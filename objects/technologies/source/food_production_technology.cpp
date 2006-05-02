@@ -364,7 +364,7 @@ void FoodProductionTechnology::production( const string& aRegionName,
     // This would be wrong if the fuelname had an emissions coefficient, or if
     // there were a fuel or other input. When multiple inputs are complete there
     // should be a specific land input.
-    input = mLandAllocator->getLandAllocation( aSectorName, aPeriod );
+    input = mLandAllocator->getLandAllocation( name, aPeriod );
     calcEmissionsAndOutputs( aRegionName, input, primaryOutput, aGDP, aPeriod );
 }
 
@@ -418,7 +418,7 @@ double FoodProductionTechnology::calcSupply( const string& aRegionName,
                                              const int aPeriod ) const
 {
     double yield = mLandAllocator->getYield( landType, name, aPeriod ); 
-    double landAllocation = mLandAllocator->getLandAllocation( aProductName, aPeriod );
+    double landAllocation = mLandAllocator->getLandAllocation( name, aPeriod );
     // Check that if yield is zero the land allocation is zero.
     // TODO: Determine why a small number is too large.
     if( yield < util::getSmallNumber() && landAllocation > 0.1 ){

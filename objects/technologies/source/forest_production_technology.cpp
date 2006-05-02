@@ -272,7 +272,7 @@ void ForestProductionTechnology::production( const string& aRegionName,
     // This would be wrong if the fuelname had an emissions coefficient, or if
     // there were a fuel or other input. When multiple inputs are complete there
     // should be a specific land input.
-    input = mLandAllocator->getLandAllocation( aSectorName, aPeriod );
+    input = mLandAllocator->getLandAllocation( name, aPeriod );
     calcEmissionsAndOutputs( aRegionName, input, primaryOutput, aGDP, aPeriod );
 }
 
