@@ -222,10 +222,29 @@ void TotalPolicyCostCalculator::createCostCurvesByPeriod() {
 void TotalPolicyCostCalculator::createRegionalCostCurves() {
     // Iterate through the regions again to determine the cost per period.
     const Configuration* conf = Configuration::getInstance();
-    const double discountRate = conf->getDouble( "discountRate", 0.05 );
-    const int startYear = conf->getInt( "discount-start-year", 2005 );
 
+    const double DEFAULT_DISCOUNT_RATE = 0.05;
+    double discountRate = conf->getDouble( "discountRate", DEFAULT_DISCOUNT_RATE );
+
+    const int DEFAULT_START_YEAR = 2005;
+    int startYear = conf->getInt( "discount-start-year", DEFAULT_START_YEAR );
+
+    // Perform error checking on the configuration values.
     const Modeltime* modeltime = mSingleScenario->getInternalScenario()->getModeltime();
+    if( discountRate < 0 || discountRate > 1 ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Invalid discount rate of " << discountRate << ". Resetting to default." << endl;
+        discountRate = DEFAULT_DISCOUNT_RATE;
+    }
+
+    if( startYear < modeltime->getStartYear() || startYear > modeltime->getEndYear() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Discount start year must be a valid model year. Resetting to default." << endl;
+        startYear = DEFAULT_START_YEAR;
+    }
+
     const int maxPeriod = modeltime->getmaxper();
     
     for( map<const string, const Curve*>::const_iterator rNameIter = mPeriodCostCurves[ 0 ].begin(); rNameIter != mPeriodCostCurves[ 0 ].end(); ++rNameIter ){
