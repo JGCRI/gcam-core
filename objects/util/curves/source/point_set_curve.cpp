@@ -1,4 +1,4 @@
-/*! 
+/*!
 * \file point_set_curve.cpp
 * \ingroup Util
 * \brief PointSetCurve class source file.
@@ -262,40 +262,30 @@ double PointSetCurve::getIntegral( const double lowDomain, const double highDoma
 
 }
 
-//! Get the value of the curve discounted to lowDomain values. Add lots more doc here. Also this doesnt really need the pair, just the x's.
-double PointSetCurve::getDiscountedValue( const double lowDomain, const double highDomain, const double discountRate ) const {
-    // <Formula> pv(x, yearsInFuture, discountRate) = x / ( 1 + discountRate )^n
-    typedef pair<double,double> PointPair;
-    typedef vector<PointPair>::const_iterator PPIter;
+/*!
+ * \brief Return a discounted sum of the values of the curve back to the year
+ *        aLowDomain assuming the X values are years.
+ * \details Computes a sum of the discounted y values of the curve from
+ *          aLowDomain to aHighDomain inclusive using the given interest rate.
+ *          The present valeu in any year is calculated as:
+ *          pv(x, yearsInFuture, discountRate) = x / ( 1 + discountRate )^n
+ * \param aLowDomain Year to begin discounting costs from inclusively. This is the base year.
+ * \param aHighDomain Last year to add the discounted value for, inclusive.
+ * \param aDiscountRate Discount rate to use, should be in the range 0-1.
+ */
+double PointSetCurve::getDiscountedValue( const double aLowerBound,
+                                          const double aUpperBound,
+                                          const double aDiscountRate ) const
+{
+    assert( aLowerBound <= aUpperBound );
+    assert( aDiscountRate >= 0 && aDiscountRate <= 1 );
+
     double sum = 0;
-
-    // Get the underlying points in this range.
-    vector<PointPair> sortedPoints = pointSet->getSortedPairs( lowDomain, highDomain );
-
-    if( !sortedPoints.empty() ){
-        // If lowdomain is not the first point, add a point to represent represent that.
-        if( !util::isEqual( sortedPoints[ 0 ].first, lowDomain ) ){
-            PointPair pointA( lowDomain, getY( lowDomain ) );
-            sortedPoints.insert( sortedPoints.begin(), pointA );
-        }
-
-        // If the highDomain is not the last point, add a point to represent that.
-        if( !util::isEqual( sortedPoints[ sortedPoints.size() - 1 ].first, highDomain ) ){
-            PointPair pointB( highDomain, getY( highDomain ) );
-            sortedPoints.push_back( pointB );
-        }
-
-        // Set the base year.
-        const double baseYear = sortedPoints[ 0 ].first;
-
-        // Now iterate through the vector and discount.
-        for( PPIter point = sortedPoints.begin(); point != sortedPoints.end(); point++ ){
-            for( double year = point->first; year < ( point + 1 )->first; year++ ){
-                double currValue = getY( year );
-                sum += ( currValue / pow( 1 + discountRate, year - baseYear ) );
-            }
-        }
+    for( double year = aLowerBound; year <= aUpperBound; ++year ){
+        sum += ( getY( year ) / pow( 1 + aDiscountRate, year - aLowerBound ) );
     }
+
+    assert( sum >= 0 && util::isValidNumber( sum ) );
     return sum;
 }
 

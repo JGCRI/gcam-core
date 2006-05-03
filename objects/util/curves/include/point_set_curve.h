@@ -4,7 +4,7 @@
 #pragma once
 #endif
 
-/*! 
+/*!
 * \file point_set_curve.h
 * \ingroup Util
 * \brief The PointSetCurve class header file.
@@ -55,7 +55,11 @@ public:
     double getMinY() const;
     std::vector<std::pair<double,double> > getSortedPairs( const double lowDomain = -DBL_MAX, const double highDomain = DBL_MAX, const int minPoints = 0 ) const;
     double getIntegral( const double lowDomain, const double highDomain ) const;
-    double getDiscountedValue( const double lowDomain, const double highDomain, const double discountRate ) const;
+
+    double getDiscountedValue( const double aLowerBound,
+                               const double aUpperBound,
+                               const double aDiscountRate ) const;
+
     void invertAxises();
 protected:
     static const std::string XML_NAME; //!< The name of the XML tag associated with this object.
