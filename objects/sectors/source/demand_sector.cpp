@@ -116,18 +116,13 @@ void DemandSector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     // write the xml for the class members.
     XMLWriteElementCheckDefault( perCapitaBased, "perCapitaBased", out, tabs, false );
 
-    for( unsigned int i = 0; i < pElasticity.size(); i++ ){
-        XMLWriteElementCheckDefault( pElasticity[ i ], "priceelasticity", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
-    }
+    XMLWriteVector( pElasticity, "priceelasticity", out, tabs, modeltime, 0.0 );
     for( int i = 0; modeltime->getper_to_yr( i ) <= 1990; i++ ){
         XMLWriteElementCheckDefault( service[ i ], "serviceoutput", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
     }
-    for( unsigned int i = 0; i < iElasticity.size(); i++ ){
-        XMLWriteElementCheckDefault( iElasticity[ i ], "incomeelasticity", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
-    }
-    for( unsigned int i = 0; i < aeei.size(); i++ ){
-        XMLWriteElementCheckDefault( aeei[ i ], "aeei", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
-    }
+    XMLWriteVector( iElasticity, "incomeelasticity", out, tabs, modeltime, 0.0 );
+    XMLWriteVector( aeei, "aeei", out, tabs, modeltime, 0.0 );
+
 }   
 
 //! Write object to debugging xml output stream.

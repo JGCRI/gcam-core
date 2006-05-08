@@ -219,10 +219,7 @@ void Accelerator::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) co
 */
 void Accelerator::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-    for( unsigned int period = 0; period < mFixedInvestments.size(); ++period ){
-        XMLWriteElementCheckDefault( mFixedInvestments[ period ], "FixedInvestment", aOut, aTabs, -1.0,
-            scenario->getModeltime()->getper_to_yr( period ) );
-    }
+    XMLWriteVector( mFixedInvestments, "FixedInvestment", aOut, aTabs, scenario->getModeltime(), -1.0 );
 
     XMLWriteElementCheckDefault( mInvestmentLogitExp, "InvestmentLogitExp", aOut, aTabs, 1.0 );
     XMLWriteElementCheckDefault( mProfitElasExp, "ProfitElasExp", aOut, aTabs, 1.0 );

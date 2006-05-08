@@ -152,35 +152,23 @@ void SubResource::initializeResource( ) {
 void SubResource::toInputXML( ostream& out, Tabs* tabs ) const {
     
     const Modeltime* modeltime = scenario->getModeltime();
-    int m = 0;
 
 	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
     
     // write the xml for the class members.
 
-    for(m = 0; m < static_cast<int>(environCost.size() ); m++ ) {
-        XMLWriteElementCheckDefault(environCost[m],"environCost",out, tabs, 0.0 ,modeltime->getper_to_yr(m));
-    }
+    XMLWriteVector( environCost, "environCost", out, tabs, modeltime, 0.0 );
 
-    for(m = 0; m < static_cast<int>(gdpExpans.size() ); m++ ) {
-        XMLWriteElementCheckDefault(gdpExpans[m],"gdpExpans",out, tabs, GDP_EXPANS_DEFAULT ,modeltime->getper_to_yr(m));
-    }
+    XMLWriteVector( gdpExpans, "gdpExpans", out, tabs, modeltime, GDP_EXPANS_DEFAULT );
 
-    for(m = 0; m < static_cast<int>(severanceTax.size() ); m++ ) {
-        XMLWriteElementCheckDefault(severanceTax[m],"severanceTax",out, tabs, 0.0 ,modeltime->getper_to_yr(m));
-    }
+    XMLWriteVector( severanceTax, "severanceTax", out, tabs, modeltime, 0.0 );
     
     // for base year only
-    m = 0;
-    XMLWriteElementCheckDefault(annualprod[m],"annualprod",out, tabs, 0.0 , modeltime->getper_to_yr(m));
+    XMLWriteElementCheckDefault(annualprod[0],"annualprod",out, tabs, 0.0 , modeltime->getper_to_yr(0));
     
-    for(m = 0; m < static_cast<int>(techChange.size() ); m++ ) {
-        XMLWriteElementCheckDefault(techChange[m],"techChange",out, tabs, 0.0 ,modeltime->getper_to_yr(m));
-    }
+    XMLWriteVector( techChange, "techChange", out, tabs, modeltime, 0.0 );
     
-    for(m = 0; m < static_cast<int>(scaleFactor.size() ); m++ ) {
-        XMLWriteElementCheckDefault(scaleFactor[m],"scaleFactor",out, tabs, SCALE_FACTOR_DEFAULT,modeltime->getper_to_yr(m));
-    }
+    XMLWriteVector( scaleFactor, "scaleFactor", out, tabs, modeltime, SCALE_FACTOR_DEFAULT );
     
     XMLWriteElementCheckDefault(minShortTermSLimit,"minShortTermSLimit",out, tabs, 0.0  );
     XMLWriteElementCheckDefault(priceElas,"priceElas",out, tabs, 1.0 );

@@ -156,10 +156,9 @@ void GHGPolicy::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElement( isFixedTax, "isFixedTax", out, tabs );
     
     const Modeltime* modeltime = scenario->getModeltime();    
-    for( int i = 0; i < scenario->getModeltime()->getmaxper(); i++ ){
-        XMLWriteElementCheckDefault( constraint[ i ], "constraint", out, tabs, -1.0, modeltime->getper_to_yr( i ) );
-        XMLWriteElementCheckDefault( fixedTaxes[ i ], "fixedTax", out, tabs, 0.0, modeltime->getper_to_yr( i ) );    
-    }
+    XMLWriteVector( constraint, "constraint", out, tabs, modeltime, -1.0 );
+    XMLWriteVector( fixedTaxes, "fixedTax", out, tabs, modeltime, 0.0 );
+
     // finished writing xml for the class members.
     XMLWriteClosingTag( getXMLName(), out, tabs );
 }

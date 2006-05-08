@@ -491,24 +491,16 @@ void Subsector::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag( getXMLName(), out, tabs, name );
     
     // write the xml for the class members.
-    for( unsigned i = 0; i < capLimit.size(); i++ ){
-        XMLWriteElementCheckDefault( capLimit[ i ], "capacitylimit", out, tabs, 1.0, modeltime->getper_to_yr( i ) );
-    }
+    XMLWriteVector( capLimit, "capacitylimit", out, tabs, modeltime, 1.0 );
 
     XMLWriteElementCheckDefault( scaleYear, "scaleYear", out, tabs, modeltime->getEndYear() );
     XMLWriteElementCheckDefault( techScaleYear, "techScaleYear", out, tabs, modeltime->getEndYear() );
     
-    for( unsigned i = 0; i < shrwts.size(); i++ ){
-        XMLWriteElementCheckDefault( shrwts[ i ], "sharewt", out, tabs, 1.0, modeltime->getper_to_yr( i ) );
-    }
+    XMLWriteVector( shrwts, "sharewt", out, tabs, modeltime, 1.0 );
     
-    for( unsigned i = 0; i < lexp.size(); i++ ){
-        XMLWriteElementCheckDefault( lexp[ i ], "logitexp", out, tabs, LOGIT_EXP_DEFAULT, modeltime->getper_to_yr( i ) );
-    }
+    XMLWriteVector( lexp, "logitexp", out, tabs, modeltime, LOGIT_EXP_DEFAULT );
     
-    for( unsigned i = 0; i < fuelPrefElasticity.size(); i++ ){
-        XMLWriteElementCheckDefault( fuelPrefElasticity[ i ], "fuelprefElasticity", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
-    }
+    XMLWriteVector( fuelPrefElasticity, "fuelprefElasticity", out, tabs, modeltime, 0.0 );
     
 
     XMLWriteElementCheckDefault( basesharewt, "basesharewt", out, tabs, 0.0, modeltime->getStartYear() );
@@ -518,9 +510,7 @@ void Subsector::toInputXML( ostream& out, Tabs* tabs ) const {
         baseTechs[i]->toInputXML( out, tabs );
     }
     
-    for ( unsigned int i = 0; i < mFixedInvestments.size(); ++i ){
-        XMLWriteElementCheckDefault( mFixedInvestments[ i ], "FixedInvestment", out, tabs, -1.0, modeltime->getper_to_yr( i ) );
-    }
+    XMLWriteVector( mFixedInvestments, "FixedInvestment", out, tabs, modeltime, -1.0 );
 
     // write out the technology objects.
     for( vector< vector< technology* > >::const_iterator j = techs.begin(); j != techs.end(); j++ ){

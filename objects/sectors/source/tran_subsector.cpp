@@ -121,15 +121,9 @@ technology* TranSubsector::createChild( const std::string& nodename ) const {
 */
 void TranSubsector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
-    for( unsigned int i = 0; i < speed.size(); ++i ){
-        XMLWriteElementCheckDefault( speed[ i ], "speed", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
-    }
-    for( unsigned int i = 0; i < popDenseElasticity.size(); ++i ){
-        XMLWriteElementCheckDefault( popDenseElasticity[ i ], "popDenseElasticity", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
-    }
-    for( unsigned int i = 0; i < mServiceOutputs.size(); ++i ){
-        XMLWriteElementCheckDefault( mServiceOutputs[ i ], "serviceoutput", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
-    }	
+    XMLWriteVector( speed, "speed", out, tabs, modeltime, 0.0 );
+    XMLWriteVector( popDenseElasticity, "popDenseElasticity", out, tabs, modeltime, 0.0 );
+    XMLWriteVector( mServiceOutputs, "serviceoutput", out, tabs, modeltime, 0.0 );
 }
 
 //! Write object to debugging xml output stream.

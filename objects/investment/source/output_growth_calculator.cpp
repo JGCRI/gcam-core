@@ -101,10 +101,7 @@ void OutputGrowthCalculator::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     
     const Modeltime* modeltime = scenario->getModeltime();
     // 0 isn't really the default.
-    for( int per = 0; per < modeltime->getmaxper(); ++per ){
-        XMLWriteElementCheckDefault( mOutputGrowthRate[ per ], "output-growth-rate", aOut, aTabs, 0.0,
-                                     modeltime->getper_to_yr( per ) );
-    }
+    XMLWriteVector( mOutputGrowthRate, "output-growth-rate", aOut, aTabs, modeltime, 0.0 );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 

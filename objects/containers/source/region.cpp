@@ -627,14 +627,11 @@ void Region::toInputXML( ostream& out, Tabs* tabs ) const {
 
             // write out calibration GDP
             const Modeltime* modeltime = scenario->getModeltime();
-            for( unsigned int m = 0; m < calibrationGDPs.size(); m++ ){
-                XMLWriteElementCheckDefault( calibrationGDPs[ m ], "GDPcal", out, tabs, 0.0, modeltime->getper_to_yr( m ) );
-            }
+            XMLWriteVector( calibrationGDPs, "GDPcal", out, tabs, modeltime, 0.0 );
 
             // write out TFE calibration values
-            for( unsigned int m = 0; m < TFEcalb.size(); m++ ) {
-                XMLWriteElementCheckDefault( TFEcalb[ m ],"TFEcalb", out, tabs, 0.0, modeltime->getper_to_yr( m ) );
-            }
+            XMLWriteVector( TFEcalb, "TFEcalb", out, tabs, modeltime, 0.0 );
+
             XMLWriteClosingTag( "calibrationdata", out, tabs );
             // End write out regional economic data
         } // close calibration IF

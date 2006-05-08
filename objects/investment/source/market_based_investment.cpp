@@ -163,10 +163,7 @@ void MarketBasedInvestor::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aT
 */
 void MarketBasedInvestor::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-    for( unsigned int period = 0; period < mFixedInvestments.size(); ++period ){
-        XMLWriteElementCheckDefault( mFixedInvestments[ period ], "FixedInvestment", aOut, aTabs, -1.0,
-            scenario->getModeltime()->getper_to_yr( period ) );
-    }
+    XMLWriteVector( mFixedInvestments, "FixedInvestment", aOut, aTabs, scenario->getModeltime(), -1.0 );
 
     XMLWriteElementCheckDefault( mInvestmentLogitExp, "InvestmentLogitExp", aOut, aTabs, 1.0 );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );

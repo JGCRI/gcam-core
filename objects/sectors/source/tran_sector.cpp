@@ -102,9 +102,7 @@ void TranSector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     DemandSector::toInputXMLDerived( out, tabs );
     
     const Modeltime* modeltime = scenario->getModeltime();
-    for( unsigned int i = 0; i < percentLicensed.size(); i++ ){
-        XMLWriteElementCheckDefault( percentLicensed[ i ], "percentLicensed", out, tabs, 0.0, modeltime->getper_to_yr( i ) );
-    }
+    XMLWriteVector( percentLicensed, "percentLicensed", out, tabs, modeltime, 0.0 );
 }
 
 //! Write object to debugging xml output stream.
