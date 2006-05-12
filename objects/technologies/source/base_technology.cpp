@@ -75,6 +75,7 @@ BaseTechnology& BaseTechnology::operator =( const BaseTechnology& baseTechIn ) {
 
 void BaseTechnology::copy( const BaseTechnology& baseTechIn ) {
     name = baseTechIn.name;
+    categoryName = baseTechIn.categoryName;
     prodDmdFnType = baseTechIn.prodDmdFnType;
     prodDmdFn = baseTechIn.prodDmdFn;
     inputNameToNo = baseTechIn.inputNameToNo;
@@ -91,6 +92,7 @@ void BaseTechnology::copy( const BaseTechnology& baseTechIn ) {
 
 void BaseTechnology::copyParam( const BaseTechnology* baseTechIn ) {
     name = baseTechIn->name;
+    categoryName = baseTechIn->categoryName;
     prodDmdFnType = baseTechIn->prodDmdFnType;
     prodDmdFn = baseTechIn->prodDmdFn;
     
@@ -172,9 +174,6 @@ void BaseTechnology::XMLParse( const DOMNode* node ) {
         if( nodeName == "#text" ) {
             continue;
         }
-        else if  ( nodeName == "name" ) {
-            name = XMLHelper<string>::getValue( curr );
-        }
         else if ( nodeName == ProductionInput::getXMLNameStatic() ) {
             parseContainerNode( curr, input, inputNameToNo, new ProductionInput() );
         }
@@ -199,7 +198,7 @@ void BaseTechnology::XMLParse( const DOMNode* node ) {
 void BaseTechnology::toInputXML( ostream& out, Tabs* tabs ) const {
 
     // write the beginning tag.
-    XMLWriteOpeningTag ( getXMLName(), out, tabs, name, year );
+    XMLWriteOpeningTag ( getXMLName(), out, tabs, name, year, "", categoryName );
 
     //XMLWriteElement( year, "year", out, tabs );
     XMLWriteElement( prodDmdFnType, "prodDmdFnType", out, tabs );
