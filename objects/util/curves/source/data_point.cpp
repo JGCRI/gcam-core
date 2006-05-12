@@ -6,9 +6,8 @@
 * \date $Date$
 * \version $Revision$
 */
-
-#include <iostream>
 #include "util/base/include/definitions.h"
+#include <iostream>
 #include "util/curves/include/data_point.h"
 #include "util/curves/include/xy_data_point.h"
 

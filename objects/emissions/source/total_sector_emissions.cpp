@@ -5,6 +5,7 @@
 * \author James Blackwood
 */
 
+#include "util/base/include/definitions.h"
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
 

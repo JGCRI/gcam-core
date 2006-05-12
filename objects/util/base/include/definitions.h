@@ -14,14 +14,24 @@
 * \author Josh Lurz
 */
 
+#include <vector>
+#include <map>
+#include <list>
+#include <string>
+#include <iostream>
+
 // Configuration constants.
 
 //! A flag which tells whether to attempt linking of fortran portions.
 #define __HAVE_FORTRAN__ 1
 
-//! A flag which turns on or off compilation of database code. 
+//! A flag which turns on or off compilation of database code. Database
+// cannot be compiled on VC8.
+#if( defined(_MSC_VER) && _MSC_VER < 1400 )
 #define __HAVE_DB__ 1
-// End of configuration constants.
+#else
+#define __HAVE_DB__ 0
+#endif
 
 //! A flag which turns on or off the compilation of the XML database code.
 #define __USE_XML_DB__ 1

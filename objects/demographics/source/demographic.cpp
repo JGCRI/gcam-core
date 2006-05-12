@@ -6,6 +6,7 @@
 * \author Katherine Chung
 */
 
+#include "util/base/include/definitions.h"
 #include <vector>
 #include <map>
 #include <cassert>

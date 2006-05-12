@@ -5,6 +5,7 @@
 * \author James Blackwood
 */
 
+#include "util/base/include/definitions.h"
 #include "technologies/include/food_production_technology.h"
 #include "land_allocator/include/iland_allocator.h"
 #include "emissions/include/ghg.h"

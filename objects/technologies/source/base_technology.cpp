@@ -289,7 +289,13 @@ void BaseTechnology::removeEmptyInputs(){
             // the vector delete function, then decrements the iterator. This
             // allows the erasure of the current position without invalidating
             // the iterator.
-            input.erase( currInput-- );
+            if( currInput == input.begin() ){
+                input.erase( currInput );
+                currInput = input.begin();
+            }
+            else {
+                input.erase( currInput-- );
+            }
         }
     }
 

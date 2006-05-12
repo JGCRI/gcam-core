@@ -5,6 +5,7 @@
 * \author Sonny Kim
 */
 
+#include "util/base/include/definitions.h"
 #include <xercesc/dom/DOMNode.hpp>
 #include "demographics/include/female.h"
 #include "util/base/include/xml_helper.h"

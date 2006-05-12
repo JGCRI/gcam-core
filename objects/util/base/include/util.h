@@ -315,6 +315,10 @@ namespace objects {
 
    long createMinicamRunID( const time_t& aTime );
    std::string XMLCreateDate( const time_t& time );
+
+   tm* getGMTime( const time_t& aTime );
+   tm* getLocalTime( const time_t& aTime );
+   void printTime( const time_t& aTime, std::ostream& aOut );
 } // End util namespace.
 
 namespace util = objects;

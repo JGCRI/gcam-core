@@ -55,10 +55,10 @@ namespace objects {
 	* \return A unique run identifier.
     */
 	long createMinicamRunID( const time_t& aTime ){
-		tm* lt = localtime( &aTime ); // struct for time components
-		const long runID = lt->tm_sec + lt->tm_min * 100 + lt->tm_hour * 10000
-			+ lt->tm_mday * 1000000 
-			+ ( lt->tm_mon * 100000000 + 100000000);
+		tm* timeInfo = getLocalTime( aTime );
+		const long runID = timeInfo->tm_sec + timeInfo->tm_min * 100 + timeInfo->tm_hour * 10000
+			+ timeInfo->tm_mday * 1000000 
+			+ ( timeInfo->tm_mon * 100000000 + 100000000);
 		return runID;
 	}
 
@@ -74,11 +74,10 @@ namespace objects {
 	string XMLCreateDate( const time_t& time ) {
 		stringstream buffer;
 		string retString;
-		struct tm* timeInfo;
-		struct tm* umtTimeInfo;
 
-		timeInfo = localtime( &time );
-		umtTimeInfo = gmtime( &time );
+		tm* timeInfo = getLocalTime( time );
+        
+        tm* umtTimeInfo = getGMTime( time );
 
 		// Create the string
 		buffer << ( timeInfo->tm_year + 1900 ); // Set the year
@@ -105,4 +104,67 @@ namespace objects {
 
 		return retString;
 	}
+
+    /*! 
+     * \brief Get an initialized time struct with the GM time information.
+     * \param aTime Current time object.
+     * \return GM time struct.
+     */
+    tm* util::getGMTime( const time_t& aTime ){
+        
+        // VC 8 complains when the older unsafe versions of the time functions
+        // are used. The are not available on older compilers or other
+        // platforms.
+#if( !defined(_MSC_VER) || _MSC_VER < 1400 )
+        return gmtime( &aTime );
+#else
+        static auto_ptr<tm> timeInfo( new tm() );
+        errno_t error = gmtime_s( timeInfo.get(), &aTime );
+        // 0 means the call was successful.
+        assert( error == 0 );
+        return timeInfo.get();
+#endif
+    }
+
+    /*! 
+     * \brief Get an initialized time struct with the local time information.
+     * \param aTime Current time object.
+     * \return Local time struct.
+     */
+    tm* util::getLocalTime( const time_t& aTime ){
+    // VC 8 complains when the older unsafe versions of the time functions are
+    // used. The are not available on older compilers or other platforms.
+#if( !defined(_MSC_VER) || _MSC_VER < 1400 )
+        return localtime( &aTime );
+#else
+        static auto_ptr<tm> timeInfo( new tm() );
+        errno_t error = localtime_s( timeInfo.get(), &aTime );
+        // 0 means the call was successful.
+        assert( error == 0 );
+        return timeInfo.get();
+#endif
+    }
+
+    /*! 
+     * \brief Print the current time to an output stream.
+     * \param aTime Current time object.
+     * \param aStream Output stream to print into.
+     */
+void util::printTime( const time_t& aTime, ostream& aOut ){
+        // VC 8 complains when the older unsafe versions of the time functions
+        // are used. The are not available on older compilers or other
+        // platforms.
+#if( !defined(_MSC_VER) || _MSC_VER < 1400 )
+    aOut << ctime( &aTime );
+#else
+    const size_t BUFFER_SIZE = 26;
+    char* buffer = new char[ BUFFER_SIZE ];
+    errno_t error = ctime_s( buffer, BUFFER_SIZE, &aTime );
+    // 0 means the call was successful.
+    assert( error == 0 );
+
+    aOut << buffer;
+    delete[] buffer;
+#endif
+    }
 }

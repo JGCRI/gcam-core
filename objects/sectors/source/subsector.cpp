@@ -333,6 +333,9 @@ technology* Subsector::createChild( const string& nodename ) const {
 
 //! Helper function which parses any type of base technology correctly.
 void Subsector::parseBaseTechHelper( const DOMNode* aCurr, BaseTechnology* aNewTech ){
+    // Ensure a valid technology was passed.
+    assert( aNewTech );
+
     // Use an auto_ptr to take responsibility for the memory.
     auto_ptr<BaseTechnology> newTech( aNewTech );
     
@@ -645,7 +648,7 @@ void Subsector::initCalc( NationalAccount& aNationalAccount,
             mTechTypes[ baseTechs[ j ]->getName() ]->initializeTechsFromBase( baseTechs[ j ]->getYear() );
         }
         // If the current tech is from the previous period, initialize the current tech with its parameters.
-        else if ( baseTechs[ j ]->getYear() == modeltime->getper_to_yr( aPeriod - 1 ) ) {
+        else if ( aPeriod > 0 && baseTechs[ j ]->getYear() == modeltime->getper_to_yr( aPeriod - 1 ) ) {
             BaseTechnology* newTech = mTechTypes[ baseTechs[ j ]->getName() ]->initOrCreateTech( modeltime->getper_to_yr( aPeriod ), baseTechs[ j ]->getYear() );
             // Check if initOrCreate created a technology which needs to be added to the base tech vector and map.
             if( newTech ){
@@ -2359,11 +2362,19 @@ void Subsector::csvSGMOutputFile( ostream& aFile, const int period ) const {
 void Subsector::accept( IVisitor* aVisitor, const int period ) const {
 	aVisitor->startVisitSubsector( this, period );
 	const Modeltime* modeltime = scenario->getModeltime();
-	for( unsigned int j = 0; j < baseTechs.size(); j++ ) {
-		if( baseTechs[ j ]->getYear() <= modeltime->getper_to_yr( period ) ){ // should be unneeded.
-			baseTechs[ j ]->accept( aVisitor, period );
-		}
-	}
+    if( period == -1 ){
+        // Output all techs.
+        for( unsigned int j = 0; j < baseTechs.size(); j++ ) {
+            baseTechs[ j ]->accept( aVisitor, period );
+        }
+    }
+    else {
+	    for( unsigned int j = 0; j < baseTechs.size(); j++ ) {
+		    if( baseTechs[ j ]->getYear() <= modeltime->getper_to_yr( period ) ){ // should be unneeded.
+			    baseTechs[ j ]->accept( aVisitor, period );
+		    }
+	    }
+    }
 	// If the period is -1 this means to update output containers for all periods.
 	if( period == -1 ){
 		for( unsigned int i = 0; i < techs.size(); ++i ){

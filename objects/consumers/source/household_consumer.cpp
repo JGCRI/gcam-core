@@ -18,7 +18,6 @@
 * \date $Date$
 * \version $Revision$
 */
-
 #include "util/base/include/definitions.h"
 #include <iostream>
 #include <cmath>

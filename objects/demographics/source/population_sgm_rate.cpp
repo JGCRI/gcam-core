@@ -5,6 +5,7 @@
 * \author Sonny Kim
 * \author Katherine Chung
 */
+#include "util/base/include/definitions.h"
 #include <vector>
 #include <xercesc/dom/DOMNode.hpp>
 #include "demographics/include/population_sgm_rate.h"

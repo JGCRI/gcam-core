@@ -4,9 +4,9 @@
 * \brief SolverInfoSet class source file.
 * \author Josh Lurz
 */
+#include "util/base/include/definitions.h"
 #include <cassert>
 #include <algorithm>
-#include "util/base/include/definitions.h"
 #include "util/base/include/util.h"
 #include "solution/util/include/solver_info_set.h"
 #include "solution/util/include/solver_info.h"

@@ -9,7 +9,6 @@
 * \date $Date$
 * \version $Revision$
 */
-
 #include "util/base/include/definitions.h"
 #include <cmath>
 #include <xercesc/dom/DOMNode.hpp>

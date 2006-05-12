@@ -7,8 +7,8 @@
 * \version $Revision$
 */
 
-#include <iostream>
 #include "util/base/include/definitions.h"
+#include <iostream>
 #include "util/curves/include/point_set.h"
 #include "util/curves/include/explicit_point_set.h"
 

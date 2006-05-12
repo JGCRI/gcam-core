@@ -5,6 +5,7 @@
  * \author James Blackwood
  */
 
+#include "util/base/include/definitions.h"
 #include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "land_allocator/include/aland_allocator_item.h"

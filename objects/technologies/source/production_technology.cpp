@@ -692,7 +692,7 @@ void ProductionTechnology::accept( IVisitor* aVisitor, const int aPeriod ) const
 {
 	// print for all operating vintages
     // This is not right, this decision should be made by the OutputContainer.
-	if( isAvailable( aPeriod ) && !isRetired( aPeriod ) ){
+	if( aPeriod == -1 || ( isAvailable( aPeriod ) && !isRetired( aPeriod ) ) ){
 		aVisitor->updateProductionTechnology( this, aPeriod );
 		BaseTechnology::accept( aVisitor, aPeriod );
 	}

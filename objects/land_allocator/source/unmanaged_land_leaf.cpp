@@ -5,6 +5,7 @@
  * \author James Blackwood
  */
 
+#include "util/base/include/definitions.h"
 #include "land_allocator/include/unmanaged_land_leaf.h"
 #include "util/base/include/xml_helper.h"
 #include "marketplace/include/marketplace.h"

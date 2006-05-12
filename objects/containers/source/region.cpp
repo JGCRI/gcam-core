@@ -1889,8 +1889,10 @@ void Region::dbOutput( const list<string>& aPrimaryFuelList ) const {
 }
 
 //! Initialize the market prices for the agricultural products.
-void Region::initializeAgMarketPrices( const vector<double>& pricesIn ) { 
-    agSector->initMarketPrices( name, pricesIn );
+void Region::initializeAgMarketPrices( const vector<double>& pricesIn ) {
+    if( agSector.get() ){
+        agSector->initMarketPrices( name, pricesIn );
+    }
 }
 
 //! update regional summaries for reporting

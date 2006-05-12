@@ -190,7 +190,7 @@ void Logger::parseHeader( string& aHeader ) {
 const string Logger::getDateString(){
 	time_t currTime;
 	time( &currTime );
-	struct tm* timeInfo = localtime( &currTime );
+    tm* timeInfo = util::getLocalTime( currTime );
 
 	// Create the string
 	stringstream buffer;
@@ -219,7 +219,8 @@ const string Logger::getDateString(){
 const string Logger::getTimeString() {
 	time_t currTime;	
 	time( &currTime );
-	struct tm* timeInfo = localtime( &currTime );
+	tm* timeInfo = util::getLocalTime( currTime );
+
 	stringstream buffer;	
 	if( timeInfo->tm_hour < 10 ){
 		buffer << "0";

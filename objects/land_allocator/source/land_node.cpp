@@ -5,6 +5,7 @@
  * \author James Blackwood
  */
 
+#include "util/base/include/definitions.h"
 #include "util/base/include/xml_helper.h"
 
 #include "land_allocator/include/land_node.h"

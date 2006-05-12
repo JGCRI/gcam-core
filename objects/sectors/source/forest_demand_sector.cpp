@@ -7,6 +7,7 @@
 * \version $Revision$
 */
 
+#include "util/base/include/definitions.h"
 #include "util/base/include/xml_helper.h"
 #include "sectors/include/forest_demand_sector.h"
 #include "containers/include/iinfo.h"

@@ -4,6 +4,8 @@
  * \brief ASimpleCarbonCalc class source file.
  * \author James Blackwood
  */
+
+#include "util/base/include/definitions.h"
 #include "emissions/include/asimple_carbon_calc.h"
 #include "util/base/include/ivisitor.h"
 #include "util/base/include/util.h"

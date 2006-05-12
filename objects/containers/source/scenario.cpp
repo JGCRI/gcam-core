@@ -432,32 +432,32 @@ void Scenario::closeDebuggingFiles( ofstream& aXMLDebugFile, ofstream& aSGMDebug
 * \param aPeriod Period to update.
 */
 void Scenario::accept( IVisitor* aVisitor, const int aPeriod ) const {
-	aVisitor->startVisitScenario( this, aPeriod );
-	// Update the meta-data.
-	if( mOutputMetaData.get() ){
-		mOutputMetaData->accept( aVisitor, aPeriod );
-	}
-	// Update the world.
-	if( world.get() ){
-		world->accept( aVisitor, aPeriod );
-	}
-	aVisitor->endVisitScenario( this, aPeriod );
+    aVisitor->startVisitScenario( this, aPeriod );
+    // Update the meta-data.
+    if( mOutputMetaData.get() ){
+        mOutputMetaData->accept( aVisitor, aPeriod );
+    }
+    // Update the world.
+    if( world.get() ){
+        world->accept( aVisitor, aPeriod );
+    }
+    aVisitor->endVisitScenario( this, aPeriod );
 }
 
 /*! \brief A function which writes output to an XML file so that it can be read by the XML database.
 */
 void Scenario::printOutputXML() const {
 #if( __USE_XML_DB__ )	
-	// Create a graph printer.
-	auto_ptr<IVisitor> xmlDBOutputter( new XMLDBOutputter );
-	
-	// Update the output container with information from the model.
-	// -1 flags to update the output container for all periods at once.
-	accept( xmlDBOutputter.get(), -1 );
-	
-	
-	// Print the output.
-	xmlDBOutputter->finish();
+    // Create a graph printer.
+    auto_ptr<IVisitor> xmlDBOutputter( new XMLDBOutputter );
+    
+    // Update the output container with information from the model.
+    // -1 flags to update the output container for all periods at once.
+    accept( xmlDBOutputter.get(), -1 );
+    
+    
+    // Print the output.
+    xmlDBOutputter->finish();
 #endif
 }
 
@@ -476,24 +476,24 @@ void Scenario::printOutputXML() const {
 * \param aPeriod The period to print graphs for.
 */
 void Scenario::printGraphs( const int aPeriod ) const {
-	// Determine which region to print. Default to the US.
-	const string regionToGraph = Configuration::getInstance()->getString( "region-to-graph", "USA" );
+    // Determine which region to print. Default to the US.
+    const string regionToGraph = Configuration::getInstance()->getString( "region-to-graph", "USA" );
     
     // Create a unique filename for the period.
-	const string fileName = Configuration::getInstance()->getFile( "dependencyGraphName", "graph" ) 
-		                    + "_" + util::toString( aPeriod ) + ".dot";
+    const string fileName = Configuration::getInstance()->getFile( "dependencyGraphName", "graph" ) 
+                            + "_" + util::toString( aPeriod ) + ".dot";
     
     // Open the file. It will automatically close.
     AutoOutputFile graphStream( fileName );
-	
+    
     // Create a graph printer.
-	auto_ptr<IVisitor> graphPrinter( new GraphPrinter( regionToGraph, *graphStream ) );
-	
-	// Update the graph printer with information from the model.
-	accept( graphPrinter.get(), aPeriod );
-	
-	// Print the graph.
-	graphPrinter->finish();
+    auto_ptr<IVisitor> graphPrinter( new GraphPrinter( regionToGraph, *graphStream ) );
+    
+    // Update the graph printer with information from the model.
+    accept( graphPrinter.get(), aPeriod );
+    
+    // Print the graph.
+    graphPrinter->finish();
 }
 
 /*! \brief Set a tax into all regions.
@@ -681,7 +681,8 @@ void Scenario::csvSGMOutputFile( ostream& aSGMDebugFile, const int aPeriod ) con
 void Scenario::csvSGMGenFile( ostream& aFile ) const {
     // Write out the file header.
     aFile << "SGM General Output " << endl;
-    aFile << "Date & Time: " << ctime( &gGlobalTime ) << endl;
-
+    aFile << "Date & Time: ";
+    util::printTime( gGlobalTime, aFile );
+    aFile << endl;
     world->csvSGMGenFile( aFile );
 }
