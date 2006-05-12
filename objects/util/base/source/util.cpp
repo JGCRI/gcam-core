@@ -110,7 +110,7 @@ namespace objects {
      * \param aTime Current time object.
      * \return GM time struct.
      */
-    tm* util::getGMTime( const time_t& aTime ){
+    tm* getGMTime( const time_t& aTime ){
         
         // VC 8 complains when the older unsafe versions of the time functions
         // are used. The are not available on older compilers or other
@@ -131,7 +131,7 @@ namespace objects {
      * \param aTime Current time object.
      * \return Local time struct.
      */
-    tm* util::getLocalTime( const time_t& aTime ){
+    tm* getLocalTime( const time_t& aTime ){
     // VC 8 complains when the older unsafe versions of the time functions are
     // used. The are not available on older compilers or other platforms.
 #if( !defined(_MSC_VER) || _MSC_VER < 1400 )
@@ -150,7 +150,7 @@ namespace objects {
      * \param aTime Current time object.
      * \param aStream Output stream to print into.
      */
-void util::printTime( const time_t& aTime, ostream& aOut ){
+void printTime( const time_t& aTime, ostream& aOut ){
         // VC 8 complains when the older unsafe versions of the time functions
         // are used. The are not available on older compilers or other
         // platforms.
