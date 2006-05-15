@@ -15,7 +15,7 @@
  */
 
 /*! 
- * \file ivisitiable.h
+ * \file ivisitable.h
  * \ingroup Objects
  * \brief IVisitable class header file.
  * \author Josh Lurz
