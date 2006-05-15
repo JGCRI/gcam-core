@@ -160,7 +160,6 @@ void BaseTechnology::XMLParse( const DOMNode* node ) {
 
     // get the name attribute.
     name = XMLHelper<string>::getAttr( node, "name" );
-    categoryName = XMLHelper<string>::getAttr( node, "categoryName" );
     year = XMLHelper<int>::getAttr( node, "year" );
 
     // get all child nodes.
@@ -183,6 +182,9 @@ void BaseTechnology::XMLParse( const DOMNode* node ) {
         else if ( nodeName == "prodDmdFnType" ) {
             prodDmdFnType = XMLHelper<string>::getValue( curr );
         }
+        else if ( nodeName == "categoryName" ) {
+            categoryName = XMLHelper<string>::getValue( curr );
+        }
         else if( nodeName == Ghg::getXMLNameStatic() ){
             parseContainerNode( curr, mGhgs, mGhgNameMap, new Ghg() );
         }
@@ -198,7 +200,7 @@ void BaseTechnology::XMLParse( const DOMNode* node ) {
 void BaseTechnology::toInputXML( ostream& out, Tabs* tabs ) const {
 
     // write the beginning tag.
-    XMLWriteOpeningTag ( getXMLName(), out, tabs, name, year, "", categoryName );
+    XMLWriteOpeningTag ( getXMLName(), out, tabs, name, year, "");
 
     //XMLWriteElement( year, "year", out, tabs );
     XMLWriteElement( prodDmdFnType, "prodDmdFnType", out, tabs );
