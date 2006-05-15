@@ -1,22 +1,21 @@
-/*
-	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Laboratory operated by Battelle Memorial
-	Institute. Battelle has certain unperfected rights in the software
-	which should not be copied or otherwise disseminated outside your
-	organization without the express written authorization from Battelle. All rights to
-	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responsibility for the 
-	use of this software.
-*/
+/* 
+ * This software, which is provided in confidence, was prepared by employees of
+ * Pacific Northwest National Laboratory operated by Battelle Memorial
+ * Institute. Battelle has certain unperfected rights in the software which
+ * should not be copied or otherwise disseminated outside your organization
+ * without the express written authorization from Battelle. All rights to the
+ * software are reserved by Battelle. Battelle makes no warranty, express or
+ * implied, and assumes no liability or responsibility for the use of this
+ * software.
+ */
+
 
 /*! 
-* \file rate_logit_distributor.cpp
-* \ingroup Objects
-* \brief RateLogitDistributor class source file.
-* \author Josh Lurz
-* \date $Date$
-* \version $Revision$
-*/
+ * \file rate_logit_distributor.cpp
+ * \ingroup Objects
+ * \brief RateLogitDistributor class source file.
+ * \author Josh Lurz
+ */
 
 #include "util/base/include/definitions.h"
 #include <cassert>

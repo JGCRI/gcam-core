@@ -1,21 +1,20 @@
-/*
-	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Laboratory operated by Battelle Memorial
-	Institute. Battelle has certain unperfected rights in the software
-	which should not be copied or otherwise disseminated outside your
-	organization without the express written authorization from Battelle. All rights to
-	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responsibility for the 
-	use of this software.
+/* 
+* This software, which is provided in confidence, was prepared by employees of
+* Pacific Northwest National Laboratory operated by Battelle Memorial
+* Institute. Battelle has certain unperfected rights in the software which
+* should not be copied or otherwise disseminated outside your organization
+* without the express written authorization from Battelle. All rights to the
+* software are reserved by Battelle. Battelle makes no warranty, express or
+* implied, and assumes no liability or responsibility for the use of this
+* software.
 */
+
 
 /*! 
 * \file simple_expected_profit_calculator.cpp
 * \ingroup Objects
 * \brief SimpleExpectedProfitCalculator class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -78,34 +77,34 @@ void SimpleExpectedProfitCalculator::toDebugXML( const int aPeriod, ostream& aOu
 * \return The sector level expected profit rate.
 */
 double SimpleExpectedProfitCalculator::calcSectorExpectedProfitRate( const vector<IInvestable*>& aInvestables,
-                                                                     const NationalAccount& aNationalAccount,
-                                                                     const string& aRegionName,
-                                                                     const string& aGoodName,
-                                                                     const double aInvestmentLogitExp,
-                                                                     const bool aIsShareCalc,
-                                                                     const int aPeriod ) const
+                                                                    const NationalAccount& aNationalAccount,
+                                                                    const string& aRegionName,
+                                                                    const string& aGoodName,
+                                                                    const double aInvestmentLogitExp,
+                                                                    const bool aIsShareCalc,
+                                                                    const int aPeriod ) const
 {
     // Sum expected profit rates for the subsector with a logit distribution.
     double expProfitRateNum = 0;
     double expProfitRateDenom = 0;
-    
+
     // I didn't code in beta since as far as i could tell it was always 1. 
     for( InvestmentUtils::CInvestableIterator currInv = aInvestables.begin();
         currInv != aInvestables.end(); ++currInv )
     {
         double currExpProfitRate = (*currInv)->getExpectedProfitRate( aNationalAccount,
-                                                                      aRegionName,
-                                                                      aGoodName,
-                                                                      this,
-                                                                      aInvestmentLogitExp,
-                                                                      aIsShareCalc,
-                                                                      aPeriod );
+            aRegionName,
+            aGoodName,
+            this,
+            aInvestmentLogitExp,
+            aIsShareCalc,
+            aPeriod );
         if( currExpProfitRate > 0 ){
             expProfitRateNum += pow( currExpProfitRate, aInvestmentLogitExp + 1 );
             expProfitRateDenom += pow( currExpProfitRate, aInvestmentLogitExp );
         }
     }
-    
+
     // If this is the share calc return only the sum of the profit rate to the logit.
     if( aIsShareCalc ){
         return expProfitRateDenom;
@@ -128,27 +127,27 @@ double SimpleExpectedProfitCalculator::calcSectorExpectedProfitRate( const vecto
 * \return Final expected profit rate for the technology.
 */
 double SimpleExpectedProfitCalculator::calcTechnologyExpectedProfitRate( const ProductionFunctionInfo& aTechProdFuncInfo,
-                                                                         const NationalAccount& aNationalAccount,
-                                                                         const string& aRegionName,
-                                                                         const string& aSectorName,
-                                                                         const double aDelayedInvestmentTime,
-                                                                         const int aLifetime,
-                                                                         const int aTimeStep,
-                                                                         const int aPeriod ) const
+                                                                        const NationalAccount& aNationalAccount,
+                                                                        const string& aRegionName,
+                                                                        const string& aSectorName,
+                                                                        const double aDelayedInvestmentTime,
+                                                                        const int aLifetime,
+                                                                        const int aTimeStep,
+                                                                        const int aPeriod ) const
 {
     // Compute the expected profit rate.
     double expectedProfit = aTechProdFuncInfo.mProductionFunction
-                                              ->calcExpProfitRate( aTechProdFuncInfo.mInputs,
-                                                                   aRegionName, 
-                                                                   aSectorName,
-                                                                   aLifetime,
-                                                                   aPeriod,
-                                                                   aTechProdFuncInfo.mAlphaZeroScaler,
-                                                                   aTechProdFuncInfo.mSigma );
+        ->calcExpProfitRate( aTechProdFuncInfo.mInputs,
+        aRegionName, 
+        aSectorName,
+        aLifetime,
+        aPeriod,
+        aTechProdFuncInfo.mAlphaZeroScaler,
+        aTechProdFuncInfo.mSigma );
 
     // Check that the denominator of the next equation is not zero.
     assert( aNationalAccount.getAccountValue( NationalAccount::INVESTMENT_TAX_CREDIT ) != 1 );
-    
+
     // Increase the raw expected profit by the investment tax credit rate.
     expectedProfit /= ( 1 - aNationalAccount.getAccountValue( NationalAccount::INVESTMENT_TAX_CREDIT ) );
 
@@ -162,11 +161,11 @@ double SimpleExpectedProfitCalculator::calcTechnologyExpectedProfitRate( const P
         discountFactor += 1 / pow( 1 + pricePaidCapital, lagYear );
     }
     discountFactor *= pow( 1 + pricePaidCapital, aDelayedInvestmentTime * aTimeStep )
-                      / static_cast<double>( aDelayedInvestmentTime + 1 );
-    
+        / static_cast<double>( aDelayedInvestmentTime + 1 );
+
     // Check that the discount factor is still a valid number. 
     assert( util::isValidNumber( discountFactor ) );
-    
+
     // Adjust for the discount factor.
     if( discountFactor > 0 ){
         expectedProfit /= discountFactor;

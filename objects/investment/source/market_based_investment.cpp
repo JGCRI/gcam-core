@@ -1,22 +1,21 @@
-/*
-	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Laboratory operated by Battelle Memorial
-	Institute. Battelle has certain unperfected rights in the software
-	which should not be copied or otherwise disseminated outside your
-	organization without the express written authorization from Battelle. All rights to
-	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responsibility for the 
-	use of this software.
-*/
+/* 
+ * This software, which is provided in confidence, was prepared by employees of
+ * Pacific Northwest National Laboratory operated by Battelle Memorial
+ * Institute. Battelle has certain unperfected rights in the software which
+ * should not be copied or otherwise disseminated outside your organization
+ * without the express written authorization from Battelle. All rights to the
+ * software are reserved by Battelle. Battelle makes no warranty, express or
+ * implied, and assumes no liability or responsibility for the use of this
+ * software.
+ */
+
 
 /*! 
-* \file market_based_investment.cpp
-* \ingroup Objects
-* \brief MarketBasedInvestor class source file.
-* \author Josh Lurz
-* \date $Date$
-* \version $Revision$
-*/
+ * \file market_based_investment.cpp
+ * \ingroup Objects
+ * \brief MarketBasedInvestor class source file.
+ * \author Josh Lurz
+ */
 
 #include "util/base/include/definitions.h"
 #include <string>
@@ -235,7 +234,7 @@ double MarketBasedInvestor::calcAndDistributeInvestment( vector<IInvestable*>& a
         Marketplace* marketplace = scenario->getMarketplace();
         // Get the price received for the good from the marketInfo for the
         // sector market. We need to check to make sure this is up to date.
-		const double priceReceived = FunctionUtils::getPriceReceived( mRegionName, mSectorName, aPeriod );
+        const double priceReceived = FunctionUtils::getPriceReceived( mRegionName, mSectorName, aPeriod );
         /*! \invariant Price received should always be positive and non-zero.*/
         assert( priceReceived > 0 );
         /*! \pre The market supply is zero as this is the only place it is added
@@ -245,7 +244,7 @@ double MarketBasedInvestor::calcAndDistributeInvestment( vector<IInvestable*>& a
                 < util::getVerySmallNumber() );
         // Set the left hand side of the equation to the price received for the
         // good.
-        marketplace->addToSupply( mMarketName, mRegionName, priceReceived, aPeriod );
+        marketplace->addToSupply( mMarketName, mRegionName, priceReceived, aPeriod, true );
 
         const double sectorExpProfit = expProfitRateCalc->calcSectorExpectedProfitRate( aInvestables,
                                                                                         aNationalAccount,
@@ -263,14 +262,14 @@ double MarketBasedInvestor::calcAndDistributeInvestment( vector<IInvestable*>& a
         */
         assert( marketplace->getDemand( mMarketName, mRegionName, aPeriod ) 
                 < util::getVerySmallNumber() );
-        marketplace->addToDemand( mMarketName, mRegionName, sectorExpProfit, aPeriod );
+        marketplace->addToDemand( mMarketName, mRegionName, sectorExpProfit, aPeriod, true );
 
         // Determine the amount of fixed investment in the sector.
         const double fixedInvestment = InvestmentUtils::sumFixedInvestment( aInvestables, aPeriod );
         /*! \invariant Fixed investment is positive. */
         assert( fixedInvestment >= 0 );
         
-        double trialInvestment = marketplace->getPrice( mMarketName, mRegionName, aPeriod );
+        double trialInvestment = marketplace->getPrice( mMarketName, mRegionName, aPeriod, true );
         // Warn if trial investment reaches zero.
         if( trialInvestment < util::getSmallNumber() ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );

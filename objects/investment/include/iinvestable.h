@@ -4,42 +4,60 @@
 #pragma once
 #endif
 
-/*
-	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Laboratory operated by Battelle Memorial
-	Institute. Battelle has certain unperfected rights in the software
-	which should not be copied or otherwise disseminated outside your
-	organization without the express written authorization from Battelle. All rights to
-	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responsibility for the 
-	use of this software.
-*/
+/* 
+ * This software, which is provided in confidence, was prepared by employees of
+ * Pacific Northwest National Laboratory operated by Battelle Memorial
+ * Institute. Battelle has certain unperfected rights in the software which
+ * should not be copied or otherwise disseminated outside your organization
+ * without the express written authorization from Battelle. All rights to the
+ * software are reserved by Battelle. Battelle makes no warranty, express or
+ * implied, and assumes no liability or responsibility for the use of this
+ * software.
+ */
 
 /*! 
-* \file iinvestable.h
-* \ingroup Objects
-* \brief The IInvestable interface header file.
-* \author Josh Lurz
-* \date $Date$
-* \version $Revision$
-*/
+ * \file iinvestable.h
+ * \ingroup Objects
+ * \brief The IInvestable interface header file.
+ * \author Josh Lurz
+ */
 class NationalAccount;
 class IExpectedProfitRateCalculator;
 class IDistributor;
 
 /*! 
-* \ingroup Objects
-* \brief This the interface to a class which can be invested in.
-* \todo Much more here
-* \todo Fix argument ordering of these functions to match.
-* \author Josh Lurz
-*/
+ * \ingroup Objects
+ * \brief An interface to any object which may be invested in.
+ * \details This interface is used to represent an object that can accept
+ *          investment. This interface is currently implemented by SGM
+ *          subsectors and ProductionTechnologies. This interface allows
+ *          investment decision making objects to treat sets of Subsectors and
+ *          ProductionTechnologies equivalently.
+ * \todo Fix argument ordering of these functions to match.
+ * \author Josh Lurz
+ */
 class IInvestable
 {
 public:
-    inline IInvestable();
-    inline virtual ~IInvestable();
+    IInvestable();
+    virtual ~IInvestable();
     
+    /*!
+     * \brief Get the expected profit rate for the object.
+     * \details Uses the IExpectedProfitRateCalculator object to calculate the
+     *          expected profit rate for the object in the given period.
+     * \param aNationalAccount Regional national accounts container.
+     * \param aRegionName Region name.
+     * \param aSectorName Sector name.
+     * \param aExpProfitRateCalc An object responsible for calculating expected
+     *        profit rates. This object must be used by the implementing class
+     *        to determine the expected profit rate.
+     * \param aInvestmentLogitExp The investment logit exponential.
+     * \param aIsShareCalculation Whether this is expected profit rate is being
+     *        used for a share calculation.
+     * \param aPeriod Period.
+     * \return The expected profit rate for the current level.
+     */
     virtual double getExpectedProfitRate( const NationalAccount& aNationalAccount,
                                           const std::string& aRegionName,
                                           const std::string& aSectorName,
@@ -47,10 +65,51 @@ public:
                                           const double aInvestmentLogitExp,
                                           const bool aIsShareCalc,
                                           const int aPeriod ) const = 0;
-                                         
+
+    /*!
+     * \brief Get the quantity of fixed investment for the period.
+     * \details Objects which implement this interface may choose to read in or
+     *          otherwise set a quantity of fixed investment by period. This
+     *          fixed investment quantity will be used as the investment amount
+     *          for the object in that period, as long as the overall investment
+     *          at that level is enough to satisfy all fixed investment.
+     * \param Period for which to get the fixed investment.
+     * \return Fixed investment for the period.
+     */
     virtual double getFixedInvestment( const int aPeriod ) const = 0;
+
+    /*!
+     * \brief Get the annual investment for a period.
+     * \details Returns the annual investment for the period. This not available
+     *          until investment has been calculated and distributed for the
+     *          period.
+     * \param aPeriod Period for which to return annual investment. If this is
+     *        -1 then return any annual investment.
+     * \todo Don't allow period to be -1.
+     * \return Annual investment for the period.
+     */
     virtual double getAnnualInvestment( const int aPeriod ) const = 0;
 
+    /*!
+     * \brief Return the amount of capital required to produce one unit of
+     *        output.
+     * \details Determines the amount of capital required to produce one unit of
+     *          output, given that the IDistributor is used to distribute the
+     *          investment with the given parameters. If there was only one
+     *          subsector and one technology, this would be equal to the capital
+     *          coefficient multiplied by the overall scalar(alpha zero). This
+     *          function must use the same methods for calculating profits and
+     *          distributing investment as will later be used once the
+     *          investment level is known for this function to be correct.
+     * \param aDistributor The object responsible for distributing investment.
+     * \param aExpProfitRateCalculator The object responsible for calculating
+     *        expected profits.
+     * \param aNationalAccount The regional national accounts container.
+     * \param aRegionName Region name.
+     * \param aSectorName Sector name.
+     * \param aPeriod Model period.
+     * \return The amount of capital required to produce one unit of output.
+     */
     virtual double getCapitalOutputRatio( const IDistributor* aDistributor,
                                           const IExpectedProfitRateCalculator* aExpProfitRateCalc,
                                           const NationalAccount& aNationalAccount,
@@ -58,8 +117,34 @@ public:
                                           const std::string& aSectorName, 
                                           const int aPeriod ) const = 0;
 
+    /*! 
+     * \brief Get the total output.
+     * \details Returns the total quantity of output for the given period by the
+     *          object and all its' children. This must be called after output
+     *          is calculated for the period.
+     * \return Total output for the period.
+     */
     virtual double getOutput( const int aPeriod ) const = 0;
     
+    /*!
+     * \brief Distribute investment to the object.
+     * \details Distributes investment to the object. If this object itself has
+     *          more investable children, it must use the IDistributor and
+     *          aExpProfitRateCalc to further distribute the investment to its'
+     *          children.
+     * \param aDistributor Object responsible for distributing investment.
+     * \param aNationalAccount Regional national accounts container.
+     * \param aExpProfitRateCalc Object responsible for calculating expected
+     *        profits.
+     * \param aRegionName Region name.
+     * \param aSectorName Sector name.
+     * \param aNewInvestment Amount of investment to distribute.
+     * \param aPeriod Model period.
+     * \return The total amount of investment actually distributed. This may
+     *         differ from aNewInvestment if there were not enough profitable
+     *         children to which to distribute investment or all children had
+     *         fixed investment.
+     */
     virtual double distributeInvestment( const IDistributor* aDistributor,
                                          NationalAccount& aNationalAccount,
                                          const IExpectedProfitRateCalculator* aExpProfitRateCalc,
