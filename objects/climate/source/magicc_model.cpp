@@ -652,11 +652,16 @@ void MagiccModel::readFile(){
     }
     
     // Now read in all the gases. 
-    int year;
     for ( unsigned int period = 0; period < static_cast<unsigned int>( mModeltime->getmaxper() - 1 ); ++period ) {
+        // Parse the year as a double so that the comma after the year does
+        // not cause parsing to fail.
+        double year = 0;
         inputGasFile >> year;
         inputGasFile.ignore( 80, ',' ); // skip comma
-        if ( year != mModeltime->getper_to_yr( period + 1 ) && year < mModeltime->getEndYear() ) {
+        int yearAsInteger = static_cast<int>( floor( year ) );
+        if ( yearAsInteger != mModeltime->getper_to_yr( period + 1 )
+            && yearAsInteger < mModeltime->getEndYear() )
+        {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
             mainLog << "Invalid Year: " << year << " found while parsing MAGICC input file " << gasFileName.c_str() << endl;
