@@ -52,8 +52,11 @@ public:
     virtual ~ALandAllocatorItem();
 
     // Tree Item methods.
+    virtual bool matches( const std::string& aName,
+                          const TreeItemType aType ) const = 0;
+
     virtual size_t getNumChildren() const = 0;
-    
+
     virtual const ALandAllocatorItem* getChildAt( const size_t aIndex ) const = 0;
     
     virtual ALandAllocatorItem* getChildAt( const size_t aIndex ) = 0;

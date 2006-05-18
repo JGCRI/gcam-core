@@ -9,12 +9,32 @@
 * \ingroup Objects
 * \brief Header file for the TreeItem template class.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>
 #include <stack>
+
+/*!
+* \brief An enum containing the possible types for items in a tree.
+* \note This enum is defined outside the TreeItem because TreeItem is a
+*       templated class, so the enum would be a dependent type.
+*/
+enum TreeItemType {
+    /*!
+    * \brief Node type.
+    */
+    eNode,
+
+    /*!
+    * \brief Leaf type.
+    */
+    eLeaf,
+
+    /*!
+    * \brief Any type, either node or leaf.
+    */
+    eAny
+};
 
 /*! 
 * \ingroup Objects
@@ -26,12 +46,14 @@
 template<class T> 
 class TreeItem {
 public:
-    /*! \brief Get the name of the tree item.
-    * \details The name of the tree item is the unique identifier within the
-    *          children of a node.
-    * \return The name of the tree item.
-    */
-    const virtual std::string& getName() const = 0;
+    /*!
+     * \brief Return whether the item matches the specified parameters.
+     * \details Returns whether the item matches according to both the given
+     *          item name and type.
+     * \return Whether the item matches.
+     */
+    virtual bool matches( const std::string& aName, 
+                          const TreeItemType aType ) const = 0;
 
     /*! \brief Get the number of children which the tree item has.
     * \details Returns the number of children which the tree item has. In the
@@ -58,29 +80,35 @@ public:
     virtual T* getChildAt( const size_t aIndex ) = 0;
 
 protected:
-    /*! \brief Perform a search of the tree below this item for a tree item with
-    *          the specified name.
-    * \details Performs a depth first search of the tree for the item with the
-    *          specified name. This will return null if the tree item is not
-    *          found. This will return the first item found with the specified
-    *          name during the left-to-right, depth-first search. 
-    * \return The first item found below this item with the specified name.
-    */
-    T* findItem( const std::string& aName );
+    /*!
+     * \brief Perform a search of the tree below this item for a tree item with
+     *          the specified name and type
+     * \details Performs a depth first search of the tree for the item with the
+     *          specified name and type This will return null if the tree item is not
+     *          found. This will return the first item found with the specified
+     *          name during the left-to-right, depth-first search. 
+     * \return The first item found below this item with the specified name and type.
+     */
+    T* findItem( const std::string& aName,
+                 const TreeItemType aType );
 
-    /*! \brief Perform a search of the tree below this item for a tree item with
-    *          the specified name.
-    * \details Performs a depth first search of the tree for the item with the
-    *          specified name. This will return null if the tree item is not
-    *          found. This will return the first item found with the specified
-    *          name during the left-to-right, depth-first search. 
-    * \return The first item found below this item with the specified name.
-    */
-    const T* findItem( const std::string& aName ) const;
+    /*!
+     * \brief Perform a search of the tree below this item for a tree item with
+     *          the specified name and type
+     * \details Performs a depth first search of the tree for the item with the
+     *          specified name and type This will return null if the tree item is not
+     *          found. This will return the first item found with the specified
+     *          name during the left-to-right, depth-first search. 
+     * \return The first item found below this item with the specified name and type.
+     */
+    const T* findItem( const std::string& aName,
+                       const TreeItemType aType ) const;
 };
 
 template<class T>
-T* TreeItem<T>::findItem( const std::string& aName ) {
+T* TreeItem<T>::findItem( const std::string& aName,
+                          const TreeItemType aType )
+{
     // Create a stack for the DFS.
     std::stack<T*> searchStack;
     
@@ -93,9 +121,10 @@ T* TreeItem<T>::findItem( const std::string& aName ) {
         searchStack.pop();
 
         // Check if this is our goal.
-        if( curr->getName() == aName ){
+        if( curr->matches( aName, aType ) ){
             return curr;
         }
+
         // Add the children onto the stack.
         for( unsigned int child = 0; child < curr->getNumChildren(); ++child ){
             searchStack.push( curr->getChildAt( child ) );
@@ -106,7 +135,9 @@ T* TreeItem<T>::findItem( const std::string& aName ) {
 }
 
 template<class T>
-const T* TreeItem<T>::findItem( const std::string& aName ) const {
+const T* TreeItem<T>::findItem( const std::string& aName,
+                                const TreeItemType aType ) const
+{
     // Create a stack for the DFS.
     std::stack<const T*> searchStack;
     
@@ -119,7 +150,7 @@ const T* TreeItem<T>::findItem( const std::string& aName ) const {
         searchStack.pop();
 
         // Check if this is our goal.
-        if( curr->getName() == aName ){
+        if( curr->matches( aName, aType ) ){
             return curr;
         }
 

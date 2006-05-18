@@ -30,6 +30,14 @@ LandNode::LandNode()
 LandNode::~LandNode() {
 }
 
+bool LandNode::matches( const string& aName,
+                        const TreeItemType aType ) const
+{
+    // Checks the type first to avoid the expensive string comparsion when
+    // possible.
+    return ( ( ( aType == eNode ) || ( aType == eAny ) ) && ( aName == mName ) );
+}
+
 size_t LandNode::getNumChildren() const {
     return mChildren.size();
 }
@@ -150,7 +158,7 @@ void LandNode::addLandUsage( const string& aLandType,
                              ILandAllocator::LandUsageType aLandUsageType )
 {
     // Find the parent land item which should have a leaf added.
-    ALandAllocatorItem* parent = findItem ( aLandType );
+    ALandAllocatorItem* parent = findItem( aLandType, eNode );
 
     // Check that the parent exists.
     if( !parent ){
@@ -272,7 +280,7 @@ void LandNode::setIntrinsicRate( const string& aRegionName,
                                  const double aIntrinsicRate,
                                  const int aPeriod )
 {
-    ALandAllocatorItem* curr = findItem ( aProductName );
+    ALandAllocatorItem* curr = findItem( aProductName, eLeaf );
     // Set the rental rate.
     if( curr ){
         curr->setIntrinsicRate( aRegionName, aLandType, aProductName,
@@ -292,7 +300,7 @@ void LandNode::setCalLandAllocation( const string& aLandType,
                                      const int aHarvestPeriod, 
                                      const int aCurrentPeriod )
 {
-    ALandAllocatorItem* curr = findItem ( aProductName );
+    ALandAllocatorItem* curr = findItem( aProductName, eLeaf );
 
     // Set the land allocation.
     if( curr ){
@@ -312,7 +320,7 @@ void LandNode::setCalObservedYield( const string& aLandType,
                                     const double aCalObservedYield,
                                     const int aPeriod )
 {
-    ALandAllocatorItem* curr = findItem ( aProductName );
+    ALandAllocatorItem* curr = findItem( aProductName, eLeaf );
     
     if( curr ){
         curr->setCalObservedYield( aLandType, aProductName, aCalObservedYield, aPeriod );
@@ -337,7 +345,7 @@ double LandNode::getCalAveObservedRateInternal( const string& aLandType,
     }
 
     // Otherwise perform a search for the land type.
-    const ALandAllocatorItem* curr = findItem( aLandType );
+    const ALandAllocatorItem* curr = findItem( aLandType, eNode );
     
     if( curr ){
         return curr->getCalAveObservedRateInternal( aLandType, aPeriod, aSigma );
@@ -355,7 +363,7 @@ void LandNode::applyAgProdChange( const string& aLandType,
                                   const double aAgProdChange,
                                   const int aPeriod )
 {
-    ALandAllocatorItem* curr = findItem( aProductName );
+    ALandAllocatorItem* curr = findItem( aProductName, eLeaf );
     
     if( curr ){
         curr->applyAgProdChange( aLandType, aProductName, aAgProdChange, aPeriod );
@@ -465,7 +473,7 @@ void LandNode::setCarbonContent( const string& aLandType,
                                  const double aBelowGroundCarbon,
                                  const int aPeriod )
 {
-    ALandAllocatorItem* curr = findItem( aProductName );
+    ALandAllocatorItem* curr = findItem( aProductName, eLeaf );
     
     if( curr ){
         curr->setCarbonContent( aLandType, aProductName, aAboveGroundCarbon,
@@ -484,7 +492,7 @@ void LandNode::calcYieldInternal( const string& aLandType,
                                   const int aHarvestPeriod,
                                   const int aCurrentPeriod )
 {
-    ALandAllocatorItem* curr = findItem( aProductName );
+    ALandAllocatorItem* curr = findItem( aProductName, eLeaf );
     
     if( curr ){
         curr->calcYieldInternal( aLandType, aProductName, aRegionName,
@@ -497,7 +505,7 @@ void LandNode::calcYieldInternal( const string& aLandType,
 * \author James Blackwood
 */
 double LandNode::getYield( const string& landType, const string& productName, const int period ) const {
-    const ALandAllocatorItem* curr = findItem( productName );
+    const ALandAllocatorItem* curr = findItem( productName, eLeaf );
 
     if( curr ){
         return curr->getYield( landType, productName, period );
@@ -514,7 +522,7 @@ void LandNode::addChild( ALandAllocatorItem* child ) {
     assert( child );
 
     // Check if the child already exists.
-    ALandAllocatorItem* existingItem = findItem( child->getName() );
+    ALandAllocatorItem* existingItem = findItem( child->getName(), eLeaf );
     if( existingItem ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );

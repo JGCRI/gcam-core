@@ -39,6 +39,14 @@ mAgProdChange( 1 )
 LandLeaf::~LandLeaf() {
 }
 
+bool LandLeaf::matches( const string& aName,
+                        const TreeItemType aType ) const
+{
+    // Checks the type first to avoid the expensive string comparsion when
+    // possible.
+    return ( ( ( aType == eLeaf ) || ( aType == eAny ) ) && ( aName == mName ) );
+}
+
 size_t LandLeaf::getNumChildren() const {
     return 0;
 }

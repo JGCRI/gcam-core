@@ -44,8 +44,13 @@ public:
     virtual ~LandNode();
 
     // Tree Item methods.
+    virtual bool matches( const std::string& aName,
+                          const TreeItemType aType ) const;
+
     virtual size_t getNumChildren() const;
+
     virtual const ALandAllocatorItem* getChildAt( const size_t aIndex ) const;
+
     virtual ALandAllocatorItem* getChildAt( const size_t aIndex );
 
     static const std::string& getXMLNameStatic();
