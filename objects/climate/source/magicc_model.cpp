@@ -514,6 +514,13 @@ void MagiccModel::printFileOutput() const {
     // Write out the data to the text output function protocol
     fileoutput3( "global","MAGICC"," "," ","Forcing","W/m^2", data );
 
+    // Fill up a vector of CO2 forcing.
+    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
+        data[ period ] = getForcing( "CO2", mModeltime->getper_to_yr( period ) );
+    }
+    // Write out the data to the text output function protocol
+    fileoutput3( "global","MAGICC"," "," ","CO2-Forcing","W/m^2", data );
+
     // Fill up a vector of Global Mean Temperature.
     for( int period = 0; period < mModeltime->getmaxper(); ++period ){
         data[ period ] = getTemperature( mModeltime->getper_to_yr( period ) );
@@ -560,8 +567,13 @@ void MagiccModel::printDBOutput() const {
     for( int period = 0; period < mModeltime->getmaxper(); ++period ){
         data[ period ] = getTotalForcing( mModeltime->getper_to_yr( period ) );
     }
+    dboutput4( "global", "General", "Forcing", "Period","W/m^2", data );
 
-     dboutput4( "global", "General", "Forcing", "Period","W/m^2", data );
+    // Fill up a vector of CO2 forcing.
+    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
+        data[ period ] = getForcing( "CO2", mModeltime->getper_to_yr( period ) );
+    }
+     dboutput4( "global", "General", "CO2-Forcing", "Period","W/m^2", data );
 
      // Fill up a vector of Global Mean Temperature.
     for( int period = 0; period < mModeltime->getmaxper(); ++period ){
