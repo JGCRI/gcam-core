@@ -259,7 +259,7 @@ double GhgMAC::findReduction( const string& regionName, const int period ) const
     reduction *= adjustPhaseIn( period );
 
     const Modeltime* modeltime = scenario->getModeltime();
-    int finalReductionPeriod = modeltime->getper_to_yr( finalReductionYear );
+    int finalReductionPeriod = modeltime->getyr_to_per( finalReductionYear );
 
     if( finalReduction > maxReduction && finalReductionPeriod > 1 ){
         reduction *= adjustTechCh( period, finalReductionPeriod, maxReduction );
