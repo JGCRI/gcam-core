@@ -324,7 +324,5 @@ void TreeLandAllocator::updateSummary( Summary& aSummary, const int aPeriod ){
 }
 
 void TreeLandAllocator::accept( IVisitor* aVisitor, const int aPeriod ) const {
-	for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-		mChildren[i]->accept( aVisitor, aPeriod );
-    }
+    LandNode::accept( aVisitor, aPeriod );
 }

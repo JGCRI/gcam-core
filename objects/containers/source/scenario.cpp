@@ -24,6 +24,7 @@
 #include "solution/solvers/include/solver.h"
 #include "util/base/include/auto_file.h"
 #include "reporting/include/graph_printer.h"
+#include "reporting/include/land_allocator_printer.h"
 #include "reporting/include/xml_db_outputter.h"
 #include "containers/include/output_meta_data.h"
 #include "util/base/include/auto_file.h"
@@ -476,24 +477,52 @@ void Scenario::printOutputXML() const {
 * \param aPeriod The period to print graphs for.
 */
 void Scenario::printGraphs( const int aPeriod ) const {
-    // Determine which region to print. Default to the US.
-    const string regionToGraph = Configuration::getInstance()->getString( "region-to-graph", "USA" );
-    
-    // Create a unique filename for the period.
-    const string fileName = Configuration::getInstance()->getFile( "dependencyGraphName", "graph" ) 
-                            + "_" + util::toString( aPeriod ) + ".dot";
-    
-    // Open the file. It will automatically close.
-    AutoOutputFile graphStream( fileName );
-    
-    // Create a graph printer.
-    auto_ptr<IVisitor> graphPrinter( new GraphPrinter( regionToGraph, *graphStream ) );
-    
-    // Update the graph printer with information from the model.
-    accept( graphPrinter.get(), aPeriod );
-    
-    // Print the graph.
-    graphPrinter->finish();
+    // The following 2 sections were scoped so that the destructors
+    // would be called earlier, and to avoid accidentally mixing
+    // variables.
+    {
+        // Determine which region to print. Default to the US.
+        const string regionToGraph = Configuration::getInstance()->getString( "region-to-graph", "USA" );
+        
+        // Create a unique filename for the period.
+        const string fileName = Configuration::getInstance()->getFile( "dependencyGraphName", "graph" ) 
+                                + "_" + util::toString( aPeriod ) + ".dot";
+        
+        // Open the file. It will automatically close.
+        AutoOutputFile graphStream( fileName );
+        
+        // Create a graph printer.
+        GraphPrinter graphPrinter( regionToGraph, *graphStream );
+        
+        // Update the graph printer with information from the model.
+        accept( &graphPrinter, aPeriod );
+        
+        // Print the graph.
+        graphPrinter.finish();
+    }
+
+    // Land Allocator Printing
+    {
+        // Determine which region to print.  Default to the US.
+        const string regionToGraph = Configuration::getInstance()->getString( "region-to-graph", "USA" );
+        
+        //Create a unique filename for the period.
+        const string laFileName = 
+            Configuration::getInstance()->getFile( "landAllocatorGraphName", "LandAllocatorGraph" )
+            + "_" + util::toString( aPeriod ) + ".dot";
+
+        // Open the file.  It will automatically close.
+        AutoOutputFile landAllocatorStream( laFileName );
+
+        // Create the land allocator printer.
+        LandAllocatorPrinter landAllocatorPrinter( regionToGraph, *landAllocatorStream );
+
+        // Update the land allocator printer with information from the model.
+        accept( &landAllocatorPrinter, aPeriod );
+
+        // Print the graph.
+        landAllocatorPrinter.finish();
+    }
 }
 
 /*! \brief Set a tax into all regions.
