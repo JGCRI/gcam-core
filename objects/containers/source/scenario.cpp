@@ -477,52 +477,46 @@ void Scenario::printOutputXML() const {
 * \param aPeriod The period to print graphs for.
 */
 void Scenario::printGraphs( const int aPeriod ) const {
-    // The following 2 sections were scoped so that the destructors
-    // would be called earlier, and to avoid accidentally mixing
-    // variables.
-    {
-        // Determine which region to print. Default to the US.
-        const string regionToGraph = Configuration::getInstance()->getString( "region-to-graph", "USA" );
-        
-        // Create a unique filename for the period.
-        const string fileName = Configuration::getInstance()->getFile( "dependencyGraphName", "graph" ) 
-                                + "_" + util::toString( aPeriod ) + ".dot";
-        
-        // Open the file. It will automatically close.
-        AutoOutputFile graphStream( fileName );
-        
-        // Create a graph printer.
-        GraphPrinter graphPrinter( regionToGraph, *graphStream );
-        
-        // Update the graph printer with information from the model.
-        accept( &graphPrinter, aPeriod );
-        
-        // Print the graph.
-        graphPrinter.finish();
-    }
+    // Determine which region to print. Default to the US.
+    const string regionToGraph = Configuration::getInstance()->getString( "region-to-graph", "USA" );
+    
+    // Create a unique filename for the period.
+    const string fileName = Configuration::getInstance()->getFile( "dependencyGraphName", "graph" ) 
+                            + "_" + util::toString( aPeriod ) + ".dot";
+    
+    // Open the file. It will automatically close.
+    AutoOutputFile graphStream( fileName );
+    
+    // Create a graph printer.
+    GraphPrinter graphPrinter( regionToGraph, *graphStream );
+    
+    // Update the graph printer with information from the model.
+    accept( &graphPrinter, aPeriod );
+    
+    // Print the graph.
+    graphPrinter.finish();
+}
 
-    // Land Allocator Printing
-    {
-        // Determine which region to print.  Default to the US.
-        const string regionToGraph = Configuration::getInstance()->getString( "region-to-graph", "USA" );
-        
-        //Create a unique filename for the period.
-        const string laFileName = 
-            Configuration::getInstance()->getFile( "landAllocatorGraphName", "LandAllocatorGraph" )
-            + "_" + util::toString( aPeriod ) + ".dot";
+void Scenario::printLandAllocatorGraph( const int aPeriod, const bool aPrintValues ) const{
+    // Determine which region to print.  Default to the US.
+    const string regionToGraph = Configuration::getInstance()->getString( "region-to-graph", "USA" );
+    
+    //Create a unique filename for the period.
+    const string laFileName = 
+        Configuration::getInstance()->getFile( "landAllocatorGraphName", "LandAllocatorGraph" )
+        + "_" + util::toString( aPeriod ) + ".dot";
 
-        // Open the file.  It will automatically close.
-        AutoOutputFile landAllocatorStream( laFileName );
+    // Open the file.  It will automatically close.
+    AutoOutputFile landAllocatorStream( laFileName );
 
-        // Create the land allocator printer.
-        LandAllocatorPrinter landAllocatorPrinter( regionToGraph, *landAllocatorStream );
+    // Create the land allocator printer.
+    LandAllocatorPrinter landAllocatorPrinter( regionToGraph, *landAllocatorStream, aPrintValues );
 
-        // Update the land allocator printer with information from the model.
-        accept( &landAllocatorPrinter, aPeriod );
+    // Update the land allocator printer with information from the model.
+    accept( &landAllocatorPrinter, aPeriod );
 
-        // Print the graph.
-        landAllocatorPrinter.finish();
-    }
+    // Print the graph.
+    landAllocatorPrinter.finish();
 }
 
 /*! \brief Set a tax into all regions.
@@ -632,9 +626,15 @@ void Scenario::writeOutputFiles() const {
     
     // Print out dependency graphs.
     const Configuration* conf = Configuration::getInstance();
+    bool printValues = conf->getBool("PrintValuesOnGraphs");
     if( conf->getBool( "PrintDependencyGraphs" ) ) {
         for( int period = 0; period  < getModeltime()->getmaxper(); ++period  ){
             printGraphs( period );
+            // We only need to print a graph for each period if we are printing
+            // values on the graphs.  Otherwise they are all the same.
+            if( period == 0 || printValues ){
+                printLandAllocatorGraph( period, printValues );
+            }
         }
     }
 

@@ -18,6 +18,7 @@
 
 #include "util/base/include/definitions.h"
 
+#include <iomanip>
 #include <boost/lexical_cast.hpp>
 
 #include "reporting/include/land_allocator_printer.h"
@@ -33,11 +34,13 @@ using namespace std;
 * \param aRegionToPrint region to print.
 * \param aFile file to print to.
 */
-LandAllocatorPrinter::LandAllocatorPrinter( const std::string& aRegionToPrint, std::ostream& aFile ):
+LandAllocatorPrinter::LandAllocatorPrinter( const std::string& aRegionToPrint, std::ostream& aFile,
+                                            const bool aPrintValues ):
 mFile( aFile ),
-mCorrectRegion(false),
-mRegionToPrint(aRegionToPrint),
-mNumNodes(0)
+mCorrectRegion( false ),
+mRegionToPrint( aRegionToPrint ),
+mNumNodes( 0 ),
+mPrintValues( aPrintValues )
 {
 }
 
@@ -90,7 +93,7 @@ void LandAllocatorPrinter::startVisitLandNode(const LandNode *aLandNode, const i
 
     if( !mParent.empty() ){
         // Print the parent link.
-        printParentChildRelationship( aLandNode->getName() );
+        printParentChildRelationship( aLandNode, aPeriod );
     }
     mParent.push( util::replaceSpaces( makeNameFromLabel( aLandNode->getName() ) ) );
     mNumNodes++;
@@ -120,7 +123,7 @@ void LandAllocatorPrinter::startVisitLandLeaf( const LandLeaf *aLandLeaf, const 
         return;
     }
     printNode( aLandLeaf->getName(), true );
-    printParentChildRelationship( aLandLeaf->getName() );
+    printParentChildRelationship( aLandLeaf, aPeriod );
     mNumNodes++;
 }
 
@@ -132,7 +135,7 @@ void LandAllocatorPrinter::startVisitLandLeaf( const LandLeaf *aLandLeaf, const 
 void LandAllocatorPrinter::printNode( const string& aName, const bool aIsLeaf ) const{
     string nameStripped = util::replaceSpaces( aName );
     mFile << "\t" << makeNameFromLabel( aName ) << "[label=" << nameStripped;
-    if(aIsLeaf){
+    if( aIsLeaf ){
         mFile << ", shape=box";
     }
     mFile << "];" << endl;
@@ -143,8 +146,14 @@ void LandAllocatorPrinter::printNode( const string& aName, const bool aIsLeaf ) 
 * \details Outputs the link from a parent node to its child node.
 * \param aName name of node
 */
-void LandAllocatorPrinter::printParentChildRelationship( const string& aName ) const{
-    mFile << "\t" << mParent.top() << "->" << util::replaceSpaces( makeNameFromLabel( aName ) ) << ";" << endl;
+void LandAllocatorPrinter::printParentChildRelationship( const ALandAllocatorItem* aLandItem,
+                                                         const int aPeriod ) const{
+    mFile << "\t" << mParent.top() << "->" << util::replaceSpaces( makeNameFromLabel( aLandItem->getName() ) );
+    if( mPrintValues ){
+        mFile << " [label=" << setiosflags(ios::fixed) << setprecision(2)
+              << aLandItem->getLandAllocation( aLandItem->getName(), aPeriod ) << "]";
+    }
+    mFile << ";" << endl;
 }
 
 /*!

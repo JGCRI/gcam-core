@@ -37,9 +37,12 @@
 * \author Jim Naslund
 */
 
+class ALandAllocatorItem;
+
 class LandAllocatorPrinter : public DefaultVisitor {
 public:
-    explicit LandAllocatorPrinter( const std::string& aRegionToPrint, std::ostream& aFile );
+    explicit LandAllocatorPrinter( const std::string& aRegionToPrint, std::ostream& aFile,
+                                   const bool aPrintValues );
     void startVisitRegion( const Region* aRegion, const int aPeriod );
     void endVisitRegion( const Region* aRegion, const int aPeriod );
     void startVisitLandNode( const LandNode * aLandNode, const int aPeriod);
@@ -61,9 +64,13 @@ private:
     //! Stores the number of nodes outputted, used ensure node names are unique
     int mNumNodes;
 
+    //! Whether or not to print values on the graph
+    bool mPrintValues;
+
     void printNode( const std::string& aName, const bool aIsLeaf = false ) const;
 
-    void printParentChildRelationship( const std::string& aName ) const;
+    void printParentChildRelationship( const ALandAllocatorItem* aLandItem,
+                                       const int aPeriod ) const;
 
     std::string makeNameFromLabel( const std::string& aName ) const;
 };

@@ -69,7 +69,7 @@ public:
     const std::map<const std::string, const Curve*> getEmissionsPriceCurves( const std::string& ghgName ) const;
     void writeOutputFiles() const;
     void dbOutput() const;
-	void accept( IVisitor* aVisitor, const int aPeriod ) const;
+    void accept( IVisitor* aVisitor, const int aPeriod ) const;
     const IClimateModel* getClimateModel() const;
     static const std::string& getXMLNameStatic();
 
@@ -99,6 +99,7 @@ private:
         const bool aPrintDebugging );
 
     void printGraphs( const int aPeriod ) const;
+    void printLandAllocatorGraph( const int aPeriod, const bool aPrintValues ) const;
     void csvSGMGenFile( std::ostream& aFile ) const;
     void csvSGMOutputFile( std::ostream& aSGMDebugFile, const int aPeriod ) const;
 
