@@ -314,8 +314,7 @@ double LandLeaf::getCalAveObservedRateInternal( const string& aLandType,
                                                 const int aPeriod,
                                                 const double aSigma ) const
 {
-    // This should never be called for a land leaf.
-    assert( false );
+    // This should always return zero for a land leaf.
     return 0;
 }
 
@@ -439,6 +438,9 @@ double LandLeaf::getYield ( const string& aLandType,
 * \author James Blackwood
 */
 void LandLeaf::addChild( ALandAllocatorItem* aChild ) {
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::ERROR );
+    mainLog << "Invalid attempt to add a leaf to leaf " << mName << endl; 
     assert( false );
 }
 

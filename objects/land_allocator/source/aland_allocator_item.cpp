@@ -77,8 +77,15 @@ void ALandAllocatorItem::setName( const string& aName ) {
 void ALandAllocatorItem::normalizeLandAllocation( const double aSum,
                                                   const int aPeriod )
 {
-    assert( aSum >= util::getSmallNumber() );
-    mShare[ aPeriod ] /= aSum;
+    if ( aSum > util::getTinyNumber() ) {
+        mShare[ aPeriod ] /= aSum;
+    }
+    else {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Land Allocator item " << mName << " had invalid share total of " << aSum << "." << endl;
+        mShare[ aPeriod ] = 0;
+    }
     assert( util::isValidNumber( mShare[ aPeriod ] ) );
 }
 

@@ -327,30 +327,41 @@ void LandNode::setCalObservedYield( const string& aLandType,
     }
 }
 
-/*! \brief Returns the IntrinsicRate of this land type at the specified period,
-*          if available.
-* \todo This comment needs to be fixed.
-* \details The intrinsic rate is divided by the share, and later divided by
-*          yield, and then subtracted from price to get the variable cost. VC =
-*          P - (intrinsicRate /(share * yield))
-* \author James Blackwood
+/*! \brief Returns the calibrated average observed Intrinsic for the specified land type.
+* \details The calibrated average observed Intrinsic rate for a land nest is equal to the 
+*   intrinsic rate for the unmanaged land node (specified by aLandType) successively divided by 
+*   its share to the power of the sigma parameter for each level.
+* \author James Blackwood and Steve Smith
+* \param aSigmaAbove the sigma value from the node above this level.
+* \param aLandType the unmanaged land node name to which the observed rate is referenced.
+* \param aPeriod model period.
 */
 double LandNode::getCalAveObservedRateInternal( const string& aLandType,
                                                 const int aPeriod,
-                                                const double aSigma ) const
+                                                const double aSigmaAbove ) const
 {
-    // Check if this node is the requested node.
+    double rateTemp = 0;
+
+    // Note that a standard TreeItem search does not work since we need the share and  
+    // sigma at everynode that leads to the unmanaged land node specified in aLandType. 
+    // So instead need to walk through tree.
+    
+    // if this node is the requested node then want this rate.
     if( mName == aLandType ){
-        return mIntrinsicRate[ aPeriod ] / pow( mShare[ aPeriod ], aSigma );
+        rateTemp = mIntrinsicRate[ aPeriod ];
+    } 
+    else {   // Otherwise check through children until a valid rate is passed up.
+        for ( unsigned int i = 0; i < mChildren.size() && rateTemp < util::getTinyNumber(); i++ ) {
+            // Pass down the sigma parameter for this node
+            rateTemp = mChildren[ i ]->getCalAveObservedRateInternal( aLandType, aPeriod, mSigma );
+        }
     }
 
-    // Otherwise perform a search for the land type.
-    const ALandAllocatorItem* curr = findItem( aLandType, eNode );
-    
-    if( curr ){
-        return curr->getCalAveObservedRateInternal( aLandType, aPeriod, aSigma );
+    // Since it may be possible for a node to have no share
+    if ( rateTemp > util::getTinyNumber() ) {
+        rateTemp /= pow( mShare[ aPeriod ], aSigmaAbove );
     }
-    return 0;
+    return rateTemp;
 }
 
 /*! \brief Finds the location to apply the agruculture production change
@@ -416,7 +427,11 @@ void LandNode::calcLandShares( const string& aRegionName,
         unnormalizedSum += mChildren[ i ]->getShare( aPeriod );                   
     }
 
-    assert( unnormalizedSum >= util::getSmallNumber() );
+    if ( unnormalizedSum < util::getSmallNumber() ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "The children of land type " << mName << " in region " << aRegionName << " have invalid total un-normalized shares of " << unnormalizedSum << "." << endl;
+    }
 
     // Normalizing the temporary unnormalized shares
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
