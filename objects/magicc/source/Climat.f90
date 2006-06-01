@@ -318,11 +318,11 @@
 !sjs -- parameters that can be modified directly from ObjECTS
 ! Note need to add the appropriate model variables to a common block if they are not in one
 ! already so that they can be set via subroutine
-	  REAL*8 newClimSens, newBTsoil, newBTGPP,newBTHumus,newDUSER,newFUSER, newSO2dir1990, newSO2ind1990
-      COMMON/NEWPARAMS/newClimSens, newBTsoil, DT2XUSER,newBTGPP,newBTHumus,newDUSER,newFUSER, &
-      					newSO2dir1990, newSO2ind1990
-      DATA newClimSens/-1.0/,newBTsoil/-1.0/,newBTHumus/-1.0/
-      DATA newDUSER/-1.0/,newFUSER/-1.0/,newBTGPP/-1.0/
+	  REAL*8 aNewClimSens, aNewBTsoil, aNewBTGPP,aNewBTHumus,aNewDUSER,aNewFUSER, aNewSO2dir1990, aNewSO2ind1990
+      COMMON/NEWPARAMS/aNewClimSens, aNewBTsoil, DT2XUSER,aNewBTGPP,aNewBTHumus,aNewDUSER,aNewFUSER, &
+      					aNewSO2dir1990, aNewSO2ind1990
+      DATA aNewClimSens/-1.0/,aNewBTsoil/-1.0/,aNewBTHumus/-1.0/
+      DATA aNewDUSER/-1.0/,aNewFUSER/-1.0/,aNewBTGPP/-1.0/
 
 !Store temperature values
       COMMON/STOREDVALS/ TEMUSER(iTp),QSO2SAVE(0:iTp+1),QDIRSAVE(0:iTp+1)
@@ -1196,7 +1196,7 @@ END IF	!end toggle for MiniCAM input
 !  PRINT OUT DATE HEADER
 !
 	myr = 0
-	imon = 0
+	imon = 1
 	iday = 0
 !      call getdat(myr,imon,iday)  ! sjs - comment out since not available on all platforms
 	
@@ -4113,7 +4113,8 @@ IF(IWrite.eq.1)THEN
 !   EXTRAPOLATED VALUES FOR TEMPERATURE AND CO2 CONCENTRATION.
 !   RELEVANT VALUES ARE FROM START YEAR FOR MODEL PROJECTIONS.
 !
-      IF (J .GT. 1) TX=2.0*TGAV(J-1)-TGAV(J-2)
+      TX = 0.0
+      IF (J .GT. 2) TX=2.0*TGAV(J-1)-TGAV(J-2)
       IF(J.EQ.226)DELT90=TX
       IF(J.EQ.236)DELT00=TX
 !
@@ -5944,17 +5945,17 @@ IF(IWrite.eq.1)THEN
 
 	  REAL*8 value
       
-	  REAL*8 newClimSens, newBTsoil, newBTGPP,newBTHumus,newDUSER,newFUSER, newSO2dir1990, newSO2ind1990
-      COMMON/NEWPARAMS/newClimSens, newBTsoil, DT2XUSER,newBTGPP,newBTHumus,newDUSER,newFUSER, &
-      					newSO2dir1990, newSO2ind1990
+	  REAL*8 aNewClimSens, aNewBTsoil, aNewBTGPP,aNewBTHumus,aNewDUSER,aNewFUSER, aNewSO2dir1990, aNewSO2ind1990
+      COMMON/NEWPARAMS/aNewClimSens, aNewBTsoil, DT2XUSER,aNewBTGPP,aNewBTHumus,aNewDUSER,aNewFUSER, &
+      					aNewSO2dir1990, aNewSO2ind1990
 
       select case (index)
-      case(1); newClimSens = value
-      case(2); newBTsoil = value
-      case(3); newBTHumus = value
-      case(4); newBTGPP = value
-      case(5); newDUSER = value
-      case(6); newFUSER = value
+      case(1); aNewClimSens = value
+      case(2); aNewBTsoil = value
+      case(3); aNewBTHumus = value
+      case(4); aNewBTGPP = value
+      case(5); aNewDUSER = value
+      case(6); aNewFUSER = value
       case default; 
       end select;
 
@@ -5966,9 +5967,9 @@ IF(IWrite.eq.1)THEN
 
       parameter (iTp=740)
 
-	  REAL*8 newClimSens, newBTsoil, newBTGPP,newBTHumus,newDUSER,newFUSER, newSO2dir1990, newSO2ind1990
-      COMMON/NEWPARAMS/newClimSens, newBTsoil, DT2XUSER,newBTGPP,newBTHumus,newDUSER,newFUSER, &
-      					newSO2dir1990, newSO2ind1990
+	  REAL*8 aNewClimSens, aNewBTsoil, aNewBTGPP,aNewBTHumus,aNewDUSER,aNewFUSER, aNewSO2dir1990, aNewSO2ind1990
+      COMMON/NEWPARAMS/aNewClimSens, aNewBTsoil, DT2XUSER,aNewBTGPP,aNewBTHumus,aNewDUSER,aNewFUSER, &
+      					aNewSO2dir1990, aNewSO2ind1990
 
       COMMON/CAR/EL1,EL2,EL3,TINV0(5),TINV(4,5),A(3,5),AA(4,5), &
      BCO2(4),BTGPP,BTRESP,BTHUM,GAMP,GPP0,RESP0,QA0,U0,C0,B340(4), &
@@ -5984,36 +5985,36 @@ IF(IWrite.eq.1)THEN
       Real*8 FBC1990, FOC1990, FSO2_dir1990,FSO2_ind1990
       COMMON/BCOC/FBC1990, FOC1990, FSO2_dir1990,FSO2_ind1990
 
-      IF(newClimSens.GT.0)THEN
-        DT2XUSER   = newClimSens
+      IF(aNewClimSens.GT.0)THEN
+        DT2XUSER   = aNewClimSens
       ENDIF
 
-      IF(newBTsoil.GT.0)THEN
-        BTSOIL   = newBTsoil
+      IF(aNewBTsoil.GT.0)THEN
+        BTSOIL   = aNewBTsoil
       ENDIF
       
-      IF(newBTHumus.GT.0)THEN
-        BTHUM   = newBTHumus
+      IF(aNewBTHumus.GT.0)THEN
+        BTHUM   = aNewBTHumus
       ENDIF
       
-      IF(newBTGPP.GT.0)THEN
-        BTGPP   = newBTGPP
+      IF(aNewBTGPP.GT.0)THEN
+        BTGPP   = aNewBTGPP
       ENDIF
       
-      IF(newDUSER.GT.0)THEN
-        DUSER   = newDUSER
+      IF(aNewDUSER.GT.0)THEN
+        DUSER   = aNewDUSER
       ENDIF
       
-      IF(newFUSER.GT.0)THEN
-        FUSER   = newFUSER
+      IF(aNewFUSER.GT.0)THEN
+        FUSER   = aNewFUSER
       ENDIF
       
-      IF(newSO2dir1990.LT.0)THEN
-        FSO2_dir1990   = newSO2dir1990
+      IF(aNewSO2dir1990.LT.0)THEN
+        FSO2_dir1990   = aNewSO2dir1990
       ENDIF
       
-      IF(newSO2ind1990.LT.0)THEN
-        FSO2_ind1990   = newSO2ind1990
+      IF(aNewSO2ind1990.LT.0)THEN
+        FSO2_ind1990   = aNewSO2ind1990
       ENDIF
 
       RETURN 
@@ -6043,31 +6044,44 @@ IF(IWrite.eq.1)THEN
      ednet(226:iTp+1),DUSER,FUSER,CORRUSER,CORRMHI,CORRMMID,CORRMLO
 
 	  REAL*8 getCarbonResults
+	  REAL*8 NetDef, GrossDef
+
         
       IYR = inYear-1990+226
 
-!
+!	  Branch for years > 1990
+
+      IF ( inYear .ge. 1990 ) THEN
       IF(IMETH.EQ.0)THEN
         TOTE=EF(IYR)+EDNET(IYR)
       ELSE
         TOTE=EF(IYR)+EDNET(IYR)+EMETH(IYR)
       ENDIF
+	    NetDef = EDNET(IYR)
+	    GrossDef = EDGROSS(4,IYR)
+	  ELSE
+        TOTE = -1.0
+		NetDef = -1.0
+		GrossDef = -1.0
+	  ENDIF
 !
       ECH4OX=EMETH(IYR)
       IF(IMETH.EQ.0)ECH4OX=0.0
       
+      getCarbonResults = - 1.0
+      
       select case (iResultNumber)
       case(0); getCarbonResults = TOTE    ! Total emissions (fossil + netDef + Oxidation)
       case(1); getCarbonResults = EF(IYR) ! Fossil Emissions as used by MAGICC
-      case(2); getCarbonResults = EDNET(IYR)  ! Net Deforestation
-      case(3); getCarbonResults = EDGROSS(4,IYR)  ! Gross Deforestation
+      case(2); getCarbonResults = NetDef  ! Net Deforestation
+      case(3); getCarbonResults = GrossDef  ! Gross Deforestation
       case(4); getCarbonResults = FOC(4,IYR)  ! Ocean Flux
       case(5); getCarbonResults = PL(4,IYR) ! Plant Carbon
       case(6); getCarbonResults = HL(4,IYR) ! Carbon in Litter
       case(7); getCarbonResults = SOIL(4,IYR) ! Carbon in Soils
       case(8); getCarbonResults = DELMASS(4,IYR)  ! Atmospheric Increase
       case(9); getCarbonResults = ECH4OX  ! Oxidation Addition to Atmosphere
-      case(10); getCarbonResults = EF(IYR)+ECH4OX-(FOC(4,IYR)+DELMASS(4,IYR)) ! Net Terrestrial Uptake
+      case(10); IF(inYear .ge. 1990 ) getCarbonResults = EF(IYR)+ECH4OX-(FOC(4,IYR)+DELMASS(4,IYR)) ! Net Terrestrial Uptake
       case default; getCarbonResults = -1.0
       end select;
 
