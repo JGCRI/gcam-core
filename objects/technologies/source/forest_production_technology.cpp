@@ -115,6 +115,7 @@ void ForestProductionTechnology::initCalc( const string& aRegionName,
         Marketplace* marketplace = scenario->getMarketplace();
 
         // Also set value to marketplace for future forest demand if there are no price effects
+        // So can calibrate by hand. Need better way to do this. //sjsTEMP
         IInfo* futureMarketInfo = marketplace->getMarketInfo( getFutureMarket( aSectorName ),
                                                               aRegionName, aPeriod , true );
 

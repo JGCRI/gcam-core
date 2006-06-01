@@ -383,8 +383,9 @@ void Region::completeInit() {
     }
 
     if ( mLandAllocator.get() ) {
-        // This needs to be after completeInit for supply sectors is called
-        // TODO: Because...?
+        // This needs to be after completeInit for supply sectors is called because calibrated land use
+        // need to be set by all production technologies (within their completeInit methods) that use land 
+        // before this function is called.
         mLandAllocator->completeInit( name, mRegionInfo.get() );
     }
 
