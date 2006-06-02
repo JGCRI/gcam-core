@@ -634,6 +634,9 @@
 					RelativePath="..\..\reporting\source\input_output_table.cpp">
 				</File>
 				<File
+					RelativePath="..\..\reporting\source\land_allocator_printer.cpp">
+				</File>
+				<File
 					RelativePath="..\..\reporting\source\sector_report.cpp">
 				</File>
 				<File
@@ -1245,6 +1248,9 @@
 				</File>
 				<File
 					RelativePath="..\..\reporting\include\input_output_table.h">
+				</File>
+				<File
+					RelativePath="..\..\reporting\include\land_allocator_printer.h">
 				</File>
 				<File
 					RelativePath="..\..\reporting\include\output_container.h">
