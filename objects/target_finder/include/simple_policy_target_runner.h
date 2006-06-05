@@ -30,7 +30,7 @@ class ITarget;
 class Curve;
 class GHGPolicy;
 
-typedef std::vector<std::pair<double,double>> VectorOfPairs;
+typedef std::vector<std::pair<double,double> > VectorOfPairs;
 
 /*! 
  * \ingroup Objects
