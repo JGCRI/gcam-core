@@ -47,7 +47,7 @@ extern void createMCvarid();
 
 class Curve;
 
-//! \brief Constructor that initializes needed variables
+//! Constructor that initializes needed variables
 SimplePolicyTargetRunner::SimplePolicyTargetRunner()
 : mLowerBound( new PointSetCurve ),
   mUpperBound( new PointSetCurve ),
