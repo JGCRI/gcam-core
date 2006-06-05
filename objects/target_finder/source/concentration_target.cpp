@@ -40,16 +40,16 @@ using namespace std;
 */
 ConcentrationTarget::ConcentrationTarget( const IClimateModel* aClimateModel,
                                           const unsigned int aInitialPeriod,
-                                          const unsigned int aFinalPeriod ):
+                                          const unsigned int aFinalPeriod,
+                                          const double aTargetValue ):
 mClimateModel( aClimateModel ),
 mInitialPeriod( aInitialPeriod ),
-mFinalPeriod( aFinalPeriod ){
+mFinalPeriod( aFinalPeriod ),
+mTargetValue( aTargetValue ){
     /*! \pre Final period should be after initial period. */
     assert( aFinalPeriod >= aInitialPeriod );
-    
     // Store configuration variables.
     const Configuration* conf = Configuration::getInstance();
-    mTargetValue = conf->getDouble( "target-value", 550 );
     mInitialReduction = conf->getDouble( "initial-target-reduction", 1 );
     mTargetGas = conf->getString( "concentration-target-gas", "CO2" );
 }

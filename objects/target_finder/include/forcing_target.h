@@ -35,7 +35,8 @@ class ForcingTarget: public ITarget {
 public:
     ForcingTarget( const IClimateModel* aClimateModel,
                    const unsigned int aInitialPeriod,
-                   const unsigned int aFinalPeriod );
+                   const unsigned int aFinalPeriod,
+                   const double aTargetValue );
 
     virtual TrialStatus getStatus( const double aTolerance,
                                    const unsigned int aPeriod ) const;

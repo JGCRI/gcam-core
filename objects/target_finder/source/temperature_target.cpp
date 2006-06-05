@@ -23,7 +23,6 @@
 #include <cmath>
 #include "climate/include/iclimate_model.h"
 #include "target_finder/include/temperature_target.h"
-#include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
 
 using namespace std;
@@ -35,14 +34,14 @@ using namespace std;
 */
 TemperatureTarget::TemperatureTarget( const IClimateModel* aClimateModel,
                                       const unsigned int aInitialPeriod,
-                                      const unsigned int aFinalPeriod ):
+                                      const unsigned int aFinalPeriod,
+                                      const double aTargetValue ):
 mClimateModel( aClimateModel ),
 mInitialPeriod( aInitialPeriod ),
-mFinalPeriod( aFinalPeriod ){
+mFinalPeriod( aFinalPeriod ),
+mTargetValue( aTargetValue ){
     /*! \pre Final period should be after initial period. */
     assert( aFinalPeriod >= aInitialPeriod );
-    const Configuration* conf = Configuration::getInstance();
-    mTargetValue = conf->getDouble( "target-value", 50 );
 }
 
 /*! \brief Get the status of the last trial with respect to the target.
@@ -93,6 +92,6 @@ const string& TemperatureTarget::getTaxName() const {
 * \return The static name of the object.
 */
 const string& TemperatureTarget::getXMLNameStatic(){
-	static const string XML_NAME = "temperature-target";
-	return XML_NAME;
+    static const string XML_NAME = "temperature-target";
+    return XML_NAME;
 }

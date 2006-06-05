@@ -700,6 +700,9 @@
 					RelativePath="..\..\target_finder\source\policy_target_runner.cpp">
 				</File>
 				<File
+					RelativePath="..\..\target_finder\source\simple_policy_target_runner.cpp">
+				</File>
+				<File
 					RelativePath="..\..\target_finder\source\target_factory.cpp">
 				</File>
 				<File
@@ -1301,6 +1304,9 @@
 				</File>
 				<File
 					RelativePath="..\..\target_finder\include\policy_target_runner.h">
+				</File>
+				<File
+					RelativePath="..\..\target_finder\include\simple_policy_target_runner.h">
 				</File>
 				<File
 					RelativePath="..\..\target_finder\include\target_factory.h">

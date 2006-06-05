@@ -404,7 +404,7 @@ void Marketplace::addToDemand( const string& goodName, const string& regionName,
 * \param per The period to return the market price for.
 * \param aMustExist Whether it is an error for the market not to exist.
 * \return The market price.
-*/
+*/  
 double Marketplace::getPrice( const string& goodName, const string& regionName, const int per, bool aMustExist ) const {
     const int marketNumber = mMarketLocator->getMarketNumber( regionName, goodName );
     

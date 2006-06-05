@@ -25,12 +25,15 @@ class GHGPolicy: public IRoundTrippable {
 public:
     GHGPolicy();
     GHGPolicy( const std::string aName,
+               const std::string aMarket );
+    GHGPolicy( const std::string aName,
                const std::string aMarket,
                const std::vector<double>& aFixedTaxes );
     GHGPolicy* clone() const;
     const std::string& getName() const;
     void completeInit( const std::string& aRegionName );
     bool isApplicable( const std::string& aRegion ) const;
+    void setConstraint( const std::vector<double>& aConstraint );
     void XMLParse( const xercesc::DOMNode* node );
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;

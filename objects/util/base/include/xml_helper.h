@@ -731,10 +731,10 @@ bool XMLHelper<T>::parseXML( const std::string& xmlFile, IParsable* aModelElemen
         return false;
     }
 
-    aModelElement->XMLParse( parser->getDocument()->getDocumentElement() );
+    bool success = aModelElement->XMLParse( parser->getDocument()->getDocumentElement() );
     parser->resetDocumentPool();
     parser->resetCachedGrammarPool();
-    return true;
+    return success;
 }
 
 /*! \brief Function which initializes the XML Platform and creates an instance

@@ -28,6 +28,7 @@
 #include "containers/include/batch_runner.h"
 #include "containers/include/mac_generator_scenario_runner.h"
 #include "target_finder/include/policy_target_runner.h"
+#include "target_finder/include/simple_policy_target_runner.h"
 
 using namespace std;
 
@@ -37,12 +38,13 @@ using namespace std;
 * \return Whether the factory can create the type.
 */
 bool ScenarioRunnerFactory::isOfType( const string& aType ) {
-	// Search the list of known types.
-	return ( ( aType == MergeRunner::getXMLNameStatic() )
-		|| ( aType == SingleScenarioRunner::getXMLNameStatic() )
-		|| ( aType == MACGeneratorScenarioRunner::getXMLNameStatic() )
-		|| ( aType == BatchRunner::getXMLNameStatic() )
-        || ( aType == PolicyTargetRunner::getXMLNameStatic() ) );
+    // Search the list of known types.
+    return ( ( aType == MergeRunner::getXMLNameStatic() )
+        || ( aType == SingleScenarioRunner::getXMLNameStatic() )
+        || ( aType == MACGeneratorScenarioRunner::getXMLNameStatic() )
+        || ( aType == BatchRunner::getXMLNameStatic() )
+        || ( aType == PolicyTargetRunner::getXMLNameStatic() )
+        || ( aType == SimplePolicyTargetRunner::getXMLNameStatic() ) );
 }
 
 /*! \brief Return a new instance of a component of the requested type.
@@ -51,26 +53,29 @@ bool ScenarioRunnerFactory::isOfType( const string& aType ) {
 *         is null if the type is unknown.
 */
 auto_ptr<IScenarioRunner> ScenarioRunnerFactory::create( const string& aType ) {
-	// Search the list of known types.
-	if( aType == MergeRunner::getXMLNameStatic() ) {
-		return auto_ptr<IScenarioRunner>( new MergeRunner );
-	}
-	if( aType == SingleScenarioRunner::getXMLNameStatic() ){
-		return auto_ptr<IScenarioRunner>( new SingleScenarioRunner );
-	}
-	if( aType == MACGeneratorScenarioRunner::getXMLNameStatic() ){
-		return auto_ptr<IScenarioRunner>( new MACGeneratorScenarioRunner );
-	}
-	if( aType == BatchRunner::getXMLNameStatic() ){
-		return auto_ptr<IScenarioRunner>( new BatchRunner );
-	}
+    // Search the list of known types.
+    if( aType == MergeRunner::getXMLNameStatic() ) {
+        return auto_ptr<IScenarioRunner>( new MergeRunner );
+    }
+    if( aType == SingleScenarioRunner::getXMLNameStatic() ){
+        return auto_ptr<IScenarioRunner>( new SingleScenarioRunner );
+    }
+    if( aType == MACGeneratorScenarioRunner::getXMLNameStatic() ){
+        return auto_ptr<IScenarioRunner>( new MACGeneratorScenarioRunner );
+    }
+    if( aType == BatchRunner::getXMLNameStatic() ){
+        return auto_ptr<IScenarioRunner>( new BatchRunner );
+    }
     if( aType == PolicyTargetRunner::getXMLNameStatic() ){
         return auto_ptr<IScenarioRunner>( new PolicyTargetRunner );
     }
+    if( aType == SimplePolicyTargetRunner::getXMLNameStatic() ){
+        return auto_ptr<IScenarioRunner>( new SimplePolicyTargetRunner );
+    }
 
-	// Unknown type.
-	ILogger& mainLog = ILogger::getLogger( "main_log" );
-	mainLog.setLevel( ILogger::ERROR );
-	mainLog << "Could not create Scenario Runner of type " << aType << "." << endl;
-	return auto_ptr<IScenarioRunner>();
+    // Unknown type.
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::ERROR );
+    mainLog << "Could not create Scenario Runner of type " << aType << "." << endl;
+    return auto_ptr<IScenarioRunner>();
 }

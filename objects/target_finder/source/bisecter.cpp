@@ -35,11 +35,13 @@ using namespace std;
 Bisecter::Bisecter( const ITarget* aTarget,
                     const double aTolerance,
                     const double aInitialValue,
-                    const unsigned int aPeriod ):
+                    const unsigned int aPeriod,
+                    const double aLowerBound,
+                    const double aUpperBound ):
 mTarget( aTarget ),
 mTolerance( aTolerance ),
-mLowerBound( UNKNOWN ), // Unknown upper bound.
-mUpperBound( UNKNOWN ), // Unknown upper bound.
+mLowerBound( aLowerBound ),
+mUpperBound( aUpperBound ),
 mCurrentTrial( aInitialValue ),
 mPeriod( aPeriod ),
 mIterations( 0 ){
@@ -67,19 +69,6 @@ pair<double, bool> Bisecter::getNextValue() {
             }
 
             // Set the lower bound to the current value.
-            mUpperBound = mCurrentTrial;
-
-            // If the lower bound is unknown set it to zero.
-            if( mLowerBound == UNKNOWN ){
-                mLowerBound = 0;
-            }
-
-            // Calculate the new current trial. This will be ignored if the target is
-            // solved.
-            mCurrentTrial = mLowerBound + ( mUpperBound - mLowerBound ) / 2;
-            break;
-        case ITarget::HIGH:
-            // Set the upper bound to the current value.
             mLowerBound = mCurrentTrial;
 
             // If the upper bound is currently unknown set the trial to twice
@@ -96,6 +85,21 @@ pair<double, bool> Bisecter::getNextValue() {
                 // Calculate the new current trial.
                 mCurrentTrial = mLowerBound + ( mUpperBound - mLowerBound ) / 2;
             }
+
+            break;
+        case ITarget::HIGH:
+            // Set the upper bound to the current value.
+            mUpperBound = mCurrentTrial;
+
+            // If the lower bound is unknown set it to zero.
+            if( mLowerBound == UNKNOWN ){
+                mLowerBound = 0;
+            }
+
+            // Calculate the new current trial. This will be ignored if the target is
+            // solved.
+            mCurrentTrial = mLowerBound + ( mUpperBound - mLowerBound ) / 2;
+
             break;
         default:
             assert( false );

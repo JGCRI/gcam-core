@@ -21,6 +21,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 
 class Tabs;
+class DataPoint;
 
 /*!
 * \ingroup Util
@@ -43,6 +44,7 @@ public:
     virtual const std::string& getXMLName() const;
     virtual void XMLParse( const xercesc::DOMNode* node ) = 0;
     static PointSet* getPointSet( const std::string& type );
+    virtual bool addPoint( DataPoint* pointIn ) = 0;
     virtual double getY( const double xValue ) const = 0;
     virtual double getX( const double yValue ) const = 0;
     virtual bool setY( const double xValue, const double yValue ) = 0;

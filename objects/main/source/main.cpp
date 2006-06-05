@@ -60,7 +60,7 @@ void parseArgs( unsigned int argc, char* argv[], string& confArg, string& logFac
 //! Main program. 
 int main( int argc, char *argv[] ) {
 
-	// identify default file names for control input and logging controls
+    // identify default file names for control input and logging controls
     string configurationArg = "configuration.xml";
     string loggerFactoryArg = "log_conf.xml";
     // Parse any command line arguments.  Can override defaults with command lone args
@@ -105,27 +105,30 @@ int main( int argc, char *argv[] ) {
     // ordering must be preserved because certain scenario runners can contain
     // other scenario runners.
     if( conf->getBool( "BatchMode" ) ){
-		runner = ScenarioRunnerFactory::create( "batch-runner" );
+        runner = ScenarioRunnerFactory::create( "batch-runner" );
     }
     else if( conf->getBool( "find-path" ) ){
         runner = ScenarioRunnerFactory::create( "policy-target-runner" );
+    }
+    else if( conf->getBool( "simple-find-path" ) ){
+        runner = ScenarioRunnerFactory::create( "simple-policy-target-runner" );
     }
     else if( conf->getBool( "mergeFilesOnly" ) ) {
         runner = ScenarioRunnerFactory::create( "merge-runner" );
     }
     else if( conf->getBool( "createCostCurve" ) ){
-		runner = ScenarioRunnerFactory::create( "mac-generator-scenario-runner" );
+        runner = ScenarioRunnerFactory::create( "mac-generator-scenario-runner" );
     }
     else { // Run a standard scenario.
         runner = ScenarioRunnerFactory::create( "single-scenario-runner" );
     }
-	
+    
     // Need to set the scenario pointer. This has to be done before XML parse is
-	// called because that requires the modeltime. TODO: Remove the global
+    // called because that requires the modeltime. TODO: Remove the global
     // pointer!
     // TODO: This may fail set the global scenario pointer for the batchrunner.
     // The batch runner adjusts the pointer later.
-	scenario = runner->getInternalScenario();
+    scenario = runner->getInternalScenario();
     
     // Setup the scenario.
     success = runner->setupScenario( timer );
@@ -144,7 +147,7 @@ int main( int argc, char *argv[] ) {
     mainLog << "Model exiting successfully." << endl;
     // Cleanup Xerces. This should be encapsulated with an initializer object to ensure against leakage.
     XMLHelper<void>::cleanupParser();
-	
+    
     // Return exit code based on whether the model succeeded(Non-zero is failure by convention).
     return success ? 0 : 1; 
 }

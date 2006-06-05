@@ -620,7 +620,7 @@
 				<File
 					RelativePath="..\..\technologies\source\cal_data_input.cpp"
 					>
-			    	</File>
+				</File>
 				<File
 					RelativePath="..\..\technologies\source\cal_data_output.cpp"
 					>
@@ -931,6 +931,10 @@
 				</File>
 				<File
 					RelativePath="..\..\target_finder\source\policy_target_runner.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\target_finder\source\simple_policy_target_runner.cpp"
 					>
 				</File>
 				<File
@@ -1616,6 +1620,10 @@
 				</File>
 				<File
 					RelativePath="..\..\target_finder\include\policy_target_runner.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\target_finder\include\simple_policy_target_runner.h"
 					>
 				</File>
 				<File

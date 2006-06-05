@@ -24,7 +24,6 @@
 #include "util/base/include/model_time.h"
 #include "climate/include/iclimate_model.h"
 #include "target_finder/include/forcing_target.h"
-#include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
 
 using namespace std;
@@ -36,14 +35,14 @@ using namespace std;
 */
 ForcingTarget::ForcingTarget( const IClimateModel* aClimateModel,
                               const unsigned int aInitialPeriod,
-                              const unsigned int aFinalPeriod ):
+                              const unsigned int aFinalPeriod,
+                              const double aTargetValue ):
 mClimateModel( aClimateModel ),
 mInitialPeriod( aInitialPeriod ),
-mFinalPeriod( aFinalPeriod ){
+mFinalPeriod( aFinalPeriod ),
+mTargetValue( aTargetValue ){
     /*! \pre Final period should be after initial period. */
     assert( aFinalPeriod >= aInitialPeriod );
-    const Configuration* conf = Configuration::getInstance();
-    mTargetValue = conf->getDouble( "target-value", 50 );
 }
 
 /*! \brief Get the status of the last trial with respect to the target.
@@ -94,6 +93,6 @@ const string& ForcingTarget::getTaxName() const {
 * \return The static name of the object.
 */
 const string& ForcingTarget::getXMLNameStatic(){
-	static const string XML_NAME = "forcing-target";
-	return XML_NAME;
+    static const string XML_NAME = "forcing-target";
+    return XML_NAME;
 }

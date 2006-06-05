@@ -28,11 +28,25 @@ extern Scenario* scenario;
 const string GHGPolicy::XML_NAME = "ghgpolicy";
 
 /*! \brief Default constructor. */
-GHGPolicy::GHGPolicy(){
-    isFixedTax = false;
-    const int maxPeriod = scenario->getModeltime()->getmaxper();
-    constraint.resize( maxPeriod, -1 );
-    fixedTaxes.resize( maxPeriod, -1 );
+GHGPolicy::GHGPolicy()
+: isFixedTax( false ),
+constraint( scenario->getModeltime()->getmaxper(), -1 ),
+fixedTaxes( scenario->getModeltime()->getmaxper(), -1 )
+{
+}
+
+/*!
+* \brief Constructor which initializes a GHG policy without setting a tax or
+*        constraint.
+*/
+GHGPolicy::GHGPolicy( const string aName,
+                      const string aMarket )
+: name( aName ), 
+market( aMarket ),
+isFixedTax( false ),
+constraint( scenario->getModeltime()->getmaxper(), -1 ),
+fixedTaxes( scenario->getModeltime()->getmaxper(), -1 )
+{
 }
 
 /*! \brief Constructor used when explicitly constructing a fixed tax.
@@ -43,10 +57,8 @@ GHGPolicy::GHGPolicy( const string aName,
 : name( aName ), 
 market( aMarket ),
 fixedTaxes( aTaxes ),
-isFixedTax( true )
-{
-    const int maxper = scenario->getModeltime()->getmaxper();
-    constraint.resize( maxper, -1 );
+isFixedTax( true ),
+constraint( scenario->getModeltime()->getmaxper(), -1 ){
     // Ensure that the taxes vector passed in is the right size.
     assert( aTaxes.size() == constraint.size() );
 }
@@ -95,7 +107,11 @@ void GHGPolicy::completeInit( const string& aRegionName ) {
         for( int per = 1; per < modeltime->getmaxper(); ++per ){
             if( constraint[ per ] != -1 ){
                 marketplace->setMarketToSolve( name, aRegionName, per );
-                marketplace->addToSupply( name, aRegionName, constraint[ per ], per );
+                // Adding the difference between the constraint for this period
+                // and the current supply because addToSupply adds to the current
+                // supply.  Passing false to supress a warning the first time through.
+                marketplace->addToSupply( name, aRegionName, constraint[ per ] - 
+                    marketplace->getSupply( name, aRegionName, per ), per, false );
             }
         }
     }
@@ -108,6 +124,15 @@ void GHGPolicy::completeInit( const string& aRegionName ) {
 */
 bool GHGPolicy::isApplicable( const string& aRegion ) const {
     return market == "global" || market == aRegion;
+}
+
+/*!
+* \brief Set the constraint to the vector passed in.
+* \param aConstraint new constraint vector
+*/
+void GHGPolicy::setConstraint( const vector<double>& aConstraint ){
+    isFixedTax = false;
+    constraint = aConstraint;
 }
 
 //! Initializes data members from XML.
@@ -130,7 +155,7 @@ void GHGPolicy::XMLParse( const DOMNode* node ){
         if( nodeName == "#text" ) {
             continue;
         }
-		else if( nodeName == "market" ){
+        else if( nodeName == "market" ){
             market = XMLHelper<string>::getValue( curr ); // should be only one market
         }
         else if( nodeName == "isFixedTax" ) {
@@ -166,7 +191,7 @@ void GHGPolicy::toInputXML( ostream& out, Tabs* tabs ) const {
 //! Writes datamembers to datastream in XML format.
 void GHGPolicy::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
-	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
+    XMLWriteOpeningTag( getXMLName(), out, tabs, name );
 
     // write out the market string.
     XMLWriteElement( market, "market", out, tabs );
@@ -193,7 +218,7 @@ void GHGPolicy::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 * \return The constant XML_NAME.
 */
 const std::string& GHGPolicy::getXMLName() const {
-	return XML_NAME;
+    return XML_NAME;
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -206,5 +231,5 @@ const std::string& GHGPolicy::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& GHGPolicy::getXMLNameStatic() {
-	return XML_NAME;
+    return XML_NAME;
 }

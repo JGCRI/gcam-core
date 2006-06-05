@@ -26,6 +26,7 @@
 #include "target_finder/include/concentration_target.h"
 #include "target_finder/include/forcing_target.h"
 #include "target_finder/include/temperature_target.h"
+#include "util/base/include/configuration.h"
 
 using namespace std;
 
@@ -35,10 +36,10 @@ using namespace std;
 * \return Whether the factory can create the type.
 */
 bool TargetFactory::isOfType( const string& aType ) {
-	// Search the list of known types.
-	return ( ( aType == ConcentrationTarget::getXMLNameStatic() )
-		|| ( aType == ForcingTarget::getXMLNameStatic() )
-		|| ( aType == TemperatureTarget::getXMLNameStatic() ) );
+    // Search the list of known types.
+    return ( ( aType == ConcentrationTarget::getXMLNameStatic() )
+        || ( aType == ForcingTarget::getXMLNameStatic() )
+        || ( aType == TemperatureTarget::getXMLNameStatic() ) );
 }
 
 /*! \brief Return a new instance of a component of the requested type.
@@ -53,28 +54,32 @@ bool TargetFactory::isOfType( const string& aType ) {
 auto_ptr<ITarget> TargetFactory::create( const string& aType,
                                          const IClimateModel* aClimateModel,
                                          const unsigned int aInitialPeriod,
-                                         const unsigned int aFinalPeriod )
+                                         const unsigned int aFinalPeriod,
+                                         double aTargetValue )
 {
-	// Search the list of known types.
-	if( aType == ConcentrationTarget::getXMLNameStatic() ) {
-		return auto_ptr<ITarget>( new ConcentrationTarget( aClimateModel,
-                                                           aInitialPeriod,
-                                                           aFinalPeriod ) );
-	}
-	if( aType == ForcingTarget::getXMLNameStatic() ){
-		return auto_ptr<ITarget>( new ForcingTarget( aClimateModel,
-                                                     aInitialPeriod,
-                                                     aFinalPeriod ) );
-	}
-	if( aType == TemperatureTarget::getXMLNameStatic() ){
-		return auto_ptr<ITarget>( new TemperatureTarget( aClimateModel,
-                                                         aInitialPeriod,
-                                                         aFinalPeriod ) );
-	}
 
-	// Unknown type.
-	ILogger& mainLog = ILogger::getLogger( "main_log" );
-	mainLog.setLevel( ILogger::ERROR );
-	mainLog << "Could not create Target of type " << aType << "." << endl;
-	return auto_ptr<ITarget>();
+    if( aType == ConcentrationTarget::getXMLNameStatic() ) {
+        return auto_ptr<ITarget>( new ConcentrationTarget( aClimateModel,
+                                                           aInitialPeriod,
+                                                           aFinalPeriod,
+                                                           aTargetValue ) );
+    }
+    if( aType == ForcingTarget::getXMLNameStatic() ){
+        return auto_ptr<ITarget>( new ForcingTarget( aClimateModel,
+                                                     aInitialPeriod,
+                                                     aFinalPeriod,
+                                                     aTargetValue ) );
+    }
+    if( aType == TemperatureTarget::getXMLNameStatic() ){
+        return auto_ptr<ITarget>( new TemperatureTarget( aClimateModel,
+                                                         aInitialPeriod,
+                                                         aFinalPeriod,
+                                                         aTargetValue ) );
+    }
+
+    // Unknown type.
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::ERROR );
+    mainLog << "Could not create Target of type " << aType << "." << endl;
+    return auto_ptr<ITarget>();
 }

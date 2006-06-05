@@ -37,7 +37,7 @@ PolicyTargetRunner::PolicyTargetRunner(){
     mSingleScenario = ScenarioRunnerFactory::create( "single-scenario-runner" );
 
     // Check to make sure calibration is off.
-	const Configuration* conf = Configuration::getInstance();
+    const Configuration* conf = Configuration::getInstance();
     if( conf->getBool( "debugChecking" ) && conf->getBool( "CalibrationActive" ) ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
@@ -104,7 +104,8 @@ bool PolicyTargetRunner::setupScenario( Timer& aTimer, const string aName,
     mPolicyTarget = TargetFactory::create( mTargetType,
                                            getInternalScenario()->getClimateModel(),
                                            targetPeriod,
-                                           modeltime->getmaxdataper() - 1 );
+                                           modeltime->getmaxper() - 1,
+                                           Configuration::getInstance()->getDouble( "target-value", 0 ) );
     return success;
 }
 
@@ -198,7 +199,8 @@ bool PolicyTargetRunner::solveInitialTarget( const unsigned int aLimitIterations
     const unsigned int targetPeriod = modeltime->getyr_to_per( mTargetYear );
     // Create the bisection object. Use 0 as the initial trial value because the
     // state of the model is unknown. TODO: Can we do better?
-    auto_ptr<Bisecter> bisecter( new Bisecter( mPolicyTarget.get(), aTolerance, 0, targetPeriod ) );
+    auto_ptr<Bisecter> bisecter( new Bisecter( mPolicyTarget.get(), aTolerance, 0, targetPeriod,
+                                               Bisecter::UNKNOWN, Bisecter::UNKNOWN ) );
     while( bisecter->getIterations() < aLimitIterations ){
         pair<double, bool> trial = bisecter->getNextValue();
 
@@ -268,7 +270,8 @@ bool PolicyTargetRunner::solveFutureTarget( const unsigned int aLimitIterations,
 
     // Construct a bisecter which has an initial trial equal to the current tax.
     auto_ptr<Bisecter> bisecter( new Bisecter( mPolicyTarget.get(), aTolerance,
-                                               mCurrentTaxes[ aPeriod ], aPeriod ) );
+                                               mCurrentTaxes[ aPeriod ], aPeriod,
+                                               Bisecter::UNKNOWN, Bisecter::UNKNOWN ) );
 
     while( bisecter->getIterations() < aLimitIterations ){
         pair<double, bool> trial = bisecter->getNextValue();
@@ -326,19 +329,19 @@ void PolicyTargetRunner::printOutput( Timer& aTimer, const bool aCloseDB ) const
 * \return The internal scenario.
 */
 Scenario* PolicyTargetRunner::getInternalScenario(){
-	return mSingleScenario->getInternalScenario();
+    return mSingleScenario->getInternalScenario();
 }
 
 /*! \brief Get the internal scenario.
 * \return Constant pointer to the internal scenario.
 */
 const Scenario* PolicyTargetRunner::getInternalScenario() const {
-	return mSingleScenario->getInternalScenario();
+    return mSingleScenario->getInternalScenario();
 }
 
 const string& PolicyTargetRunner::getXMLNameStatic(){
-	static const string XML_NAME = "policy-target-runner";
-	return XML_NAME;
+    static const string XML_NAME = "policy-target-runner";
+    return XML_NAME;
 }
 
 /*! \brief Calculate the Hotelling price path.

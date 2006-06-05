@@ -33,14 +33,17 @@ public:
     Bisecter( const ITarget* aTarget,
               const double aTolerance,
               const double aInitialValue,
-              const unsigned int aPeriod );
+              const unsigned int aPeriod,
+              const double aLowerBound,
+              const double aUpperBound );
 
     std::pair<double, bool> getNextValue();
 
     unsigned int getIterations() const;
-private:
+    
     //! A representation of an unknown bound.
     const static int UNKNOWN = -1;
+private:
 
     //! The target.
     const ITarget* mTarget;
