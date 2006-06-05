@@ -32,12 +32,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.*;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
-import javax.swing.KeyStroke;
 import javax.swing.event.*;
 
 import org.w3c.dom.Element;
@@ -46,11 +40,16 @@ import org.w3c.dom.Node;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Vector;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import ModelInterface.InterfaceMain;
 import ModelInterface.MenuAdder;
@@ -76,6 +75,8 @@ public class PPViewer implements ActionListener, MenuAdder
   private JPanel pane;
   
   private JTextArea textArea;
+  
+  private JTextField fileNameField;
   
   private XMLFilter xmlFilter = new XMLFilter();
 
@@ -165,7 +166,6 @@ public class PPViewer implements ActionListener, MenuAdder
     {
       //sets up the panel for a preprocessor file
       status = openPPFile();
-      
       if(status)
       {
         //file was opened, display it in the pane, set new title
@@ -173,6 +173,13 @@ public class PPViewer implements ActionListener, MenuAdder
         parentFrame.setTitle("["+currFile+"] - ModelInterface");
       }
       
+    } else if(command.equals("Create"))
+    {
+      //creates the actual file
+        //writes the data definition file to the disk
+      writeFile();
+        //using written file, runs the preprocessor
+      runPreprocess();
     } else if(command.equals("stub"))
     {
       //does nothing
@@ -230,7 +237,7 @@ public class PPViewer implements ActionListener, MenuAdder
   
   private void displayFile()
   {
-    
+    //TODO
   }
   
   private void setupPane()
@@ -255,22 +262,23 @@ public class PPViewer implements ActionListener, MenuAdder
     JLabel fLabel = new JLabel("File Name:");
     myPane.add(fLabel);
     
-    JTextField fField = new JTextField(30);
-    fField.addActionListener(this);
-    myPane.add(fField);
+    fileNameField = new JTextField(30);
+    fileNameField.setActionCommand("Create");
+    fileNameField.addActionListener(this);
+    myPane.add(fileNameField);
     
     return myPane;
   }
   
   private Component createDefinitionComponents()
   {
-    //TODO
     JPanel myPane = new JPanel();
     
     JLabel dLabel = new JLabel("Definition:");
     myPane.add(dLabel);
     
     JButton cButton = new JButton("Create");
+    cButton.setActionCommand("Create");
     cButton.addActionListener(this);
     myPane.add(cButton);
     
@@ -285,5 +293,56 @@ public class PPViewer implements ActionListener, MenuAdder
     textArea.setEditable(true);
     
     return scrollPane;
+  }
+  
+  private void writeFile()
+  {
+    //TODO
+  }
+  
+  private void runPreprocess()
+  {
+    Handler fHand, cHand;
+    String dSource, rSource, dOutput;
+    
+    //***init logger classes for PP
+    Logger log = Logger.getLogger("Preprocess");
+    log.setLevel(Level.parse("WARNING"));
+    log.setUseParentHandlers(false);
+    
+    cHand = new ConsoleHandler();
+    cHand.setLevel(Level.WARNING);//TODO use ALL for diagnostics, WARNING usually
+    log.addHandler(cHand);
+    try
+    {
+      fHand = new FileHandler("PPLog.log");
+      fHand.setLevel(Level.ALL);
+      fHand.setFormatter(new SimpleFormatter());
+      log.addHandler(fHand);
+    } catch(SecurityException e)
+    {
+      e.printStackTrace();
+    } catch(IOException e)
+    {
+      e.printStackTrace();
+    }
+    //***done initing PP logger
+    
+    dSource = "modelInterfacePPsource.xml";
+    rSource = "inputR.xml";
+    dOutput = fileNameField.getText();
+    if(dOutput == null)
+    {
+      dOutput = "modelInterfacePPoutput";
+    } else if(!dOutput.endsWith(".xml"))
+    {
+      dOutput = dOutput.concat(".xml");
+    }
+    
+    log.log(Level.INFO, "creating DataBuilder to run preprocessing");
+    DataBuilder mainRun = new DataBuilder(dSource, rSource, dOutput);
+    log.log(Level.INFO, "calling runAll in DataBuilder");
+    mainRun.runAll();
+  
   }
 }

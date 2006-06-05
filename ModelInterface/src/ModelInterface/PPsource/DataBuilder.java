@@ -3075,7 +3075,7 @@ public class DataBuilder
              * slows down here, and memory usage balloons. Memory usage is already very high,
              * because there is huge double matricies being stored.
              * Actual objects which are holding most memory are coordinants.
-             * This may be because a Polygon is defined by these quardenants, so when you have
+             * This may be because a Polygon is defined by these coordinants, so when you have
              * a large poly with detailed boarders there are an immence number of coords.
              * However the behavior exhibited here does not look like it is just one
              * large object being created at a time. If that were the case, and they were

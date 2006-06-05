@@ -88,7 +88,7 @@ public class Preprocess
       rSource = currFile.getAttributeValue("file");
       currFile = root.getChild("output");
       dOutput = currFile.getAttributeValue("file");
-      //***setting up a logger for DataManipulator
+      //***setting up a logger for Preprocessor
       currFile = root.getChild("log");
       if(currFile == null)
       { //no given logging level, set to lowest output amount (regular use)
@@ -107,7 +107,7 @@ public class Preprocess
       fHand.setLevel(Level.ALL);
       fHand.setFormatter(new SimpleFormatter());
       log.addHandler(fHand);
-      //***done initing DM logger
+      //***done initing PP logger
       
       log.log(Level.INFO, "creating DataBuilder to run preprocessing");
       DataBuilder mainRun = new DataBuilder(dSource, rSource, dOutput);
