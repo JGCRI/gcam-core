@@ -166,7 +166,7 @@ public class FlatIndex implements DataIndex
       }
     }
     
-    return data.getRegion((int)min.x, (int)max.y, toMask, m.x, (m.y+m.height+m.resolution), m.resolution); //returning data
+    return data.getRegion((int)min.x, (int)max.y, toMask, m.x, (m.y+m.height+m.resolution), resolution); //returning data
   }
   
   /*

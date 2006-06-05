@@ -225,6 +225,7 @@ public class DataBuilder
       double userRes = Double.parseDouble(root.getAttributeValue("resolution"));
       log.log(Level.FINER, "calling fillWorld to create access structure");
       dataStruct.fillWorld(userRes);
+      log.log(Level.INFO, "data structure initialized with "+userRes+" resolution");
       init = true;
     }
     
@@ -1554,6 +1555,7 @@ public class DataBuilder
     if(dataAvg.containsKey(dataName))
     {
       //then we are overwriting this data!
+      log.log(Level.FINER, "data being added is an overwrite");
       overwrite = true;
     } else
     {
@@ -3606,7 +3608,7 @@ public class DataBuilder
   {
     /*
      * ok... here we go, basically just extract a 2D array from the netcdf variable in the file
-     * then run through it just like in addTxtRegion, should be snap
+     * then run through it just like in addTxtRegion, should be a snap
      */
     log.log(Level.FINER, "begin function");
     

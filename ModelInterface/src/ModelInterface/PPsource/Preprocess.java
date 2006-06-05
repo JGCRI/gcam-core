@@ -97,11 +97,11 @@ public class Preprocess
       { //given a logging level, use that
         logLevel = currFile.getAttributeValue("level");
       }
-      log.setLevel(Level.parse(logLevel));
+      log.setLevel(Level.ALL);
       log.setUseParentHandlers(false);
       
       cHand = new ConsoleHandler();
-      cHand.setLevel(Level.WARNING);//TODO use ALL for diagnostics, WARNING usually
+      cHand.setLevel(Level.parse(logLevel));//TODO use ALL for diagnostics, WARNING usually
       log.addHandler(cHand);
       fHand = new FileHandler("PPLog.log");
       fHand.setLevel(Level.ALL);
@@ -136,5 +136,6 @@ public class Preprocess
     //((RegionMask)bigTest.maskList.get("Maryland")).printMask();
     //((RegionMask)bigTest.maskList.get("Texas")).printMask();
     //bigTest.dataTree.printTreeXML();
+    log.log(Level.INFO, "preprocessor completed running");
   }
 }
