@@ -3002,8 +3002,11 @@ public class ManipulationDriver
     {
       SAXBuilder builder = new SAXBuilder();
       dDocument = builder.build(dSource);
+      log.log(Level.FINER, "data document parsed");
       rDocument = builder.build(rSource);
+      log.log(Level.FINER, "region document parsed");
       cDocument = builder.build(cSource);
+      log.log(Level.FINER, "command document parsed");
     } catch(FileNotFoundException e)
     {
       log.log(Level.SEVERE, "FileNotFound! in -> makeStreams");

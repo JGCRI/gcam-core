@@ -160,8 +160,6 @@ public class PPViewer implements ActionListener, MenuAdder
     boolean status = false;
     String command = e.getActionCommand();
     
-    //TODO handle create datafi,le button clicks
-    
     if(command.equals("Preprocessor file"))
     {
       //sets up the panel for a preprocessor file
@@ -175,7 +173,8 @@ public class PPViewer implements ActionListener, MenuAdder
       
     } else if(command.equals("Create"))
     {
-      //creates the actual file
+      //creates the actual file from pressing enter on file name or clicking the create button
+      //TODO maybe add a dialoge box to confirm file create
         //writes the data definition file to the disk
       writeFile();
         //using written file, runs the preprocessor
@@ -222,9 +221,6 @@ public class PPViewer implements ActionListener, MenuAdder
       //set last directory for subsequent file opens
       ((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory",
           fc.getCurrentDirectory().toString());
-
-      //TODO get the file? display it?
-      //doc = readXMLFile(currFile);
       
     } else
     { //not sure what would get us here but, to be safe, return false
@@ -311,7 +307,7 @@ public class PPViewer implements ActionListener, MenuAdder
     log.setUseParentHandlers(false);
     
     cHand = new ConsoleHandler();
-    cHand.setLevel(Level.WARNING);//TODO use ALL for diagnostics, WARNING usually
+    cHand.setLevel(Level.WARNING);//use ALL for diagnostics, WARNING usually
     log.addHandler(cHand);
     try
     {

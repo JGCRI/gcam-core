@@ -75,11 +75,11 @@ public class Main
       { //given a logging level, use that
         logLevel = currFile.getAttributeValue("level");
       }
-      log.setLevel(Level.parse(logLevel));
+      log.setLevel(Level.ALL);
       log.setUseParentHandlers(false);
       
       cHand = new ConsoleHandler();
-      cHand.setLevel(Level.WARNING); //TODO WARNING usually ALL or FINER for tracing
+      cHand.setLevel(Level.parse(logLevel));
       log.addHandler(cHand);
       fHand = new FileHandler("DMLog.log");
       fHand.setLevel(Level.ALL);
