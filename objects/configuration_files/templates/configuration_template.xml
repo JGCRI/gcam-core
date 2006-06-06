@@ -6,6 +6,7 @@
 		<Value name="xmlInputFileName">../cvs/objects/model_data/base/base_input.xml</Value>
 		<Value name="xmlOutputFileName">../output/output.xml</Value>
 		<Value name="BatchFileName">BatchFile.xml</Value>
+		<Value name="sPolicyInputFileName">sPolInput.xml</Value>
 		<!--END User Modifiable variables-->
 		<!--START Developer Only Modifiable Variables-->
 		<Value name="outFileName">../output/outFile.csv</Value>
@@ -19,6 +20,7 @@
 		<Value name="supplyDemandOutputFileName">../output/SDCurves.csv</Value>
 		<Value name="GHGInputFileName">../cvs/objects/magicc/inputs/input_gases.emk</Value>
 		<Value name="dependencyGraphName">../output/DependencyGraph</Value>
+		<Value name="landAllocatorGraphName">../output/LandAllocatorGraph</Value>
 		<Value name="costCurvesOutputFileName">../output/cost_curves.xml</Value>
 		<!--END Developer Only Modifiable Variables-->
 	</Files>
@@ -44,6 +46,7 @@
 		<Value name="createCostCurve">0</Value>
 		<Value name="BatchMode">0</Value>
 		<Value name="find-path">0</Value>
+		<Value name="simple-find-path">0</Value>
 		<Value name="PrintDependencyGraphs">0</Value>
 		<Value name="PrintValuesOnGraphs">0</Value>
 		<Value name="PrintPrices">1</Value>
