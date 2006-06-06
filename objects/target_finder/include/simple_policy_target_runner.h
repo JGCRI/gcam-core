@@ -40,7 +40,7 @@ typedef std::vector<std::pair<double,double> > VectorOfPairs;
  *          and creates a third curve by performing a interpolating between the two pathways using 
  *          a constant.  The constant is varied until the target is reached.
  *
- *          This scenario is controlled by the "simple-policy-target-runner" boolean.
+ *          This scenario is controlled by the "simple-find-path" boolean.
  *          It reads from the filename specified by "sPolicyInputFileName" and outputs to
  *          the filename specified by "sPolicyOutputFileName".  The default output filename
  *          is sPolicyFinalEmissionsCurve.xml.
