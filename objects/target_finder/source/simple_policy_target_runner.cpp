@@ -16,7 +16,7 @@
 */
 
 #include <cassert>
-#include <pair>
+#include <utility>
 
 #include "util/base/include/definitions.h"
 
@@ -33,10 +33,10 @@
 #include "emissions/include/ghg_policy.h"
 #include "target_finder/include/target_factory.h"
 #include "target_finder/include/bisecter.h"
-#include "util\curves\include\explicit_point_set.h"
-#include "util\curves\include\xy_data_point.h"
+#include "util/curves/include/explicit_point_set.h"
+#include "util/curves/include/xy_data_point.h"
 #include "containers/include/total_policy_cost_calculator.h"
-#include "util\base\include\auto_file.h"
+#include "util/base/include/auto_file.h"
 
 using namespace std;
 using namespace xercesc;
@@ -53,7 +53,7 @@ SimplePolicyTargetRunner::SimplePolicyTargetRunner()
   mUpperBound( new PointSetCurve ),
   mInterpolatedCurve( new PointSetCurve ),
   mTargetValue( -1 ),
-  mTargetYear ( -1 )
+  mTargetYear ( 0 )
 {
     mSingleScenario = ScenarioRunnerFactory::create( "single-scenario-runner" );
 
@@ -309,8 +309,8 @@ bool SimplePolicyTargetRunner::XMLParse( const xercesc::DOMNode* aRoot ){
 
     // Evalutes to true if all the variables that should have been defined were actually defined.
     // False otherwise.
-    if( !( mLowerBound.get() != 0 && mUpperBound.get() != 0 && mTargetType != ""
-        && mTargetValue != -1 && mTargetValue != -1 ) ){
+    if( !( mLowerBound.get() != 0 && mUpperBound.get() != 0 && !mTargetType.empty()
+        && mTargetValue != -1 && mTargetYear != 0 ) ){
         errorMsgs.push_back("Missing input variables.");
         success = false;
     }
@@ -412,6 +412,15 @@ vector<double> SimplePolicyTargetRunner::curveToConstraintVector( const Curve* a
     VectorOfPairs points = aCurve->getSortedPairs();
     vector<double> constraint( modelTime->getmaxper() );
 
+    // Set the values of the non-computed periods to -1 because they are not being used.
+    // GHGPolicy.completeInit will not do anything with constraints that
+    // are -1.
+    // The first x point on the either bound curve is the first year
+    unsigned int max = modelTime->getyr_to_per( static_cast<unsigned int>(mLowerBound->getMinX()) );
+    for(unsigned int i = 0; i < max; i++){
+        constraint[ i ] = -1;
+    }
+
     // Loop through the vector of pairs
     for(unsigned int i = 0; i < points.size(); i++){
         // Assign constraint[period of this points year] to this points value.
@@ -424,17 +433,7 @@ vector<double> SimplePolicyTargetRunner::curveToConstraintVector( const Curve* a
 * \param aTaxName name of tax
 * \param aEmmissions emissions vector
 */
-void SimplePolicyTargetRunner::setTrialTaxes( const string& aTaxName, vector<double>& aEmissions ) {
-    // Set the values of the non-computed periods to -1 because they are not being used.
-    // GHGPolicy.completeInit will not do anything with constraints that
-    // are -1.
-    const Modeltime* modeltime = getInternalScenario()->getModeltime();
-    // The first x point on the either bound curve is the first year
-    unsigned int max = modeltime->getyr_to_per( static_cast<unsigned int>(mLowerBound->getMinX()) );
-    for(unsigned int i = 0; i < max; i++){
-        aEmissions[ i ] = -1;
-    }
-
+void SimplePolicyTargetRunner::setTrialTaxes( const string& aTaxName, const vector<double>& aEmissions ) {
     // Set the fixed constraint into the world. The world will clone this tax object,
     // this object retains ownership of the original.
     auto_ptr<GHGPolicy> tax( new GHGPolicy( aTaxName, "global" ) );

@@ -151,7 +151,7 @@ private:
 
     std::vector<double> curveToConstraintVector( const Curve* aCurve ) const;
     void combineCurves( const std::vector<double>& aEmissionValues ) const;
-    void setTrialTaxes( const std::string& aTaxName, std::vector<double>& aEmissions );
+    void setTrialTaxes( const std::string& aTaxName, const std::vector<double>& aEmissions );
     static std::vector<double> preComputeDifferences( const VectorOfPairs&,
                                                       const VectorOfPairs& );
     static std::vector<double> preComputeEmissions( const VectorOfPairs& aLower,
