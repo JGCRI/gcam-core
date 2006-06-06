@@ -101,7 +101,9 @@ public class Main
       log.log(Level.SEVERE, "JDOM Exception! in main function");
     }catch(IOException e)
     {
-      log.log(Level.SEVERE, "IOException! for shame! in main function");
+      log.log(Level.SEVERE, "IOException! in main function");
     }
+    
+    log.log(Level.INFO, "data manipulator completed running");
   }
 }
