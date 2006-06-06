@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+    This scenario is controlled by the "simple-policy-target-runner" boolean.
+    It reads from the filename specified by "sPolicyInputFileName" and outputs to
+    the filename specified by "sPolicyOutputFileName".  The default output filename
+    is sPolicyFinalEmissionsCurve.xml.
+-->
 <SimplePolicyTargetRunner>
 	<target-year>2050</target-year>
 	<target-value>485</target-value>
