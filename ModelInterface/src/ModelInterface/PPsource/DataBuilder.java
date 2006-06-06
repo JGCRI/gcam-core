@@ -428,10 +428,12 @@ public class DataBuilder
     Map.Entry var, time, data;
     try
     {
+      //xml header information
       rWriter.write("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
       rWriter.write("<input num=\""+regionList.size()+"\" res=\""+dataStruct.getResolution()+"\">");
       rWriter.newLine();
-
+      
+      //outputting the global data on variables (avg, units, reference)
       rWriter.write("\t<variableInfo>\n");
       itVar = dataAvg.entrySet().iterator();
       while(itVar.hasNext())
@@ -3021,6 +3023,11 @@ public class DataBuilder
             //done settign avg/add ref and units
           }
           
+          if(target.equals("Central Intelligence Agency CIA"))
+          {
+            System.out.println("CIA feature found");
+          }
+          
           if(env instanceof Point)
           {
             dataValue = new Double(1); //sending 1 as the value, so a full overlap
@@ -3052,7 +3059,7 @@ public class DataBuilder
               //add data as normal
               toAdd.data.put(target, timeValue);
             }
-
+            
             //merging this data into the current tree
             dataStruct.addData(toAdd, avg);
           } else //env is a Polygon
@@ -3104,6 +3111,7 @@ public class DataBuilder
               if(coords[i].y < minY)
                 minY = coords[i].y;
             }
+            
             //System.out.println("next geom -> "+minX+", "+maxX+", "+minY+", "+maxY);
             //normalizes lower bounds (upper dont matter)
             mult = minX/res;
@@ -3113,6 +3121,9 @@ public class DataBuilder
             mult = minY/res;
             mult = Math.floor(mult);
             minY = mult*res;
+            mult = maxY/res;
+            mult = Math.ceil(mult);
+            maxY = mult*res;
             
             //TODO assume the fact that this gets run 1000's of times is a big deal...
             for(double X = minX; X < maxX; X+=res)
@@ -3127,9 +3138,9 @@ public class DataBuilder
                 makeLR[0].x = X;
                 makeLR[0].y = Y;
                 makeLR[1].x = X;
-                makeLR[1].y = (Y+res);
+                makeLR[1].y = (Y-res);
                 makeLR[2].x = (X+res);
-                makeLR[2].y = (Y+res);
+                makeLR[2].y = (Y-res);
                 makeLR[3].x = (X+res);
                 makeLR[3].y = Y;
                 makeLR[4].x = X;
