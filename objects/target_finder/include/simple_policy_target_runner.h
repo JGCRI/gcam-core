@@ -131,9 +131,6 @@ protected:
     //! The year in which to reach the target.
     unsigned int mTargetYear;
 
-    //! The period in which to reach the target.
-    unsigned int mTargetPeriod;
-
     //! The target value
     double mTargetValue;
 

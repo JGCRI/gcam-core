@@ -34,12 +34,10 @@ class IClimateModel;
 class ForcingTarget: public ITarget {
 public:
     ForcingTarget( const IClimateModel* aClimateModel,
-                   const unsigned int aInitialPeriod,
-                   const unsigned int aFinalPeriod,
                    const double aTargetValue );
 
     virtual TrialStatus getStatus( const double aTolerance,
-                                   const unsigned int aPeriod ) const;
+                                   const unsigned int aYear ) const;
     
     const std::string& getTaxName() const;
 
@@ -47,12 +45,6 @@ public:
 private:
     //! The climate model.
     const IClimateModel* mClimateModel;
-
-    //! The initial period of the target.
-    const unsigned int mInitialPeriod;
-    
-    //! The final period of the target.
-    const unsigned int mFinalPeriod;
 
     //! The target value.
     double mTargetValue;

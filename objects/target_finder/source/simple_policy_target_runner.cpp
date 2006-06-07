@@ -102,16 +102,12 @@ bool SimplePolicyTargetRunner::setupScenario( Timer& aTimer, const string aName,
     // Parse the file.
     success &= XMLHelper<void>::parseXML( fileName, this );
 
-    const Modeltime* modeltime = getInternalScenario()->getModeltime();
     /*! \pre The target year is initialized. */
     assert( mTargetYear != 0 );
-    mTargetPeriod = modeltime->getyr_to_per( mTargetYear );
 
     // Create a a policy target.
     mPolicyTarget = TargetFactory::create( mTargetType,
                                            getInternalScenario()->getClimateModel(),
-                                           mTargetPeriod,
-                                           modeltime->getmaxper() - 1,
                                            mTargetValue );
 
     // Initialize the interpolated curve to have the same x points as the
@@ -146,7 +142,7 @@ bool SimplePolicyTargetRunner::runScenario( const int aSingleScenario,
 
     // Construct a bisecter which has an initial trial equal to 1/2
     auto_ptr<Bisecter> bisecter( new Bisecter( mPolicyTarget.get(), mTolerance,
-                                               .5, mTargetPeriod, 0, 1 ) );
+                                               .5, mTargetYear, 0, 1 ) );
 
     // Declare some variables we will be using in the loop.
     vector<double> differences = preComputeDifferences( mLowerBound->getSortedPairs(),

@@ -41,15 +41,16 @@ public:
         UNKNOWN
     };
 
-    /*! \brief Get the status of the last trial for a given period.
-    * \details Returns whether the last trial was over the target, under the
-    *          target, or solved the target for a given period.
-    * \param aTolerance Solution tolerance.
-    * \param aPeriod Period in which to check the target.
-    * \return The status of the last trial.
-    */
+    /*!
+     * \brief Get the status of the last trial for a given period.
+     * \details Returns whether the last trial was over the target, under the
+     *          target, or solved the target for a given period.
+     * \param aTolerance Solution tolerance.
+     * \param aYear Year in which to check the target.
+     * \return The status of the last trial.
+     */
     virtual TrialStatus getStatus( const double aTolerance,
-                                   const unsigned int aPeriod ) const = 0;
+                                   const unsigned int aYear ) const = 0;
 
     /*! \brief Get the name of the tax which will cause the target to be
     *          reached.

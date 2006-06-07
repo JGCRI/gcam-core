@@ -43,8 +43,6 @@ public:
     static bool isOfType( const std::string& aType );
     static std::auto_ptr<ITarget> create( const std::string& aType,
                                           const IClimateModel* aClimateModel,
-                                          const unsigned int aInitialPeriod,
-                                          const unsigned int aFinalPeriod,
                                           double aTargetValue );
 };
 

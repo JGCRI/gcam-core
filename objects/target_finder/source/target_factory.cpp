@@ -42,38 +42,29 @@ bool TargetFactory::isOfType( const string& aType ) {
         || ( aType == TemperatureTarget::getXMLNameStatic() ) );
 }
 
-/*! \brief Return a new instance of a component of the requested type.
-* \param aType Type of ITarget to return.
-* \param aClimateModel Scenario's climate model.
-* \param aTargetPeriod The period in which the target should be met.
-* \param aInitialTargetPeriod The initial period of the target.
-* \param aEndPeriod Last period of the model.
-* \return A newly created ITarget wrapped in an auto_ptr. The pointer
-*         is null if the type is unknown.
-*/
+/*!
+ * \brief Return a new instance of a component of the requested type.
+ * \param aType Type of ITarget to return.
+ * \param aClimateModel Scenario's climate model.
+ * \param aTargetValue The target value.
+ * \return A newly created ITarget wrapped in an auto_ptr. The pointer
+ *         is null if the type is unknown.
+ */
 auto_ptr<ITarget> TargetFactory::create( const string& aType,
                                          const IClimateModel* aClimateModel,
-                                         const unsigned int aInitialPeriod,
-                                         const unsigned int aFinalPeriod,
                                          double aTargetValue )
 {
 
     if( aType == ConcentrationTarget::getXMLNameStatic() ) {
         return auto_ptr<ITarget>( new ConcentrationTarget( aClimateModel,
-                                                           aInitialPeriod,
-                                                           aFinalPeriod,
                                                            aTargetValue ) );
     }
     if( aType == ForcingTarget::getXMLNameStatic() ){
         return auto_ptr<ITarget>( new ForcingTarget( aClimateModel,
-                                                     aInitialPeriod,
-                                                     aFinalPeriod,
                                                      aTargetValue ) );
     }
     if( aType == TemperatureTarget::getXMLNameStatic() ){
         return auto_ptr<ITarget>( new TemperatureTarget( aClimateModel,
-                                                         aInitialPeriod,
-                                                         aFinalPeriod,
                                                          aTargetValue ) );
     }
 

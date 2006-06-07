@@ -35,19 +35,15 @@ class IClimateModel;
 class ConcentrationTarget: public ITarget {
 public:
     ConcentrationTarget( const IClimateModel* aClimateModel,
-                         const unsigned int aInitialPeriod,
-                         const unsigned int aFinalPeriod,
                          const double aTargetValue );
 
     virtual TrialStatus getStatus( const double aTolerance,
-                                   const unsigned int aPeriod ) const;
+                                   const unsigned int aYear ) const;
 
     const std::string& getTaxName() const;
 
     static const std::string& getXMLNameStatic();
 private:
-    double calcTarget( const unsigned int aPeriod ) const;
-    double calcReductionFactor( const unsigned int aPeriod ) const;
 
     //! The name of the target gas.
     std::string mTargetGas;
@@ -55,17 +51,8 @@ private:
     //! The climate model.
     const IClimateModel* mClimateModel;
 
-    //! The initial period of the target.
-    const unsigned int mInitialPeriod;
-    
-    //! The final period of the target.
-    const unsigned int mFinalPeriod;
-
     //! The target value.
     double mTargetValue;
 
-    //! The amount of reduction in the initial period of the target to allow for
-    //! a "soft-landing".
-    double mInitialReduction;
 };
 #endif // _CONCENTRATION_TARGET_H_

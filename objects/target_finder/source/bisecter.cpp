@@ -29,13 +29,17 @@
 using namespace std;
 
 /*! \brief Construct the Bisecter.
-* \param aPolicyTarget The policy target.
-* \param aTolerance Solution tolerance.
-*/
+ * \param aTarget The policy target.
+ * \param aTolerance Solution tolerance.
+ * \param aInitialValue Initial guess.
+ * \param aYear Year which the bisecter is operating.
+ * \param aLowerBound Lower bound.
+ * \param aUpperBound Upper bound.
+ */
 Bisecter::Bisecter( const ITarget* aTarget,
                     const double aTolerance,
                     const double aInitialValue,
-                    const unsigned int aPeriod,
+                    const unsigned int aYear,
                     const double aLowerBound,
                     const double aUpperBound ):
 mTarget( aTarget ),
@@ -43,7 +47,7 @@ mTolerance( aTolerance ),
 mLowerBound( aLowerBound ),
 mUpperBound( aUpperBound ),
 mCurrentTrial( aInitialValue ),
-mPeriod( aPeriod ),
+mYear( aYear ),
 mIterations( 0 ){
 }
 
@@ -55,7 +59,7 @@ mIterations( 0 ){
 */
 pair<double, bool> Bisecter::getNextValue() {
     // Get the status of the current trial.
-    ITarget::TrialStatus currTrial = mTarget->getStatus( mTolerance, mPeriod );
+    ITarget::TrialStatus currTrial = mTarget->getStatus( mTolerance, mYear );
 
     bool solved = false;
     switch( currTrial ){

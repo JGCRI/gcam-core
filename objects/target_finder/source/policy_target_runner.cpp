@@ -103,8 +103,6 @@ bool PolicyTargetRunner::setupScenario( Timer& aTimer, const string aName,
     // Create a a policy target.
     mPolicyTarget = TargetFactory::create( mTargetType,
                                            getInternalScenario()->getClimateModel(),
-                                           targetPeriod,
-                                           modeltime->getmaxper() - 1,
                                            Configuration::getInstance()->getDouble( "target-value", 0 ) );
     return success;
 }
@@ -196,10 +194,9 @@ bool PolicyTargetRunner::solveInitialTarget( const unsigned int aLimitIterations
     bool success = mSingleScenario->runScenario( Scenario::RUN_ALL_PERIODS, aTimer );
 
     const Modeltime* modeltime = getInternalScenario()->getModeltime();
-    const unsigned int targetPeriod = modeltime->getyr_to_per( mTargetYear );
     // Create the bisection object. Use 0 as the initial trial value because the
     // state of the model is unknown. TODO: Can we do better?
-    auto_ptr<Bisecter> bisecter( new Bisecter( mPolicyTarget.get(), aTolerance, 0, targetPeriod,
+    auto_ptr<Bisecter> bisecter( new Bisecter( mPolicyTarget.get(), aTolerance, 0, mTargetYear,
                                                Bisecter::UNKNOWN, Bisecter::UNKNOWN ) );
     while( bisecter->getIterations() < aLimitIterations ){
         pair<double, bool> trial = bisecter->getNextValue();
@@ -270,7 +267,7 @@ bool PolicyTargetRunner::solveFutureTarget( const unsigned int aLimitIterations,
 
     // Construct a bisecter which has an initial trial equal to the current tax.
     auto_ptr<Bisecter> bisecter( new Bisecter( mPolicyTarget.get(), aTolerance,
-                                               mCurrentTaxes[ aPeriod ], aPeriod,
+                                               mCurrentTaxes[ aPeriod ], mTargetYear,
                                                Bisecter::UNKNOWN, Bisecter::UNKNOWN ) );
 
     while( bisecter->getIterations() < aLimitIterations ){

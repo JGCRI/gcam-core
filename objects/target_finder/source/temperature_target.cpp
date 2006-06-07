@@ -27,33 +27,30 @@
 
 using namespace std;
 
-/*! \brief Constructor
-* \param aClimateModel The climate model.
-* \param aInitialPeriod The initial period of the target.
-* \param aFinalPeriod The final period of the target.
-*/
+/*!
+ * \brief Constructor
+ * \param aClimateModel The climate model.
+ * \param aTargetValue The target value.
+ */
 TemperatureTarget::TemperatureTarget( const IClimateModel* aClimateModel,
-                                      const unsigned int aInitialPeriod,
-                                      const unsigned int aFinalPeriod,
                                       const double aTargetValue ):
 mClimateModel( aClimateModel ),
-mInitialPeriod( aInitialPeriod ),
-mFinalPeriod( aFinalPeriod ),
 mTargetValue( aTargetValue ){
     /*! \pre Final period should be after initial period. */
     assert( aFinalPeriod >= aInitialPeriod );
 }
 
-/*! \brief Get the status of the last trial with respect to the target.
-* \param aTolerance Solution tolerance.
-* \param aPeriod Period in which to get the status.
-* \return Status of the last trial.
-*/
+/*!
+ * \brief Get the status of the last trial with respect to the target.
+ * \param aTolerance Solution tolerance.
+ * \param aYear Year in which to get the status.
+ * \return Status of the last trial.
+ */
 ITarget::TrialStatus TemperatureTarget::getStatus( const double aTolerance,
-                                                   const unsigned int aPeriod ) const
+                                                   const unsigned int aYear ) const
 {
     // Check if we are above or below the target.
-    const double currTemperature = mClimateModel->getTemperature( aPeriod );
+    const double currTemperature = mClimateModel->getTemperature( aYear );
 
     // Determine how how far away from the target the current estimate is.
     double percentOff = ( currTemperature - mTargetValue ) / mTargetValue * 100;

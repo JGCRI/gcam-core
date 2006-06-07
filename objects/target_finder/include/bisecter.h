@@ -33,7 +33,7 @@ public:
     Bisecter( const ITarget* aTarget,
               const double aTolerance,
               const double aInitialValue,
-              const unsigned int aPeriod,
+              const unsigned int aYear,
               const double aLowerBound,
               const double aUpperBound );
 
@@ -63,7 +63,8 @@ private:
     //! The current number of trial values returned.
     unsigned int mIterations;
 
-    //! Period in which the bisecter is operating.
-    unsigned int mPeriod;
+    //! Year in which the bisecter is operating.
+    unsigned int mYear;
+
 };
 #endif // _BISECTER_H_
