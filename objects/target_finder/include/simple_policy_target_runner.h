@@ -53,6 +53,8 @@ typedef std::vector<std::pair<double,double> > VectorOfPairs;
  *              - \c target-year SimplePolicyTargetRunner::mTargetYear
  *              - \c target-value SimplePolicyTargetRunner::mTargetValue
  *              - \c target-type SimplePolicyTargetRunner::mTargetType
+ *              - \c target-tolerance SimplePolicyTargetRunner::mTargetTolerance (optional)
+ *                                    The default is 0.005.
  *              - \c Curve SimplePolicyTargetRunner::mLowerBound
  *                  -Attributes:
  *                      - \c type PointSetCurve
@@ -143,6 +145,9 @@ protected:
 
     //! Interpolated Curve
     std::auto_ptr<Curve> mInterpolatedCurve;
+
+    //! Tolerance as a percent
+    double mTolerance;
 
     SimplePolicyTargetRunner();
     static const std::string& getXMLNameStatic();

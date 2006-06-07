@@ -8,6 +8,7 @@
 <SimplePolicyTargetRunner>
 	<target-year>2050</target-year>
 	<target-value>485</target-value>
+	<target-tolerance>0.005</target-tolerance>
 	<target-type>concentration</target-type>
 	<Curve type="PointSetCurve" name="lower-bound" wre="450">
 		<PointSet type="ExplicitPointSet">

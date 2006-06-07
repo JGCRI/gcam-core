@@ -139,7 +139,9 @@ double ConcentrationTarget::calcTarget( const unsigned int aPeriod ) const {
 */
 double ConcentrationTarget::calcReductionFactor( const unsigned int aPeriod ) const {
     // If this is a one-period target, the reduction factor is 1.
-    if( mInitialPeriod == mFinalPeriod ){
+    // Or if mInitialPeriod equals aPeriod, the math below always results in 1,
+    // so stop here to save the extra computation.
+    if( mInitialPeriod == mFinalPeriod || mInitialPeriod == aPeriod ){
         return 1;
     }
     

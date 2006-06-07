@@ -53,7 +53,8 @@ SimplePolicyTargetRunner::SimplePolicyTargetRunner()
   mUpperBound( new PointSetCurve ),
   mInterpolatedCurve( new PointSetCurve ),
   mTargetValue( -1 ),
-  mTargetYear ( 0 )
+  mTargetYear( 0 ),
+  mTolerance( 0.005 )
 {
     mSingleScenario = ScenarioRunnerFactory::create( "single-scenario-runner" );
 
@@ -140,14 +141,11 @@ bool SimplePolicyTargetRunner::runScenario( const int aSingleScenario,
     // Search until a limit is reach or the solution is found.
     const unsigned int LIMIT_ITERATIONS = 100;
 
-    // Tolerance as a percent.
-    const double TOLERANCE = 0.005;
-
     // Run the model for all periods
     bool success = mSingleScenario->runScenario( Scenario::RUN_ALL_PERIODS, timer );
 
     // Construct a bisecter which has an initial trial equal to 1/2
-    auto_ptr<Bisecter> bisecter( new Bisecter( mPolicyTarget.get(), TOLERANCE,
+    auto_ptr<Bisecter> bisecter( new Bisecter( mPolicyTarget.get(), mTolerance,
                                                .5, mTargetPeriod, 0, 1 ) );
 
     // Declare some variables we will be using in the loop.
@@ -274,6 +272,10 @@ bool SimplePolicyTargetRunner::XMLParse( const xercesc::DOMNode* aRoot ){
         // Read the target type.
         else if ( nodeName == "target-type" ){
             mTargetType = XMLHelper<string>::getValue( curr ) + "-target";
+        }
+
+        else if ( nodeName == "target-tolerance" ){
+            mTolerance = XMLHelper<double>::getValue( curr );
         }
 
         // Read the lower-bound and upper-bound curves
