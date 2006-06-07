@@ -37,8 +37,6 @@ ConcentrationTarget::ConcentrationTarget( const IClimateModel* aClimateModel,
                                           const double aTargetValue ):
 mClimateModel( aClimateModel ),
 mTargetValue( aTargetValue ){
-    /*! \pre Final period should be after initial period. */
-    assert( aFinalPeriod >= aInitialPeriod );
     mTargetGas = Configuration::getInstance()->getString( "concentration-target-gas", "CO2" );
 }
 

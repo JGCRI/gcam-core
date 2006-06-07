@@ -37,8 +37,6 @@ ForcingTarget::ForcingTarget( const IClimateModel* aClimateModel,
                               const double aTargetValue ):
 mClimateModel( aClimateModel ),
 mTargetValue( aTargetValue ){
-    /*! \pre Final period should be after initial period. */
-    assert( aFinalPeriod >= aInitialPeriod );
 }
 
 /*!
