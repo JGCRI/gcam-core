@@ -96,6 +96,7 @@ public class XMLDB {
 			try {
 				myContainer = manager.openContainer(contName, cconfig);
 				// testing index code here should be REMOVED
+				/*
 				System.out.println("Default Index: "+myContainer.getIndexSpecification().getDefaultIndex());
 				XmlIndexSpecification is = myContainer.getIndexSpecification();
 				is.addIndex("", "name", "edge-attribute-equality-string");
@@ -106,6 +107,7 @@ public class XMLDB {
 				}
 				System.out.println("After loop");
 				//System.out.println("The Index: "+myContainer.getIndexSpecification().find("", "type").index);
+				*/
 				// end code to be REMOVED
 			} catch(XmlException ve) {
 				if(ve.getErrorCode() == XmlException.VERSION_MISMATCH) {

@@ -270,7 +270,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		}
 		*/
 		// Set up the tree
-		jtree = new JTree(new DOMmodel(doc.getDocumentElement()));
+		jtree = new JTree(new DOMmodel(doc));
 		jtree.setEditable(true);
 		jtree.getSelectionModel().setSelectionMode(
 				TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -398,7 +398,8 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			if(status) {
 				displayJtree();
 				//ADDING CP HERE
-				DOMPasteboard pd = new DOMPasteboard(doc, jtree, implls);
+				//DOMPasteboard pd = new DOMPasteboard(doc, jtree, implls);
+				jtree.setTransferHandler(new DOMTransferHandler(doc, implls));
 				//menuSave.setEnabled(true); // now save can show up
 				//setTitle("["+file+"] - ModelGUI");
 				parentFrame.setTitle("["+file+"] - ModelInterface");

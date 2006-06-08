@@ -1,26 +1,79 @@
 //import javax.swing.event.TreeModelEvent;
 //package ModelGUI2;
 package ModelInterface.ModelGUI2;
+
+import javax.swing.SwingUtilities;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.event.*;
 import java.util.Vector;
-import java.util.*;
+import java.util.List;
+import java.util.LinkedList;
+import java.util.Iterator;
 
 import org.w3c.dom.*;
+import org.w3c.dom.events.MutationEvent;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventTarget;
+import org.w3c.dom.events.EventListener;
 
 public class DOMmodel implements TreeModel {
 	private Vector treeModelListeners = new Vector();
 	private Node rootNode;
 
 	/**
-	 * Initializes the root of the tree
-	 * @param root node which will be used as the root of the tree
+	 * Initializes the root of the tree, and adds listeners to the
+	 * Document to be able to tell the JTree when the Document has
+	 * been modified so that it can update itself.
+	 * @param doc Document node which will be used to get the root of the tree
 	 */
-	public DOMmodel(Node root) {
-        	rootNode = root;
+	public DOMmodel(Document doc) {
+        	rootNode = doc.getDocumentElement();
  		treeModelListeners.clear();
+		final EventTarget target = (EventTarget)doc;
+		target.addEventListener("DOMNodeInserted", new EventListener() {
+			public void handleEvent(Event aEvent) {
+				System.out.println("HANDLIN EVENT HERE, type: "+aEvent.getType());
+				MutationEvent event = (MutationEvent)aEvent;
+				final DOMNodeAdapter target  = new DOMNodeAdapter((Node)event.getTarget());
+				final Node rel = event.getRelatedNode();
+				System.out.println("Target: "+target);
+				System.out.println("Related: "+event.getRelatedNode());
+				/*
+				SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+						getTreePathFromNode(n);
+					}
+				});
+				*/
+				int insPos = getIndexOfChild(new DOMNodeAdapter(rel), target);
+				System.out.println("Posititon of target: "+insPos);
+				int[] posArr = {insPos};
+				Object[] childArr = {target};
+				TreeModelEvent tEvent = new TreeModelEvent(this, getTreePathFromNode(rel), posArr, childArr);
+				fireTreeNodesInserted(tEvent);
+				/*
+				switch(event.getAttrChange()) {
+					case MutationEvent.ADDITION:
+						System.out.println("Should fire Add");
+						fireTreeNodesInserted(tEvent);
+						break;
+					case MutationEvent.MODIFICATION:
+						System.out.println("Should fire Change");
+						fireTreeNodesChanged(tEvent);
+						break;
+					case MutationEvent.REMOVAL:
+						System.out.println("Should fire Rem");
+						fireTreeNodesRemoved(tEvent);
+						break;
+					default:
+						System.out.println("Error don't know what kind of MutationEvent: "+event);
+						System.out.println("Attr Change: "+event.getAttrChange());
+				}
+				*/
+			}
+		}, false);
 	}
 
 	/**
@@ -207,6 +260,7 @@ public class DOMmodel implements TreeModel {
 			return n;
 		}
 		public boolean equals(Object o) {
+			System.out.println("Checking for equals");
 			if(!(o instanceof DOMNodeAdapter)) {
 				return false;
 			}
@@ -279,6 +333,7 @@ public class DOMmodel implements TreeModel {
 		   }
         
 		   parent.removeChild(child);
+		   System.out.println("The nodePath is: "+nodePath.getParentPath());
         
 		  int[] arr1 = {ct};
 		  Node[] arr2 = {child};
@@ -292,6 +347,7 @@ public class DOMmodel implements TreeModel {
 	public void fireTreeNodesInserted( TreeModelEvent e ) {
 		Iterator listeners = treeModelListeners.iterator();
 		while ( listeners.hasNext() ) {
+			System.out.println("Firing Inserted");
 			TreeModelListener listener = (TreeModelListener) listeners.next();
 			listener.treeNodesInserted( e );
 		}
@@ -304,6 +360,7 @@ public class DOMmodel implements TreeModel {
 	public void fireTreeNodesRemoved( TreeModelEvent e ) {
 		Iterator listeners = treeModelListeners.iterator();
 		while ( listeners.hasNext() ) {
+			System.out.println("Firing Removed");
 			TreeModelListener listener = (TreeModelListener) listeners.next();
 			listener.treeNodesRemoved( e );
 		}
@@ -316,9 +373,23 @@ public class DOMmodel implements TreeModel {
 	public void fireTreeNodesChanged( TreeModelEvent e ) {
 		Iterator listeners = treeModelListeners.iterator();
 		while ( listeners.hasNext() ) {
+			System.out.println("Firing Changed");
 			TreeModelListener listener = (TreeModelListener) listeners.next();
 			listener.treeNodesChanged( e );
 		}
+	}
+
+	public TreePath getTreePathFromNode(Node n) {
+		List<DOMNodeAdapter> path = new LinkedList();
+		path.add(new DOMNodeAdapter(n));
+		System.out.println("After added the first: "+n);
+		while((n = n.getParentNode()) != null) {
+			System.out.println("Adding");
+			path.add(0, new DOMNodeAdapter(n));
+		}
+		path.remove(0);
+		System.out.println("About to return: "+path);
+		return new TreePath(path.toArray());
 	}
 
 }
