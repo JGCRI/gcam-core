@@ -1063,19 +1063,9 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			try {
 				if (e.getSource() instanceof DOMmodel) {
 					BaseTableModel bt = getTableModelFromScrollPane((JScrollPane)splitPane.getRightComponent());
-					/*
-					if (((JTable) ((JScrollPane) splitPane.getRightComponent())
-							.getViewport().getView()).getModel() instanceof TableSorter) {
-						bt = (BaseTableModel) ((TableSorter) ((JTable) ((JScrollPane) splitPane
-								.getRightComponent()).getViewport().getView())
-								.getModel()).getTableModel();
-					} else {
-						bt = (BaseTableModel) ((JTable) ((JScrollPane) splitPane
-								.getRightComponent()).getViewport().getView())
-								.getModel();
+					if(bt != null) {
+						bt.fireTableRowsUpdated(0, bt.getRowCount());
 					}
-					*/
-					bt.fireTableRowsUpdated(0, bt.getRowCount());
 					((InterfaceMain)parentFrame).fireProperty("Document-Modified", null, doc);
 				}
 			} catch (Exception ex) {
@@ -1657,11 +1647,15 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	}
 
 	private BaseTableModel getTableModelFromScrollPane(JScrollPane sp) {
-		Object ret = ((JTable)sp.getViewport().getView()).getModel();
-		if(ret instanceof TableSorter) {
-			return (BaseTableModel)((TableSorter)ret).getTableModel();
-		} else {
-			return (BaseTableModel)ret;
+		try {
+			Object ret = ((JTable)sp.getViewport().getView()).getModel();
+			if(ret instanceof TableSorter) {
+				return (BaseTableModel)((TableSorter)ret).getTableModel();
+			} else {
+				return (BaseTableModel)ret;
+			}
+		} catch(NullPointerException ne) {
+			return null;
 		}
 	}
 
