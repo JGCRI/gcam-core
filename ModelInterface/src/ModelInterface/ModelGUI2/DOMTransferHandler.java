@@ -30,6 +30,7 @@ public class DOMTransferHandler extends TransferHandler {
 		implls = impllsIn;
 		try {
 			parser = implls.createLSParser(DOMImplementationLS.MODE_SYNCHRONOUS, null);
+			parser.setFilter(new ParseFilter());
 		} catch (DOMException de) {
 			de.printStackTrace();
 			// warn couldn't create parser ?
@@ -88,14 +89,10 @@ public class DOMTransferHandler extends TransferHandler {
 				de.printStackTrace();
 				// warn couldn't parse, might not have been XML
 				// try to append as text node
-				try {
-					Node txtNode = doc.createTextNode(temp);
-					parent.appendChild(txtNode);
-					return true;
-				} catch (DOMException de2) {
-					de2.printStackTrace();
-					// error couldn't append here, won't be able to paste return false
-				}
+				return attemptTextNodePaste(parent, temp);
+			} catch(LSException le) {
+				le.printStackTrace();
+				return attemptTextNodePaste(parent, temp);
 			}
 		}
 		return false;
@@ -124,6 +121,18 @@ public class DOMTransferHandler extends TransferHandler {
 	}
 	public int getSourceActions(JComponent c) {
 		return COPY_OR_MOVE;
+	}
+
+	private boolean attemptTextNodePaste(Node parent, String txt) {
+		try {
+			Node txtNode = doc.createTextNode(txt);
+			parent.appendChild(txtNode);
+			return true;
+		} catch (DOMException de2) {
+			de2.printStackTrace();
+			// error couldn't append here, won't be able to paste return false
+			return false;
+		}
 	}
 
 	private class TransferableXML implements Transferable {
