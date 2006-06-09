@@ -16,6 +16,7 @@ import javax.swing.KeyStroke;
 import ModelInterface.ConfigurationEditor.configurationeditor.ConfigurationEditor;
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.InputViewer;
+import ModelInterface.PPsource.PPViewer;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -171,6 +172,8 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		dbView.addMenuItems(menuMan);
 		final MenuAdder inputView = new InputViewer(this);
 		inputView.addMenuItems(menuMan);
+        final MenuAdder PPView = new PPViewer(this);
+        PPView.addMenuItems(menuMan);
 
 		// Create the Configuration editor and allow it to add its menu items to the
 		// menu system.

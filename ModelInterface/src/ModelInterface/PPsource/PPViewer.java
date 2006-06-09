@@ -40,6 +40,9 @@ import org.w3c.dom.Node;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -119,6 +122,7 @@ public class PPViewer implements ActionListener, MenuAdder
                   String.valueOf(splitPane.getDividerLocation()));
             }
             */
+            parentFrame.getContentPane().removeAll();
           }
           if(evt.getNewValue().equals(controlStr))
           {
@@ -174,7 +178,13 @@ public class PPViewer implements ActionListener, MenuAdder
     } else if(command.equals("Create"))
     {
       //creates the actual file from pressing enter on file name or clicking the create button
-      //TODO maybe add a dialoge box to confirm file create
+        //dialog box to make sure user wants to create now
+      int resp = JOptionPane.showConfirmDialog(parentFrame,"Are you sure you want to run the Preprocessor now?", 
+          "Run Preprocessor?", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+      if(resp == JOptionPane.NO_OPTION)
+      {
+        return;
+      }
         //writes the data definition file to the disk
       writeFile();
         //using written file, runs the preprocessor
@@ -233,67 +243,116 @@ public class PPViewer implements ActionListener, MenuAdder
   
   private void displayFile()
   {
-    //TODO
+    //at this point we have a file, just need to get the text from it, and 
+    //display that text in the textarea
+    if(currFile == null)
+    { //safety, incase opening a file failed
+      return;
+    }
+    
+    try
+    {
+      int holdFile = 0;
+      char fromFile;
+      String toText = "";
+      FileReader fReader = new FileReader(currFile);
+      
+      //reading the file character by character
+      while((holdFile = fReader.read()) != -1)
+      {
+        fromFile = (char)holdFile;
+        toText += fromFile;
+      }
+      fReader.close();
+      
+      //setting the text area to contain the read text
+      textArea.setText(toText);
+      
+    } catch(FileNotFoundException e)
+    {
+      System.out.println("The file "+currFile.getName()+" does not exist, how I dont know.");
+    } catch(IOException e)
+    {
+      System.out.println("Encountered an error while attempting to read from "+currFile.getName()+".");
+    }
   }
   
   private void setupPane()
   {
     pane = new JPanel();
-    pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
-    pane.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+    SpringLayout layout = new SpringLayout();
+    pane.setLayout(layout);
     
-    pane.add(createFileComponents());
-    pane.add(createDefinitionComponents());
-    pane.add(createTextArea());
+    //setting up the file name stuff
+    JLabel fLabel = new JLabel("File Name:");
+    layout.putConstraint(SpringLayout.WEST, fLabel, 10, SpringLayout.WEST, pane);
+    layout.putConstraint(SpringLayout.NORTH, fLabel, 10, SpringLayout.NORTH, pane);
+    
+    fileNameField = new JTextField(30);
+    fileNameField.setActionCommand("Create");
+    fileNameField.addActionListener(this);
+    fileNameField.setMaximumSize(fileNameField.getPreferredSize());
+    layout.putConstraint(SpringLayout.WEST, fileNameField, 5, SpringLayout.EAST, fLabel);
+    layout.putConstraint(SpringLayout.NORTH, fileNameField, 10, SpringLayout.NORTH, pane);
+    
+    //setting up label and create button
+    JLabel dLabel = new JLabel("Definition:");
+    layout.putConstraint(SpringLayout.NORTH, dLabel, 5, SpringLayout.SOUTH, fileNameField);
+    layout.putConstraint(SpringLayout.WEST, dLabel, 10, SpringLayout.WEST, pane);
+    
+    JButton cButton = new JButton("Create");
+    cButton.setActionCommand("Create");
+    cButton.addActionListener(this);
+    layout.putConstraint(SpringLayout.NORTH, cButton, 10, SpringLayout.NORTH, pane);
+    layout.putConstraint(SpringLayout.EAST, cButton, -10, SpringLayout.EAST, pane);
+    
+    //setting up text area
+    textArea = new JTextArea(25, 80);
+    JScrollPane scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+        JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    textArea.setEditable(true);
+    textArea.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+    layout.putConstraint(SpringLayout.WEST, scrollPane, 10, SpringLayout.WEST, pane);
+    layout.putConstraint(SpringLayout.NORTH, scrollPane, 5, SpringLayout.SOUTH, dLabel);
+    
+    //making the window create at the correct size
+    layout.putConstraint(SpringLayout.EAST, pane, 10, SpringLayout.EAST, scrollPane);
+    layout.putConstraint(SpringLayout.SOUTH, pane, 10, SpringLayout.SOUTH, scrollPane);
+    
+    //adding the components to the pane
+    pane.add(fLabel);
+    pane.add(fileNameField);
+    pane.add(dLabel);
+    pane.add(cButton);
+    pane.add(scrollPane);
     
     parentFrame.setContentPane(pane);
     parentFrame.pack();
   }
   
-  private Component createFileComponents()
-  {
-    JPanel myPane = new JPanel();
-    myPane.setLayout(new BoxLayout(myPane, BoxLayout.LINE_AXIS));
-    
-    JLabel fLabel = new JLabel("File Name:");
-    myPane.add(fLabel);
-    
-    fileNameField = new JTextField(30);
-    fileNameField.setActionCommand("Create");
-    fileNameField.addActionListener(this);
-    myPane.add(fileNameField);
-    
-    return myPane;
-  }
-  
-  private Component createDefinitionComponents()
-  {
-    JPanel myPane = new JPanel();
-    
-    JLabel dLabel = new JLabel("Definition:");
-    myPane.add(dLabel);
-    
-    JButton cButton = new JButton("Create");
-    cButton.setActionCommand("Create");
-    cButton.addActionListener(this);
-    myPane.add(cButton);
-    
-    return myPane;
-  }
-  
-  private Component createTextArea()
-  {
-    textArea = new JTextArea(100, 80);
-    JScrollPane scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-        JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    textArea.setEditable(true);
-    
-    return scrollPane;
-  }
-  
   private void writeFile()
   {
-    //TODO
+    //have a text file in the textarea, need to write that text to a file
+    //use as the file name the name of the file that was opened
+    
+    if(currFile == null)
+    { //safety, incase opening a file failed
+      return;
+    }
+    
+    try
+    {
+      FileWriter fWriter = new FileWriter(currFile);
+      
+      //writing the contents of the textArea to the file which was opened
+      fWriter.write(textArea.getText());
+      fWriter.flush();
+      fWriter.close();
+    } catch(IOException e)
+    {
+      System.out.println("Encountered an error while attempting to write to "+currFile.getName()+".");
+    }
+    
   }
   
   private void runPreprocess()
@@ -324,7 +383,7 @@ public class PPViewer implements ActionListener, MenuAdder
     }
     //***done initing PP logger
     
-    dSource = "modelInterfacePPsource.xml";
+    dSource = currFile.getName();
     rSource = "inputR.xml";
     dOutput = fileNameField.getText();
     if(dOutput == null)
@@ -339,6 +398,7 @@ public class PPViewer implements ActionListener, MenuAdder
     DataBuilder mainRun = new DataBuilder(dSource, rSource, dOutput);
     log.log(Level.INFO, "calling runAll in DataBuilder");
     mainRun.runAll();
-  
+    JOptionPane.showMessageDialog(parentFrame, "The Preprocessor has completed running.", "Preprocessor Completed",
+        JOptionPane.PLAIN_MESSAGE);
   }
 }
