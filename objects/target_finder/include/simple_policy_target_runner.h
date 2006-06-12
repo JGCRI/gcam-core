@@ -22,6 +22,7 @@
 */
 
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/noncopyable.hpp>
 #include "containers/include/iscenario_runner.h"
 #include "util/base/include/iparsable.h"
 
@@ -94,7 +95,7 @@ typedef std::vector<std::pair<double,double> > VectorOfPairs;
 
 class TotalPolicyCostCalculator;
 
-class SimplePolicyTargetRunner: public IScenarioRunner, IParsable {
+class SimplePolicyTargetRunner: public IScenarioRunner, IParsable, protected boost::noncopyable {
     friend class ScenarioRunnerFactory;
 public:
     virtual ~SimplePolicyTargetRunner();
