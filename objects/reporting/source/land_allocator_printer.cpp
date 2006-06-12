@@ -42,6 +42,9 @@ mRegionToPrint( aRegionToPrint ),
 mNumNodes( 0 ),
 mPrintValues( aPrintValues )
 {
+    // Imbue the output stream with the default locale from the user's machine.
+    // This is done so thousands seperators will be outputted.
+    mFile.imbue( locale( "" ) );
 }
 
 /*!
@@ -83,17 +86,17 @@ void LandAllocatorPrinter::endVisitRegion( const Region* aRegion, const int aPer
 * \param aLandNode landNode to visit.
 * \param aPeriod Period for which to visit.
 */
-void LandAllocatorPrinter::startVisitLandNode(const LandNode *aLandNode, const int aPeriod){
+void LandAllocatorPrinter::startVisitLandNode( const LandNode *aLandNode, const int aPeriod ){
     if( !mCorrectRegion ){
         return;
     }
 
     // Print the node.
-    printNode( aLandNode->getName() );
+    printNode( aLandNode, aPeriod, false );
 
     if( !mParent.empty() ){
         // Print the parent link.
-        printParentChildRelationship( aLandNode, aPeriod );
+        printParentChildRelationship( aLandNode );
     }
     mParent.push( util::replaceSpaces( makeNameFromLabel( aLandNode->getName() ) ) );
     mNumNodes++;
@@ -105,7 +108,7 @@ void LandAllocatorPrinter::startVisitLandNode(const LandNode *aLandNode, const i
 * \param aLandNode node to end visiting.
 * \param aPeriod Period for which to end visiting.
 */
-void LandAllocatorPrinter::endVisitLandNode(const LandNode *aLandNode, const int aPeriod){
+void LandAllocatorPrinter::endVisitLandNode( const LandNode *aLandNode, const int aPeriod ){
     if( !mCorrectRegion ){
         return;
     }
@@ -122,19 +125,28 @@ void LandAllocatorPrinter::startVisitLandLeaf( const LandLeaf *aLandLeaf, const 
     if( !mCorrectRegion ){
         return;
     }
-    printNode( aLandLeaf->getName(), true );
-    printParentChildRelationship( aLandLeaf, aPeriod );
+    printNode( aLandLeaf, aPeriod, true );
+    printParentChildRelationship( aLandLeaf );
     mNumNodes++;
 }
 
 /*!
-* \brief Outputs a node.
-* \details Outputs a node.  Creates a unique name for the node.
-* \param aName name of node
-*/
-void LandAllocatorPrinter::printNode( const string& aName, const bool aIsLeaf ) const{
-    string nameStripped = util::replaceSpaces( aName );
-    mFile << "\t" << makeNameFromLabel( aName ) << "[label=" << nameStripped;
+ * \brief Outputs a node.
+ * \details Outputs a node.  Creates a unique name for the node.
+ * \param aLandItem the land item to print.
+ * \param aPeriod The period.
+ * \param aIsLeaf Whether or not the node is a leaf.
+ */
+void LandAllocatorPrinter::printNode( const ALandAllocatorItem* aLandItem,
+                                      const int aPeriod, const bool aIsLeaf ) const{
+    string name = aLandItem->getName();
+    string nameStripped = util::replaceSpaces( name );
+    mFile << "\t" << makeNameFromLabel( name ) << "[label=" << "\"" << nameStripped;
+    if( mPrintValues ){
+        mFile << "\\n" << setiosflags( ios::fixed ) << setprecision( 0 ) 
+              << aLandItem->getTotalLandAllocation( aLandItem->getName(), aPeriod );
+    }
+    mFile << "\"";
     if( aIsLeaf ){
         mFile << ", shape=box";
     }
@@ -142,18 +154,13 @@ void LandAllocatorPrinter::printNode( const string& aName, const bool aIsLeaf ) 
 }
 
 /*!
-* \brief Outputs the parent-child relationship between two nodes.
-* \details Outputs the link from a parent node to its child node.
-* \param aName name of node
-*/
-void LandAllocatorPrinter::printParentChildRelationship( const ALandAllocatorItem* aLandItem,
-                                                         const int aPeriod ) const{
-    mFile << "\t" << mParent.top() << "->" << util::replaceSpaces( makeNameFromLabel( aLandItem->getName() ) );
-    if( mPrintValues ){
-        mFile << " [label=" << setiosflags(ios::fixed) << setprecision(2)
-              << aLandItem->getLandAllocation( aLandItem->getName(), aPeriod ) << "]";
-    }
-    mFile << ";" << endl;
+ * \brief Outputs the parent-child relationship between two nodes.
+ * \details Outputs the link from a parent node to its child node.
+ * \param aLandItem The child in the relationship.
+ */
+void LandAllocatorPrinter::printParentChildRelationship( const ALandAllocatorItem* aLandItem ) const{
+    mFile << "\t" << mParent.top() << "->" 
+          << util::replaceSpaces( makeNameFromLabel( aLandItem->getName() ) ) << ";" << endl;
 }
 
 /*!
@@ -163,5 +170,6 @@ void LandAllocatorPrinter::printParentChildRelationship( const ALandAllocatorIte
 * \return unique name for node.
 */
 string LandAllocatorPrinter::makeNameFromLabel( const string& aName ) const{
-    return aName + boost::lexical_cast<std::string>(mNumNodes);
+    return aName + boost::lexical_cast<std::string>( mNumNodes );
 }
+

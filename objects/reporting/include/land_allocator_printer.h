@@ -67,10 +67,10 @@ private:
     //! Whether or not to print values on the graph
     bool mPrintValues;
 
-    void printNode( const std::string& aName, const bool aIsLeaf = false ) const;
+    void printNode( const ALandAllocatorItem* aLandItem,
+                    const int aPeriod, const bool aIsLeaf ) const;
 
-    void printParentChildRelationship( const ALandAllocatorItem* aLandItem,
-                                       const int aPeriod ) const;
+    void printParentChildRelationship( const ALandAllocatorItem* aLandItem ) const;
 
     std::string makeNameFromLabel( const std::string& aName ) const;
 };
