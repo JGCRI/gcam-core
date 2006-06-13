@@ -13,6 +13,11 @@ import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
 import javax.swing.KeyStroke;
 
+import javax.swing.undo.UndoManager;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.CannotRedoException;
+
+
 import ModelInterface.ConfigurationEditor.configurationeditor.ConfigurationEditor;
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.InputViewer;
@@ -43,6 +48,8 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	public static int FILE_QUIT_MENUITEM_POS = 50;
 	public static int EDIT_COPY_MENUITEM_POS = 10;
 	public static int EDIT_PASTE_MENUITEM_POS = 11;
+	public static int EDIT_UNDO_MENUITEM_POS = 1;
+	public static int EDIT_REDO_MENUITEM_POS = 2;
 	
 	private static File propertiesFile = new File("model_interface.properties");
 	private static String oldControl;
@@ -53,7 +60,11 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	private JMenuItem quitMenu;
 	private JMenuItem copyMenu;
 	private JMenuItem pasteMenu;
+	private JMenuItem undoMenu;
+	private JMenuItem redoMenu;
 	private Properties savedProperties;
+
+	private UndoManager undoManager;
 
 	/**
 	 * Main function, creates a new thread for the gui and runs it.
@@ -154,13 +165,20 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		menuMan.addMenuItem(new JMenu("Edit"), EDIT_MENU_POS);
 
 		copyMenu = new JMenuItem("Copy");
-		copyMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
-				ActionEvent.CTRL_MASK));
+		// key stroke is system dependent
+		//copyMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
 		menuMan.getSubMenuManager(EDIT_MENU_POS).addMenuItem(copyMenu, EDIT_COPY_MENUITEM_POS);
 		pasteMenu = new JMenuItem("Paste");
-		pasteMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V,
-				ActionEvent.CTRL_MASK));
+		// key stroke is system dependent
+		//pasteMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.CTRL_MASK));
 		menuMan.getSubMenuManager(EDIT_MENU_POS).addMenuItem(pasteMenu, EDIT_PASTE_MENUITEM_POS);
+		menuMan.getSubMenuManager(EDIT_MENU_POS).addSeparator(EDIT_PASTE_MENUITEM_POS);
+
+		copyMenu.setEnabled(false);
+		pasteMenu.setEnabled(false);
+
+		setupUndo(menuMan);
+
 		/* FileChooserDemo is being removed, but I will leave this here, 
 		 * This is how I envision the menuitems to be added and hopefully all 
 		 * the listeners would be set up correctly and we won't need to keep 
@@ -180,9 +198,6 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		final MenuAdder confEditor = new ConfigurationEditor();
 		confEditor.addMenuItems(menuMan);
 		
-		copyMenu.setEnabled(false);
-		pasteMenu.setEnabled(false);
-
 		JMenuBar mb = menuMan.createMenu(); //new JMenuBar();
 		//mb.add(m);
 
@@ -267,6 +282,14 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	public JMenuItem getPasteMenu() {
 		return pasteMenu;
 	}
+	public JMenuItem getUndoMenu() {
+		// will this be needed since they will be setup in here?
+		return undoMenu;
+	}
+	public JMenuItem getRedoMenu() {
+		// will this be needed since they will be setup in here?
+		return redoMenu;
+	}
 	public void fireControlChange(String newValue) {
 		System.out.println("Going to change controls");
 		if(newValue.equals(oldControl)) {
@@ -347,5 +370,53 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	}
 	public Properties getProperties() {
 		return savedProperties;
+	}
+	private void setupUndo(MenuManager menuMan) {
+		undoManager = new UndoManager();
+		undoManager.setLimit(10);
+
+		undoMenu = new JMenuItem("Undo");
+		menuMan.getSubMenuManager(EDIT_MENU_POS).addMenuItem(undoMenu, EDIT_UNDO_MENUITEM_POS);
+		redoMenu = new JMenuItem("Redo");
+		menuMan.getSubMenuManager(EDIT_MENU_POS).addMenuItem(redoMenu, EDIT_REDO_MENUITEM_POS);
+		menuMan.getSubMenuManager(EDIT_MENU_POS).addSeparator(EDIT_REDO_MENUITEM_POS);
+
+		undoMenu.setEnabled(false);
+		redoMenu.setEnabled(false);
+
+		ActionListener undoListener = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String cmd = e.getActionCommand();
+				if(cmd.startsWith("Undo")) {
+					try {
+						undoManager.undo();
+						refreshUndoRedo();
+					} catch(CannotUndoException cue) {
+						cue.printStackTrace();
+					}
+				} else if(cmd.startsWith("Redo")) {
+					try {
+						undoManager.redo();
+						refreshUndoRedo();
+					} catch(CannotRedoException cre) {
+						cre.printStackTrace();
+					}
+				} else {
+					System.out.println("Didn't recognize: "+cmd);
+				}
+			}
+		};
+
+		undoMenu.addActionListener(undoListener);
+		redoMenu.addActionListener(undoListener);
+	}
+	public UndoManager getUndoManager() {
+		return undoManager;
+	}
+	public void refreshUndoRedo() {
+		undoMenu.setText(undoManager.getUndoPresentationName());
+		undoMenu.setEnabled(undoManager.canUndo());
+		redoMenu.setText(undoManager.getRedoPresentationName());
+		redoMenu.setEnabled(undoManager.canRedo());
 	}
 }

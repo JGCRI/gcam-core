@@ -7,6 +7,9 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.event.*;
+import javax.swing.undo.UndoManager;
+import javax.swing.undo.UndoableEdit;
+
 import java.util.Vector;
 import java.util.List;
 import java.util.LinkedList;
@@ -18,6 +21,10 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.events.EventListener;
 
+import ModelInterface.ModelGUI2.undo.NodeInsertUndoableEdit;
+import ModelInterface.ModelGUI2.undo.NodeDeleteUndoableEdit;
+import ModelInterface.InterfaceMain;
+
 public class DOMmodel implements TreeModel {
 	private Vector treeModelListeners = new Vector();
 	private Node rootNode;
@@ -28,7 +35,7 @@ public class DOMmodel implements TreeModel {
 	 * been modified so that it can update itself.
 	 * @param doc Document node which will be used to get the root of the tree
 	 */
-	public DOMmodel(Document doc) {
+	public DOMmodel(Document doc, final InterfaceMain main) {
         	rootNode = doc.getDocumentElement();
  		treeModelListeners.clear();
 		final EventTarget target = (EventTarget)doc;
@@ -42,6 +49,18 @@ public class DOMmodel implements TreeModel {
 				int[] posArr = {insPos};
 				Object[] childArr = {target};
 				TreeModelEvent tEvent = new TreeModelEvent(this, getTreePathFromNode(rel), posArr, childArr);
+				// do I have to make sure this event isn't from an undo/redo
+				// and if it is, do I not create a new edit?
+				// don't know source so this doesn't work..
+				// could do something like add some attribute to the node so we know if it had been modified
+				// and if it is a text/comment node would have to do something different. Qustions would be
+				// when to add, and when to delete the attribute( same deal for delete)
+				// also what if we put listeners for char data modified then what?
+				// hmm.. what about setting userdata on the node, should look into that
+				//if(!(aEvent.getSource() instanceof UndoableEdit)) {
+					main.getUndoManager().addEdit(new NodeInsertUndoableEdit(rel, target.getNode()));
+				//}
+				main.refreshUndoRedo();
 				fireTreeNodesInserted(tEvent);
 			}
 		}, false);
@@ -55,6 +74,12 @@ public class DOMmodel implements TreeModel {
 				int[] posArr = {insPos};
 				Object[] childArr = {target};
 				TreeModelEvent tEvent = new TreeModelEvent(this, getTreePathFromNode(rel), posArr, childArr);
+				// do I have to make sure this event isn't from an undo/redo
+				// and if it is, do I not create a new edit?
+				//if(!(aEvent.getSource() instanceof UndoableEdit)) {
+					//main.getUndoManager().addEdit(new NodeDeleteUndoableEdit(rel, target.getNode()));
+				//}
+				main.refreshUndoRedo();
 				fireTreeNodesRemoved(tEvent);
 			}
 		}, false);

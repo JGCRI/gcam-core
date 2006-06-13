@@ -186,12 +186,17 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 						evt.getOldValue().equals(controlStr+"Same")) {
 						((InterfaceMain)parentFrame).getSaveMenu().removeActionListener(thisViewer);
 						((InterfaceMain)parentFrame).getSaveAsMenu().removeActionListener(thisViewer);
+						//((InterfaceMain)parentFrame).getUndoMenu().removeActionListener(thisViewer);
+						//((InterfaceMain)parentFrame).getRedoMenu().removeActionListener(thisViewer);
 						((InterfaceMain)parentFrame).getSaveAsMenu().setEnabled(false);
+						//((InterfaceMain)parentFrame).getUndoMenu().setEnabled(false);
+						//((InterfaceMain)parentFrame).getRedoMenu().setEnabled(false);
 						((InterfaceMain)parentFrame).removePropertyChangeListener(savePropListener);
 						//((InterfaceMain)parentFrame).getQuitMenu().removeActionListener(thisViewer);
 						((InterfaceMain)parentFrame).getSaveMenu().setEnabled(false);
 						doc = null;
 						documentation = null;
+						((InterfaceMain)parentFrame).getUndoManager().discardAllEdits();
 						parentFrame.getContentPane().removeAll();
 						parentFrame.setTitle("ModelInterface");
 						if(splitPane != null) {
@@ -202,7 +207,11 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 					if(evt.getNewValue().equals(controlStr)) {
 						((InterfaceMain)parentFrame).getSaveMenu().addActionListener(thisViewer);
 						((InterfaceMain)parentFrame).getSaveAsMenu().addActionListener(thisViewer);
+						//((InterfaceMain)parentFrame).getUndoMenu().addActionListener(thisViewer);
+						//((InterfaceMain)parentFrame).getRedoMenu().addActionListener(thisViewer);
 						((InterfaceMain)parentFrame).getSaveAsMenu().setEnabled(true);
+						//((InterfaceMain)parentFrame).getUndoMenu().setEnabled(true);
+						//((InterfaceMain)parentFrame).getRedoMenu().setEnabled(true);
 						((InterfaceMain)parentFrame).addPropertyChangeListener(savePropListener);
 						//((InterfaceMain)parentFrame).getQuitMenu().addActionListener(thisViewer);
 						//((InterfaceMain)parentFrame).oldControl = "FileChooserDemo.File";
@@ -270,7 +279,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		}
 		*/
 		// Set up the tree
-		jtree = new JTree(new DOMmodel(doc));
+		jtree = new JTree(new DOMmodel(doc, (InterfaceMain)parentFrame));
 		jtree.setEditable(true);
 		jtree.getSelectionModel().setSelectionMode(
 				TreeSelectionModel.SINGLE_TREE_SELECTION);
