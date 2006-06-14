@@ -95,14 +95,9 @@ void ForestLandLeaf::calcLandAllocation( const string& aRegionName,
 }
 
 /*! \brief Return annual amount of land allocated to forest production
-* When harvestPeriod is equal to period + steps (i.e., for forests being planted now to be
-* harvested later), the method returns the amount of total forest land allocation
-* that is free for future forest production.  This is done by subtracting
-* the land set aside for future forests from the total land allocated to forests.
-* When harvestPeriod is less than period, this method will return the forest land that has been 
-* set aside previously to be harvested in that specific harvestPeriod.
-* The landAllocation variable is the total land allocated, while landToBeHarvested is an annual value.
-* It is assumed that time steps are constant for all periods.
+* Method returns the amount of land that is to be harvested for the given period.
+* Use getTotalLandAllocation() method to obtain the total amount of land that has been dedicated
+* to forestry.
 * \author James Blackwood, Steve Smith
 * \return annual amount of land allocated to forest production
 */
