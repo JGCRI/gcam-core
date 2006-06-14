@@ -1,4 +1,5 @@
 package ModelInterface;
+//asdf
 
 import java.util.*;
 import java.io.File;
@@ -39,7 +40,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	 * Unique identifier used for serializing.
 	 */
 	private static final long serialVersionUID = -9137748180688015902L;
-	
+
 	public static int FILE_MENU_POS = 0;
 	public static int EDIT_MENU_POS = 1;
 	public static int FILE_NEW_MENUITEM_POS = 0;
@@ -51,7 +52,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	public static int EDIT_PASTE_MENUITEM_POS = 11;
 	public static int EDIT_UNDO_MENUITEM_POS = 1;
 	public static int EDIT_REDO_MENUITEM_POS = 2;
-	
+
 	private static File propertiesFile = new File("model_interface.properties");
 	private static String oldControl;
 	private static InterfaceMain main;
@@ -180,9 +181,9 @@ public class InterfaceMain extends JFrame implements ActionListener {
 
 		setupUndo(menuMan);
 
-		/* FileChooserDemo is being removed, but I will leave this here, 
-		 * This is how I envision the menuitems to be added and hopefully all 
-		 * the listeners would be set up correctly and we won't need to keep 
+		/* FileChooserDemo is being removed, but I will leave this here,
+		 * This is how I envision the menuitems to be added and hopefully all
+		 * the listeners would be set up correctly and we won't need to keep
 		 * the pointer to the classes around
 		FileChooserDemo fcd = new FileChooserDemo(this);
 		fcd.addMenuItems(menuMan);
@@ -200,7 +201,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		// menu system.
 		final MenuAdder confEditor = new ConfigurationEditor();
 		confEditor.addMenuItems(menuMan);
-		
+
 		JMenuBar mb = menuMan.createMenu(); //new JMenuBar();
 		//mb.add(m);
 
@@ -360,7 +361,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
 			} else {
 				Object[] keys = subItems.keySet().toArray();
 				for(int i = 0; i < keys.length; ++i) {
-					if(sepList != null && !sepList.isEmpty() && 
+					if(sepList != null && !sepList.isEmpty() &&
 							((Integer)keys[i]).intValue() > ((Integer)sepList.first()).intValue()) {
 						((JMenu)menuValue).addSeparator();
 						sepList.remove(sepList.first());
