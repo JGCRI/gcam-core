@@ -1,5 +1,4 @@
 package ModelInterface;
-//asdf
 
 import java.util.*;
 import java.io.File;
