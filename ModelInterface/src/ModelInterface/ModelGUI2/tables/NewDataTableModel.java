@@ -2,6 +2,8 @@ package ModelInterface.ModelGUI2.tables;
 
 import ModelInterface.ModelGUI2.DOMmodel;
 import ModelInterface.ModelGUI2.Documentation;
+import ModelInterface.InterfaceMain;
+import ModelInterface.ModelGUI2.undo.FlipUndoableEdit;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
@@ -19,6 +21,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.tree.TreePath;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.undo.UndoManager;
 
 import org.apache.poi.hssf.usermodel.*;
 
@@ -203,6 +206,11 @@ public class NewDataTableModel extends BaseTableModel{
 		indCol.add(0, ind1Name);
 		flipped = !flipped;
 		fireTableStructureChanged();
+		if(row >= 0 && col >= 0) {
+			UndoManager undoManager = ((InterfaceMain)parentFrame).getUndoManager();
+			undoManager.addEdit(new FlipUndoableEdit(this));
+		}
+		((InterfaceMain)parentFrame).refreshUndoRedo();
 	}
 
 	/**

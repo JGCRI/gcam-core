@@ -5,6 +5,8 @@ import ModelInterface.ModelGUI2.DOMmodel;
 import ModelInterface.ModelGUI2.XMLDB;
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.Documentation;
+import ModelInterface.InterfaceMain;
+import ModelInterface.ModelGUI2.undo.FlipUndoableEdit;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
@@ -28,6 +30,8 @@ import javax.swing.*;
 import javax.swing.tree.TreePath;
 import javax.swing.table.TableCellRenderer;
 import org.w3c.dom.xpath.*;
+
+import javax.swing.undo.UndoManager;
 
 import com.sleepycat.dbxml.XmlValue;
 import com.sleepycat.dbxml.XmlResults;
@@ -97,6 +101,11 @@ public class ComboTableModel extends BaseTableModel{
 		// to set active rows appropriatly
 		doFilter( new Vector(tableFilterMaps.keySet()) );
 		fireTableStructureChanged();
+		if(row >= 0 && col >= 0) {
+			UndoManager undoManager = ((InterfaceMain)parentFrame).getUndoManager();
+			undoManager.addEdit(new FlipUndoableEdit(this));
+		}
+		((InterfaceMain)parentFrame).refreshUndoRedo();
 	}
 
 	public TableCellRenderer getCellRenderer(int row, int col) {
