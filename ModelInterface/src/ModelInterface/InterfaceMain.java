@@ -19,6 +19,7 @@ import javax.swing.undo.CannotRedoException;
 
 
 import ModelInterface.ConfigurationEditor.configurationeditor.ConfigurationEditor;
+import ModelInterface.DMsource.DMViewer;
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.InputViewer;
 import ModelInterface.PPsource.PPViewer;
@@ -192,6 +193,8 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		inputView.addMenuItems(menuMan);
         final MenuAdder PPView = new PPViewer(this);
         PPView.addMenuItems(menuMan);
+        final MenuAdder DMView = new DMViewer(this);
+        DMView.addMenuItems(menuMan);
 
 		// Create the Configuration editor and allow it to add its menu items to the
 		// menu system.
