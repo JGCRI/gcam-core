@@ -51,15 +51,13 @@ public class DOMmodel implements TreeModel {
 				TreeModelEvent tEvent = new TreeModelEvent(this, getTreePathFromNode(rel), posArr, childArr);
 				// do I have to make sure this event isn't from an undo/redo
 				// and if it is, do I not create a new edit?
-				// don't know source so this doesn't work..
-				// could do something like add some attribute to the node so we know if it had been modified
-				// and if it is a text/comment node would have to do something different. Qustions would be
-				// when to add, and when to delete the attribute( same deal for delete)
-				// also what if we put listeners for char data modified then what?
-				// hmm.. what about setting userdata on the node, should look into that
-				//if(!(aEvent.getSource() instanceof UndoableEdit)) {
+				// too tell if this change can from an Undo/redo(in which case I don't create a new edit)
+				// I set user data on the node under the key "isFromUndoable"
+				if(!new Boolean(true).equals(target.getNode().getUserData("isFromUndoable"))) {
 					main.getUndoManager().addEdit(new NodeInsertUndoableEdit(rel, target.getNode()));
-				//}
+				} else {
+					target.getNode().setUserData("isFromUndoable", false, null);
+				}
 				main.refreshUndoRedo();
 				fireTreeNodesInserted(tEvent);
 			}
@@ -76,9 +74,11 @@ public class DOMmodel implements TreeModel {
 				TreeModelEvent tEvent = new TreeModelEvent(this, getTreePathFromNode(rel), posArr, childArr);
 				// do I have to make sure this event isn't from an undo/redo
 				// and if it is, do I not create a new edit?
-				//if(!(aEvent.getSource() instanceof UndoableEdit)) {
-					//main.getUndoManager().addEdit(new NodeDeleteUndoableEdit(rel, target.getNode()));
-				//}
+				if(!new Boolean(true).equals(target.getNode().getUserData("isFromUndoable"))) {
+					main.getUndoManager().addEdit(new NodeDeleteUndoableEdit(rel, target.getNode()));
+				} else {
+					target.getNode().setUserData("isFromUndoable", false, null);
+				}
 				main.refreshUndoRedo();
 				fireTreeNodesRemoved(tEvent);
 			}

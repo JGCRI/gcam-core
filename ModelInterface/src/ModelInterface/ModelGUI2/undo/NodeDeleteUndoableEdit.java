@@ -34,8 +34,10 @@ public class NodeDeleteUndoableEdit extends AbstractUndoableEdit {
 		if(canUndo()) {
 			try {
 				// index position ??
+				child.setUserData("isFromUndoable", true, null);
 				parent.appendChild(child);
 			} catch(DOMException de) {
+				child.setUserData("isFromUndoable", null, null);
 				CannotUndoException e = new CannotUndoException();
 				e.initCause(de);
 				throw e;
@@ -48,8 +50,10 @@ public class NodeDeleteUndoableEdit extends AbstractUndoableEdit {
 	public void redo() throws CannotRedoException {
 		if(canRedo()) {
 			try {
+				child.setUserData("isFromUndoable", true, null);
 				parent.removeChild(child);
 			} catch(DOMException de) {
+				child.setUserData("isFromUndoable", null, null);
 				CannotRedoException e = new CannotRedoException();
 				e.initCause(de);
 				throw e;
