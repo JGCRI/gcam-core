@@ -2362,7 +2362,11 @@ public class ManipulationDriver
       varR = (ReferenceVariable)var;
       res = varR.res;
       currInfo = command.getChild("file");
-      fileName = currInfo.getAttributeValue("name")+".nc"; //storing netcdf file name
+      fileName = currInfo.getAttributeValue("name"); //storing netcdf file name
+      if(!fileName.endsWith(".nc"))
+      {
+        fileName += ".nc";
+      }
       
 //**************************DEFINING FILE*********************************
       ncfile = NetcdfFileWriteable.createNew(fileName, true);

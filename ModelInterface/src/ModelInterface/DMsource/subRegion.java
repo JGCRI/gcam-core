@@ -62,7 +62,21 @@ public class subRegion extends Region
   //returns the matrix of values for the specified variable during the specified year
   public double[][] getM(String var, String year)
   {
-    return (double[][])((TreeMap)data.get(var)).get(year);
+    TreeMap holdVar = ((TreeMap)data.get(var));
+    
+    if(holdVar.containsKey(year))
+    { //user enterd a time which exists, return it
+      return (double[][])holdVar.get(year);
+    } else
+    { //test if the user just forgot the .0 at the end of time, add for them
+      if(holdVar.containsKey(year+".0"))
+      {
+        return (double[][])holdVar.get(year+".0");
+      } else
+      { //this time just straight up doesnt exist
+        return null;
+      }
+    }
   }
   
   public byte[][] getBitMask()
