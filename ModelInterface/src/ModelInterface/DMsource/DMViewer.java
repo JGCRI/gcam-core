@@ -56,7 +56,6 @@ import java.util.logging.SimpleFormatter;
 import ModelInterface.InterfaceMain;
 import ModelInterface.MenuAdder;
 import ModelInterface.InterfaceMain.MenuManager;
-import ModelInterface.ModelGUI2.DOMPasteboard;
 import ModelInterface.ModelGUI2.DOMmodel;
 import ModelInterface.ModelGUI2.Documentation;
 import ModelInterface.ModelGUI2.XMLFilter;
