@@ -101,7 +101,7 @@ public class Preprocess
       log.setUseParentHandlers(false);
       
       cHand = new ConsoleHandler();
-      cHand.setLevel(Level.parse(logLevel));//TODO use ALL for diagnostics, WARNING usually
+      cHand.setLevel(Level.parse(logLevel));
       log.addHandler(cHand);
       fHand = new FileHandler("PPLog.log");
       fHand.setLevel(Level.ALL);
@@ -136,6 +136,6 @@ public class Preprocess
     //((RegionMask)bigTest.maskList.get("Maryland")).printMask();
     //((RegionMask)bigTest.maskList.get("Texas")).printMask();
     //bigTest.dataTree.printTreeXML();
-    log.log(Level.INFO, "preprocessor completed running");
+    log.log(Level.INFO, "Preprocessor completed running");
   }
 }

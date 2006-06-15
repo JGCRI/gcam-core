@@ -9,15 +9,19 @@ public class MatrixRepository implements DataRepository
    * implements as a treemap of vars -> treemap of times -> double[][]
    */
   TreeMap<String, TreeMap<Double, double[][]>> root;
+
   double[][] currLayer;
+
   String currName;
+
   int xSize;
+
   int ySize;
-  
-//*********************************************************
-//*****************Class Constructors**********************
-//********************************************************* 
-  
+
+  //*********************************************************
+  //*****************Class Constructors**********************
+  //********************************************************* 
+
   public MatrixRepository()
   {
     root = new TreeMap<String, TreeMap<Double, double[][]>>();
@@ -25,6 +29,7 @@ public class MatrixRepository implements DataRepository
     ySize = 180;
     currName = "";
   }
+
   public MatrixRepository(int x, int y)
   {
     root = new TreeMap<String, TreeMap<Double, double[][]>>();
@@ -32,48 +37,50 @@ public class MatrixRepository implements DataRepository
     ySize = y;
     currName = "";
   }
-  
-//*********************************************************
-//*************Begin Functions Proper**********************
-//*********************************************************
-  
+
+  //*********************************************************
+  //*************Begin Functions Proper**********************
+  //*********************************************************
+
   public void changeLayer(String varName, double time)
   {
     if(!currName.equals((varName+time)))
     {
       double[][] thisLayer = createLayer(varName, time);
-      
+
       currLayer = thisLayer;
       currName = (varName+time);
     }
   }
+
   public double[][] createLayer(String varName, double time)
   {
     if(!root.containsKey(varName))
     { //create variable
       root.put(varName, new TreeMap<Double, double[][]>());
     }
-    
+
     TreeMap<Double, double[][]> inVar = root.get(varName);
     if(!inVar.containsKey(time))
     { //create this field matrix
       double[][] newb = new double[xSize][ySize];
       //filling this new layer with NaN's
-      for(int i = 0; i < xSize; i ++)
-        for(int k = 0; k < ySize; k++)
+      for(int i = 0; i<xSize; i++)
+        for(int k = 0; k<ySize; k++)
         {
           newb[i][k] = Double.NaN;
         }
-      
+
       inVar.put(time, newb);
     }
-    
+
     return inVar.get(time);
   }
+
   public double[][] getLayer(String varName, double time)
   {
     changeLayer(varName, time);
-    
+
     return currLayer;
   }
 
@@ -81,10 +88,11 @@ public class MatrixRepository implements DataRepository
   {
     currLayer[X][Y] = value;
   }
+
   public void setValue(String varName, double time, int X, int Y, double value)
   {
     changeLayer(varName, time);
-    
+
     setValue(X, Y, value);
   }
 
@@ -101,28 +109,29 @@ public class MatrixRepository implements DataRepository
       }
     } catch(ArrayIndexOutOfBoundsException e)
     {
-      System.out.println("SEVERE: ("+X+","+Y+") out of bounds("+xSize+","+ySize+") - PROGRAM TERMINATING");
+      System.out.println("SEVERE: ("+X+","+Y+") out of bounds("+xSize+","+ySize
+          +") - PROGRAM TERMINATING");
       System.exit(1);
     }
-    
-    
-    
+
   }
+
   public void addValue(String varName, double time, int X, int Y, double value)
   {
     changeLayer(varName, time);
-    
+
     addValue(X, Y, value);
-  }  
-  
+  }
+
   public double getValue(int X, int Y)
   {
     return currLayer[X][Y];
   }
+
   public double getValue(String varName, double time, int X, int Y)
   {
     changeLayer(varName, time);
-    
+
     return getValue(X, Y);
   }
 
@@ -139,8 +148,7 @@ public class MatrixRepository implements DataRepository
     TreeMap<Double, double[][]> overwrite;
     double[][] holdTime;
     double[][] overwriteTime;
-    
-    
+
     //make sure hold exists and the var to overwrite exists
     if((!root.containsKey(holdName))||(!root.containsKey(varName)))
     {
@@ -148,7 +156,7 @@ public class MatrixRepository implements DataRepository
     }
     hold = root.get(holdName);
     overwrite = root.get(varName);
-    
+
     //iterate through each time in hold
     iH = hold.entrySet().iterator();
     while(iH.hasNext())
@@ -162,20 +170,20 @@ public class MatrixRepository implements DataRepository
       }
       holdTime = holdEntry.getValue();
       overwriteTime = overwrite.get(thisTime);
-      
+
       //actually putting them together
       overwriteTime = overMerge(overwriteTime, holdTime);
       //replaciung the old info with this new info
       overwrite.put(thisTime, overwriteTime);
     }
-    
+
     //we have completely put hold's data in the passed var
     //remove hold
     root.remove(holdName);
-    
+
     return 1; //success
   }
-  
+
   public TreeMap<String, TreeMap<Double, Double>> getAllLayers(int X, int Y)
   {
     /*
@@ -185,7 +193,7 @@ public class MatrixRepository implements DataRepository
      */
     TreeMap<String, TreeMap<Double, Double>> toReturn = new TreeMap<String, TreeMap<Double, Double>>();
     TreeMap<Double, Double> holdVar;
-    
+
     Map.Entry<String, TreeMap<Double, double[][]>> varEntry;
     Map.Entry<Double, double[][]> timeEntry;
     Iterator<Map.Entry<Double, double[][]>> iT;
@@ -193,7 +201,7 @@ public class MatrixRepository implements DataRepository
     Double value;
     String varName;
     Double timeName;
-    
+
     while(iV.hasNext())
     {
       varEntry = iV.next();
@@ -204,7 +212,7 @@ public class MatrixRepository implements DataRepository
         timeEntry = iT.next();
         timeName = timeEntry.getKey();
         value = timeEntry.getValue()[X][Y];
-        
+
         if(!Double.isNaN(value))
         {
           if(!toReturn.containsKey(varName))
@@ -212,16 +220,17 @@ public class MatrixRepository implements DataRepository
             toReturn.put(varName, new TreeMap<Double, Double>());
           }
           holdVar = toReturn.get(varName);
-          
+
           holdVar.put(timeName, value);
         }
       }
     }
-    
+
     return toReturn;
   }
 
-  public Map<String, Map<String, Map<Point2D.Double, Double>>> getRegion(int X, int Y, double[][] weights, double xL, double yL, double res)
+  public Map<String, Map<String, Map<Point2D.Double, Double>>> getRegion(int X, int Y,
+      double[][] weights, double xL, double yL, double res)
   {
     /*
      * X and Y are the top left corner
@@ -236,18 +245,18 @@ public class MatrixRepository implements DataRepository
     String varName;
     Double timeName;
     double currXL, currYL;
-    
+
     toReturn.put("weight", new LinkedHashMap<String, Map<Point2D.Double, Double>>());
     holdVar = toReturn.get("weight");
     holdVar.put("0", new LinkedHashMap<Point2D.Double, Double>());
     holdTime = holdVar.get("0");
     currXL = xL;
-    for(int x = 0; x < (weights[0].length); x++)
+    for(int x = 0; x<(weights[0].length); x++)
     {
       currYL = (yL-res);
-      for(int y = (weights.length-1); y >= 0; y--)
+      for(int y = (weights.length-1); y>=0; y--)
       {
-        if(weights[(y)][(x)] > 0)
+        if(weights[(y)][(x)]>0)
         {
           //add weight
           Point2D.Double hold = new Point2D.Double(currXL, currYL);
@@ -257,11 +266,13 @@ public class MatrixRepository implements DataRepository
       }
       currXL += res;
     }
-    
+
     while(iV.hasNext())
     {
       varEntry = iV.next();
       varName = varEntry.getKey();
+      //some variables do not exist in root.entrySet by this point
+      //System.out.println(varName);
       toReturn.put(varName, new LinkedHashMap<String, Map<Point2D.Double, Double>>());
       holdVar = toReturn.get(varName);
       iT = varEntry.getValue().entrySet().iterator();
@@ -271,20 +282,21 @@ public class MatrixRepository implements DataRepository
         timeName = timeEntry.getKey();
         holdVar.put(timeName.toString(), new LinkedHashMap<Point2D.Double, Double>());
         holdTime = holdVar.get(timeName.toString());
-        
+
         changeLayer(varName, timeName);
-        
+
         currXL = xL;
-        for(int x = 0; x < (weights[0].length); x++)
+        for(int x = 0; x<(weights[0].length); x++)
         {
           currYL = (yL-res);
-          for(int y = (weights.length-1); y >= 0; y--)
+          for(int y = (weights.length-1); y>=0; y--)
           {
-            if(weights[(y)][(x)] > 0)
+            if(weights[(y)][(x)]>0)
             {
               //get this point's value
               //add it to toReturn
-              holdTime.put(new Point2D.Double(currXL, currYL), (currLayer[x+X][Y-((weights.length-1)-y)]));
+              holdTime.put(new Point2D.Double(currXL, currYL), (currLayer[x+X][Y
+                  -((weights.length-1)-y)]));
             }
             currYL -= res;
           }
@@ -292,36 +304,37 @@ public class MatrixRepository implements DataRepository
         }
       }
     }
-    
+    //System.out.println("---");
+
     return toReturn;
   }
-  
-//*********************************************************
-//*************Begin Private Functions*********************
-//*********************************************************
-  
+
+  //*********************************************************
+  //*************Begin Private Functions*********************
+  //*********************************************************
+
   private double[][] overMerge(double[][] oldData, double[][] newData)
   {
-    if((oldData.length != newData.length)||(oldData[0].length != newData[0].length))
+    if((oldData.length!=newData.length)||(oldData[0].length!=newData[0].length))
     {
       return null;
     }
     double[][] toReturn = oldData;
-    
-    for(int i = 0; i < oldData.length; i++)
+
+    for(int i = 0; i<oldData.length; i++)
     {
-      for(int k = 0; k < oldData[0].length; k++)
+      for(int k = 0; k<oldData[0].length; k++)
       {
         if(!Double.isNaN(newData[i][k]))
         {
           //then we use the new value, otherwise just keep old value
           toReturn[i][k] = newData[i][k];
         }
-      } 
+      }
     }
-    
+
     //will now have a mesh of new and old values (new wherever they exist)
     return toReturn;
   }
-  
+
 }

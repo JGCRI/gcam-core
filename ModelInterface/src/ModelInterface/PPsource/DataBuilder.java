@@ -124,6 +124,7 @@ public class DataBuilder
     rSource = r;
     outFile = o;
     log.log(Level.CONFIG, "DataBuilder seed files: "+i+", "+r+", "+o);
+    //can change the Index type used to change memory behavior
     dataStruct = new FlatIndex(-180, 180, -90, 90);
     regionList = new TreeSet();
     maskList = new TreeMap();
@@ -1554,6 +1555,7 @@ public class DataBuilder
   //done reading from XML file
     
 
+  //checking for overwrite and setting basic information (avg, ref, units)
     if(dataAvg.containsKey(dataName))
     {
       //then we are overwriting this data!
@@ -1579,6 +1581,7 @@ public class DataBuilder
       }
       //done settign avg/add and references
     }
+  //done doing overwrite check
     
   //reading the data from the file
     try 
@@ -2801,6 +2804,8 @@ public class DataBuilder
   
   private void addPolyShapeFileEnum(Element currFile)
   {
+    // a feature is a piece of data (a polygon) an attribute is a name
+    //of this feature (a data name)
     log.log(Level.FINER, "begin function");
     
     List infoChildren;
@@ -3023,11 +3028,6 @@ public class DataBuilder
             //done settign avg/add ref and units
           }
           
-          if(target.equals("Central Intelligence Agency CIA"))
-          {
-            System.out.println("CIA feature found");
-          }
-          
           if(env instanceof Point)
           {
             dataValue = new Double(1); //sending 1 as the value, so a full overlap
@@ -3082,7 +3082,7 @@ public class DataBuilder
              * though, when running with verbose garbage collection there is alot of
              * memory getting picked up in this section. either way, the program significantly
              * slows down here, and memory usage balloons. Memory usage is already very high,
-             * because there is huge double matricies being stored.
+             * because there are huge double matricies being stored.
              * Actual objects which are holding most memory are coordinants.
              * This may be because a Polygon is defined by these coordinants, so when you have
              * a large poly with detailed boarders there are an immence number of coords.

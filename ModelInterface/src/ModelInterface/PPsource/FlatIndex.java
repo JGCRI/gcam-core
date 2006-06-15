@@ -76,7 +76,6 @@ public class FlatIndex implements DataIndex
       init(val.width);
     }
     
-    //!!!!!!!!!!
     //System.out.println("block x: "+val.x+"-"+(val.x+val.width));
     //System.out.println("block y: "+val.y+"-"+(val.y+val.height));
     
