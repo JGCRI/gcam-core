@@ -968,6 +968,9 @@ public class DataBuilder
   
   private void addUNEPData(Element currFile)
   {
+    //Data from the United Nations Environment Program
+    //txt file with some specific tags in the beginning
+    //these tags tell where the data is and what resolution it is stored at
     log.log(Level.FINER, "begin function");
     boolean avg = true;
     boolean dec = true;

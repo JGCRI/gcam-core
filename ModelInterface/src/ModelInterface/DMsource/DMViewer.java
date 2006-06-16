@@ -414,6 +414,7 @@ public class DMViewer implements ActionListener, MenuAdder
           JOptionPane.PLAIN_MESSAGE);
     } catch(NullPointerException e)
     {
+      e.printStackTrace();
       JOptionPane.showMessageDialog(parentFrame, "Data Manipulator requires a dataset to run.", "DataManipulator Error",
           JOptionPane.PLAIN_MESSAGE);
       return;

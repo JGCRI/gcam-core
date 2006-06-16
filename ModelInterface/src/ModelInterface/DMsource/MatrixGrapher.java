@@ -89,7 +89,7 @@ public class MatrixGrapher implements ActionListener
         openWindows--;
       }
     });
-    //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    //frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
     JPanel pane = new JPanel();
     pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
