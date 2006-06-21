@@ -104,7 +104,8 @@ public class Preprocess
       cHand.setLevel(Level.parse(logLevel));
       log.addHandler(cHand);
       fHand = new FileHandler("PPLog.log");
-      fHand.setLevel(Level.ALL);
+      fHand.setLevel(Level.parse(logLevel));//TODO use ALL for diagnostics, WARNING usually
+      //fHand.setLevel(Level.ALL);
       fHand.setFormatter(new SimpleFormatter());
       log.addHandler(fHand);
       //***done initing PP logger

@@ -1597,7 +1597,13 @@ public class DataBuilder
       Index in = ma2Array.getIndex();
       int i = 0;
       int k = 0;
-      float NaN = data.findAttribute("missing_value").getNumericValue().floatValue();
+      ucar.nc2.Attribute tempAttr = data.findAttribute("missing_value");
+      float NaN;
+      if(tempAttr != null) {
+	      NaN = tempAttr.getNumericValue().floatValue();
+      } else {
+	      NaN = Float.POSITIVE_INFINITY;
+      }
 
       for(double y = (90-res); y >= -90; y-=res)
       {
