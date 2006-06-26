@@ -6,11 +6,13 @@
  */
 
 #include "util/base/include/definitions.h"
+#include <cassert>
+#include <cfloat>
+
 #include "emissions/include/asimple_carbon_calc.h"
 #include "util/base/include/ivisitor.h"
 #include "util/base/include/util.h"
-#include <cassert>
-#include <cfloat>
+#include "land_allocator/include/land_use_history.h"
 
 using namespace std;
 using namespace xercesc;
@@ -22,12 +24,21 @@ using namespace xercesc;
 ASimpleCarbonCalc::ASimpleCarbonCalc() : mCurrentEmissions( getStartYear(), getEndYear() ),
                                          mCalculated( getStartYear(), getEndYear() ),
                                          mTotalEmissions( getStartYear(), getEndYear() ),
-                                         mIsFirstTime( true )
+                                         mIsFirstTime( true ),
+                                         mHistoricalShare( 0 ),
+                                         mLandUseHistory( 0 )
 {
 }
 
 //! Default destructor
 ASimpleCarbonCalc::~ASimpleCarbonCalc() {
+}
+
+void ASimpleCarbonCalc::initLandUseHistory( const LandUseHistory* aHistory,
+                                            const double aShare )
+{
+    mLandUseHistory = aHistory;
+    mHistoricalShare = aShare;
 }
 
 void ASimpleCarbonCalc::calc( const int aPeriod ) {
@@ -91,11 +102,44 @@ void ASimpleCarbonCalc::accept( IVisitor* aVisitor, const int aPeriod ) const {
 
 /*!
  * \brief Get the land usage for a year.
- * \param aYear Year.
+ * \details Returns the land usage for a year. An appropriate historical or
+ *          calculated value will be returned depending on the year.
  * \return Land usage for the year.
  */
-double ASimpleCarbonCalc::getLandUse( const int aYear ) const {
-    return interpYearHelper( mLandUse, aYear );
+double ASimpleCarbonCalc::getLandUse( const unsigned int aYear ) const {
+    // TODO: Make this dynamic.
+    const unsigned int basePeriod = 1;
+
+    // Store the first calculated year to save time.
+    static const unsigned int baseYear
+        = static_cast<unsigned int>( scenario->getModeltime()->getper_to_yr( basePeriod ) );
+
+    // TODO: Determine what to do if the history overlaps with calculated
+    // values.
+
+    double landUse;
+    // If the year is within the range of the history use the historical
+    // allocation. The land use history may be null if none was read-in.
+    unsigned int maxHistoryYear = 0;
+    if( mLandUseHistory ){
+        maxHistoryYear = mLandUseHistory->getMaxYear();
+    }
+
+    if( aYear < maxHistoryYear ){
+        landUse = mHistoricalShare * mLandUseHistory->getAllocation( aYear );
+    }
+    // If the year is between the last historical year and the first
+    // calculated year interpolate between the two.
+    else if( aYear < baseYear && maxHistoryYear != 0 ){
+        landUse = util::linearInterpolateY( aYear, maxHistoryYear, baseYear,
+                                            mHistoricalShare * mLandUseHistory->getAllocation( maxHistoryYear ),
+                                            mLandUse[ basePeriod ] );
+    }
+    // Otherwise use data interpolated from the current data.
+    else {
+        landUse = interpYearHelper( mLandUse, aYear );
+    }
+    return landUse;
 }
 
 /*!

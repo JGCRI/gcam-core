@@ -18,6 +18,7 @@
 // Forward declarations
 class IInfo;
 class Tabs;
+class LandUseHistory;
 
 /*!
  * \brief An interface to an object responsible for determining the annual
@@ -58,6 +59,16 @@ public:
      * \brief Complete the initialization of the carbon calculator.
      */
 	virtual void completeInit() = 0;
+
+    /*!
+     * \brief Initialize the historical land use for the carbon calculation.
+     * \details Initializes the carbon calculation with values for the historical
+     *          land use of the leaf containing the carbon calculator.
+     * \param aHistory Historical land use object which may be null.
+     * \param aShare Estimated share of total land used by the containing leaf.
+     */
+    virtual void initLandUseHistory( const LandUseHistory* aHistory,
+                                     const double aShare ) = 0;
 
     /*!
      * \brief Conduct carbon calculations for a period.

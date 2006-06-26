@@ -13,6 +13,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include "util/base/include/time_vector.h"
 #include "emissions/include/icarbon_calc.h"
+class LandUseHistory;
 
 /*!
  * \brief The abstract base class of all simple carbon content calculators.
@@ -31,6 +32,9 @@ public:
 	virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const = 0;
 
 	virtual void completeInit() = 0;
+
+    virtual void initLandUseHistory( const LandUseHistory* aHistory,
+                                     const double aShare );
 
     virtual void calc( const int aPeriod );
 
@@ -71,7 +75,21 @@ protected:
     //! Whether this is the first time the period has been calculated.
     objects::PeriodVector<bool> mIsFirstTime;
 
-    double getLandUse( const int aYear ) const;
+    /*! 
+     * \brief The land use history for the land leaf or it's parent land node.
+     * \details Weak pointer to the land use history either for this leaf
+     *          or the parent land type. The historical land share will be set to
+     *          1 if this is the land use history for the leaf, and the historical share
+     *          if it is for the parent land type.
+     */
+    const LandUseHistory* mLandUseHistory;
+
+    /*! 
+     * \brief Constant share of historical land to be assigned to this leaf.
+     */
+    double mHistoricalShare;
+
+    double getLandUse( const unsigned int aYear ) const;
 
     void calcAboveGroundCarbonEmission( const unsigned int aYear,
                                         const bool aIsCurrentYear );
