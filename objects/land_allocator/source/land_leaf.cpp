@@ -10,6 +10,7 @@
 #include <vector>
 #include <cassert>
 #include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "util/base/include/xml_helper.h"
 #include "marketplace/include/marketplace.h"
@@ -26,14 +27,19 @@ using namespace xercesc;
 extern Scenario* scenario;
 
 /*! \brief Constructor.
-* \author James Blackwood
-*/
-LandLeaf::LandLeaf():
+ * \author James Blackwood
+ * \param aName Product name.
+ */
+LandLeaf::LandLeaf( const string& aName ):
 mIntrinsicYieldMode( 0 ),
 mYield( scenario->getModeltime()->getmaxper(), -1 ),
 mCalObservedYield( 0 ),
 mAgProdChange( 1 )
-{}
+{
+    // Can't use initializer because mName is a member of ALandAllocatorItem,
+    // not LandLeaf.
+    mName = aName;
+}
 
 //! Default destructor
 LandLeaf::~LandLeaf() {
@@ -63,15 +69,42 @@ ALandAllocatorItem* LandLeaf::getChildAt( const size_t aIndex ) {
     return 0;
 }
 
-/*! \brief Parses any attributes specific to derived classes
-*
-* Method parses any input data attributes (not child nodes, see XMLDerivedClassParse) that are specific to any classes derived from this class.
+/*! \brief Set data members from XML input
 *
 * \author James Blackwood
-* \param nodeName The name of the curr node. 
-* \param curr pointer to the current node in the XML input tree
+* \param node pointer to the current node in the XML input tree
 */
-bool LandLeaf::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurr ){
+bool LandLeaf::XMLParse( const DOMNode* aNode ){
+
+    // assume we are passed a valid node.
+    assert( aNode );
+    
+    // Set the node name.
+    mName = XMLHelper<string>::getAttr( aNode, "name" );
+
+    // get all the children.
+    DOMNodeList* nodeList = aNode->getChildNodes();
+    
+    for( unsigned int i = 0; i < nodeList->getLength(); ++i ){
+        const DOMNode* curr = nodeList->item( i );
+        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+
+        if( nodeName == "#text" ) {
+            continue;
+        }
+        if ( !XMLDerivedClassParse( nodeName, curr ) ){
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
+                    << getXMLName() << "." << endl;
+        }
+    }
+
+    return true;
+}
+
+bool LandLeaf::XMLDerivedClassParse( const string &aNodeName, const DOMNode *aCurr ){
+    // Allow derived classes to override.
     return false;
 }
 
@@ -110,6 +143,8 @@ void LandLeaf::initCarbonCycle(){
     if( !mCarbonContentCalc.get() ){
         mCarbonContentCalc.reset( new ProductionCarbonCalc );
     }
+
+    // Initialize all historical land allocations.
 }
 
 void LandLeaf::addLandUsage( const string& aLandType,
@@ -138,11 +173,28 @@ bool LandLeaf::isProductionLeaf() const {
 *
 * \author James Blackwood
 */
-void LandLeaf::setInitShares( const double aLandAllocationAbove, const int aPeriod ) {
+void LandLeaf::setInitShares( const double aLandAllocationAbove,
+                              const LandUseHistory* aLandUseHistory,
+                              const int aPeriod )
+{
     if ( aLandAllocationAbove > util::getSmallNumber() ) {
         mShare[ aPeriod ] = mLandAllocation[ aPeriod ] / aLandAllocationAbove;
         assert( util::isValidNumber( mShare[ aPeriod ] ) );
     }
+
+    // Now that the leaf share is known set the land use history.
+    initLandUseHistory( aLandUseHistory, aPeriod );
+}
+
+/*!
+ * \brief Initialize the land use history for the leaf.
+ * \param aLandUseHistory Land use history container.
+ * \param aPeriod Model period to assume is the first calibrated period.
+ */
+void LandLeaf::initLandUseHistory( const LandUseHistory* aLandUseHistory,
+                                   const int aPeriod )
+{
+    mCarbonContentCalc->initLandUseHistory( aLandUseHistory, mShare[ aPeriod ] );
 }
 
 /*! \brief Calculate the Intrinsic Yield Mode
@@ -338,6 +390,10 @@ void LandLeaf::applyAgProdChange( const string& aLandType,
 
     const Modeltime* modeltime = scenario->getModeltime();
     int timestep = modeltime->gettimestep( aPeriod );
+
+    // Store the cumulative technical change. Adjust the intrinisic yield mode
+    // by the cumulative as it was set in the base period and has not been
+    // adjusted in the interim.
     mAgProdChange[ aPeriod ] = previousAgProdChange * pow( 1 + aAgProdChange, timestep );
     mIntrinsicYieldMode[ aPeriod ] *= mAgProdChange[ aPeriod ];
 }
@@ -452,10 +508,13 @@ void LandLeaf::addChild( ALandAllocatorItem* aChild ) {
 double LandLeaf::getLandAllocation( const string& aProductName,
                                     const int aPeriod ) const
 {
-    if ( aProductName == mName ) {
-        return mLandAllocation[ aPeriod ];
-    }
-    return 0;
+    assert( aProductName == mName );
+    return getLandAllocationInternal( aPeriod );
+}
+
+double LandLeaf::getLandAllocationInternal( const int aPeriod ) const
+{
+    return mLandAllocation[ aPeriod ];
 }
 
 /*! \brief Get total land allocation.
@@ -465,10 +524,15 @@ double LandLeaf::getLandAllocation( const string& aProductName,
 * \author James Blackwood
 * \return the LandAllocation at this node, if the productName matches the name of this landType.
 */
-double LandLeaf::getTotalLandAllocation( const string& aProductName,
+double LandLeaf::getTotalLandAllocation( const bool aProductionOnly, 
                                          const int aPeriod ) const
 {
-    return getLandAllocation( aProductName, aPeriod );
+    // Check if only production leaf allocation is requested and this is not a
+    // production leaf.
+    if( aProductionOnly && !isProductionLeaf() ){
+        return 0;
+    }
+    return getLandAllocationInternal( aPeriod );
 }
 
 /*! \brief Returns the baseLandAllocation of this leaf.
@@ -517,6 +581,7 @@ void LandLeaf::csvOutput( const string& aRegionName ) const {
 }
 
 void LandLeaf::dbOutput( const string& aRegionName ) const {
+    // TODO: Won't this be wrong any time two leaves have the same name?
     ALandAllocatorItem::dbOutput( aRegionName );
 
     const Modeltime* modeltime = scenario->getModeltime();

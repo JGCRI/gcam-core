@@ -27,48 +27,6 @@ ALandAllocatorItem::ALandAllocatorItem()
 ALandAllocatorItem::~ALandAllocatorItem() {
 }
 
-/*! \brief Set data members from XML input
-*
-* \author James Blackwood
-* \param node pointer to the current node in the XML input tree
-*/
-void ALandAllocatorItem::XMLParse( const DOMNode* aNode ){
-
-    // assume we are passed a valid node.
-    assert( aNode );
-    
-    // Set the node name.
-    mName = XMLHelper<string>::getAttr( aNode, "name" );
-
-    // get all the children.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    for( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        const DOMNode* curr = nodeList->item( i );
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "landAllocation" ) {
-            XMLHelper<double>::insertValueIntoVector( curr, mLandAllocation, scenario->getModeltime() ); 
-        }
-        else if ( !XMLDerivedClassParse( nodeName, curr ) ){
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                    << getXMLName() << "." << endl;
-        }
-    }
-}
-
-/*! \brief Sets the name of this ALandAllocatorItem.
-* \author James Blackwood
-*/
-void ALandAllocatorItem::setName( const string& aName ) {
-    mName = aName;
-}
-
 /*! \brief This method is called from the node version of calcLandShares and it
 *          normalizes each share.
 * \param aSum The sum of all the children's shares before normalization.

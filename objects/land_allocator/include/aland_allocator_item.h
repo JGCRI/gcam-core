@@ -17,6 +17,8 @@
 
 #include "containers/include/tree_item.h"
 #include "util/base/include/ivisitable.h"
+#include "util/base/include/iparsable.h"
+#include "util/base/include/iround_trippable.h"
 #include "util/base/include/time_vector.h"
 
 // For LandUsageType enum.
@@ -28,6 +30,7 @@ class Summary;
 class IInfo;
 class Tabs;
 class GDP;
+class LandUseHistory;
 
 /*!
  * \brief A single item in the land allocator tree.
@@ -36,15 +39,16 @@ class GDP;
  *          class so that it can make use of the tree library functions.
  *
  *          <b>XML specification for ALandAllocatorItem</b>
- *          - XML name: \c None, derived classes have names.
+ *          - XML name: Not parsed
  *          - Contained by: TreeLandAllocator
  *          - Parsing inherited from class: None
- *          - Attributes: \c name ALandAllocator::mName
- *          - Elements:
- *              - \c landAllocation ALandAllocator::mLandAllocation
+ *          - Attributes: None
+ *          - Elements: None
  */
 class ALandAllocatorItem : public TreeItem<ALandAllocatorItem>,
-                           public IVisitable
+                           public IVisitable,
+                           public IParsable,
+                           public IRoundTrippable
 {
 public:
     ALandAllocatorItem();
@@ -61,18 +65,22 @@ public:
     
     virtual ALandAllocatorItem* getChildAt( const size_t aIndex ) = 0;
     
-    void XMLParse( const xercesc::DOMNode* aNode );
+    // IParsable
+    virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
     
-    void toDebugXML( const int aPeriod,
-                     std::ostream& aOut,
-                     Tabs* aTabs ) const;
-    
+    // IRoundTrippable
     virtual void toInputXML( std::ostream& aOut,
                              Tabs* aTabs ) const = 0;
     
-    const std::string& getName() const;
+    // IVisitable
+	virtual void accept( IVisitor* aVisitor,
+                         const int aPeriod ) const = 0;
 
-    void setName( const std::string& aName );
+    void toDebugXML( const int aPeriod,
+                     std::ostream& aOut,
+                     Tabs* aTabs ) const;
+
+    const std::string& getName() const;
 
     double getShare( const int aPeriod ) const;
 
@@ -86,7 +94,9 @@ public:
     virtual double getLandAllocation( const std::string& aProductName,
                                       const int aPeriod ) const = 0;
 
-    virtual double getTotalLandAllocation( const std::string& aProductName,
+    virtual double getLandAllocationInternal( const int aPeriod ) const = 0;
+
+    virtual double getTotalLandAllocation( const bool aProductionOnly,
                                            const int aPeriod ) const = 0;
 
     virtual double getBaseLandAllocation( const int aPeriod ) const = 0;
@@ -95,6 +105,7 @@ public:
                                   const int aPeriod );
 
     virtual void setInitShares( const double aLandAllocationAbove,
+                                const LandUseHistory* aLandUseHistory,
                                 const int aPeriod ) = 0;
 
     virtual void setIntrinsicYieldMode( const double aIntrinsicRateAbove,
@@ -175,9 +186,6 @@ public:
 
     virtual void updateSummary ( Summary& aSummary,
                                  const int aPeriod ) = 0;
-
-	virtual void accept( IVisitor* aVisitor,
-                         const int aPeriod ) const = 0;
 
 protected:
     //! Percent of land

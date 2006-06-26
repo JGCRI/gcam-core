@@ -7,6 +7,7 @@
 
 #include "util/base/include/definitions.h"
 #include "land_allocator/include/unmanaged_land_leaf.h"
+#include "land_allocator/include/land_use_history.h"
 #include "util/base/include/xml_helper.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/scenario.h"
@@ -26,7 +27,8 @@ extern Scenario* scenario;
 * \author James Blackwood
 */
 UnmanagedLandLeaf::UnmanagedLandLeaf():
-mHistoryYear( defaultHistoryYear() )
+// Default the name to the empty string. It will be read in during XML parsing.
+LandLeaf( "" )
 {}
 
 //! Default destructor
@@ -37,14 +39,20 @@ bool UnmanagedLandLeaf::XMLDerivedClassParse( const string& nodeName, const DOMN
     if( nodeName == GhgInput::getXMLNameStatic() ){
         parseContainerNode( curr, mGHGs, new GhgInput() );
     }
-    else if( nodeName == "historyYear" ) {
-        mHistoryYear = XMLHelper<int>::getValue( curr );
-    }
     else if( nodeName == "intrinsicRate" ){
         XMLHelper<double>::insertValueIntoVector( curr, mBaseIntrinsicRate, scenario->getModeltime() );
     }
+    else if( nodeName == "landAllocation" ){
+        XMLHelper<double>::insertValueIntoVector( curr, mLandAllocation, scenario->getModeltime() );
+    }
+    else if( nodeName == LandUseHistory::getXMLNameStatic() ){
+        parseSingleNode( curr, mLandUseHistory, new LandUseHistory );
+    }
     else if( nodeName == UnmanagedCarbonCalc::getXMLNameStatic() ) {
         parseSingleNode( curr, mCarbonContentCalc, new UnmanagedCarbonCalc );
+    }
+    else {
+        return false;
     }
     return true;
 }
@@ -59,22 +67,11 @@ void UnmanagedLandLeaf::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag ( getXMLName(), out, tabs, mName );
     const Modeltime* modeltime = scenario->getModeltime();
     XMLWriteVector( mBaseIntrinsicRate, "intrinsicRate", out, tabs, modeltime, 0.0 );
+    XMLWriteVector( mLandAllocation, "landAllocation", out, tabs, scenario->getModeltime() );
 
-    XMLWriteElementCheckDefault( mHistoryYear, "historyYear", out, tabs, defaultHistoryYear() );
-
-    // Only write out land allocation values for historical years. Leave constant after last historical year
-    objects::PeriodVector<double> tempLandAllocation;
-    int lastHistoryPeriod = 0;
-    for( int per = 0; per < modeltime->getmaxper(); ++per ){
-        if ( modeltime->getper_to_yr( per ) <= static_cast<int>( mHistoryYear ) ) {
-            tempLandAllocation[ per ] = mLandAllocation[ per ];
-            lastHistoryPeriod = per;
-        }
-        else {
-            tempLandAllocation[ per ] = mLandAllocation[ lastHistoryPeriod ];
-        }
+    if( mLandUseHistory.get() ){
+        mLandUseHistory->toInputXML( out, tabs );
     }
-    XMLWriteVector( tempLandAllocation, "landAllocation", out, tabs, modeltime, 0.0 );
 
     mCarbonContentCalc->toInputXML( out, tabs );
 
@@ -85,10 +82,16 @@ void UnmanagedLandLeaf::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
-void UnmanagedLandLeaf::toDebugXMLDerived( const int aPeriod, std::ostream& out, Tabs* tabs ) const {
+void UnmanagedLandLeaf::toDebugXMLDerived( const int aPeriod, ostream& out, Tabs* tabs ) const {
     LandLeaf::toDebugXMLDerived( aPeriod, out, tabs );
     XMLWriteElement( mBaseIntrinsicRate[ aPeriod ], "baseIntrinsicRate", out, tabs );
     XMLWriteElement( mBaseLandAllocation[ aPeriod ], "baseLandAllocation", out, tabs );
+
+    // Don't write out land allocation because ALandAllocatorItem writes it.
+
+    if( mLandUseHistory.get() ){
+        mLandUseHistory->toDebugXML( aPeriod, out, tabs );
+    }
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -124,6 +127,15 @@ void UnmanagedLandLeaf::initCarbonCycle(){
     if( !mCarbonContentCalc.get() ){
         mCarbonContentCalc.reset( new UnmanagedCarbonCalc );
     }
+}
+
+void UnmanagedLandLeaf::initLandUseHistory( const LandUseHistory* aLandUseHistory,
+                                            const int aPeriod )
+{
+    // Initialize the carbon calculator with the unmanaged land leaf history,
+    // not the node history. The share is one because the history object
+    // is for this leaf only.
+    mCarbonContentCalc->initLandUseHistory( mLandUseHistory.get(), 1 );
 }
 
 /*! \brief Returns whether this is a production leaf.
@@ -212,8 +224,6 @@ void UnmanagedLandLeaf::calcEmission( const string& aRegionName,
         PrimaryOutput landOutput( mName );
         landOutput.initCalc( aRegionName, aPeriod );
         landOutput.setPhysicalOutput( 0, aRegionName, aPeriod );
-        landOutput.initCalc( aRegionName, aPeriod );
-        landOutput.setPhysicalOutput( 0, aRegionName, aPeriod );
         vector<IOutput*> outputs;
         outputs.push_back( &landOutput ); 
         mGHGs[ j ]->calcEmission( aRegionName, mName, input, outputs, aGDP, aPeriod );
@@ -240,13 +250,6 @@ void UnmanagedLandLeaf::accept( IVisitor* aVisitor, const int aPeriod ) const {
         mGHGs[ i ]->accept( aVisitor, aPeriod );
     }
 	aVisitor->endVisitUnmanagedLandLeaf( this, aPeriod );
-}
-
-/*! \brief Returns the default for the history year.
-* \return Default for the history year.
-*/
-unsigned int UnmanagedLandLeaf::defaultHistoryYear(){
-    return 1990;
 }
 
 void UnmanagedLandLeaf::updateSummary( Summary& aSummary, const int period ) {

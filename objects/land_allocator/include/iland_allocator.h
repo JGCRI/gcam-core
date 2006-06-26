@@ -12,6 +12,8 @@
  */
 #include <xercesc/dom/DOMNode.hpp>
 #include "util/base/include/ivisitable.h"
+#include "util/base/include/iparsable.h"
+#include "util/base/include/iround_trippable.h"
 
 // Forward declarations
 class Summary;
@@ -25,13 +27,15 @@ class GDP;
  *          technologies to interact with a system for distributing land between
  *          usages.
  */
-class ILandAllocator : public IVisitable {
+class ILandAllocator : public IVisitable,
+                       public IParsable,
+                       public IRoundTrippable {
 public:
     inline ILandAllocator();
     
     inline virtual ~ILandAllocator();
 
-    virtual void XMLParse( const xercesc::DOMNode* aNode ) = 0;
+    virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
     
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const = 0;
     
@@ -89,7 +93,7 @@ public:
                                           const int aPeriod ) const = 0;
     
     /*!
-     * \brief Get the amount of land allocated for a product.
+     * \brief Get the amount of land allocated for a type of land.
      * \param aProductName Product name.
      * \param aPeriod Model period.
      * \return The land allocated for the product.

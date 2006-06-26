@@ -20,7 +20,7 @@
  *          of a crop.
  *
  *          <b>XML specification for ForestLandLeaf</b>
- *          - XML name: \c Not parsed
+ *          - XML name: Not parsed
  *          - Contained by: LandNode
  *          - Parsing inherited from class: None
  *          - Attributes: None
@@ -28,7 +28,7 @@
  */
 class ForestLandLeaf : public LandLeaf {
 public:
-    ForestLandLeaf();
+    ForestLandLeaf( const std::string& aName );
     virtual ~ForestLandLeaf();
 
     virtual void completeInit( const std::string& aRegionName, 
@@ -38,10 +38,9 @@ public:
                                      const double aLandAllocationAbove,
                                      const int aPeriod );
 
-    virtual double getLandAllocation ( const std::string& aProductName,
-                                       const int aPeriod ) const;
+    virtual double getLandAllocationInternal( const int aPeriod ) const;
 
-    virtual double getTotalLandAllocation( const std::string& aProductName,
+    virtual double getTotalLandAllocation( const bool aProductionOnly,
                                            const int aPeriod ) const;
 
     virtual void setCalLandAllocation( const std::string& aLandType,

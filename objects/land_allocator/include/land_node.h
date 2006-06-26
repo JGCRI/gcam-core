@@ -12,6 +12,7 @@
  */
 
 #include <vector>
+#include <memory>
 #include <xercesc/dom/DOMNode.hpp>
 #include "land_allocator/include/aland_allocator_item.h"
 #include "util/base/include/value.h"
@@ -19,7 +20,7 @@
 // Forward declarations
 class GDP;
 class Ghg;
-
+class LandUseHistory;
 /*!
  * \brief A node in the land allocation tree.
  * \details A land allocator node represents a type of land available for
@@ -31,12 +32,14 @@ class Ghg;
  *          <b>XML specification for LandNode</b>
  *          - XML name: -c LandAllocatorNode
  *          - Contained by: LandAllocatorRoot
- *          - Parsing inherited from class: ALandAllocatorItem
- *          - Attributes: Derived only.
+ *          - Parsing inherited from class: None
+ *          - Attributes:
+ *              - \c name ALandAllocatorItem::mName
  *          - Elements:
  *              - \c LandNode LandNode::children
  *              - \c UnmanagedLandLeaf LandNode::children
  *              - \c sigma LandNode::mSigma
+ *              - \c land-use-history LandNode::mLandUseHistory
  */
 class LandNode : public ALandAllocatorItem {
 public:
@@ -63,6 +66,7 @@ public:
                                const ILandAllocator::LandUsageType aLandUsageType );
 
     virtual void setInitShares( const double aLandAllocationAbove,
+                                const LandUseHistory* aLandUseHistory,
                                 const int aPeriod );
 
     virtual void setIntrinsicYieldMode( const double aIntrinsicRateAbove,
@@ -119,7 +123,9 @@ public:
     virtual double getLandAllocation( const std::string& aProductName,
                                       const int aPeriod ) const;
 
-    virtual double getTotalLandAllocation( const std::string& aProductName,
+    virtual double getLandAllocationInternal( const int aPeriod ) const;
+
+    virtual double getTotalLandAllocation( const bool aProductionOnly,
                                            const int aPeriod ) const;
 
     virtual double getBaseLandAllocation( const int aPeriod ) const;
@@ -148,19 +154,24 @@ public:
 
 	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
+    virtual bool XMLParse( const xercesc::DOMNode* aNode );
 protected:
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
+    virtual void toInputXMLDerived( std::ostream& aOutput, Tabs* aTabs ) const;
 
     virtual const std::string& getXMLName() const;
     virtual void addChild( ALandAllocatorItem* child );
+    
+    //! List of the children of this land node located below it in the land
+    //! allocation tree.
+    std::vector<ALandAllocatorItem*> mChildren;
 
     //! Exponential constant used to distribute land shares.
     Value mSigma;
 
-    //! List of the children of this land node located below it in the land
-    //! allocation tree.
-    std::vector<ALandAllocatorItem*> mChildren;
+    //! Container of historical land use.
+    std::auto_ptr<LandUseHistory> mLandUseHistory;
 };
 
 #endif // _LAND_NODE_H_

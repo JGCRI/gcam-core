@@ -7,10 +7,11 @@
 
 #include "util/base/include/definitions.h"
 #include "util/base/include/xml_helper.h"
-
+#include <xercesc/dom/DOMNodeList.hpp>
 #include "land_allocator/include/land_node.h"
 #include "land_allocator/include/unmanaged_land_leaf.h"
 #include "land_allocator/include/forest_land_leaf.h"
+#include "land_allocator/include/land_use_history.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/ivisitor.h"
 
@@ -54,25 +55,60 @@ ALandAllocatorItem* LandNode::getChildAt( const size_t aIndex ) {
     return mChildren[ aIndex ];
 }
 
+/*! \brief Set data members from XML input
+*
+* \author James Blackwood
+* \param node pointer to the current node in the XML input tree
+*/
+bool LandNode::XMLParse( const DOMNode* aNode ){
+
+    // assume we are passed a valid node.
+    assert( aNode );
+    
+    // Set the node name.
+    mName = XMLHelper<string>::getAttr( aNode, "name" );
+
+    // get all the children.
+    DOMNodeList* nodeList = aNode->getChildNodes();
+    
+    for( unsigned int i = 0; i < nodeList->getLength(); ++i ){
+        const DOMNode* curr = nodeList->item( i );
+        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+
+        if( nodeName == "#text" ) {
+            continue;
+        }
+        else if ( nodeName == LandNode::getXMLNameStatic() ) {
+            parseContainerNode( curr, mChildren, new LandNode );
+        }
+        else if ( nodeName == UnmanagedLandLeaf::getXMLNameStatic() ) {
+            parseContainerNode( curr, mChildren, new UnmanagedLandLeaf );
+        }
+        else if( nodeName == "sigma" ) {
+            mSigma = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == LandUseHistory::getXMLNameStatic() ){
+            parseSingleNode( curr, mLandUseHistory, new LandUseHistory );
+        }
+        else if ( !XMLDerivedClassParse( nodeName, curr ) ){
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
+                    << getXMLName() << "." << endl;
+        }
+    }
+
+    // TODO: Improve error checking
+    return true;
+}
+
 /*! \brief Parses any attributes specific to derived classes
 * \author James Blackwood
 * \param nodeName The name of the curr node. 
 * \param curr pointer to the current node in the XML input tree
 */
 bool LandNode::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ){
-    if ( nodeName == LandNode::getXMLNameStatic() ) {
-        parseContainerNode( curr, mChildren, new LandNode );
-    }
-    else if ( nodeName == UnmanagedLandLeaf::getXMLNameStatic() ) {
-        parseContainerNode( curr, mChildren, new UnmanagedLandLeaf );
-    }
-    else if( nodeName == "sigma" ) {
-        mSigma = XMLHelper<double>::getValue( curr );
-    }
-    else {
-        return false;
-    }
-    return true;
+    return false;
 }
 
 /*! \brief Write XML values specific to derived objects
@@ -85,12 +121,21 @@ void LandNode::toInputXML( ostream& out, Tabs* tabs ) const {
     // finished writing xml for the class members.
 
     XMLWriteElement( mSigma, "sigma", out, tabs );
-    XMLWriteVector( mLandAllocation, "landAllocation", out, tabs, scenario->getModeltime(), 0.0 );
+
+    if( mLandUseHistory.get() ){
+        mLandUseHistory->toInputXML( out, tabs );
+    }
+
     // write out for mChildren
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
         mChildren[i]->toInputXML( out, tabs );
     }
+    toInputXMLDerived( out, tabs );
     XMLWriteClosingTag( getXMLName(), out, tabs );
+}
+
+void LandNode::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
+    // Allow derived classes to override.
 }
 
 /*! \brief Write XML values to debug stream for this object.
@@ -99,8 +144,10 @@ void LandNode::toInputXML( ostream& out, Tabs* tabs ) const {
 */
 void LandNode::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
     XMLWriteElement( mSigma, "sigma", out, tabs );
-    XMLWriteElement( mLandAllocation[ period ], "landAllocation", out, tabs );
 
+    if( mLandUseHistory.get() ){
+        mLandUseHistory->toDebugXML( period, out, tabs );
+    }
     // write out for mChildren
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
         mChildren[i]->toDebugXML( period, out, tabs );
@@ -171,17 +218,17 @@ void LandNode::addLandUsage( const string& aLandType,
         // Add a new leaf for the land usage.
         LandLeaf* newLeaf = 0;
         if( aLandUsageType == ILandAllocator::eCrop ){
-            newLeaf = new LandLeaf;
+            newLeaf = new LandLeaf( aProductName );
         }
         else if( aLandUsageType == ILandAllocator::eForest ){
-            newLeaf = new ForestLandLeaf;
+            newLeaf = new ForestLandLeaf( aProductName );
         }
         // Unknown type. This can only occur if a new type is added to the enum
         // and not here.
         else {
             assert( false );
         }
-        newLeaf->setName( aProductName );
+
         parent->addChild( newLeaf );
     }
 }
@@ -210,18 +257,12 @@ void LandNode::setUnmanagedLandAllocation( const string& aRegionName,
     // If this node is not full of production leafs, then this is unmanaged land
     if ( !isProductionLeaf() && aLandAllocation > 0 ) {
         mLandAllocation[ aPeriod ] = aLandAllocation;
-        if ( mLandAllocation[ aPeriod ] < 0 ) {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::DEBUG );
-            mainLog << "Land allocation above is less than land allocated." << endl;
-            mLandAllocation[ aPeriod ] = 0;
-        }
 
-        double totalLandAllocated = getLandAllocation( mName, aPeriod );
+        double totalLandAllocated = getLandAllocationInternal( aPeriod );
         if ( totalLandAllocated > 0 ) {
             double landAllocationScaleFactor = mLandAllocation[ aPeriod ] / totalLandAllocated;
             for ( unsigned int i = 0; i < mChildren.size() ; i++ ) {
-                double childLandAllocation = mChildren[ i ]->getLandAllocation( mChildren[ i ]->getName(), aPeriod );
+                double childLandAllocation = mChildren[ i ]->getLandAllocationInternal( aPeriod );
                 double newAllocation = childLandAllocation * landAllocationScaleFactor;
                 mChildren[ i ]->setUnmanagedLandAllocation( aRegionName, newAllocation, aPeriod );
             }
@@ -235,13 +276,17 @@ void LandNode::setUnmanagedLandAllocation( const string& aRegionName,
 * \todo figure out a way to set the unmanaged land allocation leaves. (Unmanaged Class)
 * \author James Blackwood
 */
-void LandNode::setInitShares( const double aLandAllocationAbove, const int aPeriod ) {
+void LandNode::setInitShares( const double aLandAllocationAbove,
+                              const LandUseHistory* aLandUseHistory,
+                              const int aPeriod )
+{
     // Summing the LandAllocations of the mChildren
-    mLandAllocation[ aPeriod ] = getTotalLandAllocation( mName, aPeriod ); 
+    mLandAllocation[ aPeriod ] = getTotalLandAllocation( false, aPeriod ); 
 
     //Calculating the shares
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->setInitShares( mLandAllocation[ aPeriod ], aPeriod );
+        mChildren[ i ]->setInitShares( mLandAllocation[ aPeriod ],
+                                       mLandUseHistory.get(), aPeriod );
     }
 
     // If there is no land allocation for the parent land type, set the share to
@@ -358,7 +403,7 @@ double LandNode::getCalAveObservedRateInternal( const string& aLandType,
     }
 
     // Since it may be possible for a node to have no share
-    if ( rateTemp > util::getTinyNumber() ) {
+    if ( mShare[ aPeriod ] > util::getTinyNumber() ) {
         rateTemp /= pow( mShare[ aPeriod ], aSigmaAbove );
     }
     return rateTemp;
@@ -557,37 +602,38 @@ void LandNode::addChild( ALandAllocatorItem* child ) {
 double LandNode::getLandAllocation( const string& aProductName,
                                     const int aPeriod ) const 
 {
+    const ALandAllocatorItem* curr = findItem( aProductName, eLeaf );
+
+    if( curr ){
+        return curr->getLandAllocation( aProductName, aPeriod );
+    }
+    return 0;
+}
+
+double LandNode::getLandAllocationInternal( const int aPeriod ) const {
     double sum = 0;
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        // TODO: Product name is only valid for leaves. This seems wrong.
-        if( mName == aProductName ) {
-            sum += getLandAllocation( mChildren[ i ]->getName(), aPeriod );
-        }
-        else {
-            sum += mChildren[ i ]->getLandAllocation( aProductName, aPeriod );
-        }
+        sum += mChildren[ i ]->getLandAllocationInternal( aPeriod );
     }
     return sum;
 }
 
-/*! \brief Returns all land allocated for this land type.
-* \details This function is needed so that separate function can be called for
-*          land classes with vintaging when total land allocated is necessary
-* \author Steve Smith
-* \return the land Allocated to this landType
-*/
-double LandNode::getTotalLandAllocation( const string& aProductName,
+/*!
+ * \brief Returns all land allocated for this land type.
+ * \param aProductionOnly Whether to only get land allocation for production
+ *        leaves.
+ * \param aPeriod Model period.
+ * \note This function is needed so that separate function can be called for
+ *       land classes with vintaging when total land allocated is necessary.
+ * \author Steve Smith
+ * \return The total land allocated below the node.
+ */
+double LandNode::getTotalLandAllocation( const bool aProductionOnly, 
                                          const int aPeriod ) const
 {
     double sum = 0;
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        if ( mName == aProductName ) {
-            // TODO: Product name is only valid for leaves. This seems wrong.
-            sum += getTotalLandAllocation( mChildren[ i ]->getName(), aPeriod );
-        }
-        else {
-            sum += mChildren[ i ]->getTotalLandAllocation( aProductName, aPeriod );
-        }
+        sum += mChildren[ i ]->getTotalLandAllocation( aProductionOnly, aPeriod );
     }
     return sum;
 }
@@ -625,6 +671,7 @@ bool LandNode::isProductionLeaf() const {
     }
     return true;
 }
+
 
 /*! \brief Write output to csv output file. 
 *

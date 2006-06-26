@@ -21,7 +21,8 @@ extern Scenario* scenario;
 /*! \brief Default constructor.
 * \author James Blackwood
 */
-ForestLandLeaf::ForestLandLeaf():
+ForestLandLeaf::ForestLandLeaf( const string& aName ):
+LandLeaf( aName ),
 mSteps( -1 ),
 // TODO: This needs improvement. This vector is resized again later, but values
 // are set before the resize.
@@ -101,13 +102,9 @@ void ForestLandLeaf::calcLandAllocation( const string& aRegionName,
 * \author James Blackwood, Steve Smith
 * \return annual amount of land allocated to forest production
 */
-double ForestLandLeaf::getLandAllocation( const string& aProductName,
-                                          const int aPeriod ) const
+double ForestLandLeaf::getLandAllocationInternal( const int aPeriod ) const
 {
-    if ( aProductName == mName ) {
-        return mLandToBeHarvested[ aPeriod ];
-    }
-    return 0;
+    return mLandToBeHarvested[ aPeriod ];
 }
 
 /*! \brief Get total land allocation.
@@ -118,10 +115,11 @@ double ForestLandLeaf::getLandAllocation( const string& aProductName,
 * \author Steve Smith
 * \return the LandAllocation at this node
 */
-double ForestLandLeaf::getTotalLandAllocation( const string& aProductName,
+double ForestLandLeaf::getTotalLandAllocation( const bool aProductionOnly,
                                                const int aPeriod ) const
 {
-    return LandLeaf::getLandAllocation( aProductName, aPeriod );
+    // All forestry land is production.
+    return mLandAllocation[ aPeriod ];
 }
 
 /*! 

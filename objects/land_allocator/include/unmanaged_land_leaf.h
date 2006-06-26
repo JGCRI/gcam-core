@@ -10,8 +10,9 @@
  * \brief The LandAllocatorLeaf class header file.
  * \author James Blackwood
  */
-
+#include <memory>
 #include "land_allocator/include/land_leaf.h"
+class LandUseHistory;
 
 /*!
  * \brief A type of leaf which contains unmanaged land.
@@ -22,13 +23,14 @@
  *          <b>XML specification for UnmanagedLandLeaf</b>
  *          - XML name: \c UnmanagedLandLeaf
  *          - Contained by: LandNode
- *          - Parsing inherited from class: ALandAllocatorItem
- *          - Attributes: Derived only.
+ *          - Parsing inherited from class: None
+ *          - Attributes:
+ *              - \c name ALandAllocatorItem::mName
  *          - Elements:
  *              - \c GHG_INPUT LandLeaf::mGHGs
- *              - \c historyYear UnmanagedLandLeaf::historyYear
  *              - \c intrinsicRate UnmanagedLandLeaf::mBaseIntrinsicRate
  *              - \c unmanaged-carbon-calc LandLeaf::mCarbonContentCalc
+  *             - \c land-use-history UnmanagedLandLeaf::mHistoricalLandAllocation
  */
 class UnmanagedLandLeaf : public LandLeaf {
 public:
@@ -70,15 +72,15 @@ protected:
     
     //! Unadjusted land value
     objects::PeriodVector<double> mBaseLandAllocation;
-    
+
     // TODO: GHGs in the land allocator are difficult to deal with because the interface
     // is designed for Technologies. The cost is not currently included in profit rates.
     
     //! Vector of suites of greenhouse gases.
     std::vector<Ghg*> mGHGs;
-  
-    //! Year before which land allocations are historical values.
-    unsigned int mHistoryYear;
+
+    //! Container of historical land use.
+    std::auto_ptr<LandUseHistory> mLandUseHistory;
 
     virtual void initCarbonCycle();
     virtual bool isProductionLeaf() const;
@@ -88,9 +90,9 @@ protected:
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual double getBaseLandAllocation( const int aPeriod ) const;
     virtual void checkCalObservedYield( const int aPeriod ) const;
-    
-    static unsigned int defaultHistoryYear();
 
+    virtual void initLandUseHistory( const LandUseHistory* aLandUseHistory,
+                                     const int aPeriod );
 };
 
 #endif // _UNMANAGED_LAND_LEAF_H_

@@ -37,7 +37,7 @@ class ICarbonCalc;
  */
 class LandLeaf : public ALandAllocatorItem {
 public:
-    LandLeaf();
+    LandLeaf( const std::string& aName );
     virtual ~LandLeaf();
 
     // Tree Item methods.
@@ -58,6 +58,7 @@ public:
                                const ILandAllocator::LandUsageType aLandUsageType );
 
     virtual void setInitShares( const double aLandAllocationAbove,
+                                const LandUseHistory* aLandUseHistory,
                                 const int aPeriod );
 
     virtual void setIntrinsicYieldMode( const double aIntrinsicRateAbove,
@@ -114,7 +115,9 @@ public:
     virtual double getLandAllocation( const std::string& aProductName,
                                       const int aPeriod ) const;
 
-    virtual double getTotalLandAllocation( const std::string& aProductName,
+    virtual double getLandAllocationInternal( const int aPeriod ) const;
+
+    virtual double getTotalLandAllocation( const bool aProductionOnly,
                                            const int aPeriod ) const;
     
     virtual double getBaseLandAllocation( const int aPeriod ) const;
@@ -144,6 +147,8 @@ public:
 
     virtual void updateSummary( Summary& aSummary,
                                 const int aPeriod );
+
+    virtual bool XMLParse( const xercesc::DOMNode* aNode );
 
     virtual void toInputXML( std::ostream& aOut,
                              Tabs* aTabs ) const;
@@ -188,6 +193,9 @@ protected:
     virtual void addChild( ALandAllocatorItem* aChild );
 
     virtual void checkCalObservedYield( const int aPeriod ) const;
+
+    virtual void initLandUseHistory( const LandUseHistory* aLandUseHistory,
+                                     const int aPeriod );
 };
 
 #endif // _LAND_LEAF_H_

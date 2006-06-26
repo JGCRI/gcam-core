@@ -29,9 +29,11 @@ class GDP;
  *          <b>XML specification for TreeLandAllocator</b>
  *          - XML name: -c LandAllocatorRoot
  *          - Contained by: Region
- *          - Parsing inherited from class: ALandAllocatorItem
- *          - Attributes: Derived only.
- *          - Elements: None
+ *          - Parsing inherited from class: None
+ *          - Attributes:
+ *              - \c name ALandAllocatorItem::mName
+ *          - Elements:
+ *              - \c landAllocation ALandAllocatorItem::mLandAllocation
  */
 class TreeLandAllocator : public ILandAllocator,
                           public LandNode {
@@ -40,9 +42,10 @@ public:
     virtual ~TreeLandAllocator();
     static const std::string& getXMLNameStatic();
 
-    // ILandAllocator methods.
-    virtual void XMLParse( const xercesc::DOMNode* aNode );
+    // IParsable
+    virtual bool XMLParse( const xercesc::DOMNode* aNode );
     
+    // ILandAllocator methods.
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
@@ -123,6 +126,7 @@ public:
     double getAvgIntrinsicRate( const int aPeriod ) const;
 
     virtual void setInitShares( const double aLandAllocationAbove,
+                                const LandUseHistory* aLandUseHistory,
                                 const int aPeriod );
 
     virtual void calcLandShares( const std::string& aRegionName,
@@ -135,6 +139,16 @@ public:
                                      const int aPeriod );
 protected:
     virtual const std::string& getXMLName() const;
+
+    virtual bool XMLDerivedClassParse( const std::string& aNodeName,
+                                       const xercesc::DOMNode* aCurr );
+
+    virtual void toInputXMLDerived( std::ostream& aOutput,
+                                    Tabs* aTabs ) const;
+private:
+    void checkRotationPeriod( const IInfo* aRegionInfo ) const;
+
+    void adjustTotalLand( const int aPeriod );
 };
 
 #endif // _LAND_ALLOCATOR_ROOT_H_
