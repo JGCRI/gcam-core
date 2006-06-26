@@ -101,7 +101,8 @@
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				TargetMachine="1"/>
+				TargetMachine="1"
+				FixedBaseAddress="1"/>
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
@@ -725,6 +726,9 @@
 					RelativePath="..\..\land_allocator\source\land_node.cpp">
 				</File>
 				<File
+					RelativePath="..\..\land_allocator\source\land_use_history.cpp">
+				</File>
+				<File
 					RelativePath="..\..\land_allocator\source\tree_land_allocator.cpp">
 				</File>
 				<File
@@ -1332,6 +1336,9 @@
 				</File>
 				<File
 					RelativePath="..\..\land_allocator\include\land_node.h">
+				</File>
+				<File
+					RelativePath="..\..\land_allocator\include\land_use_history.h">
 				</File>
 				<File
 					RelativePath="..\..\land_allocator\include\tree_land_allocator.h">
