@@ -144,7 +144,7 @@ void LandAllocatorPrinter::printNode( const ALandAllocatorItem* aLandItem,
     mFile << "\t" << makeNameFromLabel( name ) << "[label=" << "\"" << nameStripped;
     if( mPrintValues ){
         mFile << "\\n" << setiosflags( ios::fixed ) << setprecision( 0 ) 
-              << aLandItem->getTotalLandAllocation( aLandItem->getName(), aPeriod );
+              << aLandItem->getTotalLandAllocation( false, aPeriod );
     }
     mFile << "\"";
     if( aIsLeaf ){
