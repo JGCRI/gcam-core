@@ -136,9 +136,24 @@ namespace objects {
     */
     template <class T>
     inline bool isValidNumber( const T aNumber ) {
+
         // Need to check whether the type supports not-a-number and infinity.
         return ( !std::numeric_limits<T>::has_quiet_NaN || aNumber != std::numeric_limits<T>::quiet_NaN() )
-            && ( !std::numeric_limits<T>::has_infinity || aNumber != std::numeric_limits<T>::infinity() );
+            && ( !std::numeric_limits<T>::has_infinity ||
+            ( aNumber != std::numeric_limits<T>::infinity()
+            && std::negate<double>()( aNumber ) != std::numeric_limits<T>::infinity() ) );
+    }
+
+    /*!
+     * \brief Specialization of isValidNumber for booleans.
+     * \details Booleans are always valid so this overrides isValidNumber to 
+     *          avoid conversion which would not be legal on booleans.
+     * \param aBoolean Boolean to check for validity.
+     * \return Whether the boolean is valid which is always true.
+     */
+    template <>
+    inline bool isValidNumber<bool>( const bool aNumber ){
+        return true;
     }
 
     /*!\brief This is a template function which compares two values. 
