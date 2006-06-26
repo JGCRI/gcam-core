@@ -6,17 +6,12 @@
 */
 #include "util/base/include/definitions.h"
 
-// Turn off MTL warnings.
-#if defined(_MSC_VER)          
-#pragma warning( push )
-#pragma warning( disable: 4275 )
-#pragma warning( disable: 4267 )
-#pragma warning( disable: 4244 )
-#endif
-
-#include <mtl/mtl.h>
-#include <mtl/utils.h>
-#include <mtl/lu.h>
+#include <boost/numeric/ublas/vector.hpp>
+#include <boost/numeric/ublas/vector_proxy.hpp>
+#include <boost/numeric/ublas/matrix.hpp>
+#include <boost/numeric/ublas/triangular.hpp>
+#include <boost/numeric/ublas/lu.hpp>
+#include <boost/numeric/ublas/io.hpp>
 #include "util/base/include/definitions.h"
 #include <vector>
 #include <map>
@@ -33,7 +28,6 @@
 #include "util/logger/include/ilogger.h"
 
 using namespace std;
-using namespace mtl;
 
 #define NO_REGIONAL_DERIVATIVES 0
 
@@ -198,10 +192,10 @@ void SolverLibrary::derivatives( Marketplace* marketplace, World* world, SolverI
 void SolverLibrary::updateMatrices( SolverInfoSet& solverSet, Matrix& JFSM, Matrix& JFDM, Matrix& JF ){
     for( unsigned int j = 0; j < solverSet.getNumSolvable(); ++j ){
         for( unsigned int i = 0; i < solverSet.getNumSolvable(); ++i ){
-            JFDM[ i ][ j ] = solverSet.getSolvable( j ).getDemandElasWithRespectTo( i );
-            JFSM[ i ][ j ] = solverSet.getSolvable( j ).getSupplyElasWithRespectTo( i );
-            JF[ i ][ j ] = JFSM[ i ][ j ] - JFDM[ i ][ j ];
-            assert( util::isValidNumber( JF[ i ][ j ] ) );
+            JFDM( i , j ) = solverSet.getSolvable( j ).getDemandElasWithRespectTo( i );
+            JFSM( i , j ) = solverSet.getSolvable( j ).getSupplyElasWithRespectTo( i );
+            JF( i , j ) = JFSM( i , j ) - JFDM( i , j );
+            assert( util::isValidNumber( JF( i , j) ) );
         }
     }
 
@@ -241,8 +235,8 @@ bool SolverLibrary::calculateNewPricesLogNR( SolverInfoSet& solverSet, Matrix& J
     for ( unsigned int i = 0; i < solverSet.getNumSolvable(); i++ ) {
         for ( unsigned int j = 0; j < solverSet.getNumSolvable(); j++ ) {
             double tempValue = log( max( solverSet.getSolvable( j ).getPrice(), util::getSmallNumber() ) );
-            KD[ i ] -= tempValue * JFDM[ i ][ j ];
-            KS[ i ] -= tempValue * JFSM[ i ][ j ];
+            KD[ i ] -= tempValue * JFDM( i , j );
+            KS[ i ] -= tempValue * JFSM( i , j );
             assert( util::isValidNumber( KD[ i ] ) );
             assert( util::isValidNumber( KS[ i ] ) );
         }
@@ -261,8 +255,8 @@ bool SolverLibrary::calculateNewPricesLogNR( SolverInfoSet& solverSet, Matrix& J
         for ( unsigned int j = 0; j < solverSet.getNumSolvable(); j++ ) {
             // An error at this assert means that something happened to the JF matrix during inversion (since there is an assert checking for valid numbers when JF is created)
             // This is probably a singular matrix where some market has zero derivative for supply and demand
-            assert( util::isValidNumber( JF[ i ][ j ] ) );
-            NP[ i ] += JF[ i ][ j ] * KDS[ j ];
+            assert( util::isValidNumber( JF( i , j ) ) );
+            NP[ i ] += JF( i , j ) * KDS[ j ];
             assert( util::isValidNumber( NP[ i ] ) );
         }
 
@@ -292,13 +286,13 @@ bool SolverLibrary::calculateNewPricesLogNR( SolverInfoSet& solverSet, Matrix& J
                 double maxKDSval = 0;
                 for ( unsigned int j = 0; j < solverSet.getNumSolvable(); j++ ) {
                     maxKDSval = max( maxKDSval, fabs( KDS[ j ] ) );
-                    maxDerVal = max( maxDerVal, fabs( JF[ i ][ j ]) );
+                    maxDerVal = max( maxDerVal, fabs( JF( i , j ) ) );
                 }
                 solverLog << "Max KDS: " << maxKDSval << ", Max Derivitive: " << maxDerVal;
                 solverLog << "Large derivitives against: " << endl;
                 for ( unsigned int j = 0; j < solverSet.getNumSolvable(); j++ ) {
-                    if ( fabs( JF[ i ][ j ]) > maxDerVal / 100 ) {
-                        solverLog << "   Market: " << solverSet.getSolvable( j ).getName() << ", Value: " << JF[ i ][ j ] << endl;
+                    if ( fabs( JF( i , j ) ) > maxDerVal / 100 ) {
+                        solverLog << "   Market: " << solverSet.getSolvable( j ).getName() << ", Value: " << JF( i , j ) << endl;
                     }
                 }
             }
@@ -307,24 +301,103 @@ bool SolverLibrary::calculateNewPricesLogNR( SolverInfoSet& solverSet, Matrix& J
     return true;
 }
 
-/*! \brief Calculate the inverse of a matrix using an LU factorization.
+/*! \brief Calculate the inverse of a matrix using Gauss-Jordan partial pivoting.
+* \author Pralit Patel
 * \author Josh Lurz
-* \details This function uses an LU decomposition to determine the inverse of the matrix. The matrix which was passed in
-* is then set to its inverse.
-* \param A matrix to invert.
+* \details This function uses Gauss-Jordan partial pivoting to determine the inverse
+*          of the matrix. The matrix which was passed in can then be set to its inverse.
+*          This function also checks if the matrix is singular in which case garbage may
+*          be returned since no inverse exists.  The singular attrubute should always be 
+*          checked after a call to this method.
+* \param aInputMatrix Matrix to invert.
+* \param singular An out parameter which is used to determine if the matrix is singular.
 */
-void SolverLibrary::invertMatrix( Matrix& A ) {
+Matrix SolverLibrary::invertMatrix( const Matrix& aInputMatrix, bool& aIsSingular ) {
+    using namespace boost::numeric::ublas;
 
-    // create LU decomposition
-    Matrix LU( A.nrows(), A.ncols() );
+    const int size = aInputMatrix.size1();
 
-    dense1D<int> pvector( A.nrows() );
+    // Cannot invert if non-square matrix or 0x0 matrix.
+    // Report it as singular in these cases, and return 
+    // a 0x0 matrix.
+    if ( size != aInputMatrix.size2() || size == 0 ) {
+        aIsSingular = true;
+        Matrix A( 0, 0 );
+        return A;
+    }
 
-    copy(A, LU);
-    lu_factor( LU, pvector );
+    // Handle 1x1 matrix edge case as general purpose 
+    // inverter below requires 2x2 to function properly.
+    if ( size == 1 ) {
+        Matrix A(1, 1);
+        if ( aInputMatrix(0,0) == 0.0 ) {
+            aIsSingular = true;
+            return A;
+        }
+        aIsSingular = false;
+        A(0,0) = 1/aInputMatrix( 0, 0 );
+        return A;
+    }
 
-    // solve
-    lu_inverse( LU, pvector, A );
+    // Create an augmented matrix A to invert. Assign the
+    // matrix to be inverted to the left hand side and an
+    // identity matrix to the right hand side.
+    Matrix A( size, 2*size );
+    matrix_range< Matrix > Aleft( A, range( 0, size ), range( 0, size ) );
+    Aleft = aInputMatrix;
+    matrix_range< Matrix > Aright( A, range( 0, size ), range( size, 2*size ) );
+    Aright = identity_matrix<double>( size );
+
+    // Swap rows to eliminate zero diagonal elements.
+    for (int k = 0; k < size; k++) {
+        if ( A( k, k ) == 0 ) // TODO: test for "small" instead
+        {
+            // Find a row(l) to swap with row(k)
+            int l = -1;
+            for ( int i = k+1; i < size; i++ ) {
+                if ( A( i,k ) != 0 ) {
+                    l = i; 
+                    break;
+                }
+            }
+
+            // Swap the rows if found
+            if ( l < 0 ) {
+                aIsSingular = true;
+                return Aleft;
+            }
+            else {
+                matrix_row< Matrix > rowk( A, k );
+                matrix_row< Matrix > rowl( A, l );
+                rowk.swap( rowl );
+            }
+        }
+    }
+
+    // Doing partial pivot
+    for (int k = 0; k < size; k++)
+    {
+        // normalize the current row
+        for ( int j = k+1; j < 2*size; j++ ) {
+            A( k, j ) /= A( k, k );
+        }
+        A( k, k ) = 1;
+
+        // normalize other rows
+        for ( int i = 0; i < size; i++ ) {
+            if ( i != k ) {
+                if ( A( i, k ) != 0 ) {
+                    for ( int j = k+1; j < 2*size; j++ ) {
+                        A( i, j ) -= A( k, j ) * A( i, k );
+                    }
+                    A( i, k ) = 0;
+                }
+            }
+        }
+    }
+
+    aIsSingular = false;
+    return Aright;
 }
 
 //! Check if regional values sum to a world total.
@@ -692,8 +765,3 @@ void SolverLibrary::restorePrices( SolverInfoSet& aSolverSet, const vector<doubl
         aSolverSet.getAny( i ).setPrice( aPrices[ i ] );
     }
 }
-
-// Restore normal compiler warnings.
-#if defined(_MSC_VER)
-#pragma warning( pop )
-#endif

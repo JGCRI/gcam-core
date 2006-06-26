@@ -39,7 +39,8 @@ public:
         SUCCESS,
         FAILURE_ITER_MAX_REACHED,
         FAILURE_WRONG_DIRECTION,
-        FAILURE_SOLUTION_SIZE_CHANGED
+        FAILURE_SOLUTION_SIZE_CHANGED,
+        FAILURE_SINGULAR_MATRIX
     };
    SolverComponent( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn );
    virtual ~SolverComponent();

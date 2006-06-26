@@ -19,13 +19,7 @@
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
 
-#include <mtl/matrix.h>
-#include <mtl/mtl.h>
-typedef mtl::matrix<double, mtl::rectangle<>, mtl::dense<>, mtl::row_major>::type Matrix;
-
 using namespace std;
-
-const string LogNewtonRaphson::SOLVER_NAME = "LogNewtonRaphson";
 
 //! Default Constructor. Constructs the base class. 
 LogNewtonRaphson::LogNewtonRaphson( Marketplace* aMarketplace,
@@ -41,12 +35,13 @@ void LogNewtonRaphson::init() {
 
 //! Get the name of the SolverComponent
 const string& LogNewtonRaphson::getNameStatic() {
+    static const string SOLVER_NAME = "LogNewtonRaphson";
     return SOLVER_NAME;
 }
 
 //! Get the name of the SolverComponent
 const string& LogNewtonRaphson::getName() const {
-    return SOLVER_NAME;
+    return getNameStatic();
 }
 
 /*! \brief Ron's version of the Newton Raphson Solution Mechanism (all markets)
@@ -65,9 +60,9 @@ const string& LogNewtonRaphson::getName() const {
 */
 SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolerance, const double edSolutionFloor,
                                                      const unsigned int maxIterations, SolverInfoSet& solverSet,
-                                                     const int period ){
+                                                    const int period ) {
     startMethod();
-    const unsigned int nrCalcsStart = calcCounter->getMethodCount( SOLVER_NAME );
+    const unsigned int nrCalcsStart = calcCounter->getMethodCount( getName() );
     ReturnCode code = SolverComponent::ORIGINAL_STATE;
       
     // Constants
@@ -94,16 +89,16 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
     const bool calibrationStatus = world->getCalibrationSetting();
     world->turnCalibrationsOff();
 
-    bool success = true;
+    // Setup the solution matrices.
+    size_t currSize = solverSet.getNumSolvable();
+    Matrix JF( currSize, currSize );
+    Matrix JFDM( currSize, currSize );
+    Matrix JFSM( currSize, currSize );
 
+    bool success = true;
     do {
         singleLog.setLevel( ILogger::DEBUG );
         solverSet.printMarketInfo( "Begin logNR", calcCounter->getPeriodCount(), singleLog );
-
-        // Declare matrices here due to a resize bug.
-        Matrix JF( solverSet.getNumSolvable(), solverSet.getNumSolvable() );
-        Matrix JFDM( solverSet.getNumSolvable(), solverSet.getNumSolvable() );
-        Matrix JFSM( solverSet.getNumSolvable(), solverSet.getNumSolvable() );
 
         // Calculate derivatives
         code = calculateDerivatives( solverSet, JFSM, JFDM, JF, period );        
@@ -130,10 +125,15 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
         worstMarketLog.setLevel( ILogger::NOTICE );
         worstMarketLog << "NR-maxRelED: " << *currWorstSol << endl;
         solverLog.setLevel( ILogger::DEBUG );
-        solverLog << "Solution after " << calcCounter->getMethodCount( SOLVER_NAME ) - nrCalcsStart << " iterations in NR_RON: " << endl;
+            solverLog << "Solution after " << calcCounter->getMethodCount( getName() ) - nrCalcsStart << " iterations in NR_RON: " << endl;
         solverLog << solverSet << endl;
         
-        solverSet.updateSolvable( true );
+            if( solverSet.updateSolvable( true ) != SolverInfoSet::UNCHANGED ){
+                size_t newSize = solverSet.getNumSolvable();
+                JF.resize( newSize, newSize );
+                JFDM.resize( newSize, newSize );
+                JFSM.resize( newSize, newSize );
+            }
 
         solverSet.printMarketInfo( "NR routine ", calcCounter->getPeriodCount(), singleLog );
         }
@@ -143,7 +143,7 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
     } // end do loop    
     while ( success &&
             isImproving( MAX_ITER_NO_IMPROVEMENT ) && 
-        calcCounter->getMethodCount( SOLVER_NAME ) - nrCalcsStart < maxIterations && 
+        calcCounter->getMethodCount( getName() ) - nrCalcsStart < maxIterations && 
         solverSet.getMaxRelativeExcessDemand( edSolutionFloor ) >= solutionTolerance );
 
     // Update the return code. 
@@ -158,7 +158,7 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
     else if( code == SUCCESS && solverSet.isAllSolved( solutionTolerance, edSolutionFloor ) ){
         solverLog << "Newton-Raphson solved all markets successfully." << endl;
     }
-    else if( calcCounter->getMethodCount( SOLVER_NAME ) - nrCalcsStart > maxIterations ){
+    else if( calcCounter->getMethodCount( getName() ) - nrCalcsStart > maxIterations ){
         solverLog << "Exiting due to exceeding maximum iterations: " << maxIterations << endl;
     }
     else {
@@ -182,7 +182,13 @@ SolverComponent::ReturnCode LogNewtonRaphson::calculateDerivatives( SolverInfoSe
 
     // Update the JF, JFDM, and JFSM matrices
     SolverLibrary::updateMatrices( solverSet, JFSM, JFDM, JF );
-    SolverLibrary::invertMatrix( JF );
-
+    bool isSingular = false;
+    JF = SolverLibrary::invertMatrix( JF, isSingular );
+    if( isSingular ) {
+        solverLog.setLevel( ILogger::ERROR );
+        solverLog << "Matrix came back as singluar, could not invert." << endl;
+        solverLog.setLevel( ILogger::NOTICE );
+        return FAILURE_SINGULAR_MATRIX;
+    } 
     return SUCCESS;
 }

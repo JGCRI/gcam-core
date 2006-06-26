@@ -11,22 +11,13 @@
 *        contains helper methods used by SolverComponents.
 * \author Josh Lurz
 */
-
-// Turn off MTL warnings.
-#if defined(_MSC_VER)          
-#pragma warning( push )
-#pragma warning( disable: 4275 )
-#pragma warning( disable: 4267 )
-#pragma warning( disable: 4244 )
-#endif
-
-#include <mtl/matrix.h>
 #include <vector>
 #include <map>
 #include <string>
 #include <functional>
+#include <boost/numeric/ublas/matrix.hpp> 
 
-typedef mtl::matrix<double, mtl::rectangle<>, mtl::dense<>, mtl::row_major>::type Matrix;
+typedef boost::numeric::ublas::matrix<double> Matrix;
 
 class Marketplace;
 class World;
@@ -53,7 +44,7 @@ public:
    static void derivatives( Marketplace* marketplace, World* world, SolverInfoSet& solutionVector,
        const double aDeltaPrice, const int per );
    
-   static void invertMatrix( Matrix& A );
+   static Matrix invertMatrix( const Matrix& aInputMatrix, bool& aIsSingular );
    
    static bool bracketOne( Marketplace* marketplace, World* world, const double aBracketInterval,
                            const double aSolutionTolerance, const double aSolutionFloor,
@@ -96,11 +87,6 @@ private:
     static std::vector<double> storePrices( const SolverInfoSet& aSolverSet );
     static void restorePrices( SolverInfoSet& aSolverSet, const std::vector<double>& aPrices );
 };
-
-// Restore normal compiler warnings.
-#if defined(_MSC_VER)
-#pragma warning( pop )
-#endif
 
 #endif // _SOLVER_LIBRARY_H_
 

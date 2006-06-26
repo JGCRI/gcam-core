@@ -36,9 +36,9 @@ protected:
                                              int period );
 
     bool derivativesCalculated;
-    std::auto_ptr<Matrix> JFSave;
-    std::auto_ptr<Matrix> JFDMSave;
-    std::auto_ptr<Matrix> JFSMSave;
+    Matrix JFSave;
+    Matrix JFDMSave;
+    Matrix JFSMSave;
     unsigned int savedMatrixSize;
 };
 

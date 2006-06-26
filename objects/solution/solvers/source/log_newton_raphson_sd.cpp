@@ -20,10 +20,6 @@
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
 
-#include <mtl/matrix.h>
-#include <mtl/mtl.h>
-#include <mtl/utils.h>
-
 using namespace std;
 
 const string LogNewtonRaphsonSaveDeriv::SOLVER_NAME = "LogNewtonRaphsonSaveDeriv";
@@ -73,15 +69,19 @@ SolverComponent::ReturnCode LogNewtonRaphsonSaveDeriv::calculateDerivatives( Sol
 
         // Update the JF, JFDM, and JFSM matrices
         SolverLibrary::updateMatrices( solverSet, JFSM, JFDM, JF );
-        SolverLibrary::invertMatrix( JF );
+        bool isSingular = false;
+        JF = SolverLibrary::invertMatrix( JF, isSingular );
+        if( isSingular ) {
+            solverLog.setLevel( ILogger::ERROR );
+            solverLog << "Matrix came back as singluar, could not invert." << endl;
+            solverLog.setLevel( ILogger::NOTICE );
+            return FAILURE_SINGULAR_MATRIX;
+        }
 
         // Save matricies
-        JFSave.reset( new Matrix( solverSet.getNumSolvable(), solverSet.getNumSolvable() ) );
-        JFDMSave.reset( new Matrix( solverSet.getNumSolvable(), solverSet.getNumSolvable() ) );
-        JFSMSave.reset( new Matrix( solverSet.getNumSolvable(), solverSet.getNumSolvable() ) );
-        copy( JF, *JFSave );
-        copy( JFDM, *JFDMSave );
-        copy( JFSM, *JFSMSave );
+        JFSave.assign( JF );
+        JFDMSave.assign( JFDM );
+        JFSMSave.assign( JFSM );
         savedMatrixSize = solverSet.getNumSolvable();
 
         // Otherwise restore from saved values
@@ -95,9 +95,9 @@ SolverComponent::ReturnCode LogNewtonRaphsonSaveDeriv::calculateDerivatives( Sol
             solverLog << "Matrix sizes changed " << solverSet.getNumSolvable() << ", "<< savedMatrixSize << endl;
             return FAILURE_SOLUTION_SIZE_CHANGED;
         }
-        copy( *JFSave, JF );
-        copy( *JFDMSave, JFDM );
-        copy( *JFSMSave, JFSM );
+        JF.assign( JFSave );
+        JFDM.assign( JFDMSave );
+        JFSM.assign( JFSMSave );
     }
 
     return SUCCESS;

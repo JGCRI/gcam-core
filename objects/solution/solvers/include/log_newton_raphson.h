@@ -12,17 +12,9 @@
 * \author Josh Lurz
 */
 #include <string>
+#include <boost/numeric/ublas/matrix.hpp> 
 
-// Turn off MTL warnings.
-#if defined(_MSC_VER)          
-#pragma warning( push )
-#pragma warning( disable: 4275 )
-#pragma warning( disable: 4267 )
-#pragma warning( disable: 4244 )
-#endif
-
-#include <mtl/matrix.h>
-typedef mtl::matrix<double, mtl::rectangle<>, mtl::dense<>, mtl::row_major>::type Matrix;
+typedef boost::numeric::ublas::matrix<double> Matrix;
 
 class CalcCounter; 
 class Marketplace;
@@ -45,16 +37,10 @@ public:
                       const unsigned int maxIterations, SolverInfoSet& solverSet, const int period );
     
 protected:
-    static const std::string SOLVER_NAME;
     virtual const std::string& getName() const;
     virtual ReturnCode calculateDerivatives( SolverInfoSet& solverSet, Matrix& JFSM, Matrix& JFDM, Matrix& JF, int period );
 
     double mDeltaPrice; //!< The amount to adjust prices by when calculation derivatives.
 };
-
-// Restore normal compiler warnings.
-#if defined(_MSC_VER)
-#pragma warning( pop )
-#endif
 
 #endif // _NEWTON_RAPHSON_H_
