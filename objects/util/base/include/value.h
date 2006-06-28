@@ -97,7 +97,12 @@ Value::operator double() const {
     return mValue;
 }
 
-//! Get the value. Only use this function to resolve ambiguities.
+/*!
+ * \brief Get the value in an unambigous way.
+ * \details Only use this function when using the Value directly gives an error
+ *          or warning.
+ * \return The value.
+ */
 double Value::get() const {
     return mValue;
 }
