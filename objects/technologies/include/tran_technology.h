@@ -28,7 +28,7 @@ class IInfo;
 class TranTechnology : public technology
 {
 public:
-    TranTechnology();
+    TranTechnology( const std::string& aName, const int aYear );
     TranTechnology* clone() const;
     const std::string& getXMLName1D() const;
     static const std::string& getXMLNameStatic1D();

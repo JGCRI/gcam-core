@@ -27,8 +27,14 @@ const string BuildingCoolingDmdTechnology::XML_NAME1D = "coolingservice";
 
 // Technology class method definition
 
-//! Default constructor.
-BuildingCoolingDmdTechnology::BuildingCoolingDmdTechnology() {
+/*! 
+ * \brief Constructor.
+ * \param aName Technology name.
+ * \param aYear Technology year.
+ */
+BuildingCoolingDmdTechnology::BuildingCoolingDmdTechnology( const string& aName, const int aYear )
+:BuildingHeatCoolDmdTechnology( aName, aYear )
+{
     coolingDegreeDays = 0;
 }
 

@@ -26,7 +26,7 @@
 
 using namespace std;
 using namespace xercesc;
-	
+    
 extern Scenario* scenario;
 const string TranSubsector::XML_NAME = "tranSubsector";
 
@@ -54,7 +54,7 @@ TranSubsector::TranSubsector( const string regionName, const string sectorName )
 * \return The constant XML_NAME.
 */
 const std::string& TranSubsector::getXMLName() const {
-	return XML_NAME;
+    return XML_NAME;
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -67,7 +67,7 @@ const std::string& TranSubsector::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& TranSubsector::getXMLNameStatic() {
-	return XML_NAME;
+    return XML_NAME;
 }
 
 //! Parses any input variables specific to derived classes
@@ -102,14 +102,22 @@ bool TranSubsector::isNameOfChild  ( const string& nodename ) const {
     return nodename == TranTechnology::getXMLNameStatic1D();
 }
 
-/*! \brief Virtual function to generate a child element or construct the appropriate technology.
-*
-* \pre Needs cooresponding isNameOfChild() function
-* \author Steve Smith
-* \return returns a new child object of appropriate type.
-*/
-technology* TranSubsector::createChild( const std::string& nodename ) const {
-    return new TranTechnology();
+/*!
+ * \brief Derived helper function to generate a child element or construct the
+ *        appropriate technology.
+ * \param aTechType The name of the XML node, which is the type of the
+ *        technology.
+ * \param aTechName The name of the new technology.
+ * \param aYear The year of the new technology.
+ * \pre isNameOfChild returned that the type could be created.
+ * \author Steve Smith
+ * \return A newly created technology of the specified type.
+ */
+technology* TranSubsector::createChild( const string& aTechType,
+                                        const string& aTechName,
+                                        const int aTechYear ) const
+{
+    return new TranTechnology( aTechName, aTechYear );
 }
 
 /*! \brief XML output stream for derived classes
@@ -163,15 +171,15 @@ void TranSubsector::initCalc( NationalAccount& aNationalAccount,
                               const MoreSectorInfo* aMoreSectorInfo,
                               const int aPeriod )
 {
-	// Check if illegal values have been read in
-	if ( speed[ aPeriod ] <= 0 ) {
-		speed[ aPeriod ] = 1;
-		ILogger& mainLog = ILogger::getLogger( "main_log" );
-		mainLog.setLevel( ILogger::ERROR );
-		mainLog << "Speed was zero or negative in subsector: " << name << " in region " 
-			<< regionName << ". Reset to 1." << endl;
-	}
-	Subsector::initCalc( aNationalAccount, aDemographics, aMoreSectorInfo, aPeriod );
+    // Check if illegal values have been read in
+    if ( speed[ aPeriod ] <= 0 ) {
+        speed[ aPeriod ] = 1;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Speed was zero or negative in subsector: " << name << " in region " 
+            << regionName << ". Reset to 1." << endl;
+    }
+    Subsector::initCalc( aNationalAccount, aDemographics, aMoreSectorInfo, aPeriod );
 }
 
 //! calculate subsector share numerator
@@ -193,8 +201,8 @@ void TranSubsector::calcShare( const int period, const GDP* gdp )
     const double WEEKS_PER_YEAR = 50;
     const double HOURS_PER_WEEK = 40;
     
-	/*! \pre Speed must be greater than 0. */
-	assert( speed[ period ] > 0 );
+    /*! \pre Speed must be greater than 0. */
+    assert( speed[ period ] > 0 );
 
     // Add cost of time spent on travel by converting gdp/cap into an hourly
     // wage and multipling by average speed calculate time value based on hours
@@ -202,42 +210,42 @@ void TranSubsector::calcShare( const int period, const GDP* gdp )
     // of $'s). GDP value at this point in the code does not include energy
     // feedback calculation for this year, so is, therefore, approximate.
     timeValue[period] = gdp->getApproxGDPperCap( period ) * 1000 
-		               / ( HOURS_PER_WEEK * WEEKS_PER_YEAR ) / speed[ period ];
-	
-	/*! \invariant Time value must be valid and greater than or equal to zero. */
-	assert( timeValue[ period ] >= 0 && util::isValidNumber( timeValue[ period ] ) );
-	
+                       / ( HOURS_PER_WEEK * WEEKS_PER_YEAR ) / speed[ period ];
+    
+    /*! \invariant Time value must be valid and greater than or equal to zero. */
+    assert( timeValue[ period ] >= 0 && util::isValidNumber( timeValue[ period ] ) );
+    
     double generalizedCost = subsectorprice[period] + timeValue[period] ;
     
-	/*! \invariant Generalized cost be valid and greater than or equal to zero. */
-	assert( generalizedCost >= 0 && util::isValidNumber( generalizedCost ) );
-	
-	// Compute calibrating scaler if first period, otherwise use computed
-	// scaler in subsequent periods.
-	if( period == 0 ) {
-		// Can only calculate a base period scaler if there is a non-zero share
-		// weight.
-		if( shrwts[ period ] > 0 ){
-			baseScaler = mServiceOutputs[0] / shrwts[ period ] 
-			             * pow( generalizedCost, -lexp[ period ] )
-				         * pow( scaledGdpPerCapita, -fuelPrefElasticity[ period ] )
-				         * pow( popDensity, -popDenseElasticity[ period ] );
-		}
-		else {
-			baseScaler = 1;
-		}
-	}
-	
-	/*! \pre The base scaler must have already been calculated. */
-	assert( baseScaler != -1 );
+    /*! \invariant Generalized cost be valid and greater than or equal to zero. */
+    assert( generalizedCost >= 0 && util::isValidNumber( generalizedCost ) );
+    
+    // Compute calibrating scaler if first period, otherwise use computed
+    // scaler in subsequent periods.
+    if( period == 0 ) {
+        // Can only calculate a base period scaler if there is a non-zero share
+        // weight.
+        if( shrwts[ period ] > 0 ){
+            baseScaler = mServiceOutputs[0] / shrwts[ period ] 
+                         * pow( generalizedCost, -lexp[ period ] )
+                         * pow( scaledGdpPerCapita, -fuelPrefElasticity[ period ] )
+                         * pow( popDensity, -popDenseElasticity[ period ] );
+        }
+        else {
+            baseScaler = 1;
+        }
+    }
+    
+    /*! \pre The base scaler must have already been calculated. */
+    assert( baseScaler != -1 );
 
-	// Compute the share of the subsector.
+    // Compute the share of the subsector.
     share[period] = baseScaler * shrwts[period] * pow( generalizedCost, lexp[period])
                     * pow( scaledGdpPerCapita, fuelPrefElasticity[period] )
-					* pow( popDensity, popDenseElasticity[period] );
-	
-	/*! \post The share must be greater than or equal to zero and valid. */
-	assert( share[ period ] >= 0 && util::isValidNumber( share[ period ] ) );
+                    * pow( popDensity, popDenseElasticity[period] );
+    
+    /*! \post The share must be greater than or equal to zero and valid. */
+    assert( share[ period ] >= 0 && util::isValidNumber( share[ period ] ) );
 }
 
 //! sets demand to output and output

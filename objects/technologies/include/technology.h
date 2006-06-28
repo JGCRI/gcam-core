@@ -94,9 +94,9 @@ protected:
                                   const GDP* aGDP,
                                   const int aPeriod );
 public:
-    technology(); // default construtor
-    technology( const technology& techIn ); // copy constructor.
-    technology& operator=( const technology& techIn ); // assignment operator.
+    technology( const std::string& aName, const int aYear );
+    technology( const technology& techIn );
+    technology& operator=( const technology& techIn );
     virtual technology* clone() const;
     virtual ~technology();
     virtual void XMLParse( const xercesc::DOMNode* tempnode ); // initialize technology with xml data

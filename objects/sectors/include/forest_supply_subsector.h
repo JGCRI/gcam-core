@@ -27,16 +27,19 @@
 
 class ForestSupplySubsector : public Subsector {
 public:
-	ForestSupplySubsector( const std::string& aRegionName,
+    ForestSupplySubsector( const std::string& aRegionName,
                            const std::string& aSectorName );
 
-	virtual ~ForestSupplySubsector();
-	static const std::string& getXMLNameStatic();
+    virtual ~ForestSupplySubsector();
+    static const std::string& getXMLNameStatic();
 protected:
-	virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-	virtual const std::string& getXMLName() const;
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
+    virtual const std::string& getXMLName() const;
     bool isNameOfChild( const std::string& nodename ) const;
-    virtual technology* createChild( const std::string& nodename ) const;
+
+    virtual technology* createChild( const std::string& aTechType,
+                                     const std::string& aTechName,
+                                     const int aTechYear ) const;
 private:
 };
 #endif // _FOREST_SUPPLY_SUBSECTOR_H_

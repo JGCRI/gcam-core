@@ -74,7 +74,11 @@ protected:
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     void setUpSubSectorMarkets();
     bool isNameOfChild  ( const std::string& nodename ) const;
-    technology* createChild( const std::string& nodename ) const;
+
+    virtual technology* createChild( const std::string& aTechType,
+                                     const std::string& aTechName,
+                                     const int aTechYear ) const;
+
     void adjustTechnologyShareWeights( const int period );
     void MCDerivedClassOutput( ) const;
     std::vector<double> output; //!< Output of the building demand sector.

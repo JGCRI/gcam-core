@@ -29,8 +29,13 @@ const string BuildingGenericDmdTechnology::XML_NAME1D = "buildingservice";
 
 // Technology class method definition
 
-//! Default constructor.
-BuildingGenericDmdTechnology::BuildingGenericDmdTechnology() {
+/*! 
+ * \brief Constructor.
+ * \param aName Technology name.
+ * \param aYear Technology year.
+ */
+BuildingGenericDmdTechnology::BuildingGenericDmdTechnology( const string& aName, const int aYear )
+:technology( aName, aYear ){
     saturation = 1;
     priceElasticity = 0;
 }

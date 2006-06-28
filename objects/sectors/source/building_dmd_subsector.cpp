@@ -127,28 +127,35 @@ bool BuildingDemandSubSector::isNameOfChild  ( const string& nodename ) const {
     }
 }
 
-/*! \brief Virtual function to generate a child element or construct the appropriate technology.
-*
-* \pre Needs cooresponding isNameOfChild() function
-* \author Steve Smith
-* \return returns a new child object of appropriate type.
-*/
-technology* BuildingDemandSubSector::createChild( const string& nodename ) const {
-    if ( nodename == BuildingGenericDmdTechnology::getXMLNameStatic1D() ) {
-        return new BuildingGenericDmdTechnology();
+/*!
+ * \brief Derived helper function to generate a child element or construct the
+ *        appropriate technology.
+ * \param aTechType The name of the XML node, which is the type of the
+ *        technology.
+ * \param aTechName The name of the new technology.
+ * \param aYear The year of the new technology.
+ * \pre isNameOfChild returned that the type could be created.
+ * \author Steve Smith
+ * \return A newly created technology of the specified type.
+ */
+technology* BuildingDemandSubSector::createChild( const string& aTechType,
+                                                  const string& aTechName,
+                                                  const int aTechYear ) const
+{
+    if ( aTechType == BuildingGenericDmdTechnology::getXMLNameStatic1D() ) {
+        return new BuildingGenericDmdTechnology( aTechName, aTechYear );
     }
-    else if ( nodename == BuildingCoolingDmdTechnology::getXMLNameStatic1D() ){
-        return new BuildingCoolingDmdTechnology();
+    if ( aTechType == BuildingCoolingDmdTechnology::getXMLNameStatic1D() ){
+        return new BuildingCoolingDmdTechnology( aTechName, aTechYear );
     }
-    else if ( nodename == BuildingHeatingDmdTechnology::getXMLNameStatic1D() ){
-        return new BuildingHeatingDmdTechnology();
+    if ( aTechType == BuildingHeatingDmdTechnology::getXMLNameStatic1D() ){
+        return new BuildingHeatingDmdTechnology( aTechName, aTechYear );
     } 
-    else {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "ERROR: No building demand technology created in subsector type " << getXMLNameStatic() << endl;
-        return 0;
-    }
+
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::ERROR );
+    mainLog << "ERROR: No building demand technology created in subsector type " << getXMLNameStatic() << endl;
+    return 0;
 }
 
 /*! \brief Parses any input variables specific to derived classes

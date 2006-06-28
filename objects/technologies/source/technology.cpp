@@ -51,8 +51,13 @@ typedef vector<IOutput*>::const_iterator COutputIterator;
 typedef vector<Ghg*>::const_iterator CGHGIterator;
 // Technology class method definition
 
-//! Default constructor.
-technology::technology() {
+/*! 
+ * \brief Constructor.
+ * \param aName Technology name.
+ * \param aYear Technology year.
+ */
+technology::technology( const string& aName, const int aYear )
+: name( aName ), year ( aYear ) {
     initElementalMembers();
 }
 
@@ -134,7 +139,6 @@ void technology::clear(){
 
 //! Initialize elemental data members.
 void technology::initElementalMembers(){
-    year = 0;
     shrwts = 1;
     eff = 1; 
     effBase = 1; 
@@ -182,10 +186,12 @@ void technology::XMLParse( const DOMNode* node ) {
             continue;
         }
         else if( nodeName == "name" ) {
-            name = XMLHelper<string>::getValue( curr );
+            // Note: Parsing the name inside technology is now deprecated.
+            //       This will eventually be an error.
         } 
         else if( nodeName == "year" ){
-            year = XMLHelper<int>::getValue( curr );
+            // Note: Parsing the year inside technology is now deprecated.
+            //       This will eventually be an error.
         }
         else if( nodeName == "fuelname" ){
             fuelname = XMLHelper<string>::getValue( curr );
@@ -317,7 +323,8 @@ void technology::completeInit( const string& aSectorName,
     }
 
     // Add the input dependency to the dependency finder if there is one. There
-    // will not be one if this is a transportation technology.
+    // will not be one if this is a demand technology.
+
     if( aDepFinder ){
         // Don't add dependency if technology does not ever function. If this is
         // the case, the technology can never have an effect on the markets.
@@ -339,9 +346,6 @@ void technology::toInputXML( ostream& out, Tabs* tabs ) const {
     
     XMLWriteOpeningTag( getXMLName2D(), out, tabs, "", year );
     // write the xml for the class members.
-    
-    XMLWriteElement( name, "name", out, tabs );
-    XMLWriteElement( year, "year", out, tabs );
     
     XMLWriteElementCheckDefault( shrwts, "sharewt", out, tabs, 1.0 );
     
@@ -569,7 +573,7 @@ void technology::calcCost( const string& regionName, const string& sectorName, c
     fuelcost = ( fuelprice * fMultiplier ) / eff;
     techcost = ( fuelcost + necost ) * pMultiplier;
     techcost -= calcSecondaryValue( regionName, per );
-    
+
     // techcost can drift below zero in disequalibrium.
     techcost = max( techcost, util::getSmallNumber() );
 }
@@ -747,6 +751,8 @@ void technology::production( const string& aRegionName,
                              const GDP* aGDP,
                              const int aPeriod )
 {
+    assert( util::isValidNumber( aDemand ) && aDemand >= 0 );
+
     // dmd is total subsector demand. Use share to get output for each
     // technology
     double primaryOutput = share * aDemand;

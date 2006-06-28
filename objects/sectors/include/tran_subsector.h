@@ -70,7 +70,10 @@ protected:
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     const std::string& getXMLName() const;
     bool isNameOfChild  ( const std::string& nodename ) const;
-    technology* createChild( const std::string& nodename ) const;
+    
+    virtual technology* createChild( const std::string& aTechType,
+                                     const std::string& aTechName,
+		                             const int aTechYear ) const;
 private:
     static const std::string XML_NAME; //!< XML name of this object.
 };

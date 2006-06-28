@@ -38,12 +38,22 @@ bool FoodSupplySubsector::isNameOfChild( const string& nodename ) const {
     return ( nodename == FoodProductionTechnology::getXMLNameStatic1D() );
 }
 
-/*! \brief Virtual function to generate a child element or construct the appropriate technology.
-* \author Steve Smith
-* \return returns a new child object of appropriate type.
-*/
-technology* FoodSupplySubsector::createChild( const string& nodename ) const {
-    return new FoodProductionTechnology();
+/*!
+ * \brief Derived helper function to generate a child element or construct the
+ *        appropriate technology.
+ * \param aTechType The name of the XML node, which is the type of the
+ *        technology.
+ * \param aTechName The name of the new technology.
+ * \param aYear The year of the new technology.
+ * \pre isNameOfChild returned that the type could be created.
+ * \author Steve Smith
+ * \return A newly created technology of the specified type.
+ */
+technology* FoodSupplySubsector::createChild( const string& aTechType,
+                                              const string& aTechName,
+                                              const int aTechYear ) const
+{
+    return new FoodProductionTechnology( aTechName, aTechYear );
 }
 
 //! Parses any input variables specific to derived classes
@@ -60,7 +70,7 @@ bool FoodSupplySubsector::XMLDerivedClassParse( const string& nodeName, const DO
 * \return The constant XML_NAME.
 */
 const string& FoodSupplySubsector::getXMLName() const {
-	return getXMLNameStatic();
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -73,8 +83,8 @@ const string& FoodSupplySubsector::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const string& FoodSupplySubsector::getXMLNameStatic() {
-	const static string XML_NAME = "FoodSupplySubsector";
-	return XML_NAME;
+    const static string XML_NAME = "FoodSupplySubsector";
+    return XML_NAME;
 }
 
 //! Outputs any variables specific to derived classes

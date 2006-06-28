@@ -35,7 +35,7 @@ class IInfo;
 class BuildingGenericDmdTechnology : public technology
 {
 public:
-    BuildingGenericDmdTechnology();
+    BuildingGenericDmdTechnology( const std::string& aName, const int aYear );
     virtual BuildingGenericDmdTechnology* clone() const;
     virtual ~BuildingGenericDmdTechnology();
     virtual const std::string& getXMLName1D() const;

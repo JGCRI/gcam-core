@@ -33,7 +33,7 @@ class NationalAccount;
 class BuildingSupplyTechnology : public technology
 {
 public:
-    BuildingSupplyTechnology(); // default construtor
+    BuildingSupplyTechnology( const std::string& aName, const int aYear );
     BuildingSupplyTechnology* clone() const;
     ~BuildingSupplyTechnology();
     const std::string& getXMLName1D() const;

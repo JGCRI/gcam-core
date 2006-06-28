@@ -27,8 +27,13 @@ const string BuildingSupplyTechnology::XML_NAME1D = "buildingsupplytech";
 
 // Technology class method definition
 
-//! Default constructor.
-BuildingSupplyTechnology::BuildingSupplyTechnology() {
+/*! 
+ * \brief Constructor.
+ * \param aName Technology name.
+ * \param aYear Technology year.
+ */
+BuildingSupplyTechnology::BuildingSupplyTechnology( const string& aName, const int aYear )
+:technology( aName, aYear ){
     internalLoadFraction = 1;
 }
 

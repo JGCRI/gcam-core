@@ -102,7 +102,10 @@ protected:
     void techShareWeightLinearInterpFn( const int beginPeriod,  const int endPeriod );
     void parseBaseTechHelper( const xercesc::DOMNode* curr, BaseTechnology* newTech );
     virtual bool isNameOfChild  ( const std::string& nodename ) const;
-    virtual technology* createChild( const std::string& nodename ) const;
+    
+    virtual technology* createChild( const std::string& aTechType,
+                                     const std::string& aTechName,
+                                     const int aTechYear ) const;
    
     static bool initializeTechVector( std::vector<technology*>& aTechVector, 
                                       const std::string& aSectorName,

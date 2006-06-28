@@ -34,7 +34,11 @@ public:
 protected:
     virtual const std::string& getXMLName() const;
     bool isNameOfChild  ( const std::string& nodename ) const;
-    technology* createChild( const std::string& nodename ) const;
+
+    virtual technology* createChild( const std::string& aTechType,
+                                     const std::string& aTechName,
+                                     const int aTechYear ) const;
+
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
     double unitInternalLoads; //!< internal loads per unit service
 private:

@@ -19,8 +19,13 @@ using namespace xercesc;
 
 extern Scenario* scenario;
 
-//! Constructor.
-ForestProductionTechnology::ForestProductionTechnology(){
+/*! 
+ * \brief Constructor.
+ * \param aName Technology name.
+ * \param aYear Technology year.
+ */
+ForestProductionTechnology::ForestProductionTechnology( const string& aName, const int aYear )
+:FoodProductionTechnology( aName, aYear ){
     // TODO: 0.02 should not be a default value.
     interestRate = 0.02;
     mRotationPeriod = 0;

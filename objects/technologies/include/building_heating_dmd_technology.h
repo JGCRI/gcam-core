@@ -37,7 +37,7 @@ class IInfo;
 class BuildingHeatingDmdTechnology : public BuildingHeatCoolDmdTechnology
 {
 public:
-    BuildingHeatingDmdTechnology(); // default construtor
+    BuildingHeatingDmdTechnology( const std::string& aName, const int aYear );
     BuildingHeatingDmdTechnology* clone() const;
     const std::string& getXMLName1D() const;
     static const std::string& getXMLNameStatic1D();

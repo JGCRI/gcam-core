@@ -28,7 +28,7 @@ class ILandAllocator;
 
 class FoodProductionTechnology : public technology {
 public:
-    FoodProductionTechnology();
+    FoodProductionTechnology( const std::string& aName, const int aYear );
     ~FoodProductionTechnology();
     static const std::string& getXMLNameStatic1D();
     FoodProductionTechnology* clone() const;    

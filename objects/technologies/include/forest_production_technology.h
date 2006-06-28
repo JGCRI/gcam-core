@@ -29,7 +29,7 @@ class DependencyFinder;
 
 class ForestProductionTechnology : public FoodProductionTechnology {
 public:
-    ForestProductionTechnology();
+    ForestProductionTechnology( const std::string& aName, const int aYear );
     ~ForestProductionTechnology();
     static const std::string& getXMLNameStatic1D();
     const std::string& getXMLName1D() const;

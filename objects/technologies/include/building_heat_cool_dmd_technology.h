@@ -38,7 +38,7 @@ class IInfo;
 class BuildingHeatCoolDmdTechnology : public BuildingGenericDmdTechnology
 {
 public:
-    BuildingHeatCoolDmdTechnology(); // default construtor
+    BuildingHeatCoolDmdTechnology( const std::string& aName, const int aYear );
     virtual const std::string& getXMLName1D() const = 0;
     
     virtual void initCalc( const std::string& aRegionName,

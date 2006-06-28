@@ -41,7 +41,7 @@ BuildingSupplySubSector::BuildingSupplySubSector( const string regionName, const
 * \return The constant XML_NAME.
 */
 const std::string& BuildingSupplySubSector::getXMLName() const {
-	return XML_NAME;
+    return XML_NAME;
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -54,7 +54,7 @@ const std::string& BuildingSupplySubSector::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& BuildingSupplySubSector::getXMLNameStatic() {
-	return XML_NAME;
+    return XML_NAME;
 }
 
 /*! \brief Parses any input variables specific to derived classes
@@ -77,12 +77,20 @@ bool BuildingSupplySubSector::isNameOfChild  ( const string& nodename ) const {
     return nodename == BuildingSupplyTechnology::getXMLNameStatic1D();
 }
 
-/*! \brief Virtual function to generate a child element or construct the appropriate technology.
-*
-* \pre Needs cooresponding isNameOfChild() function
-* \author Steve Smith
-* \return returns a new child object of appropriate type.
-*/
-technology* BuildingSupplySubSector::createChild( const string& nodename ) const {
-    return new BuildingSupplyTechnology();
+/*!
+ * \brief Derived helper function to generate a child element or construct the
+ *        appropriate technology.
+ * \param aTechType The name of the XML node, which is the type of the
+ *        technology.
+ * \param aTechName The name of the new technology.
+ * \param aYear The year of the new technology.
+ * \pre isNameOfChild returned that the type could be created.
+ * \author Steve Smith
+ * \return A newly created technology of the specified type.
+ */
+technology* BuildingSupplySubSector::createChild( const string& aTechType,
+                                                  const string& aTechName,
+                                                  const int aTechYear ) const
+{
+    return new BuildingSupplyTechnology( aTechName, aTechYear );
 }

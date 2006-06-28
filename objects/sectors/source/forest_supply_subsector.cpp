@@ -39,14 +39,22 @@ bool ForestSupplySubsector::isNameOfChild( const string& nodename ) const {
     return ( nodename == ForestProductionTechnology::getXMLNameStatic1D() );
 }
 
-/*! \brief Virtual function to generate a child element or construct the appropriate technology.
-*
-* \pre Needs cooresponding isNameOfChild() function
-* \author Steve Smith
-* \return returns a new child object of appropriate type.
-*/
-technology* ForestSupplySubsector::createChild( const string& nodename ) const {
-    return new ForestProductionTechnology();
+/*!
+ * \brief Derived helper function to generate a child element or construct the
+ *        appropriate technology.
+ * \param aTechType The name of the XML node, which is the type of the
+ *        technology.
+ * \param aTechName The name of the new technology.
+ * \param aYear The year of the new technology.
+ * \pre isNameOfChild returned that the type could be created.
+ * \author Steve Smith
+ * \return A newly created technology of the specified type.
+ */
+technology* ForestSupplySubsector::createChild( const string& aTechType,
+                                                const string& aTechName,
+                                                const int aTechYear ) const
+{
+    return new ForestProductionTechnology( aTechName, aTechYear );
 }
 
 //! Parses any input variables specific to derived classes
@@ -63,7 +71,7 @@ bool ForestSupplySubsector::XMLDerivedClassParse( const string& nodeName, const 
 * \return The constant XML_NAME.
 */
 const string& ForestSupplySubsector::getXMLName() const {
-	return getXMLNameStatic();
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -76,6 +84,6 @@ const string& ForestSupplySubsector::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const string& ForestSupplySubsector::getXMLNameStatic() {
-	const static string XML_NAME = "ForestSupplySubsector";
-	return XML_NAME;
+    const static string XML_NAME = "ForestSupplySubsector";
+    return XML_NAME;
 }

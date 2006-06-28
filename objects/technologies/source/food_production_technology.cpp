@@ -19,10 +19,13 @@ using namespace xercesc;
 
 extern Scenario* scenario;
 
-// Technology class method definition
-
-//! Default constructor.
-FoodProductionTechnology::FoodProductionTechnology(){
+/*! 
+ * \brief Constructor.
+ * \param aName Technology name.
+ * \param aYear Technology year.
+ */
+FoodProductionTechnology::FoodProductionTechnology( const string& aName, const int aYear )
+:technology( aName, aYear ){
     mLandAllocator = 0;
     variableCost = 2; // Need a better default value for this (0 is probably ok, with a warning to logfile).
     fuelname = "none";
@@ -196,7 +199,8 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
         calVarCost = calPrice - mLandAllocator->getCalAveObservedRate( "UnmanagedLand", aPeriod )
                                 / calcDiscountFactor()
                                 / calObservedYield;
-        
+        assert( util::isValidNumber( calVarCost ) );
+
         // Set the variable cost for the technology to the calibrated variable cost.
         if ( calVarCost > util::getSmallNumber() ) {
             // TODO: Add warning if there was a read-in variable cost.

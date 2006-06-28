@@ -29,8 +29,13 @@ extern Scenario* scenario;
 
 const string TranTechnology::XML_NAME = "tranTechnology";
 
-//! Default constructor.
-TranTechnology::TranTechnology() {
+/*! 
+ * \brief Constructor.
+ * \param aName Technology name.
+ * \param aYear Technology year.
+ */
+TranTechnology::TranTechnology( const string& aName, const int aYear )
+:technology( aName, aYear ){
 	intensity = 1;
     loadFactor = 1;
 	mTechnicalChange = 0;

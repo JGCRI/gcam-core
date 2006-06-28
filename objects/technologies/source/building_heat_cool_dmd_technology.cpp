@@ -23,8 +23,13 @@ using namespace xercesc;
 
 extern Scenario* scenario;
 
-//! Default constructor.
-BuildingHeatCoolDmdTechnology::BuildingHeatCoolDmdTechnology() {
+/*! 
+ * \brief Constructor.
+ * \param aName Technology name.
+ * \param aYear Technology year.
+ */
+BuildingHeatCoolDmdTechnology::BuildingHeatCoolDmdTechnology( const string& aName, const int aYear )
+:BuildingGenericDmdTechnology( aName, aYear ){
     aveInsulation = 0;
     floorToSurfaceArea = 0;
     fractionOfYearActive = 0;

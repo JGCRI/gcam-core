@@ -25,14 +25,18 @@
 
 class FoodSupplySubsector : public Subsector {
 public:
-	FoodSupplySubsector( const std::string& regionName, const std::string& sectorName );
-	virtual ~FoodSupplySubsector();
-	static const std::string& getXMLNameStatic();
+    FoodSupplySubsector( const std::string& regionName, const std::string& sectorName );
+    virtual ~FoodSupplySubsector();
+    static const std::string& getXMLNameStatic();
 protected:
-	virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-	virtual const std::string& getXMLName() const;
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
+    virtual const std::string& getXMLName() const;
     bool isNameOfChild( const std::string& nodename ) const;
-    virtual technology* createChild( const std::string& nodename ) const;
+
+    virtual technology* createChild( const std::string& aTechType,
+                                     const std::string& aTechName,
+                                     const int aTechYear ) const;
+
     virtual void MCDerivedClassOutput() const;
 };
 #endif // _FOOD_SUPPLY_SUBSECTOR_H_

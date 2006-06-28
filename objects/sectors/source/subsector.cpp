@@ -243,7 +243,9 @@ void Subsector::XMLParse( const DOMNode* node ) {
                             // have been initialized. Create the technology for
                             // the given year if it does not exist.
                             if( !(*techPosition)[ thisPeriod ] ){
-                                (*techPosition)[ thisPeriod ] = createChild( nodeName );
+                                int techYear = modeltime->getper_to_yr( thisPeriod );
+                                (*techPosition)[ thisPeriod ] = createChild( nodeName, techName,
+                                                                             techYear );
                             }
                             (*techPosition)[ thisPeriod ]->XMLParse( currChild );
                         }
@@ -274,9 +276,11 @@ void Subsector::XMLParse( const DOMNode* node ) {
                     // 2nd dimension of the tech XML is "period". This is the
                     // same for all derived technologies.
                     else if( childNodeName == technology::getXMLNameStatic2D() ){
-                        auto_ptr<technology> tempTech( createChild( nodeName ) );
-                        tempTech->XMLParse( currChild );
                         int thisPeriod = XMLHelper<void>::getNodePeriod( currChild, modeltime );
+                        int currYear = modeltime->getper_to_yr( thisPeriod );
+                        auto_ptr<technology> tempTech( createChild( nodeName, techName, currYear ) );
+                        tempTech->XMLParse( currChild );
+
 
                         // Check that a technology does not already exist.
                         if( techVec[ thisPeriod ] ){
@@ -326,9 +330,22 @@ bool Subsector::isNameOfChild( const string& nodename ) const {
     return nodename == technology::getXMLNameStatic1D();
 }
 
-//! Virtual function to generate a child element or construct the appropriate technology.
-technology* Subsector::createChild( const string& nodename ) const {
-    return new technology();
+/*!
+ * \brief Derived helper function to generate a child element or construct the
+ *        appropriate technology.
+ * \param aTechType The name of the XML node, which is the type of the
+ *        technology.
+ * \param aTechName The name of the new technology.
+ * \param aYear The year of the new technology.
+ * \pre isNameOfChild returned that the type could be created.
+ * \author Steve Smith
+ * \return A newly created technology of the specified type.
+ */
+technology* Subsector::createChild( const string& aTechType,
+                                    const string& aTechName,
+                                    const int aTechYear ) const
+{
+    return new technology( aTechName, aTechYear );
 }
 
 //! Helper function which parses any type of base technology correctly.
@@ -689,7 +706,7 @@ void Subsector::initCalc( NationalAccount& aNationalAccount,
         
         int numberOfGHGs =  techs[ i ][ aPeriod ]->getNumbGHGs();
 
-		if ( numberOfGHGs != techs[i][ aPeriod - 1 ]->getNumbGHGs() && aPeriod > 1 ) {
+        if ( numberOfGHGs != techs[i][ aPeriod - 1 ]->getNumbGHGs() && aPeriod > 1 ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
             mainLog << name << " Number of GHG objects changed in period " << aPeriod;
@@ -910,23 +927,23 @@ void Subsector::calcTechShares( const GDP* gdp, const int period ) {
 * \warning there is no difference between demand and supply technologies. Control behavior with value of parameter fuelPrefElasticity
 */
 void Subsector::calcShare(const int period, const GDP* gdp ) {
-	// call function to compute technology shares
-	calcTechShares( gdp, period );
-	// calculate and return Subsector share; uses above price function
-	// calcPrice() uses normalized technology shares calculated above
+    // call function to compute technology shares
+    calcTechShares( gdp, period );
+    // calculate and return Subsector share; uses above price function
+    // calcPrice() uses normalized technology shares calculated above
 
-	// compute Subsector weighted average price of technologies
-	calcPrice( period );
+    // compute Subsector weighted average price of technologies
+    calcPrice( period );
 
-	// Calculate the subsector share based on its price.
-	if( subsectorprice[ period ] > 0 ){
-		double scaledGdpPerCapita = gdp->getBestScaledGDPperCap( period );
-		share[ period ] = shrwts[ period ] * pow( subsectorprice[ period ], lexp[ period ] )
-			                               * pow( scaledGdpPerCapita, fuelPrefElasticity[ period ] );
-	}
-	else {
-		share[ period ] = 0;
-	}
+    // Calculate the subsector share based on its price.
+    if( subsectorprice[ period ] > 0 ){
+        double scaledGdpPerCapita = gdp->getBestScaledGDPperCap( period );
+        share[ period ] = shrwts[ period ] * pow( subsectorprice[ period ], lexp[ period ] )
+                                           * pow( scaledGdpPerCapita, fuelPrefElasticity[ period ] );
+    }
+    else {
+        share[ period ] = 0;
+    }
 
     // Check for invalid shares.
     if( share[ period ] < 0 || !util::isValidNumber( share[ period ] ) ) {
@@ -2347,12 +2364,12 @@ void Subsector::finalizePeriod( const int aPeriod ){
  * \param period The period which we are outputing for
  */
 void Subsector::csvSGMOutputFile( ostream& aFile, const int period ) const {
-	const Modeltime* modeltime = scenario->getModeltime();
-	for( unsigned int j = 0; j < baseTechs.size(); j++ ) {
-		if( baseTechs[ j ]->getYear() <= modeltime->getper_to_yr( period ) ){ 
-			baseTechs[ j ]->csvSGMOutputFile( aFile, period );
-		}
-	}
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( unsigned int j = 0; j < baseTechs.size(); j++ ) {
+        if( baseTechs[ j ]->getYear() <= modeltime->getper_to_yr( period ) ){ 
+            baseTechs[ j ]->csvSGMOutputFile( aFile, period );
+        }
+    }
 }
 
 /*! \brief Update an output container with information for the subsector.
@@ -2360,8 +2377,8 @@ void Subsector::csvSGMOutputFile( ostream& aFile, const int period ) const {
 * \param period Period in which to update.
 */
 void Subsector::accept( IVisitor* aVisitor, const int period ) const {
-	aVisitor->startVisitSubsector( this, period );
-	const Modeltime* modeltime = scenario->getModeltime();
+    aVisitor->startVisitSubsector( this, period );
+    const Modeltime* modeltime = scenario->getModeltime();
     if( period == -1 ){
         // Output all techs.
         for( unsigned int j = 0; j < baseTechs.size(); j++ ) {
@@ -2369,26 +2386,26 @@ void Subsector::accept( IVisitor* aVisitor, const int period ) const {
         }
     }
     else {
-	    for( unsigned int j = 0; j < baseTechs.size(); j++ ) {
-		    if( baseTechs[ j ]->getYear() <= modeltime->getper_to_yr( period ) ){ // should be unneeded.
-			    baseTechs[ j ]->accept( aVisitor, period );
-		    }
-	    }
+        for( unsigned int j = 0; j < baseTechs.size(); j++ ) {
+            if( baseTechs[ j ]->getYear() <= modeltime->getper_to_yr( period ) ){ // should be unneeded.
+                baseTechs[ j ]->accept( aVisitor, period );
+            }
+        }
     }
-	// If the period is -1 this means to update output containers for all periods.
-	if( period == -1 ){
-		for( unsigned int i = 0; i < techs.size(); ++i ){
-			for( unsigned int j = 0; j < techs[ i ].size(); ++j ){
-				techs[ i ][ j ]->accept( aVisitor, j );
-			}
-		}
-	}
-	else {
-		for( unsigned int i = 0; i < techs.size(); ++i ){
-			techs[ i ][ period ]->accept( aVisitor, period );
-		}
-	}
-	aVisitor->endVisitSubsector( this, period );
+    // If the period is -1 this means to update output containers for all periods.
+    if( period == -1 ){
+        for( unsigned int i = 0; i < techs.size(); ++i ){
+            for( unsigned int j = 0; j < techs[ i ].size(); ++j ){
+                techs[ i ][ j ]->accept( aVisitor, j );
+            }
+        }
+    }
+    else {
+        for( unsigned int i = 0; i < techs.size(); ++i ){
+            techs[ i ][ period ]->accept( aVisitor, period );
+        }
+    }
+    aVisitor->endVisitSubsector( this, period );
 }
 
 /*! \brief Return fixed investment.
