@@ -34,7 +34,9 @@ public:
     FoodProductionTechnology* clone() const;    
 
     bool outputFixed() const;
-    double getCalibrationOutput() const;
+
+    virtual double getCalibrationOutput( const int aPeriod ) const;
+
     virtual bool getCalibrationStatus() const;
     
     virtual void completeInit( const std::string& aSectorName,

@@ -485,7 +485,7 @@ void XMLDBOutputter::startVisitTechnology( const technology* aTechnology,
     XMLWriteElement( aTechnology->techcost, "tech-cost", mBuffer, mTabs.get() );
 
     // Write out the non-energy cost.
-    XMLWriteElement( aTechnology->necost, "non-energy-cost", mBuffer, mTabs.get() );
+    XMLWriteElement( aTechnology->getNonEnergyCost( aPeriod ), "non-energy-cost", mBuffer, mTabs.get() );
 
     // Write out the fuel cost.
     XMLWriteElement( aTechnology->fuelcost, "fuel-cost", mBuffer, mTabs.get() );

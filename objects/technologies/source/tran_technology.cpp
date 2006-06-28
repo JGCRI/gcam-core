@@ -36,9 +36,9 @@ const string TranTechnology::XML_NAME = "tranTechnology";
  */
 TranTechnology::TranTechnology( const string& aName, const int aYear )
 :technology( aName, aYear ){
-	intensity = 1;
+    mIntensity = 1;
     loadFactor = 1;
-	mTechnicalChange = 0;
+    mTechnicalChange = 0;
 }
 
 //! Clone function. Returns a deep copy of the current TranTechnology.
@@ -74,7 +74,7 @@ const std::string& TranTechnology::getXMLNameStatic1D() {
 //! initialize TranTechnology with xml data
 bool TranTechnology::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
     if( nodeName == "intensity" ){
-        intensity = XMLHelper<double>::getValue( curr );
+        mIntensity = XMLHelper<double>::getValue( curr );
     }
     else if( nodeName == "loadFactor" ){
         loadFactor = XMLHelper<double>::getValue( curr );
@@ -97,14 +97,14 @@ bool TranTechnology::XMLDerivedClassParse( const string& nodeName, const DOMNode
 * \param tabs A tabs object responsible for printing the correct number of tabs. 
 */
 void TranTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) const {  
-    XMLWriteElementCheckDefault( intensity, "intensity", out, tabs, 1.0 );
+    XMLWriteElementCheckDefault( mIntensity, "intensity", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( loadFactor, "loadFactor", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( mTechnicalChange, "techchange", out, tabs, 0.0 );
 }	
 
 //! Write object to debugging xml output stream.
 void TranTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const { 
-    XMLWriteElement( intensity, "intensity", out, tabs );
+    XMLWriteElement( mIntensity, "intensity", out, tabs );
     XMLWriteElement( loadFactor, "loadFactor", out, tabs );
     XMLWriteElement( getCumulativeTechnicalChange( period ), "techChangeCumm", out, tabs );
     XMLWriteElement( getOutput( period ) / loadFactor, "vehicleOutput", out, tabs );
@@ -131,8 +131,8 @@ void TranTechnology::initCalc( const string& aRegionName,
         mainLog << "LoadFactor was zero in technology: " << name << ". Reset to 1." << endl;
     }
     
-    if ( intensity == 0 ) {
-        intensity = 1;
+    if ( util::isEqual( mIntensity, 0.0 ) ) {
+        mIntensity = 1;
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Intensity was zero in technology: " << name << ". Reset to 1." << endl;
@@ -153,9 +153,9 @@ void TranTechnology::calcCost( const string& regionName, const string& sectorNam
 	assert( fuelprice != Marketplace::NO_MARKET_PRICE );
     
     double secondaryValue = calcSecondaryValue( regionName, per );
-	fuelcost = ( (fuelprice * fMultiplier) - secondaryValue ) * intensity/ getCumulativeTechnicalChange( per )
+	fuelcost = ( (fuelprice * fMultiplier) - secondaryValue ) * mIntensity / getCumulativeTechnicalChange( per )
              * JPERBTU/(1.0E9)*CVRT90;
-    techcost = ( fuelcost + necost ) * pMultiplier;
+    techcost = ( fuelcost + getNonEnergyCost( per ) ) * pMultiplier;
     
     // Convert cost to cost per service instead of cost per vehicle.
     // For example,  convert $/vehicle-mi into $/pass-mi or $/ton-mi 
@@ -185,7 +185,7 @@ void TranTechnology::production(const string& regionName,const string& prodName,
     const double ECONV = 1.055e-9;
 
     //intensity /= pow(1+techchange,timestep*per);
-    input = vehicleOutput*intensity*ECONV/ getCumulativeTechnicalChange( per );
+    input = vehicleOutput* mIntensity *ECONV/ getCumulativeTechnicalChange( per );
     //input = vehicleOutput*intensity*ECONV;
    
     if (input < 0) {
@@ -201,20 +201,24 @@ void TranTechnology::production(const string& regionName,const string& prodName,
     calcEmissionsAndOutputs( regionName, input, primaryOutput, gdp, per );  
 }
 
-//! return technology calibration value
-double TranTechnology::getCalibrationOutput( ) const {
-    const double ECONV = 1.055e-9;
-	const int period = scenario->getModeltime()->getyr_to_per( year );
-    if( mCalValue.get() ){
-	    return mCalValue->getCalInput( eff ) * getCumulativeTechnicalChange( period )
-               * loadFactor / ( intensity * ECONV );
+/*!
+ * \brief Return technology output calibration value.
+ * \param aPeriod Model period.
+ * \return Output calibration value.
+ */
+double TranTechnology::getCalibrationOutput( const int aPeriod ) const {
+    // Calibration output is for the initial year of the technology.
+    if( mCalValue.get() && year == scenario->getModeltime()->getper_to_yr( aPeriod ) ){
+        const double ECONV = 1.055e-9;
+	    return mCalValue->getCalInput( getEfficiency( aPeriod ) ) * getCumulativeTechnicalChange( aPeriod )
+               * loadFactor / ( mIntensity * ECONV );
     }
     return 0;
 }
 
 //! return fuel intensity
 double TranTechnology::getIntensity(const int per) const {
-    return intensity / getCumulativeTechnicalChange( per );
+    return mIntensity / getCumulativeTechnicalChange( per );
 }
 
 /*! \brief Calculate the cumulative technical change for a period.

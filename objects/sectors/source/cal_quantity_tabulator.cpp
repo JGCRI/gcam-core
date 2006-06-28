@@ -89,7 +89,7 @@ void CalQuantityTabulator::startVisitTechnology( const technology* aTechnology,
     else if ( aTechnology->getCalibrationStatus() ) {
         mTechState = eCalibrated;
         // Add calibration outputs for all outputs.
-        mCurrentOutput = aTechnology->getCalibrationOutput();
+        mCurrentOutput = aTechnology->getCalibrationOutput( aPeriod );
     }
     else if( aTechnology->outputFixed() ) {
         mTechState = eFixed;

@@ -47,16 +47,20 @@ protected:
     std::string fuelname; //!< name of fuel used
     int year; //!< period year or vintage
     double shrwts; //!< logit share weight
-    double eff; //!< effective energy efficiency applies penalty to base 
-    double effBase; //!< base energy efficiency read in
+    
+    //! Base read-in efficiency.
+    double mBaseEfficiency;
+
+    //! Base non-fuel costs read in(levelized).
+    double mBaseNonEnergyCost;
+    
     double effPenalty; //!< energy efficiency penalty
-    double intensity; //!< energy intensity (1/eff)
-    double necost; //!< effective non-fuel costs applies penalty to base (levelized)
-    double neCostBase; //!< base non-fuel costs read in(levelized)
+
     double neCostPenalty; //!< penalty on non-fuel costs 
+
     double fuelcost; //!< fuel cost only
     double techcost; //!< total cost of technology
-    double tax; //!< utility tax
+
     double fMultiplier; //!< multiplier on fuel cost or price
     double pMultiplier; //!< multiplier on total cost or price
     double fuelPrefElasticity; //!< Fuel preference elasticity
@@ -145,15 +149,23 @@ public:
     // ****** return names and values ******
     const std::string& getName() const; // return technology name
     const std::string& getFuelName() const; // return fuel name
-    double getEff() const; // return fuel efficiency
-    virtual double getIntensity(const int per) const; // return fuel intensity
+
+    double getInputRequiredForOutput( double aRequiredOutput,
+                                      const int aPeriod ) const;
+
+    double getEfficiency( const int aPeriod ) const;
+    virtual double getIntensity(const int per) const;
+
     double getShare() const; // return normalized share
     virtual bool getCalibrationStatus( ) const; // return true if technology has calibration value
     void scaleCalibrationInput( const double scaleFactor ); // scale calibration value
     void scaleShareWeight( double scaleValue );
     void setShareWeight( double shareWeightValue );
-    double getCalibrationInput() const; // return calibration input value
-    virtual double getCalibrationOutput() const; // return calibration output value
+    
+    double getCalibrationInput( const int aPeriod ) const;
+    
+    virtual double getCalibrationOutput( const int aPeriod ) const;
+
     virtual void adjustForCalibration( double subSectorDemand, const std::string& regionName, const IInfo* aSubsectorIInfo, const int period ); // Adjust share weights for calibration
     bool techAvailable( ) const; // Return available status (re: calibration)
     virtual bool outputFixed() const; // return calibration output value
@@ -161,7 +173,9 @@ public:
     double getOutput( const int aPeriod ) const;
     virtual double getFuelcost() const; // return fuel cost only
     double getTechcost() const; // return total technology cost
-    double getNecost() const; // return non-fuel cost
+    
+    double getNonEnergyCost( const int aPeriod ) const;
+
     double getTotalGHGCost( const std::string& aRegionName, const int aPeriod ) const;
     double getCarbonTaxPaid( const std::string& aRegionName, int aPeriod ) const;
     double getShareWeight() const;
@@ -174,7 +188,7 @@ public:
     double get_emissmap_second( const std::string& str ) const; // return value for ghg
     double getlexp() const; // return logit exponential for the technology
     double getFixedOutput() const; // return fixed output
-    double getFixedInput() const; // return fixed input
+    double getFixedInput( const int aPeriod ) const;
     int getNumbGHGs()  const; // number of GHG objects in this technology
     void setYear( const int yearIn );
     virtual void tabulateFixedDemands( const std::string regionName, const int period, const IInfo* aSubsectorIInfo );

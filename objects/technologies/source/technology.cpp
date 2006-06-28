@@ -84,16 +84,12 @@ technology& technology::operator = ( const technology& techIn ) {
 void technology::copy( const technology& techIn ) {
     year = techIn.year;
     shrwts = techIn.shrwts;
-    eff = techIn.eff; 
-    effBase = techIn.effBase; 
-    effPenalty = techIn.effPenalty; 
-    intensity = techIn.intensity; 
-    necost = techIn.necost;
-    neCostBase = techIn.neCostBase;
+    mBaseEfficiency = techIn.mBaseEfficiency; 
+    effPenalty = techIn.effPenalty;
+    mBaseNonEnergyCost = techIn.mBaseNonEnergyCost;
     neCostPenalty = techIn.neCostPenalty;
     fuelcost = techIn.fuelcost;
     techcost = techIn.techcost;
-    tax = techIn.tax;
     fMultiplier = techIn.fMultiplier;
     pMultiplier = techIn.pMultiplier;
     lexp = techIn.lexp;
@@ -140,16 +136,12 @@ void technology::clear(){
 //! Initialize elemental data members.
 void technology::initElementalMembers(){
     shrwts = 1;
-    eff = 1; 
-    effBase = 1; 
+    mBaseEfficiency = 1; 
     effPenalty = 0; 
-    intensity = 1; 
     fuelcost = 0;
-    necost = 0;
-    neCostBase = 0;
+    mBaseNonEnergyCost = 0;
     neCostPenalty = 0;
     techcost = 0;
-    tax = 0;
     fMultiplier = 1;
     pMultiplier = 1;
     lexp = LOGIT_EXP_DEFAULT; 
@@ -203,19 +195,16 @@ void technology::XMLParse( const DOMNode* node ) {
             fuelPrefElasticity = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "efficiency" ){
-            effBase = XMLHelper<double>::getValue( curr );
+            mBaseEfficiency = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "efficiencyPenalty" ){
             effPenalty = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "nonenergycost" ){
-            neCostBase = XMLHelper<double>::getValue( curr );
+            mBaseNonEnergyCost = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "neCostPenalty" ){
             neCostPenalty = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "tax" ){
-            tax = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "pMultiplier" ){
             pMultiplier = XMLHelper<double>::getValue( curr );
@@ -301,6 +290,15 @@ void technology::completeInit( const string& aSectorName,
         mainLog << "Technology " << name << " in sector " << aSectorName
             << " has an invalid year attribute." << endl;
     }
+    
+    // Check for non-sensical efficiency.
+    if( mBaseEfficiency <= 0 ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Resetting invalid effiency for Technology " << name << endl;
+        mBaseEfficiency = 1;
+    }
+
     const string CO2_NAME = "CO2";
     if( !util::hasValue( ghgNameMap, CO2_NAME ) ) {
         // arguments: gas, unit, remove fraction, GWP, and emissions coefficient
@@ -309,10 +307,6 @@ void technology::completeInit( const string& aSectorName,
         ghg.push_back( CO2 );
         ghgNameMap[ CO2_NAME ] = static_cast<int>( ghg.size() ) - 1;
     }
-
-    // calculate effective efficiency
-    eff = effBase * (1 - effPenalty); // reduces efficiency by penalty
-    necost = neCostBase * (1 + neCostPenalty); // increases cost by penalty
 
     // Create the primary output for this technology. All technologies will have
     // a primary output. Always insert the primary output at position 0.
@@ -354,12 +348,11 @@ void technology::toInputXML( ostream& out, Tabs* tabs ) const {
     }
     
     XMLWriteElement( fuelname, "fuelname", out, tabs );
-    XMLWriteElementCheckDefault( effBase, "efficiency", out, tabs, 1.0 );
+    XMLWriteElementCheckDefault( mBaseEfficiency, "efficiency", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( effPenalty, "efficiencyPenalty", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( neCostBase, "nonenergycost", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( mBaseNonEnergyCost, "nonenergycost", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( neCostPenalty, "neCostPenalty", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( fuelPrefElasticity, "fuelprefElasticity", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( tax, "tax", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( fMultiplier, "fMultiplier", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( pMultiplier, "pMultiplier", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( lexp, "logitexp", out, tabs, LOGIT_EXP_DEFAULT );
@@ -389,14 +382,13 @@ void technology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const 
 	if ( mCalValue.get() ) {
 		mCalValue->toDebugXML( out, tabs );
     }
-    XMLWriteElement( eff, "efficiencyEffective", out, tabs );
-    XMLWriteElement( effBase, "efficiencyBase", out, tabs );
+    XMLWriteElement( getEfficiency( period ), "efficiencyEffective", out, tabs );
+    XMLWriteElement( mBaseEfficiency, "efficiencyBase", out, tabs );
     XMLWriteElement( effPenalty, "efficiencyPenalty", out, tabs );
     XMLWriteElement( fuelcost, "fuelcost", out, tabs );
-    XMLWriteElement( necost, "nonEnergyCostEffective", out, tabs );
-    XMLWriteElement( neCostBase, "neCostBase", out, tabs );
+    XMLWriteElement( getNonEnergyCost( period ), "nonEnergyCostEffective", out, tabs );
+    XMLWriteElement( mBaseNonEnergyCost, "neCostBase", out, tabs );
     XMLWriteElement( neCostPenalty, "neCostPenalty", out, tabs );
-    XMLWriteElement( tax, "tax", out, tabs );
     XMLWriteElement( fMultiplier, "fMultiplier", out, tabs );
     XMLWriteElement( pMultiplier, "pMultiplier", out, tabs );
     XMLWriteElement( lexp, "logitexp", out, tabs );
@@ -488,7 +480,7 @@ void technology::initCalc( const string& aRegionName,
         mCalValue->initCalc( aDemographics, aPeriod );
     }
 
-	if ( mCalValue.get() && ( mCalValue->getCalInput( eff ) < 0 ) ) {
+	if ( mCalValue.get() && ( mCalValue->getCalInput( getEfficiency( aPeriod ) ) < 0 ) ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::DEBUG );
         mainLog << "Negative calibration value for technology " << name
@@ -522,7 +514,7 @@ double technology::calcSecondaryValue( const string& aRegionName, const int aPer
     double totalValue = 0;
     // Add all costs from the GHGs.
     for( unsigned int i = 0; i < ghg.size(); ++i ){
-        totalValue -= ghg[i]->getGHGValue( aRegionName, fuelname, mOutputs, eff, aPeriod );
+        totalValue -= ghg[i]->getGHGValue( aRegionName, fuelname, mOutputs, getEfficiency( aPeriod ), aPeriod );
     }
 
     // Add all values from the outputs. The primary output is included in this
@@ -570,8 +562,8 @@ void technology::calcCost( const string& regionName, const string& sectorName, c
     } 
      
     // fMultiplier and pMultiplier are initialized to 1 for those not read in
-    fuelcost = ( fuelprice * fMultiplier ) / eff;
-    techcost = ( fuelcost + necost ) * pMultiplier;
+    fuelcost = ( fuelprice * fMultiplier ) / getEfficiency( per );
+    techcost = ( fuelcost + getNonEnergyCost( per ) ) * pMultiplier;
     techcost -= calcSecondaryValue( regionName, per );
 
     // techcost can drift below zero in disequalibrium.
@@ -657,21 +649,38 @@ double technology::getFixedOutput() const {
 
 /*! \brief Return fixed technology input
 * 
-* returns the current value of fixed input.
-* This may differ from the variable fixedOutput/eff due to scale down if demand is less than 
-* the value of fixed Output.
+* Returns the current value of fixed input. This may differ from the variable
+* fixedOutput/eff due to scale down if demand is less than the value of fixed
+* Output.
 *
 * \author Steve Smith
-* \param per model period
-* \return value of fixed input for this technology
+* \param aPeriod Model period.
+* \return Fixed input for this technology
 */
-double technology::getFixedInput() const {
-    // Return zero as the fixed input if the efficiency is impossible or the
-    // fixed output is the default value.
-    if ( eff == 0 || fixedOutputVal == getFixedOutputDefault() ) {
+double technology::getFixedInput( const int aPeriod ) const {
+    // Return zero as the fixed input if the fixed output is the default value
+    // or if this is not the initial investment year of the technology.
+    if ( fixedOutputVal == getFixedOutputDefault()
+        || year != scenario->getModeltime()->getper_to_yr( aPeriod ) ) 
+    {
         return 0;
     }
-    return fixedOutputVal / eff;
+    return fixedOutputVal / getEfficiency( aPeriod );
+}
+
+/*
+ * \brief Return the amount of input required to produce a specified amount of output.
+ * \param aRequiredOutput The required amount of output.
+ * \param aPeriod Model period.
+ * \return The amount of input required for the output.
+ */
+double technology::getInputRequiredForOutput( double aRequiredOutput,
+                                              const int aPeriod ) const
+{
+    // Efficiency should be positive because invalid efficiencies were
+    // already corrected. 
+    assert( getEfficiency( aPeriod ) > 0 );
+    return aRequiredOutput / getEfficiency( aPeriod );
 }
 
 /*! \brief Scale fixed technology supply
@@ -764,7 +773,7 @@ void technology::production( const string& aRegionName,
     }
     
     // Calculate input demand.
-    input = primaryOutput / eff;
+    input = primaryOutput / getEfficiency( aPeriod );
 
     Marketplace* marketplace = scenario->getMarketplace();
     // set demand for fuel in marketplace
@@ -821,7 +830,7 @@ void technology::adjustForCalibration( double subSectorDemand,
                                        const int period )
 {
    // total calibrated outputs for this sub-sector
-   double calOutput = getCalibrationOutput();
+   double calOutput = getCalibrationOutput( period );
 
     // make sure share weights aren't zero or else can't calibrate
     if ( ( shrwts == 0 ) && ( calOutput > 0 ) ) {
@@ -908,8 +917,9 @@ const string& technology::getFuelName() const {
 * \author Sonny Kim
 * \return efficiency (out/In) of this technology
 */
-double technology::getEff() const {
-    return eff;
+double technology::getEfficiency( const int aPeriod ) const {
+    // calculate effective efficiency
+    return mBaseEfficiency * ( 1 - effPenalty );
 }
 
 /*! \brief Return fuel intensity (input over output) for this technology
@@ -918,8 +928,11 @@ double technology::getEff() const {
 * \return fuel intensity (input/output) of this technology
 * \todo Need to impliment method of adding appropriate units (btu/kwh; gallons/mile, etc.)
 */
-double technology::getIntensity(const int per) const {
-    return intensity;
+double technology::getIntensity( const int aPeriod ) const {
+    // Efficiency should be positive because invalid efficiencies were
+    // already corrected.
+    assert( getEfficiency( aPeriod ) > 0 );
+    return 1 / getEfficiency( aPeriod );
 }
 
 /*! \brief returns share for this technology
@@ -1005,9 +1018,17 @@ double technology::getFuelcost() const {
     return fuelcost;
 }
 
-//! return technology calibration value
-double technology::getCalibrationInput( ) const {
-    return mCalValue.get() ? mCalValue->getCalInput( eff ) : 0;
+/*!
+ * \brief Return technology input calibration value.
+ * \param aPeriod Model period.
+ * \return Input calibration value.
+ */
+double technology::getCalibrationInput( const int aPeriod ) const {
+    // Calibration output is for the initial year of the technology.
+    if( mCalValue.get() && year == scenario->getModeltime()->getper_to_yr( aPeriod ) ){
+        return mCalValue->getCalInput( getEfficiency( aPeriod ) );
+    }
+    return 0;
 }
 
 //! scale technology calibration or fixed values
@@ -1017,9 +1038,17 @@ void technology::scaleCalibrationInput( const double scaleFactor ) {
     }
 }
 
-//! return technology calibration value
-double technology::getCalibrationOutput() const {
-    return mCalValue.get() ? mCalValue->getCalOutput( eff ) : 0;
+/*!
+ * \brief Return technology output calibration value.
+ * \param aPeriod Model period.
+ * \return Output calibration value.
+ */
+double technology::getCalibrationOutput( const int aPeriod ) const {
+    // Calibration output is for the initial year of the technology.
+    if( mCalValue.get() && year == scenario->getModeltime()->getper_to_yr( aPeriod ) ){
+        return mCalValue->getCalOutput( getEfficiency( aPeriod ) );
+    }
+    return 0;
 }
 
 //! return the cost of technology
@@ -1027,9 +1056,13 @@ double technology::getTechcost() const {
     return techcost;
 }
 
-//! return the non-energy cost of the technology
-double technology::getNecost() const {
-    return necost;
+/*!
+ * \brief Return the non-energy cost of the Technology
+ * \param aPeriod Model period.
+ * \return Non-energy cost for the Technology.
+ */
+double technology::getNonEnergyCost( const int aPeriod ) const {
+   return mBaseNonEnergyCost * ( 1 + neCostPenalty );
 }
 
 //! return any carbon tax and storage cost applied to technology
@@ -1037,7 +1070,7 @@ double technology::getTotalGHGCost( const string& aRegionName, const int aPeriod
     double totalValue = 0;
     // Add all value from the GHGs.
     for( unsigned int i = 0; i < ghg.size(); ++i ){
-        totalValue += ghg[i]->getGHGValue( aRegionName, fuelname, mOutputs, eff, aPeriod );
+        totalValue += ghg[i]->getGHGValue( aRegionName, fuelname, mOutputs, getEfficiency( aPeriod ), aPeriod );
     }
     return totalValue;
 }
@@ -1155,9 +1188,9 @@ void technology::tabulateFixedDemands( const string regionName, const int period
             double fixedInput = 0;
             // this sector has fixed output
 			if ( technology::getCalibrationStatus() ) {
-                fixedOrCalInput = getCalibrationInput();
+                fixedOrCalInput = getCalibrationInput( period );
             } else if ( fixedOutput >= 0 ) {
-                fixedOrCalInput = getFixedInput();
+                fixedOrCalInput = getFixedInput( period );
                 fixedInput = fixedOrCalInput;
             }
             // set demand for fuel in marketInfo counter

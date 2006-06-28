@@ -136,9 +136,17 @@ bool FoodProductionTechnology::outputFixed( ) const {
     return ( calProduction != -1 ); // this sector has fixed output
 }
 
-//! return technology calibration value
-double FoodProductionTechnology::getCalibrationOutput( ) const {
-    return ( calProduction != -1 ) ? calProduction : 0;
+/*!
+ * \brief Return technology output calibration value.
+ * \param aPeriod Model period.
+ * \return Output calibration value.
+ */
+double FoodProductionTechnology::getCalibrationOutput( const int aPeriod ) const {
+    // Calibration output is for the initial year of the technology.
+    if( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ){
+        return ( calProduction != -1 ) ? calProduction : 0;
+    }
+    return 0;
 }
 
 /*! \brief Returns calibration status for this technoloy

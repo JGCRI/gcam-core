@@ -1488,13 +1488,13 @@ double Subsector::getTotalCalOutputs( const int period ) const {
     double sumCalValues = 0;
     for( unsigned int i = 0; i < techs.size(); ++i ){
         if ( techs[ i ][ period ]->getCalibrationStatus( ) ) {
-            if ( techs[ i ][ period ]->getCalibrationOutput( ) < 0 ) {
+            if ( techs[ i ][ period ]->getCalibrationOutput( period ) < 0 ) {
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::DEBUG );
                 mainLog << "calibration < 0 for tech " << techs[ i ][ period ]->getName() 
                     << " in Subsector " << name << endl;
             }
-            sumCalValues += techs[ i ][ period ]->getCalibrationOutput( );
+            sumCalValues += techs[ i ][ period ]->getCalibrationOutput( period );
         }
     }
     return sumCalValues;
@@ -1517,10 +1517,10 @@ double Subsector::getCalAndFixedInputs( const int period, const std::string& goo
     for ( unsigned int i=0; i< techs.size(); i++ ) {
         if ( techHasInput( techs[ i ][ period ], goodName ) || ( goodName == "allInputs" ) ) {
             if ( techs[ i ][ period ]->getCalibrationStatus( ) ) {
-                sumCalInputValues += techs[ i ][ period ]->getCalibrationInput( );
+                sumCalInputValues += techs[ i ][ period ]->getCalibrationInput( period );
             } 
             else if ( techs[ i ][ period ]->outputFixed( ) && bothVals ) {
-                sumCalInputValues += techs[ i ][ period ]->getFixedInput( );
+                sumCalInputValues += techs[ i ][ period ]->getFixedInput( period );
             }
         }
     }
@@ -1543,7 +1543,7 @@ double Subsector::getCalAndFixedOutputs( const int period, const std::string& go
     for ( unsigned int i=0; i< techs.size(); i++ ) {
         if ( techHasInput( techs[ i ][ period ], goodName ) || ( goodName == "allInputs" ) ) {
             if ( techs[ i ][ period ]->getCalibrationStatus( ) ) {
-                sumCalOutputValues += techs[ i ][ period ]->getCalibrationOutput( );
+                sumCalOutputValues += techs[ i ][ period ]->getCalibrationOutput( period );
             } 
             else if ( techs[ i ][ period ]->outputFixed( ) && bothVals ) {
                 sumCalOutputValues += techs[ i ][ period ]->getFixedOutput( );
@@ -1574,7 +1574,7 @@ bool Subsector::setImpliedFixedInput( const int period, const std::string& goodN
     bool inputWasChanged = false;
     for ( unsigned int i=0; i< techs.size(); i++ ) {
         if ( techHasInput( techs[ i ][ period ], goodName ) ) {
-            double inputValue = requiredOutput / techs[ i ][ period ]->getEff();
+            double inputValue = techs[ i ][ period ]->getInputRequiredForOutput( requiredOutput, period );
             if ( !inputWasChanged ) {
                 inputWasChanged = true;
                 double existingMarketDemand = max( marketInfo->getDouble( "calDemand", true ), 0.0 );
@@ -1822,12 +1822,12 @@ void Subsector::csvOutputFile() const {
         fileoutput3( regionName,sectorName,name,techs[i][ 0 ]->getName(),"fuel consump","EJ",temp);
         // technology efficiency
         for ( int m=0;m<maxper;m++) {
-            temp[m] = techs[i][m]->getEff();
+            temp[m] = techs[i][m]->getEfficiency( m );
         }
         fileoutput3( regionName,sectorName,name,techs[i][ 0 ]->getName(),"efficiency","%",temp);
         // technology non-energy cost
         for ( int m=0;m<maxper;m++) {
-            temp[m] = techs[i][m]->getNecost();
+            temp[m] = techs[i][m]->getNonEnergyCost( m );
         }
         fileoutput3( regionName,sectorName,name,techs[i][ 0 ]->getName(),"non-energy cost","$/GJ",temp);
         // technology CO2 emission
@@ -1885,7 +1885,7 @@ void Subsector::MCoutputSupplySector() const {
     for( unsigned int i = 0; i < techs.size(); ++i ){
         // technology non-energy cost
         for ( int m=0;m<maxper;m++) {
-            temp[m] = techs[i][m]->getNecost();
+            temp[m] = techs[i][m]->getNonEnergyCost( m );
         }
         dboutput4( regionName, "Price NE Cost", sectorName, techs[i][ 0 ]->getName(), "75$/GJ", temp );
         // secondary energy and price output by tech
@@ -1946,7 +1946,7 @@ void Subsector::MCoutputDemandSector() const {
             dboutput4( regionName,"Price",sectorName+" "+name+" Fuel Cost",techs[i][ 0 ]->getName(),"75$/Ser",temp);
             // technology non-energy cost
             for ( int m=0;m<maxper;m++) {
-                temp[m] = techs[i][m]->getNecost();
+                temp[m] = techs[i][m]->getNonEnergyCost( m );
             }
             dboutput4( regionName, "Price", sectorName + " " + name + " NE Cost", techs[i][ 0 ]->getName(), "75$/Ser", temp );
         }
@@ -2036,7 +2036,7 @@ void Subsector::MCoutputAllSectors() const {
         // for 1 or more technologies
         // technology efficiency
         for ( int m=0;m<maxper;m++) {
-            temp[m] = techs[i][m]->getEff();
+            temp[m] = techs[i][m]->getEfficiency( m );
         }
         dboutput4(regionName,"Tech Efficiency",sectorName, subsecTechName,"%",temp);
         for ( int m=0;m<maxper;m++) {

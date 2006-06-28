@@ -41,7 +41,8 @@ public:
                              const int aPeriod );
 
     double getIntensity(const int per) const;
-    double getCalibrationOutput() const;
+
+    virtual double getCalibrationOutput( const int aPeriod ) const;
     
     virtual void initCalc( const std::string& aRegionName,
                            const std::string& aSectorName,
@@ -56,6 +57,9 @@ protected:
 	//! Annual technical change rate.
 	double mTechnicalChange;
 	
+    //! Vehicle intensity.
+    double mIntensity;
+
 	double getCumulativeTechnicalChange( const int aPeriod ) const;
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
