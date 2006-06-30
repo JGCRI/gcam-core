@@ -7,6 +7,8 @@ import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.Documentation;
 import ModelInterface.InterfaceMain;
 import ModelInterface.ModelGUI2.undo.FlipUndoableEdit;
+import ModelInterface.ModelGUI2.undo.FilterUndoableEdit;
+import ModelInterface.ModelGUI2.undo.TableUndoableEdit;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
@@ -32,6 +34,8 @@ import javax.swing.table.TableCellRenderer;
 import org.w3c.dom.xpath.*;
 
 import javax.swing.undo.UndoManager;
+import javax.swing.undo.UndoableEdit;
+import javax.swing.undo.CompoundEdit;
 
 import com.sleepycat.dbxml.XmlValue;
 import com.sleepycat.dbxml.XmlResults;
@@ -419,6 +423,7 @@ public class ComboTableModel extends BaseTableModel{
 	 */
 	protected void doFilter(Vector possibleFilters) {
 		        // reset the activeRows
+			Vector oldActiveRows = activeRows;
 			activeRows = new Vector();
 			for (int i = 0; i < (leftSideVector.size() * indRow.size()); i++) {
 				activeRows.addElement(new Integer(i));
@@ -450,6 +455,10 @@ public class ComboTableModel extends BaseTableModel{
 					}
 				}
 			}
+		UndoManager undoManager = ((InterfaceMain)parentFrame).getUndoManager();
+		// what about changeing the filter map
+		undoManager.addEdit(new FilterUndoableEdit(this, oldActiveRows, activeRows));
+		((InterfaceMain)parentFrame).refreshUndoRedo();
 	}
 	
 	/**
@@ -462,12 +471,17 @@ public class ComboTableModel extends BaseTableModel{
 	public void setValueAt(Object val, int row, int col) {
 		
 		TreeMap data = ((TreeMap)TreeMapVector.get( row / (indRow.size())));
+		CompoundEdit setEdit = new CompoundEdit();
 
 		Node n = (Node)data.get(getKey(row,col));
 		if( n != null ){
+			String oldVal = n.getNodeValue();
 			n.setNodeValue(val.toString());
+			// data and key won't be necessary here so just giving it null
+			setEdit.addEdit(new TableUndoableEdit(this, row, col, n, oldVal, null, null));
 		}else{
 			n = doc.createTextNode( val.toString() );
+			n.setUserData("isSetValue", setEdit, null);
 			//Node updown = null;
 			Node side = null;
 
@@ -531,25 +545,31 @@ public class ComboTableModel extends BaseTableModel{
 			// if there needs to be nodes created they will be using info 
 			// from the row header, or the path info from the same row
 			parent = parent.getParentNode();
-			parent = checkPath(parent, headerone, attrFrom1, attrTo1);
+			parent = checkPath(parent, headerone, attrFrom1, attrTo1, setEdit);
 			for(int i = nodePath.size()-1; i >= 0; --i) {
 				Element temp = (Element)nodePath.get(i);
 				if(temp.getNodeName().equals(headertwo)) {
-					parent = checkPath(parent, headertwo, attrFrom2, attrTo2);
+					parent = checkPath(parent, headertwo, attrFrom2, attrTo2, setEdit);
 				} else {
 					Node attrTemp = temp.getAttributes().item(0);
 					if(attrTemp == null) {
-						parent = checkPath(parent, temp.getNodeName(), null, null);
+						parent = checkPath(parent, temp.getNodeName(), null, null, setEdit);
 					} else {
 						parent = checkPath(parent, temp.getNodeName(), attrTemp.getNodeName(), 
-								attrTemp.getNodeValue());
+								attrTemp.getNodeValue(), setEdit);
 					}
 				}
 			}
 
 			parent.appendChild( n );
 			data.put( getKey(row,col), n );
+			// need to add and edit that tells the table to make this pos null again
+			setEdit.addEdit(new TableUndoableEdit(this, row, col, n, null, data, getKey(row, col)));
 		}
+		setEdit.end();
+		UndoManager undoManager = ((InterfaceMain)parentFrame).getUndoManager();
+		undoManager.addEdit(setEdit);
+		((InterfaceMain)parentFrame).refreshUndoRedo();
 		
 		fireTableCellUpdated(row, col);
 
@@ -567,7 +587,7 @@ public class ComboTableModel extends BaseTableModel{
 	 * @param attrVal attribute value of the node that we want to follow
 	 * @return the pointer to the node we wanted to follow
 	 */
-	private Node checkPath(Node parent, String nodeName, String attrKey, String attrVal) {
+	private Node checkPath(Node parent, String nodeName, String attrKey, String attrVal, UndoableEdit setEdit) {
 		NodeList nl = parent.getChildNodes();
 		for(int i = 0; i < nl.getLength(); ++i) {
 			Element temp = (Element)nl.item(i);
@@ -578,6 +598,7 @@ public class ComboTableModel extends BaseTableModel{
 			}
 		}
 		Element newElement = doc.createElement(nodeName);
+		newElement.setUserData("isSetValue", setEdit, null);
 		if(attrKey != null) {
 			newElement.setAttribute(attrKey, attrVal);
 		}

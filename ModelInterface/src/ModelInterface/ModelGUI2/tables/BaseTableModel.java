@@ -589,4 +589,15 @@ public abstract class BaseTableModel extends AbstractTableModel {
 			return new Dimension(350, 350+((legendSize-500)/2));
 		}
 	}
+
+	/**
+	 * Set the active rows of this table.  This method is essentially setting the filter, and should
+	 * usually not be called directly.
+	 * @param newActive the new Vector of indices which are active
+	 */
+	public void setActiveRows(Vector newActive) {
+		activeRows = newActive;
+		// correct event to fire?
+		fireTableStructureChanged();
+	}
 }

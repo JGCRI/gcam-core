@@ -53,10 +53,18 @@ public class DOMmodel implements TreeModel {
 				// and if it is, do I not create a new edit?
 				// too tell if this change can from an Undo/redo(in which case I don't create a new edit)
 				// I set user data on the node under the key "isFromUndoable"
-				if(!new Boolean(true).equals(target.getNode().getUserData("isFromUndoable"))) {
-					main.getUndoManager().addEdit(new NodeInsertUndoableEdit(rel, target.getNode()));
-				} else {
+				if(new Boolean(true).equals(target.getNode().getUserData("isFromUndoable"))) {
+					System.out.println("Thinks this is from undo");
+					// set to false or null?
 					target.getNode().setUserData("isFromUndoable", false, null);
+				} else if (target.getNode().getUserData("isSetValue") != null) {
+					System.out.println("Putting as compound edit");
+					System.out.println("Add to CompEdit returned: "+((UndoableEdit)target.getNode().getUserData("isSetValue")).addEdit(
+								   new NodeInsertUndoableEdit(rel, target.getNode())));
+					target.getNode().setUserData("isSetValue", null, null);
+				} else {
+					System.out.println("Thinks this is your regular or insert");
+					main.getUndoManager().addEdit(new NodeInsertUndoableEdit(rel, target.getNode()));
 				}
 				main.refreshUndoRedo();
 				fireTreeNodesInserted(tEvent);

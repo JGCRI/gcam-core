@@ -40,17 +40,17 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	 */
 	private static final long serialVersionUID = -9137748180688015902L;
 
-	public static int FILE_MENU_POS = 0;
-	public static int EDIT_MENU_POS = 1;
-	public static int FILE_NEW_MENUITEM_POS = 0;
-	public static int FILE_OPEN_SUBMENU_POS = 5;
-	public static int FILE_SAVE_MENUITEM_POS = 10;
-	public static int FILE_SAVEAS_MENUITEM_POS = 11;
-	public static int FILE_QUIT_MENUITEM_POS = 50;
-	public static int EDIT_COPY_MENUITEM_POS = 10;
-	public static int EDIT_PASTE_MENUITEM_POS = 11;
-	public static int EDIT_UNDO_MENUITEM_POS = 1;
-	public static int EDIT_REDO_MENUITEM_POS = 2;
+	public static final int FILE_MENU_POS = 0;
+	public static final int EDIT_MENU_POS = 1;
+	public static final int FILE_NEW_MENUITEM_POS = 0;
+	public static final int FILE_OPEN_SUBMENU_POS = 5;
+	public static final int FILE_SAVE_MENUITEM_POS = 10;
+	public static final int FILE_SAVEAS_MENUITEM_POS = 11;
+	public static final int FILE_QUIT_MENUITEM_POS = 50;
+	public static final int EDIT_COPY_MENUITEM_POS = 10;
+	public static final int EDIT_PASTE_MENUITEM_POS = 11;
+	public static final int EDIT_UNDO_MENUITEM_POS = 1;
+	public static final int EDIT_REDO_MENUITEM_POS = 2;
 
 	private static File propertiesFile = new File("model_interface.properties");
 	private static String oldControl;
@@ -108,6 +108,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	private static void createAndShowGUI() {
 		main = null;
 		main  = new InterfaceMain("Model Interface");
+		main.initialize();
 		//main.pack();
 		main.setVisible(true);
 	}
@@ -137,9 +138,17 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		contentPane.setLayout(new BorderLayout());
 
 		oldControl = "ModelInterface";
+	}
 
+	private void initialize() {
 		MenuManager menuMan = new MenuManager(null);
-
+		addWindowAdapters();
+		addMenuItems(menuMan);
+		addMenuAdderMenuItems(menuMan);
+		finalizeMenu(menuMan);
+	}
+	
+	private void addMenuItems(MenuManager menuMan) {
 		JMenu m = new JMenu("File");
 		menuMan.addMenuItem(m, FILE_MENU_POS);
 		JMenu submenu;
@@ -179,34 +188,37 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		pasteMenu.setEnabled(false);
 
 		setupUndo(menuMan);
+	}
 
+	private void addMenuAdderMenuItems(MenuManager menuMan) {
 		/* FileChooserDemo is being removed, but I will leave this here,
 		 * This is how I envision the menuitems to be added and hopefully all
 		 * the listeners would be set up correctly and we won't need to keep
 		 * the pointer to the classes around
-		FileChooserDemo fcd = new FileChooserDemo(this);
-		fcd.addMenuItems(menuMan);
-		*/
+		 FileChooserDemo fcd = new FileChooserDemo(this);
+		 fcd.addMenuItems(menuMan);
+		 */
 		final MenuAdder dbView = new DbViewer(this);
 		dbView.addMenuItems(menuMan);
 		final MenuAdder inputView = new InputViewer(this);
 		inputView.addMenuItems(menuMan);
-        final MenuAdder PPView = new PPViewer(this);
-        PPView.addMenuItems(menuMan);
-        final MenuAdder DMView = new DMViewer(this);
-        DMView.addMenuItems(menuMan);
+		final MenuAdder PPView = new PPViewer(this);
+		PPView.addMenuItems(menuMan);
+		final MenuAdder DMView = new DMViewer(this);
+		DMView.addMenuItems(menuMan);
 
 		// Create the Configuration editor and allow it to add its menu items to the
 		// menu system.
 		final MenuAdder confEditor = new ConfigurationEditor();
 		confEditor.addMenuItems(menuMan);
+	}
 
+	private void finalizeMenu(MenuManager menuMan) {
 		JMenuBar mb = menuMan.createMenu(); //new JMenuBar();
-		//mb.add(m);
-
 		setJMenuBar(mb);
-		//setSize(800/*windowWidth*/, 800/*windowHeight*/);
+	}
 
+	private void addWindowAdapters() {
 		// Add adapter to catch window events.
 		WindowAdapter myWindowAdapter = new WindowAdapter() {
 			public void windowStateChanged(WindowEvent e) {
