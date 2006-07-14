@@ -359,7 +359,6 @@ double CESProductionFn::calcCoefficient( vector<Input*>& input, double consumpti
 }
 
 /*! \brief Normalize alpha zero scaler to 1 and readjust inputs
-* \param 
 * \author Sonny Kim
 * \return alpha zero.
 */
@@ -378,7 +377,6 @@ double CESProductionFn::normalizeAlphaZero( vector<Input*>& input, double aAlpha
 }
 
 /*! \brief Transform production coefficients to utilize elasticity of substitution directly
-* \param 
 * \author Sonny Kim
 * \return alpha-zero.
 */
@@ -402,7 +400,6 @@ double CESProductionFn::transformCoefficients( vector<Input*>& input, double pri
 
 /*! \brief Transform production coefficients based on long-term elasticity to
 *          short-term elasticity.
-* \param 
 * \author Sonny Kim
 * \return alpha zero.
 */
