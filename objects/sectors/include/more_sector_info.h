@@ -18,13 +18,8 @@
 /*! 
 * \file more_sector_info.h
 * \ingroup Objects
-* \brief Additional information for base Sector class header file.
-*
-*  Detailed description.
-*
+* \brief MoreSectorInfo class header file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>
@@ -35,10 +30,8 @@
 
 /*! 
 * \ingroup Objects
-* \brief CHANGE
-* \details CHANGE
-*
-* \note CHANGE
+* \brief A container which contains additional information about an SGM sector.
+* \details TODO
 * \author Sonny Kim
 */
 

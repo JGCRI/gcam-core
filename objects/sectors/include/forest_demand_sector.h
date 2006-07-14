@@ -18,6 +18,9 @@
 // Forward declarations
 class GDP;
 
+/*! 
+ * \brief A sector which demands forestry products.
+ */
 class ForestDemandSector: public DemandSector {
 public:
     ForestDemandSector( const std::string& regionName );

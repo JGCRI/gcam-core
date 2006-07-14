@@ -20,6 +20,9 @@
 // Forward declarations
 class ILandAllocator;
 
+/*!
+ * \brief A sector which supplies food products.
+ */
 class FoodSupplySector : public SupplySector {
 public:
     FoodSupplySector( std::string& aRegionName );

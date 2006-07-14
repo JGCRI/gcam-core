@@ -16,6 +16,9 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include "sectors/include/food_supply_sector.h"
 
+/*! 
+ * \brief A sector which produces forestry products.
+ */
 class ForestSupplySector : public FoodSupplySector {
 public:
 	ForestSupplySector( std::string& regionName );

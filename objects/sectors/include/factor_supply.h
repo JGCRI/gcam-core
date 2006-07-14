@@ -36,10 +36,9 @@ class MoreSectorInfo;
 
 /*! 
 * \ingroup Objects
-* \brief CHANGE
-* \details CHANGE
-*
-* \note CHANGE
+* \brief The supplier of the initial goods such as land, labor and capital used
+*        to create intermediate products,
+* \details
 * \author Pralit Patel, Sonny Kim
 */
 
