@@ -12,10 +12,7 @@
 /*! 
 * \file national_account.cpp
 * \ingroup Objects
-* \brief The National Account class source file.
-*
-*  Detailed description.
-*
+* \brief The National ccount class source file.
 * \author Pralit Patel
 * \author Sonny Kim
 * \date $Date$
