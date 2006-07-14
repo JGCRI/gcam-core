@@ -65,7 +65,7 @@ namespace objects {
 	*          already exists, This function will delete the passed in atom,
     *          print a warning and return false. Otherwise the atom is added to
 	*          the list.
-	* \param An Atom to register.
+	* \param aAtom An Atom to register.
 	* \return Whether the atom was successfully registered.
     */
 	bool AtomRegistry::registerAtom( Atom* aAtom ){

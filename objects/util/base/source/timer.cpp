@@ -46,7 +46,7 @@ double Timer::getTimeDifference() const {
 * \details This function prints the time between the last call to stop() and the time
 * start() was called.
 * \param aOut The output stream to print to.
-* \param aLabel The label to print in front of the time. Defaults to 'Time: '
+* \param aTitle The label to print in front of the time. Defaults to 'Time: '
 */
 void Timer::print( std::ostream& aOut, const string& aLabel ) const {
     aOut << aLabel << " " << getTimeDifference() << " seconds. " << endl; 
