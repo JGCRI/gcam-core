@@ -55,10 +55,8 @@ class TechnologyType;
 
 /*! 
 * \ingroup Objects
-* \brief CHANGE
-* \details CHANGE
-*
-* \note CHANGE
+* \brief The common base class of ProductionTechnology and Consumer.
+* \details TODO
 * \author Pralit Patel, Sonny Kim
 */
 

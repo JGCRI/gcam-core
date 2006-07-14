@@ -115,6 +115,6 @@ double CalDataOutputPercap::getCalOutput( const double aEfficiency ) {
     return mCalOutputPercapValue * mPopulation / aEfficiency;
 }
 
-void CalDataOutputPercap::scaleValue( const double aScaleValue ) {
-    mCalOutputPercapValue *= aScaleValue;
+void CalDataOutputPercap::scaleValue( const double aScaleFactor ) {
+    mCalOutputPercapValue *= aScaleFactor;
 }

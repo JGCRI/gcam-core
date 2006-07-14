@@ -112,6 +112,6 @@ double CalDataInput::getCalOutput( double aEfficiency ) {
     return mCalInputValue * aEfficiency;
 }
 
-void CalDataInput::scaleValue( const double aScaleValue ) {
-    mCalInputValue *= aScaleValue;
+void CalDataInput::scaleValue( const double aScaleFactor ) {
+    mCalInputValue *= aScaleFactor;
 }

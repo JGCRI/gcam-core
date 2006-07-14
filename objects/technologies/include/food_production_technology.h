@@ -21,7 +21,7 @@ class ILandAllocator;
 
 /*!
 * \ingroup Objects
-* \brief TODO
+* \brief A technology which supplies food products.
 * \details TODO
 * \author James Blackwood
 */

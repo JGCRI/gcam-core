@@ -39,13 +39,11 @@ class IExpectedProfitRateCalculator;
 class IShutdownDecider;
 /*! 
 * \ingroup Objects
-* \brief CHANGE
-* \details CHANGE
-*
-* \note CHANGE
+* \brief A technology which accepts investment and produces output for SGM
+*        production sectors.
+* \details TODO
 * \author Pralit Patel, Sonny Kim
 */
-
 class ProductionTechnology : public BaseTechnology
 {
     friend class SocialAccountingMatrix;

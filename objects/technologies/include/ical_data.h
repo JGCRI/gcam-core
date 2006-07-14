@@ -15,7 +15,7 @@
  */
 
 /*! 
- * \file cal_data.h
+ * \file ical_data.h
  * \ingroup Objects
  * \brief The CalData class header file.
  * \author James Blackwood

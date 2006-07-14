@@ -55,7 +55,7 @@ public:
 
     virtual double getCalInput( const double aEfficiency );
     virtual double getCalOutput( const double aEfficiency );
-    virtual void scaleValue( const double aScaleValue );
+    virtual void scaleValue( const double aScaleFactor );
 private:
     //! Calibrated output value.
     double mCalOutputValue;
