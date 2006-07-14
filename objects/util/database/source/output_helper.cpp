@@ -1,13 +1,11 @@
 /*! 
-* \file output_helper.cpp
-* \ingroup CIAM
-* \brief Contains the functions to write out single records to output file or table in the database.
-* \File includes functions to open, create, and close database and tables.
-* \Revision 2004/10/13
-* \author Sonny Kim
-* \date $Date$
-* \version $Revision$
-*/
+ * \file output_helper.cpp
+ * \ingroup CIAM
+ * \brief Contains the functions to write out single records to output file or
+ *        table in the database. includes functions to open, create, and close
+ *        database and tables.
+ * \author Sonny Kim
+ */
 
 #include "util/base/include/definitions.h"
 #define DUPLICATE_CHECKING 0
