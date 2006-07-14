@@ -281,7 +281,7 @@ namespace objects {
    }
 
     /*! \brief Function which returns a vector of keys from a map.
-    * \detailed This function takes a map as an argument and returns a vector of
+    * \details This function takes a map as an argument and returns a vector of
     *           all the keys of the map. It uses the same order as the map
     *           iterator returns.
     * \param aMap A map to return all keys for.
