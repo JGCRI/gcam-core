@@ -22,7 +22,7 @@ class World;
 
 /*! \brief An abstract class defining an interface to an independent component
 *          of a Solver.
-* \detailed A SolverComponent is an independent object which takes a Marketplace
+* \details A SolverComponent is an independent object which takes a Marketplace
 *           and attempts to clear all markets to a given relative excess demand
 *           tolerance within a given number of iterations. SolverComponents may
 *           use static functions within the SolverLibrary class, they may not

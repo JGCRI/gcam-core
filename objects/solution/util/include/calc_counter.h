@@ -18,12 +18,12 @@
 /*!
 * \ingroup Solution
 * \brief A class used to count iterations of world.calc.
-* \detailed This function tracks calls to world.calc and keeps updated counts of the total 
+* \details This class tracks calls to world.calc and keeps updated counts of the total 
 * number of times world.calc has been called for the model, the total times for the period, 
 * and the number of times in the current period by solution mechanism. The world has a pointer
 * to this object, so it is updated automatically. Solution mechanisms need to notify it when they
 * switch solution methods and when a new period is started. They can then use its accessor functions 
-* at any time and are gaurunteed to have updated values. 
+* at any time and are guaranteed to have updated values. 
 * \author Josh Lurz
 */
 class CalcCounter {
