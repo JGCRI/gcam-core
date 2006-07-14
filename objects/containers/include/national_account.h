@@ -18,14 +18,9 @@
 /*! 
 * \file national_account.h
 * \ingroup Objects
-* \brief The National Account class header file.
-*
-*  Detailed description.
-*
+* \brief The NationalAccount class header file.
 * \author Pralit Patel
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <vector>
@@ -36,10 +31,8 @@
 class Tabs;
 /*! 
 * \ingroup Objects
-* \brief CHANGE
-* \details CHANGE
-*
-* \note CHANGE
+* \brief A container of national accounts information for the Region.
+* \details TODO
 * \author Pralit Patel, Sonny Kim
 * \todo Lots of documentation!
 */
