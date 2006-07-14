@@ -49,6 +49,9 @@ class FactorSupply;
 class Input;
 class Modeltime;
 
+/*!
+ * \brief A visitor which constructs the general SGM output tables.
+ */
 class SGMGenTable : public DefaultVisitor {
 public:
     SGMGenTable( const std::string& aName, const std::string& aHeader,

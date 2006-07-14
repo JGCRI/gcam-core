@@ -33,17 +33,19 @@
 
 #include "util/base/include/default_visitor.h"
 
-/*! 
-* \ingroup Objects
-* \brief An OutputContainer that represents the total results for all sectors within a region.
-* \details ADD HERE
-* \author Josh Lurz
-*/
+
 class Sector;
 class ProductionTechnology;
 class ProductionSector;
 class StorageTable;
 
+/*! 
+* \ingroup Objects
+* \brief A visitor that collects the total results for all sectors within a
+*        region.
+* \details ADD HERE
+* \author Josh Lurz
+*/
 class SectorResults : public DefaultVisitor {
 public:
     SectorResults( const std::string& aRegionName, std::ostream& aFile );

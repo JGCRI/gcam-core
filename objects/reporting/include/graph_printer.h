@@ -27,7 +27,9 @@
 #include <sstream>
 
 #include "util/base/include/default_visitor.h"
-
+class Sector;
+class Region;
+class technology;
 /*! 
 * \ingroup Objects
 * \brief A reporting class which outputs a dot graph for a specified region.
@@ -38,10 +40,6 @@
 *          those based on prices or quantities of consumed inputs.
 * \author Josh Lurz
 */
-class Sector;
-class Region;
-class technology;
-
 class GraphPrinter : public DefaultVisitor {
 public:
     explicit GraphPrinter( const std::string& aRegionToPrint, std::ostream& aFile );

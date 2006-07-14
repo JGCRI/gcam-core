@@ -25,7 +25,7 @@
 #include <string>
 
 #include "util/base/include/default_visitor.h"
-
+class ALandAllocatorItem;
 /*! 
 * \ingroup Objects
 * \brief A reporting class which outputs a dot graph of the land allocator for a specified region.
@@ -36,9 +36,6 @@
 *          as circles, leaf nodes are outputted as boxes.
 * \author Jim Naslund
 */
-
-class ALandAllocatorItem;
-
 class LandAllocatorPrinter : public DefaultVisitor {
 public:
     explicit LandAllocatorPrinter( const std::string& aRegionToPrint, std::ostream& aFile,

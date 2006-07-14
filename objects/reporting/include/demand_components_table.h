@@ -19,9 +19,6 @@
 * \file demand_components_table.h
 * \ingroup Objects
 * \brief DemandComponentsTable class header file.
-*
-*  Detailed description.
-*
 * \author Katherine Chung
 * \date $Date$
 * \version $Revision$
@@ -41,6 +38,9 @@ class ProductionTechnology;
 class Input;
 class StorageTable;
 
+/*!
+ * \brief A visitor which collects reporting information on demands for goods.
+ */
 class DemandComponentsTable : public DefaultVisitor {
 public:
     DemandComponentsTable( std::ostream& aFile );

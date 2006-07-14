@@ -33,20 +33,21 @@
 
 #include "util/base/include/default_visitor.h"
 
-/*! 
-* \ingroup Objects
-* \brief An OutputContainer that represents the total results for the goverment final demand sector.
-* \details ADD HERE
-* \author Josh Lurz
-*/
+
 class Sector;
 class ProductionTechnology;
 class ProductionSector;
 class RegionCGE;
 class GovtConsumer;
-
 class StorageTable;
 
+/*! 
+* \ingroup Objects
+* \brief A visitor which collects the total results for the goverment final
+*        demand sector.
+* \details ADD HERE
+* \author Josh Lurz
+*/
 class GovtResults : public DefaultVisitor {
 public:
     GovtResults( const std::string& aRegionName, std::ostream& aFile );

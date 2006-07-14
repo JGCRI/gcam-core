@@ -33,14 +33,7 @@
 
 #include "util/base/include/default_visitor.h"
 
-/*! 
-* \ingroup Objects
-* \brief An OutputContainer that represents the IO table for a single Region.
-* \details The InputOutputTable is instantiated at the Region level where it is passed to all sectors
-* so that each may add its additions to the InputOutputTable. FactorSupplies and FinalDemands are also
-* added to the table. The table is in currency values.
-* \author Josh Lurz
-*/
+
 class Sector;
 class ProductionTechnology;
 class FactorSupply;
@@ -50,6 +43,14 @@ class ProductionInput;
 class DemandInput;
 class Consumer;
 
+/*! 
+* \ingroup Objects
+* \brief A visitor that represents the IO table for a single Region.
+* \details The InputOutputTable is instantiated at the Region level where it is passed to all sectors
+* so that each may add its additions to the InputOutputTable. FactorSupplies and FinalDemands are also
+* added to the table. The table is in currency values.
+* \author Josh Lurz
+*/
 class InputOutputTable : public DefaultVisitor {
 public:
     InputOutputTable( const std::string& aRegionName, std::ostream& aFile );
