@@ -41,6 +41,7 @@ public:
     *          present, and creates a new one key-value pair if it does not
     *          exist.
 	* \param aStringKey The key for which to set or update the value.
+    * \param aValue The new value.
     */
 	virtual bool setBoolean( const std::string& aStringKey,
 		                     const bool aValue ) = 0;
@@ -49,6 +50,7 @@ public:
 	* \details Updates the value associated with the key if it is already
     *          present, and creates a new key-value pair if it does not exist.
 	* \param aStringKey The key for which to set or update the value.
+    * \param aValue The new value.
     */
 	virtual bool setInteger( const std::string& aStringKey,
 		                     const int aValue ) = 0;
@@ -57,6 +59,7 @@ public:
 	* \details Updates the value associated with the key if it is already
     *          present, and creates a new key-value pair if it does not exist.
 	* \param aStringKey The key for which to set or update the value.
+    * \param aValue The new value.
     */
 	virtual bool setDouble( const std::string& aStringKey,
 		                    const double aValue ) = 0;
@@ -65,6 +68,7 @@ public:
 	* \details Updates the value associated with the key if it is already
     *          present, and creates a new key-value pair if it does not exist.
 	* \param aStringKey The key for which to set or update the value.
+    * \param aValue The new value.
     */
 	virtual bool setString( const std::string& aStringKey,
 		                    const std::string& aValue ) = 0;
@@ -128,7 +132,7 @@ public:
     * \details Writes the set of keys and values to an output stream as XML.
     * \param aPeriod Model period for which to write debugging information.
     * \param aTabs Tabs manager.
-    * \param aOutput Output stream.
+    * \param aOut Output stream.
     */
     virtual void toDebugXML( const int aPeriod,
                              Tabs* aTabs,
