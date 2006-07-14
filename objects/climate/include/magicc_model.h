@@ -5,7 +5,7 @@
 #endif
 
 /*! 
-* \file magicc.h
+* \file magicc_model.h
 * \ingroup Objects
 * \brief The MagiccModel header file.
 * \author Josh Lurz
