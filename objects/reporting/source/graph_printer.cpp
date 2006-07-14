@@ -143,7 +143,7 @@ void GraphPrinter::startVisitDemandSector( const DemandSector* aDemandSector, co
 *              instead of quantities.</li>
 *          <li>ShowNullPaths Show paths with weights below DISPLAY_THRESHOLD.</li>
 *          <li>PrintValuesOnGraphs Activates printing labels on the edges
-               with the weights, either prices or quantities of the input used.<li>
+               with the weights, either prices or quantities of the input used.</li>
 * \param aTechnology Technology for which to write output.
 * \param aPeriod Period to output.
 */
