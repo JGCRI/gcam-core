@@ -43,12 +43,13 @@ public:
     //! correctly through a pointer to the interface.
     inline virtual ~IParsable();
     
-	/*! \brief A function which initializes a top level XML parse of a DOM tree
-    *          given the root of the DOM tree.
-    * \param aRoot The root of a DOM tree.
-    * \return Whether the parse completed successfully.
-    */
-    virtual bool XMLParse( const xercesc::DOMNode* aRoot ) = 0;
+	/*!
+     * \brief A function which parses XML starting at a given position in the
+     *        DOM tree.
+     * \param aNode The current node of a DOM tree.
+     * \return Whether the parse completed successfully.
+     */
+    virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
 };
 
 // Inline function definitions.
