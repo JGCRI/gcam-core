@@ -100,7 +100,6 @@ const string& UnmanagedCarbonCalc::getXMLNameStatic() {
 
 /*! 
 * \brief Perform initializations that only need to be done once.
-* \param aSubsectorIInfo Parent information container.
 * \author James Blackwood
 */
 void UnmanagedCarbonCalc::completeInit() {

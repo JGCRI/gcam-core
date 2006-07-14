@@ -104,7 +104,7 @@ const string& GhgMAC::getXMLNameStatic() {
     return XML_NAME;
 }
 /*! \brief Reads in a series of data points and creates a MAC curve from those points
-* \detailed The x value of the data points is the carbon price.  The y- value is the amount of 
+* \details The x value of the data points is the carbon price.  The y- value is the amount of 
 * reduction in emissions (0= none, 1= completely reduced) The curve that is created is 
 * piecewise linear, so that the reduction for any carbon price between two read-in points
 * will be found using linear interpolation.
@@ -224,7 +224,7 @@ void GhgMAC::initCalc( const string& ghgName ){
 }
 
 /*! \brief Finds the reduction using a created MAC curve
-* \detailed The function finds the current carbon price, and using the pre-defined MAC curve,
+* \details The function finds the current carbon price, and using the pre-defined MAC curve,
 * it uses that carbon price as the x- value to find the reduction.
 * \author  Nick Fernandez
 * \param regionName the name of the region 
