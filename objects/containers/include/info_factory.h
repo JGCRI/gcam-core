@@ -5,7 +5,7 @@
 #endif
 
 /*! 
-* \file info.h
+* \file info_factory.h
 * \ingroup objects
 * \brief The InfoFactory class header file.
 * \author Josh Lurz
