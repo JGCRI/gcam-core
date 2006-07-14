@@ -28,6 +28,9 @@ class Demographic;
 class Tabs;
 class MoreSectorInfo;
 
+/*! 
+ * \brief A consumer representing government purchases.
+ */
 class GovtConsumer : public Consumer
 {
     friend class SocialAccountingMatrix;

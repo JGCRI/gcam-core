@@ -30,6 +30,9 @@ class Tabs;
 class MoreSectorInfo;
 class IVisitor;
 
+/*!
+ * \brief A consumer representing trade flows out of the region.
+ */
 class TradeConsumer : public Consumer
 {
     friend class SocialAccountingMatrix;

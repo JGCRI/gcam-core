@@ -27,6 +27,9 @@ class Demographic;
 class Tabs;
 class IVisitor;
 
+/*!
+ * \brief A consumer representing the consumption caused by investment.
+ */
 class InvestConsumer : public Consumer
 {
     friend class SocialAccountingMatrix;

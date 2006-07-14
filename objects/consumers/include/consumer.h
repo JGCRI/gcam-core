@@ -38,13 +38,10 @@ class IVisitor;
 class IExpectedProfitRateCalculator;
 /*! 
 * \ingroup Objects
-* \brief CHANGE
+* \brief A type of SGM technology representing purchases of good by consumers.
 * \details CHANGE
-*
-* \note CHANGE
 * \author Pralit Patel, Sonny Kim
 */
-
 class Consumer : public BaseTechnology
 {
     friend class SGMGenTable;
