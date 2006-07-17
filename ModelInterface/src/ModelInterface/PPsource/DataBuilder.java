@@ -52,6 +52,13 @@ import org.geotools.feature.*;
 
 import com.vividsolutions.jts.geom.*;
 
+import com.sun.media.jai.codec.FileSeekableStream;
+
+import org.geotiff.image.jai.*;
+import org.libtiff.jai.codec.*;
+
+import ModelInterface.PPsource.util.HomolosineToDegreeConversion;
+
 /**
  * Driver class for preprocessor, runs based on supplied XML files.This class runs based on
  * the supplied XML files which define a list of files which
@@ -315,6 +322,9 @@ public class DataBuilder
       } else if(currFile.getAttributeValue("type").equals("raster"))
       {
         addRasterData(currFile);
+      } else if(currFile.getAttributeValue("type").equals("geoTiff"))
+      {
+	      addGeoTiffFile(currFile);
       } else
       {
         log.log(Level.WARNING, "Unsupported File Type -> "+currFile.getAttributeValue(null, "type"));
@@ -3458,6 +3468,7 @@ public class DataBuilder
   private void addRasterData(Element currFile)
   { //i hope i can do this too...
     log.log(Level.SEVERE, "Function not implemented yet");
+    // throw unsupportedoperationexception?
   }
   
   private void addTxtRegion(Element currFile)
@@ -3782,6 +3793,233 @@ public class DataBuilder
     //done adding region masks
   }
   
+  private void addGeoTiffFile(Element currFile)
+  {
+	  String fileName = null;
+	  Element currElem;
+	  List infoChildren = currFile.getChildren();
+	  double radius = 1.0;
+	  Double timeDouble = new Double(0.0);
+	  double res = 1;
+	  boolean avg = true;
+	  String dataName = "shutup,";
+	  boolean overwrite = false;
+	  for(int i = 0; i < infoChildren.size(); i++)
+	  {
+		  currElem = (Element)infoChildren.get(i);
+		  if(currElem.getName().equals("name"))
+		  {
+			  fileName = currElem.getAttributeValue("value");
+		  } else if(currElem.getName().equals("data"))
+		  {
+			  dataName = currElem.getAttributeValue("value");
+		  } else if(currElem.getName().equals("date"))
+		  {
+			  timeDouble = Double.parseDouble(currElem.getAttributeValue("value"));
+		  } else if(currElem.getName().equals("res"))
+		  {
+			  res = Double.parseDouble(currElem.getAttributeValue("value"));
+		  } else if(currElem.getName().equals("average"))
+		  {
+			  avg = (Boolean.valueOf(currElem.getAttributeValue("value"))).booleanValue();
+		  } else if(currElem.getName().equals("radius")) 
+		  {
+			  radius = Double.parseDouble(currElem.getAttributeValue("value"));
+		  } else
+		  {
+			  log.log(Level.WARNING, "Unknown File Tag -> "+currElem.getName());
+		  }
+
+	  }
+	  // TODO: put checks to make sure required input was found
+
+	  FileSeekableStream fss = null;
+	  try {
+		  fss = new FileSeekableStream(fileName);
+		  GeoTIFFDirectory gTiffDir = (GeoTIFFDirectory)new GeoTIFFFactory().createDirectory(fss, 0);
+		  XTIFFField[] fields = gTiffDir.getFields();
+		  // key 256 type 3 has width in pixels?
+		  // key 257 type 3 has height in pixels?
+		  // key 273 type 4 has offset strip
+		  // key 279 type 4 has offset strip len
+		  // key 33550 type 12 has pixel scale (in form (x,y,z)?)
+		  // key 33922 type 12 has tie ponits(bounds??) in this case the 4th and 5th are (x, y) of upper left
+		  // where do I get value scale info?
+
+		  long[] offsets = gTiffDir.getField(273).getAsLongs();
+		  long[] offsetSizes = gTiffDir.getField(279).getAsLongs();
+		  double[] pixelScale = gTiffDir.getPixelScale();
+		  double[] tiePts = gTiffDir.getTiepoints();
+		  byte[] buff = null;
+
+		  double currEasting = tiePts[3];
+		  double currNorthing = tiePts[4];
+
+		  HomolosineToDegreeConversion convInst = HomolosineToDegreeConversion.getInstance();
+
+		  /*
+		  Point2D.Double latLongInit = convInst.convert(new Point2D.Double(currEasting, currNorthing), radius);
+		  Point2D.Double latLongChange = convInst.convert(new Point2D.Double(currEasting + pixelScale[1], currNorthing - pixelScale[0]), radius);
+		  System.out.println("Change in lat: "+(Math.abs(latLongChange.getY() - latLongInit.getY())));
+		  System.out.println("Will need to read: "+Math.ceil(res/(Math.abs(latLongChange.getY() - latLongInit.getY()))));
+		  System.out.println("Change in long: "+(Math.abs(latLongChange.getX() - latLongInit.getX())));
+		  System.out.println("Will need to read: "+Math.ceil(res/(Math.abs(latLongChange.getX() - latLongInit.getX()))));
+		  if(1==1) {
+			  throw new NullPointerException();
+		  }
+		  */
+
+		  Point2D.Double latLong;
+
+		  double x;
+		  double y;
+		  double mult;
+		  Double dataValue;
+		  TreeMap timeValue;
+		  DataBlock toAdd;
+
+		  if(dataAvg.containsKey(dataName))
+		  {
+			  //then we are overwriting this data!
+			  overwrite = true;
+		  } else
+		  {
+			  //dont want to add all this information if we already have!!!
+			  if(!init)
+			  { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
+				  dataStruct.fillWorld(res);
+				  init = true;
+			  }
+			  //setting whether contained data is additive or averaged and references
+			  dataAvg.put(dataName, new Boolean(avg));
+			  /*
+			  if(ref != null)
+			  {
+				  dataRef.put(dataName, ref);
+			  }
+			  if(unit != null)
+			  {
+				  dataUnits.put(dataName, unit);
+			  }
+			  //done settign avg/add and references
+			  */
+		  }
+
+		  /*
+		  Point2D.Double currPoint = new Point2D.Double(currEasting, currNorthing);
+		  Point2D.Double basePoint = convInst.convert(currPoint, radius);
+		  double baseNorthing = currNorthing;
+		  double latMoved = 0.0;
+		  int count = 0;
+		  int total = 0;
+		  for(int i = 0; i < offsets.length; i++) {
+			  count++;
+			  latLong = convInst.convert(currPoint, radius);
+			  latMoved += Math.abs(basePoint.getY() - latLong.getY());
+			  if(latMoved >= res) {
+				  System.out.println("Moved "+count+" offsets");
+				  total += count;
+				  count = 0;
+				  latMoved = 0.0;
+				  basePoint = latLong;
+			  }
+			  currPoint.setLocation(currPoint.getX(), currPoint.getY() - pixelScale[0]);
+		  }
+		  System.out.println("Should be "+offsets.length+" total is "+total);
+		  */
+
+		  for(int i = 0; i < offsets.length; i++) {
+			  fss.seek(offsets[i]);
+			  if(buff == null || buff.length < offsetSizes[i]) {
+				  buff = new byte[(int)offsetSizes[i]];
+			  }
+			  int read = fss.read(buff, 0, (int)offsetSizes[i]);
+			  /*
+			  if(read != (int)offsetSizes[l]) {
+				  log.log(Level.WARNING, "Data read: "+read+" expected: "+offsetSizes[i]+" at offset: "+l);
+			  }
+			  */
+			  // reset the easting back to initial
+			  currEasting = tiePts[3];
+			  for(int j = 0; j < read; j++) {
+				  // should endianess be of concern here?
+				  short temp = (short)(0x000000FF & ((int)buff[j]));
+				  if(temp <= 100) {
+					  latLong = convInst.convert(new Point2D.Double(currEasting, currNorthing), radius);
+					  if(latLong == null) {
+						  //System.out.println("Had a problem with this point: ("+currEasting+", "+currNorthing+")");
+						  //log.log(Level.WARNING, "Had a problem with this point: ("+currEasting+", "+currNorthing+")");
+						  dataValue = Double.NaN;
+					  } else {
+						  dataValue = new Double(temp/100.0); // relative scale?
+					  //System.out.println("Got back(lat, long): ("+latLong.getX()+", "+latLong.getY()+")");
+
+						  // somehow the x/y or lat/long are getting flipped so I just flipped them here and
+						  // it looks ok
+					  x = latLong.getY();
+					  mult = x/res;
+					  mult = Math.floor(mult);
+					  x = mult*res;
+
+					  y = latLong.getX();
+					  mult = y/res;
+					  mult = Math.floor(mult);
+					  y = mult*res;
+
+					  //System.out.println(latLong.getX()+" "+latLong.getY()+" - "+x+" "+y);
+
+					  toAdd = new DataBlock(x, y, res, res);
+					  timeValue = new TreeMap();
+					  timeValue.put(timeDouble, dataValue);
+
+					  //check overwrite bit, if so, use hold instead of dataName
+					  if(overwrite)
+					  {
+						  //just replace name with hold, later, we will merge hold over old data
+						  toAdd.data.put("hold", timeValue);
+					  } else
+					  {
+						  //add data as normal
+						  toAdd.data.put(dataName, timeValue);
+					  }
+					  //merging this data into the current tree
+					  dataStruct.addData(toAdd, avg);
+					  }
+				  }
+				  currEasting += pixelScale[1];
+			  }
+			  currNorthing -= pixelScale[0];
+		  }
+
+		  /*
+		  Point2D.Double topLeft = new Point2D.Double(-1998500.000, 4529500.000);
+		  Point2D.Double latLong = ModelInterface.PPsource.util.HomolosineToDegreeConversion.getInstance().convert(topLeft, 6370997);
+		  System.out.println("Got back(lat/long): ("+latLong.getX()+", "+latLong.getY()+")");
+		  */
+
+		  //done adding all data, if overwrite, must merge with old data now
+		  if(overwrite)
+		  {
+			  dataStruct.resolveOverwrite("hold", dataName);
+		  } //else we are done already
+
+	  } catch(IOException ioe) {
+		  ioe.printStackTrace();
+		  //TODO: log this exception and exit?
+	  } finally {
+		  try {
+			  fss.close();
+		  } catch(IOException ioe) {
+			  ioe.printStackTrace();
+			  // TODO: log this exception
+		  }
+	  }
+
+	  // TODO: read parameters from XML
+	  // TODO: do init if necessary
+	  // TODO: read through data and add it
+  }
+
 //*****************************************************************************
 //*********************Helper Functions****************************************
 //*****************************************************************************
