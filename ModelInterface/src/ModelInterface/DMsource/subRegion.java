@@ -56,13 +56,13 @@ public class subRegion extends Region
   
   public double[][] getM()
   {
-    return (double[][])((TreeMap)data.get("weight")).get("0");
+    return (double[][])((Map)data.get("weight")).get("0");
   }
   
   //returns the matrix of values for the specified variable during the specified year
   public double[][] getM(String var, String year)
   {
-    TreeMap holdVar = ((TreeMap)data.get(var));
+    Map holdVar = ((Map)data.get(var));
     
     if(holdVar.containsKey(year))
     { //user enterd a time which exists, return it
@@ -104,7 +104,7 @@ public class subRegion extends Region
         for(int k = 0; k < toReturn[0].data[0].length; k++)
           toReturn[0].data[i][k] = java.lang.Double.NaN;
       
-    } else if(!((TreeMap)data.get(var)).containsKey(year))
+    } else if(!((Map)data.get(var)).containsKey(year))
     {
       toReturn[0] = new ReferenceWrapper(this);
       for(int i = 0; i < toReturn[0].data.length; i++)
@@ -112,7 +112,7 @@ public class subRegion extends Region
           toReturn[0].data[i][k] = java.lang.Double.NaN;
     } else
     {
-      double[][] holdD = (double[][])((TreeMap)data.get(var)).get(year);
+      double[][] holdD = (double[][])((Map)data.get(var)).get(year);
       toReturn[0] = new ReferenceWrapper(this);
       
       for(int i = 0; i < holdD.length; i++)
@@ -131,7 +131,7 @@ public class subRegion extends Region
    */
   public double get(String var, double year, int x, int y)
   {
-    return ((Matrix)((TreeMap)data.get(var)).get(String.valueOf(year))).get(x, y);
+    return ((Matrix)((Map)data.get(var)).get(String.valueOf(year))).get(x, y);
   }
   
   /**
@@ -147,14 +147,14 @@ public class subRegion extends Region
     //i dunno if this math is right... but hey maybe it is!
     int X = (int)(Math.floor((findX-x)/resolution));
     int Y = (int)(Math.floor(((y+height)-findY)/resolution));
-    return ((Matrix)((TreeMap)data.get(var)).get(String.valueOf(year))).get(X, Y);
+    return ((Matrix)((Map)data.get(var)).get(String.valueOf(year))).get(X, Y);
   }
   
   public ArrayList<String> getTimeList(String var)
   {
     Map.Entry e;
     ArrayList<String> toRet = new ArrayList<String>();
-    TreeMap times = (TreeMap)data.get(var);
+    Map times = (Map)data.get(var);
     Iterator it = times.entrySet().iterator();
     
     while(it.hasNext())

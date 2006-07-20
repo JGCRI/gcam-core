@@ -43,7 +43,11 @@ import ucar.nc2.Dimension;
 import ucar.nc2.NetcdfFileWriteable;
 import ucar.ma2.*;
 
-
+import org.xml.sax.helpers.DefaultHandler;
+import org.xml.sax.helpers.XMLReaderFactory;
+import org.xml.sax.Attributes;
+import org.xml.sax.XMLReader;
+import org.xml.sax.SAXException;
 
 
 
@@ -137,7 +141,7 @@ public class ManipulationDriver
     log.log(Level.FINE, "Calling makeStrams");
     makeStreams();
     log.log(Level.FINE, "Building lowest-level regions");
-    buildRegionData();
+    //buildRegionData();
     log.log(Level.FINE, "Creating the regio hierarchy");
     buildRegionHierarchy();
     log.log(Level.FINE, "Parsing user input");
@@ -3006,7 +3010,15 @@ public class ManipulationDriver
     try
     {
       SAXBuilder builder = new SAXBuilder();
-      dDocument = builder.build(dSource);
+      //dDocument = builder.build(dSource);
+      dDocument = null;
+      try {
+	      XMLReader saxReader = XMLReaderFactory.createXMLReader();
+	      saxReader.setContentHandler(new DataContentHandler());
+	      saxReader.parse(dSource);
+      } catch(SAXException e) {
+	      e.printStackTrace();
+      }
       log.log(Level.FINER, "data document parsed");
       rDocument = builder.build(rSource);
       log.log(Level.FINER, "region document parsed");
@@ -3424,6 +3436,93 @@ public class ManipulationDriver
       
       System.exit(0);
     }
+  }
+
+  private class DataContentHandler extends DefaultHandler {
+	  subRegion toAdd;
+	  int sizeX, sizeY, currX, currY;
+	  Map toAddVar;
+	  double[][] toAddTime;
+	  String varName, timeName;
+	  boolean avg;
+	  boolean isVarInfo = false;
+	  public void startElement(String uri, String localName, String qName, Attributes attrs) {
+		  if(localName.equals("input")) {
+			  resolution = Double.parseDouble(attrs.getValue("res"));
+		  } else if(localName.equals("variableInfo")) {
+			  isVarInfo = true;
+		  } else if(localName.equals("region")) {
+			  // do I need to keep track of numAtomicRegions ?
+			  toAdd = new subRegion();
+			  toAdd.name = attrs.getValue("name");
+			  toAdd.resolution = resolution;
+			  toAdd.x = Double.parseDouble(attrs.getValue("x"));
+			  toAdd.y = Double.parseDouble(attrs.getValue("y"));
+			  sizeX = Integer.parseInt(attrs.getValue("sizeX"));
+			  sizeY = Integer.parseInt(attrs.getValue("sizeY"));
+			  toAdd.width = (sizeX*resolution);
+			  toAdd.height = (sizeY*resolution);
+		  } else if(localName.equals("weight")) {
+			  varName = "weight";
+			  toAddVar = new HashMap(); // does this have to be a treemap?
+		  } else if(localName.equals("time")) {
+			  timeName = attrs.getValue("value");
+			  toAddTime = new double[sizeY][sizeX];
+			  for(int hy = 0; hy<sizeY; hy++)
+			  {
+				  for(int hx = 0; hx<sizeX; hx++)
+				  {
+					  if(varName.equals("weight")) {
+						  toAddTime[hy][hx] = 0;
+					  } else { // variable
+						  toAddTime[hy][hx] = Double.NaN;
+					  }
+				  }
+			  }
+		  } else if(localName.equals("data")) {
+			  currX = Integer.parseInt(attrs.getValue("x"));
+			  currY = Integer.parseInt(attrs.getValue("y"));
+			  toAddTime[currY][currX] = stringToDouble(attrs.getValue("value"));
+			  if(varName.equals("variable") && !avg)
+			  { //this is an additive value and should be initially weighted (now)
+				  toAddTime[currY][currX] *= ((double[][])((Map)toAdd.data.get("weight")).get("0"))[currY][currX];
+			  }
+		  } else if(localName.equals("variable")) {
+			  if(!isVarInfo) {
+				  varName = attrs.getValue("value");
+				  avg = ((Boolean)dataAvgAdd.get(varName)).booleanValue();
+				  toAddVar = new HashMap(); // again has to be TreeMap?
+			  } else {
+				  varName = attrs.getValue("name");
+			  }
+		  } else if(localName.equals("average")) {
+			  avg = (Boolean.valueOf(attrs.getValue("value"))).booleanValue();
+			  dataAvgAdd.put(varName, new Boolean(avg));
+		  } else if(localName.equals("reference")) {
+			  dataRef.put(varName, attrs.getValue("value"));
+		  } else if(localName.equals("units")) {
+			  dataUnits.put(varName, attrs.getValue("value"));
+		  } else {
+			  log.log(Level.WARNING, "Didn't recognize element name: "+localName);
+		  }
+	  }
+	  public void endElement(String uri, String localName, String qName) {
+		  // make sure things get reset to null?
+		  if(localName.equals("variableInfo")) {
+			  isVarInfo = false;
+		  } else if(localName.equals("region")) {
+			  //adding region to master list
+			  regionList.put(toAdd.name, toAdd);
+		  } else if(localName.equals("weight")) {
+			  //end getting weight
+		  } else if(localName.equals("time")) {
+			  //end getting time
+			  toAdd.data.put(varName, toAddVar);
+		  } else if(localName.equals("data")) {
+			  //end getting data
+			  toAddVar.put(timeName, toAddTime);
+		  }
+	  }
   }
   
 //*****************************************************************************
