@@ -2405,7 +2405,7 @@ public class ManipulationDriver
 
       //double data(time, lat, lon)
       ncfile.addVariable("data", DataType.FLOAT, dim4);
-      ncfile.addVariableAttribute("data", "missing_value", Double.NaN);
+      ncfile.addVariableAttribute("data", "missing_value", Float.NaN);
       //ncfile.addVariableAttribute("data", "long_name", "input");
       //ncfile.addVariableAttribute("data", "units", "input");
       

@@ -296,7 +296,7 @@ public class MatrixRepository implements DataRepository
               //get this point's value
               //add it to toReturn
               holdTime.put(new Point2D.Double(currXL, currYL), (currLayer[x+X][Y
-                  -((weights.length)-y)]));
+                  -((weights.length)-y)])); //used to have a -1 here
             }
             currYL -= res;
           }
