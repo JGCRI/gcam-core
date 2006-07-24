@@ -149,7 +149,7 @@ public class MultiTableModel extends BaseTableModel{
 	  TreeSet regions = new TreeSet();
 	  TreeSet years = new TreeSet();
 	  tableFilterMaps = new LinkedHashMap();
-	  TreeMap dataTree = new TreeMap();
+	  Map dataTree = new TreeMap();
 	  while ((tempNode = res.iterateNext()) != null) {
 		regionAndYear = getRegionAndYearFromNode(tempNode.getParentNode(), tableFilterMaps);
 		regions.add(regionAndYear[0]);
@@ -181,9 +181,9 @@ public class MultiTableModel extends BaseTableModel{
 			  */
 
 		  } else if(n.hasAttributes()) {
-			  HashMap tempFilter;
+			  Map tempFilter;
 	           	  if (filterMaps.containsKey(n.getNodeName())) {
-	                          tempFilter = (HashMap)filterMaps.get(n.getNodeName());
+	                          tempFilter = (Map)filterMaps.get(n.getNodeName());
                           } else {
                                   tempFilter = new HashMap();
                           }
@@ -209,11 +209,11 @@ public class MultiTableModel extends BaseTableModel{
    *        dataTree the complete set of maps sorting the data
    * @return the current mapping that was just created/used
    */
-  private TreeMap addToDataTree(Node currNode, TreeMap dataTree) {
+  private Map addToDataTree(Node currNode, Map dataTree) {
 	  if (currNode.getNodeType() == Node.DOCUMENT_NODE) {
 		  return dataTree;
 	  }
-	  TreeMap tempMap = addToDataTree(currNode.getParentNode(), dataTree);
+	  Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
 	  // used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
 	  if( ((((String)wild.get(0)).matches(".*[Ss]ector") || ((String)wild.get(1)).matches(".*[Ss]ector"))) && currNode.getNodeName().equals(".*[Ss]ector") ) {
 		  return tempMap;
@@ -229,7 +229,7 @@ public class MultiTableModel extends BaseTableModel{
 		if(!tempMap.containsKey(attr)) {
 			tempMap.put(attr, new TreeMap());
 		}
-		return (TreeMap)tempMap.get(attr);
+		return (Map)tempMap.get(attr);
 	  }
 	  return tempMap;
   }
@@ -243,7 +243,7 @@ public class MultiTableModel extends BaseTableModel{
    *        years row axis attributes
    *        title a string describing the path in which the data in the table is coming from
    */
-  private void recAddTables(TreeMap dataTree, Map.Entry parent, TreeSet regions, TreeSet years, String titleStr) {
+  private void recAddTables(Map dataTree, Map.Entry parent, TreeSet regions, TreeSet years, String titleStr) {
 	Iterator it = dataTree.entrySet().iterator();
 	while(it.hasNext()) {
 		Map.Entry me = (Map.Entry)it.next();
@@ -251,11 +251,11 @@ public class MultiTableModel extends BaseTableModel{
 			NewDataTableModel tM;
 			if(me.getValue() instanceof Double) {
 				tM = new NewDataTableModel(regions, qg.getAxis1Name()/*(String)wild.get(0)*/, years, 
-						qg.getVariable(), /*titleStr+'/'+(String)parent.getKey()*/title, (TreeMap)parent.getValue(), doc,
+						qg.getVariable(), /*titleStr+'/'+(String)parent.getKey()*/title, (Map)parent.getValue(), doc,
 						null); 
 			} else {
 				tM = new NewDataTableModel(regions, (String)wild.get(0), years, 
-						(String)wild.get(1), /*titleStr+'/'+(String)parent.getKey()*/title, (TreeMap)parent.getValue(), doc,
+						(String)wild.get(1), /*titleStr+'/'+(String)parent.getKey()*/title, (Map)parent.getValue(), doc,
 						documentation /*, (String)wild.get(2)*/); 
 			}
 			//BufferedImage chartImage = tM.createChart(0,0).createBufferedImage( 350, 350);
@@ -327,7 +327,7 @@ public class MultiTableModel extends BaseTableModel{
 	  		tables.add(tableView);
 			return;
 		} else {
-			recAddTables((TreeMap)me.getValue(), me, regions, years, titleStr+'/'+(String)me.getKey());
+			recAddTables((Map)me.getValue(), me, regions, years, titleStr+'/'+(String)me.getKey());
 		}
 	}
   }
@@ -407,7 +407,7 @@ public class MultiTableModel extends BaseTableModel{
 	protected void doFilter(Vector possibleFilters) {
 		StringBuffer regex = new StringBuffer("^/");
 		for(int i = possibleFilters.size()-1; i >= 0; i--) {
-			Iterator it = ((HashMap)tableFilterMaps.get(possibleFilters.get(i))).entrySet().iterator();
+			Iterator it = ((Map)tableFilterMaps.get(possibleFilters.get(i))).entrySet().iterator();
 			if(it.hasNext()) {
 				regex.append((String)possibleFilters.get(i)).append("@(");
 				while(it.hasNext()) {
@@ -456,6 +456,7 @@ public class MultiTableModel extends BaseTableModel{
 		wild.add(qgIn.getYearLevel());
 		System.out.println("Query is "+qgIn.getCompleteXPath(regions));
 		//FileChooserDemo.xmlDB.setQueryFunction("");
+		System.out.println("Before Function: "+System.currentTimeMillis());
 		buildTable(DbViewer.xmlDB.createQuery(qgIn.getCompleteXPath(regions), queryFilter, null), qgIn.isSumAll(), qgIn.getLevelValues());
 		//DbViewer.xmlDB.setQueryFilter("");
 		tableEditor = new TableEditor();
@@ -466,6 +467,7 @@ public class MultiTableModel extends BaseTableModel{
 		}
 	}
 	private void buildTable(XmlResults res, boolean sumAll, Object[] levelValues) {
+		System.out.println("In Function: "+System.currentTimeMillis());
 	  try {
 		  if(!res.hasNext()) {
 			  System.out.println("Query didn't get any results");
@@ -483,7 +485,7 @@ public class MultiTableModel extends BaseTableModel{
 	  TreeSet regions = new TreeSet();
 	  TreeSet years = new TreeSet();
 	  tableFilterMaps = new LinkedHashMap();
-	  TreeMap dataTree = new TreeMap();
+	  Map dataTree = new TreeMap();
 	  try {
 		  while(res.hasNext()) {
 			  tempNode = res.next();
@@ -511,7 +513,9 @@ public class MultiTableModel extends BaseTableModel{
 	  } catch(Exception e) {
 		  e.printStackTrace();
 	  }
+	  System.out.println("After build Tree: "+System.currentTimeMillis());
 	  recAddTables(dataTree, null, regions, years, "");
+	  System.out.println("After Add table: "+System.currentTimeMillis());
 	  /* Figure out what to do for level selected
 	  System.out.println("Level Selected: "+levelValues);
 	  if(!sumAll && levelValues != null && years.size() != levelValues.length) {

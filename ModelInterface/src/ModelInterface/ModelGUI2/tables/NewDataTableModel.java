@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
+import java.util.Map;
 import java.util.TreeSet;
 import java.util.Vector;
 
@@ -54,7 +55,7 @@ public class NewDataTableModel extends BaseTableModel{
 	Vector indRow;
 	String ind1Name;
 	String ind2Name;
-	TreeMap data;
+	Map data;
 	boolean flipped;
 	String w3;
 	JFreeChart chart;
@@ -172,7 +173,7 @@ public class NewDataTableModel extends BaseTableModel{
 	 *        dataIn the map which defines mapping of colKey;rowKey to data
 	 *        docIn document of where the data comes from
 	 */
-	public NewDataTableModel(Collection set1, String set1Name, Collection set2, String set2Name, String w3In, TreeMap dataIn, Document docIn,
+	public NewDataTableModel(Collection set1, String set1Name, Collection set2, String set2Name, String w3In, Map dataIn, Document docIn,
 			Documentation documentationIn) {
 		documentation = documentationIn;
 		w3 = w3In;

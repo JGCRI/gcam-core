@@ -47,21 +47,14 @@ public class QueryGenerator {
 	String axis2Name;
 	private QueryBuilder qb;
 	int currSel;
+	String labelColumnName;
 	public QueryGenerator(Frame parentFrameIn) {
 		qb = null;
 		isSumable = false;
 		xPath = "";
 		parentFrame = parentFrameIn;
-		/*
-		DbViewer.xmlDB.setQueryFunction("distinct-values(");
-		DbViewer.xmlDB.setQueryFilter("/scenario/world/region/");
-		*/
 		sumAll = false;
 		getQueryDialog();
-		/*
-		DbViewer.xmlDB.setQueryFunction("");
-		DbViewer.xmlDB.setQueryFilter("");
-		*/
 	}
 	public QueryGenerator(Node queryIn) {
 		if(queryIn.getNodeName().equals(MarketQueryBuilder.xmlName)) {
@@ -80,6 +73,8 @@ public class QueryGenerator {
 			qb = new GDPQueryBuilder(this);
 		} else if(queryIn.getNodeName().equals(ClimateQueryBuilder.xmlName)) {
 			qb = new ClimateQueryBuilder(this);
+		} else if(queryIn.getNodeName().equals(LandAllocatorQueryBuilder.xmlName)) {
+			qb = new LandAllocatorQueryBuilder(this);
 		} else {
 			qb = null;
 		}
@@ -172,6 +167,7 @@ public class QueryGenerator {
 		typeMap.put("Cost Curves", new Boolean(false));
 		typeMap.put("GDP", new Boolean(false));
 		typeMap.put("Climate", new Boolean(false));
+		typeMap.put("LandAllocator", new Boolean(false));
 		typeMap.put("Query Group", new Boolean(false));
 		final Vector types = new Vector(typeMap.keySet().size(), 0);
 		for(int i = 0; i < types.capacity(); ++i) {
@@ -330,6 +326,10 @@ public class QueryGenerator {
 							}
 							case 7: {
 									types.set(selInd, new ClimateQueryBuilder(thisGen));
+									break;
+							}
+							case 8: {
+									types.set(selInd, new LandAllocatorQueryBuilder(thisGen));
 									break;
 							}
 							default: {
@@ -630,6 +630,7 @@ public class QueryGenerator {
 		final JTextField xPathTextF = new JTextField(xPath, 50);
 		final JCheckBox sumAllCheckBox = new JCheckBox("Sum All", sumAll);
 		final JCheckBox groupCheckBox = new JCheckBox("Group", group);
+		final JTextField labelCol = new JTextField(labelColumnName, 30);
 		Component seperator = Box.createRigidArea(new Dimension(20, 10));
 		all.setLayout(new BoxLayout(all, BoxLayout.Y_AXIS));
 		all.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -686,6 +687,15 @@ public class QueryGenerator {
 		tempPanel = new JPanel();
 		tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.X_AXIS));
 		tempPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		tempPanel.add(new JLabel("Chart Label Column: "));
+		tempPanel.add(seperator);
+		tempPanel.add(labelCol);
+		tempPanel.add(Box.createHorizontalGlue());
+		all.add(tempPanel);
+
+		tempPanel = new JPanel();
+		tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.X_AXIS));
+		tempPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		tempPanel.add(new JLabel("XPATH: "));
 		tempPanel.add(seperator);
 		tempPanel.add(xPathTextF);
@@ -709,6 +719,7 @@ public class QueryGenerator {
 				axis2Name = a2NameTextF.getText();
 				yearLevel = a2TextF.getText();
 				var = dataNameTextF.getText();
+				labelColumnName = labelCol.getText();
 				xPath = xPathTextF.getText();
 				sumAll = sumAllCheckBox.isSelected();
 				group = groupCheckBox.isSelected();

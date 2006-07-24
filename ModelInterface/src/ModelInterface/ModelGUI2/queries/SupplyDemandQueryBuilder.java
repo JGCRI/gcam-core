@@ -16,7 +16,6 @@ import java.util.Iterator;
 import java.util.Vector;
 import java.util.LinkedHashMap;
 import java.util.HashMap;
-import java.util.TreeMap;
 
 import com.sleepycat.dbxml.XmlResults;
 import com.sleepycat.dbxml.XmlValue;
@@ -392,9 +391,11 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 				*/
 
 			} else if(XMLDB.hasAttr(n)) {
+				// are filter maps used, I don't belive filtering is currently enabled for DB Output
+				// is this a feature people would want?
 				Map tempFilter;
 				if (filterMaps.containsKey(n.getNodeName())) {
-					tempFilter = (HashMap)filterMaps.get(n.getNodeName());
+					tempFilter = (Map)filterMaps.get(n.getNodeName());
 				} else {
 					tempFilter = new HashMap();
 				}
@@ -439,7 +440,7 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 			String attr = XMLDB.getAllAttr(currNode);
 			attr = currNode.getNodeName()+"@"+attr;
 			if(!tempMap.containsKey(attr)) {
-				tempMap.put(attr, new TreeMap());
+				tempMap.put(attr, new HashMap());
 			}
 			currNode.delete();
 			return (Map)tempMap.get(attr);

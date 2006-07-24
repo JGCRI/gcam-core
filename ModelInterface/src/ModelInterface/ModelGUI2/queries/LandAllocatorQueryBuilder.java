@@ -17,12 +17,15 @@ import java.util.HashMap;
 import java.util.TreeMap;
 
 import com.sleepycat.dbxml.XmlValue;
+import com.sleepycat.dbxml.XmlResults;
+import com.sleepycat.dbxml.XmlException;
 
-public class ClimateQueryBuilder extends QueryBuilder {
+public class LandAllocatorQueryBuilder extends QueryBuilder {
 	public static Map varList;
-	public static String xmlName = "ClimateQuery";
-	public ClimateQueryBuilder(QueryGenerator qgIn) {
+	public static String xmlName = "LandAllocatorQuery";
+	public LandAllocatorQueryBuilder(QueryGenerator qgIn) {
 		super(qgIn);
+		varList = new HashMap();
 	}
 	public String createListPath(int level) {
 		System.out.println("This Method doesn't do anything");
@@ -33,11 +36,6 @@ public class ClimateQueryBuilder extends QueryBuilder {
 		updateList(list, label);
 	}
 	public ListSelectionListener getListSelectionListener(final JList list, final JButton nextButton, final JButton cancelButton) {
-		/*
-		queryFunctions.removeAllElements();
-		queryFunctions.add("distinct-values");
-		queryFilter = "/scenario/world/"+regionQueryPortion+"/";
-		*/
 		return (new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				int[] selectedInd = list.getSelectedIndices();
@@ -66,11 +64,31 @@ public class ClimateQueryBuilder extends QueryBuilder {
 	public boolean isAtEnd() {
 		return qg.currSel == 3-1;
 	}
+	private void getLeaves() {
+		// region query portion!!
+		queryFilter = "/scenario/world/region/LandAllocatorNode[@name='root']";
+		queryFunctions.clear();
+		queryFunctions.add("distinct-values");
+		XmlResults res = DbViewer.xmlDB.createQuery("//LandLeaf/@name", queryFilter, queryFunctions);
+		XmlValue val;
+		System.out.println("Did query");
+		try {
+			while((val = res.next()) != null) {
+				System.out.println("Got Val: "+val.asString());
+				varList.put(val.asString(), false);
+				val.delete();
+			}
+		} catch(XmlException xe) {
+			xe.printStackTrace();
+		}
+		DbViewer.xmlDB.printLockStats("LandAllocatorQueryBuilder.getLeaves");
+	}
 	public void updateList(JList list, JLabel label) {
 		Map temp = null;
 		switch(qg.currSel) {
 			case 2: {
 					list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+					getLeaves();
 					temp = varList;
 					//list.setListData(varList.keySet().toArray());
 					label.setText("Select Cost Type:");
@@ -116,29 +134,52 @@ public class ClimateQueryBuilder extends QueryBuilder {
 		}
 	}
 	private void createXPath() {
-		String typeSel = null;
+		String nameSel = null;
 		for(Iterator i = varList.entrySet().iterator(); i.hasNext(); ) {
 			Map.Entry me = (Map.Entry)i.next();
 			if(((Boolean)me.getValue()).booleanValue()) {
-				typeSel = (String)me.getKey();
+				nameSel = (String)me.getKey();
 			}
 		}
-		qg.xPath = "/climate-model/"+typeSel+"/text()";
-		qg.axis1Name = qg.yearLevel = qg.nodeLevel = typeSel;
+		qg.xPath = "/LandLeaf[@name='"+nameSel+"']/land-allocation/text()";
+		qg.axis1Name = "Land Allocation";
+		qg.yearLevel = qg.nodeLevel = "land-allocation";
 		qg.var = qg.axis2Name = "Year";
 		qg.group = false;
 		qg.sumAll = false;
 	}
 	protected boolean isGlobal;
 	public String getCompleteXPath(Object[] regions) {
-		// ignoring selected regions
-		return qg.xPath;
+		StringBuilder ret = new StringBuilder();
+		boolean added = false;
+
+		if(((String)regions[0]).equals("Global")) {
+			ret.append(regionQueryPortion+"/");
+			regions = new Object[0];
+			isGlobal = true;
+		} else {
+			isGlobal = false;
+		}
+		for(int i = 0; i < regions.length; ++i) {
+			if(!added) {
+				ret.append(regionQueryPortion.substring(0, regionQueryPortion.length()-1)).append(" and (");
+				added = true;
+			} else {
+				ret.append(" or ");
+			}
+			ret.append("(@name='").append(regions[i]).append("')");
+		}
+		if(added) {
+			ret.append(" )]/");
+		}
+		ret.append("LandAllocatorNode[@name='root']/");
+		return ret.append(qg.getXPath()).toString();
 	}
 	public Object[] extractAxisInfo(XmlValue n, Map filterMaps) throws Exception {
 		Object[] ret = new Object[2];
 		ret[0] = XMLDB.getAttr(n, "year");
-		ret[1] = n.getNodeName();
-		DbViewer.xmlDB.printLockStats("ClimateQueryBuilder.extractAxisInfo");
+		ret[1] = "land-allocation";
+		DbViewer.xmlDB.printLockStats("LandAllocatorQueryBuilder.extractAxisInfo");
 		return ret;
 	}
 	public Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {
@@ -147,6 +188,7 @@ public class ClimateQueryBuilder extends QueryBuilder {
 			return dataTree;
 		}
 		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
+		// is the nodeLevel always going to be the same as year if not need to add the check here
 		if(XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals(qg.yearLevel)) {
 			String attr = XMLDB.getAllAttr(currNode);
 			attr = currNode.getNodeName()+"@"+attr;

@@ -91,23 +91,45 @@ public class XMLDB {
 			manager = new XmlManager(dbEnv, mc);
 			XmlContainerConfig cconfig = new XmlContainerConfig();
 			cconfig.setAllowCreate(true);
+			//cconfig.setIndexNodes(true);
 			contName = dbPath.substring(dbPath.lastIndexOf(System.getProperty("file.separator"))+1);
 			uc = manager.createUpdateContext();
 			try {
+				/*
+				System.out.println("Before reindex");
+				manager.reindexContainer(contName, uc, cconfig);
+				System.out.println("After reindex");
+				closeDB();
+				System.exit(0);
+				*/
+				System.out.println("Is node container: "+cconfig.getNodeContainer());
+
 				myContainer = manager.openContainer(contName, cconfig);
 				// testing index code here should be REMOVED
-				/*
 				System.out.println("Default Index: "+myContainer.getIndexSpecification().getDefaultIndex());
 				XmlIndexSpecification is = myContainer.getIndexSpecification();
-				is.addIndex("", "name", "edge-attribute-equality-string");
-				myContainer.setIndexSpecification(is, uc);
+				//is.addIndex("", "name", "edge-attribute-equality-string");
+				//is.addIndex("", "type", "edge-attribute-equality-string");
+				//myContainer.setIndexSpecification(is, uc);
 				XmlIndexDeclaration dec;
 				while((dec = is.next()) != null) {
 					System.out.println("Index Name: "+dec.uri+":"+dec.name+" Index: "+dec.index);
 				}
-				System.out.println("After loop");
-				//System.out.println("The Index: "+myContainer.getIndexSpecification().find("", "type").index);
+				System.out.println("Is node indexed: "+myContainer.getIndexNodes());
+
+				/*
+				XmlQueryContext qc = manager.createQueryContext();
+				XmlIndexLookup xil = manager.createIndexLookup(myContainer, "", "type", "edge-attribute-equality-string");
+				XmlResults res =  xil.execute(qc);
+				XmlValue val;
+				while((val = res.next()) != null) {
+					System.out.print("Node Name: "+val.getNodeName()+"\t");
+					System.out.println("Node Value: "+val.getNodeValue());
+					val.delete();
+				}
 				*/
+
+				//System.out.println("The Index: "+myContainer.getIndexSpecification().find("", "type").index);
 				// end code to be REMOVED
 			} catch(XmlException ve) {
 				if(ve.getErrorCode() == XmlException.VERSION_MISMATCH) {
@@ -268,9 +290,14 @@ public class XMLDB {
 			}
 		}
 		*/
-		//System.out.println("About to perform query: "+queryBuff.toString());
+		System.out.println("About to perform query: "+queryBuff.toString());
 		try {
 			XmlQueryContext qc = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
+			/*
+			XmlQueryExpression qeTemp = manager.prepare(queryBuff.toString(), qc);
+			System.out.println("Query Plan: "+qeTemp.getQueryPlan());
+			return qeTemp.execute(qc);
+			*/
 			return manager.query(queryBuff.toString(), qc);
 		} catch(XmlException e) {
 			e.printStackTrace();
@@ -357,17 +384,6 @@ public class XMLDB {
 		//printLockStats("getAllAtr"); should be lock safe, now can make it static
 		return ret.substring(1);
 	}
-	/*
-	public void setQueryFilter(String qf) {
-		queryFilter = qf;
-	}
-	public String getQueryFilter() {
-		return queryFilter;
-	}
-	public void setQueryFunction(String func) {
-		queryFunction = func;
-	}
-	*/
 	public String getQueryFunctionAsDistinctNames() {
 		return "declare function local:distinct-node-names ($arg as node()*, $before_a as xs:string*) as xs:string* {    for $a at $apos in $arg  let $b := fn:local-name($a), $c_before := fn:count($before_a) + $apos - $apos, $before_a := fn:distinct-values(fn:insert-before($before_a, 0, $b))  where not(fn:count($before_a) = $c_before)  return $b }; local:distinct-node-names";
 	}
@@ -384,13 +400,13 @@ public class XMLDB {
 		}
 	}
 	public void addVarMetaData(Frame parentFrame) {
-		//XmlResults res = createQuery("/*[fn:empty(dbxml:metadata('var'))]");
 		try {
 			XmlQueryContext qc = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Eager);
 			final XmlResults res = manager.query("collection('"+contName+"')/*[fn:empty(dbxml:metadata('var'))]", qc);
-			//final XmlUpdateContext uc = manager.createUpdateContext();
 			uc.setApplyChangesToContainers(true);
-			final JProgressBar progBar = new JProgressBar(0, res.size()*5);
+			// instead of having to determine the size of prog bar, should be figured out
+			// by the number of query builders..
+			final JProgressBar progBar = new JProgressBar(0, res.size()*6);
 			final JDialog jd = createProgressBarGUI(parentFrame, progBar);
 			(new Thread(new Runnable() {
 				public void run() {
@@ -456,6 +472,18 @@ public class XMLDB {
 						tempRes.delete();
 						SwingUtilities.invokeLater(incProgress);
 
+						path = "local:distinct-node-names(/scenario/world/climate-model/*[fn:count(child::text()) = 1], ())";
+						tempRes = getVars(tempVal, path);
+						strBuff = new StringBuffer();
+						while(tempRes.hasNext()) {
+							strBuff.append(tempRes.next().asString());
+							strBuff.append(';');
+						}
+						docTemp.setMetaData("", "ClimateVar", new XmlValue(strBuff.toString()));
+						tempRes.delete();
+						SwingUtilities.invokeLater(incProgress);
+
+
 						path = "local:distinct-node-names(/scenario/world/*[@type='region']/GDP/*[fn:count(child::text()) = 1], ())";
 						tempRes = getVars(tempVal, path);
 						strBuff = new StringBuffer();
@@ -496,19 +524,6 @@ public class XMLDB {
 		printLockStats("addVarMetaData2");
 	}
 
-	/*
-	private boolean waiting;
-	private synchronized void makeWait() {
-		while(waiting) {
-			try {
-				wait();
-			} catch(InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		notifyAll();
-	}
-	*/
 	protected XmlResults getVars(XmlValue contextVal, String path) {
 		try {
 			//System.out.println("Doesn't have metadata: "+contextVal.asDocument().getName());
@@ -541,6 +556,7 @@ public class XMLDB {
 		EmissionsQueryBuilder.ghgList = new LinkedHashMap();
 		EmissionsQueryBuilder.fuelList = new LinkedHashMap();
 		GDPQueryBuilder.varList = new LinkedHashMap();
+		ClimateQueryBuilder.varList = new LinkedHashMap();
 		XmlMetaData md;
 		try {
 			while(res.hasNext()) {
@@ -579,6 +595,12 @@ public class XMLDB {
 							//System.out.println(vars[i]);
 							GDPQueryBuilder.varList.put(vars[i], new Boolean(false));
 						}
+					} else if(md.get_name().equals("ClimateVar")) {
+						String[] vars = md.get_value().asString().split(";");
+						for(int i = 0; i < vars.length; ++i) {
+							//System.out.println(vars[i]);
+							ClimateQueryBuilder.varList.put(vars[i], new Boolean(false));
+						}
 					}
 				}
 				it.delete();
@@ -587,12 +609,10 @@ public class XMLDB {
 			}
 		} catch(XmlException e) {
 			e.printStackTrace();
-		//} catch(InterruptedException e) {
-			//e.printStackTrace();
 		}
 		res.delete();
 		// maybe this should be somewhere else..
-		//setQueryFunction("distinct-values(");
+		// maybe summable list should be cached..
 		Vector funcTemp = new Vector<String>(1,0);
 		funcTemp.add("distinct-values");
 		res = createQuery("/scenario/output-meta-data/summable/@var", null, funcTemp);

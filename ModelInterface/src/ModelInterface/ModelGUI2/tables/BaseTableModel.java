@@ -492,10 +492,10 @@ public abstract class BaseTableModel extends AbstractTableModel {
 		// need to go through and change boolean values of the maps, kind of like an XOR
 		for (int i = 0; i < currKeys.length; i++) {
 			// clean this up... maybe
-			if (((Boolean)((HashMap)tempFilterMaps.get(key)).get(currKeys[i])).booleanValue() && (j >= selectedKeys.length || i != selectedKeys[j])) {
-				((HashMap)tempFilterMaps.get(key)).put(currKeys[i], new Boolean(false));
-			} else if (!((Boolean)((HashMap)tempFilterMaps.get(key)).get(currKeys[i])).booleanValue() && (j < selectedKeys.length && i == selectedKeys[j])) {
-				((HashMap)tempFilterMaps.get(key)).put(currKeys[i], new Boolean(true));
+			if (((Boolean)((Map)tempFilterMaps.get(key)).get(currKeys[i])).booleanValue() && (j >= selectedKeys.length || i != selectedKeys[j])) {
+				((Map)tempFilterMaps.get(key)).put(currKeys[i], new Boolean(false));
+			} else if (!((Boolean)((Map)tempFilterMaps.get(key)).get(currKeys[i])).booleanValue() && (j < selectedKeys.length && i == selectedKeys[j])) {
+				((Map)tempFilterMaps.get(key)).put(currKeys[i], new Boolean(true));
 			}
 			if (j < selectedKeys.length && i == selectedKeys[j]) {
 				j++;
@@ -511,7 +511,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	 *        tempFilterMaps the set of filterMaps being edited by the user
 	 */
 	protected void updateList(JList list, JLabel listLabel, String key, Map tempFilterMaps) {
-		HashMap tempMap = (HashMap)tempFilterMaps.get(key);
+		Map tempMap = (Map)tempFilterMaps.get(key);
 		Vector tempVector = new Vector();
 		listLabel.setText("Filter "+key);
 		currKeys = (String[])tempMap.keySet().toArray(new String[0]);
