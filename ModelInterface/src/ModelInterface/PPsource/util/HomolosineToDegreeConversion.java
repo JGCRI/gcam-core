@@ -125,7 +125,7 @@ public class HomolosineToDegreeConversion {
 	 * param radius The radius of the earth used for the projection.
 	 * return The corresponding degree coordinates (lat, long)
 	 */
-	public Point2D.Double convert(Point2D.Double point, double radius) {
+	public Point2D.Double convert(Point2D.Double point, double radius, boolean checkInt) {
 		// declare to throw exception if invalid point such as if it happens to
 		// fall in an interrupted zone?
 
@@ -175,6 +175,7 @@ public class HomolosineToDegreeConversion {
 			lat = point.getY() / radius;
 			if(Math.abs(lat) > piOverTwo) {
 				// error?
+              System.out.println("dont know what this is, throwing null at x: "+point.x+" y: "+point.y);
 				return null;
 			}
 			// maybe give a little more flex the Double.MIN_VALUE
@@ -188,17 +189,20 @@ public class HomolosineToDegreeConversion {
 			arg = (point.getY() + 0.0528035274542 * radius * Math.signum(point.getY())) / (Math.sqrt(2) * radius);
 			if(arg > 1.0) {
 				// this is an interrupted value throw exception?
+              System.out.println("got interrupted space, throwing null at x: "+point.x+" y: "+point.y);
 				return null;
 			}
 			theta = Math.asin(arg);
 			lon = getCentralMeridian(region) + (Math.PI * point.getX()) / (2 * Math.sqrt(2) * radius * Math.cos(theta));
 			if(lon < -1* Math.PI) {
 				// this is an interrupted value throw exception?
+              System.out.println("got interrupted space2, throwing null at x: "+point.x+" y: "+point.y);
 				return null;
 			}
 			arg = (2*theta + Math.sin(2*theta)) / Math.PI;
 			if(arg > 1.0) {
 				// this is an interrupted value throw exception?
+              System.out.println("got interrupted space3, throwing null at x: "+point.x+" y: "+point.y);
 				return null;
 			}
 			lat = Math.asin(arg);
@@ -208,8 +212,9 @@ public class HomolosineToDegreeConversion {
 			System.out.println("Did flip");
 			lon *= -1;
 		}
-		if(checkInInterrupted(lat, lon, region)) {
+		if(checkInt&&checkInInterrupted(lat, lon, region)) {
 			// this is an interrupted value throw exception?
+          System.out.println("got interrupted space4, throwing null at x: "+point.x+" y: "+point.y+" lat: "+Math.toDegrees(lat)+" lon: "+Math.toDegrees(lon)+" in region: "+region);
 			return null;
 		} else {
 			// we did it!!

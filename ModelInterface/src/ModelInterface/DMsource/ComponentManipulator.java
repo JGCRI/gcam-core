@@ -904,12 +904,13 @@ public final class ComponentManipulator
     toReturn[0].data = holdMR;
     return toReturn;
   }
-  public static Wrapper[] sumValues(Wrapper[] R, double[][] weight, double x, double y, double h)
+  public static Wrapper[] sumValues(Wrapper[] R, Wrapper[] weight, double x, double y, double h)
   {
     log.log(Level.FINER, "begin function");
     double[][] holdMR = new double[1][1];
     double[][] holdMS;
-    int wX, wY; //the double indexs for weight
+    double[][] holdMW;
+    //int wX, wY; //the double indexs for weight
     DataWrapper[] toReturn = new DataWrapper[1];
     
     holdMR[0][0] = 0;
@@ -917,15 +918,16 @@ public final class ComponentManipulator
     for(int i = 0; i < R.length; i++)
     {
       holdMS = R[i].data;
+      holdMW = weight[i].data;
       for(int iY = 0; iY < holdMS.length; iY++)
       {
-        wY = (int)(((iY*R[i].getRes())+((y+h)-(R[i].getY()+R[i].getH())))/R[i].getRes());
+        //wY = (int)(((iY*R[i].getRes())+((y+h)-(R[i].getY()+R[i].getH())))/R[i].getRes());
         for(int iX = 0; iX < holdMS[0].length; iX++)
         {
           if(!Double.isNaN(holdMS[iY][iX]))
           {
-            wX = (int)((((iX*R[i].getRes())+R[i].getX())-x)/R[i].getRes());
-            holdMR[0][0] += (holdMS[iY][iX]*weight[wY][wX]);
+            //wX = (int)((((iX*R[i].getRes())+R[i].getX())-x)/R[i].getRes());
+            holdMR[0][0] += (holdMS[iY][iX]*holdMW[iY][iX]);
           }
         }
       }
@@ -982,7 +984,7 @@ public final class ComponentManipulator
     toReturn[0].data = holdMR;
     return toReturn;
   }
-  public static Wrapper[] sumArea(Wrapper[] R, double[][] weight, double x, double y, double h)
+  public static Wrapper[] sumArea(Wrapper[] R, Wrapper[] weight, double x, double y, double h)
   {
     log.log(Level.FINER, "begin function");
     final double POLAR_CIRCUM = 40008.00;
@@ -991,7 +993,8 @@ public final class ComponentManipulator
     
     double[][] holdMR = new double[1][1];
     double[][] holdMS;
-    int wX, wY; //the double indexs for weight
+    double[][] holdMW;
+    //int wX, wY; //the double indexs for weight
     double cellSize;
     DataWrapper[] toReturn = new DataWrapper[1];
     
@@ -1009,9 +1012,10 @@ public final class ComponentManipulator
       blockHeight = (totalHeight/R[i].data.length);
       
       holdMS = R[i].data;
+      holdMW = weight[i].data;
       for(int iY = 0; iY < holdMS.length; iY++)
       {
-        wY = (int)(((iY*R[i].getRes())+((y+h)-(R[i].getY()+R[i].getH())))/R[i].getRes());
+        //wY = (int)(((iY*R[i].getRes())+((y+h)-(R[i].getY()+R[i].getH())))/R[i].getRes());
         circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((R[i].getY()+(iY*R[i].getRes()))*(PI/180)));
         totalWidth = (circumAtLat/(360/R[i].getW()));
         blockWidth = (totalWidth/R[i].data[iY].length);
@@ -1021,8 +1025,8 @@ public final class ComponentManipulator
         {
           if(!Double.isNaN(holdMS[iY][iX]))
           {
-            wX = (int)((((iX*R[i].getRes())+R[i].getX())-x)/R[i].getRes());
-            holdMR[0][0] += (holdMS[iY][iX]*cellSize*weight[wY][wX]);
+            //wX = (int)((((iX*R[i].getRes())+R[i].getX())-x)/R[i].getRes());
+            holdMR[0][0] += (holdMS[iY][iX]*cellSize*holdMW[iY][iX]);
           }
         }
       }
@@ -1175,29 +1179,32 @@ public final class ComponentManipulator
     toReturn[0].data = holdMR;
     return toReturn;
   }
-  public static Wrapper[] avgOverRegion(Wrapper[] R, double[][] weight, double x, double y, double h)
+  public static Wrapper[] avgOverRegion(Wrapper[] R, Wrapper[] weight, double x, double y, double h)
   {
     log.log(Level.FINER, "begin function");
     double[][] holdMR = new double[1][1];
     double[][] holdMS;
+    double[][] holdMW;
     DataWrapper[] toReturn = new DataWrapper[1];
     int count = 0;
-    int wY, wX;
+    //int wY, wX;
+    //used to use double[][] for weight which is why that absurd math is below
     
     holdMR[0][0] = 0;
     
     for(int i = 0; i < R.length; i++)
     {
       holdMS = R[i].data;
+      holdMW = weight[i].data;
       for(int iY = 0; iY < holdMS.length; iY++)
       {
-        wY = (int)(((iY*R[i].getRes())+((y+h)-(R[i].getY()+R[i].getH())))/R[i].getRes());
+        //wY = (int)(((iY*R[i].getRes())+((y+h)-(R[i].getY()+R[i].getH())))/R[i].getRes());
         for(int iX = 0; iX < holdMS[0].length; iX++)
         {
           if(!Double.isNaN(holdMS[iY][iX]))
           {
-            wX = (int)((((iX*R[i].getRes())+R[i].getRes())-x)/R[i].getRes());
-            holdMR[0][0] += (holdMS[iY][iX]*weight[wY][wX]);
+            //wX = (int)((((iX*R[i].getRes())+R[i].getRes())-x)/R[i].getRes());
+            holdMR[0][0] += (holdMS[iY][iX]*holdMW[iY][iX]);
             count++;
           }
         }
@@ -1309,7 +1316,7 @@ public final class ComponentManipulator
     toReturn[0].data = holdMR;
     return toReturn;
   }
-  public static Wrapper[] avgOverRegionByArea(Wrapper[] R, double[][] weight, double Rx, double Ry, double Rw, double Rh)
+  public static Wrapper[] avgOverRegionByArea(Wrapper[] R, Wrapper[] weight, double Rx, double Ry, double Rw, double Rh)
   {
     log.log(Level.FINER, "begin function");
     double POLAR_CIRCUM = 40008.00; //these are constand but i dont know how to make constants in java...
@@ -1318,9 +1325,10 @@ public final class ComponentManipulator
     
     double[][] holdMR = new double[1][1];
     double[][] holdMS;
+    double[][] holdMW;
     double total = 0;
     DataWrapper[] toReturn = new DataWrapper[1];
-    int wY, wX;
+    //int wY, wX;
     
     double circumAtLat; //the circumference of the earth at a specific latitude
     double totalWidth; //width in km of the region
@@ -1346,9 +1354,10 @@ public final class ComponentManipulator
       blockHeight = (totalHeight/R[i].data.length);
       
       holdMS = R[i].data;
+      holdMW = weight[i].data;
       for(int iY = 0; iY < holdMS.length; iY++)
       {
-        wY = (int)(((iY*R[i].getRes())+((Ry+Rh)-(R[i].getY()+R[i].getH())))/R[i].getRes());
+        //wY = (int)(((iY*R[i].getRes())+((Ry+Rh)-(R[i].getY()+R[i].getH())))/R[i].getRes());
         circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((R[i].getY()+((holdMS.length-iY)*R[i].getRes()))*(PI/180)));
         totalWidth = (circumAtLat/(360/(R[i].getW())));
         blockWidth = (totalWidth/R[i].data[iY].length);
@@ -1358,8 +1367,8 @@ public final class ComponentManipulator
         {
           if(!Double.isNaN(holdMS[iY][iX]))
           {
-            wX = (int)((((iX*R[i].getRes())+R[i].getX())-Rx)/R[i].getRes());
-            holdMR[0][0] += (holdMS[iY][iX]*proportion*weight[wY][wX]);
+            //wX = (int)((((iX*R[i].getRes())+R[i].getX())-Rx)/R[i].getRes());
+            holdMR[0][0] += (holdMS[iY][iX]*proportion*holdMW[iY][iX]);
           }
         }
       }

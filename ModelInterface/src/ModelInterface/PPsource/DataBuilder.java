@@ -3801,6 +3801,8 @@ public class DataBuilder
 	  double radius = 1.0;
 	  Double timeDouble = new Double(0.0);
 	  double res = 1;
+      double resX = 1;
+      double resY = 1;
 	  boolean avg = true;
 	  String dataName = "shutup,";
 	  boolean overwrite = false;
@@ -3870,6 +3872,7 @@ public class DataBuilder
 		  */
 
 		  Point2D.Double latLong;
+          Point2D.Double findRes;
 
 		  double x;
 		  double y;
@@ -3945,30 +3948,42 @@ public class DataBuilder
 				  // should endianess be of concern here?
 				  short temp = (short)(0x000000FF & ((int)buff[j]));
 				  if(temp <= 100) {
-					  latLong = convInst.convert(new Point2D.Double(currEasting, currNorthing), radius);
-					  if(latLong == null) {
+					  latLong = convInst.convert(new Point2D.Double(currEasting, currNorthing), radius, true);
+                      findRes = convInst.convert(new Point2D.Double(currEasting+pixelScale[1], currNorthing-pixelScale[0]), radius, false);
+                      if(findRes == null)
+                      {
+                        System.out.println("problem lat: "+latLong.getX()+" lon: "+latLong.getY());
+                      }
+                      if(latLong == null) {
 						  //System.out.println("Had a problem with this point: ("+currEasting+", "+currNorthing+")");
 						  //log.log(Level.WARNING, "Had a problem with this point: ("+currEasting+", "+currNorthing+")");
-						  dataValue = Double.NaN;
+                        dataValue = Double.NaN;
 					  } else {
-						  dataValue = new Double(temp/100.0); // relative scale?
+                      //System.out.println("encountered value of: "+temp);
+						  dataValue = new Double(temp); // relative scale?
+                          resX = findRes.getY()-latLong.getY();
+                          resY = latLong.getX()-findRes.getX();
+                      //System.out.println("storing value of: "+dataValue);
+                      //System.out.println("with resolution of: "+res);
 					  //System.out.println("Got back(lat, long): ("+latLong.getX()+", "+latLong.getY()+")");
 
 						  // somehow the x/y or lat/long are getting flipped so I just flipped them here and
 						  // it looks ok
+                          /*
 					  x = latLong.getY();
-					  mult = x/res;
+					  mult = x/resX;
 					  mult = Math.floor(mult);
-					  x = mult*res;
+					  x = mult*resX;
 
 					  y = latLong.getX();
-					  mult = y/res;
+					  mult = y/resY;
 					  mult = Math.floor(mult);
-					  y = mult*res;
+					  y = mult*resY;
+                      */
 
 					  //System.out.println(latLong.getX()+" "+latLong.getY()+" - "+x+" "+y);
 
-					  toAdd = new DataBlock(x, y, res, res);
+					  toAdd = new DataBlock(latLong.getY(), latLong.getX(), resY, resX);
 					  timeValue = new TreeMap();
 					  timeValue.put(timeDouble, dataValue);
 

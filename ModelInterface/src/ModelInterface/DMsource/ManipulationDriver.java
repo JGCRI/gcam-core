@@ -489,6 +489,7 @@ public class ManipulationDriver
     //we are adding region stuff, need to store answer in region stuff
     VDest = new ReferenceVariable(VDname, varData[0]);
     VDest.data = new Wrapper[DWcount];
+    VDest.weight = new Wrapper[DWcount];
     VDest.region = null;
     
     DWcount = 0;
@@ -516,10 +517,12 @@ public class ManipulationDriver
       for(int k = 0; k < varData[i].data.length; k++)
       {
         VDest.data[DWcount] = varData[i].data[k];
+        VDest.weight[DWcount] = varData[i].weight[k];
         DWcount++;
       }
     }
     
+    /* ---weights are stored in wrappers now..---
     //filling this new aggregated variables weight with NaN's
     VDest.weight = new double[(int)(VDest.h/VDest.res)][(int)(VDest.w/VDest.res)];
     for(int iY = 0; iY < VDest.weight.length; iY++)
@@ -548,6 +551,7 @@ public class ManipulationDriver
         }
       }
     }
+    */
     
     variableList.put(VDname, VDest);
   }
@@ -2427,6 +2431,7 @@ public class ManipulationDriver
       ArrayFloat timeArr = new ArrayFloat.D1(1);
       ArrayFloat lvlArr = new ArrayFloat.D1(1);
       
+      //filling the array with the data
       Index ima = dataArr.getIndex();
       // write
       //System.out.println("lat: "+latDim.getLength());
@@ -2437,9 +2442,16 @@ public class ManipulationDriver
       {
         for(int j = 0; j < lonDim.getLength(); j++)
         {
+          /*
+          if(myData[i][j] > 1)
+          {
+            System.out.println("this isnt right: "+myData[i][j]+" at: "+i+", "+j);
+          }
+          */
           dataArr.setFloat(ima.set(0,0,i,j), (float)myData[i][j]);
         }
       }
+      //filling array with latitude degrees
       Index iml = latArr.getIndex();
       degHold = 89.75f;
       for(int i = 0; i < latDim.getLength(); i++)
@@ -2447,6 +2459,7 @@ public class ManipulationDriver
         latArr.setFloat(iml.set(i), degHold);
         degHold -= res;
       }
+      //filling array with longitude degrees
       iml = lonArr.getIndex();
       degHold = -179.75f;
       for(int i = 0; i < lonDim.getLength(); i++)
@@ -2454,8 +2467,10 @@ public class ManipulationDriver
         lonArr.setFloat(iml.set(i), degHold);
         degHold += res;
       }
+      //time array is empty
       iml = timeArr.getIndex();
       timeArr.setFloat(iml.set(0), 1);
+      //level array is empty
       iml = lvlArr.getIndex();
       lvlArr.setFloat(iml.set(0), 1);
       

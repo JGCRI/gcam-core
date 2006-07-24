@@ -94,7 +94,17 @@ public class superRegion extends Region
             if(java.lang.Double.isNaN(toReturn[(offsetY+iY)][(offsetX+iX)]))
               toReturn[(offsetY+iY)][(offsetX+iX)] = (holdM[iY][iX]);
             else
+            {
+              /*TODO this is a logical problem, we are ignoring this weight value
+                this is because we will have overlapping weights and we need them 
+                to be distinct so that when we add boarder regions we dont get incorrect
+                values this is currently working in the opposit way it should, should have
+                2 weights of .5 each, when they are added they will equal a weight of 1 and fill the cell
+                correctly, but are getting weights of liek 2.0 and cell values are something like 4x what 
+                they should be
+               */
               toReturn[(offsetY+iY)][(offsetX+iX)] += (holdM[iY][iX]);
+            }
           }
         }
       }

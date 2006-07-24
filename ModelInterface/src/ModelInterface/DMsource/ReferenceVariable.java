@@ -44,7 +44,7 @@ public class ReferenceVariable extends Variable
   String reference;
   String units;
   boolean avg;
-  double[][] weight; //um ok, im storing a bitmask for this thing in itself
+  Wrapper[] weight; //um ok, im storing a bitmask for this thing in itself
   double x;
   double y;
   double w;
@@ -113,7 +113,7 @@ public class ReferenceVariable extends Variable
     w = r.width;
     h = r.height;
     res = r.resolution;
-    weight = r.getM();
+    weight = r.getWorkingM("weight", "0");
   } 
   /**
    * Creates a reference variable with information, including data of passed variable
@@ -138,7 +138,7 @@ public class ReferenceVariable extends Variable
     h = r.height;
     res = r.resolution;
     data = r.getWorkingM(v, t);
-    weight = r.getM();
+    weight = r.getWorkingM("weight", "0");
   }
   
   //***************************************************************************
@@ -264,7 +264,9 @@ public class ReferenceVariable extends Variable
   {
     int offsetY, offsetX;
     double[][] holdM;
+    double[][] holdWM;
     ReferenceWrapper holdD;
+    ReferenceWrapper holdW;
     double[][] toPrint = new double[(int)(h/res)][(int)(w/res)];
     
     for(int i = 0; i < toPrint.length; i++)
@@ -280,6 +282,8 @@ public class ReferenceVariable extends Variable
     {
       holdD = (ReferenceWrapper)data[i];
       holdM = holdD.data;
+      holdW = (ReferenceWrapper)weight[i];
+      holdWM = holdW.data;
       offsetY = (int)(((y+h)-(holdD.y+holdD.height))/res);
       offsetX = (int)((holdD.x-x)/res);
       
@@ -291,10 +295,10 @@ public class ReferenceVariable extends Variable
           {
             if(Double.isNaN(toPrint[(offsetY+iY)][(offsetX+iX)]))
             {
-              toPrint[(offsetY+iY)][(offsetX+iX)] = (holdM[iY][iX]);
+              toPrint[(offsetY+iY)][(offsetX+iX)] = ((holdM[iY][iX])*holdWM[iY][iX]);
             } else
             {
-              toPrint[(offsetY+iY)][(offsetX+iX)] += (holdM[iY][iX]);
+              toPrint[(offsetY+iY)][(offsetX+iX)] += ((holdM[iY][iX])*holdWM[iY][iX]);
             }
           }
         }
@@ -307,9 +311,14 @@ public class ReferenceVariable extends Variable
   {
     //System.out.println(x+", "+y+", "+w+", "+h);
     int offsetY, offsetX;
+    int offsetWy, offsetWx;
     double[][] holdM;
+    double[][] holdWM;
     ReferenceWrapper holdD;
+    ReferenceWrapper holdW;
     double[][] toPrint = new double[(int)(180/res)][(int)(360/res)];
+    
+    //System.out.println("size of weight: "+weight.length+" by "+weight[0].length);
     
     for(int i = 0; i < toPrint.length; i++)
     {
@@ -324,8 +333,11 @@ public class ReferenceVariable extends Variable
     {
       holdD = (ReferenceWrapper)data[i];
       holdM = holdD.data;
+      holdW = (ReferenceWrapper)weight[i];
+      holdWM = holdW.data;
       offsetY = (int)(((90)-(holdD.y+holdD.height))/res);
       offsetX = (int)((holdD.x+180)/res);
+      
       //System.out.println(offsetX+", "+offsetY);
       
       for(int iY = 0; iY < holdM.length; iY++)
@@ -334,12 +346,34 @@ public class ReferenceVariable extends Variable
         {
           if(!Double.isNaN(holdM[iY][iX]))
           {
-            if(Double.isNaN(toPrint[(offsetY+iY)][(offsetX+iX)]))
+            /*
+            if(weight[(offsetWy+iY)][(offsetWx+iX)] != 1)
             {
-              toPrint[(offsetY+iY)][(offsetX+iX)] = (holdM[iY][iX]);
+              System.out.println("check out weight of: "+weight[(offsetWy+iY)][(offsetWx+iX)]+" at: "+(iY+offsetY)+", "+(iX+offsetX));
+            }
+            */
+            
+            if(Double.isNaN(toPrint[(offsetY+iY)][(offsetX+iX)]))
+            {//TODO added weight to the output here
+              toPrint[(offsetY+iY)][(offsetX+iX)] = holdM[iY][iX]*holdWM[iY][iX];
+//            toPrint[(offsetY+iY)][(offsetX+iX)] = (holdM[iY][iX]);
+              
+              if((holdM[iY][iX]) > 1)
+              {
+                System.out.println("serious problem: "+(holdM[iY][iX])+" at "+(offsetY+iY)+", "+(offsetX+iX)+" with weight "+holdWM[(iY)][(iX)]);
+              }
+              
+              
             } else
             {
-              toPrint[(offsetY+iY)][(offsetX+iX)] += (holdM[iY][iX]);
+              toPrint[(offsetY+iY)][(offsetX+iX)] += ((holdM[iY][iX])*holdWM[(iY)][(iX)]);
+              //toPrint[(offsetY+iY)][(offsetX+iX)] += (holdM[iY][iX]);
+              
+              if(toPrint[(offsetY+iY)][(offsetX+iX)] > 1)
+              {
+                System.out.println("still a problem: "+(holdM[iY][iX])+"->"+toPrint[(offsetY+iY)][(offsetX+iX)]+" at "+(offsetY+iY)+", "+(offsetX+iX)+" with weight "+holdWM[(iY)][(iX)]);
+              }
+              
             }
           }
         }
