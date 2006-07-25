@@ -89,8 +89,7 @@ public:
      * \return The average observed rate for this land allocator for
      *         calibration.
      */
-    virtual double getCalAveObservedRate( const std::string& aLandType,
-                                          const int aPeriod ) const = 0;
+    virtual double getUnmanagedCalAveObservedRate( const int aPeriod ) const = 0;
     
     /*!
      * \brief Get the amount of land allocated for a type of land.

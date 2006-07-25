@@ -198,8 +198,8 @@ void TreeLandAllocator::addLandUsage( const string& aLandType,
     LandNode::addLandUsage( aLandType, aProductName, aLandUsageType );
 }
 
-double TreeLandAllocator::getCalAveObservedRate( const string& aLandType, int aPeriod ) const {
-    return getCalAveObservedRateInternal( aLandType, aPeriod, mSigma );
+double TreeLandAllocator::getUnmanagedCalAveObservedRate( const int aPeriod ) const {
+    return getUnmanagedCalAveObservedRateInternal( aPeriod, mSigma );
 }
 
 double TreeLandAllocator::getLandAllocation( const string& aLandType,

@@ -50,6 +50,9 @@ public:
                                  const double aTotalLandAllocated,
                                  const int aPeriod );
 
+    virtual double getUnmanagedCalAveObservedRateInternal( const int aPeriod,
+                                                           const double aSigma ) const;
+
     virtual void calcEmission( const std::string& aRegionName,
                                const GDP* aGDP,
                                const int aPeriod );

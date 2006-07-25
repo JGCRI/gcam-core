@@ -118,9 +118,24 @@ public:
                                    const double aIntrinsicRate,
                                    const int aPeriod ) = 0;
     
-    virtual double getCalAveObservedRateInternal( const std::string& aLandType,
-                                                  const int aPeriod,
-                                                  const double aSigma ) const = 0;
+   /*!
+    * \brief Returns the calibrated average observed intrinsic rate for unmanaged land.
+    * \details The calibrated average observed Intrinsic rate for the unmanaged
+    *          land nest is equal to the intrinsic rate for the unmanaged land node
+    *          successively divided by its share to the power of the sigma
+    *          parameter for each level.
+    * \warning This function will not behave properly if there are unmanaged land
+    *          nodes in more than 1 place.
+    * \note UnmanagedLand leaves return 1 in this function, all other leaves
+    *       return 0.
+    * \author James Blackwood
+    * \author Steve Smith
+    * \author Jim Naslund
+    * \param aPeriod model period.
+    * \param aSigmaAbove the sigma value from the node above this level.
+    */
+    virtual double getUnmanagedCalAveObservedRateInternal( const int aPeriod,
+                                                           const double aSigma ) const = 0;
 
     virtual void setCalLandAllocation( const std::string& aLandType,
                                        const std::string& aProductName,

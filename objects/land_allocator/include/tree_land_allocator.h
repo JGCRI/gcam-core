@@ -57,8 +57,7 @@ public:
                                const std::string& aProductName,
                                const LandUsageType aLandUsageType );
 
-    virtual double getCalAveObservedRate( const std::string& LandType,
-                                          const int aPeriod ) const;
+    virtual double getUnmanagedCalAveObservedRate( const int aPeriod ) const;
     
     virtual double getLandAllocation( const std::string& aProductName,
                                       const int aPeriod ) const;

@@ -372,41 +372,46 @@ void LandNode::setCalObservedYield( const string& aLandType,
     }
 }
 
-/*! \brief Returns the calibrated average observed Intrinsic for the specified land type.
-* \details The calibrated average observed Intrinsic rate for a land nest is equal to the 
-*   intrinsic rate for the unmanaged land node (specified by aLandType) successively divided by 
-*   its share to the power of the sigma parameter for each level.
-* \author James Blackwood and Steve Smith
-* \param aSigmaAbove the sigma value from the node above this level.
-* \param aLandType the unmanaged land node name to which the observed rate is referenced.
-* \param aPeriod model period.
-*/
-double LandNode::getCalAveObservedRateInternal( const string& aLandType,
-                                                const int aPeriod,
-                                                const double aSigmaAbove ) const
+double LandNode::getUnmanagedCalAveObservedRateInternal( const int aPeriod,
+                                                         const double aSigmaAbove ) const
 {
-    double rateTemp = 0;
+    double rateToReturn = 0;
 
     // Note that a standard TreeItem search does not work since we need the share and  
-    // sigma at everynode that leads to the unmanaged land node specified in aLandType. 
-    // So instead need to walk through tree.
+    // sigma at everynode that leads to the unmanaged land node.
+    // Instead, we will traverse the tree to find the top of the unmanaged land
+    // nest.  UnmanagedLandLeaf::getUnmanagedCalAveObservedRateInternal returns
+    // 1; all other leaves return 0.  Therefore if all of a node's children
+    // return a non-zero value, the node is an unmanaged land nest and will
+    // return its instrinsic rate.  The highest unmanaged land node nest's
+    // instrinsic rate will be successively divided by its share to the power of
+    // the sigma parameter for each level and return by the root.
     
-    // if this node is the requested node then want this rate.
-    if( mName == aLandType ){
-        rateTemp = mIntrinsicRate[ aPeriod ];
-    } 
-    else {   // Otherwise check through children until a valid rate is passed up.
-        for ( unsigned int i = 0; i < mChildren.size() && rateTemp < util::getTinyNumber(); i++ ) {
-            // Pass down the sigma parameter for this node
-            rateTemp = mChildren[ i ]->getCalAveObservedRateInternal( aLandType, aPeriod, mSigma );
+    // It can't be the unmanaged nest if it doesn't have any children.
+    bool isUnmanagedNest = mChildren.size() > 0 ? true : false;
+
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ){
+        double rateTemp = mChildren[ i ]->getUnmanagedCalAveObservedRateInternal( aPeriod, mSigma );
+        if( rateTemp < util::getTinyNumber() ){
+            isUnmanagedNest = false;
+        }
+        else {
+            rateToReturn = rateTemp;
         }
     }
 
+    // If all the children of this node returned a non-zero
+    // getUnmanagedCalAveObservedRateInternal then we want this node's
+    // mInstrinsicRate
+    if( isUnmanagedNest ){
+        rateToReturn = mIntrinsicRate[ aPeriod ];
+    } 
+
     // Since it may be possible for a node to have no share
-    if ( mShare[ aPeriod ] > util::getTinyNumber() ) {
-        rateTemp /= pow( mShare[ aPeriod ], aSigmaAbove );
+    if ( mShare[ aPeriod ] > util::getTinyNumber() ){
+        rateToReturn /= pow( mShare[ aPeriod ], aSigmaAbove );
     }
-    return rateTemp;
+    return rateToReturn;
 }
 
 /*! \brief Finds the location to apply the agruculture production change

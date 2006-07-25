@@ -202,6 +202,13 @@ void UnmanagedLandLeaf::calcLandShares( const string& aRegionName,
     }
 }
 
+
+double UnmanagedLandLeaf::getUnmanagedCalAveObservedRateInternal( const int aPeriod,
+                                                                  const double aSigma ) const {
+    // This is a hack to help find the top node of the unmanaged land nest.
+    return 1;
+}
+
 /*! \brief returns the baseLandAllocation of this landType.
 *
 * \author Steve Smith

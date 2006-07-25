@@ -90,9 +90,8 @@ public:
                                       const double aCalObservedYield, 
                                       const int aPeriod );
 
-    virtual double getCalAveObservedRateInternal( const std::string& aLandType,
-                                                  const int aPeriod,
-                                                  const double aSigma ) const;
+    virtual double getUnmanagedCalAveObservedRateInternal( const int aPeriod,
+                                                           const double aSigma ) const;
 
     virtual void applyAgProdChange( const std::string& aLandType,
                                     const std::string& aProductName,

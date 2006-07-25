@@ -77,9 +77,8 @@ public:
                                        const int aHarvestPeriod, 
                                        const int aCurrentPeriod );
    
-    virtual double getCalAveObservedRateInternal( const std::string& aLandType,
-                                                  const int aPeriod,
-                                                  const double aSigma ) const;
+    virtual double getUnmanagedCalAveObservedRateInternal( const int aPeriod,
+                                                           const double aSigma ) const;
 
     virtual void setCalObservedYield( const std::string& aLandType,
                                       const std::string& aProductName,

@@ -362,9 +362,8 @@ void LandLeaf::setCalObservedYield( const string& aLandType,
     mCalObservedYield[ aPeriod ] = aCalObservedYield;
 }
 
-double LandLeaf::getCalAveObservedRateInternal( const string& aLandType,
-                                                const int aPeriod,
-                                                const double aSigma ) const
+double LandLeaf::getUnmanagedCalAveObservedRateInternal( const int aPeriod,
+                                                         const double aSigma ) const
 {
     // This should always return zero for a land leaf.
     return 0;

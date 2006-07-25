@@ -204,7 +204,7 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
         // Calculate the calibrated variable cost.
         // TODO: This is the only access of this variable from outside the AgLU. Change this function
         // to getCalNumeraireAveObservedRate.
-        calVarCost = calPrice - mLandAllocator->getCalAveObservedRate( "UnmanagedLand", aPeriod )
+        calVarCost = calPrice - mLandAllocator->getUnmanagedCalAveObservedRate( aPeriod )
                                 / calcDiscountFactor()
                                 / calObservedYield;
         assert( util::isValidNumber( calVarCost ) );
