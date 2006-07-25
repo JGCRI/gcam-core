@@ -268,6 +268,7 @@ public class ReferenceVariable extends Variable
     ReferenceWrapper holdD;
     ReferenceWrapper holdW;
     double[][] toPrint = new double[(int)(h/res)][(int)(w/res)];
+    //double[][] toPrint = new double[(int)(180/res)][(int)(360/res)];
     
     for(int i = 0; i < toPrint.length; i++)
     {
@@ -286,6 +287,8 @@ public class ReferenceVariable extends Variable
       holdWM = holdW.data;
       offsetY = (int)(((y+h)-(holdD.y+holdD.height))/res);
       offsetX = (int)((holdD.x-x)/res);
+      //offsetY = (int)(((90)-(holdD.y+holdD.height))/res);
+      //offsetX = (int)((holdD.x+180)/res);
       
       for(int iY = 0; iY < holdM.length; iY++)
       {
@@ -299,12 +302,17 @@ public class ReferenceVariable extends Variable
             } else
             {
               toPrint[(offsetY+iY)][(offsetX+iX)] += ((holdM[iY][iX])*holdWM[iY][iX]);
+              /*
+              if(toPrint[(offsetY+iY)][(offsetX+iX)] > 1)
+              {
+                System.out.println("still a problem: "+(holdM[iY][iX])+"->"+toPrint[(offsetY+iY)][(offsetX+iX)]+" at "+(offsetY+iY)+", "+(offsetX+iX)+" with weight "+holdWM[(iY)][(iX)]);
+              }
+              */
             }
           }
         }
       }
     }
-    
     return toPrint;
   }
   public double[][] buildWorldMatrix()
@@ -318,8 +326,6 @@ public class ReferenceVariable extends Variable
     ReferenceWrapper holdW;
     double[][] toPrint = new double[(int)(180/res)][(int)(360/res)];
     
-    //System.out.println("size of weight: "+weight.length+" by "+weight[0].length);
-    
     for(int i = 0; i < toPrint.length; i++)
     {
       for(int k = 0; k < toPrint[i].length; k++)
@@ -331,13 +337,13 @@ public class ReferenceVariable extends Variable
     //building a complete matrix of values to print from sub regions
     for(int i = 0; i < data.length; i++)
     {
+      //System.out.println("adding region: "+((ReferenceWrapper)data[i]).name);
       holdD = (ReferenceWrapper)data[i];
       holdM = holdD.data;
       holdW = (ReferenceWrapper)weight[i];
       holdWM = holdW.data;
       offsetY = (int)(((90)-(holdD.y+holdD.height))/res);
       offsetX = (int)((holdD.x+180)/res);
-      
       //System.out.println(offsetX+", "+offsetY);
       
       for(int iY = 0; iY < holdM.length; iY++)
@@ -346,34 +352,19 @@ public class ReferenceVariable extends Variable
         {
           if(!Double.isNaN(holdM[iY][iX]))
           {
-            /*
-            if(weight[(offsetWy+iY)][(offsetWx+iX)] != 1)
-            {
-              System.out.println("check out weight of: "+weight[(offsetWy+iY)][(offsetWx+iX)]+" at: "+(iY+offsetY)+", "+(iX+offsetX));
-            }
-            */
-            
             if(Double.isNaN(toPrint[(offsetY+iY)][(offsetX+iX)]))
-            {//TODO added weight to the output here
-              toPrint[(offsetY+iY)][(offsetX+iX)] = holdM[iY][iX]*holdWM[iY][iX];
-//            toPrint[(offsetY+iY)][(offsetX+iX)] = (holdM[iY][iX]);
-              
-              if((holdM[iY][iX]) > 1)
-              {
-                System.out.println("serious problem: "+(holdM[iY][iX])+" at "+(offsetY+iY)+", "+(offsetX+iX)+" with weight "+holdWM[(iY)][(iX)]);
-              }
-              
-              
+            {
+              toPrint[(offsetY+iY)][(offsetX+iX)] = ((holdM[iY][iX])*holdWM[iY][iX]);
             } else
             {
-              toPrint[(offsetY+iY)][(offsetX+iX)] += ((holdM[iY][iX])*holdWM[(iY)][(iX)]);
-              //toPrint[(offsetY+iY)][(offsetX+iX)] += (holdM[iY][iX]);
-              
+              //System.out.println("added twice: "+(90-((offsetY+iY)*res))+", "+(((offsetX+iX)*res)-180));
+              toPrint[(offsetY+iY)][(offsetX+iX)] += ((holdM[iY][iX])*holdWM[iY][iX]);
+              /*
               if(toPrint[(offsetY+iY)][(offsetX+iX)] > 1)
               {
-                System.out.println("still a problem: "+(holdM[iY][iX])+"->"+toPrint[(offsetY+iY)][(offsetX+iX)]+" at "+(offsetY+iY)+", "+(offsetX+iX)+" with weight "+holdWM[(iY)][(iX)]);
+                System.out.println("still a problem: "+(holdM[iY][iX])+"->"+toPrint[(offsetY+iY)][(offsetX+iX)]+" at "+(90-((offsetY+iY)*res))+", "+(((offsetX+iX)*res)-180)+" with weight "+holdWM[(iY)][(iX)]);
               }
-              
+              */
             }
           }
         }
@@ -382,6 +373,17 @@ public class ReferenceVariable extends Variable
     
     return toPrint;
     
+    /*
+     * if((holdM[iY][iX]) > 1)
+              {
+                System.out.println("serious problem: "+(holdM[iY][iX])+" at "+(offsetY+iY)+", "+(offsetX+iX)+" with weight "+holdWM[(iY)][(iX)]);
+              }
+     * 
+     * if(toPrint[(offsetY+iY)][(offsetX+iX)] > 1)
+              {
+                System.out.println("still a problem: "+(holdM[iY][iX])+"->"+toPrint[(offsetY+iY)][(offsetX+iX)]+" at "+(offsetY+iY)+", "+(offsetX+iX)+" with weight "+holdWM[(iY)][(iX)]);
+              }
+     */
   }
   
   //***************************************************************************
