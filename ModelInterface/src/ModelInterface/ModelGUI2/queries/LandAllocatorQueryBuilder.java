@@ -31,14 +31,13 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 		System.out.println("This Method doesn't do anything");
 		return null;
 	}
-	public void doNext(JList list, JLabel label) {
-		//System.out.println("This Method doesn't do anything");
+	public void doNext(JComponentAdapter list, JLabel label) {
 		updateList(list, label);
 	}
-	public ListSelectionListener getListSelectionListener(final JList list, final JButton nextButton, final JButton cancelButton) {
+	public ListSelectionListener getListSelectionListener(final JComponentAdapter list, final JButton nextButton, final JButton cancelButton) {
 		return (new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				int[] selectedInd = list.getSelectedIndices();
+				int[] selectedInd = list.getSelectedRows();
 				if(selectedInd.length == 0 && qg.currSel != 0) {
 					nextButton.setEnabled(false);
 					cancelButton.setText(" Cancel "/*cancelTitle*/);
@@ -48,7 +47,7 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 			}
 		});
 	}
-	public void doFinish(JList list) {
+	public void doFinish(JComponentAdapter list) {
 		++qg.currSel;
 		updateSelected(list);
 		--qg.currSel;
@@ -58,7 +57,7 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 		queryFunctions = null;
 		queryFilter = null;
 	}
-	public void doBack(JList list, JLabel label) {
+	public void doBack(JComponentAdapter list, JLabel label) {
 		System.out.println("Would I do anything here");
 	}
 	public boolean isAtEnd() {
@@ -66,31 +65,59 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 	}
 	private void getLeaves() {
 		// region query portion!!
-		queryFilter = "/scenario/world/region/LandAllocatorNode[@name='root']";
+		queryFilter = "/scenario/world/region";
 		queryFunctions.clear();
-		queryFunctions.add("distinct-values");
-		XmlResults res = DbViewer.xmlDB.createQuery("//LandLeaf/@name", queryFilter, queryFunctions);
+		//queryFunctions.add("distinct-values");
+		XmlResults res = DbViewer.xmlDB.createQuery("/LandAllocatorNode[@name='root']", queryFilter, queryFunctions);
 		XmlValue val;
+		Map<String, Map> landUseTree = new HashMap<String, Map>();
 		System.out.println("Did query");
 		try {
 			while((val = res.next()) != null) {
-				System.out.println("Got Val: "+val.asString());
-				varList.put(val.asString(), false);
+				System.out.println("Got Val: "+val.getNodeName());
+				varList.put(val.getNodeName(), false);
+				addToLandUseTree(val, landUseTree);
 				val.delete();
 			}
+			System.out.println("Land Use Map: "+landUseTree);
 		} catch(XmlException xe) {
 			xe.printStackTrace();
 		}
 		DbViewer.xmlDB.printLockStats("LandAllocatorQueryBuilder.getLeaves");
 	}
-	public void updateList(JList list, JLabel label) {
+	private void addToLandUseTree(XmlValue curr, Map<String, Map> tree) throws XmlException{
+		Map<String, Map> currTree;
+		String attr = XMLDB.getAttr(curr, "name");
+		if(attr == null) {
+			return;
+
+		}
+		String name = curr.getNodeName()+" "+attr;
+		System.out.println("Curr Name: "+name);
+		currTree = tree.get(name);
+		if(currTree == null) {
+			currTree = new HashMap<String, Map>();
+			tree.put(name, currTree);
+		}
+		XmlValue val = curr.getFirstChild();
+		XmlValue valPrev;
+		while(val != null && !val.isNull()) {
+			if(val.getType() == XmlValue.NODE && val.getNodeType() == XmlValue.ELEMENT_NODE) {
+				addToLandUseTree(val, currTree);
+			}
+			valPrev = val;
+			val = val.getNextSibling();
+			valPrev.delete();
+		}
+	}
+
+	public void updateList(JComponentAdapter list, JLabel label) {
 		Map temp = null;
 		switch(qg.currSel) {
 			case 2: {
 					list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 					getLeaves();
 					temp = varList;
-					//list.setListData(varList.keySet().toArray());
 					label.setText("Select Cost Type:");
 					break;
 			}
@@ -98,7 +125,7 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 		}
 		Vector tempVector = new Vector();
 		String[] currKeys = (String[])temp.keySet().toArray(new String[0]);
-		list.setListData(currKeys);
+		((JList)list.getModel()).setListData(currKeys);
 		// check the maps to see which ones are true and add it to the list of selected
 		for (int i = 0; i < currKeys.length; ++i) {
 			if (((Boolean)temp.get(currKeys[i])).booleanValue()) {
@@ -111,9 +138,9 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 		}
 		temp = null;
 		tempVector = null;
-		list.setSelectedIndices(selected);
+		list.setSelectedRows(selected);
 	}
-	public void updateSelected(JList list) {
+	public void updateSelected(JComponentAdapter list) {
 		Object[] selectedKeys = list.getSelectedValues();
 		Map selected = null;
 		switch(qg.currSel -1) {

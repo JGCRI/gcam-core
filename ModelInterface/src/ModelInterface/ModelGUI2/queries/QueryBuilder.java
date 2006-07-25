@@ -1,6 +1,5 @@
 package ModelInterface.ModelGUI2.queries;
 
-import javax.swing.JList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.event.ListSelectionListener;
@@ -29,13 +28,14 @@ public abstract class QueryBuilder {
 		queryFilter = "";
 		queryFunctions = new Vector<String>();
 	}
-	public abstract ListSelectionListener getListSelectionListener(final JList list, final JButton nextButton, final JButton cancelButton);
-	public abstract void doFinish(JList list);
-	public abstract void doBack(JList list, JLabel label);
-	public abstract void doNext(JList list, JLabel label);
+	public abstract ListSelectionListener getListSelectionListener(final JComponentAdapter list, 
+			final JButton nextButton, final JButton cancelButton);
+	public abstract void doFinish(JComponentAdapter list);
+	public abstract void doBack(JComponentAdapter list, JLabel label);
+	public abstract void doNext(JComponentAdapter list, JLabel label);
 	public abstract boolean isAtEnd();
-	public abstract void updateList(JList list, JLabel label);
-	public abstract void updateSelected(JList list);
+	public abstract void updateList(JComponentAdapter list, JLabel label);
+	public abstract void updateSelected(JComponentAdapter list);
 	public abstract String createListPath(int level);
 	public abstract String getCompleteXPath(Object[] regions);
   	public abstract Object[] extractAxisInfo(XmlValue n, Map filterMaps) throws Exception; 

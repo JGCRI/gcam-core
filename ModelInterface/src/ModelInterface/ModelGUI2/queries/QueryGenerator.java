@@ -174,8 +174,8 @@ public class QueryGenerator {
 			types.add(null);
 		}
 
-		final JList list = new JList();
-		list.setCellRenderer(new ListCellRenderer() {
+		final JComponentAdapter list = new JListAdapter(new JList());
+		((JList)list.getModel()).setCellRenderer(new ListCellRenderer() {
 			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
 				boolean cellHasFocus) {
 				Component comp = (new DefaultListCellRenderer()).getListCellRendererComponent(list, value, 
@@ -212,8 +212,8 @@ public class QueryGenerator {
 				if(currSel != 1) {
 					return;
 				}
-				if(list.getSelectedIndices().length > 0) {
-					if(list.getSelectedIndex() == typeMap.keySet().size()-1) {
+				if(list.getSelectedRows().length > 0) {
+					if(list.getSelectedRows()[0] == typeMap.keySet().size()-1) {
 						nextButton.setEnabled(false);
 						cancelButton.setText("Finished");
 					} else {
@@ -225,9 +225,7 @@ public class QueryGenerator {
 				}
 			}
 		});
-		list.getSelectionModel().addListSelectionListener(typeListener);
-		//list.getSelectionModel().addListSelectionListener(qb.getListSelectionListener(list, nextButton, cancelButton));
-
+		list.addSelectionListener(typeListener);
 
 		backButton.setMnemonic(KeyEvent.VK_B);
 		nextButton.setMnemonic(KeyEvent.VK_N);
@@ -252,8 +250,8 @@ public class QueryGenerator {
 			public void actionPerformed(ActionEvent e) {
 				currSel--;
 				if(currSel == 1) {
-					list.getSelectionModel().removeListSelectionListener(currListener[0]);
-					list.getSelectionModel().addListSelectionListener(typeListener);
+					list.removeSelectionListener(currListener[0]);
+					list.addSelectionListener(typeListener);
 					qb = null;
 					updateList(typeMap, list, listLabel);
 				} else if(currSel != 0) {
@@ -292,8 +290,8 @@ public class QueryGenerator {
 					for(int i = 0; i < selectedKeys.length; ++i) {
 						typeMap.put(selectedKeys[i], new Boolean(true));
 					}
-					list.getSelectionModel().removeListSelectionListener(typeListener);
-					int selInd = list.getSelectedIndex();
+					list.removeSelectionListener(typeListener);
+					int selInd = list.getSelectedRows()[0];
 					if(types.get(selInd) == null) {
 						switch(selInd) {
 							case 0: {
@@ -339,8 +337,7 @@ public class QueryGenerator {
 					}
 					qb = (QueryBuilder)types.get(selInd);
 					currListener[0] = qb.getListSelectionListener(list, nextButton, cancelButton);
-					//list.getSelectionModel().addListSelectionListener(qb.getListSelectionListener(list, nextButton, cancelButton));
-					list.getSelectionModel().addListSelectionListener(currListener[0]);
+					list.addSelectionListener(currListener[0]);
 					qb.doNext(list, listLabel);
 				} else {
 					qb.doNext(list, listLabel);
@@ -375,7 +372,7 @@ public class QueryGenerator {
 		listPane.add(Box.createVerticalGlue());
 		listPane.add(listLabel);
 		listPane.add(Box.createVerticalStrut(10));
-		JScrollPane listScroll = new JScrollPane(list);
+		JScrollPane listScroll = new JScrollPane(list.getModel());
 		listScroll.setPreferredSize(new Dimension(150, 750));
 		listPane.add(listScroll);
 		listPane.add(Box.createVerticalStrut(10));
@@ -398,12 +395,12 @@ public class QueryGenerator {
 		filterDialog.setContentPane(filterContent);
 		filterDialog.setVisible(true);
 	}
-	private void updateList(Map typeMap, JList list, JLabel listLabel) {
+	private void updateList(Map typeMap, JComponentAdapter list, JLabel listLabel) {
 		listLabel.setText("Select type: ");
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		Vector tempVector = new Vector();
 		String[] currKeys = (String[])typeMap.keySet().toArray(new String[0]);
-		list.setListData(currKeys);
+		((JList)list.getModel()).setListData(currKeys);
 		// check the maps to see which ones are true and add it to the list of selected
 		for (int i = 0; i < currKeys.length; ++i) {
 			if (((Boolean)typeMap.get(currKeys[i])).booleanValue()) {
@@ -415,7 +412,7 @@ public class QueryGenerator {
 			selected[i] = ((Integer)tempVector.get(i)).intValue();
 		}
 		tempVector = null;
-		list.setSelectedIndices(selected);
+		list.setSelectedRows(selected);
 	}
 	private String expandGroupName(String gName) {
 		String query;

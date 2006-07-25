@@ -34,7 +34,7 @@ public class MarketQueryBuilder extends QueryBuilder {
 		varList.put("supply", new Boolean(false));
 		goodList = null;
 	}
-	public ListSelectionListener getListSelectionListener(final JList list, final JButton nextButton, final JButton cancelButton) {
+	public ListSelectionListener getListSelectionListener(final JComponentAdapter list, final JButton nextButton, final JButton cancelButton) {
 		queryFunctions.removeAllElements();
 		queryFunctions.add("distinct-values");
 		queryFilter = "/scenario/world/Marketplace/";
@@ -42,7 +42,7 @@ public class MarketQueryBuilder extends QueryBuilder {
 		//DbViewer.xmlDB.setQueryFunction("distinct-values(");
 		return (new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				int[] selectedInd = list.getSelectedIndices();
+				int[] selectedInd = list.getSelectedRows();
 				if(selectedInd.length == 0 && qg.currSel != 0) {
 					nextButton.setEnabled(false);
 					cancelButton.setText(" Cancel "/*cancelTitle*/);
@@ -65,7 +65,7 @@ public class MarketQueryBuilder extends QueryBuilder {
 			}
 		});
 	}
-	public void doNext(JList list, JLabel label) {
+	public void doNext(JComponentAdapter list, JLabel label) {
 		updateSelected(list);
 		if(qg.currSel == 3) {
 			for(Iterator it = varList.entrySet().iterator(); it.hasNext(); ) {
@@ -86,10 +86,10 @@ public class MarketQueryBuilder extends QueryBuilder {
 		}
 		updateList(list, label);
 	}
-	public void doBack(JList list, JLabel label) {
+	public void doBack(JComponentAdapter list, JLabel label) {
 		updateList(list, label);
 	}
-	public void doFinish(JList list) {
+	public void doFinish(JComponentAdapter list) {
 		++qg.currSel;
 		updateSelected(list);
 		--qg.currSel;
@@ -103,7 +103,7 @@ public class MarketQueryBuilder extends QueryBuilder {
 	public boolean isAtEnd() {
 		return qg.currSel == 3;
 	}
-	public void updateList(JList list, JLabel label) {
+	public void updateList(JComponentAdapter list, JLabel label) {
 		Map temp = null;
 		switch(qg.currSel) {
 			case 2: {
@@ -126,7 +126,7 @@ public class MarketQueryBuilder extends QueryBuilder {
 		}
 		Vector tempVector = new Vector();
 		String[] currKeys = (String[])temp.keySet().toArray(new String[0]);
-		list.setListData(currKeys);
+		((JList)list.getModel()).setListData(currKeys);
 		// check the maps to see which ones are true and add it to the list of selected
 		for (int i = 0; i < currKeys.length; ++i) {
 			if (((Boolean)temp.get(currKeys[i])).booleanValue()) {
@@ -139,9 +139,9 @@ public class MarketQueryBuilder extends QueryBuilder {
 		}
 		temp = null;
 		tempVector = null;
-		list.setSelectedIndices(selected);
+		list.setSelectedRows(selected);
 	}
-	public void updateSelected(JList list) {
+	public void updateSelected(JComponentAdapter list) {
 		Object[] selectedKeys = list.getSelectedValues();
 		Map selected = null;
 		switch(qg.currSel) { case 2: {

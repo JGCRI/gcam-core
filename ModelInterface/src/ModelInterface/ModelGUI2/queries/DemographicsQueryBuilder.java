@@ -44,15 +44,13 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		Object got = popList.get("populationMiniCAM");
 		return got != null && ((Boolean)got).booleanValue();
 	}
-	public ListSelectionListener getListSelectionListener(final JList list, final JButton nextButton, final JButton cancelButton) {
+	public ListSelectionListener getListSelectionListener(final JComponentAdapter list, final JButton nextButton, final JButton cancelButton) {
 		queryFunctions.removeAllElements();
 		queryFunctions.add("distinct-values");
 		queryFilter = "/scenario/world/"+regionQueryPortion+"/demographics/";
-		//DbViewer.xmlDB.setQueryFilter("/scenario/world/region/demographics/");
-		//DbViewer.xmlDB.setQueryFunction("distinct-values(");
 		return (new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				int[] selectedInd = list.getSelectedIndices();
+				int[] selectedInd = list.getSelectedRows();
 				if(selectedInd.length == 0 && qg.currSel != 0) {
 					nextButton.setEnabled(false);
 					cancelButton.setText(" Cancel "/*cancelTitle*/);
@@ -67,20 +65,10 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 					nextButton.setEnabled(false);
 					cancelButton.setText("Finished");
 				}
-					/*
-				 else if((qg.isSumable && (selectedInd[0] == 0 || selectedInd[0] == 1)) || selectedInd.length > 1
-					|| ((String)list.getSelectedValues()[0]).startsWith("Group:")) {
-					nextButton.setEnabled(false);
-					cancelButton.setText("Finished");
-				} else if(qg.currSel != 3){
-					nextButton.setEnabled(true);
-					cancelButton.setText(" Cancel "/*cancelTitle/);
-				}
-			*/
 			}
 		});
 	}
-	public void doNext(JList list, JLabel label) {
+	public void doNext(JComponentAdapter list, JLabel label) {
 		updateSelected(list);
 		if(qg.currSel == 3) {
 			for(Iterator it = varList.entrySet().iterator(); it.hasNext(); ) {
@@ -101,13 +89,13 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		}
 		updateList(list, label);
 	}
-	public void doBack(JList list, JLabel label) {
+	public void doBack(JComponentAdapter list, JLabel label) {
 		if(qg.currSel == 3) {
 			cohortList = null;
 		}
 		updateList(list, label);
 	}
-	public void doFinish(JList list) {
+	public void doFinish(JComponentAdapter list) {
 		++qg.currSel;
 		updateSelected(list);
 		--qg.currSel;
@@ -133,7 +121,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 	public boolean isAtEnd() {
 		return (qg.currSel == 3 && isPopMiniCAMSelected()) || qg.currSel == 5;
 	}
-	public void updateList(JList list, JLabel label) {
+	public void updateList(JComponentAdapter list, JLabel label) {
 		Map temp = null;
 		switch(qg.currSel) {
 			case 2: {
@@ -174,7 +162,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		}
 		Vector tempVector = new Vector();
 		String[] currKeys = (String[])temp.keySet().toArray(new String[0]);
-		list.setListData(currKeys);
+		((JList)list.getModel()).setListData(currKeys);
 		// check the maps to see which ones are true and add it to the list of selected
 		for (int i = 0; i < currKeys.length; ++i) {
 			if (((Boolean)temp.get(currKeys[i])).booleanValue()) {
@@ -187,9 +175,9 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		}
 		temp = null;
 		tempVector = null;
-		list.setSelectedIndices(selected);
+		list.setSelectedRows(selected);
 	}
-	public void updateSelected(JList list) {
+	public void updateSelected(JComponentAdapter list) {
 		Object[] selectedKeys = list.getSelectedValues();
 		Map selected = null;
 		switch(qg.currSel) { 

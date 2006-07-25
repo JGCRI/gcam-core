@@ -37,17 +37,17 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 		System.out.println("This Method doesn't do anything");
 		return null;
 	}
-	public void doNext(JList list, JLabel label) {
+	public void doNext(JComponentAdapter list, JLabel label) {
 		//System.out.println("This Method doesn't do anything");
 		updateList(list, label);
 	}
-	public ListSelectionListener getListSelectionListener(final JList list, final JButton nextButton, final JButton cancelButton) {
+	public ListSelectionListener getListSelectionListener(final JComponentAdapter list, final JButton nextButton, final JButton cancelButton) {
 		queryFunctions.removeAllElements();
 		queryFunctions.add("distinct-values");
 		queryFilter = "/scenario/world/"+regionQueryPortion+"/";
 		return (new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				int[] selectedInd = list.getSelectedIndices();
+				int[] selectedInd = list.getSelectedRows();
 				if(selectedInd.length == 0 && qg.currSel != 0) {
 					nextButton.setEnabled(false);
 					cancelButton.setText(" Cancel "/*cancelTitle*/);
@@ -68,7 +68,7 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 			}
 		});
 	}
-	public void doFinish(JList list) {
+	public void doFinish(JComponentAdapter list) {
 		++qg.currSel;
 		updateSelected(list);
 		--qg.currSel;
@@ -78,19 +78,18 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 		queryFunctions = null;
 		queryFilter = null;
 	}
-	public void doBack(JList list, JLabel label) {
+	public void doBack(JComponentAdapter list, JLabel label) {
 		System.out.println("Would I do anything here");
 	}
 	public boolean isAtEnd() {
 		return qg.currSel == 3-1;
 	}
-	public void updateList(JList list, JLabel label) {
+	public void updateList(JComponentAdapter list, JLabel label) {
 		Map temp = null;
 		switch(qg.currSel) {
 			case 2: {
 					list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 					temp = varList;
-					//list.setListData(varList.keySet().toArray());
 					label.setText("Select Cost Type:");
 					break;
 			}
@@ -98,7 +97,7 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 		}
 		Vector tempVector = new Vector();
 		String[] currKeys = (String[])temp.keySet().toArray(new String[0]);
-		list.setListData(currKeys);
+		((JList)list.getModel()).setListData(currKeys);
 		// check the maps to see which ones are true and add it to the list of selected
 		for (int i = 0; i < currKeys.length; ++i) {
 			if (((Boolean)temp.get(currKeys[i])).booleanValue()) {
@@ -111,9 +110,9 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 		}
 		temp = null;
 		tempVector = null;
-		list.setSelectedIndices(selected);
+		list.setSelectedRows(selected);
 	}
-	public void updateSelected(JList list) {
+	public void updateSelected(JComponentAdapter list) {
 		Object[] selectedKeys = list.getSelectedValues();
 		Map selected = null;
 		switch(qg.currSel -1) {

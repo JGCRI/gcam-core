@@ -27,52 +27,28 @@ public class GDPQueryBuilder extends QueryBuilder {
 	public static String xmlName = "gdpQueryBuilder";
 	public GDPQueryBuilder(QueryGenerator qgIn) {
 		super(qgIn);
-		/*
-		varList = new HashMap();
-		varList.put("PeriodCostCurves", false);
-		varList.put("RegionalCostCurvesByPeriod", false);
-		varList.put("RegionalUndiscountedCosts", false);
-		varList.put("RegionalDiscountedCosts", false);
-		*/
 	}
 	public String createListPath(int level) {
 		System.out.println("This Method doesn't do anything");
 		return null;
 	}
-	public void doNext(JList list, JLabel label) {
-		//System.out.println("This Method doesn't do anything");
+	public void doNext(JComponentAdapter list, JLabel label) {
 		updateList(list, label);
 	}
-	public ListSelectionListener getListSelectionListener(final JList list, final JButton nextButton, final JButton cancelButton) {
-		/*
-		queryFunctions.removeAllElements();
-		queryFunctions.add("distinct-values");
-		queryFilter = "/scenario/world/region/";
-		*/
+	public ListSelectionListener getListSelectionListener(final JComponentAdapter list, final JButton nextButton, final JButton cancelButton) {
 		return (new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				int[] selectedInd = list.getSelectedIndices();
+				int[] selectedInd = list.getSelectedRows();
 				if(selectedInd.length == 0 && qg.currSel != 0) {
 					nextButton.setEnabled(false);
 					cancelButton.setText(" Cancel "/*cancelTitle*/);
-					/*
-				} else if(qg.currSel == 1 || qg.currSel == 2) {
-					nextButton.setEnabled(true);
-				} else if((qg.isSumable && (selectedInd[0] == 0 || selectedInd[0] == 1)) || selectedInd.length > 1
-					|| ((String)list.getSelectedValues()[0]).startsWith("Group:")) {
-					nextButton.setEnabled(false);
-					cancelButton.setText("Finished");
-				} else if(qg.currSel != 5){
-					nextButton.setEnabled(true);
-					cancelButton.setText(" Cancel "/*cancelTitle/);
-					*/
 				} else {
 					cancelButton.setText("Finished");
 				}
 			}
 		});
 	}
-	public void doFinish(JList list) {
+	public void doFinish(JComponentAdapter list) {
 		++qg.currSel;
 		updateSelected(list);
 		--qg.currSel;
@@ -82,19 +58,18 @@ public class GDPQueryBuilder extends QueryBuilder {
 		queryFunctions = null;
 		queryFilter = null;
 	}
-	public void doBack(JList list, JLabel label) {
+	public void doBack(JComponentAdapter list, JLabel label) {
 		System.out.println("Would I do anything here");
 	}
 	public boolean isAtEnd() {
 		return qg.currSel == 3-1;
 	}
-	public void updateList(JList list, JLabel label) {
+	public void updateList(JComponentAdapter list, JLabel label) {
 		Map temp = null;
 		switch(qg.currSel) {
 			case 2: {
 					list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 					temp = varList;
-					//list.setListData(varList.keySet().toArray());
 					label.setText("Select Cost Type:");
 					break;
 			}
@@ -106,7 +81,6 @@ public class GDPQueryBuilder extends QueryBuilder {
 						sectorList.putAll(createList("supplysector/group/@name", true));
 					}
 					temp = sectorList;
-					//list.setListData(sectorList.keySet().toArray());
 					label.setText("Select Sector:");
 					break;
 			}
@@ -115,7 +89,6 @@ public class GDPQueryBuilder extends QueryBuilder {
 						subsectorList = createList(createListPath(4), false);
 					}
 					temp = subsectorList;
-					//list.setListData(subsectorList.keySet().toArray());
 					label.setText("Select Subsector:");
 					break;
 			}
@@ -124,7 +97,6 @@ public class GDPQueryBuilder extends QueryBuilder {
 						techList = createList(createListPath(5), false);
 					}
 					temp = techList;
-					//list.setListData(techList.keySet().toArray());
 					label.setText("Select Technology:");
 					break;
 			}
@@ -133,7 +105,7 @@ public class GDPQueryBuilder extends QueryBuilder {
 		}
 		Vector tempVector = new Vector();
 		String[] currKeys = (String[])temp.keySet().toArray(new String[0]);
-		list.setListData(currKeys);
+		((JList)list.getModel()).setListData(currKeys);
 		// check the maps to see which ones are true and add it to the list of selected
 		for (int i = 0; i < currKeys.length; ++i) {
 			if (((Boolean)temp.get(currKeys[i])).booleanValue()) {
@@ -146,9 +118,9 @@ public class GDPQueryBuilder extends QueryBuilder {
 		}
 		temp = null;
 		tempVector = null;
-		list.setSelectedIndices(selected);
+		list.setSelectedRows(selected);
 	}
-	public void updateSelected(JList list) {
+	public void updateSelected(JComponentAdapter list) {
 		Object[] selectedKeys = list.getSelectedValues();
 		Map selected = null;
 		switch(qg.currSel -1) {

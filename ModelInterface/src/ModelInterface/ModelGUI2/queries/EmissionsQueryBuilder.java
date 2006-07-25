@@ -35,7 +35,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		subsectorList = null;
 		techList = null;
 	}
-	public ListSelectionListener getListSelectionListener(final JList list, final JButton nextButton, final JButton cancelButton) {
+	public ListSelectionListener getListSelectionListener(final JComponentAdapter list, final JButton nextButton, final JButton cancelButton) {
 		queryFunctions.removeAllElements();
 		queryFunctions.add("distinct-values");
 		queryFilter = "/scenario/world/"+regionQueryPortion+"/";
@@ -43,7 +43,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		//DbViewer.xmlDB.setQueryFilter("/scenario/world/region/");
 		return (new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				int[] selectedInd = list.getSelectedIndices();
+				int[] selectedInd = list.getSelectedRows();
 				if(selectedInd.length == 0 && qg.currSel != 0) {
 					nextButton.setEnabled(false);
 					cancelButton.setText(" Cancel "/*cancelTitle*/);
@@ -65,7 +65,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			}
 		});
 	}
-	public void doFinish(JList list) {
+	public void doFinish(JComponentAdapter list) {
 		++qg.currSel;
 		updateSelected(list);
 		--qg.currSel;
@@ -76,7 +76,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		//DbViewer.xmlDB.setQueryFunction("");
 		//DbViewer.xmlDB.setQueryFilter("");
 	}
-	public void doBack(JList list, JLabel label) {
+	public void doBack(JComponentAdapter list, JLabel label) {
 		// doing this stuff after currSel has changed now..
 		// have to sub 1
 		if(qg.currSel == 3) {
@@ -88,7 +88,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		}
 		updateList(list, label);
 	}
-	public void doNext(JList list, JLabel label) {
+	public void doNext(JComponentAdapter list, JLabel label) {
 		// being moved to after currSel changed, adjust numbers
 		updateSelected(list);
 		if(qg.currSel == 3) {
@@ -115,7 +115,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 	public boolean isAtEnd() {
 		return qg.currSel == 7-1;
 	}
-	public void updateList(JList list, JLabel label) {
+	public void updateList(JComponentAdapter list, JLabel label) {
 		Map temp = null;
 		switch(qg.currSel) {
 			case 2: {
@@ -124,7 +124,6 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 						ghgList = createList(sectorQueryPortion+"/"+subsectorQueryPortion+"/"+technologyQueryPortion+"/GHG/@name", false);
 					}
 					temp = ghgList;
-					//list.setListData(varList.keySet().toArray());
 					label.setText("Select Greenhouse Gas:");
 					break;
 			}
@@ -144,7 +143,6 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 						sectorList.putAll(createList(sectorQueryPortion+"/group/@name", true));
 					}
 					temp = sectorList;
-					//list.setListData(sectorList.keySet().toArray());
 					label.setText("Select Sector:");
 					break;
 			}
@@ -153,7 +151,6 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 						subsectorList = createList(createListPath(4), false);
 					}
 					temp = subsectorList;
-					//list.setListData(subsectorList.keySet().toArray());
 					label.setText("Select Subsector:");
 					break;
 			}
@@ -162,7 +159,6 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 						techList = createList(createListPath(5), false);
 					}
 					temp = techList;
-					//list.setListData(techList.keySet().toArray());
 					label.setText("Select Technology:");
 					break;
 			}
@@ -170,7 +166,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		}
 		Vector tempVector = new Vector();
 		String[] currKeys = (String[])temp.keySet().toArray(new String[0]);
-		list.setListData(currKeys);
+		((JList)list.getModel()).setListData(currKeys);
 		// check the maps to see which ones are true and add it to the list of selected
 		for (int i = 0; i < currKeys.length; ++i) {
 			if (((Boolean)temp.get(currKeys[i])).booleanValue()) {
@@ -183,9 +179,9 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		}
 		temp = null;
 		tempVector = null;
-		list.setSelectedIndices(selected);
+		list.setSelectedRows(selected);
 	}
-	public void updateSelected(JList list) {
+	public void updateSelected(JComponentAdapter list) {
 		Object[] selectedKeys = list.getSelectedValues();
 		Map selected = null;
 		switch(qg.currSel -1) {
