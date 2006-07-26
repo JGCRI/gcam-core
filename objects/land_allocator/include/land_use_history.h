@@ -29,7 +29,8 @@ class Tabs;
  * \brief Container of historical land allocations for a single land type.
  * \details A container mapping years to historical land use for a single land
  *          type. Each land type may have a single LandUseHistory, multiple are
- *          not allowed.
+ *          not allowed.  LandUseHistory objects can be contained in either
+ *          LandNodes or UmanagedLandLeafs.
  *
  *          <b>XML specification for LandUseHistory</b>
  *          - XML name: \c land-use-history
@@ -37,11 +38,13 @@ class Tabs;
  *          - Parsing inherited from class: None
  *          - Attributes: None
  *          - Elements:
- *              - \c allocation LandUseHistory::mLandAllocation
+ *              - \c allocation LandUseHistory::mHistoricalLand (value is a double)
+ *                  -Attributes
+ *                      - \c year the year of the land allocation
  */
 class LandUseHistory : public IVisitable,
-                          public IParsable,
-                          public IRoundTrippable
+                       public IParsable,
+                       public IRoundTrippable
 {
 public:
     static const std::string& getXMLNameStatic();
