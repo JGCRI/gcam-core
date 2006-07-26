@@ -2,10 +2,10 @@ package ModelInterface.ModelGUI2.queries;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.event.ListSelectionListener;
 import com.sleepycat.dbxml.XmlValue;
 import java.util.Map;
 import java.util.Vector;
+import java.util.EventListener;
 
 public abstract class QueryBuilder {
 
@@ -28,13 +28,13 @@ public abstract class QueryBuilder {
 		queryFilter = "";
 		queryFunctions = new Vector<String>();
 	}
-	public abstract ListSelectionListener getListSelectionListener(final JComponentAdapter list, 
+	public abstract EventListener getListSelectionListener(final JComponentAdapter list, 
 			final JButton nextButton, final JButton cancelButton);
 	public abstract void doFinish(JComponentAdapter list);
-	public abstract void doBack(JComponentAdapter list, JLabel label);
-	public abstract void doNext(JComponentAdapter list, JLabel label);
+	public abstract JComponentAdapter doBack(JComponentAdapter list, JLabel label);
+	public abstract JComponentAdapter doNext(JComponentAdapter list, JLabel label);
 	public abstract boolean isAtEnd();
-	public abstract void updateList(JComponentAdapter list, JLabel label);
+	public abstract JComponentAdapter updateList(JComponentAdapter list, JLabel label);
 	public abstract void updateSelected(JComponentAdapter list);
 	public abstract String createListPath(int level);
 	public abstract String getCompleteXPath(Object[] regions);

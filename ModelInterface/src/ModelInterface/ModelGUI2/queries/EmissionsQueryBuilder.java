@@ -17,6 +17,7 @@ import java.util.Vector;
 import java.util.LinkedHashMap;
 import java.util.HashMap;
 import java.util.TreeMap;
+import java.util.EventListener;
 
 import com.sleepycat.dbxml.XmlResults;
 import com.sleepycat.dbxml.XmlValue;
@@ -35,7 +36,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		subsectorList = null;
 		techList = null;
 	}
-	public ListSelectionListener getListSelectionListener(final JComponentAdapter list, final JButton nextButton, final JButton cancelButton) {
+	public EventListener getListSelectionListener(final JComponentAdapter list, final JButton nextButton, final JButton cancelButton) {
 		queryFunctions.removeAllElements();
 		queryFunctions.add("distinct-values");
 		queryFilter = "/scenario/world/"+regionQueryPortion+"/";
@@ -76,7 +77,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		//DbViewer.xmlDB.setQueryFunction("");
 		//DbViewer.xmlDB.setQueryFilter("");
 	}
-	public void doBack(JComponentAdapter list, JLabel label) {
+	public JComponentAdapter doBack(JComponentAdapter list, JLabel label) {
 		// doing this stuff after currSel has changed now..
 		// have to sub 1
 		if(qg.currSel == 3) {
@@ -86,9 +87,9 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		} else if(qg.currSel == 5) {
 			techList = null;
 		}
-		updateList(list, label);
+		return updateList(list, label);
 	}
-	public void doNext(JComponentAdapter list, JLabel label) {
+	public JComponentAdapter doNext(JComponentAdapter list, JLabel label) {
 		// being moved to after currSel changed, adjust numbers
 		updateSelected(list);
 		if(qg.currSel == 3) {
@@ -110,12 +111,12 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			*/
 			qg.var = "emissions";
 		}
-		updateList(list, label);
+		return updateList(list, label);
 	}
 	public boolean isAtEnd() {
 		return qg.currSel == 7-1;
 	}
-	public void updateList(JComponentAdapter list, JLabel label) {
+	public JComponentAdapter updateList(JComponentAdapter list, JLabel label) {
 		Map temp = null;
 		switch(qg.currSel) {
 			case 2: {
@@ -180,6 +181,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		temp = null;
 		tempVector = null;
 		list.setSelectedRows(selected);
+		return list;
 	}
 	public void updateSelected(JComponentAdapter list) {
 		Object[] selectedKeys = list.getSelectedValues();

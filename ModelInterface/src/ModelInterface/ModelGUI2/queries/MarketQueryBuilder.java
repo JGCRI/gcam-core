@@ -17,6 +17,7 @@ import java.util.Vector;
 import java.util.LinkedHashMap;
 import java.util.HashMap;
 import java.util.TreeMap;
+import java.util.EventListener;
 
 import com.sleepycat.dbxml.XmlResults;
 import com.sleepycat.dbxml.XmlValue;
@@ -34,7 +35,7 @@ public class MarketQueryBuilder extends QueryBuilder {
 		varList.put("supply", new Boolean(false));
 		goodList = null;
 	}
-	public ListSelectionListener getListSelectionListener(final JComponentAdapter list, final JButton nextButton, final JButton cancelButton) {
+	public EventListener getListSelectionListener(final JComponentAdapter list, final JButton nextButton, final JButton cancelButton) {
 		queryFunctions.removeAllElements();
 		queryFunctions.add("distinct-values");
 		queryFilter = "/scenario/world/Marketplace/";
@@ -65,7 +66,7 @@ public class MarketQueryBuilder extends QueryBuilder {
 			}
 		});
 	}
-	public void doNext(JComponentAdapter list, JLabel label) {
+	public JComponentAdapter doNext(JComponentAdapter list, JLabel label) {
 		updateSelected(list);
 		if(qg.currSel == 3) {
 			for(Iterator it = varList.entrySet().iterator(); it.hasNext(); ) {
@@ -84,10 +85,10 @@ public class MarketQueryBuilder extends QueryBuilder {
 				}
 			}
 		}
-		updateList(list, label);
+		return updateList(list, label);
 	}
-	public void doBack(JComponentAdapter list, JLabel label) {
-		updateList(list, label);
+	public JComponentAdapter doBack(JComponentAdapter list, JLabel label) {
+		return updateList(list, label);
 	}
 	public void doFinish(JComponentAdapter list) {
 		++qg.currSel;
@@ -103,7 +104,7 @@ public class MarketQueryBuilder extends QueryBuilder {
 	public boolean isAtEnd() {
 		return qg.currSel == 3;
 	}
-	public void updateList(JComponentAdapter list, JLabel label) {
+	public JComponentAdapter updateList(JComponentAdapter list, JLabel label) {
 		Map temp = null;
 		switch(qg.currSel) {
 			case 2: {
@@ -140,6 +141,7 @@ public class MarketQueryBuilder extends QueryBuilder {
 		temp = null;
 		tempVector = null;
 		list.setSelectedRows(selected);
+		return list;
 	}
 	public void updateSelected(JComponentAdapter list) {
 		Object[] selectedKeys = list.getSelectedValues();

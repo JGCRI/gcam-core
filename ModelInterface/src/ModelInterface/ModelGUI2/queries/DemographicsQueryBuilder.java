@@ -17,6 +17,7 @@ import java.util.Vector;
 import java.util.LinkedHashMap;
 import java.util.HashMap;
 import java.util.TreeMap;
+import java.util.EventListener;
 
 import com.sleepycat.dbxml.XmlResults;
 import com.sleepycat.dbxml.XmlValue;
@@ -44,7 +45,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		Object got = popList.get("populationMiniCAM");
 		return got != null && ((Boolean)got).booleanValue();
 	}
-	public ListSelectionListener getListSelectionListener(final JComponentAdapter list, final JButton nextButton, final JButton cancelButton) {
+	public EventListener getListSelectionListener(final JComponentAdapter list, final JButton nextButton, final JButton cancelButton) {
 		queryFunctions.removeAllElements();
 		queryFunctions.add("distinct-values");
 		queryFilter = "/scenario/world/"+regionQueryPortion+"/demographics/";
@@ -68,7 +69,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 			}
 		});
 	}
-	public void doNext(JComponentAdapter list, JLabel label) {
+	public JComponentAdapter doNext(JComponentAdapter list, JLabel label) {
 		updateSelected(list);
 		if(qg.currSel == 3) {
 			for(Iterator it = varList.entrySet().iterator(); it.hasNext(); ) {
@@ -87,13 +88,13 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 				}
 			}
 		}
-		updateList(list, label);
+		return updateList(list, label);
 	}
-	public void doBack(JComponentAdapter list, JLabel label) {
+	public JComponentAdapter doBack(JComponentAdapter list, JLabel label) {
 		if(qg.currSel == 3) {
 			cohortList = null;
 		}
-		updateList(list, label);
+		return updateList(list, label);
 	}
 	public void doFinish(JComponentAdapter list) {
 		++qg.currSel;
@@ -121,7 +122,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 	public boolean isAtEnd() {
 		return (qg.currSel == 3 && isPopMiniCAMSelected()) || qg.currSel == 5;
 	}
-	public void updateList(JComponentAdapter list, JLabel label) {
+	public JComponentAdapter updateList(JComponentAdapter list, JLabel label) {
 		Map temp = null;
 		switch(qg.currSel) {
 			case 2: {
@@ -176,6 +177,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		temp = null;
 		tempVector = null;
 		list.setSelectedRows(selected);
+		return list;
 	}
 	public void updateSelected(JComponentAdapter list) {
 		Object[] selectedKeys = list.getSelectedValues();

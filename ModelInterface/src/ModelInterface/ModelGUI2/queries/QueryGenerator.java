@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 import java.util.Iterator;
+import java.util.EventListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -174,8 +175,10 @@ public class QueryGenerator {
 			types.add(null);
 		}
 
-		final JComponentAdapter list = new JListAdapter(new JList());
-		((JList)list.getModel()).setCellRenderer(new ListCellRenderer() {
+		final JComponentAdapter[] list = new JComponentAdapter[1];
+		list[0] = new JListAdapter(new JList());
+		final JScrollPane listScroll = new JScrollPane(list[0].getModel());
+		((JList)list[0].getModel()).setCellRenderer(new ListCellRenderer() {
 			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
 				boolean cellHasFocus) {
 				Component comp = (new DefaultListCellRenderer()).getListCellRendererComponent(list, value, 
@@ -205,15 +208,15 @@ public class QueryGenerator {
 		final JTextField titleField = new JTextField();
 		titleField.setPreferredSize(new Dimension(30, 12));
 
-		final ListSelectionListener[] currListener = new ListSelectionListener[1];
+		final EventListener[] currListener = new EventListener[1];
 		currListener[0] = null;
 		final ListSelectionListener typeListener = (new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				if(currSel != 1) {
 					return;
 				}
-				if(list.getSelectedRows().length > 0) {
-					if(list.getSelectedRows()[0] == typeMap.keySet().size()-1) {
+				if(list[0].getSelectedRows().length > 0) {
+					if(list[0].getSelectedRows()[0] == typeMap.keySet().size()-1) {
 						nextButton.setEnabled(false);
 						cancelButton.setText("Finished");
 					} else {
@@ -225,7 +228,7 @@ public class QueryGenerator {
 				}
 			}
 		});
-		list.addSelectionListener(typeListener);
+		list[0].addSelectionListener(typeListener);
 
 		backButton.setMnemonic(KeyEvent.VK_B);
 		nextButton.setMnemonic(KeyEvent.VK_N);
@@ -233,7 +236,7 @@ public class QueryGenerator {
 			public void actionPerformed(ActionEvent e) {
 				if (!cancelButton.getText().equals(cancelTitle)) {
 					if(qb != null) {
-						qb.doFinish(list);
+						qb.doFinish(list[0]);
 					} else {
 						xPath = "Query Group";
 					}
@@ -250,12 +253,19 @@ public class QueryGenerator {
 			public void actionPerformed(ActionEvent e) {
 				currSel--;
 				if(currSel == 1) {
-					list.removeSelectionListener(currListener[0]);
-					list.addSelectionListener(typeListener);
+					list[0].removeSelectionListener(currListener[0]);
+					list[0].addSelectionListener(typeListener);
 					qb = null;
-					updateList(typeMap, list, listLabel);
+					updateList(typeMap, list[0], listLabel);
 				} else if(currSel != 0) {
-					qb.doBack(list, listLabel);
+					JComponentAdapter tempComp = qb.doBack(list[0], listLabel);
+					if(tempComp != list[0]) {
+						list[0].removeSelectionListener(currListener[0]);
+						list[0] = tempComp;
+						listScroll.getViewport().setView(list[0].getModel());
+						currListener[0] = qb.getListSelectionListener(list[0], nextButton, cancelButton);
+						list[0].addSelectionListener(currListener[0]);
+					}
 				} else {
 					filterContent.remove(listPane);
 					filterContent.add(inputPane);
@@ -281,17 +291,17 @@ public class QueryGenerator {
 					title = titleField.getText();
 					filterContent.remove(inputPane);
 					filterContent.add(listPane);
-					updateList(typeMap, list, listLabel);
+					updateList(typeMap, list[0], listLabel);
 				} else if(currSel == 2) {
-					Object[] selectedKeys = list.getSelectedValues();
+					Object[] selectedKeys = list[0].getSelectedValues();
 					for(Iterator it = typeMap.entrySet().iterator(); it.hasNext(); ) {
 						((Map.Entry)it.next()).setValue(new Boolean(false));
 					}
 					for(int i = 0; i < selectedKeys.length; ++i) {
 						typeMap.put(selectedKeys[i], new Boolean(true));
 					}
-					list.removeSelectionListener(typeListener);
-					int selInd = list.getSelectedRows()[0];
+					list[0].removeSelectionListener(typeListener);
+					int selInd = list[0].getSelectedRows()[0];
 					if(types.get(selInd) == null) {
 						switch(selInd) {
 							case 0: {
@@ -336,11 +346,22 @@ public class QueryGenerator {
 						}
 					}
 					qb = (QueryBuilder)types.get(selInd);
-					currListener[0] = qb.getListSelectionListener(list, nextButton, cancelButton);
-					list.addSelectionListener(currListener[0]);
-					qb.doNext(list, listLabel);
+					JComponentAdapter tempComp = qb.doNext(list[0], listLabel);
+					if(tempComp != list[0]) {
+						list[0] = tempComp;
+						listScroll.getViewport().setView(list[0].getModel());
+					}
+					currListener[0] = qb.getListSelectionListener(list[0], nextButton, cancelButton);
+					list[0].addSelectionListener(currListener[0]);
 				} else {
-					qb.doNext(list, listLabel);
+					JComponentAdapter tempComp = qb.doNext(list[0], listLabel);
+					if(tempComp != list[0]) {
+						list[0].removeSelectionListener(currListener[0]);
+						list[0] = tempComp;
+						listScroll.getViewport().setView(list[0].getModel());
+						currListener[0] = qb.getListSelectionListener(list[0], nextButton, cancelButton);
+						list[0].addSelectionListener(currListener[0]);
+					}
 				}
 				if (!backButton.isEnabled()) {
 					backButton.setEnabled(true);
@@ -372,7 +393,6 @@ public class QueryGenerator {
 		listPane.add(Box.createVerticalGlue());
 		listPane.add(listLabel);
 		listPane.add(Box.createVerticalStrut(10));
-		JScrollPane listScroll = new JScrollPane(list.getModel());
 		listScroll.setPreferredSize(new Dimension(150, 750));
 		listPane.add(listScroll);
 		listPane.add(Box.createVerticalStrut(10));

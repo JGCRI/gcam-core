@@ -17,6 +17,7 @@ import java.util.Vector;
 import java.util.LinkedHashMap;
 import java.util.HashMap;
 import java.util.TreeMap;
+import java.util.EventListener;
 
 import com.sleepycat.dbxml.XmlResults;
 import com.sleepycat.dbxml.XmlValue;
@@ -32,10 +33,10 @@ public class GDPQueryBuilder extends QueryBuilder {
 		System.out.println("This Method doesn't do anything");
 		return null;
 	}
-	public void doNext(JComponentAdapter list, JLabel label) {
-		updateList(list, label);
+	public JComponentAdapter doNext(JComponentAdapter list, JLabel label) {
+		return updateList(list, label);
 	}
-	public ListSelectionListener getListSelectionListener(final JComponentAdapter list, final JButton nextButton, final JButton cancelButton) {
+	public EventListener getListSelectionListener(final JComponentAdapter list, final JButton nextButton, final JButton cancelButton) {
 		return (new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				int[] selectedInd = list.getSelectedRows();
@@ -58,13 +59,14 @@ public class GDPQueryBuilder extends QueryBuilder {
 		queryFunctions = null;
 		queryFilter = null;
 	}
-	public void doBack(JComponentAdapter list, JLabel label) {
+	public JComponentAdapter doBack(JComponentAdapter list, JLabel label) {
 		System.out.println("Would I do anything here");
+		return list;
 	}
 	public boolean isAtEnd() {
 		return qg.currSel == 3-1;
 	}
-	public void updateList(JComponentAdapter list, JLabel label) {
+	public JComponentAdapter updateList(JComponentAdapter list, JLabel label) {
 		Map temp = null;
 		switch(qg.currSel) {
 			case 2: {
@@ -119,6 +121,7 @@ public class GDPQueryBuilder extends QueryBuilder {
 		temp = null;
 		tempVector = null;
 		list.setSelectedRows(selected);
+		return list;
 	}
 	public void updateSelected(JComponentAdapter list) {
 		Object[] selectedKeys = list.getSelectedValues();
