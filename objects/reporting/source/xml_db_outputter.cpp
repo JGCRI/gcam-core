@@ -161,7 +161,7 @@ auto_ptr<XMLDBOutputter::DBContainer> XMLDBOutputter::createContainer() {
     
     try {
         dbContainer->mContainerWrapper.reset( new DBContainer::XMLContainerWrapper(
-                                             dbContainer->mManager->openContainer( containerName, DB_CREATE ) ) );
+                                             dbContainer->mManager->openContainer( containerName, DB_CREATE | DBXML_INDEX_NODES) ) );
     }
     catch ( const DbXml::XmlException& e ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -735,8 +735,8 @@ void XMLDBOutputter::endVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPer
 }
 
 void XMLDBOutputter::startVisitCarbonCalc( const ICarbonCalc* aCarbon, const int aPeriod ){
-	// Write the opening gdp tag.
-    XMLWriteOpeningTag( "carbon-calc", mBuffer, mTabs.get() );
+    // Carbon Calc does not create a tag for the sake of simplicity for the dataviewer.  
+    // This allows all the LandLeaf data to be at one level.
 
     // Loop over the periods to output Carbon information.
     // The loops are separated so the types are grouped together, as is required for
@@ -752,7 +752,8 @@ void XMLDBOutputter::startVisitCarbonCalc( const ICarbonCalc* aCarbon, const int
     }
 }
 void XMLDBOutputter::endVisitCarbonCalc( const ICarbonCalc* aCarbonP, const int aPeriod ){
-	XMLWriteClosingTag( "carbon-calc", mBuffer, mTabs.get() );
+	// Does nothing since the land-use-change-emission was brought a level up
+    // in the output.
 }
 
 #endif
