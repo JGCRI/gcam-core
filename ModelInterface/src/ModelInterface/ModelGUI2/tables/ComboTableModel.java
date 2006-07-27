@@ -59,6 +59,7 @@ public class ComboTableModel extends BaseTableModel{
 	String ind2Name;
 	boolean flipped;
 	TableCellRenderer documentationRenderer;
+	int chartLabelCol  = -1;
 
 	//Vector tables;
 
@@ -614,7 +615,12 @@ public class ComboTableModel extends BaseTableModel{
 		for( int row = 0; row < getRowCount(); ++row ){
 			// Row name is at element zero.
 			//String rowNameFull = (String)getValueAt(row,0);
-			String rowNameFull = (String)indRow.get( ((Integer)activeRows.get( row )).intValue() % (indRow.size()) );
+			String rowNameFull;
+			if(chartLabelCol >= 0) {
+				rowNameFull = (String)getValueAt(row, chartLabelCol);
+			} else {
+				rowNameFull = (String)indRow.get( ((Integer)activeRows.get( row )).intValue() % (indRow.size()) );
+			}
 			
 			// Split out the name attribute if it contains it.
 			String rowName;
@@ -658,7 +664,7 @@ public class ComboTableModel extends BaseTableModel{
 		//NumberAxis xAxis = new NumberAxis("Year");
 		
 		// Use the parent element name as the name of the axis.
-		NumberAxis yAxis = new NumberAxis(ind2Name);
+		NumberAxis yAxis = new NumberAxis(ind1Name);
 		
 		// This turns off always including zero in the domain.
 		xAxis.setAutoRangeIncludesZero(false);
@@ -687,6 +693,18 @@ public class ComboTableModel extends BaseTableModel{
 		return chart;
 	}
 
+	public void setColNameIndex(String name) {
+		if(name != null) {
+			for(int i = 0; i < getColumnCount(); ++i) {
+				if(name.equals(getColumnName(i))) {
+					chartLabelCol = i;
+					return;
+				}
+			}
+		}
+		chartLabelCol = -1;
+	}
+
 	protected QueryGenerator qg;
 	public ComboTableModel(QueryGenerator qgIn, String filterQuery, Object[] regions, JFrame parentFrameIn) {
 		qg = qgIn;
@@ -701,6 +719,7 @@ public class ComboTableModel extends BaseTableModel{
 			activeRows.add(new Integer(i));
 		}
 		indCol.add(0, ind1Name);
+		setColNameIndex(qg.getChartLabelColumnName());
 	}
 	private void buildTable(XmlResults res, boolean sumAll, Object[] levelValues) {
 	  try {

@@ -1,7 +1,9 @@
 package ModelInterface.ModelGUI2.queries;
 
+import ModelInterface.InterfaceMain;
 import ModelInterface.ModelGUI2.XMLDB;
 import ModelInterface.ModelGUI2.DbViewer;
+import ModelInterface.ModelGUI2.undo.EditQueryUndoableEdit;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -91,6 +93,8 @@ public class QueryGenerator {
 			} else if(nl.item(i).getNodeName().equals("axis2")) {
 				yearLevel = nl.item(i).getFirstChild().getNodeValue();
 				axis2Name = ((Element)nl.item(i)).getAttribute("name");
+			} else if(nl.item(i).getNodeName().equals("chartLabelColumn")) {
+				labelColumnName = nl.item(i).getFirstChild().getNodeValue();
 			} else if (nl.item(i).getNodeName().equals("xPath")) {
 				var = ((Element)nl.item(i)).getAttribute("dataName");
 				if( ((Element)nl.item(i)).getAttribute("sumAll").equals("true")) {
@@ -461,26 +465,46 @@ public class QueryGenerator {
 		return ret.toString();
 	}
 	public String getXPath() {
-		System.out.println("Xpath is: "+xPath);
 		return xPath;
+	}
+	public void setXPath(String xp) {
+		xPath = xp;
 	}
 	public String getVariable() {
 		return var;
 	}
+	public void setVariable(String varIn) {
+		var = varIn;
+	}
 	public String getNodeLevel() {
 		return nodeLevel;
+	}
+	public void setNodeLevel(String nodeLevelIn) {
+		nodeLevel = nodeLevelIn;
 	}
 	public String getAxis1Name() {
 		return axis1Name;
 	}
+	public void setAxis1Name(String a1) {
+		axis1Name = a1;
+	}
 	public String getAxis2Name() {
 		return axis2Name;
+	}
+	public void setAxis2Name(String a2) {
+		axis2Name = a2;
 	}
 	public boolean isSumAll() {
 		return sumAll;
 	}
+	public void setSumAll(boolean s) {
+		sumAll = s;
+	}
 	public boolean isGroup() {
 		return group;
+	}
+	public void setGroup(boolean g) {
+		group = g;
 	}
 	public Node getAsNode(Document doc) {
 		Element queryNode; 
@@ -499,6 +523,11 @@ public class QueryGenerator {
 		temp.setAttribute("name", axis2Name);
 		temp.appendChild(doc.createTextNode(yearLevel));
 		queryNode.appendChild(temp);
+		if(labelColumnName != null && !labelColumnName.equals("")) {
+			temp = doc.createElement("chartLabelColumn");
+			temp.appendChild(doc.createTextNode(labelColumnName));
+			queryNode.appendChild(temp);
+		}
 		temp = doc.createElement("xPath");
 		temp.setAttribute("dataName", var);
 		if(sumAll) {
@@ -523,11 +552,23 @@ public class QueryGenerator {
 	public String toString() {
 		return title;
 	}
+	public void setTitle(String titleIn) {
+		title = titleIn;
+	}
 	public Object[] getLevelValues() {
 		return levelValues;
 	}
 	public String getYearLevel() {
 		return yearLevel;
+	}
+	public void setYearLevel(String yL) {
+		yearLevel = yL;
+	}
+	public String getChartLabelColumnName() {
+		return labelColumnName;
+	}
+	public void setCharLabelColumnName(String name) {
+		labelColumnName = name;
 	}
 	public String getCompleteXPath(Object[] regions) {
 		if(qb != null) {
@@ -631,7 +672,8 @@ public class QueryGenerator {
 	}
 	public String editDialog() {
 		String oldTitle = title;
-		final JDialog editDialog = new JDialog(parentFrame, "Edit Query", false);
+		final JDialog editDialog = new JDialog(InterfaceMain.getInstance(), "Edit Query", false);
+		final QueryGenerator thisGen = this;
 		//editDialog.setLocation(100,100);
 		editDialog.setResizable(false);
 		JButton cancelButton = new JButton("Cancel");
@@ -730,6 +772,8 @@ public class QueryGenerator {
 
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				EditQueryUndoableEdit eqEdit = new EditQueryUndoableEdit(thisGen);
+				eqEdit.setOldValues(thisGen);
 				title = titleTextF.getText();
 				axis1Name = a1NameTextF.getText();
 				nodeLevel = a1TextF.getText();
@@ -740,6 +784,9 @@ public class QueryGenerator {
 				xPath = xPathTextF.getText();
 				sumAll = sumAllCheckBox.isSelected();
 				group = groupCheckBox.isSelected();
+				eqEdit.setNewValues(thisGen);
+				InterfaceMain.getInstance().getUndoManager().addEdit(eqEdit);
+				InterfaceMain.getInstance().refreshUndoRedo();
 				editDialog.dispose();
 			}
 		});

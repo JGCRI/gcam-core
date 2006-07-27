@@ -34,7 +34,6 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 	private TreePath selectedTreePath;
 	public LandAllocatorQueryBuilder(QueryGenerator qgIn) {
 		super(qgIn);
-		varList = new HashMap();
 		listComp = null;
 	}
 	public String createListPath(int level) {
@@ -87,6 +86,7 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 	public boolean isAtEnd() {
 		return qg.currSel == 4-1;
 	}
+	/*
 	private void getLeaves() {
 		queryFilter = "";
 		queryFunctions.clear();
@@ -103,6 +103,7 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 		}
 		DbViewer.xmlDB.printLockStats("LandAllocatorQueryBuilder.getLeaves");
 	}
+	*/
 	private JTreeAdapter getLandUseTree() {
 		// region query portion!!
 		queryFilter = "/scenario/world/region";
@@ -162,7 +163,7 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 						listComp = null;
 					}
 					list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-					getLeaves();
+					//getLeaves();
 					temp = varList;
 					label.setText("Select Land Use Data:");
 					Vector tempVector = new Vector();

@@ -406,7 +406,7 @@ public class XMLDB {
 			uc.setApplyChangesToContainers(true);
 			// instead of having to determine the size of prog bar, should be figured out
 			// by the number of query builders..
-			final JProgressBar progBar = new JProgressBar(0, res.size()*6);
+			final JProgressBar progBar = new JProgressBar(0, res.size()*7);
 			final JDialog jd = createProgressBarGUI(parentFrame, progBar);
 			(new Thread(new Runnable() {
 				public void run() {
@@ -421,33 +421,27 @@ public class XMLDB {
 					//int numDone = 0;
 					while(res.hasNext()) {
 						System.out.println("Getting new MetaData");
-						//System.out.println("Doesn't have metadata: "+res.next());
 						tempVal = res.next();
-						String path = "local:distinct-node-names(/scenario/world/*[@type='region']/*[@type='sector']/*[@type='subsector']/*[@type='technology']/*[fn:count(child::text()) = 1], ())";
+						String path = "local:distinct-node-names(/scenario/world/*[@type='region']/demographics//*[fn:count(child::text()) = 1], ())";
 						tempRes = getVars(tempVal, path);
 						StringBuffer strBuff = new StringBuffer();
 						while(tempRes.hasNext()) {
 							strBuff.append(tempRes.next().asString());
 							strBuff.append(';');
-							//tempVal.asDocument().setMetaData("", "var", tempRes.next());
-							//System.out.println("Got var: "+tempRes.next().asString());
 						}
 						XmlDocument docTemp = tempVal.asDocument();
-						docTemp.setMetaData("", "var", new XmlValue(strBuff.toString()));
-						//myContainer.updateDocument(docTemp, uc);
-						//docTemp.delete();
-						//tempVal.delete();
+						docTemp.setMetaData("", "demographicsVar", new XmlValue(strBuff.toString()));
 						tempRes.delete();
 						SwingUtilities.invokeLater(incProgress);
 
-						path = "local:distinct-node-names(/scenario/world/*[@type='region']/demographics//*[fn:count(child::text()) = 1], ())";
+						path = "local:distinct-node-names(/scenario/world/*[@type='region']/*[@type='sector']/*[@type='subsector']/*[@type='technology']/*[fn:count(child::text()) = 1], ())";
 						tempRes = getVars(tempVal, path);
 						strBuff = new StringBuffer();
 						while(tempRes.hasNext()) {
 							strBuff.append(tempRes.next().asString());
 							strBuff.append(';');
 						}
-						docTemp.setMetaData("", "demographicsVar", new XmlValue(strBuff.toString()));
+						docTemp.setMetaData("", "var", new XmlValue(strBuff.toString()));
 						tempRes.delete();
 						SwingUtilities.invokeLater(incProgress);
 
@@ -483,6 +477,16 @@ public class XMLDB {
 						tempRes.delete();
 						SwingUtilities.invokeLater(incProgress);
 
+						path = "local:distinct-node-names(//LandLeaf/*[fn:count(child::text()) = 1], ())";
+						tempRes = getVars(tempVal, path);
+						strBuff = new StringBuffer();
+						while(tempRes.hasNext()) {
+							strBuff.append(tempRes.next().asString());
+							strBuff.append(';');
+						}
+						docTemp.setMetaData("", "LandAllocationVar", new XmlValue(strBuff.toString()));
+						tempRes.delete();
+						SwingUtilities.invokeLater(incProgress);
 
 						path = "local:distinct-node-names(/scenario/world/*[@type='region']/GDP/*[fn:count(child::text()) = 1], ())";
 						tempRes = getVars(tempVal, path);
@@ -557,6 +561,7 @@ public class XMLDB {
 		EmissionsQueryBuilder.fuelList = new LinkedHashMap();
 		GDPQueryBuilder.varList = new LinkedHashMap();
 		ClimateQueryBuilder.varList = new LinkedHashMap();
+		LandAllocatorQueryBuilder.varList = new LinkedHashMap();
 		XmlMetaData md;
 		try {
 			while(res.hasNext()) {
@@ -600,6 +605,12 @@ public class XMLDB {
 						for(int i = 0; i < vars.length; ++i) {
 							//System.out.println(vars[i]);
 							ClimateQueryBuilder.varList.put(vars[i], new Boolean(false));
+						}
+					} else if(md.get_name().equals("LandAllocationVar")) {
+						String[] vars = md.get_value().asString().split(";");
+						for(int i = 0; i < vars.length; ++i) {
+							//System.out.println(vars[i]);
+							LandAllocatorQueryBuilder.varList.put(vars[i], new Boolean(false));
 						}
 					}
 				}

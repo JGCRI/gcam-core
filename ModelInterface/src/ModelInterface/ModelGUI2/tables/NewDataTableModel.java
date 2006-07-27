@@ -60,7 +60,7 @@ public class NewDataTableModel extends BaseTableModel{
 	String w3;
 	JFreeChart chart;
 	TableCellRenderer documentationRenderer;
-	//Document doc;
+	int chartLabelCol = -1;
 
 	/**
 	 * Constructor initializes data members, and calls buildTable to initialize data, and filterMaps
@@ -475,7 +475,12 @@ public class NewDataTableModel extends BaseTableModel{
 		// Loop through the rows and create a data series for each.
 		for( int row = 0; row < getRowCount(); ++row ){
 			// Row name is at element zero.
-			String rowNameFull = (String)getValueAt(row,0);
+			String rowNameFull;
+			if(chartLabelCol >= 0) {
+				rowNameFull = (String)getValueAt(row, chartLabelCol);
+			} else {
+				rowNameFull = (String)getValueAt(row,0);
+			}
 			
 			// Split out the name attribute if it contains it.
 			String rowName;
@@ -554,6 +559,18 @@ public class NewDataTableModel extends BaseTableModel{
 		*/
 
 		return chart;
+	}
+
+	public void setColNameIndex(String name) {
+		if(name != null) {
+			for(int i = 0; i < getColumnCount(); ++i) {
+				if(name.equals(getColumnName(i))) {
+					chartLabelCol = i;
+					return;
+				}
+			}
+		}
+		chartLabelCol = -1;
 	}
 	/*
 	ImageIcon icon = null;

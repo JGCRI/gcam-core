@@ -253,17 +253,13 @@ public class MultiTableModel extends BaseTableModel{
 				tM = new NewDataTableModel(regions, qg.getAxis1Name()/*(String)wild.get(0)*/, years, 
 						qg.getVariable(), /*titleStr+'/'+(String)parent.getKey()*/title, (Map)parent.getValue(), doc,
 						null); 
+				tM.setColNameIndex(qg.getChartLabelColumnName());
 			} else {
 				tM = new NewDataTableModel(regions, (String)wild.get(0), years, 
 						(String)wild.get(1), /*titleStr+'/'+(String)parent.getKey()*/title, (Map)parent.getValue(), doc,
 						documentation /*, (String)wild.get(2)*/); 
 			}
-			//BufferedImage chartImage = tM.createChart(0,0).createBufferedImage( 350, 350);
-			//tM.createChart(0,0);
 	  		JTable jTable = new JTable(tM);
-
-	  		//jTable.getModel().addTableModelListener((FileChooserDemo)parentFrame);
-	  		//jTable.getModel().addTableModelListener(FileChooserDemo.thisDemo);
 
 	  		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	 
@@ -281,10 +277,6 @@ public class MultiTableModel extends BaseTableModel{
 		  		j++;
 	  		}
 			CopyPaste copyPaste = new CopyPaste( jTable );
-			/* only want the action to be passed to this copy paste when it is in focus
-			((FileChooserDemo)parentFrame).copyMenu.addActionListener(copyPaste);
-			((FileChooserDemo)parentFrame).pasteMenu.addActionListener(copyPaste);
-			*/
 	  		JScrollPane tV = new JScrollPane(jTable);
 			JScrollPane tableView = tV;
 			if(me.getValue() instanceof Double) {
@@ -292,8 +284,6 @@ public class MultiTableModel extends BaseTableModel{
 				JSplitPane sp = new JSplitPane();
 
 				JLabel labelChart = new JLabel();
-				//labelChart.setIcon(new ImageIcon(tM.getChartImage()));
-				//BufferedImage chartImage = chart.createBufferedImage( 350, 350);
 				try {
 					JFreeChart chart = tM.createChart(0,0);
 					Dimension chartDim = tM.getChartDimensions(chart);
@@ -304,26 +294,17 @@ public class MultiTableModel extends BaseTableModel{
 					labelChart.setText("Cannot Create Chart");
 				}
 				//labelChart.setIcon(tM.getChartImage());
-				/*
-				   tpanel.add(tV);
-				   tpanel.add(Box.createHorizontalStrut(10));
-				   tpanel.add(labelChart);
-				   */
 
 				sp.setLeftComponent(tV);
 				sp.setRightComponent(labelChart);
 				tableView = new JScrollPane(sp);
 				sp.setDividerLocation(parentFrame.getWidth()-350);
-				//tableView.setColumnHeaderView(jTable);
-				//tableView.getViewport().getView().add(Box.createHorizontalStrut(1000));
-				//tableView.getViewport().getView().add(labelChart);
 			}
 
 	  		if(tables == null) {
 		  		tables = new Vector();
 	  		}
 			tables.add(titleStr+"/");
-	  		//tables.add(tpanel);
 	  		tables.add(tableView);
 			return;
 		} else {

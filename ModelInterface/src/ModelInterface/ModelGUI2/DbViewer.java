@@ -554,18 +554,22 @@ public class DbViewer implements ActionListener, MenuAdder {
 					parentFrame.getGlassPane().setVisible(true);
 					TreePath[] selPaths = queryList.getSelectionPaths();
 					for(int i = 0; i < selPaths.length; ++i) {
-						QueryGenerator qg = (QueryGenerator)selPaths[i].getLastPathComponent();
-						Container ret = null;
-						if(qg.isGroup()) {
-							ret = createGroupTableContent(qg, tempFilterQuery);
-						} else {
-							ret = createSingleTableContent(qg, tempFilterQuery);
-						}
-						if(ret != null) {
-							//tablePanel.removeAll();
-							tablesTabs.addTab(qg.toString(), new TabCloseIcon(), ret);
-							// fire this here, or after they are all done??
-							((InterfaceMain)parentFrame).fireProperty("Query", null, bt);
+						try {
+							QueryGenerator qg = (QueryGenerator)selPaths[i].getLastPathComponent();
+							Container ret = null;
+							if(qg.isGroup()) {
+								ret = createGroupTableContent(qg, tempFilterQuery);
+							} else {
+								ret = createSingleTableContent(qg, tempFilterQuery);
+							}
+							if(ret != null) {
+								//tablePanel.removeAll();
+								tablesTabs.addTab(qg.toString(), new TabCloseIcon(), ret);
+								// fire this here, or after they are all done??
+								((InterfaceMain)parentFrame).fireProperty("Query", null, bt);
+							}
+						} catch(ClassCastException cce) {
+							System.out.println("Warning: Caught "+cce+" likely a QueryGroup was in the selection");
 						}
 					}
 					//tablePanel.add(Box.createVerticalGlue());

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.event.TreeModelListener;
+import javax.swing.event.TreeModelEvent;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Element;
@@ -17,6 +18,7 @@ public class QueryTreeModel implements TreeModel {
 	public QueryTreeModel(Node n) {
 		root = new QueryGroup("All", recCreateTree(n));
 		tmListeners = new ArrayList();
+		addTreeModelListener(new QueryTreeModelListener());
 	}
 	protected ArrayList recCreateTree(Node n) {
 		NodeList nl = n.getChildNodes();
@@ -138,6 +140,21 @@ public class QueryTreeModel implements TreeModel {
 		}
 		public String toString() {
 			return groupName;
+		}
+	}
+	protected class QueryTreeModelListener implements TreeModelListener {
+		public void treeNodesChanged(TreeModelEvent e) {
+			// don't care about this
+		}
+		public void treeNodesInserted(TreeModelEvent e) {
+			System.out.println("Insert being called from "+e.getSource());
+		}
+		public void treeNodesRemoved(TreeModelEvent e) {
+			System.out.println("Remove being called from "+e.getSource());
+			// create undoable edit
+		}
+		public void treeStructureChanged(TreeModelEvent e) {
+			// don't care about this
 		}
 	}
 }
