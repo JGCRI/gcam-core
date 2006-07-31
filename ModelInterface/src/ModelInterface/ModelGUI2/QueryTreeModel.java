@@ -133,7 +133,7 @@ public class QueryTreeModel implements TreeModel {
 		addQueryGroup(doc, doc.getDocumentElement(), root);
 		return doc.getDocumentElement();
 	}
-	protected void addQueryGroup(Document doc, Node currNode, QueryGroup currGroup) {
+	public void addQueryGroup(Document doc, Node currNode, QueryGroup currGroup) {
 		Node tempNode;
 		for(int i = 0; i < currGroup.getQueryList().size(); ++i) {
 			if(currGroup.getQueryList().get(i) instanceof QueryGroup) {

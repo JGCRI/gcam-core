@@ -291,6 +291,7 @@ public class MultiTableModel extends BaseTableModel{
 							(int)chartDim.getHeight());
 					labelChart.setIcon(new ImageIcon(chartImage));
 				} catch(Exception e) {
+					e.printStackTrace();
 					labelChart.setText("Cannot Create Chart");
 				}
 				//labelChart.setIcon(tM.getChartImage());
