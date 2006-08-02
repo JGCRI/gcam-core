@@ -34,7 +34,7 @@ import com.sleepycat.dbxml.XmlResults;
 import com.sleepycat.dbxml.XmlValue;
 import com.sleepycat.dbxml.XmlException;
 
-public class QueryGenerator {
+public class QueryGenerator implements java.io.Serializable{
 	private Frame parentFrame;
 	String xPath;
 	String var;
@@ -548,6 +548,17 @@ public class QueryGenerator {
 		}
 		queryNode.appendChild(temp);
 		return queryNode;
+	}
+	/**
+	 * Used to determine if this query has <i>enough</i> information to
+	 * be a valid query.  I.E if it was passed an invalid Node into the constructor.
+	 * @return True if it is determined enough data had been gathered, false otherwise.
+	 */
+	public boolean isValid() {
+		// checking if qb is null may or may not be a good way to determine if this
+		// is valid..
+		return title != null && yearLevel != null && nodeLevel != null && var != null &&
+			axis1Name != null && axis2Name != null;
 	}
 	public String toString() {
 		return title;

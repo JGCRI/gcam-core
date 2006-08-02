@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.EventListener;
 
-public abstract class QueryBuilder {
+public abstract class QueryBuilder implements java.io.Serializable {
 
 	/* Query Fragments that will be used when generating queries.  We need to be able to 
 	 * have some method for enabaling subtypes of for example sectors. Currently done by

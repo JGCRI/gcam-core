@@ -31,11 +31,15 @@ public class QueryTreeModel implements TreeModel {
 	protected ArrayList recCreateTree(Node n) {
 		NodeList nl = n.getChildNodes();
 		ArrayList ret = new ArrayList(nl.getLength());
+		QueryGenerator qg;
 		for(int i = 0; i < nl.getLength(); ++i) {
 			if(nl.item(i).getNodeName().equals("queryGroup")) {
 				ret.add(new QueryGroup(((Element)nl.item(i)).getAttribute("name"), recCreateTree(nl.item(i))));
 			} else {
-				ret.add(new QueryGenerator(nl.item(i)));
+				qg = new QueryGenerator(nl.item(i));
+				if(qg.isValid()) {
+					ret.add(qg);
+				}
 			}
 		}
 		return ret;
@@ -176,6 +180,19 @@ public class QueryTreeModel implements TreeModel {
 	public QueryGroup createQueryGroup(String name, ArrayList list) {
 		return new QueryGroup(name, list);
 	}
+	public QueryGroup createQueryGroup(Node n) {
+		// TODO: put in more checks to make sure this node represents
+		// a real QueryGroup
+		String name = ((Element)n).getAttribute("name");
+		if(name == null) {
+			return null;
+		}
+		ArrayList temp = recCreateTree(n);
+		if(temp.size() == 0) {
+			return null;
+		}
+		return new QueryGroup(name, temp);
+	}
 	public class QueryGroup {
 		ArrayList qList;
 		String groupName;
@@ -193,7 +210,7 @@ public class QueryTreeModel implements TreeModel {
 			return groupName;
 		}
 	}
-	protected class QueryTreeModelListener implements TreeModelListener {
+	protected class QueryTreeModelListener implements TreeModelListener, java.io.Serializable {
 		private UndoManager undoManager;
 		private InterfaceMain main;
 		public QueryTreeModelListener() {

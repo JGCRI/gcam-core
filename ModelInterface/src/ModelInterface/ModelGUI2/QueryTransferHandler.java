@@ -76,73 +76,106 @@ public class QueryTransferHandler extends TransferHandler {
 	}
 	public boolean importData(JComponent comp, Transferable t) {
 		DataFlavor[] transFlavors = t.getTransferDataFlavors();
-		if(canImport(comp, transFlavors)) {
-			QueryGenerator qg = null;
-			QueryGroup qGroup = null;
-			Node node = null;
-			String str = null;
-			boolean hasLocalGen = false;
-			boolean hasSerialGen = false;
-			boolean hasLocalGroup = false;
-			boolean hasSerialGroup = false;
-			boolean hasLocalNode = false;
-			boolean hasSerialNode = false;
-			boolean hasString = false;
-			for(DataFlavor tranFlav : transFlavors) {
-				if(localQueryGeneratorFlavor.equals(tranFlav)) {
-					hasLocalGen = true;
-				} else if(serialQueryGeneratorFlavor.equals(tranFlav)) {
-					hasSerialGen = true;
-				} else if(localQueryGroupFlavor.equals(tranFlav)) {
-					hasLocalGroup = true;
-				} else if(serialQueryGroupFlavor.equals(tranFlav)) {
-					hasSerialGroup = true;
-				} else if(localNodeFlavor.equals(tranFlav)) {
-					hasLocalNode = true;
-				} else if(serialNodeFlavor.equals(tranFlav)) {
-					hasSerialNode = true;
-				} else if(tranFlav.isFlavorTextType()) {
-					hasString = true;
-				}
+		if(!canImport(comp, transFlavors)) {
+			return false;
+		}
+		QueryGenerator qg = null;
+		QueryGroup qGroup = null;
+		Node node = null;
+		boolean hasLocalGen = false;
+		boolean hasSerialGen = false;
+		boolean hasLocalGroup = false;
+		boolean hasSerialGroup = false;
+		boolean hasLocalNode = false;
+		boolean hasSerialNode = false;
+		boolean hasString = false;
+		for(DataFlavor tranFlav : transFlavors) {
+			if(localQueryGeneratorFlavor.equals(tranFlav)) {
+				hasLocalGen = true;
+			} else if(serialQueryGeneratorFlavor.equals(tranFlav)) {
+				hasSerialGen = true;
+			} else if(localQueryGroupFlavor.equals(tranFlav)) {
+				hasLocalGroup = true;
+			} else if(serialQueryGroupFlavor.equals(tranFlav)) {
+				hasSerialGroup = true;
+			} else if(localNodeFlavor.equals(tranFlav)) {
+				hasLocalNode = true;
+			} else if(serialNodeFlavor.equals(tranFlav)) {
+				hasSerialNode = true;
+			} else if(tranFlav.isFlavorTextType()) {
+				hasString = true;
 			}
-			try {
-				if(hasLocalGen) {
-					qg = (QueryGenerator)t.getTransferData(localQueryGeneratorFlavor);
-				} else if(hasSerialGen) {
-					qg = (QueryGenerator)t.getTransferData(serialQueryGeneratorFlavor);
-				} else if(hasLocalGroup) {
-					qGroup = (QueryGroup)t.getTransferData(localQueryGroupFlavor);
-				} else if(hasSerialGroup) {
-					qGroup = (QueryGroup)t.getTransferData(serialQueryGroupFlavor);
-				} else if(hasLocalNode) {
-					node = (Node)t.getTransferData(localNodeFlavor);
-				} else if(hasSerialNode) {
-					node = (Node)t.getTransferData(serialNodeFlavor);
-				} else if(hasString) {
-					str = (String)t.getTransferData(DataFlavor.stringFlavor);
-				} else {
-					return false;
-				}
-			} catch(UnsupportedFlavorException ufe) {
-				ufe.printStackTrace();
-				return false;
-			} catch(IOException ioe) {
-				ioe.printStackTrace();
-				return false;
-			}
-
-			JTree target = (JTree)comp;
-			TreePath selPath = target.getSelectionPath();
-			QueryTreeModel qt = (QueryTreeModel)target.getModel();
-			if(qg != null) {
-				qt.add(selPath, qg);
-				return true;
-			} else if(qGroup != null) {
-				qt.add(selPath, qGroup);
-				return true;
+		}
+		try {
+			if(hasLocalGen && lastAction == MOVE) {
+				System.out.println("Doing local Gen");
+				qg = (QueryGenerator)t.getTransferData(localQueryGeneratorFlavor);
+			} else if(hasSerialGen) {
+				System.out.println("Doing serial Gen");
+				qg = (QueryGenerator)t.getTransferData(serialQueryGeneratorFlavor);
+			} else if(hasLocalGroup && lastAction == MOVE) {
+				System.out.println("Doing local Grp");
+				qGroup = (QueryGroup)t.getTransferData(localQueryGroupFlavor);
+			} else if(hasSerialGroup) {
+				System.out.println("Doing serial Grp");
+				qGroup = (QueryGroup)t.getTransferData(serialQueryGroupFlavor);
+			} else if(hasLocalNode) {
+				System.out.println("Doing local Node");
+				// I don't think nodes are serializable..
+				node = (Node)t.getTransferData(localNodeFlavor);
+			} else if(hasSerialNode) {
+				System.out.println("Doing serial Node");
+				node = (Node)t.getTransferData(serialNodeFlavor);
+			} else if(hasString) {
+				System.out.println("Doing String");
+				String str = (String)t.getTransferData(DataFlavor.stringFlavor);
+				LSInput tempInput = implls.createLSInput();
+				tempInput.setStringData(str);
+				node = doc.adoptNode(parser.parse(tempInput).getDocumentElement());
 			} else {
+				System.out.println("Returning false");
 				return false;
 			}
+		} catch(UnsupportedFlavorException ufe) {
+			ufe.printStackTrace();
+			return false;
+		} catch(IOException ioe) {
+			ioe.printStackTrace();
+			return false;
+		}
+
+		JTree target = (JTree)comp;
+		TreePath selPath = target.getSelectionPath();
+		QueryTreeModel qt = (QueryTreeModel)target.getModel();
+		if(node != null) {
+			if(node.getNodeName().equals("queryGroup")) {
+				qGroup = qt.createQueryGroup(node);
+			} else {
+				qg = new QueryGenerator(node);
+				if(!qg.isValid()) {
+					qg = null;
+				}
+			}
+		}
+		if(qg != null) {
+			qt.add(selPath, qg);
+			return true;
+		} else if(qGroup != null) {
+			if(!qGroup.getName().equals("MultipleQuerySelection")) {
+				qt.add(selPath, qGroup);
+			} else {
+				Object curr;
+				ArrayList children = qGroup.getQueryList();
+				for(int i = 0; i < children.size(); ++i) {
+					curr = children.get(i);
+					if(curr instanceof QueryGenerator) {
+						qt.add(selPath, (QueryGenerator)curr);
+					} else if(curr instanceof QueryGroup) {
+						qt.add(selPath, (QueryGroup)curr);
+					}
+				}
+			}
+			return true;
 		} else {
 			return false;
 		}
@@ -188,7 +221,7 @@ public class QueryTransferHandler extends TransferHandler {
 			} else {
 				ArrayList dataGrouped = new ArrayList(paths.length);
 				for(TreePath path : paths) {
-					dataGrouped.add(path);
+					dataGrouped.add(path.getLastPathComponent());
 				}
 				data = ((QueryTreeModel)qt.getModel()).createQueryGroup("MultipleQuerySelection", dataGrouped);
 			}
@@ -227,8 +260,11 @@ public class QueryTransferHandler extends TransferHandler {
 					toSerialize = ((QueryGenerator)data).getAsNode(doc);
 				} else {
 					toSerialize = doc.createElement("queryGroup");
+					System.out.println(toSerialize);
 					((Element)toSerialize).setAttribute("name", ((QueryGroup)data).getName());
+					System.out.println(toSerialize);
 					((QueryTreeModel)qt.getModel()).addQueryGroup(doc, toSerialize, ((QueryGroup)data));
+					System.out.println(toSerialize);
 				}
 				if(flavor.isFlavorTextType()) {
 					return implls.createLSSerializer().writeToString(toSerialize);
