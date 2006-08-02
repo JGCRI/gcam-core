@@ -92,6 +92,9 @@ public class QueryTreeModel implements TreeModel {
 	public void add(TreePath path, String gN) {
 		addValue(path, new QueryGroup(gN, new ArrayList()));
 	}
+	public void add(TreePath path, QueryGroup qGroup) {
+		addValue(path, qGroup);
+	}
 	private void addValue(TreePath path, Object val) {
 		TreePath parentPath;
 		if(path.getLastPathComponent() instanceof QueryGroup) {
@@ -169,6 +172,9 @@ public class QueryTreeModel implements TreeModel {
 		for(Iterator<TreeModelListener> it = tmListeners.iterator(); it.hasNext(); ) {
 			it.next().treeStructureChanged(e);
 		}
+	}
+	public QueryGroup createQueryGroup(String name, ArrayList list) {
+		return new QueryGroup(name, list);
 	}
 	public class QueryGroup {
 		ArrayList qList;
