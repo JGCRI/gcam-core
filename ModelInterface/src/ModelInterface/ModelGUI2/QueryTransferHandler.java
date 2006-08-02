@@ -15,6 +15,8 @@ import javax.swing.JComponent;
 import javax.swing.JTree;
 import javax.swing.tree.TreePath;
 
+import java.util.ArrayList;
+
 import java.io.IOException;
 
 import ModelInterface.ModelGUI2.queries.QueryGenerator;
@@ -75,21 +77,49 @@ public class QueryTransferHandler extends TransferHandler {
 	public boolean importData(JComponent comp, Transferable t) {
 		DataFlavor[] transFlavors = t.getTransferDataFlavors();
 		if(canImport(comp, transFlavors)) {
-			QueryGenerator qg;
-			boolean hasLocal = false;
-			boolean hasSerial = false;
+			QueryGenerator qg = null;
+			QueryGroup qGroup = null;
+			Node node = null;
+			String str = null;
+			boolean hasLocalGen = false;
+			boolean hasSerialGen = false;
+			boolean hasLocalGroup = false;
+			boolean hasSerialGroup = false;
+			boolean hasLocalNode = false;
+			boolean hasSerialNode = false;
+			boolean hasString = false;
 			for(DataFlavor tranFlav : transFlavors) {
 				if(localQueryGeneratorFlavor.equals(tranFlav)) {
-					hasLocal = true;
+					hasLocalGen = true;
 				} else if(serialQueryGeneratorFlavor.equals(tranFlav)) {
-					hasSerial = true;
+					hasSerialGen = true;
+				} else if(localQueryGroupFlavor.equals(tranFlav)) {
+					hasLocalGroup = true;
+				} else if(serialQueryGroupFlavor.equals(tranFlav)) {
+					hasSerialGroup = true;
+				} else if(localNodeFlavor.equals(tranFlav)) {
+					hasLocalNode = true;
+				} else if(serialNodeFlavor.equals(tranFlav)) {
+					hasSerialNode = true;
+				} else if(tranFlav.isFlavorTextType()) {
+					hasString = true;
 				}
 			}
 			try {
-				if(hasLocal) {
+				if(hasLocalGen) {
 					qg = (QueryGenerator)t.getTransferData(localQueryGeneratorFlavor);
-				} else if(hasSerial) {
+				} else if(hasSerialGen) {
 					qg = (QueryGenerator)t.getTransferData(serialQueryGeneratorFlavor);
+				} else if(hasLocalGroup) {
+					qGroup = (QueryGroup)t.getTransferData(localQueryGroupFlavor);
+				} else if(hasSerialGroup) {
+					qGroup = (QueryGroup)t.getTransferData(serialQueryGroupFlavor);
+				} else if(hasLocalNode) {
+					node = (Node)t.getTransferData(localNodeFlavor);
+				} else if(hasSerialNode) {
+					node = (Node)t.getTransferData(serialNodeFlavor);
+				} else if(hasString) {
+					str = (String)t.getTransferData(DataFlavor.stringFlavor);
 				} else {
 					return false;
 				}
@@ -104,8 +134,15 @@ public class QueryTransferHandler extends TransferHandler {
 			JTree target = (JTree)comp;
 			TreePath selPath = target.getSelectionPath();
 			QueryTreeModel qt = (QueryTreeModel)target.getModel();
-			qt.add(selPath, qg);
-			return true;
+			if(qg != null) {
+				qt.add(selPath, qg);
+				return true;
+			} else if(qGroup != null) {
+				qt.add(selPath, qGroup);
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			return false;
 		}
@@ -113,7 +150,12 @@ public class QueryTransferHandler extends TransferHandler {
 	public boolean canImport(JComponent comp, DataFlavor[] transFlavors) {
 		for(DataFlavor tranFlav : transFlavors) {
 			if(localQueryGeneratorFlavor.equals(tranFlav) ||
-					serialQueryGeneratorFlavor.equals(tranFlav)) {
+				serialQueryGeneratorFlavor.equals(tranFlav) ||
+				localQueryGroupFlavor.equals(tranFlav) ||
+				serialQueryGroupFlavor.equals(tranFlav) ||
+				localNodeFlavor.equals(tranFlav) ||
+				serialNodeFlavor.equals(tranFlav) ||
+				tranFlav.isFlavorTextType()) {
 				return true;
 			}
 		}
@@ -140,7 +182,16 @@ public class QueryTransferHandler extends TransferHandler {
 		private Object data;
 		public TransferableQuery(JTree qt) {
 			this.qt = qt;
-			data = qt.getSelectionPath().getLastPathComponent();
+			TreePath[] paths = qt.getSelectionPaths();
+			if(paths.length == 1) {
+				data = qt.getSelectionPath().getLastPathComponent();
+			} else {
+				ArrayList dataGrouped = new ArrayList(paths.length);
+				for(TreePath path : paths) {
+					dataGrouped.add(path);
+				}
+				data = ((QueryTreeModel)qt.getModel()).createQueryGroup("MultipleQuerySelection", dataGrouped);
+			}
 			transFlavors = new DataFlavor[5];
 			if(data instanceof QueryGenerator) {
 				transFlavors[0] = localQueryGeneratorFlavor;
