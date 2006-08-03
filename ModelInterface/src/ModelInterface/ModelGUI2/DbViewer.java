@@ -418,6 +418,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		regionList = new JList(regions);
 		final JTree queryList = new JTree(queries);
 		queryList.setTransferHandler(new QueryTransferHandler(queriesDoc, implls));
+		queryList.setDragEnabled(true);
 		queryList.getSelectionModel().setSelectionMode(javax.swing.tree.TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION);
 		queryList.setSelectionRow(0);
 		for(int i = 0; i < queryList.getRowCount(); ++i) {

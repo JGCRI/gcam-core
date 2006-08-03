@@ -409,6 +409,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 				//ADDING CP HERE
 				//DOMPasteboard pd = new DOMPasteboard(doc, jtree, implls);
 				jtree.setTransferHandler(new DOMTransferHandler(doc, implls));
+				jtree.setDragEnabled(true);
 				//menuSave.setEnabled(true); // now save can show up
 				//setTitle("["+file+"] - ModelGUI");
 				parentFrame.setTitle("["+file+"] - ModelInterface");

@@ -20,6 +20,10 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Element;
 import org.w3c.dom.Document;
 
+import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
+import java.io.IOException;
+
 public class QueryTreeModel implements TreeModel {
 	protected QueryGroup root;
 	protected ArrayList<TreeModelListener> tmListeners;
@@ -118,9 +122,6 @@ public class QueryTreeModel implements TreeModel {
 		Object[] lastComp = new Object[1];
 		int[] index;
 		lastComp[0] = path.getLastPathComponent();
-		if(lastComp[0] instanceof QueryGroup) {
-			// ask sure to remove all of this group
-		}
 		if(lastComp[0].equals(root)) {
 			Object[] children = root.getQueryList().toArray();
 			index = new int[children.length];
@@ -193,7 +194,7 @@ public class QueryTreeModel implements TreeModel {
 		}
 		return new QueryGroup(name, temp);
 	}
-	public class QueryGroup {
+	public class QueryGroup implements java.io.Serializable {
 		ArrayList qList;
 		String groupName;
 		public QueryGroup(String name, ArrayList list) {
@@ -209,8 +210,16 @@ public class QueryTreeModel implements TreeModel {
 		public String toString() {
 			return groupName;
 		}
+		private void writeObject(ObjectOutputStream out) throws IOException {
+			out.writeObject(groupName);
+			out.writeObject(qList);
+		}
+		private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+			groupName = (String)in.readObject();
+			qList = (ArrayList)in.readObject();
+		}
 	}
-	protected class QueryTreeModelListener implements TreeModelListener, java.io.Serializable {
+	protected class QueryTreeModelListener implements TreeModelListener {
 		private UndoManager undoManager;
 		private InterfaceMain main;
 		public QueryTreeModelListener() {

@@ -9,6 +9,7 @@ import org.w3c.dom.ls.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.event.InputEvent;
 
 import javax.swing.TransferHandler;
 import javax.swing.JComponent;
@@ -42,6 +43,7 @@ public class QueryTransferHandler extends TransferHandler {
 	private static final String localNodeType = DataFlavor.javaJVMLocalObjectMimeType+
 		";class=org.w3c.dom.Node";
 	private int lastAction;
+	private TreePath[] dragPaths;
 
 	static {
 		try {
@@ -56,14 +58,7 @@ public class QueryTransferHandler extends TransferHandler {
 
 	public QueryTransferHandler(Document docIn, DOMImplementationLS impllsIn) {
 		super();
-		if(localQueryGeneratorFlavor == null) {
-			// !!! stupid compilier
-			localQueryGeneratorFlavor = null;
-		}
-		if(localQueryGroupFlavor == null) {
-			// !!! stupid compilier
-			localQueryGroupFlavor = null;
-		}	
+		dragPaths = null;
 		doc = docIn;
 		implls = impllsIn;
 		try {
@@ -108,32 +103,24 @@ public class QueryTransferHandler extends TransferHandler {
 		}
 		try {
 			if(hasLocalGen && lastAction == MOVE) {
-				System.out.println("Doing local Gen");
 				qg = (QueryGenerator)t.getTransferData(localQueryGeneratorFlavor);
 			} else if(hasSerialGen) {
-				System.out.println("Doing serial Gen");
 				qg = (QueryGenerator)t.getTransferData(serialQueryGeneratorFlavor);
 			} else if(hasLocalGroup && lastAction == MOVE) {
-				System.out.println("Doing local Grp");
 				qGroup = (QueryGroup)t.getTransferData(localQueryGroupFlavor);
 			} else if(hasSerialGroup) {
-				System.out.println("Doing serial Grp");
 				qGroup = (QueryGroup)t.getTransferData(serialQueryGroupFlavor);
 			} else if(hasLocalNode) {
-				System.out.println("Doing local Node");
 				// I don't think nodes are serializable..
 				node = (Node)t.getTransferData(localNodeFlavor);
 			} else if(hasSerialNode) {
-				System.out.println("Doing serial Node");
 				node = (Node)t.getTransferData(serialNodeFlavor);
 			} else if(hasString) {
-				System.out.println("Doing String");
 				String str = (String)t.getTransferData(DataFlavor.stringFlavor);
 				LSInput tempInput = implls.createLSInput();
 				tempInput.setStringData(str);
 				node = doc.adoptNode(parser.parse(tempInput).getDocumentElement());
 			} else {
-				System.out.println("Returning false");
 				return false;
 			}
 		} catch(UnsupportedFlavorException ufe) {
@@ -197,12 +184,23 @@ public class QueryTransferHandler extends TransferHandler {
 	protected Transferable createTransferable(JComponent comp) {
 		return new TransferableQuery((JTree)comp);
 	}
+	public void exportAsDrag(JComponent comp, InputEvent e, int action) {
+		dragPaths = ((JTree)comp).getSelectionPaths();
+		super.exportAsDrag(comp, e, action);
+	}
 	protected void exportDone(JComponent comp, Transferable t, int action) {
 		lastAction = action;
 		if(action == MOVE) {
-			((JTree)comp).removeSelectionPaths(((JTree)comp).getSelectionPaths());
-			// do I need to remove from the model, is it going to delete it?
-			// don't want it to be deleted do I?
+			QueryTreeModel qt = (QueryTreeModel)((JTree)comp).getModel();
+			TreePath[] paths;
+			if(dragPaths != null) {
+				paths = dragPaths;
+			} else {
+				paths = ((JTree)comp).getSelectionPaths();
+			}
+			for(TreePath path : paths) {
+				qt.remove(path);
+			}
 		}
 	}
 	public int getSourceActions(JComponent c) {
@@ -260,11 +258,13 @@ public class QueryTransferHandler extends TransferHandler {
 					toSerialize = ((QueryGenerator)data).getAsNode(doc);
 				} else {
 					toSerialize = doc.createElement("queryGroup");
-					System.out.println(toSerialize);
 					((Element)toSerialize).setAttribute("name", ((QueryGroup)data).getName());
-					System.out.println(toSerialize);
 					((QueryTreeModel)qt.getModel()).addQueryGroup(doc, toSerialize, ((QueryGroup)data));
-					System.out.println(toSerialize);
+					if(toSerialize.getFirstChild() == null) {
+						// hack because the serializer doesn't seem to like no children on the
+						// root tag
+						toSerialize.appendChild(doc.createTextNode(""));
+					}
 				}
 				if(flavor.isFlavorTextType()) {
 					return implls.createLSSerializer().writeToString(toSerialize);
