@@ -222,7 +222,7 @@ double UnmanagedLandLeaf::getTotalLandAllocation( const LandAllocationType aType
                                                   const int aPeriod ) const
 {
     // Check if unmanaged land should be returned.
-    if( aType == eAny || aType == eUnmanaged ){
+    if( aType == eAnyLand || aType == eUnmanaged ){
         return mLandAllocation[ aPeriod ];
     }
     return 0;

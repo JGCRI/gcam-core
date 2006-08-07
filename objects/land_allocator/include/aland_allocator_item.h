@@ -103,7 +103,7 @@ public:
         eUnmanaged,
 
         //! Any land allocation.
-        eAny
+        eAnyLand
     };
 
     virtual double getTotalLandAllocation( const LandAllocationType aType,

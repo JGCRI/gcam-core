@@ -120,7 +120,7 @@ double ForestLandLeaf::getTotalLandAllocation( const LandAllocationType aType,
                                                const int aPeriod ) const
 {
     // All forestry land is production.
-    if( aType == eAny || aType == eManaged ){
+    if( aType == eAnyLand || aType == eManaged ){
         return mLandAllocation[ aPeriod ];
     }
     return 0;

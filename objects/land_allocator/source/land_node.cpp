@@ -279,7 +279,7 @@ void LandNode::setInitShares( const double aLandAllocationAbove,
                               const int aPeriod )
 {
     // Calculating the shares
-    double nodeLandAllocation = getTotalLandAllocation( eAny, aPeriod ); 
+    double nodeLandAllocation = getTotalLandAllocation( eAnyLand, aPeriod ); 
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
         mChildren[ i ]->setInitShares( nodeLandAllocation,
                                        mLandUseHistory.get(), aPeriod );

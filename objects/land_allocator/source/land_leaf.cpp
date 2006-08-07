@@ -514,7 +514,7 @@ double LandLeaf::getTotalLandAllocation( const LandAllocationType aType,
                                          const int aPeriod ) const
 {
     // Unless a land leaf is overridden it is a production leaf.
-    if( aType == eAny || aType == eManaged ){
+    if( aType == eAnyLand || aType == eManaged ){
         return mLandAllocation[ aPeriod ];
     }
     return 0;

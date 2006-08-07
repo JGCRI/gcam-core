@@ -90,7 +90,7 @@ void ALandAllocatorItem::csvOutput( const string& aRegionName ) const {
     // write land allocations for region
     vector<double> temp( scenario->getModeltime()->getmaxper() );
     for( unsigned int i = 0; i < temp.size(); ++i ){
-        temp[ i ] = getTotalLandAllocation( eAny, i );
+        temp[ i ] = getTotalLandAllocation( eAnyLand, i );
     }
     fileoutput3(aRegionName, mName," "," ","Land Use","000Ha", temp );
 
@@ -104,7 +104,7 @@ void ALandAllocatorItem::dbOutput( const string& aRegionName ) const {
     // write land allocations for region
     vector<double> temp( scenario->getModeltime()->getmaxper() );
     for( unsigned int i = 0; i < temp.size(); ++i ){
-        temp[ i ] = getTotalLandAllocation( eAny, i );
+        temp[ i ] = getTotalLandAllocation( eAnyLand, i );
     }
     dboutput4(aRegionName, "Land Allocation", mName,"Land Use","000Ha", temp );
 }
