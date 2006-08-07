@@ -90,10 +90,10 @@ public:
                                     const double aAgProdChange,
                                     const int aPeriod );
 
-    virtual void calcLandShares( const std::string& aRegionName,
-                                 const double aSigmaAbove,
-                                 const double aTotalLandAllocated,
-                                 const int aPeriod );
+    virtual double calcLandShares( const std::string& aRegionName,
+                                   const double aSigmaAbove,
+                                   const double aTotalLandAllocated,
+                                   const int aPeriod );
 
     virtual void calcLandAllocation( const std::string& aRegionName,
                                      const double aLandAllocationAbove,
@@ -114,9 +114,7 @@ public:
     virtual double getLandAllocation( const std::string& aProductName,
                                       const int aPeriod ) const;
 
-    virtual double getLandAllocationInternal( const int aPeriod ) const;
-
-    virtual double getTotalLandAllocation( const bool aProductionOnly,
+    virtual double getTotalLandAllocation( const LandAllocationType aType,
                                            const int aPeriod ) const;
     
     virtual double getBaseLandAllocation( const int aPeriod ) const;
@@ -128,8 +126,6 @@ public:
     virtual void csvOutput( const std::string& aRegionName ) const;
 
     virtual void dbOutput( const std::string& aRegionName ) const;
-
-    virtual bool isProductionLeaf() const;
 
     virtual void setUnmanagedLandValues( const std::string& aRegionName,
                                          const int aPeriod );
@@ -169,6 +165,9 @@ protected:
     //! Calculated cumulative technical change.
     objects::PeriodVector<double> mAgProdChange;
 
+    //! Land allocated in 1000's of hectars
+    objects::PeriodVector<double> mLandAllocation;
+
     //! Carbon content and emissions calculator for the leaf.
 	std::auto_ptr<ICarbonCalc> mCarbonContentCalc;
 
@@ -194,7 +193,7 @@ protected:
     virtual void checkCalObservedYield( const int aPeriod ) const;
 
     virtual void initLandUseHistory( const LandUseHistory* aLandUseHistory,
-                                     const int aPeriod );
+                                     const int aFirstCalibratedPeriod );
 };
 
 #endif // _LAND_LEAF_H_

@@ -47,14 +47,6 @@ void ALandAllocatorItem::normalizeLandAllocation( const double aSum,
     assert( util::isValidNumber( mShare[ aPeriod ] ) );
 }
 
-/*! \brief Returns the share of this land type at a given period.
-* \param period the time period.
-* \author James Blackwood
-*/
-double ALandAllocatorItem::getShare( const int aPeriod ) const {
-    return mShare[ aPeriod ];
-}
-
 /*! \brief Returns the name.
 * \author James Blackwood
 * \return the name of this ALandAllocatorItem
@@ -77,7 +69,6 @@ void ALandAllocatorItem::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTa
 
     // write out basic datamembers
     XMLWriteElement( mIntrinsicRate[ aPeriod ], "IntrinsicRate", aOut, aTabs );
-    XMLWriteElement( mLandAllocation[ aPeriod ], "landAllocation", aOut, aTabs );
 
     toDebugXMLDerived( aPeriod, aOut, aTabs );
     // Finished writing xml for the class members.
@@ -97,7 +88,11 @@ void ALandAllocatorItem::csvOutput( const string& aRegionName ) const {
         string var4name,string var5name,string uname,vector<double> dout);
 
     // write land allocations for region
-    fileoutput3(aRegionName, mName," "," ","Land Use","000Ha", mLandAllocation.convertToVector() );
+    vector<double> temp( scenario->getModeltime()->getmaxper() );
+    for( unsigned int i = 0; i < temp.size(); ++i ){
+        temp[ i ] = getTotalLandAllocation( eAny, i );
+    }
+    fileoutput3(aRegionName, mName," "," ","Land Use","000Ha", temp );
 
 }
 
@@ -107,5 +102,9 @@ void ALandAllocatorItem::dbOutput( const string& aRegionName ) const {
         string uname,vector<double> dout);
 
     // write land allocations for region
-    dboutput4(aRegionName, "Land Allocation", mName,"Land Use","000Ha", mLandAllocation.convertToVector() );
+    vector<double> temp( scenario->getModeltime()->getmaxper() );
+    for( unsigned int i = 0; i < temp.size(); ++i ){
+        temp[ i ] = getTotalLandAllocation( eAny, i );
+    }
+    dboutput4(aRegionName, "Land Allocation", mName,"Land Use","000Ha", temp );
 }

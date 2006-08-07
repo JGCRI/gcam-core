@@ -101,7 +101,7 @@ void TreeLandAllocator::completeInit( const string& aRegionName,
         // Now re-allocate unmanaged land. Read-in land allocations are used as
         // weights with total unmanaged land set to be equal to total land minus
         // land allocation.
-        const double unmanagedLand = mLandAllocation[ period ] - getTotalLandAllocation( true, period );
+        const double unmanagedLand = mLandAllocation[ period ] - getTotalLandAllocation( eManaged, period );
         for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
             // This will not work for more than one unmanaged land node under the root
             mChildren[i]->setUnmanagedLandAllocation( aRegionName, unmanagedLand, period );
@@ -160,7 +160,7 @@ void TreeLandAllocator::checkRotationPeriod( const IInfo* aRegionInfo ) const {
  */
 void TreeLandAllocator::adjustTotalLand( const int aPeriod ){
 
-    const double totalManagedLand = getTotalLandAllocation( true, aPeriod );
+    const double totalManagedLand = getTotalLandAllocation( eManaged, aPeriod );
 
     // Check that the total calLandUsed is not greater than the total available.
     if ( totalManagedLand - mLandAllocation[ aPeriod ] > util::getSmallNumber() ) {
@@ -276,7 +276,7 @@ void TreeLandAllocator::setInitShares( const double aLandAllocationAbove,
     mShare[ aPeriod ] = 1;
 }
 
-void TreeLandAllocator::calcLandShares( const string& aRegionName,
+double TreeLandAllocator::calcLandShares( const string& aRegionName,
                                         const double aSigmaAbove,
                                         const double aTotalLandAllocated,
                                         const int aPeriod )
@@ -284,7 +284,8 @@ void TreeLandAllocator::calcLandShares( const string& aRegionName,
     LandNode::calcLandShares( aRegionName, aSigmaAbove, aTotalLandAllocated, aPeriod );
  
     // This is the root node so its share is 100%.
-    mShare[ aPeriod ] = 1;                                        
+    mShare[ aPeriod ] = 1;
+    return mShare[ aPeriod ];
 }
 
 /*! \brief Recursively calculates the landAllocation at each leaf and node using the shares.

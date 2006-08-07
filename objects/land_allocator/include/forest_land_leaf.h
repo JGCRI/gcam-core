@@ -38,9 +38,11 @@ public:
                                      const double aLandAllocationAbove,
                                      const int aPeriod );
 
-    virtual double getLandAllocationInternal( const int aPeriod ) const;
+    virtual double getLandAllocation( const std::string& aProductName,
+                                      const int aPeriod ) const;
 
-    virtual double getTotalLandAllocation( const bool aProductionOnly,
+
+    virtual double getTotalLandAllocation( const LandAllocationType aType,
                                            const int aPeriod ) const;
 
     virtual void setCalLandAllocation( const std::string& aLandType,

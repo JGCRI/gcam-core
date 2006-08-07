@@ -45,10 +45,13 @@ public:
     virtual void setUnmanagedLandValues( const std::string& aRegionName,
                                          const int aPeriod );
 
-    virtual void calcLandShares( const std::string& aRegionName,
-                                 const double aSigmaAbove,
-                                 const double aTotalLandAllocated,
-                                 const int aPeriod );
+    virtual double calcLandShares( const std::string& aRegionName,
+                                   const double aSigmaAbove,
+                                   const double aTotalLandAllocated,
+                                   const int aPeriod );
+    
+    virtual double getTotalLandAllocation( const LandAllocationType aType,
+                                           const int aPeriod ) const;
 
     virtual double getUnmanagedCalAveObservedRateInternal( const int aPeriod,
                                                            const double aSigma ) const;
@@ -78,7 +81,8 @@ protected:
 
     // TODO: GHGs in the land allocator are difficult to deal with because the interface
     // is designed for Technologies. The cost is not currently included in profit rates.
-    
+    // Unmanaged GHGs should not affect profit rates, however there is no way of enforcing this.
+
     //! Vector of suites of greenhouse gases.
     std::vector<Ghg*> mGHGs;
 
@@ -86,7 +90,6 @@ protected:
     std::auto_ptr<LandUseHistory> mLandUseHistory;
 
     virtual void initCarbonCycle();
-    virtual bool isProductionLeaf() const;
     virtual const std::string& getXMLName() const;
 
     virtual void toDebugXMLDerived( const int aPeriod, std::ostream& out, Tabs* tabs ) const;
@@ -94,8 +97,9 @@ protected:
     virtual double getBaseLandAllocation( const int aPeriod ) const;
     virtual void checkCalObservedYield( const int aPeriod ) const;
 
-    virtual void initLandUseHistory( const LandUseHistory* aLandUseHistory,
-                                     const int aPeriod );
+    virtual void initLandUseHistory( const double aParentHistoryShare,
+                                     const LandUseHistory* aParentHistory,
+                                     const int aFirstCalibratedPeriod );
 };
 
 #endif // _UNMANAGED_LAND_LEAF_H_

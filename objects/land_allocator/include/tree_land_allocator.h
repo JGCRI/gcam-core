@@ -128,10 +128,10 @@ public:
                                 const LandUseHistory* aLandUseHistory,
                                 const int aPeriod );
 
-    virtual void calcLandShares( const std::string& aRegionName,
-                                 const double aSigmaAbove,
-                                 const double aTotalLandAllocated,
-                                 const int aPeriod );
+    virtual double calcLandShares( const std::string& aRegionName,
+                                   const double aSigmaAbove,
+                                   const double aTotalLandAllocated,
+                                   const int aPeriod );
 
      virtual void calcLandAllocation( const std::string& aRegionName,
                                      const double aLandAllocationAbove,
@@ -145,6 +145,9 @@ protected:
     virtual void toInputXMLDerived( std::ostream& aOutput,
                                     Tabs* aTabs ) const;
 private:
+    //! Land allocated in 1000's of hectars
+    objects::PeriodVector<double> mLandAllocation;
+
     void checkRotationPeriod( const IInfo* aRegionInfo ) const;
 
     void adjustTotalLand( const int aPeriod );

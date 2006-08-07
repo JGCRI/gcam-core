@@ -82,8 +82,6 @@ public:
 
     const std::string& getName() const;
 
-    double getShare( const int aPeriod ) const;
-
     virtual void completeInit( const std::string& aRegionName, 
                                const IInfo* aRegionInfo ) = 0;
 
@@ -94,9 +92,21 @@ public:
     virtual double getLandAllocation( const std::string& aProductName,
                                       const int aPeriod ) const = 0;
 
-    virtual double getLandAllocationInternal( const int aPeriod ) const = 0;
+    /*!
+     * \brief An enumeration of possible land allocation types.
+     */
+    enum LandAllocationType {
+        // Managed land allocation.
+        eManaged,
 
-    virtual double getTotalLandAllocation( const bool aProductionOnly,
+        //! Unmanaged land allocation.
+        eUnmanaged,
+
+        //! Any land allocation.
+        eAny
+    };
+
+    virtual double getTotalLandAllocation( const LandAllocationType aType,
                                            const int aPeriod ) const = 0;
 
     virtual double getBaseLandAllocation( const int aPeriod ) const = 0;
@@ -155,10 +165,10 @@ public:
 
     virtual void addChild( ALandAllocatorItem* aChild ) = 0;
     
-    virtual void calcLandShares( const std::string& aRegionName,
-                                 const double aSigmaAbove,
-                                 const double aTotalLandAllocated,
-                                 const int aPeriod ) = 0;
+    virtual double calcLandShares( const std::string& aRegionName,
+                                   const double aSigmaAbove,
+                                   const double aTotalLandAllocated,
+                                   const int aPeriod ) = 0;
 
     virtual void calcLandAllocation( const std::string& aRegionName,
                                      const double aLandAllocationAbove,
@@ -179,8 +189,6 @@ public:
     virtual void csvOutput( const std::string& aRegionName ) const = 0;
 
     virtual void dbOutput( const std::string& aRegionName ) const = 0;
-
-    virtual bool isProductionLeaf() const = 0;
     
     virtual void setUnmanagedLandAllocation( const std::string& aRegionName,
                                              const double aLandAllocation,
@@ -208,9 +216,6 @@ protected:
     
     //! Rate in dollars to rent the land
     objects::PeriodVector<double> mIntrinsicRate;
-    
-    //! Land allocated in 1000's of hectars
-    objects::PeriodVector<double> mLandAllocation;
     
     //! Name of the land allocator item. This is the name of the product for
     //! leafs and name of the type of land for nodes.

@@ -129,24 +129,22 @@ void UnmanagedLandLeaf::initCarbonCycle(){
     }
 }
 
-void UnmanagedLandLeaf::initLandUseHistory( const LandUseHistory* aLandUseHistory,
-                                            const int aPeriod )
+void UnmanagedLandLeaf::initLandUseHistory( const double aParentHistoryShare,
+                                            const LandUseHistory* aParentHistory,
+                                            const int aFirstCalibratedPeriod )
 {
-    // Initialize the carbon calculator with the unmanaged land leaf history,
-    // not the node history. The share is one because the history object
-    // is for this leaf only.
-    mCarbonContentCalc->initLandUseHistory( mLandUseHistory.get(), 1 );
-}
+    // Use the unmanaged land leaf's history if one exists,
+    // otherwise use the parent.
+    double historyShare = 1;
+    const LandUseHistory* history = mLandUseHistory.get();
+    if( !history ){
+        // Check that the share has been normalized.
+        assert( mShare[ aPeriod ] <= 1 );
+        history = aParentHistory;
+        historyShare = aParentHistoryShare * mShare[ aFirstCalibratedPeriod ];
+    }
 
-/*! \brief Returns whether this is a production leaf.
-* \details Returning true means that this leaf was set-up by a supply sector,
-*          returning falses means this is an unmanaged land leaf that was
-*          read-in from the land allocator.
-* \return Whether this is a production leaf.
-* \author Steve Smith
-*/
-bool UnmanagedLandLeaf::isProductionLeaf() const {
-    return false;
+    mCarbonContentCalc->initLandUseHistory( history, historyShare );
 }
 
 /*! \brief Sets land allocation of unmanged land leaf
@@ -184,12 +182,13 @@ void UnmanagedLandLeaf::setUnmanagedLandValues( const string& aRegionName,
 * \param sigmaAbove the sigma value from the node above this level.
 * \param aTotalLandAllocated Total base unmanaged land allocation for this
 *        level.
+* \return The unnormalized share.
 * \author James Blackwood, Steve Smith
 */
-void UnmanagedLandLeaf::calcLandShares( const string& aRegionName,
-                                        const double aSigmaAbove,
-                                        const double aTotalLandAllocated,
-                                        const int aPeriod )
+double UnmanagedLandLeaf::calcLandShares( const string& aRegionName,
+                                          const double aSigmaAbove,
+                                          const double aTotalLandAllocated,
+                                          const int aPeriod )
 {
     LandLeaf::calcLandShares( aRegionName, aSigmaAbove, 0, aPeriod );
 
@@ -200,6 +199,7 @@ void UnmanagedLandLeaf::calcLandShares( const string& aRegionName,
         mShare[ aPeriod ] *= mBaseLandAllocation[ aPeriod ] / aTotalLandAllocated;
         assert( util::isValidNumber( mShare[ aPeriod ] ) );
     }
+    return mShare[ aPeriod ];
 }
 
 
@@ -216,6 +216,16 @@ double UnmanagedLandLeaf::getUnmanagedCalAveObservedRateInternal( const int aPer
 */
 double UnmanagedLandLeaf::getBaseLandAllocation( const int aPeriod ) const {
     return mBaseLandAllocation[ aPeriod ];
+}
+
+double UnmanagedLandLeaf::getTotalLandAllocation( const LandAllocationType aType,
+                                                  const int aPeriod ) const
+{
+    // Check if unmanaged land should be returned.
+    if( aType == eAny || aType == eUnmanaged ){
+        return mLandAllocation[ aPeriod ];
+    }
+    return 0;
 }
 
 // TODO: This gets called too late if land GHGs are included in policies.

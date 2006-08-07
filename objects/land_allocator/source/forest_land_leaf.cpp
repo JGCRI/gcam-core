@@ -102,7 +102,8 @@ void ForestLandLeaf::calcLandAllocation( const string& aRegionName,
 * \author James Blackwood, Steve Smith
 * \return annual amount of land allocated to forest production
 */
-double ForestLandLeaf::getLandAllocationInternal( const int aPeriod ) const
+double ForestLandLeaf::getLandAllocation( const string& aProductName,
+                                          const int aPeriod ) const 
 {
     return mLandToBeHarvested[ aPeriod ];
 }
@@ -115,11 +116,14 @@ double ForestLandLeaf::getLandAllocationInternal( const int aPeriod ) const
 * \author Steve Smith
 * \return the LandAllocation at this node
 */
-double ForestLandLeaf::getTotalLandAllocation( const bool aProductionOnly,
+double ForestLandLeaf::getTotalLandAllocation( const LandAllocationType aType,
                                                const int aPeriod ) const
 {
     // All forestry land is production.
-    return mLandAllocation[ aPeriod ];
+    if( aType == eAny || aType == eManaged ){
+        return mLandAllocation[ aPeriod ];
+    }
+    return 0;
 }
 
 /*! 

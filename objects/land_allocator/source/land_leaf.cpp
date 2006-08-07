@@ -155,17 +155,6 @@ void LandLeaf::addLandUsage( const string& aLandType,
     assert( false );
 }
 
-/*! \brief Returns whether this is a production leaf.
-* \details Returning true means that this leaf was set-up by a supply sector,
-*          returning falses means this is an unmanaged land leaf that was
-*          read-in from the land allocator.
-* \return Whether this is a production leaf.
-* \author Steve Smith
-*/
-bool LandLeaf::isProductionLeaf() const {
-    return true;
-}
-
 /*! \brief Set the initial shares for this land.
 *
 * Sets the share for this land in the period passed in, from the ratio of
@@ -189,12 +178,12 @@ void LandLeaf::setInitShares( const double aLandAllocationAbove,
 /*!
  * \brief Initialize the land use history for the leaf.
  * \param aLandUseHistory Land use history container.
- * \param aPeriod Model period to assume is the first calibrated period.
+ * \param aFirstCalibratedPeriod Model period to assume is the first calibrated period.
  */
 void LandLeaf::initLandUseHistory( const LandUseHistory* aLandUseHistory,
-                                   const int aPeriod )
+                                   const int aFirstCalibratedPeriod )
 {
-    mCarbonContentCalc->initLandUseHistory( aLandUseHistory, mShare[ aPeriod ] );
+    mCarbonContentCalc->initLandUseHistory( aLandUseHistory, mShare[ aFirstCalibratedPeriod ] );
 }
 
 /*! \brief Calculate the Intrinsic Yield Mode
@@ -237,7 +226,7 @@ void LandLeaf::toInputXML( ostream& aOut, Tabs* aTabs ) const {
 }
 
 void LandLeaf::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
-    XMLWriteElement( isProductionLeaf(), "isProductionLeaf", out, tabs );
+    XMLWriteElement( mLandAllocation[ period ], "landAllocation", out, tabs );
     XMLWriteElement( mIntrinsicYieldMode[ period ], "intrinsicYieldMode", out, tabs );
     XMLWriteElement( mCalObservedYield[ period ], "calObservedYield", out, tabs );
     XMLWriteElement( mYield[ period ], "yield", out, tabs );
@@ -403,16 +392,18 @@ void LandLeaf::applyAgProdChange( const string& aLandType,
 * \param sigmaAbove the sigma value from the node above this level.
 * \param totalBaseLandAllocation total base unmanaged land allocation for this
 *        level.
+* \return The unnormalized share.
 * \author James Blackwood, Steve Smith
 */
-void LandLeaf::calcLandShares( const string& aRegionName,
-                               const double aSigmaAbove,
-                               const double aTotalLandAllocated,
-                               const int aPeriod )
+double LandLeaf::calcLandShares( const string& aRegionName,
+                                 const double aSigmaAbove,
+                                 const double aTotalLandAllocated,
+                                 const int aPeriod )
 {
     // Land node should have validated all sigmas.
     assert( aSigmaAbove > util::getSmallNumber() );
-
+    
+    // Production land leaves ignore aTotalLandAllocated.
     if( mIntrinsicRate[ aPeriod ] < util::getSmallNumber() ){
         // Intrinsic rates may not be negative.
         assert( mIntrinsicRate[ aPeriod ] >= 0 );
@@ -422,6 +413,7 @@ void LandLeaf::calcLandShares( const string& aRegionName,
         mShare[ aPeriod ] = pow( mIntrinsicRate[ aPeriod ], 1 / aSigmaAbove );
         assert( util::isValidNumber( mShare[ aPeriod ] ) );
     }
+    return mShare[ aPeriod ];
 }
 
 /*! \brief Calculates the land allocated for this land.
@@ -508,11 +500,6 @@ double LandLeaf::getLandAllocation( const string& aProductName,
                                     const int aPeriod ) const
 {
     assert( aProductName == mName );
-    return getLandAllocationInternal( aPeriod );
-}
-
-double LandLeaf::getLandAllocationInternal( const int aPeriod ) const
-{
     return mLandAllocation[ aPeriod ];
 }
 
@@ -523,15 +510,14 @@ double LandLeaf::getLandAllocationInternal( const int aPeriod ) const
 * \author James Blackwood
 * \return the LandAllocation at this node, if the productName matches the name of this landType.
 */
-double LandLeaf::getTotalLandAllocation( const bool aProductionOnly, 
+double LandLeaf::getTotalLandAllocation( const LandAllocationType aType,
                                          const int aPeriod ) const
 {
-    // Check if only production leaf allocation is requested and this is not a
-    // production leaf.
-    if( aProductionOnly && !isProductionLeaf() ){
-        return 0;
+    // Unless a land leaf is overridden it is a production leaf.
+    if( aType == eAny || aType == eManaged ){
+        return mLandAllocation[ aPeriod ];
     }
-    return getLandAllocationInternal( aPeriod );
+    return 0;
 }
 
 /*! \brief Returns the baseLandAllocation of this leaf.

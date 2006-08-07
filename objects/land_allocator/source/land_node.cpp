@@ -255,14 +255,12 @@ void LandNode::setUnmanagedLandAllocation( const string& aRegionName,
                                            const int aPeriod )
 {
     // If this node is not full of production leafs, then this is unmanaged land
-    if ( !isProductionLeaf() && aLandAllocation > 0 ) {
-        mLandAllocation[ aPeriod ] = aLandAllocation;
-
-        double totalLandAllocated = getLandAllocationInternal( aPeriod );
+    if ( aLandAllocation > 0 ) {
+        double totalLandAllocated = getTotalLandAllocation( eUnmanaged, aPeriod );
         if ( totalLandAllocated > 0 ) {
-            double landAllocationScaleFactor = mLandAllocation[ aPeriod ] / totalLandAllocated;
+            double landAllocationScaleFactor = aLandAllocation / totalLandAllocated;
             for ( unsigned int i = 0; i < mChildren.size() ; i++ ) {
-                double childLandAllocation = mChildren[ i ]->getLandAllocationInternal( aPeriod );
+                double childLandAllocation = mChildren[ i ]->getTotalLandAllocation( eUnmanaged, aPeriod );
                 double newAllocation = childLandAllocation * landAllocationScaleFactor;
                 mChildren[ i ]->setUnmanagedLandAllocation( aRegionName, newAllocation, aPeriod );
             }
@@ -280,12 +278,10 @@ void LandNode::setInitShares( const double aLandAllocationAbove,
                               const LandUseHistory* aLandUseHistory,
                               const int aPeriod )
 {
-    // Summing the LandAllocations of the mChildren
-    mLandAllocation[ aPeriod ] = getTotalLandAllocation( false, aPeriod ); 
-
-    //Calculating the shares
+    // Calculating the shares
+    double nodeLandAllocation = getTotalLandAllocation( eAny, aPeriod ); 
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->setInitShares( mLandAllocation[ aPeriod ],
+        mChildren[ i ]->setInitShares( nodeLandAllocation,
                                        mLandUseHistory.get(), aPeriod );
     }
 
@@ -295,7 +291,7 @@ void LandNode::setInitShares( const double aLandAllocationAbove,
         mShare[ aPeriod ] = util::getSmallNumber();
     }
     else {
-        mShare[ aPeriod ] = mLandAllocation[ aPeriod ] / aLandAllocationAbove;
+        mShare[ aPeriod ] = nodeLandAllocation / aLandAllocationAbove;
         assert( util::isValidNumber( mShare[ aPeriod ] ) );
     }
 }
@@ -307,10 +303,10 @@ void LandNode::setIntrinsicYieldMode( const double aIntrinsicRateAbove,
                                       const double aSigmaAbove,
                                       const int aPeriod )
 {
-    double intrinsicRateToBePassed = aIntrinsicRateAbove * pow( mShare[ aPeriod], aSigmaAbove );
-    if( intrinsicRateToBePassed > 0 ){
+    double nodeIntrinsicRate = aIntrinsicRateAbove * pow( mShare[ aPeriod ], aSigmaAbove );
+    if( nodeIntrinsicRate > 0 ){
         for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-            mChildren[ i ]->setIntrinsicYieldMode( intrinsicRateToBePassed, mSigma, aPeriod );
+            mChildren[ i ]->setIntrinsicYieldMode( nodeIntrinsicRate, mSigma, aPeriod );
         }
     }
 }
@@ -443,6 +439,7 @@ void LandNode::applyAgProdChange( const string& aLandType,
 *          is calculated for this node using the calculated intrinsicRate and
 *          the sigma from one level up.
 * \param aSigmaAbove the sigma value from the node above this level.
+* \return The unnormalized share.
 * \author James Blackwood
 * \todo need a better way to check if "UnmanagedLand" to not overwrite
 *       intrinsicRate that was read in through input
@@ -450,31 +447,23 @@ void LandNode::applyAgProdChange( const string& aLandType,
 *       greater than initial allocation 
 * \todo this will not work if unmanaged land nodes are nested
 */
-void LandNode::calcLandShares( const string& aRegionName,
-                               const double aSigmaAbove,
-                               const double aTotalLandAllocated,
-                               const int aPeriod )
+double LandNode::calcLandShares( const string& aRegionName,
+                                 const double aSigmaAbove,
+                                 const double aTotalLandAllocated,
+                                 const int aPeriod )
 {
     // First adjust value of unmanaged land nodes
     setUnmanagedLandValues( aRegionName, aPeriod );
 
     // Calculate the temporary unnormalized shares and sum them
     double unnormalizedSum = 0;
-    // double excessShares = 0; (ignore this for now)
     double totalBaseLandAllocation = getBaseLandAllocation( aPeriod );
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        // If this is managed land, or if unmanaged land and no base land
-        // allocation is specified then use standard method.
-        if ( isProductionLeaf() || util::isEqual( totalBaseLandAllocation, 0.0 ) ) {
-            mChildren[ i ]->calcLandShares( aRegionName, mSigma, 0, aPeriod );
-        }
-        else {
-            // If this is unmanaged land then use initial land allocation to
-            // weight land use.
-            mChildren[ i ]->calcLandShares( aRegionName, mSigma, totalBaseLandAllocation, aPeriod );
-        }
-        // Get the temporary unnormalized share.
-        unnormalizedSum += mChildren[ i ]->getShare( aPeriod );                   
+        // If this is unmanaged land then use initial land allocation to
+        // weight land use. Returns the temporary unnormalized share.
+        unnormalizedSum += mChildren[ i ]->calcLandShares( aRegionName, mSigma,
+                                                           totalBaseLandAllocation,
+                                                           aPeriod );          
     }
 
     if ( unnormalizedSum < util::getSmallNumber() ) {
@@ -503,6 +492,7 @@ void LandNode::calcLandShares( const string& aRegionName,
     else {
         mShare[ aPeriod ] = 1;
     }
+    return mShare[ aPeriod ];
 }
 
 /*! \brief Adjust land values for unmanaged land nodes as necessary
@@ -526,9 +516,9 @@ void LandNode::calcLandAllocation( const string& aRegionName,
                                    const double aLandAllocationAbove,
                                    const int aPeriod )
 {
-    mLandAllocation[ aPeriod ] = aLandAllocationAbove * mShare[ aPeriod ];
+    double nodeLandAllocation = aLandAllocationAbove * mShare[ aPeriod ];
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->calcLandAllocation( aRegionName, mLandAllocation[ aPeriod ], aPeriod );
+        mChildren[ i ]->calcLandAllocation( aRegionName, nodeLandAllocation, aPeriod );
     }
 }
 
@@ -542,7 +532,7 @@ void LandNode::setCarbonContent( const string& aLandType,
     
     if( curr ){
         curr->setCarbonContent( aLandType, aProductName, aAboveGroundCarbon,
-                                aAboveGroundCarbon, aPeriod );
+                                aBelowGroundCarbon, aPeriod );
     }
 }
 
@@ -615,68 +605,38 @@ double LandNode::getLandAllocation( const string& aProductName,
     return 0;
 }
 
-double LandNode::getLandAllocationInternal( const int aPeriod ) const {
-    double sum = 0;
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        sum += mChildren[ i ]->getLandAllocationInternal( aPeriod );
-    }
-    return sum;
-}
-
 /*!
  * \brief Returns all land allocated for this land type.
- * \param aProductionOnly Whether to only get land allocation for production
- *        leaves.
+ * \param aType The type of land allocation to return: unmanaged, managed, or
+ *        either.
  * \param aPeriod Model period.
  * \note This function is needed so that separate function can be called for
  *       land classes with vintaging when total land allocated is necessary.
  * \author Steve Smith
  * \return The total land allocated below the node.
  */
-double LandNode::getTotalLandAllocation( const bool aProductionOnly, 
+double LandNode::getTotalLandAllocation( const LandAllocationType aType,
                                          const int aPeriod ) const
 {
     double sum = 0;
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        sum += mChildren[ i ]->getTotalLandAllocation( aProductionOnly, aPeriod );
+        sum += mChildren[ i ]->getTotalLandAllocation( aType, aPeriod );
     }
     return sum;
 }
 
 /*! \brief Recursively sums the baseLandAllocation of all the nodes and leafs
 *          below this landType.
-*
-* Only sums land in unmanaged land nodes, since these are the only ones that
-* have a base land allocation
-*
 * \author Steve Smith
 * \return the baseLandAllocation of this landType
 */
 double LandNode::getBaseLandAllocation( const int aPeriod ) const {
     double sum = 0;
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        if ( !mChildren[i]->isProductionLeaf() ) {
-            sum += mChildren[ i ]->getBaseLandAllocation( aPeriod );
-        }
+        sum += mChildren[ i ]->getBaseLandAllocation( aPeriod );
     }
     return sum;
 }
-
-/*! \brief Returns Whether all leaves under this node are production leaves.
-* \details Checks all nodes and leaf below this node, if any are not a
-*          production leaf this returns false.
-* \return Whether all mChildren leaves are production leaves.
-* \author Steve Smith
-*/
-bool LandNode::isProductionLeaf() const {
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        if ( !mChildren[ i ]->isProductionLeaf() ) {
-            return false;
-        }
-    }
-    return true;
-}
-
 
 /*! \brief Write output to csv output file. 
 *
