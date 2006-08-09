@@ -139,7 +139,7 @@ void UnmanagedLandLeaf::initLandUseHistory( const double aParentHistoryShare,
     const LandUseHistory* history = mLandUseHistory.get();
     if( !history ){
         // Check that the share has been normalized.
-        assert( mShare[ aPeriod ] <= 1 );
+        assert( mShare[ aFirstCalibratedPeriod ] <= 1 );
         history = aParentHistory;
         historyShare = aParentHistoryShare * mShare[ aFirstCalibratedPeriod ];
     }
