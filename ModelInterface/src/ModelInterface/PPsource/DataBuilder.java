@@ -1519,13 +1519,13 @@ public class DataBuilder
     String ref = null;
     String unit = null;
     double time = 0;
-    double res = 1;
+    double resX = 1;
+    double resY = 1;
     List infoChildren;
     Element currElem;
     TreeMap timeValue;
     Double dataValue;
     DataBlock toAdd;
-    
     
   //getting file info from XML
     infoChildren = currFile.getChildren();
@@ -1538,9 +1538,11 @@ public class DataBuilder
       } else if(currElem.getName().equals("date"))
       {
         time = Double.parseDouble(currElem.getAttributeValue("value"));
+	/*
       } else if(currElem.getName().equals("res"))
       {
         res = Double.parseDouble(currElem.getAttributeValue("value"));
+	*/
       } else if(currElem.getName().equals("average"))
       {
         avg = (Boolean.valueOf(currElem.getAttributeValue("value"))).booleanValue();
@@ -1568,33 +1570,6 @@ public class DataBuilder
   //done reading from XML file
     
 
-  //checking for overwrite and setting basic information (avg, ref, units)
-    if(dataAvg.containsKey(dataName))
-    {
-      //then we are overwriting this data!
-      log.log(Level.FINER, "data being added is an overwrite");
-      overwrite = true;
-    } else
-    {
-      //dont want to add all this information if we already have!!!
-      if(!init)
-      { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
-        dataStruct.fillWorld(res);
-        init = true;
-      }
-      //setting whether contained data is additive or averaged and references
-      dataAvg.put(dataName, new Boolean(avg));
-      if(ref != null)
-      {
-        dataRef.put(dataName, ref);
-      }
-      if(unit != null)
-      {
-        dataUnits.put(dataName, unit);
-      }
-      //done settign avg/add and references
-    }
-  //done doing overwrite check
     
   //reading the data from the file
     try 
@@ -1604,6 +1579,38 @@ public class DataBuilder
       Variable data = nc.findVariable(dataVar);
       Array ma2Array = data.read();
       
+      int[] shp = ma2Array.getShape();
+      resY = 180.0 / shp[shp.length-2];
+      resX = 360.0 / shp[shp.length-1];
+
+      //checking for overwrite and setting basic information (avg, ref, units)
+      if(dataAvg.containsKey(dataName))
+      {
+	      //then we are overwriting this data!
+	      log.log(Level.FINER, "data being added is an overwrite");
+	      overwrite = true;
+      } else
+      {
+	      //dont want to add all this information if we already have!!!
+	      if(!init)
+	      { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
+		      dataStruct.fillWorld(resX);
+		      init = true;
+	      }
+	      //setting whether contained data is additive or averaged and references
+	      dataAvg.put(dataName, new Boolean(avg));
+	      if(ref != null)
+	      {
+		      dataRef.put(dataName, ref);
+	      }
+	      if(unit != null)
+	      {
+		      dataUnits.put(dataName, unit);
+	      }
+	      //done settign avg/add and references
+      }
+      //done doing overwrite check
+
       Index in = ma2Array.getIndex();
       int i = 0;
       int k = 0;
@@ -1614,11 +1621,25 @@ public class DataBuilder
       } else {
 	      NaN = Float.POSITIVE_INFINITY;
       }
+      Variable timeVar = nc.findVariable("time");
+      int internalTimeIndex = 0;
+      if(timeVar != null) {
+	      Array timeArr = timeVar.read();
+	      Index timeInd = timeArr.getIndex();
+	      internalTimeIndex = findYearIndex(timeArr, timeInd, 0, timeArr.getShape()[0]-1, (float)time);
+	      if(internalTimeIndex == -1) {
+		      log.log(Level.WARNING, "Couldn't find "+time+" in time variable defaulting to 0");
+		      internalTimeIndex = 0;
+	      }
+      } else {
+	      log.log(Level.WARNING, "Couldn't find time data defaulting to 0");
+	      internalTimeIndex = 0;
+      }
 
-      for(double y = (90-res); y >= -90; y-=res)
+      for(double y = (90-resY); y >= -90; y-=resY)
       {
         k=0;
-        for(double x = -180; x < 180; x+=res)
+        for(double x = -180; x < 180; x+=resX)
         {
         	//System.out.println("getting "+ma2Array.getFloat(in.set(0, 0, i, k)));
           if(ma2Array.getRank() == 2)
@@ -1626,10 +1647,10 @@ public class DataBuilder
             dataValue = new Double((double)ma2Array.getFloat(in.set(i, k)));
           } else if(ma2Array.getRank() == 3)
           {
-            dataValue = new Double((double)ma2Array.getFloat(in.set(0, i, k)));
+            dataValue = new Double(ma2Array.getDouble(in.set(internalTimeIndex, i, k)));
           } else if(ma2Array.getRank() == 4)
           {
-            dataValue = new Double((double)ma2Array.getFloat(in.set(0, 0, i, k)));
+            dataValue = new Double((double)ma2Array.getFloat(in.set(0, internalTimeIndex, i, k)));
           } else
           {
             log.log(Level.SEVERE, "Array rank of "+ma2Array.getRank()+" not supported.");
@@ -1638,7 +1659,7 @@ public class DataBuilder
           
           if(dataValue != NaN)
           {
-            toAdd = new DataBlock(x, y, res, res);
+            toAdd = new DataBlock(x, y, resX, resY);
             timeValue = new TreeMap();
             timeValue.put(new Double(time), dataValue);
 
@@ -1676,6 +1697,22 @@ public class DataBuilder
     }
   //done reading data from file
     
+  }
+
+  private int findYearIndex(Array arr, Index ind, int low, int high, float find) {
+	  // since the array is sorted can do something like binary search
+	  if(high < low || low > high) {
+		  return -1;
+	  }
+	  int mid = (int)((high+low)/2);
+	  float midValue = arr.getFloat(ind.set(mid));
+	  if(find == midValue) {
+		  return mid;
+	  } else if(find < midValue) {
+		  return findYearIndex(arr, ind, low, mid-1, find);
+	  } else {
+		  return findYearIndex(arr, ind, mid+1, high, find);
+	  }
   }
   
   private void addPointShapeFileData(Element currFile)
@@ -3908,29 +3945,6 @@ public class DataBuilder
 			  */
 		  }
 
-		  /*
-		  Point2D.Double currPoint = new Point2D.Double(currEasting, currNorthing);
-		  Point2D.Double basePoint = convInst.convert(currPoint, radius);
-		  double baseNorthing = currNorthing;
-		  double latMoved = 0.0;
-		  int count = 0;
-		  int total = 0;
-		  for(int i = 0; i < offsets.length; i++) {
-			  count++;
-			  latLong = convInst.convert(currPoint, radius);
-			  latMoved += Math.abs(basePoint.getY() - latLong.getY());
-			  if(latMoved >= res) {
-				  System.out.println("Moved "+count+" offsets");
-				  total += count;
-				  count = 0;
-				  latMoved = 0.0;
-				  basePoint = latLong;
-			  }
-			  currPoint.setLocation(currPoint.getX(), currPoint.getY() - pixelScale[0]);
-		  }
-		  System.out.println("Should be "+offsets.length+" total is "+total);
-		  */
-
 		  for(int i = 0; i < offsets.length; i++) {
 			  fss.seek(offsets[i]);
 			  if(buff == null || buff.length < offsetSizes[i]) {
@@ -3955,11 +3969,9 @@ public class DataBuilder
                         System.out.println("problem lat: "+latLong.getX()+" lon: "+latLong.getY());
                       }
                       if(latLong == null) {
-						  //System.out.println("Had a problem with this point: ("+currEasting+", "+currNorthing+")");
-						  //log.log(Level.WARNING, "Had a problem with this point: ("+currEasting+", "+currNorthing+")");
+						  log.log(Level.WARNING, "Had a problem with this point: ("+currEasting+", "+currNorthing+")");
                         dataValue = Double.NaN;
 					  } else {
-                      //System.out.println("encountered value of: "+temp);
 						  dataValue = new Double(temp); // relative scale?
                           resX = findRes.getY()-latLong.getY();
                           resY = latLong.getX()-findRes.getX();
@@ -3969,20 +3981,6 @@ public class DataBuilder
 
 						  // somehow the x/y or lat/long are getting flipped so I just flipped them here and
 						  // it looks ok
-                          /*
-					  x = latLong.getY();
-					  mult = x/resX;
-					  mult = Math.floor(mult);
-					  x = mult*resX;
-
-					  y = latLong.getX();
-					  mult = y/resY;
-					  mult = Math.floor(mult);
-					  y = mult*resY;
-                      */
-
-					  //System.out.println(latLong.getX()+" "+latLong.getY()+" - "+x+" "+y);
-
 					  toAdd = new DataBlock(latLong.getY(), latLong.getX(), resY, resX);
 					  timeValue = new TreeMap();
 					  timeValue.put(timeDouble, dataValue);
