@@ -133,7 +133,7 @@ public class ComboTableModel extends BaseTableModel{
 	  TreeSet regions = new TreeSet();
 	  TreeSet years = new TreeSet();
 	  tableFilterMaps = new LinkedHashMap();
-	  TreeMap dataTree = new TreeMap();
+	  Map dataTree = new TreeMap();
 	  while ((tempNode = res.iterateNext()) != null) {
 		regionAndYear = getRegionAndYearFromNode(tempNode.getParentNode(), tableFilterMaps);
 		regions.add(regionAndYear[0]);
@@ -199,13 +199,13 @@ public class ComboTableModel extends BaseTableModel{
    * @param currNode current level in tree being sorted
    * @param dataTree the entire data maps tree
    * @return the current map being used
-   * @see MultiTableModel#addToDataTree(Node, TreeMap)
+   * @see MultiTableModel#addToDataTree(Node, Map)
    */
-  private TreeMap addToDataTree(Node currNode, TreeMap dataTree) {
+  private Map addToDataTree(Node currNode, Map dataTree) {
 	  if (currNode.getNodeType() == Node.DOCUMENT_NODE) {
 		  return dataTree;
 	  }
-	  TreeMap tempMap = addToDataTree(currNode.getParentNode(), dataTree);
+	  Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
 	  if( ((((String)wild.get(0)).matches(".*[Ss]ector") || ((String)wild.get(1)).matches(".*[Ss]ector"))) && currNode.getNodeName().matches(".*[Ss]ector") ) {
 		  return tempMap;
 	  }
@@ -220,7 +220,7 @@ public class ComboTableModel extends BaseTableModel{
 		if(!tempMap.containsKey(attr)) {
 			tempMap.put(attr, new TreeMap());
 		}
-		return (TreeMap)tempMap.get(attr);
+		return (Map)tempMap.get(attr);
 	  }
 	  return tempMap;
   }
@@ -233,14 +233,14 @@ public class ComboTableModel extends BaseTableModel{
    * @param regions column axis attrubutes
    * @param years row axis attributes
    * @param title a string describing the path in which the data in the table is coming from
-   * @see MultiTableModel#recAddTables(TreeMap, Map.Entry, TreeSet, TreeSet, String)
+   * @see MultiTableModel#recAddTables(Map, Map.Entry, TreeSet, TreeSet, String)
    */
-  private void recAddTables(TreeMap dataTree, Map.Entry parent, TreeSet regions, TreeSet years, String titleStr) {
+  private void recAddTables(Map dataTree, Map.Entry parent, TreeSet regions, TreeSet years, String titleStr) {
 	Iterator it = dataTree.entrySet().iterator();
 	while(it.hasNext()) {	
 		Map.Entry me = (Map.Entry)it.next();
 		if(me.getValue() instanceof Node || me.getValue() instanceof Double) {
-			TreeMapVector.add( (TreeMap)parent.getValue() );
+			TreeMapVector.add( (Map)parent.getValue() );
 			
 			// create a left side 2d vector, add it to LeftSideVector
 			
@@ -280,7 +280,7 @@ public class ComboTableModel extends BaseTableModel{
 			}
 			return;
 		}else{
-			recAddTables((TreeMap)me.getValue(), me, regions, years, titleStr+'/'+(String)me.getKey());
+			recAddTables((Map)me.getValue(), me, regions, years, titleStr+'/'+(String)me.getKey());
 		}
 	}
   }
@@ -335,7 +335,7 @@ public class ComboTableModel extends BaseTableModel{
 				return indRow.get( ((Integer)activeRows.get( row )).intValue() % (indRow.size()) );
 			// these columns represent data
 			}else{
-				Object temp = ((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) );
+				Object temp = ((Map)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) );
 				if(temp instanceof Node) {
 					return new Double(((Node)temp).getNodeValue());
 				} else if(temp instanceof Double) {
@@ -348,7 +348,7 @@ public class ComboTableModel extends BaseTableModel{
 		} catch(NullPointerException e) {
 			return "";
 		} catch(NumberFormatException nf) { // if the data is not numbers
-			Object temp = ((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) );
+			Object temp = ((Map)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) );
 			if(temp instanceof Node) {
 				return ((Node)temp).getNodeValue();
 			} else {
@@ -376,7 +376,7 @@ public class ComboTableModel extends BaseTableModel{
 		if( col <= leftHeaderVector.size() ){
 			return null;
 		}
-		Object temp = ((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) );
+		Object temp = ((Map)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) );
 		if(temp instanceof Node) {
 			return (Node)temp;
 		} else {
@@ -471,7 +471,7 @@ public class ComboTableModel extends BaseTableModel{
 	 */
 	public void setValueAt(Object val, int row, int col) {
 		
-		TreeMap data = ((TreeMap)TreeMapVector.get( row / (indRow.size())));
+		Map data = ((Map)TreeMapVector.get( row / (indRow.size())));
 		CompoundEdit setEdit = new CompoundEdit();
 
 		Node n = (Node)data.get(getKey(row,col));
@@ -640,7 +640,7 @@ public class ComboTableModel extends BaseTableModel{
 					fullColumn = fullColumn.split("=")[1];
 				}
 				double year = Double.parseDouble( fullColumn );
-				if(yValue != 0 || ((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() 
+				if(yValue != 0 || ((Map)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() 
 								/ (indRow.size()))).get( getKey( row, col ) ) != null) {
 					currSeries.add( year, yValue);
 				}
@@ -739,7 +739,7 @@ public class ComboTableModel extends BaseTableModel{
 	  TreeSet regions = new TreeSet();
 	  TreeSet years = new TreeSet();
 	  tableFilterMaps = new LinkedHashMap();
-	  TreeMap dataTree = new TreeMap();
+	  Map dataTree = new TreeMap();
 	  try {
 		  while(res.hasNext()) {
 			  tempNode = res.next();
@@ -808,9 +808,9 @@ public class ComboTableModel extends BaseTableModel{
 			  */
 
 		  } else if(XMLDB.hasAttr(n)) {
-			  HashMap tempFilter;
+			  Map tempFilter;
 	           	  if (filterMaps.containsKey(n.getNodeName())) {
-	                          tempFilter = (HashMap)filterMaps.get(n.getNodeName());
+	                          tempFilter = (Map)filterMaps.get(n.getNodeName());
                           } else {
                                   tempFilter = new HashMap();
                           }
@@ -831,12 +831,12 @@ public class ComboTableModel extends BaseTableModel{
 	  return ret.toArray();
   	}
 
-  private TreeMap addToDataTree(XmlValue currNode, TreeMap dataTree) throws Exception {
+  private Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {
 	  if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
 		  currNode.delete();
 		  return dataTree;
 	  }
-	  TreeMap tempMap = addToDataTree(currNode.getParentNode(), dataTree);
+	  Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
 	  // used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
 	  String w = (String)wild.get(0);
 	  //if(currNode.getNodeName().matches(".*sector") || currNode.getNodeName().equals("technology")) {
@@ -852,7 +852,7 @@ public class ComboTableModel extends BaseTableModel{
 			tempMap.put(attr, new TreeMap());
 		}
 		currNode.delete();
-		return (TreeMap)tempMap.get(attr);
+		return (Map)tempMap.get(attr);
 	  } 
 	  currNode.delete();
 	  return tempMap;
