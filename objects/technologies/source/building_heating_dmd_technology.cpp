@@ -1,7 +1,7 @@
 /*! 
 * \file building_heating_dmd_technology.cpp
 * \ingroup CIAM
-* \brief The building heating service demand technology.
+* \brief BuildingHeatingDmdTechnology source file
 * \author Steve Smith
 * \date $Date$
 * \version $Revision$

@@ -1,7 +1,7 @@
 /*! 
 * \file tran_technology.cpp
 * \ingroup Objects
-* \brief transporation technology class source file.
+* \brief TranTechnology class source file.
 * \author Sonny Kim, Josh Lurz
 * \date $Date$
 * \version $Revision$

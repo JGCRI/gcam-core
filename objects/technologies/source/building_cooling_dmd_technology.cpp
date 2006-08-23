@@ -1,7 +1,7 @@
 /*! 
 * \file building_cooling_dmd_technology.cpp
 * \ingroup CIAM
-* \brief The building cooling service demand technology.
+* \brief BuildingCoolingDmdTechnology class source file.
 * \author Steve Smith
 * \date $Date$
 * \version $Revision$

@@ -1,7 +1,7 @@
 /*! 
 * \file building_generic_dmd_technology.cpp
 * \ingroup CIAM
-* \brief The building service demand technology.
+* \brief BuildingGenericDmdTechnology class source file.
 * \author Steve Smith
 */
 

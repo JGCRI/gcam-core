@@ -12,7 +12,7 @@
 /*! 
 * \file base_technology.cpp
 * \ingroup Objects
-* \brief The Base Technology class source file.
+* \brief The BaseTechnology class source file.
 *
 *  Detailed Description.
 *

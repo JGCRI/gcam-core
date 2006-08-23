@@ -1,7 +1,7 @@
 /*! 
 * \file building_supply_technology.cpp
 * \ingroup CIAM
-* \brief The building supply technology
+* \brief BuildingSupplyTechnology source file
 * \author Steve Smith
 */
 
