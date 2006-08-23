@@ -12,12 +12,10 @@ use of this software.
 /*! 
 * \file production_demand_function.cpp
 * \ingroup Objects
-* \brief The Production Demand Function class source file.
+* \brief The source file for all IProductionFunction's.
 * \author Pralit Patel
 * \author Sonny Kim
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
