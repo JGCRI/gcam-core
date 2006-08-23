@@ -17,7 +17,7 @@
 /*! 
  * \file ical_data.h
  * \ingroup Objects
- * \brief The CalData class header file.
+ * \brief The ICalData interface header file.
  * \author James Blackwood
  */
 

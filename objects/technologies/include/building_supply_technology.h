@@ -7,7 +7,7 @@
 /*! 
 * \file building_supply_technology.h
 * \ingroup CIAM
-* \brief The building supply technology
+* \brief BuildingSupplyTechnology header file
 * \author Steve Smith
 */
 

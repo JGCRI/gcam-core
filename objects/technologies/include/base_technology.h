@@ -18,7 +18,7 @@
 /*! 
 * \file base_technology.h
 * \ingroup Objects
-* \brief Base Technology class header file.
+* \brief BaseTechnology class header file.
 * \author Pralit Patel
 * \author Sonny Kim
 * \date $Date$

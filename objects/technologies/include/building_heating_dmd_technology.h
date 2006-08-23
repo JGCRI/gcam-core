@@ -7,7 +7,7 @@
 /*! 
 * \file building_heating_dmd_technology.h
 * \ingroup CIAM
-* \brief The building heating service demand technology.
+* \brief BuildingHeatingDmdTechnology header file
 * \author Steve Smith
 * \date $Date$
 * \version $Revision$

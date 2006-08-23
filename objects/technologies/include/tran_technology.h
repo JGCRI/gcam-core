@@ -7,7 +7,7 @@
 /*! 
 * \file tran_technology.h
 * \ingroup Objects
-* \brief The transportation technology class header file.
+* \brief The TranTechnology class header file.
 * \author Sonny Kim
 * \date $Date$
 * \version $Revision$
