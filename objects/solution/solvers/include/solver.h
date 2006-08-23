@@ -7,7 +7,7 @@
 /*! 
 * \file solver.h
 * \ingroup Objects
-* \brief This is the header file for the solver class.
+* \brief This is the header file for the Solver class.
 * \author Josh Lurz
 */
 #include <memory>

@@ -7,7 +7,7 @@
 /*! 
 * \file solver_component.h
 * \ingroup objects
-* \brief This is the header file for the solver component class.
+* \brief This is the header file for the SolverComponent class.
 *
 * \author Josh Lurz
 */
