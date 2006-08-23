@@ -7,7 +7,7 @@
 /*! 
 * \file trial_value_market.h
 * \ingroup CIAM
-* \brief The trial_value_market class header file.
+* \brief The TrialValueMarket class header file.
 * \author Steve Smith
 */
 
