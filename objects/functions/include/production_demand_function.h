@@ -18,14 +18,9 @@
 /*! 
 * \file production_demand_function.h
 * \ingroup Objects
-* \brief Production Demand Function abstract class header file.
-*
-*  Detailed description.
-*
+* \brief The header file for all IProductionFunction's.
 * \author Pralit Patel
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>
