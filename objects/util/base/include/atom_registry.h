@@ -17,10 +17,8 @@
 /*! 
 * \file atom_registry.h
 * \ingroup Util
-* \brief The AtomRegistry class header file.
+* \brief The objects::AtomRegistry class header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include <list>

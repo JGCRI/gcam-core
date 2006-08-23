@@ -20,10 +20,8 @@
 /*! 
 * \file atom.h  
 * \ingroup util
-* \brief Header file for the Atom class.
+* \brief Header file for the objects::Atom class.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>
