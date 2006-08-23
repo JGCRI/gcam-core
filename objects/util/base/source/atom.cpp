@@ -1,10 +1,8 @@
 /*! 
 * \file atom.cpp
 * \ingroup Util
-* \brief Atom class source file.
+* \brief objects::Atom class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"

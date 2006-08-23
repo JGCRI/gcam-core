@@ -1,10 +1,8 @@
 /*! 
 * \file atom_registry.cpp
 * \ingroup Util
-* \brief AtomRegistry class source file.
+* \brief objects::AtomRegistry class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 #include "util/base/include/definitions.h"
 #include <iostream>
