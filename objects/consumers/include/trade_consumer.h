@@ -7,7 +7,7 @@
 /*! 
 * \file trade_consumer.h
 * \ingroup Objects
-* \brief Trade Consumer class header file.
+* \brief TradeConsumer class header file.
 *
 *  Detailed description.
 *

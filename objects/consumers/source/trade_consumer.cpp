@@ -12,7 +12,7 @@ use of this software.
 /*! 
 * \file trade_consumer.cpp
 * \ingroup Objects
-* \brief The Trade Consumer class source file.
+* \brief The TradeConsumer class source file.
 *
 * \author Sonny Kim
 * \author Pralit Patel

@@ -7,7 +7,7 @@
 /*! 
 * \file invest_consumer.h
 * \ingroup Objects
-* \brief Investment Consumer class header file.
+* \brief InvestConsumer class header file.
 *
 *  Detailed description.
 *

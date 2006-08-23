@@ -1,7 +1,7 @@
 /*! 
 * \file invest_consumer.cpp
 * \ingroup Objects
-* \brief The Investment Consumer class source file.
+* \brief The InvestConsumer class source file.
 *
 * \author Sonny Kim
 * \author Pralit Patel
