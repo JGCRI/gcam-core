@@ -14,11 +14,6 @@
 
 // User headers
 #include "technologies/include/technology.h"
-#include "emissions/include/ghg.h"
-#include "emissions/include/ghg_output.h"
-#include "emissions/include/ghg_output_aggr.h"
-#include "emissions/include/so2_emissions.h"
-#include "emissions/include/ghg_input.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/model_time.h"
@@ -34,6 +29,8 @@
 #include "technologies/include/secondary_output.h"
 #include "technologies/include/primary_output.h"
 #include "technologies/include/ical_data.h"
+#include "emissions/include/ghg_factory.h"
+#include "emissions/include/co2_emissions.h"
 
 // TODO: Factory for cal data objects.
 #include "technologies/include/cal_data_input.h"
@@ -48,7 +45,9 @@ extern Scenario* scenario;
 const double LOGIT_EXP_DEFAULT = -6;
 
 typedef vector<IOutput*>::const_iterator COutputIterator;
-typedef vector<Ghg*>::const_iterator CGHGIterator;
+typedef vector<IOutput*>::iterator OutputIterator;
+typedef vector<AGHG*>::const_iterator CGHGIterator;
+typedef vector<AGHG*>::iterator GHGIterator;
 // Technology class method definition
 
 /*! 
@@ -85,7 +84,7 @@ void technology::copy( const technology& techIn ) {
     year = techIn.year;
     shrwts = techIn.shrwts;
     mBaseEfficiency = techIn.mBaseEfficiency; 
-    effPenalty = techIn.effPenalty;
+    effPenalty = techIn.effPenalty; 
     mBaseNonEnergyCost = techIn.mBaseNonEnergyCost;
     neCostPenalty = techIn.neCostPenalty;
     fuelcost = techIn.fuelcost;
@@ -125,10 +124,10 @@ technology* technology::clone() const {
 //! Clear member variables.
 void technology::clear(){
     // Delete the GHGs to avoid a memory leak.
-    for( vector<Ghg*>::iterator iter = ghg.begin(); iter != ghg.end(); ++iter ) {
+    for( GHGIterator iter = ghg.begin(); iter != ghg.end(); ++iter ) {
         delete *iter;
     }
-    for( vector<IOutput*>::iterator iter = mOutputs.begin(); iter != mOutputs.end(); ++iter ) {
+    for( OutputIterator iter = mOutputs.begin(); iter != mOutputs.end(); ++iter ) {
         delete *iter;
     }
 }
@@ -218,29 +217,17 @@ void technology::XMLParse( const DOMNode* node ) {
         else if( nodeName == "fixedOutput" ){
             fixedOutput = XMLHelper<double>::getValue( curr );
         }
-		else if( nodeName == CalDataInput::getXMLNameStatic() ){
+        else if( nodeName == CalDataInput::getXMLNameStatic() ){
             parseSingleNode( curr, mCalValue, new CalDataInput );
         }
         else if( nodeName == CalDataOutput::getXMLNameStatic() ){
             parseSingleNode( curr, mCalValue, new CalDataOutput );
         }
-		else if( nodeName == CalDataOutputPercap::getXMLNameStatic() ){
+        else if( nodeName == CalDataOutputPercap::getXMLNameStatic() ){
             parseSingleNode( curr, mCalValue, new CalDataOutputPercap );
-		}
-		else if( nodeName == Ghg::getXMLNameStatic() ){
-            parseContainerNode( curr, ghg, ghgNameMap, new Ghg );
         }
-        else if( nodeName == GhgOutput::getXMLNameStatic() ){
-            parseContainerNode( curr, ghg, ghgNameMap, new GhgOutput );
-        }
-        else if( nodeName == GhgInput::getXMLNameStatic() ){
-            parseContainerNode( curr, ghg, ghgNameMap, new GhgInput );
-        }
-        else if( nodeName == GhgOutputAggr::getXMLNameStatic() ){
-            parseContainerNode( curr, ghg, ghgNameMap, new GhgOutputAggr );
-        }
-        else if( nodeName == SO2Emissions::getXMLNameStatic() ){
-            parseContainerNode( curr, ghg, ghgNameMap, new SO2Emissions );
+        else if( GHGFactory::isGHGNode( nodeName ) ){
+            parseContainerNode( curr, ghg, ghgNameMap, GHGFactory::create( nodeName ).release() );
         }
         else if( nodeName == SecondaryOutput::getXMLNameStatic() ){
             parseContainerNode( curr, mOutputs, new SecondaryOutput );
@@ -299,13 +286,12 @@ void technology::completeInit( const string& aSectorName,
         mBaseEfficiency = 1;
     }
 
-    const string CO2_NAME = "CO2";
-    if( !util::hasValue( ghgNameMap, CO2_NAME ) ) {
+    if( !util::hasValue( ghgNameMap, CO2Emissions::getXMLNameStatic() ) ) {
         // arguments: gas, unit, remove fraction, GWP, and emissions coefficient
         // for CO2 this emissions coefficient is not used
-        Ghg* CO2 = new Ghg( CO2_NAME, "MTC", 1 ); // at least CO2 must be present
+        AGHG* CO2 = new CO2Emissions(); // at least CO2 must be present
         ghg.push_back( CO2 );
-        ghgNameMap[ CO2_NAME ] = static_cast<int>( ghg.size() ) - 1;
+        ghgNameMap[ CO2Emissions::getXMLNameStatic() ] = static_cast<int>( ghg.size() ) - 1;
     }
 
     // Create the primary output for this technology. All technologies will have
@@ -344,7 +330,7 @@ void technology::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( shrwts, "sharewt", out, tabs, 1.0 );
     
     if ( mCalValue.get() ){
-		mCalValue->toInputXML( out, tabs );
+        mCalValue->toInputXML( out, tabs );
     }
     
     XMLWriteElement( fuelname, "fuelname", out, tabs );
@@ -379,8 +365,8 @@ void technology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const 
     
     XMLWriteElement( fuelname, "fuelname", out, tabs );
     XMLWriteElement( shrwts, "sharewt", out, tabs );
-	if ( mCalValue.get() ) {
-		mCalValue->toDebugXML( out, tabs );
+    if ( mCalValue.get() ) {
+        mCalValue->toDebugXML( out, tabs );
     }
     XMLWriteElement( getEfficiency( period ), "efficiencyEffective", out, tabs );
     XMLWriteElement( mBaseEfficiency, "efficiencyBase", out, tabs );
@@ -419,7 +405,7 @@ void technology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const 
 * \return The constant XML_NAME.
 */
 const string& technology::getXMLName1D() const {
-	return getXMLNameStatic1D();
+    return getXMLNameStatic1D();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -432,8 +418,8 @@ const string& technology::getXMLName1D() const {
 * \return The constant XML_NAME as a static.
 */
 const string& technology::getXMLNameStatic1D() {
-	const static string XML_NAME1D = "technology";
-	return XML_NAME1D;
+    const static string XML_NAME1D = "technology";
+    return XML_NAME1D;
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -445,7 +431,7 @@ const string& technology::getXMLNameStatic1D() {
 * \return The constant XML_NAME.
 */
 const string& technology::getXMLName2D() const {
-	return getXMLNameStatic2D();
+    return getXMLNameStatic2D();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -458,8 +444,8 @@ const string& technology::getXMLName2D() const {
 * \return The constant XML_NAME as a static.
 */
 const string& technology::getXMLNameStatic2D() {
-	const static string XML_NAME2D = "period";
-	return XML_NAME2D;
+    const static string XML_NAME2D = "period";
+    return XML_NAME2D;
 }
 
 /*! \brief Perform initializations that only need to be done once per period.
@@ -480,12 +466,12 @@ void technology::initCalc( const string& aRegionName,
         mCalValue->initCalc( aDemographics, aPeriod );
     }
 
-	if ( mCalValue.get() && ( mCalValue->getCalInput( getEfficiency( aPeriod ) ) < 0 ) ) {
+    if ( mCalValue.get() && ( mCalValue->getCalInput( getEfficiency( aPeriod ) ) < 0 ) ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::DEBUG );
         mainLog << "Negative calibration value for technology " << name
                 << ". Calibration removed." << endl;
-		mCalValue.reset( 0 );
+        mCalValue.reset( 0 );
     }
 
     for( unsigned int i = 0; i < ghg.size(); i++ ){
@@ -565,7 +551,7 @@ void technology::calcCost( const string& regionName, const string& sectorName, c
     fuelcost = ( fuelprice * fMultiplier ) / getEfficiency( per );
     techcost = ( fuelcost + getNonEnergyCost( per ) ) * pMultiplier;
     techcost -= calcSecondaryValue( regionName, per );
-
+    
     // techcost can drift below zero in disequalibrium.
     techcost = max( techcost, util::getSmallNumber() );
 }
@@ -985,7 +971,7 @@ bool technology::getCalibrationStatus( ) const {
 
 //! returns true if all output is either fixed or calibrated
 bool technology::outputFixed( ) const {
-	return ( technology::getCalibrationStatus() || ( fixedOutput >= 0 ) || ( shrwts == 0 ) );
+    return ( technology::getCalibrationStatus() || ( fixedOutput >= 0 ) || ( shrwts == 0 ) );
 }
 
 /*! \brief Returns true if this technology is available for production and not fixed
@@ -1027,7 +1013,7 @@ double technology::getCalibrationInput( const int aPeriod ) const {
     // Calibration output is for the initial year of the technology.
     if( mCalValue.get() && year == scenario->getModeltime()->getper_to_yr( aPeriod ) ){
         return mCalValue->getCalInput( getEfficiency( aPeriod ) );
-    }
+}
     return 0;
 }
 
@@ -1047,7 +1033,7 @@ double technology::getCalibrationOutput( const int aPeriod ) const {
     // Calibration output is for the initial year of the technology.
     if( mCalValue.get() && year == scenario->getModeltime()->getper_to_yr( aPeriod ) ){
         return mCalValue->getCalOutput( getEfficiency( aPeriod ) );
-    }
+}
     return 0;
 }
 
@@ -1098,7 +1084,7 @@ const vector<string> technology::getGHGNames() const {
 * \param prevGHG Pointer to the previous GHG object that needs to be passed to the corresponding object this period.
 * \warning Assumes there is only one GHG object with any given name
 */
-void technology::copyGHGParameters( const Ghg* prevGHG ) {
+void technology::copyGHGParameters( const AGHG* prevGHG ) {
     const int ghgIndex = util::searchForValue( ghgNameMap, prevGHG->getName() );
 
     if ( prevGHG ) {
@@ -1111,7 +1097,7 @@ void technology::copyGHGParameters( const Ghg* prevGHG ) {
 * \param ghgName Name of GHG 
 * \warning Assumes there is only one GHG object with any given name
 */
-Ghg* technology::getGHGPointer( const string& ghgName ) {
+AGHG* technology::getGHGPointer( const string& ghgName ) {
     const int ghgIndex = util::searchForValue( ghgNameMap, ghgName );
 
     return ghg[ ghgIndex ];
@@ -1164,7 +1150,7 @@ void technology::setYear( const int aYear ) {
 * \author Steve Smith
 */
 int technology::getNumbGHGs()  const {
-    std::vector<std::string> ghgNames = getGHGNames();
+    vector<string> ghgNames = getGHGNames();
     return static_cast<int>( ghgNames.size() ); 
 }
 
@@ -1177,7 +1163,7 @@ int technology::getNumbGHGs()  const {
 * \param period Model period
 */
 void technology::tabulateFixedDemands( const string regionName, const int period, const IInfo* aSubsectorIInfo ) {
-	const double MKT_NOT_ALL_FIXED = -1; 
+    const double MKT_NOT_ALL_FIXED = -1; 
     Marketplace* marketplace = scenario->getMarketplace();
 
     IInfo* marketInfo = marketplace->getMarketInfo( fuelname, regionName, period, false );
@@ -1187,7 +1173,7 @@ void technology::tabulateFixedDemands( const string regionName, const int period
             double fixedOrCalInput = 0;
             double fixedInput = 0;
             // this sector has fixed output
-			if ( technology::getCalibrationStatus() ) {
+            if ( technology::getCalibrationStatus() ) {
                 fixedOrCalInput = getCalibrationInput( period );
             } else if ( fixedOutput >= 0 ) {
                 fixedOrCalInput = getFixedInput( period );
@@ -1226,14 +1212,14 @@ void technology::setTechShare(const double shareIn) {
 * \param aPeriod The period for which to update.
 */
 void technology::accept( IVisitor* aVisitor, const int aPeriod ) const {
-	aVisitor->startVisitTechnology( this, aPeriod );
+    aVisitor->startVisitTechnology( this, aPeriod );
 
     for( unsigned int i = 0; i < mOutputs.size(); ++i ){
         mOutputs[ i ]->accept( aVisitor, aPeriod );
     }
 
-	for( unsigned int i = 0; i < ghg.size(); ++i ){
-		ghg[ i ]->accept( aVisitor, aPeriod );
-	}
-	aVisitor->endVisitTechnology( this, aPeriod );
+    for( unsigned int i = 0; i < ghg.size(); ++i ){
+        ghg[ i ]->accept( aVisitor, aPeriod );
+    }
+    aVisitor->endVisitTechnology( this, aPeriod );
 }

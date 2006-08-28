@@ -1225,7 +1225,7 @@ void Sector::csvSGMOutputFile( ostream& aFile, const int period ) const {
     }    
 }
 
-void Sector::accept( IVisitor* aVisitor, const int aPeriod ) const{
+void Sector::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitSector( this, aPeriod );
     for( unsigned int i = 0; i < subsec.size(); i++ ) {
         subsec[ i ]->accept( aVisitor, aPeriod );

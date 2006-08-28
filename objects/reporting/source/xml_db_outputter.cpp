@@ -28,7 +28,7 @@
 #include "sectors/include/subsector.h"
 #include "sectors/include/building_dmd_subsector.h"
 #include "technologies/include/technology.h"
-#include "emissions/include/ghg.h"
+#include "emissions/include/aghg.h"
 #include "util/base/include/model_time.h"
 #include "containers/include/output_meta_data.h"
 #include "marketplace/include/marketplace.h"
@@ -505,7 +505,7 @@ void XMLDBOutputter::endVisitTechnology( const technology* aTechnology,
     XMLWriteClosingTag( aTechnology->getXMLName1D(), mBuffer, mTabs.get() );
 }
 
-void XMLDBOutputter::startVisitGHG( const Ghg* aGHG, const int aPeriod ){
+void XMLDBOutputter::startVisitGHG( const AGHG* aGHG, const int aPeriod ){
     // XML DB outputter should always be called on all periods at once.
     // TODO: Currently when the all periods flag is passed to subsector, 
     // it calls technology visit with the period of the technology. This assert
@@ -514,7 +514,7 @@ void XMLDBOutputter::startVisitGHG( const Ghg* aGHG, const int aPeriod ){
 
     // Write out the opening element tag of the GHG and the type of the base class.
     XMLWriteOpeningTag( aGHG->getXMLName(), mBuffer, mTabs.get(), aGHG->getName(),
-                        0, Ghg::getXMLNameStatic() );
+                        0, AGHG::getXMLNameStatic() );
 
     // Write out emissions.
     map<string, string> attrs;
@@ -542,7 +542,7 @@ void XMLDBOutputter::startVisitGHG( const Ghg* aGHG, const int aPeriod ){
     }
 }
 
-void XMLDBOutputter::endVisitGHG( const Ghg* aGHG, const int aPeriod ){
+void XMLDBOutputter::endVisitGHG( const AGHG* aGHG, const int aPeriod ){
     // Write the closing ghg tag.
     XMLWriteClosingTag( aGHG->getXMLName(), mBuffer, mTabs.get() );
 }
@@ -715,23 +715,23 @@ void XMLDBOutputter::endVisitLandNode( const LandNode* aLandNode, const int aPer
 }
 
 void XMLDBOutputter::startVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod ){
-	// Write the opening gdp tag.
+    // Write the opening gdp tag.
     XMLWriteOpeningTag( "LandLeaf", mBuffer, mTabs.get(), aLandLeaf->getName() );
 
     // Loop over the periods to output LandLeaf information.
     // The loops are separated so the types are grouped together, as is required for
     // valid XML.
     const Modeltime* modeltime = scenario->getModeltime();
-	for( int i = 0; i < modeltime->getmaxper(); ++i ){
+    for( int i = 0; i < modeltime->getmaxper(); ++i ){
         int year = modeltime->getper_to_yr( i );
         // Write out the labor productivity growth rate.
-		XMLWriteElement( aLandLeaf->getLandAllocation( aLandLeaf->getName(), i ),
+        XMLWriteElement( aLandLeaf->getLandAllocation( aLandLeaf->getName(), i ),
                          "land-allocation", mBuffer, mTabs.get(), year );
     }
 }
 
 void XMLDBOutputter::endVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod ){
-	XMLWriteClosingTag( "LandLeaf", mBuffer, mTabs.get() );
+    XMLWriteClosingTag( "LandLeaf", mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::startVisitCarbonCalc( const ICarbonCalc* aCarbon, const int aPeriod ){
@@ -744,7 +744,7 @@ void XMLDBOutputter::startVisitCarbonCalc( const ICarbonCalc* aCarbon, const int
 
     // Printing yearly values would be too much data.
     const Modeltime* modeltime = scenario->getModeltime();
-	for( int i = 0; i < modeltime->getmaxper(); ++i ){
+    for( int i = 0; i < modeltime->getmaxper(); ++i ){
         int year = modeltime->getper_to_yr( i );
         // Write out the carbon emissions.
         XMLWriteElement( aCarbon->getNetLandUseChangeEmission( year ),

@@ -76,7 +76,7 @@ double Female::calcFemaleBirth() {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
-const std::string& Female::getXMLName() const{
+const std::string& Female::getXMLName() const {
     return XML_NAME;
 }
 
@@ -98,8 +98,8 @@ const std::string& Female::getXMLNameStatic(){
 * \param aPeriod Period for which to update.
 */
 void Female::accept( IVisitor* aVisitor, const int aPeriod ) const {
-	aVisitor->startVisitFemale( this, aPeriod );
-	// Update the parent class.
-	Gender::accept( aVisitor, aPeriod );
-	aVisitor->endVisitFemale( this, aPeriod );
+    aVisitor->startVisitFemale( this, aPeriod );
+    // Update the parent class.
+    Gender::accept( aVisitor, aPeriod );
+    aVisitor->endVisitFemale( this, aPeriod );
 }

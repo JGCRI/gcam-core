@@ -27,9 +27,9 @@ using namespace xercesc;
 extern Scenario* scenario;
 
 /*! \brief Constructor.
- * \author James Blackwood
+* \author James Blackwood
  * \param aName Product name.
- */
+*/
 LandLeaf::LandLeaf( const string& aName ):
 mIntrinsicYieldMode( 0 ),
 mYield( scenario->getModeltime()->getmaxper(), -1 ),
@@ -70,10 +70,10 @@ ALandAllocatorItem* LandLeaf::getChildAt( const size_t aIndex ) {
 }
 
 /*! \brief Set data members from XML input
-*
-* \author James Blackwood
+ *
+ * \author James Blackwood
 * \param node pointer to the current node in the XML input tree
-*/
+ */
 bool LandLeaf::XMLParse( const DOMNode* aNode ){
 
     // assume we are passed a valid node.
@@ -103,19 +103,19 @@ bool LandLeaf::XMLParse( const DOMNode* aNode ){
     return true;
 }
 
-bool LandLeaf::XMLDerivedClassParse( const string &aNodeName, const DOMNode *aCurr ){
+bool LandLeaf::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurr ){
     // Allow derived classes to override.
     return false;
 }
 
 /*! \brief Get the XML node name for output to XML.
-*
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
-* \author Josh Lurz, James Blackwood
-* \return The constant XML_NAME.
-*/
+ *
+ * This public function accesses the private constant string, XML_NAME.
+ * This way the tag is always consistent for both read-in and output and can be easily changed.
+ *  This function may be virtual to be overriden by derived class pointers.
+ * \author Josh Lurz, James Blackwood
+ * \return The constant XML_NAME.
+ */
 const string& LandLeaf::getXMLName() const {
     const static string XML_NAME = "LandAllocatorLeaf";
     return XML_NAME;
@@ -500,8 +500,8 @@ double LandLeaf::getLandAllocation( const string& aProductName,
                                     const int aPeriod ) const
 {
     assert( aProductName == mName );
-    return mLandAllocation[ aPeriod ];
-}
+        return mLandAllocation[ aPeriod ];
+    }
 
 /*! \brief Get total land allocation.
 *
@@ -516,7 +516,7 @@ double LandLeaf::getTotalLandAllocation( const LandAllocationType aType,
     // Unless a land leaf is overridden it is a production leaf.
     if( aType == eAnyLand || aType == eManaged ){
         return mLandAllocation[ aPeriod ];
-    }
+}
     return 0;
 }
 
@@ -600,12 +600,12 @@ void LandLeaf::dbOutput( const string& aRegionName ) const {
 * \param aPeriod Period to update.
 */
 void LandLeaf::accept( IVisitor* aVisitor, const int aPeriod ) const {
-	aVisitor->startVisitLandLeaf( this, aPeriod );
+    aVisitor->startVisitLandLeaf( this, aPeriod );
 
     // All land leaves have carbon content calculators, but it may not have been
     // instantiated yet.
     if( mCarbonContentCalc.get() ){
         mCarbonContentCalc->accept( aVisitor, aPeriod );
     }
-	aVisitor->endVisitLandLeaf( this, aPeriod );
+    aVisitor->endVisitLandLeaf( this, aPeriod );
 }

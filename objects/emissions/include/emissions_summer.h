@@ -38,7 +38,7 @@ class EmissionsSummer : public DefaultVisitor {
 public:
     explicit EmissionsSummer( const std::string& aGHGName );
 
-    virtual void startVisitGHG( const Ghg* aGHG,
+    virtual void startVisitGHG( const AGHG* aGHG,
                                 const int aPeriod );
     
     // TODO: Remove this when the Fortran land allocator is removed.

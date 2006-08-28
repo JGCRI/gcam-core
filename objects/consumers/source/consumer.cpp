@@ -1,12 +1,12 @@
 /*
-	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Laboratory operated by Battelle Memorial
-	Institute. Battelle has certain unperfected rights in the software
-	which should not be copied or otherwise disseminated outside your
-	organization without the express written authorization from Battelle. All rights to
-	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responsibility for the 
-	use of this software.
+    This software, which is provided in confidence, was prepared by employees
+    of Pacific Northwest National Laboratory operated by Battelle Memorial
+    Institute. Battelle has certain unperfected rights in the software
+    which should not be copied or otherwise disseminated outside your
+    organization without the express written authorization from Battelle. All rights to
+    the software are reserved by Battelle.  Battelle makes no warranty,
+    express or implied, and assumes no liability or responsibility for the 
+    use of this software.
 */
 
 /*! 
@@ -32,12 +32,15 @@
 #include "marketplace/include/marketplace.h"
 #include "functions/include/function_manager.h"
 #include "util/base/include/ivisitor.h"
-#include "emissions/include/ghg.h"
+#include "emissions/include/aghg.h"
 
 using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
+
+typedef vector<AGHG*>::const_iterator CGHGIterator;
+typedef vector<AGHG*>::iterator GHGIterator;
 
 //!< Default Constructor
 Consumer::Consumer() {
@@ -45,7 +48,7 @@ Consumer::Consumer() {
 
 //! Calculate Demand
 void Consumer::calcInputDemand( double aConsumption, const string& aRegionName, 
-							    const string& aSectorName, int aPeriod ) 
+                                const string& aSectorName, int aPeriod ) 
 {
     // Consumer production is never scaled.
     const double CONSUMER_SCALE_FACTOR = 1;
@@ -55,22 +58,22 @@ void Consumer::calcInputDemand( double aConsumption, const string& aRegionName,
 }
 
 void Consumer::updateMarketplace( const string& aSectorName, const string& aRegionName, const int aPeriod ) {
-	Marketplace* marketplace = scenario->getMarketplace();
-	double totalDemand = 0;
-	for( unsigned int i = 0; i < input.size(); i++ ) {
-		// don't add govement deficit to marketplace demand
-		if( !input[i]->isCapital() ) {
-			double tempDemand = input[ i ]->getDemandCurrency();
+    Marketplace* marketplace = scenario->getMarketplace();
+    double totalDemand = 0;
+    for( unsigned int i = 0; i < input.size(); i++ ) {
+        // don't add govement deficit to marketplace demand
+        if( !input[i]->isCapital() ) {
+            double tempDemand = input[ i ]->getDemandCurrency();
             assert( util::isValidNumber( tempDemand ) );
-			if( tempDemand < 0 ){
-				cout << "Error: Trying to add a negative demand currency to the marketplace for " << input[ i ]->getName() << endl;
-			}
+            if( tempDemand < 0 ){
+                cout << "Error: Trying to add a negative demand currency to the marketplace for " << input[ i ]->getName() << endl;
+            }
 
-			marketplace->addToDemand( input[ i ]->getName(), aRegionName, tempDemand, aPeriod );
-			totalDemand += tempDemand;
-		}
-	}
-	marketplace->addToSupply( aSectorName, aRegionName, totalDemand, aPeriod, false );
+            marketplace->addToDemand( input[ i ]->getName(), aRegionName, tempDemand, aPeriod );
+            totalDemand += tempDemand;
+        }
+    }
+    marketplace->addToSupply( aSectorName, aRegionName, totalDemand, aPeriod, false );
 }
 
 void Consumer::calcEmissions( const string& aGoodName, const string& aRegionName, const int aPeriod ) {

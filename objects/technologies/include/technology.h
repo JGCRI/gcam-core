@@ -19,7 +19,7 @@
 #include "util/base/include/iround_trippable.h"
 
 // Forward declaration
-class Ghg;
+class AGHG;
 class Emcoef_ind;
 class GDP;
 class DependencyFinder;
@@ -68,14 +68,14 @@ protected:
     double share; //!< technology shares
     double input; //!< total fuel input (fossil and uranium)
     double fixedOutput; //!< amount of fixed supply (>0) for this tech, exclusive of constraints
-	double fixedOutputVal;
+    double fixedOutputVal;
     //! Calibration value
     std::auto_ptr<ICalData> mCalValue;
 
     //! Vector of output objects representing the outputs of the technology.
     std::vector<IOutput*> mOutputs;
 
-    std::vector<Ghg*> ghg; //!< suite of greenhouse gases
+    std::vector<AGHG*> ghg; //!< suite of greenhouse gases
     std::map<std::string,double> emissmap; //!< map of ghg emissions
     std::map<std::string,double> emfuelmap; //!< map of ghg emissions implicit in fuel
     std::map<std::string,double> emindmap; //!< map of indirect ghg emissions
@@ -179,8 +179,8 @@ public:
     double getTotalGHGCost( const std::string& aRegionName, const int aPeriod ) const;
     double getCarbonTaxPaid( const std::string& aRegionName, int aPeriod ) const;
     double getShareWeight() const;
-    void technology::copyGHGParameters( const Ghg* prevGHG );
-    Ghg* technology::getGHGPointer( const std::string& ghgName );
+    void copyGHGParameters( const AGHG* prevGHG );
+    AGHG* getGHGPointer( const std::string& ghgName );
     const std::vector<std::string> getGHGNames() const;
     const std::map<std::string,double>& getemissmap() const; // return map of all ghg emissions
     const std::map<std::string,double>& getemfuelmap() const; // return map of all ghg emissions
@@ -192,7 +192,7 @@ public:
     int getNumbGHGs()  const; // number of GHG objects in this technology
     void setYear( const int yearIn );
     virtual void tabulateFixedDemands( const std::string regionName, const int period, const IInfo* aSubsectorIInfo );
-	void setTechShare(const double shareIn);
-	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
+    void setTechShare(const double shareIn);
+    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 };
 #endif // _TECHNOLOGY_H_

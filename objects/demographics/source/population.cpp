@@ -89,7 +89,7 @@ void Population::XMLParse( const xercesc::DOMNode* node ){
 }
 
 //! Write out datamembers to XML output stream.
-void Population::toInputXML( std::ostream& out, Tabs* tabs ) const{
+void Population::toInputXML( std::ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag ( getXMLName(), out, tabs , "", mYear);
 
     XMLWriteElementCheckDefault( mTotalPop, "totalPop", out, tabs );
@@ -103,7 +103,7 @@ void Population::toInputXML( std::ostream& out, Tabs* tabs ) const{
 }
 
 //! Write out XML for debugging purposes.
-void Population::toDebugXML( std::ostream& out, Tabs* tabs ) const{
+void Population::toDebugXML( std::ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag ( getXMLName(), out, tabs , "", mYear);
 
     XMLWriteElement( mTotalPop, "totalPop", out, tabs );
@@ -127,6 +127,6 @@ void Population::csvSGMOutputFile( ostream& aFile, const int period ) const {
 * \param aPeriod Period for which to update.
 */
 void Population::accept( IVisitor* aVisitor, const int aPeriod ) const {
-	aVisitor->startVisitPopulation( this, aPeriod );
-	aVisitor->endVisitPopulation( this, aPeriod );
+    aVisitor->startVisitPopulation( this, aPeriod );
+    aVisitor->endVisitPopulation( this, aPeriod );
 }

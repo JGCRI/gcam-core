@@ -84,7 +84,7 @@ protected:
     // Unmanaged GHGs should not affect profit rates, however there is no way of enforcing this.
 
     //! Vector of suites of greenhouse gases.
-    std::vector<Ghg*> mGHGs;
+    std::vector<AGHG*> mGHGs;
 
     //! Container of historical land use.
     std::auto_ptr<LandUseHistory> mLandUseHistory;

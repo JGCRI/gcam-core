@@ -1,12 +1,12 @@
 /*
-	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Laboratory operated by Battelle Memorial
-	Institute. Battelle has certain unperfected rights in the software
-	which should not be copied or otherwise disseminated outside your
-	organization without the express written authorization from Battelle. All rights to
-	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responsibility for the 
-	use of this software.
+    This software, which is provided in confidence, was prepared by employees
+    of Pacific Northwest National Laboratory operated by Battelle Memorial
+    Institute. Battelle has certain unperfected rights in the software
+    which should not be copied or otherwise disseminated outside your
+    organization without the express written authorization from Battelle. All rights to
+    the software are reserved by Battelle.  Battelle makes no warranty,
+    express or implied, and assumes no liability or responsibility for the 
+    use of this software.
 */
 
 /*! 
@@ -35,7 +35,7 @@
 #include "sectors/include/more_sector_info.h"
 #include "util/base/include/ivisitor.h"
 #include "investment/include/iexpected_profit_calculator.h"
-#include "emissions/include/ghg.h"
+#include "emissions/include/aghg.h"
 #include "technologies/include/technology_type.h"
 #include "functions/include/function_utils.h"
 #include "technologies/include/profit_shutdown_decider.h"
@@ -45,9 +45,12 @@ using namespace xercesc;
 
 extern Scenario* scenario;
 
+typedef vector<AGHG*>::const_iterator CGHGIterator;
+typedef vector<AGHG*>::iterator GHGIterator;
+
 //! Default Constructor
 ProductionTechnology::ProductionTechnology() {
-	const int maxper = scenario->getModeltime()->getmaxper();
+    const int maxper = scenario->getModeltime()->getmaxper();
     mCostsReporting.resize( maxper );
     mProfits.resize( maxper );
 
@@ -56,15 +59,15 @@ ProductionTechnology::ProductionTechnology() {
 
     mExpectedProfitRateReporting = 0;
     capital = 0;
-	indBusTax = 0;
-	sigma1 = 0;
-	sigma2 = 0;
-	lifeTime = 0;
-	delayedInvestTime = 0;
-	maxLifeTime = 0;
-	retrofitLifeTime = 0;
-	periodIniInvest = 0;
-	periodInvestUnallowed = 0;
+    indBusTax = 0;
+    sigma1 = 0;
+    sigma2 = 0;
+    lifeTime = 0;
+    delayedInvestTime = 0;
+    maxLifeTime = 0;
+    retrofitLifeTime = 0;
+    periodIniInvest = 0;
+    periodInvestUnallowed = 0;
     mAnnualInvestment = 0;
     mBasePhysicalOutput = 0;
     mConversionFactor = 1;
@@ -85,72 +88,72 @@ void ProductionTechnology::copyParam( const BaseTechnology* baseTech ) {
 }
 
 void ProductionTechnology::copyParamsInto( ProductionTechnology& prodTechIn ) const {
- 	 prodTechIn.alphaZeroScaler = alphaZeroScaler;
-	 prodTechIn.indBusTax = indBusTax;
-	 prodTechIn.sigma1 = sigma1;
-	 prodTechIn.sigma2 = sigma2;
-	 prodTechIn.mConversionFactor = mConversionFactor;
-	 prodTechIn.lifeTime = lifeTime;
-	 prodTechIn.delayedInvestTime = delayedInvestTime;
-	 prodTechIn.maxLifeTime = maxLifeTime;
-	 prodTechIn.retrofitLifeTime = retrofitLifeTime;
-	 prodTechIn.periodIniInvest = periodIniInvest;
-	 prodTechIn.periodInvestUnallowed = periodInvestUnallowed;
+     prodTechIn.alphaZeroScaler = alphaZeroScaler;
+     prodTechIn.indBusTax = indBusTax;
+     prodTechIn.sigma1 = sigma1;
+     prodTechIn.sigma2 = sigma2;
+     prodTechIn.mConversionFactor = mConversionFactor;
+     prodTechIn.lifeTime = lifeTime;
+     prodTechIn.delayedInvestTime = delayedInvestTime;
+     prodTechIn.maxLifeTime = maxLifeTime;
+     prodTechIn.retrofitLifeTime = retrofitLifeTime;
+     prodTechIn.periodIniInvest = periodIniInvest;
+     prodTechIn.periodInvestUnallowed = periodInvestUnallowed;
      prodTechIn.currSigma = currSigma; // not sure
 }
 
 ProductionTechnology* ProductionTechnology::clone() const {
-	return new ProductionTechnology( *this );
+    return new ProductionTechnology( *this );
 }
 
 const string& ProductionTechnology::getXMLName() const {
-	return getXMLNameStatic();
+    return getXMLNameStatic();
 }
 
 const string& ProductionTechnology::getXMLNameStatic() {
     const static string XML_NAME = "productionTechnology";
-	return XML_NAME;
+    return XML_NAME;
 }
 
 //! Parse xml file for data
 bool ProductionTechnology::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
-	if ( nodeName == "lifeTime" ) {
-		lifeTime = XMLHelper<int>::getValue( curr );
-	}
-	//\todo this is capital stock change name
-	else if (nodeName == "capital" ) {
-		capital = XMLHelper<double>::getValue( curr );
-	}
-	else if (nodeName == "indirectBusinessTax" ) {
-		indBusTax = XMLHelper<double>::getValue( curr );
-	}
-	else if (nodeName == "Sigma1" ) {
-		sigma1 = XMLHelper<double>::getValue( curr );
-	}
-	else if (nodeName == "Sigma2" ) {
-		sigma2 = XMLHelper<double>::getValue( curr );
-	}
-	else if (nodeName == "basePhysicalOutput" ) {
-		mBasePhysicalOutput = XMLHelper<double>::getValue( curr );
-	}
-	else if (nodeName == "delayedInvestTime" ) {
-		delayedInvestTime = XMLHelper<int>::getValue( curr );
-	}
-	else if (nodeName == "maxLifeTime" ) {
-		maxLifeTime = XMLHelper<int>::getValue( curr );
-	}
-	else if (nodeName == "retrofitLifeTime" ) {
-		retrofitLifeTime = XMLHelper<int>::getValue( curr );
-	}
-	else if (nodeName == "periodIniInvest" ) {
-		periodIniInvest = XMLHelper<int>::getValue( curr );
-	}
-	else if (nodeName == "periodInvestUnallowed" ) {
-		periodInvestUnallowed = XMLHelper<int>::getValue( curr );
-	}
+    if ( nodeName == "lifeTime" ) {
+        lifeTime = XMLHelper<int>::getValue( curr );
+    }
+    //\todo this is capital stock change name
+    else if (nodeName == "capital" ) {
+        capital = XMLHelper<double>::getValue( curr );
+    }
+    else if (nodeName == "indirectBusinessTax" ) {
+        indBusTax = XMLHelper<double>::getValue( curr );
+    }
+    else if (nodeName == "Sigma1" ) {
+        sigma1 = XMLHelper<double>::getValue( curr );
+    }
+    else if (nodeName == "Sigma2" ) {
+        sigma2 = XMLHelper<double>::getValue( curr );
+    }
+    else if (nodeName == "basePhysicalOutput" ) {
+        mBasePhysicalOutput = XMLHelper<double>::getValue( curr );
+    }
+    else if (nodeName == "delayedInvestTime" ) {
+        delayedInvestTime = XMLHelper<int>::getValue( curr );
+    }
+    else if (nodeName == "maxLifeTime" ) {
+        maxLifeTime = XMLHelper<int>::getValue( curr );
+    }
+    else if (nodeName == "retrofitLifeTime" ) {
+        retrofitLifeTime = XMLHelper<int>::getValue( curr );
+    }
+    else if (nodeName == "periodIniInvest" ) {
+        periodIniInvest = XMLHelper<int>::getValue( curr );
+    }
+    else if (nodeName == "periodInvestUnallowed" ) {
+        periodInvestUnallowed = XMLHelper<int>::getValue( curr );
+    }
     else if (nodeName == "investmentAnnual" ) {
-		mAnnualInvestment = XMLHelper<double>::getValue( curr );
-	}
+        mAnnualInvestment = XMLHelper<double>::getValue( curr );
+    }
     else if( nodeName == "fixed-investment" ){
         mFixedInvestment = XMLHelper<double>::getValue( curr );
     }
@@ -158,31 +161,31 @@ bool ProductionTechnology::XMLDerivedClassParse( const string& nodeName, const D
         mTechChange.mHicksTechChange = XMLHelper<double>::getValue( curr );
     }
     else if (nodeName == "technicalChangeEnergy" ) {
-		mTechChange.mEnergyTechChange = XMLHelper<double>::getValue( curr );
-	}
+        mTechChange.mEnergyTechChange = XMLHelper<double>::getValue( curr );
+    }
     else if (nodeName == "technicalChangeMaterial" ) {
-		mTechChange.mMaterialTechChange = XMLHelper<double>::getValue( curr );
-	}
-	else {
-		return false;
-	}
-	return true;
+        mTechChange.mMaterialTechChange = XMLHelper<double>::getValue( curr );
+    }
+    else {
+        return false;
+    }
+    return true;
 }
 
 //! For derived classes to output XML data
 void ProductionTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     // Note: We should be using checkDefault version of this function.
-	XMLWriteElement(lifeTime, "lifeTime", out, tabs );
-	XMLWriteElement(capital, "capital", out, tabs );
-	XMLWriteElement(indBusTax, "indBusTax", out, tabs );
-	XMLWriteElement(sigma1, "Sigma1", out, tabs );
-	XMLWriteElement(sigma2, "Sigma2", out, tabs );
-	XMLWriteElement(mBasePhysicalOutput, "basePhysicalOutput", out, tabs );
-	XMLWriteElement(delayedInvestTime, "delayedInvestTime", out, tabs );
-	XMLWriteElement(maxLifeTime, "maxLifeTime", out, tabs );
-	XMLWriteElement(retrofitLifeTime, "retrofitLifeTime", out, tabs );
-	XMLWriteElement(periodIniInvest, "periodIniInvest", out, tabs );
-	XMLWriteElement(periodInvestUnallowed, "periodInvestUnallowed", out, tabs );
+    XMLWriteElement(lifeTime, "lifeTime", out, tabs );
+    XMLWriteElement(capital, "capital", out, tabs );
+    XMLWriteElement(indBusTax, "indBusTax", out, tabs );
+    XMLWriteElement(sigma1, "Sigma1", out, tabs );
+    XMLWriteElement(sigma2, "Sigma2", out, tabs );
+    XMLWriteElement(mBasePhysicalOutput, "basePhysicalOutput", out, tabs );
+    XMLWriteElement(delayedInvestTime, "delayedInvestTime", out, tabs );
+    XMLWriteElement(maxLifeTime, "maxLifeTime", out, tabs );
+    XMLWriteElement(retrofitLifeTime, "retrofitLifeTime", out, tabs );
+    XMLWriteElement(periodIniInvest, "periodIniInvest", out, tabs );
+    XMLWriteElement(periodInvestUnallowed, "periodInvestUnallowed", out, tabs );
     XMLWriteElement(mAnnualInvestment, "investmentAnnual", out, tabs );
     XMLWriteElementCheckDefault( mFixedInvestment, "fixed-investment", out, tabs, -1.0 );
     XMLWriteElement( mTechChange.mEnergyTechChange, "technicalChangeEnergy", out, tabs );
@@ -192,18 +195,18 @@ void ProductionTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
 
 //! Output debug info for derived class
 void ProductionTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
-	XMLWriteElement(lifeTime, "lifeTime", out, tabs );
-	XMLWriteElement(capital, "capital", out, tabs );
-	XMLWriteElement(indBusTax, "indBusTax", out, tabs );
-	XMLWriteElement(alphaZeroScaler, "alphaZero", out, tabs );
-	XMLWriteElement(sigma1, "Sigma1", out, tabs );
-	XMLWriteElement(sigma2, "Sigma2", out, tabs );
-	XMLWriteElement(mBasePhysicalOutput, "basePhysicalOutput", out, tabs );
-	XMLWriteElement(delayedInvestTime, "delayedInvestTime", out, tabs );
-	XMLWriteElement(maxLifeTime, "maxLifeTime", out, tabs );
-	XMLWriteElement(retrofitLifeTime, "retrofitLifeTime", out, tabs );
-	XMLWriteElement(periodIniInvest, "periodIniInvest", out, tabs );
-	XMLWriteElement(periodInvestUnallowed, "periodInvestUnallowed", out, tabs );
+    XMLWriteElement(lifeTime, "lifeTime", out, tabs );
+    XMLWriteElement(capital, "capital", out, tabs );
+    XMLWriteElement(indBusTax, "indBusTax", out, tabs );
+    XMLWriteElement(alphaZeroScaler, "alphaZero", out, tabs );
+    XMLWriteElement(sigma1, "Sigma1", out, tabs );
+    XMLWriteElement(sigma2, "Sigma2", out, tabs );
+    XMLWriteElement(mBasePhysicalOutput, "basePhysicalOutput", out, tabs );
+    XMLWriteElement(delayedInvestTime, "delayedInvestTime", out, tabs );
+    XMLWriteElement(maxLifeTime, "maxLifeTime", out, tabs );
+    XMLWriteElement(retrofitLifeTime, "retrofitLifeTime", out, tabs );
+    XMLWriteElement(periodIniInvest, "periodIniInvest", out, tabs );
+    XMLWriteElement(periodInvestUnallowed, "periodInvestUnallowed", out, tabs );
     XMLWriteElement(mAnnualInvestment, "investmentAnnual", out, tabs );
     XMLWriteElement( mFixedInvestment, "fixed-investment", out, tabs );
     XMLWriteElement( mTechChange.mEnergyTechChange, "technicalChangeEnergy", out, tabs );
@@ -214,13 +217,13 @@ void ProductionTechnology::toDebugXMLDerived( const int period, ostream& out, Ta
 void ProductionTechnology::completeInit( const string& regionName ) {
     prodDmdFnType = "CES";
     currSigma = sigma1;
-	BaseTechnology::completeInit(regionName);
+    BaseTechnology::completeInit(regionName);
 }
 
 void ProductionTechnology::updateMarketplace( const string& sectorName, const string& regionName,
                                               const int period )
 {
-	BaseTechnology::updateMarketplace( sectorName, regionName, period );
+    BaseTechnology::updateMarketplace( sectorName, regionName, period );
 }
 
 void ProductionTechnology::initCalc( const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName,
@@ -285,7 +288,7 @@ void ProductionTechnology::initCalc( const MoreSectorInfo* aMoreSectorInfo, cons
             ( year < scenario->getModeltime()->getper_to_yr(0) && (aPeriod == 1) ) ) 
         { // transform base and pre-base period vintages in period 1.
             const Marketplace* marketplace = scenario->getMarketplace();
-			double priceReceivedLastPer = FunctionUtils::getPriceReceived( aRegionName, aSectorName, aPeriod - 1 );
+            double priceReceivedLastPer = FunctionUtils::getPriceReceived( aRegionName, aSectorName, aPeriod - 1 );
             currSigma = sigma2;
             double sigmaNew = sigma1;
             double sigmaOld = sigma2;
@@ -297,12 +300,12 @@ void ProductionTechnology::initCalc( const MoreSectorInfo* aMoreSectorInfo, cons
                 prodDmdFn = FunctionManager::getFunction( "Leontief" );
                 // Transform CES coefficients to Leontief.
                 alphaZeroScaler = prodDmdFn->changeElasticity( input, priceReceivedLastPer, mProfits[ aPeriod - 1 ],
-					                                           capital, alphaZeroScaler, sigmaNew, sigmaOld );
+                                                               capital, alphaZeroScaler, sigmaNew, sigmaOld );
             }
             else if( sigma1 != sigma2 ){
                 // Transform coefficients to use short-term instead of long-term elasticity of substitution.
                 alphaZeroScaler = prodDmdFn->changeElasticity( input, priceReceivedLastPer, mProfits[ aPeriod - 1 ],
-					                                           capital, alphaZeroScaler, sigmaNew, sigmaOld );
+                                                               capital, alphaZeroScaler, sigmaNew, sigmaOld );
             }    
         }
     }
@@ -320,55 +323,55 @@ void ProductionTechnology::operate( NationalAccount& aNationalAccount, const Dem
                                    const string& aSectorName, const bool aIsNewVintageMode, const int aPeriod )
 {
     // Always operate old techs and operate old techs if they are still .
-	if( isAvailable( aPeriod ) && !isRetired( aPeriod ) ){
+    if( isAvailable( aPeriod ) && !isRetired( aPeriod ) ){
         assert( !input.empty() );
         // calculate prices paid for technology inputs
         BaseTechnology::calcPricePaid( aMoreSectorInfo, aRegionName, aSectorName, aPeriod );
         expenditure.reset();
-		if( ( aIsNewVintageMode && isNewInvestment( aPeriod ))
+        if( ( aIsNewVintageMode && isNewInvestment( aPeriod ))
             || (!aIsNewVintageMode && !isNewInvestment( aPeriod )) )
         {
 
-			// \todo capital here is capital stock, change name
+            // \todo capital here is capital stock, change name
             double shutdownCoef = calcShutdownCoef( aRegionName, aSectorName, aPeriod );
-			mOutputs[ aPeriod ] = prodDmdFn->calcDemand( input, 0, aRegionName, aSectorName,
+            mOutputs[ aPeriod ] = prodDmdFn->calcDemand( input, 0, aRegionName, aSectorName,
                                                          shutdownCoef, aPeriod, capital,
                                                          alphaZeroScaler, currSigma );
 
-			// Add wages and land rents to national account
-			for( unsigned int i = 0; i < input.size(); i++ ) {
-				if( input[i]->getName() == "Labor" ) {
-					double wages = input[i]->getDemandCurrency() 
+            // Add wages and land rents to national account
+            for( unsigned int i = 0; i < input.size(); i++ ) {
+                if( input[i]->getName() == "Labor" ) {
+                    double wages = input[i]->getDemandCurrency() 
                         * input[ i ]->getPrice( aRegionName, aPeriod );
-					expenditure.addToType( Expenditure::WAGES, wages );
-					aNationalAccount.addToAccount(NationalAccount::LABOR_WAGES, wages );
-				}
-				else if( input[i]->getName() == "Land" ) {
-					double landRents = input[i]->getDemandCurrency()
+                    expenditure.addToType( Expenditure::WAGES, wages );
+                    aNationalAccount.addToAccount(NationalAccount::LABOR_WAGES, wages );
+                }
+                else if( input[i]->getName() == "Land" ) {
+                    double landRents = input[i]->getDemandCurrency()
                                      * input[ i ]->getPrice( aRegionName, aPeriod );
-					expenditure.addToType(Expenditure::LAND_RENTS, landRents );
-					aNationalAccount.addToAccount(NationalAccount::LAND_RENTS, landRents );
-				}
+                    expenditure.addToType(Expenditure::LAND_RENTS, landRents );
+                    aNationalAccount.addToAccount(NationalAccount::LAND_RENTS, landRents );
+                }
                 else if( !input[ i ]->isCapital() ){
                     expenditure.addToType( Expenditure::INTERMEDIATE_INPUTS,
                                            input[i]->getDemandCurrency() );
                 }
-			}
+            }
             
              // TODO: Move this to setInvestment
-			// Add annual investment in new production technology to National Accounts
-			// and to maketplace demand for capital or annual investments, coordinate with Josh
-			// Not for old vintages where investment does not occur
-			if( aIsNewVintageMode && isNewInvestment( aPeriod ) ){
-				aNationalAccount.addToAccount(NationalAccount::ANNUAL_INVESTMENT, mAnnualInvestment );
-			}
-			
+            // Add annual investment in new production technology to National Accounts
+            // and to maketplace demand for capital or annual investments, coordinate with Josh
+            // Not for old vintages where investment does not occur
+            if( aIsNewVintageMode && isNewInvestment( aPeriod ) ){
+                aNationalAccount.addToAccount(NationalAccount::ANNUAL_INVESTMENT, mAnnualInvestment );
+            }
+            
             // calculate costs. Shouldn't costs used the scaled output?
-			double costs = prodDmdFn->calcCosts(input, aRegionName, aPeriod );
-			// Calculate output of Production Technology
-			mOutputs[ aPeriod ] = prodDmdFn->calcOutput( input, aRegionName, aSectorName, shutdownCoef,
+            double costs = prodDmdFn->calcCosts(input, aRegionName, aPeriod );
+            // Calculate output of Production Technology
+            mOutputs[ aPeriod ] = prodDmdFn->calcOutput( input, aRegionName, aSectorName, shutdownCoef,
                                                          aPeriod, capital, alphaZeroScaler, currSigma );
-			expenditure.addToType( Expenditure::SALES, mOutputs[ aPeriod ] );
+            expenditure.addToType( Expenditure::SALES, mOutputs[ aPeriod ] );
 
             // Check output before adding it.
             /*! \invariant Output is greater than or equal to zero. */
@@ -376,20 +379,20 @@ void ProductionTechnology::operate( NationalAccount& aNationalAccount, const Dem
             /*! \invariant Output is a valid number. */
             assert( util::isValidNumber( mOutputs[ aPeriod ] ) );
             Marketplace* marketplace = scenario->getMarketplace();
-			marketplace->addToSupply( aSectorName, aRegionName, mOutputs[ aPeriod ], aPeriod );
-			// calculate taxes and subsidies
-			calcTaxes( aNationalAccount, aMoreSectorInfo, aRegionName, aSectorName, aPeriod );
+            marketplace->addToSupply( aSectorName, aRegionName, mOutputs[ aPeriod ], aPeriod );
+            // calculate taxes and subsidies
+            calcTaxes( aNationalAccount, aMoreSectorInfo, aRegionName, aSectorName, aPeriod );
             calcEmissions( aSectorName, aRegionName, aPeriod );
-		}
-	} // if operational
+        }
+    } // if operational
 }
 
 void ProductionTechnology::calcEmissions( const string& aGoodName, const string& aRegionName, const int aPeriod ) {
     // calculate the correct currency to physical conversion factor. Use the
     // conversion factor from the technology if one was set, otherwise use the
     // one from the marketplace.
-	const double physicalConvFactor = mConversionFactor != 1 ? mConversionFactor : 
-	                                                           Input::getMarketConversionFactor( aGoodName, aRegionName );
+    const double physicalConvFactor = mConversionFactor != 1 ? mConversionFactor : 
+                                                               Input::getMarketConversionFactor( aGoodName, aRegionName );
     // determine physical output.
     double physicalOutput = mOutputs[ aPeriod ] * physicalConvFactor;
 
@@ -438,13 +441,13 @@ double ProductionTechnology::setInvestment( const string& aRegionName, const dou
 void ProductionTechnology::calcTaxes( NationalAccount& aNationalAccount, const MoreSectorInfo* aMoreSectorInfo,
                                      const string& aRegionName, const string aSectorName, const int aPeriod )
 {
-	double investTaxCreditRate = aMoreSectorInfo->getValue(MoreSectorInfo::INVEST_TAX_CREDIT_RATE);
-	double investmentTaxCredit = investTaxCreditRate * mAnnualInvestment;
-	double indBusTaxRate = aMoreSectorInfo->getValue(MoreSectorInfo::IND_BUS_TAX_RATE);
+    double investTaxCreditRate = aMoreSectorInfo->getValue(MoreSectorInfo::INVEST_TAX_CREDIT_RATE);
+    double investmentTaxCredit = investTaxCreditRate * mAnnualInvestment;
+    double indBusTaxRate = aMoreSectorInfo->getValue(MoreSectorInfo::IND_BUS_TAX_RATE);
     Marketplace* marketplace = scenario->getMarketplace();
-	indBusTax = indBusTaxRate * mOutputs[ aPeriod ] 
-	* FunctionUtils::getPriceReceived( aRegionName, aSectorName, aPeriod );
-	
+    indBusTax = indBusTaxRate * mOutputs[ aPeriod ] 
+    * FunctionUtils::getPriceReceived( aRegionName, aSectorName, aPeriod );
+    
                 // calculate profits
     if( capital <= 0 ){
         cout << "Error: Negative or zero capital in production technology: " << name << " in vintage " << year << endl;
@@ -457,36 +460,36 @@ void ProductionTechnology::calcTaxes( NationalAccount& aNationalAccount, const M
     assert( util::isValidNumber( profits ) );
     assert( profits >= 0 );
 
-	// corporate income tax rate
-	// add other value added to rentals, does not include land and labor
-	expenditure.addToType( Expenditure::RENTALS, profits );
-	double corpIncomeTaxRate = aMoreSectorInfo->getValue(MoreSectorInfo::CORP_INCOME_TAX_RATE);
-	double corpIncomeTax = corpIncomeTaxRate * profits - investmentTaxCredit;
+    // corporate income tax rate
+    // add other value added to rentals, does not include land and labor
+    expenditure.addToType( Expenditure::RENTALS, profits );
+    double corpIncomeTaxRate = aMoreSectorInfo->getValue(MoreSectorInfo::CORP_INCOME_TAX_RATE);
+    double corpIncomeTax = corpIncomeTaxRate * profits - investmentTaxCredit;
 
-	double reRate = aMoreSectorInfo->getValue(MoreSectorInfo::MAX_CORP_RET_EARNINGS_RATE)
-		*(1 - exp(aMoreSectorInfo->getValue(MoreSectorInfo::RET_EARNINGS_PARAM)
+    double reRate = aMoreSectorInfo->getValue(MoreSectorInfo::MAX_CORP_RET_EARNINGS_RATE)
+        *(1 - exp(aMoreSectorInfo->getValue(MoreSectorInfo::RET_EARNINGS_PARAM)
         *marketplace->getPrice("Capital",aRegionName,aPeriod)));
 
-	double dividends = (profits * (1 - corpIncomeTaxRate) + investmentTaxCredit) * (1 - reRate);
-	double retainedEarnings = (profits * (1 - corpIncomeTaxRate) + investmentTaxCredit) * reRate;
-	
+    double dividends = (profits * (1 - corpIncomeTaxRate) + investmentTaxCredit) * (1 - reRate);
+    double retainedEarnings = (profits * (1 - corpIncomeTaxRate) + investmentTaxCredit) * reRate;
+    
     // All retained earnings to marketplace capital supply
-	assert( retainedEarnings >= 0 );
+    assert( retainedEarnings >= 0 );
     assert( util::isValidNumber( retainedEarnings ) );
 
-	marketplace->addToSupply( "Capital", aRegionName, retainedEarnings, aPeriod );
-	// Add all taxes and accounts to expenditure
-	expenditure.setType(Expenditure::INDIRECT_TAXES, indBusTax);
-	expenditure.setType(Expenditure::DIRECT_TAXES, corpIncomeTax);
-	expenditure.setType(Expenditure::DIVIDENDS, dividends);
-	expenditure.setType(Expenditure::RETAINED_EARNINGS, retainedEarnings);
-	// Add all taxes to national account
-	aNationalAccount.addToAccount(NationalAccount::RETAINED_EARNINGS, retainedEarnings);
-	aNationalAccount.addToAccount(NationalAccount::DIVIDENDS, dividends);
-	aNationalAccount.addToAccount(NationalAccount::INDIRECT_BUSINESS_TAX, indBusTax);
-	aNationalAccount.addToAccount(NationalAccount::CORPORATE_INCOME_TAXES, corpIncomeTax);
-	// Add corporate profits to national account
-	aNationalAccount.addToAccount(NationalAccount::CORPORATE_PROFITS, profits);
+    marketplace->addToSupply( "Capital", aRegionName, retainedEarnings, aPeriod );
+    // Add all taxes and accounts to expenditure
+    expenditure.setType(Expenditure::INDIRECT_TAXES, indBusTax);
+    expenditure.setType(Expenditure::DIRECT_TAXES, corpIncomeTax);
+    expenditure.setType(Expenditure::DIVIDENDS, dividends);
+    expenditure.setType(Expenditure::RETAINED_EARNINGS, retainedEarnings);
+    // Add all taxes to national account
+    aNationalAccount.addToAccount(NationalAccount::RETAINED_EARNINGS, retainedEarnings);
+    aNationalAccount.addToAccount(NationalAccount::DIVIDENDS, dividends);
+    aNationalAccount.addToAccount(NationalAccount::INDIRECT_BUSINESS_TAX, indBusTax);
+    aNationalAccount.addToAccount(NationalAccount::CORPORATE_INCOME_TAXES, corpIncomeTax);
+    // Add corporate profits to national account
+    aNationalAccount.addToAccount(NationalAccount::CORPORATE_PROFITS, profits);
 
 }
 
@@ -497,7 +500,7 @@ void ProductionTechnology::calcTaxes( NationalAccount& aNationalAccount, const M
 double ProductionTechnology::getCapital() const {
     assert( util::isValidNumber( capital ) );
     assert( capital >= 0 );
-	return capital;
+    return capital;
 }
 
 /*! \brief Get the annual investment for this technology.
@@ -682,20 +685,20 @@ void ProductionTechnology::finalizePeriod( const string& aRegionName, const stri
 }
 
 void ProductionTechnology::csvSGMOutputFile( ostream& aFile, const int period ) const {
-	// print for all operating vintages
+    // print for all operating vintages
     if( isAvailable( period ) && !isRetired( period ) ){
-		// BaseTechnology::csvSGMOutputFile( aFile, period );
-	}
+        // BaseTechnology::csvSGMOutputFile( aFile, period );
+    }
 }
 
 void ProductionTechnology::accept( IVisitor* aVisitor, const int aPeriod ) const
 {
-	// print for all operating vintages
+    // print for all operating vintages
     // This is not right, this decision should be made by the OutputContainer.
-	if( aPeriod == -1 || ( isAvailable( aPeriod ) && !isRetired( aPeriod ) ) ){
-		aVisitor->updateProductionTechnology( this, aPeriod );
-		BaseTechnology::accept( aVisitor, aPeriod );
-	}
+    if( aPeriod == -1 || ( isAvailable( aPeriod ) && !isRetired( aPeriod ) ) ){
+        aVisitor->updateProductionTechnology( this, aPeriod );
+        BaseTechnology::accept( aVisitor, aPeriod );
+    }
 }
 
 //! Set the parent technology type helper object. This may change.

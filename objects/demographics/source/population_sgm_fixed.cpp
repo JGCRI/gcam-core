@@ -54,14 +54,14 @@ bool PopulationSGMFixed::XMLDerivedClassParse( const std::string& nodeName, cons
 }
 
 //! Write out rest of datamembers to XML output stream.
-void PopulationSGMFixed::toInputXMLDerived( std::ostream& out, Tabs* tabs ) const{
+void PopulationSGMFixed::toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {
     for( vector<AgeCohort *>::const_iterator i = ageCohort.begin(); i != ageCohort.end(); i++ ){
         ( *i )->toInputXML( out, tabs );
     }
 }
 
 //! Write out XML for debugging purposes.
-void PopulationSGMFixed::toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const{
+void PopulationSGMFixed::toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const {
     for( vector<AgeCohort *>::const_iterator i = ageCohort.begin(); i != ageCohort.end(); i++ ){
         ( *i )->toDebugXML( out, tabs );
     }
@@ -84,7 +84,7 @@ double PopulationSGMFixed::getWorkingAgePop() const { // ages 15-65
 //! returns male working age population (ages 15-65)
 /* \todo Handle age bounds not exactly equal to min and max working age.
 */
-double PopulationSGMFixed::getWorkingAgePopMale() const{ // ages 15-65
+double PopulationSGMFixed::getWorkingAgePopMale() const { // ages 15-65
     double workAgePop = 0;
     // Iterate over the cohorts and add populations between ages 15 and 65.
     for( CAgeCohortIterator cohort = ageCohort.begin(); cohort != ageCohort.end(); ++cohort ){
@@ -102,7 +102,7 @@ double PopulationSGMFixed::getWorkingAgePopMale() const{ // ages 15-65
 /*! \todo Make min and max working age read in.
 * \todo Handle age bounds not exactly equal to min and max working age.
 */
-double PopulationSGMFixed::getWorkingAgePopFemale() const{ // ages 15-65
+double PopulationSGMFixed::getWorkingAgePopFemale() const { // ages 15-65
     double workAgePop = 0;
     // Iterate over the cohorts and add populations between ages 15 and 65.
     for( CAgeCohortIterator cohort = ageCohort.begin(); cohort != ageCohort.end(); ++cohort ){
@@ -124,7 +124,7 @@ double PopulationSGMFixed::getWorkingAgePopFemale() const{ // ages 15-65
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
-const std::string& PopulationSGMFixed::getXMLName() const{
+const std::string& PopulationSGMFixed::getXMLName() const {
     return XML_NAME;
 }
 
@@ -169,12 +169,12 @@ void PopulationSGMFixed::csvSGMOutputFile( ostream& aFile, const int period ) co
 * \param aPeriod Period for which to update.
 */
 void PopulationSGMFixed::accept( IVisitor* aVisitor, const int aPeriod ) const {
-	aVisitor->startVisitPopulationSGMFixed( this, aPeriod );
-	// Call the parent class visit.
-	Population::accept( aVisitor, aPeriod );
-	// Update the cohorts.
-	for( unsigned int i = 0; i < ageCohort.size(); ++i ){
-		ageCohort[ i ]->accept( aVisitor, aPeriod );
-	}
-	aVisitor->endVisitPopulationSGMFixed( this, aPeriod );
+    aVisitor->startVisitPopulationSGMFixed( this, aPeriod );
+    // Call the parent class visit.
+    Population::accept( aVisitor, aPeriod );
+    // Update the cohorts.
+    for( unsigned int i = 0; i < ageCohort.size(); ++i ){
+        ageCohort[ i ]->accept( aVisitor, aPeriod );
+    }
+    aVisitor->endVisitPopulationSGMFixed( this, aPeriod );
 }

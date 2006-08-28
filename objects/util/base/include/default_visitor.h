@@ -110,15 +110,15 @@ public:
     virtual void startVisitOutput( const IOutput* aOutput, const int aPeriod ){}
     virtual void endVisitOutput( const IOutput* aOutput, const int aPeriod ){}
 
-	virtual void startVisitGHG( const Ghg* aGHG, const int aPeriod ){}
-	virtual void endVisitGHG( const Ghg* aGHG, const int aPeriod ){}
+    virtual void startVisitGHG( const AGHG* aGHG, const int aPeriod ){}
+    virtual void endVisitGHG( const AGHG* aGHG, const int aPeriod ){}
 
-	virtual void startVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod ){}
-	virtual void endVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod ){}
-	virtual void startVisitMarketplace( const Marketplace* aMarketplace, const int aPeriod ){}
-	virtual void endVisitMarketplace( const Marketplace* aMarketplace, const int aPeriod ){}
-	virtual void startVisitMarket( const Market* aMarket, const int aPeriod ){}
-	virtual void endVisitMarket( const Market* aMarket, const int aPeriod ){}
+    virtual void startVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod ){}
+    virtual void endVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod ){}
+    virtual void startVisitMarketplace( const Marketplace* aMarketplace, const int aPeriod ){}
+    virtual void endVisitMarketplace( const Marketplace* aMarketplace, const int aPeriod ){}
+    virtual void startVisitMarket( const Market* aMarket, const int aPeriod ){}
+    virtual void endVisitMarket( const Market* aMarket, const int aPeriod ){}
 
     virtual void startVisitGDP( const GDP* aGDP, const int aPeriod ){}
     virtual void endVisitGDP( const GDP* aGDP, const int aPeriod ){}

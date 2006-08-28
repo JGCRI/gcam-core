@@ -314,7 +314,31 @@
 				Name="emissions"
 				>
 				<File
+					RelativePath="..\..\emissions\source\acomplex_emissions.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\emissions\source\aemissions_coef.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\emissions\source\aggr_emissions_coef.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\emissions\source\aghg.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\emissions\source\asimple_carbon_calc.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\emissions\source\co2_emissions.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\emissions\source\emissions_driver_factory.cpp"
 					>
 				</File>
 				<File
@@ -322,23 +346,15 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\emissions\source\ghg.cpp"
+					RelativePath="..\..\emissions\source\generic_emissions.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\emissions\source\ghg_input.cpp"
+					RelativePath="..\..\emissions\source\ghg_factory.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\..\emissions\source\ghg_mac.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\emissions\source\ghg_output.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\emissions\source\ghg_output_aggr.cpp"
 					>
 				</File>
 				<File
@@ -350,7 +366,27 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\emissions\source\input_driver.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\emissions\source\input_emissions_coef.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\emissions\source\input_output_driver.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\emissions\source\output_driver.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\emissions\source\production_carbon_calc.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\emissions\source\read_emissions_coef.cpp"
 					>
 				</File>
 				<File
@@ -1143,7 +1179,35 @@
 				Name="emissions"
 				>
 				<File
+					RelativePath="..\..\emissions\include\acomplex_emissions.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\emissions\include\aemissions_coef.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\emissions\include\aemissions_driver.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\emissions\include\aggr_emissions_coef.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\emissions\include\aghg.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\emissions\include\asimple_carbon_calc.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\emissions\include\co2_emissions.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\emissions\include\emissions_driver_factory.h"
 					>
 				</File>
 				<File
@@ -1151,23 +1215,15 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\emissions\include\ghg.h"
+					RelativePath="..\..\emissions\include\generic_emissions.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\emissions\include\ghg_input.h"
+					RelativePath="..\..\emissions\include\ghg_factory.h"
 					>
 				</File>
 				<File
 					RelativePath="..\..\emissions\include\ghg_mac.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\emissions\include\ghg_output.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\emissions\include\ghg_output_aggr.h"
 					>
 				</File>
 				<File
@@ -1183,7 +1239,27 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\emissions\include\input_driver.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\emissions\include\input_emissions_coef.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\emissions\include\input_output_driver.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\emissions\include\output_driver.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\emissions\include\production_carbon_calc.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\emissions\include\read_emissions_coef.h"
 					>
 				</File>
 				<File

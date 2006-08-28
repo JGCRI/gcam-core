@@ -497,7 +497,7 @@ void Scenario::printGraphs( const int aPeriod ) const {
     graphPrinter.finish();
 }
 
-void Scenario::printLandAllocatorGraph( const int aPeriod, const bool aPrintValues ) const{
+void Scenario::printLandAllocatorGraph( const int aPeriod, const bool aPrintValues ) const {
     // Determine which region to print.  Default to the US.
     const string regionToGraph = Configuration::getInstance()->getString( "region-to-graph", "USA" );
     

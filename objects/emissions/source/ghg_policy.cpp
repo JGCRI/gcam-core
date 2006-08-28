@@ -217,7 +217,7 @@ void GHGPolicy::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
-const std::string& GHGPolicy::getXMLName() const {
+const string& GHGPolicy::getXMLName() const {
     return XML_NAME;
 }
 
@@ -230,6 +230,6 @@ const std::string& GHGPolicy::getXMLName() const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const std::string& GHGPolicy::getXMLNameStatic() {
+const string& GHGPolicy::getXMLNameStatic() {
     return XML_NAME;
 }

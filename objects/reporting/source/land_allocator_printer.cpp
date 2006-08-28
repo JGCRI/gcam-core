@@ -138,7 +138,7 @@ void LandAllocatorPrinter::startVisitLandLeaf( const LandLeaf *aLandLeaf, const 
  * \param aIsLeaf Whether or not the node is a leaf.
  */
 void LandAllocatorPrinter::printNode( const ALandAllocatorItem* aLandItem,
-                                      const int aPeriod, const bool aIsLeaf ) const{
+                                      const int aPeriod, const bool aIsLeaf ) const {
     string name = aLandItem->getName();
     string nameStripped = util::replaceSpaces( name );
     mFile << "\t" << makeNameFromLabel( name ) << "[label=" << "\"" << nameStripped;
@@ -158,7 +158,7 @@ void LandAllocatorPrinter::printNode( const ALandAllocatorItem* aLandItem,
  * \details Outputs the link from a parent node to its child node.
  * \param aLandItem The child in the relationship.
  */
-void LandAllocatorPrinter::printParentChildRelationship( const ALandAllocatorItem* aLandItem ) const{
+void LandAllocatorPrinter::printParentChildRelationship( const ALandAllocatorItem* aLandItem ) const {
     mFile << "\t" << mParent.top() << "->" 
           << util::replaceSpaces( makeNameFromLabel( aLandItem->getName() ) ) << ";" << endl;
 }
@@ -169,7 +169,7 @@ void LandAllocatorPrinter::printParentChildRelationship( const ALandAllocatorIte
 * \param aName name to make unique.
 * \return unique name for node.
 */
-string LandAllocatorPrinter::makeNameFromLabel( const string& aName ) const{
+string LandAllocatorPrinter::makeNameFromLabel( const string& aName ) const {
     return aName + boost::lexical_cast<std::string>( mNumNodes );
 }
 

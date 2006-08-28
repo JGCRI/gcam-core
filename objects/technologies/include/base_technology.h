@@ -5,14 +5,14 @@
 #endif
 
 /*
-	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Laboratory operated by Battelle Memorial
-	Institute. Battelle has certain unperfected rights in the software
-	which should not be copied or otherwise disseminated outside your
-	organization without the express written authorization from Battelle. All rights to
-	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responsibility for the 
-	use of this software.
+    This software, which is provided in confidence, was prepared by employees
+    of Pacific Northwest National Laboratory operated by Battelle Memorial
+    Institute. Battelle has certain unperfected rights in the software
+    which should not be copied or otherwise disseminated outside your
+    organization without the express written authorization from Battelle. All rights to
+    the software are reserved by Battelle.  Battelle makes no warranty,
+    express or implied, and assumes no liability or responsibility for the 
+    use of this software.
 */
 
 /*! 
@@ -49,7 +49,7 @@ class InvestConsumer;
 class ProductionTechnology;
 class InvestConsumer;
 class IVisitor;
-class Ghg;
+class AGHG;
 class IExpectedProfitRateCalculator;
 class TechnologyType;
 
@@ -132,8 +132,8 @@ public:
                                          const int aPeriod ) = 0;
     virtual void updateMarketplace( const std::string& sectorName, const std::string& regionName,
                                     const int period ) = 0;
-	virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const = 0;
-	virtual void accept( IVisitor* aVisitor, const int period ) const = 0;
+    virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const = 0;
+    virtual void accept( IVisitor* aVisitor, const int period ) const = 0;
     const std::string getIdentifier() const;
     static const std::string createIdentifier( const std::string& aName, int aYear );
     void removeEmptyInputs();
@@ -155,11 +155,7 @@ protected:
     std::map<std::string,int> inputNameToNo; //!< Mapping of input name to number.
     std::map<std::string,int> mGhgNameMap; //!< Mapping of ghg name to number.
     std::vector<Input*> input; //!< Inputs
-    typedef std::vector<Input*>::iterator InputIterator;
-    typedef std::vector<Input*>::const_iterator CInputIterator;
-    std::vector<Ghg*> mGhgs; //!< Green-House gases.
-    typedef std::vector<Ghg*>::iterator GHGIterator;
-    typedef std::vector<Ghg*>::const_iterator CGHGIterator;
+    std::vector<AGHG*> mGhgs; //!< Green-House gases.
     
     std::vector<double> mOutputs; //!< Outputs
     const IFunction* prodDmdFn; //!< Pointer to function this class will use

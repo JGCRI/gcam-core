@@ -234,7 +234,7 @@ void DemandSector::calibrateSector( const int period ) {
 * \return The weighted energy price.
 */
 double DemandSector::getWeightedEnergyPrice ( const int aPeriod ) const {
-	return getOutput( 0 ) * getPrice( aPeriod );
+    return getOutput( 0 ) * getPrice( aPeriod );
 }
 
 //! Set output for Sector (ONLY USED FOR energy service demand at present).
@@ -330,14 +330,14 @@ void DemandSector::scaleOutput( int period, double scaleFactor ) {
 */
 void DemandSector::initCalc( NationalAccount& nationalAccount, const Demographic* aDemographics, const int aPeriod )
 {
-	Sector::initCalc( nationalAccount, aDemographics, aPeriod );
-	
+    Sector::initCalc( nationalAccount, aDemographics, aPeriod );
+    
     // If no output has been specified for period zero (mBaseOutput), then can never calibrate.
     // So set mBaseOutput to calibrated value to provide non-zero value from which to scale.
     // Only do the initialization once
-	if ( mBaseOutput == 0 && ( getCalOutput( aPeriod ) != 0 ) && ( getOutput( 0 ) == 0 ) ) {
-		mBaseOutput = getCalOutput( aPeriod );
-	}
+    if ( mBaseOutput == 0 && ( getCalOutput( aPeriod ) != 0 ) && ( getOutput( 0 ) == 0 ) ) {
+        mBaseOutput = getCalOutput( aPeriod );
+    }
 }
 
 /*! \brief Complete the initialization of a demand sector.
@@ -623,8 +623,8 @@ double DemandSector::getServiceWoTC( const int period ) const {
     return service[ period ] * techChangeCumm[ period ];
 }
 
-void DemandSector::accept( IVisitor* aVisitor, const int aPeriod ) const{
-	aVisitor->startVisitDemandSector( this, aPeriod );
-	Sector::accept( aVisitor, aPeriod );
-	aVisitor->endVisitDemandSector( this, aPeriod );
+void DemandSector::accept( IVisitor* aVisitor, const int aPeriod ) const {
+    aVisitor->startVisitDemandSector( this, aPeriod );
+    Sector::accept( aVisitor, aPeriod );
+    aVisitor->endVisitDemandSector( this, aPeriod );
 }

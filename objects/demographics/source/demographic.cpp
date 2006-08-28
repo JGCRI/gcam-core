@@ -80,7 +80,7 @@ void Demographic::XMLParse( const xercesc::DOMNode* node ){
 }
 
 //! Write out datamembers to XML output stream.
-void Demographic::toInputXML( ostream& out, Tabs* tabs ) const{
+void Demographic::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag ( getXMLName(), out, tabs );
 
     for( CPopulationIterator i = population.begin(); i != population.end(); ++i ){
@@ -128,7 +128,7 @@ void Demographic::initCalc(){
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
-const string& Demographic::getXMLName() const{
+const string& Demographic::getXMLName() const {
     return getXMLNameStatic();
 }
 
@@ -311,22 +311,22 @@ void Demographic::csvSGMOutputFile( ostream& aFile, const int period ) const {
 }
 
 // for reporting
-void Demographic::accept( IVisitor* aVisitor, const int aPeriod ) const{
-	aVisitor->startVisitDemographic( this, aPeriod );
+void Demographic::accept( IVisitor* aVisitor, const int aPeriod ) const {
+    aVisitor->startVisitDemographic( this, aPeriod );
 
-	// If the period is -1 update the output container with information about all the populations.
-	if( aPeriod == -1 ){
-		for( unsigned int i = 0; i < population.size(); ++i ){
-			population[ i ]->accept( aVisitor, aPeriod );
-		}
-	}
-	// Otherwise only update the one for the given period.
-	else {
-	int index = convertPeriodToPopulationIndex( aPeriod );
-		// Check for invalid indices.
-		if( index != -1 ){
-			population[ index ]->accept( aVisitor, aPeriod );
-		}
-	}
-	aVisitor->endVisitDemographic( this, aPeriod );
+    // If the period is -1 update the output container with information about all the populations.
+    if( aPeriod == -1 ){
+        for( unsigned int i = 0; i < population.size(); ++i ){
+            population[ i ]->accept( aVisitor, aPeriod );
+        }
+    }
+    // Otherwise only update the one for the given period.
+    else {
+    int index = convertPeriodToPopulationIndex( aPeriod );
+        // Check for invalid indices.
+        if( index != -1 ){
+            population[ index ]->accept( aVisitor, aPeriod );
+        }
+    }
+    aVisitor->endVisitDemographic( this, aPeriod );
 }

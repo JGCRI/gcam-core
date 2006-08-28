@@ -197,7 +197,7 @@ double SolverInfoSet::getMaxRelativeExcessDemand( const double ED_SOLUTION_FLOOR
 }
 
 //! Find the maximum absolute excess demand.
-double SolverInfoSet::getMaxAbsoluteExcessDemand() const{
+double SolverInfoSet::getMaxAbsoluteExcessDemand() const {
     double largest = -1;
     for ( ConstSetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ) {
         const double absoluteExcessDemand = fabs( iter->getED() );

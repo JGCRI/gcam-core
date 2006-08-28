@@ -204,7 +204,7 @@ bool SimplePolicyTargetRunner::runScenario( const int aSingleScenario,
 * \param aTimer Scenario timer.
 * \param aCloseDB Whether to close the Access database when complete.
 */
-void SimplePolicyTargetRunner::printOutput( Timer& timer, const bool aCloseDB ) const{
+void SimplePolicyTargetRunner::printOutput( Timer& timer, const bool aCloseDB ) const {
     if( mPolicyCostCalculator.get() ){
         mPolicyCostCalculator->printOutput();
     }
@@ -233,7 +233,7 @@ Scenario* SimplePolicyTargetRunner::getInternalScenario(){
 /*! \brief Get the internal scenario.
 * \return Constant pointer to the internal scenario.
 */
-const Scenario* SimplePolicyTargetRunner::getInternalScenario() const{
+const Scenario* SimplePolicyTargetRunner::getInternalScenario() const {
     return mSingleScenario->getInternalScenario();
 }
 
@@ -403,7 +403,7 @@ vector<double> SimplePolicyTargetRunner::preComputeEmissions( const VectorOfPair
 * \param aCurve the curve to convert.
 * \return vector of doubles
 */
-vector<double> SimplePolicyTargetRunner::curveToConstraintVector( const Curve* aCurve ) const{
+vector<double> SimplePolicyTargetRunner::curveToConstraintVector( const Curve* aCurve ) const {
     // Get a pointer to the modelTime
     const Modeltime* modelTime = mSingleScenario->getInternalScenario()->getModeltime();
 

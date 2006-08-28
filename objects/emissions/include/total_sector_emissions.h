@@ -15,6 +15,7 @@
 
 #include <string>
 #include <vector>
+#include <xercesc/dom/DOMNode.hpp>
 #include "util/base/include/value.h"
 
 class Sector;
@@ -30,9 +31,9 @@ class Tabs;
 class TotalSectorEmissions
 {
 public:
-	TotalSectorEmissions();
+    TotalSectorEmissions();
 
-	void XMLParse( const xercesc::DOMNode* aNode );
+    void XMLParse( const xercesc::DOMNode* aNode );
     
     void toInputXML( std::ostream& aOut,
                      Tabs* aTabs ) const;
@@ -43,28 +44,28 @@ public:
 
     const std::string& getName() const;
 
-	void setAggregateEmissionFactor( const std::vector<Sector*>& aSectors,
+    void setAggregateEmissionFactor( const std::vector<Sector*>& aSectors,
                                      IInfo* aRegionInfo,
                                      const int aPeriod ) const;
-	
+    
     double getEmissionFactor() const;
 
-	static const std::string& getXMLNameStatic();
-	static const std::string& aggrEmissionsPrefix();
+    static const std::string& getXMLNameStatic();
+    static const std::string& aggrEmissionsPrefix();
 private:
 
 
     //! Type of sector that this GHG will be emitted from
-	std::string mType;
+    std::string mType;
 
     //! Name of ghg
-	std::string mName;
+    std::string mName;
 
     //! Aggregate emissions of the ghg
-	Value mAggregateEmissions;
+    Value mAggregateEmissions;
     
     //! Year in which to set aggregate emissions
-	int mApplicableYear;
+    int mApplicableYear;
 };
 
 #endif // _TOTAL_SECTOR_EMISSIONS_H_

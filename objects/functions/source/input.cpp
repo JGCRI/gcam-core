@@ -320,7 +320,7 @@ double Input::getPrice( const string& aRegionName, const int aPeriod ) const {
 *
 * \author Sonny Kim
 */
-double Input::getPricePaid() const{
+double Input::getPricePaid() const {
     return mPricePaid;
 }
 /*! \brief Set the price paid for each input.
@@ -466,5 +466,5 @@ void Input::csvSGMOutputFile( ostream& aFile, const int period ) const {
 }
 
 void Input::accept( IVisitor* aVisitor, const int aPeriod ) const {
-	aVisitor->updateInput( this );
+    aVisitor->updateInput( this );
 }

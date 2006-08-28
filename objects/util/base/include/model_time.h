@@ -49,23 +49,23 @@ private:
     std::vector<int> dataOffset; //!< Index of timesteps.
     std::vector<int> modelPeriodToYear; //!< Model period to year.
     std::map<int,int> yearToModelPeriod; //!< Year to model period map object.
-	static const std::string XML_NAME; //!< node name for toXML methods
+    static const std::string XML_NAME; //!< node name for toXML methods
 
     // member functions
     void initElementalMembers();
-	const std::string& getXMLName() const;
+    const std::string& getXMLName() const;
 public:
     Modeltime();
     void XMLParse( const xercesc::DOMNode* node );
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
 
-	static const std::string& getXMLNameStatic();
+    static const std::string& getXMLNameStatic();
     void set(); // calculates parameters
     int getBasePeriod() const;
     int getStartYear() const;
     int getEndYear() const;
-    int gettimestep( const int period ) const{ return periodToTimeStep[ period ]; } // years from last to current per
+    int gettimestep( const int period ) const { return periodToTimeStep[ period ]; } // years from last to current per
     int getmaxper() const { return maxPeriod; }  // max modeling periods
     int getmaxdataper() const { return maxDataPeriod; } // data points for reading in
     int getper_to_yr( const int period ) const { return modelPeriodToYear[ period ]; }  // year to model period

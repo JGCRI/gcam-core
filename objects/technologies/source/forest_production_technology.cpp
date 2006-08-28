@@ -8,7 +8,7 @@
 #include "util/base/include/definitions.h"
 #include "technologies/include/forest_production_technology.h"
 #include "land_allocator/include/iland_allocator.h"
-#include "emissions/include/ghg.h"
+#include "emissions/include/aghg.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/xml_helper.h"
 #include "containers/include/iinfo.h"

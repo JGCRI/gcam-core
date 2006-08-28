@@ -11,12 +11,12 @@
 #include "util/base/include/xml_helper.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/scenario.h"
-#include "emissions/include/ghg_input.h"
 #include "technologies/include/primary_output.h"
 #include "emissions/include/unmanaged_carbon_calc.h"
-#include "emissions/include/ghg.h"
+#include "emissions/include/aghg.h"
 #include "util/base/include/summary.h"
 #include "util/base/include/ivisitor.h"
+#include "emissions/include/ghg_factory.h"
 
 using namespace std;
 using namespace xercesc;
@@ -36,8 +36,8 @@ UnmanagedLandLeaf::~UnmanagedLandLeaf() {
 }
 
 bool UnmanagedLandLeaf::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ){
-    if( nodeName == GhgInput::getXMLNameStatic() ){
-        parseContainerNode( curr, mGHGs, new GhgInput() );
+    if( GHGFactory::isGHGNode( nodeName ) ){
+        parseContainerNode( curr, mGHGs, GHGFactory::create( nodeName ).release() );
     }
     else if( nodeName == "intrinsicRate" ){
         XMLHelper<double>::insertValueIntoVector( curr, mBaseIntrinsicRate, scenario->getModeltime() );
@@ -260,13 +260,13 @@ void UnmanagedLandLeaf::checkCalObservedYield( const int aPeriod ) const {
 * \param aPeriod Period to update.
 */
 void UnmanagedLandLeaf::accept( IVisitor* aVisitor, const int aPeriod ) const {
-	aVisitor->startVisitUnmanagedLandLeaf( this, aPeriod );
+    aVisitor->startVisitUnmanagedLandLeaf( this, aPeriod );
     LandLeaf::accept( aVisitor, aPeriod );
 
     for( unsigned int i = 0; i < mGHGs.size(); ++i ){
         mGHGs[ i ]->accept( aVisitor, aPeriod );
     }
-	aVisitor->endVisitUnmanagedLandLeaf( this, aPeriod );
+    aVisitor->endVisitUnmanagedLandLeaf( this, aPeriod );
 }
 
 void UnmanagedLandLeaf::updateSummary( Summary& aSummary, const int period ) {
@@ -301,7 +301,7 @@ void UnmanagedLandLeaf::csvOutput( const string& aRegionName ) const {
         for ( int j = 0; j < maxper; j++) {
             temp[j] = mGHGs[i]->getEmission( j );
         }
-        fileoutput3(aRegionName, mName," "," ",mGHGs[i]->getName()+" emiss", mGHGs[i]->getUnit(),temp);
+        fileoutput3(aRegionName, mName, " ", " ", mGHGs[i]->getName()+" emiss", "MTC", temp);
     }
 }
 

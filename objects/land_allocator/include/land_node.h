@@ -19,7 +19,7 @@
 
 // Forward declarations
 class GDP;
-class Ghg;
+class AGHG;
 class LandUseHistory;
 /*!
  * \brief A node in the land allocation tree.
@@ -148,7 +148,7 @@ public:
                                const int aPeriod );
     virtual void updateSummary ( Summary& aSummary, const int aPeriod );
 
-	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
+    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
 protected:

@@ -1,12 +1,12 @@
 /*
-	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Laboratory operated by Battelle Memorial
-	Institute. Battelle has certain unperfected rights in the software
-	which should not be copied or otherwise disseminated outside your
-	organization without the express written authorization from Battelle. All rights to
-	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responsibility for the 
-	use of this software.
+    This software, which is provided in confidence, was prepared by employees
+    of Pacific Northwest National Laboratory operated by Battelle Memorial
+    Institute. Battelle has certain unperfected rights in the software
+    which should not be copied or otherwise disseminated outside your
+    organization without the express written authorization from Battelle. All rights to
+    the software are reserved by Battelle.  Battelle makes no warranty,
+    express or implied, and assumes no liability or responsibility for the 
+    use of this software.
 */
 
 /*! 
@@ -70,56 +70,56 @@ void NationalAccount::XMLParse( const DOMNode* node ) {
         if( nodeName == "#text" ) {
             continue;
         }
-		else if  ( nodeName == "retainedEarning" ) {
-			addToAccount( RETAINED_EARNINGS, XMLHelper<double>::getValue( curr ) );
-		}
-		else if  ( nodeName == "dividends" ) {
-			addToAccount( DIVIDENDS, XMLHelper<double>::getValue( curr ) );
-		}
-		else if  ( nodeName == "transfers" ) {
-			addToAccount( TRANSFERS, XMLHelper<double>::getValue( curr ) );
-		}
-		else if  ( nodeName == "corporateIncomeTaxRate" ) {
-			setAccount( CORPORATE_INCOME_TAX_RATE, XMLHelper<double>::getValue( curr ) );
-		}
-		else if  ( nodeName == "exchangeRate" ) {
-			addToAccount( EXCHANGE_RATE, XMLHelper<double>::getValue( curr ) );
-		}
-		else {
+        else if  ( nodeName == "retainedEarning" ) {
+            addToAccount( RETAINED_EARNINGS, XMLHelper<double>::getValue( curr ) );
+        }
+        else if  ( nodeName == "dividends" ) {
+            addToAccount( DIVIDENDS, XMLHelper<double>::getValue( curr ) );
+        }
+        else if  ( nodeName == "transfers" ) {
+            addToAccount( TRANSFERS, XMLHelper<double>::getValue( curr ) );
+        }
+        else if  ( nodeName == "corporateIncomeTaxRate" ) {
+            setAccount( CORPORATE_INCOME_TAX_RATE, XMLHelper<double>::getValue( curr ) );
+        }
+        else if  ( nodeName == "exchangeRate" ) {
+            addToAccount( EXCHANGE_RATE, XMLHelper<double>::getValue( curr ) );
+        }
+        else {
             cout << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLNameStatic() << "." << endl;
-		}
-	}
+        }
+    }
 }
 
 //! Output debug info to XML
 void NationalAccount::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
-	XMLWriteOpeningTag( getXMLNameStatic(), out, tabs );
+    XMLWriteOpeningTag( getXMLNameStatic(), out, tabs );
 
-	XMLWriteElement( getAccountValue( GDP ), "GDP", out, tabs );
-	XMLWriteElement( getAccountValue( SUBSIDY ), "subsidy", out, tabs );
-	XMLWriteElement( getAccountValue( CORPORATE_PROFITS ), "corpProfits", out, tabs );
-	XMLWriteElement( getAccountValue( CORPORATE_RETAINED_EARNINGS ), "corpRetainedEarnings", out, tabs );
-	XMLWriteElement( getAccountValue( CORPORATE_INCOME_TAXES ), "corporateIncomeTax", out, tabs );
-	XMLWriteElement( getAccountValue( CORPORATE_INCOME_TAX_RATE ), "corporateIncomeTaxRate", out, tabs );
-	XMLWriteElement( getAccountValue( PERSONAL_INCOME_TAXES ), "personalIncomeTax", out, tabs );
-	XMLWriteElement( getAccountValue( INVESTMENT_TAX_CREDIT ), "investmentTaxCredit", out, tabs );
-	XMLWriteElement( getAccountValue( DIVIDENDS ), "dividends", out, tabs );
-	XMLWriteElement( getAccountValue( INDIRECT_BUSINESS_TAX ), "indirectBusinessTax", out, tabs );
-	XMLWriteElement( getAccountValue( LABOR_WAGES ), "laborWages", out, tabs );
-	XMLWriteElement( getAccountValue( LAND_RENTS ), "landRents", out, tabs );
-	XMLWriteElement( getAccountValue( TRANSFERS ), "transfers", out, tabs );
-	XMLWriteElement( getAccountValue( SOCIAL_SECURITY_TAX ), "socialSecurityTax", out, tabs );
-	XMLWriteElement( getAccountValue( INDIRECT_BUSINESS_TAX ), "exchangeRate", out, tabs );
-	XMLWriteElement( getAccountValue( GNP ), "GNP", out, tabs );
-	XMLWriteElement( getAccountValue( GNP_VA ), "GNPVA", out, tabs );
-	XMLWriteElement( getAccountValue( CONSUMPTION ), "consumption", out, tabs );
-	XMLWriteElement( getAccountValue( GOVERNMENT ), "government", out, tabs );
-	XMLWriteElement( getAccountValue( INVESTMENT ), "investment", out, tabs );
-	XMLWriteElement( getAccountValue( NET_EXPORT ), "netExport", out, tabs );
-	XMLWriteElement( getAccountValue( EXCHANGE_RATE ), "exchangeRate", out, tabs );
-	XMLWriteElement( getAccountValue( ANNUAL_INVESTMENT ), "annualInvestment", out, tabs );
-	
-	XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
+    XMLWriteElement( getAccountValue( GDP ), "GDP", out, tabs );
+    XMLWriteElement( getAccountValue( SUBSIDY ), "subsidy", out, tabs );
+    XMLWriteElement( getAccountValue( CORPORATE_PROFITS ), "corpProfits", out, tabs );
+    XMLWriteElement( getAccountValue( CORPORATE_RETAINED_EARNINGS ), "corpRetainedEarnings", out, tabs );
+    XMLWriteElement( getAccountValue( CORPORATE_INCOME_TAXES ), "corporateIncomeTax", out, tabs );
+    XMLWriteElement( getAccountValue( CORPORATE_INCOME_TAX_RATE ), "corporateIncomeTaxRate", out, tabs );
+    XMLWriteElement( getAccountValue( PERSONAL_INCOME_TAXES ), "personalIncomeTax", out, tabs );
+    XMLWriteElement( getAccountValue( INVESTMENT_TAX_CREDIT ), "investmentTaxCredit", out, tabs );
+    XMLWriteElement( getAccountValue( DIVIDENDS ), "dividends", out, tabs );
+    XMLWriteElement( getAccountValue( INDIRECT_BUSINESS_TAX ), "indirectBusinessTax", out, tabs );
+    XMLWriteElement( getAccountValue( LABOR_WAGES ), "laborWages", out, tabs );
+    XMLWriteElement( getAccountValue( LAND_RENTS ), "landRents", out, tabs );
+    XMLWriteElement( getAccountValue( TRANSFERS ), "transfers", out, tabs );
+    XMLWriteElement( getAccountValue( SOCIAL_SECURITY_TAX ), "socialSecurityTax", out, tabs );
+    XMLWriteElement( getAccountValue( INDIRECT_BUSINESS_TAX ), "exchangeRate", out, tabs );
+    XMLWriteElement( getAccountValue( GNP ), "GNP", out, tabs );
+    XMLWriteElement( getAccountValue( GNP_VA ), "GNPVA", out, tabs );
+    XMLWriteElement( getAccountValue( CONSUMPTION ), "consumption", out, tabs );
+    XMLWriteElement( getAccountValue( GOVERNMENT ), "government", out, tabs );
+    XMLWriteElement( getAccountValue( INVESTMENT ), "investment", out, tabs );
+    XMLWriteElement( getAccountValue( NET_EXPORT ), "netExport", out, tabs );
+    XMLWriteElement( getAccountValue( EXCHANGE_RATE ), "exchangeRate", out, tabs );
+    XMLWriteElement( getAccountValue( ANNUAL_INVESTMENT ), "annualInvestment", out, tabs );
+    
+    XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
 }
 
 //! Add to the value for the national account specified by the account type key. 
@@ -140,14 +140,14 @@ double NationalAccount::getAccountValue( const AccountType aType ) const {
 
 //! Reset the national account values
 void NationalAccount::reset() {
-	// save tranfer amount calculated from government's initCalc
+    // save tranfer amount calculated from government's initCalc
     // this is a giant hack. store the values that should not be reset.
     double tempTransfers = mAccounts[ TRANSFERS ];
     assert( tempTransfers > 0 );
     double tempInvTaxCreditRate = mAccounts[ INVESTMENT_TAX_CREDIT ];
     
     // Clear the values.
-	mAccounts.clear();
+    mAccounts.clear();
     mAccounts.resize( END );
 
     // Restore the two values that were saved.
@@ -161,43 +161,43 @@ void NationalAccount::reset() {
  * \param period The period which we are outputing for
  */
 void NationalAccount::csvSGMOutputFile( ostream& aFile, const int period ) const {
-	// write headers
-	aFile << "GNP Accounts" << endl;
-	aFile << enumToName( GNP ) << ',';
-	aFile << enumToName( CONSUMPTION ) << ',';
-	aFile << enumToName( GOVERNMENT ) << ',';
-	aFile << enumToName( INVESTMENT ) << ',';
-	aFile << enumToName( NET_EXPORT ) << ',';
-	aFile << endl;
-	// write data
-	aFile << getAccountValue( GNP ) << ',';
-	aFile << getAccountValue( CONSUMPTION ) << ',';
-	aFile << getAccountValue( GOVERNMENT ) << ',';
-	aFile << getAccountValue( INVESTMENT ) << ',';
-	aFile << getAccountValue( NET_EXPORT ) << ',';
-	aFile << endl << endl;
-	// write tax accounts
-	aFile << "National Tax Accounts" << endl;
-	// write headers
-	aFile << enumToName( CORPORATE_INCOME_TAXES ) << ',';
-	aFile << enumToName( INDIRECT_BUSINESS_TAX ) << ',';
-	aFile << enumToName( SOCIAL_SECURITY_TAX ) << ',';
-	aFile << enumToName( PERSONAL_INCOME_TAXES ) << ',';
-	aFile << enumToName( INVESTMENT_TAX_CREDIT ) << ',';
-	aFile << "Total Taxes";
-	aFile << endl;
-	// write data
-	aFile << getAccountValue( CORPORATE_INCOME_TAXES ) << ',';
-	aFile << getAccountValue( INDIRECT_BUSINESS_TAX ) << ',';
-	aFile << getAccountValue( SOCIAL_SECURITY_TAX ) << ',';
-	aFile << getAccountValue( PERSONAL_INCOME_TAXES ) << ',';
-	aFile << getAccountValue( INVESTMENT_TAX_CREDIT ) << ',';
-	aFile << getAccountValue( CORPORATE_INCOME_TAXES )
-			+ getAccountValue( INDIRECT_BUSINESS_TAX )
-			+ getAccountValue( SOCIAL_SECURITY_TAX )
-			+ getAccountValue( PERSONAL_INCOME_TAXES )
-			+ getAccountValue( INVESTMENT_TAX_CREDIT );
-	aFile << endl << endl;
+    // write headers
+    aFile << "GNP Accounts" << endl;
+    aFile << enumToName( GNP ) << ',';
+    aFile << enumToName( CONSUMPTION ) << ',';
+    aFile << enumToName( GOVERNMENT ) << ',';
+    aFile << enumToName( INVESTMENT ) << ',';
+    aFile << enumToName( NET_EXPORT ) << ',';
+    aFile << endl;
+    // write data
+    aFile << getAccountValue( GNP ) << ',';
+    aFile << getAccountValue( CONSUMPTION ) << ',';
+    aFile << getAccountValue( GOVERNMENT ) << ',';
+    aFile << getAccountValue( INVESTMENT ) << ',';
+    aFile << getAccountValue( NET_EXPORT ) << ',';
+    aFile << endl << endl;
+    // write tax accounts
+    aFile << "National Tax Accounts" << endl;
+    // write headers
+    aFile << enumToName( CORPORATE_INCOME_TAXES ) << ',';
+    aFile << enumToName( INDIRECT_BUSINESS_TAX ) << ',';
+    aFile << enumToName( SOCIAL_SECURITY_TAX ) << ',';
+    aFile << enumToName( PERSONAL_INCOME_TAXES ) << ',';
+    aFile << enumToName( INVESTMENT_TAX_CREDIT ) << ',';
+    aFile << "Total Taxes";
+    aFile << endl;
+    // write data
+    aFile << getAccountValue( CORPORATE_INCOME_TAXES ) << ',';
+    aFile << getAccountValue( INDIRECT_BUSINESS_TAX ) << ',';
+    aFile << getAccountValue( SOCIAL_SECURITY_TAX ) << ',';
+    aFile << getAccountValue( PERSONAL_INCOME_TAXES ) << ',';
+    aFile << getAccountValue( INVESTMENT_TAX_CREDIT ) << ',';
+    aFile << getAccountValue( CORPORATE_INCOME_TAXES )
+            + getAccountValue( INDIRECT_BUSINESS_TAX )
+            + getAccountValue( SOCIAL_SECURITY_TAX )
+            + getAccountValue( PERSONAL_INCOME_TAXES )
+            + getAccountValue( INVESTMENT_TAX_CREDIT );
+    aFile << endl << endl;
 
 }
 
@@ -237,11 +237,11 @@ const string& NationalAccount::enumToName( const AccountType aType ) const {
             "Exchange Rate",
             "Annual Investment" 
     };
-	// Return the string in the static array at the index.
+    // Return the string in the static array at the index.
     return names[ aType ];
 }
 
 // for reporting National Account information
-void NationalAccount::accept( IVisitor* aVisitor, const int aPeriod ) const{
-	aVisitor->updateNationalAccount( this, aPeriod );
+void NationalAccount::accept( IVisitor* aVisitor, const int aPeriod ) const {
+    aVisitor->updateNationalAccount( this, aPeriod );
 }

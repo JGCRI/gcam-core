@@ -47,7 +47,7 @@ class Resource;
 class technology;
 class DemandSector;
 class Scenario;
-class Ghg;
+class AGHG;
 class OutputMetaData;
 class Marketplace;
 class Market;
@@ -167,21 +167,21 @@ public:
     virtual void updateInput( const Input* aInput ) = 0;
     virtual void updateProductionInput( const ProductionInput* aProdInput ) = 0;
     virtual void updateDemandInput( const DemandInput* aDemandInput ) = 0;
-	
+    
     virtual void startVisitOutput( const IOutput* aOutput, const int aPeriod ) = 0;
     virtual void endVisitOutput( const IOutput* aOutput, const int aPeriod ) = 0;
 
-	virtual void startVisitGHG( const Ghg* aGHG, const int aPeriod ) = 0;
-	virtual void endVisitGHG( const Ghg* aGHG, const int aPeriod ) = 0;
-	
-	virtual void startVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod ) = 0;
-	virtual void endVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod ) = 0;
-	
-	virtual void startVisitMarketplace( const Marketplace* aMarketplace, const int aPeriod ) = 0;
-	virtual void endVisitMarketplace( const Marketplace* aMarketplace, const int aPeriod ) = 0;
-	
-	virtual void startVisitMarket( const Market* aMarket, const int aPeriod ) = 0;
-	virtual void endVisitMarket( const Market* aMarket, const int aPeriod ) = 0;
+    virtual void startVisitGHG( const AGHG* aGHG, const int aPeriod ) = 0;
+    virtual void endVisitGHG( const AGHG* aGHG, const int aPeriod ) = 0;
+    
+    virtual void startVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod ) = 0;
+    virtual void endVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod ) = 0;
+    
+    virtual void startVisitMarketplace( const Marketplace* aMarketplace, const int aPeriod ) = 0;
+    virtual void endVisitMarketplace( const Marketplace* aMarketplace, const int aPeriod ) = 0;
+    
+    virtual void startVisitMarket( const Market* aMarket, const int aPeriod ) = 0;
+    virtual void endVisitMarket( const Market* aMarket, const int aPeriod ) = 0;
 
     virtual void startVisitGDP( const GDP* aGDP, const int aPeriod ) = 0;
     virtual void endVisitGDP( const GDP* aGDP, const int aPeriod ) = 0;

@@ -12,7 +12,7 @@
 #include <cassert>
 #include <cmath>
 #include "technologies/include/tran_technology.h"
-#include "emissions/include/ghg.h"
+#include "emissions/include/aghg.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/model_time.h"
@@ -55,7 +55,7 @@ TranTechnology* TranTechnology::clone() const {
 * \return The constant XML_NAME.
 */
 const std::string& TranTechnology::getXMLName1D() const {
-	return XML_NAME;
+    return XML_NAME;
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -68,7 +68,7 @@ const std::string& TranTechnology::getXMLName1D() const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& TranTechnology::getXMLNameStatic1D() {
-	return XML_NAME;
+    return XML_NAME;
 }
 
 //! initialize TranTechnology with xml data
@@ -148,12 +148,12 @@ void TranTechnology::calcCost( const string& regionName, const string& sectorNam
 
     Marketplace* marketplace = scenario->getMarketplace();
     double fuelprice = marketplace->getPrice(fuelname,regionName,per);
-	
-	/*! \invariant The market price of the fuel must be valid. */
-	assert( fuelprice != Marketplace::NO_MARKET_PRICE );
+    
+    /*! \invariant The market price of the fuel must be valid. */
+    assert( fuelprice != Marketplace::NO_MARKET_PRICE );
     
     double secondaryValue = calcSecondaryValue( regionName, per );
-	fuelcost = ( (fuelprice * fMultiplier) - secondaryValue ) * mIntensity / getCumulativeTechnicalChange( per )
+    fuelcost = ( (fuelprice * fMultiplier) - secondaryValue ) * mIntensity / getCumulativeTechnicalChange( per )
              * JPERBTU/(1.0E9)*CVRT90;
     techcost = ( fuelcost + getNonEnergyCost( per ) ) * pMultiplier;
     
@@ -210,7 +210,7 @@ double TranTechnology::getCalibrationOutput( const int aPeriod ) const {
     // Calibration output is for the initial year of the technology.
     if( mCalValue.get() && year == scenario->getModeltime()->getper_to_yr( aPeriod ) ){
         const double ECONV = 1.055e-9;
-	    return mCalValue->getCalInput( getEfficiency( aPeriod ) ) * getCumulativeTechnicalChange( aPeriod )
+        return mCalValue->getCalInput( getEfficiency( aPeriod ) ) * getCumulativeTechnicalChange( aPeriod )
                * loadFactor / ( mIntensity * ECONV );
     }
     return 0;
@@ -226,21 +226,21 @@ double TranTechnology::getIntensity(const int per) const {
 * \return Cumulative technical change.
 */
 double TranTechnology::getCumulativeTechnicalChange( const int aPeriod ) const {
-	/*! \pre The period is valid. */
-	assert( aPeriod >= 0 && aPeriod < scenario->getModeltime()->getmaxper() );
+    /*! \pre The period is valid. */
+    assert( aPeriod >= 0 && aPeriod < scenario->getModeltime()->getmaxper() );
 
-	// Default to 1 for period 0 and 1.
-	double cumulativeTechChange = 1;
-	if( aPeriod > 1 ){
-		const Modeltime* modeltime = scenario->getModeltime();
-		const int timestep = modeltime->gettimestep( aPeriod );
+    // Default to 1 for period 0 and 1.
+    double cumulativeTechChange = 1;
+    if( aPeriod > 1 ){
+        const Modeltime* modeltime = scenario->getModeltime();
+        const int timestep = modeltime->gettimestep( aPeriod );
 
-		// Calculate cumulative technical change from period 1.
-		// TODO: Correct this for variable timesteps.
-		cumulativeTechChange = pow( 1 + mTechnicalChange, timestep * ( aPeriod - 1 ) );
-	}
+        // Calculate cumulative technical change from period 1.
+        // TODO: Correct this for variable timesteps.
+        cumulativeTechChange = pow( 1 + mTechnicalChange, timestep * ( aPeriod - 1 ) );
+    }
 
-	/*! \post Cumulative technical change is greater than or equal to one.*/
-	assert( cumulativeTechChange >= 1 );
-	return cumulativeTechChange;
+    /*! \post Cumulative technical change is greater than or equal to one.*/
+    assert( cumulativeTechChange >= 1 );
+    return cumulativeTechChange;
 }

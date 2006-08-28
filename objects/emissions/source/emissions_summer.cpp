@@ -19,7 +19,7 @@
 #include "util/base/include/definitions.h"
 #include <cassert>
 #include "emissions/include/emissions_summer.h"
-#include "emissions/include/ghg.h"
+#include "emissions/include/aghg.h"
 #include "sectors/include/ag_sector.h"
 #include "emissions/include/icarbon_calc.h"
 
@@ -36,7 +36,7 @@ mGHGName( aGHGName ){
 * \param aGHG GHG to update emissions from.
 * \param aPeriod Period in which to update.
 */
-void EmissionsSummer::startVisitGHG( const Ghg* aGHG, const int aPeriod ){
+void EmissionsSummer::startVisitGHG( const AGHG* aGHG, const int aPeriod ){
     if( aGHG->getName() == mGHGName ){
         mEmissionsByPeriod[ aPeriod ] += aGHG->getEmission( aPeriod );
     }

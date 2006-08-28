@@ -25,7 +25,7 @@
 #include "land_allocator/include/iland_allocator.h"
 
 // Forward declarations
-class Ghg;
+class AGHG;
 class Summary;
 class IInfo;
 class Tabs;
@@ -73,7 +73,7 @@ public:
                              Tabs* aTabs ) const = 0;
     
     // IVisitable
-	virtual void accept( IVisitor* aVisitor,
+    virtual void accept( IVisitor* aVisitor,
                          const int aPeriod ) const = 0;
 
     void toDebugXML( const int aPeriod,

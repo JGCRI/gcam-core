@@ -39,11 +39,13 @@ using namespace std;
 
 extern Scenario* scenario; // for marketplace.
 
+typedef vector<Input*>::const_iterator CInputIterator;
+
 //! Scale Input Coefficients
 void FunctionUtils::scaleCoefficientInputs( vector<Input*>& input, double scaler ) {
-	for ( unsigned int i = 0; i < input.size(); ++i ) {
-		input[i]->scaleCoefficient( scaler ); // scale total demand
-	}
+    for ( unsigned int i = 0; i < input.size(); ++i ) {
+        input[i]->scaleCoefficient( scaler ); // scale total demand
+    }
 }
 
 //! Function to return sum of all demand inputs
@@ -57,11 +59,11 @@ double FunctionUtils::getDemandSum( const std::vector<Input*>& aInputs ) {
 
 //! Return sum of Inputs
 double FunctionUtils::getCoefSum( const vector<Input*>& input ) {
-	double sum = 0;
-	for ( unsigned int i = 0; i < input.size(); ++i ) {
-		sum += input[i]->getCoefficient(); // sum each coefficient
-	}
-	return sum;
+    double sum = 0;
+    for ( unsigned int i = 0; i < input.size(); ++i ) {
+        sum += input[i]->getCoefficient(); // sum each coefficient
+    }
+    return sum;
 }
 
 /*! \brief Return a specific input given its name.
@@ -72,12 +74,12 @@ double FunctionUtils::getCoefSum( const vector<Input*>& input ) {
 Input* FunctionUtils::getInput( const vector<Input*>& aInputs,
                                   const string& aInputName )
 {
-    for( vector<Input*>::const_iterator input = aInputs.begin(); input != aInputs.end(); ++input ) {
-		if( (*input)->getName() == aInputName ) {
-			return *input;
-		}
-	}
-	return 0;
+    for( CInputIterator input = aInputs.begin(); input != aInputs.end(); ++input ) {
+        if( (*input)->getName() == aInputName ) {
+            return *input;
+        }
+    }
+    return 0;
 }
 
 //! Helper function to find the index of capital.
@@ -107,7 +109,7 @@ Input* FunctionUtils::getNumeraireInput( const vector<Input*>& aInputs ) {
 //! Calculate Rho from Sigma and return
 double FunctionUtils::getRho( const double aSigma ) {
     assert( aSigma > 0 );
-	return ( aSigma - 1 ) / aSigma;
+    return ( aSigma - 1 ) / aSigma;
 }
 
 /*! \brief Calculate the net present value multiplier using the current price of
@@ -124,11 +126,11 @@ double FunctionUtils::getNetPresentValueMult( const vector<Input*>& aInputs,
     // Find the capital input.
     const Input* capInput = getCapitalInput( aInputs );
     assert( capInput );
-	double discountRate = capInput->getPricePaid(); // already includes adjustments
-	
+    double discountRate = capInput->getPricePaid(); // already includes adjustments
+    
     // calculate net present value multiplier
-	double netPresentValueMult = FunctionUtils::calcNetPresentValueMult( discountRate, aLifetimeYears );
-	assert( util::isValidNumber( netPresentValueMult ) );
+    double netPresentValueMult = FunctionUtils::calcNetPresentValueMult( discountRate, aLifetimeYears );
+    assert( util::isValidNumber( netPresentValueMult ) );
     assert( netPresentValueMult >= 0 );
     return netPresentValueMult;
 }
@@ -161,17 +163,17 @@ double FunctionUtils::calcNetPresentValueMult( const double aDiscountRate, const
 * \param aPricePaid The price paid.
 */
 void FunctionUtils::setPricePaid( const string& aRegionName,
-								  const string& aGoodName,
-							      const int aPeriod,
-								  const double aPricePaid )
+                                  const string& aGoodName,
+                                  const int aPeriod,
+                                  const double aPricePaid )
 {
-	assert( aGoodName != "USA" );
-	IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( aGoodName, aRegionName,
-		                                                           aPeriod, true );
+    assert( aGoodName != "USA" );
+    IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( aGoodName, aRegionName,
+                                                                   aPeriod, true );
 
-	/*! \invariant The market and market info must exist. */
-	assert( marketInfo );
-	marketInfo->setDouble( "pricePaid", aPricePaid );
+    /*! \invariant The market and market info must exist. */
+    assert( marketInfo );
+    marketInfo->setDouble( "pricePaid", aPricePaid );
 }
 
 /*! \brief Gets the price paid for the good by querying the marketplace.
@@ -183,17 +185,17 @@ void FunctionUtils::setPricePaid( const string& aRegionName,
 * \return The price paid, 0 if there is not one set.
 */
 double FunctionUtils::getPricePaid( const string& aRegionName,
-								    const string& aGoodName,
-									const int aPeriod )
+                                    const string& aGoodName,
+                                    const int aPeriod )
 {
-	assert( aGoodName != "USA" );
+    assert( aGoodName != "USA" );
     const Marketplace* marketplace = scenario->getMarketplace();
-	const IInfo* marketInfo = marketplace->getMarketInfo( aGoodName, aRegionName,
+    const IInfo* marketInfo = marketplace->getMarketInfo( aGoodName, aRegionName,
                                                           aPeriod, true );
-	
+    
     /*! \invariant The market and market info must exist. */
-	assert( marketInfo );
-	return marketInfo->getDouble( "pricePaid", true );
+    assert( marketInfo );
+    return marketInfo->getDouble( "pricePaid", true );
 }
 
 /*! \brief Set the price received for a good into the marketplace.
@@ -205,18 +207,18 @@ double FunctionUtils::getPricePaid( const string& aRegionName,
 * \param aPriceReceived Price received to set.
 */
 void FunctionUtils::setPriceReceived( const string& aRegionName,
-								      const string& aGoodName,
-									  const int aPeriod,
-								      const double aPriceReceived )
+                                      const string& aGoodName,
+                                      const int aPeriod,
+                                      const double aPriceReceived )
 {
-	assert( aGoodName != "USA" );
+    assert( aGoodName != "USA" );
     Marketplace* marketplace = scenario->getMarketplace();
-	IInfo* marketInfo = marketplace->getMarketInfo( aGoodName, aRegionName,
-		                                            aPeriod, true );
+    IInfo* marketInfo = marketplace->getMarketInfo( aGoodName, aRegionName,
+                                                    aPeriod, true );
 
-	/*! \invariant The market and market info must exist. */
-	assert( marketInfo );
-	marketInfo->setDouble( "priceReceived", aPriceReceived );
+    /*! \invariant The market and market info must exist. */
+    assert( marketInfo );
+    marketInfo->setDouble( "priceReceived", aPriceReceived );
 }
 
 /*! \brief Gets the price received for the good by querying the marketplace.
@@ -228,16 +230,16 @@ void FunctionUtils::setPriceReceived( const string& aRegionName,
 * \return The price received, 0 if there is not one set.
 */
 double FunctionUtils::getPriceReceived( const string& aRegionName,
-									    const string& aGoodName,
-										const int aPeriod )
+                                        const string& aGoodName,
+                                        const int aPeriod )
 {
-	assert( aGoodName != "USA" );
+    assert( aGoodName != "USA" );
     const Marketplace* marketplace = scenario->getMarketplace();
-	const IInfo* marketInfo = marketplace->getMarketInfo( aGoodName, aRegionName,
+    const IInfo* marketInfo = marketplace->getMarketInfo( aGoodName, aRegionName,
                                                           aPeriod, true );
-	/*! \invariant The market and market info must exist. */
-	assert( marketInfo );
-	return marketInfo->getDouble( "priceReceived", true );
+    /*! \invariant The market and market info must exist. */
+    assert( marketInfo );
+    return marketInfo->getDouble( "priceReceived", true );
 }
 
 /*! \brief Calculate the expected price received for the good produced by the
@@ -260,7 +262,7 @@ double FunctionUtils::getExpectedPriceReceived( const vector<Input*>& aInputs,
                                                 const int aPeriod )
 {
     // calculate expected price received for the produced good
-	return getPriceReceived( aRegionName, aGoodName, aPeriod )
+    return getPriceReceived( aRegionName, aGoodName, aPeriod )
            * getNetPresentValueMult( aInputs, aLifetimeYears );
 }
 

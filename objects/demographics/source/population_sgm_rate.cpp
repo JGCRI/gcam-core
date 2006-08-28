@@ -56,7 +56,7 @@ bool PopulationSGMRate::XMLDerivedClassParse( const std::string& nodeName, const
 /*! \todo Make min and max working age read in.
 * \todo Handle age bounds not exactly equal to min and max working age.
 */
-double PopulationSGMRate::getWorkingAgePop() const{ // ages 15-65
+double PopulationSGMRate::getWorkingAgePop() const { // ages 15-65
     return getWorkingAgePopMale() + getWorkingAgePopFemale();
 }
 
@@ -64,7 +64,7 @@ double PopulationSGMRate::getWorkingAgePop() const{ // ages 15-65
 /*! \todo Make min and max working age read in.
 * \todo Handle age bounds not exactly equal to min and max working age.
 */
-double PopulationSGMRate::getWorkingAgePopMale() const{ // ages 15-65
+double PopulationSGMRate::getWorkingAgePopMale() const { // ages 15-65
     double workAgePop = 0;
     // Iterate over the cohorts and add populations between ages 15 and 65.
     for( CAgeCohortIterator cohort = ageCohort.begin(); cohort != ageCohort.end(); ++cohort ){
@@ -82,7 +82,7 @@ double PopulationSGMRate::getWorkingAgePopMale() const{ // ages 15-65
 /*! \todo Make min and max working age read in.
 * \todo Handle age bounds not exactly equal to min and max working age.
 */
-double PopulationSGMRate::getWorkingAgePopFemale() const{ // ages 15-65
+double PopulationSGMRate::getWorkingAgePopFemale() const { // ages 15-65
     double workAgePop = 0;
     // Iterate over the cohorts and add populations between ages 15 and 65.
     for( CAgeCohortIterator cohort = ageCohort.begin(); cohort != ageCohort.end(); ++cohort ){
@@ -97,14 +97,14 @@ double PopulationSGMRate::getWorkingAgePopFemale() const{ // ages 15-65
 }
 
 //! Write out rest of datamembers to XML output stream.
-void PopulationSGMRate::toInputXMLDerived( std::ostream& out, Tabs* tabs ) const{
+void PopulationSGMRate::toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {
     for( CAgeCohortIterator i = ageCohort.begin(); i != ageCohort.end(); ++i ){
         ( *i )->toInputXML( out, tabs );
     }
 }
 
 //! Write out XML for debugging purposes.
-void PopulationSGMRate::toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const{
+void PopulationSGMRate::toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const {
     for( CAgeCohortIterator i = ageCohort.begin(); i != ageCohort.end(); ++i ){
         ( *i )->toDebugXML( out, tabs );
     }
@@ -133,7 +133,7 @@ void PopulationSGMRate::initCalc(){
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
-const std::string& PopulationSGMRate::getXMLName() const{
+const std::string& PopulationSGMRate::getXMLName() const {
     return XML_NAME;
 }
 
@@ -244,12 +244,12 @@ void PopulationSGMRate::csvSGMOutputFile( ostream& aFile, const int period ) con
 * \param aPeriod Period for which to update.
 */
 void PopulationSGMRate::accept( IVisitor* aVisitor, const int aPeriod ) const {
-	aVisitor->startVisitPopulationSGMRate( this, aPeriod );
-	// Call the parent class visit.
-	Population::accept( aVisitor, aPeriod );
-	// Update the cohorts.
-	for( unsigned int i = 0; i < ageCohort.size(); ++i ){
-		ageCohort[ i ]->accept( aVisitor, aPeriod );
-	}
-	aVisitor->endVisitPopulationSGMRate( this, aPeriod );
+    aVisitor->startVisitPopulationSGMRate( this, aPeriod );
+    // Call the parent class visit.
+    Population::accept( aVisitor, aPeriod );
+    // Update the cohorts.
+    for( unsigned int i = 0; i < ageCohort.size(); ++i ){
+        ageCohort[ i ]->accept( aVisitor, aPeriod );
+    }
+    aVisitor->endVisitPopulationSGMRate( this, aPeriod );
 }

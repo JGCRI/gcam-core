@@ -39,7 +39,7 @@ void Male::toDebugXMLDerived(ostream& out, Tabs* tabs ) const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
-const std::string& Male::getXMLName() const{
+const std::string& Male::getXMLName() const {
     return XML_NAME;
 }
 
@@ -61,8 +61,8 @@ const std::string& Male::getXMLNameStatic(){
 * \param aPeriod Period for which to update.
 */
 void Male::accept( IVisitor* aVisitor, const int aPeriod ) const {
-	aVisitor->startVisitMale( this, aPeriod );
-	// Update the parent class.
-	Gender::accept( aVisitor, aPeriod );
-	aVisitor->endVisitMale( this, aPeriod );
+    aVisitor->startVisitMale( this, aPeriod );
+    // Update the parent class.
+    Gender::accept( aVisitor, aPeriod );
+    aVisitor->endVisitMale( this, aPeriod );
 }

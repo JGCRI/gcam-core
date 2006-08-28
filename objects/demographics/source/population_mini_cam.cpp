@@ -44,17 +44,17 @@ bool PopulationMiniCAM::XMLDerivedClassParse( const string &nodeName, const xerc
 }
 
 //! returns total working age population (ages 15-65)
-double PopulationMiniCAM::getWorkingAgePop() const{ // ages 15-65
+double PopulationMiniCAM::getWorkingAgePop() const { // ages 15-65
     return mTotalPop;
 }
 
 //! Write out datamembers to XML output stream.
-void PopulationMiniCAM::toInputXMLDerived( ostream& out, Tabs* tabs ) const{
+void PopulationMiniCAM::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     // do nothing
 }
 
 //! Write out XML for debugging purposes.
-void PopulationMiniCAM::toDebugXMLDerived( ostream& out, Tabs* tabs ) const{
+void PopulationMiniCAM::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {
     // do nothing
 }
 
@@ -76,7 +76,7 @@ void PopulationMiniCAM::initCalc(){
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
-const string& PopulationMiniCAM::getXMLName() const{
+const string& PopulationMiniCAM::getXMLName() const {
     return XML_NAME;
 }
 
@@ -102,8 +102,8 @@ void PopulationMiniCAM::csvSGMOutputFile( ostream& aFile, const int period ) con
 * \param aPeriod Period for which to update.
 */
 void PopulationMiniCAM::accept( IVisitor* aVisitor, const int aPeriod ) const {
-	aVisitor->startVisitPopulationMiniCAM( this, aPeriod );
-	// Call the parent class visit.
-	Population::accept( aVisitor, aPeriod );
-	aVisitor->endVisitPopulationMiniCAM( this, aPeriod );
+    aVisitor->startVisitPopulationMiniCAM( this, aPeriod );
+    // Call the parent class visit.
+    Population::accept( aVisitor, aPeriod );
+    aVisitor->endVisitPopulationMiniCAM( this, aPeriod );
 }

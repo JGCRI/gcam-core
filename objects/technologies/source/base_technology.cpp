@@ -1,12 +1,12 @@
 /*
-	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Laboratory operated by Battelle Memorial
-	Institute. Battelle has certain unperfected rights in the software
-	which should not be copied or otherwise disseminated outside your
-	organization without the express written authorization from Battelle. All rights to
-	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responsibility for the 
-	use of this software.
+    This software, which is provided in confidence, was prepared by employees
+    of Pacific Northwest National Laboratory operated by Battelle Memorial
+    Institute. Battelle has certain unperfected rights in the software
+    which should not be copied or otherwise disseminated outside your
+    organization without the express written authorization from Battelle. All rights to
+    the software are reserved by Battelle.  Battelle makes no warranty,
+    express or implied, and assumes no liability or responsibility for the 
+    use of this software.
 */
 
 /*! 
@@ -39,13 +39,20 @@
 #include "util/base/include/model_time.h"
 #include "technologies/include/expenditure.h"
 #include "marketplace/include/marketplace.h"
-#include "emissions/include/ghg.h"
+#include "emissions/include/aghg.h"
 #include "util/base/include/ivisitor.h"
+#include "emissions/include/ghg_factory.h"
+#include "emissions/include/co2_emissions.h"
 
 using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
+
+typedef vector<Input*>::iterator InputIterator;
+typedef vector<Input*>::const_iterator CInputIterator;
+typedef vector<AGHG*>::const_iterator CGHGIterator;
+typedef vector<AGHG*>::iterator GHGIterator;
 
 //!< Default Constructor
 BaseTechnology::BaseTechnology() {
@@ -85,7 +92,7 @@ void BaseTechnology::copy( const BaseTechnology& baseTechIn ) {
     for ( unsigned int i = 0; i < baseTechIn.input.size(); i++) {
         input.push_back( baseTechIn.input[i]->clone() );
     }
-    for( vector<Ghg*>::const_iterator ghg = baseTechIn.mGhgs.begin(); ghg != baseTechIn.mGhgs.end(); ++ghg ){
+    for( CGHGIterator ghg = baseTechIn.mGhgs.begin(); ghg != baseTechIn.mGhgs.end(); ++ghg ){
         mGhgs.push_back( (*ghg)->clone() );
     }
 }
@@ -130,7 +137,7 @@ void BaseTechnology::copyParam( const BaseTechnology* baseTechIn ) {
     } // end for
     
     // For each Ghg check if it exists in the current technology.
-    for ( vector<Ghg*>::const_iterator ghg = baseTechIn->mGhgs.begin(); ghg != baseTechIn->mGhgs.end(); ++ghg ) {
+    for ( CGHGIterator ghg = baseTechIn->mGhgs.begin(); ghg != baseTechIn->mGhgs.end(); ++ghg ) {
         if( !util::hasValue( mGhgNameMap, (*ghg)->getName() ) ){
             mGhgs.push_back( (*ghg)->clone() );
             // Add it to the map.
@@ -185,8 +192,8 @@ void BaseTechnology::XMLParse( const DOMNode* node ) {
         else if ( nodeName == "categoryName" ) {
             categoryName = XMLHelper<string>::getValue( curr );
         }
-        else if( nodeName == Ghg::getXMLNameStatic() ){
-            parseContainerNode( curr, mGhgs, mGhgNameMap, new Ghg() );
+        else if( GHGFactory::isGHGNode( nodeName ) ){
+            parseContainerNode( curr, mGhgs, mGhgNameMap, GHGFactory::create( nodeName ).release() );
         }
         else if( !XMLDerivedClassParse( nodeName, curr ) ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -209,7 +216,7 @@ void BaseTechnology::toInputXML( ostream& out, Tabs* tabs ) const {
         input[ iter ]->toInputXML( out, tabs );
     }
     
-    for( vector<Ghg*>::const_iterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){
+    for( CGHGIterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){
         (*ghg)->toInputXML( out, tabs );
     }
     toInputXMLDerived( out, tabs );
@@ -228,7 +235,7 @@ void BaseTechnology::toDebugXML( const int period, ostream& out, Tabs* tabs ) co
     for( unsigned int iter = 0; iter < input.size(); iter++ ){
         input[ iter ]->toDebugXML( period, out, tabs );
     }
-    for( vector<Ghg*>::const_iterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){
+    for( CGHGIterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){
         (*ghg)->toDebugXML( period, out, tabs );
     }
     expenditure.toDebugXML( period, out, tabs );
@@ -248,10 +255,10 @@ void BaseTechnology::completeInit( const std::string& regionName ) {
     }
 
     // Check if CO2 is missing. 
-    if( !util::hasValue( mGhgNameMap, string( "CO2" ) ) ){
+    if( !util::hasValue( mGhgNameMap, CO2Emissions::getXMLNameStatic() ) ){
         // arguments: gas, unit, remove fraction, GWP, and emissions coefficient
         // for CO2 this emissions coefficient is not used
-        mGhgs.push_back( new Ghg( "CO2", "MTC", 1 ) ); // at least CO2 must be present
+        mGhgs.push_back( new CO2Emissions() ); // at least CO2 must be present
         mGhgNameMap[ "CO2" ] = static_cast<int>( mGhgs.size() ) - 1;
     }
     for( GHGIterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){
@@ -376,7 +383,7 @@ void BaseTechnology::calcPricePaid( const MoreSectorInfo* aMoreSectorInfo, const
         else {
             // Calculate GHG taxes.
             double carbonTax = 0;
-            for( vector<Ghg*>::const_iterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){
+            for( CGHGIterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){
                 carbonTax += (*ghg)->getGHGValue( input[ i ], aRegionName, aSectorName, aPeriod );
             }
             tempPricePaid = ( ( input[ i ]->getPrice( aRegionName, aPeriod ) + 
@@ -411,10 +418,10 @@ void BaseTechnology::csvSGMOutputFile( ostream& aFile, const int period ) const 
 
 void BaseTechnology::accept( IVisitor* aVisitor, const int period ) const
 {
-	aVisitor->updateBaseTechnology( this );
-	for( CInputIterator cInput = input.begin(); cInput != input.end(); ++cInput ) {
-		(*cInput)->accept( aVisitor, period );
-	}
+    aVisitor->updateBaseTechnology( this );
+    for( CInputIterator cInput = input.begin(); cInput != input.end(); ++cInput ) {
+        (*cInput)->accept( aVisitor, period );
+    }
 }
 
 const string BaseTechnology::getIdentifier() const {

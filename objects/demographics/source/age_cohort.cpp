@@ -116,7 +116,7 @@ bool AgeCohort::parseGender( DOMNode* aNode ) {
     return true;
 }
 //! Write out datamembers to XML output stream.
-void AgeCohort::toInputXML( std::ostream& out, Tabs* tabs ) const{
+void AgeCohort::toInputXML( std::ostream& out, Tabs* tabs ) const {
     // write the beginning tag.
     tabs->writeTabs( out );
     out << "<" << getXMLNameStatic() << " ageGroup=\"" << ageGroup << "\">"<< endl;
@@ -315,8 +315,8 @@ int AgeCohort::getUpperAgeBound() const {
 * \param aPeriod Period for which to update.
 */
 void AgeCohort::accept( IVisitor* aVisitor, const int aPeriod ) const {
-	aVisitor->startVisitAgeCohort( this, aPeriod );
-	male->accept( aVisitor, aPeriod );
-	female->accept( aVisitor, aPeriod );
-	aVisitor->endVisitAgeCohort( this, aPeriod );
+    aVisitor->startVisitAgeCohort( this, aPeriod );
+    male->accept( aVisitor, aPeriod );
+    female->accept( aVisitor, aPeriod );
+    aVisitor->endVisitAgeCohort( this, aPeriod );
 }

@@ -15,7 +15,7 @@
 
 #include <xercesc/dom/DOMNode.hpp>
 #include <memory>
-#include "emissions/include/ghg.h"
+#include "emissions/include/aghg.h"
 
 class Curve;
 class Tabs;
