@@ -35,6 +35,7 @@ class NationalAccount;
 class MoreSectorInfo;
 class SocialAccountingMatrix;
 class ILandAllocator;
+class GlobalTechnologyDatabase;
 
 /*! 
 * \ingroup Objects
@@ -104,7 +105,8 @@ public:
     
     virtual void completeInit( const IInfo* aRegionInfo,
                                DependencyFinder* aDepFinder,
-                               ILandAllocator* aLandAllocator ) = 0;
+                               ILandAllocator* aLandAllocator,
+                               const GlobalTechnologyDatabase* aGlobalTechDB ) = 0;
     
     virtual void initCalc( NationalAccount& aNationalAccount,
                            const Demographic* aDemographics,

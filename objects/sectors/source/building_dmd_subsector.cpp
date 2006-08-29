@@ -138,7 +138,7 @@ bool BuildingDemandSubSector::isNameOfChild  ( const string& nodename ) const {
  * \author Steve Smith
  * \return A newly created technology of the specified type.
  */
-technology* BuildingDemandSubSector::createChild( const string& aTechType,
+ITechnology* BuildingDemandSubSector::createChild( const string& aTechType,
                                                   const string& aTechName,
                                                   const int aTechYear ) const
 {
@@ -224,13 +224,15 @@ void BuildingDemandSubSector::toDebugXMLDerived( const int period, ostream& out,
 * \param aSectorInfo Parent sector info object.
 * \param aDependencyFinder The regional dependency finder.
 * \param aLandAllocator Regional land allocator.
+* \param aGlobalTechDB Global technology database.
 * \warning markets are not necesarilly set when completeInit is called
 */
 void BuildingDemandSubSector::completeInit( const IInfo* aSectorInfo,
                                             DependencyFinder* aDependencyFinder,
-                                            ILandAllocator* aLandAllocator )
+                                            ILandAllocator* aLandAllocator,
+                                            const GlobalTechnologyDatabase* aGlobalTechDB )
 {
-    Subsector::completeInit( aSectorInfo, aDependencyFinder, aLandAllocator );
+    Subsector::completeInit( aSectorInfo, aDependencyFinder, aLandAllocator, aGlobalTechDB );
     setUpSubSectorMarkets();
 }
 
@@ -283,7 +285,7 @@ void BuildingDemandSubSector::calcPrice( const int period ) {
     fuelprice[period] = 0; // initialize to 0 for summing
     // There is no fuel price as this sector does not directly consume fuels
     
-    for ( unsigned int i=0; i< techs.size(); i++ ) {
+    for ( unsigned int i= 0; i< techs.size(); i++ ) {
         // calculate sum of all energy service costs
         subsectorprice[period] += techs[i][period]->getTechcost();
       }
@@ -419,7 +421,7 @@ void BuildingDemandSubSector::adjustForCalibration( double sectorDemand, double 
 * \param period Model period
 */
 void BuildingDemandSubSector::setCalibrationStatus( const int period ) {
-    for ( unsigned int i=0; i < techs.size(); i++ ) {
+    for ( unsigned int i= 0; i < techs.size(); i++ ) {
         Marketplace* marketplace = scenario->getMarketplace();
         const IInfo* marketInfo = marketplace->getMarketInfo( techs[ i ][ period ]->getFuelName(), regionName,
                                                               period, false );
@@ -464,7 +466,7 @@ Marketplace* marketplace = scenario->getMarketplace();
 
     dboutput4( regionName, "Price", sectorName + " NE Cost", name, "75$/Ser", nonEnergyCost );
     
-    for ( int m=0;m<maxper;m++) {
+    for ( int m= 0;m<maxper;m++) {
         temp[m] =  marketplace->getPrice( getInternalGainsMarketName( sectorName ), regionName, m );
     }
     dboutput4( regionName, "General", sectorName + " internalGains", name, "??", temp );

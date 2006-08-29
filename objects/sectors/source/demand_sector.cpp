@@ -344,12 +344,14 @@ void DemandSector::initCalc( NationalAccount& nationalAccount, const Demographic
 * \param aRegionInfo Regional information object.
 * \param aDependencyFinder The region's dependency finder.
 * \param aLandAllocator Regional land allocator.
+* \param aGlobalTechDB Global technology database.
 */
 void DemandSector::completeInit( const IInfo* aRegionInfo,
                                  DependencyFinder* aDependencyFinder,
-                                 ILandAllocator* aLandAllocator )
+                                 ILandAllocator* aLandAllocator,
+                                 const GlobalTechnologyDatabase* aGlobalTechDB )
 {
-    Sector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator );
+    Sector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator, aGlobalTechDB );
     pElasticityBase = pElasticity[ 0 ]; // Store the base year price elasticity.
 
     // Check to see if demand sector has the same name as a market.
@@ -503,7 +505,7 @@ void DemandSector::dbOutput() const {
     dboutput4(regionName,"End-Use Service","Elasticity",secname + "_income"," ",iElasticity);
     
     // TFE for this demand sector
-    for (m=0;m<maxper;m++) {
+    for (m= 0;m<maxper;m++) {
         temp[m] = getEnergyInput( m );
     }
     dboutput4(regionName,"Final Energy Cons",name,"zTotal","EJ",temp);
@@ -514,7 +516,7 @@ void DemandSector::dbOutput() const {
     // Write out total (zTotal) fuel consumption for each sector only.
     if( !tfuelmap.empty() ){
         CI fmap = --tfuelmap.end();
-        for (m=0;m<maxper;m++) {
+        for (m= 0;m<maxper;m++) {
             temp[m] = Sector::getConsByFuel(m,fmap->first);
         }
         dboutput4(regionName,"Fuel Consumption",secname,fmap->first,"EJ",temp);
@@ -526,39 +528,39 @@ void DemandSector::dbOutput() const {
     // sector emissions for all greenhouse gases
     map<string,double> temissmap = summary[0].getemission(); // get gases for period 0
     for (CI gmap=temissmap.begin(); gmap!=temissmap.end(); ++gmap) {
-        for (int m=0;m<maxper;m++) {
+        for (int m= 0;m<maxper;m++) {
             temp[m] = summary[m].get_emissmap_second(gmap->first);
         }
         dboutput4(regionName,"Emissions","Sec-"+secname,gmap->first,"MTC",temp);
     }
     
     // CO2 emissions by sector
-    for (m=0;m<maxper;m++) {
+    for (m= 0;m<maxper;m++) {
         temp[m] = summary[m].get_emissmap_second("CO2");
     }
     dboutput4(regionName,"CO2 Emiss","by Sector",secname,"MTC",temp);
     dboutput4(regionName,"CO2 Emiss",secname,"zTotal","MTC",temp);
     
     // CO2 indirect emissions by sector
-    for (m=0;m<maxper;m++) {
+    for (m= 0;m<maxper;m++) {
         temp[m] = summary[m].get_emindmap_second("CO2");
     }
     dboutput4(regionName,"CO2 Emiss(ind)",secname,"zTotal","MTC",temp);
     
     // sector price (not normalized)
-    for (m=0;m<maxper;m++) {
+    for (m= 0;m<maxper;m++) {
         temp[m] = getPrice( m );
     }
     dboutput4(regionName,"Price",secname,"zSectorAvg","75$/Ser",temp);
     
     // sector price normalized to base price
-    for (m=0;m<maxper;m++) {
+    for (m= 0;m<maxper;m++) {
         temp[m] = getPrice( m ) / getPrice( 0 );
     }
     dboutput4(regionName,"Price","by End-Use Sector",secname,"Norm75",temp);
     
     // sector carbon taxes paid
-    for (m=0;m<maxper;m++) {
+    for (m= 0;m<maxper;m++) {
         temp[m] = Sector::getTotalCarbonTaxPaid(m);
     }
     dboutput4(regionName,"General","CarbonTaxPaid",secname,"$",temp);

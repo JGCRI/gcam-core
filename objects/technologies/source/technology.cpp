@@ -29,6 +29,9 @@
 #include "technologies/include/secondary_output.h"
 #include "technologies/include/primary_output.h"
 #include "technologies/include/ical_data.h"
+#include "technologies/include/generic_technology_info.h"
+#include "technologies/include/global_technology.h"
+#include "technologies/include/global_technology_database.h"
 #include "emissions/include/ghg_factory.h"
 #include "emissions/include/co2_emissions.h"
 
@@ -56,7 +59,7 @@ typedef vector<AGHG*>::iterator GHGIterator;
  * \param aYear Technology year.
  */
 technology::technology( const string& aName, const int aYear )
-: name( aName ), year ( aYear ) {
+: year ( aYear ), mName( aName ) {
     initElementalMembers();
 }
 
@@ -81,29 +84,33 @@ technology& technology::operator = ( const technology& techIn ) {
 
 //! Helper copy function to avoid replicating code.
 void technology::copy( const technology& techIn ) {
+    mName = techIn.mName;
+    mGetGlobalTech = techIn.mGetGlobalTech;
+
     year = techIn.year;
     shrwts = techIn.shrwts;
-    mBaseEfficiency = techIn.mBaseEfficiency; 
-    effPenalty = techIn.effPenalty; 
-    mBaseNonEnergyCost = techIn.mBaseNonEnergyCost;
-    neCostPenalty = techIn.neCostPenalty;
     fuelcost = techIn.fuelcost;
     techcost = techIn.techcost;
-    fMultiplier = techIn.fMultiplier;
     pMultiplier = techIn.pMultiplier;
     lexp = techIn.lexp;
     share = techIn.share;
     input = techIn.input;
     fixedOutput = techIn.fixedOutput;
     fixedOutputVal = techIn.fixedOutputVal;
-    name = techIn.name;
-    fuelname = techIn.fuelname;
 
     emissmap = techIn.emissmap; 
     emfuelmap = techIn.emfuelmap; 
     emindmap = techIn.emindmap; 
-    fuelPrefElasticity = techIn.fuelPrefElasticity;
     ghgNameMap = techIn.ghgNameMap; 
+
+    // all cloning should have been done before completeInit
+    // because during completeInit GlobalTechnologies are fetched
+    // and they cannot be cloned.
+    if( techIn.mTechData.get() ) {
+        mTechData.reset( techIn.mTechData->clone() );
+    } else {
+        mTechData.reset();
+    }
     
     // Clone the existing cal data object if there is one.
     // TODO: This may correct given the usage of clone in technology to copy forward.
@@ -117,7 +124,7 @@ void technology::copy( const technology& techIn ) {
 }
 
 //! Clone Function. Returns a deep copy of the current technology.
-technology* technology::clone() const {
+ITechnology* technology::clone() const {
     return new technology( *this );
 }
 
@@ -135,20 +142,15 @@ void technology::clear(){
 //! Initialize elemental data members.
 void technology::initElementalMembers(){
     shrwts = 1;
-    mBaseEfficiency = 1; 
-    effPenalty = 0; 
     fuelcost = 0;
-    mBaseNonEnergyCost = 0;
-    neCostPenalty = 0;
     techcost = 0;
-    fMultiplier = 1;
     pMultiplier = 1;
     lexp = LOGIT_EXP_DEFAULT; 
     share = 0;
     input = 0;
     fixedOutput = getFixedOutputDefault(); // initialize to no fixed supply
     fixedOutputVal = getFixedOutputDefault();
-    fuelPrefElasticity = 0;
+    mGetGlobalTech = false;
 }
 
 /*! \brief Default value for fixedOutput;
@@ -185,31 +187,38 @@ void technology::XMLParse( const DOMNode* node ) {
             //       This will eventually be an error.
         }
         else if( nodeName == "fuelname" ){
-            fuelname = XMLHelper<string>::getValue( curr );
+            createTechData();
+            mTechData->setFuelName( XMLHelper<string>::getValue( curr ) );
         }
         else if( nodeName == "sharewt" ){
             shrwts = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "fuelprefElasticity" ){
-            fuelPrefElasticity = XMLHelper<double>::getValue( curr );
+            createTechData();  
+            mTechData->setFuelPrefElasticity( XMLHelper<double>::getValue( curr ) );
         }
         else if( nodeName == "efficiency" ){
-            mBaseEfficiency = XMLHelper<double>::getValue( curr );
+            createTechData();
+            mTechData->setEfficiency( XMLHelper<double>::getValue( curr ) );
         }
         else if( nodeName == "efficiencyPenalty" ){
-            effPenalty = XMLHelper<double>::getValue( curr );
+            createTechData();
+            mTechData->setEffPenalty( XMLHelper<double>::getValue( curr ) );
         }
         else if( nodeName == "nonenergycost" ){
-            mBaseNonEnergyCost = XMLHelper<double>::getValue( curr );
+            createTechData();
+            mTechData->setNonEnergyCost( XMLHelper<double>::getValue( curr ) );
         }
         else if( nodeName == "neCostPenalty" ){
-            neCostPenalty = XMLHelper<double>::getValue( curr );
+            createTechData();
+            mTechData->setNECostPenalty( XMLHelper<double>::getValue( curr ) );
         }
         else if( nodeName == "pMultiplier" ){
             pMultiplier = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "fMultiplier" ){
-            fMultiplier = XMLHelper<double>::getValue( curr );
+            createTechData();
+            mTechData->setFMultiplier( XMLHelper<double>::getValue( curr ) );
         }
         else if( nodeName == "logitexp" ){
             lexp = XMLHelper<double>::getValue( curr );
@@ -232,9 +241,11 @@ void technology::XMLParse( const DOMNode* node ) {
         else if( nodeName == SecondaryOutput::getXMLNameStatic() ){
             parseContainerNode( curr, mOutputs, new SecondaryOutput );
         }
-
         else if( nodeName == "note" ){
             note = XMLHelper<string>::getValue( curr );
+        }
+        else if( nodeName == GlobalTechnology::getXMLNameStatic() ) {
+            mGetGlobalTech = true;
         }
         // parse derived classes
         else if( XMLDerivedClassParse( nodeName, curr ) ){
@@ -246,6 +257,20 @@ void technology::XMLParse( const DOMNode* node ) {
         }
 
     }
+}
+
+/*! \brief Creates a generic technology info
+ *  \details Will create and set a new generic technolgy
+ *           info if mTechData has not already been set.
+ *           Also will reset the flag to get a global technology
+ *           to false as the generic technology is overiding it.
+ *  \author Pralit Patel
+ */
+void technology::createTechData() {
+    if( !mTechData.get() ) {
+        mTechData.reset( new GenericTechnologyInfo( mName ) );
+    }
+    mGetGlobalTech = false;
 }
 
 //! Parses any input variables specific to derived classes
@@ -262,29 +287,32 @@ bool technology::XMLDerivedClassParse( const string& nodeName, const DOMNode* cu
 * \param aDepDefinder Regional dependency finder.
 * \param aSubsectorInfo Subsector information object.
 * \param aLandAllocator Regional land allocator.
+* \param aGlobalTechDB Global Technology database.
 * \author Josh Lurz
 * \warning Markets are not necesarilly set when completeInit is called
 */
 void technology::completeInit( const string& aSectorName,
                                DependencyFinder* aDepFinder,
                                const IInfo* aSubsectorInfo,
-                               ILandAllocator* aLandAllocator )
+                               ILandAllocator* aLandAllocator,
+                               const GlobalTechnologyDatabase* aGlobalTechDB )
 {
     // Check for an unset or invalid year.
     if( year == 0 ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Technology " << name << " in sector " << aSectorName
+        mainLog << "Technology " << mName << " in sector " << aSectorName
             << " has an invalid year attribute." << endl;
     }
-    
-    // Check for non-sensical efficiency.
-    if( mBaseEfficiency <= 0 ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Resetting invalid effiency for Technology " << name << endl;
-        mBaseEfficiency = 1;
+
+    if( mGetGlobalTech && aGlobalTechDB ) {
+        mTechData = aGlobalTechDB->getTechnology( mName, year );
     }
+    if( !mTechData.get() ) {
+        // create one so that it can have default values
+        mTechData.reset( new GenericTechnologyInfo( mName ) );
+    }
+    mTechData->completeInit();
 
     if( !util::hasValue( ghgNameMap, CO2Emissions::getXMLNameStatic() ) ) {
         // arguments: gas, unit, remove fraction, GWP, and emissions coefficient
@@ -311,7 +339,7 @@ void technology::completeInit( const string& aSectorName,
         // This is necessary for export sectors to operate correctly, but will
         // be true in general.
         if ( !hasNoInputOrOutput() ) { // note the NOT operator
-            aDepFinder->addDependency( aSectorName, fuelname );
+            aDepFinder->addDependency( aSectorName, mTechData->getFuelName() );
         }
     }
 
@@ -333,13 +361,14 @@ void technology::toInputXML( ostream& out, Tabs* tabs ) const {
         mCalValue->toInputXML( out, tabs );
     }
     
-    XMLWriteElement( fuelname, "fuelname", out, tabs );
-    XMLWriteElementCheckDefault( mBaseEfficiency, "efficiency", out, tabs, 1.0 );
-    XMLWriteElementCheckDefault( effPenalty, "efficiencyPenalty", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( mBaseNonEnergyCost, "nonenergycost", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( neCostPenalty, "neCostPenalty", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( fuelPrefElasticity, "fuelprefElasticity", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( fMultiplier, "fMultiplier", out, tabs, 1.0 );
+    // don't print GlobalTechs in toInputXML, they will be printed in the
+    // GlobalTechnologyDatabase
+    if( !mGetGlobalTech ) {
+        mTechData->toInputXML( out, tabs );
+    }
+    else {
+        XMLWriteElement<string>( "", GlobalTechnology::getXMLNameStatic(), out, tabs );
+    }
     XMLWriteElementCheckDefault( pMultiplier, "pMultiplier", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( lexp, "logitexp", out, tabs, LOGIT_EXP_DEFAULT );
     XMLWriteElementCheckDefault( fixedOutput, "fixedOutput", out, tabs, getFixedOutputDefault() );
@@ -360,22 +389,16 @@ void technology::toInputXML( ostream& out, Tabs* tabs ) const {
 //! write object to xml debugging output stream
 void technology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     
-    XMLWriteOpeningTag( getXMLName1D(), out, tabs, name, year );
+    XMLWriteOpeningTag( getXMLName1D(), out, tabs, mName, year );
     // write the xml for the class members.
     
-    XMLWriteElement( fuelname, "fuelname", out, tabs );
     XMLWriteElement( shrwts, "sharewt", out, tabs );
     if ( mCalValue.get() ) {
         mCalValue->toDebugXML( out, tabs );
     }
+    mTechData->toDebugXML( period, out, tabs );
     XMLWriteElement( getEfficiency( period ), "efficiencyEffective", out, tabs );
-    XMLWriteElement( mBaseEfficiency, "efficiencyBase", out, tabs );
-    XMLWriteElement( effPenalty, "efficiencyPenalty", out, tabs );
-    XMLWriteElement( fuelcost, "fuelcost", out, tabs );
     XMLWriteElement( getNonEnergyCost( period ), "nonEnergyCostEffective", out, tabs );
-    XMLWriteElement( mBaseNonEnergyCost, "neCostBase", out, tabs );
-    XMLWriteElement( neCostPenalty, "neCostPenalty", out, tabs );
-    XMLWriteElement( fMultiplier, "fMultiplier", out, tabs );
     XMLWriteElement( pMultiplier, "pMultiplier", out, tabs );
     XMLWriteElement( lexp, "logitexp", out, tabs );
     XMLWriteElement( share, "share", out, tabs );
@@ -469,7 +492,7 @@ void technology::initCalc( const string& aRegionName,
     if ( mCalValue.get() && ( mCalValue->getCalInput( getEfficiency( aPeriod ) ) < 0 ) ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::DEBUG );
-        mainLog << "Negative calibration value for technology " << name
+        mainLog << "Negative calibration value for technology " << mName
                 << ". Calibration removed." << endl;
         mCalValue.reset( 0 );
     }
@@ -500,7 +523,7 @@ double technology::calcSecondaryValue( const string& aRegionName, const int aPer
     double totalValue = 0;
     // Add all costs from the GHGs.
     for( unsigned int i = 0; i < ghg.size(); ++i ){
-        totalValue -= ghg[i]->getGHGValue( aRegionName, fuelname, mOutputs, getEfficiency( aPeriod ), aPeriod );
+        totalValue -= ghg[i]->getGHGValue( aRegionName, mTechData->getFuelName(), mOutputs, getEfficiency( aPeriod ), aPeriod );
     }
 
     // Add all values from the outputs. The primary output is included in this
@@ -530,17 +553,18 @@ void technology::calcCost( const string& regionName, const string& sectorName, c
      // code specical case where there is no fuel input. sjs
      // used now to drive non-CO2 GHGs
     double fuelprice;
-    if ( fuelname == "none" || fuelname == "renewable" ) {
+    if ( ( mTechData->getFuelName() == "none" || mTechData->getFuelName().empty() ) || 
+            mTechData->getFuelName() == "renewable" ) {
         fuelprice = 0;
     }
     else {
-        fuelprice = marketplace->getPrice( fuelname, regionName, per );
+        fuelprice = marketplace->getPrice( mTechData->getFuelName(), regionName, per );
         
         /*! \invariant The market price of the fuel must be valid. */
         if ( fuelprice == Marketplace::NO_MARKET_PRICE ) {
            ILogger& mainLog = ILogger::getLogger( "main_log" );
            mainLog.setLevel( ILogger::ERROR );
-           mainLog << "Requested fuel >" << fuelname << "< with no price in technology " << name 
+           mainLog << "Requested fuel >" << mTechData->getFuelName() << "< with no price in technology " << mName 
                    << " in sector " << sectorName << " in region " << regionName << "." << endl;
            // set fuelprice to a valid, although arbitrary, number
            fuelprice = util::getLargeNumber();
@@ -548,7 +572,7 @@ void technology::calcCost( const string& regionName, const string& sectorName, c
     } 
      
     // fMultiplier and pMultiplier are initialized to 1 for those not read in
-    fuelcost = ( fuelprice * fMultiplier ) / getEfficiency( per );
+    fuelcost = ( fuelprice * mTechData->getFMultiplier() ) / getEfficiency( per );
     techcost = ( fuelcost + getNonEnergyCost( per ) ) * pMultiplier;
     techcost -= calcSecondaryValue( regionName, per );
     
@@ -572,9 +596,9 @@ void technology::calcShare( const string& aRegionName,
 {
     share = shrwts * pow( techcost, lexp );
     // This is rarely used, so probably worth it to not to waste cycles on the power function. sjs
-    if ( fuelPrefElasticity != 0 ) {
+    if ( mTechData->getFuelPrefElasticity() != 0 ) {
       double scaledGdpPerCapita = aGDP->getBestScaledGDPperCap( aPeriod );
-      share *= pow( scaledGdpPerCapita, fuelPrefElasticity );
+      share *= pow( scaledGdpPerCapita, mTechData->getFuelPrefElasticity() );
     }
 }
 
@@ -755,7 +779,7 @@ void technology::production( const string& aRegionName,
     if ( primaryOutput < 0 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Primary output value less than zero for technology " << name << endl;
+        mainLog << "Primary output value less than zero for technology " << mName << endl;
     }
     
     // Calculate input demand.
@@ -763,8 +787,9 @@ void technology::production( const string& aRegionName,
 
     Marketplace* marketplace = scenario->getMarketplace();
     // set demand for fuel in marketplace
-    if( ( fuelname != "renewable" ) && ( fuelname != "none" ) ){ 
-        marketplace->addToDemand( fuelname, aRegionName, input, aPeriod );
+    if( ( mTechData->getFuelName() != "renewable" ) && ( ( mTechData->getFuelName() != "none" ) ||
+            mTechData->getFuelName().empty() ) ){ 
+        marketplace->addToDemand( mTechData->getFuelName(), aRegionName, input, aPeriod );
     }
 
     calcEmissionsAndOutputs( aRegionName, input, primaryOutput, aGDP, aPeriod );
@@ -794,7 +819,7 @@ void technology::calcEmissionsAndOutputs( const string& aRegionName,
 
     // calculate emissions for each gas after setting input and output amounts
     for ( unsigned int i = 0; i < ghg.size(); ++i ) {
-        ghg[ i ]->calcEmission( aRegionName, fuelname, aInput, mOutputs, aGDP, aPeriod );
+        ghg[ i ]->calcEmission( aRegionName, mTechData->getFuelName(), aInput, mOutputs, aGDP, aPeriod );
     }
 }
 
@@ -834,7 +859,7 @@ void technology::adjustForCalibration( double subSectorDemand,
     if ( shrwts < 0 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Share weight is less than zero in technology " << name << endl;
+        mainLog << "Share weight is less than zero in technology " << mName << endl;
         mainLog << "Share weight was " << shrwts << "(reset to 1)" << endl;
         shrwts = 1;
     }
@@ -844,7 +869,7 @@ void technology::adjustForCalibration( double subSectorDemand,
     if ( debugChecking && shrwts > 1e6 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Large share weight in calibration for technology: " << name << endl;
+        mainLog << "Large share weight in calibration for technology: " << mName << endl;
     }
 }
 
@@ -858,7 +883,7 @@ void technology::calcEmission( const string& aGoodName, const int aPeriod ) {
         emissmap[ghg[i]->getName()] = ghg[i]->getEmission( aPeriod );
         // emissions by gas and fuel names combined
         // used to calculate emissions by fuel
-        emissmap[ghg[i]->getName() + fuelname] = ghg[i]->getEmission( aPeriod );
+        emissmap[ghg[i]->getName() + mTechData->getFuelName()] = ghg[i]->getEmission( aPeriod );
         // add sequestered amount to emissions map
         // used to calculate emissions by fuel
         emissmap[ghg[i]->getName() + "sequestGeologic"] = ghg[i]->getSequestAmountGeologic();
@@ -866,7 +891,7 @@ void technology::calcEmission( const string& aGoodName, const int aPeriod ) {
         
         // emfuelmap[ghg[i]->getName()] = ghg[i]->getEmissFuel();
         // This really should include the GHG name as well.
-        emfuelmap[fuelname] = ghg[i]->getEmissFuel( aPeriod );
+        emfuelmap[mTechData->getFuelName()] = ghg[i]->getEmissFuel( aPeriod );
     }
 }
 
@@ -874,8 +899,8 @@ void technology::calcEmission( const string& aGoodName, const int aPeriod ) {
 void technology::indemission( const vector<Emcoef_ind>& emcoef_ind )
 {
     emindmap.clear(); // clear emissions map
-    for (int i=0; i< static_cast<int>( ghg.size() ); i++) {
-        ghg[i]->calcIndirectEmission(input,fuelname, emcoef_ind );
+    for (int i= 0; i< static_cast<int>( ghg.size() ); i++) {
+        ghg[i]->calcIndirectEmission(input,mTechData->getFuelName(), emcoef_ind );
         emindmap[ghg[i]->getName()] = ghg[i]->getEmissInd();
     }
 }
@@ -886,7 +911,7 @@ void technology::indemission( const vector<Emcoef_ind>& emcoef_ind )
 * \return sector name as a string
 */
 const string& technology::getName() const {
-    return name;
+    return mName;
 }
 
 /*! \brief Returns name of the fuel consumed by this technology
@@ -895,7 +920,7 @@ const string& technology::getName() const {
 * \return fuel name as a string
 */
 const string& technology::getFuelName() const {
-    return fuelname;
+    return mTechData->getFuelName();
 }
 
 /*! \brief Returns the ratio of output to input for this technology
@@ -905,7 +930,7 @@ const string& technology::getFuelName() const {
 */
 double technology::getEfficiency( const int aPeriod ) const {
     // calculate effective efficiency
-    return mBaseEfficiency * ( 1 - effPenalty );
+    return mTechData->getEfficiency() * ( 1 - mTechData->getEffPenalty() );
 }
 
 /*! \brief Return fuel intensity (input over output) for this technology
@@ -1048,7 +1073,7 @@ double technology::getTechcost() const {
  * \return Non-energy cost for the Technology.
  */
 double technology::getNonEnergyCost( const int aPeriod ) const {
-   return mBaseNonEnergyCost * ( 1 + neCostPenalty );
+   return mTechData->getNonEnergyCost() * ( 1 + mTechData->getNECostPenalty() );
 }
 
 //! return any carbon tax and storage cost applied to technology
@@ -1056,7 +1081,7 @@ double technology::getTotalGHGCost( const string& aRegionName, const int aPeriod
     double totalValue = 0;
     // Add all value from the GHGs.
     for( unsigned int i = 0; i < ghg.size(); ++i ){
-        totalValue += ghg[i]->getGHGValue( aRegionName, fuelname, mOutputs, getEfficiency( aPeriod ), aPeriod );
+        totalValue += ghg[i]->getGHGValue( aRegionName, mTechData->getFuelName(), mOutputs, getEfficiency( aPeriod ), aPeriod );
     }
     return totalValue;
 }
@@ -1135,7 +1160,7 @@ void technology::setYear( const int aYear ) {
     if( aYear <= 0 ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Invalid year passed to set year for technology " << name << "." << endl;
+        mainLog << "Invalid year passed to set year for technology " << mName << "." << endl;
     }
     else {
         year = aYear;
@@ -1166,7 +1191,7 @@ void technology::tabulateFixedDemands( const string regionName, const int period
     const double MKT_NOT_ALL_FIXED = -1; 
     Marketplace* marketplace = scenario->getMarketplace();
 
-    IInfo* marketInfo = marketplace->getMarketInfo( fuelname, regionName, period, false );
+    IInfo* marketInfo = marketplace->getMarketInfo( mTechData->getFuelName(), regionName, period, false );
     // Fuel may not have a market, as is the case with renewable.
     if( marketInfo ){
         if ( outputFixed() ) {

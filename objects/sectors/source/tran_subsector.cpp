@@ -113,7 +113,7 @@ bool TranSubsector::isNameOfChild  ( const string& nodename ) const {
  * \author Steve Smith
  * \return A newly created technology of the specified type.
  */
-technology* TranSubsector::createChild( const string& aTechType,
+ITechnology* TranSubsector::createChild( const string& aTechType,
                                         const string& aTechName,
                                         const int aTechYear ) const
 {
@@ -147,10 +147,11 @@ void TranSubsector::toDebugXMLDerived( const int period, ostream& out, Tabs* tab
 
 void TranSubsector::completeInit( const IInfo* aSectorInfo,
                                   DependencyFinder* aDependencyFinder,
-                                  ILandAllocator* aLandAllocator )
+                                  ILandAllocator* aLandAllocator,
+                                  const GlobalTechnologyDatabase* aGlobalTechDB )
 {
     // Only call base class completeInit.
-    Subsector::completeInit( aSectorInfo, aDependencyFinder, aLandAllocator );
+    Subsector::completeInit( aSectorInfo, aDependencyFinder, aLandAllocator, aGlobalTechDB );
 }
 
 /*!

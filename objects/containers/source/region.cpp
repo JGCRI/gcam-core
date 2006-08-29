@@ -318,10 +318,11 @@ bool Region::XMLDerivedClassParse( const std::string& nodeName, const xercesc::D
 /*! Complete the initialization. Get the size of vectors, initialize AGLU,
 *   create all markets, call complete initialization 
 *  functions for nested objects, update the fuel map, and find simultaneities.
+* \param aGlobalTechDB Global Technology database.
 * \todo I think since there is one indirect ghg object for each sector, it might
 *       be better in sector. This may require deriving supply sector.
 */
-void Region::completeInit() {
+void Region::completeInit( const GlobalTechnologyDatabase* aGlobalTechDB ) {
     // Region info has no parent Info.
     mRegionInfo.reset( InfoFactory::constructInfo( 0 ) );
     mRegionInfo->setInteger( "rotationPeriod", mRotationPeriod );
@@ -367,7 +368,7 @@ void Region::completeInit() {
     // This may need to move to init calc when markets change by period.
     auto_ptr<DependencyFinder> depFinder( new DependencyFinder( scenario->getMarketplace(), name ) );
     for( SectorIterator sectorIter = supplySector.begin(); sectorIter != supplySector.end(); ++sectorIter ) {
-        ( *sectorIter )->completeInit( mRegionInfo.get(), depFinder.get(), mLandAllocator.get() );
+        ( *sectorIter )->completeInit( mRegionInfo.get(), depFinder.get(), mLandAllocator.get(), aGlobalTechDB );
         Emcoef_ind temp( ( *sectorIter )->getName() );
         emcoefInd.push_back( temp );
     }
@@ -400,7 +401,7 @@ void Region::completeInit() {
         // technologies will not add their dependencies. This is because demand
         // sectors are not currently included in the ordering. Pass null for the land allocator
         // since demand sectors cannot allocate land.
-        ( *demandSectorIter )->completeInit( mRegionInfo.get(), 0, 0 );
+        ( *demandSectorIter )->completeInit( mRegionInfo.get(), 0, 0, aGlobalTechDB );
     }
 
     for( GHGPolicyIterator ghgPolicy = mGhgPolicies.begin(); ghgPolicy != mGhgPolicies.end(); ++ghgPolicy ){
@@ -1684,19 +1685,19 @@ void Region::csvOutputFile() const {
     fileoutput3(name," "," "," ","C tax revenue","Mil90$",carbonTaxPaid);
 
     // write total emissions for region
-    for (int m=0;m<maxper;m++) {
+    for (int m= 0;m<maxper;m++) {
         temp[m] = summary[m].get_emissmap_second("CO2"); 
     }
     fileoutput3(name," "," "," ","CO2 emiss","MTC",temp);
 
     // write ag emissions for region
-    for (int m=0;m<maxper;m++) {
+    for (int m= 0;m<maxper;m++) {
         temp[m] = summary[m].get_emissmap_second( "CO2NetLandUse" ); 
     }
     fileoutput3(name," "," "," ","Net Land Use CO2 emiss","MTC",temp);
 
     // TFE for this region
-    for (int m=0;m<maxper;m++) {
+    for (int m= 0;m<maxper;m++) {
         temp[m] = getTotFinalEnergy(m);
     }
     fileoutput3(name," "," "," ","TFE","EJ",temp);
@@ -1709,14 +1710,14 @@ void Region::csvOutputFile() const {
     typedef map<string,double>:: const_iterator CI;
     map<string,double> tpemap = summary[0].getpecons();
     for (CI pmap=tpemap.begin(); pmap!=tpemap.end(); ++pmap) {
-        for (int m=0;m<maxper;m++) {
+        for (int m= 0;m<maxper;m++) {
             temp[m] = summary[m].get_pemap_second(pmap->first);
         }
         fileoutput3(name,"Pri Energy","Consumption","",pmap->first,"EJ",temp);
     }
 
     // regional Pri Energy Production Total
-    for (int m=0;m<maxper;m++) {
+    for (int m= 0;m<maxper;m++) {
         temp[m] = summary[m].get_peprodmap_second("zTotal");
     }
     fileoutput3(name,"Pri Energy","total","","zTotal","EJ",temp);
@@ -1764,7 +1765,7 @@ void Region::dbOutput( const list<string>& aPrimaryFuelList ) const {
     for( list<string>::const_iterator fuelIter = aPrimaryFuelList.begin();
         fuelIter != aPrimaryFuelList.end(); fuelIter++ )
     {
-        for ( int m=0;m<maxper;m++) {
+        for ( int m= 0;m<maxper;m++) {
             temp[m] = summary[m].get_emissfuelmap_second( *fuelIter );
             temptot[m] += temp[m];
         }
@@ -1772,7 +1773,7 @@ void Region::dbOutput( const list<string>& aPrimaryFuelList ) const {
     }
     // add amount of geologic sequestration to emissions by fuel
     // todo change hardcoded category name
-    for ( int m=0;m<maxper;m++) {
+    for ( int m= 0;m<maxper;m++) {
         // note the negative value for sequestered amount
         temp[m] = - summary[m].get_emissmap_second( "CO2sequestGeologic" );
         temptot[m] += temp[m];
@@ -1781,7 +1782,7 @@ void Region::dbOutput( const list<string>& aPrimaryFuelList ) const {
 
     // add amount of sequestration from non-energy use to emissions by fuel
     // todo change hardcoded category name
-    for ( int m=0;m<maxper;m++) {
+    for ( int m= 0;m<maxper;m++) {
         // note the negative value for sequestered amount
         temp[m] = - summary[m].get_emissmap_second( "CO2sequestNonEngy" );
         temptot[m] += temp[m];
@@ -1789,7 +1790,7 @@ void Region::dbOutput( const list<string>& aPrimaryFuelList ) const {
     dboutput4(name,"CO2 Emiss","by Fuel","non-energy use","MTC",temp);
 
     // total emissions by sector for region
-    for ( int m=0;m<maxper;m++) {
+    for ( int m= 0;m<maxper;m++) {
         temp[m] = summary[m].get_emissmap_second("CO2");
     }
     // CO2 emissions by fuel and sector totals use same value
@@ -1797,7 +1798,7 @@ void Region::dbOutput( const list<string>& aPrimaryFuelList ) const {
     dboutput4(name,"CO2 Emiss","by Sector","zTotal","MTC",temp);
 
     // total ag sector emissions by sector for region
-    for ( int m=0;m<maxper;m++) {
+    for ( int m= 0;m<maxper;m++) {
         temp[m] = summary[m].get_emissmap_second( "CO2NetLandUse" );
     }
     dboutput4(name, "CO2 Emiss", "Net Land Use", "total", "MTC", temp );
@@ -1806,14 +1807,14 @@ void Region::dbOutput( const list<string>& aPrimaryFuelList ) const {
     typedef map<string,double>:: const_iterator CI;
     map<string,double> temissmap = summary[0].getemission(); // get gases for period 0
     for (CI gmap=temissmap.begin(); gmap!=temissmap.end(); ++gmap) {
-        for ( int m=0;m<maxper;m++) {
+        for ( int m= 0;m<maxper;m++) {
             temp[m] = summary[m].get_emissmap_second(gmap->first);
         }
         dboutput4(name,"Emissions","by gas",gmap->first,"MTC",temp);
     }
 
     // regional total end-use service demand for all demand sectors
-    for ( int m=0;m<maxper;m++) {
+    for ( int m= 0;m<maxper;m++) {
         temp[m] = 0; // initialize temp to 0 for each period
         for ( unsigned int i = 0; i < demandSector.size(); i++ ) { // sum for all period and demand sectors
             temp[m] += demandSector[i]->getService( m );
@@ -1822,7 +1823,7 @@ void Region::dbOutput( const list<string>& aPrimaryFuelList ) const {
     dboutput4(name,"End-Use Service","by Sector","zTotal","Ser Unit",temp);
 
     // regional total end-use service demand without Tech Change for all demand sectors
-    for ( int m=0;m<maxper;m++) {
+    for ( int m= 0;m<maxper;m++) {
         temp[m] = 0; // initialize temp to 0 for each period
         for ( unsigned int i = 0; i < demandSector.size(); i++ ) { // sum for all period and demand sectors
             temp[m] += demandSector[i]->getServiceWoTC( m );
@@ -1831,7 +1832,7 @@ void Region::dbOutput( const list<string>& aPrimaryFuelList ) const {
     dboutput4(name,"End-Use Service","by Sector w/o TC","zTotal","Ser Unit",temp);
 
     // TFE for this region
-    for ( int m=0;m<maxper;m++) {
+    for ( int m= 0;m<maxper;m++) {
         temp[m] = getTotFinalEnergy(m);
     }
     dboutput4(name,"Final Energy Cons","total","total","EJ",temp);
@@ -1839,11 +1840,10 @@ void Region::dbOutput( const list<string>& aPrimaryFuelList ) const {
     // regional fuel consumption (primary and secondary) by fuel type
     map<string,double> tfuelmap = summary[0].getfuelcons();
     for (CI fmap=tfuelmap.begin(); fmap!=tfuelmap.end(); ++fmap) {
-        for ( int m=0;m<maxper;m++) {
+        for ( int m= 0;m<maxper;m++) {
             temp[m] = summary[m].get_fmap_second(fmap->first);
         }
         if( fmap->first == "" ){
-            cout << "Error: Empty fuel name." << endl;
             dboutput4(name,"Fuel Consumption","by fuel","No Fuelname","EJ",temp);
         }
         else {
@@ -1854,7 +1854,7 @@ void Region::dbOutput( const list<string>& aPrimaryFuelList ) const {
     // region primary energy consumption by fuel type
     map<string,double> tpemap = summary[0].getpecons();
     for (CI pmap=tpemap.begin(); pmap!=tpemap.end(); ++pmap) {
-        for ( int m=0;m<maxper;m++) {
+        for ( int m= 0;m<maxper;m++) {
             temp[m] = summary[m].get_pemap_second(pmap->first);
         }
         dboutput4(name,"Pri Energy","Consumption by fuel",pmap->first,"EJ",temp);
@@ -1863,14 +1863,14 @@ void Region::dbOutput( const list<string>& aPrimaryFuelList ) const {
     // region primary energy trade by fuel type
     tpemap = summary[0].getpetrade();
     for (CI pmap=tpemap.begin(); pmap!=tpemap.end(); ++pmap) {
-        for ( int m=0;m<maxper;m++) {
+        for ( int m= 0;m<maxper;m++) {
             temp[m] = summary[m].get_petrmap_second(pmap->first);
         }
         dboutput4(name,"Pri Energy","Trade by fuel",pmap->first,"EJ",temp);
     }
 
     // regional Pri Energy Production Total
-    for ( int m=0;m<maxper;m++) {
+    for ( int m= 0;m<maxper;m++) {
         temp[m] = summary[m].get_peprodmap_second("zTotal");
     }
     dboutput4(name,"Pri Energy","Production by Sector","zTotal","EJ",temp);
@@ -2113,10 +2113,10 @@ bool Region::ensureDemographics() const {
 void Region::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitRegion( this, aPeriod );
 
-	// Visit LandAllocator object
-	if ( mLandAllocator.get() ){
-		mLandAllocator->accept( aVisitor, aPeriod );
-	}
+    // Visit LandAllocator object
+    if ( mLandAllocator.get() ){
+        mLandAllocator->accept( aVisitor, aPeriod );
+    }
 
     // Visit demographics object.
     if( demographic.get() ){

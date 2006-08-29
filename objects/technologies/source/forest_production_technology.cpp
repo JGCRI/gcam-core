@@ -137,6 +137,7 @@ void ForestProductionTechnology::initCalc( const string& aRegionName,
 * \param aDepDefinder Regional dependency finder.
 * \param aSubsectorInfo Subsector information object.
 * \param aLandAllocator Regional land allocator.
+* \param aGlobalTechDB Global Technology database.
 * \author Josh Lurz
 * \warning Markets are not necesarilly set when completeInit is called
 * \author James Blackwood
@@ -145,8 +146,12 @@ void ForestProductionTechnology::initCalc( const string& aRegionName,
 void ForestProductionTechnology::completeInit( const string& aSectorName,
                                               DependencyFinder* aDepFinder,
                                               const IInfo* aSubsectorInfo,
-                                              ILandAllocator* aLandAllocator )
+                                              ILandAllocator* aLandAllocator,
+                                              const GlobalTechnologyDatabase* aGlobalTechDB )
 {
+    technology::completeInit( aSectorName, aDepFinder, aSubsectorInfo,
+        aLandAllocator, aGlobalTechDB );
+
     // Store away the land allocator.
     mLandAllocator = aLandAllocator;
 
@@ -157,13 +162,10 @@ void ForestProductionTechnology::completeInit( const string& aSectorName,
     // all technologies, of a given type. TODO: This is error prone if
     // technologies don't all have the same land type.
     if( year == scenario->getModeltime()->getStartYear() ){
-        mLandAllocator->addLandUsage( landType, name, ILandAllocator::eForest );
+        mLandAllocator->addLandUsage( landType, mName, ILandAllocator::eForest );
     }
 
     setCalLandValues();
-
-    technology::completeInit( aSectorName, aDepFinder, aSubsectorInfo,
-        aLandAllocator );
 }
 
 /*! \brief Sets calibrated land values to land allocator.
@@ -201,8 +203,8 @@ void ForestProductionTechnology::setCalLandValues() {
             }
 
             calLandUsed = calProductionTemp / calYieldTemp;
-            mLandAllocator->setCalLandAllocation( landType, name, calLandUsed, i, period );
-            mLandAllocator->setCalObservedYield( landType, name, calYieldTemp, i );
+            mLandAllocator->setCalLandAllocation( landType, mName, calLandUsed, i, period );
+            mLandAllocator->setCalObservedYield( landType, mName, calYieldTemp, i );
             if ( i == period ) {
                 calObservedYield = calYieldTemp;
             }
@@ -229,7 +231,7 @@ void ForestProductionTechnology::calcShare( const string& aRegionName,
                                             const int aPeriod )
 {
     double profitRate = calcProfitRate( aRegionName, getFutureMarket( aSectorName ), aPeriod );
-    mLandAllocator->setIntrinsicRate( aRegionName, landType, name, profitRate, aPeriod );
+    mLandAllocator->setIntrinsicRate( aRegionName, landType, mName, profitRate, aPeriod );
     
     // Forest production technologies are profit based, so the amount of output
     // they produce is independent of the share.
@@ -263,7 +265,7 @@ void ForestProductionTechnology::production( const string& aRegionName,
 
     // Calculating the yield for future forest.
     const int harvestPeriod = getHarvestPeriod( aPeriod );
-    mLandAllocator->calcYield( landType, name, aRegionName,
+    mLandAllocator->calcYield( landType, mName, aRegionName,
                                profitRate, harvestPeriod, aPeriod );
     
     // Add the supply of future forestry to the future market.
@@ -279,7 +281,7 @@ void ForestProductionTechnology::production( const string& aRegionName,
     // This would be wrong if the fuelname had an emissions coefficient, or if
     // there were a fuel or other input. When multiple inputs are complete there
     // should be a specific land input.
-    input = mLandAllocator->getLandAllocation( name, aPeriod );
+    input = mLandAllocator->getLandAllocation( mName, aPeriod );
     calcEmissionsAndOutputs( aRegionName, input, primaryOutput, aGDP, aPeriod );
 }
 

@@ -40,6 +40,7 @@ class Curve;
 class DependencyFinder;
 class TotalSectorEmissions;
 class IInfo;
+class GlobalTechnologyDatabase;
 /*! 
 * \ingroup Objects
 * \brief This class defines a single region of the model and contains other
@@ -79,7 +80,7 @@ public:
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
-    virtual void completeInit();
+    virtual void completeInit( const GlobalTechnologyDatabase* aGlobalTechDB );
     const std::string& getName() const;
     virtual void calc( const int period, const bool doCalibrations );
     void calibrateTFE( const int period ); 

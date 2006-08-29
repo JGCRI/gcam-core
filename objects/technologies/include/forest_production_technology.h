@@ -38,7 +38,8 @@ public:
     virtual void completeInit( const std::string& aSectorName,
                                DependencyFinder* aDepFinder,
                                const IInfo* aSubsectorIInfo,
-                               ILandAllocator* aLandAllocator );
+                               ILandAllocator* aLandAllocator,
+                               const GlobalTechnologyDatabase* aGlobalTechDB );
     
     virtual void initCalc( const std::string& aRegionName,
                            const std::string& aSectorName,

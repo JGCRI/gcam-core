@@ -45,7 +45,8 @@ public:
     
     virtual void completeInit( const IInfo* aSectorInfo,
                                DependencyFinder* aDependencyFinder,
-                               ILandAllocator* aLandAllocator );
+                               ILandAllocator* aLandAllocator,
+                               const GlobalTechnologyDatabase* aGlobalTechDB );
     
     virtual void initCalc( NationalAccount& aNationalAccount,
                            const Demographic* aDemographics,
@@ -75,7 +76,7 @@ protected:
     void setUpSubSectorMarkets();
     bool isNameOfChild  ( const std::string& nodename ) const;
 
-    virtual technology* createChild( const std::string& aTechType,
+    virtual ITechnology* createChild( const std::string& aTechType,
                                      const std::string& aTechName,
                                      const int aTechYear ) const;
 

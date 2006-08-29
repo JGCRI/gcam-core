@@ -239,7 +239,7 @@ void BuildingGenericDmdTechnology::production( const string& aRegionName,
     calcEmissionsAndOutputs( aRegionName, input, primaryOutput, aGDP, aPeriod );
 
 	// set demand for fuel in marketplace
-	marketplace->addToDemand( fuelname, aRegionName, input, aPeriod );
+	marketplace->addToDemand( mTechData->getFuelName(), aRegionName, input, aPeriod );
 
 }
 
@@ -259,8 +259,8 @@ double BuildingGenericDmdTechnology::getDemandFnPrefix( const string& regionName
 Marketplace* marketplace = scenario->getMarketplace();
 
     double priceRatio = ( period > 1 ) ? 
-        marketplace->getPrice( fuelname, regionName, period ) / 
-        marketplace->getPrice( fuelname, regionName, 1) : 1;
+        marketplace->getPrice( mTechData->getFuelName(), regionName, period ) / 
+        marketplace->getPrice( mTechData->getFuelName(), regionName, 1) : 1;
             
     double prefixValue = saturation * pow( priceRatio, priceElasticity );
     

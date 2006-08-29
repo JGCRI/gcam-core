@@ -48,6 +48,7 @@ IntermittentSubsector::IntermittentSubsector( const string regionName, const str
 * \param aSectorInfo Sector information object.
 * \param aDependencyFinder Regional dependency finder.
 * \param aLandAllocator Regional land allocator.
+* \param aGlobalTechDB Global technology database.
 * \author Marshall Wise
 * \warning markets are not necesarilly set when completeInit is called. For the
 *          intermittent subsector, use this to make sure there is a trial market
@@ -56,10 +57,11 @@ IntermittentSubsector::IntermittentSubsector( const string regionName, const str
 */
 void IntermittentSubsector::completeInit( const IInfo* aSectorInfo,
                                           DependencyFinder* aDependencyFinder,
-                                          ILandAllocator* aLandAllocator )
+                                          ILandAllocator* aLandAllocator,
+                                          const GlobalTechnologyDatabase* aGlobalTechDB )
 {
     // first call parent method
-    Subsector::completeInit( aSectorInfo, aDependencyFinder, aLandAllocator );
+    Subsector::completeInit( aSectorInfo, aDependencyFinder, aLandAllocator, aGlobalTechDB );
 
     // now set the trial market for electricity.
     // TODO: What if the electricity market hadn't been created yet?
@@ -313,7 +315,7 @@ void IntermittentSubsector::MCoutputSupplySector() const {
     Marketplace* marketplace = scenario->getMarketplace();
  
     // Intermittent Resource Subsector and Backup Capacity in GW
-    for (int m=0;m<maxper;m++) {
+    for (int m= 0;m<maxper;m++) {
         // Get resource name from fuel name of technology
 	    string resourceName = techs[resourceTechNumber][m]->getFuelName();
         // get resource capacity factor from market info

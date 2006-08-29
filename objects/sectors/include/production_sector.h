@@ -40,7 +40,8 @@ public:
     
     virtual void completeInit( const IInfo* aRegionInfo,
                                DependencyFinder* aDepFinder,
-                               ILandAllocator* aLandAllocator );
+                               ILandAllocator* aLandAllocator,
+                               const GlobalTechnologyDatabase* aGlobalTechDB );
 
     double getOutput( const int aPeriod ) const;
     

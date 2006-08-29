@@ -39,6 +39,7 @@
 #include "util/base/include/hash_map.h"
 #include "util/base/include/atom_registry.h"
 #include "emissions/include/emissions_summer.h"
+#include "technologies/include/global_technology_database.h"
 
 using namespace std;
 using namespace xercesc;
@@ -80,6 +81,9 @@ void World::XMLParse( const DOMNode* node ){
         if( nodeName == "#text" ) {
             continue;
         }
+        else if( nodeName == GlobalTechnologyDatabase::getXMLNameStatic() ) {
+            parseSingleNode( curr, globalTechDB, new GlobalTechnologyDatabase() );
+        }
         // MiniCAM regions
         else if( nodeName == Region::getXMLNameStatic() ){
             parseContainerNode( curr, regions, regionNamesToNumbers, new Region() );
@@ -113,7 +117,7 @@ void World::completeInit() {
 
     // Finish initializing all the regions.
     for( RegionIterator regionIter = regions.begin(); regionIter != regions.end(); regionIter++ ) {
-        ( *regionIter )->completeInit();
+        ( *regionIter )->completeInit( globalTechDB.get() );
     }
 
     // Initialize AgLU
@@ -182,6 +186,10 @@ void World::toInputXML( ostream& out, Tabs* tabs ) const {
 
     XMLWriteOpeningTag ( getXMLNameStatic(), out, tabs );
 
+    if( globalTechDB.get() ) {
+        globalTechDB->toInputXML( out, tabs );
+    }
+
     for( CRegionIterator i = regions.begin(); i != regions.end(); i++ ){
         ( *i )->toInputXML( out, tabs );
     }
@@ -204,6 +212,10 @@ void World::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     // write the xml for the class members.
 
     scenario->getMarketplace()->toDebugXML( period, out, tabs );
+
+    if( globalTechDB.get() ) {
+        globalTechDB->toDebugXML( period, out, tabs );
+    }
 
     // Only print debug XML information for the specified region to avoid
     // unmanagably large XML files.

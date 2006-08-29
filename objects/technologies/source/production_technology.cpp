@@ -256,7 +256,7 @@ void ProductionTechnology::initCalc( const MoreSectorInfo* aMoreSectorInfo, cons
         }
 
         if( aPeriod == BASE_PERIOD ) {
-            for(unsigned int i=0; i<input.size(); i++) {
+            for(unsigned int i= 0; i<input.size(); i++) {
                 if (input[i]->getName() == "Land") {
                     nationalAccount.addToAccount(NationalAccount::LAND_RENTS, input[i]->getDemandCurrency());
                 }

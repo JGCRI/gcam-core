@@ -15,8 +15,11 @@
 #include <vector>
 #include <map>
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/shared_ptr.hpp>
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
+#include "technologies/include/itechnology.h"
+#include "technologies/include/itechnology_info.h"
 
 // Forward declaration
 class AGHG;
@@ -28,6 +31,7 @@ class ICalData;
 class ILandAllocator;
 class Demographic;
 class IOutput;
+class GlobalTechnologyDatabase;
 
 /*! 
 * \ingroup Objects
@@ -37,33 +41,30 @@ class IOutput;
 *
 * \author Sonny Kim
 */
-class technology: public IVisitable, public IRoundTrippable
+class technology: public ITechnology
 {
     friend class XMLDBOutputter;
 private:
     void clear();
 protected:
-    std::string name; //!< technology name
-    std::string fuelname; //!< name of fuel used
+    std::string mName; //!< Name of this technolgy.
+
+    /*!
+     * \brief Flag to know whether to get a GlobalTechnology.
+     * \details Because GlobalTechnologies could be parsed after the technology we have to
+     *          wait until complete init to fetch it, however if the user decided to parse values
+     *          which would have gone in the global technology, a GenericTechnologyInfo will be
+     *          created.  The mTechData used will depend on which was parsed last.
+     */
+    bool mGetGlobalTech;
+
     int year; //!< period year or vintage
     double shrwts; //!< logit share weight
-    
-    //! Base read-in efficiency.
-    double mBaseEfficiency;
-
-    //! Base non-fuel costs read in(levelized).
-    double mBaseNonEnergyCost;
-    
-    double effPenalty; //!< energy efficiency penalty
-
-    double neCostPenalty; //!< penalty on non-fuel costs 
 
     double fuelcost; //!< fuel cost only
     double techcost; //!< total cost of technology
 
-    double fMultiplier; //!< multiplier on fuel cost or price
     double pMultiplier; //!< multiplier on total cost or price
-    double fuelPrefElasticity; //!< Fuel preference elasticity
     double lexp; //!< logit exponential
     double share; //!< technology shares
     double input; //!< total fuel input (fossil and uranium)
@@ -83,6 +84,9 @@ protected:
 
     std::map<std::string,int> ghgNameMap; //!< Map of ghg name to integer position in vector.
 
+    //! The ITechnologyInfo this class will delegate to for shared data.
+    boost::shared_ptr<ITechnologyInfo> mTechData;
+
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     bool hasNoInputOrOutput() const; // return if tech is fixed for no output
     double calcSecondaryValue( const std::string& aRegionName, const int aPeriod ) const;
@@ -97,18 +101,20 @@ protected:
                                   const double aPrimaryOutput,
                                   const GDP* aGDP,
                                   const int aPeriod );
+    void createTechData();
 public:
     technology( const std::string& aName, const int aYear );
     technology( const technology& techIn );
     technology& operator=( const technology& techIn );
-    virtual technology* clone() const;
+    virtual ITechnology* clone() const;
     virtual ~technology();
     virtual void XMLParse( const xercesc::DOMNode* tempnode ); // initialize technology with xml data
     
     virtual void completeInit( const std::string& aSectorName,
                                DependencyFinder* aDepFinder,
                                const IInfo* aSubsectorIInfo,
-                               ILandAllocator* aLandAllocator );
+                               ILandAllocator* aLandAllocator,
+                               const GlobalTechnologyDatabase* aGlobalTechDB );
     
     virtual void initCalc( const std::string& aRegionName,
                            const std::string& aSectorName,

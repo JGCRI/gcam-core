@@ -160,12 +160,14 @@ void SupplySector::supply( const GDP* aGDP, const int aPeriod ) {
 /*! \brief Complete the initialization of the supply sector.
 * \param aRegionInfo Regional information object.
 * \param aDependencyFinder Regional dependency finder.
+* \param aGlobalTechDB Global technology database.
 */
 void SupplySector::completeInit( const IInfo* aRegionInfo,
                                  DependencyFinder* aDependencyFinder,
-                                 ILandAllocator* aLandAllocator )
+                                 ILandAllocator* aLandAllocator,
+                                 const GlobalTechnologyDatabase* aGlobalTechDB )
 {
-    Sector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator );
+    Sector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator, aGlobalTechDB );
     setMarket();
 }
 

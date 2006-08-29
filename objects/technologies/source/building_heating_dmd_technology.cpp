@@ -105,8 +105,8 @@ double BuildingHeatingDmdTechnology::getDemandFnPrefix( const string& regionName
 	Marketplace* marketplace = scenario->getMarketplace();
 
     double priceRatio = ( period > 1 ) ? 
-        marketplace->getPrice( fuelname, regionName, period ) / 
-        marketplace->getPrice( fuelname, regionName, 1 ) : 1;
+        marketplace->getPrice( mTechData->getFuelName(), regionName, period ) / 
+        marketplace->getPrice( mTechData->getFuelName(), regionName, 1 ) : 1;
     
     double prefixValue = saturation * aveInsulation * floorToSurfaceArea * 
                          heatingDegreeDays * pow( priceRatio, priceElasticity );

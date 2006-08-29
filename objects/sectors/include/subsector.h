@@ -22,7 +22,7 @@
 
 // Forward declarations
 class Summary;
-class technology;
+class ITechnology;
 class Emcoef_ind;
 class GDP;
 class IInfo;
@@ -37,6 +37,7 @@ class IDistributor;
 class Tabs;
 class ILandAllocator;
 class Demographics;
+class GlobalTechnologyDatabase;
 
 /*! 
 * \ingroup Objects
@@ -66,7 +67,7 @@ protected:
     int techScaleYear; //!< year to scale technology share weights to after calibration
     double basesharewt; //! subsector base year consumption share weight
     std::auto_ptr<IInfo> mSubsectorInfo; //!< The subsector's information store.
-    std::vector<std::vector<technology*> > techs; //!< vector of technology by period
+    std::vector<std::vector<ITechnology*> > techs; //!< vector of technology by period
 
     std::vector<double> capLimit; //!< subsector capacity limit
     std::vector<double> fixedShare; //!< share of this sub-sector that is fixed capacity -- set in sector
@@ -90,7 +91,7 @@ protected:
     typedef std::vector<BaseTechnology*>::iterator BaseTechIterator;
     void shareWeightScale( const int pmer ); // Consistantly adjust share weights
     void shareWeightLinearInterpFn( const int beginPeriod,  const int endPeriod );
-    bool techHasInput( const technology* thisTech, const std::string& goodName ) const;
+    bool techHasInput( const ITechnology* thisTech, const std::string& goodName ) const;
     virtual void MCDerivedClassOutput() const;
     virtual void csvDerivedClassOutput() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
@@ -103,17 +104,18 @@ protected:
     void parseBaseTechHelper( const xercesc::DOMNode* curr, BaseTechnology* newTech );
     virtual bool isNameOfChild  ( const std::string& nodename ) const;
     
-    virtual technology* createChild( const std::string& aTechType,
+    virtual ITechnology* createChild( const std::string& aTechType,
                                      const std::string& aTechName,
                                      const int aTechYear ) const;
    
-    static bool initializeTechVector( std::vector<technology*>& aTechVector, 
+    static bool initializeTechVector( std::vector<ITechnology*>& aTechVector, 
                                       const std::string& aSectorName,
                                       DependencyFinder* aDependencyFinder,
                                       const IInfo* aSubsecInfo,
-                                      ILandAllocator* aLandAllocator );
+                                      ILandAllocator* aLandAllocator,
+                                      const GlobalTechnologyDatabase* aGlobalTechDB );
 
-    static const std::string findTechName( const std::vector<technology*>& aTechVector );
+    static const std::string findTechName( const std::vector<ITechnology*>& aTechVector );
 public:
     Subsector( const std::string regionName, const std::string sectorName );
     virtual ~Subsector();
@@ -123,7 +125,8 @@ public:
 
     virtual void completeInit( const IInfo* aSectorInfo,
                                DependencyFinder* aDependencyFinder,
-                               ILandAllocator* aLandAllocator );
+                               ILandAllocator* aLandAllocator,
+                               const GlobalTechnologyDatabase* aGlobalTechDB );
     
     virtual void initCalc( NationalAccount& aNationalAccount,
                            const Demographic* aDemographics,

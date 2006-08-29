@@ -30,7 +30,8 @@ public:
     
     virtual void completeInit( const IInfo* aSectorInfo,
                                DependencyFinder* aDependencyFinder,
-                               ILandAllocator* aLandAllocator );
+                               ILandAllocator* aLandAllocator,
+                               const GlobalTechnologyDatabase* aGlobalTechDB );
     
     virtual void initCalc( NationalAccount& aNationalAccount,
                            const Demographic* aDemographics,

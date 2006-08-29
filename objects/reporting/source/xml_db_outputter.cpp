@@ -462,7 +462,7 @@ void XMLDBOutputter::startVisitTechnology( const technology* aTechnology,
                                            const int aPeriod )
 {
     // Store the fuel name so the GHG can write it out with emissions.
-    mCurrentFuel = aTechnology->fuelname;
+    mCurrentFuel = aTechnology->mTechData->getFuelName();
     mCurrentTechYear = aTechnology->year;
 
     // Write the opening technology tag and the type of the base class.
@@ -476,7 +476,7 @@ void XMLDBOutputter::startVisitTechnology( const technology* aTechnology,
     // For writing the input add an attribute which specifies the fuel.
     {
         map<string, string> attrs;
-        attrs[ "fuel-name" ] = aTechnology->fuelname;
+        attrs[ "fuel-name" ] = aTechnology->mTechData->getFuelName();
         XMLWriteElementWithAttributes( aTechnology->input, "input", mBuffer,
                                        mTabs.get(), attrs );
     }

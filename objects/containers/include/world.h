@@ -26,6 +26,7 @@ class Curve;
 class CalcCounter;
 class IClimateModel;
 class GHGPolicy;
+class GlobalTechnologyDatabase;
 
 namespace objects {
     class Atom;
@@ -103,6 +104,7 @@ private:
     std::vector<Region*> regions; //!< array of pointers to Region objects
     std::auto_ptr<IClimateModel> mClimateModel; //!< The climate model.
     bool doCalibrations; //!< turn on or off calibration routines
+    std::auto_ptr<GlobalTechnologyDatabase> globalTechDB; //!< The Global Technology Database.
 
     //! Reference to an object which maintains a count of the number of time
     //! calc() has been called.

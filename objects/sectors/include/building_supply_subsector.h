@@ -35,7 +35,7 @@ protected:
     virtual const std::string& getXMLName() const;
     bool isNameOfChild  ( const std::string& nodename ) const;
 
-    virtual technology* createChild( const std::string& aTechType,
+    virtual ITechnology* createChild( const std::string& aTechType,
                                      const std::string& aTechName,
                                      const int aTechYear ) const;
 

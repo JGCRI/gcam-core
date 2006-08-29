@@ -28,7 +28,6 @@ FoodProductionTechnology::FoodProductionTechnology( const string& aName, const i
 :technology( aName, aYear ){
     mLandAllocator = 0;
     variableCost = 2; // Need a better default value for this (0 is probably ok, with a warning to logfile).
-    fuelname = "none";
     calLandUsed = -1;
     calProduction = -1;
     calYield = -1;
@@ -175,6 +174,7 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
                                          const int aPeriod )
 {
     technology::initCalc( aRegionName, aSectorName, aSubsectorInfo, aDemographics, aPeriod );
+
     const Modeltime* modeltime = scenario->getModeltime();
 
     // Only setup calibration information if this is the initial year of the
@@ -185,7 +185,7 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
 
     // Only apply technical change if the year is past the base year.
     if( year > modeltime->getper_to_yr( 1 ) ){
-        mLandAllocator->applyAgProdChange( landType, name, agProdChange, aPeriod );
+        mLandAllocator->applyAgProdChange( landType, mName, agProdChange, aPeriod );
     }
 
     // TODO: Use a better method of passing forward calibration information.
@@ -218,7 +218,7 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::DEBUG );
             mainLog << "Read in value for calPrice in " << aRegionName << " "
-                    << name << " is too low by " << fabs( calVarCost ) << endl;
+                    << mName << " is too low by " << fabs( calVarCost ) << endl;
         }
     }
     else {
@@ -240,7 +240,7 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
 
     // Set the above and below ground carbon for this technology.
     // TODO: This may need to be moved if the carbon content is calculated dynamically.
-    mLandAllocator->setCarbonContent( landType, name, mAboveGroundCarbon, mBelowGroundCarbon, aPeriod );
+    mLandAllocator->setCarbonContent( landType, mName, mAboveGroundCarbon, mBelowGroundCarbon, aPeriod );
 }
 
 /*!
@@ -250,14 +250,19 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
 * \param aDepDefinder Regional dependency finder.
 * \param aSubsectorInfo Subsector information object.
 * \param aLandAllocator Regional land allocator.
+* \param aGlobalTechDB Global technology database.
 * \author James Blackwood
 * \warning Markets are not necesarilly set when completeInit is called
 */
 void FoodProductionTechnology::completeInit( const string& aSectorName,
                                              DependencyFinder* aDepFinder,
                                              const IInfo* aSubsectorInfo,
-                                             ILandAllocator* aLandAllocator )
+                                             ILandAllocator* aLandAllocator,
+                                             const GlobalTechnologyDatabase* aGlobalTechDB )
 {
+    technology::completeInit( aSectorName, aDepFinder, aSubsectorInfo,
+                              aLandAllocator, aGlobalTechDB );
+
     // Store away the land allocator.
     mLandAllocator = aLandAllocator;
 
@@ -265,7 +270,7 @@ void FoodProductionTechnology::completeInit( const string& aSectorName,
     // all technologies, of a given type. TODO: This is error prone if
     // technologies don't all have the same land type.
     if( year == scenario->getModeltime()->getStartYear() ){
-        mLandAllocator->addLandUsage( landType, name, ILandAllocator::eCrop );
+        mLandAllocator->addLandUsage( landType, mName, ILandAllocator::eCrop );
     }
 
     const int period = scenario->getModeltime()->getyr_to_per( year );
@@ -281,15 +286,12 @@ void FoodProductionTechnology::completeInit( const string& aSectorName,
         }
 
         // Want to pass in yied in units of GCal/kHa
-        mLandAllocator->setCalLandAllocation( landType, name, calLandUsed, period, period );
-        mLandAllocator->setCalObservedYield( landType, name, calObservedYield, period );
+        mLandAllocator->setCalLandAllocation( landType, mName, calLandUsed, period, period );
+        mLandAllocator->setCalObservedYield( landType, mName, calObservedYield, period );
     } 
     else if ( calYield != -1 ) {
-        mLandAllocator->setCalObservedYield( landType, name, calYield, period );
+        mLandAllocator->setCalObservedYield( landType, mName, calYield, period );
     }
-
-    technology::completeInit( aSectorName, aDepFinder, aSubsectorInfo,
-                              aLandAllocator );
 }
 
 /*!
@@ -314,7 +316,7 @@ void FoodProductionTechnology::calcShare( const string& aRegionName,
     // Passing in rate as $/GCal and setIntrinsicRate will set it to  $/Ha.
     double profitRate = calcProfitRate( aRegionName, aSectorName, aPeriod );
 
-    mLandAllocator->setIntrinsicRate( aRegionName, landType, name, profitRate, aPeriod );
+    mLandAllocator->setIntrinsicRate( aRegionName, landType, mName, profitRate, aPeriod );
     
     // Food production technologies are profit based, so the amount of output
     // they produce is independent of the share.
@@ -361,7 +363,7 @@ void FoodProductionTechnology::production( const string& aRegionName,
     double profitRate = calcProfitRate( aRegionName, aSectorName, aPeriod );
 
     // Calculate the yield.
-    mLandAllocator->calcYield( landType, name, aRegionName, 
+    mLandAllocator->calcYield( landType, mName, aRegionName, 
                                profitRate, aPeriod, aPeriod );
 
     // Calculate the output of the technology.
@@ -369,7 +371,7 @@ void FoodProductionTechnology::production( const string& aRegionName,
 
     // This output needs to be in EJ instead of GJ.
     // TODO: Fix this once units framework is complete.
-    if( name == "biomass" ) {
+    if( mName == "biomass" ) {
         primaryOutput /= 1e9;
     }
 
@@ -377,7 +379,7 @@ void FoodProductionTechnology::production( const string& aRegionName,
     // This would be wrong if the fuelname had an emissions coefficient, or if
     // there were a fuel or other input. When multiple inputs are complete there
     // should be a specific land input.
-    input = mLandAllocator->getLandAllocation( name, aPeriod );
+    input = mLandAllocator->getLandAllocation( mName, aPeriod );
     calcEmissionsAndOutputs( aRegionName, input, primaryOutput, aGDP, aPeriod );
 }
 
@@ -430,14 +432,14 @@ double FoodProductionTechnology::calcSupply( const string& aRegionName,
                                              const string& aProductName,
                                              const int aPeriod ) const
 {
-    double yield = mLandAllocator->getYield( landType, name, aPeriod ); 
-    double landAllocation = mLandAllocator->getLandAllocation( name, aPeriod );
+    double yield = mLandAllocator->getYield( landType, mName, aPeriod ); 
+    double landAllocation = mLandAllocator->getLandAllocation( mName, aPeriod );
     // Check that if yield is zero the land allocation is zero.
     // TODO: Determine why a small number is too large.
     if( yield < util::getSmallNumber() && landAllocation > 0.1 ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "Zero production of " << aProductName << " by technology " << name
+        mainLog << "Zero production of " << aProductName << " by technology " << mName
                 << " in region " << aRegionName << " with a positive land allocation of "
                 << landAllocation << "." << endl;
     }

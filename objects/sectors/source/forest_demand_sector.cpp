@@ -111,9 +111,10 @@ void ForestDemandSector::initCalc( NationalAccount& aNationalAccount, const Demo
 */
 void ForestDemandSector::completeInit( const IInfo* aRegionInfo,
                                        DependencyFinder* aDependencyFinder,
-                                       ILandAllocator* aLandAllocator )
+                                       ILandAllocator* aLandAllocator,
+                                       const GlobalTechnologyDatabase* aGlobalTechDB )
 {
-    DemandSector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator );
+    DemandSector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator, aGlobalTechDB );
 	rotationPeriod = aRegionInfo->getInteger( "rotationPeriod", true );
 }
 

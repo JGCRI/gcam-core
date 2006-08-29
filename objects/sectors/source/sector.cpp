@@ -186,17 +186,18 @@ void Sector::XMLParse( const DOMNode* node ){
 * \param aRegionInfo Regional information object.
 * \param aDepFinder Regional dependency finder.
 * \param aLandAllocator Regional land allocator.
+* \param aGlobalTechDB Global Technology database.
 * \warning markets are not necesarilly set when completeInit is called
 */
 void Sector::completeInit( const IInfo* aRegionInfo, DependencyFinder* aDepFinder, 
-                           ILandAllocator* aLandAllocator )
+                           ILandAllocator* aLandAllocator, const GlobalTechnologyDatabase* aGlobalTechDB )
 {
     // Allocate the sector info.
     mSectorInfo.reset( InfoFactory::constructInfo( aRegionInfo ) );
 
     // Complete the subsector initializations. 
     for( vector<Subsector*>::iterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
-        ( *subSecIter )->completeInit( mSectorInfo.get(), aDepFinder, aLandAllocator );
+        ( *subSecIter )->completeInit( mSectorInfo.get(), aDepFinder, aLandAllocator, aGlobalTechDB );
     }
 }
 
@@ -378,7 +379,7 @@ void Sector::normalizeShareWeights( const int period ) {
                 mainLog.setLevel( ILogger::ERROR );
                 mainLog << "ERROR: in sector " << name << " Shareweights sum to zero." << endl;
             } else {
-                for ( int unsigned i=0; i< subsec.size(); i++ ) {
+                for ( int unsigned i= 0; i< subsec.size(); i++ ) {
                     subsec[ i ]->scaleShareWeight( numberNonzeroSubSectors / shareWeightTotal, period - 1 );
                 }
                 ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
@@ -1032,7 +1033,7 @@ void Sector::dbOutput() const {
     typedef map<string,double>:: const_iterator CI;
     map<string,double> tfuelmap = summary[0].getfuelcons();
     for (CI fmap=tfuelmap.begin(); fmap!=tfuelmap.end(); ++fmap) {
-        for (int m=0;m<maxper;m++) {
+        for (int m= 0;m<maxper;m++) {
             temp[m] = summary[m].get_fmap_second(fmap->first);
         }
         if( fmap->first == "" ){
@@ -1046,32 +1047,32 @@ void Sector::dbOutput() const {
     // Sector emissions for all greenhouse gases
     map<string,double> temissmap = summary[0].getemission(); // get gases for per 0
     for (CI gmap=temissmap.begin(); gmap!=temissmap.end(); ++gmap) {
-        for (int m=0;m<maxper;m++) {
+        for (int m= 0;m<maxper;m++) {
             temp[m] = summary[m].get_emissmap_second(gmap->first);
         }
         dboutput4(regionName,"Emissions","Sec-"+name,gmap->first,"MTC",temp);
     }
     // CO2 emissions by Sector
-    for ( int m=0;m<maxper;m++) {
+    for ( int m= 0;m<maxper;m++) {
         temp[m] = summary[m].get_emissmap_second("CO2");
     }
     dboutput4( regionName,"CO2 Emiss","by Sector",name,"MTC",temp);
     dboutput4( regionName,"CO2 Emiss",name,"zTotal","MTC",temp);
 
     // CO2 indirect emissions by Sector
-    for ( int m=0;m<maxper;m++) {
+    for ( int m= 0;m<maxper;m++) {
         temp[m] = summary[m].get_emindmap_second("CO2");
     }
     dboutput4( regionName,"CO2 Emiss(ind)",name,"zTotal","MTC",temp);
 
     // Sector price
-    for ( int m=0;m<maxper;m++) {
+    for ( int m= 0;m<maxper;m++) {
         temp[m] = getPrice( m );
     }
     dboutput4( regionName,"Price",name,"zSectorAvg","$/GJ", temp );
     // for electricity Sector only
     if (name == "electricity") {
-        for ( int m=0;m<maxper;m++) {
+        for ( int m= 0;m<maxper;m++) {
             temp[m] = getPrice( m ) * 2.212 * 0.36;
         }
         dboutput4( regionName,"Price","electricity C/kWh","zSectorAvg","90C/kWh",temp);

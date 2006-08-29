@@ -142,13 +142,15 @@ void ProductionSector::toDebugXMLDerived( const int period, std::ostream& out, T
 * \param aRegionInfo Regional information object.
 * \param aDependencyFinder Regional dependency finder.
 * \param aLandAllocator Regional land allocator.
+* \param aGlobalTechDB Global technology database.
 */
 void ProductionSector::completeInit( const IInfo* aRegionInfo,
                                      DependencyFinder* aDependencyFinder,
-                                     ILandAllocator* aLandAllocator )
+                                     ILandAllocator* aLandAllocator,
+                                     const GlobalTechnologyDatabase* aGlobalTechDB )
 {
     // Call parent class complete init.
-    Sector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator );
+    Sector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator, aGlobalTechDB );
 	// Set the market.
 	setMarket();
     // Initialize the investment object to the default if one has not been read in.

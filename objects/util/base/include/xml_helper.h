@@ -910,6 +910,74 @@ void parseContainerNode( const xercesc::DOMNode* aNode,
     }
 }
 
+/*! \brief Function which positions a node containing children within a vector
+*          of its parent, and if successful parses the new node.
+* \details This function will look at the name and delete attributes of the node
+*          to determine if the model node which corresponds to the input should
+*          be added, modified, or deleted. After it determines this it will make
+*          this change to the data structure passed in.
+* \param aNode The node pointing to the container node in the XML tree. 
+* \param aContainerSet The vector of objects of the type pointed to by node.
+* \param aNewObject An object to use if the xml node is unique. This node is
+*        deleted if it is not needed.
+* \param aIDAttr Name of the attribute containing the unique identifier for the
+*        node. Defaults to "name".
+*/
+template<class T, class U>
+void parseContainerNode( const xercesc::DOMNode* aNode,
+                         std::vector<T>& aContainerSet, 
+                         U& aNewObject,
+                         const std::string& aObjName = XMLHelper<std::string>::getAttr( aNode, XMLHelper<std::string>::name() ) )
+{
+    assert( aNode );
+    // Force U* to implement IParsable. TODO: Activate this check when all
+    // elements of the model properly implement the interface. IParsable*
+    // parsable = aNewNode;
+
+    // First determine if the node exists. 
+    
+    // Search the insert to vector for an item with the name.
+    typename std::vector<T>::iterator iter = util::searchForValue( aContainerSet, aObjName );
+   
+    // Determine if we should be deleting a node. 
+    bool shouldDelete = XMLHelper<bool>::getAttr( aNode, "delete" );
+    
+    // Check if the node already exists in the model tree. 
+    if( iter != aContainerSet.end() ){     
+        // Modify or delete the node based on the contents of the delete attribute.
+        if( shouldDelete ) {
+            // Perform deletion.
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::DEBUG );
+            mainLog << "Deleting node: " << aObjName << std::endl;
+
+            // Remove the pointer from the vector. 
+            aContainerSet.erase( iter );
+        }
+        // Parse the XML data into the existing node to modify it.
+        else {
+           (*iter)->XMLParse( aNode );
+        }
+    } 
+    // The node does not already exist.
+    else {
+        if( shouldDelete ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Could not delete node " << aObjName << " as it does not exist." << std::endl;
+        } 
+        else if( XMLHelper<bool>::getAttr( aNode, "nocreate" ) ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::NOTICE );
+            mainLog << "Did not create node " << aObjName << " as the nocreate input flag was set." << std::endl;
+        }
+        else {
+            aNewObject->XMLParse( aNode );
+            aContainerSet.push_back( aNewObject );
+        }
+    }
+}
+
 /*! \brief Function which parses a node containing model-children, such as a region, and determines what to do with it.
 * \details This function will look at the name and delete attributes of the node to determine if the model node which 
 * corresponds to the input should be added, modified, or deleted. After it determines this it will make this change 

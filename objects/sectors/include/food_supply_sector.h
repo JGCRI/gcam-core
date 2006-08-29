@@ -30,7 +30,8 @@ public:
     static const std::string& getXMLNameStatic();
     virtual void completeInit( const IInfo* aRegionInfo,
                                DependencyFinder* aDepFinder,
-                               ILandAllocator* aLandAllocator );
+                               ILandAllocator* aLandAllocator,
+                               const GlobalTechnologyDatabase* aGlobalTechDB );
     virtual double getPrice( const int aPeriod ) const;
     virtual void supply( const GDP* aGDP, const int aPeriod );
 protected:

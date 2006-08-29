@@ -50,7 +50,7 @@ bool ForestSupplySubsector::isNameOfChild( const string& nodename ) const {
  * \author Steve Smith
  * \return A newly created technology of the specified type.
  */
-technology* ForestSupplySubsector::createChild( const string& aTechType,
+ITechnology* ForestSupplySubsector::createChild( const string& aTechType,
                                                 const string& aTechName,
                                                 const int aTechYear ) const
 {

@@ -100,7 +100,7 @@ void TranTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( mIntensity, "intensity", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( loadFactor, "loadFactor", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( mTechnicalChange, "techchange", out, tabs, 0.0 );
-}	
+}   
 
 //! Write object to debugging xml output stream.
 void TranTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const { 
@@ -109,7 +109,7 @@ void TranTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* ta
     XMLWriteElement( getCumulativeTechnicalChange( period ), "techChangeCumm", out, tabs );
     XMLWriteElement( getOutput( period ) / loadFactor, "vehicleOutput", out, tabs );
     XMLWriteElement( mTechnicalChange, "techchange", out, tabs );
-}	
+}   
 
 //! Perform initializations that only need to be done once per period.
 /*! Check to see if illegal values have been read in. This avoids serious errors
@@ -128,14 +128,14 @@ void TranTechnology::initCalc( const string& aRegionName,
         loadFactor = 1;
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "LoadFactor was zero in technology: " << name << ". Reset to 1." << endl;
+        mainLog << "LoadFactor was zero in technology: " << mName << ". Reset to 1." << endl;
     }
     
     if ( util::isEqual( mIntensity, 0.0 ) ) {
         mIntensity = 1;
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Intensity was zero in technology: " << name << ". Reset to 1." << endl;
+        mainLog << "Intensity was zero in technology: " << mName << ". Reset to 1." << endl;
     }
 }
 
@@ -147,13 +147,13 @@ void TranTechnology::calcCost( const string& regionName, const string& sectorNam
     const double JPERBTU = 1055; // 1055 Joules per BTU
 
     Marketplace* marketplace = scenario->getMarketplace();
-    double fuelprice = marketplace->getPrice(fuelname,regionName,per);
+    double fuelprice = marketplace->getPrice(mTechData->getFuelName(),regionName,per);
     
     /*! \invariant The market price of the fuel must be valid. */
     assert( fuelprice != Marketplace::NO_MARKET_PRICE );
     
     double secondaryValue = calcSecondaryValue( regionName, per );
-    fuelcost = ( (fuelprice * fMultiplier) - secondaryValue ) * mIntensity / getCumulativeTechnicalChange( per )
+    fuelcost = ( (fuelprice * mTechData->getFMultiplier()) - secondaryValue ) * mIntensity / getCumulativeTechnicalChange( per )
              * JPERBTU/(1.0E9)*CVRT90;
     techcost = ( fuelcost + getNonEnergyCost( per ) ) * pMultiplier;
     
@@ -191,12 +191,12 @@ void TranTechnology::production(const string& regionName,const string& prodName,
     if (input < 0) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Input value < 0 for TranTechnology " << name << endl;
+        mainLog << "Input value < 0 for TranTechnology " << mName << endl;
     }
     
     Marketplace* marketplace = scenario->getMarketplace();    
     // set demand for fuel in marketplace
-    marketplace->addToDemand(fuelname,regionName,input,per);
+    marketplace->addToDemand(mTechData->getFuelName(),regionName,input,per);
 
     calcEmissionsAndOutputs( regionName, input, primaryOutput, gdp, per );  
 }

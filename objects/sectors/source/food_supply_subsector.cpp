@@ -49,7 +49,7 @@ bool FoodSupplySubsector::isNameOfChild( const string& nodename ) const {
  * \author Steve Smith
  * \return A newly created technology of the specified type.
  */
-technology* FoodSupplySubsector::createChild( const string& aTechType,
+ITechnology* FoodSupplySubsector::createChild( const string& aTechType,
                                               const string& aTechName,
                                               const int aTechYear ) const
 {
@@ -99,7 +99,7 @@ void FoodSupplySubsector::MCDerivedClassOutput() const {
     // do for all technologies in the Subsector
     for( unsigned int i = 0; i < techs.size(); ++i ){
         // technology fuel cost
-        for ( int m=0;m< maxper;m++) {
+        for ( int m= 0;m< maxper;m++) {
             temp[m] = techs[i][m]->getFuelcost();
         }
         dboutput4( regionName,"Price",sectorName+" "+name+" Variable Cost",techs[i][ 0 ]->getName(),"75$/Ser",temp);

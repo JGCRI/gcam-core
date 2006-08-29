@@ -51,16 +51,16 @@ public:
                            const int aPeriod );
 
 protected:
-	//! Vehicle load factor.
+    //! Vehicle load factor.
     double loadFactor;
 
-	//! Annual technical change rate.
-	double mTechnicalChange;
-	
+    //! Annual technical change rate.
+    double mTechnicalChange;
+    
     //! Vehicle intensity.
     double mIntensity;
 
-	double getCumulativeTechnicalChange( const int aPeriod ) const;
+    double getCumulativeTechnicalChange( const int aPeriod ) const;
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
