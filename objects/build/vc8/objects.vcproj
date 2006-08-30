@@ -678,6 +678,18 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\technologies\source\generic_technology_info.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\global_technology.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\global_technology_database.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\technologies\source\primary_output.cpp"
 					>
 				</File>
@@ -1955,6 +1967,18 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\technologies\include\generic_technology_info.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\global_technology.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\global_technology_database.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\technologies\include\ical_data.h"
 					>
 				</File>
@@ -1964,6 +1988,14 @@
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\ishutdown_decider.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\itechnology.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\itechnology_info.h"
 					>
 				</File>
 				<File
