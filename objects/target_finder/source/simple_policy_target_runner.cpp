@@ -215,8 +215,10 @@ void SimplePolicyTargetRunner::printOutput( Timer& timer, const bool aCloseDB ) 
     std::auto_ptr<Tabs> tabs( new Tabs );
     mInterpolatedCurve->toInputXMLDerived( *out, tabs.get() );
 
+    static const bool printDB = Configuration::getInstance()->getBool( "write-access-db", true );
+    
     // Close the database.
-    if( aCloseDB ){
+    if( printDB && aCloseDB ){
         createMCvarid();
         closeDB();
         outFile.close();

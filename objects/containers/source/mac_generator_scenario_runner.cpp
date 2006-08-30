@@ -93,8 +93,10 @@ void MACGeneratorScenarioRunner::printOutput( Timer& timer, const bool aCloseDB 
         mPolicyCostCalculator->printOutput();
     }
     
+    static const bool printDB = Configuration::getInstance()->getBool( "write-access-db", true );
+    
     // Close the database.
-    if( aCloseDB ){
+    if( printDB && aCloseDB ){
         createMCvarid();
         closeDB();
         outFile.close();

@@ -315,7 +315,8 @@ void PolicyTargetRunner::printOutput( Timer& aTimer, const bool aCloseDB ) const
     }
     
     // Close the database.
-    if( aCloseDB ){
+    static const bool printDB = Configuration::getInstance()->getBool( "write-access-db", true );
+    if( printDB && aCloseDB ){
         createMCvarid();
         closeDB();
         outFile.close();

@@ -168,19 +168,25 @@ void SingleScenarioRunner::printOutput( Timer& aTimer, const bool aCloseDB ) con
     // Write csv file output
     mScenario->writeOutputFiles();
 
-    // Perform the database output. 
-	// Open MS Access database
-    openDB();
-	// create main database output table before calling output routines
-    createDBout();
-    mScenario->dbOutput();
+    static const bool printDB = Configuration::getInstance()->getBool( "write-access-db", true );
+    if( printDB ){
+        // Perform the database output. 
+	    // Open MS Access database
+        openDB();
+	    // create main database output table before calling output routines
+        createDBout();
+        mScenario->dbOutput();
+
+        if( aCloseDB ){
+            createMCvarid(); // create MC variable id's     
+            // close MS Access database
+            closeDB();
+        }
+    }
 
     if( aCloseDB ){
-        createMCvarid(); // create MC variable id's     
-        // close MS Access database
-        closeDB();
         outFile.close();
-   }
+    }
 
      // Print the timestamps.
     aTimer.stop();

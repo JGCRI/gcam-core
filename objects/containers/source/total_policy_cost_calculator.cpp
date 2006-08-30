@@ -305,9 +305,13 @@ void TotalPolicyCostCalculator::printOutput() const {
     XMLDBOutputter::appendData( xmlString, UPDATE_LOCATION );
 #endif
 
+    static const bool printDB = Configuration::getInstance()->getBool( "write-access-db", true );
+
     // Write to the database.
-    writeToDB();
-    
+    if( printDB ){
+        writeToDB();
+    }
+
     // Write to CSV file
     writeToCSV();
 }
