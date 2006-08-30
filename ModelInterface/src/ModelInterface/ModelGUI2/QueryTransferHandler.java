@@ -125,8 +125,11 @@ public class QueryTransferHandler extends TransferHandler {
 			}
 		} catch(UnsupportedFlavorException ufe) {
 			ufe.printStackTrace();
+			// TODO: GUI exception
+			// all though not sure if I will get this one
 			return false;
 		} catch(IOException ioe) {
+			// TODO: GUI exception
 			ioe.printStackTrace();
 			return false;
 		}
@@ -195,12 +198,15 @@ public class QueryTransferHandler extends TransferHandler {
 			TreePath[] paths;
 			if(dragPaths != null) {
 				paths = dragPaths;
+				dragPaths = null;
 			} else {
 				paths = ((JTree)comp).getSelectionPaths();
 			}
 			for(TreePath path : paths) {
 				qt.remove(path);
 			}
+		} else if(action == NONE) {
+			dragPaths = null;
 		}
 	}
 	public int getSourceActions(JComponent c) {
@@ -223,7 +229,7 @@ public class QueryTransferHandler extends TransferHandler {
 				}
 				data = ((QueryTreeModel)qt.getModel()).createQueryGroup("MultipleQuerySelection", dataGrouped);
 			}
-			transFlavors = new DataFlavor[5];
+			transFlavors = new DataFlavor[4];
 			if(data instanceof QueryGenerator) {
 				transFlavors[0] = localQueryGeneratorFlavor;
 				transFlavors[1] = serialQueryGeneratorFlavor;
@@ -233,7 +239,7 @@ public class QueryTransferHandler extends TransferHandler {
 			}
 			transFlavors[2] = DataFlavor.stringFlavor;
 			transFlavors[3] = localNodeFlavor;
-			transFlavors[4] = serialNodeFlavor;
+			//transFlavors[4] = serialNodeFlavor;
 		}
 		public DataFlavor[] getTransferDataFlavors() {
 			return transFlavors;

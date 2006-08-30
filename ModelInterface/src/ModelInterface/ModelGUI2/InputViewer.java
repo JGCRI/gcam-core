@@ -285,6 +285,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 				TreeSelectionModel.SINGLE_TREE_SELECTION);
 		jtree.setShowsRootHandles(true);
 		jtree.getModel().addTreeModelListener(new MyTreeModelListener());
+		jtree.setCellEditor( new DOMTreeCellEditor());
 
 		//listen for right click on the tree
 		jtree.addMouseListener(new MouseAdapter() {
@@ -1430,7 +1431,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			System.out.println("Got Exception while creating XML document: "
 					+ e);
 			JOptionPane.showMessageDialog(parentFrame,
-					"Exception while creating XML document\n" + e, "Exception",
+					"Exception while creating XML document\n" + e.getMessage(), "Exception",
 					JOptionPane.ERROR_MESSAGE);
 		}
 		return null;
