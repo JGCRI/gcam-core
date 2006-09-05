@@ -14,7 +14,7 @@
 * into one xml input file rather than running the model (mergeFilesOnly).
 * 
 * If the model is to be run, it is triggered by the ScenarioRunner class object, which 
-* calls runScenario() to trigger running of the complete model for all periods.
+* calls runScenarios() to trigger running of the complete model for all periods.
 *
 * \author Sonny Kim
 * \date $Date$
@@ -84,9 +84,7 @@ int main( int argc, char *argv[] ) {
         return 1;
     }
 
-    // Create an auto_ptr to the scenario runner. This will automatically
-    // deallocate memory.
-    auto_ptr<IScenarioRunner> runner;
+
     // Get the main log file.
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
@@ -101,27 +99,13 @@ int main( int argc, char *argv[] ) {
         return 1;
     }
 
-    // Determine the correct type of ScenarioRunner to create. Note that this
-    // ordering must be preserved because certain scenario runners can contain
-    // other scenario runners.
-    if( conf->getBool( "BatchMode" ) ){
-        runner = ScenarioRunnerFactory::create( "batch-runner" );
-    }
-    else if( conf->getBool( "find-path" ) ){
-        runner = ScenarioRunnerFactory::create( "policy-target-runner" );
-    }
-    else if( conf->getBool( "simple-find-path" ) ){
-        runner = ScenarioRunnerFactory::create( "simple-policy-target-runner" );
-    }
-    else if( conf->getBool( "mergeFilesOnly" ) ) {
-        runner = ScenarioRunnerFactory::create( "merge-runner" );
-    }
-    else if( conf->getBool( "createCostCurve" ) ){
-        runner = ScenarioRunnerFactory::create( "mac-generator-scenario-runner" );
-    }
-    else { // Run a standard scenario.
-        runner = ScenarioRunnerFactory::create( "single-scenario-runner" );
-    }
+    // Create an empty exclusion list so that any type of IScenarioRunner can be
+    // created.
+    list<string> exclusionList;
+
+    // Create an auto_ptr to the scenario runner. This will automatically
+    // deallocate memory.
+    auto_ptr<IScenarioRunner> runner = ScenarioRunnerFactory::createDefault( exclusionList );
     
     // Need to set the scenario pointer. This has to be done before XML parse is
     // called because that requires the modeltime. TODO: Remove the global
@@ -131,7 +115,7 @@ int main( int argc, char *argv[] ) {
     scenario = runner->getInternalScenario();
     
     // Setup the scenario.
-    success = runner->setupScenario( timer );
+    success = runner->setupScenarios( timer );
     // Check if setting up the scenario, which often includes parsing,
     // succeeded.
     if( !success ){
@@ -139,7 +123,7 @@ int main( int argc, char *argv[] ) {
     }
 
     // Run the scenario.
-    success = runner->runScenario( Scenario::RUN_ALL_PERIODS, timer );
+    success = runner->runScenarios( Scenario::RUN_ALL_PERIODS, timer );
 
     // Print the output.
     runner->printOutput( timer );

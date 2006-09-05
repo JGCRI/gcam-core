@@ -44,7 +44,6 @@
 #include "demographics/include/demographic.h"
 
 #include "emissions/include/ghg_policy.h"
-#include "emissions/include/indirect_emiss_coef.h"
 #include "emissions/include/total_sector_emissions.h"
 
 #include "marketplace/include/marketplace.h"
@@ -65,6 +64,8 @@
 #include "util/curves/include/xy_data_point.h"
 #include "util/curves/include/point_set.h"
 #include "util/curves/include/explicit_point_set.h"
+
+#include "reporting/include/indirect_emissions_calculator.h"
 
 using namespace std;
 using namespace xercesc;
@@ -369,8 +370,6 @@ void Region::completeInit( const GlobalTechnologyDatabase* aGlobalTechDB ) {
     auto_ptr<DependencyFinder> depFinder( new DependencyFinder( scenario->getMarketplace(), name ) );
     for( SectorIterator sectorIter = supplySector.begin(); sectorIter != supplySector.end(); ++sectorIter ) {
         ( *sectorIter )->completeInit( mRegionInfo.get(), depFinder.get(), mLandAllocator.get(), aGlobalTechDB );
-        Emcoef_ind temp( ( *sectorIter )->getName() );
-        emcoefInd.push_back( temp );
     }
 
     // Finish initializing agLu
@@ -562,10 +561,6 @@ void Region::toInputXML( ostream& out, Tabs* tabs ) const {
         XMLWriteElement( coefAllIter->second, "PrimaryFuelCO2Coef", out, tabs, 0, coefAllIter->first );
     }
 
-    for( map<string,double>::const_iterator coefPriIter = carbonTaxFuelCoef.begin(); coefPriIter != carbonTaxFuelCoef.end(); coefPriIter++ ) {
-        XMLWriteElement( coefPriIter->second, "CarbonTaxFuelCoef", out, tabs, 0, coefPriIter->first );
-    }
-
     XMLWriteElementCheckDefault( heatingDegreeDays, "heatingDegreeDays", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( coolingDegreeDays, "coolingDegreeDays", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( mRotationPeriod, "rotationPeriod", out, tabs, 0 );
@@ -680,9 +675,6 @@ void Region::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
         XMLWriteElement( coefAllIter->second, "PrimaryFuelCO2Coef", out, tabs, 0, coefAllIter->first );
     }
 
-    for( map<string,double>::const_iterator coefPriIter = carbonTaxFuelCoef.begin(); coefPriIter != carbonTaxFuelCoef.end(); coefPriIter++ ) {
-        XMLWriteElement( coefPriIter->second, "CarbonTaxFuelCoef", out, tabs, 0, coefPriIter->first );
-    }
     // write the xml for the class members.
     // write out the single population object.
     if( gdp.get() ){
@@ -896,6 +888,9 @@ const vector<double> Region::calcFutureGDP() const {
 * \param period Model time period
 */
 void Region::calcEndUsePrice( const int period ) {
+    if( !ensureGDP()  ){
+        return;
+    }
 
     mEnergyServicePrice[ period ] = 0;
 
@@ -1599,8 +1594,6 @@ void Region::calcEmissions( const int period ) {
     for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
         supplySector[i]->emission(period);
         summary[period].updateemiss(supplySector[i]->getemission(period));
-        emcoefInd[i].setemcoef(supplySector[i]->getemfuelmap(period), 
-            supplySector[i]->getOutput(period));
     }
     for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
         demandSector[i]->emission(period);
@@ -1618,7 +1611,6 @@ void Region::calcEmissions( const int period ) {
         mLandAllocator->calcEmission( name, gdp.get(), period );
         mLandAllocator->updateSummary( summary[ period ], period );
     }
-
 }
 
 /*! \brief Calculate regional emissions by fuel for reporting.
@@ -1634,20 +1626,11 @@ void Region::calcEmissFuel( const list<string>& aPrimaryFuelList, const int peri
     for( list<string>::const_iterator fuelIter = aPrimaryFuelList.begin();
         fuelIter != aPrimaryFuelList.end(); ++fuelIter )
     {
-        fuelemiss[ *fuelIter ] = summary[period].get_pemap_second( *fuelIter ) * primaryFuelCO2Coef[ *fuelIter ];
+        double primaryCoef = objects::searchForValue( primaryFuelCO2Coef, *fuelIter );
+        fuelemiss[ *fuelIter ] = summary[period].get_pemap_second( *fuelIter ) * primaryCoef;
     }
 
     summary[period].updateemiss(fuelemiss); // add CO2 emissions by fuel
-}
-
-//! Calculate regional indirect emissions from intermediate and final demand sectors.
-void Region::emissionInd( const int period ){
-    for( SectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ){
-        (*currSector)->indemission( period, emcoefInd );
-    }
-    for( DemandSectorIterator currSector = demandSector.begin(); currSector != demandSector.end(); ++currSector ){
-        (*currSector)->indemission( period, emcoefInd );
-    }
 }
 
 //! Calculate total carbon tax paid in the region by all supply and demand
@@ -1729,13 +1712,11 @@ void Region::csvOutputFile() const {
     // write supply sector results to file
     for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
         supplySector[i]->csvOutputFile();
-        supplySector[i]->subsec_outfile();
     }
 
     // write end-use sector demand results to file
     for ( unsigned int i = 0; i < demandSector.size(); i++ ){
         demandSector[i]->csvOutputFile();   
-        demandSector[i]->subsec_outfile();
     }
 }
 
@@ -1879,13 +1860,20 @@ void Region::dbOutput( const list<string>& aPrimaryFuelList ) const {
     for ( unsigned int i = 0; i < resources.size(); i++ ) {
         resources[i]->dbOutput( name );
     }
+
+    // Calculate indirect emissions so they can be written to the database.
+    IndirectEmissionsCalculator indEmissCalc;
+    for( int i = 0; i < modeltime->getmaxper(); ++i ){
+        accept( &indEmissCalc, i );
+    }
+
     // write supply sector results to database
     for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
-        supplySector[i]->dbOutput();
+        supplySector[i]->dbOutput( &indEmissCalc );
     }
     // write end-use sector demand results to database
     for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
-        demandSector[i]->dbOutput();
+        demandSector[i]->dbOutput( &indEmissCalc );
     }
 }
 

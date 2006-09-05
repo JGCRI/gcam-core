@@ -15,7 +15,7 @@
 */
 
 /*!
-* \file forcing_target.h
+* \file temperature_target.h
 * \ingroup Objects
 * \brief The TemperatureTarget class header file.
 * \author Josh Lurz

@@ -20,6 +20,7 @@
 #include "containers/include/scenario.h"
 #include "containers/include/gdp.h"
 #include "util/base/include/ivisitor.h"
+#include "reporting/include/indirect_emissions_calculator.h"
 
 using namespace std;
 using namespace xercesc;
@@ -477,7 +478,7 @@ void DemandSector::csvOutputFile() const {
 }
 
 //! Write MiniCAM style demand sector output to database.
-void DemandSector::dbOutput() const {
+void DemandSector::dbOutput( const IndirectEmissionsCalculator* aIndEmissCalc ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     int m;
     const int maxper = modeltime->getmaxper();
@@ -543,7 +544,7 @@ void DemandSector::dbOutput() const {
     
     // CO2 indirect emissions by sector
     for (m= 0;m<maxper;m++) {
-        temp[m] = summary[m].get_emindmap_second("CO2");
+        temp[m] =  aIndEmissCalc->getIndirectEmissions( name, m );
     }
     dboutput4(regionName,"CO2 Emiss(ind)",secname,"zTotal","MTC",temp);
     
@@ -566,16 +567,17 @@ void DemandSector::dbOutput() const {
     dboutput4(regionName,"General","CarbonTaxPaid",secname,"$",temp);
     
     // do for all subsectors in the sector
-    MCoutput_subsec();
+    MCoutput_subsec( aIndEmissCalc );
+    subsec_outfile( aIndEmissCalc );
 }
 
 //! Write out subsector results from demand Sector.
-void DemandSector::MCoutput_subsec() const {
+void DemandSector::MCoutput_subsec( const IndirectEmissionsCalculator* aIndirectEmissCalc ) const {
     // do for all subsectors in the Sector
     for ( unsigned int i = 0; i < subsec.size(); ++i ){
         // output or demand for each technology
         subsec[ i ]->MCoutputDemandSector();
-        subsec[ i ]->MCoutputAllSectors();
+        subsec[ i ]->MCoutputAllSectors( aIndirectEmissCalc );
     }
 }
 
@@ -593,7 +595,7 @@ double DemandSector::getService( const int period ) const {
 /*! \brief Get the output for the demand sector, which is equivalent to the demand.
 * \param aPeriod Period to get the output for.
 * \return Output for the period.
-* \authod Josh Lurz
+* \author Josh Lurz
 */
 double DemandSector::getOutput( int aPeriod ) const {
     // In the base period return a read in output if there is none.

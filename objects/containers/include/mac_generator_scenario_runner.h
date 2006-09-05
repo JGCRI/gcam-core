@@ -32,11 +32,14 @@ class MACGeneratorScenarioRunner: public IScenarioRunner {
 public:
     virtual ~MACGeneratorScenarioRunner();
 
-    virtual bool setupScenario( Timer& timer,
+    // IParsable interface
+    virtual bool XMLParse( const xercesc::DOMNode* aRoot );
+
+    virtual bool setupScenarios( Timer& timer,
         const std::string aName = "",
         const std::list<std::string> aScenComponents = std::list<std::string>() );
     
-    virtual bool runScenario( const int aSinglePeriod,
+    virtual bool runScenarios( const int aSinglePeriod,
                               Timer& timer );
 
     virtual void printOutput( Timer& timer,

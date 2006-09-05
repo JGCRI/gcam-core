@@ -53,6 +53,7 @@ public:
     void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     void accept( IVisitor* aVisitor, const int period ) const;
     void csvSGMGenFile( std::ostream& aFile ) const;
+
 protected:
     const static std::string XML_NAME; //!< node name for toXML method.
     std::vector<FinalDemandSector*> finalDemandSector; //!< vector of pointers to supply sector objects

@@ -1,10 +1,8 @@
 /*! 
 * \file building_supply_subsector.cpp
 * \ingroup CIAM
-* \brief The building supply subsector
+* \brief The BuildingSupplySubSector class source file.
 * \author Steve Smith
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"

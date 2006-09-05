@@ -14,7 +14,6 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
 #include "emissions/include/aghg.h"
-#include "emissions/include/indirect_emiss_coef.h"
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
@@ -358,18 +357,6 @@ void AGHG::calcEmission( const vector<Input*> aInputs, const string& aRegionName
     // TODO: Need to do sequestered emissions here.
     // Add to the constraint market. 
     marketplace->addToDemand( getName(), aRegionName, emissGwp, aPeriod, false );
-}
-
-//! calculates emissions associated with the use of secondary energy
-/*! get indirect emissions coefficient from map object */
-// I've got a better way to do this.
-void AGHG::calcIndirectEmission( const double input, const string& fuelname, const vector<Emcoef_ind>& emcoef_ind ) {
-    emissInd = 0; // to initialize
-    for (int i=0;i< static_cast<int>( emcoef_ind.size() );i++) {
-        if (emcoef_ind[i].getName() == fuelname) { // sector name
-            emissInd = emcoef_ind[i].getemcoef( getName() ) * input;
-        }
-    }
 }
 
 //! Return Ghg emissions.

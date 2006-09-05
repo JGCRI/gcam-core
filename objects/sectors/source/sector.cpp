@@ -25,7 +25,6 @@
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/configuration.h"
 #include "util/base/include/summary.h"
-#include "emissions/include/indirect_emiss_coef.h"
 #include "containers/include/world.h"
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
@@ -162,8 +161,7 @@ void Sector::XMLParse( const DOMNode* node ){
             }
         }
         else if( nodeName == MoreSectorInfo::getXMLNameStatic() ) {
-            moreSectorInfo.reset( new MoreSectorInfo() );
-            moreSectorInfo->XMLParse( curr );
+            parseSingleNode( curr, moreSectorInfo, new MoreSectorInfo );
         }
         else if( nodeName == Subsector::getXMLNameStatic() ){
             parseContainerNode( curr, subsec, subSectorNameMap, new Subsector( regionName, name ) );
@@ -929,20 +927,6 @@ void Sector::emission( const int period ) {
     }
 }
 
-/*! \brief Calculate indirect GHG emissions for each Sector from subsectors.
-*
-* \author Sonny Kim
-* \param period Model period
-* \param emcoef_ind Vector of indirect emissions objects. 
-*/
-void Sector::indemission( const int period, const vector<Emcoef_ind>& emcoef_ind ) {
-    summary[ period ].clearemindmap(); // clear emissions map
-    for( unsigned int i = 0; i < subsec.size(); ++i ){
-        subsec[ i ]->indemission( period, emcoef_ind );
-        summary[ period ].updateemindmap( subsec[ i ]->getemindmap( period ));
-    }
-}
-
 /*! \brief Returns sectoral energy consumption.
 *
 * Routine sums all input energy consumption and puts that into the input variable.
@@ -1010,98 +994,12 @@ void Sector::csvOutputFile() const {
     fileoutput3( regionName, name, " ", " ", "C tax paid", "Mil90$", temp );
 }
 
-//! Write MiniCAM style Sector output to database.
-void Sector::dbOutput() const {
-    const Modeltime* modeltime = scenario->getModeltime();
-    // function protocol
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-
-    // total Sector output
-    int maxper = modeltime->getmaxper();
-    vector<double> temp(maxper);
-    for( int per = 0; per < maxper; ++per ){
-        temp[ per ] = getOutput( per );
-    }
-    dboutput4( regionName,"Secondary Energy Prod","by Sector",name,"EJ", temp );
-    dboutput4( regionName,"Secondary Energy Prod",name,"zTotal","EJ", temp );
-
-
-    string str; // temporary string
-
-    // Sector fuel consumption by fuel type
-    typedef map<string,double>:: const_iterator CI;
-    map<string,double> tfuelmap = summary[0].getfuelcons();
-    for (CI fmap=tfuelmap.begin(); fmap!=tfuelmap.end(); ++fmap) {
-        for (int m= 0;m<maxper;m++) {
-            temp[m] = summary[m].get_fmap_second(fmap->first);
-        }
-        if( fmap->first == "" ){
-            dboutput4( regionName,"Fuel Consumption",name, "No Fuelname", "EJ",temp);
-        }
-        else {
-            dboutput4( regionName,"Fuel Consumption",name,fmap->first,"EJ",temp);
-        }
-    }
-
-    // Sector emissions for all greenhouse gases
-    map<string,double> temissmap = summary[0].getemission(); // get gases for per 0
-    for (CI gmap=temissmap.begin(); gmap!=temissmap.end(); ++gmap) {
-        for (int m= 0;m<maxper;m++) {
-            temp[m] = summary[m].get_emissmap_second(gmap->first);
-        }
-        dboutput4(regionName,"Emissions","Sec-"+name,gmap->first,"MTC",temp);
-    }
-    // CO2 emissions by Sector
-    for ( int m= 0;m<maxper;m++) {
-        temp[m] = summary[m].get_emissmap_second("CO2");
-    }
-    dboutput4( regionName,"CO2 Emiss","by Sector",name,"MTC",temp);
-    dboutput4( regionName,"CO2 Emiss",name,"zTotal","MTC",temp);
-
-    // CO2 indirect emissions by Sector
-    for ( int m= 0;m<maxper;m++) {
-        temp[m] = summary[m].get_emindmap_second("CO2");
-    }
-    dboutput4( regionName,"CO2 Emiss(ind)",name,"zTotal","MTC",temp);
-
-    // Sector price
-    for ( int m= 0;m<maxper;m++) {
-        temp[m] = getPrice( m );
-    }
-    dboutput4( regionName,"Price",name,"zSectorAvg","$/GJ", temp );
-    // for electricity Sector only
-    if (name == "electricity") {
-        for ( int m= 0;m<maxper;m++) {
-            temp[m] = getPrice( m ) * 2.212 * 0.36;
-        }
-        dboutput4( regionName,"Price","electricity C/kWh","zSectorAvg","90C/kWh",temp);
-    }
-
-    // Sector price
-    for ( int m = 0; m < maxper; m++ ) {
-        temp[m] = getPrice( m );
-    }
-    dboutput4( regionName,"Price","by Sector",name,"$/GJ", temp );
-    // Sector carbon taxes paid
-    for( int per = 0; per < maxper; ++per ){
-        temp[ per ] = getTotalCarbonTaxPaid( per );
-    }
-    dboutput4( regionName,"General","CarbonTaxPaid",name,"$", temp );
-    // do for all subsectors in the Sector
-    for( unsigned int i = 0; i < subsec.size(); ++i ){
-        // output or demand for each technology
-        subsec[ i ]->MCoutputSupplySector();
-        subsec[ i ]->MCoutputAllSectors();
-    }
-}
-
 //! Write subsector output to database.
-void Sector::subsec_outfile() const {
+void Sector::subsec_outfile( const IndirectEmissionsCalculator* aIndirectEmissCalc ) const {
     // do for all subsectors in the Sector
     for( unsigned int i = 0; i < subsec.size(); ++i ){
         // output or demand for each technology
-        subsec[ i ]->csvOutputFile();
+        subsec[ i ]->csvOutputFile( aIndirectEmissCalc );
     }
 }
 

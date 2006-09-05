@@ -24,7 +24,6 @@
 // Forward declarations
 class Subsector;
 class Summary;
-class Emcoef_ind;
 class ILogger;
 class GDP;
 class Tabs;
@@ -35,6 +34,7 @@ class NationalAccount;
 class MoreSectorInfo;
 class SocialAccountingMatrix;
 class ILandAllocator;
+class IndirectEmissionsCalculator;
 class GlobalTechnologyDatabase;
 
 /*! 
@@ -97,6 +97,7 @@ protected:
 
     virtual double getPrice( const int aPeriod ) const = 0;
     bool outputsAllFixed( const int period ) const;
+    void subsec_outfile( const IndirectEmissionsCalculator* aIndirectEmissCalc ) const;
 public:
     explicit Sector( std::string regionName );
     virtual ~Sector();
@@ -114,8 +115,6 @@ public:
 
     virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    
-
 
     virtual void calibrateSector( const int period ); 
     virtual void checkSectorCalData( const int period );
@@ -139,12 +138,12 @@ public:
     virtual void calcShare( const int period, const GDP* gdp );
     virtual void calcFinalSupplyPrice( const GDP* aGdp, const int aPeriod ) = 0;
     void emission( const int period );
-    void indemission( const int period, const std::vector<Emcoef_ind>& emcoef_ind );
     double getInput( const int period ) const;
     virtual double getEnergyInput( const int period ) const;
     virtual void csvOutputFile() const;
-    virtual void dbOutput() const;
-    void subsec_outfile() const;
+    
+    virtual void dbOutput( const IndirectEmissionsCalculator* aIndEmissCalc ) const = 0;
+
     double getTotalCarbonTaxPaid( const int period ) const;
     std::map<std::string, double> getfuelcons( const int period ) const;
     double getConsByFuel( const int period, const std::string& key) const;

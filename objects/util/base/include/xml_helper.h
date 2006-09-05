@@ -348,8 +348,8 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* aNode,
 *          the vector.
 * \warning Make sure the node passed as an argument has a year attribute.
 * \param aNode A pointer to a node from which to extract the data.
-* \param aPeriod A PeriodVector passed by reference in which to insert the
-*        value.
+* \param aPeriodVector A PeriodVector passed by reference in which to insert the
+*                      value.
 * \param aModeltime Modeltime object.
 */
 template<class T>
@@ -704,16 +704,19 @@ void XMLWriteVector( const objects::PeriodVector<T>& aOutputVector,
 * This is a very simple function which calls the parse function and handles the exceptions which it may throw.
 * It also takes care of fetching the document and its root element.
 * \param aXMLFile The name of the file to parse.
-* \param aParser A pointer to an already created xercesDOMParser.
 * \param aModelElement Element to call XMLParse on.
 * \return Whether parsing was successful.
 */
 
 template <class T>
-bool XMLHelper<T>::parseXML( const std::string& xmlFile, IParsable* aModelElement ) {
+bool XMLHelper<T>::parseXML( const std::string& aXMLFile, IParsable* aModelElement ) {
+    // Track the number of active parses to avoid destroying a document that causes other
+    // documents to be parsed before its own parsing was complete.
+    static unsigned int numParses = 0;
+    ++numParses;
     xercesc::XercesDOMParser* parser = XMLHelper<T>::getParser();
     try {
-        parser->parse( xmlFile.c_str() );
+        parser->parse( aXMLFile.c_str() );
     } catch ( const xercesc::XMLException& toCatch ) {
         std::string message = XMLHelper<std::string>::safeTranscode( toCatch.getMessage() );
         std::cout << "ERROR: XML Read Exception message is:" << std::endl << message << std::endl;
@@ -732,8 +735,11 @@ bool XMLHelper<T>::parseXML( const std::string& xmlFile, IParsable* aModelElemen
     }
 
     bool success = aModelElement->XMLParse( parser->getDocument()->getDocumentElement() );
-    parser->resetDocumentPool();
-    parser->resetCachedGrammarPool();
+    // Cleanup parser memory if there are no active parses.
+    if( --numParses == 0 ){
+        parser->resetDocumentPool();
+        parser->resetCachedGrammarPool();
+    }
     return success;
 }
 
@@ -847,9 +853,10 @@ static void resetMapIndices( const std::vector<T>& aItems, std::map<std::string,
 *        deleted if it is not needed.
 * \param aIDAttr Name of the attribute containing the unique identifier for the
 *        node. Defaults to "name".
+* \return Whether the node was parsed successfully.
 */
 template<class T, class U>
-void parseContainerNode( const xercesc::DOMNode* aNode,
+bool parseContainerNode( const xercesc::DOMNode* aNode,
                          std::vector<T*>& aContainerSet, 
                          U* aNewObject,
                          const std::string& aIDAttr = XMLHelper<std::string>::name() )
@@ -892,22 +899,24 @@ void parseContainerNode( const xercesc::DOMNode* aNode,
         }
     } 
     // The node does not already exist.
-    else {
-        if( shouldDelete ) {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Could not delete node " << objName << " as it does not exist." << std::endl;
-        } 
-        else if( XMLHelper<bool>::getAttr( aNode, "nocreate" ) ) {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::NOTICE );
-            mainLog << "Did not create node " << objName << " as the nocreate input flag was set." << std::endl;
-        }
-        else {
-            aNewObject->XMLParse( aNode );
-            aContainerSet.push_back( newObjWrapper.release() );
-        }
+    else if( shouldDelete ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Could not delete node " << objName << " as it does not exist." << std::endl;
+    } 
+    else if( XMLHelper<bool>::getAttr( aNode, "nocreate" ) ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << "Did not create node " << objName << " as the nocreate input flag was set." << std::endl;
     }
+    else {
+        aNewObject->XMLParse( aNode );
+        aContainerSet.push_back( newObjWrapper.release() );
+    }
+
+    // TODO: Setup error checking. This currently won't work because the return
+    //       type of XMLParse can be void or bool.
+    return true;
 }
 
 /*! \brief Function which positions a node containing children within a vector

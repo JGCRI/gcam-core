@@ -7,7 +7,7 @@
 /*! 
 * \file tran_subsector.h
 * \ingroup Objects
-* \brief The Transportation Subsector header file. 
+* \brief The TranSubsector header file. 
 * \author Marshall Wise, Sonny Kim, Josh Lurz
 * \date $Date$
 * \version $Revision$

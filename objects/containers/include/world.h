@@ -67,7 +67,6 @@ public:
     typedef std::vector<const objects::Atom*> AtomVector;
     void calc( const int period, const AtomVector& aRegionsToCalc = AtomVector() );
     void updateSummary( const std::list<std::string> aPrimaryFuelList, const int period ); 
-    void emiss_ind( const int period );
     void runClimateModel();
     void csvOutputFile() const; 
     void dbOutput( const std::list<std::string>& aPrimaryFuelList ) const; 

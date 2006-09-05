@@ -18,10 +18,7 @@
 /*! 
 * \file final_demand_sector.h
 * \ingroup Objects
-* \brief Final Demand Sector class header file.
-*
-*  Detailed description.
-*
+* \brief FinalDemandSector class header file.
 * \author Pralit Patel
 * \author Sonny Kim
 */
@@ -35,6 +32,10 @@ class Tabs;
 class IInfo;
 class DependencyFinder;
 
+/*!
+ * \brief A sector which calculates the final demands for a region using a
+ *        series of consumers.
+ */
 class FinalDemandSector : public Sector
 {
 public:
@@ -55,6 +56,8 @@ public:
                                DependencyFinder* aDependencyFinder,
                                ILandAllocator* aLandAllocator,
                                const GlobalTechnologyDatabase* aGlobalTechDB );
+
+    virtual void dbOutput( const IndirectEmissionsCalculator* aIndEmissCalc ) const {}
 protected:
     virtual double getOutput( const int aPeriod ) const { return 0; }
     virtual double getPrice( const int aPeriod ) const;

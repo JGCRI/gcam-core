@@ -42,13 +42,16 @@ class ITarget;
 class PolicyTargetRunner: public IScenarioRunner {
     friend class ScenarioRunnerFactory;
 public:
+    // IParsable interface
+    virtual bool XMLParse( const xercesc::DOMNode* aRoot );
+
     virtual ~PolicyTargetRunner();
 
-    virtual bool setupScenario( Timer& timer,
+    virtual bool setupScenarios( Timer& timer,
         const std::string aName = "",
         const std::list<std::string> aScenComponents = std::list<std::string>() );
     
-    virtual bool runScenario( const int aSingleScenario,
+    virtual bool runScenarios( const int aSingleScenario,
                               Timer& timer );
 
     virtual void printOutput( Timer& timer,

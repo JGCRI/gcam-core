@@ -1,7 +1,7 @@
 /*! 
 * \file building_dmd_subsector.cpp
 * \ingroup CIAM
-* \brief The building demand subsector
+* \brief The BuildingDemandSubSector class source file.
 * \author Steve Smith
 */
 

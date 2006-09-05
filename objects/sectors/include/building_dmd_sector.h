@@ -7,7 +7,7 @@
 /*! 
 * \file building_dmd_sector.h
 * \ingroup CIAM
-* \brief The building demand sector
+* \brief The BuildingDemandSector class header file.
 * \author Steve Smith
 * \date $Date$
 * \version $Revision$

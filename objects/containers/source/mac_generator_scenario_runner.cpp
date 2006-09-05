@@ -45,16 +45,21 @@ MACGeneratorScenarioRunner::MACGeneratorScenarioRunner(){
 MACGeneratorScenarioRunner::~MACGeneratorScenarioRunner(){
 }
 
+bool MACGeneratorScenarioRunner::XMLParse( const xercesc::DOMNode* aRoot ){
+    // No data to parse.
+    return true;
+}
+
 /*! \brief Setup the Scenario to be run.
-* \detailed This function sets up the contained SingleScenarioRunner.
+* \details This function sets up the contained SingleScenarioRunner.
 * \param aTimer The timer used to print out the amount of time spent performing
 *        operations.
 * \param aName The name to add on to the name read in in the Configuration file.
 * \param aScenComponents A list of additional scenario components to read in.
 * \return Whether the setup completed successfully.
 */
-bool MACGeneratorScenarioRunner::setupScenario( Timer& aTimer, const string aName, const list<string> aScenComponents ){
-    return mSingleScenario->setupScenario( aTimer, aName, aScenComponents );
+bool MACGeneratorScenarioRunner::setupScenarios( Timer& aTimer, const string aName, const list<string> aScenComponents ){
+    return mSingleScenario->setupScenarios( aTimer, aName, aScenComponents );
 }
 
 /*! \brief Function which handles running the scenario and optionally computing
@@ -70,9 +75,9 @@ bool MACGeneratorScenarioRunner::setupScenario( Timer& aTimer, const string aNam
 * \return Whether all model runs solved successfully.
 * \author Josh Lurz
 */
-bool MACGeneratorScenarioRunner::runScenario( const int aSinglePeriod, Timer& aTimer ) {
+bool MACGeneratorScenarioRunner::runScenarios( const int aSinglePeriod, Timer& aTimer ) {
     // Run the base scenario. 
-    bool success = mSingleScenario->runScenario( Scenario::RUN_ALL_PERIODS, aTimer );
+    bool success = mSingleScenario->runScenarios( Scenario::RUN_ALL_PERIODS, aTimer );
 
     // Print the output now before it is overwritten.
     mSingleScenario->printOutput( aTimer, false );

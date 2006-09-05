@@ -29,9 +29,11 @@
 
 #include "dbxml/DbXml.hpp"
 
+class IndirectEmissionsCalculator;
+
 /*! 
 * \ingroup Objects
-* \brief 
+* \brief A visitor which writes model results to an XML database.
 * \details
 * \author Josh Lurz
 */
@@ -126,15 +128,22 @@ private:
 
     //! Current technology fuel stored from Technology so that GHG may access
     //! this. This is updated when the visitor reaches each Technology.
-    std::string mCurrentFuel;
-    
-    //! Current technology year stored from Technology so that GHG may access
+	std::string mCurrentFuel;
+	
+    //! Current indirect emissions for the Technology. These are more easily
+    //! calculated at the Technology but logically belong in the GHG writeout.
+    double mCurrIndirectEmissions;
+
+	//! Current technology year stored from Technology so that GHG may access
     //! this. This is updated when the visitor reaches each Technology.
     int mCurrentTechYear;
 
     //! Tabs object.
     std::auto_ptr<Tabs> mTabs;
-    
+   
+    //! Indirect emissions calculator for the current region.
+    std::auto_ptr<IndirectEmissionsCalculator> mIndirectEmissCalc;
+
     /*! \brief Contains all objects neccessary to operate on a container.
     * \details This struct defines the set of objects that must have the same
     *          lifetime so that the XML database outputter can operate on the

@@ -90,7 +90,6 @@ public:
     virtual void scaleFixedOutput(const double scaleRatio) = 0; // scale fixed supply
     // calculates fuel input and technology output
 
-    virtual void indemission( const std::vector<Emcoef_ind>& emcoef_ind ) = 0;
     virtual void calcEmission( const std::string& aGoodName, const int aPeriod ) = 0;
 
     // ****** return names and values ******
@@ -131,7 +130,7 @@ public:
     virtual const std::vector<std::string> getGHGNames() const = 0;
     virtual const std::map<std::string,double>& getemissmap() const = 0; // return map of all ghg emissions
     virtual const std::map<std::string,double>& getemfuelmap() const = 0; // return map of all ghg emissions
-    virtual const std::map<std::string,double>& getemindmap() const = 0; // return map of all ghg emissions
+
     virtual double get_emissmap_second( const std::string& str ) const = 0; // return value for ghg
     virtual double getlexp() const = 0; // return logit exponential for the technology
     virtual double getFixedOutput() const = 0; // return fixed output

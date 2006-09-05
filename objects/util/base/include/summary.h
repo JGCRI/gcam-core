@@ -35,7 +35,6 @@ private:
 	SummaryItem petrade;  //!< map of primary energy trade
 	SummaryItem emission;  //!< map of ghg emissions
 	SummaryItem emissfuel;  //!< map of ghg emissions implicit in fuel
-	SummaryItem emissind;  //!< map of indirect ghg emissions
 	SummaryItem sequesteredAmount;  //!< map of sequestered amount of emissions
 public:
 	Summary(); // default construtor
@@ -46,26 +45,22 @@ public:
 	const SummaryItem& getpetrade() const;
 	const SummaryItem& getemission() const;
 	const SummaryItem& getemfuelmap() const;
-	const SummaryItem& getemindmap() const;
 	const SummaryItem& getSequesteredAmountMap() const;
 	void updatefuelcons( const std::list<std::string>& aPrimaryFuelList, const SummaryItem& fuelinfo);
 	void updatepetrade();
 	void updateemiss( const SummaryItem& ghginfo );
 	void updateemfuelmap( const SummaryItem& ghginfo );
-	void updateemindmap( const SummaryItem& ghginfo );
 	void updateSequesteredAmountMap( const SummaryItem& ghginfo );
     void clearfuelcons();
 	void clearpeprod();
 	void clearemiss();
 	void clearemfuelmap();
-	void clearemindmap();
     void clearSequesteredAmountMap();
 	double get_fmap_second( const std::string& name ) const;
 	double get_pemap_second( const std::string& name ) const;
 	double get_petrmap_second( const std::string& name ) const;
 	double get_peprodmap_second( const std::string& name ) const;
 	double get_emissmap_second( const std::string& name ) const;
-	double get_emindmap_second( const std::string& name ) const;
     double getSequesteredAmount( const std::string& name ) const;
     double get_emissfuelmap_second( const std::string& name ) const;
 };

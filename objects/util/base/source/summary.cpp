@@ -57,10 +57,6 @@ const Summary::SummaryItem& Summary::getemfuelmap() const {
 	return emissfuel;
 }
 
-const Summary::SummaryItem& Summary::getemindmap() const {
-	return emissind;
-}
-
 //! return map of sequestered amount of emissions
 const Summary::SummaryItem& Summary::getSequesteredAmountMap() const {
 	return sequesteredAmount;
@@ -112,13 +108,6 @@ void Summary::updateemfuelmap( const SummaryItem& ghginfo ) {
 	}
 }
 
-void Summary::updateemindmap( const SummaryItem& ghginfo ) {
-	// map all primary and secondary fuel consumption
-	for ( CSummaryIterator fmap = ghginfo.begin(); fmap != ghginfo.end(); ++fmap ) {
-		emissind[ fmap->first ] += fmap->second;
-	}
-}
-
 //! update the map of sequestered amount of emissions
 void Summary::updateSequesteredAmountMap( const SummaryItem& ghginfo ) {
 	// map sequestered amount of CO2 for secondary fuels and zTotal
@@ -143,10 +132,6 @@ void Summary::clearemiss() {
 
 void Summary::clearemfuelmap() {
 	emissfuel.clear();
-}
-
-void Summary::clearemindmap() {
-	emissind.clear();
 }
 
 //! clear out map of sequestered amount
@@ -181,8 +166,4 @@ double Summary::getSequesteredAmount( const string& name ) const {
 
 double Summary::get_emissfuelmap_second( const string& name ) const {
 	return util::searchForValue( emissfuel, name );
-}
-
-double Summary::get_emindmap_second( const string& name ) const {
-	return util::searchForValue( emissind, name );
 }

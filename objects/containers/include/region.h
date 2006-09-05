@@ -33,7 +33,6 @@ class AgSector;
 class ILandAllocator;
 class GHGPolicy;
 class Summary;
-class Emcoef_ind;
 class ILogger;
 class GDP;
 class Curve;
@@ -41,6 +40,9 @@ class DependencyFinder;
 class TotalSectorEmissions;
 class IInfo;
 class GlobalTechnologyDatabase;
+
+#define SORT_TESTING 0
+
 /*! 
 * \ingroup Objects
 * \brief This class defines a single region of the model and contains other
@@ -63,8 +65,6 @@ class GlobalTechnologyDatabase;
 *
 * \author Sonny Kim
 */
-
-#define SORT_TESTING 0
 class Region: public IVisitable, public IRoundTrippable
 {
     friend class InputOutputTable;
@@ -85,7 +85,6 @@ public:
     virtual void calc( const int period, const bool doCalibrations );
     void calibrateTFE( const int period ); 
     virtual void initCalc( const int period );
-    void emissionInd( const int period );
 
     void csvOutputFile() const;
     void dbOutput( const std::list<std::string>& aPrimaryFuelList ) const;
@@ -152,9 +151,7 @@ protected:
     std::map<std::string,int> demandSectorNameMap; //!< Map of demandsector name to integer position in vector. 
     std::map<std::string,int> mGhgPoliciesNameMap; //!< Map of GhgPolicy name to integer position in vector. 
     std::map<std::string,int> totalSectorEmissionsNameMap; //!< Map of totalSectorEmission name to integer position in vector. 
-    std::vector<Emcoef_ind> emcoefInd; //!< vector of objects containing indirect emissions coefficients
     std::map<std::string, double> primaryFuelCO2Coef; //!< map of CO2 emissions coefficient for primary fuels only
-    std::map<std::string, double> carbonTaxFuelCoef; //!< map of CO2 emissions coefficient for all fossil fuels
     double heatingDegreeDays; //!< heatingDegreeDays for this region (used to drive heating/cooling demands -- to be replaced in the future with specific set points)
     double coolingDegreeDays; //!< coolingDegreeDays for this region (used to drive heating/cooling demands -- to be replaced in the future with specific set points)
 

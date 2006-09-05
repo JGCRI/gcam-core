@@ -44,6 +44,8 @@ public:
 
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic,
                           const int aPeriod ){};
+
+    virtual void dbOutput( const IndirectEmissionsCalculator* aIndEmissCalc ) const;
 protected:
     virtual double getOutput( const int aPeriod ) const;
     virtual double getPrice( const int aPeriod ) const;

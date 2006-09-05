@@ -63,7 +63,9 @@ public:
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic,
                           const int aPeriod ){}; // Passing demographic here is not good.
     virtual void csvOutputFile() const;
-    virtual void dbOutput() const;
+
+    virtual void dbOutput( const IndirectEmissionsCalculator* aIndEmissCalc ) const;
+
     virtual void calibrateSector( const int period );
 
     virtual double getWeightedEnergyPrice( const int aPeriod ) const;
@@ -83,7 +85,7 @@ protected:
     std::vector<double> techChangeCumm; //!< cummulative technical change on end-use service
     
     virtual void setMarket();
-    void MCoutput_subsec() const;
+    void MCoutput_subsec( const IndirectEmissionsCalculator* aIndirectEmissCalc ) const;
     virtual double getOutput( const int aPeriod ) const;
     virtual double getPrice( const int aPeriod ) const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 

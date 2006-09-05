@@ -23,7 +23,6 @@
 
 // Forward declaration
 class AGHG;
-class Emcoef_ind;
 class GDP;
 class DependencyFinder;
 class IInfo;
@@ -43,7 +42,9 @@ class GlobalTechnologyDatabase;
 */
 class technology: public ITechnology
 {
+    // TODO: Ideally these classes would use public interfaces.
     friend class XMLDBOutputter;
+    friend class IndirectEmissionsCalculator;
 private:
     void clear();
 protected:
@@ -79,7 +80,6 @@ protected:
     std::vector<AGHG*> ghg; //!< suite of greenhouse gases
     std::map<std::string,double> emissmap; //!< map of ghg emissions
     std::map<std::string,double> emfuelmap; //!< map of ghg emissions implicit in fuel
-    std::map<std::string,double> emindmap; //!< map of indirect ghg emissions
     std::string note; //!< input data notation for this technology
 
     std::map<std::string,int> ghgNameMap; //!< Map of ghg name to integer position in vector.
@@ -149,7 +149,6 @@ public:
     void scaleFixedOutput(const double scaleRatio); // scale fixed supply
     // calculates fuel input and technology output
 
-    void indemission( const std::vector<Emcoef_ind>& emcoef_ind );
     void calcEmission( const std::string& aGoodName, const int aPeriod );
 
     // ****** return names and values ******
@@ -172,7 +171,11 @@ public:
     
     virtual double getCalibrationOutput( const int aPeriod ) const;
 
-    virtual void adjustForCalibration( double subSectorDemand, const std::string& regionName, const IInfo* aSubsectorIInfo, const int period ); // Adjust share weights for calibration
+    virtual void adjustForCalibration( double subSectorDemand,
+                                       const std::string& regionName,
+                                       const IInfo* aSubsectorIInfo,
+                                       const int period );
+    
     bool techAvailable( ) const; // Return available status (re: calibration)
     virtual bool outputFixed() const; // return calibration output value
     double getInput() const; // return fuel input amount
@@ -190,7 +193,6 @@ public:
     const std::vector<std::string> getGHGNames() const;
     const std::map<std::string,double>& getemissmap() const; // return map of all ghg emissions
     const std::map<std::string,double>& getemfuelmap() const; // return map of all ghg emissions
-    const std::map<std::string,double>& getemindmap() const; // return map of all ghg emissions
     double get_emissmap_second( const std::string& str ) const; // return value for ghg
     double getlexp() const; // return logit exponential for the technology
     double getFixedOutput() const; // return fixed output

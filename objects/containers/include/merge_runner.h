@@ -30,8 +30,12 @@ class MergeRunner: public IScenarioRunner {
 	friend class ScenarioRunnerFactory;
 public:
     ~MergeRunner();
-    bool setupScenario( Timer& timer, const std::string aName, const std::list<std::string> aScenComponents = std::list<std::string>() );
-    virtual bool runScenario( const int aSinglePeriod, Timer& aTimer );
+
+    // IParsable interface
+    virtual bool XMLParse( const xercesc::DOMNode* aRoot );
+
+    bool setupScenarios( Timer& timer, const std::string aName, const std::list<std::string> aScenComponents = std::list<std::string>() );
+    virtual bool runScenarios( const int aSinglePeriod, Timer& aTimer );
     void printOutput( Timer& timer, const bool aCloseDB = true ) const;
 	Scenario* getInternalScenario();
 	virtual const Scenario* getInternalScenario() const;

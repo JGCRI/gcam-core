@@ -24,7 +24,6 @@
 #include "util/base/include/xml_helper.h"
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/summary.h"
-#include "emissions/include/indirect_emiss_coef.h"
 #include "containers/include/world.h"
 #include "containers/include/gdp.h"
 #include "containers/include/info_factory.h"
@@ -41,6 +40,7 @@
 #include "investment/include/idistributor.h"
 #include "investment/include/iexpected_profit_calculator.h"
 #include "investment/include/investment_utils.h"
+#include "reporting/include/indirect_emissions_calculator.h"
 
 using namespace std;
 using namespace xercesc;
@@ -1753,7 +1753,7 @@ void Subsector::setShare( const double shareVal, const int period ) {
 }
 
 //! write Subsector output to database
-void Subsector::csvOutputFile() const {
+void Subsector::csvOutputFile( const IndirectEmissionsCalculator* aIndirectEmissCalc ) const {
     // function protocol
     void fileoutput3( string var1name,string var2name,string var3name,
         string var4name,string var5name,string uname,vector<double> dout);
@@ -1840,9 +1840,11 @@ void Subsector::csvOutputFile() const {
             temp[m] = techs[i][m]->get_emissmap_second("CO2");
         }
         fileoutput3( regionName,sectorName,name,techs[i][ 0 ]->getName(),"CO2 emiss","MTC",temp);
+        
         // technology indirect CO2 emission
         for ( int m= 0;m<maxper;m++) {
-            temp[m] = techs[i][m]->get_emissmap_second("CO2ind");
+            temp[m] = techs[i][m]->getInput() *
+                aIndirectEmissCalc->getUpstreamEmissionsCoefficient( techs[ i ][ m ]->getFuelName(), m );
         }
         fileoutput3( regionName,sectorName,name,techs[i][ 0 ]->getName(),"CO2 emiss(ind)","MTC",temp);
     }
@@ -1964,7 +1966,7 @@ void Subsector::MCoutputDemandSector() const {
 *
 * \author Sonny Kim
 */
-void Subsector::MCoutputAllSectors() const {
+void Subsector::MCoutputAllSectors( const IndirectEmissionsCalculator* aIndirectEmissCalc ) const {
     // function protocol
     void dboutput4(string var1name,string var2name,string var3name,string var4name,
         string uname,vector<double> dout);
@@ -2011,9 +2013,11 @@ void Subsector::MCoutputAllSectors() const {
         const string subsecTechName = name + techs[i][ 0 ]->getName();
         // technology indirect CO2 emission
         for( int m= 0;m<maxper;m++) {
-            temp[m] = summary[m].get_emindmap_second("CO2");
+            temp[m] = techs[i][m]->getInput() *
+                aIndirectEmissCalc->getUpstreamEmissionsCoefficient( techs[ i ][ m ]->getFuelName(), m );
         }
         dboutput4(regionName,"CO2 Emiss(ind)",sectorName, subsecTechName,"MTC",temp);
+
         // technology share
         for ( int m= 0;m<maxper;m++) {
             temp[m] = techs[i][m]->getShare();
@@ -2077,18 +2081,6 @@ void Subsector::emission( const int period ){
         summary[period].updateemfuelmap( techs[i][period]->getemfuelmap() );
     }
 }
-
-//! calculate indirect GHG emissions from annual production of each technology
-void Subsector::indemission( const int period, const vector<Emcoef_ind>& emcoef_ind ) {
-    /*! \pre period is less than max period. */
-    assert( period < scenario->getModeltime()->getmaxper() );
-    summary[period].clearemindmap(); // clear emissions map
-    for( unsigned int i = 0; i < techs.size(); ++i ){
-        techs[i][period]->indemission( emcoef_ind );
-        summary[period].updateemindmap(techs[i][period]->getemindmap());
-    }
-}
-
 
 /*! \brief returns (energy) input to sector
 *
@@ -2242,16 +2234,6 @@ map<string, double> Subsector::getemission( const int period ) const {
 */
 map<string, double> Subsector::getemfuelmap( const int period ) const {
     return summary[ period ].getemfuelmap();
-}
-
-/*! \brief returns map of indirect GHG emissions for this sub-sector
-*
-* \author Sonny Kim, Josh Lurz
-* \param period Model period
-* \return map of indirect GHG emissions
-*/
-map<string, double> Subsector::getemindmap( const int period ) const {
-    return summary[ period ].getemindmap();
 }
 
 /*! \brief update summaries for reporting

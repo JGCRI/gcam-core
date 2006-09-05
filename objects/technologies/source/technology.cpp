@@ -18,7 +18,6 @@
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
-#include "emissions/include/indirect_emiss_coef.h"
 #include "containers/include/gdp.h"
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
@@ -100,7 +99,6 @@ void technology::copy( const technology& techIn ) {
 
     emissmap = techIn.emissmap; 
     emfuelmap = techIn.emfuelmap; 
-    emindmap = techIn.emindmap; 
     ghgNameMap = techIn.ghgNameMap; 
 
     // all cloning should have been done before completeInit
@@ -895,16 +893,6 @@ void technology::calcEmission( const string& aGoodName, const int aPeriod ) {
     }
 }
 
-//! calculate indirect GHG emissions from technology use
-void technology::indemission( const vector<Emcoef_ind>& emcoef_ind )
-{
-    emindmap.clear(); // clear emissions map
-    for (int i= 0; i< static_cast<int>( ghg.size() ); i++) {
-        ghg[i]->calcIndirectEmission(input,mTechData->getFuelName(), emcoef_ind );
-        emindmap[ghg[i]->getName()] = ghg[i]->getEmissInd();
-    }
-}
-
 /*! \brief Returns technology name
 *
 * \author Sonny Kim
@@ -1137,11 +1125,6 @@ const map<string,double>& technology::getemissmap() const {
 //! return map of all ghg emissions
 const map<string,double>& technology::getemfuelmap() const {
     return emfuelmap;
-}
-
-//! return map of all ghg emissions
-const map<string,double>& technology::getemindmap() const {
-    return emindmap;
 }
 
 //! return value for ghg

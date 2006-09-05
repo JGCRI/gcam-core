@@ -7,10 +7,8 @@
 /*! 
 * \file building_supply_subsector.h
 * \ingroup CIAM
-* \brief The building supply subsector
+* \brief The BuildingSupplySubSector class header file.
 * \author Steve Smith
-* \date $Date$
-* \version $Revision$
 */
 
 #include <xercesc/dom/DOMNode.hpp>

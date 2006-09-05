@@ -7,7 +7,7 @@
 /*!
 * \file interm_subsector.h
 * \ingroup CIAM
-* \brief The intermittent supply subsector class header file.
+* \brief The IntermittentSubsector class header file.
 * \author Marshall Wise
 */
 

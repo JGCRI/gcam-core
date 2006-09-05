@@ -1,7 +1,7 @@
 /*! 
 * \file tran_subsector.cpp
 * \ingroup Objects
-* \brief transporation technology class source file.
+* \brief TranSubsector class source file.
 * \author Marshall Wise, Sonny Kim, Josh Lurz
 * \date $Date$
 * \version $Revision$

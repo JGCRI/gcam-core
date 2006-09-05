@@ -7,7 +7,7 @@
 /*! 
 * \file building_dmd_subsector.h
 * \ingroup CIAM
-* \brief The building demand subsector
+* \brief The BuildingDemandSubSector class header file.
 * \author Steve Smith
 */
 

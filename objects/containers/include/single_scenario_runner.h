@@ -31,10 +31,14 @@ class Scenario;
 class SingleScenarioRunner: public IScenarioRunner {
     friend class ScenarioRunnerFactory;
 public:
+    // IParsable interface
+    virtual bool XMLParse( const xercesc::DOMNode* aRoot );
+
     virtual ~SingleScenarioRunner();
-    virtual bool setupScenario( Timer& timer, const std::string aName = "",
+
+    virtual bool setupScenarios( Timer& timer, const std::string aName = "",
                                 const std::list<std::string> aScenComponents = std::list<std::string>() );
-    virtual bool runScenario( const int aSinglePeriod, Timer& aTimer );
+    virtual bool runScenarios( const int aSinglePeriod, Timer& aTimer );
     virtual void printOutput( Timer& timer, const bool aCloseDB = true ) const;
     virtual Scenario* getInternalScenario();
     virtual const Scenario* getInternalScenario() const;

@@ -54,7 +54,8 @@ SimplePolicyTargetRunner::SimplePolicyTargetRunner()
   mInterpolatedCurve( new PointSetCurve ),
   mTargetValue( -1 ),
   mTargetYear( 0 ),
-  mTolerance( 0.005 )
+  mTolerance( 0.005 ),
+  mHasParsedConfig( false )
 {
     mSingleScenario = ScenarioRunnerFactory::create( "single-scenario-runner" );
 
@@ -77,15 +78,15 @@ SimplePolicyTargetRunner::~SimplePolicyTargetRunner(){
 }
 
 /*! \brief Setup the Scenario to be run.
-* \detailed This function sets up the contained SingleScenarioRunner.
+* \details This function sets up the contained SingleScenarioRunner.
 * \param aTimer The timer used to print out the amount of time spent performing
 *        operations.
 * \param aName The name to add on to the name read in in the Configuration file.
 * \param aScenComponents A list of additional scenario components to read in.
 * \return Whether the setup completed successfully.
 */
-bool SimplePolicyTargetRunner::setupScenario( Timer& aTimer, const string aName, const list<string> aScenComponents ){
-    bool success = mSingleScenario->setupScenario( aTimer, aName, aScenComponents );
+bool SimplePolicyTargetRunner::setupScenarios( Timer& aTimer, const string aName, const list<string> aScenComponents ){
+    bool success = mSingleScenario->setupScenarios( aTimer, aName, aScenComponents );
 
     // Get the name of the input file from the Configuration.
     const string fileName = Configuration::getInstance()->getFile( "sPolicyInputFileName", "" );
@@ -94,13 +95,58 @@ bool SimplePolicyTargetRunner::setupScenario( Timer& aTimer, const string aName,
         return false;
     }
 
-    // Add note so that if XML read fails here user knows what happened
-    ILogger& mainLog = ILogger::getLogger( "main_log" );
-    mainLog.setLevel( ILogger::NOTICE );
-    mainLog << "Reading simple target finder configuration file " << fileName << endl;
+    // Only read from the configuration file if the data has not already been
+    // directly parsed from the BatchRunner configuration file.
+    if( !mHasParsedConfig ){
+        // Add note so that if XML read fails here user knows what happened
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << "Reading simple target finder configuration file " << fileName << endl;
 
-    // Parse the file.
-    success &= XMLHelper<void>::parseXML( fileName, this );
+        // Parse the file.
+        success &= XMLHelper<void>::parseXML( fileName, this );
+    }
+
+
+    // Vector of strings to hold input errors.
+    vector<string> errorMsgs;
+
+    // Evalutes to true if all the variables that should have been defined were actually defined.
+    // False otherwise.
+    if( !( mLowerBound.get() != 0 && mUpperBound.get() != 0 && !mTargetType.empty()
+        && mTargetValue != -1 && mTargetYear != 0 ) ){
+        errorMsgs.push_back("Missing input variables.");
+        success = false;
+    }
+    // Evaluates to true if both curves have the same number of points.
+    if( mLowerBound->getSortedPairs().size() 
+        != mUpperBound->getSortedPairs().size() ){
+        errorMsgs.push_back("Curves do not have the same number of points.");
+        success = false;
+    }
+    // Evaluates to true if the lower bound has less than or equal to the number of periods
+    // It is unneccesary to check the upper bound because the two curves are guaranteed to have
+    // the same number of points.
+    if( mLowerBound->getSortedPairs().size() 
+        > (unsigned int)getInternalScenario()->getModeltime()->getmaxper() ){
+        errorMsgs.push_back("Curves have more points than the number of periods.");
+        success = false;
+    }
+    // Evaluates to true if both curves have the same starting and ending point.
+    if( ( mLowerBound->getMinX() != mUpperBound->getMinX() )
+        || ( mLowerBound->getMaxX() != mUpperBound->getMaxX() ) ){
+        errorMsgs.push_back("Curves do not have the same starting and ending point.");
+        success = false;
+    }
+
+    if( !success ){
+        // Output all errors in input to the user.
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        for(unsigned int i = 0; i < errorMsgs.size(); i++){
+            mainLog << errorMsgs[ i ] << endl;
+        }
+    }
 
     /*! \pre The target year is initialized. */
     assert( mTargetYear != 0 );
@@ -132,13 +178,13 @@ bool SimplePolicyTargetRunner::setupScenario( Timer& aTimer, const string aName,
 *        operations.
 * \return Whether all model runs solved successfully.
 */
-bool SimplePolicyTargetRunner::runScenario( const int aSingleScenario,
+bool SimplePolicyTargetRunner::runScenarios( const int aSingleScenario,
                                            Timer& timer ){
     // Search until a limit is reach or the solution is found.
     const unsigned int LIMIT_ITERATIONS = 100;
 
     // Run the model for all periods
-    bool success = mSingleScenario->runScenario( Scenario::RUN_ALL_PERIODS, timer );
+    bool success = mSingleScenario->runScenarios( Scenario::RUN_ALL_PERIODS, timer );
 
     // Construct a bisecter which has an initial trial equal to 1/2
     auto_ptr<Bisecter> bisecter( new Bisecter( mPolicyTarget.get(), mTolerance,
@@ -163,7 +209,7 @@ bool SimplePolicyTargetRunner::runScenario( const int aSingleScenario,
         unsigned int start = modeltime->getyr_to_per( static_cast<unsigned int>(mLowerBound->getMinX()) );
         unsigned int max = getInternalScenario()->getModeltime()->getmaxper();
         for( unsigned int i = start; i < max; i++ ){
-            success &= mSingleScenario->runScenario( i, timer );
+            success &= mSingleScenario->runScenarios( i, timer );
         }
 
         pair<double, bool> trial = bisecter->getNextValue();
@@ -241,13 +287,18 @@ const Scenario* SimplePolicyTargetRunner::getInternalScenario() const {
 
 // IParsable Interface callback function
 bool SimplePolicyTargetRunner::XMLParse( const xercesc::DOMNode* aRoot ){
+    // Check for double initialization.
+    assert( !mHasParsedConfig );
+
+    // Set the configuration has been parsed.
+    mHasParsedConfig = true;
 
     // assume we were passed a valid node.
     assert( aRoot );
-    
+
     // get the children of the node.
     DOMNodeList* nodeList = aRoot->getChildNodes();
-    
+    bool success = true;
     // loop through the children
     for ( unsigned int i = 0; i < nodeList->getLength(); i++ ){
         DOMNode* curr = nodeList->item( i );
@@ -285,12 +336,13 @@ bool SimplePolicyTargetRunner::XMLParse( const xercesc::DOMNode* aRoot ){
             else if( nameOfCurve == "upper-bound"){
                 mUpperBound->XMLParse( curr );
             }
-            else{
+            else {
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::WARNING );
                 mainLog << "Unrecognized name of curve: " << nameOfCurve
                         << " found while parsing SimplePolicyTargetRunner." << endl
                         << "Looking for \"lower-bound\" or \"upper-bound\"" << endl;
+                success = false;
             }
         }
 
@@ -300,54 +352,11 @@ bool SimplePolicyTargetRunner::XMLParse( const xercesc::DOMNode* aRoot ){
             mainLog.setLevel( ILogger::WARNING );
             mainLog << "Unrecognized string: " << nodeName
                     << " found while parsing SimplePolicyTargetRunner." << endl;
+            success = false;
         }
     }
-
-    // Vector of strings to hold input errors.
-    vector<string> errorMsgs;
-    bool success = true;
-
-    // Evalutes to true if all the variables that should have been defined were actually defined.
-    // False otherwise.
-    if( !( mLowerBound.get() != 0 && mUpperBound.get() != 0 && !mTargetType.empty()
-        && mTargetValue != -1 && mTargetYear != 0 ) ){
-        errorMsgs.push_back("Missing input variables.");
-        success = false;
-    }
-    // Evaluates to true if both curves have the same number of points.
-    if( mLowerBound->getSortedPairs().size() 
-        != mUpperBound->getSortedPairs().size() ){
-        errorMsgs.push_back("Curves do not have the same number of points.");
-        success = false;
-    }
-    // Evaluates to true if the lower bound has less than or equal to the number of periods
-    // It is unneccesary to check the upper bound because the two curves are guaranteed to have
-    // the same number of points.
-    if( mLowerBound->getSortedPairs().size() 
-        > (unsigned int)getInternalScenario()->getModeltime()->getmaxper() ){
-        errorMsgs.push_back("Curves have more points than the number of periods.");
-        success = false;
-    }
-    // Evaluates to true if both curves have the same starting and ending point.
-    if( ( mLowerBound->getMinX() != mUpperBound->getMinX() )
-        || ( mLowerBound->getMaxX() != mUpperBound->getMaxX() ) ){
-        errorMsgs.push_back("Curves do not have the same starting and ending point.");
-        success = false;
-    }
-
-    if( !success ){
-        // Output all errors in input to the user.
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        for(unsigned int i = 0; i < errorMsgs.size(); i++){
-            mainLog << errorMsgs[ i ] << endl;
-        }
-    }
-
     return success;
 }
-
-
 
 const string& SimplePolicyTargetRunner::getXMLNameStatic(){
     static const string XML_NAME = "simple-policy-target-runner";

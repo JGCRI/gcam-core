@@ -22,6 +22,8 @@
 #include "marketplace/include/imarket_type.h"
 #include "util/base/include/configuration.h"
 #include "containers/include/iinfo.h"
+#include "util/base/include/summary.h"
+#include "reporting/include/indirect_emissions_calculator.h"
 
 using namespace std;
 using namespace xercesc;
@@ -318,4 +320,91 @@ void SupplySector::adjustForFixedOutput( const double aMarketDemand, const int a
             subsec[ i ]->adjShares( aMarketDemand, shareRatio, totalfixedOutput, aPeriod ); 
         }
     }
+}
+
+//! Write MiniCAM style Sector output to database.
+void SupplySector::dbOutput( const IndirectEmissionsCalculator* aIndEmissCalc ) const {
+    const Modeltime* modeltime = scenario->getModeltime();
+    // function protocol
+    void dboutput4(string var1name,string var2name,string var3name,string var4name,
+        string uname,vector<double> dout);
+
+    // total Sector output
+    int maxper = modeltime->getmaxper();
+    vector<double> temp(maxper);
+    for( int per = 0; per < maxper; ++per ){
+        temp[ per ] = getOutput( per );
+    }
+    dboutput4( regionName,"Secondary Energy Prod","by Sector",name,"EJ", temp );
+    dboutput4( regionName,"Secondary Energy Prod",name,"zTotal","EJ", temp );
+
+
+    string str; // temporary string
+
+    // Sector fuel consumption by fuel type
+    typedef map<string,double>:: const_iterator CI;
+    map<string,double> tfuelmap = summary[0].getfuelcons();
+    for (CI fmap=tfuelmap.begin(); fmap!=tfuelmap.end(); ++fmap) {
+        for (int m=0;m<maxper;m++) {
+            temp[m] = summary[m].get_fmap_second(fmap->first);
+        }
+        if( fmap->first == "" ){
+            dboutput4( regionName,"Fuel Consumption",name, "No Fuelname", "EJ",temp);
+        }
+        else {
+            dboutput4( regionName,"Fuel Consumption",name,fmap->first,"EJ",temp);
+        }
+    }
+
+    // Sector emissions for all greenhouse gases
+    map<string,double> temissmap = summary[0].getemission(); // get gases for per 0
+    for (CI gmap=temissmap.begin(); gmap!=temissmap.end(); ++gmap) {
+        for (int m=0;m<maxper;m++) {
+            temp[m] = summary[m].get_emissmap_second(gmap->first);
+        }
+        dboutput4(regionName,"Emissions","Sec-"+name,gmap->first,"MTC",temp);
+    }
+    // CO2 emissions by Sector
+    for ( int m=0;m<maxper;m++) {
+        temp[m] = summary[m].get_emissmap_second("CO2");
+    }
+    dboutput4( regionName,"CO2 Emiss","by Sector",name,"MTC",temp);
+    dboutput4( regionName,"CO2 Emiss",name,"zTotal","MTC",temp);
+
+    // CO2 indirect emissions by Sector
+    for ( int m=0;m<maxper;m++) {
+        temp[m] = aIndEmissCalc->getIndirectEmissions( name, m );
+    }
+    dboutput4( regionName,"CO2 Emiss(ind)",name,"zTotal","MTC",temp);
+
+    // Sector price
+    for ( int m=0;m<maxper;m++) {
+        temp[m] = getPrice( m );
+    }
+    dboutput4( regionName,"Price",name,"zSectorAvg","$/GJ", temp );
+    // for electricity Sector only
+    if (name == "electricity") {
+        for ( int m=0;m<maxper;m++) {
+            temp[m] = getPrice( m ) * 2.212 * 0.36;
+        }
+        dboutput4( regionName,"Price","electricity C/kWh","zSectorAvg","90C/kWh",temp);
+    }
+
+    // Sector price
+    for ( int m = 0; m < maxper; m++ ) {
+        temp[m] = getPrice( m );
+    }
+    dboutput4( regionName,"Price","by Sector",name,"$/GJ", temp );
+    // Sector carbon taxes paid
+    for( int per = 0; per < maxper; ++per ){
+        temp[ per ] = getTotalCarbonTaxPaid( per );
+    }
+    dboutput4( regionName,"General","CarbonTaxPaid",name,"$", temp );
+    // do for all subsectors in the Sector
+    for( unsigned int i = 0; i < subsec.size(); ++i ){
+        // output or demand for each technology
+        subsec[ i ]->MCoutputSupplySector();
+        subsec[ i ]->MCoutputAllSectors( aIndEmissCalc );
+    }
+    subsec_outfile( aIndEmissCalc );
 }

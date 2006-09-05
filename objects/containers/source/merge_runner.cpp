@@ -25,8 +25,14 @@ MergeRunner::MergeRunner(): mScenario( new Scenario ){
 MergeRunner::~MergeRunner(){
 }
 
+// IParsable interface
+bool MergeRunner::XMLParse( const xercesc::DOMNode* aRoot ){
+    // No data to parse.
+    return true;
+}
+
 //! Setup the scenario.
-bool MergeRunner::setupScenario( Timer& timer, const string aName, const list<string> aScenComponents ){
+bool MergeRunner::setupScenarios( Timer& timer, const string aName, const list<string> aScenComponents ){
     // Parse the input file.
     const Configuration* conf = Configuration::getInstance();
     bool success = XMLHelper<void>::parseXML( conf->getFile( "xmlInputFileName" ), mScenario.get() );
@@ -74,7 +80,7 @@ bool MergeRunner::setupScenario( Timer& timer, const string aName, const list<st
 * \author Josh Lurz
 */
 
-bool MergeRunner::runScenario( const int aSinglePeriod, Timer& aTimer ){
+bool MergeRunner::runScenarios( const int aSinglePeriod, Timer& aTimer ){
     return true;
 }
 

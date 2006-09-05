@@ -216,7 +216,7 @@ const string& Scenario::getName() const {
 * \param aSinglePeriod Single period to run or RUN_ALL_PERIODS if all periods
 *        should be run.
 * \param aPrintDebugging Whether to print extra debugging files.
-* \param filenameEnding The string to add to the end of the debug output file
+* \param aFilenameEnding The string to add to the end of the debug output file
 *        for uniqueness.
 * \return Whether all model runs solved successfully.
 */
@@ -314,6 +314,7 @@ bool Scenario::calculatePeriod( const int aPeriod,
         marketplace->nullSuppliesAndDemands( aPeriod );
     }
     world->calc( aPeriod ); // call to calculate initial supply and demand
+
     bool success = solve( aPeriod ); // solution uses Bisect and NR routine to clear markets
     world->finalizePeriod( aPeriod );
     
@@ -323,7 +324,6 @@ bool Scenario::calculatePeriod( const int aPeriod,
                                           : list<string>();
 
     world->updateSummary( primaryFuelList, aPeriod ); // call to update summaries for reporting
-    world->emiss_ind( aPeriod ); // call to calculate global emissions
 
     // Mark that the period is now valid.
     mIsValidPeriod[ aPeriod ] = true;

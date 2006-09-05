@@ -41,6 +41,12 @@ SingleScenarioRunner::SingleScenarioRunner():mScenario( new Scenario ){
 SingleScenarioRunner::~SingleScenarioRunner(){
 }
 
+// IParsable interface
+bool SingleScenarioRunner::XMLParse( const xercesc::DOMNode* aRoot ){
+    // No data to parse.
+    return true;
+}
+
 /*! \brief Setup the Scenario to be run.
 * \details This function opens the various output files, reads in the base input
 *          file and the list of scenario components from the configuration file
@@ -51,7 +57,7 @@ SingleScenarioRunner::~SingleScenarioRunner(){
 * \param aScenComponents A list of additional scenario components to read in.
 * \return Whether the setup completed successfully.
 */
-bool SingleScenarioRunner::setupScenario( Timer& timer, const string aName, const list<string> aScenComponents ){
+bool SingleScenarioRunner::setupScenarios( Timer& timer, const string aName, const list<string> aScenComponents ){
     // Parse the input file.
     const Configuration* conf = Configuration::getInstance();
     bool success = XMLHelper<void>::parseXML( conf->getFile( "xmlInputFileName" ), mScenario.get() );
@@ -115,7 +121,7 @@ bool SingleScenarioRunner::setupScenario( Timer& timer, const string aName, cons
 * \param aTimer The timer used to print out the amount of time spent performing
 *        operations.
 */
-bool SingleScenarioRunner::runScenario( const int aSinglePeriod, Timer& aTimer ){
+bool SingleScenarioRunner::runScenarios( const int aSinglePeriod, Timer& aTimer ){
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
     mainLog << "Starting a model run." << endl;

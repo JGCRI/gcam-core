@@ -47,6 +47,7 @@
 #include "emissions/include/icarbon_calc.h"
 #include "util/base/include/atom.h"
 #include "land_allocator/include/land_node.h"
+#include "reporting/include/indirect_emissions_calculator.h"
 
 #include <ctime>
 #include "dbxml/DbXml.hpp"
@@ -85,10 +86,11 @@ XMLDBOutputter::DBContainer::XMLContainerWrapper::XMLContainerWrapper( DbXml::Xm
 
 /*! \brief Constructor
 */
-XMLDBOutputter::XMLDBOutputter(){
-    mTabs.reset( new Tabs );
-    mCurrentTechYear = 0;
-}
+XMLDBOutputter::XMLDBOutputter(): 
+mTabs( new Tabs ),
+mCurrIndirectEmissions( 0 ),
+mCurrentTechYear( 0 )
+{}
 
 /*! \brief Write the output to the database.
 * \details Write the accumulated output to the database. This will open the
@@ -304,6 +306,16 @@ void XMLDBOutputter::startVisitRegion( const Region* aRegion,
     // Write the opening region tag and the type of the base class.
     XMLWriteOpeningTag( aRegion->getXMLName(), mBuffer, mTabs.get(),
         aRegion->getName(), 0, Region::getXMLNameStatic() );
+
+    // Calculate indirect emissions coefficients for all Technologies in a Region.
+    mIndirectEmissCalc.reset( new IndirectEmissionsCalculator );
+
+    // The XML db outputter is always called in all-period mode but the indirect
+    // emissions calculator only works in single period mode.
+    assert( aPeriod == -1 );
+    for( int m = 0; m < scenario->getModeltime()->getmaxper(); ++m ){
+        aRegion->accept( mIndirectEmissCalc.get(), m );
+    }
 }
 
 void XMLDBOutputter::endVisitRegion( const Region* aRegion,
@@ -492,14 +504,19 @@ void XMLDBOutputter::startVisitTechnology( const technology* aTechnology,
 
     // Write out the share.
     XMLWriteElement( aTechnology->share, "tech-share", mBuffer, mTabs.get() );
+
+    // Calculate the technology's indirect emissions.
+    mCurrIndirectEmissions = aTechnology->getInput()
+                             * mIndirectEmissCalc->getUpstreamEmissionsCoefficient( aTechnology->getFuelName(), aPeriod );
 }
 
 void XMLDBOutputter::endVisitTechnology( const technology* aTechnology,
                                          const int aPeriod )
 {
-    // Clear the stored fuel name and technology year.
+    // Clear the stored technology information.
     mCurrentFuel.clear();
     mCurrentTechYear = 0;
+    mCurrIndirectEmissions = 0;
 
     // Write the closing technology tag.
     XMLWriteClosingTag( aTechnology->getXMLName1D(), mBuffer, mTabs.get() );
@@ -539,6 +556,12 @@ void XMLDBOutputter::startVisitGHG( const AGHG* aGHG, const int aPeriod ){
         int currPeriod = scenario->getModeltime()->getyr_to_per( mCurrentTechYear );
         XMLWriteElementWithAttributes( aGHG->getEmission( currPeriod ), "emissions",
                                        mBuffer, mTabs.get(), attrs );
+
+        // Write indirect emissions if this is CO2.
+        if( aGHG->getName() == "CO2" ){
+            XMLWriteElementWithAttributes( mCurrIndirectEmissions, "indirect-emissions",
+                                           mBuffer, mTabs.get(), attrs );
+        }
     }
 }
 

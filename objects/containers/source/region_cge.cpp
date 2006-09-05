@@ -30,7 +30,6 @@
 #include "emissions/include/ghg_policy.h"
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
-#include "emissions/include/indirect_emiss_coef.h"
 #include "containers/include/world.h"
 #include "util/base/include/model_time.h" 
 #include "marketplace/include/marketplace.h"

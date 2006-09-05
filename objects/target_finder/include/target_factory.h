@@ -15,9 +15,9 @@
 */
 
 /*!
-* \file scenario_runner_factory.h
+* \file target_factory.h
 * \ingroup Objects
-* \brief ScenarioRunnerFactory header file.
+* \brief TargetFactory header file.
 * \author Josh Lurz
 * \date $Date$
 * \version $Revision$

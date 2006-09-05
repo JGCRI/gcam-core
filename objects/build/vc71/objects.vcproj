@@ -254,9 +254,6 @@
 					RelativePath="..\..\emissions\source\ghg_policy.cpp">
 				</File>
 				<File
-					RelativePath="..\..\emissions\source\indirect_emiss_coef.cpp">
-				</File>
-				<File
 					RelativePath="..\..\emissions\source\input_driver.cpp">
 				</File>
 				<File
@@ -668,6 +665,9 @@
 					RelativePath="..\..\reporting\source\graph_printer.cpp">
 				</File>
 				<File
+					RelativePath="..\..\reporting\source\indirect_emissions_calculator.cpp">
+				</File>
+				<File
 					RelativePath="..\..\reporting\source\input_output_table.cpp">
 				</File>
 				<File
@@ -849,9 +849,6 @@
 					RelativePath="..\..\containers\include\scenario.h">
 				</File>
 				<File
-					RelativePath="..\..\containers\include\scenario_runner.h">
-				</File>
-				<File
 					RelativePath="..\..\containers\include\scenario_runner_factory.h">
 				</File>
 				<File
@@ -944,9 +941,6 @@
 					RelativePath="..\..\emissions\include\icarbon_calc.h">
 				</File>
 				<File
-					RelativePath="..\..\emissions\include\indirect_emiss_coef.h">
-				</File>
-				<File
 					RelativePath="..\..\emissions\include\input_driver.h">
 				</File>
 				<File
@@ -1014,12 +1008,6 @@
 			<Filter
 				Name="resources"
 				Filter="">
-				<File
-					RelativePath="..\..\resources\include\accumulated_grade.h">
-				</File>
-				<File
-					RelativePath="..\..\resources\include\accumulated_post_grade.h">
-				</File>
 				<File
 					RelativePath="..\..\resources\include\grade.h">
 				</File>
@@ -1335,13 +1323,13 @@
 					RelativePath="..\..\reporting\include\graph_printer.h">
 				</File>
 				<File
+					RelativePath="..\..\reporting\include\indirect_emissions_calculator.h">
+				</File>
+				<File
 					RelativePath="..\..\reporting\include\input_output_table.h">
 				</File>
 				<File
 					RelativePath="..\..\reporting\include\land_allocator_printer.h">
-				</File>
-				<File
-					RelativePath="..\..\reporting\include\output_container.h">
 				</File>
 				<File
 					RelativePath="..\..\reporting\include\sector_report.h">

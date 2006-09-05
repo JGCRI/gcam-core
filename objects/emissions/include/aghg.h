@@ -20,7 +20,6 @@
 #include "util/base/include/iround_trippable.h"
 
 // Forward declarations
-class Emcoef_ind;
 class GDP;
 class GhgMAC;
 class Input;
@@ -100,8 +99,6 @@ public:
                                const double input, const std::vector<IOutput*>& aOutputs,
                                const GDP* aGDP, const int aPeriod ) = 0;
 
-    void calcIndirectEmission( const double input, const std::string& fuelname,
-                               const std::vector<Emcoef_ind>& emcoef_ind  );
     /*!
      * \brief Returns the name of ghg gas.
      * \return A string representing the name of the ghg gas.

@@ -1,7 +1,7 @@
 /*! 
 * \file building_dmd_sector.cpp
 * \ingroup CIAM
-* \brief The building demand sector
+* \brief The BuildingDemandSector class source file.
 * \author Steve Smith
 * \date $Date$
 * \version $Revision$

@@ -195,7 +195,7 @@ void World::toInputXML( ostream& out, Tabs* tabs ) const {
     }
     
     // Climate model parameters
-    if ( !mClimateModel.get() ) {
+    if ( mClimateModel.get() ) {
         mClimateModel->toInputXML( out, tabs );
     }
 
@@ -402,13 +402,6 @@ void World::updateSummary( const list<string> aPrimaryFuelList, const int period
     }
 }
 
-//! calculate indirect emissions for each region
-void World::emiss_ind( const int period ) {
-    for( RegionIterator i = regions.begin(); i != regions.end(); i++ ){
-        ( *i )->emissionInd( period ); // calculate indirect emissions
-    }
-}
-
 /*! Calculates the global emissions.
 */
 void World::runClimateModel() {
@@ -509,6 +502,7 @@ bool World::getCalibrationSetting() const {
 *
 * \author Steve Smith
 * \param period Model period
+* \param calAccuracy Calibration tolerance.
 * \param printWarnings flag to turn on logging of warnings if calibrations are
 *        not accurate
 * \return Boolean true if calibration is ok.
@@ -592,7 +586,7 @@ const IClimateModel* World::getClimateModel() const {
 * with each datapoint containing a time period and an amount of gas emissions.
 * \note The user is responsible for deallocating the memory in the returned Curves.
 * \author Josh Lurz
-* \param The name of the ghg to create a set of curves for.
+* \param ghgName The name of the ghg to create a set of curves for.
 * \return A map with keys as region names and Curves as values representing the quantity of ghg emissions by time period.
 */
 const map<const string,const Curve*> World::getEmissionsQuantityCurves( const string& ghgName ) const {
@@ -622,7 +616,7 @@ const map<const string,const Curve*> World::getEmissionsQuantityCurves( const st
 * with each datapoint containing a time period and the price gas emissions. 
 * \note The user is responsible for deallocating the memory in the returned Curves.
 * \author Josh Lurz
-* \param The name of the ghg to create a set of Curves for.
+* \param ghgName The name of the ghg to create a set of Curves for.
 * \return A map with keys as region names and Curves as values representing the price of ghg emissions by time period. 
 */
 const map<const string,const Curve*> World::getEmissionsPriceCurves( const string& ghgName ) const {

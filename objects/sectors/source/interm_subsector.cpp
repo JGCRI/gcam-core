@@ -1,7 +1,7 @@
 /*!
 * \file interm_subsector.cpp
 * \ingroup CIAM
-* \brief Subsector class source file.
+* \brief IntermittentSubsector class source file.
 * \author Marshall Wise
 */
 

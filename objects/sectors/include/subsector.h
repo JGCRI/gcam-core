@@ -7,7 +7,7 @@
 /*! 
 * \file subsector.h
 * \ingroup Objects
-* \brief The subsector class header file.
+* \brief The Subsector class header file.
 * \author Sonny Kim
 */
 
@@ -23,7 +23,6 @@
 // Forward declarations
 class Summary;
 class ITechnology;
-class Emcoef_ind;
 class GDP;
 class IInfo;
 class DependencyFinder;
@@ -37,6 +36,7 @@ class IDistributor;
 class Tabs;
 class ILandAllocator;
 class Demographics;
+class IndirectEmissionsCalculator;
 class GlobalTechnologyDatabase;
 
 /*! 
@@ -171,12 +171,11 @@ public:
     double getCalAndFixedInputs( const int period, const std::string& goodName, const bool bothVals ) const;
     double getCalAndFixedOutputs( const int period, const std::string& goodName, const bool bothVals ) const;
     bool setImpliedFixedInput( const int period, const std::string& goodName, const double requiredOutput );
-    void csvOutputFile() const; 
+    void csvOutputFile( const IndirectEmissionsCalculator* aIndirectEmissCalc ) const; 
     virtual void MCoutputSupplySector() const; 
     void MCoutputDemandSector() const; 
-    void MCoutputAllSectors() const; 
+    void MCoutputAllSectors( const IndirectEmissionsCalculator* aIndirectEmissCalc ) const; 
     void emission( const int period );
-    void indemission( const int period, const std::vector<Emcoef_ind>& emcoef_ind );
     double getInput( const int period ) const;
     virtual double getOutput( const int period ) const;
     double getAnnualInvestment( const int aPeriod ) const;
@@ -193,10 +192,15 @@ public:
     std::map<std::string, double> getfuelcons( const int period ) const; 
     std::map<std::string, double> getemission( const int period ) const;
     std::map<std::string, double> getemfuelmap( const int period ) const; 
-    std::map<std::string, double> getemindmap( const int period ) const;
     void adjShares( const double demand, const double shareRatio, const double totalfixedOutput, const int period );
     void updateSummary( const int period );
-    virtual void adjustForCalibration( double sectorDemand, double totalfixedOutput, double totalCalOutputs, const bool allFixedOutput, const int period );
+
+    virtual void adjustForCalibration( double sectorDemand,
+                                       double totalfixedOutput,
+                                       double totalCalOutputs,
+                                       const bool allFixedOutput,
+                                       const int period );
+
     void scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue );
     int getNumberAvailTechs( const int period ) const;
     virtual void tabulateFixedDemands( const int period, const IInfo* aSectorInfo);

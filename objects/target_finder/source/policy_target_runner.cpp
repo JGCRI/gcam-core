@@ -70,18 +70,24 @@ PolicyTargetRunner::PolicyTargetRunner(){
 PolicyTargetRunner::~PolicyTargetRunner(){
 }
 
+// IParsable interface
+bool PolicyTargetRunner::XMLParse( const xercesc::DOMNode* aRoot ){
+    // TODO: Parse the data here instead of from the configuration file.
+    return true;
+}
+
 /*! \brief Setup the Scenario to be run.
-* \detailed This function sets up the contained SingleScenarioRunner.
+* \details This function sets up the contained SingleScenarioRunner.
 * \param aTimer The timer used to print out the amount of time spent performing
 *        operations.
 * \param aName The name to add on to the name read in in the Configuration file.
 * \param aScenComponents A list of additional scenario components to read in.
 * \return Whether the setup completed successfully.
 */
-bool PolicyTargetRunner::setupScenario( Timer& aTimer, const string aName,
+bool PolicyTargetRunner::setupScenarios( Timer& aTimer, const string aName,
                                         const list<string> aScenComponents )
 {
-    bool success = mSingleScenario->setupScenario( aTimer, aName, aScenComponents );
+    bool success = mSingleScenario->setupScenarios( aTimer, aName, aScenComponents );
     
     // This has to be done after the modeltime is initialzed. Determine the
     // period in which to reach the target.
@@ -117,7 +123,7 @@ bool PolicyTargetRunner::setupScenario( Timer& aTimer, const string aName,
 * \return Whether all model runs solved successfully.
 * \author Josh Lurz
 */
-bool PolicyTargetRunner::runScenario( const int aSinglePeriod, Timer& aTimer ) {
+bool PolicyTargetRunner::runScenarios( const int aSinglePeriod, Timer& aTimer ) {
     
     // Search until a limit is reach or the solution is found.
     const unsigned int LIMIT_ITERATIONS = 100;
@@ -191,7 +197,7 @@ bool PolicyTargetRunner::solveInitialTarget( const unsigned int aLimitIterations
 
     // Run the model without a tax target once to get a baseline for the
     // bisecter and to calculate the initial non-tax periods.
-    bool success = mSingleScenario->runScenario( Scenario::RUN_ALL_PERIODS, aTimer );
+    bool success = mSingleScenario->runScenarios( Scenario::RUN_ALL_PERIODS, aTimer );
 
     const Modeltime* modeltime = getInternalScenario()->getModeltime();
     // Create the bisection object. Use 0 as the initial trial value because the
@@ -220,7 +226,7 @@ bool PolicyTargetRunner::solveInitialTarget( const unsigned int aLimitIterations
         // positive tax to a tax of absolute zero.
         for( int period = 0; period < modeltime->getmaxper(); ++period ){
             if( mCurrentTaxes[ period ] > 0 ){
-                success &= mSingleScenario->runScenario( period, aTimer );
+                success &= mSingleScenario->runScenarios( period, aTimer );
             }
         }
     }
@@ -263,7 +269,7 @@ bool PolicyTargetRunner::solveFutureTarget( const unsigned int aLimitIterations,
     // current period concentration may not be accurate and reflect the effect
     // of this tax in the current period, since this period was not run while
     // solving the previous period.
-    bool success = mSingleScenario->runScenario( aPeriod, aTimer );
+    bool success = mSingleScenario->runScenarios( aPeriod, aTimer );
 
     // Construct a bisecter which has an initial trial equal to the current tax.
     auto_ptr<Bisecter> bisecter( new Bisecter( mPolicyTarget.get(), aTolerance,
@@ -286,7 +292,7 @@ bool PolicyTargetRunner::solveFutureTarget( const unsigned int aLimitIterations,
         setTrialTaxes( mPolicyTarget->getTaxName(), mCurrentTaxes );
 
         // Run the base scenario.
-        success = mSingleScenario->runScenario( aPeriod, aTimer );
+        success = mSingleScenario->runScenarios( aPeriod, aTimer );
     }
 
     if( bisecter->getIterations() >= aLimitIterations ){
