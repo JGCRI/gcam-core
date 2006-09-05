@@ -42,7 +42,6 @@ isGeologicSequestration( true ),
 storageCost( util::getLargeNumber() ), // default to a large cost to turn off CCS
 sequestAmountGeologic( 0 ),
 sequestAmountNonEngy( 0 ),
-emissInd( 0 ),
 // this is inefficient as it is greater than the lifetime
 // but much simpler than converting period to liftime period 
 // TODO: Fix this so it has one spot per active period.
@@ -78,7 +77,6 @@ void AGHG::copy( const AGHG& other ){
     storageName = other.storageName;
     sequestAmountGeologic = other.sequestAmountGeologic;
     sequestAmountNonEngy = other.sequestAmountNonEngy;
-    emissInd = other.emissInd;
 
     mEmissions.resize( scenario->getModeltime()->getmaxper() );
     std::copy( other.mEmissions.begin(), other.mEmissions.end(), mEmissions.begin() );
@@ -167,7 +165,6 @@ void AGHG::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( sequestAmountGeologic, "sequestAmountGeologic", out, tabs );
     XMLWriteElement( sequestAmountNonEngy, "sequestAmountNonEngy", out, tabs );
     XMLWriteElement( mEmissionsByFuel[ period ], "emissFuel", out, tabs );
-    XMLWriteElement( emissInd, "emissInd", out, tabs );
 
     toDebugXMLDerived( period, out, tabs );
     // done writing xml for data members.
@@ -378,11 +375,6 @@ double AGHG::getSequestAmountNonEngy() const {
 //! Return ghg emissions inplicit in fuel.
 double AGHG::getEmissFuel( const int aPeriod ) const {
     return mEmissionsByFuel[ aPeriod ];
-}
-
-//! Return indirect ghg emissions.
-double AGHG::getEmissInd() const {
-    return emissInd;
 }
 
 //! returns the emissions Driver value. emissions are proportional to input minus output.

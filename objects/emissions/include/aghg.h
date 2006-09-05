@@ -109,7 +109,7 @@ public:
     // These two should be one function!
     double getSequestAmountGeologic() const;
     double getSequestAmountNonEngy() const;
-    double getEmissInd() const;
+
     double getEmissFuel( const int aPeriod ) const;
     bool getEmissionsCoefInputStatus() const;
     void setEmissionsCoefInputStatus();
@@ -144,7 +144,6 @@ protected:
     std::vector<double> mEmissionsByFuel; //!< Emissions by primary fuel.
     double sequestAmountGeologic; //!< geologic sequestered emissions (calculated)
     double sequestAmountNonEngy; //!< sequestered in non-energy form (calculated)
-    double emissInd; //!< indirect emissions
 
     std::auto_ptr<AEmissionsDriver> mEmissionsDriver; //!< emissions driver delegate
 
