@@ -55,7 +55,12 @@ const string& SO2Emissions::getName() const {
     return getXMLNameStatic();
 }
 
-void SO2Emissions::initCalc( const IInfo* aSubsectorInfo ){
+void SO2Emissions::initCalc( const string& aRegionName,
+                             const string& aFuelName,
+                             const IInfo* aLocalInfo,
+                             const int aPeriod )
+{
+    // TODO: Determine why this doesn't call the base class method.
     mEmissionsCoef.reset( new ReadEmissionsCoef( 1 ) );
 }
 

@@ -38,7 +38,12 @@ public:
     virtual AComplexEmissions* clone() const = 0;
 
     virtual void copyGHGParameters( const AGHG* prevGHG );
-    virtual void initCalc( const IInfo* aSubsectorInfo );
+    
+    virtual void initCalc( const std::string& aRegionName,
+                           const std::string& aFuelName,
+                           const IInfo* aLocalInfo,
+                           const int aPeriod );
+
     virtual double getGHGValue( const std::string& regionName, const std::string& fuelName,
                                 const std::vector<IOutput*>& aOutputs, const double efficiency,
                                 const int period ) const;
@@ -51,7 +56,8 @@ protected:
     AComplexEmissions();
     AComplexEmissions( const AComplexEmissions& other );
     AComplexEmissions& operator=( const AComplexEmissions& other );
-
+    
+    double gwp; //!< global warming poential
     double maxCntrl; //!<  final control fraction for ghg's
     double gdpcap0; //!< User inputed variable- represents midpoint of curve for control function
     double tau; //!< User inputed timescale parameter in control function

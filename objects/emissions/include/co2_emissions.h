@@ -24,6 +24,7 @@
 #include "emissions/include/aghg.h"
 #include <string>
 #include <xercesc/dom/DOMNode.hpp>
+#include "util/base/include/value.h"
 
 /*! 
  * \ingroup Objects
@@ -35,8 +36,17 @@ public:
     virtual ~CO2Emissions();
 
     virtual CO2Emissions* clone() const;
+    
+    virtual void copyGHGParameters( const AGHG* aPrevGHG );
+    
     static const std::string& getXMLNameStatic();
+
     virtual const std::string& getName() const;
+
+    virtual void initCalc( const std::string& aRegionName,
+                           const std::string& aFuelName,
+                           const IInfo* aLocalInfo,
+                           const int aPeriod );
 
     virtual double getGHGValue( const std::string& regionName,
                                 const std::string& fuelName,
@@ -56,6 +66,9 @@ protected:
     virtual void parseName( const std::string& aNameAttr );
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
+
+    //! Fuel coefficient.
+    Value mFuelCoefficient;
 };
 
 #endif // _CO2_EMISSIONS_H_

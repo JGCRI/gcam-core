@@ -30,7 +30,6 @@
 
 // Forward declaration
 class AGHG;
-class Emcoef_ind;
 class GDP;
 class DependencyFinder;
 class IInfo;
@@ -40,7 +39,7 @@ class Demographic;
 class IOutput;
 class GlobalTechnologyDatabase;
 
-/*! 
+/*!
 * \ingroup Objects
 * \brief This class defines the interface for what it means to be a MiniCAM technology.
 *
@@ -125,14 +124,14 @@ public:
     virtual double getTotalGHGCost( const std::string& aRegionName, const int aPeriod ) const = 0;
     virtual double getCarbonTaxPaid( const std::string& aRegionName, int aPeriod ) const = 0;
     virtual double getShareWeight() const = 0;
-    virtual void ITechnology::copyGHGParameters( const AGHG* prevGHG ) = 0;
-    virtual AGHG* ITechnology::getGHGPointer( const std::string& ghgName ) = 0;
+    virtual void copyGHGParameters( const AGHG* prevGHG ) = 0;
+    virtual const AGHG* getGHGPointer( const std::string& aGHGName ) = 0;
     virtual const std::vector<std::string> getGHGNames() const = 0;
     virtual const std::map<std::string,double>& getemissmap() const = 0; // return map of all ghg emissions
     virtual const std::map<std::string,double>& getemfuelmap() const = 0; // return map of all ghg emissions
 
     virtual double get_emissmap_second( const std::string& str ) const = 0; // return value for ghg
-    virtual double getlexp() const = 0; // return logit exponential for the technology
+
     virtual double getFixedOutput() const = 0; // return fixed output
     virtual double getFixedInput( const int aPeriod ) const = 0;
     virtual int getNumbGHGs()  const = 0; // number of GHG objects in this technology

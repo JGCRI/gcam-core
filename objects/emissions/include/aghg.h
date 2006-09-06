@@ -58,7 +58,31 @@ public:
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
 
-    virtual void copyGHGParameters( const AGHG* prevGHG );
+    /*!
+     * \brief Copies parameters such as Tau, GDP0, and MAC curve that should
+     *        only be specified once
+     * \details Certain parameters for GHG emissions should only be specified
+     *          once so that they are consistent for all years (and also to
+     *          simplify input). Given that GHG objects are embedded in 
+     *          technology objects this means that these parameters need to be
+     *          copied from object to object. This method copies any needed
+     *          parameters from the previous year's GHG object. Also included in
+     *          this function is code for the variable adjMaxCntrl. The code for
+     *          this varible needs to be run only once, with the values at the
+     *          end of the period, so it is useful to have it here where those
+     *          values are defined. adjMaxCntrl has a default of 1, so if it is
+     *          not input, maxCntrl will simply be multiplied by 1, and the
+     *          function for adjusting gdpcap0 will simplify to gdpcap0 =
+     *          gdpcap0, thus keeping it at the same value. If adjMaxCntrl != 1,
+     *          it will adjust gdpcap0 up or down so that the base year
+     *          emissions remain unchanged. adjMaxCntrl should be input once, in
+     *          the base year. 
+     *
+     * \author Steve Smith and Nick Fernandez
+     * \param aPrevGHG pointer to previous period's GHG object
+     */
+    virtual void copyGHGParameters( const AGHG* aPrevGHG ) = 0;
+
     double getGHGValue( const Input* aInput, const std::string& aRegionName, const std::string& aProdName,
                         const int aPeriod ) const;
     /*! 
@@ -120,7 +144,19 @@ public:
     bool getEmissionsCoefInputStatus() const;
     void setEmissionsCoefInputStatus();
     double getCarbonTaxPaid( const std::string& aRegionName, int aPeriod ) const;
-    virtual void initCalc( const IInfo* aSubsectorInfo );
+
+    /*!
+     * \brief Perform initializations that only need to be done once per period.
+     * \param aRegionName Region name.
+     * \param aFuelName Fuel name.
+     * \param aLocalInfo The local information object.
+     * \param aPeriod Model period.
+     */
+    virtual void initCalc( const std::string& aRegionName,
+                           const std::string& aFuelName,
+                           const IInfo* aSubsectorInfo,
+                           const int aPeriod ) = 0;
+
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     void setEmissionsDriver( std::auto_ptr<AEmissionsDriver>& aEmissionsDriver );
 protected:
@@ -146,7 +182,7 @@ protected:
 
     double rmfrac; //!< fraction of carbon removed from fuel
     double storageCost; //!< storage cost associated with the remove fraction
-    double gwp; //!< global warming poential
+
     std::vector<double> mEmissions; //!< emissions (calculated)
     std::vector<double> mEmissionsByFuel; //!< Emissions by primary fuel.
     double sequestAmountGeologic; //!< geologic sequestered emissions (calculated)

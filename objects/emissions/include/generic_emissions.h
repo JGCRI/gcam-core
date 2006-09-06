@@ -36,7 +36,11 @@ public:
     GenericEmissions* clone() const;
     static const std::string& getXMLNameStatic();
     virtual const std::string& getName() const;
-    virtual void initCalc( const IInfo* aSubSectorInfo );
+
+    virtual void initCalc( const std::string& aRegionName,
+                           const std::string& aFuelName,
+                           const IInfo* aLocalInfo,
+                           const int aPeriod );
 protected:
     virtual const std::string& getXMLName() const;
     virtual void parseName( const std::string& aNameAttr );

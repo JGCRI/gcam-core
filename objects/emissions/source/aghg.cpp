@@ -36,7 +36,6 @@ typedef vector<Input*>::const_iterator CInputIterator;
 
 //! Default constructor.
 AGHG::AGHG():
-gwp( 1 ),
 rmfrac( 0 ),
 isGeologicSequestration( true ),
 storageCost( util::getLargeNumber() ), // default to a large cost to turn off CCS
@@ -71,7 +70,6 @@ AGHG& AGHG::operator=( const AGHG& other ){
 //! Copy helper function.
 void AGHG::copy( const AGHG& other ){
     rmfrac = other.rmfrac;
-    gwp = other.gwp;
     isGeologicSequestration = other.isGeologicSequestration;
     storageCost = other.storageCost;
     storageName = other.storageName;
@@ -118,9 +116,6 @@ void AGHG::XMLParse(const DOMNode* node) {
             storageName = XMLHelper<string>::getAttr( curr, "name" );
             storageCost = XMLHelper<double>::getValue( curr );
         }
-        else if( nodeName == "GWP" ){
-            gwp = XMLHelper<double>::getValue( curr );
-        }
         else if( EmissionsDriverFactory::isEmissionsDriverNode( nodeName ) ){
             setEmissionsDriver( EmissionsDriverFactory::create( nodeName ) );
         }
@@ -143,7 +138,6 @@ void AGHG::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( rmfrac, "removefrac", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( isGeologicSequestration, "isGeologicSequestration", out, tabs, true );
     XMLWriteElementCheckDefault( storageCost, "storageCost", out, tabs, util::getLargeNumber() );
-    XMLWriteElementCheckDefault( gwp, "GWP", out, tabs, 1.0 );
 
     toInputXMLDerived( out, tabs );
     // done writing xml for data members.
@@ -158,7 +152,6 @@ void AGHG::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
     // write xml for data members
     XMLWriteElement( rmfrac, "removefrac", out, tabs );
-    XMLWriteElement( gwp, "GWP", out, tabs );
     XMLWriteElement( mEmissions[ period ], "emission", out, tabs );
     XMLWriteElement( isGeologicSequestration, "isGeologicSequestration", out, tabs );
     XMLWriteElement( storageCost, "storageCost", out, tabs );
@@ -185,33 +178,6 @@ void AGHG::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 const string& AGHG::getXMLNameStatic(){
     static const string XML_NAME = "GHG";
     return XML_NAME;
-}
-/*! \brief Copies parameters such as Tau, GDP0, and MAC curve that should only be specified once
-* \detailed Certain parameters for GHG emissions should only be specified once so that they are
-* consistent for all years (and also to simplify input). Given that GHG objects are embedded in 
-* technology objects this means that these parameters need to be copied from object to object.
-* This method copies any needed parameters from the previous year's GHG object.
-* Also included in this function is code for the variable adjMaxCntrl.  The code for this varible
-* needs to be run only once, with the values at the end of the period, so it is useful to have it here
-* where those values are defined.  adjMaxCntrl has a default of 1, so if it is not input, maxCntrl will simply
-* be multiplied by 1, and the function for adjusting gdpcap0 will simplify to gdpcap0 = gdpcap0, thus keeping it
-* at the same value.  If adjMaxCntrl != 1, it will adjust gdpcap0 up or down so that the base year emissions
-* remain unchanged.  adjMaxCntrl should be input once, in the base year. 
-*
-* \author Steve Smith and Nick Fernandez
-* \param prevGHG pointer to previous period's GHG object
-*/
-void AGHG::copyGHGParameters( const AGHG* prevGHG ) {
-
-    assert( prevGHG ); // Make sure valid pointer was passed
- 
-    if ( !gwp ) { 
-        gwp = prevGHG->gwp; // only copy if GWP has not changed
-    }
-}
-
-//! Perform initializations that only need to be done once per period
-void AGHG::initCalc( const IInfo* aSubsectorInfo ) {
 }
 
 /*!
@@ -276,7 +242,7 @@ double AGHG::getGHGValue( const Input* aInput, const string& aRegionName,
     double convFactor = aInput->getConversionFactor( aRegionName );
     
     // Return the rate.
-    return ghgTax * gwp * currInputGasCoef * convFactor;
+    return ghgTax * currInputGasCoef * convFactor;
 }
 
 /*! \brief Calculate the input emissions for a good.
@@ -344,16 +310,12 @@ void AGHG::calcEmission( const vector<Input*> aInputs, const string& aRegionName
         tempEmission -= outputEmissions;
     }
 
-    // Calculate emissions for the constraint market based on the global warming potential of the gas.
-    // CO2 is 1.
-    double emissGwp = gwp * tempEmission;
-
     // Store the total emissions.
     mEmissions[ aPeriod ] = tempEmission;
 
     // TODO: Need to do sequestered emissions here.
     // Add to the constraint market. 
-    marketplace->addToDemand( getName(), aRegionName, emissGwp, aPeriod, false );
+    marketplace->addToDemand( getName(), aRegionName, tempEmission, aPeriod, false );
 }
 
 //! Return Ghg emissions.
@@ -410,7 +372,7 @@ double AGHG::getCarbonTaxPaid( const string& aRegionName, const int aPeriod ) co
     }
     // The carbon tax paid is the amount of the emission multiplied by the tax and the global
     // warming emission. This may be a negative in the case of a credit.
-    return GHGTax * mEmissions[ aPeriod ] * gwp;
+    return GHGTax * mEmissions[ aPeriod ];
 }
 
 

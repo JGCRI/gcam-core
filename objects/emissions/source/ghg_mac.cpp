@@ -231,7 +231,7 @@ void GhgMAC::initCalc( const string& ghgName ){
 * \param period the current period
 * \warning MAC curves are all keyed off of CO2 price.
 * \todo Add capability to adjust for different GWP in GHG vs MAC.
-* \todo make the good name more general instead of hard coding CO2?
+* \todo make the good name more general instead of hard coding CO2
 * \todo Put the CH4 shift into a separate type of MAC class
 */
 double GhgMAC::findReduction( const string& regionName, const int period ) const {

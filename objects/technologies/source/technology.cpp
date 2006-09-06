@@ -496,7 +496,7 @@ void technology::initCalc( const string& aRegionName,
     }
 
     for( unsigned int i = 0; i < ghg.size(); i++ ){
-        ghg[i]->initCalc( aSubsectorInfo );
+        ghg[i]->initCalc( aRegionName, mTechData->getFuelName(), aSubsectorInfo, aPeriod );
     }
 
     for( unsigned int i = 0; i < mOutputs.size(); ++i ){
@@ -1107,11 +1107,10 @@ void technology::copyGHGParameters( const AGHG* prevGHG ) {
 }
 
 /*! \brief Returns the pointer to a specific GHG 
-* \param ghgName Name of GHG 
-* \warning Assumes there is only one GHG object with any given name
+* \param aGHGName Name of GHG 
 */
-AGHG* technology::getGHGPointer( const string& ghgName ) {
-    const int ghgIndex = util::searchForValue( ghgNameMap, ghgName );
+const AGHG* technology::getGHGPointer( const string& aGHGName ) {
+    const int ghgIndex = util::searchForValue( ghgNameMap, aGHGName );
 
     return ghg[ ghgIndex ];
      
@@ -1130,11 +1129,6 @@ const map<string,double>& technology::getemfuelmap() const {
 //! return value for ghg
 double technology::get_emissmap_second( const string& str) const {
     return util::searchForValue( emissmap, str );
-}
-
-//! returns technology logit exponential
-double technology::getlexp()  const {
-    return lexp;
 }
 
 //! Set the technology year.

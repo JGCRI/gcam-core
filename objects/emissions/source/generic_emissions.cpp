@@ -43,8 +43,12 @@ const string& GenericEmissions::getName() const {
     return mName;
 }
 
-void GenericEmissions::initCalc( const IInfo* aSubSectorInfo ){
-    AComplexEmissions::initCalc( aSubSectorInfo );
+void GenericEmissions::initCalc( const string& aRegionName,
+                                 const string& aFuelName,
+                                 const IInfo* aLocalInfo,
+                                 const int aPeriod )
+{
+    AComplexEmissions::initCalc( aRegionName, aFuelName, aLocalInfo, aPeriod );
     if( !mEmissionsDriver.get() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );

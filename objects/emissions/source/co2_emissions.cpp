@@ -23,7 +23,6 @@
 #include "util/base/include/xml_helper.h"
 #include "containers/include/iinfo.h"
 #include "technologies/include/ioutput.h"
-#include "containers/include/gdp.h"
 
 using namespace std;
 using namespace xercesc;
@@ -38,6 +37,10 @@ CO2Emissions::~CO2Emissions(){
 //! Clone operator.
 CO2Emissions* CO2Emissions::clone() const {
     return new CO2Emissions( *this );
+}
+
+void CO2Emissions::copyGHGParameters( const AGHG* aPrevGHG ){
+    // Nothing needs to be copied.
 }
 
 /*!
@@ -59,6 +62,22 @@ const string& CO2Emissions::getXMLNameStatic(){
 
 const string& CO2Emissions::getName() const {
     return getXMLNameStatic();
+}
+
+void CO2Emissions::initCalc( const string& aRegionName,
+                             const string& aFuelName,
+                             const IInfo* aLocalInfo,
+                             const int aPeriod )
+{
+    // Setup the cached fuel CO2 coefficient.
+    // Fuel market may not exist.
+    const Marketplace* marketplace = scenario->getMarketplace();
+    const IInfo* fuelInfo = marketplace->getMarketInfo( aFuelName,
+                                                        aRegionName,
+                                                        aPeriod,
+                                                        false );
+
+    mFuelCoefficient = fuelInfo ? fuelInfo->getDouble( "CO2Coef", false ) : 0;
 }
 
 double CO2Emissions::getGHGValue( const string& regionName, const string& fuelName,
@@ -91,30 +110,28 @@ double CO2Emissions::getGHGValue( const string& regionName, const string& fuelNa
 
     // units for generalized cost is in 75$/gj
     double generalizedCost = 0;
-
-    // Fuel market may not exist.
-    const IInfo* fuelInfo = marketplace->getMarketInfo( fuelName, regionName, period, false );
-    const double coefFuel = fuelInfo ? fuelInfo->getDouble( "CO2Coef", false ) : 0;
-
+    
+    assert( mFuelCoefficient.isInited() );
+    
     double coefProduct = calcOutputCoef( aOutputs, period );
     // if remove fraction is greater than zero and storage cost is required
-    if (rmfrac > 0) {
+    if ( rmfrac > 0 ) {
         // add geologic sequestration cost
-        if (isGeologicSequestration) {
+        if ( isGeologicSequestration ) {
             // gwp applied only on the amount emitted
             // account for conversion losses through efficiency
-            generalizedCost = ((1.0 - rmfrac)*GHGTax*gwp + rmfrac*marketStorageCost)
-                * (coefFuel/efficiency - coefProduct) / CVRT90 * CVRT_tg_MT;
+            generalizedCost = ( ( 1.0 - rmfrac ) * GHGTax + rmfrac * marketStorageCost )
+                * ( mFuelCoefficient / efficiency - coefProduct ) / CVRT90 * CVRT_tg_MT;
         }
         // no sequestration or storage cost added for non-energy use of fossil fuels
         else {
-            generalizedCost = ((1.0 - rmfrac)*GHGTax*gwp)
-                * (coefFuel/efficiency - coefProduct) / CVRT90 * CVRT_tg_MT;
+            generalizedCost = ( ( 1.0 - rmfrac ) * GHGTax )
+                * ( mFuelCoefficient / efficiency - coefProduct ) / CVRT90 * CVRT_tg_MT;
         }
     }
     // no storage required
     else {
-        generalizedCost = GHGTax * gwp * (coefFuel/efficiency - coefProduct) / CVRT90 * CVRT_tg_MT;
+        generalizedCost = GHGTax * ( mFuelCoefficient / efficiency - coefProduct ) / CVRT90 * CVRT_tg_MT;
     }
 
     // The generalized cost returned by the GHG may be negative if
@@ -135,25 +152,24 @@ void CO2Emissions::calcEmission( const string& regionName,
 
     const Marketplace* marketplace = scenario->getMarketplace();
 
-    // Fuel market may not exist.
-    const IInfo* fuelInfo = marketplace->getMarketInfo( fuelname, regionName, aPeriod, false );
-    const double coefFuel = fuelInfo ? fuelInfo->getDouble( "CO2Coef", false ): 0;
     double coefProduct = calcOutputCoef( aOutputs, aPeriod );
-
+    
+    assert( mFuelCoefficient.isInited() );
+    
     // sequestered emissions
     if (rmfrac > 0) {
         // geologic sequestration
         if(isGeologicSequestration) {
-            sequestAmountGeologic = rmfrac * ( (input * coefFuel ) - ( primaryOutput * coefProduct ) );
+            sequestAmountGeologic = rmfrac * ( (input * mFuelCoefficient ) - ( primaryOutput * coefProduct ) );
         }
         // non-energy use of fuel, ie petrochemicals
         else {
-            sequestAmountNonEngy = rmfrac * ( (input * coefFuel ) - ( primaryOutput * coefProduct ) );
+            sequestAmountNonEngy = rmfrac * ( (input * mFuelCoefficient ) - ( primaryOutput * coefProduct ) );
         }
     }
     // Note that negative emissions can occur here since biomass has a coef of 0. 
-    mEmissions[ aPeriod ] = ( 1.0 - rmfrac ) * ( ( input * coefFuel ) - ( primaryOutput * coefProduct ) );
-    mEmissionsByFuel[ aPeriod ] = ( 1.0 - rmfrac ) * input * coefFuel;
+    mEmissions[ aPeriod ] = ( 1.0 - rmfrac ) * ( ( input * mFuelCoefficient ) - ( primaryOutput * coefProduct ) );
+    mEmissionsByFuel[ aPeriod ] = ( 1.0 - rmfrac ) * input * mFuelCoefficient;
 
     addEmissionsToMarket( regionName, aPeriod );
 }
@@ -170,5 +186,3 @@ void CO2Emissions::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
 
 void CO2Emissions::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
 }
-
-

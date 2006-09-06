@@ -46,6 +46,7 @@ extern Scenario* scenario;
 //! Default constructor.
 AComplexEmissions::AComplexEmissions():
 AGHG(),
+gwp( 1 ),
 emAdjust( 0 ),
 gdpCap( 0 ),
 maxCntrl( -1000 ),
@@ -80,6 +81,7 @@ AComplexEmissions& AComplexEmissions::operator=( const AComplexEmissions& other 
 
 //! Copy helper function.
 void AComplexEmissions::copy( const AComplexEmissions& other ){
+    gwp = other.gwp;
     maxCntrl = other.maxCntrl;
     gdpcap0 = other.gdpcap0;
     tau = other.tau;
@@ -104,7 +106,6 @@ void AComplexEmissions::copyGHGParameters( const AGHG* prevGHG ){
 
     // Copy values that always need to be the same for all periods.
     // Note that finalEmissCoef is not copied, since maxCntrl has already been set appropriately
-    AGHG::copyGHGParameters( prevGHG );
 
     // Ensure that prevGHG can be cast to AComplexEmissions* otherwise return early
     // TODO: Fix this, maybe pass around a struct.
@@ -115,7 +116,11 @@ void AComplexEmissions::copyGHGParameters( const AGHG* prevGHG ){
         mainLog << "Bad dynamic cast occurred in copyGHGParameters." << endl;
         return;
     }
-
+    
+    if ( !gwp ) { 
+        gwp = prevComplexGHG->gwp; // only copy if GWP has not changed
+    }
+    
     maxCntrl = prevComplexGHG->maxCntrl;
     gdpcap0 = prevComplexGHG->gdpcap0;
     tau = prevComplexGHG->tau;
@@ -242,7 +247,10 @@ void AComplexEmissions::calcEmission( const string& regionName,
 }
 
 bool AComplexEmissions::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ){
-    if( nodeName == "inputEmissions" ){
+    if( nodeName == "GWP" ){
+        gwp = XMLHelper<double>::getValue( curr );
+    }
+    else if( nodeName == "inputEmissions" ){
         mEmissionsCoef.reset( new InputEmissionsCoef( XMLHelper<double>::getValue( curr ) ) );
     }
     else if( nodeName == "emAdjust" ){
@@ -289,6 +297,7 @@ bool AComplexEmissions::XMLDerivedClassParse( const string& nodeName, const DOMN
 void AComplexEmissions::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     // Write out the EmissionsCoef
     mEmissionsCoef->toInputXML( out, tabs );
+    XMLWriteElementCheckDefault( gwp, "GWP", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( emAdjust, "emAdjust", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( maxCntrl, "maxCntrl", out, tabs, -1000.0 );
     XMLWriteElementCheckDefault( gdpcap0, "gdpcap0", out, tabs, 0.0 );
@@ -307,6 +316,7 @@ void AComplexEmissions::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
 void AComplexEmissions::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
     // Write out the EmissionsCoef
     mEmissionsCoef->toDebugXML( out, tabs );
+    XMLWriteElement( gwp, "GWP", out, tabs );
     XMLWriteElement( emAdjust, "emAdjust", out, tabs );
     XMLWriteElement( maxCntrl, "maxCntrl", out, tabs );
     XMLWriteElement( gdpcap0, "gdpcap0", out, tabs );
@@ -424,8 +434,11 @@ double AComplexEmissions::calcTechChange( const int period ){
     return pow(1 + (techDiff / 100), year );
 }
 
-void AComplexEmissions::initCalc( const IInfo* aSubsectorInfo ){
-    AGHG::initCalc( aSubsectorInfo );
+void AComplexEmissions::initCalc( const string& aRegionName,
+                                  const string& aFuelName,
+                                  const IInfo* aLocalInfo,
+                                  const int aPeriod )
+{
     maxCntrl *= multMaxCntrl;
     // Make sure control percentage never goes above 100% so there are no negative emissions!
     maxCntrl = min( maxCntrl, 100.0 );
@@ -440,7 +453,7 @@ void AComplexEmissions::initCalc( const IInfo* aSubsectorInfo ){
         mEmissionsCoef.reset( new ReadEmissionsCoef( 0 ) );
     }
 
-    mEmissionsCoef->initCalc(  aSubsectorInfo, getName() );
+    mEmissionsCoef->initCalc( aLocalInfo, getName() );
 
     // If a finalEmissCoef or maxCntrl were read in, a tau and gdpcap0
     // must also have been read in.

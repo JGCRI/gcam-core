@@ -189,12 +189,14 @@ public:
     double getCarbonTaxPaid( const std::string& aRegionName, int aPeriod ) const;
     double getShareWeight() const;
     void copyGHGParameters( const AGHG* prevGHG );
-    AGHG* getGHGPointer( const std::string& ghgName );
+    
+    const AGHG* getGHGPointer( const std::string& aGHGName );
+
     const std::vector<std::string> getGHGNames() const;
     const std::map<std::string,double>& getemissmap() const; // return map of all ghg emissions
     const std::map<std::string,double>& getemfuelmap() const; // return map of all ghg emissions
     double get_emissmap_second( const std::string& str ) const; // return value for ghg
-    double getlexp() const; // return logit exponential for the technology
+
     double getFixedOutput() const; // return fixed output
     double getFixedInput( const int aPeriod ) const;
     int getNumbGHGs()  const; // number of GHG objects in this technology
