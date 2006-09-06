@@ -31,16 +31,17 @@ class InitCalc;
 /*! 
  * \ingroup Objects
  * \brief The AGHG class describes a single gas.
- * \details The AGHG class describes a single gas with
- *          attributes of gas name, unit, emissions coefficients,
- *          and the calculated emissions.
+ * \details The AGHG class describes a single gas with attributes of gas name,
+ *          unit, emissions coefficients, and the calculated emissions.
  *
- *          Note that for non-CO2 GHGs, there are two methods of setting emissions. 
- *          Through an emissions coefficient or a read-in input emissions for a base year (or years).
- *          These are mutually exclusive. The last one of these read in determines the method used.
+ *          Note that for non-CO2 GHGs, there are two methods of setting
+ *          emissions. Through an emissions coefficient or a read-in input
+ *          emissions for a base year (or years). These are mutually exclusive.
+ *          The last one of these read in determines the method used.
  *
- *          Emissions emitted indirectly through use of technology are also calculated.
- *          \author Sonny Kim, Marshall Wise, Steve Smith, Nick Fernandez, Jim Naslund
+ *          Emissions emitted indirectly through use of technology are also
+ *          calculated.
+ * \author Sonny Kim, Marshall Wise, Steve Smith, Nick Fernandez, Jim Naslund
  */
 class AGHG: public IVisitable, public IRoundTrippable
 { 
@@ -62,10 +63,10 @@ public:
                         const int aPeriod ) const;
     /*! 
      * \brief Convert GHG tax and any storage costs into energy units using GHG
-     *        coefficients and return the value or cost of the tax and storage for
-     *        the GHG.
-     * \details Applies taxes only if emissions occur. Emissions occur if there is a
-     *          difference in the emissions coefficients.
+     *        coefficients and return the value or cost of the tax and storage
+     *        for the GHG.
+     * \details Applies taxes only if emissions occur. Emissions occur if there
+     *          is a difference in the emissions coefficients.
      * \author Sonny Kim
      * \param regionName Name of the region for GHG
      * \param fuelName Name of the fuel
@@ -81,19 +82,24 @@ public:
                                const std::string& aGoodName, const double aOutput, const int aPeriod );
     /*!
      * \brief Calculates emissions of GHG's
-     * \detailed Emissions of these gases are equal to the emissions driver multiplied by the emissions coefficient
-     *           (how much of the chemical forming the GHG is emitted per unit driver) multiplied by the control function
-     *           (the extent to which regions are expected to put controls on end-of-pipe emissions- based on their pppGdp)
-     *           multiplied by the result of the Marginal Abatement curve, and finally by an external read-in emissions
-     *           Adjustment factor(if any).  The function also sets the emissions coefficient if emissions are read in.  
+     * \details Emissions of these gases are equal to the emissions driver
+     *          multiplied by the emissions coefficient (how much of the
+     *          chemical forming the GHG is emitted per unit driver) multiplied
+     *          by the control function (the extent to which regions are
+     *          expected to put controls on end-of-pipe emissions- based on
+     *          their pppGdp) multiplied by the result of the Marginal Abatement
+     *          curve, and finally by an external read-in emissions Adjustment
+     *          factor(if any). The function also sets the emissions coefficient
+     *          if emissions are read in.  
      * \author Nick Fernandez, Steve Smith
      * \param regionName Name of the region for GHG
      * \param fuelname The name of the fuel
      * \param input The amount of fuel sent out
      * \param aOutputs Vector of Technology outputs.
      * \param period The period in which this calculation is occurring.
-     * \todo Emissions calc will not work properly with vintaging (base-year emissions will not work,
-     *       and some thought needs to be given to how emissions controls should work)
+     * \todo Emissions calc will not work properly with vintaging (base-year
+     *       emissions will not work, and some thought needs to be given to how
+     *       emissions controls should work)
      */
     virtual void calcEmission( const std::string& regionName, const std::string& fuelname,
                                const double input, const std::vector<IOutput*>& aOutputs,
@@ -125,9 +131,10 @@ protected:
 
     /*!
      * \brief Get the XML node name for output to XML.
-     * \details This public function accesses the private constant string, XML_NAME.
-     *          This way the tag is always consistent for both read-in and output and can be easily changed.
-     *          This function may be virtual to be overridden by derived class pointers.
+     * \details This public function accesses the private constant string,
+     *          XML_NAME. This way the tag is always consistent for both read-in
+     *          and output and can be easily changed. This function may be
+     *          virtual to be overridden by derived class pointers.
      * \author Jim Naslund
      * \return The constant XML_NAME.
      */
@@ -149,8 +156,8 @@ protected:
 
     /*!
      * \brief Parses any child nodes specific to derived classes
-     * \details Method parses any input data from child nodes that are specific to the classes derived from
-     *          this class.
+     * \details Method parses any input data from child nodes that are specific
+     *          to the classes derived from this class.
      * \author Josh Lurz, Steve Smith
      * \param nodeName name of current node
      * \param curr pointer to the current node in the XML input tree
@@ -164,18 +171,22 @@ protected:
     virtual void parseName( const std::string& aNameAttr ) = 0;
     /*!
      * \brief XML output stream for derived classes
-     * \details Function writes output due to any variables specific to derived classes to XML
+     * \details Function writes output due to any variables specific to derived
+     *          classes to XML
      * \author Jim Naslund
      * \param out reference to the output stream
-     * \param tabs A tabs object responsible for printing the correct number of tabs. 
+     * \param tabs A tabs object responsible for printing the correct number of
+     *        tabs. 
      */
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     /*!
      * \brief XML debug output stream for derived classes
-     * \details Function writes output due to any variables specific to derived classes to XML
+     * \details Function writes output due to any variables specific to derived
+     *          classes to XML
      * \author Jim Naslund
      * \param out reference to the output stream
-     * \param tabs A tabs object responsible for printing the correct number of tabs. 
+     * \param tabs A tabs object responsible for printing the correct number of
+     *        tabs. 
      */
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
 
