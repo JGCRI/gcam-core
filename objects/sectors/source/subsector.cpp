@@ -310,7 +310,14 @@ void Subsector::XMLParse( const DOMNode* node ) {
                                 techVec[ i ]->setYear( modeltime->getper_to_yr( i ) );
                             } // end for
                         } // end if fillout
-                    } // end else if
+                    }
+                    else {
+                        ILogger& mainLog = ILogger::getLogger( "main_log" );
+                        mainLog.setLevel( ILogger::WARNING );
+                        mainLog << "Unknown element " << childNodeName
+                                << " encountered while parsing " << nodeName
+                                << endl;
+                    }
                 } // end for
                 techs.push_back( techVec );
             }
