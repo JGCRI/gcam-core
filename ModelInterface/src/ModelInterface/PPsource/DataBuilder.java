@@ -1526,6 +1526,11 @@ public class DataBuilder
     TreeMap timeValue;
     Double dataValue;
     DataBlock toAdd;
+    boolean isEosWeb = false;
+    boolean shouldFlip = false;
+    int internalTimeIndex = 0;
+    int numTime = 1;
+    int timeStep = 1;
     
   //getting file info from XML
     infoChildren = currFile.getChildren();
@@ -1537,7 +1542,19 @@ public class DataBuilder
         dataName = currElem.getAttributeValue("value");
       } else if(currElem.getName().equals("date"))
       {
-        time = Double.parseDouble(currElem.getAttributeValue("value"));
+	String tempAttr;
+        //time = Double.parseDouble(currElem.getAttributeValue("value"));
+	if((tempAttr = currElem.getAttributeValue("value")) != null) {
+		time = Double.parseDouble(tempAttr);
+	} else {
+		time = Double.parseDouble(currElem.getAttributeValue("start"));
+		Double tempEndTime = Double.parseDouble(currElem.getAttributeValue("end"));
+		numTime = (int)(tempEndTime - time) + 1;
+		timeStep = Integer.parseInt(currElem.getAttributeValue("dateStep"));
+		if(numTime < 0) {
+			log.log(Level.WARNING, "End date is before start date");
+		}
+	}
 	/*
       } else if(currElem.getName().equals("res"))
       {
@@ -1561,6 +1578,13 @@ public class DataBuilder
       } else if(currElem.getName().equals("storage"))
       {
         //do nothing but this is a known tag
+      } else if(currElem.getName().equals("eos-webster"))
+      {
+	      isEosWeb = true;
+	      if(currElem.getAttributeValue("flip") != null) {
+		      shouldFlip = Boolean.parseBoolean(currElem.getAttributeValue("flip"));
+	      }
+	      internalTimeIndex = Integer.parseInt(currElem.getAttributeValue("date-index"));
       } else
       {
         log.log(Level.WARNING, "Unknown File Tag -> "+currElem.getName());
@@ -1582,6 +1606,7 @@ public class DataBuilder
       int[] shp = ma2Array.getShape();
       resY = 180.0 / shp[shp.length-2];
       resX = 360.0 / shp[shp.length-1];
+      System.out.println("Has shape: "+shp[0]+"x"+shp[1]+"x"+shp[2]);
 
       //checking for overwrite and setting basic information (avg, ref, units)
       if(dataAvg.containsKey(dataName))
@@ -1621,70 +1646,97 @@ public class DataBuilder
       } else {
 	      NaN = Float.POSITIVE_INFINITY;
       }
-      Variable timeVar = nc.findVariable("time");
-      int internalTimeIndex = 0;
-      if(timeVar != null) {
-	      Array timeArr = timeVar.read();
-	      Index timeInd = timeArr.getIndex();
-	      internalTimeIndex = findYearIndex(timeArr, timeInd, 0, timeArr.getShape()[0]-1, (float)time);
-	      if(internalTimeIndex == -1) {
-		      log.log(Level.WARNING, "Couldn't find "+time+" in time variable defaulting to 0");
+      Variable timeVar = null;
+      Array timeArr = null;
+      Index timeInd = null;
+      if(!isEosWeb) {
+	      timeVar = nc.findVariable("time");
+	      if(timeVar != null) {
+		      timeArr = timeVar.read();
+		      timeInd = timeArr.getIndex();
+	      } else {
+		      log.log(Level.WARNING, "Couldn't find time data defaulting to 0");
 		      internalTimeIndex = 0;
 	      }
       } else {
-	      log.log(Level.WARNING, "Couldn't find time data defaulting to 0");
-	      internalTimeIndex = 0;
+	      --internalTimeIndex;
       }
+      /*
+      System.out.println("Have settings:");
+      System.out.println("resY: "+resY);
+      System.out.println("resX: "+resX);
+      System.out.println("missing value: "+NaN);
+      System.out.println("internal time index: "+internalTimeIndex);
+      System.out.println("num times: "+numTime);
+      System.out.println("time step : "+timeStep);
+      */
 
-      for(double y = (90-resY); y >= -90; y-=resY)
+      for(int currTimeIndex = 0; currTimeIndex < numTime; currTimeIndex += timeStep)
       {
-        k=0;
-        for(double x = -180; x < 180; x+=resX)
-        {
-        	//System.out.println("getting "+ma2Array.getFloat(in.set(0, 0, i, k)));
-          if(ma2Array.getRank() == 2)
-          {
-            dataValue = new Double((double)ma2Array.getFloat(in.set(i, k)));
-          } else if(ma2Array.getRank() == 3)
-          {
-            dataValue = new Double(ma2Array.getDouble(in.set(internalTimeIndex, i, k)));
-          } else if(ma2Array.getRank() == 4)
-          {
-            dataValue = new Double((double)ma2Array.getFloat(in.set(0, internalTimeIndex, i, k)));
-          } else
-          {
-            log.log(Level.SEVERE, "Array rank of "+ma2Array.getRank()+" not supported.");
-            return;
-          }
-          
-          if(dataValue != NaN)
-          {
-            toAdd = new DataBlock(x, y, resX, resY);
-            timeValue = new TreeMap();
-            timeValue.put(new Double(time), dataValue);
+	      if(!isEosWeb && timeVar != null) {
+		      internalTimeIndex = findYearIndex(timeArr, timeInd, 0, timeArr.getShape()[0]-1, (float)(time+currTimeIndex));
+		      if(internalTimeIndex == -1) {
+			      log.log(Level.WARNING, "Couldn't find "+time+" in time variable defaulting to 0");
+			      internalTimeIndex = 0;
+		      }
+	      } else {
+		      internalTimeIndex += timeStep;
+	      }
+	      for(double y = (90-resY); y >= -90; y-=resY)
+	      {
+		      k=0;
+		      for(double x = -180; x < 180; x+=resX)
+		      {
+			      //System.out.println("getting "+ma2Array.getFloat(in.set(0, 0, i, k)));
+			      if(ma2Array.getRank() == 2)
+			      {
+				      dataValue = new Double((double)ma2Array.getFloat(in.set(i, k)));
+			      } else if(ma2Array.getRank() == 3)
+			      {
+				      dataValue = new Double(ma2Array.getDouble(in.set(internalTimeIndex, i, k)));
+				      //System.out.println((x+.5)+","+(y+.5)+","+dataValue);
+			      } else if(ma2Array.getRank() == 4)
+			      {
+				      dataValue = new Double((double)ma2Array.getFloat(in.set(0, internalTimeIndex, i, k)));
+			      } else
+			      {
+				      log.log(Level.SEVERE, "Array rank of "+ma2Array.getRank()+" not supported.");
+				      return;
+			      }
 
-            //check overwrite bit, if so, use hold instead of dataName
-            if(overwrite)
-            {
-              //just replace name with hold, later, we will merge hold over old data
-              toAdd.data.put("hold", timeValue);
-            } else
-            {
-              //add data as normal
-              toAdd.data.put(dataName, timeValue);
-            }
+			      if(dataValue != NaN)
+			      {
+				      if(!shouldFlip) {
+					      toAdd = new DataBlock(x, y, resX, resY);
+				      } else {
+					      toAdd = new DataBlock(x, -1*y, resX, resY);
+				      }
+				      timeValue = new TreeMap();
+				      timeValue.put(new Double(time+currTimeIndex), dataValue);
 
-          //merging this data into the current tree
-            //System.out.println("sending "+dataValue);
-            dataStruct.addData(toAdd, avg);
-          }
-          //else this value SUCKS!!!!
-          
-          k++;
-        }
-        i++;
+				      //check overwrite bit, if so, use hold instead of dataName
+				      if(overwrite)
+				      {
+					      //just replace name with hold, later, we will merge hold over old data
+					      toAdd.data.put("hold", timeValue);
+				      } else
+				      {
+					      //add data as normal
+					      toAdd.data.put(dataName, timeValue);
+				      }
+
+				      //merging this data into the current tree
+				      //System.out.println("sending "+dataValue);
+				      dataStruct.addData(toAdd, avg);
+			      }
+			      //else this value SUCKS!!!!
+
+			      k++;
+		      }
+		      i++;
+	      }
+	      i = 0;
       }
-      
       //done adding all data, if overwrite, must merge with old data now
       if(overwrite)
       {
@@ -1699,6 +1751,16 @@ public class DataBuilder
     
   }
 
+  /**
+   * Finds the year index from the passed in array.
+   * @param arr The array to search in.
+   * @param ind The index for the array
+   * @param low The lowest index the value could be in.
+   * @param high The highest index the value could be in.
+   * @param find The value to find.
+   * @return The index of the given year in the given array, or -1 if not found.
+   * @warning The array must be sorted.
+   */
   private int findYearIndex(Array arr, Index ind, int low, int high, float find) {
 	  // since the array is sorted can do something like binary search
 	  if(high < low || low > high) {
