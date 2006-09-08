@@ -1983,6 +1983,7 @@ public class ManipulationDriver
     }
     
     VDest.setData(VShape.extractRegion((ReferenceVariable)VSource));
+    ((ReferenceVariable)VDest).weight = VShape.getWorkingM("weight", "0");
   }
   /**
    * Give the user access to a contained Child varialbe in the passed

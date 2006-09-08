@@ -388,3 +388,4 @@ public class ReferenceVariable extends Variable
   
   //***************************************************************************
 }
+
