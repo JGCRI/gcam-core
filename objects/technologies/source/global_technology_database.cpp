@@ -84,7 +84,7 @@ void GlobalTechnologyDatabase::XMLParse( const DOMNode* aNode ){
         }
         else if( nodeName == GlobalTechnology::getXMLNameStatic() ) {
             boost::shared_ptr<GlobalTechnology> tmpTech ( new GlobalTechnology() );
-            parseContainerNode( curr, mTechnologyList, tmpTech, GlobalTechnology::parseIdentifier( curr ) );
+            parseContainerNode( curr, mTechnologyList, tmpTech, &GlobalTechnology::parseIdentifier );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );

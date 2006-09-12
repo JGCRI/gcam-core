@@ -859,7 +859,7 @@ template<class T, class U>
 bool parseContainerNode( const xercesc::DOMNode* aNode,
                          std::vector<T*>& aContainerSet, 
                          U* aNewObject,
-                         const std::string aIDAttr = XMLHelper<std::string>::name() )
+                         const std::string& aIDAttr = XMLHelper<std::string>::name() )
 {
     assert( aNode );
     // Force U* to implement IParsable. TODO: Activate this check when all
@@ -919,6 +919,22 @@ bool parseContainerNode( const xercesc::DOMNode* aNode,
     return true;
 }
 
+/*!
+ * \brief Parse the name attribute of a node.
+ * \param aNode Node to parse.
+ * \return The name attribute of the node or the empty string if it does not exist.
+ */
+static const std::string parseNameAttr( const xercesc::DOMNode* aNode ) {
+    return XMLHelper<std::string>::getAttr( aNode,
+                                            XMLHelper<std::string>::name() );
+}
+
+/*!
+ * \brief Type definition for a function pointer that parses the identifier of a
+ *        node.
+ */
+typedef const std::string (*AttrGetter) (const xercesc::DOMNode* aNode);
+
 /*! \brief Function which positions a node containing children within a vector
 *          of its parent, and if successful parses the new node.
 * \details This function will look at the name and delete attributes of the node
@@ -936,8 +952,10 @@ template<class T, class U>
 void parseContainerNode( const xercesc::DOMNode* aNode,
                          std::vector<T>& aContainerSet, 
                          U& aNewObject,
-                         const std::string aObjName = XMLHelper<std::string>::getAttr( aNode, XMLHelper<std::string>::name() ) )
+                         AttrGetter aAttrGetter = &XMLHelper<std::string>::parseNameAttr )
 {
+    const std::string aObjName = aAttrGetter( aNode );
+
     assert( aNode );
     // Force U* to implement IParsable. TODO: Activate this check when all
     // elements of the model properly implement the interface. IParsable*
