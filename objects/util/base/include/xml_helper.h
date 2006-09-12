@@ -945,14 +945,14 @@ typedef const std::string (*AttrGetter) (const xercesc::DOMNode* aNode);
 * \param aContainerSet The vector of objects of the type pointed to by node.
 * \param aNewObject An object to use if the xml node is unique. This node is
 *        deleted if it is not needed.
-* \param aIDAttr Name of the attribute containing the unique identifier for the
-*        node. Defaults to "name".
+* \param aAttrGetter Pointer to a function which parses the ID attribute from
+*        the current node.
 */
 template<class T, class U>
 void parseContainerNode( const xercesc::DOMNode* aNode,
                          std::vector<T>& aContainerSet, 
                          U& aNewObject,
-                         AttrGetter aAttrGetter = &XMLHelper<std::string>::parseNameAttr )
+                         AttrGetter aAttrGetter = &parseNameAttr )
 {
     const std::string aObjName = aAttrGetter( aNode );
 
