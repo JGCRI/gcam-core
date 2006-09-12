@@ -859,7 +859,7 @@ template<class T, class U>
 bool parseContainerNode( const xercesc::DOMNode* aNode,
                          std::vector<T*>& aContainerSet, 
                          U* aNewObject,
-                         const std::string& aIDAttr = XMLHelper<std::string>::name() )
+                         const std::string aIDAttr = XMLHelper<std::string>::name() )
 {
     assert( aNode );
     // Force U* to implement IParsable. TODO: Activate this check when all
@@ -936,7 +936,7 @@ template<class T, class U>
 void parseContainerNode( const xercesc::DOMNode* aNode,
                          std::vector<T>& aContainerSet, 
                          U& aNewObject,
-                         const std::string& aObjName = XMLHelper<std::string>::getAttr( aNode, XMLHelper<std::string>::name() ) )
+                         const std::string aObjName = XMLHelper<std::string>::getAttr( aNode, XMLHelper<std::string>::name() ) )
 {
     assert( aNode );
     // Force U* to implement IParsable. TODO: Activate this check when all
