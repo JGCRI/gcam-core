@@ -731,9 +731,9 @@ double ProductionTechnology::calcShutdownCoef( const string& aRegionName,
     ProductionFunctionInfo prodFunc = { input, prodDmdFn, currSigma, alphaZeroScaler, capital };
 
     // Create a new shutdown decider.
-    auto_ptr<IShutdownDecider> shutdownDecider( new ProfitShutdownDecider );
-    double shutdownCoef = shutdownDecider->calcShutdownCoef( prodFunc, aRegionName,
-                                                              aSectorName, aPeriod );
+    ProfitShutdownDecider shutdownDecider;
+    double shutdownCoef = shutdownDecider.calcShutdownCoef( prodFunc, aRegionName,
+                                                            aSectorName, aPeriod );
     return shutdownCoef;
 }
 

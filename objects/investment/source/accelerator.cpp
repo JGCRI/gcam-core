@@ -275,16 +275,16 @@ double Accelerator::calcAndDistributeInvestment( vector<IInvestable*>& aInvestab
     assert( newInvestment >= 0 );
 
     // Create a logit based investment distributor.
-    auto_ptr<IDistributor> invDistributor( new RateLogitDistributor( mInvestmentLogitExp ) );
+    RateLogitDistributor invDistributor( mInvestmentLogitExp );
 
     // Use the investment distributor to distribute the investment.
-    mInvestments[ aPeriod ] = invDistributor->distribute( mProfitRateCalculator.get(),
-                                                          aInvestables,
-                                                          aNationalAccount,
-                                                          mRegionName,
-                                                          mSectorName,
-                                                          newInvestment,
-                                                          aPeriod );
+    mInvestments[ aPeriod ] = invDistributor.distribute( mProfitRateCalculator.get(),
+                                                         aInvestables,
+                                                         aNationalAccount,
+                                                         mRegionName,
+                                                         mSectorName,
+                                                         newInvestment,
+                                                         aPeriod );
 
     // Check that total investment and distributed investment are equal.
     if( !util::isEqual( newInvestment, mInvestments[ aPeriod ] ) ){
@@ -343,16 +343,16 @@ double Accelerator::calcNewInvestment( vector<IInvestable*>& aInvestables,
     }
 
     // Create a standard profit rate calculator.
-    auto_ptr<IExpectedProfitRateCalculator> expProfitRateCalc( new SimpleExpectedProfitCalculator );
+    SimpleExpectedProfitCalculator expProfitRateCalc;
 
     // Calculate the sector level expected profit rate.
-    const double expProfitRate = expProfitRateCalc->calcSectorExpectedProfitRate( aInvestables,
-                                                                                  aNationalAccount,
-                                                                                  mRegionName,
-                                                                                  mSectorName,
-                                                                                  mInvestmentLogitExp,
-                                                                                  false,
-                                                                                  aPeriod );
+    const double expProfitRate = expProfitRateCalc.calcSectorExpectedProfitRate( aInvestables,
+                                                                                 aNationalAccount,
+                                                                                 mRegionName,
+                                                                                 mSectorName,
+                                                                                 mInvestmentLogitExp,
+                                                                                 false,
+                                                                                 aPeriod );
     
     // Calculate the total new investment using the expected profit and the
     // profit rate elasticity.

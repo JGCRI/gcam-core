@@ -450,15 +450,15 @@ void Scenario::accept( IVisitor* aVisitor, const int aPeriod ) const {
 void Scenario::printOutputXML() const {
 #if( __USE_XML_DB__ )	
     // Create a graph printer.
-    auto_ptr<IVisitor> xmlDBOutputter( new XMLDBOutputter );
+    XMLDBOutputter xmlDBOutputter;
     
     // Update the output container with information from the model.
     // -1 flags to update the output container for all periods at once.
-    accept( xmlDBOutputter.get(), -1 );
+    accept( &xmlDBOutputter, -1 );
     
     
     // Print the output.
-    xmlDBOutputter->finish();
+    xmlDBOutputter.finish();
 #endif
 }
 

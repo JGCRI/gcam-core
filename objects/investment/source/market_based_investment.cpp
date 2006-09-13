@@ -211,7 +211,7 @@ double MarketBasedInvestor::calcAndDistributeInvestment( vector<IInvestable*>& a
     
     // Create a standard profit rate calculator. This will be used to calculate the average
     // levelized cost and to distribute investment. 
-    auto_ptr<IExpectedProfitRateCalculator> expProfitRateCalc( new LevelizedCostCalculator );
+    LevelizedCostCalculator expProfitRateCalc;
     
     // Check if parent level investment is fixed.
     if( mFixedInvestments[ aPeriod ] != -1 ){
@@ -246,13 +246,13 @@ double MarketBasedInvestor::calcAndDistributeInvestment( vector<IInvestable*>& a
         // good.
         marketplace->addToSupply( mMarketName, mRegionName, priceReceived, aPeriod, true );
 
-        const double sectorExpProfit = expProfitRateCalc->calcSectorExpectedProfitRate( aInvestables,
-                                                                                        aNationalAccount,
-                                                                                        mRegionName,
-                                                                                        mSectorName,
-                                                                                        mInvestmentLogitExp,
-                                                                                        false,
-                                                                                        aPeriod );
+        const double sectorExpProfit = expProfitRateCalc.calcSectorExpectedProfitRate( aInvestables,
+                                                                                       aNationalAccount,
+                                                                                       mRegionName,
+                                                                                       mSectorName,
+                                                                                       mInvestmentLogitExp,
+                                                                                       false,
+                                                                                       aPeriod );
 
         // Set the sector expected profit as the right hand side. It will have
         // been cleared at the end of the last iteration, so there should not be
@@ -292,17 +292,17 @@ double MarketBasedInvestor::calcAndDistributeInvestment( vector<IInvestable*>& a
     }
     
     // Create a logit based investment distributor.
-    auto_ptr<IDistributor> invDistributor( new RateLogitDistributor( mInvestmentLogitExp ) );
+    RateLogitDistributor invDistributor( mInvestmentLogitExp );
     
     // Use the investment distributor to distribute the trial investment plus
     // the fixed investment.
-    mInvestments[ aPeriod ] = invDistributor->distribute( expProfitRateCalc.get(),
-                                                          aInvestables,
-                                                          aNationalAccount,
-                                                          mRegionName,
-                                                          mSectorName,
-                                                          totalInvestment,
-                                                          aPeriod );
+    mInvestments[ aPeriod ] = invDistributor.distribute( &expProfitRateCalc,
+                                                         aInvestables,
+                                                         aNationalAccount,
+                                                         mRegionName,
+                                                         mSectorName,
+                                                         totalInvestment,
+                                                         aPeriod );
 
     // Check that total investment and distributed investment are equal.
     if( !util::isEqual( totalInvestment, mInvestments[ aPeriod ] ) ){

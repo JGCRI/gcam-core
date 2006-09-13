@@ -92,6 +92,14 @@ mCurrIndirectEmissions( 0 ),
 mCurrentTechYear( 0 )
 {}
 
+/*!
+ * \brief Destructor
+ * \note This needs to be explicitly defined for incompletely defined members
+ *       to be deleted correctly.
+ */
+XMLDBOutputter::~XMLDBOutputter(){
+}
+
 /*! \brief Write the output to the database.
 * \details Write the accumulated output to the database. This will open the
 *          database, create a unique ID for the scenario and a container with

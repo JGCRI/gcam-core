@@ -118,11 +118,11 @@ namespace objects {
 #if( !defined(_MSC_VER) || _MSC_VER < 1400 )
         return gmtime( &aTime );
 #else
-        static auto_ptr<tm> timeInfo( new tm() );
-        errno_t error = gmtime_s( timeInfo.get(), &aTime );
+        static tm timeInfo;
+        errno_t error = gmtime_s( &timeInfo, &aTime );
         // 0 means the call was successful.
         assert( error == 0 );
-        return timeInfo.get();
+        return &timeInfo;
 #endif
     }
 
@@ -137,11 +137,11 @@ namespace objects {
 #if( !defined(_MSC_VER) || _MSC_VER < 1400 )
         return localtime( &aTime );
 #else
-        static auto_ptr<tm> timeInfo( new tm() );
-        errno_t error = localtime_s( timeInfo.get(), &aTime );
+        static tm timeInfo;
+        errno_t error = localtime_s( &timeInfo, &aTime );
         // 0 means the call was successful.
         assert( error == 0 );
-        return timeInfo.get();
+        return &timeInfo;
 #endif
     }
 

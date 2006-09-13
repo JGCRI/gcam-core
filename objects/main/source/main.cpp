@@ -75,8 +75,8 @@ int main( int argc, char *argv[] ) {
     timer.start();
 
     // Initialize the LoggerFactory
-    auto_ptr<LoggerFactoryWrapper> loggerFactoryWrapper( new LoggerFactoryWrapper() );
-    bool success = XMLHelper<void>::parseXML( loggerFileName, loggerFactoryWrapper.get() );
+    LoggerFactoryWrapper loggerFactoryWrapper;
+    bool success = XMLHelper<void>::parseXML( loggerFileName, &loggerFactoryWrapper );
     
     // Check if parsing succeeded. Non-zero return codes from main indicate
     // failure.

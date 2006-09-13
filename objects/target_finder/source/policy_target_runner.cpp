@@ -202,10 +202,11 @@ bool PolicyTargetRunner::solveInitialTarget( const unsigned int aLimitIterations
     const Modeltime* modeltime = getInternalScenario()->getModeltime();
     // Create the bisection object. Use 0 as the initial trial value because the
     // state of the model is unknown. TODO: Can we do better?
-    auto_ptr<Bisecter> bisecter( new Bisecter( mPolicyTarget.get(), aTolerance, 0, mTargetYear,
-                                               Bisecter::UNKNOWN, Bisecter::UNKNOWN ) );
-    while( bisecter->getIterations() < aLimitIterations ){
-        pair<double, bool> trial = bisecter->getNextValue();
+    Bisecter bisecter( mPolicyTarget.get(), aTolerance, 0, mTargetYear,
+                       Bisecter::UNKNOWN, Bisecter::UNKNOWN );
+
+    while( bisecter.getIterations() < aLimitIterations ){
+        pair<double, bool> trial = bisecter.getNextValue();
 
         // Check for solution.
         if( trial.second ){
@@ -231,7 +232,7 @@ bool PolicyTargetRunner::solveInitialTarget( const unsigned int aLimitIterations
         }
     }
 
-    if( bisecter->getIterations() >= aLimitIterations ){
+    if( bisecter.getIterations() >= aLimitIterations ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Exiting target finding search as the iterations limit was reached." << endl;
@@ -241,7 +242,7 @@ bool PolicyTargetRunner::solveInitialTarget( const unsigned int aLimitIterations
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Target value was found by search algorithm in "
-                << bisecter->getIterations() << " iterations." << endl;
+                << bisecter.getIterations() << " iterations." << endl;
     }
     return success;
 }
@@ -272,12 +273,12 @@ bool PolicyTargetRunner::solveFutureTarget( const unsigned int aLimitIterations,
     bool success = mSingleScenario->runScenarios( aPeriod, aTimer );
 
     // Construct a bisecter which has an initial trial equal to the current tax.
-    auto_ptr<Bisecter> bisecter( new Bisecter( mPolicyTarget.get(), aTolerance,
-                                               mCurrentTaxes[ aPeriod ], mTargetYear,
-                                               Bisecter::UNKNOWN, Bisecter::UNKNOWN ) );
+    Bisecter bisecter( mPolicyTarget.get(), aTolerance,
+                       mCurrentTaxes[ aPeriod ], mTargetYear,
+                       Bisecter::UNKNOWN, Bisecter::UNKNOWN );
 
-    while( bisecter->getIterations() < aLimitIterations ){
-        pair<double, bool> trial = bisecter->getNextValue();
+    while( bisecter.getIterations() < aLimitIterations ){
+        pair<double, bool> trial = bisecter.getNextValue();
         
         // Check for solution.
         if( trial.second ){
@@ -295,7 +296,7 @@ bool PolicyTargetRunner::solveFutureTarget( const unsigned int aLimitIterations,
         success = mSingleScenario->runScenarios( aPeriod, aTimer );
     }
 
-    if( bisecter->getIterations() >= aLimitIterations ){
+    if( bisecter.getIterations() >= aLimitIterations ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Exiting target finding search as the iterations limit was reached." << endl;
@@ -305,7 +306,7 @@ bool PolicyTargetRunner::solveFutureTarget( const unsigned int aLimitIterations,
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Target value was found by search algorithm in "
-                << bisecter->getIterations() << " iterations." << endl;
+                << bisecter.getIterations() << " iterations." << endl;
     }
     return success;
 }
@@ -381,6 +382,6 @@ vector<double> PolicyTargetRunner::calculateHotellingPath( const double aScaler 
 void PolicyTargetRunner::setTrialTaxes( const string& aTaxName, const vector<double> aTaxes ) {
     // Set the fixed taxes into the world. The world will clone this tax object,
     // this object retains ownership of the original.
-    auto_ptr<GHGPolicy> tax( new GHGPolicy( aTaxName, "global", aTaxes ) );
-    mSingleScenario->getInternalScenario()->setTax( tax.get() );
+    GHGPolicy tax( aTaxName, "global", aTaxes );
+    mSingleScenario->getInternalScenario()->setTax( &tax );
 }

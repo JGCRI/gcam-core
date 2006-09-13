@@ -367,9 +367,9 @@ void Region::completeInit( const GlobalTechnologyDatabase* aGlobalTechDB ) {
 
     // Initialize the dependency finder.
     // This may need to move to init calc when markets change by period.
-    auto_ptr<DependencyFinder> depFinder( new DependencyFinder( scenario->getMarketplace(), name ) );
+    DependencyFinder depFinder( scenario->getMarketplace(), name );
     for( SectorIterator sectorIter = supplySector.begin(); sectorIter != supplySector.end(); ++sectorIter ) {
-        ( *sectorIter )->completeInit( mRegionInfo.get(), depFinder.get(), mLandAllocator.get(), aGlobalTechDB );
+        ( *sectorIter )->completeInit( mRegionInfo.get(), &depFinder, mLandAllocator.get(), aGlobalTechDB );
     }
 
     // Finish initializing agLu
@@ -418,8 +418,8 @@ void Region::completeInit( const GlobalTechnologyDatabase* aGlobalTechDB ) {
     // This needs to be at the end of completeInit so that all objects have
     // completed their calls to aDepFinder->addDependency. This should be moved
     // to RegionMiniCAM to avoid confusion.
-    depFinder->createOrdering();
-    reorderSectors( depFinder->getOrdering() );
+    depFinder.createOrdering();
+    reorderSectors( depFinder.getOrdering() );
 
     setupCalibrationMarkets();
 }
@@ -1324,9 +1324,9 @@ bool Region::setImpliedCalInputs( const int period ) {
 
             // Now prepare to loop through all the fuels used by this sector.
             // Get fuel consumption map for sector.
-            auto_ptr<InputFinder> inputFinder( new InputFinder );
-            supplySector[ jsec ]->accept( inputFinder.get(), period );
-            const list<string>& inputsUsed = inputFinder->getInputs();
+            InputFinder inputFinder;
+            supplySector[ jsec ]->accept( &inputFinder, period );
+            const list<string>& inputsUsed = inputFinder.getInputs();
             // Total directly calibrated outputs (not outputs infered from
             // market)
             double totalCalOutputs = 0;
@@ -1473,9 +1473,9 @@ int Region::scaleCalInputs( const int period ) {
     // demands.
     int numberOfScaledValues = 0;
     
-    auto_ptr<InputFinder> inputFinder( new InputFinder );
-    accept( inputFinder.get(), 0 );
-    const list<string>& inputsUsed = inputFinder->getInputs();
+    InputFinder inputFinder;
+    accept( &inputFinder, 0 );
+    const list<string>& inputsUsed = inputFinder.getInputs();
     typedef list<string>::const_iterator CI;
 
     // Loop through each fuel used in this region

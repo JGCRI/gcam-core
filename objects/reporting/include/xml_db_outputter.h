@@ -42,6 +42,8 @@ class XMLDBOutputter : public DefaultVisitor {
 public:
     XMLDBOutputter();
 
+    ~XMLDBOutputter();
+
     void finish() const;
 
     void startVisitScenario( const Scenario* aScenario, const int aPeriod );

@@ -156,8 +156,8 @@ bool TotalPolicyCostCalculator::runTrials(){
                 currTaxes[ per ] = rIter->second->getY( year ) * fraction;
             }
             // Set the fixed taxes into the world.
-            auto_ptr<GHGPolicy> tax( new GHGPolicy( mGHGName, rIter->first, currTaxes ) );
-            mSingleScenario->getInternalScenario()->setTax( tax.get() );
+            GHGPolicy tax( mGHGName, rIter->first, currTaxes );
+            mSingleScenario->getInternalScenario()->setTax( &tax );
         }
 
         // Create an ending for the output files using the run number.

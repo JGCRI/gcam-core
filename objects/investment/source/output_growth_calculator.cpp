@@ -201,14 +201,16 @@ double OutputGrowthCalculator::calcTrialCapital( const vector<IInvestable*>& aIn
     
     // Create a simple expected profit rate calculator and distributor which are
     // needed to calculate the average sector capital to output ratio.
-    auto_ptr<IExpectedProfitRateCalculator> expProfitRateCalc( new SimpleExpectedProfitCalculator );
-    auto_ptr<IDistributor> distributor( new RateLogitDistributor( aInvestmentLogitExp ) );
+    SimpleExpectedProfitCalculator expProfitRateCalc;
+    RateLogitDistributor distributor( aInvestmentLogitExp );
 
     // Calculate the amount of capital required to produce one unit of output.
-    const double capitalOutputRatio = distributor->calcCapitalOutputRatio( aInvestables, expProfitRateCalc.get(),
-                                                                           aNationalAccount,
-                                                                           aRegionName, aGoodName,
-                                                                           aPeriod );
+    const double capitalOutputRatio = distributor.calcCapitalOutputRatio( aInvestables,
+                                                                          &expProfitRateCalc,
+                                                                          aNationalAccount,
+                                                                          aRegionName,
+                                                                          aGoodName,
+                                                                          aPeriod );
     
     // Calculate the trial level of capital needed to reach the desired output.
     mTrialCapital[ aPeriod ] = capitalOutputRatio * additionalOutput +
@@ -267,13 +269,13 @@ double OutputGrowthCalculator::calcOutputGap( const vector<IInvestable*>& aInves
 
     // Create a simple expected profit rate calculator and distributor which are
     // needed to calculate the average sector capital to output ratio.
-    auto_ptr<IExpectedProfitRateCalculator> expProfitRateCalc( new SimpleExpectedProfitCalculator );
-    auto_ptr<IDistributor> distributor( new RateLogitDistributor( aInvestmentLogitExp ) );
+    SimpleExpectedProfitCalculator expProfitRateCalc;
+    RateLogitDistributor distributor( aInvestmentLogitExp );
     
     for( unsigned int i = 0; i < aInvestables.size(); ++i ){
         // Determine the capital to output ratio for the subsector.
-        const double capOutputRatio = aInvestables[ i ]->getCapitalOutputRatio( distributor.get(),
-                                                                                expProfitRateCalc.get(),
+        const double capOutputRatio = aInvestables[ i ]->getCapitalOutputRatio( &distributor,
+                                                                                &expProfitRateCalc,
                                                                                 aNationalAccount,
                                                                                 aRegionName,
                                                                                 aGoodName,

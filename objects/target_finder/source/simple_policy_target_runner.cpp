@@ -187,15 +187,15 @@ bool SimplePolicyTargetRunner::runScenarios( const int aSingleScenario,
     bool success = mSingleScenario->runScenarios( Scenario::RUN_ALL_PERIODS, timer );
 
     // Construct a bisecter which has an initial trial equal to 1/2
-    auto_ptr<Bisecter> bisecter( new Bisecter( mPolicyTarget.get(), mTolerance,
-                                               .5, mTargetYear, 0, 1 ) );
+    Bisecter bisecter( mPolicyTarget.get(), mTolerance,
+                       .5, mTargetYear, 0, 1 );
 
     // Declare some variables we will be using in the loop.
     vector<double> differences = preComputeDifferences( mLowerBound->getSortedPairs(),
                                                         mUpperBound->getSortedPairs());
     double scalingValue = .5; // initial value
 
-    while( bisecter->getIterations() < LIMIT_ITERATIONS ){
+    while( bisecter.getIterations() < LIMIT_ITERATIONS ){
 
         // Compute the emissions based on the constant c and set those emissions as a 
         // constraint in the model.
@@ -212,7 +212,7 @@ bool SimplePolicyTargetRunner::runScenarios( const int aSingleScenario,
             success &= mSingleScenario->runScenarios( i, timer );
         }
 
-        pair<double, bool> trial = bisecter->getNextValue();
+        pair<double, bool> trial = bisecter.getNextValue();
 
         // Check for solution.
         if( trial.second ){
@@ -222,7 +222,7 @@ bool SimplePolicyTargetRunner::runScenarios( const int aSingleScenario,
         scalingValue = trial.first;
     }
 
-    if( bisecter->getIterations() >= LIMIT_ITERATIONS ){
+    if( bisecter.getIterations() >= LIMIT_ITERATIONS ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Exiting target finding search as the iterations limit was reached." << endl;
@@ -232,7 +232,7 @@ bool SimplePolicyTargetRunner::runScenarios( const int aSingleScenario,
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Target value was found by search algorithm in "
-                << bisecter->getIterations() << " iterations." << endl;
+                << bisecter.getIterations() << " iterations." << endl;
     }
 
     mSingleScenario->printOutput( timer, false );
@@ -258,8 +258,8 @@ void SimplePolicyTargetRunner::printOutput( Timer& timer, const bool aCloseDB ) 
     // Open the XML output file and write the final emmissions pathway to it.  It will
     // automatically be closed.
     AutoOutputFile out( "sPolicyOutputFileName", "sPolicyFinalEmissionsCurve.xml" );
-    std::auto_ptr<Tabs> tabs( new Tabs );
-    mInterpolatedCurve->toInputXMLDerived( *out, tabs.get() );
+    Tabs tabs;
+    mInterpolatedCurve->toInputXMLDerived( *out, &tabs );
 
     static const bool printDB = Configuration::getInstance()->getBool( "write-access-db", true );
     
@@ -445,7 +445,7 @@ vector<double> SimplePolicyTargetRunner::curveToConstraintVector( const Curve* a
 void SimplePolicyTargetRunner::setTrialTaxes( const string& aTaxName, const vector<double>& aEmissions ) {
     // Set the fixed constraint into the world. The world will clone this tax object,
     // this object retains ownership of the original.
-    auto_ptr<GHGPolicy> tax( new GHGPolicy( aTaxName, "global" ) );
-    tax->setConstraint( aEmissions );
-    mSingleScenario->getInternalScenario()->setTax( tax.get() );
+    GHGPolicy tax( aTaxName, "global" );
+    tax.setConstraint( aEmissions );
+    mSingleScenario->getInternalScenario()->setTax( &tax );
 }
