@@ -43,12 +43,14 @@ using namespace std;
 auto_ptr<AGHG> GHGFactory::create( const string& aType ){
     if( aType == CO2Emissions::getXMLNameStatic() ){
         AGHG* toReturn = new CO2Emissions();
-        toReturn->setEmissionsDriver( auto_ptr<AEmissionsDriver>( new InputOutputDriver ) );
+        auto_ptr<AEmissionsDriver> newDriver( new InputOutputDriver );
+        toReturn->setEmissionsDriver( newDriver );
         return auto_ptr<AGHG>( toReturn );
     }
     if( aType == SO2Emissions::getXMLNameStatic() ){
         AGHG* toReturn = new SO2Emissions();
-        toReturn->setEmissionsDriver( auto_ptr<AEmissionsDriver>( new InputDriver ) );
+        auto_ptr<AEmissionsDriver> newDriver( new InputOutputDriver );
+        toReturn->setEmissionsDriver( newDriver );
         return auto_ptr<AGHG>( toReturn );
     }
     if( aType == GenericEmissions::getXMLNameStatic() ){

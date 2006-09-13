@@ -117,7 +117,8 @@ void AGHG::XMLParse(const DOMNode* node) {
             storageCost = XMLHelper<double>::getValue( curr );
         }
         else if( EmissionsDriverFactory::isEmissionsDriverNode( nodeName ) ){
-            setEmissionsDriver( EmissionsDriverFactory::create( nodeName ) );
+            auto_ptr<AEmissionsDriver> newDriver = EmissionsDriverFactory::create( nodeName );
+            setEmissionsDriver( newDriver );
         }
         else if( XMLDerivedClassParse( nodeName, curr ) ){
         }
