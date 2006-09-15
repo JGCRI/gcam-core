@@ -30,6 +30,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 	protected Map subsectorList;
 	protected Map techList;
 	public static String xmlName = "emissionsQueryBuilder";
+	private static final String ghgQueryPortion = "*[@type = 'GHG']";
 	public EmissionsQueryBuilder(QueryGenerator qgIn) {
 		super(qgIn);
 		sectorList = null;
@@ -45,7 +46,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		return (new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				int[] selectedInd = list.getSelectedRows();
-				if(selectedInd.length == 0 && qg.currSel != 0) {
+				if(selectedInd.length == 0 && (qg.currSel != 0 && qg.currSel != 3)) {
 					nextButton.setEnabled(false);
 					cancelButton.setText(" Cancel "/*cancelTitle*/);
 				} else if(qg.currSel == 1 || qg.currSel == 2) {
@@ -122,7 +123,9 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			case 2: {
 					list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 					if(ghgList == null) {
-						ghgList = createList(sectorQueryPortion+"/"+subsectorQueryPortion+"/"+technologyQueryPortion+"/GHG/@name", false);
+						ghgList = createList(sectorQueryPortion+"/"+subsectorQueryPortion+"/"+technologyQueryPortion+"/"+
+								ghgQueryPortion+"/@name", false);
+						System.out.println("GETS HERE IN GHG LIST");
 					}
 					temp = ghgList;
 					label.setText("Select Greenhouse Gas:");
@@ -244,7 +247,8 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 				//++i;
 			} else if(i == 3){
 				tempMap = ghgList;
-				ret.append("GHG");
+				//ret.append("GHG");
+				ret.append(ghgQueryPortion.substring(0, ghgQueryPortion.length()-1));
 			} else {
 				//lV = new Vector();
 				tempMap = fuelList;
@@ -252,7 +256,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			}
 			added = false;
 			if(tempMap == null) {
-				if(i <= 2) {
+				if(i <= 3) {
 					ret.append("]/");
 				} else {
 					ret.append("/");
@@ -270,7 +274,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 				Map.Entry me = (Map.Entry)it.next();
 				if(((Boolean)me.getValue()).booleanValue()) {
 					if(!added) {
-						if(i == 0 || i == 1 || i == 2) {
+						if(i == 0 || i == 1 || i == 2 || i == 3) {
 							ret.append(" and (");
 						} else {
 							ret.append("[( ");
@@ -290,7 +294,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 					}
 				}
 			}
-			if(added || i <= 2) {
+			if(added || i <= 3) {
 				ret.append(" )]/");
 			} else {
 				ret.append("/");
@@ -301,7 +305,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		} else if(level == 5) {
 			ret.append(technologyQueryPortion+"/@name");
 		} else if(level == 6) {
-			ret.append("GHG/emissions/@fuel-name");
+			ret.append(ghgQueryPortion+"/emissions/@fuel-name");
 		} else if(level == 7) {
 			ret.append(qg.var).append("/node()");
 		} else {
@@ -319,7 +323,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		String query;
 		StringBuffer ret = new StringBuffer();
 		if(qg.currSel == 3) {
-			query = sectorQueryPortion+"/"+subsectorQueryPortion+"/"+technologyQueryPortion+"/GHG/emissions";
+			query = sectorQueryPortion+"/"+subsectorQueryPortion+"/"+technologyQueryPortion+"/"+ghgQueryPortion+"/emissions";
 		} else if(qg.currSel == 4) {
 			query = sectorQueryPortion;
 		} else if(qg.currSel == 5) {
@@ -355,7 +359,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			default: System.out.println("Error currSel: "+qg.currSel);
 		}
 		qg.axis1Name = qg.nodeLevel;
-		qg.yearLevel = "technology";
+		qg.yearLevel = "emissions";
 		qg.axis2Name = "Year";
 	}
 	private Map createList(String path, boolean isGroupNames) {

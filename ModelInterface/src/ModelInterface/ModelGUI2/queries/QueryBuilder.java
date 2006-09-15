@@ -13,12 +13,12 @@ public abstract class QueryBuilder implements java.io.Serializable {
 	 * have some method for enabaling subtypes of for example sectors. Currently done by
 	 * an attribute with type = the type that is subclassed from
 	 */
-	public static String regionQueryPortion = "*[@type = 'region']";
-	public static String sectorQueryPortion = "*[@type = 'sector']";
-	public static String subsectorQueryPortion = "*[@type = 'subsector']";
-	public static String technologyQueryPortion = "*[@type = 'technology']";
-	public static String resourceQueryPortion = "*[@type = 'resource']";
-	public static String subresourceQueryPortion = "*[@type = 'subresource']";
+	public static final String regionQueryPortion = "*[@type = 'region']";
+	public static final String sectorQueryPortion = "*[@type = 'sector']";
+	public static final String subsectorQueryPortion = "*[@type = 'subsector']";
+	public static final String technologyQueryPortion = "*[@type = 'technology']";
+	public static final String resourceQueryPortion = "*[@type = 'resource']";
+	public static final String subresourceQueryPortion = "*[@type = 'subresource']";
 
 	protected QueryGenerator qg;
 	protected String queryFilter;
