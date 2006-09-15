@@ -192,9 +192,6 @@ public:
     virtual void startVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod ) = 0;
     virtual void endVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod ) = 0;
 
-    virtual void startVisitUnmanagedLandLeaf( const UnmanagedLandLeaf* aUnmanagedLandLeaf, const int aPeriod ) = 0;
-    virtual void endVisitUnmanagedLandLeaf( const UnmanagedLandLeaf* aUnmanagedLandLeaf, const int aPeriod ) = 0;
-
     virtual void startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ) = 0;
     virtual void endVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ) = 0;
 

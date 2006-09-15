@@ -15,7 +15,6 @@
 #include "util/base/include/ivisitable.h"
 
 class IInfo;
-class GDP;
 
 /*! 
  * \brief Root of a single land allocation tree.
@@ -27,7 +26,7 @@ class GDP;
  *          the LandAllocatorNode functions.
  *
  *          <b>XML specification for TreeLandAllocator</b>
- *          - XML name: -c LandAllocatorRoot
+ *          - XML name: \c LandAllocatorRoot
  *          - Contained by: Region
  *          - Parsing inherited from class: None
  *          - Attributes:
@@ -55,11 +54,14 @@ public:
     
     virtual void addLandUsage( const std::string& aLandType,
                                const std::string& aProductName,
-                               const LandUsageType aLandUsageType );
+                               const LandUsageType aLandUsageType,
+                               const int aPeriod );
 
-    virtual double getUnmanagedCalAveObservedRate( const int aPeriod ) const;
+    virtual double getUnmanagedCalAveObservedRate( const int aPeriod,
+                                                   const std::string& aLandType ) const;
     
-    virtual double getLandAllocation( const std::string& aProductName,
+    virtual double getLandAllocation( const std::string& aLandType,
+                                      const std::string& aProductName,
                                       const int aPeriod ) const;
 
     virtual void applyAgProdChange( const std::string& aLandType,
@@ -110,22 +112,16 @@ public:
     virtual void csvOutput( const std::string& aRegionName ) const; 
     
     virtual void dbOutput( const std::string& aRegionName ) const;
-    
-    virtual void calcEmission( const std::string& aRegionName,
-                               const GDP* aGDP,
-                               const int aPeriod );
-    
-    virtual void updateSummary( Summary& aSummary,
-                                const int aPeriod );
 
 	virtual void accept( IVisitor* aVisitor,
                          const int aPeriod ) const;
 
     // Land allocator node methods.
-    double getAvgIntrinsicRate( const int aPeriod ) const;
-
-    virtual void setInitShares( const double aLandAllocationAbove,
-                                const LandUseHistory* aLandUseHistory,
+    virtual void setInitShares( const std::string& aRegionName,
+                                const double aSigmaAbove,
+                                const double aLandAllocationAbove,
+                                const double aParentHistoryShare,
+                                const LandUseHistory* aParentHistory,
                                 const int aPeriod );
 
     virtual double calcLandShares( const std::string& aRegionName,
@@ -146,7 +142,9 @@ protected:
                                     Tabs* aTabs ) const;
 private:
     //! Land allocated in 1000's of hectars
-    objects::PeriodVector<double> mLandAllocation;
+    objects::PeriodVector<Value> mLandAllocation;
+
+    const ALandAllocatorItem* findParentOfType( const std::string& aType ) const;
 
     void checkRotationPeriod( const IInfo* aRegionInfo ) const;
 

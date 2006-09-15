@@ -32,6 +32,15 @@ public:
 
     virtual ~ForestSupplySubsector();
     static const std::string& getXMLNameStatic();
+
+    virtual void calcShare( const int aPeriod, const GDP* aGDP );
+
+    virtual void adjustForCalibration( double sectorDemand,
+                                       double totalfixedOutput,
+                                       double totalCalOutputs,
+                                       const bool allFixedOutput,
+                                       const int period );
+
 protected:
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual const std::string& getXMLName() const;

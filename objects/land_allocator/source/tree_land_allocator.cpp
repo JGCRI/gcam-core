@@ -17,24 +17,19 @@ using namespace xercesc;
 
 extern Scenario* scenario;
 
-/*! \brief Default constructor.
-* \author James Blackwood
-*/
-TreeLandAllocator::TreeLandAllocator(){
+/*!
+ * \brief Constructor.
+ * \author James Blackwood
+ */
+TreeLandAllocator::TreeLandAllocator()
+: LandNode( 0 )
+{
 }
 
-//! Default destructor
+//! Destructor
 TreeLandAllocator::~TreeLandAllocator() {
 }
 
-/*! \brief Get the XML node name for output to XML.
-*
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
-* \author James Blackwood
-* \return The constant XML_NAME.
-*/
 const string& TreeLandAllocator::getXMLName() const {
     return getXMLNameStatic();
 }
@@ -60,7 +55,7 @@ bool TreeLandAllocator::XMLParse( const DOMNode* aNode ){
 
 bool TreeLandAllocator::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurr ){
     if( aNodeName == "landAllocation" ){
-        XMLHelper<double>::insertValueIntoVector( aCurr, mLandAllocation, scenario->getModeltime() );
+        XMLHelper<Value>::insertValueIntoVector( aCurr, mLandAllocation, scenario->getModeltime() );
     }
     else {
         return false;
@@ -82,17 +77,12 @@ void TreeLandAllocator::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteVector( mLandAllocation, "landAllocation", aOut, aTabs, scenario->getModeltime() );
 }
 
-/*! \brief Complete the Initialization in the LandAllocator.
-* \author James Blackwood
-*/
 void TreeLandAllocator::completeInit( const string& aRegionName, 
                                       const IInfo* aRegionInfo )
 {
     checkRotationPeriod( aRegionInfo );
 
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->completeInit( mName, aRegionInfo );
-    }
+    LandNode::completeInit( aRegionName, aRegionInfo );
 
     const Modeltime* modeltime = scenario->getModeltime();
     for( int period = 0; period < modeltime->getmaxper(); period++ ) {
@@ -101,17 +91,29 @@ void TreeLandAllocator::completeInit( const string& aRegionName,
         // Now re-allocate unmanaged land. Read-in land allocations are used as
         // weights with total unmanaged land set to be equal to total land minus
         // land allocation.
-        const double unmanagedLand = mLandAllocation[ period ] - getTotalLandAllocation( eManaged, period );
-        for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-            // This will not work for more than one unmanaged land node under the root
-            mChildren[i]->setUnmanagedLandAllocation( aRegionName, unmanagedLand, period );
-        }
+        double unmanagedLand = mLandAllocation[ period ]
+                               - getTotalLandAllocation( eManaged, period );
+        LandNode::setUnmanagedLandAllocation( aRegionName, unmanagedLand, period );
 
-        setInitShares( 0, // No land allocation above this node.
+        // Check that the final allocations sum correctly.
+        assert( util::isEqual( getTotalLandAllocation( eAnyLand, period ),
+                               mLandAllocation[ period ].get(),
+                               util::getSmallNumber() ) );
+        assert( util::isEqual( getTotalLandAllocation( eUnmanaged, period ),
+                               unmanagedLand,
+                               util::getSmallNumber() ) );
+        assert( util::isEqual( getTotalLandAllocation( eManaged, period ),
+                               mLandAllocation[ period ] - unmanagedLand,
+                               util::getSmallNumber() ) );
+
+        setInitShares( aRegionName,
+                       0, // No parent sigma
+                       0, // No land allocation above this node.
+                       1, // Share of land use history is 100%.
                        mLandUseHistory.get(),
                        period );
 
-        setIntrinsicYieldMode( 1, // Intrinsic rate is one for the root.
+        setIntrinsicYieldMode( 1, // Intrinsic yield mode is one for the root.
                                mSigma,
                                period );
     }
@@ -144,7 +146,8 @@ void TreeLandAllocator::checkRotationPeriod( const IInfo* aRegionInfo ) const {
         if( rotationPeriod % modeltime->gettimestep( period ) != 0 ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::DEBUG );
-            mainLog << "Rotation period is not evenly divisible by timestep in period " << period << "." << endl;
+            mainLog << "Rotation period is not evenly divisible by timestep in period "
+                    << period << "." << endl;
         }
     }
 }
@@ -167,7 +170,7 @@ void TreeLandAllocator::adjustTotalLand( const int aPeriod ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::DEBUG );
         mainLog << "The total managed land allocated is greater than the total land in " << mName
-            << " in " << scenario->getModeltime()->getper_to_yr( aPeriod ) << " by "
+                << " in " << scenario->getModeltime()->getper_to_yr( aPeriod ) << " by "
                 << totalManagedLand - mLandAllocation[ aPeriod ] 
                 << "(" << 100 * ( totalManagedLand - mLandAllocation[ aPeriod ] ) / mLandAllocation[ aPeriod ]
                 << "%)" << endl;
@@ -180,32 +183,35 @@ void TreeLandAllocator::adjustTotalLand( const int aPeriod ){
     }
 }
 
-/*!
-* \brief Returns the intrinsicRate.
-* \author James Blackwood
-* \param aPeriod Period
-* \return the intrinsicRate of this LandAllocator which should only be called by
-*         the root node.
-*/
-double TreeLandAllocator::getAvgIntrinsicRate( const int aPeriod ) const {
-    return mIntrinsicRate[ aPeriod ];
-}
-
 void TreeLandAllocator::addLandUsage( const string& aLandType,
                                       const string& aProductName,
-                                      const LandUsageType aLandUsageType )
+                                      const LandUsageType aLandUsageType,
+                                      const int aPeriod )
 {
-    LandNode::addLandUsage( aLandType, aProductName, aLandUsageType );
-}
+    // Find the parent land item which should have a leaf added.
+    ALandAllocatorItem* parent = findChild( aLandType, eNode );
 
-double TreeLandAllocator::getUnmanagedCalAveObservedRate( const int aPeriod ) const {
-    return getUnmanagedCalAveObservedRateInternal( aPeriod, mSigma );
+    // Check that the parent exists.
+    if( !parent ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Cannot add a land usage for " << aProductName << " as the land type "
+                << aLandType << " does not exist." << endl;
+        return;
+    }
+    parent->addLandUsage( aLandType, aProductName, aLandUsageType, aPeriod );
 }
 
 double TreeLandAllocator::getLandAllocation( const string& aLandType,
+                                             const string& aProductName,
                                              const int aPeriod ) const
 {
-    return LandNode::getLandAllocation( aLandType, aPeriod );
+    const ALandAllocatorItem* node = findChild( aLandType, eNode );
+
+    if( node ){
+        return node->getLandAllocation( aLandType, aProductName, aPeriod );
+    }
+    return 0;
 }
 
 void TreeLandAllocator::applyAgProdChange( const string& aLandType,
@@ -213,7 +219,12 @@ void TreeLandAllocator::applyAgProdChange( const string& aLandType,
                                            const double aAgProdChange,
                                            const int aPeriod )
 {
-    LandNode::applyAgProdChange( aLandType, aProductName, aAgProdChange, aPeriod );
+    // Search for the correct land node.
+    ALandAllocatorItem* node = findChild( aLandType, eNode );
+    if( node ){
+        node->applyAgProdChange( aLandType, aProductName,
+                                         aAgProdChange, aPeriod );
+    }
 }
 
 void TreeLandAllocator::calcYield( const string& aLandType,
@@ -223,15 +234,38 @@ void TreeLandAllocator::calcYield( const string& aLandType,
                                    const int aHarvestPeriod,
                                    const int aCurrentPeriod )
 {
-    LandNode::calcYieldInternal( aLandType, aProductName, aRegionName, aProfitRate,
-                                 mIntrinsicRate[ aCurrentPeriod ], aHarvestPeriod, aCurrentPeriod );
+    // Locate the subtree containing the land type. This is required to determine the
+    // average intrinsic rate. 
+    const ALandAllocatorItem* subTreeRoot = findParentOfType( aLandType );
+
+    // This can only happen if there is an error in the input.
+    if( !subTreeRoot ){
+        return;
+    }
+
+    // The subtree will be this object if the sigma is greater than zero.
+    assert( subTreeRoot == this || util::isEqual( mSigma.get(), 0.0 ) );
+
+    // Find the correct land type.
+    ALandAllocatorItem* node = findChild( aLandType, eNode );
+
+    if( node ){
+        node->calcYieldInternal( aLandType, aProductName,
+                                 aRegionName, aProfitRate,
+                                 subTreeRoot->getInstrinsicRate( aCurrentPeriod ),
+                                 aHarvestPeriod, aCurrentPeriod );
+    }
 }
 
 double TreeLandAllocator::getYield( const string& aLandType,
                                     const string& aProductName,
                                     const int aPeriod ) const
 {
-    return LandNode::getYield( aLandType, aProductName, aPeriod );
+    const ALandAllocatorItem* node = findChild( aLandType, eNode );
+    if( node ){
+        return node->getYield( aLandType, aProductName, aPeriod );
+    }
+    return 0;
 }
 
 void TreeLandAllocator::setCalLandAllocation( const string& aLandType,
@@ -240,8 +274,12 @@ void TreeLandAllocator::setCalLandAllocation( const string& aLandType,
                                               const int aHarvestPeriod, 
                                               const int aCurrentPeriod )
 {
-    LandNode::setCalLandAllocation( aLandType, aProductName, aCalLandUsed,
-                                             aHarvestPeriod, aCurrentPeriod );
+    // TODO: This is called before the completeInit of the LandAllocator.
+    ALandAllocatorItem* node = findChild( aLandType, eNode );
+    if( node ){
+        node->setCalLandAllocation( aLandType, aProductName, aCalLandUsed,
+                                    aHarvestPeriod, aCurrentPeriod );
+    }
 }
 
 void TreeLandAllocator::setCalObservedYield( const string& aLandType,
@@ -249,7 +287,12 @@ void TreeLandAllocator::setCalObservedYield( const string& aLandType,
                                              const double aCalObservedYield,
                                              const int aPeriod )
 {
-    LandNode::setCalObservedYield( aLandType, aProductName, aCalObservedYield, aPeriod );
+    // TODO: This is called before the completeInit of the LandAllocator.
+    ALandAllocatorItem* node = findChild( aLandType, eNode );
+    if( node ){
+        node->setCalObservedYield( aLandType, aProductName,
+                                   aCalObservedYield, aPeriod );
+    }
 }
 
 void TreeLandAllocator::setIntrinsicRate( const string& aRegionName,
@@ -258,18 +301,31 @@ void TreeLandAllocator::setIntrinsicRate( const string& aRegionName,
                                           const double aIntrinsicRate,
                                           const int aPeriod )
 {
-    LandNode::setIntrinsicRate( aRegionName, aLandType, aProductName,
+    ALandAllocatorItem* node = findChild( aLandType, eNode );
+    if( node ){
+        node->setIntrinsicRate( aRegionName, aLandType, aProductName,
                                 aIntrinsicRate, aPeriod );
+    }
 }
 
-void TreeLandAllocator::setInitShares( const double aLandAllocationAbove,
-                                       const LandUseHistory* aLandUseHistory,
+void TreeLandAllocator::setInitShares( const string& aRegionName,
+                                       const double aSigmaAbove,
+                                       const double aLandAllocationAbove,
+                                       const double aParentHistoryShare,
+                                       const LandUseHistory* aParentHistory,
                                        const int aPeriod )
 {
+    // First adjust value of unmanaged land nodes
+    setUnmanagedLandValues( aRegionName, aPeriod );
+
     // Calculating the shares
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->setInitShares( mLandAllocation[ aPeriod ],
-                                       mLandUseHistory.get(), aPeriod );
+        mChildren[ i ]->setInitShares( aRegionName,
+                                       mSigma,
+                                       mLandAllocation[ aPeriod ],
+                                       1, // Share of land use history.
+                                       mLandUseHistory.get(),
+                                       aPeriod );
     }
 
     // This is the root node so its share is 100%.
@@ -277,22 +333,20 @@ void TreeLandAllocator::setInitShares( const double aLandAllocationAbove,
 }
 
 double TreeLandAllocator::calcLandShares( const string& aRegionName,
-                                        const double aSigmaAbove,
-                                        const double aTotalLandAllocated,
-                                        const int aPeriod )
+                                          const double aSigmaAbove,
+                                          const double aTotalBaseLand,
+                                          const int aPeriod )
 {
-    LandNode::calcLandShares( aRegionName, aSigmaAbove, aTotalLandAllocated, aPeriod );
+    // First adjust value of unmanaged land nodes
+    setUnmanagedLandValues( aRegionName, aPeriod );
+
+    LandNode::calcLandShares( aRegionName, aSigmaAbove, aTotalBaseLand, aPeriod );
  
     // This is the root node so its share is 100%.
     mShare[ aPeriod ] = 1;
-    return mShare[ aPeriod ];
+    return 1;
 }
 
-/*! \brief Recursively calculates the landAllocation at each leaf and node using the shares.
-* landAllocationAbove is passed the value of 0 at the root when this method is called,
-*  so the value in landAllocation at the root will not be changed and be passed down recursively.
-* \author Steve Smith, James Blackwood
-*/
 void TreeLandAllocator::calcLandAllocation( const string& aRegionName,
                                             const double aLandAllocationAbove,
                                             const int aPeriod )
@@ -302,10 +356,6 @@ void TreeLandAllocator::calcLandAllocation( const string& aRegionName,
     }
 }
 
-/*! \brief Calculate the land allocation of the entire nest.
-* \param aRegionName Region name.
-* \param aPeriod Model period.
-*/
 void TreeLandAllocator::calcFinalLandAllocation( const string& aRegionName,
                                                  const int aPeriod )
 {
@@ -325,9 +375,73 @@ void TreeLandAllocator::setCarbonContent( const string& aLandType,
                                           const double aBelowGroundCarbon,
                                           const int aPeriod )
 {
-    LandNode::setCarbonContent( aLandType, aProductName, aAboveGroundCarbon,
+    ALandAllocatorItem* node = findChild( aLandType, eNode );
+    if( node ){
+        node->setCarbonContent( aLandType, aProductName, aAboveGroundCarbon,
                                 aBelowGroundCarbon, aPeriod );
+    }
 }
+
+double TreeLandAllocator::getUnmanagedCalAveObservedRate( const int aPeriod,
+                                                          const string& aType ) const
+{
+    // Find the subtree where the node resides.
+    const ALandAllocatorItem* subTreeRoot = findParentOfType( aType );
+    if( !subTreeRoot ){
+        // It would only be possible for there to be no root if the type did not
+        // exist. Warnings will have already been printed.
+        return 1;
+    }
+
+    // Starting at the subtree, find the unmanaged land node.
+    const ALandAllocatorItem* unmanagedNest
+        = findItem<ALandAllocatorItem>( eBFS, subTreeRoot, IsUnmanagedNest() );
+
+    if( !unmanagedNest ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "There was no unmanaged node in the subtree for land type "
+                << aType << "." << endl;
+        return 1;
+    }
+
+    // Starting at the unmanaged land node adjust the calibrated average observed
+    // rate working up to the subtree root.
+    double aveObservedRate = unmanagedNest->getInstrinsicRate( aPeriod );
+    while( unmanagedNest && unmanagedNest != subTreeRoot ){
+        double sigmaAbove = unmanagedNest->getParent() ?
+                            unmanagedNest->getParent()->getSigma() : 0;
+        aveObservedRate /= pow( unmanagedNest->getShare( aPeriod ), sigmaAbove );
+        unmanagedNest = unmanagedNest->getParent();
+    }
+
+    return aveObservedRate;
+}
+
+/*!
+ * \brief Returns the conceptual root of the passed in type.
+ * \note A conceptual root is a node whose parent's sigma is 0.
+ * \param aType The type of node to find a conceptual root for.
+ * \return A pointer to the conceptual root of the passed in type.
+ */
+const ALandAllocatorItem* TreeLandAllocator::findParentOfType( const string& aType ) const {
+    
+    // Find the requested child.
+    const ALandAllocatorItem* item = findChild( aType, eAny );
+    
+    // Make sure we found the item.
+    if( !item ) {
+        return 0;
+    }
+
+    // Search up the tree until a conceptual root is found. This will search
+    // until it finds the child of a node with a sigma of zero or the root node.
+    while( item->getParent() && !item->isConceptualRoot() ){
+        item = item->getParent();
+    }
+    return item;
+}
+
 
 void TreeLandAllocator::csvOutput( const string& aRegionName ) const {
     LandNode::csvOutput( aRegionName );
@@ -336,17 +450,6 @@ void TreeLandAllocator::csvOutput( const string& aRegionName ) const {
 
 void TreeLandAllocator::dbOutput( const string& aRegionName ) const {
     LandNode::dbOutput( aRegionName );
-}
-    
-void TreeLandAllocator::calcEmission( const string& aRegionName,
-                                      const GDP* aGDP, 
-                                      const int aPeriod )
-{
-    LandNode::calcEmission( aRegionName, aGDP, aPeriod );
-}
-
-void TreeLandAllocator::updateSummary( Summary& aSummary, const int aPeriod ){
-    LandNode::updateSummary( aSummary, aPeriod );
 }
 
 void TreeLandAllocator::accept( IVisitor* aVisitor, const int aPeriod ) const {

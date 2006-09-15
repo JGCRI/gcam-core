@@ -16,10 +16,8 @@
 #include "util/base/include/iround_trippable.h"
 
 // Forward declarations
-class Summary;
 class Tabs;
 class IInfo;
-class GDP;
 
 /*!
  * \brief The interface to a land allocation system.
@@ -31,9 +29,9 @@ class ILandAllocator : public IVisitable,
                        public IParsable,
                        public IRoundTrippable {
 public:
-    inline ILandAllocator();
+    ILandAllocator();
     
-    inline virtual ~ILandAllocator();
+    virtual ~ILandAllocator();
 
     virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
     
@@ -62,18 +60,39 @@ public:
      * \param aLandType Land type the product will use.
      * \param aProductName Name of the product.
      * \param aLandUsageType The type of the land usage.
+     * \param aPeriod The period corresponding to the agricultural production
+     *        technology which is adding a land use.
      */
     virtual void addLandUsage( const std::string& aLandType,
                                const std::string& aProductName,
-                               const LandUsageType aLandUsageType ) = 0;
+                               const LandUsageType aLandUsageType,
+                               const int aPeriod ) = 0;
 
+    /*!
+     * \brief Set the calibrated observed yield for a given product within a land type.
+     * \details Determines the appropriate land leaf and sets the calibrated
+     *          observed yield for a given product.
+     * \param aLandType Land type of the product.
+     * \param aProductName Name of the product.
+     * \param aCalObservedYield Calibrated observed yield.
+     * \param aPeriod Period.
+     * \author James Blackwood
+     */
     virtual void setCalObservedYield( const std::string& aLandType,
                                       const std::string& aProductName,
                                       const double aCalObservedYield, 
                                       const int aPeriod ) = 0;
 
     /*!
-     * \brief Set the intrinsic rate
+     * \brief Sets the intrinsic rate for a given product.
+     * \details Determines the appropriate land leaf and sets the intrinsic rate
+     *          for a given period.
+     * \param aRegionName Name of the containing region.
+     * \param aLandType Land type of the product.
+     * \param aProductName Name of the product.
+     * \param aIntrinsicRate Intrinisic rate of the product.
+     * \param aPeriod Model period.
+     * \author James Blackwood
      */
     virtual void setIntrinsicRate( const std::string& aRegionName,
                                    const std::string& aLandType,
@@ -82,29 +101,49 @@ public:
                                    const int aPeriod ) = 0;
 
     /*!
-     * \brief Returns the average observed rate for calibration.
-     * \details During calibration the average observed rate is equal to the
-     *          intrinsic rate of unmanaged land over its share raised to sigma.
+     * \brief Returns the calibrated average observed intrinsic rate for
+     *        unmanaged land.
+     * \details The calibrated average observed Intrinsic rate for the unmanaged
+     *          land nest is equal to the intrinsic rate for the unmanaged land
+     *          node successively divided by its share to the power of the sigma
+     *          parameter for each level.  When there are multiple unmanaged land
+     *          nests this function finds the unmanaged land nest that
+     *          corresponds to the passed in land type. In that case the
+     *          intrinsic rate will be successively divided up until the
+     *          conceptual root is reached.
+     * \author James Blackwood
      * \author Steve Smith
-     * \return The average observed rate for this land allocator for
-     *         calibration.
+     * \author Jim Naslund
+     * \param aPeriod model period.
+     * \param aLandType The type of land to find the rate for.
+     * \return The average observed rate for the subtree containing this land
+     *         type.
      */
-    virtual double getUnmanagedCalAveObservedRate( const int aPeriod ) const = 0;
+    virtual double getUnmanagedCalAveObservedRate( const int aPeriod,
+                                                   const std::string& aLandType ) const = 0;
     
     /*!
      * \brief Get the amount of land allocated for a type of land.
+     * \param aLandType The land type.
      * \param aProductName Product name.
      * \param aPeriod Model period.
      * \return The land allocated for the product.
      */
-    virtual double getLandAllocation( const std::string& aProductName,
+    virtual double getLandAllocation( const std::string& aLandType,
+                                      const std::string& aProductName,
                                       const int aPeriod ) const = 0;
 
     /*!
-     * \brief Apply agricultural productivity change to the land associated with
-     *        a product.
+     * \brief Apply an annual agricultural productivity change to the land
+     *        associated with the given product.
+     * \details Increases the cummulative technical change for the leaf using
+     *          the supplied annual technical change for the years specified by
+     *          the given period. The cummulative technical change is then
+     *          applied to the intrinsic yield mode.
      * \param aLandType The land type.
      * \param aProductName Name of the product.
+     * \param aAgProdChange Amount of technical change to apply.
+     * \param aPeriod Period.
      */
     virtual void applyAgProdChange( const std::string& aLandType,
                                     const std::string& aProductName,
@@ -118,8 +157,8 @@ public:
      * \param aProductName Product name.
      * \param aRegionName Region name.
      * \param aProfitRate Profit rate.
-     * \param aPeriod Current period.
      * \param aHarvestPeriod Period in which the crop will be harvested.
+     * \param aCurrentPeriod The current period.
      * \todo Should this also return the yield? That would help the technology.
      */
     virtual void calcYield( const std::string& aLandType,
@@ -141,12 +180,17 @@ public:
                              const int aPeriod ) const = 0;
 
     /*!
-     * \brief Set the known land allocation for a given product.
-     * \param aLandType Land type.
-     * \param aProductName Product name.
-     * \param aCalLandUsed Quantity of land.
+     * \brief Sets the calibrated land allocation for a given product.
+     * \details Determines the appropriate land leaf and sets the calibrated
+     *          quantity of land use for a given period.
+     * \param aLandType Land type of the product.
+     * \param aProductName Name of the product.
+     * \param aCalLandUsed Calibrated quantity of land.
      * \param aHarvestPeriod Period in which the land will be harvested.
-     * \param aPeriod Current model period.
+     * \param aCurrentPeriod Period in which the calibrated quantity was
+     *        observed.
+     * \note This function must be called in order of increasing periods.
+     * \author James Blackwood
      */
     virtual void setCalLandAllocation( const std::string& aLandType,
                                        const std::string& aProductName,
@@ -198,24 +242,6 @@ public:
      * \param aRegionName Name of the region.
      */
     virtual void dbOutput( const std::string& aRegionName ) const = 0;
-    
-    /*!
-     * \brief Calculate emissions from the land allocator.
-     * \param aRegionName Region name.
-     * \param aGDP Regional GDP container.
-     * \param aPeriod Model period.
-     */
-    virtual void calcEmission( const std::string& aRegionName,
-                               const GDP* aGDP,
-                               const int aPeriod ) = 0;
-    
-    /*!
-     * \brief Update the summary object with information about the land
-     *        allocator for reporting.
-     * \param aSummary Summary container.
-     * \param aPeriod Period for which to update information.
-     */
-    virtual void updateSummary( Summary& aSummary, const int aPeriod ) = 0;
 
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const = 0;
 };
@@ -223,11 +249,11 @@ public:
 // Inline function definitions.
 
 //! Constructor
-ILandAllocator::ILandAllocator(){
+inline ILandAllocator::ILandAllocator(){
 }
 
 //! Destructor.
-ILandAllocator::~ILandAllocator(){
+inline ILandAllocator::~ILandAllocator(){
 }
 
 #endif // _ILANDALLOCATOR_H_

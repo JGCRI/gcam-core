@@ -156,38 +156,50 @@ namespace objects {
         return true;
     }
 
-    /*!\brief This is a template function which compares two values. 
-    * \details This function very simply uses the == operator of the 
-    * two arguments to compare them, and returns the return value of the ==
-    * operator. The reason for this function is so that it can be overridden
-    * for doubles to perform special comparison not using the == operator. 
-    * \param firstValue The first value to compare.
-    * \param secondValue The second value to compare.
-    * \return Whether or not the two values are equal.
-    */
+    /*!
+     * \brief This is a template function which compares two values. 
+     * \details This function very simply uses the == operator of the two
+     *          arguments to compare them, and returns the return value of the
+     *          == operator. The reason for this function is so that it can be
+     *          overridden for doubles to perform special comparison not using
+     *          the == operator.
+     * \param aFirstValue The first value to compare.
+     *  \param aSecondValue The second value to compare.
+     * \param aTolerance This parameter is unused and only for compatability
+     *        with the double specialization of the function.
+     * \return Whether or not the two values are equal.
+     */
     template<class T>
-    inline bool isEqual( const T firstValue, const T secondValue ) {
-        return ( firstValue == secondValue );
+    inline bool isEqual( const T aFirstValue,
+                         const T aSecondValue,
+                         const double aTolerance = 1E-10 )
+    {
+        return ( aFirstValue == aSecondValue );
     }
 
-    /*! \brief A function to determine if two doubles are equal.
-    * \details Due to inaccuracies in machine arithmatic, it is virtually
-    *          impossible for two doubles with decimal values that are
-    *          calculated with different methods to be exactly equal. This
-    *          function checks if the two values are within a very small
-    *          threshhold. This an explicit template specialization for doubles
-    *          which allows isEqual to act differently for doubles. These
-    *          function had to be declared inline to avoid linker errors.
-    * \warning Do not compare two doubles using the == operator. Use this
-    *          function instead. 
-    * \param firstNumber The first double to compare.
-    * \param secondNumber The second double to compare.
-    * \return Whether the two doubles are within SMALL_NUM of equivalence. 
-    */
+    /*!
+     * \brief A function to determine if two doubles are equal.
+     * \details Due to inaccuracies in machine arithmatic, it is virtually
+     *          impossible for two doubles with decimal values that are
+     *          calculated with different methods to be exactly equal. This
+     *          function checks if the two values are within a very small
+     *          threshhold. This an explicit template specialization for doubles
+     *          which allows isEqual to act differently for doubles. These
+     *          function had to be declared inline to avoid linker errors.
+     * \warning Do not compare two doubles using the == operator. Use this
+     *          function instead. 
+     * \param aFirstValue The first double to compare.
+     * \param aSecondValue The second double to compare.
+     * \param aTolerance Tolerance to use when comparing the numbers. Defaults
+     *        to 1E-10.
+     * \return Whether the two doubles are within aTolerance of each other. 
+     */
     template<>
-    inline bool isEqual<double>( const double firstNumber, const double secondNumber ) {
-        const static double SMALL_NUM = 1E-10;
-        return ( std::fabs( firstNumber - secondNumber ) < SMALL_NUM );
+    inline bool isEqual<double>( const double aFirstValue,
+                                 const double aSecondValue,
+                                 const double aTolerance )
+    {
+        return ( std::fabs( aFirstValue - aSecondValue ) < aTolerance );
     }
 
     /*

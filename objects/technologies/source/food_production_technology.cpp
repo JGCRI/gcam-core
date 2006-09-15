@@ -175,23 +175,21 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
 {
     technology::initCalc( aRegionName, aSectorName, aSubsectorInfo, aDemographics, aPeriod );
 
-    const Modeltime* modeltime = scenario->getModeltime();
-
     // Only setup calibration information if this is the initial year of the
     // technology.
+    const Modeltime* modeltime = scenario->getModeltime();
     if( aPeriod != modeltime->getyr_to_per( year ) ){
         return;
     }
 
-    // Only apply technical change if the year is past the base year.
-    if( year > modeltime->getper_to_yr( 1 ) ){
-        mLandAllocator->applyAgProdChange( landType, mName, agProdChange, aPeriod );
-    }
+    // Apply technical change.
+    mLandAllocator->applyAgProdChange( landType, mName, agProdChange, aPeriod );
 
     // TODO: Use a better method of passing forward calibration information.
     // Since the market may be global, create a unique regional string for the
-    // calibrated variable cost.
-    const string calVarCostName = "calVarCost" + aRegionName;
+    // calibrated variable cost. This is hacked to work for multiple technologies too
+    // This needs to be fixed ASAP.
+    const string calVarCostName = "calVarCost-" + mName + "-" + aRegionName;
     double calVarCost;
 
     // Get the information object for this market.
@@ -204,11 +202,11 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
         // Calculate the calibrated variable cost.
         // TODO: This is the only access of this variable from outside the AgLU. Change this function
         // to getCalNumeraireAveObservedRate.
-        calVarCost = calPrice - mLandAllocator->getUnmanagedCalAveObservedRate( aPeriod )
+        calVarCost = calPrice - mLandAllocator->getUnmanagedCalAveObservedRate( aPeriod, landType )
                                 / calcDiscountFactor()
                                 / calObservedYield;
         assert( util::isValidNumber( calVarCost ) );
-
+        
         // Set the variable cost for the technology to the calibrated variable cost.
         if ( calVarCost > util::getSmallNumber() ) {
             // TODO: Add warning if there was a read-in variable cost.
@@ -266,14 +264,23 @@ void FoodProductionTechnology::completeInit( const string& aSectorName,
     // Store away the land allocator.
     mLandAllocator = aLandAllocator;
 
-    // Setup the land usage for this production. Only add land usage once for
-    // all technologies, of a given type. TODO: This is error prone if
-    // technologies don't all have the same land type.
-    if( year == scenario->getModeltime()->getStartYear() ){
-        mLandAllocator->addLandUsage( landType, mName, ILandAllocator::eCrop );
+    // Setup the land usage for this production.
+    int techPeriod = scenario->getModeltime()->getyr_to_per( year );
+    mLandAllocator->addLandUsage( landType, mName, ILandAllocator::eCrop, techPeriod );
+
+    // Technical change may only be applied after the base period.
+    if( agProdChange > util::getSmallNumber() &&
+        techPeriod <= 1 )
+    {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Agricultural technologies may not have technical change"
+                << " in the calibration period." << endl;
+        agProdChange = 0;
     }
 
-    const int period = scenario->getModeltime()->getyr_to_per( year );
+    // TODO: We should change the input so that only one of these options can be read
+    //       as they are mutually exclusive.
     if ( ( calProduction != -1 ) && ( calLandUsed != -1 ) ) {
         calObservedYield = calProduction / calLandUsed;
 
@@ -282,15 +289,15 @@ void FoodProductionTechnology::completeInit( const string& aSectorName,
         if( calYield != -1 ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::NOTICE );
-            mainLog << "Calibrated yield will be overridden by the observied yield." << endl;
+            mainLog << "Calibrated yield will be overridden by the observed yield." << endl;
         }
 
         // Want to pass in yied in units of GCal/kHa
-        mLandAllocator->setCalLandAllocation( landType, mName, calLandUsed, period, period );
-        mLandAllocator->setCalObservedYield( landType, mName, calObservedYield, period );
+        mLandAllocator->setCalLandAllocation( landType, mName, calLandUsed, techPeriod, techPeriod );
+        mLandAllocator->setCalObservedYield( landType, mName, calObservedYield, techPeriod );
     } 
     else if ( calYield != -1 ) {
-        mLandAllocator->setCalObservedYield( landType, mName, calYield, period );
+        mLandAllocator->setCalObservedYield( landType, mName, calYield, techPeriod );
     }
 }
 
@@ -315,7 +322,6 @@ void FoodProductionTechnology::calcShare( const string& aRegionName,
     // If yield is GCal/Ha and prices are $/GCal, then rental rate is $/Ha
     // Passing in rate as $/GCal and setIntrinsicRate will set it to  $/Ha.
     double profitRate = calcProfitRate( aRegionName, aSectorName, aPeriod );
-
     mLandAllocator->setIntrinsicRate( aRegionName, landType, mName, profitRate, aPeriod );
     
     // Food production technologies are profit based, so the amount of output
@@ -337,6 +343,16 @@ void FoodProductionTechnology::calcCost( const string& regionName, const string&
     // TODO: Fix share calculation to avoid this.
     techcost = 1;
 }
+
+void FoodProductionTechnology::adjustForCalibration( double subSectorDemand,
+                                                     const string& regionName,
+                                                     const IInfo* aSubsectorIInfo,
+                                                     const int period )
+{
+    // Calibration adjustments occur in the land allocator, so there is nothing
+    // to do here.
+}
+
 
 /*! \brief Calculates the output of the technology.
 * \details Calculates the amount of current forestry output based on the amount
@@ -379,7 +395,7 @@ void FoodProductionTechnology::production( const string& aRegionName,
     // This would be wrong if the fuelname had an emissions coefficient, or if
     // there were a fuel or other input. When multiple inputs are complete there
     // should be a specific land input.
-    input = mLandAllocator->getLandAllocation( mName, aPeriod );
+    input = mLandAllocator->getLandAllocation( landType, mName, aPeriod );
     calcEmissionsAndOutputs( aRegionName, input, primaryOutput, aGDP, aPeriod );
 }
 
@@ -432,17 +448,23 @@ double FoodProductionTechnology::calcSupply( const string& aRegionName,
                                              const string& aProductName,
                                              const int aPeriod ) const
 {
-    double yield = mLandAllocator->getYield( landType, mName, aPeriod ); 
-    double landAllocation = mLandAllocator->getLandAllocation( mName, aPeriod );
+    double yield = mLandAllocator->getYield( landType, mName, aPeriod );
+    assert( yield >= 0 );
+
+    double landAllocation = mLandAllocator->getLandAllocation( landType, mName, aPeriod );
     // Check that if yield is zero the land allocation is zero.
     // TODO: Determine why a small number is too large.
-    if( yield < util::getSmallNumber() && landAllocation > 0.1 ){
+    // TODO: Checking the variable cost of zero is a hack so that this works
+    //       for the unmanaged sector.
+    if( yield < util::getSmallNumber() && landAllocation > 0.1 && variableCost > 0 ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Zero production of " << aProductName << " by technology " << mName
                 << " in region " << aRegionName << " with a positive land allocation of "
                 << landAllocation << "." << endl;
     }
+
+    assert( yield * landAllocation >= 0 );
 
     // Set output to yield times amount of land.
     return yield * landAllocation;

@@ -82,6 +82,7 @@ public:
     static const std::string& getXMLNameStatic();
     virtual void completeInit( const GlobalTechnologyDatabase* aGlobalTechDB );
     const std::string& getName() const;
+    
     virtual void calc( const int period, const bool doCalibrations );
     void calibrateTFE( const int period ); 
     virtual void initCalc( const int period );
@@ -91,6 +92,7 @@ public:
     void initializeAgMarketPrices( const std::vector<double>& pricesIn );
     void updateSummary( const std::list<std::string>& aPrimaryFuelList, const int period );
     const Summary& getSummary( const int period ) const;
+    
     void setTax( const GHGPolicy* aTax );
     const Curve* getEmissionsQuantityCurve( const std::string& ghgName ) const;
     const Curve* getEmissionsPriceCurve( const std::string& ghgName ) const;

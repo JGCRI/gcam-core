@@ -156,6 +156,9 @@ void FoodSupplySector::setMarket() {
     if ( marketplace->createMarket( regionName, mMarketName, name, IMarketType::NORMAL ) ) {
         vector <double> tempCalPrice( maxper, calPrice / CVRT90 ); // market prices are in $1975
         marketplace->setPriceVector( name, regionName, tempCalPrice );
+
+        // TODO: If there is a calibrated price why does the market need to be
+        // solved?
         for( int per = 1; per < modeltime->getmaxper(); ++per ){
             marketplace->setMarketToSolve( name, regionName, per );
         }

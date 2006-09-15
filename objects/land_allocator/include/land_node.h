@@ -7,7 +7,7 @@
 /*! 
  * \file land_node.h
  * \ingroup Objects
- * \brief The LandAllocatorNode class header file.
+ * \brief The LandNode class header file.
  * \author James Blackwood
  */
 
@@ -18,8 +18,6 @@
 #include "util/base/include/value.h"
 
 // Forward declarations
-class GDP;
-class AGHG;
 class LandUseHistory;
 /*!
  * \brief A node in the land allocation tree.
@@ -43,13 +41,11 @@ class LandUseHistory;
  */
 class LandNode : public ALandAllocatorItem {
 public:
-    LandNode();
+    explicit LandNode( const ALandAllocatorItem* aParent );
+
     virtual ~LandNode();
 
     // Tree Item methods.
-    virtual bool matches( const std::string& aName,
-                          const TreeItemType aType ) const;
-
     virtual size_t getNumChildren() const;
 
     virtual const ALandAllocatorItem* getChildAt( const size_t aIndex ) const;
@@ -63,13 +59,17 @@ public:
 
     virtual void addLandUsage( const std::string& aLandType,
                                const std::string& aProductName,
-                               const ILandAllocator::LandUsageType aLandUsageType );
+                               const ILandAllocator::LandUsageType aLandUsageType,
+                               const int aPeriod );
 
-    virtual void setInitShares( const double aLandAllocationAbove,
-                                const LandUseHistory* aLandUseHistory,
+    virtual void setInitShares( const std::string& aRegionName,
+                                const double aSigmaAbove,
+                                const double aLandAllocationAbove,
+                                const double aParentHistoryShare,
+                                const LandUseHistory* aParentHistory,
                                 const int aPeriod );
 
-    virtual void setIntrinsicYieldMode( const double aIntrinsicRateAbove,
+    virtual void setIntrinsicYieldMode( const double aIntrinsicYieldAbove,
                                         const double aSigmaAbove,
                                         const int aPeriod );
     
@@ -89,9 +89,6 @@ public:
                                       const std::string& aProductName,
                                       const double aCalObservedYield, 
                                       const int aPeriod );
-
-    virtual double getUnmanagedCalAveObservedRateInternal( const int aPeriod,
-                                                           const double aSigma ) const;
 
     virtual void applyAgProdChange( const std::string& aLandType,
                                     const std::string& aProductName,
@@ -119,7 +116,8 @@ public:
                              const std::string& aProductName,
                              const int aPeriod ) const;
     
-    virtual double getLandAllocation( const std::string& aProductName,
+    virtual double getLandAllocation( const std::string& aLandType,
+                                      const std::string& aProductName,
                                       const int aPeriod ) const;
 
     virtual double getTotalLandAllocation( const LandAllocationType aType,
@@ -128,12 +126,18 @@ public:
     virtual double getBaseLandAllocation( const int aPeriod ) const;
     
     virtual void setUnmanagedLandAllocation( const std::string& aRegionName,
-                                             const double aLandAllocation,
+                                             const double aNewUnmanaged,
                                              const int aPeriod );
 
     virtual void csvOutput( const std::string& aRegionName ) const;
     virtual void dbOutput( const std::string& aRegionName ) const;
-
+    
+    virtual bool isUnmanagedNest() const;
+    
+    virtual bool isConceptualRoot() const;
+    
+    virtual double getSigma() const;
+    
     virtual void setUnmanagedLandValues( const std::string& aRegionName,
                                          const int aPeriod );
 
@@ -143,22 +147,25 @@ public:
                                    const double aBelowGroundCarbon,
                                    const int aPeriod );
 
-    virtual void calcEmission( const std::string& aRegionName,
-                               const GDP* aGDP,
-                               const int aPeriod );
-    virtual void updateSummary ( Summary& aSummary, const int aPeriod );
-
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
+
 protected:
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual void toInputXMLDerived( std::ostream& aOutput, Tabs* aTabs ) const;
 
     virtual const std::string& getXMLName() const;
+
     virtual void addChild( ALandAllocatorItem* child );
     
+    ALandAllocatorItem* findChild( const std::string& aName,
+                                   const TreeItemType aType );
+    
+    const ALandAllocatorItem* findChild( const std::string& aName,
+                                         const TreeItemType aType ) const;
+
     //! List of the children of this land node located below it in the land
     //! allocation tree.
     std::vector<ALandAllocatorItem*> mChildren;

@@ -38,6 +38,30 @@
 class Value
 {
 public:
+
+    /*!
+     * \brief Output stream operator to print a Value.
+     * \details Output stream operators allow classes to be printed using the <<
+     *          operator. This function must be defined in the global namespace.
+     * \param aOut Output stream into which to print.
+     * \param aValue Value to print.
+     * \return aOut for chaining.
+     */
+    friend std::ostream& operator<<( std::ostream& aOut, const Value& aValue ){
+        aValue.print( aOut );
+        return aOut;
+    }
+
+    /*!
+     * \brief Input operator to read doubles into a Value.
+     * \param aIStream Input stream to read from.
+     * \param aValue Value to read into.
+     * \return Input stream for chaining.
+     */
+     friend std::istream& operator>>( std::istream& aIStream, Value& aValue ){
+         return aValue.read( aIStream );
+     }
+
     enum Unit {
         DEFAULT,
         PETAJOULE,
@@ -53,8 +77,16 @@ public:
     inline bool isInited() const;
     inline Value& operator+=( const Value& aValue );
     inline Value& operator-=( const Value& aValue );
+
+    Value& operator*=( const Value& aValue );
+
+    Value& operator/=( const Value& aValue );
+
     // XML Function here.
 private:
+    void print( std::ostream& aOutputStream ) const;
+    std::istream& read( std::istream& aIStream );
+
     double mValue;
     bool mIsInit;
     Unit mUnit;
@@ -139,9 +171,64 @@ Value& Value::operator-=( const Value& aValue ){
     return *this;
 }
 
+/*! 
+ * \brief Multiple the value by the amount contained in another value.
+ * \param aValue Value containing the amount by which to multiply.
+ * \return This value by reference for chaining.
+ */
+inline Value& Value::operator*=( const Value& aValue ){
+    // If the value hasn't been initialized it should not be used.
+    assert( mIsInit );
+
+    // Make sure the units match up.
+    assert( mUnit == aValue.mUnit );
+    mValue *= aValue.mValue;
+    return *this;
+}
+
+/*! 
+ * \brief Divide the value by the amount contained in another value.
+ * \param aValue Value containing the divisor.
+ * \return This value by reference for chaining.
+ */
+inline Value& Value::operator/=( const Value& aValue ){
+    // If the value hasn't been initialized it should not be used.
+    assert( mIsInit );
+    assert( aValue > util::getSmallNumber() );
+
+    // Make sure the units match up.
+    assert( mUnit == aValue.mUnit );
+    mValue /= aValue.mValue;
+    return *this;
+}
+
 //! Check if the value has been initialized.
 bool Value::isInited() const {
     return mIsInit;
+}
+
+/*!
+ * \brief Print the value.
+ * \details Helper function for the global << operator which prints the Value
+ *          into the output stream.
+ * \param aOut Output stream into which to print.
+ */
+inline void Value::print( std::ostream& aOut ) const {
+    aOut << mValue;
+}
+
+/*!
+ * \brief Helper function to read a Value from a stream.
+ * \param aIStream Input stream to read from.
+ * \return The input stream for chaining.
+ */
+inline std::istream& Value::read( std::istream& aIStream ){
+    double streamValue;
+    if( aIStream >> streamValue ) {
+        mIsInit = true;
+        mValue = streamValue;
+    }
+    return aIStream;
 }
 
 #endif // _VALUE_H_

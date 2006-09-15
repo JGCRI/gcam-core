@@ -28,7 +28,9 @@
  */
 class ForestLandLeaf : public LandLeaf {
 public:
-    ForestLandLeaf( const std::string& aName );
+    ForestLandLeaf( const ALandAllocatorItem* aParent,
+                    const std::string& aName );
+
     virtual ~ForestLandLeaf();
 
     virtual void completeInit( const std::string& aRegionName, 
@@ -38,9 +40,9 @@ public:
                                      const double aLandAllocationAbove,
                                      const int aPeriod );
 
-    virtual double getLandAllocation( const std::string& aProductName,
+    virtual double getLandAllocation( const std::string& aLandType,
+                                      const std::string& aProductName,
                                       const int aPeriod ) const;
-
 
     virtual double getTotalLandAllocation( const LandAllocationType aType,
                                            const int aPeriod ) const;
@@ -53,8 +55,9 @@ public:
 
     virtual void setCalObservedYield( const std::string& aLandType,
                                       const std::string& aProductName,
-                                      const double aCalObservedYield,
+                                      const double aCalObservedYield, 
                                       const int aPeriod );
+
 protected:
     // TODO: Create a Value class for ints and use it here.
     int mSteps; //!< number of model time steps for a rotation period

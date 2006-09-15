@@ -14,29 +14,26 @@
 #include "land_allocator/include/land_use_history.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/ivisitor.h"
+#include <numeric>
 
 using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
 
-/*! \brief Constructor.
-* \author James Blackwood
-*/
-LandNode::LandNode()
-{
-}
+/*!
+ * \brief Constructor.
+ * \param aParent Pointer to this leafs's parent.
+ * \author James Blackwood
+ */
+LandNode::LandNode( const ALandAllocatorItem* aParent )
+: ALandAllocatorItem( aParent, eNode )
+ {
+    mType = eNode;
+ }
 
 //! Destructor
 LandNode::~LandNode() {
-}
-
-bool LandNode::matches( const string& aName,
-                        const TreeItemType aType ) const
-{
-    // Checks the type first to avoid the expensive string comparsion when
-    // possible.
-    return ( ( ( aType == eNode ) || ( aType == eAny ) ) && ( aName == mName ) );
 }
 
 size_t LandNode::getNumChildren() const {
@@ -44,22 +41,17 @@ size_t LandNode::getNumChildren() const {
 }
 
 const ALandAllocatorItem* LandNode::getChildAt( const size_t aIndex ) const {
-    /*! \pre aIndex is less than the size of the child vector. */
+    // aIndex must be less than the size of the child vector.
     assert( aIndex < mChildren.size() );
     return mChildren[ aIndex ];
 }
 
 ALandAllocatorItem* LandNode::getChildAt( const size_t aIndex ) {
-    /*! \pre aIndex is less than the size of the child vector. */
+    // aIndex must be less than the size of the child vector.
     assert( aIndex < mChildren.size() );
     return mChildren[ aIndex ];
 }
 
-/*! \brief Set data members from XML input
-*
-* \author James Blackwood
-* \param node pointer to the current node in the XML input tree
-*/
 bool LandNode::XMLParse( const DOMNode* aNode ){
 
     // assume we are passed a valid node.
@@ -79,10 +71,10 @@ bool LandNode::XMLParse( const DOMNode* aNode ){
             continue;
         }
         else if ( nodeName == LandNode::getXMLNameStatic() ) {
-            parseContainerNode( curr, mChildren, new LandNode );
+            parseContainerNode( curr, mChildren, new LandNode( this ) );
         }
         else if ( nodeName == UnmanagedLandLeaf::getXMLNameStatic() ) {
-            parseContainerNode( curr, mChildren, new UnmanagedLandLeaf );
+            parseContainerNode( curr, mChildren, new UnmanagedLandLeaf( this ) );
         }
         else if( nodeName == "sigma" ) {
             mSigma = XMLHelper<double>::getValue( curr );
@@ -102,19 +94,12 @@ bool LandNode::XMLParse( const DOMNode* aNode ){
     return true;
 }
 
-/*! \brief Parses any attributes specific to derived classes
-* \author James Blackwood
-* \param nodeName The name of the curr node. 
-* \param curr pointer to the current node in the XML input tree
-*/
-bool LandNode::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ){
+bool LandNode::XMLDerivedClassParse( const string& aNodeName,
+                                     const DOMNode* aCurr )
+{
     return false;
 }
 
-/*! \brief Write XML values specific to derived objects
-*
-* \author Steve Smith
-*/
 void LandNode::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag ( getXMLName(), out, tabs, mName );
 
@@ -138,10 +123,6 @@ void LandNode::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
     // Allow derived classes to override.
 }
 
-/*! \brief Write XML values to debug stream for this object.
-*
-* \author Steve Smith
-*/
 void LandNode::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
     XMLWriteElement( mSigma, "sigma", out, tabs );
 
@@ -154,14 +135,6 @@ void LandNode::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tab
     }
 }
 
-/*! \brief Get the XML node name for output to XML.
-*
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
-* \author James Blackwood
-* \return The constant XML_NAME.
-*/
 const string& LandNode::getXMLName() const {
     return getXMLNameStatic();
 }
@@ -173,21 +146,18 @@ const string& LandNode::getXMLName() const {
 * The "==" operator that is used when parsing, required this second function to return static.
 * \note A function cannot be static and virtual.
 * \author James Blackwood
-* \return The constant XML_NAME as a static.
+* \return The XML name of the object.
 */
 const string& LandNode::getXMLNameStatic() {
     const static string XML_NAME = "LandAllocatorNode";
     return XML_NAME;
 }
 
-/*! \brief Complete the Initialization in the LandAllocator.
-* \author James Blackwood
-*/
 void LandNode::completeInit( const string& aRegionName,
                              const IInfo* aRegionInfo )
 {
     // Verify that sigma is initialized and valid.
-    if( !mSigma.isInited() || mSigma < util::getSmallNumber() ){
+    if( !mSigma.isInited() || mSigma < 0 ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
         mainLog << "Sigma for land node " << mName
@@ -202,89 +172,73 @@ void LandNode::completeInit( const string& aRegionName,
 
 void LandNode::addLandUsage( const string& aLandType,
                              const string& aProductName,
-                             ILandAllocator::LandUsageType aLandUsageType )
+                             ILandAllocator::LandUsageType aLandUsageType,
+                             const int aPeriod )
 {
-    // Find the parent land item which should have a leaf added.
-    ALandAllocatorItem* parent = findItem( aLandType, eNode );
+    assert( aLandType == mName );
 
-    // Check that the parent exists.
-    if( !parent ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Cannot add a land usage for " << aProductName << " as the land type "
-                << aLandType << " does not exist." << endl;
+    // Only add land usage in the base period. If this is not the base period check to make
+    // sure the leaf was already created.
+    if( aPeriod > 0 ){
+        ALandAllocatorItem* existingItem = findChild( aProductName, eLeaf );
+        if( !existingItem ){
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "A land leaf is required but cannot be created after the base period." << endl;
+        }
     }
+    // Add a new leaf for the land usage.
     else {
-        // Add a new leaf for the land usage.
         LandLeaf* newLeaf = 0;
-        if( aLandUsageType == ILandAllocator::eCrop ){
-            newLeaf = new LandLeaf( aProductName );
+        switch( aLandUsageType ){
+        case ILandAllocator::eCrop:
+            newLeaf = new LandLeaf( this, aProductName );
+            break;
+        case ILandAllocator::eForest:
+            newLeaf = new ForestLandLeaf( this, aProductName );
+            break;
+            // No default here so that the compiler will detect 
+            // a missing case.
         }
-        else if( aLandUsageType == ILandAllocator::eForest ){
-            newLeaf = new ForestLandLeaf( aProductName );
-        }
-        // Unknown type. This can only occur if a new type is added to the enum
-        // and not here.
-        else {
-            assert( false );
-        }
-
-        parent->addChild( newLeaf );
+        addChild( newLeaf );
     }
 }
 
-/*! \brief Sets land allocation of unmanaged land nodes and leafs.
-* \details Production nodes have their land allocation set by the supply sectors
-*          that create them The land allocation in unmanaged land nodes need to
-*          be set as the difference between the land allocated above and the
-*          land used in the rest of the mChildren at this level. Unmanaged land
-*          leafs have an allocation read in, which acts as a relative share of
-*          their land -- this needs to be adjusted to be consistant with the
-*          land specified to be used in the production sectors root node is
-*          represented by having a landAllocationAbove equal to zero.
-* \warning this routine assumes that all leafs under an unmanaged land node are
-*          not managed land.
-* \todo Generalize this method so that unmanaged land leafs could be at any
-*       level
-* \param landAllocationIn Total land allocated to be allocated to this node
-* \param period Period index
-* \author Steve Smith
-*/
 void LandNode::setUnmanagedLandAllocation( const string& aRegionName,
-                                           const double aLandAllocation,
+                                           const double aNewUnmanaged,
                                            const int aPeriod )
 {
-    // If this node is not full of production leafs, then this is unmanaged land
-    if ( aLandAllocation > 0 ) {
-        double totalLandAllocated = getTotalLandAllocation( eUnmanaged, aPeriod );
-        if ( totalLandAllocated > 0 ) {
-            double landAllocationScaleFactor = aLandAllocation / totalLandAllocated;
-            for ( unsigned int i = 0; i < mChildren.size() ; i++ ) {
-                double childLandAllocation = mChildren[ i ]->getTotalLandAllocation( eUnmanaged, aPeriod );
-                double newAllocation = childLandAllocation * landAllocationScaleFactor;
-                mChildren[ i ]->setUnmanagedLandAllocation( aRegionName, newAllocation, aPeriod );
-            }
-        }
-        calcLandShares( aRegionName, 0, 0, aPeriod );
+    // Determine the current amount of unmanaged land below this node.
+    double unmanagedBelow = getTotalLandAllocation( eUnmanaged, aPeriod );
+
+    double landAllocationScaleFactor = unmanagedBelow > util::getSmallNumber() ? 
+                                       aNewUnmanaged / unmanagedBelow : 0;
+
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        // Scale the child land allocation so the sum of this node's land
+        // allocation is equal to the indended allocation.
+        double newAllocation = mChildren[ i ]->getTotalLandAllocation( eUnmanaged, aPeriod )
+            * landAllocationScaleFactor;
+
+        mChildren[ i ]->setUnmanagedLandAllocation( aRegionName, newAllocation, aPeriod );
+
+        // Check that scaling of the child worked correctly.
+        assert( util::isEqual( newAllocation,
+            mChildren[ i ]->getTotalLandAllocation( eUnmanaged, aPeriod ),
+            util::getSmallNumber() ) );
     }
 }
 
-/*! \brief Sets the initial shares and land allocation.
-* \warning Unmanged land allocations are not set properly. 
-* \todo figure out a way to set the unmanaged land allocation leaves. (Unmanaged Class)
-* \author James Blackwood
-*/
-void LandNode::setInitShares( const double aLandAllocationAbove,
-                              const LandUseHistory* aLandUseHistory,
+void LandNode::setInitShares( const string& aRegionName,
+                              const double aSigmaAbove,
+                              const double aLandAllocationAbove,
+                              const double aParentHistoryShare,
+                              const LandUseHistory* aParentHistory,
                               const int aPeriod )
 {
-    // Calculating the shares
-    double nodeLandAllocation = getTotalLandAllocation( eAnyLand, aPeriod ); 
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->setInitShares( nodeLandAllocation,
-                                       mLandUseHistory.get(), aPeriod );
-    }
-
+    // Calculate the total land within this node.
+    double nodeLandAllocation = getTotalLandAllocation( eAnyLand, aPeriod );
+    
     // If there is no land allocation for the parent land type, set the share to
     // a small number.
     if( aLandAllocationAbove < util::getSmallNumber() ){
@@ -292,36 +246,65 @@ void LandNode::setInitShares( const double aLandAllocationAbove,
     }
     else {
         mShare[ aPeriod ] = nodeLandAllocation / aLandAllocationAbove;
-        assert( util::isValidNumber( mShare[ aPeriod ] ) );
+    }
+
+    // If the current node does not have a land use history object,
+    // use the parent's object and land use history share.
+    const LandUseHistory* nodeLandUseHistory = mLandUseHistory.get();
+    double landUseShare = 1;
+    if( !nodeLandUseHistory ){
+        nodeLandUseHistory = aParentHistory;
+        landUseShare = aParentHistoryShare * mShare[ aPeriod ];
+    }
+
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        mChildren[ i ]->setInitShares( aRegionName,
+                                       mSigma,
+                                       nodeLandAllocation,
+                                       landUseShare,
+                                       nodeLandUseHistory,
+                                       aPeriod );
+    }
+
+    // Calculate the intrinsic rate only in unmanaged land. This is to calculate
+    // the unmanaged land intrinsic rates, which is needed for calibrated. Other
+    // land types cannot calculate their intrinsic rates at this point.
+    if( isUnmanagedNest() ){
+        double totalBaseLandAllocation = getBaseLandAllocation( aPeriod );
+        calcLandShares( aRegionName, 0, totalBaseLandAllocation, aPeriod );
     }
 }
 
-/*! \brief Sets the intrinsic yield mode for the node and its' children.
-* \author James Blackwood
-*/
-void LandNode::setIntrinsicYieldMode( const double aIntrinsicRateAbove,
+void LandNode::setIntrinsicYieldMode( const double aIntrinsicYieldAbove,
                                       const double aSigmaAbove,
                                       const int aPeriod )
 {
-    double nodeIntrinsicRate = aIntrinsicRateAbove * pow( mShare[ aPeriod ], aSigmaAbove );
-    if( nodeIntrinsicRate > 0 ){
-        for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-            mChildren[ i ]->setIntrinsicYieldMode( nodeIntrinsicRate, mSigma, aPeriod );
-        }
+    assert( mShare[ aPeriod ].isInited() );
+
+    // Intrisic yields for a land type cannot be zero.
+    assert( aIntrinsicYieldAbove > util::getSmallNumber() );
+
+    double nodeIntrinsicRate = aIntrinsicYieldAbove * pow( mShare[ aPeriod ].get(), aSigmaAbove );
+    
+    // If this is a child of the root with a sigma of zero the power of the
+    // share to the sigma will be one, and since the root has an intrinsic rate
+    // of one this will equal 1.
+    assert( aSigmaAbove > util::getSmallNumber() || util::isEqual( nodeIntrinsicRate, 1.0 ) );
+
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        mChildren[ i ]->setIntrinsicYieldMode( nodeIntrinsicRate, mSigma, aPeriod );
     }
 }
 
-/*! \brief Finds the location to set the intrinsicRate and sets it using the leaf's version of this method.
-* If the location is not found it creates it as a leaf from the landType which should be a node.
-* \author Josh Lurz, James Blackwood
-*/
 void LandNode::setIntrinsicRate( const string& aRegionName,
                                  const string& aLandType,
                                  const string& aProductName,
                                  const double aIntrinsicRate,
                                  const int aPeriod )
 {
-    ALandAllocatorItem* curr = findItem( aProductName, eLeaf );
+    assert( aLandType == mName );
+
+    ALandAllocatorItem* curr = findChild( aProductName, eLeaf );
     // Set the rental rate.
     if( curr ){
         curr->setIntrinsicRate( aRegionName, aLandType, aProductName,
@@ -329,19 +312,14 @@ void LandNode::setIntrinsicRate( const string& aRegionName,
     }
 }
 
-/*! \brief Finds the location to set the calibrated land allocation values and
-*          sets them using the leaf's version of this method. If the location is
-*          not found it creates it as a leaf from the landType which should be a
-*          node.
-* \author James Blackwood
-*/
 void LandNode::setCalLandAllocation( const string& aLandType,
                                      const string& aProductName,
                                      const double aCalLandUsed,
                                      const int aHarvestPeriod, 
                                      const int aCurrentPeriod )
 {
-    ALandAllocatorItem* curr = findItem( aProductName, eLeaf );
+    assert( aLandType == mName );
+    ALandAllocatorItem* curr = findChild( aProductName, eLeaf );
 
     // Set the land allocation.
     if( curr ){
@@ -350,172 +328,112 @@ void LandNode::setCalLandAllocation( const string& aLandType,
     }
 }
 
-/*! \brief Finds the location to set the calibrated land allocation and observed
-*          yield values and sets them using the leaf's version of this method.
-*          If the location is not found it creates it as a leaf from the
-*          landType which should be a node.
-* \author James Blackwood
-*/
 void LandNode::setCalObservedYield( const string& aLandType,
                                     const string& aProductName,
                                     const double aCalObservedYield,
                                     const int aPeriod )
 {
-    ALandAllocatorItem* curr = findItem( aProductName, eLeaf );
+    assert( aLandType == mName );
+    ALandAllocatorItem* curr = findChild( aProductName, eLeaf );
     
     if( curr ){
         curr->setCalObservedYield( aLandType, aProductName, aCalObservedYield, aPeriod );
     }
 }
 
-double LandNode::getUnmanagedCalAveObservedRateInternal( const int aPeriod,
-                                                         const double aSigmaAbove ) const
-{
-    double rateToReturn = 0;
-
-    // Note that a standard TreeItem search does not work since we need the share and  
-    // sigma at everynode that leads to the unmanaged land node.
-    // Instead, we will traverse the tree to find the top of the unmanaged land
-    // nest.  UnmanagedLandLeaf::getUnmanagedCalAveObservedRateInternal returns
-    // 1; all other leaves return 0.  Therefore if all of a node's children
-    // return a non-zero value, the node is an unmanaged land nest and will
-    // return its instrinsic rate.  The highest unmanaged land node nest's
-    // instrinsic rate will be successively divided by its share to the power of
-    // the sigma parameter for each level and return by the root.
-    
-    // It can't be the unmanaged nest if it doesn't have any children.
-    bool isUnmanagedNest = mChildren.size() > 0 ? true : false;
-
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ){
-        double rateTemp = mChildren[ i ]->getUnmanagedCalAveObservedRateInternal( aPeriod, mSigma );
-        if( rateTemp < util::getTinyNumber() ){
-            isUnmanagedNest = false;
-        }
-        else {
-            rateToReturn = rateTemp;
-        }
-    }
-
-    // If all the children of this node returned a non-zero
-    // getUnmanagedCalAveObservedRateInternal then we want this node's
-    // mInstrinsicRate
-    if( isUnmanagedNest ){
-        rateToReturn = mIntrinsicRate[ aPeriod ];
-    } 
-
-    // Since it may be possible for a node to have no share
-    if ( mShare[ aPeriod ] > util::getTinyNumber() ){
-        rateToReturn /= pow( mShare[ aPeriod ], aSigmaAbove );
-    }
-    return rateToReturn;
-}
-
-/*! \brief Finds the location to apply the agruculture production change
-* and sets them using the leaf's version of this method. If the location is not
-* found it creates it as a leaf from the landType which should be a node.
-* \author James Blackwood
-*/
 void LandNode::applyAgProdChange( const string& aLandType,
                                   const string& aProductName,
                                   const double aAgProdChange,
                                   const int aPeriod )
 {
-    ALandAllocatorItem* curr = findItem( aProductName, eLeaf );
+    assert( aLandType == mName );
+    ALandAllocatorItem* curr = findChild( aProductName, eLeaf );
     
     if( curr ){
         curr->applyAgProdChange( aLandType, aProductName, aAgProdChange, aPeriod );
     }
 }
 
-/*! \brief This method will calculate the share value for each leaf and node,
-*          and then normalize it.
-* \details This function will be called from the supply side of the sectors and
-*          will be passed a default dummy sigmaAbove. The first loop cycles
-*          through all the mChildren. If a child is a leaf then it will call the
-*          calcLandShares method in LandAllocatorLeaf, where share is
-*          calculated. If a child is a node there will be a recursive call to
-*          this method. The second loop uses the sum of all the shares of the
-*          mChildren vector and normalizes and overwrites share. Finally, share
-*          is calculated for this node using the calculated intrinsicRate and
-*          the sigma from one level up.
-* \param aSigmaAbove the sigma value from the node above this level.
-* \return The unnormalized share.
-* \author James Blackwood
-* \todo need a better way to check if "UnmanagedLand" to not overwrite
-*       intrinsicRate that was read in through input
-* \todo May need to add a method to deal with case if total allocation is
-*       greater than initial allocation 
-* \todo this will not work if unmanaged land nodes are nested
-*/
 double LandNode::calcLandShares( const string& aRegionName,
                                  const double aSigmaAbove,
-                                 const double aTotalLandAllocated,
+                                 const double aTotalBaseLand,
                                  const int aPeriod )
 {
-    // First adjust value of unmanaged land nodes
-    setUnmanagedLandValues( aRegionName, aPeriod );
-
-    // Calculate the temporary unnormalized shares and sum them
-    double unnormalizedSum = 0;
+    // Calculate the temporary unnormalized shares.
     double totalBaseLandAllocation = getBaseLandAllocation( aPeriod );
+    vector<double> unnormalizedShares( mChildren.size() );
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        // If this is unmanaged land then use initial land allocation to
-        // weight land use. Returns the temporary unnormalized share.
-        unnormalizedSum += mChildren[ i ]->calcLandShares( aRegionName, mSigma,
-                                                           totalBaseLandAllocation,
-                                                           aPeriod );          
+        // If this is unmanaged land then use initial land allocation to weight
+        // land use. Returns the temporary unnormalized share.
+        unnormalizedShares[ i ] = mChildren[ i ]->calcLandShares( aRegionName,
+                                                                  mSigma,
+                                                                  totalBaseLandAllocation,
+                                                                  aPeriod );          
     }
 
-    if ( unnormalizedSum < util::getSmallNumber() ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "The children of land type " << mName << " in region " << aRegionName << " have invalid total un-normalized shares of " << unnormalizedSum << "." << endl;
-    }
+    double unnormalizedSum = accumulate( unnormalizedShares.begin(),
+                                         unnormalizedShares.end(),
+                                         0.0 );
 
-    // Normalizing the temporary unnormalized shares
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->normalizeLandAllocation( unnormalizedSum, aPeriod );
-    }
-
-    // The unnormalizedSum is actually the 1/sigma weighted intrinsic rates of
-    // the mChildren Therefore, the equation below gives the intrinsic rate of
-    // this node
-    mIntrinsicRate[ aPeriod ] = pow( unnormalizedSum, mSigma.get() );
-
-    // This is a temporary unnormalized share. Sigma above may be zero when
-    // setting the unmanaged land allocation.
-    // TODO: Can this be simplified?
-    if( aSigmaAbove > util::getSmallNumber() ){
-        mShare[ aPeriod ] = pow( mIntrinsicRate[ aPeriod ], 1 / aSigmaAbove );
-        assert( util::isValidNumber( mShare[ aPeriod ] ) );
+    double unnormalizedShare;
+    if ( unnormalizedSum < util::getSmallNumber() ){ 
+        mIntrinsicRate[ aPeriod ] = 0;
+        unnormalizedShare = 0;
     }
     else {
-        mShare[ aPeriod ] = 1;
+        // Set the normalized share for each child.
+        for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+            mChildren[ i ]->setShare( unnormalizedShares[ i ] / unnormalizedSum,
+                                      aPeriod );
+        }
+
+        // The unnormalizedSum is actually the 1/sigma weighted intrinsic rates
+        // of the mChildren Therefore, the equation below gives the intrinsic
+        // rate of this node
+        mIntrinsicRate[ aPeriod ] = pow( unnormalizedSum, mSigma.get() );
+
+
+        // This is a temporary unnormalized share. If this is an unmanaged land node
+        // within a nest that includes managed land nodes, the sigma above will be
+        // set to zero during the initial setting of shares.
+        if( aSigmaAbove > util::getSmallNumber() ){
+            unnormalizedShare = pow( mIntrinsicRate[ aPeriod ].get(), 1 / aSigmaAbove );
+
+            // If this is unmanaged land, adjust the share for the proportion of
+            // base land in this node and base land in the parent. This would
+            // only be required if there were multiple unmanaged land nodes
+            // below a single conceptual root.
+            if ( totalBaseLandAllocation > util::getSmallNumber() &&
+                aTotalBaseLand > util::getSmallNumber() )
+            {
+                unnormalizedShare *= totalBaseLandAllocation / aTotalBaseLand;
+            }
+            assert( util::isValidNumber( unnormalizedShare ) );
+        }
+        else {
+            // The unnormalized share cannot be calculated. If all children of a
+            // node return 0, as in the case where the sigma of the node is
+            // zero, the node will not adjust the initial shares.
+            unnormalizedShare = 0;
+        }
     }
-    return mShare[ aPeriod ];
+    return unnormalizedShare;
 }
 
-/*! \brief Adjust land values for unmanaged land nodes as necessary
-* \param aRegionName Region name.
-* \param aPeriod Model period
-* \author Steve Smith
-*/
-void LandNode::setUnmanagedLandValues( const string& aRegionName, const int aPeriod ) {
-    for ( unsigned int i = 0; i < mChildren.size() ; i++ ) {
+void LandNode::setUnmanagedLandValues( const string& aRegionName,
+                                       const int aPeriod )
+{
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
         mChildren[ i ]->setUnmanagedLandValues( aRegionName, aPeriod );
     }
 }
 
-/*! \brief Recursively calculates the landAllocation at each leaf and node using
-*          the shares. landAllocationAbove is passed the value of 0 at the root
-*          when this method is called, so the value in landAllocation at the
-*          root will not be changed and be passed down recursively.
-* \author Steve Smith, James Blackwood
-*/
 void LandNode::calcLandAllocation( const string& aRegionName,
                                    const double aLandAllocationAbove,
                                    const int aPeriod )
 {
+    assert( mShare[ aPeriod ].isInited() );
+
     double nodeLandAllocation = aLandAllocationAbove * mShare[ aPeriod ];
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
         mChildren[ i ]->calcLandAllocation( aRegionName, nodeLandAllocation, aPeriod );
@@ -528,7 +446,8 @@ void LandNode::setCarbonContent( const string& aLandType,
                                  const double aBelowGroundCarbon,
                                  const int aPeriod )
 {
-    ALandAllocatorItem* curr = findItem( aProductName, eLeaf );
+    assert( aLandType == mName );
+    ALandAllocatorItem* curr = findChild( aProductName, eLeaf );
     
     if( curr ){
         curr->setCarbonContent( aLandType, aProductName, aAboveGroundCarbon,
@@ -536,9 +455,6 @@ void LandNode::setCarbonContent( const string& aLandType,
     }
 }
 
-/*! \brief Finds the location to calculate the yield using the leaf's version of this method.
-* \author James Blackwood
-*/
 void LandNode::calcYieldInternal( const string& aLandType,
                                   const string& aProductName,
                                   const string& aRegionName,
@@ -547,7 +463,12 @@ void LandNode::calcYieldInternal( const string& aLandType,
                                   const int aHarvestPeriod,
                                   const int aCurrentPeriod )
 {
-    ALandAllocatorItem* curr = findItem( aProductName, eLeaf );
+    assert( aLandType == mName );
+    
+    // There should always be a positive average intrinsic rate.
+    assert( aAvgIntrinsicRate > util::getSmallNumber() );
+
+    ALandAllocatorItem* curr = findChild( aProductName, eLeaf );
     
     if( curr ){
         curr->calcYieldInternal( aLandType, aProductName, aRegionName,
@@ -556,28 +477,24 @@ void LandNode::calcYieldInternal( const string& aLandType,
     }
 }
 
-/*! \brief Finds the location to get the yield using the leaf's version of this method.
-* \author James Blackwood
-*/
-double LandNode::getYield( const string& landType, const string& productName, const int period ) const {
-    const ALandAllocatorItem* curr = findItem( productName, eLeaf );
+double LandNode::getYield( const string& aLandType,
+                           const string& aProductName,
+                           const int aPeriod ) const
+{
+    assert( aLandType == mName );
+    const ALandAllocatorItem* curr = findChild( aProductName, eLeaf );
 
     if( curr ){
-        return curr->getYield( landType, productName, period );
+        return curr->getYield( aLandType, aProductName, aPeriod );
     }
     return 0;
 }
 
-/*! \brief Adds a child to the mChildren vector by pushing it on the back.
-* The child can be a leaf or a node.
-* \author Josh Lurz, James Blackwood
-*/
 void LandNode::addChild( ALandAllocatorItem* child ) {
-    /*! \pre The child exists. */
     assert( child );
 
     // Check if the child already exists.
-    ALandAllocatorItem* existingItem = findItem( child->getName(), eLeaf );
+    ALandAllocatorItem* existingItem = findChild( child->getName(), eLeaf );
     if( existingItem ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
@@ -588,33 +505,42 @@ void LandNode::addChild( ALandAllocatorItem* child ) {
     mChildren.push_back( child );
 }
 
-/*! \brief Recursively sums the landAllocation of all the nodes and leafs below
-*          this landType.
-* \author James Blackwood
-* \return the landAllocation of this landType
-* \todo Does this continue searching after finding the land type?
-*/
-double LandNode::getLandAllocation( const string& aProductName,
+/*!
+ * \brief Finds a child of this node that has the desired name and type.
+ * \param aName The desired name.
+ * \param aType The desired type.
+ * \return ALandAllocatorItem pointer to the child.
+ */
+ALandAllocatorItem* LandNode::findChild( const string& aName,
+                                         const TreeItemType aType ) {
+    return findItem<ALandAllocatorItem>( eDFS, this, MatchesTypeAndName( aName, aType ) );
+}
+
+/*!
+ * \brief Finds a child of this node that has the desired name and type.
+ * \param aName The desired name.
+ * \param aType The desired type.
+ * \return ALandAllocatorItem pointer to the child.
+ */
+const ALandAllocatorItem* LandNode::findChild( const string& aName,
+                                               const TreeItemType aType ) const {
+    return findItem<ALandAllocatorItem>( eDFS, this, MatchesTypeAndName( aName, aType ) );
+}
+
+double LandNode::getLandAllocation( const string& aLandType,
+                                    const string& aProductName,
                                     const int aPeriod ) const 
 {
-    const ALandAllocatorItem* curr = findItem( aProductName, eLeaf );
+    assert( aLandType == mName );
+
+    const ALandAllocatorItem* curr = findChild( aProductName, eLeaf );
 
     if( curr ){
-        return curr->getLandAllocation( aProductName, aPeriod );
+        return curr->getLandAllocation( aLandType, aProductName, aPeriod );
     }
     return 0;
 }
 
-/*!
- * \brief Returns all land allocated for this land type.
- * \param aType The type of land allocation to return: unmanaged, managed, or
- *        either.
- * \param aPeriod Model period.
- * \note This function is needed so that separate function can be called for
- *       land classes with vintaging when total land allocated is necessary.
- * \author Steve Smith
- * \return The total land allocated below the node.
- */
 double LandNode::getTotalLandAllocation( const LandAllocationType aType,
                                          const int aPeriod ) const
 {
@@ -625,11 +551,6 @@ double LandNode::getTotalLandAllocation( const LandAllocationType aType,
     return sum;
 }
 
-/*! \brief Recursively sums the baseLandAllocation of all the nodes and leafs
-*          below this landType.
-* \author Steve Smith
-* \return the baseLandAllocation of this landType
-*/
 double LandNode::getBaseLandAllocation( const int aPeriod ) const {
     double sum = 0;
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
@@ -638,11 +559,23 @@ double LandNode::getBaseLandAllocation( const int aPeriod ) const {
     return sum;
 }
 
-/*! \brief Write output to csv output file. 
-*
-*
-* \author Steve Smith
-*/
+bool LandNode::isUnmanagedNest() const {
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        if ( !mChildren[ i ]->isUnmanagedNest() ) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool LandNode::isConceptualRoot() const {
+    return getParent() ? getParent()->getSigma() < util::getSmallNumber() : true;
+}
+
+double LandNode::getSigma() const {
+    return mSigma;
+}
+
 void LandNode::csvOutput( const string& aRegionName ) const {
     ALandAllocatorItem::csvOutput( aRegionName );
     //write output for mChildren
@@ -659,26 +592,10 @@ void LandNode::dbOutput( const string& aRegionName ) const {
     }
 }
 
-void LandNode::calcEmission( const string& aRegionName,
-                             const GDP* aGDP, 
-                             const int aPeriod )
-{
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->calcEmission( aRegionName, aGDP, aPeriod );
-    }
-}
-
-void LandNode::updateSummary( Summary& aSummary, const int aPeriod ) {
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) { 
-        mChildren[ i ]->updateSummary( aSummary, aPeriod );
-    }
-}
-
 void LandNode::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitLandNode( this, aPeriod );
-	for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-		mChildren[i]->accept( aVisitor, aPeriod );
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        mChildren[i]->accept( aVisitor, aPeriod );
     }
     aVisitor->endVisitLandNode( this, aPeriod );
 }
-

@@ -10,8 +10,8 @@
 #include "land_allocator/include/iland_allocator.h"
 #include "emissions/include/aghg.h"
 #include "containers/include/scenario.h"
-#include "util/base/include/xml_helper.h"
 #include "containers/include/iinfo.h"
+#include "util/base/include/xml_helper.h"
 #include "marketplace/include/marketplace.h"
 
 using namespace std;
@@ -115,19 +115,6 @@ void ForestProductionTechnology::initCalc( const string& aRegionName,
 
     FoodProductionTechnology::initCalc( aRegionName, aSectorName, aSubsectorInfo,
                                         aDemographics, aPeriod );
-
-    if ( calObservedYield != -1 && calProduction != -1 && mFutureProduction.isInited() ) {
-        Marketplace* marketplace = scenario->getMarketplace();
-
-        // Also set value to marketplace for future forest demand if there are no price effects
-        // So can calibrate by hand. Need better way to do this. //sjsTEMP
-        IInfo* futureMarketInfo = marketplace->getMarketInfo( getFutureMarket( aSectorName ),
-                                                              aRegionName, aPeriod , true );
-
-        double existingSupply = max( futureMarketInfo->getDouble( "calSupply", false ), 0.0 );
-
-        futureMarketInfo->setDouble( "calSupply", existingSupply + mFutureProduction );
-    }
 }
 
 /*!
@@ -158,12 +145,9 @@ void ForestProductionTechnology::completeInit( const string& aSectorName,
     // Set rotation period variable so this can be used throughout object
     mRotationPeriod = aSubsectorInfo->getInteger( "rotationPeriod", true );
 
-    // Setup the land usage for this production. Only add land usage once for
-    // all technologies, of a given type. TODO: This is error prone if
-    // technologies don't all have the same land type.
-    if( year == scenario->getModeltime()->getStartYear() ){
-        mLandAllocator->addLandUsage( landType, mName, ILandAllocator::eForest );
-    }
+    // Setup the land usage for this production.
+    int techPeriod = scenario->getModeltime()->getyr_to_per( year );
+    mLandAllocator->addLandUsage( landType, mName, ILandAllocator::eForest, techPeriod );
 
     setCalLandValues();
 }
@@ -281,7 +265,7 @@ void ForestProductionTechnology::production( const string& aRegionName,
     // This would be wrong if the fuelname had an emissions coefficient, or if
     // there were a fuel or other input. When multiple inputs are complete there
     // should be a specific land input.
-    input = mLandAllocator->getLandAllocation( mName, aPeriod );
+    input = mLandAllocator->getLandAllocation( landType, mName, aPeriod );
     calcEmissionsAndOutputs( aRegionName, input, primaryOutput, aGDP, aPeriod );
 }
 
@@ -310,8 +294,10 @@ double ForestProductionTechnology::calcProfitRate( const string& aRegionName,
     return netPresentValue;
 }
 
-/*! \brief Calculate the factor to discount between the present period and the
-*          harvest period.
+/*! \brief Calculate the factor which discounts the future value of the forest
+*          harvest between the future harvest period and the current period and
+*          levelizes across the number of years during which the trees are
+*          grown.
 * \return The discount factor.
 */
 double ForestProductionTechnology::calcDiscountFactor() const {

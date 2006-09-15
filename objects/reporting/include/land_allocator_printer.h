@@ -38,13 +38,21 @@ class ALandAllocatorItem;
 */
 class LandAllocatorPrinter : public DefaultVisitor {
 public:
-    explicit LandAllocatorPrinter( const std::string& aRegionToPrint, std::ostream& aFile,
-                                   const bool aPrintValues );
+    explicit LandAllocatorPrinter( const std::string& aRegionToPrint,
+                                   std::ostream& aFile,
+                                   const bool aPrintValues,
+                                   const bool aPrintSpecificRegion );
+
     void startVisitRegion( const Region* aRegion, const int aPeriod );
     void endVisitRegion( const Region* aRegion, const int aPeriod );
-    void startVisitLandNode( const LandNode * aLandNode, const int aPeriod);
-    void endVisitLandNode( const LandNode * aLandNode, const int aPeriod);
-    void startVisitLandLeaf( const LandLeaf * aLandLeaf, const int aPeriod);
+    void startVisitLandNode( const LandNode * aLandNode, const int aPeriod );
+    void endVisitLandNode( const LandNode * aLandNode, const int aPeriod );
+    void startVisitLandLeaf( const LandLeaf * aLandLeaf, const int aPeriod );
+    void openGraph() const;
+    void closeGraph() const;
+    static void printToFile( const std::string& aRegion,
+                             const std::string& aFileName,
+                             const ALandAllocatorItem& aLandAllocatorItem );
 private:
     //! The file to which to write.
     std::ostream& mFile;
@@ -63,6 +71,9 @@ private:
 
     //! Whether or not to print values on the graph
     bool mPrintValues;
+
+    //! Whether or not to only print a certain region
+    bool mPrintSpecificRegion;
 
     void printNode( const ALandAllocatorItem* aLandItem,
                     const int aPeriod, const bool aIsLeaf ) const;

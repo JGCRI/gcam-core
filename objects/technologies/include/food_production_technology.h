@@ -62,7 +62,14 @@ public:
                              const GDP* aGDP,
                              const int aPeriod );
 
-    virtual void calcCost( const std::string& regionName, const std::string& sectorName, const int per );
+    virtual void calcCost( const std::string& regionName,
+                           const std::string& sectorName,
+                           const int per );
+
+    virtual void adjustForCalibration( double subSectorDemand,
+                                       const std::string& regionName,
+                                       const IInfo* aSubsectorIInfo,
+                                       const int period );
 
     virtual double getFuelcost() const;
 protected:

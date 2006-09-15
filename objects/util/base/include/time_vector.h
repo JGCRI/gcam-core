@@ -59,6 +59,8 @@ namespace objects {
 
             const T& operator*() const;
 
+            const T* operator->() const;
+
             bool operator==( const const_iterator& aOther ) const;
 
             bool operator!=( const const_iterator& aOther ) const;
@@ -108,6 +110,8 @@ namespace objects {
             iterator();
 
             T& operator*();
+
+            T* operator->();
 
             bool operator==( const iterator& aOther ) const;
 
@@ -214,6 +218,14 @@ namespace objects {
         assert( mParent );
         assert( mPos <= mParent->size() );
         return mParent->mData[ mPos ];
+    }
+
+    //! Get the contents of the iterator so a function can be called on it.
+    template<class T>
+    const T* TimeVectorBase<T>::const_iterator::operator->() const {
+        assert( mParent );
+        assert( mPos <= mParent->size() );
+        return &mParent->mData[ mPos ];
     }
 
     //! Equality operator.
@@ -338,7 +350,7 @@ namespace objects {
     template<class T>
     size_t TimeVectorBase<T>::const_iterator::operator-(const typename TimeVectorBase<T>::const_iterator& aOther) const {
         // Check that they have the same parent.
-        assert( mParent == aOther->mParent );
+        assert( mParent == aOther.mParent );
         return mPos - aOther.mPos;
     }
 
@@ -367,6 +379,14 @@ namespace objects {
         return mParent->mData[ mPos ];
     }
     
+    //! Get the contents of the iterator so a function can be called on it.
+    template<class T>
+    T* TimeVectorBase<T>::iterator::operator->() {
+        assert( mParent );
+        assert( mPos <= mParent->size() );
+        return &mParent->mData[ mPos ];
+    }
+
     //! Equality operator.
     template<class T>
     bool TimeVectorBase<T>::iterator::operator==( const typename TimeVectorBase<T>::iterator& aOther ) const {
@@ -468,8 +488,8 @@ namespace objects {
 
     /*!
      * \brief Constructor.
-     * \param Size of the TimeVectorBase. The size is immutable once
-     *        constructed.
+     * \param aSize Size of the TimeVectorBase. The size is immutable once
+     *              constructed.
      * \param aDefaultValue Default for all values.
      */
     template<class T>
@@ -497,8 +517,8 @@ namespace objects {
 
    /*! 
     * \brief Initialize the TimeVectorBase.
-     * \param Size of the TimeVectorBase. The size is immutable once
-     *        constructed.
+     * \param aSize Size of the TimeVectorBase. The size is immutable once
+     *              constructed.
      * \param aDefaultValue Default for all values.
     */
    template<class T>
@@ -812,9 +832,6 @@ namespace objects {
         PeriodVector( const T aDefaultValue = T() );
         virtual T& operator[]( const size_t aIndex );
         virtual const T& operator[]( const size_t aIndex ) const;
-        
-        // PeriodVector only function.
-        std::vector<T> convertToVector() const;
     protected:
         // Declare that this class is using the base class data and size.
         using TimeVectorBase<T>::mData;
@@ -858,22 +875,17 @@ namespace objects {
             assert( isValidNumber( mData[ aIndex ] ) );
             return mData[ aIndex ];
         }
-       /*!
+    }
+    /*!
      * \brief Convert a PeriodVector into a std::vector.
-     * \param aPeriodVector Period vector to convert.
      * \return Vector equivalent to the period vector.
+     * \todo Remove this after the database code is removed.
      */
     template<class T>
-        std::vector<T> PeriodVector<T>::convertToVector() const {
-            std::vector<T> convVector( size() );
-            // TODO: It'd be convenient to use a copy constructor
-            // of the vector or the copy() function to do this, 
-            // but GCC requires iterator_traits defined.
-            for( unsigned int i = 0; i < convVector.size(); ++i ){
-                convVector[ i ] = (*this)[ i ];
-            }
-            return convVector;
-        }
+    static std::vector<double> convertToVector( typename const objects::PeriodVector<T>& aTimeVector ) {
+        std::vector<double> convVector( aTimeVector.size() );
+        copy( aTimeVector.begin(), aTimeVector.end(), convVector.begin() );
+        return convVector;
    }
 
 #endif // _TIME_VECTOR_H_

@@ -16,59 +16,80 @@ using namespace xercesc;
 
 extern Scenario* scenario;
 
-/*! \brief Constructor.
-* \author James Blackwood
-*/
-ALandAllocatorItem::ALandAllocatorItem()
+/*!
+ * \brief Constructor.
+ * \param aParent Pointer to this item's parent.
+ * \param aType Enum representing this nodes type.
+ * \author James Blackwood
+ */
+ALandAllocatorItem::ALandAllocatorItem( const ALandAllocatorItem* aParent,
+                                        const TreeItemType aType )
+: mParent( aParent ),
+  mType( aType )
 {
 }
 
-//! Default destructor
+//! Destructor
 ALandAllocatorItem::~ALandAllocatorItem() {
 }
 
-/*! \brief This method is called from the node version of calcLandShares and it
-*          normalizes each share.
-* \param aSum The sum of all the children's shares before normalization.
-* \author James Blackwood
-*/
-void ALandAllocatorItem::normalizeLandAllocation( const double aSum,
-                                                  const int aPeriod )
+void ALandAllocatorItem::setShare( const double aShare,
+                                   const int aPeriod )
 {
-    if ( aSum > util::getTinyNumber() ) {
-        mShare[ aPeriod ] /= aSum;
-    }
-    else {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Land Allocator item " << mName << " had invalid share total of " << aSum << "." << endl;
-        mShare[ aPeriod ] = 0;
-    }
-    assert( util::isValidNumber( mShare[ aPeriod ] ) );
+    assert( aShare >= 0 && aShare <= 1 );
+    mShare[ aPeriod ] = aShare;
 }
 
-/*! \brief Returns the name.
-* \author James Blackwood
-* \return the name of this ALandAllocatorItem
-*/
 const string& ALandAllocatorItem::getName() const {
     return mName;
 }
 
-/*! \brief Write datamembers to datastream in XML format for debugging purposes.  
-* Calls XMLWriteElement function from the XMLHelper class for the actual
-* writing. Calls debug functions in other contained objects. 
-*
-* \param aPeriod Model time period
-* \param aOut Output file for debugging purposes in XML format
-* \param aTabs Tabs object used to track the number of tabs to print.
-*/
+/*!
+ * \brief Returns the parent of the item.
+ * \return ALandAllocatorItem pointer to the parent of this item.
+ */
+const ALandAllocatorItem* ALandAllocatorItem::getParent() const {
+    return mParent;
+}
+
+/*!
+ * \brief Returns the intrinsic rate for the specified period.
+ * \param aPeriod The period to get the rate for.
+ * \return double reprenting the intrinsic rate of this item for the specified
+ *         period.
+ */
+double ALandAllocatorItem::getInstrinsicRate( const int aPeriod ) const {
+    assert( mIntrinsicRate[ aPeriod ].isInited() );
+    return mIntrinsicRate[ aPeriod ];
+}
+
+/*!
+ * \brief Returns the share for the specified period.
+ * \param aPeriod The period to get the rate for.
+ * \return double representing the share of this item for the specified period.
+ */
+double ALandAllocatorItem::getShare( const int aPeriod ) const {
+    assert( mShare[ aPeriod ].isInited() &&
+            mShare[ aPeriod ] >= 0 &&
+            mShare[ aPeriod ] <= 1 );
+    return mShare[ aPeriod ];
+}
+
+/*!
+ * \brief Returns an enum representing the type of node (node/leaf).
+ * \return Enum representing the type of this item.
+ */
+TreeItemType ALandAllocatorItem::getType() const {
+    return mType;
+}
+
 void ALandAllocatorItem::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     
     XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, mName );
 
     // write out basic datamembers
     XMLWriteElement( mIntrinsicRate[ aPeriod ], "IntrinsicRate", aOut, aTabs );
+    XMLWriteElement( mShare[ aPeriod ], "share", aOut, aTabs );
 
     toDebugXMLDerived( aPeriod, aOut, aTabs );
     // Finished writing xml for the class members.

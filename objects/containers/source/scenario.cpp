@@ -510,7 +510,8 @@ void Scenario::printLandAllocatorGraph( const int aPeriod, const bool aPrintValu
     AutoOutputFile landAllocatorStream( laFileName );
 
     // Create the land allocator printer.
-    LandAllocatorPrinter landAllocatorPrinter( regionToGraph, *landAllocatorStream, aPrintValues );
+    LandAllocatorPrinter landAllocatorPrinter( regionToGraph, *landAllocatorStream,
+                                               aPrintValues, true );
 
     // Update the land allocator printer with information from the model.
     accept( &landAllocatorPrinter, aPeriod );

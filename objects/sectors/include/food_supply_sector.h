@@ -40,6 +40,8 @@ protected:
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual const std::string& getXMLName() const;
     virtual void setMarket();
+
+    // TODO: Should this be a vector?
     double calPrice;
 
     //! Name of the market for this good.

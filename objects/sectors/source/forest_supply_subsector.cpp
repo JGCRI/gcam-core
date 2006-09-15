@@ -87,3 +87,27 @@ const string& ForestSupplySubsector::getXMLNameStatic() {
     const static string XML_NAME = "ForestSupplySubsector";
     return XML_NAME;
 }
+
+void ForestSupplySubsector::calcShare( const int aPeriod, const GDP* aGDP ) {
+    // call function to compute technology shares. This is required
+    // currently because costs are calculated for the technologies here.
+    calcTechShares( aGDP, aPeriod );
+
+    share[ aPeriod ] = 1;
+}
+
+void ForestSupplySubsector::adjustForCalibration( double sectorDemand,
+                                                  double totalfixedOutput,
+                                                  double totalCalOutputs,
+                                                  const bool allFixedOutput,
+                                                  const int period )
+{
+    // All calibration occurs on the supply side. Allow technologies to perform
+    // any adjustments required. Share is always one, so the technology
+    // calibrated output is the same as totalCalOutput.
+    for( unsigned int i = 0; i < techs.size(); ++i ){
+        techs[ i ][period]->adjustForCalibration( totalCalOutputs, regionName,
+                                                  mSubsectorInfo.get(), period );
+    }
+}
+

@@ -27,19 +27,18 @@ class LandUseHistory;
  *          - Attributes:
  *              - \c name ALandAllocatorItem::mName
  *          - Elements:
- *              - \c GHG_INPUT LandLeaf::mGHGs
  *              - \c intrinsicRate UnmanagedLandLeaf::mBaseIntrinsicRate
  *              - \c unmanaged-carbon-calc LandLeaf::mCarbonContentCalc
-  *             - \c land-use-history UnmanagedLandLeaf::mHistoricalLandAllocation
+ *              - \c land-use-history UnmanagedLandLeaf::mLandUseHistory
  */
 class UnmanagedLandLeaf : public LandLeaf {
 public:
-    UnmanagedLandLeaf();
+    explicit UnmanagedLandLeaf( const ALandAllocatorItem* aParent );
     virtual ~UnmanagedLandLeaf();
     static const std::string& getXMLNameStatic();
 
     virtual void setUnmanagedLandAllocation( const std::string& aRegionName,
-                                             const double aLandAllocation,
+                                             const double aNewUnmanaged,
                                              const int aPeriod );
     
     virtual void setUnmanagedLandValues( const std::string& aRegionName,
@@ -53,38 +52,16 @@ public:
     virtual double getTotalLandAllocation( const LandAllocationType aType,
                                            const int aPeriod ) const;
 
-    virtual double getUnmanagedCalAveObservedRateInternal( const int aPeriod,
-                                                           const double aSigma ) const;
+    virtual bool isUnmanagedNest() const;
 
-    virtual void calcEmission( const std::string& aRegionName,
-                               const GDP* aGDP,
-                               const int aPeriod );
-
-    virtual void toInputXML( std::ostream& out,
-                             Tabs* tabs ) const;
-
-    virtual void accept( IVisitor* aVisitor,
-                         const int aPeriod ) const;
-
-    virtual void updateSummary( Summary& aSummary,
-                                const int aPeriod );
-
-    virtual void csvOutput( const std::string& aRegionName ) const;
-
-    virtual void dbOutput( const std::string& aRegionName ) const;
+    virtual void toInputXML( std::ostream& aOut,
+                             Tabs* aTabs ) const;
 protected:
     //! Unadjusted intrinsic rate.
-    objects::PeriodVector<double> mBaseIntrinsicRate;
+    objects::PeriodVector<Value> mBaseIntrinsicRate;
     
     //! Unadjusted land value
-    objects::PeriodVector<double> mBaseLandAllocation;
-
-    // TODO: GHGs in the land allocator are difficult to deal with because the interface
-    // is designed for Technologies. The cost is not currently included in profit rates.
-    // Unmanaged GHGs should not affect profit rates, however there is no way of enforcing this.
-
-    //! Vector of suites of greenhouse gases.
-    std::vector<AGHG*> mGHGs;
+    objects::PeriodVector<Value> mBaseLandAllocation;
 
     //! Container of historical land use.
     std::auto_ptr<LandUseHistory> mLandUseHistory;

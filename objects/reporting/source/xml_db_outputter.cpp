@@ -756,7 +756,7 @@ void XMLDBOutputter::startVisitLandLeaf( const LandLeaf* aLandLeaf, const int aP
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
         int year = modeltime->getper_to_yr( i );
         // Write out the labor productivity growth rate.
-        XMLWriteElement( aLandLeaf->getLandAllocation( aLandLeaf->getName(), i ),
+        XMLWriteElement( aLandLeaf->getTotalLandAllocation( ALandAllocatorItem::eAnyLand, i ),
                          "land-allocation", mBuffer, mTabs.get(), year );
     }
 }

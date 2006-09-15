@@ -47,7 +47,6 @@ private:
     static const std::string prefix;
     std::string demandedGoodName;
     double perCapitaBaseOutput;
-    bool onceThrough;
 };
 
 #endif // _FOREST_DEMAND_SECTOR_H_

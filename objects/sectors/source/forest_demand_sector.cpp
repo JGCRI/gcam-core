@@ -87,20 +87,10 @@ const std::string& ForestDemandSector::getXMLNameStatic() {
 */
 void ForestDemandSector::initCalc( NationalAccount& aNationalAccount, const Demographic* aDemographics, const int aPeriod )
 {
-    // TODO: Why is this 2?
-    if ( pElasticity[ 2 ] == 0 ) {
-	    ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        // TODO: Why are price elasticities of 0 incorrect?
-        mainLog << "Price Elasticity for demand sector " << name << " is equal to zero. This sector may not solve." << endl;
-    }
-    
     // Set a string defining the good consumed by this sector. 
     // If there is more than one good then calibration logic will not work
     // sjsTEMP -- need more robust method of obtaining this name
     demandedGoodName = "Forest";
-
-    onceThrough = false;
 
     // TODO: Calibration checking needs to be implemented.
 
@@ -159,18 +149,6 @@ void ForestDemandSector::aggdemand( const GDP* gdp, const int period ) {
             // If output is calibrated, then re-set base output value to appropriate value
             mBaseOutput = perCapitaBaseOutput * population1990;
             service[ 0 ] = mBaseOutput;
-
-            // This provides information necessary so that future forest demand can be calibrated by hand. Need to find better method for this. //sjsTEMP
-            if ( !onceThrough ) {
-                onceThrough = true;
-                IInfo* marketInfo = marketplace->getMarketInfo( demandedGoodName, regionName, period, true );
-                // Also set value to marketplace for future forest demand if there are no price effects
-                marketInfo = marketplace->getMarketInfo( prefix + demandedGoodName, regionName, period, true );
-                const int normPeriod = modeltime->getyr_to_per( 1990 );
-                forestDemandFuture = calcForestDemand ( gdp, (period + future), normPeriod, 1.0 );
-                double existingDemand = max( marketInfo->getDouble( "calDemand", false ), 0.0 );
-                marketInfo->setDouble( "calDemand", existingDemand + forestDemandFuture );        
-            }
         }
     }
 

@@ -1606,11 +1606,6 @@ void Region::calcEmissions( const int period ) {
     map<string,double> agEmissions;
     agEmissions[ "CO2NetLandUse" ] = co2LandUseSummer.getEmissions( period );
     summary[ period ].updateemiss( agEmissions );
-
-    if ( mLandAllocator.get() ) {
-        mLandAllocator->calcEmission( name, gdp.get(), period );
-        mLandAllocator->updateSummary( summary[ period ], period );
-    }
 }
 
 /*! \brief Calculate regional emissions by fuel for reporting.
