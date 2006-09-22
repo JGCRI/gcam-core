@@ -1359,8 +1359,33 @@ public class ManipulationDriver
     VDest = new DataVariable();
     VDest.name = VDname;
     variableList.put(VDname, VDest);
-    
-    if((VSource.isReference())&&(((ReferenceVariable)VSource).avg))
+    if(VSource.isGroup())
+    { //dealing with a group, average each member
+      Map.Entry me;
+      Variable Vcurr, Nvar;
+      Iterator it = ((GroupVariable)VSource).data.entrySet().iterator();
+      double[][] tempSum = new double[1][1];
+      tempSum[0][0] = 0;
+      
+      while(it.hasNext())
+      {
+        me = (Map.Entry)it.next();
+        Vcurr = (Variable)me.getValue();
+	if((Vcurr.isReference())&&(((ReferenceVariable)Vcurr).avg))
+	{ //dont need to weight values
+		tempSum[0][0] += ((DataWrapper)(ComponentManipulator.sumValues(((ReferenceVariable)Vcurr).getData(), ((ReferenceVariable)Vcurr).weight, ((ReferenceVariable)Vcurr).x, ((ReferenceVariable)Vcurr).y, ((ReferenceVariable)Vcurr).h))[0]).data[0][0];
+	} else
+	{
+		tempSum[0][0] += ((DataWrapper)(ComponentManipulator.sumValues(Vcurr.getData()))[0]).data[0][0];
+	}
+        
+      }
+      Wrapper[] tempWrapper = new Wrapper[1];
+      tempWrapper[0] = new DataWrapper();
+      tempWrapper[0].setData(tempSum);
+      VDest.setData(tempWrapper);
+      
+    } else if((VSource.isReference())&&(((ReferenceVariable)VSource).avg))
     { //dont need to weight values
       VDest.setData(ComponentManipulator.sumValues(((ReferenceVariable)VSource).getData(), ((ReferenceVariable)VSource).weight, ((ReferenceVariable)VSource).x, ((ReferenceVariable)VSource).y, ((ReferenceVariable)VSource).h));
     } else
@@ -2630,18 +2655,23 @@ public class ManipulationDriver
      * TODO this will be extended so multiple commands can be run in one loop
      * this will approximate the functionality of a for loop in, say, c++ or java
      */
+    // why copy?
     copyCom = (Element)originalCom.clone();
+    List comms = currInfo.getChildren();
     
     //get all tags which need extraction
-    attIt = copyCom.getDescendants(new ContentFilter(ContentFilter.ELEMENT));
-    while(attIt.hasNext())
-    {
-      currInfo = (Element)attIt.next();
-      currName = currInfo.getAttributeValue("replace");
-      if((currName != null))
-      {
-        replaceElements.add(currInfo);
-      }
+    for(int i = 0; i < comms.size(); ++i) {
+	    copyCom = (Element)comms.get(i);
+	    attIt = copyCom.getDescendants(new ContentFilter(ContentFilter.ELEMENT));
+	    while(attIt.hasNext())
+	    {
+		    currInfo = (Element)attIt.next();
+		    currName = currInfo.getAttributeValue("replace");
+		    if((currName != null))
+		    {
+			    replaceElements.add(currInfo);
+		    }
+	    }
     }
     
     //for each region
@@ -2672,7 +2702,10 @@ public class ManipulationDriver
         currReplace.setAttribute("name", currName+regionNames.get(r));
       }
       //run created command
-      runCommand(copyCom);
+      for(int i = 0; i < comms.size(); ++i) {
+	      copyCom = (Element)comms.get(i);
+	      runCommand(copyCom);
+      }
       //removing all the extract variables
       for(int e = 0; e < replaceElements.size(); e++)
       {
@@ -2777,7 +2810,57 @@ public class ManipulationDriver
       log.log(Level.SEVERE, "IOException in -> zoneCombineCommand on write");
     }
   }
-  
+
+  /**
+   * Runs a command on subregions which are extracted from the given variable.
+   * Subregions are defined on a specific level according to the regionDef.
+   * @param command XML node defining the operation.
+   */
+  private void forEachCommand(Element command)
+  {
+	  log.log(Level.FINER, "begin function");
+	  final String currVarName = "$_";
+	  Variable VEachPriv; 
+	  if(variableList.containsKey(currVarName)) {
+		  VEachPriv = getVariable(currVarName);
+	  } else {
+		  VEachPriv = null;
+	  }
+	  Variable VSource;
+	  Variable VCurr;
+	  Element currInfo;
+
+	  VSource = getVariable(command.getAttributeValue("name"));
+	  currInfo = command.getChild("command");
+	  List comms = currInfo.getChildren();
+	  if(VSource.isGroup())
+	  {
+		  Map.Entry me;
+		  Iterator it = ((GroupVariable)VSource).data.entrySet().iterator();
+
+		  while(it.hasNext())
+		  {
+			  me = (Map.Entry)it.next();
+			  VCurr = (Variable)me.getValue();
+			  variableList.put(currVarName, VCurr);
+			  for(int i = 0; i < comms.size(); ++i) {
+				  runCommand((Element)comms.get(i));
+			  }
+		  }
+	  } else 
+	  {
+		  variableList.put(currVarName, VSource);
+		  for(int i = 0; i < comms.size(); ++i) {
+			  runCommand((Element)comms.get(i));
+		  }
+	  }
+	  if(VEachPriv != null) {
+		  variableList.put(currVarName, VEachPriv);
+	  } else {
+		  variableList.remove(currVarName);
+	  }
+  }
+
 //*****************************************************************************
 //*******************Component Functions***************************************
 //*****************************************************************************
@@ -3245,6 +3328,9 @@ public class ManipulationDriver
     } else if(currCom.getName().equals("forEachSubregion"))
     {
       forEachSubregionCommand(currCom);
+    } else if(currCom.getName().equals("forEach"))
+    {
+      forEachCommand(currCom);
     } else if(currCom.getName().equals("zoneCombine"))
     {
       zoneCombineCommand(currCom);

@@ -1606,7 +1606,7 @@ public class DataBuilder
       int[] shp = ma2Array.getShape();
       resY = 180.0 / shp[shp.length-2];
       resX = 360.0 / shp[shp.length-1];
-      System.out.println("Has shape: "+shp[0]+"x"+shp[1]+"x"+shp[2]);
+      //System.out.println("Has shape: "+shp[0]+"x"+shp[1]+"x"+shp[2]);
 
       //checking for overwrite and setting basic information (avg, ref, units)
       if(dataAvg.containsKey(dataName))
