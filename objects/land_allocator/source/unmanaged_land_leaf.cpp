@@ -39,7 +39,7 @@ bool UnmanagedLandLeaf::XMLDerivedClassParse( const string& aNodeName,
                                                  scenario->getModeltime() );
     }
     else if( aNodeName == "intrinsicRate" ){
-        XMLHelper<Value>::insertValueIntoVector( aCurr, mIntrinsicRate,
+        XMLHelper<Value>::insertValueIntoVector( aCurr, mBaseIntrinsicRate,
                                                  scenario->getModeltime() );
     }
     else if( aNodeName == LandUseHistory::getXMLNameStatic() ){
