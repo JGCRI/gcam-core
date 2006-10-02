@@ -197,6 +197,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 						doc = null;
 						documentation = null;
 						((InterfaceMain)parentFrame).getUndoManager().discardAllEdits();
+						((InterfaceMain)parentFrame).refreshUndoRedo();
 						parentFrame.getContentPane().removeAll();
 						parentFrame.setTitle("ModelInterface");
 						if(splitPane != null) {

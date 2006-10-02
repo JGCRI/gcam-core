@@ -78,6 +78,14 @@ public class QueryGenerator implements java.io.Serializable{
 			qb = new ClimateQueryBuilder(this);
 		} else if(queryIn.getNodeName().equals(LandAllocatorQueryBuilder.xmlName)) {
 			qb = new LandAllocatorQueryBuilder(this);
+		} else if(queryIn.getNodeName().equals(InputQueryBuilder.xmlName)) {
+			qb = new InputQueryBuilder(this);
+		} else if(queryIn.getNodeName().equals(InputOutputQueryBuilder.xmlName)) {
+			qb = new InputOutputQueryBuilder(this);
+		} else if(queryIn.getNodeName().equals(DemandComponentsQueryBuilder.xmlName)) {
+			qb = new DemandComponentsQueryBuilder(this);
+		} else if(queryIn.getNodeName().equals(SAMQueryBuilder.xmlName)) {
+			qb = new SAMQueryBuilder(this);
 		} else {
 			qb = null;
 		}
@@ -135,6 +143,9 @@ public class QueryGenerator implements java.io.Serializable{
 						skip = 2;
 					} else if(nodeLevel.equals("grade")) {
 						skip = 2;
+					} else if(nodeLevel.equals("input")) {
+						currSel = 6;
+						skip = 3;
 					}
 					while( mat.find()) {
 						if(mat.group(1).startsWith("Group:")) {
@@ -173,6 +184,9 @@ public class QueryGenerator implements java.io.Serializable{
 		typeMap.put("GDP", new Boolean(false));
 		typeMap.put("Climate", new Boolean(false));
 		typeMap.put("LandAllocator", new Boolean(false));
+		typeMap.put("Input", new Boolean(false));
+		typeMap.put("Demand Components Table", new Boolean(false));
+		typeMap.put("Social Accounting Matrix", new Boolean(false));
 		typeMap.put("Query Group", new Boolean(false));
 		final Vector types = new Vector(typeMap.keySet().size(), 0);
 		for(int i = 0; i < types.capacity(); ++i) {
@@ -342,6 +356,18 @@ public class QueryGenerator implements java.io.Serializable{
 							}
 							case 8: {
 									types.set(selInd, new LandAllocatorQueryBuilder(thisGen));
+									break;
+							}
+							case 9: {
+									types.set(selInd, new InputQueryBuilder(thisGen));
+									break;
+							}
+							case 10: {
+									types.set(selInd, new DemandComponentsQueryBuilder(thisGen));
+									break;
+							}
+							case 11: {
+									types.set(selInd, new SAMQueryBuilder(thisGen));
 									break;
 							}
 							default: {

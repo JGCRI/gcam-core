@@ -118,6 +118,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 						prop.setProperty("scenarioRegionSplit", String.valueOf(scenarioRegionSplit.getDividerLocation()));
 						prop.setProperty("queriesSplit", String.valueOf(queriesSplit.getDividerLocation()));
 						prop.setProperty("tableCreatorSplit", String.valueOf(tableCreatorSplit.getDividerLocation()));
+						((InterfaceMain)parentFrame).getUndoManager().discardAllEdits();
+						((InterfaceMain)parentFrame).refreshUndoRedo();
 						parentFrame.getContentPane().removeAll();
 					}
 					if(evt.getNewValue().equals(controlStr)) {

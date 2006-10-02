@@ -1,10 +1,5 @@
 package ModelInterface.ModelGUI2;
 
-/*
-import ModelInterface.ModelGUI2.queries.SupplyDemandQueryBuilder;
-import ModelInterface.ModelGUI2.queries.DemographicsQueryBuilder;
-import ModelInterface.ModelGUI2.queries.EmissionsQueryBuilder;
-*/
 import ModelInterface.ModelGUI2.queries.*;
 
 import java.io.*;
@@ -18,7 +13,7 @@ import com.sleepycat.db.*;
 import com.sleepycat.dbxml.*;
 
 public class XMLDB {
-	static public boolean lockCheck = false;
+	public static final boolean lockCheck = false;
 	Environment dbEnv;
 	XmlManager manager;
 	XmlContainer myContainer;
@@ -446,7 +441,7 @@ public class XMLDB {
 						SwingUtilities.invokeLater(incProgress);
 
 						XmlQueryContext qcL = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
-						XmlQueryExpression qe = manager.prepare("distinct-values(/scenario/world/*[@type='region']/*[@type='sector']/*[@type='subsector']/*[@type='technology']/GHG/@name)", qcL);
+						XmlQueryExpression qe = manager.prepare("distinct-values(/scenario/world/*[@type='region']/*[@type='sector']/*[@type='subsector']/*[@type='technology']/*[@type='GHG']/@name)", qcL);
 						tempRes = qe.execute(tempVal, qcL);
 						strBuff = new StringBuffer();
 						while(tempRes.hasNext()) {
@@ -456,7 +451,7 @@ public class XMLDB {
 						tempRes.delete();
 						SwingUtilities.invokeLater(incProgress);
 
-						qe = manager.prepare("distinct-values(/scenario/world/*[@type='region']/*[@type='sector']/*[@type='subsector']/*[@type='technology']/GHG/emissions/@fuel-name)", qcL);
+						qe = manager.prepare("distinct-values(/scenario/world/*[@type='region']/*[@type='sector']/*[@type='subsector']/*[@type='technology']/*[@type='GHG']/emissions/@fuel-name)", qcL);
 						tempRes = qe.execute(tempVal, qcL);
 						strBuff = new StringBuffer();
 						while(tempRes.hasNext()) {

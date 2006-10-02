@@ -370,7 +370,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		XmlValue nBefore;
 		do {
 			if(n.getNodeName().equals(qg.nodeLevel) || qg.nodeLevel.equals(XMLDB.getAttr(n, "type"))) {
-				ret.add(XMLDB.getAttr(n));
+				ret.add(XMLDB.getAttr(n, "ageGroup"));
 			} 
 			if(n.getNodeName().equals(qg.yearLevel)) {
 				ret.add(0, XMLDB.getAttr(n, "year"));
