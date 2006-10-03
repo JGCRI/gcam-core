@@ -600,7 +600,9 @@ void XMLWriteVector( const std::vector<T>& outputVector, const std::string& elem
             }
         }
         if( canSkip > 0 ){
-            XMLWriteElementCheckDefault( outputVector.at( i ), elementName, out, tabs, defaultValue, year, "", true );
+            // Need to write out the default value because they could be cleared
+            // by an earlier fillout.
+            XMLWriteElement( outputVector.at( i ), elementName, out, tabs, defaultValue, year, "", true );
             i += canSkip;
         } else {
             // Can't skip any. write normally.
