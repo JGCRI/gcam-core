@@ -157,6 +157,16 @@ public class RegionMask extends Rectangle2D.Double
   {
     int X = (int)(Math.floor((findX-x)/resolution));
     int Y = (int)(Math.floor(((y+height)-(findY+resolution))/resolution));
+    if(Y==-1) {
+	    //log.log(Level.WARNING, "In "+name+" Y is -1 possibly due to rounding errors, setting to 0");
+	    System.out.println("WARNING: In "+name+" Y is -1 possibly due to rounding errors, setting to 0");
+	    Y = 0;
+    }
+    if(X==-1) {
+	    //log.log(Level.WARNING, "In "+name+" X is -1 possibly due to rounding errors, setting to 0");
+	    System.out.println("WARNING: In "+name+" X is -1 possibly due to rounding errors, setting to 0");
+	    X = 0;
+    }
     bMask[Y][X] = 1;
   }
   /**

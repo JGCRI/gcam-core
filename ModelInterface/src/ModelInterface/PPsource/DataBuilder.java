@@ -325,6 +325,9 @@ public class DataBuilder
       } else if(currFile.getAttributeValue("type").equals("geoTiff"))
       {
 	      addGeoTiffFile(currFile);
+      } else if(currFile.getAttributeValue("type").equals("flt"))
+      {
+	      addFLTFile(currFile);
       } else
       {
         log.log(Level.WARNING, "Unsupported File Type -> "+currFile.getAttributeValue(null, "type"));
@@ -377,6 +380,9 @@ public class DataBuilder
       } else if(currChild.getAttributeValue("type").equals("netcdf"))
       {
         addNetCDFRegion(currChild);
+      } else if(currChild.getAttributeValue("type").equals("unep"))
+      {
+        addUNEPRegion(currChild);
       } else
       {
         log.log(Level.WARNING, "Unsupported File Type -> "+currChild.getAttributeValue(null, "type"));
@@ -3747,7 +3753,6 @@ public class DataBuilder
     String fileName = "init";
     String dataVar = "ctry";
     String holdK;
-    int maskArray[][];
     List infoList;
     Element currInfo;
     RegionMask holdR;
@@ -3794,7 +3799,6 @@ public class DataBuilder
       /* Read a variable named ctry from the file, it contains the masks */
       Variable data = nc.findVariable(dataVar);
       Array ma2Array = data.read();
-      maskArray = new int[(int)Math.ceil(180/res)][(int)Math.ceil(360/res)];
       Index in = ma2Array.getIndex();
       int i = 0;
       int k = 0;
@@ -3805,12 +3809,8 @@ public class DataBuilder
         for(double x = -180; x < 180; x+=res)
         {
           rblock = (int)ma2Array.getFloat(in.set(0, 0, i, k));
-          if(rblock == NaN)
+          if(rblock != NaN)
           {
-            maskArray[i][k] = 0;
-          } else
-          {
-            maskArray[i][k] = rblock;
             if(rblock >= 0)
             { //updating someones bounds
               holdR = ((RegionMask)newRegions.get(String.valueOf(rblock)));
@@ -3852,6 +3852,9 @@ public class DataBuilder
       while(it.hasNext())
       {
         me = (Map.Entry)it.next();
+	holdR = (RegionMask)me.getValue();
+      //System.out.println("region "+holdR.name+" dim: "+holdR.bMask.length+"x"+holdR.bMask[0].length);
+      //System.out.println("region "+holdR.name+" coord: x: "+holdR.x+" y: "+holdR.y+" h: "+holdR.height+" w: "+holdR.width);
         ((RegionMask)me.getValue()).makeMatrix();
       }
       //done initializing byte matricies
@@ -3891,9 +3894,225 @@ public class DataBuilder
     }
     //done adding region masks
   }
+
+  private void addUNEPRegion(Element currFile)
+  {
+	  log.log(Level.FINER, "begin function");
+
+	  double res = 1;
+	  int rblock, NaN = 0;
+	  String fileName = "init";
+	  String holdK;
+	  int maskArray[][];
+	  List infoList;
+	  Element currInfo;
+	  RegionMask holdR;
+	  TreeMap<String, RegionMask> newRegions = new TreeMap<String, RegionMask>();
+	  int numCols = 0, numRows = 0;
+	  double xLL = 0.0, yLL = 0.0;
+	  double currX, currY;
+	  BufferedReader input = null;
+
+	  //getting file info from XML file
+	  infoList = currFile.getChildren();
+	  for(int i = 0; i < infoList.size(); i++)
+	  {
+		  currInfo = (Element)infoList.get(i);
+		  if(currInfo.getName().equals("name"))
+		  {
+			  /* WARNING: the file name must come before the region list
+			   * because the res info is read from the file, and that info
+			   * is needed to create a new region.
+			   */
+			  fileName = currInfo.getAttributeValue("value");
+			  //opening txt file for reading
+			  try {
+				  input = new BufferedReader(new FileReader(fileName));
+			  } catch (FileNotFoundException ex) 
+			  {
+				  log.log(Level.SEVERE, "FileNotFoundException!!!");
+				  System.exit(0);
+			  }
+			  /*
+			   * read numcols
+			   * numrows
+			   * xll corner
+			   * yll corner
+			   * cellsize (res)
+			   * NODATA_value
+			   */
+
+			  double shift;
+			  readWord(input); //reading ncols
+			  numCols = Integer.valueOf(readNumber(input));
+			  //System.out.println("numCols "+numCols);
+			  readWord(input); //reading nrows
+			  numRows = Integer.valueOf(readNumber(input));
+			  //System.out.println("numRows "+numRows);
+			  readWord(input); //reading xllcorner
+			  xLL = Double.valueOf(readNumber(input));
+			  //System.out.println("xLL "+xLL);
+			  readWord(input); //reading yllcorner
+			  yLL = Double.valueOf(readNumber(input));
+			  //System.out.println("yLL "+yLL);
+			  readWord(input); //reading cellsize
+			  res = Double.valueOf(readNumber(input));
+			  //System.out.println("res "+res);
+			  readWord(input); //reading NODATA_value
+			  //ignore = Double.valueOf(readNumber(input));
+			  NaN= (int)Double.parseDouble(readNumber(input));
+			  //System.out.println("ignore "+ignore);
+
+			  //rectifying bounds if they are out of legal values
+			  if(xLL < -180)
+			  {
+				  shift = (xLL*-1)-180;
+				  xLL = -180;
+				  log.log(Level.WARNING, fileName+" shifted right by "+shift+" to "+xLL);
+			  } else
+			  {
+				  shift = (xLL+(numCols*res))-180;
+				  if(shift > 0)
+				  {
+					  xLL -= shift;
+					  log.log(Level.WARNING, fileName+" shifted left by "+shift+" to "+xLL);
+				  }
+			  }
+			  if(yLL < -90)
+			  {
+				  shift = (xLL*-1)-90;
+				  yLL = -90;
+				  log.log(Level.WARNING, fileName+" shifted up by "+shift+" to "+yLL);
+			  } else
+			  {
+				  shift = (yLL+((numRows+1)*res))-90;
+				  if(shift > 0)
+				  {
+					  yLL -= shift;
+					  log.log(Level.WARNING, fileName+" shifted down by "+shift+" to "+yLL);
+				  }
+			  }
+			  //done rectifying bounds
+		  } else if(currInfo.getName().equals("variable"))
+		  {
+			  //dataVar = currInfo.getAttributeValue("value");
+		  } else if(currInfo.getName().equals("region"))
+		  {
+			  List rList = currInfo.getChildren("RID");
+			  Element currR;
+			  for(int k = 0; k < rList.size(); k++)
+			  {
+				  currR = (Element)rList.get(k);
+				  holdK = currR.getAttributeValue("key");
+				  holdR = new RegionMask(currR.getAttributeValue("value"), res);
+				  newRegions.put(holdK, holdR);
+			  }
+		  } else
+		  {
+			  log.log(Level.WARNING, "Unknown File Tag in addNetCDFRegion -> "+currInfo.getName());
+		  }
+	  }
+	  //done getting file info from XML
+
+	  //reading the data from the file
+	  maskArray = new int[numRows][numCols];
+	  currY = (yLL+(numRows*res));
+	  for(int i = 0; i < numRows; i++)
+	  {
+		  currX = xLL;
+		  for(int k = 0; k <numCols; k++)
+		  {
+			  rblock = (int)Double.parseDouble(readNumber(input));
+			  if(rblock == NaN)
+			  {
+				  maskArray[i][k] = 0;
+			  } else
+			  {
+				  maskArray[i][k] = rblock;
+				  if(rblock >= 0)
+				  { //updating someones bounds
+					  holdR = ((RegionMask)newRegions.get(String.valueOf(rblock)));
+					  if(holdR.height==-1)
+					  { //this is the first block being added to this region nothing to
+						  // test against yet
+						  holdR.y = currY;
+						  holdR.x = currX;
+						  holdR.height = res;
+						  holdR.width = res;
+					  } else
+					  { //test against old bounds, if outside them, change them
+						  if(currY<holdR.y)
+						  { //y will never be higher, only lower
+							  holdR.height += (holdR.y-currY);
+							  holdR.y = currY;
+						  }
+						  if(currX<holdR.x)
+						  { //x may be higher or lower
+							  holdR.width += (holdR.x-currX);
+							  holdR.x = currX;
+						  }
+						  if((currX+res)>(holdR.x+holdR.width))
+						  {
+							  holdR.width = ((currX+res)-holdR.x);
+						  }
+					  }
+				  }
+			  }
+			  currX += res;
+		  }
+		  currY -= res;
+	  }
+	  try {
+		  input.close();
+	  } catch(IOException ioe) {
+		  log.log(Level.WARNING, "Couldn't close file: "+ioe);
+	  }
+
+	  //initializing byte matrix for each region
+	  Iterator it = newRegions.entrySet().iterator();
+	  Map.Entry me;
+	  while(it.hasNext())
+	  {
+		  me = (Map.Entry)it.next();
+		  ((RegionMask)me.getValue()).makeMatrix();
+	  }
+	  //done initializing byte matricies
+
+	  //MAIN BYTEMASK CREATION LOOP
+
+	  currY = (yLL+(numRows*res));
+	  for(int i = 0; i < numRows; i++)
+	  {
+		  currX = xLL;
+		  for(int k = 0; k <numCols; k++)
+		  {
+			  rblock = maskArray[i][k];
+			  if((rblock > 0)&&(rblock != NaN))
+			  {
+				  holdR = ((RegionMask)newRegions.get(String.valueOf(rblock)));
+				  holdR.setPointTrue(currX, currY);
+			  }
+			  currX += res;
+		  }
+		  currY -= res;
+	  }
+	  //DONE SETTING MASKS   
+
+	  //adding these regions masks to the master list of masks
+	  it = newRegions.entrySet().iterator();
+	  while(it.hasNext())
+	  {
+		  me = (Map.Entry)it.next();
+		  holdR = ((RegionMask)me.getValue());
+		  regionList.add(holdR.name);
+		  maskList.put(holdR.name, holdR);
+	  }
+	  //done adding region masks
+  }
   
   private void addGeoTiffFile(Element currFile)
   {
+	  log.log(Level.FINER, "begin function");
 	  String fileName = null;
 	  Element currElem;
 	  List infoChildren = currFile.getChildren();
@@ -4094,6 +4313,110 @@ public class DataBuilder
 	  // TODO: do init if necessary
 	  // TODO: read through data and add it
   }
+
+public void addFLTFile(Element currFile) 
+{
+	log.log(Level.FINER, "begin function");
+	String fileName = null;
+	Element currElem;
+	List infoChildren = currFile.getChildren();
+	Double timeDouble = new Double(0.0);
+	double res = 1;
+	double resY, resX;
+	boolean avg = true;
+	String dataName = "shutup,";
+	DataBlock toAdd;
+	TreeMap timeValue;
+	boolean overwrite = false;
+	double NaN = 0.0;
+	for(int i = 0; i < infoChildren.size(); i++)
+	{
+		currElem = (Element)infoChildren.get(i);
+		if(currElem.getName().equals("name"))
+		{
+			fileName = currElem.getAttributeValue("value");
+		} else if(currElem.getName().equals("data"))
+		{
+			dataName = currElem.getAttributeValue("value");
+		} else if(currElem.getName().equals("date"))
+		{
+			timeDouble = Double.parseDouble(currElem.getAttributeValue("value"));
+		} else if(currElem.getName().equals("res"))
+		{
+			res = Double.parseDouble(currElem.getAttributeValue("value"));
+		} else if(currElem.getName().equals("average"))
+		{
+			avg = (Boolean.valueOf(currElem.getAttributeValue("value"))).booleanValue();
+		} else if(currElem.getName().equals("missing-value"))
+		{
+			NaN = Double.parseDouble(currElem.getAttributeValue("value"));
+		} else
+		{
+			log.log(Level.WARNING, "Unknown File Tag -> "+currElem.getName());
+		}
+	}
+	if(dataAvg.containsKey(dataName))
+	{
+		//then we are overwriting this data!
+		overwrite = true;
+	} else
+	{
+		//dont want to add all this information if we already have!!!
+		if(!init)
+		{ //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
+			dataStruct.fillWorld(res);
+			init = true;
+		}
+		//setting whether contained data is additive or averaged and references
+		dataAvg.put(dataName, new Boolean(avg));
+	}
+	try 
+	{
+		resY = resX = res;
+		DataInputStream input = new DataInputStream(new FileInputStream(fileName));
+		for(double y = (90-resY); y >= -90; y-=resY)
+		{
+			for(double x = -180; x < 180; x+=resX)
+			{
+				// this binary file seems to be the oposite endian java or my comp?? expects
+				// so I am reading as int and reversing the bytes
+				double dataValue = (double)Float.intBitsToFloat(Integer.reverseBytes(input.readInt()));
+				if(dataValue != NaN) {
+					toAdd = new DataBlock(x, y, resX, resY);
+				      timeValue = new TreeMap();
+				      timeValue.put(timeDouble, dataValue);
+
+				      //check overwrite bit, if so, use hold instead of dataName
+				      if(overwrite)
+				      {
+					      //just replace name with hold, later, we will merge hold over old data
+					      toAdd.data.put("hold", timeValue);
+				      } else
+				      {
+					      //add data as normal
+					      toAdd.data.put(dataName, timeValue);
+				      }
+
+				      //merging this data into the current tree
+				      dataStruct.addData(toAdd, avg);
+
+				}
+			}
+		}
+		//done adding all data, if overwrite, must merge with old data now
+		if(overwrite)
+		{
+			dataStruct.resolveOverwrite("hold", dataName);
+		} //else we are done already
+    
+		input.close(); //im such a good programmer closing my files and whatnot
+		//done reading data from file
+	} catch(IOException ioe) 
+	{
+		log.log(Level.SEVERE, "Couldn't read file "+fileName+": "+ioe);
+		System.exit(1);
+	}
+}
 
 //*****************************************************************************
 //*********************Helper Functions****************************************
