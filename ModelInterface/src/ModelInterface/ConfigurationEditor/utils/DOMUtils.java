@@ -6,7 +6,6 @@ package ModelInterface.ConfigurationEditor.utils;
 import java.awt.Container;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,7 +13,6 @@ import javax.swing.JOptionPane;
 
 import org.apache.xpath.domapi.XPathEvaluatorImpl;
 import org.w3c.dom.Attr;
-import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;

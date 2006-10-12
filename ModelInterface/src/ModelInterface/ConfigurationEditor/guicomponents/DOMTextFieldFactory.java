@@ -194,6 +194,9 @@ public class DOMTextFieldFactory implements PropertyChangeListener {
 				// which needs to occur to erase an old value.
 				final JTextField currField = mChildTextFields.get(xPath);
 				currField.setText(newValue);
+                
+                // Enable or disable the field.
+                currField.setEnabled(mDocument != null);
 			}
 		}
         else {

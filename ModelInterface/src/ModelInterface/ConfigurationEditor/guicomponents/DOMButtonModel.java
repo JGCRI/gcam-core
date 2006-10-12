@@ -239,7 +239,8 @@ public class DOMButtonModel extends DefaultButtonModel implements ButtonModel, I
     public void propertyChange(final PropertyChangeEvent aEvent) {
         if(aEvent.getPropertyName().equals("document-replaced")) {
             mDocument = (Document)aEvent.getNewValue();
-            // TODO: Enable and disable?
+            // Enable or disable the button model.
+            this.setEnabled(mDocument != null);
         }
         else {
             Logger.global.log(Level.WARNING, "Property change listener added for the wrong property change.");

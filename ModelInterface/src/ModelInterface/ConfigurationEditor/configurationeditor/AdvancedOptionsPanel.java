@@ -12,6 +12,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.border.BevelBorder;
@@ -63,13 +64,14 @@ public class AdvancedOptionsPanel extends AbstractEditorPanel {
      *            The new document.
      */
     private void createAdvancedTree(final Document aNewDocument) {
-        // Remove the existing tree from the panel if there is one.
+        // Remove the existing content from the panel if there is one.
         final Component[] panelComponents = getComponents();
         for (int i = 0; i < panelComponents.length; ++i) {
-            if (panelComponents[i].getName().equals("tree-scroller")) {
+            if (panelComponents[i].getName().equals("content")) {
                 remove(i);
             }
         }
+
         if (aNewDocument != null) {
             final JTree advancedTree = new JTree(new DOMTreeModel(aNewDocument
                     .getDocumentElement(), ConfigurationEditor.ELEMENT_NAME));
@@ -86,8 +88,19 @@ public class AdvancedOptionsPanel extends AbstractEditorPanel {
             // Create a scroll pane to display the tree.
             final JScrollPane treeScroller = new JScrollPane(advancedTree);
             treeScroller.setPreferredSize(new Dimension(600, 250));
-            treeScroller.setName("tree-scroller");
+            treeScroller.setName("content");
             add(treeScroller);
+        }
+        else {
+            // Add an item in place of the tree scroller so the user
+            // can tell that there would be content here if the document
+            // were loaded.
+            final String errorString = "A configuration must be opened before the advanced editing options can be used.";
+            JLabel label = new JLabel(errorString);
+            
+            // The label will be removed when a document is added.
+            label.setName("content");
+            add(label);
         }
     }
 

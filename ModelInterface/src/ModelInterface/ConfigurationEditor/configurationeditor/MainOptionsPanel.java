@@ -4,11 +4,14 @@ import ModelInterface.ConfigurationEditor.guicomponents.DOMButtonModel;
 import ModelInterface.ConfigurationEditor.guicomponents.DOMListPanelFactory;
 import ModelInterface.ConfigurationEditor.guicomponents.DOMTextFieldFactory;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
+
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -40,6 +43,22 @@ public class MainOptionsPanel extends AbstractEditorPanel {
     public MainOptionsPanel() {
         super();
         initialize();
+    }
+    
+    @Override
+    public void propertyChange(final PropertyChangeEvent aEvent) {
+        super.propertyChange(aEvent);
+
+        // If the document was replaced, enable or disable all the
+        // labels depending on whether the new document is null.
+        if (aEvent.getPropertyName() == "document-replaced") {
+            for (int i = 0; i < getComponentCount(); ++i) {
+                final Component curr = getComponent(i);
+                if (curr instanceof JLabel) {
+                    curr.setEnabled(aEvent.getNewValue() != null);
+                }
+            }
+        }
     }
     
     /**
