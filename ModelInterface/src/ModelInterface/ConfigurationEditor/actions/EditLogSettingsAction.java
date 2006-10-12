@@ -40,11 +40,17 @@ public class EditLogSettingsAction extends AbstractAction {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(final ActionEvent aEvent) {
+        // Initialize the log editor.
+        final LogEditor logEditor = new LogEditor();
+        if (!logEditor.initialize()) {
+            return;
+        }
         // TODO: This is pretty nasty.
-        final Frame parent = (Frame)((JComponent)aEvent.getSource()).getTopLevelAncestor();
+        final Frame parent = (Frame) ((JComponent) aEvent.getSource())
+                .getTopLevelAncestor();
         final JDialog editLogsDialog = new JDialog(parent, "Log Settings", true);
         editLogsDialog.addWindowListener(new WindowCloseListener());
-        editLogsDialog.setContentPane(new LogEditor());
+        editLogsDialog.setContentPane(logEditor);
         editLogsDialog.pack();
         editLogsDialog.setVisible(true);
     }

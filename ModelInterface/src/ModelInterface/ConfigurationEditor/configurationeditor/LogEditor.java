@@ -60,7 +60,7 @@ public class LogEditor extends JPanel implements DOMDocumentEditor {
     /**
      * The document which contains the log configuration options.
      */
-    final private transient Document mDocument;
+    private transient Document mDocument;
 
     /**
      * The name of the root element of a log conf file.
@@ -102,15 +102,23 @@ public class LogEditor extends JPanel implements DOMDocumentEditor {
      */
     public LogEditor() {
         super();
-        // TODO: Move this after GUI creation, DOMCombo box models
-        // will have to handle document switching.
-        mDocument = loadDocument();
-        initialize();
     }
 
     /**
+     * Initialize the LogEditor. This must be called before the log editor is
+     * used.
+     * 
+     * @return Whether the LogEditor was successfully initialized.
      */
-    final private void initialize() {
+    final public boolean initialize() {
+        // TODO: Move this after GUI creation, DOMCombo box models
+        // will have to handle document switching.
+        mDocument = loadDocument();
+
+        if (mDocument == null) {
+            return false;
+        }
+
         // Create the main panel.
         setLayout(new GridBagLayout());
         setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
@@ -208,6 +216,7 @@ public class LogEditor extends JPanel implements DOMDocumentEditor {
         cons.anchor = GridBagConstraints.WEST;
         final JButton cancelButton = createCancelButton();
         add(cancelButton, cons);
+        return true;
     }
 
     /**

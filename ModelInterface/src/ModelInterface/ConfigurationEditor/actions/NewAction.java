@@ -4,6 +4,7 @@
 package ModelInterface.ConfigurationEditor.actions;
 
 
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.Properties;
@@ -12,6 +13,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+import javax.swing.JToolBar;
 
 import org.w3c.dom.Document;
 
@@ -51,15 +53,25 @@ public class NewAction extends AbstractAction {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(final ActionEvent aEvent) {
-        // Find the root window. 
-    	// TODO: Improve this to not use instance of.
-    	ConfigurationEditor parentEditor = null;
-    	if(aEvent.getSource() instanceof ConfigurationEditor){
-    		parentEditor = (ConfigurationEditor)aEvent.getSource();
-    	}
-    	else {
-    		parentEditor = (ConfigurationEditor)((JComponent)((JPopupMenu)((JComponent)aEvent.getSource()).getParent()).getInvoker()).getTopLevelAncestor();
-    	}
+        // Find the root window.
+        // TODO: Improve this to not use instance of.
+        ConfigurationEditor parentEditor = null;
+        if (aEvent.getSource() instanceof ConfigurationEditor) {
+            parentEditor = (ConfigurationEditor) aEvent.getSource();
+        } else {
+            Container parentContainer = ((JComponent) aEvent.getSource())
+                    .getParent();
+            if (parentContainer instanceof JPopupMenu) {
+                parentEditor = (ConfigurationEditor) ((JComponent) ((JPopupMenu) parentContainer)
+                        .getInvoker()).getTopLevelAncestor();
+            } else if (parentContainer instanceof JToolBar) {
+                parentEditor = (ConfigurationEditor) ((JToolBar) parentContainer)
+                        .getTopLevelAncestor();
+            } else {
+                // Unknown type.
+                assert (false);
+            }
+        }
     	
         // Check if the file should be saved before creating a new one.
         if (!FileUtils.askForSave(parentEditor)) {
