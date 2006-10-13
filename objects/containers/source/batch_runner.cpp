@@ -121,7 +121,7 @@ bool BatchRunner::runScenarios( const int aSinglePeriod, Timer& aTimer ){
 
                 // If the current iterator is to the end position of the last
                 // component set there are no more scenarios to run.
-                if( outPos == mComponentSet.end() ){
+                if( outPos == mComponentSet.end() - 1 ){
                     shouldExit = true;
                 }
             }
