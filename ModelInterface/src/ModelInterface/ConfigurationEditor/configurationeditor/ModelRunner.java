@@ -5,6 +5,9 @@ package ModelInterface.ConfigurationEditor.configurationeditor;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -22,6 +25,7 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -31,6 +35,7 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
+import javax.swing.border.BevelBorder;
 
 import ModelInterface.ConfigurationEditor.actions.RunAction;
 
@@ -217,16 +222,42 @@ public class ModelRunner implements Runnable {
         public void run() {
             // Create the GUI components.
             final JDialog outputDialog = createOutputDialog();
+            outputDialog.setLayout(new GridBagLayout());
+
+            // Create grid bag constraints to use to position elements.
+            final GridBagConstraints outputCons = new GridBagConstraints();
+            // Create a border around all elements.
+            outputCons.insets = new Insets(5, 5, 5, 5);
+            
+            outputCons.anchor = GridBagConstraints.WEST;
+            outputCons.gridy = 0;
+            outputCons.gridx = 0;
+            outputCons.fill = GridBagConstraints.BOTH;
+            outputCons.gridwidth = 3;
+            outputCons.gridheight = 1;
+            outputCons.weightx = 1;
+            outputCons.weighty = 1;
             final JTextArea outputArea = createOutputArea();
             final JScrollPane outputScrollPane = createOutputScrollPane(outputArea);
 
-            // Add the scroll pane at the center of the window.
-            // TODO: Need a layout manager here.
-            outputDialog.add(outputScrollPane);
-            outputDialog.add(createTerminateButton());
-            outputDialog.add(createCloseButton(outputDialog));
-            outputDialog.add(createSaveButton(outputArea));
-
+            outputDialog.add(outputScrollPane, outputCons);
+            
+            final GridBagConstraints buttonCons = new GridBagConstraints();
+            // Create a border around all elements.
+            buttonCons.insets = new Insets(5, 5, 5, 5);
+            
+            buttonCons.anchor = GridBagConstraints.WEST;
+            buttonCons.gridy = 1;
+            buttonCons.gridx = GridBagConstraints.RELATIVE;
+            
+            outputDialog.add(createTerminateButton(), buttonCons);
+            outputDialog.add(createSaveButton(outputArea), buttonCons);
+            
+            // Set the close button to take up the rest of the horizontal
+            // space.
+            buttonCons.fill = GridBagConstraints.HORIZONTAL;
+            outputDialog.add(createCloseButton(outputDialog), buttonCons);
+            
             // Display the dialog.
             outputDialog.pack();
             outputDialog.setVisible(true);

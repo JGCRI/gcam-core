@@ -7,6 +7,7 @@ import ModelInterface.ConfigurationEditor.guihelpers.ButtonSetEnabler;
 import ModelInterface.ConfigurationEditor.guihelpers.XMLFileFilter;
 import ModelInterface.ConfigurationEditor.guihelpers.ButtonSetEnabler.ButtonType;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -108,6 +109,21 @@ public class DOMListPanel extends JPanel {
 		((DOMListModel) getList(null).getModel()).setDocument(aDocument);
 	}
 
+    /**
+     * Set whether the list panel is enabled.
+     * @param aEnabled Whether the panel is enabled.
+     */
+    @Override
+    public void setEnabled(final boolean aEnabled){
+        super.setEnabled(aEnabled);
+        
+        // Disable all the child components.
+        for (int i = 0; i < getComponentCount(); ++i) {
+            final Component curr = getComponent(i);
+            curr.setEnabled(aEnabled);
+        }
+    }
+    
 	/**
 	 * Initialize the panel before viewing.
 	 * 

@@ -178,7 +178,6 @@ public class ConfigurationEditor extends JFrame implements DOMDocumentEditor, Me
             // that the document has been modified.
             target.addEventListener("DOMSubtreeModified", new EventListener() {
                 public void handleEvent(Event aEvent) {
-                    System.out.println("HANDLIN EVENT");
                     // Don't fire events if the source is the root element
                     // because they may be meta-tags being added or removed.
                     MutationEvent event = (MutationEvent)aEvent;

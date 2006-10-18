@@ -54,9 +54,7 @@ public class MainOptionsPanel extends AbstractEditorPanel {
         if (aEvent.getPropertyName() == "document-replaced") {
             for (int i = 0; i < getComponentCount(); ++i) {
                 final Component curr = getComponent(i);
-                if (curr instanceof JLabel) {
-                    curr.setEnabled(aEvent.getNewValue() != null);
-                }
+                curr.setEnabled(aEvent.getNewValue() != null);
             }
         }
     }

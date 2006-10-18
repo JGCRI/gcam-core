@@ -8,7 +8,6 @@ import ModelInterface.ConfigurationEditor.guicomponents.DOMComboBoxController;
 import ModelInterface.ConfigurationEditor.guicomponents.DOMComboBoxModel;
 import ModelInterface.ConfigurationEditor.guihelpers.DOMDocumentSaveSetter;
 
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -26,7 +25,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -155,8 +153,8 @@ public class LogEditor extends JPanel implements DOMDocumentEditor {
         cons.gridwidth = 2;
         cons.anchor = GridBagConstraints.CENTER;
         final JLabel singleLogLabel = new JLabel(
-                "Settings for the selected log");
-        singleLogLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                "Settings for the selected log: ");
+
         add(singleLogLabel);
 
         cons.anchor = GridBagConstraints.WEST;
@@ -174,9 +172,14 @@ public class LogEditor extends JPanel implements DOMDocumentEditor {
         minWarningLevel.setHorizontalAlignment(SwingConstants.LEFT);
         add(minWarningLevel, cons);
 
+        cons.gridx = 2;
         cons.gridy = 3;
         cons.weightx = 1;
         cons.fill = GridBagConstraints.HORIZONTAL;
+        final JLabel printLevelLabel = new JLabel(Messages.getString("ConfigurationEditor.94")); //$NON-NLS-1$
+        add(printLevelLabel, cons);
+        
+        cons.gridx = 3;
         final JCheckBox printLevel = createPrintLevelCheckBox();
         // Add the checkbox model as an item listener to the log selecter
         // to receive updates.
@@ -347,9 +350,10 @@ public class LogEditor extends JPanel implements DOMDocumentEditor {
         // document changed notifications.
         addPropertyChangeListener("document-replaced", model);
 
+        // Use an independent label instead of the checkbox text
+        // for consistency with the rest of the UI.
         printLevel.setMnemonic(KeyEvent.VK_W);
         printLevel.setHorizontalTextPosition(SwingConstants.LEFT);
-        printLevel.setText(Messages.getString("ConfigurationEditor.94")); //$NON-NLS-1$
         printLevel.setToolTipText(Messages.getString("ConfigurationEditor.95")); //$NON-NLS-1$
         return printLevel;
     }
