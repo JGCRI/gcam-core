@@ -26,6 +26,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -236,7 +237,7 @@ public class LogEditor extends JPanel implements DOMDocumentEditor {
             public void actionPerformed(ActionEvent aEvent) {
                 // Save the batch file document.
                 DOMUtils.serialize(mDocument, parent);
-                parent.getParent().setVisible(false);
+                parent.getTopLevelAncestor().setVisible(false);
             }
         });
         return okButton;
@@ -256,7 +257,7 @@ public class LogEditor extends JPanel implements DOMDocumentEditor {
         final LogEditor parent = this;
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent aEvent) {
-                parent.getParent().setVisible(false);
+                parent.getTopLevelAncestor().setVisible(false);
             }
         });
         return cancelButton;

@@ -4,6 +4,7 @@ package ModelInterface.ConfigurationEditor.utils;
 
 import java.awt.Component;
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Properties;
@@ -81,6 +82,7 @@ final public class FileUtils {
 			try {
 				// Create a URI object from the string.
 				final URI docURI = new URI(uriString);
+                
 				return new File(docURI.getPath());
 			} catch (URISyntaxException aException) {
 				Logger.global.log(Level.SEVERE,
@@ -276,13 +278,17 @@ final public class FileUtils {
 					JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
-
+        
+        // Convert the file path to a URI before parsing to
+        // ensure the document has a valid heirarchical URI.
+        final URI docURI = aFile.toURI();
+        
 		// Attempt to parse the document.
 		Document loadedDocument = null;
 		try {
 			DocumentBuilder parser = DocumentBuilderFactory.newInstance()
 					.newDocumentBuilder();
-			loadedDocument = parser.parse(aFile);
+			loadedDocument = parser.parse(docURI.getPath());
 		} catch (Exception e) {
 			// Unexpected error parsing the document.
 			Logger.global.log(Level.SEVERE, e.getStackTrace().toString());

@@ -3,8 +3,12 @@
  */
 package ModelInterface.ConfigurationEditor.configurationeditor;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -217,10 +221,11 @@ public class ModelRunner implements Runnable {
             final JScrollPane outputScrollPane = createOutputScrollPane(outputArea);
 
             // Add the scroll pane at the center of the window.
+            // TODO: Need a layout manager here.
             outputDialog.add(outputScrollPane);
             outputDialog.add(createTerminateButton());
-
-            // TODO: Save button?
+            outputDialog.add(createCloseButton(outputDialog));
+            outputDialog.add(createSaveButton(outputArea));
 
             // Display the dialog.
             outputDialog.pack();
@@ -313,8 +318,41 @@ public class ModelRunner implements Runnable {
             // Add a button at the bottom which will stop the model.
             final JButton terminateButton = new JButton("Terminate");
             terminateButton.setToolTipText("Terminate the model run.");
-            terminateButton.addActionListener(new TerminateButtonListener());
+            terminateButton.addActionListener(new TerminateButtonListener(terminateButton));
             return terminateButton;
+        }
+        
+        /**
+         * Creates a button which saves the output to the clipboard.
+         * @param aTextArea The text area containing the output.
+         * @return A save button.
+         */
+        private JButton createSaveButton(final JTextArea aTextArea) {
+            final JButton saveButton = new JButton("Save output to clipboard");
+            saveButton.setToolTipText("Save output to the clipboard.");
+            
+            saveButton.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent aEvent) {
+                    aTextArea.selectAll();
+                    final String text = aTextArea.getSelectedText();
+                    StringSelection stringSelection = new StringSelection(text);
+                    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    clipboard.setContents(stringSelection, stringSelection);
+                }
+                
+            });
+            return saveButton;
+        }
+        
+        /**
+         * Creates a button which closes the window.
+         * @param aDialog The dialog containing this button.
+         */
+        private JButton createCloseButton(final JDialog aDialog){
+            final JButton closeButton = new JButton("Close");
+            closeButton.setToolTipText("Terminate and close the output window.");
+            closeButton.addActionListener(new OutputWindowCloseListener(mProcess, aDialog));
+            return closeButton;
         }
 
         /**
@@ -366,7 +404,7 @@ public class ModelRunner implements Runnable {
             outputDialog
                     .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
             outputDialog.addWindowListener(new OutputWindowCloseListener(
-                    mProcess));
+                    mProcess, outputDialog));
             outputDialog.setPreferredSize(new Dimension(400, 400));
             return outputDialog;
         }
@@ -377,6 +415,18 @@ public class ModelRunner implements Runnable {
          * @author Josh Lurz
          */
         private final class TerminateButtonListener implements ActionListener {
+            /**
+             *  The terminate button this action is attached to.
+             */
+            private transient JButton mButton;
+            
+            /**
+             * Constructor
+             * @param aTerminateButton The button this action is attached to.
+             */
+            public TerminateButtonListener(final JButton aButton){
+                mButton = aButton;
+            }
             /**
              * Method called when the button is clicked which will terminate the
              * model
@@ -392,6 +442,9 @@ public class ModelRunner implements Runnable {
                 // to stop when there is a chance.
                 mModelRunning = false;
                 mProcess.destroy();
+                
+                // Disable the button so the user does not repeatedly press it.
+                mButton.setEnabled(false);
             }
         }
 
@@ -495,23 +548,37 @@ public class ModelRunner implements Runnable {
      * 
      * @author Josh Lurz
      */
-    private final class OutputWindowCloseListener implements WindowListener {
+    private final class OutputWindowCloseListener implements WindowListener, ActionListener {
         /**
          * The model process to close when the window is closed.
          */
         private final transient Process mProcess;
 
         /**
+         * A reference to the parent window container.
+         */
+        private final transient Component mComponent;
+        
+        /**
          * Constructor
          * 
          * @param aProcess
          *            Process to close when the window is closed.
+         * @param aComponent
+         *            The component containing the item notifying this listener.
          */
-        public OutputWindowCloseListener(Process aProcess) {
+        public OutputWindowCloseListener(Process aProcess, Component aComponent) {
             super();
             mProcess = aProcess;
+            mComponent = aComponent;
         }
 
+        /**
+         * Method called when the "Close" button is clicked.
+         */
+        public void actionPerformed(final ActionEvent aEvent){
+            endProcessAndClose();
+        }
         /**
          * Method called when the output window is closing which ensures that
          * the model executable is stopped.
@@ -520,17 +587,24 @@ public class ModelRunner implements Runnable {
          *            The window event received.
          */
         public void windowClosing(final WindowEvent aEvent) {
+            endProcessAndClose();
+        }
+
+        /** 
+         * Terminate the process and close the output window.
+         */
+        private void endProcessAndClose(){
             Logger.global.log(Level.INFO,
-                    "Output window closed, attempting to stop the model.");
+            "Output window closed, attempting to stop the model.");
             // Stop the loop and from that the model
             // and output thread when there is a chance.
             mModelRunning = false;
             mProcess.destroy();
 
             // Close the window.
-            ((JDialog) aEvent.getSource()).setVisible(false);
+            mComponent.setVisible(false);
         }
-
+        
         /**
          * Method called when a window is opened, implemented to do nothing.
          * 

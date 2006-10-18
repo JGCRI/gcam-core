@@ -222,7 +222,7 @@ public final class DOMUtils {
 
 
 	    if(!aDocument.getDocumentElement().getAttribute("needs-save").equals("true")) {
-		    System.out.println("Saving an unmodified document. needs-save: " + aDocument.getDocumentElement().getAttribute("needs-save"));
+		    Logger.global.log(Level.INFO, "Saving an unmodified document. needs-save: " + aDocument.getDocumentElement().getAttribute("needs-save"));
 	    }
 	    aDocument.getDocumentElement().removeAttribute("needs-save"); //$NON-NLS-1$
 
