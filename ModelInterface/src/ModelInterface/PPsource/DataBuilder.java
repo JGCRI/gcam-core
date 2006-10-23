@@ -1665,7 +1665,9 @@ public class DataBuilder
 		      internalTimeIndex = 0;
 	      }
       } else {
-	      --internalTimeIndex;
+	      // is this right? should it be - timeStep
+	      // --internalTimeIndex;
+	      internalTimeIndex -= timeStep;
       }
       /*
       System.out.println("Have settings:");
@@ -1693,14 +1695,12 @@ public class DataBuilder
 		      k=0;
 		      for(double x = -180; x < 180; x+=resX)
 		      {
-			      //System.out.println("getting "+ma2Array.getFloat(in.set(0, 0, i, k)));
 			      if(ma2Array.getRank() == 2)
 			      {
 				      dataValue = new Double((double)ma2Array.getFloat(in.set(i, k)));
 			      } else if(ma2Array.getRank() == 3)
 			      {
 				      dataValue = new Double(ma2Array.getDouble(in.set(internalTimeIndex, i, k)));
-				      //System.out.println((x+.5)+","+(y+.5)+","+dataValue);
 			      } else if(ma2Array.getRank() == 4)
 			      {
 				      dataValue = new Double((double)ma2Array.getFloat(in.set(0, internalTimeIndex, i, k)));
