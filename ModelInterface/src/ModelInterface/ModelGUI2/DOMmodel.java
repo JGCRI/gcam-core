@@ -1,5 +1,3 @@
-//import javax.swing.event.TreeModelEvent;
-//package ModelGUI2;
 package ModelInterface.ModelGUI2;
 
 import javax.swing.SwingUtilities;
@@ -28,6 +26,7 @@ import org.w3c.dom.events.EventListener;
 import ModelInterface.ModelGUI2.undo.NodeInsertUndoableEdit;
 import ModelInterface.ModelGUI2.undo.NodeDeleteUndoableEdit;
 import ModelInterface.ModelGUI2.undo.NodeEditUndoableEdit;
+import ModelInterface.ModelGUI2.csvconv.DOMTreeBuilder;
 import ModelInterface.InterfaceMain;
 
 public class DOMmodel implements TreeModel {
