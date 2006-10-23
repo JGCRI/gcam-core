@@ -187,6 +187,7 @@ public class QueryGenerator implements java.io.Serializable{
 		typeMap.put("Input", new Boolean(false));
 		typeMap.put("Demand Components Table", new Boolean(false));
 		typeMap.put("Social Accounting Matrix", new Boolean(false));
+		typeMap.put("Input Output Table", new Boolean(false));
 		typeMap.put("Query Group", new Boolean(false));
 		final Vector types = new Vector(typeMap.keySet().size(), 0);
 		for(int i = 0; i < types.capacity(); ++i) {
@@ -368,6 +369,10 @@ public class QueryGenerator implements java.io.Serializable{
 							}
 							case 11: {
 									types.set(selInd, new SAMQueryBuilder(thisGen));
+									break;
+							}
+							case 12: {
+									types.set(selInd, new InputOutputQueryBuilder(thisGen));
 									break;
 							}
 							default: {

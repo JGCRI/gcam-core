@@ -255,17 +255,21 @@ public class XMLDB {
 	}
 	
 	public XmlResults createQuery(String query, String queryFilter, Vector<String> queryFunctions) {
-		StringBuffer queryBuff = new StringBuffer();
+		StringBuilder queryBuff = new StringBuilder();
+		String[] queries = query.split("\\s*\\|\\s*");
 		if(queryFunctions != null) {
 			for(Iterator i = queryFunctions.iterator(); i.hasNext(); ) {
 				queryBuff.append(i.next()).append('(');
 			}
 		}
-		queryBuff.append("collection('").append(contName).append("')");
-		if(queryFilter != null) {
-			queryBuff.append(queryFilter);
+		for(String currQuery : queries) {
+			queryBuff.append("collection('").append(contName).append("')");
+			if(queryFilter != null) {
+				queryBuff.append(queryFilter);
+			}
+			queryBuff.append(currQuery).append(" | ");
 		}
-		queryBuff.append(query);
+		queryBuff.delete(queryBuff.length()-3, queryBuff.length());
 		if(queryFunctions != null) {
 			for(int i = 0; i < queryFunctions.size(); ++i) {
 				if(queryFunctions.get(i).startsWith("declare")) {

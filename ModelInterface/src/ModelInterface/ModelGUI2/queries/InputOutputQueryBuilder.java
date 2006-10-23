@@ -332,10 +332,12 @@ public class InputOutputQueryBuilder extends QueryBuilder {
 		qg.axis2Name = qg.yearLevel = "sector";
 		qg.group = true;
 		qg.var = "demand-currency";
+		// the query for getting the factor supply names is no good becauase I won't be able to filter to the correct
+		// scenarios/regions.  Plus isn't it almost always going to be Land, Labor, and Capital anyways?
 		qg.xPath = sectorQueryPortion+"/"+subsectorQueryPortion+"/"+technologyQueryPortion+"/"
 			+inputQueryPortion+"/demand-currency/text() | "+sectorQueryPortion+"/"+subsectorQueryPortion+"/"+
 			technologyQueryPortion+"/*[local-name() = 'output' or local-name() = 'annual-investment']/text() | "+
-			"collection('database.dbxml')/scenario/world/Marketplace/market[child::MarketGoodOrFuel[ child::text() = /scenario/world/regionCGE/factorSupply/@name]]/supply/text()";
+			"Marketplace/market[child::MarketGoodOrFuel[ child::text() = /scenario/world/regionCGE/factorSupply/@name]]/supply/text()";
 	}
 	private Map createList(String path, boolean isGroupNames) {
 		LinkedHashMap ret = new LinkedHashMap();
@@ -362,27 +364,46 @@ public class InputOutputQueryBuilder extends QueryBuilder {
 	protected boolean isGlobal;
 	public String getCompleteXPath(Object[] regions) {
 		boolean added = false;
-		StringBuffer ret = new StringBuffer();
+		StringBuilder regionQ = new StringBuilder();
+		// for somereason you can not append a StringBuilder to
+		// a StringBuilder, but you can append a StringBuffer to
+		// a StringBuilder.  Whatever..
+		StringBuffer marketRegionQ = new StringBuffer();
+
 		if(((String)regions[0]).equals("Global")) {
-			ret.append(regionQueryPortion+"/");
-			//regionSel = new int[0]; 
-			regions = new Object[0];
+			regionQ.append(regionQueryPortion+"/");
 			isGlobal = true;
 		} else {
 			isGlobal = false;
 		}
-		for(int i = 0; i < regions.length; ++i) {
+		for(int i = 0; i < regions.length && !isGlobal; ++i) {
 			if(!added) {
-				ret.append(regionQueryPortion.substring(0, regionQueryPortion.length()-1)).append(" and (");
+				regionQ.append(regionQueryPortion.substring(0, regionQueryPortion.length()-1)).append(" and (");
+				marketRegionQ.append(" and ContainedRegion[");
 				added = true;
 			} else {
-				ret.append(" or ");
+				regionQ.append(" or ");
+				marketRegionQ.append(" or ");
 			}
-			ret.append("(@name='").append(regions[i]).append("')");
+			regionQ.append("(@name='").append(regions[i]).append("')");
+			marketRegionQ.append("(child::text() = '").append(regions[i]).append("')");
 		}
+		String[] queries = qg.getXPath().split("\\s*\\|\\s*");
+		// this is sort of hard coding that I know the market query will be last,
+		// and that there will only be 1 market query.. think of a better way
 		if(added) {
-			ret.append(" )]/");
+			regionQ.append(" )]/");
+			marketRegionQ.append(" ] ]/");
+			String[] spStr = queries[2].split("\\]/");
+			marketRegionQ.insert(0, spStr[0]).append(spStr[1]).toString();
+		} else {
+			marketRegionQ.append(queries[2]);
 		}
+		String regionFilter = regionQ.toString();
+		System.out.println("The 3 parts are : >>"+queries[0]+"<< | >>"+queries[1]+"<< | >>"+queries[2]+"<<");
+		return regionQ.append(queries[0]).append(" | ").append(regionFilter).append(queries[1])
+			.append(" | ").append(marketRegionQ).toString();
+		/*
 		int pipeIndex = qg.getXPath().indexOf('|');
 		String part1 = qg.getXPath().substring(0, pipeIndex+1);
 		String part2 = qg.getXPath().substring(pipeIndex+1, qg.getXPath().length());
@@ -392,6 +413,7 @@ public class InputOutputQueryBuilder extends QueryBuilder {
 		return ret.append(part1)
 			.append(" collection('database.dbxml')/scenario[ (@name='test' and @date='2006-27-9T22:20:46-00:00') ]/world/")
 			.append(retStr).append(part2).toString();
+			*/
 	}
 	public Object[] extractAxisInfo(XmlValue n, Map filterMaps) throws Exception {
 		Vector ret = new Vector(2, 0);
