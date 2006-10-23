@@ -71,6 +71,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	 * Main function, creates a new thread for the gui and runs it.
 	 */
 	public static void main(String[] args) {
+		System.out.println("Library Path: "+System.getProperty("java.library.path"));
 
 		//Schedule a job for the event-dispatching thread:
 		//creating and showing this application's GUI.

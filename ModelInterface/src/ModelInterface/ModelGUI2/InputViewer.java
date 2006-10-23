@@ -42,6 +42,10 @@ import ModelInterface.InterfaceMain;
 import ModelInterface.MenuAdder;
 
 import ModelInterface.ModelGUI2.tables.*;
+import ModelInterface.ModelGUI2.csvconv.DOMTreeBuilder;
+
+import ModelInterface.common.FileChooser;
+import ModelInterface.common.FileChooserFactory;
 
 public class InputViewer implements ActionListener, TableModelListener, MenuAdder {
 
@@ -1206,45 +1210,17 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	 */
 	boolean openXMLFile() {
 
-		/*
-		java.awt.FileDialog fd = new java.awt.FileDialog(parentFrame, "Open XML File");
-		fd.setMode(java.awt.FileDialog.LOAD);
-		fd.setFilenameFilter(new java.io.FilenameFilter() {
-			public boolean accept(File dir, String name) {
-				return name.endsWith(".xml");
-			}
-		});
-		fd.setDirectory(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", "."));
-		fd.setVisible(true);
-		String result = fd.getFile();
-		*/
+		FileChooser fc = FileChooserFactory.getFileChooser();
+		File[] result = fc.doFilePrompt(parentFrame, "Open XML File", FileChooser.LOAD_DIALOG, 
+				new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")),
+				xmlFilter);
 
-		JFileChooser fc = new JFileChooser();
-		fc.setDialogTitle("Open XML File");
-
-		// Choose only files, not directories
-		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-		// Start in current directory
-		//fc.setCurrentDirectory(globalFC.getCurrentDirectory());
-		fc.setCurrentDirectory(new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")));
-
-		// Set filter for Java source files.
-		fc.setFileFilter(xmlFilter);
-
-		// Now open chooser
-		int result = fc.showOpenDialog(parentFrame);
-
-		if (result == JFileChooser.CANCEL_OPTION) {
-		//if (result == null) {
+		if (result == null) {
 			return false;
-		} else if (result == JFileChooser.APPROVE_OPTION) {
+		} else {
 			((InterfaceMain)parentFrame).fireControlChange(controlStr);
-			file = fc.getSelectedFile();
-			//file = new File(result);
-			//globalFC.setCurrentDirectory(fc.getCurrentDirectory());
-			((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", fc.getCurrentDirectory().toString());
-			//((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", fd.getDirectory());
+			file = result[0];
+			((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", file.getParent());
 
 			doc = readXMLFile( file );
 			
@@ -1299,8 +1275,6 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 									"URI parsing failed. Cannot open the documentation XML file.");
 				}
 			}
-		} else {
-			return false;
 		}
 		return true;
 	}
@@ -1313,50 +1287,29 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	 */
 	boolean openCSVFile() {
 
-		//File file2;
-		File[] csvFiles;
-		JFileChooser fc = new JFileChooser();
-		fc.setDialogTitle("Open CSV File");
+		FileChooser fc = FileChooserFactory.getFileChooser();
+		File[] csvFiles = fc.doFilePrompt(parentFrame, "Open CSV Files", FileChooser.LOAD_DIALOG, 
+				new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")),
+				csvFilter);
 
-		// Choose only files, not directories
-		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		fc.setMultiSelectionEnabled(true);
-
-		// Start in current directory
-		//fc.setCurrentDirectory(globalFC.getCurrentDirectory());
-		fc.setCurrentDirectory(new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")));
-
-		// Set filter for Java source files.
-		fc.setFileFilter(csvFilter);
-
-		// Now open chooser
-		int result = fc.showOpenDialog(parentFrame);
-
-		if (result == JFileChooser.CANCEL_OPTION) {
+		if(csvFiles == null) {
 			return false;
-		} else if (result == JFileChooser.APPROVE_OPTION) {
+		} else {
 			((InterfaceMain)parentFrame).fireControlChange(controlStr);
-			//file = fc.getSelectedFile();
-			csvFiles = fc.getSelectedFiles();
-			//globalFC.setCurrentDirectory(fc.getCurrentDirectory());
-			((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", fc.getCurrentDirectory().toString());
+			((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", csvFiles[0].getPath());
 
-			JFileChooser fc2 = new JFileChooser();
-			fc2.setDialogTitle("Open Headers File");
-			fc2.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			fc2.setCurrentDirectory(fc.getCurrentDirectory());
-			int result2 = fc2.showOpenDialog(parentFrame);
-			if (result2 == JFileChooser.CANCEL_OPTION) {
+			File[] headerFiles = fc.doFilePrompt(parentFrame, "Open Headers File", FileChooser.LOAD_DIALOG, 
+					new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")),
+					null);
+			if(headerFiles == null) {
 				return true;
-			} else if (result2 == JFileChooser.APPROVE_OPTION) {
-				file = fc2.getSelectedFile();
-				//globalFC.setCurrentDirectory(fc2.getCurrentDirectory());
-				((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", fc.getCurrentDirectory().toString());
-				readCSVFile(csvFiles, file);
+			} else {
+				((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", headerFiles[0].getPath());
+				// TODO: get rid of the dependency on file
+				file = headerFiles[0];
+				readCSVFile(csvFiles, headerFiles[0]);
 			}
 
-		} else {
-			return false;
 		}
 		return true;
 	}
@@ -1368,26 +1321,14 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	boolean saveFile() {
 		// save as..
 
-		//File file = null;
-		JFileChooser fc = new JFileChooser();
-
-		// Start in current directory
-		//fc.setCurrentDirectory(globalFC.getCurrentDirectory());
-		fc.setCurrentDirectory(new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")));
-
-		// Set filter for xml files.
-		fc.setFileFilter(xmlFilter); // *********************************
-
-		// Set to a default name for save.
-		fc.setSelectedFile(file);
-
-		// Open chooser dialog
-		int result = fc.showSaveDialog(parentFrame);
-
-		if (result == JFileChooser.CANCEL_OPTION) {
+		FileChooser fc = FileChooserFactory.getFileChooser();
+		File[] result = fc.doFilePrompt(parentFrame, null, FileChooser.SAVE_DIALOG, 
+				new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")),
+				xmlFilter);
+		if(result == null) {
 			return true;
-		} else if (result == JFileChooser.APPROVE_OPTION) {
-			file = fc.getSelectedFile();
+		} else {
+			File file = result[0];
 			if (!file.getName().matches("[.]")) {
 				if (!(file.getAbsolutePath().endsWith(".xml"))) {
 					file = new File(file.getAbsolutePath() + ".xml");
@@ -1398,16 +1339,13 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 						"Overwrite existing file?", "Confirm Overwrite",
 						JOptionPane.OK_CANCEL_OPTION,
 						JOptionPane.QUESTION_MESSAGE);
-				//if they hit cancell it gives and error message, so i
+				//if they hit cancel it gives and error message, so i
 				//made it return true, that could be a problem in the future
 				if (response == JOptionPane.CANCEL_OPTION)
 					return true;
 			}
-			//globalFC.setCurrentDirectory(fc.getCurrentDirectory());
-			((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", fc.getCurrentDirectory().toString());
+			((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", file.getParent());
 			return writeFile(file, doc);
-		} else {
-			return false;
 		}
 	}
 

@@ -35,7 +35,7 @@ import com.sleepycat.dbxml.XmlValue;
 import com.sleepycat.dbxml.XmlException;
 
 public class QueryGenerator implements java.io.Serializable{
-	private Frame parentFrame;
+	private transient Frame parentFrame;
 	String xPath;
 	String var;
 	String nodeLevel;
@@ -48,7 +48,7 @@ public class QueryGenerator implements java.io.Serializable{
 	public static Vector sumableList;
 	String axis1Name;
 	String axis2Name;
-	private QueryBuilder qb;
+	private transient QueryBuilder qb;
 	int currSel;
 	String labelColumnName;
 	public QueryGenerator(Frame parentFrameIn) {

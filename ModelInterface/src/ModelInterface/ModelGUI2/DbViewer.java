@@ -7,6 +7,8 @@ import ModelInterface.ModelGUI2.tables.ComboTableModel;
 import ModelInterface.ModelGUI2.tables.MultiTableModel;
 import ModelInterface.ModelGUI2.tables.CopyPaste;
 import ModelInterface.ModelGUI2.queries.QueryGenerator;
+import ModelInterface.common.FileChooser;
+import ModelInterface.common.FileChooserFactory;
 import ModelInterface.MenuAdder;
 
 import java.beans.PropertyChangeListener;
@@ -22,6 +24,7 @@ import javax.swing.*;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.tree.TreePath;
+import javax.swing.filechooser.FileFilter;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.geom.Point2D;
@@ -238,17 +241,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("DB Open")) {
-			JFileChooser fc = new JFileChooser();
-			fc.setDialogTitle("Choose XML Database");
-
-			// Choose only files, not directories
-			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-			// Start in current directory
-			fc.setCurrentDirectory(new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")));
-			//fc.setCurrentDirectory(globalFC.getCurrentDirectory());
-
-			fc.setFileFilter(new javax.swing.filechooser.FileFilter() {
+			final FileFilter dbFilter = (new javax.swing.filechooser.FileFilter() {
 				public boolean accept(File f) {
 					return f.getName().toLowerCase().endsWith(".dbxml") || f.isDirectory();
 				}
@@ -256,40 +249,32 @@ public class DbViewer implements ActionListener, MenuAdder {
 					return "BDB XML Container (*.dbxml)";
 				}
 			});
-
+			FileChooser fc = FileChooserFactory.getFileChooser();
 			// Now open chooser
-			//int result = fc.showOpenDialog(parentFrame);
-			if( fc.showOpenDialog(parentFrame) == JFileChooser.APPROVE_OPTION )  {
+			File[] dbFiles = fc.doFilePrompt(parentFrame, "Choose XML Database", FileChooser.LOAD_DIALOG, 
+					new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")),
+					dbFilter);
+
+			if(dbFiles != null) {
 				((InterfaceMain)parentFrame).fireControlChange(controlStr);
-				doOpenDB(fc);
+				doOpenDB(dbFiles[0]);
 			}
 		} else if(e.getActionCommand().equals("Manage DB")) {
 			manageDB();
 		} else if(e.getActionCommand().equals("Batch Query")) {
-			JFileChooser fc = new JFileChooser();
-			fc.setDialogTitle("Open Batch Query File");
-
-			// Choose only files, not directories
-			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-			// Start in current directory
-			//fc.setCurrentDirectory(globalFC.getCurrentDirectory());
-			fc.setCurrentDirectory(new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")));
-
-			// Set filter for Java source files.
-			fc.setFileFilter(new XMLFilter());
-
+			FileChooser fc = FileChooserFactory.getFileChooser();
 			// Now open chooser
-			int result = fc.showOpenDialog(parentFrame);
+			final FileFilter xmlFilter = new XMLFilter();
+			File[] batchFiles = fc.doFilePrompt(parentFrame, "Open bath Query File", FileChooser.LOAD_DIALOG, 
+					new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")),
+					xmlFilter);
 
-			if (result == JFileChooser.CANCEL_OPTION) {
+			if(batchFiles == null) {
 				return;
-			} else if (result == JFileChooser.APPROVE_OPTION) {
-				File batchFile = fc.getSelectedFile();
-				((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", fc.getCurrentDirectory().toString());
+			} else {
+				((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", batchFiles[0].getParent());
 
-				fc.setDialogTitle("Select Where to Save Output");
-				fc.setFileFilter(new javax.swing.filechooser.FileFilter() {
+				final FileFilter xlsFilter = (new javax.swing.filechooser.FileFilter() {
 					public boolean accept(File f) {
 						return f.getName().toLowerCase().endsWith(".xls") || f.isDirectory();
 					}
@@ -297,13 +282,14 @@ public class DbViewer implements ActionListener, MenuAdder {
 						return "Microsoft Excel File(*.xls)";
 					}
 				});
-				int result2 = fc.showSaveDialog(parentFrame);
-				if (result2 == JFileChooser.CANCEL_OPTION) {
+				File[] xlsFiles = fc.doFilePrompt(parentFrame, "Select Where to Save Output", FileChooser.SAVE_DIALOG, 
+						new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")),
+						xlsFilter);
+				if(xlsFiles == null) {
 					return;
-				} else if (result2 == JFileChooser.APPROVE_OPTION) {
-					File saveFile = fc.getSelectedFile();
-					((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", fc.getCurrentDirectory().toString());
-					batchQuery(batchFile, saveFile);
+				} else {
+					((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", xlsFiles[0].getParent());
+					batchQuery(batchFiles[0], xlsFiles[0]);
 				}
 			}
 		} else if(e.getActionCommand().equals("Export / Print")) {
@@ -311,11 +297,11 @@ public class DbViewer implements ActionListener, MenuAdder {
 		}
 	}
 
-	private void doOpenDB(JFileChooser fc) {
-		((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", fc.getCurrentDirectory().toString());
-		xmlDB = new XMLDB(fc.getSelectedFile().toString(), parentFrame);
+	private void doOpenDB(File dbFile) {
+		((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", dbFile.getParent());
+		xmlDB = new XMLDB(dbFile.getAbsolutePath(), parentFrame);
 		createTableSelector();
-		parentFrame.setTitle("["+fc.getSelectedFile()+"] - ModelInterface");
+		parentFrame.setTitle("["+dbFile+"] - ModelInterface");
 	}
 
 	private Vector getScenarios() {
@@ -729,30 +715,18 @@ public class DbViewer implements ActionListener, MenuAdder {
 		final DirtyBit dirtyBit = new DirtyBit();
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser fc = new JFileChooser();
-				fc.setDialogTitle("Open XML File");
+				FileChooser fc = FileChooserFactory.getFileChooser();
+				final FileFilter xmlFilter = new XMLFilter();
+				File[] xmlFiles = fc.doFilePrompt(parentFrame, "Open XML File", FileChooser.LOAD_DIALOG,
+					new File(((InterfaceMain)parentFrame).getProperties().  getProperty("lastDirectory", ".")),
+					xmlFilter);
 
-				// Choose only files, not directories
-				fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-				// Start in current directory
-				//fc.setCurrentDirectory(globalFC.getCurrentDirectory());
-				fc.setCurrentDirectory(new File(((InterfaceMain)parentFrame).getProperties().
-						getProperty("lastDirectory", ".")));
-
-				// Set filter for Java source files.
-				fc.setFileFilter(new XMLFilter());
-
-				// Now open chooser
-				int result = fc.showOpenDialog(parentFrame);
-
-				if (result == JFileChooser.APPROVE_OPTION) {
+				if(xmlFiles != null) {
 					dirtyBit.setDirty();
-					//globalFC.setCurrentDirectory(fc.getCurrentDirectory());
 					((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", 
-						 fc.getCurrentDirectory().toString());
+						 xmlFiles[0].getParent());
 					parentFrame.getGlassPane().setVisible(true);
-					xmlDB.addFile(fc.getSelectedFile().toString());
+					xmlDB.addFile(xmlFiles[0].getAbsolutePath());
 					scns = getScenarios();
 					list.setListData(scns);
 					parentFrame.getGlassPane().setVisible(false);
@@ -764,12 +738,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 				Object[] remList = list.getSelectedValues();
 				for(int i = 0; i < remList.length; ++i) {
 					dirtyBit.setDirty();
-					/*
-					xmlDB.removeDoc(((String)remList[i]).substring(0, 
-							((String)remList[i]).indexOf(' ')));
-							*/
 					xmlDB.removeDoc(((ScenarioListItem)remList[i]).docName);
-					//System.out.println(((String)remList[i]).substring(0, ((String)remList[i]).indexOf(' ')));
 				}
 				scns = getScenarios();
 				list.setListData(scns);

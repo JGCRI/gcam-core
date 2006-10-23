@@ -24,6 +24,8 @@ import org.w3c.dom.Document;
 import ModelInterface.ConfigurationEditor.configurationeditor.ConfigurationEditor;
 import ModelInterface.ConfigurationEditor.configurationeditor.PropertiesInfo;
 import ModelInterface.InterfaceMain;
+import ModelInterface.common.FileChooser;
+import ModelInterface.common.FileChooserFactory;
 
 /**
  * Static utility class with helper functions.
@@ -233,23 +235,19 @@ final public class FileUtils {
 		}
 
 		// Ask the user for a file to load.
-		final JFileChooser chooser = new JFileChooser(recentFile);
-		chooser.setFileFilter(aFilter);
-		chooser.setMultiSelectionEnabled(false);
+		final FileChooser chooser = FileChooserFactory.getFileChooser();
+		// TODO: use to want single selection, figure out what to do about this
+		// right now it will get the selections but only use the first one 
+		File[] selectedFiles = chooser.doFilePrompt(aParentWindow, null, aIsSave ? FileChooser.SAVE_DIALOG :
+				FileChooser.LOAD_DIALOG, new File(recentFile), aFilter);
 
-		final int returnValue = aIsSave ? chooser.showSaveDialog(aParentWindow)
-				: chooser.showOpenDialog(aParentWindow);
-		File selectedFile = null;
-		if (returnValue == JFileChooser.APPROVE_OPTION) {
-			selectedFile = chooser.getSelectedFile();
-
-			// Save the file as the most recent document.
-			props.setProperty(PropertiesInfo.RECENT_FILE, selectedFile
+		if(selectedFiles != null) {
+			props.setProperty(PropertiesInfo.RECENT_FILE, selectedFiles[0]
 					.getAbsolutePath());
-			//FileUtils.saveProperties();
+			return selectedFiles[0];
+		} else {
+			return null;
 		}
-
-		return selectedFile;
 	}
 
 	/**
@@ -328,7 +326,7 @@ final public class FileUtils {
 	public static Document createDocument(final Component aParentWindow,
 			final File aFile, final String aRootTag) {
 		// Check if the new file already exists.
-		if (aFile.exists()) {
+		if (aFile != null && aFile.exists()) {
 			final String errorMessage = Messages
 					.getString("ConfigurationEditor.147"); //$NON-NLS-1$
 			final String errorTitle = Messages
