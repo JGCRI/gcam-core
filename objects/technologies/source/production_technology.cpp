@@ -15,8 +15,6 @@
 * \brief The ProductionTechnology class source file.
 * \author Pralit Patel
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -313,7 +311,12 @@ void ProductionTechnology::initCalc( const MoreSectorInfo* aMoreSectorInfo, cons
 
 /*! \brief Operate the technology.
 * \author Josh Lurz
-* \param aMode Whether to operate only old technologies, or new and old technologies.
+* \param aNationalAccount Regional national accounts container.
+* \param aDemographic Regional demographic information.
+* \param aMoreSectorInfo Sector information container.
+* \param aRegionName Region name.
+* \param aSectorName Sector name.
+* \param aIsNewVintageMode Whether to operate only old technologies, or new and old technologies.
 * \param aPeriod Period to operate in.
 * \note sets the output value for the current period. Also sets input values.
 */
@@ -402,7 +405,8 @@ void ProductionTechnology::calcEmissions( const string& aGoodName, const string&
     }
 }
 
-/*! \brief Set a level of new investment for a given period. 
+/*! \brief Set a level of new investment for a given period.
+* \param aRegionName Region name.
 * \param aAnnualInvestment The level of annual investment at the end of the time period.
 * \param aTotalInvestment The level of new investment.
 * \param aPeriod The period in which to add investment.
@@ -504,8 +508,8 @@ double ProductionTechnology::getCapital() const {
 }
 
 /*! \brief Get the annual investment for this technology.
-* \param Period to get the annual investment for. If it is -1 return any annual
-*        investment.
+* \param aPeriod Period to get the annual investment for. If it is -1 return any
+*        annual investment.
 * \return The annual investment for this technology. Not applicable to all
 *         technologies.
 * \author Josh Lurz
@@ -569,6 +573,9 @@ double ProductionTechnology::getExpectedProfitRate( const NationalAccount& aNati
 }
 
 /*! \brief Get the amount of capital required to produce one unit of output.
+* \param aDistributor Investment distributor.
+* \param aExpProfitRateCalc Expected profit rate calculator.
+* \param aNationalAccount Regional national accounts container.
 * \param aRegionName The name of the region.
 * \param aSectorName The name of the sector.
 * \param aPeriod The period.
@@ -596,7 +603,7 @@ double ProductionTechnology::getCapitalOutputRatio( const IDistributor* aDistrib
 
 /*! \brief Get the quantity of fixed investment for the production technology.
 * \author Josh Lurz
-* \param The period for which to get fixed investment.
+* \param aPeriod The period for which to get fixed investment.
 * \return Fixed investment amount for the vintage.
 */
 double ProductionTechnology::getFixedInvestment( const int aPeriod ) const {
@@ -650,13 +657,15 @@ double ProductionTechnology::distributeInvestment( const IDistributor* aDistribu
 
 /*! \brief Function to finalize objects after a period is solved.
 * \details This function is used to calculate and store variables which are only
-*          needed after the current period is complete. 
+*          needed after the current period is complete.
+* \param aRegionName Region name.
+* \param aSectorName Sector name.
 * \param aPeriod The period to finalize.
 * \todo Finish this function, could move transform here.
 * \author Josh Lurz
 */
-void ProductionTechnology::finalizePeriod( const string& aRegionName, const string& aSectorName, 
-                                          const int aPeriod )
+void ProductionTechnology::postCalc( const string& aRegionName, const string& aSectorName, 
+                                     const int aPeriod )
 {
     if( !isRetired( aPeriod ) && year <= scenario->getModeltime()->getper_to_yr( aPeriod ) ){
         // Save cost, profit rate, and output. Profit rate is needed to convert
@@ -732,8 +741,12 @@ double ProductionTechnology::calcShutdownCoef( const string& aRegionName,
 
     // Create a new shutdown decider.
     ProfitShutdownDecider shutdownDecider;
-    double shutdownCoef = shutdownDecider.calcShutdownCoef( prodFunc, aRegionName,
-                                                            aSectorName, aPeriod );
+	double shutdownCoef = shutdownDecider.calcShutdownCoef( &prodFunc,
+                                                            IShutdownDecider::getUncalculatedProfitRateConstant(), 
+		                                                    aRegionName,
+                                                            aSectorName,
+                                                            year,
+                                                            aPeriod );
     return shutdownCoef;
 }
 
