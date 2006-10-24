@@ -21,8 +21,6 @@
 * \brief ProductionTechnology class header file.
 * \author Pralit Patel
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>
@@ -106,7 +104,7 @@ public:
     void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
     void setTypeHelper( TechnologyType* aTechType );
-    void finalizePeriod( const std::string& aRegionName, const std::string& aSectorName, const int aPeriod );
+    void postCalc( const std::string& aRegionName, const std::string& aSectorName, const int aPeriod );
 protected:
     virtual bool isCoefBased() const { return true; }
     virtual void calcEmissions( const std::string& aGoodName, const std::string& aRegionName, const int aPeriod );
