@@ -21,8 +21,6 @@
 * \brief BaseTechnology class header file.
 * \author Pralit Patel
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>
@@ -138,8 +136,8 @@ public:
     static const std::string createIdentifier( const std::string& aName, int aYear );
     void removeEmptyInputs();
     virtual void setTypeHelper( TechnologyType* aTechType ) = 0;
-    virtual void finalizePeriod( const std::string& aRegionName, const std::string& aSectorName,
-                                 const int aPeriod ) = 0;
+    virtual void postCalc( const std::string& aRegionName, const std::string& aSectorName,
+                           const int aPeriod ) = 0;
 protected:
     virtual bool isCoefBased() const = 0;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
