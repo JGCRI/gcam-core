@@ -21,8 +21,6 @@
 * \brief Consumer class header file.
 * \author Pralit Patel
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>
@@ -66,8 +64,8 @@ public:
 
 	virtual void updateMarketplace( const std::string& aSectorName, const std::string& aRegionName,
                                     const int aPeriod );
-    virtual void finalizePeriod( const std::string& aRegionName, const std::string& aSectorName, 
-                                 const int aPeriod ){} // do nothing for now.
+    virtual void postCalc( const std::string& aRegionName, const std::string& aSectorName, 
+                           const int aPeriod ){} // do nothing for now.
     virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const = 0;
 	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     
