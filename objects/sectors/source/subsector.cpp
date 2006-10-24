@@ -2354,7 +2354,7 @@ void Subsector::updateMarketplace( const int period ) {
 void Subsector::finalizePeriod( const int aPeriod ){
     // Finalize base technologies.
     for( BaseTechIterator baseTech = baseTechs.begin(); baseTech != baseTechs.end(); ++baseTech ){
-        (*baseTech)->finalizePeriod( regionName, sectorName, aPeriod );
+        (*baseTech)->postCalc( regionName, sectorName, aPeriod );
     }
 }
 
