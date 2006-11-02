@@ -86,10 +86,10 @@ public class HeaderEntity {
 					// must read the attr value from the table
 					readData = false;
 					readAttr = true;
-					attributes.put(attr, null);
+					attributes.put(attr.trim(), null);
 				} else {
 					hasSpecificAttrVal = true;
-					attributes.put(attr.substring(0, findPos), attr.substring(findPos+1));
+					attributes.put(attr.substring(0, findPos).trim(), attr.substring(findPos+1));
 				}
 			}
 		}
@@ -99,7 +99,7 @@ public class HeaderEntity {
 			// intended to be in the node name that are not valid XML characters
 		       throw new Exception("Invalid header "+headerStr+" found invalid characters after parsing");
 		}
-		name = headerStr;
+		name = headerStr.trim();
 	}
 
 	/**

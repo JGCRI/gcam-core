@@ -333,11 +333,11 @@ public class DOMTreeBuilder {
 		if(child.hasGrandParent()) {
 			Stack<Node> parentStack = new Stack<Node>();
 			parentStack.push(retNode);
-			Node currNode;
+			Node currNode = retNode;
 			// follow that trail back up the tree until we find the GP
 			// node we are looking for.  Along the way keep track of where
 			// we have been so we can come back down.
-			while(!(currNode = retNode.getParentNode()).getNodeName()
+			while(!(currNode = currNode.getParentNode()).getNodeName()
 					.equals(child.getGrandParentEntity().getName())) {
 				parentStack.push(currNode);
 			}
