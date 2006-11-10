@@ -1,0 +1,3211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="Africa">
+         <demandsector name="building">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.470638188</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.111745692</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.185182164</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.314805492</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.63409086</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.054805212</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.158554116</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.47917926</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.697688352</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="trad biomass">
+               <technology name="trad biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>8.053368537</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>8.416430964</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector nocreate="1" name="energy-use">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.259623468</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>3.22153326</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.933279588</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.906735276</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.649749492</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.046155716</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.673781724</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.125244368</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.005627492</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.278690588</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="non-energy use oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.24032232</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.266154876</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.007871184</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.00020934</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.01632852</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.02574882</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.013690836</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.04521744</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.847299896</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>2.928917808</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Australia_NZ">
+         <demandsector name="building">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.076785912</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.069542748</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.009755244</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.010760076</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.294248304</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.4490343</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.119868084</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.171700668</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.033829344</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.043249644</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector nocreate="1" name="energy-use">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.078251292</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.133684524</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.287047008</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.232493004</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.318950424</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.483449796</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.408547944</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.528416028</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.240406056</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.422322516</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="non-energy use oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.156000168</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.131381784</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.003056364</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.002763288</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.00669888</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.009755244</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.002805156</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.014360724</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.125956124</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.488909816</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Canada">
+         <demandsector name="building">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.067281876</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.077330196</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.002177136</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.001088568</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.857624112</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.025431056</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.823794768</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.04837472</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.370866744</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.466367652</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector nocreate="1" name="energy-use">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.236596068</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.3328506</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.184051728</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.201678156</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.741859092</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.93344706</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.25520264</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.63515474</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.59054814</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.59913108</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="non-energy use oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.46661886</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.838950984</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.006112728</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.011764908</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.014151384</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.121249728</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.15093414</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.754604144</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>2.182871916</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="China">
+         <demandsector name="building">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.351230652</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>4.410728575</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>4.871616889</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.257948748</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.387756728</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.105841078</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.596742638</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.462750648</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.814890682</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="trad biomass">
+               <technology name="trad biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>8.699117908</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>10.54583259</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector nocreate="1" name="energy-use">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.066444516</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.10341396</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>12.54909564</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>17.83091131</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.92990546</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>6.165146736</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.510831468</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.9995985</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.818034164</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>3.840426036</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="non-energy use oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.793566072</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>2.582501976</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.428602716</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.185433372</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.021603888</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.078460632</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.002219004</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.002428344</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.321647156</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>4.780739448</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Eastern Europe">
+         <demandsector name="building">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.099855116</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.379491356</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.366145778</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.466783197</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.385101864</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.64937268</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.60457263</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.043598252</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.23320291</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.230273446</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector nocreate="1" name="energy-use">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.046389744</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.13837374</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.401991848</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.011195936</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.960577524</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.824548392</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.520059608</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.924738516</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.05046812</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.665366256</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="non-energy use oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.361278972</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.4103064</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.000544284</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.002847024</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.007619976</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.000376812</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.055349496</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.04144932</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.043793928</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.894761028</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.571599116</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Former Soviet Union">
+         <demandsector name="building">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.147500446</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.317233491</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>3.265950355</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.058588705</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.97217496</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.157147784</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>7.172645</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>7.032056168</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.316159276</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.733986802</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector nocreate="1" name="energy-use">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.799846272</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.097301232</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>3.8560428</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>2.221390476</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>4.209157512</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>2.745410364</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>10.43915778</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>4.898932812</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>6.414763752</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>2.745870912</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="non-energy use oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.93890708</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.693878364</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.175091976</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.002805156</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.313256376</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.350309556</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.251124264</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.722114576</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>5.301619236</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>3.194779608</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="India">
+         <demandsector name="building">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.446815296</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.320248332</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.155414016</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.457449768</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.001716588</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.023529816</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.507147084</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.103347404</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="trad biomass">
+               <technology name="trad biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>4.489477418</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>7.950398256</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector nocreate="1" name="energy-use">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.979334388</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.497367152</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.728478512</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.673363044</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.286310564</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.265066308</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.42202944</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.540432144</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.183985172</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="non-energy use oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.26669916</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.051682292</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.101571768</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.014821272</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.034206156</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.077221772</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.487528172</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Japan">
+         <demandsector name="building">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.006487143</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.008245169</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.017416139</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.000502214</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.30711896</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.987599564</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.453423798</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.665067442</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.442935806</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.699170424</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector nocreate="1" name="energy-use">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.1078101</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.098431668</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>2.23805394</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>2.055844404</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.501972632</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.625022684</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.070421976</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.423159876</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>2.573793432</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>2.308517784</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="non-energy use oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.443357432</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.766703996</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.060541128</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.067574952</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>3.327584904</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>4.090754808</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Korea">
+         <demandsector name="building">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.018086154</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.36278622</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.027507276</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.122840712</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.546042456</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.0251208</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.434463842</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.374216184</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.420141016</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector nocreate="1" name="energy-use">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.047394576</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.4909023</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.677382372</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.239736168</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.719041032</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.003684384</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.189494568</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.59096682</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.671688324</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="non-energy use oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.292741056</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.338478092</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.000167472</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.003642516</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.008917884</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.009545904</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.687556296</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.706414076</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Latin America">
+         <demandsector name="building">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.408104576</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.405969308</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.006196464</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.00272142</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.774934812</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.450642464</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.300026088</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.486799236</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.977115384</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.109543868</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="trad biomass">
+               <technology name="trad biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>3.837465646</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>8.826177908</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector nocreate="1" name="energy-use">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.771937496</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>2.098172952</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.57024216</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.696432312</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.104729048</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.835828064</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>2.13505866</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>3.183391512</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>2.848112568</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>3.202190244</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="non-energy use oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.798171552</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.030078404</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.250328772</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.268625088</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.000251208</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.000041868</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.010467</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.012267324</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.008457336</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.226212804</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>4.4966232</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>6.727601448</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Middle East">
+         <demandsector name="building">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.001130436</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.000502416</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.00083736</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.441623664</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.090828872</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.10927548</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.062442368</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.715565988</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.021621068</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector nocreate="1" name="energy-use">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.037220652</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.043710192</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.027800352</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.04877622</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.349765272</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.795743208</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.863837756</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>3.576615768</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.50180516</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>2.66196744</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="non-energy use oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.507607632</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.158864372</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.000251208</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>2.834421732</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>4.82068152</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Southeast Asia">
+         <demandsector name="building">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>2.592382824</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.011890512</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.008247996</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.352235484</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.070941572</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.101488032</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.42056406</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.501955452</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.790509708</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="trad biomass">
+               <technology name="trad biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>3.162095925</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>4.212465084</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector nocreate="1" name="energy-use">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.86478354</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.164474684</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.26104698</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.904641876</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.372541464</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.849669192</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.075672656</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>2.225367936</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.29183714</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>2.300395392</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="non-energy use oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.311749128</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.68830992</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.000795492</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.00188406</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.026962992</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>2.459242584</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>5.592978648</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="USA">
+         <demandsector name="building">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.392261292</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.16140114</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.102409128</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>6.34760748</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>9.083095128</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>6.858313344</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>7.780372308</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>2.018372544</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>2.034952272</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector nocreate="1" name="energy-use">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.945881856</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.283714748</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>2.755877364</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.871541468</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>4.108590576</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>4.91174442</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>6.977344068</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>7.338581172</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>4.853882844</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>3.73420692</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="non-energy use oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>4.25043936</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>6.232847292</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.287088876</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.01486314</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.025455744</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.64518588</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.577527192</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>21.56155945</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>26.89328178</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Western Europe">
+         <demandsector name="building">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.214756298</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>1.339523689</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>1.181011911</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.311287844</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>3.688947612</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>5.26029552</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>3.901134136</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>6.265251697</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>3.935130917</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>3.495893928</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector nocreate="1" name="energy-use">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.610937856</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.696976596</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>3.72604266</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>2.355368076</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>4.181733972</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>5.115767184</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>4.036619484</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>5.439658032</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>4.26613986</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>4.546739196</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="non-energy use oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>3.257832816</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>3.85039062</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector nocreate="1" name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.000083736</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.081684468</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.00146538</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.183339972</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.245848896</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>0.012727872</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>0.03516912</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector nocreate="1" name="oil">
+               <technology name="oil">
+                  <period year="1990">
+                     <CalDataInput>
+                        <calInputValue>13.02404623</calInputValue>
+                     </CalDataInput>
+                  </period>
+                  <period year="2005">
+                     <CalDataInput>
+                        <calInputValue>16.75134493</calInputValue>
+                     </CalDataInput>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+      </region>
+   </world>
+</scenario>

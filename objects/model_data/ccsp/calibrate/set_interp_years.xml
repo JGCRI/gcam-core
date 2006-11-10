@@ -1,0 +1,775 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA" nocreate="1">
+         <demandsector name="building" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="fuelcellNAS" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="trad biomass" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry" nocreate="1">
+            <subsector name="energy-use" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2005</techScaleYear>
+            </subsector>
+            <subsector name="non-energy use oil" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2005</techScaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="h2" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Canada" nocreate="1">
+         <demandsector name="building" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="fuelcellNAS" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="trad biomass" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry" nocreate="1">
+            <subsector name="energy-use" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2005</techScaleYear>
+            </subsector>
+            <subsector name="non-energy use oil" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2005</techScaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="h2" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Western Europe" nocreate="1">
+         <demandsector name="building" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2020</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2020</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2020</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2020</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2020</scaleYear>
+            </subsector>
+            <subsector name="fuelcellNAS" nocreate="1">
+               <scaleYear>2020</scaleYear>
+            </subsector>
+            <subsector name="trad biomass" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry" nocreate="1">
+            <subsector name="energy-use" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2020</techScaleYear>
+            </subsector>
+            <subsector name="non-energy use oil" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2020</techScaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2020</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2020</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2020</scaleYear>
+            </subsector>
+            <subsector name="h2" nocreate="1">
+               <scaleYear>2020</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2020</scaleYear>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Japan" nocreate="1">
+         <demandsector name="building" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="fuelcellNAS" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="trad biomass" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry" nocreate="1">
+            <subsector name="energy-use" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2005</techScaleYear>
+            </subsector>
+            <subsector name="non-energy use oil" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2005</techScaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="h2" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Australia_NZ" nocreate="1">
+         <demandsector name="building" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="fuelcellNAS" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="trad biomass" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry" nocreate="1">
+            <subsector name="energy-use" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2005</techScaleYear>
+            </subsector>
+            <subsector name="non-energy use oil" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2005</techScaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="h2" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Former Soviet Union" nocreate="1">
+         <demandsector name="building" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="fuelcellNAS" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="trad biomass" nocreate="1">
+               <scaleYear>2065</scaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry" nocreate="1">
+            <subsector name="energy-use" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2095</techScaleYear>
+            </subsector>
+            <subsector name="non-energy use oil" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2095</techScaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2065</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="h2" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="China" nocreate="1">
+         <demandsector name="building" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="fuelcellNAS" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="trad biomass" nocreate="1">
+               <scaleYear>2065</scaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry" nocreate="1">
+            <subsector name="energy-use" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2095</techScaleYear>
+            </subsector>
+            <subsector name="non-energy use oil" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2095</techScaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2065</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="h2" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Middle East" nocreate="1">
+         <demandsector name="building" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="fuelcellNAS" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="trad biomass" nocreate="1">
+               <scaleYear>2065</scaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry" nocreate="1">
+            <subsector name="energy-use" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2095</techScaleYear>
+            </subsector>
+            <subsector name="non-energy use oil" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2095</techScaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2065</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="h2" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Africa" nocreate="1">
+         <demandsector name="building" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="fuelcellNAS" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="trad biomass" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry" nocreate="1">
+            <subsector name="energy-use" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2095</techScaleYear>
+            </subsector>
+            <subsector name="non-energy use oil" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2095</techScaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="h2" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Latin America" nocreate="1">
+         <demandsector name="building" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="fuelcellNAS" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="trad biomass" nocreate="1">
+               <scaleYear>2080</scaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry" nocreate="1">
+            <subsector name="energy-use" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2095</techScaleYear>
+            </subsector>
+            <subsector name="non-energy use oil" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2095</techScaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2080</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="h2" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Southeast Asia" nocreate="1">
+         <demandsector name="building" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="fuelcellNAS" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="trad biomass" nocreate="1">
+               <scaleYear>2080</scaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry" nocreate="1">
+            <subsector name="energy-use" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2095</techScaleYear>
+            </subsector>
+            <subsector name="non-energy use oil" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2095</techScaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2080</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="h2" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Eastern Europe" nocreate="1">
+         <demandsector name="building" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2080</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2080</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2080</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2080</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2080</scaleYear>
+            </subsector>
+            <subsector name="fuelcellNAS" nocreate="1">
+               <scaleYear>2080</scaleYear>
+            </subsector>
+            <subsector name="trad biomass" nocreate="1">
+               <scaleYear>2065</scaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry" nocreate="1">
+            <subsector name="energy-use" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2080</techScaleYear>
+            </subsector>
+            <subsector name="non-energy use oil" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2080</techScaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2065</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2080</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2080</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2080</scaleYear>
+            </subsector>
+            <subsector name="h2" nocreate="1">
+               <scaleYear>2080</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2080</scaleYear>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Korea" nocreate="1">
+         <demandsector name="building" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2050</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2050</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2050</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2050</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2050</scaleYear>
+            </subsector>
+            <subsector name="fuelcellNAS" nocreate="1">
+               <scaleYear>2050</scaleYear>
+            </subsector>
+            <subsector name="trad biomass" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry" nocreate="1">
+            <subsector name="energy-use" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2050</techScaleYear>
+            </subsector>
+            <subsector name="non-energy use oil" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2050</techScaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2005</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2050</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2050</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2050</scaleYear>
+            </subsector>
+            <subsector name="h2" nocreate="1">
+               <scaleYear>2050</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2050</scaleYear>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="India" nocreate="1">
+         <demandsector name="building" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="fuelcellNAS" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="trad biomass" nocreate="1">
+               <scaleYear>2080</scaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry" nocreate="1">
+            <subsector name="energy-use" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2095</techScaleYear>
+            </subsector>
+            <subsector name="non-energy use oil" nocreate="1">
+               <scaleYear>2005</scaleYear>
+               <techScaleYear>2095</techScaleYear>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation" nocreate="1">
+            <subsector name="oil" nocreate="1">
+               <scaleYear>2080</scaleYear>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="electricity" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="h2" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <scaleYear>2095</scaleYear>
+            </subsector>
+         </demandsector>
+      </region>
+   </world>
+</scenario>

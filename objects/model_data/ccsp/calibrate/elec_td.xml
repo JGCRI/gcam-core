@@ -1,0 +1,1419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="Africa">
+         <supplysector name="elect_td_bld">
+            <subsector name="electricity_td_bld">
+               <technology name="electricity_td_bld">
+                  <period year="1975">
+                     <efficiency>0.900</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.900</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.889</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.893</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.897</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.901</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.904</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.908</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.912</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <subsector name="electricity_td_ind">
+               <technology name="electricity_td_ind">
+                  <period year="1975">
+                     <efficiency>0.900</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.900</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.889</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.893</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.897</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.901</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.904</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.908</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.912</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <subsector name="electricity_td_trn">
+               <technology name="electricity_td_trn">
+                  <period year="1975">
+                     <efficiency>0.900</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.900</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.889</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.893</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.897</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.901</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.904</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.908</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.912</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Australia_NZ">
+         <supplysector name="elect_td_bld">
+            <subsector name="electricity_td_bld">
+               <technology name="electricity_td_bld">
+                  <period year="1975">
+                     <efficiency>0.923</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.923</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.928</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.932</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.935</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.939</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.942</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.945</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.949</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <subsector name="electricity_td_ind">
+               <technology name="electricity_td_ind">
+                  <period year="1975">
+                     <efficiency>0.923</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.923</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.928</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.932</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.935</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.939</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.942</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.945</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.949</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <subsector name="electricity_td_trn">
+               <technology name="electricity_td_trn">
+                  <period year="1975">
+                     <efficiency>0.923</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.923</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.928</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.932</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.935</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.939</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.942</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.945</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.949</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Canada">
+         <supplysector name="elect_td_bld">
+            <subsector name="electricity_td_bld">
+               <technology name="electricity_td_bld">
+                  <period year="1975">
+                     <efficiency>0.929</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.929</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.934</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.938</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.941</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.945</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.948</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.952</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.956</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <subsector name="electricity_td_ind">
+               <technology name="electricity_td_ind">
+                  <period year="1975">
+                     <efficiency>0.929</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.929</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.934</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.938</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.941</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.945</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.948</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.952</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.956</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <subsector name="electricity_td_trn">
+               <technology name="electricity_td_trn">
+                  <period year="1975">
+                     <efficiency>0.929</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.929</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.934</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.938</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.941</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.945</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.948</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.952</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.956</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="China">
+         <supplysector name="elect_td_bld">
+            <subsector name="electricity_td_bld">
+               <technology name="electricity_td_bld">
+                  <period year="1975">
+                     <efficiency>0.927</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.927</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.935</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.938</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.941</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.945</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.948</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.951</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.955</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <subsector name="electricity_td_ind">
+               <technology name="electricity_td_ind">
+                  <period year="1975">
+                     <efficiency>0.927</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.927</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.935</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.938</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.941</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.945</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.948</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.951</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.955</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <subsector name="electricity_td_trn">
+               <technology name="electricity_td_trn">
+                  <period year="1975">
+                     <efficiency>0.927</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.927</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.935</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.938</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.941</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.945</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.948</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.951</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.955</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Eastern Europe">
+         <supplysector name="elect_td_bld">
+            <subsector name="electricity_td_bld">
+               <technology name="electricity_td_bld">
+                  <period year="1975">
+                     <efficiency>0.909</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.909</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.896</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.900</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.903</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.907</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.911</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.914</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.918</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <subsector name="electricity_td_ind">
+               <technology name="electricity_td_ind">
+                  <period year="1975">
+                     <efficiency>0.909</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.909</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.896</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.900</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.903</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.907</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.911</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.914</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.918</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <subsector name="electricity_td_trn">
+               <technology name="electricity_td_trn">
+                  <period year="1975">
+                     <efficiency>0.909</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.909</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.896</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.900</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.903</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.907</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.911</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.914</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.918</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Former Soviet Union">
+         <supplysector name="elect_td_bld">
+            <subsector name="electricity_td_bld">
+               <technology name="electricity_td_bld">
+                  <period year="1975">
+                     <efficiency>0.918</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.918</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.872</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.875</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.878</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.882</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.885</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.888</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.892</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <subsector name="electricity_td_ind">
+               <technology name="electricity_td_ind">
+                  <period year="1975">
+                     <efficiency>0.918</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.918</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.872</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.875</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.878</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.882</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.885</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.888</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.892</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <subsector name="electricity_td_trn">
+               <technology name="electricity_td_trn">
+                  <period year="1975">
+                     <efficiency>0.918</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.918</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.872</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.875</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.878</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.882</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.885</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.888</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.892</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="India">
+         <supplysector name="elect_td_bld">
+            <subsector name="electricity_td_bld">
+               <technology name="electricity_td_bld">
+                  <period year="1975">
+                     <efficiency>0.805</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.805</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.737</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.760</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.783</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.806</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.831</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.856</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.882</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <subsector name="electricity_td_ind">
+               <technology name="electricity_td_ind">
+                  <period year="1975">
+                     <efficiency>0.805</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.805</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.737</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.760</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.783</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.806</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.831</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.856</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.882</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <subsector name="electricity_td_trn">
+               <technology name="electricity_td_trn">
+                  <period year="1975">
+                     <efficiency>0.805</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.805</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.737</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.760</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.783</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.806</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.831</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.856</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.882</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Japan">
+         <supplysector name="elect_td_bld">
+            <subsector name="electricity_td_bld">
+               <technology name="electricity_td_bld">
+                  <period year="1975">
+                     <efficiency>0.951</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.951</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.954</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.956</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.958</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.960</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.962</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.963</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.965</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <subsector name="electricity_td_ind">
+               <technology name="electricity_td_ind">
+                  <period year="1975">
+                     <efficiency>0.951</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.951</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.954</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.956</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.958</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.960</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.962</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.963</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.965</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <subsector name="electricity_td_trn">
+               <technology name="electricity_td_trn">
+                  <period year="1975">
+                     <efficiency>0.951</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.951</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.954</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.956</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.958</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.960</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.962</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.963</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.965</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Korea">
+         <supplysector name="elect_td_bld">
+            <subsector name="electricity_td_bld">
+               <technology name="electricity_td_bld">
+                  <period year="1975">
+                     <efficiency>0.966</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.966</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.965</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.968</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.970</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.972</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.975</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.977</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.980</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <subsector name="electricity_td_ind">
+               <technology name="electricity_td_ind">
+                  <period year="1975">
+                     <efficiency>0.966</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.966</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.965</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.968</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.970</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.972</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.975</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.977</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.980</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <subsector name="electricity_td_trn">
+               <technology name="electricity_td_trn">
+                  <period year="1975">
+                     <efficiency>0.966</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.966</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.965</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.968</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.970</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.972</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.975</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.977</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.980</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Latin America">
+         <supplysector name="elect_td_bld">
+            <subsector name="electricity_td_bld">
+               <technology name="electricity_td_bld">
+                  <period year="1975">
+                     <efficiency>0.858</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.858</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.834</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.846</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.858</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.869</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.881</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.893</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.905</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <subsector name="electricity_td_ind">
+               <technology name="electricity_td_ind">
+                  <period year="1975">
+                     <efficiency>0.858</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.858</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.834</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.846</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.858</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.869</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.881</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.893</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.905</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <subsector name="electricity_td_trn">
+               <technology name="electricity_td_trn">
+                  <period year="1975">
+                     <efficiency>0.858</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.858</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.834</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.846</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.858</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.869</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.881</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.893</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.905</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Middle East">
+         <supplysector name="elect_td_bld">
+            <subsector name="electricity_td_bld">
+               <technology name="electricity_td_bld">
+                  <period year="1975">
+                     <efficiency>0.918</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.918</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.888</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.898</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.907</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.916</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.925</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.934</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.943</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <subsector name="electricity_td_ind">
+               <technology name="electricity_td_ind">
+                  <period year="1975">
+                     <efficiency>0.918</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.918</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.888</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.898</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.907</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.916</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.925</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.934</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.943</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <subsector name="electricity_td_trn">
+               <technology name="electricity_td_trn">
+                  <period year="1975">
+                     <efficiency>0.918</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.918</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.888</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.898</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.907</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.916</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.925</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.934</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.943</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Southeast Asia">
+         <supplysector name="elect_td_bld">
+            <subsector name="electricity_td_bld">
+               <technology name="electricity_td_bld">
+                  <period year="1975">
+                     <efficiency>0.873</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.873</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.883</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.893</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.904</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.915</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.925</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.936</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.946</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <subsector name="electricity_td_ind">
+               <technology name="electricity_td_ind">
+                  <period year="1975">
+                     <efficiency>0.873</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.873</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.883</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.893</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.904</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.915</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.925</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.936</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.946</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <subsector name="electricity_td_trn">
+               <technology name="electricity_td_trn">
+                  <period year="1975">
+                     <efficiency>0.873</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.873</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.883</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.893</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.904</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.915</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.925</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.936</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.946</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="USA">
+         <supplysector name="elect_td_bld">
+            <subsector name="electricity_td_bld">
+               <technology name="electricity_td_bld">
+                  <period year="1975">
+                     <efficiency>0.907</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.907</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.936</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.940</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.944</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.948</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.952</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.956</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.960</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <subsector name="electricity_td_ind">
+               <technology name="electricity_td_ind">
+                  <period year="1975">
+                     <efficiency>0.907</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.907</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.936</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.940</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.944</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.948</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.952</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.956</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.960</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <subsector name="electricity_td_trn">
+               <technology name="electricity_td_trn">
+                  <period year="1975">
+                     <efficiency>0.907</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.907</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.936</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.940</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.944</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.948</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.952</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.956</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.960</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Western Europe">
+         <supplysector name="elect_td_bld">
+            <subsector name="electricity_td_bld">
+               <technology name="electricity_td_bld">
+                  <period year="1975">
+                     <efficiency>0.935</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.935</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.930</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.933</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.936</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.939</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.942</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.945</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.948</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <subsector name="electricity_td_ind">
+               <technology name="electricity_td_ind">
+                  <period year="1975">
+                     <efficiency>0.935</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.935</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.930</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.933</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.936</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.939</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.942</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.945</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.948</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <subsector name="electricity_td_trn">
+               <technology name="electricity_td_trn">
+                  <period year="1975">
+                     <efficiency>0.935</efficiency>
+                  </period>
+                  <period year="1990">
+                     <efficiency>0.935</efficiency>
+                  </period>
+                  <period year="2005">
+                     <efficiency>0.930</efficiency>
+                  </period>
+                  <period year="2020">
+                     <efficiency>0.933</efficiency>
+                  </period>
+                  <period year="2035">
+                     <efficiency>0.936</efficiency>
+                  </period>
+                  <period year="2050">
+                     <efficiency>0.939</efficiency>
+                  </period>
+                  <period year="2065">
+                     <efficiency>0.942</efficiency>
+                  </period>
+                  <period year="2080">
+                     <efficiency>0.945</efficiency>
+                  </period>
+                  <period year="2095">
+                     <efficiency>0.948</efficiency>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+   </world>
+</scenario>

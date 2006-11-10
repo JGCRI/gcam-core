@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Josh Lurz (PNNL) -->
+<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="D:\cvs\Code\Ciam\Configuration.xsd">
+	<Files>
+		<Value name="erbInputFileName">../input/erbinput2.csv</Value>
+		<Value name="outFileName">outFile.csv</Value>
+		<Value name="bugOutFileName">bugoutfile.csv</Value>
+		<Value name="logOutFileName">logfile.csv</Value>
+		<Value name="climatFileName">gas.emk</Value>
+		<Value name="xmlInputFileName">Cal Output CCSP Final.xml</Value>
+		<Value name="xmlOutputFileName">output.xml</Value>
+		<Value name="BatchFileName">../input/hot batch 101106.xml</Value>
+		<Value name="xmlDebugFileName">debug.xml</Value>
+		<Value name="sdCurveFileName">sdcurve.csv</Value>
+		<Value name="sdFileName">sdall.csv</Value>
+		<Value name="dbOutFileName">dbout.csv</Value>
+		<Value name="dbFileName">../output/output V2.mdb</Value>
+		<Value name="supplyDemandOutputFileName">SDCurves.csv</Value>
+		<Value name="GHGInputFileName">../input/magicc/GAS_ref_12-13-05.EMK</Value>
+		<Value name="dependencyGraphName">DependencyGraph</Value>
+	</Files>
+	<ScenarioComponents>
+		<Value name="Level_3">..\input\wre\Level_3.xml</Value>
+        </ScenarioComponents>
+	<Strings>
+		<Value name="scenarioName">Level_3</Value>
+	</Strings>
+	<Bools>
+		<Value name="BatchMode">0</Value>
+		<Value name="find-path">0</Value>
+		<Value name="debugChecking">1</Value>
+		<!-- Turns on various internal checks -->
+		<Value name="timestamp">0</Value>
+		<Value name="agSectorActive">1</Value>
+		<Value name="agBioMarketSet">0</Value>
+		<Value name="simulActive">1</Value>
+		<Value name="CalibrationActive">0</Value>
+		<Value name="trackMaxED">0</Value> <!-- Writes out the worst ED to screen as solution proceeds -->
+		<Value name="PrintDependencyGraphs">0</Value>
+		<Value name="PrintValuesOnGraphs">1</Value>
+		<Value name="debugFindSD">1</Value>
+		<Value name="PrintSectorDependencies">1</Value>
+		<Value name="ShowNullPaths">0</Value>
+		<Value name="PrintPrices">1</Value>
+		<Value name="createCostCurve">1</Value>
+		<Value name="estimateCosts">0</Value>
+	</Bools>
+	<Ints>
+		<Value name="numMarketsToFindSD">10</Value>
+		<Value name="numPointsForSD">21</Value>
+		<Value name="numPointsForCO2CostCurve">5</Value>
+		<Value name="target-year">2095</Value>
+	</Ints>
+	<Doubles>
+		<Value name="path-discount-rate">0.05</Value>
+		<Value name="target-value">460</Value>
+		<Value name="backstop-tax">3000</Value>
+		<Value name="initial-target-reduction">1</Value>
+	</Doubles>
+</Configuration>

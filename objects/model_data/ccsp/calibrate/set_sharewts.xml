@@ -1,0 +1,3377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="Africa">
+         <demandsector name="building">
+            <subsector name="oil">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.671935</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.622643</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.00191577</sharewt>
+            </subsector>
+            <subsector name="biomass">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.0187255</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">3.68478</sharewt>
+            </subsector>
+            <subsector name="fuelcellNAS">
+               <sharewt year="2020">0.3113215</sharewt>
+               <sharewt year="2035">0.3113215</sharewt>
+               <sharewt year="2050">0.3113215</sharewt>
+               <sharewt year="2065">0.3113215</sharewt>
+               <sharewt year="2080">0.3113215</sharewt>
+               <sharewt year="2095">0.3113215</sharewt>
+            </subsector>
+            <subsector name="trad biomass">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector name="energy-use">
+               <technology name="oil">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+               </technology>
+               <technology name="biomass">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellCS">
+                  <period year="2020">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellDist">
+                  <period year="2020">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector name="oil">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">2.9512</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.0143248</sharewt>
+            </subsector>
+            <subsector name="h2">
+               <sharewt year="2020">0.0344783</sharewt>
+               <sharewt year="2035">0.0344783</sharewt>
+               <sharewt year="2050">0.0344783</sharewt>
+               <sharewt year="2065">0.0344783</sharewt>
+               <sharewt year="2080">0.0344783</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Australia_NZ">
+         <demandsector name="building">
+            <subsector name="oil">
+               <sharewt year="2020">0.671935</sharewt>
+               <sharewt year="2035">0.671935</sharewt>
+               <sharewt year="2050">0.671935</sharewt>
+               <sharewt year="2065">0.671935</sharewt>
+               <sharewt year="2080">0.671935</sharewt>
+               <sharewt year="2095">0.671935</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">0.622643</sharewt>
+               <sharewt year="2035">0.622643</sharewt>
+               <sharewt year="2050">0.622643</sharewt>
+               <sharewt year="2065">0.622643</sharewt>
+               <sharewt year="2080">0.622643</sharewt>
+               <sharewt year="2095">0.622643</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">0.00191577</sharewt>
+               <sharewt year="2035">0.00191577</sharewt>
+               <sharewt year="2050">0.00191577</sharewt>
+               <sharewt year="2065">0.00191577</sharewt>
+               <sharewt year="2080">0.00191577</sharewt>
+               <sharewt year="2095">0.00191577</sharewt>
+            </subsector>
+            <subsector name="biomass">
+               <sharewt year="2020">0.0187255</sharewt>
+               <sharewt year="2035">0.0187255</sharewt>
+               <sharewt year="2050">0.0187255</sharewt>
+               <sharewt year="2065">0.0187255</sharewt>
+               <sharewt year="2080">0.0187255</sharewt>
+               <sharewt year="2095">0.0187255</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">3.68478</sharewt>
+               <sharewt year="2035">3.68478</sharewt>
+               <sharewt year="2050">3.68478</sharewt>
+               <sharewt year="2065">3.68478</sharewt>
+               <sharewt year="2080">3.68478</sharewt>
+               <sharewt year="2095">3.68478</sharewt>
+            </subsector>
+            <subsector name="fuelcellNAS">
+               <sharewt year="2020">0.3113215</sharewt>
+               <sharewt year="2035">0.3113215</sharewt>
+               <sharewt year="2050">0.3113215</sharewt>
+               <sharewt year="2065">0.3113215</sharewt>
+               <sharewt year="2080">0.3113215</sharewt>
+               <sharewt year="2095">0.3113215</sharewt>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector name="energy-use">
+               <technology name="oil">
+                  <period year="2020">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="2020">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="2020">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+               </technology>
+               <technology name="biomass">
+                  <period year="2020">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="2020">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellCS">
+                  <period year="2020">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellDist">
+                  <period year="2020">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector name="oil">
+               <sharewt year="2020">0.0344783</sharewt>
+               <sharewt year="2035">0.0344783</sharewt>
+               <sharewt year="2050">0.0344783</sharewt>
+               <sharewt year="2065">0.0344783</sharewt>
+               <sharewt year="2080">0.0344783</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">2.9512</sharewt>
+               <sharewt year="2035">2.9512</sharewt>
+               <sharewt year="2050">2.9512</sharewt>
+               <sharewt year="2065">2.9512</sharewt>
+               <sharewt year="2080">2.9512</sharewt>
+               <sharewt year="2095">2.9512</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0</sharewt>
+               <sharewt year="2050">0</sharewt>
+               <sharewt year="2065">0</sharewt>
+               <sharewt year="2080">0</sharewt>
+               <sharewt year="2095">0</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">0.0143248</sharewt>
+               <sharewt year="2035">0.0143248</sharewt>
+               <sharewt year="2050">0.0143248</sharewt>
+               <sharewt year="2065">0.0143248</sharewt>
+               <sharewt year="2080">0.0143248</sharewt>
+               <sharewt year="2095">0.0143248</sharewt>
+            </subsector>
+            <subsector name="h2">
+               <sharewt year="2020">0.0344783</sharewt>
+               <sharewt year="2035">0.0344783</sharewt>
+               <sharewt year="2050">0.0344783</sharewt>
+               <sharewt year="2065">0.0344783</sharewt>
+               <sharewt year="2080">0.0344783</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Canada">
+         <demandsector name="building">
+            <subsector name="oil">
+               <sharewt year="2020">0.671935</sharewt>
+               <sharewt year="2035">0.671935</sharewt>
+               <sharewt year="2050">0.671935</sharewt>
+               <sharewt year="2065">0.671935</sharewt>
+               <sharewt year="2080">0.671935</sharewt>
+               <sharewt year="2095">0.671935</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">0.622643</sharewt>
+               <sharewt year="2035">0.622643</sharewt>
+               <sharewt year="2050">0.622643</sharewt>
+               <sharewt year="2065">0.622643</sharewt>
+               <sharewt year="2080">0.622643</sharewt>
+               <sharewt year="2095">0.622643</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">0.00191577</sharewt>
+               <sharewt year="2035">0.00191577</sharewt>
+               <sharewt year="2050">0.00191577</sharewt>
+               <sharewt year="2065">0.00191577</sharewt>
+               <sharewt year="2080">0.00191577</sharewt>
+               <sharewt year="2095">0.00191577</sharewt>
+            </subsector>
+            <subsector name="biomass">
+               <sharewt year="2020">0.0187255</sharewt>
+               <sharewt year="2035">0.0187255</sharewt>
+               <sharewt year="2050">0.0187255</sharewt>
+               <sharewt year="2065">0.0187255</sharewt>
+               <sharewt year="2080">0.0187255</sharewt>
+               <sharewt year="2095">0.0187255</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">3.68478</sharewt>
+               <sharewt year="2035">3.68478</sharewt>
+               <sharewt year="2050">3.68478</sharewt>
+               <sharewt year="2065">3.68478</sharewt>
+               <sharewt year="2080">3.68478</sharewt>
+               <sharewt year="2095">3.68478</sharewt>
+            </subsector>
+            <subsector name="fuelcellNAS">
+               <sharewt year="2020">0.3113215</sharewt>
+               <sharewt year="2035">0.3113215</sharewt>
+               <sharewt year="2050">0.3113215</sharewt>
+               <sharewt year="2065">0.3113215</sharewt>
+               <sharewt year="2080">0.3113215</sharewt>
+               <sharewt year="2095">0.3113215</sharewt>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector name="energy-use">
+               <technology name="oil">
+                  <period year="2020">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="2020">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="2020">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+               </technology>
+               <technology name="biomass">
+                  <period year="2020">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="2020">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellCS">
+                  <period year="2020">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellDist">
+                  <period year="2020">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector name="oil">
+               <sharewt year="2020">0.0344783</sharewt>
+               <sharewt year="2035">0.0344783</sharewt>
+               <sharewt year="2050">0.0344783</sharewt>
+               <sharewt year="2065">0.0344783</sharewt>
+               <sharewt year="2080">0.0344783</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">2.9512</sharewt>
+               <sharewt year="2035">2.9512</sharewt>
+               <sharewt year="2050">2.9512</sharewt>
+               <sharewt year="2065">2.9512</sharewt>
+               <sharewt year="2080">2.9512</sharewt>
+               <sharewt year="2095">2.9512</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0</sharewt>
+               <sharewt year="2050">0</sharewt>
+               <sharewt year="2065">0</sharewt>
+               <sharewt year="2080">0</sharewt>
+               <sharewt year="2095">0</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">0.0143248</sharewt>
+               <sharewt year="2035">0.0143248</sharewt>
+               <sharewt year="2050">0.0143248</sharewt>
+               <sharewt year="2065">0.0143248</sharewt>
+               <sharewt year="2080">0.0143248</sharewt>
+               <sharewt year="2095">0.0143248</sharewt>
+            </subsector>
+            <subsector name="h2">
+               <sharewt year="2020">0.0344783</sharewt>
+               <sharewt year="2035">0.0344783</sharewt>
+               <sharewt year="2050">0.0344783</sharewt>
+               <sharewt year="2065">0.0344783</sharewt>
+               <sharewt year="2080">0.0344783</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="China">
+         <demandsector name="building">
+            <subsector name="oil">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.671935</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.622643</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.00191577</sharewt>
+            </subsector>
+            <subsector name="biomass">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.0187255</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">3.68478</sharewt>
+            </subsector>
+            <subsector name="fuelcellNAS">
+               <sharewt year="2020">0.3113215</sharewt>
+               <sharewt year="2035">0.3113215</sharewt>
+               <sharewt year="2050">0.3113215</sharewt>
+               <sharewt year="2065">0.3113215</sharewt>
+               <sharewt year="2080">0.3113215</sharewt>
+               <sharewt year="2095">0.3113215</sharewt>
+            </subsector>
+            <subsector name="trad biomass">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">0</sharewt>
+               <sharewt year="2080">0</sharewt>
+               <sharewt year="2095">0</sharewt>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector name="energy-use">
+               <technology name="oil">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+               </technology>
+               <technology name="biomass">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellCS">
+                  <period year="2020">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellDist">
+                  <period year="2020">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector name="oil">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">2.9512</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.0143248</sharewt>
+            </subsector>
+            <subsector name="h2">
+               <sharewt year="2020">0.0344783</sharewt>
+               <sharewt year="2035">0.0344783</sharewt>
+               <sharewt year="2050">0.0344783</sharewt>
+               <sharewt year="2065">0.0344783</sharewt>
+               <sharewt year="2080">0.0344783</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Eastern Europe">
+         <demandsector name="building">
+            <subsector name="oil">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">0.671935</sharewt>
+               <sharewt year="2095">0.671935</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">0.622643</sharewt>
+               <sharewt year="2095">0.622643</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">0.00191577</sharewt>
+               <sharewt year="2095">0.00191577</sharewt>
+            </subsector>
+            <subsector name="biomass">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">0.0187255</sharewt>
+               <sharewt year="2095">0.0187255</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">3.68478</sharewt>
+               <sharewt year="2095">3.68478</sharewt>
+            </subsector>
+            <subsector name="fuelcellNAS">
+               <sharewt year="2020">0.3113215</sharewt>
+               <sharewt year="2035">0.3113215</sharewt>
+               <sharewt year="2050">0.3113215</sharewt>
+               <sharewt year="2065">0.3113215</sharewt>
+               <sharewt year="2080">0.3113215</sharewt>
+               <sharewt year="2095">0.3113215</sharewt>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector name="energy-use">
+               <technology name="oil">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+               </technology>
+               <technology name="biomass">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellCS">
+                  <period year="2020">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellDist">
+                  <period year="2020">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector name="oil">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">0.0344783</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">2.9512</sharewt>
+               <sharewt year="2095">2.9512</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">0</sharewt>
+               <sharewt year="2095">0</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">0.0143248</sharewt>
+               <sharewt year="2095">0.0143248</sharewt>
+            </subsector>
+            <subsector name="h2">
+               <sharewt year="2020">0.0344783</sharewt>
+               <sharewt year="2035">0.0344783</sharewt>
+               <sharewt year="2050">0.0344783</sharewt>
+               <sharewt year="2065">0.0344783</sharewt>
+               <sharewt year="2080">0.0344783</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Former Soviet Union">
+         <demandsector name="building">
+            <subsector name="oil">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.671935</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.622643</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.00191577</sharewt>
+            </subsector>
+            <subsector name="biomass">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.0187255</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">3.68478</sharewt>
+            </subsector>
+            <subsector name="fuelcellNAS">
+               <sharewt year="2020">0.3113215</sharewt>
+               <sharewt year="2035">0.3113215</sharewt>
+               <sharewt year="2050">0.3113215</sharewt>
+               <sharewt year="2065">0.3113215</sharewt>
+               <sharewt year="2080">0.3113215</sharewt>
+               <sharewt year="2095">0.3113215</sharewt>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector name="energy-use">
+               <technology name="oil">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+               </technology>
+               <technology name="biomass">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellCS">
+                  <period year="2020">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellDist">
+                  <period year="2020">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector name="oil">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">2.9512</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.0143248</sharewt>
+            </subsector>
+            <subsector name="h2">
+               <sharewt year="2020">0.0344783</sharewt>
+               <sharewt year="2035">0.0344783</sharewt>
+               <sharewt year="2050">0.0344783</sharewt>
+               <sharewt year="2065">0.0344783</sharewt>
+               <sharewt year="2080">0.0344783</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="India">
+         <demandsector name="building">
+            <subsector name="oil">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.671935</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.622643</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.00191577</sharewt>
+            </subsector>
+            <subsector name="biomass">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.0187255</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">3.68478</sharewt>
+            </subsector>
+            <subsector name="fuelcellNAS">
+               <sharewt year="2020">0.3113215</sharewt>
+               <sharewt year="2035">0.3113215</sharewt>
+               <sharewt year="2050">0.3113215</sharewt>
+               <sharewt year="2065">0.3113215</sharewt>
+               <sharewt year="2080">0.3113215</sharewt>
+               <sharewt year="2095">0.3113215</sharewt>
+            </subsector>
+            <subsector name="trad biomass">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">0</sharewt>
+               <sharewt year="2095">0</sharewt>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector name="energy-use">
+               <technology name="oil">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+               </technology>
+               <technology name="biomass">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellCS">
+                  <period year="2020">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellDist">
+                  <period year="2020">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector name="oil">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">2.9512</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.0143248</sharewt>
+            </subsector>
+            <subsector name="h2">
+               <sharewt year="2020">0.0344783</sharewt>
+               <sharewt year="2035">0.0344783</sharewt>
+               <sharewt year="2050">0.0344783</sharewt>
+               <sharewt year="2065">0.0344783</sharewt>
+               <sharewt year="2080">0.0344783</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Japan">
+         <demandsector name="building">
+            <subsector name="oil">
+               <sharewt year="2020">0.671935</sharewt>
+               <sharewt year="2035">0.671935</sharewt>
+               <sharewt year="2050">0.671935</sharewt>
+               <sharewt year="2065">0.671935</sharewt>
+               <sharewt year="2080">0.671935</sharewt>
+               <sharewt year="2095">0.671935</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">0.622643</sharewt>
+               <sharewt year="2035">0.622643</sharewt>
+               <sharewt year="2050">0.622643</sharewt>
+               <sharewt year="2065">0.622643</sharewt>
+               <sharewt year="2080">0.622643</sharewt>
+               <sharewt year="2095">0.622643</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">0.00191577</sharewt>
+               <sharewt year="2035">0.00191577</sharewt>
+               <sharewt year="2050">0.00191577</sharewt>
+               <sharewt year="2065">0.00191577</sharewt>
+               <sharewt year="2080">0.00191577</sharewt>
+               <sharewt year="2095">0.00191577</sharewt>
+            </subsector>
+            <subsector name="biomass">
+               <sharewt year="2020">0.0187255</sharewt>
+               <sharewt year="2035">0.0187255</sharewt>
+               <sharewt year="2050">0.0187255</sharewt>
+               <sharewt year="2065">0.0187255</sharewt>
+               <sharewt year="2080">0.0187255</sharewt>
+               <sharewt year="2095">0.0187255</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">3.68478</sharewt>
+               <sharewt year="2035">3.68478</sharewt>
+               <sharewt year="2050">3.68478</sharewt>
+               <sharewt year="2065">3.68478</sharewt>
+               <sharewt year="2080">3.68478</sharewt>
+               <sharewt year="2095">3.68478</sharewt>
+            </subsector>
+            <subsector name="fuelcellNAS">
+               <sharewt year="2020">0.3113215</sharewt>
+               <sharewt year="2035">0.3113215</sharewt>
+               <sharewt year="2050">0.3113215</sharewt>
+               <sharewt year="2065">0.3113215</sharewt>
+               <sharewt year="2080">0.3113215</sharewt>
+               <sharewt year="2095">0.3113215</sharewt>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector name="energy-use">
+               <technology name="oil">
+                  <period year="2020">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="2020">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="2020">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+               </technology>
+               <technology name="biomass">
+                  <period year="2020">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="2020">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellCS">
+                  <period year="2020">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellDist">
+                  <period year="2020">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector name="oil">
+               <sharewt year="2020">0.0344783</sharewt>
+               <sharewt year="2035">0.0344783</sharewt>
+               <sharewt year="2050">0.0344783</sharewt>
+               <sharewt year="2065">0.0344783</sharewt>
+               <sharewt year="2080">0.0344783</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">2.9512</sharewt>
+               <sharewt year="2035">2.9512</sharewt>
+               <sharewt year="2050">2.9512</sharewt>
+               <sharewt year="2065">2.9512</sharewt>
+               <sharewt year="2080">2.9512</sharewt>
+               <sharewt year="2095">2.9512</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0</sharewt>
+               <sharewt year="2050">0</sharewt>
+               <sharewt year="2065">0</sharewt>
+               <sharewt year="2080">0</sharewt>
+               <sharewt year="2095">0</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">0.0143248</sharewt>
+               <sharewt year="2035">0.0143248</sharewt>
+               <sharewt year="2050">0.0143248</sharewt>
+               <sharewt year="2065">0.0143248</sharewt>
+               <sharewt year="2080">0.0143248</sharewt>
+               <sharewt year="2095">0.0143248</sharewt>
+            </subsector>
+            <subsector name="h2">
+               <sharewt year="2020">0.0344783</sharewt>
+               <sharewt year="2035">0.0344783</sharewt>
+               <sharewt year="2050">0.0344783</sharewt>
+               <sharewt year="2065">0.0344783</sharewt>
+               <sharewt year="2080">0.0344783</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Korea">
+         <demandsector name="building">
+            <subsector name="oil">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">0.671935</sharewt>
+               <sharewt year="2065">0.671935</sharewt>
+               <sharewt year="2080">0.671935</sharewt>
+               <sharewt year="2095">0.671935</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">0.622643</sharewt>
+               <sharewt year="2065">0.622643</sharewt>
+               <sharewt year="2080">0.622643</sharewt>
+               <sharewt year="2095">0.622643</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">0.00191577</sharewt>
+               <sharewt year="2065">0.00191577</sharewt>
+               <sharewt year="2080">0.00191577</sharewt>
+               <sharewt year="2095">0.00191577</sharewt>
+            </subsector>
+            <subsector name="biomass">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">0.0187255</sharewt>
+               <sharewt year="2065">0.0187255</sharewt>
+               <sharewt year="2080">0.0187255</sharewt>
+               <sharewt year="2095">0.0187255</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">3.68478</sharewt>
+               <sharewt year="2065">3.68478</sharewt>
+               <sharewt year="2080">3.68478</sharewt>
+               <sharewt year="2095">3.68478</sharewt>
+            </subsector>
+            <subsector name="fuelcellNAS">
+               <sharewt year="2020">0.3113215</sharewt>
+               <sharewt year="2035">0.3113215</sharewt>
+               <sharewt year="2050">0.3113215</sharewt>
+               <sharewt year="2065">0.3113215</sharewt>
+               <sharewt year="2080">0.3113215</sharewt>
+               <sharewt year="2095">0.3113215</sharewt>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector name="energy-use">
+               <technology name="oil">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+               </technology>
+               <technology name="biomass">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellCS">
+                  <period year="2020">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellDist">
+                  <period year="2020">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector name="oil">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">0.0344783</sharewt>
+               <sharewt year="2065">0.0344783</sharewt>
+               <sharewt year="2080">0.0344783</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">2.9512</sharewt>
+               <sharewt year="2065">2.9512</sharewt>
+               <sharewt year="2080">2.9512</sharewt>
+               <sharewt year="2095">2.9512</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">0</sharewt>
+               <sharewt year="2065">0</sharewt>
+               <sharewt year="2080">0</sharewt>
+               <sharewt year="2095">0</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">0.0143248</sharewt>
+               <sharewt year="2065">0.0143248</sharewt>
+               <sharewt year="2080">0.0143248</sharewt>
+               <sharewt year="2095">0.0143248</sharewt>
+            </subsector>
+            <subsector name="h2">
+               <sharewt year="2020">0.0344783</sharewt>
+               <sharewt year="2035">0.0344783</sharewt>
+               <sharewt year="2050">0.0344783</sharewt>
+               <sharewt year="2065">0.0344783</sharewt>
+               <sharewt year="2080">0.0344783</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Latin America">
+         <demandsector name="building">
+            <subsector name="oil">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.671935</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.622643</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.00191577</sharewt>
+            </subsector>
+            <subsector name="biomass">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.0187255</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">3.68478</sharewt>
+            </subsector>
+            <subsector name="fuelcellNAS">
+               <sharewt year="2020">0.3113215</sharewt>
+               <sharewt year="2035">0.3113215</sharewt>
+               <sharewt year="2050">0.3113215</sharewt>
+               <sharewt year="2065">0.3113215</sharewt>
+               <sharewt year="2080">0.3113215</sharewt>
+               <sharewt year="2095">0.3113215</sharewt>
+            </subsector>
+            <subsector name="trad biomass">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">0</sharewt>
+               <sharewt year="2095">0</sharewt>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector name="energy-use">
+               <technology name="oil">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+               </technology>
+               <technology name="biomass">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellCS">
+                  <period year="2020">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellDist">
+                  <period year="2020">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector name="oil">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">2.9512</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.0143248</sharewt>
+            </subsector>
+            <subsector name="h2">
+               <sharewt year="2020">0.0344783</sharewt>
+               <sharewt year="2035">0.0344783</sharewt>
+               <sharewt year="2050">0.0344783</sharewt>
+               <sharewt year="2065">0.0344783</sharewt>
+               <sharewt year="2080">0.0344783</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Middle East">
+         <demandsector name="building">
+            <subsector name="oil">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.671935</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.622643</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.00191577</sharewt>
+            </subsector>
+            <subsector name="biomass">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.0187255</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">3.68478</sharewt>
+            </subsector>
+            <subsector name="fuelcellNAS">
+               <sharewt year="2020">0.3113215</sharewt>
+               <sharewt year="2035">0.3113215</sharewt>
+               <sharewt year="2050">0.3113215</sharewt>
+               <sharewt year="2065">0.3113215</sharewt>
+               <sharewt year="2080">0.3113215</sharewt>
+               <sharewt year="2095">0.3113215</sharewt>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector name="energy-use">
+               <technology name="oil">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+               </technology>
+               <technology name="biomass">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellCS">
+                  <period year="2020">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellDist">
+                  <period year="2020">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector name="oil">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">2.9512</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.0143248</sharewt>
+            </subsector>
+            <subsector name="h2">
+               <sharewt year="2020">0.0344783</sharewt>
+               <sharewt year="2035">0.0344783</sharewt>
+               <sharewt year="2050">0.0344783</sharewt>
+               <sharewt year="2065">0.0344783</sharewt>
+               <sharewt year="2080">0.0344783</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Southeast Asia">
+         <demandsector name="building">
+            <subsector name="oil">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.671935</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.622643</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.00191577</sharewt>
+            </subsector>
+            <subsector name="biomass">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.0187255</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">3.68478</sharewt>
+            </subsector>
+            <subsector name="fuelcellNAS">
+               <sharewt year="2020">0.3113215</sharewt>
+               <sharewt year="2035">0.3113215</sharewt>
+               <sharewt year="2050">0.3113215</sharewt>
+               <sharewt year="2065">0.3113215</sharewt>
+               <sharewt year="2080">0.3113215</sharewt>
+               <sharewt year="2095">0.3113215</sharewt>
+            </subsector>
+            <subsector name="trad biomass">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">0</sharewt>
+               <sharewt year="2095">0</sharewt>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector name="energy-use">
+               <technology name="oil">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+               </technology>
+               <technology name="biomass">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellCS">
+                  <period year="2020">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellDist">
+                  <period year="2020">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector name="oil">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">2.9512</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">0.0143248</sharewt>
+            </subsector>
+            <subsector name="h2">
+               <sharewt year="2020">0.0344783</sharewt>
+               <sharewt year="2035">0.0344783</sharewt>
+               <sharewt year="2050">0.0344783</sharewt>
+               <sharewt year="2065">0.0344783</sharewt>
+               <sharewt year="2080">0.0344783</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="USA">
+         <demandsector name="building">
+            <subsector name="oil">
+               <sharewt year="2020">0.671935</sharewt>
+               <sharewt year="2035">0.671935</sharewt>
+               <sharewt year="2050">0.671935</sharewt>
+               <sharewt year="2065">0.671935</sharewt>
+               <sharewt year="2080">0.671935</sharewt>
+               <sharewt year="2095">0.671935</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">0.622643</sharewt>
+               <sharewt year="2035">0.622643</sharewt>
+               <sharewt year="2050">0.622643</sharewt>
+               <sharewt year="2065">0.622643</sharewt>
+               <sharewt year="2080">0.622643</sharewt>
+               <sharewt year="2095">0.622643</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">0.00191577</sharewt>
+               <sharewt year="2035">0.00191577</sharewt>
+               <sharewt year="2050">0.00191577</sharewt>
+               <sharewt year="2065">0.00191577</sharewt>
+               <sharewt year="2080">0.00191577</sharewt>
+               <sharewt year="2095">0.00191577</sharewt>
+            </subsector>
+            <subsector name="biomass">
+               <sharewt year="2020">0.0187255</sharewt>
+               <sharewt year="2035">0.0187255</sharewt>
+               <sharewt year="2050">0.0187255</sharewt>
+               <sharewt year="2065">0.0187255</sharewt>
+               <sharewt year="2080">0.0187255</sharewt>
+               <sharewt year="2095">0.0187255</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">3.68478</sharewt>
+               <sharewt year="2035">3.68478</sharewt>
+               <sharewt year="2050">3.68478</sharewt>
+               <sharewt year="2065">3.68478</sharewt>
+               <sharewt year="2080">3.68478</sharewt>
+               <sharewt year="2095">3.68478</sharewt>
+            </subsector>
+            <subsector name="fuelcellNAS">
+               <sharewt year="2020">0.3113215</sharewt>
+               <sharewt year="2035">0.3113215</sharewt>
+               <sharewt year="2050">0.3113215</sharewt>
+               <sharewt year="2065">0.3113215</sharewt>
+               <sharewt year="2080">0.3113215</sharewt>
+               <sharewt year="2095">0.3113215</sharewt>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector name="energy-use">
+               <technology name="oil">
+                  <period year="2020">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="2020">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="2020">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+               </technology>
+               <technology name="biomass">
+                  <period year="2020">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="2020">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellCS">
+                  <period year="2020">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellDist">
+                  <period year="2020">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector name="oil">
+               <sharewt year="2020">0.0344783</sharewt>
+               <sharewt year="2035">0.0344783</sharewt>
+               <sharewt year="2050">0.0344783</sharewt>
+               <sharewt year="2065">0.0344783</sharewt>
+               <sharewt year="2080">0.0344783</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">2.9512</sharewt>
+               <sharewt year="2035">2.9512</sharewt>
+               <sharewt year="2050">2.9512</sharewt>
+               <sharewt year="2065">2.9512</sharewt>
+               <sharewt year="2080">2.9512</sharewt>
+               <sharewt year="2095">2.9512</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0</sharewt>
+               <sharewt year="2050">0</sharewt>
+               <sharewt year="2065">0</sharewt>
+               <sharewt year="2080">0</sharewt>
+               <sharewt year="2095">0</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">0.0143248</sharewt>
+               <sharewt year="2035">0.0143248</sharewt>
+               <sharewt year="2050">0.0143248</sharewt>
+               <sharewt year="2065">0.0143248</sharewt>
+               <sharewt year="2080">0.0143248</sharewt>
+               <sharewt year="2095">0.0143248</sharewt>
+            </subsector>
+            <subsector name="h2">
+               <sharewt year="2020">0.0344783</sharewt>
+               <sharewt year="2035">0.0344783</sharewt>
+               <sharewt year="2050">0.0344783</sharewt>
+               <sharewt year="2065">0.0344783</sharewt>
+               <sharewt year="2080">0.0344783</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+         </demandsector>
+      </region>
+      <region name="Western Europe">
+         <demandsector name="building">
+            <subsector name="oil">
+               <sharewt year="2020">0.671935</sharewt>
+               <sharewt year="2035">0.671935</sharewt>
+               <sharewt year="2050">0.671935</sharewt>
+               <sharewt year="2065">0.671935</sharewt>
+               <sharewt year="2080">0.671935</sharewt>
+               <sharewt year="2095">0.671935</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">0.622643</sharewt>
+               <sharewt year="2035">0.622643</sharewt>
+               <sharewt year="2050">0.622643</sharewt>
+               <sharewt year="2065">0.622643</sharewt>
+               <sharewt year="2080">0.622643</sharewt>
+               <sharewt year="2095">0.622643</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">0.00191577</sharewt>
+               <sharewt year="2035">0.00191577</sharewt>
+               <sharewt year="2050">0.00191577</sharewt>
+               <sharewt year="2065">0.00191577</sharewt>
+               <sharewt year="2080">0.00191577</sharewt>
+               <sharewt year="2095">0.00191577</sharewt>
+            </subsector>
+            <subsector name="biomass">
+               <sharewt year="2020">0.0187255</sharewt>
+               <sharewt year="2035">0.0187255</sharewt>
+               <sharewt year="2050">0.0187255</sharewt>
+               <sharewt year="2065">0.0187255</sharewt>
+               <sharewt year="2080">0.0187255</sharewt>
+               <sharewt year="2095">0.0187255</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">3.68478</sharewt>
+               <sharewt year="2035">3.68478</sharewt>
+               <sharewt year="2050">3.68478</sharewt>
+               <sharewt year="2065">3.68478</sharewt>
+               <sharewt year="2080">3.68478</sharewt>
+               <sharewt year="2095">3.68478</sharewt>
+            </subsector>
+            <subsector name="fuelcellNAS">
+               <sharewt year="2020">0.3113215</sharewt>
+               <sharewt year="2035">0.3113215</sharewt>
+               <sharewt year="2050">0.3113215</sharewt>
+               <sharewt year="2065">0.3113215</sharewt>
+               <sharewt year="2080">0.3113215</sharewt>
+               <sharewt year="2095">0.3113215</sharewt>
+            </subsector>
+         </demandsector>
+         <demandsector name="industry">
+            <subsector name="energy-use">
+               <technology name="oil">
+                  <period year="2020">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.738644</sharewt>
+                  </period>
+               </technology>
+               <technology name="gas">
+                  <period year="2020">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="coal">
+                  <period year="2020">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.0634527</sharewt>
+                  </period>
+               </technology>
+               <technology name="biomass">
+                  <period year="2020">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.112809</sharewt>
+                  </period>
+               </technology>
+               <technology name="electricity">
+                  <period year="2020">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>3.63785</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellCS">
+                  <period year="2020">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.447242</sharewt>
+                  </period>
+               </technology>
+               <technology name="fuelcellDist">
+                  <period year="2020">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.458409</sharewt>
+                  </period>
+               </technology>
+            </subsector>
+         </demandsector>
+         <demandsector name="transportation">
+            <subsector name="oil">
+               <sharewt year="2020">0.0344783</sharewt>
+               <sharewt year="2035">0.0344783</sharewt>
+               <sharewt year="2050">0.0344783</sharewt>
+               <sharewt year="2065">0.0344783</sharewt>
+               <sharewt year="2080">0.0344783</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+            <subsector name="gas">
+               <sharewt year="2020">2.9512</sharewt>
+               <sharewt year="2035">2.9512</sharewt>
+               <sharewt year="2050">2.9512</sharewt>
+               <sharewt year="2065">2.9512</sharewt>
+               <sharewt year="2080">2.9512</sharewt>
+               <sharewt year="2095">2.9512</sharewt>
+            </subsector>
+            <subsector name="coal">
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0</sharewt>
+               <sharewt year="2050">0</sharewt>
+               <sharewt year="2065">0</sharewt>
+               <sharewt year="2080">0</sharewt>
+               <sharewt year="2095">0</sharewt>
+            </subsector>
+            <subsector name="electricity">
+               <sharewt year="2020">0.0143248</sharewt>
+               <sharewt year="2035">0.0143248</sharewt>
+               <sharewt year="2050">0.0143248</sharewt>
+               <sharewt year="2065">0.0143248</sharewt>
+               <sharewt year="2080">0.0143248</sharewt>
+               <sharewt year="2095">0.0143248</sharewt>
+            </subsector>
+            <subsector name="h2">
+               <sharewt year="2020">0.0344783</sharewt>
+               <sharewt year="2035">0.0344783</sharewt>
+               <sharewt year="2050">0.0344783</sharewt>
+               <sharewt year="2065">0.0344783</sharewt>
+               <sharewt year="2080">0.0344783</sharewt>
+               <sharewt year="2095">0.0344783</sharewt>
+            </subsector>
+         </demandsector>
+      </region>
+   </world>
+</scenario>
