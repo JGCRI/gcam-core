@@ -16,8 +16,6 @@ use of this software.
 *
 * \author Sonny Kim
 * \author Pralit Patel
-* \date $Date$
-* \version $Revision$
 */
 #include "util/base/include/definitions.h"
 #include <xercesc/dom/DOMNode.hpp>

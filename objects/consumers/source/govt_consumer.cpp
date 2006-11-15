@@ -6,8 +6,6 @@
 *
 * \author Sonny Kim
 * \author Katherine Chung
-* \date $Date$
-* \version $Revision$
 */
 #include "util/base/include/definitions.h"
 #include <cmath>
@@ -205,7 +203,7 @@ void GovtConsumer::calcTransfer( NationalAccount& nationalAccount, const Demogra
     const Input* numInput = FunctionUtils::getNumeraireInput( input );
     assert( numInput );
 	double transfer = mBaseTransferPopCoef * aDemographics->getTotal( period ) 
-                      * numInput->getPrice( regionName, period ); 
+                      * numInput->getPrice( regionName, period );
 	expenditure.setType( Expenditure::TRANSFERS, transfer );
 	nationalAccount.setAccount(NationalAccount::TRANSFERS, transfer );
 }

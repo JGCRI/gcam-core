@@ -13,8 +13,6 @@
 *
 * \author Katherine Chung
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>

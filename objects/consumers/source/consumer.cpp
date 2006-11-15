@@ -18,8 +18,6 @@
 *
 * \author Pralit Patel
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 #include "util/base/include/definitions.h"
 #include <xercesc/dom/DOMNode.hpp>
