@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief The DependencyFinder class header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include <vector>

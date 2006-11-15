@@ -9,8 +9,6 @@
 * \ingroup objects
 * \brief The InfoFactory class header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 class IInfo;
