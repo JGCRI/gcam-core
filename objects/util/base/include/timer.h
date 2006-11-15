@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief Header file for the Timer class.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include <iosfwd>
