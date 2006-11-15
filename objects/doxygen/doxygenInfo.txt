@@ -1,5 +1,5 @@
 /*! 
-* \defgroup ObjECTS C++ Integrated Assessment Model
+* \defgroup Objects ObjECTS Integrated Assessment Model
 */
 
 
@@ -30,8 +30,9 @@
 *
 * \subsection overview Model Overview
 <P>The ObjECTS framework is a flexible, modular, Integrated Assessment modeling framework. The component-based structure of this model represents global energy, land-use, and economic systems through a component hierarchy that aggregates detailed technology information up to a global macroeconomic level.  The primary component hierarchy is from technology -> sub-sector -> sector -> region -> world.  Input is provided by the flexible XML framework, where data is structured in an object hierarchy that parallels that of the model structure.</P> 
+
+The ObjECTS code is intended to replicate both the partial-equilibrium MiniCAM integrated assessment model and a Computable General Equilibrium methodology, similar to that of the current Second Generation Model (SGM).
 <P></P> 
-The ObjECTS code currently replicates both the partial-equilibrium MiniCAM integrated assessment model and the Computable General Equilibrium Second Generation Model (SGM). The ObjECTS-MiniCAM has substantially more functionality and flexibility than the previous FORTRAN version of the model.<P></P> 
 
 The architecture, based on the natural hierarchy of the global economy, is a component structure that consists of the world, region, sector, sub-sector, technology, and emissions objects, as well as a marketplace object that acts as the glue for all the objects.  The architecture incorporates a structure in which the model is driven by data and its availability, so that the specific sectors and technologies used are determined by the input data not the model code.  
 <P></P> 
