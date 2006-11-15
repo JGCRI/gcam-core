@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief The InfoFactory class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
