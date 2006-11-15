@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief Source file for the util functions.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"

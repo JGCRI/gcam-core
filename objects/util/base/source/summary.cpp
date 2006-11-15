@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief summary class source file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
