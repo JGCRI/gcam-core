@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief The DependencyFinder class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -229,7 +227,7 @@ void DependencyFinder::breakCycle( const size_t aFirstSector, const size_t aSeco
     // Add simul markets to remove the dependency. Note that one of these
     // sectors may already have a simul market setup for it, the marketplace
     // will ignore the request to convert the market in that case.
-    mMarketplace->resetToPriceMarket( getNameFromIndex( aFirstSector ), mRegionName );
+	mMarketplace->resetToPriceMarket( getNameFromIndex( aFirstSector ), mRegionName );
     mMarketplace->resetToPriceMarket( getNameFromIndex( aSecondSector ), mRegionName );
     
     // Remove the cycle from the graph by removing both edges.
