@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief The Summary class header file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <map>
