@@ -20,8 +20,6 @@
 * \ingroup Objects
 * \brief Input class header file.
 * \author Pralit Patel, Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>

@@ -22,8 +22,6 @@
 *
 * \author Josh Lurz
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>

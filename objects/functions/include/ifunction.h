@@ -20,8 +20,6 @@
 * \ingroup Objects
 * \brief IFunction class header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>

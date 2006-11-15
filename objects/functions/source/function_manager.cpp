@@ -15,8 +15,6 @@
 * \brief The FunctionManager class source file.
 * \author Pralit Patel
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 #include "util/base/include/definitions.h"
 #include <string>

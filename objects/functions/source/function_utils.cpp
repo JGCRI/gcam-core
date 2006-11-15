@@ -16,8 +16,6 @@ use of this software.
 *
 * \author Sonny Kim
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"

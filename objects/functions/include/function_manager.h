@@ -21,8 +21,6 @@
 * \brief FunctionManager class header file.
 * \author Pralit Patel
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include <map>
