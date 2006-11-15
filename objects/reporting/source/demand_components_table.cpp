@@ -19,8 +19,6 @@
 * \author Pralit Patel
 * \author Sonny Kim
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 #include "util/base/include/definitions.h"
 #include "reporting/include/demand_components_table.h"

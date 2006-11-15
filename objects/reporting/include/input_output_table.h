@@ -23,8 +23,6 @@
 *  Detailed description.
 *
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>

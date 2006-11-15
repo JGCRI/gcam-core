@@ -23,8 +23,6 @@
 *  Detailed description.
 *
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>

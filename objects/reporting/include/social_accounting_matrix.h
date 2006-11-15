@@ -21,8 +21,6 @@
 * \brief SocialAccountingMatrix class header file.
 * \author Pralit Patel
 * \author Katherine Chung
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>

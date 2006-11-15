@@ -15,8 +15,6 @@ use of this software.
 * \brief The SocialAccountingMatrix class source file.
 *
 * \author Praelit Patel
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"

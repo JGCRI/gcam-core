@@ -20,8 +20,6 @@
 * \ingroup Objects
 * \brief DemandComponentsTable class header file.
 * \author Katherine Chung
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>

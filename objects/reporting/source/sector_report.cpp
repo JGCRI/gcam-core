@@ -16,8 +16,6 @@ use of this software.
 * 
 * \author Praelit Patel
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
