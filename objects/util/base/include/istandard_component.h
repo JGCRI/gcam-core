@@ -5,21 +5,21 @@
 #endif
 
 /*
-* This software, which is provided in confidence, was prepared by employees of
-* Pacific Northwest National Labratory operated by Battelle Memorial Institute.
-* Battelle has certain unperfected rights in the software which should not be
-* copied or otherwise disseminated outside your organization without the express
-* written authorization from Battelle. All rights to the software are reserved
-* by Battelle. Battelle makes no warranty, express or implied, and assumes no
-* liability or responsibility for the use of this software.
-*/
+ * This software, which is provided in confidence, was prepared by employees of
+ * Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+ * Battelle has certain unperfected rights in the software which should not be
+ * copied or otherwise disseminated outside your organization without the
+ * express written authorization from Battelle. All rights to the software are
+ * reserved by Battelle. Battelle makes no warranty, express or implied, and
+ * assumes no liability or responsibility for the use of this software.
+ */
 
-/*! 
-* \file istandard_component.h
-* \ingroup Objects
-* \brief IStandardComponent interface header file.
-* \author Josh Lurz
-*/
+/*!
+ * \file istandard_component.h
+ * \ingroup Objects
+ * \brief IStandardComponent interface header file.
+ * \author Josh Lurz
+ */
 
 #include <string>
 #include <xercesc/dom/DOMNode.hpp>
@@ -42,8 +42,8 @@ class ISimpleComponent {
 public:
 	/*!
      * \brief Constructor.
-	 * \details Inlined constructor to avoid compiler problems with abstract base
-     *          classes. 
+	 * \details Inlined constructor to avoid compiler problems with abstract
+     *          base classes. 
      */
     ISimpleComponent();
 
@@ -95,7 +95,8 @@ inline ISimpleComponent::~ISimpleComponent(){
 
 /*! 
  * \ingroup Objects
- * \brief Defines the interface to a standard component which is serialized to XML.
+ * \brief Defines the interface to a standard component which is serialized to
+ *        XML.
  * \details TODO
  * \todo Is there a better name? DataComponent, XMLComponent, etc?
  * \author Josh Lurz
@@ -107,8 +108,8 @@ class IParsedComponent: public ISimpleComponent,
 public:
 	/*!
      * \brief Constructor.
-	 * \details Inlined constructor to avoid compiler problems with abstract base
-     *          classes. 
+	 * \details Inlined constructor to avoid compiler problems with abstract
+     *          base classes. 
      */
     IParsedComponent();
 };
