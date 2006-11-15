@@ -15,12 +15,9 @@
 * \brief The National ccount class source file.
 * \author Pralit Patel
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
-#include <iostream>
 #include <cassert>
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
@@ -29,6 +26,7 @@
 #include "util/base/include/ivisitor.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/util.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 using namespace xercesc;
@@ -70,25 +68,27 @@ void NationalAccount::XMLParse( const DOMNode* node ) {
         if( nodeName == "#text" ) {
             continue;
         }
-        else if  ( nodeName == "retainedEarning" ) {
-            addToAccount( RETAINED_EARNINGS, XMLHelper<double>::getValue( curr ) );
-        }
-        else if  ( nodeName == "dividends" ) {
-            addToAccount( DIVIDENDS, XMLHelper<double>::getValue( curr ) );
-        }
-        else if  ( nodeName == "transfers" ) {
-            addToAccount( TRANSFERS, XMLHelper<double>::getValue( curr ) );
-        }
-        else if  ( nodeName == "corporateIncomeTaxRate" ) {
-            setAccount( CORPORATE_INCOME_TAX_RATE, XMLHelper<double>::getValue( curr ) );
-        }
-        else if  ( nodeName == "exchangeRate" ) {
-            addToAccount( EXCHANGE_RATE, XMLHelper<double>::getValue( curr ) );
-        }
-        else {
-            cout << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLNameStatic() << "." << endl;
-        }
-    }
+		else if  ( nodeName == "retainedEarning" ) {
+			addToAccount( RETAINED_EARNINGS, XMLHelper<double>::getValue( curr ) );
+		}
+		else if  ( nodeName == "dividends" ) {
+			addToAccount( DIVIDENDS, XMLHelper<double>::getValue( curr ) );
+		}
+		else if  ( nodeName == "transfers" ) {
+			addToAccount( TRANSFERS, XMLHelper<double>::getValue( curr ) );
+		}
+		else if  ( nodeName == "corporateIncomeTaxRate" ) {
+			setAccount( CORPORATE_INCOME_TAX_RATE, XMLHelper<double>::getValue( curr ) );
+		}
+		else if  ( nodeName == "exchangeRate" ) {
+			addToAccount( EXCHANGE_RATE, XMLHelper<double>::getValue( curr ) );
+		}
+		else {
+			ILogger& mainLog = ILogger::getLogger( "main_log" );
+			mainLog.setLevel( ILogger::WARNING );
+			mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLNameStatic() << "." << endl;
+		}
+	}
 }
 
 //! Output debug info to XML
