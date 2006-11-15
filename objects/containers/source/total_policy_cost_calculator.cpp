@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief TotalPolicyCostCalculator class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -217,6 +215,7 @@ void TotalPolicyCostCalculator::createCostCurvesByPeriod() {
 * used as datapoints to create a total cost curve for each region by period. These regional
 * cost curves are then integrated and discounted based on a read-in discount rate. These values
 * are both stored by region. A global sum for discounted and undiscounted values is stored as well.
+
 * \author Josh Lurz
 */
 void TotalPolicyCostCalculator::createRegionalCostCurves() {
@@ -253,7 +252,6 @@ void TotalPolicyCostCalculator::createRegionalCostCurves() {
             continue;
         }
         ExplicitPointSet* costPoints = new ExplicitPointSet();
-
         // Loop through the periods. 
         for( int per = 0; per < maxPeriod; per++ ){
             const int year = modeltime->getper_to_yr( per );
@@ -271,7 +269,7 @@ void TotalPolicyCostCalculator::createRegionalCostCurves() {
         mRegionalCostCurves[ rNameIter->first ] = regCostCurve;
         mRegionalCosts[ rNameIter->first ] = regionalCost;
         mRegionalDiscountedCosts[ rNameIter->first ] = discountedRegionalCost;
-    
+        
         mGlobalCost += regionalCost;
         mGlobalDiscountedCost += discountedRegionalCost;
     }
@@ -325,12 +323,11 @@ void TotalPolicyCostCalculator::writeToCSV() const {
 
     const Modeltime* modeltime = mSingleScenario->getInternalScenario()->getModeltime();
     const int maxPeriod = modeltime->getmaxper();
-    const double CVRT_75_TO_90 = 2.212; //  convert '75 price to '90 price
     vector<double> tempOutVec( maxPeriod );
     for( CRegionCurvesIterator rIter = mRegionalCostCurves.begin(); rIter != mRegionalCostCurves.end(); ++rIter ){
         // Write out to the database.
         for( int per = 0; per < maxPeriod; ++per ){
-            tempOutVec[ per ] = rIter->second->getY( modeltime->getper_to_yr( per ) ) * CVRT_75_TO_90;
+            tempOutVec[ per ] = rIter->second->getY( modeltime->getper_to_yr( per ) );
         }
         fileoutput3(rIter->first,"PolicyCost","","PolicyCostUndisc","Period","(millions)90US$",tempOutVec);
     }
@@ -338,6 +335,8 @@ void TotalPolicyCostCalculator::writeToCSV() const {
     // Write out undiscounted costs by region.
     tempOutVec.clear();
     tempOutVec.resize( maxPeriod );
+    // Note: Since the carbon tax is in 1990 dollars, the total costs are
+    // already in 1990 dollars.
     for( CRegionalCostsIterator iter = mRegionalCosts.begin(); iter != mRegionalCosts.end(); iter++ ){
         // regional total cost of policy
         tempOutVec[maxPeriod-1] = iter->second;
