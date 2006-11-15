@@ -20,8 +20,6 @@
 * \ingroup Objects
 * \brief OutputMetaData header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 #include <list>
 #include <string>
