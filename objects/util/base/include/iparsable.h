@@ -19,8 +19,6 @@
 * \ingroup Objects
 * \brief Header file for the IParsable interface.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 #include <xercesc/dom/DOMNode.hpp>
 /*!
