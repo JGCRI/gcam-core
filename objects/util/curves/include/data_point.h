@@ -9,8 +9,6 @@
 * \ingroup Util
 * \brief The DataPoint class header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include <iosfwd>

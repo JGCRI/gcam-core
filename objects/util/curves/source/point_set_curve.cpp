@@ -3,8 +3,6 @@
 * \ingroup Util
 * \brief PointSetCurve class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"

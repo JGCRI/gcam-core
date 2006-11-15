@@ -9,8 +9,6 @@
 * \ingroup Util
 * \brief The ExplicitPointSet class header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 * \todo Add an iterator??
 */
 
