@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief The TotalPolicyCostCalculator class header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include <map>
