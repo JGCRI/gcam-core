@@ -1378,7 +1378,7 @@ public class DataBuilder
     
     log.log(Level.FINER, "begin function");
     boolean avg = true;
-    boolean overwrite = false;
+    //boolean overwrite = false;
     String dataName = "shutup,";
     String fileName = "it is initialized thanks";
     String ref = null;
@@ -1391,16 +1391,19 @@ public class DataBuilder
     TreeMap timeValue;
     Double dataValue;
     DataBlock toAdd;
+    String storage = "values";
+    String nameConvention = "natural";
+    String target = null;
+    String prefix = null;
+    TreeMap<String, Boolean> overwrite = new TreeMap<String, Boolean>();
+    HashMap nameMap = null;
     
   //getting file info from XML
     infoChildren = currFile.getChildren();
     for(int i = 0; i < infoChildren.size(); i++)
     {
       currElem = (Element)infoChildren.get(i);
-      if(currElem.getName().equals("data"))
-      {
-        dataName = currElem.getAttributeValue("value");
-      } else if(currElem.getName().equals("date"))
+      if(currElem.getName().equals("date"))
       {
         time = Double.parseDouble(currElem.getAttributeValue("value"));
       } else if(currElem.getName().equals("res"))
@@ -1421,6 +1424,39 @@ public class DataBuilder
       } else if(currElem.getName().equals("name"))
       {
         fileName = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("storage")) {
+	      storage = currElem.getAttributeValue("type");
+      } else if(currElem.getName().equals("data"))
+      {
+	      nameConvention = currElem.getAttributeValue("type");
+	      if(nameConvention != null)
+	      {
+		      if(nameConvention.equals("prefix"))
+		      {//names are a prefix concatedated with the value
+			      Element preElem = currElem.getChild("prefix");
+			      prefix = preElem.getAttributeValue("value");
+		      } else if(nameConvention.equals("manual"))
+		      {//each value has a mapping to a name to use
+			      nameMap = new HashMap();
+			      List mapList = currElem.getChildren("map");
+			      Element currMap;
+
+			      for(int k = 0; k < mapList.size(); k++)
+			      {
+				      currMap = (Element)mapList.get(k);
+				      nameMap.put(currMap.getAttributeValue("key"), currMap.getAttributeValue("name"));
+			      }
+
+			      if(!nameMap.containsKey("null"))
+			      {
+				      nameMap.put("null", null);
+			      }
+		      } //else use natual naming
+	      } else
+	      { //everything goes in one!
+		      nameConvention = "single";
+		      dataName = currElem.getAttributeValue("value");
+	      }
       } else
       {
         log.log(Level.WARNING, "Unknown File Tag -> "+currElem.getName());
@@ -1442,7 +1478,7 @@ public class DataBuilder
     if(dataAvg.containsKey(dataName))
     {
       //then we are overwriting this data!
-      overwrite = true;
+      //overwrite = true;
     } else
     {
       //dont want to add all this information if we already have!!!
@@ -1451,6 +1487,7 @@ public class DataBuilder
         dataStruct.fillWorld(res);
         init = true;
       }
+      /*
       //setting whether contained data is additive or averaged and references
       dataAvg.put(dataName, new Boolean(avg));
       if(ref != null)
@@ -1462,6 +1499,7 @@ public class DataBuilder
         dataUnits.put(dataName, unit);
       }
       //done settign avg/add and references
+      */
     }
     
     //reading the data from the file
@@ -1477,11 +1515,73 @@ public class DataBuilder
         {
           dataValue = Double.NaN;
         }
+	if(storage.equals("coverage")) {
+          if(nameConvention.equals("single"))
+          {
+            target = dataName;
+          } else
+          {
+            target = dataValue.toString();
+
+            if(nameConvention.equals("manual"))
+            {
+
+              target = (String)nameMap.get(target);
+            } else if(nameConvention.equals("prefix"))
+            {
+              target = prefix+target;
+            }
+          } //target now has the data name we are storing this geometry in
+          
+	  dataValue = new Double(1.0);
+	} else {
+		target = dataName;
+	}
+          if(!overwrite.containsKey(target))
+          { //this is the first run, check for overwrite properties now
+            boolean over = false;
+            if(dataAvg.containsKey(target))
+            {
+              over = true;
+            }
+            overwrite.put(target, over);
+          }
+          
+          if(!overwrite.get(target))
+          {
+            //setting whether contained data is additive or averaged
+            if(!dataAvg.containsKey(target))
+            { //i cant believe this is the only way to do this
+              //its going to take forever to test every run
+              dataAvg.put(target, new Boolean(avg));
+              if(ref != null)
+              {
+                dataRef.put(target, ref);
+              }
+            }
+            //done settign avg/add ref and units
+          }
         
         toAdd = new DataBlock(k, i, res, res);
         timeValue = new TreeMap();
         timeValue.put(time, dataValue);
+
+
+
+          //check overwrite bit, if so, use hold instead of dataName
+          if(overwrite.get(target))
+          {
+            //just replace name with hold, later, we will merge hold over old data
+            toAdd.data.put(("hold"+target), timeValue);
+          } else
+          {
+            //add data as normal
+            toAdd.data.put(target, timeValue);
+          }
+
+	
         
+	  /*
         //check overwrite bit, if so, use hold instead of dataName
         if(overwrite)
         {
@@ -1492,17 +1592,35 @@ public class DataBuilder
           //add data as normal
           toAdd.data.put(dataName, timeValue);
         }
+	*/
         
       //merging this data into the current tree
         dataStruct.addData(toAdd, avg);
       }
     }
+
+
+    //done adding all data, if overwrite, must merge with old data now
+    Map.Entry me;
+    Iterator overIt = overwrite.entrySet().iterator();
+    while(overIt.hasNext())
+    {
+      me = (Map.Entry)overIt.next();
+      if((Boolean)me.getValue())
+      {
+        //then this particular 'target' was overwritten
+        dataStruct.resolveOverwrite(("hold"+(String)me.getKey()), (String)me.getKey());
+      }
+    }
     
+    
+    /*
     //done adding all data, if overwrite, must merge with old data now
     if(overwrite)
     {
       dataStruct.resolveOverwrite("hold", dataName);
     } //else we are done already
+    */
     
     try{
       input.close(); //im such a good programmer closing my files and whatnot
@@ -4575,6 +4693,11 @@ public void addFLTFile(Element currFile)
     if(E == -1)
     {
       E = sc.indexOf('e');
+    }
+    // if there was not any E/e at all then just try to 
+    // convert the whole string to a double
+    if(E == -1) {
+	    return Double.parseDouble(sc);
     }
     mantissa = Double.parseDouble(sc.substring(0, E));
     if(sc.substring(E+1, E+2).equals("+"))
