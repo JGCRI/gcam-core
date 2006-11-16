@@ -9,8 +9,6 @@
 * \ingroup CIAM
 * \brief BuildingHeatingDmdTechnology header file
 * \author Steve Smith
-* \date $Date$
-* \version $Revision$
 */
 #include <xercesc/dom/DOMNode.hpp>
 
@@ -38,6 +36,7 @@ class BuildingHeatingDmdTechnology : public BuildingHeatCoolDmdTechnology
 {
 public:
     BuildingHeatingDmdTechnology( const std::string& aName, const int aYear );
+
     BuildingHeatingDmdTechnology* clone() const;
     const std::string& getXMLName1D() const;
     static const std::string& getXMLNameStatic1D();
