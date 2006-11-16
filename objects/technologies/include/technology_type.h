@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief The TechnologyType class header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include <map>
