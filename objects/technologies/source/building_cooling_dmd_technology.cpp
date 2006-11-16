@@ -3,8 +3,6 @@
 * \ingroup CIAM
 * \brief BuildingCoolingDmdTechnology class source file.
 * \author Steve Smith
-* \date $Date$
-* \version $Revision$
 */
 
 // Standard Library headers
@@ -116,4 +114,3 @@ Marketplace* marketplace = scenario->getMarketplace();
     // Make sure and do not return zero
     return ( prefixValue > 0 ) ? prefixValue : 1;
 }
-
