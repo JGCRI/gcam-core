@@ -21,8 +21,6 @@
 * \brief Expenditure class header file.
 * \author Pralit Patel
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>
