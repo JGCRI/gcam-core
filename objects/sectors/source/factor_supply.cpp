@@ -15,8 +15,6 @@
 * \brief The FactorSupply class source file.
 * \author Pralit Patel
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
