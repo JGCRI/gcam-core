@@ -3,8 +3,6 @@
 * \ingroup CIAM
 * \brief BuildingHeatingDmdTechnology source file
 * \author Steve Smith
-* \date $Date$
-* \version $Revision$
 */
 
 // Standard Library headers
@@ -82,7 +80,7 @@ void BuildingHeatingDmdTechnology::initCalc( const string& aRegionName,
 {
 	heatingDegreeDays = aSubsectorInfo->getDouble( "heatingDegreeDays", true );
     BuildingHeatCoolDmdTechnology::initCalc( aRegionName, aSectorName,
-                                             aSubsectorInfo, aDemographics, aPeriod );
+                                             aSubsectorInfo, aDemographics, aPeriod );        
 }
 
 /*! \brief Determine sign of internal gains
@@ -96,7 +94,7 @@ double BuildingHeatingDmdTechnology::getInternalGainsSign() const {
 }
  
 //! Demand function prefix.
-/*! Defines the demand function, exclusive of demand and share . 
+/*! Defines the demand function, exclusive of demand and share. 
 * \author Steve Smith
 * \param regionName name of the region
 * \param period Model period
