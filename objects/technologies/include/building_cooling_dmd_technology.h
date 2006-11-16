@@ -9,8 +9,6 @@
 * \ingroup CIAM
 * \brief BuildingCoolingDmdTechnology class header file.
 * \author Steve Smith
-* \date $Date$
-* \version $Revision$
 */
 #include <xercesc/dom/DOMNode.hpp>
 
