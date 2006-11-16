@@ -18,8 +18,6 @@
 *
 * \author Pralit Patel
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 * \todo This class design could still use some work. Expenditure and National accounts
 * should inherit from a base class. A string based enum type could make toDebugXML not have
 * to explicitally write everything out, although it would inflate the static class size.-JPL
@@ -61,16 +59,16 @@ void Expenditure::reset() {
 //! Output debug info to XML
 void Expenditure::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 	// write the beginning tag.
-    XMLWriteOpeningTag( "Expenditure", out, tabs );
-    XMLWriteElement( getValue( SOCIAL_SECURITY_TAX ), "socialSecurityTax", out, tabs );
-    XMLWriteElement( getValue( SAVINGS ), "savings", out, tabs );
-    XMLWriteElement( getValue( TAXABLE_INCOME ), "taxableIncome", out, tabs );
-    XMLWriteElement( getValue( DIRECT_TAXES ), "directTaxes", out, tabs );
-    XMLWriteElement( getValue( TRANSFERS ), "transfers", out, tabs );
-    XMLWriteElement( getValue( DISPOSABLE_INCOME ), "disposableIncome", out, tabs );
-    XMLWriteElement( getValue( CONSUMPTION ), "consumption", out, tabs );
-    XMLWriteElement( getValue( INCOME ), "income", out, tabs );
-    XMLWriteElement( getValue( BUDGET ), "budget", out, tabs );
+	XMLWriteOpeningTag( "Expenditure", out, tabs );
+	XMLWriteElement( getValue( SOCIAL_SECURITY_TAX ), "socialSecurityTax", out, tabs );
+	XMLWriteElement( getValue( SAVINGS ), "savings", out, tabs );
+	XMLWriteElement( getValue( TAXABLE_INCOME ), "taxableIncome", out, tabs );
+	XMLWriteElement( getValue( DIRECT_TAXES ), "directTaxes", out, tabs );
+	XMLWriteElement( getValue( TRANSFERS ), "transfers", out, tabs );
+	XMLWriteElement( getValue( DISPOSABLE_INCOME ), "disposableIncome", out, tabs );
+	XMLWriteElement( getValue( CONSUMPTION ), "consumption", out, tabs );
+	XMLWriteElement( getValue( INCOME ), "income", out, tabs );
+	XMLWriteElement( getValue( BUDGET ), "budget", out, tabs );
 	XMLWriteElement( getValue( SUBSIDY ), "subsidy", out, tabs );
 	XMLWriteElement( getValue( INVESTMENT ), "investment", out, tabs );
 	XMLWriteElement( getValue( TOTAL_IMPORTS ), "totalImports", out, tabs );
@@ -86,28 +84,28 @@ void Expenditure::toDebugXML( const int period, ostream& out, Tabs* tabs ) const
 	XMLWriteElement( getValue( IMPORTS ), "imports", out, tabs );
 	XMLWriteElement( getValue( SALES ), "sales", out, tabs );
 	XMLWriteElement( getValue( COSTS ), "costs", out, tabs );
-    XMLWriteClosingTag( "Expenditure", out, tabs );
+	XMLWriteClosingTag( "Expenditure", out, tabs );
 }
 
 /*! \brief Set the value of the expenditure for the specified type
- *
- * \author Pralit Patel
- * \param aType The type of expenditure to set
- * \param aValue The value the to set in the expenditure
- */
+*
+* \author Pralit Patel
+* \param aType The type of expenditure to set
+* \param aValue The value the to set in the expenditure
+*/
 void Expenditure::setType( const ExpenditureType aType, const double aValue ) {
 	mExpenditures[ aType ] = aValue;
 }
 
 /*! \brief For outputing SGM data to a flat csv File
- * 
- * \author Pralit Patel
- * \param period The period which we are outputing for
- */
+* 
+* \author Pralit Patel
+* \param period The period which we are outputing for
+*/
 void Expenditure::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    for( int i = 0; i < END; ++i ){
-        // Need to statically cast the index into an expenditure type. Since its
-        // starting at zero and stopping below end, this won't fail.
+	for( int i = 0; i < END; ++i ){
+		// Need to statically cast the index into an expenditure type. Since its
+		// starting at zero and stopping below end, this won't fail.
 		aFile << enumToName( static_cast<ExpenditureType>( i ) ) << ",";
 		// reset format to default
 		aFile.setf( ios_base::fixed, ios_base::floatfield );
