@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief TechnologyType class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 #include "util/base/include/definitions.h"
 #include <string>
@@ -124,6 +122,7 @@ BaseTechnology* TechnologyType::initOrCreateTech( const int aNewTechYear, const 
 
 /*! \brief Set total investment for the given year and a level of annual
 *          investment at that year.
+* \param aRegionName Region name.
 * \param aPrevYear The year of the previous investment to interpolate from.
 * \param aCurrentYear The year of the technology to set the investment level
 *        for. 
