@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief CalDataOutputPercap class source file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 
 
