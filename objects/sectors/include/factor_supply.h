@@ -21,8 +21,6 @@
 * \brief FactorSupply class header file.
 * \author Pralit Patel
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <vector>
