@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief The CalDataOutputPercap class header file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 
 #include <xercesc/dom/DOMNode.hpp>
