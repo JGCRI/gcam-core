@@ -1422,6 +1422,41 @@ public class ManipulationDriver
       VDest.setData(ComponentManipulator.sumArea(VSource.getData()));
     }
   }
+
+  /**
+   * Sums the size of land represented by this variable with no regards 
+   * to the value of the data in the variable.  Number returned is in km^2.
+   * @param command XML node defining the operation.
+   */
+  private void sumRegionAreaCommand(Element command) {
+    log.log(Level.FINER, "begin function");
+    Variable VDest;
+    Variable VSource;
+    Element currInfo;
+    
+    currInfo = command.getChild("target");
+    String VDname = currInfo.getAttributeValue("name");
+    currInfo = command.getChild("argument");
+    VSource = getVariable(currInfo.getAttributeValue("name"));
+    //creating new datavariable to hold result
+    VDest = new DataVariable();
+    VDest.name = VDname;
+    variableList.put(VDname, VDest);
+    
+    /*
+    if((VSource.isReference())&&(((ReferenceVariable)VSource).avg))
+    { //dont need to weight values
+      VDest.setData(ComponentManipulator.sumRegionArea(((ReferenceVariable)VSource).getData(), ((ReferenceVariable)VSource).weight, ((ReferenceVariable)VSource).x, ((ReferenceVariable)VSource).y, ((ReferenceVariable)VSource).h));
+    } else
+    {
+    */
+      VDest.setData(ComponentManipulator.sumRegionArea(VSource.getData()));
+      /*
+    }
+    */
+  }
+
+
    /**
    * Gets the largest single value in the passed variable.
    * @param command XML node defining the operation.
@@ -3271,6 +3306,9 @@ public class ManipulationDriver
     } else if(currCom.getName().equals("sumArea"))
     {
       sumAreaCommand(currCom);
+    } else if(currCom.getName().equals("sumRegionArea"))
+    {
+      sumRegionAreaCommand(currCom);
     } else if(currCom.getName().equals("avgOverRegion"))
     {
       avgOverRegionCommand(currCom);
