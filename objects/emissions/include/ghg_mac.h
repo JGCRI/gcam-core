@@ -52,17 +52,33 @@ protected:
     double shiftCostReduction( const int period, const double costReductionRate ) const;
     double getMACValue( const double carbonPrice ) const;
 
-    double phaseIn; //!< number of periods over which phase in occurs. can be a non-integer
-    double fuelShiftRange; //!< the initial range over which carbon price changes due to the standard range of Nat. Gas price changes
-    double costReductionRate; //!< the annual rate at which carbon price is shifted due to technological change
-    double finalReduction; //!< Increase maximum reduction to this value (due to tech change) 
-    int baseCostYear; //!< Base year from which to start decreasing costs
-    int finalReductionYear; //!< Year in which maximum reduction should be implimented
-    bool noBelowZero;//!< turns off reductions if carbon Price is less than 0;
-    std::string curveShiftFuelName; //!< Name of fuel who's price changes cause a shift in the curve
+    //! number of periods over which phase in occurs. can be a non-integer
+    double phaseIn;
     
-    std::auto_ptr<Curve> macCurve; //!< The underlying Curve
-
+    //! the initial range over which carbon price changes due to the standard range of Nat. Gas price changes
+    double fuelShiftRange;
+    
+    //! the annual rate at which carbon price is shifted due to technological change (Direct number. i.e. 1% = 0.01)
+    double costReductionRate; 
+    
+    //! Increase maximum reduction to this value (due to tech change)  (Direct number. i.e. 1% = 0.01)
+    double finalReduction; 
+    
+    //! Base year from which to start decreasing costs
+    int baseCostYear; 
+    
+    //! Year in which maximum reduction should be implimented
+    int finalReductionYear; 
+    
+    //! turns off reductions if carbon Price is less than 0;
+    bool noBelowZero;
+    
+    //! Name of fuel who's price changes cause a shift in the curve
+    std::string curveShiftFuelName; 
+    
+    //! The underlying Curve
+    std::auto_ptr<Curve> macCurve; 
+    
 private:
     static const std::string XML_NAME; //!< node name for toXML methods
     void copy( const GhgMAC& other );
