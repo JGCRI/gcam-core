@@ -142,7 +142,7 @@ const string& IntermittentSubsector::getXMLNameStatic() {
 * \author Marshall Wise
 * \param period Model period
 */
-void IntermittentSubsector::initCalc( NationalAccount& aNationalAccount,
+void IntermittentSubsector::initCalc( NationalAccount* aNationalAccount,
                                       const Demographic* aDemographics,
                                       const MoreSectorInfo* aMoreSectorInfo,
                                       const int aPeriod )

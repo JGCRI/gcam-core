@@ -44,23 +44,23 @@ class GraphPrinter : public DefaultVisitor {
 public:
     explicit GraphPrinter( const std::string& aRegionToPrint, std::ostream& aFile );
     void startVisitRegion( const Region* aRegion, const int aPeriod );
-	void endVisitRegion( const Region* aRegion, const int aPeriod );
-	void startVisitResource( const Resource* aResource, const int aPeriod );
+    void endVisitRegion( const Region* aRegion, const int aPeriod );
+    void startVisitResource( const Resource* aResource, const int aPeriod );
     void startVisitSector( const Sector* aSector, const int aPeriod );
-	void startVisitDemandSector( const DemandSector* aDemandSector, const int aPeriod );
-	void startVisitTechnology( const technology* aTechnology, const int aPeriod );
+    void startVisitDemandSector( const DemandSector* aDemandSector, const int aPeriod );
+    void startVisitTechnology( const technology* aTechnology, const int aPeriod );
 private:
     //! The file to which to write.
     std::ostream& mFile;
 
-	//! Whether we are printing the current region.
-	bool mCorrectRegion;
+    //! Whether we are printing the current region.
+    bool mCorrectRegion;
 
-	//! The region for which to print graphs.
-	const std::string mRegionToPrint;
+    //! The region for which to print graphs.
+    const std::string mRegionToPrint;
 
-	//! The current sector name
-	std::string mCurrSectorName;
+    //! The current sector name
+    std::string mCurrSectorName;
 };
 
 #endif // _GRAPH_PRINTER_H_

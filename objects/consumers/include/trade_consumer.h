@@ -37,12 +37,16 @@ class TradeConsumer : public Consumer
     friend class DemandComponentsTable;
     friend class SectorReport;
     friend class SGMGenTable;
+    friend class XMLDBOutputter;
 public:
-	TradeConsumer();
+    TradeConsumer();
 
-	TradeConsumer* clone() const;
-	void copyParam( const BaseTechnology* baseTech );
-	void copyParamsInto( TradeConsumer& tradeConsumerIn ) const;
+    TradeConsumer* clone() const;
+
+    virtual void copyParam( const BaseTechnology* baseTech,
+                            const int aPeriod );
+
+    void copyParamsInto( TradeConsumer& tradeConsumerIn ) const;
 
     virtual void completeInit( const std::string& aRegionName );
     
@@ -57,13 +61,21 @@ public:
     void operate( NationalAccount& aNationalAccount, const Demographic* aDemographics,
         const MoreSectorInfo* moreSectorInfo, const std::string& aRegionName, 
         const std::string& aSectorName, const bool aIsNewVintageMode, const int aPeriod );
-    	
+        
     void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
-	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
+    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 
-	static const std::string& getXMLNameStatic();
+    static const std::string& getXMLNameStatic();
 protected:
-    bool isCoefBased() const { return false; }
+
+    virtual bool isCoefBased() const {
+        return false;
+    }
+    
+    virtual bool isTrade() const {
+        return true;
+    }
+
     const std::string& getXMLName() const;
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;

@@ -80,8 +80,10 @@ ProductionTechnology::ProductionTechnology() {
 ProductionTechnology::~ProductionTechnology(){
 }
 
-void ProductionTechnology::copyParam( const BaseTechnology* baseTech ) {
-    BaseTechnology::copyParam( baseTech );
+void ProductionTechnology::copyParam( const BaseTechnology* baseTech,
+                                      const int aPeriod )
+{
+    BaseTechnology::copyParam( baseTech, aPeriod );
     baseTech->copyParamsInto( *this );
 }
 
@@ -228,6 +230,10 @@ void ProductionTechnology::initCalc( const MoreSectorInfo* aMoreSectorInfo, cons
                                     const string& aSectorName, NationalAccount& nationalAccount,
                                     const Demographic* aDemographics, const double aCapitalStock, const int aPeriod )
 {
+    BaseTechnology::initCalc( aMoreSectorInfo, aRegionName, aSectorName,
+                              nationalAccount, aDemographics, aCapitalStock,
+                              aPeriod );
+
     // Setup the cached values for the period.
     mValidCachePeriod = aPeriod;
     mCachedValues[ AVAILABLE ] = calcIsAvailable( aPeriod );
@@ -256,10 +262,10 @@ void ProductionTechnology::initCalc( const MoreSectorInfo* aMoreSectorInfo, cons
         if( aPeriod == BASE_PERIOD ) {
             for(unsigned int i= 0; i<input.size(); i++) {
                 if (input[i]->getName() == "Land") {
-                    nationalAccount.addToAccount(NationalAccount::LAND_RENTS, input[i]->getDemandCurrency());
+                    nationalAccount.addToAccount(NationalAccount::LAND_RENTS, input[i]->getDemandCurrency( aPeriod ));
                 }
                 else if (input[i]->getName() == "Labor") {
-                    nationalAccount.addToAccount(NationalAccount::LABOR_WAGES, input[i]->getDemandCurrency());
+                    nationalAccount.addToAccount(NationalAccount::LABOR_WAGES, input[i]->getDemandCurrency( aPeriod ));
                 }
             }
 
@@ -278,7 +284,7 @@ void ProductionTechnology::initCalc( const MoreSectorInfo* aMoreSectorInfo, cons
             if ( mBasePhysicalOutput != 0 ) {
                 // 1000 is for conversion from PJ to EJ, use Value class for this
                 mConversionFactor = mBasePhysicalOutput / 1000 / 
-                    ( FunctionUtils::getDemandSum( input ) + indBusTax );
+                    ( FunctionUtils::getDemandSum( input, aPeriod ) + indBusTax );
             }
         }
         // Convert all vintages, not just last.
@@ -298,12 +304,14 @@ void ProductionTechnology::initCalc( const MoreSectorInfo* aMoreSectorInfo, cons
                 prodDmdFn = FunctionManager::getFunction( "Leontief" );
                 // Transform CES coefficients to Leontief.
                 alphaZeroScaler = prodDmdFn->changeElasticity( input, priceReceivedLastPer, mProfits[ aPeriod - 1 ],
-                                                               capital, alphaZeroScaler, sigmaNew, sigmaOld );
+                                                               capital, aPeriod - 1,
+                                                               alphaZeroScaler, sigmaNew, sigmaOld );
             }
             else if( sigma1 != sigma2 ){
                 // Transform coefficients to use short-term instead of long-term elasticity of substitution.
                 alphaZeroScaler = prodDmdFn->changeElasticity( input, priceReceivedLastPer, mProfits[ aPeriod - 1 ],
-                                                               capital, alphaZeroScaler, sigmaNew, sigmaOld );
+                                                               capital, aPeriod - 1,
+                                                               alphaZeroScaler, sigmaNew, sigmaOld );
             }    
         }
     }
@@ -330,7 +338,7 @@ void ProductionTechnology::operate( NationalAccount& aNationalAccount, const Dem
         assert( !input.empty() );
         // calculate prices paid for technology inputs
         BaseTechnology::calcPricePaid( aMoreSectorInfo, aRegionName, aSectorName, aPeriod );
-        expenditure.reset();
+        expenditures[ aPeriod ].reset();
         if( ( aIsNewVintageMode && isNewInvestment( aPeriod ))
             || (!aIsNewVintageMode && !isNewInvestment( aPeriod )) )
         {
@@ -344,20 +352,20 @@ void ProductionTechnology::operate( NationalAccount& aNationalAccount, const Dem
             // Add wages and land rents to national account
             for( unsigned int i = 0; i < input.size(); i++ ) {
                 if( input[i]->getName() == "Labor" ) {
-                    double wages = input[i]->getDemandCurrency() 
+                    double wages = input[i]->getDemandCurrency( aPeriod ) 
                         * input[ i ]->getPrice( aRegionName, aPeriod );
-                    expenditure.addToType( Expenditure::WAGES, wages );
+                    expenditures[ aPeriod ].addToType( Expenditure::WAGES, wages );
                     aNationalAccount.addToAccount(NationalAccount::LABOR_WAGES, wages );
                 }
                 else if( input[i]->getName() == "Land" ) {
-                    double landRents = input[i]->getDemandCurrency()
+                    double landRents = input[i]->getDemandCurrency( aPeriod )
                                      * input[ i ]->getPrice( aRegionName, aPeriod );
-                    expenditure.addToType(Expenditure::LAND_RENTS, landRents );
+                    expenditures[ aPeriod ].addToType(Expenditure::LAND_RENTS, landRents );
                     aNationalAccount.addToAccount(NationalAccount::LAND_RENTS, landRents );
                 }
                 else if( !input[ i ]->isCapital() ){
-                    expenditure.addToType( Expenditure::INTERMEDIATE_INPUTS,
-                                           input[i]->getDemandCurrency() );
+                    expenditures[ aPeriod ].addToType( Expenditure::INTERMEDIATE_INPUTS,
+                        input[i]->getDemandCurrency( aPeriod ) );
                 }
             }
             
@@ -374,7 +382,7 @@ void ProductionTechnology::operate( NationalAccount& aNationalAccount, const Dem
             // Calculate output of Production Technology
             mOutputs[ aPeriod ] = prodDmdFn->calcOutput( input, aRegionName, aSectorName, shutdownCoef,
                                                          aPeriod, capital, alphaZeroScaler, currSigma );
-            expenditure.addToType( Expenditure::SALES, mOutputs[ aPeriod ] );
+            expenditures[ aPeriod ].addToType( Expenditure::SALES, mOutputs[ aPeriod ] );
 
             // Check output before adding it.
             /*! \invariant Output is greater than or equal to zero. */
@@ -466,7 +474,7 @@ void ProductionTechnology::calcTaxes( NationalAccount& aNationalAccount, const M
 
     // corporate income tax rate
     // add other value added to rentals, does not include land and labor
-    expenditure.addToType( Expenditure::RENTALS, profits );
+    expenditures[ aPeriod ].addToType( Expenditure::RENTALS, profits );
     double corpIncomeTaxRate = aMoreSectorInfo->getValue(MoreSectorInfo::CORP_INCOME_TAX_RATE);
     double corpIncomeTax = corpIncomeTaxRate * profits - investmentTaxCredit;
 
@@ -483,10 +491,10 @@ void ProductionTechnology::calcTaxes( NationalAccount& aNationalAccount, const M
 
     marketplace->addToSupply( "Capital", aRegionName, retainedEarnings, aPeriod );
     // Add all taxes and accounts to expenditure
-    expenditure.setType(Expenditure::INDIRECT_TAXES, indBusTax);
-    expenditure.setType(Expenditure::DIRECT_TAXES, corpIncomeTax);
-    expenditure.setType(Expenditure::DIVIDENDS, dividends);
-    expenditure.setType(Expenditure::RETAINED_EARNINGS, retainedEarnings);
+    expenditures[ aPeriod ].setType(Expenditure::INDIRECT_TAXES, indBusTax);
+    expenditures[ aPeriod ].setType(Expenditure::DIRECT_TAXES, corpIncomeTax);
+    expenditures[ aPeriod ].setType(Expenditure::DIVIDENDS, dividends);
+    expenditures[ aPeriod ].setType(Expenditure::RETAINED_EARNINGS, retainedEarnings);
     // Add all taxes to national account
     aNationalAccount.addToAccount(NationalAccount::RETAINED_EARNINGS, retainedEarnings);
     aNationalAccount.addToAccount(NationalAccount::DIVIDENDS, dividends);
@@ -702,12 +710,9 @@ void ProductionTechnology::csvSGMOutputFile( ostream& aFile, const int period ) 
 
 void ProductionTechnology::accept( IVisitor* aVisitor, const int aPeriod ) const
 {
-    // print for all operating vintages
-    // This is not right, this decision should be made by the OutputContainer.
-    if( aPeriod == -1 || ( isAvailable( aPeriod ) && !isRetired( aPeriod ) ) ){
-        aVisitor->updateProductionTechnology( this, aPeriod );
-        BaseTechnology::accept( aVisitor, aPeriod );
-    }
+    aVisitor->startVisitProductionTechnology( this, aPeriod );
+    BaseTechnology::accept( aVisitor, aPeriod );
+    aVisitor->endVisitProductionTechnology( this, aPeriod );
 }
 
 //! Set the parent technology type helper object. This may change.
@@ -737,13 +742,14 @@ double ProductionTechnology::calcShutdownCoef( const string& aRegionName,
     }
     // Could optimize by storing the shutdown coef.
     // Create the structure of info for the production function.
-    ProductionFunctionInfo prodFunc = { input, prodDmdFn, currSigma, alphaZeroScaler, capital };
+    ProductionFunctionInfo prodFunc = { input, prodDmdFn, currSigma,
+                                        alphaZeroScaler, capital };
 
     // Create a new shutdown decider.
     ProfitShutdownDecider shutdownDecider;
-	double shutdownCoef = shutdownDecider.calcShutdownCoef( &prodFunc,
+    double shutdownCoef = shutdownDecider.calcShutdownCoef( &prodFunc,
                                                             IShutdownDecider::getUncalculatedProfitRateConstant(), 
-		                                                    aRegionName,
+                                                            aRegionName,
                                                             aSectorName,
                                                             year,
                                                             aPeriod );

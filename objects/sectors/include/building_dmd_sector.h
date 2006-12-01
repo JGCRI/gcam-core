@@ -40,7 +40,7 @@ public:
     BuildingDemandSector( const std::string regionName );
     ~BuildingDemandSector();
     static const std::string& getXMLNameStatic();
-    virtual void initCalc( NationalAccount& aNationalAccount,
+    virtual void initCalc( NationalAccount* aNationalAccount,
                            const Demographic* aDemographics,
                            const int aPeriod );
 

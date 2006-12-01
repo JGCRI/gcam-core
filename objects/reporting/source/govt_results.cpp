@@ -15,6 +15,7 @@
 #include "reporting/include/storage_table.h"
 #include "sectors/include/production_sector.h"
 #include "containers/include/scenario.h"
+#include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
 #include "consumers/include/govt_consumer.h"
 #include "consumers/include/household_consumer.h"
@@ -52,7 +53,7 @@ void GovtResults::finish() const {
         const vector<string> colNames = mTaxReceipts->getColLabels();
         for( vector<string>::const_iterator col = colNames.begin(); col != colNames.end(); ++col ){
             mFile << ',' << *col;
-        }	
+        }   
         mFile << endl;
 
         // Write out each row of the table, representing one sector
@@ -77,7 +78,7 @@ void GovtResults::finish() const {
         const vector<string> colNames = mSubsidies->getColLabels();
         for( vector<string>::const_iterator col = colNames.begin(); col != colNames.end(); ++col ){
             mFile << ',' << *col;
-        }	
+        }   
         mFile << endl;
 
         // Write out each row of the table, representing one sector
@@ -123,47 +124,54 @@ void GovtResults::startVisitSector( const Sector* aSector, const int aPeriod ){
     mCurrSectorName = aSector->getName();
 }
 
-void GovtResults::updateProductionTechnology( const ProductionTechnology* aProdTechnology, 
-											  const int aPeriod )
+void GovtResults::startVisitProductionTechnology( const ProductionTechnology* aProdTechnology, 
+                                                 const int aPeriod )
 {
-    mParsingGovt = false;
-    // Fill up the tax table.
-    // This isn't complete yet, its zero anyway right now.
-    mTaxReceipts->addToType( mCurrSectorName, "Proportional Tax", 0 );
-    
-    mTaxReceipts->addToType( mCurrSectorName, "Social Security Tax",
-        aProdTechnology->expenditure.getValue( Expenditure::SOCIAL_SECURITY_TAX ) );
-    
-    // this would be wrong if more was added to DIRECT_TAXES. 
-    mTaxReceipts->addToType( mCurrSectorName, "Corporate Tax",
-        aProdTechnology->expenditure.getValue( Expenditure::DIRECT_TAXES ) );
-    
-    // this would be wrong if more was added to indirect taxes.
-    mTaxReceipts->addToType( mCurrSectorName, "IBT",
-        aProdTechnology->expenditure.getValue( Expenditure::INDIRECT_TAXES ) );
+    if( aPeriod == -1 || ( aProdTechnology->isAvailable( aPeriod ) && 
+        !aProdTechnology->isRetired( aPeriod ) ) ) {
+            mParsingGovt = false;
+            // Fill up the tax table.
+            // This isn't complete yet, its zero anyway right now.
+            mTaxReceipts->addToType( mCurrSectorName, "Proportional Tax", 0 );
 
-    // these two aren't finished yet.
-    mTaxReceipts->addToType( mCurrSectorName, "Carbon", 0 );
-    mTaxReceipts->addToType( mCurrSectorName, "ITC", 0 );
+            mTaxReceipts->addToType( mCurrSectorName, "Social Security Tax",
+                aProdTechnology->expenditures[ aPeriod ].getValue( Expenditure::SOCIAL_SECURITY_TAX ) );
 
-    // Fill up the subsidy table. This isn't done per sector in the model yet.
-    mSubsidies->addToType( mCurrSectorName, "Amount", 0 );
+            // this would be wrong if more was added to DIRECT_TAXES. 
+            mTaxReceipts->addToType( mCurrSectorName, "Corporate Tax",
+                aProdTechnology->expenditures[ aPeriod ].getValue( Expenditure::DIRECT_TAXES ) );
+
+            // this would be wrong if more was added to indirect taxes.
+            mTaxReceipts->addToType( mCurrSectorName, "IBT",
+                aProdTechnology->expenditures[ aPeriod ].getValue( Expenditure::INDIRECT_TAXES ) );
+
+            // these two aren't finished yet.
+            mTaxReceipts->addToType( mCurrSectorName, "Carbon", 0 );
+            mTaxReceipts->addToType( mCurrSectorName, "ITC", 0 );
+
+            // Fill up the subsidy table. This isn't done per sector in the model yet.
+            mSubsidies->addToType( mCurrSectorName, "Amount", 0 );
+        }
 }    
 
-void GovtResults::updateGovtConsumer( const GovtConsumer* aGovtConsumer, const int aPeriod ){
-    // Set the total transfers.
-    mGovtTransfers = aGovtConsumer->expenditure.getValue( Expenditure::TRANSFERS );
+void GovtResults::startVisitGovtConsumer( const GovtConsumer* aGovtConsumer, const int aPeriod ){
+    if( aGovtConsumer->getYear() == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
+        // Set the total transfers.
+        mGovtTransfers = aGovtConsumer->expenditures[ aPeriod ].getValue( Expenditure::TRANSFERS );
 
-    // Need to setup the expenditure table.
-    mParsingGovt = true;
+        // Need to setup the expenditure table.
+        mParsingGovt = true;
+    }
 }
 
-void GovtResults::updateHouseholdConsumer( const HouseholdConsumer* aHouseholdConsumer, const int aPeriod ){
-    // Need to get social security tax added.
-    mTaxReceipts->addToType( mCurrSectorName, "Social Security Tax",
-        aHouseholdConsumer->expenditure.getValue( Expenditure::SOCIAL_SECURITY_TAX ) );
+void GovtResults::startVisitHouseholdConsumer( const HouseholdConsumer* aHouseholdConsumer, const int aPeriod ){
+    if( aHouseholdConsumer->getYear() == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
+        // Need to get social security tax added.
+        mTaxReceipts->addToType( mCurrSectorName, "Social Security Tax",
+            aHouseholdConsumer->expenditures[ aPeriod ].getValue( Expenditure::SOCIAL_SECURITY_TAX ) );
 
-    // Also corporate income tax?
-    mTaxReceipts->addToType( mCurrSectorName, "Corporate Tax",
-        aHouseholdConsumer->expenditure.getValue( Expenditure::DIRECT_TAXES ) ); // this might be wrong.
+        // Also corporate income tax?
+        mTaxReceipts->addToType( mCurrSectorName, "Corporate Tax",
+            aHouseholdConsumer->expenditures[ aPeriod ].getValue( Expenditure::DIRECT_TAXES ) ); // this might be wrong.
+    }
 }

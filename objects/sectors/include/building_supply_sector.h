@@ -38,7 +38,7 @@ public:
     BuildingSupplySector( const std::string regionName );
     virtual ~BuildingSupplySector();
 	static const std::string& getXMLNameStatic();
-    virtual void initCalc( NationalAccount& aNationalAccount,
+    virtual void initCalc( NationalAccount* aNationalAccount,
                            const Demographic* aDemographics,
                            const int aPeriod );
 protected:

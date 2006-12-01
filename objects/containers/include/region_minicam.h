@@ -1,13 +1,13 @@
-#ifndef _REGION_H_
-#define _REGION_H_
+#ifndef _REGION_MINICAM_H_
+#define _REGION_MINICAM_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
 
-/*! 
-* \file region.h
+/*!
+* \file region_minicam.h
 * \ingroup Objects
-* \brief The Region class header file.
+* \brief The RegionMiniCAM class header file.
 * \author Sonny Kim
 */
 
@@ -18,7 +18,7 @@
 #include <list>
 #include <xercesc/dom/DOMNode.hpp>
 
-#include "containers/include/national_account.h"
+#include "containers/include/region.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
 
@@ -65,7 +65,8 @@ class GlobalTechnologyDatabase;
 *
 * \author Sonny Kim
 */
-class Region: public IVisitable, public IRoundTrippable
+
+class RegionMiniCAM: public Region
 {
     friend class InputOutputTable;
     friend class SocialAccountingMatrix;
@@ -74,45 +75,27 @@ class Region: public IVisitable, public IRoundTrippable
     friend class SGMGenTable;
     friend class XMLDBOutputter;
 public:
-    Region();
-    virtual ~Region(); 
-    void XMLParse( const xercesc::DOMNode* node );
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
-    void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+    RegionMiniCAM();
+    virtual ~RegionMiniCAM();
     static const std::string& getXMLNameStatic();
     virtual void completeInit( const GlobalTechnologyDatabase* aGlobalTechDB );
-    const std::string& getName() const;
-    
     virtual void calc( const int period, const bool doCalibrations );
-    void calibrateTFE( const int period ); 
     virtual void initCalc( const int period );
 
-    void csvOutputFile() const;
-    void dbOutput( const std::list<std::string>& aPrimaryFuelList ) const;
-    void initializeAgMarketPrices( const std::vector<double>& pricesIn );
-    void updateSummary( const std::list<std::string>& aPrimaryFuelList, const int period );
-    const Summary& getSummary( const int period ) const;
-    
-    void setTax( const GHGPolicy* aTax );
-    const Curve* getEmissionsQuantityCurve( const std::string& ghgName ) const;
-    const Curve* getEmissionsPriceCurve( const std::string& ghgName ) const;
+    virtual void csvOutputFile() const;
+    virtual void dbOutput( const std::list<std::string>& aPrimaryFuelList ) const;
+    virtual void initializeAgMarketPrices( const std::vector<double>& pricesIn );
+    virtual void updateSummary( const std::list<std::string>& aPrimaryFuelList, const int period );
+    virtual const Summary& getSummary( const int period ) const;
 
-    bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
-    void setCalSuppliesAndDemands( const int period );
-    void initializeCalValues( const int period );
-    bool setImpliedCalInputs( const int period );
-    int scaleCalInputs( const int period );
+    virtual bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
+    virtual void setCalSuppliesAndDemands( const int period );
+    virtual void initializeCalValues( const int period );
+    virtual bool setImpliedCalInputs( const int period );
+    virtual int scaleCalInputs( const int period );
     virtual void updateAllOutputContainers( const int period );
-    virtual void updateMarketplace( const int period );
-    virtual void finalizePeriod( const int aPeriod );
-    virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
-    virtual void csvSGMGenFile( std::ostream& aFile ) const;
 protected:
-    std::vector<NationalAccount> nationalAccount; //!< National Accounts container.
-    const static std::string XML_NAME; //!< node name for toXML method.
-    std::string name; //!< Region name
-    std::auto_ptr<Demographic> demographic; //!< Population object
     std::auto_ptr<GDP> gdp; //!< GDP object.
     std::auto_ptr<AgSector> agSector; //!< Agricultural sector
 
@@ -126,15 +109,12 @@ protected:
     typedef std::map<std::string, std::vector<std::string> > FuelRelationshipMap;
     std::auto_ptr<FuelRelationshipMap> fuelRelationshipMap;
     std::vector<Resource*> resources; //!< vector of pointers toresource objects
-    std::vector<Sector*> supplySector; //!< vector of pointers to supply sector objects
     std::vector<DemandSector*> demandSector; //!< vector of pointers to demand sector objects
-    std::vector<GHGPolicy*> mGhgPolicies; //!< vector of pointers to ghg market objects, container for constraints and emissions
 
     //! Container of objects which calculate an aggregate emissions coefficient
     //! for a set of sectors.
     std::vector<TotalSectorEmissions*> mAggEmissionsCalculators;
 
-    std::vector<double> iElasticity; //!< income elasticity
     std::vector<double> calibrationGDPs; //!< GDPs to calibrate to
     std::vector<double> GDPcalPerCapita; //!< GDP per capita to calibrate to
 
@@ -145,14 +125,10 @@ protected:
     std::vector<double> TFEcalb;  //!< Total Final Energy Calibration value (cannot be equal to 0)
     std::vector<double> TFEPerCapcalb;  //!< Total Final Energy per Capita Calibration GJ/cap (cannot be equal to 0)
 #if SORT_TESTING
-    std::vector<std::string> sectorOrderList; //!< A vector listing the order in which to process the sectors. 
+    std::vector<std::string> sectorOrderList; //!< A vector listing the order in which to process the sectors.
 #endif
     std::vector<Summary> summary; //!< summary values and totals for reporting
-    std::map<std::string,int> resourceNameMap; //!< Map of resource name to integer position in vector. 
-    std::map<std::string,int> supplySectorNameMap; //!< Map of supplysector name to integer position in vector. 
-    std::map<std::string,int> demandSectorNameMap; //!< Map of demandsector name to integer position in vector. 
-    std::map<std::string,int> mGhgPoliciesNameMap; //!< Map of GhgPolicy name to integer position in vector. 
-    std::map<std::string,int> totalSectorEmissionsNameMap; //!< Map of totalSectorEmission name to integer position in vector. 
+    std::map<std::string,int> supplySectorNameMap; //!< Map of supplysector name to integer position in vector.
     std::map<std::string, double> primaryFuelCO2Coef; //!< map of CO2 emissions coefficient for primary fuels only
     double heatingDegreeDays; //!< heatingDegreeDays for this region (used to drive heating/cooling demands -- to be replaced in the future with specific set points)
     double coolingDegreeDays; //!< coolingDegreeDays for this region (used to drive heating/cooling demands -- to be replaced in the future with specific set points)
@@ -168,8 +144,6 @@ protected:
     typedef std::vector<DemandSector*>::const_iterator CDemandSectorIterator;
     typedef std::vector<Resource*>::iterator ResourceIterator;
     typedef std::vector<Resource*>::const_iterator CResourceIterator;
-    typedef std::vector<GHGPolicy*>::iterator GHGPolicyIterator;
-    typedef std::vector<GHGPolicy*>::const_iterator CGHGPolicyIterator;
     typedef std::vector<Sector*>::iterator SectorIterator;
     typedef std::vector<Sector*>::reverse_iterator SectorReverseIterator;
     typedef std::vector<Sector*>::const_iterator CSectorIterator;
@@ -199,6 +173,7 @@ protected:
     void calcEmissFuel( const std::list<std::string>& aPrimaryFuelList, const int period );
     void calcTotalCarbonTaxPaid( const int period );
     void setCO2CoefsIntoMarketplace( const int aPeriod );
+    void calibrateTFE( const int period );
 private:
     void clear();
     bool ensureGDP() const;

@@ -31,7 +31,7 @@ class TranSector : public DemandSector
 public:
     TranSector( const std::string regionName );
     
-    virtual void initCalc( NationalAccount& aNationalAccount,
+    virtual void initCalc( NationalAccount* aNationalAccount,
                            const Demographic* aDemographics,
                            const int aPeriod );
 

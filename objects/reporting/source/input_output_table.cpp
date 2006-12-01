@@ -22,6 +22,7 @@
 #include "containers/include/region_cge.h"
 #include "containers/include/scenario.h" // only for modeltime
 #include "util/base/include/model_time.h"
+#include "consumers/include/consumer.h"
 
 extern Scenario* scenario;
 
@@ -32,7 +33,8 @@ InputOutputTable::InputOutputTable( const string& aRegionName, ostream& aFile ):
 mFile( aFile ),
 mRegionName( aRegionName ),
 mInternalTable( new StorageTable ),
-mParsingConsumer( false ){
+mParsingConsumer( false ),
+mUseInput( false ){
 }
 
 /*! \brief Output the IOTable to a CSV
@@ -48,7 +50,7 @@ void InputOutputTable::finish() const {
     const vector<string> colNames = mInternalTable->getColLabels();
     for( vector<string>::const_iterator col = colNames.begin(); col != colNames.end(); ++col ){
         mFile << ',' << *col;
-    }	
+    }   
     mFile << endl;
 
     // Write out each row of the IOTable.
@@ -84,42 +86,64 @@ void InputOutputTable::startVisitSector( const Sector* sector, const int aPeriod
     mCurrSectorName = sector->getName();
 }
 
-void InputOutputTable::updateProductionTechnology( const ProductionTechnology* prodTechnology,
-												   const int aPeriod )
+void InputOutputTable::startVisitProductionTechnology( const ProductionTechnology* prodTechnology,
+                                                   const int aPeriod )
 {
-    // Add the technologies output as a negative demand on the diagonal.
-    mInternalTable->addToType( mCurrSectorName, mCurrSectorName, -1 * prodTechnology->getOutput( aPeriod ) );
-    mInternalTable->addToType( "Capital", mCurrSectorName, prodTechnology->getAnnualInvestment( aPeriod ) );
+    if( aPeriod == -1 || ( prodTechnology->isAvailable( aPeriod ) && 
+        !prodTechnology->isRetired( aPeriod ) ) ) {
+            mUseInput = true;
+            // Add the technologies output as a negative demand on the diagonal.
+            mInternalTable->addToType( mCurrSectorName, mCurrSectorName, -1 * prodTechnology->getOutput( aPeriod ) );
+            mInternalTable->addToType( "Capital", mCurrSectorName, prodTechnology->getAnnualInvestment( aPeriod ) );
 
-    // Everything else will be updated at the input level.
-    mParsingConsumer = false; // set that we aren't currently parsing a consumer.
+            // Everything else will be updated at the input level.
+            mParsingConsumer = false; // set that we aren't currently parsing a consumer.
+        }
+    else {
+        mUseInput = false;
+    }
 }
 
-void InputOutputTable::updateFactorSupply( const FactorSupply* factorSupply, const int period ){
+void InputOutputTable::startVisitFactorSupply( const FactorSupply* factorSupply, const int aPeriod ){
     // Add factor supplies to the household column.
     mInternalTable->addToType( factorSupply->getName(), "Household", 
-        -1 * factorSupply->getSupply( mRegionName, period ) );
+        -1 * factorSupply->getSupply( mRegionName, aPeriod ) );
 }
 
 //! Update the inputs contribution to the IOTable.
-void InputOutputTable::updateProductionInput( const ProductionInput* aProdInput ){
-    // Add the currency demand.
-    // The capital row is not truely capital but other value added.
-    // The row is only the OVA row in ProductionSectors, it behaves as capital in Consumers.
-    if( aProdInput->isCapital() && !mParsingConsumer ){
-        mInternalTable->addToType( "OVA", mCurrSectorName, aProdInput->getDemandCurrency() );
-    }
-    else {
-        mInternalTable->addToType( aProdInput->getName(), mCurrSectorName, aProdInput->getDemandCurrency() );
+void InputOutputTable::startVisitProductionInput( const ProductionInput* aProdInput, 
+                                                 const int aPeriod )
+{
+    if( mUseInput ) {
+        // Add the currency demand.
+        // The capital row is not truely capital but other value added.
+        // The row is only the OVA row in ProductionSectors, it behaves as capital in Consumers.
+        if( aProdInput->isCapital() && !mParsingConsumer ){
+            mInternalTable->addToType( "OVA", mCurrSectorName, 
+                aProdInput->getDemandCurrency( aPeriod ) );
+        }
+        else {
+            mInternalTable->addToType( aProdInput->getName(), mCurrSectorName, 
+                aProdInput->getDemandCurrency( aPeriod ) );
+        }
     }
 }
 
 //! Update the inputs contribution to the IOTable.
-void InputOutputTable::updateDemandInput( const DemandInput* aDemandInput ){
-    mInternalTable->addToType( aDemandInput->getName(), mCurrSectorName, aDemandInput->getDemandCurrency() );
+void InputOutputTable::startVisitDemandInput( const DemandInput* aDemandInput, const int aPeriod ){
+    if( mUseInput ) {
+        mInternalTable->addToType( aDemandInput->getName(), mCurrSectorName, 
+            aDemandInput->getDemandCurrency( aPeriod ) );
+    }
 }
 
 //! Update the consumer. Set that the current state is parsing a consumer, not a production tech.
-void InputOutputTable::updateConsumer( const Consumer* aConsumer, const int aPeriod ){
-    mParsingConsumer = true;
+void InputOutputTable::startVisitConsumer( const Consumer* aConsumer, const int aPeriod ){
+    if( aConsumer->getYear() == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
+        mParsingConsumer = true;
+        mUseInput = true;
+    }
+    else {
+        mUseInput = false;
+    }
 }

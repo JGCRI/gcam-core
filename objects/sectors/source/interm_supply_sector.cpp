@@ -131,7 +131,7 @@ void IntermittentSupplySector::toDebugXMLDerived( const int period, ostream& out
 * \author Marshall Wise
 * \param period Model period
 */
-void IntermittentSupplySector::initCalc( NationalAccount& aNationalAccount,
+void IntermittentSupplySector::initCalc( NationalAccount* aNationalAccount,
                                          const Demographic* aDemographics,
                                          const int aPeriod )
 {

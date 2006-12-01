@@ -26,6 +26,7 @@
 class World;
 class Region;
 class RegionCGE;
+class RegionMiniCAM;
 class NationalAccount;
 class Demographic;
 class Sector;
@@ -43,6 +44,7 @@ class ProductionInput;
 class Input;
 class FactorSupply;
 class ProductionSector;
+class Expenditure;
 class Resource;
 class technology;
 class DemandSector;
@@ -94,6 +96,8 @@ public:
     virtual void endVisitWorld( const World* aWorld, const int aPeriod ) = 0;
     virtual void startVisitRegion( const Region* aRegion, const int aPeriod ) = 0;
     virtual void endVisitRegion( const Region* aRegion, const int aPeriod ) = 0;
+    virtual void startVisitRegionMiniCAM( const RegionMiniCAM* aRegionMiniCAM, const int aPeriod ) = 0;
+    virtual void endVisitRegionMiniCAM( const RegionMiniCAM* aRegionMiniCAM, const int aPeriod ) = 0;
     virtual void startVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod ) = 0;
     virtual void endVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod ) = 0;
     
@@ -138,8 +142,9 @@ public:
     
     virtual void startVisitDemandSector( const DemandSector* aDemandSector, const int aPeriod ) = 0;
     virtual void endVisitDemandSector( const DemandSector* aDemandSector, const int aPeriod ) = 0;
-    
-    virtual void updateProductionSector( const ProductionSector* aProdSector, const int aPeriod ) = 0;
+
+    virtual void startVisitProductionSector( const ProductionSector* aProdSector, const int aPeriod ) = 0;
+    virtual void endVisitProductionSector( const ProductionSector* aProdSector, const int aPeriod ) = 0;
     
     virtual void startVisitSubsector( const Subsector* aSubsector, const int aPeriod ) = 0;
     virtual void endVisitSubsector( const Subsector* aSubsector, const int aPeriod ) = 0;
@@ -149,24 +154,51 @@ public:
     virtual void endVisitBuildingDemandSubsector( const BuildingDemandSubSector* aSubsector,
                                                   const int aPeriod ) = 0;
 
-    // TODO: Fix all these. Convert to start/end methodology and add a period to
-    // all functions.
-    virtual void updateBaseTechnology( const BaseTechnology* aBaseTechnology ) = 0;
-    
-    virtual void updateConsumer( const Consumer* aConsumer, const int aPeriod ) = 0;
-    virtual void updateHouseholdConsumer( const HouseholdConsumer* aHouseholdConsumer,
-        const int aPeriod ) = 0;
-    virtual void updateGovtConsumer( const GovtConsumer* aGovtConsumer, const int aPeriod ) = 0;
-    virtual void updateInvestConsumer( const InvestConsumer* aInvestConsumer, const int aPeriod ) = 0;
-    virtual void updateTradeConsumer( const TradeConsumer* aTradeConsumer, const int aPeriod ) = 0;
-    virtual void updateProductionTechnology( const ProductionTechnology* aProductionTechnology, const int aPeriod ) = 0;
     virtual void startVisitTechnology( const technology* aTechnology, const int aPeriod ) = 0;
     virtual void endVisitTechnology( const technology* aTechnology, const int aPeriod ) = 0;
-    virtual void updateFactorSupply( const FactorSupply* aFactorSupply, const int aPeriod ) = 0;
-    virtual void updateNationalAccount( const NationalAccount* aNationalAccount, const int aPeriod ) = 0;
-    virtual void updateInput( const Input* aInput ) = 0;
-    virtual void updateProductionInput( const ProductionInput* aProdInput ) = 0;
-    virtual void updateDemandInput( const DemandInput* aDemandInput ) = 0;
+
+    virtual void startVisitBaseTechnology( const BaseTechnology* aBaseTechnology, const int aPeriod ) = 0;
+    virtual void endVisitBaseTechnology( const BaseTechnology* aBaseTechnology, const int aPeriod ) = 0;
+
+    virtual void startVisitConsumer( const Consumer* aConsumer, const int aPeriod ) = 0;
+    virtual void endVisitConsumer( const Consumer* aConsumer, const int aPeriod ) = 0;
+
+    virtual void startVisitHouseholdConsumer( const HouseholdConsumer* aHouseholdConsumer, 
+        const int aPeriod ) = 0;
+    virtual void endVisitHouseholdConsumer( const HouseholdConsumer* aHouseholdConsumer, 
+        const int aPeriod ) = 0;
+
+    virtual void startVisitGovtConsumer( const GovtConsumer* aGovtConsumer, const int aPeriod ) = 0;
+    virtual void endVisitGovtConsumer( const GovtConsumer* aGovtConsumer, const int aPeriod ) = 0;
+
+    virtual void startVisitInvestConsumer( const InvestConsumer* aInvestConsumer, const int aPeriod ) = 0;
+    virtual void endVisitInvestConsumer( const InvestConsumer* aInvestConsumer, const int aPeriod ) = 0;
+
+    virtual void startVisitTradeConsumer( const TradeConsumer* aTradeConsumer, const int aPeriod ) = 0;
+    virtual void endVisitTradeConsumer( const TradeConsumer* aTradeConsumer, const int aPeriod ) = 0;
+
+    virtual void startVisitProductionTechnology( const ProductionTechnology* aProductionTechnology, 
+        const int aPeriod ) = 0;
+    virtual void endVisitProductionTechnology( const ProductionTechnology* aProductionTechnology, 
+        const int aPeriod ) = 0;
+
+    virtual void startVisitFactorSupply( const FactorSupply* aFactorSupply, const int aPeriod ) = 0;
+    virtual void endVisitFactorSupply( const FactorSupply* aFactorSupply, const int aPeriod ) = 0;
+
+    virtual void startVisitNationalAccount( const NationalAccount* aNationalAccount, const int aPeriod ) = 0;
+    virtual void endVisitNationalAccount( const NationalAccount* aNationalAccount, const int aPeriod ) = 0;
+
+    virtual void startVisitInput( const Input* aInput, const int aPeriod ) = 0;
+    virtual void endVisitInput( const Input* aInput, const int aPeriod ) = 0;
+
+    virtual void startVisitProductionInput( const ProductionInput* aProductionInput, const int aPeriod ) = 0;
+    virtual void endVisitProductionInput( const ProductionInput* aProductionInput, const int aPeriod ) = 0;
+
+    virtual void startVisitDemandInput( const DemandInput* aDemandInput, const int aPeriod ) = 0;
+    virtual void endVisitDemandInput( const DemandInput* aDemandInput, const int aPeriod ) = 0;
+
+    virtual void startVisitExpenditure( const Expenditure* aExpenditure, const int aPeriod ) = 0;
+    virtual void endVisitExpenditure( const Expenditure* aExpenditure, const int aPeriod ) = 0;
     
     virtual void startVisitOutput( const IOutput* aOutput, const int aPeriod ) = 0;
     virtual void endVisitOutput( const IOutput* aOutput, const int aPeriod ) = 0;

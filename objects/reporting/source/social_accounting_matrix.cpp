@@ -23,6 +23,8 @@ use of this software.
 
 #include "reporting/include/social_accounting_matrix.h"
 
+#include "containers/include/scenario.h"
+#include "util/base/include/model_time.h"
 #include "containers/include/region.h"
 #include "sectors/include/sector.h"
 #include "sectors/include/subsector.h"
@@ -38,6 +40,7 @@ use of this software.
 #include "reporting/include/storage_table.h"
 
 using namespace std;
+extern Scenario* scenario;
 
 //! Default Constructor
 SocialAccountingMatrix::SocialAccountingMatrix( const string& aRegionName, ostream& aFile ):
@@ -49,107 +52,117 @@ mFile( aFile ), mRegionName( aRegionName ), mTable( new StorageTable ){
  * \author Pralit Patel
  */
 void SocialAccountingMatrix::finish() const {
-	mFile << "Social Accounting Matrix" << endl
-	      << "Receipts" << ',' << "Activites" << ',' << "Commoditites" << ',' << "Land" << ',' 
+    mFile << "Social Accounting Matrix" << endl
+          << "Receipts" << ',' << "Activites" << ',' << "Commoditites" << ',' << "Land" << ',' 
           << "Labor" << ',' << "Capital" << ',' << "Households" << ',' << "Enterprises" << ',' 
           << "Government" << ',' << "Capital Account" << ',' << "Rest Of World" << ',' 
           << "Totals" << endl;
 
-	for ( int categoryIndex = ACTIVITIES; categoryIndex <= TOTALS; categoryIndex++ ) {
+    for ( int categoryIndex = ACTIVITIES; categoryIndex <= TOTALS; categoryIndex++ ) {
         mTable->addColumn( getString( CategoryType( categoryIndex ) ) );
-		mFile << getString( CategoryType( categoryIndex ) );
+        mFile << getString( CategoryType( categoryIndex ) );
         for( int sectorIndex = ACTIVITIES; sectorIndex <= TOTALS; sectorIndex++ ) {
-			if( !( sectorIndex == TOTALS && categoryIndex == TOTALS ) ) {
-				mFile << ',' << mTable->getValue( getString( CategoryType ( sectorIndex ) ),
+            if( !( sectorIndex == TOTALS && categoryIndex == TOTALS ) ) {
+                mFile << ',' << mTable->getValue( getString( CategoryType ( sectorIndex ) ),
                     getString( CategoryType( categoryIndex ) ) );
-			}
-		}
-		mFile << endl;
-	}
-	mFile << endl;
+            }
+        }
+        mFile << endl;
+    }
+    mFile << endl;
 }
 
-void SocialAccountingMatrix::updateHouseholdConsumer( const HouseholdConsumer* householdConsumer,
+void SocialAccountingMatrix::startVisitHouseholdConsumer( const HouseholdConsumer* householdConsumer,
                                                       const int aPeriod ) 
 {
-	// for household column of SAM
-	addToType( HOUSEHOLDS, COMMODITIES,
-        householdConsumer->expenditure.getValue( Expenditure::CONSUMPTION ) );
-	addToType( HOUSEHOLDS, HOUSEHOLDS,
-        householdConsumer->expenditure.getValue( Expenditure::TRANSFERS ) );
-	addToType( HOUSEHOLDS, GOVERNMENT,
-        householdConsumer->expenditure.getValue( Expenditure::DIRECT_TAXES ) );
-	addToType( HOUSEHOLDS, CAPITAL_ACCOUNT,
-        householdConsumer->expenditure.getValue( Expenditure::SAVINGS ) );
+    if( householdConsumer->year == scenario->getModeltime()->getper_to_yr( aPeriod ) ){
+        // for household column of SAM
+        addToType( HOUSEHOLDS, COMMODITIES,
+            householdConsumer->expenditures[ aPeriod ].getValue( Expenditure::CONSUMPTION ) );
+        addToType( HOUSEHOLDS, HOUSEHOLDS,
+            householdConsumer->expenditures[ aPeriod ].getValue( Expenditure::TRANSFERS ) );
+        addToType( HOUSEHOLDS, GOVERNMENT,
+            householdConsumer->expenditures[ aPeriod ].getValue( Expenditure::DIRECT_TAXES ) );
+        addToType( HOUSEHOLDS, CAPITAL_ACCOUNT,
+            householdConsumer->expenditures[ aPeriod ].getValue( Expenditure::SAVINGS ) );
+    }
 }
 
-void SocialAccountingMatrix::updateGovtConsumer( const GovtConsumer* govtConsumer,
+void SocialAccountingMatrix::startVisitGovtConsumer( const GovtConsumer* govtConsumer,
                                                  const int aPeriod )
 {
-	// for government column of SAM
-	addToType( GOVERNMENT, ACTIVITIES,
-        govtConsumer->expenditure.getValue( Expenditure::SUBSIDY ) );
-	addToType( GOVERNMENT, COMMODITIES,
-        govtConsumer->expenditure.getValue( Expenditure::CONSUMPTION ) );
-	addToType( GOVERNMENT, HOUSEHOLDS,
-        govtConsumer->expenditure.getValue( Expenditure::TRANSFERS ) );
-	addToType( GOVERNMENT, CAPITAL_ACCOUNT,
-        govtConsumer->expenditure.getValue( Expenditure::SAVINGS ) );	
+    if( govtConsumer->year == scenario->getModeltime()->getper_to_yr( aPeriod ) ){
+        // for government column of SAM
+        addToType( GOVERNMENT, ACTIVITIES,
+            govtConsumer->expenditures[ aPeriod ].getValue( Expenditure::SUBSIDY ) );
+        addToType( GOVERNMENT, COMMODITIES,
+            govtConsumer->expenditures[ aPeriod ].getValue( Expenditure::CONSUMPTION ) );
+        addToType( GOVERNMENT, HOUSEHOLDS,
+            govtConsumer->expenditures[ aPeriod ].getValue( Expenditure::TRANSFERS ) );
+        addToType( GOVERNMENT, CAPITAL_ACCOUNT,
+            govtConsumer->expenditures[ aPeriod ].getValue( Expenditure::SAVINGS ) );   
+    }
 }
 
-void SocialAccountingMatrix::updateTradeConsumer( const TradeConsumer* tradeConsumer, const int aPeriod )
+void SocialAccountingMatrix::startVisitTradeConsumer( const TradeConsumer* tradeConsumer, const int aPeriod )
 {
-	// for net export or rest of world column of SAM
-	addToType( REST_OF_WORLD, ACTIVITIES,
-        tradeConsumer->expenditure.getValue( Expenditure::TOTAL_IMPORTS ) );
+    if ( tradeConsumer->year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
+        // for net export or rest of world column of SAM
+        addToType( REST_OF_WORLD, ACTIVITIES,
+            tradeConsumer->expenditures[ aPeriod ].getValue( Expenditure::TOTAL_IMPORTS ) );
+    }
 }
 
-void SocialAccountingMatrix::updateInvestConsumer( const InvestConsumer* investConsumer, 
+void SocialAccountingMatrix::startVisitInvestConsumer( const InvestConsumer* investConsumer, 
                                                    const int aPeriod )
 {
-	// for capital account column of SAM
-	addToType( CAPITAL_ACCOUNT, COMMODITIES,
-        investConsumer->expenditure.getValue( Expenditure::INVESTMENT ) );
+    if( investConsumer->year == scenario->getModeltime()->getper_to_yr( aPeriod ) ){
+        // for capital account column of SAM
+        addToType( CAPITAL_ACCOUNT, COMMODITIES,
+            investConsumer->expenditures[ aPeriod ].getValue( Expenditure::INVESTMENT ) );
+    }
 }
 
-void SocialAccountingMatrix::updateProductionTechnology( const ProductionTechnology* prodTech,
-														 const int aPeriod ) 
+void SocialAccountingMatrix::startVisitProductionTechnology( const ProductionTechnology* prodTech,
+                                                         const int aPeriod ) 
 {
-	// for activities column of SAM
-	addToType( ACTIVITIES, COMMODITIES,
-        prodTech->expenditure.getValue( Expenditure::INTERMEDIATE_INPUTS ) );
-	addToType( ACTIVITIES, FACTORS_LABOR, prodTech->expenditure.getValue( Expenditure::WAGES ) );
-	addToType( ACTIVITIES, FACTORS_LAND, prodTech->expenditure.getValue( Expenditure::LAND_RENTS ) );
-	addToType( ACTIVITIES, FACTORS_CAPITAL, prodTech->expenditure.getValue( Expenditure::RENTALS ) );
-	addToType( FACTORS_CAPITAL, ENTERPRISES, prodTech->expenditure.getValue( Expenditure::RENTALS ) );
-	addToType( ACTIVITIES, GOVERNMENT, prodTech->expenditure.getValue( Expenditure::INDIRECT_TAXES ) );
-	
-    // for commodities column of SAM
-	addToType( COMMODITIES, ACTIVITIES, prodTech->expenditure.getValue( Expenditure::SALES ) );
-	addToType( COMMODITIES, GOVERNMENT, prodTech->expenditure.getValue( Expenditure::TARIFFS ) );
-	addToType( COMMODITIES, REST_OF_WORLD, prodTech->expenditure.getValue( Expenditure::IMPORTS ) );
-	
-    // for enterprise column of SAM
-	addToType( ENTERPRISES, HOUSEHOLDS, prodTech->expenditure.getValue( Expenditure::DIVIDENDS ) );
-	addToType( ENTERPRISES, GOVERNMENT, prodTech->expenditure.getValue( Expenditure::DIRECT_TAXES ) );
-	addToType( ENTERPRISES, CAPITAL_ACCOUNT,
-        prodTech->expenditure.getValue( Expenditure::RETAINED_EARNINGS ) );
+    if( aPeriod == -1 || ( prodTech->isAvailable( aPeriod ) && !prodTech->isRetired( aPeriod ) ) ) {
+        // for activities column of SAM
+        addToType( ACTIVITIES, COMMODITIES,
+            prodTech->expenditures[ aPeriod ].getValue( Expenditure::INTERMEDIATE_INPUTS ) );
+        addToType( ACTIVITIES, FACTORS_LABOR, prodTech->expenditures[ aPeriod ].getValue( Expenditure::WAGES ) );
+        addToType( ACTIVITIES, FACTORS_LAND, prodTech->expenditures[ aPeriod ].getValue( Expenditure::LAND_RENTS ) );
+        addToType( ACTIVITIES, FACTORS_CAPITAL, prodTech->expenditures[ aPeriod ].getValue( Expenditure::RENTALS ) );
+        addToType( FACTORS_CAPITAL, ENTERPRISES, prodTech->expenditures[ aPeriod ].getValue( Expenditure::RENTALS ) );
+        addToType( ACTIVITIES, GOVERNMENT, prodTech->expenditures[ aPeriod ].getValue( Expenditure::INDIRECT_TAXES ) );
+
+        // for commodities column of SAM
+        addToType( COMMODITIES, ACTIVITIES, prodTech->expenditures[ aPeriod ].getValue( Expenditure::SALES ) );
+        addToType( COMMODITIES, GOVERNMENT, prodTech->expenditures[ aPeriod ].getValue( Expenditure::TARIFFS ) );
+        addToType( COMMODITIES, REST_OF_WORLD, prodTech->expenditures[ aPeriod ].getValue( Expenditure::IMPORTS ) );
+
+        // for enterprise column of SAM
+        addToType( ENTERPRISES, HOUSEHOLDS, prodTech->expenditures[ aPeriod ].getValue( Expenditure::DIVIDENDS ) );
+        addToType( ENTERPRISES, GOVERNMENT, prodTech->expenditures[ aPeriod ].getValue( Expenditure::DIRECT_TAXES ) );
+        addToType( ENTERPRISES, CAPITAL_ACCOUNT,
+            prodTech->expenditures[ aPeriod ].getValue( Expenditure::RETAINED_EARNINGS ) );
+    }
 }
 
-void SocialAccountingMatrix::updateFactorSupply( const FactorSupply* factorSupply,
+void SocialAccountingMatrix::startVisitFactorSupply( const FactorSupply* factorSupply,
                                                  const int period )
-{	
-	double tempSupply = factorSupply->getSupply( mRegionName, period );
+{   
+    double tempSupply = factorSupply->getSupply( mRegionName, period );
 
-	if( factorSupply->getName() == "Land" ) {
-		// for land column of SAM
-		addToType( FACTORS_LAND, HOUSEHOLDS, tempSupply );
-	}
-	else if( factorSupply->getName() == "Labor" ) {
-		// for labor column of SAM
-		addToType( FACTORS_LABOR, HOUSEHOLDS, tempSupply );
-	}
-	// for factors_capital column see updateProductionTechnology
+    if( factorSupply->getName() == "Land" ) {
+        // for land column of SAM
+        addToType( FACTORS_LAND, HOUSEHOLDS, tempSupply );
+    }
+    else if( factorSupply->getName() == "Labor" ) {
+        // for labor column of SAM
+        addToType( FACTORS_LABOR, HOUSEHOLDS, tempSupply );
+    }
+    // for factors_capital column see startVisitProductionTechnology
     // Is this right?
 }
 

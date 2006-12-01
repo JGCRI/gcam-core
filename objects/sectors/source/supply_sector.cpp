@@ -45,7 +45,7 @@ SupplySector::SupplySector( const string& aRegionName ) : Sector ( aRegionName )
 * \param aDemographics Regional demographics object.
 * \param aPeriod Period for which to initialize the SupplySector.
 */
-void SupplySector::initCalc( NationalAccount& aNationalAccount,
+void SupplySector::initCalc( NationalAccount* aNationalAccount,
                              const Demographic* aDemographics,
                              const int aPeriod )
 {

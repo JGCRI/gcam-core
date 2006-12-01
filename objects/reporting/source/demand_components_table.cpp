@@ -1,12 +1,12 @@
 /*
-	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Laboratory operated by Battelle Memorial
-	Institute. Battelle has certain unperfected rights in the software
-	which should not be copied or otherwise disseminated outside your
-	organization without the express written authorization from Battelle. All rights to
-	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responsibility for the 
-	use of this software.
+This software, which is provided in confidence, was prepared by employees
+of Pacific Northwest National Laboratory operated by Battelle Memorial
+Institute. Battelle has certain unperfected rights in the software
+which should not be copied or otherwise disseminated outside your
+organization without the express written authorization from Battelle. All rights to
+the software are reserved by Battelle.  Battelle makes no warranty,
+express or implied, and assumes no liability or responsibility for the 
+use of this software.
 */
 
 /*! 
@@ -46,10 +46,10 @@ mTable( new StorageTable ){
 }
 
 /*! \brief For outputing SGM data to a flat csv File
- */
+*/
 void DemandComponentsTable::finish() const {
-	
-	mFile << "Demand Components Table" << endl << "Industry" << ',';
+
+    mFile << "Demand Components Table" << endl << "Industry" << ',';
     // Now output the table column labels.
     const vector<string> cols = mTable->getColLabels();
     for( vector<string>::const_iterator col = cols.begin(); col != cols.end(); ++col ){
@@ -57,24 +57,24 @@ void DemandComponentsTable::finish() const {
     }
     mFile << endl;
 
-	// Note: This is structurly different from SAM. This goes through the rows and prints
-	// out each of the category values.
-	mFile.precision(0);
+    // Note: This is structurly different from SAM. This goes through the rows and prints
+    // out each of the category values.
+    mFile.precision(0);
 
     // Get the row labels.
     const vector<string> rows = mTable->getRowLabels();
 
     // Loop through each row and print all the columns.
     for( vector<string>::const_iterator row = rows.begin(); row != rows.end(); ++row ){
-		mFile << *row; // output the row label.
+        mFile << *row; // output the row label.
         for( vector<string>::const_iterator col = cols.begin(); col != cols.end(); ++col ){
             mFile << ',' << mTable->getValue( *row, *col ); // output the value.
-		}
-		mFile << endl;
-	}
-	mFile << endl;
-	// reset format to default
-	mFile.precision(3);
+        }
+        mFile << endl;
+    }
+    mFile << endl;
+    // reset format to default
+    mFile.precision(3);
 }
 
 void DemandComponentsTable::startVisitRegionCGE( const RegionCGE* regionCGE, const int aPeriod ) {
@@ -94,68 +94,70 @@ void DemandComponentsTable::startVisitRegionCGE( const RegionCGE* regionCGE, con
     }
 }
 
-void DemandComponentsTable::updateHouseholdConsumer( const HouseholdConsumer* householdConsumer,
+void DemandComponentsTable::startVisitHouseholdConsumer( const HouseholdConsumer* householdConsumer,
+                                                        const int aPeriod )
+{
+    // add only current year consumer
+    if( householdConsumer->year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
+        for( unsigned int i = 0; i < householdConsumer->input.size(); ++i ){
+            mTable->addToType( householdConsumer->input[ i ]->getName(), getLabel( CONSUMPTION ),
+                householdConsumer->input[ i ]->getDemandCurrency( aPeriod ) );
+        }
+    }
+}
+
+void DemandComponentsTable::startVisitGovtConsumer( const GovtConsumer* govtConsumer,
+                                                   const int aPeriod )
+{
+    // add only current year consumer
+    if( govtConsumer->year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
+        for( unsigned int i = 0; i < govtConsumer->input.size(); ++i ){
+            mTable->addToType( govtConsumer->input[ i ]->getName(), getLabel( GOVERNMENT ),
+                govtConsumer->input[ i ]->getDemandCurrency( aPeriod ) );
+        }
+    }
+}
+
+void DemandComponentsTable::startVisitTradeConsumer( const TradeConsumer* tradeConsumer, const int aPeriod )
+{
+    // add only current year consumer
+    if( tradeConsumer->year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
+        for( unsigned int i = 0; i< tradeConsumer->input.size(); i++ ){
+            mTable->addToType( tradeConsumer->input[ i ]->getName(), getLabel( TRADE ),
+                tradeConsumer->input[ i ]->getDemandCurrency( aPeriod ) );
+        }
+    }
+}
+
+void DemandComponentsTable::startVisitInvestConsumer( const InvestConsumer* investConsumer,
                                                      const int aPeriod )
 {
-	// add only current year consumer
-	if( householdConsumer->year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
-		for( unsigned int i = 0; i < householdConsumer->input.size(); ++i ){
-			mTable->addToType( householdConsumer->input[ i ]->getName(), getLabel( CONSUMPTION ),
-                               householdConsumer->input[ i ]->getDemandCurrency() );
-		}
-	}
-}
-
-void DemandComponentsTable::updateGovtConsumer( const GovtConsumer* govtConsumer,
-                                                const int aPeriod )
-{
-	// add only current year consumer
-	if( govtConsumer->year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
-		for( unsigned int i = 0; i < govtConsumer->input.size(); ++i ){
-			mTable->addToType( govtConsumer->input[ i ]->getName(), getLabel( GOVERNMENT ),
-                               govtConsumer->input[ i ]->getDemandCurrency() );
-		}
-	}
-}
-
-void DemandComponentsTable::updateTradeConsumer( const TradeConsumer* tradeConsumer, const int aPeriod )
-{
-	// add only current year consumer
-	if( tradeConsumer->year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
-		for( unsigned int i = 0; i< tradeConsumer->input.size(); i++ ){
-			mTable->addToType( tradeConsumer->input[ i ]->getName(), getLabel( TRADE ),
-                               tradeConsumer->input[ i ]->getDemandCurrency() );
-		}
-	}
-}
-
-void DemandComponentsTable::updateInvestConsumer( const InvestConsumer* investConsumer,
-                                                  const int aPeriod )
-{
-	// add only current year consumer
-	if( investConsumer->year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
-		for( unsigned int i = 0; i < investConsumer->input.size(); ++i ){
-			mTable->addToType( investConsumer->input[ i ]->getName(), getLabel( INVESTMENT ),
-                               investConsumer->input[ i ]->getDemandCurrency() );
-		}
-	}
-}
-
-void DemandComponentsTable::updateProductionTechnology( const ProductionTechnology* prodTech,
-													    const int aPeriod ) 
-{
-    for( unsigned int i=0; i<prodTech->input.size(); i++ ){
-        // if capital, add only current vintage demand
-        if( prodTech->input[i]->getName() == "Capital" ) {
-            if( prodTech->getYear() == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
-                mTable->addToType( prodTech->input[ i ]->getName(), getLabel( INTERMED ),
-                                   prodTech->input[ i ]->getDemandCurrency() );
-            }
+    // add only current year consumer
+    if( investConsumer->year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
+        for( unsigned int i = 0; i < investConsumer->input.size(); ++i ){
+            mTable->addToType( investConsumer->input[ i ]->getName(), getLabel( INVESTMENT ),
+                investConsumer->input[ i ]->getDemandCurrency( aPeriod ) );
         }
-        // for all other inputs, add all vintages
-        else {
-            mTable->addToType( prodTech->input[ i ]->getName(), getLabel( INTERMED ),
-                               prodTech->input[ i ]->getDemandCurrency() );
+    }
+}
+
+void DemandComponentsTable::startVisitProductionTechnology( const ProductionTechnology* prodTech,
+                                                           const int aPeriod ) 
+{
+    if( aPeriod == -1 || ( prodTech->isAvailable( aPeriod ) && !prodTech->isRetired( aPeriod ) ) ) {
+        for( unsigned int i=0; i<prodTech->input.size(); i++ ){
+            // if capital, add only current vintage demand
+            if( prodTech->input[i]->getName() == "Capital" ) {
+                if( prodTech->getYear() == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
+                    mTable->addToType( prodTech->input[ i ]->getName(), getLabel( INTERMED ),
+                        prodTech->input[ i ]->getDemandCurrency( aPeriod ) );
+                }
+            }
+            // for all other inputs, add all vintages
+            else {
+                mTable->addToType( prodTech->input[ i ]->getName(), getLabel( INTERMED ),
+                    prodTech->input[ i ]->getDemandCurrency( aPeriod ) );
+            }
         }
     }
 }

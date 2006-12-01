@@ -5,14 +5,14 @@
 #endif
 
 /*
-	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Laboratory operated by Battelle Memorial
-	Institute. Battelle has certain unperfected rights in the software
-	which should not be copied or otherwise disseminated outside your
-	organization without the express written authorization from Battelle. All rights to
-	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responsibility for the 
-	use of this software.
+    This software, which is provided in confidence, was prepared by employees
+    of Pacific Northwest National Laboratory operated by Battelle Memorial
+    Institute. Battelle has certain unperfected rights in the software
+    which should not be copied or otherwise disseminated outside your
+    organization without the express written authorization from Battelle. All rights to
+    the software are reserved by Battelle.  Battelle makes no warranty,
+    express or implied, and assumes no liability or responsibility for the 
+    use of this software.
 */
 
 /*! 
@@ -39,8 +39,8 @@
 
 class StorageTable {
 public:
-	StorageTable();
-	void clear();
+    StorageTable();
+    void clear();
     bool isEmpty() const;
     void addColumn( const std::string& aCol );
     void addToType( const int aRow, const std::string& aCol, const double aValue );
@@ -73,7 +73,7 @@ private:
         std::string label;
         std::vector<Row> rows;
     };
-	InternalTable mInternalTable; //!< The internal storage.
+    InternalTable mInternalTable; //!< The internal storage.
 };
 
 #endif // _STORAGE_TABLE_H_

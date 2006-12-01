@@ -329,7 +329,7 @@ void DemandSector::scaleOutput( int period, double scaleFactor ) {
 * \param aDemographics Regional demographics object.
 * \param aPeriod Period for which to initialize the DemandSector.
 */
-void DemandSector::initCalc( NationalAccount& nationalAccount, const Demographic* aDemographics, const int aPeriod )
+void DemandSector::initCalc( NationalAccount* nationalAccount, const Demographic* aDemographics, const int aPeriod )
 {
     Sector::initCalc( nationalAccount, aDemographics, aPeriod );
     

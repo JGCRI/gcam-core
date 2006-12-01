@@ -90,7 +90,7 @@ void FinalDemandSector::operate( NationalAccount& aNationalAccount, const Demogr
 * \param aDemographics Demographics object
 * \param aPeriod Period to initialize
 */
-void FinalDemandSector::initCalc( NationalAccount& aNationalAccount,
+void FinalDemandSector::initCalc( NationalAccount* aNationalAccount,
                                   const Demographic* aDemographics,
                                   const int aPeriod )
 {

@@ -167,7 +167,7 @@ void TranSubsector::completeInit( const IInfo* aSectorInfo,
 * \param aMoreSectorInfo SGM sector info object.
 * \param aPeriod Model period
 */
-void TranSubsector::initCalc( NationalAccount& aNationalAccount,
+void TranSubsector::initCalc( NationalAccount* aNationalAccount,
                               const Demographic* aDemographics,
                               const MoreSectorInfo* aMoreSectorInfo,
                               const int aPeriod )

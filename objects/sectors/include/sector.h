@@ -58,7 +58,7 @@ protected:
     std::string regionName; //!< region name
 
     //! Type of the sector.
-	std::string mSectorType;
+    std::string mSectorType;
 
     double mBaseOutput; //!< Read in base year output.
     std::auto_ptr<IInfo> mSectorInfo; //!< Pointer to the sector's information store.
@@ -109,7 +109,7 @@ public:
                                ILandAllocator* aLandAllocator,
                                const GlobalTechnologyDatabase* aGlobalTechDB ) = 0;
     
-    virtual void initCalc( NationalAccount& aNationalAccount,
+    virtual void initCalc( NationalAccount* aNationalAccount,
                            const Demographic* aDemographics,
                            const int aPeriod ) = 0;
 
@@ -131,7 +131,7 @@ public:
     bool inputsAllFixed( const int period, const std::string& goodName ) const;
     double getCalAndFixedInputs( const int period, const std::string& goodName, const bool bothVals = true ) const;
     double getCalAndFixedOutputs( const int period, const std::string& goodName, const bool bothVals = true ) const;
-	double getCalOutput( const int period, const std::string aSectorType ) const;
+    double getCalOutput( const int period, const std::string aSectorType ) const;
     void setImpliedFixedInput( const int period, const std::string& goodName, const double requiredOutput );
     virtual void scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue );
 

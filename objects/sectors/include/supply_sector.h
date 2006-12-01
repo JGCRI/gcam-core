@@ -33,7 +33,7 @@ public:
                                const GlobalTechnologyDatabase* aGlobalTechDB );
 
     
-    virtual void initCalc( NationalAccount& aNationalAccount,
+    virtual void initCalc( NationalAccount* aNationalAccount,
                            const Demographic* aDemographics,
                            const int aPeriod );
 

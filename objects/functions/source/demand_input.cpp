@@ -41,8 +41,10 @@ DemandInput* DemandInput::clone() const {
     return new DemandInput( *this );
 }
 
-void DemandInput::copyParam( const Input* aInput ) {
-    Input::copyParam( aInput );
+void DemandInput::copyParam( const Input* aInput,
+                             const int aPeriod )
+{
+    Input::copyParam( aInput, aPeriod );
     aInput->copyParamsInto( *this );
 }
 
@@ -114,6 +116,7 @@ const string& DemandInput::getXMLNameStatic() {
 }
 
 void DemandInput::accept( IVisitor* aVisitor, const int aPeriod ) const {
+    aVisitor->startVisitDemandInput( this, aPeriod );
     Input::accept( aVisitor, aPeriod );
-	aVisitor->updateDemandInput( this );
+    aVisitor->endVisitDemandInput( this, aPeriod );
 }

@@ -63,7 +63,8 @@ public:
 	static void scaleCoefficientInputs( std::vector<Input*>& input,
                                         double scaler );
     
-    static double getDemandSum( const std::vector<Input*>& aInputs );
+    static double getDemandSum( const std::vector<Input*>& aInputs,
+                                const int aPeriod );
     
     static double getCoefSum( const std::vector<Input*>& input );
     
@@ -77,7 +78,8 @@ public:
     static double getRho( const double aSigma );
     
     static double getNetPresentValueMult( const std::vector<Input*>& aInputs,
-                                          const double aLifetimeYears );
+                                          const double aLifetimeYears,
+                                          const int aPeriod );
     
     static double calcNetPresentValueMult( const double aDiscountRate,
                                            const double aLifetime );

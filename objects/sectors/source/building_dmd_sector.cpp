@@ -131,7 +131,7 @@ const std::string& BuildingDemandSector::getXMLNameStatic() {
 *
 * \author Steve Smith
 */
-void BuildingDemandSector::initCalc( NationalAccount& aNationalAccount,
+void BuildingDemandSector::initCalc( NationalAccount* aNationalAccount,
                                      const Demographic* aDemographic,
                                      const int aPeriod )
 {

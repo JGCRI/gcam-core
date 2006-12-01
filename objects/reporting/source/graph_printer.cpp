@@ -56,16 +56,16 @@ mCorrectRegion( false )
 * \param aPeriod Period for which to visit.
 */
 void GraphPrinter::startVisitRegion( const Region* aRegion, const int aPeriod ){
-	// Check if this is the region to print.
-	if( aRegion->getName() == mRegionToPrint ){
-		mCorrectRegion = true;
-		// Print the graph header.
-		mFile << "digraph " << util::replaceSpaces( aRegion->getName() ) << " {" << endl;
-	}
-	else {
-		// Don't print this region.
-		mCorrectRegion = false;
-	}
+    // Check if this is the region to print.
+    if( aRegion->getName() == mRegionToPrint ){
+        mCorrectRegion = true;
+        // Print the graph header.
+        mFile << "digraph " << util::replaceSpaces( aRegion->getName() ) << " {" << endl;
+    }
+    else {
+        // Don't print this region.
+        mCorrectRegion = false;
+    }
 }
 
 /*!
@@ -75,10 +75,10 @@ void GraphPrinter::startVisitRegion( const Region* aRegion, const int aPeriod ){
 * \param aPeriod Period for which to visit.
 */
 void GraphPrinter::endVisitRegion( const Region* aRegion, const int aPeriod ){
-	if( mCorrectRegion ){
-		// Now close the graph.
-		mFile << "}" << endl << endl;
-	}
+    if( mCorrectRegion ){
+        // Now close the graph.
+        mFile << "}" << endl << endl;
+    }
 }
 
 /*! \brief Add the resource to a dependency graph.
@@ -89,13 +89,13 @@ void GraphPrinter::endVisitRegion( const Region* aRegion, const int aPeriod ){
 * \param aPeriod Period for which to output.
 */
 void GraphPrinter::startVisitResource( const Resource* aResource, const int aPeriod ){
-	if( !mCorrectRegion ){
-		return;
-	}
+    if( !mCorrectRegion ){
+        return;
+    }
 
-	// Output a node with the resource label and styling.
-	mFile << "\t" << util::replaceSpaces( aResource->getName() ) << "[label=\"" << aResource->getName() 
-		    << "\", shape=box, style=filled, color=indianred1 ];" << endl;
+    // Output a node with the resource label and styling.
+    mFile << "\t" << util::replaceSpaces( aResource->getName() ) << "[label=\"" << aResource->getName() 
+            << "\", shape=box, style=filled, color=indianred1 ];" << endl;
 }
 
 /*! \brief Add the sector to a dependency graph.
@@ -106,16 +106,16 @@ void GraphPrinter::startVisitResource( const Resource* aResource, const int aPer
 * \param aPeriod Period for which to output.
 */
 void GraphPrinter::startVisitSector( const Sector* aSector, const int aPeriod ){
-	if( !mCorrectRegion ){
-		return;
-	}
+    if( !mCorrectRegion ){
+        return;
+    }
 
-	// Store the name of the current sector without spaces, this is the name of
+    // Store the name of the current sector without spaces, this is the name of
     // the node in the graph.
-	mCurrSectorName = util::replaceSpaces( aSector->getName() );
+    mCurrSectorName = util::replaceSpaces( aSector->getName() );
 
-	// Write out a node with a label.
-	mFile << "\t" << mCurrSectorName << "[label=\"" << aSector->getName() << "\"];" << endl;
+    // Write out a node with a label.
+    mFile << "\t" << mCurrSectorName << "[label=\"" << aSector->getName() << "\"];" << endl;
 }
 
 /*! \brief Visits the demand sector.
@@ -126,12 +126,12 @@ void GraphPrinter::startVisitSector( const Sector* aSector, const int aPeriod ){
 * \author Josh Lurz
 */
 void GraphPrinter::startVisitDemandSector( const DemandSector* aDemandSector, const int aPeriod ){
-	if( !mCorrectRegion ){
-		return;
-	}
-	// output sector coloring here.
+    if( !mCorrectRegion ){
+        return;
+    }
+    // output sector coloring here.
    mFile << "\t" << util::replaceSpaces( aDemandSector->getName() )
-	       << " [style=filled, color=steelblue1 ];" << endl;
+           << " [style=filled, color=steelblue1 ];" << endl;
 }
 
 /*! \brief Add the technology to the graph.
@@ -148,67 +148,67 @@ void GraphPrinter::startVisitDemandSector( const DemandSector* aDemandSector, co
 * \param aPeriod Period to output.
 */
 void GraphPrinter::startVisitTechnology( const technology* aTechnology, const int aPeriod ){
-	if( !mCorrectRegion ){
-		return;
-	}
-	
-	// Do not show links with values below this.
-	const double DISPLAY_THRESHOLD = 1E-5;
-	
-	// Number of digits to print of the value on the graph.
-	const unsigned int DISPLAY_PRECISION = 2;
+    if( !mCorrectRegion ){
+        return;
+    }
+    
+    // Do not show links with values below this.
+    const double DISPLAY_THRESHOLD = 1E-5;
+    
+    // Number of digits to print of the value on the graph.
+    const unsigned int DISPLAY_PRECISION = 2;
 
-	// Values at which to switch the type of line used to display the link.
-	const double DOTTED_LEVEL = 1.0;
-	const double DASHED_LEVEL = 5.0;
-	const double LINE_LEVEL = 10.0;
+    // Values at which to switch the type of line used to display the link.
+    const double DOTTED_LEVEL = 1.0;
+    const double DASHED_LEVEL = 5.0;
+    const double LINE_LEVEL = 10.0;
 
-	// Set whether to print prices or quantities on the graph. Initialize the
-	// value of the line to a price or quantity.
-	double graphValue = 0;
-	const static bool printPrices = Configuration::getInstance()->getBool( "PrintPrices", false );
-	if( printPrices ){
-		graphValue = scenario->getMarketplace()->getPrice( aTechnology->getFuelName(), mRegionToPrint,
-			                                               aPeriod, false );
-		// Technologies with fake fuels will have a price equal to
-		// NO_MARKET_PRICE at this point. Reset the price to 0.
-		if( graphValue == Marketplace::NO_MARKET_PRICE ){
-			graphValue = 0;
-		}
-	} 
-	else {
-		graphValue = aTechnology->getInput();
-	}
+    // Set whether to print prices or quantities on the graph. Initialize the
+    // value of the line to a price or quantity.
+    double graphValue = 0;
+    const static bool printPrices = Configuration::getInstance()->getBool( "PrintPrices", false );
+    if( printPrices ){
+        graphValue = scenario->getMarketplace()->getPrice( aTechnology->getFuelName(), mRegionToPrint,
+                                                           aPeriod, false );
+        // Technologies with fake fuels will have a price equal to
+        // NO_MARKET_PRICE at this point. Reset the price to 0.
+        if( graphValue == Marketplace::NO_MARKET_PRICE ){
+            graphValue = 0;
+        }
+    } 
+    else {
+        graphValue = aTechnology->getInput();
+    }
 
-	// Add the edge to the graph with a weight determined by the value.
-	const static bool showNullPaths = Configuration::getInstance()->getBool( "ShowNullPaths", false );
-	if( showNullPaths || graphValue >  DISPLAY_THRESHOLD ) {
-		mFile << "\t" << util::replaceSpaces( aTechnology->getFuelName() ) << " -> " << mCurrSectorName;
-		mFile << " [style=\"";
-		if( graphValue < DOTTED_LEVEL ) {
-			mFile << "dotted";
-		}
-		else if ( graphValue < DASHED_LEVEL ) {
-			mFile << "dashed";
-		}
-		else if ( graphValue < LINE_LEVEL ) {
-			mFile << "";
-		}
-		else {
-			mFile << "bold";
-		}
+    // Add the edge to the graph with a weight determined by the value.
+    const static bool showNullPaths = Configuration::getInstance()->getBool( "ShowNullPaths", false );
+    if( showNullPaths || graphValue >  DISPLAY_THRESHOLD ) {
+        mFile << "\t" << util::replaceSpaces( aTechnology->getFuelName() ) << " -> " << mCurrSectorName;
+        mFile << " [style=\"";
+        if( graphValue < DOTTED_LEVEL ) {
+            mFile << "dotted";
+        }
+        else if ( graphValue < DASHED_LEVEL ) {
+            mFile << "dashed";
+        }
+        else if ( graphValue < LINE_LEVEL ) {
+            mFile << "";
+        }
+        else {
+            mFile << "bold";
+        }
 
-		mFile << "\"";
-	
-		// Add a label to the graph optionally showing the weight, either the
+        mFile << "\"";
+    
+        // Add a label to the graph optionally showing the weight, either the
         // price of the quantity.
-		const static bool printValues = Configuration::getInstance()->getBool( "PrintValuesOnGraphs", false );
-		if( printValues ) {
-			mFile << ",label=\"";
-			mFile << setiosflags( ios::fixed | ios::showpoint ) << setprecision( DISPLAY_PRECISION );
-			mFile << graphValue;
-			mFile << "\"";
-		}
-		mFile << "];" << endl;
-	}
+        const static bool printValues = Configuration::getInstance()->getBool( "PrintValuesOnGraphs", false );
+        if( printValues ) {
+            mFile << ",label=\"";
+            mFile << setiosflags( ios::fixed | ios::showpoint ) << setprecision( DISPLAY_PRECISION );
+            mFile << graphValue;
+            mFile << "\"";
+        }
+        mFile << "];" << endl;
+    }
 }

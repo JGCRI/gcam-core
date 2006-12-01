@@ -168,6 +168,9 @@
 					RelativePath="..\..\containers\source\region_cge.cpp">
 				</File>
 				<File
+					RelativePath="..\..\containers\source\region_minicam.cpp">
+				</File>
+				<File
 					RelativePath="..\..\containers\source\scenario.cpp">
 				</File>
 				<File
@@ -844,6 +847,9 @@
 				</File>
 				<File
 					RelativePath="..\..\containers\include\region_cge.h">
+				</File>
+				<File
+					RelativePath="..\..\containers\include\region_minicam.h">
 				</File>
 				<File
 					RelativePath="..\..\containers\include\scenario.h">

@@ -5,14 +5,14 @@
 #endif
 
 /*
-	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Laboratory operated by Battelle Memorial
-	Institute. Battelle has certain unperfected rights in the software
-	which should not be copied or otherwise disseminated outside your
-	organization without the express written authorization from Battelle. All rights to
-	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responsibility for the 
-	use of this software.
+    This software, which is provided in confidence, was prepared by employees
+    of Pacific Northwest National Laboratory operated by Battelle Memorial
+    Institute. Battelle has certain unperfected rights in the software
+    which should not be copied or otherwise disseminated outside your
+    organization without the express written authorization from Battelle. All rights to
+    the software are reserved by Battelle.  Battelle makes no warranty,
+    express or implied, and assumes no liability or responsibility for the 
+    use of this software.
 */
 
 /*! 
@@ -43,12 +43,12 @@ class DemandComponentsTable : public DefaultVisitor {
 public:
     DemandComponentsTable( std::ostream& aFile );
     void finish() const;
-	void startVisitRegionCGE( const RegionCGE* regionCGE, const int aPeriod );
-	void updateHouseholdConsumer( const HouseholdConsumer* householdConsumer, const int aPeriod );
-	void updateGovtConsumer( const GovtConsumer* govtConsumer, const int aPeriod );
-	void updateTradeConsumer( const TradeConsumer* tradeConsumer, const int aPeriod );
-	void updateInvestConsumer( const InvestConsumer* investConsumer, const int aPeriod );
-	void updateProductionTechnology( const ProductionTechnology* prodTech, const int aPeriod );
+    void startVisitRegionCGE( const RegionCGE* regionCGE, const int aPeriod );
+    void startVisitHouseholdConsumer( const HouseholdConsumer* householdConsumer, const int aPeriod );
+    void startVisitGovtConsumer( const GovtConsumer* govtConsumer, const int aPeriod );
+    void startVisitTradeConsumer( const TradeConsumer* tradeConsumer, const int aPeriod );
+    void startVisitInvestConsumer( const InvestConsumer* investConsumer, const int aPeriod );
+    void startVisitProductionTechnology( const ProductionTechnology* prodTech, const int aPeriod );
 private:
     //! The type of the demand components category.
     enum CategoryType {

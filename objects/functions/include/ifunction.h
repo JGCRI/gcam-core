@@ -68,11 +68,15 @@ public:
         const std::string& aRegionName, const std::string& aSectorName, int aPeriod, double aSigma = 0, 
         double aIBT = 0, double aCapitalStock = 0 ) const = 0;
 
-	virtual double transformCoefficients( std::vector<Input*>& aInputs, double aPriceReceived, 
-        double aAlphaZero = 0, double aSigma = 0 ) const = 0;
+	virtual double transformCoefficients( std::vector<Input*>& aInputs,
+                                          double aPriceReceived,
+                                          const int aPeriod,
+                                          double aAlphaZero = 0,
+                                          double aSigma = 0 ) const = 0;
 	
     virtual double changeElasticity( std::vector<Input*>& aInputs, double aPriceReceived, 
-        double aProfits, double aCapitalStock, double aAlphaZero = 0, double aSigmaNew = 0, 
+        double aProfits, double aCapitalStock, const int aPeriod,
+        double aAlphaZero = 0, double aSigmaNew = 0, 
         double aSigmaOld = 0 ) const = 0;
 	
     virtual double applyTechnicalChange( std::vector<Input*>& aInputs, const TechChange& aTechChange,

@@ -43,6 +43,7 @@ Input::Input() {
     // Initially set the special types as false until we parse the input.
     mIsNumeraire = false;
     mIsCapital = false;
+    mIsFixedTrade = false;
 }
 
 //! Destructor
@@ -71,7 +72,7 @@ void Input::XMLParse( const xercesc::DOMNode* node ) {
             mCoefficient.init( XMLHelper<double>::getValue( curr ) );
         }
         else if( nodeName == "demandCurrency" ) {
-            mDemandCurrency.init( XMLHelper<double>::getValue( curr ) );
+            mInitialDemandCurrency = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "priceAdjustFactor" ) {
             mPriceAdjustFactor.init( XMLHelper<double>::getValue( curr ) );
@@ -85,7 +86,13 @@ void Input::XMLParse( const xercesc::DOMNode* node ) {
     }
 }
 
-void Input::completeInit(){
+void Input::completeInit( const unsigned int aFirstOperationalPeriod )
+{
+    // Copy in the read-in value which is assumed to be for the start year.
+    if( mInitialDemandCurrency.isInited() ){
+        mDemandCurrency[ aFirstOperationalPeriod ] = mInitialDemandCurrency;
+    }
+
     // If the input has a special type, store it for speed.
     mIsCapital = ( mName == "Capital" );
 
@@ -95,13 +102,44 @@ void Input::completeInit(){
     mIsNumeraire = ( mName == numeraireInputName );
 }
 
-void Input::copyParam( const Input* aInput ){
+void Input::initCalc( const string& aRegionName,
+                      const bool aIsTrade,
+                      const int aPeriod )
+{
+    // Determine if this is a fixed trade good.
+    // Note: Currently fixed trade is not determined on a per period basis.
+    if( aIsTrade && !isFactorSupply() ){
+        const Marketplace* marketplace = scenario->getMarketplace();
+        const IInfo* marketInfo =
+            scenario->getMarketplace()->getMarketInfo( mName, aRegionName,
+            aPeriod,
+            true );
+
+        // An input is fixed trade if it is in a trade consumer, not fixed price,
+        // and not a factor supply.
+        mIsFixedTrade = marketInfo ? !marketInfo->getBoolean( "IsFixedPrice",
+            false ) : true;
+    }
+
+    // Demand currencies for capital and fixed trade should be copied forward
+    // as they are read-in.
+    if( aPeriod > 0 && !mDemandCurrency[ aPeriod ].isInited() &&
+        ( isCapital() || mIsFixedTrade ) ){
+        mDemandCurrency[ aPeriod ] = mDemandCurrency[ aPeriod - 1 ];
+    }
+}
+
+void Input::copyParam( const Input* aInput,
+                       const int aPeriod )
+{
     // Name must be already defined.
     mCoefficient.set( aInput->mCoefficient );
-    mPricePaid.set( aInput->mPricePaid );
+    mPricePaid = aInput->mPricePaid;
+
+    if( !mInitialDemandCurrency.isInited() ){
+        mInitialDemandCurrency = aInput->mInitialDemandCurrency;
+    }
     
-    // Parameters which should not get copied forward if they didn't exist.
-    mDemandCurrency.init( aInput->mDemandCurrency );
     mPriceAdjustFactor.init( aInput->mPriceAdjustFactor );
     mTechnicalChange.init( aInput->mTechnicalChange );
 }
@@ -112,7 +150,7 @@ void Input::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag ( getXMLName(), out, tabs, mName );
 
     XMLWriteElement( mCoefficient, "coefficient", out, tabs );
-    XMLWriteElement( mDemandCurrency, "demandCurrency", out, tabs );
+    XMLWriteElement( mInitialDemandCurrency, "demandCurrency", out, tabs );
     XMLWriteElement( mConversionFactor, "conversionFactor", out, tabs );
     XMLWriteElement( mPriceAdjustFactor, "priceAdjustFactor", out, tabs );
 
@@ -129,8 +167,8 @@ void Input::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag ( getXMLName(), out, tabs, mName );
 
     XMLWriteElement( mCoefficient, "coefficient", out, tabs );
-    XMLWriteElement( mDemandCurrency, "demandCurrency", out, tabs );
-    XMLWriteElement( mPricePaid, "pricePaid", out, tabs );
+    XMLWriteElement( mDemandCurrency[ period ], "demandCurrency", out, tabs );
+    XMLWriteElement( mPricePaid[ period ], "pricePaid", out, tabs );
     XMLWriteElement( mConversionFactor, "conversionFactor", out, tabs );
     XMLWriteElement( mPriceAdjustFactor, "priceAdjustFactor", out, tabs );
 
@@ -220,16 +258,21 @@ double Input::getGHGCoefficient( const string& aGHGName, const string& aRegionNa
 *          factor for the input.
 * \param aRegionName The region name containing the good, needed to determine
 *        the conversion factor.
+* \param aPeriod Model period.
 * \return The demand for this input in physical units.
 * \author Josh Lurz
 */
-double Input::getDemandPhysical( const string& aRegionName ) const {
-    return mDemandCurrency * getConversionFactor( aRegionName );
+double Input::getDemandPhysical( const string& aRegionName,
+                                 const int aPeriod ) const
+{
+    assert( isCapital() || mDemandCurrency[ aPeriod ].isInited() );
+    return mDemandCurrency[ aPeriod ] * getConversionFactor( aRegionName );
 }
 
 //! Get the Currency Demand
-double Input::getDemandCurrency() const {
-    return mDemandCurrency;
+double Input::getDemandCurrency( const int aPeriod ) const {
+    assert( isCapital() || mIsFixedTrade || mDemandCurrency[ aPeriod ].isInited() );
+    return mDemandCurrency[ aPeriod ];
 }
 
 /*! \brief Get the technical change which should be applied to the input.
@@ -272,9 +315,17 @@ double Input::getTechChange( double aEnergyTechChange, double aMaterialTechChang
 }
 
 //! Set Currency Demand.
-void Input::setDemandCurrency( double aDemandCurrency, const string& aRegionName,
-                               const string& aSectorName, int aPeriod )  {
-    mDemandCurrency.set( aDemandCurrency );
+void Input::setDemandCurrency( double aDemandCurrency,
+                               const string& aRegionName,
+                               const string& aSectorName,
+                               int aPeriod ) 
+{
+    // For fixed trade, the value set to the demand currency is equal
+    // to the read in fixed demand currency.
+    assert( !mIsFixedTrade ||
+        util::isEqual( aDemandCurrency, mDemandCurrency[ aPeriod ].get() ) );
+
+    mDemandCurrency[ aPeriod ] = aDemandCurrency;
     Marketplace* marketplace = scenario->getMarketplace();
     /* Removing this check becuase it is activated by trade and the government. 
     if( aDemandCurrency < 0 ){
@@ -282,7 +333,7 @@ void Input::setDemandCurrency( double aDemandCurrency, const string& aRegionName
              << " from " << aSectorName << " in " << aRegionName << "." <<endl;
     }
     */
-    marketplace->addToDemand( mName, aRegionName, mDemandCurrency, aPeriod );
+    marketplace->addToDemand( mName, aRegionName, aDemandCurrency, aPeriod );
 }
 
 //! Function to get the input-output coefficient
@@ -316,20 +367,24 @@ double Input::getPrice( const string& aRegionName, const int aPeriod ) const {
     return scenario->getMarketplace()->getPrice( mName, aRegionName, aPeriod );
 }
 
-/*! \brief Returns the price paid for each input.
-*
+/*!
+ * \brief Returns the price paid for each input.
+ * \param aPeriod Model period.
 * \author Sonny Kim
 */
-double Input::getPricePaid() const {
-    return mPricePaid;
+double Input::getPricePaid( const int aPeriod ) const {
+    assert( mPricePaid[ aPeriod ].isInited() );
+    return mPricePaid[ aPeriod ];
 }
 /*! \brief Set the price paid for each input.
-*
 * \param aPricePaid new price paid value
+ * \param aPeriod Model period.
 * \author Sonny Kim
 */
-void Input::setPricePaid( double aPricePaid ) {
-    mPricePaid.set( aPricePaid );
+void Input::setPricePaid( double aPricePaid,
+                          const int aPeriod )
+{
+    mPricePaid[ aPeriod ] = aPricePaid;
 }
 /*! \brief Returns the price received for an input.
 * \details Queries the marketplace and get the price received from the market info.
@@ -460,11 +515,12 @@ double Input::getMarketConversionFactor( const string& aInputName, const string&
 void Input::csvSGMOutputFile( ostream& aFile, const int period ) const {
     aFile << mName << ',';
     aFile.precision(0);
-    aFile << mDemandCurrency << ',';
+    aFile << mDemandCurrency[ period ] << ',';
     aFile.precision(3);
-    aFile << mPricePaid << endl;
+    aFile << mPricePaid[ period ] << endl;
 }
 
 void Input::accept( IVisitor* aVisitor, const int aPeriod ) const {
-    aVisitor->updateInput( this );
+    aVisitor->startVisitInput( this, aPeriod );
+    aVisitor->endVisitInput( this, aPeriod );
 }

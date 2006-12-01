@@ -85,7 +85,7 @@ const std::string& ForestDemandSector::getXMLNameStatic() {
 * \author James Blackwood
 * \param period Model period
 */
-void ForestDemandSector::initCalc( NationalAccount& aNationalAccount, const Demographic* aDemographics, const int aPeriod )
+void ForestDemandSector::initCalc( NationalAccount* aNationalAccount, const Demographic* aDemographics, const int aPeriod )
 {
     // Set a string defining the good consumed by this sector. 
     // If there is more than one good then calibration logic will not work

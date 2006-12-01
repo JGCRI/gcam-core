@@ -29,7 +29,7 @@ class IntermittentSupplySector: public SupplySector
 public:
     IntermittentSupplySector ( const std::string regionNameIn );
     static const std::string& getXMLNameStatic();
-    virtual void initCalc( NationalAccount& nationalAccount,
+    virtual void initCalc( NationalAccount* nationalAccount,
                            const Demographic* aDemographics,
                            const int aPeriod );
 protected:

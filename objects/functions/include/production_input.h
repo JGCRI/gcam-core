@@ -43,7 +43,10 @@ class ProductionInput : public Input
 public:
     ProductionInput();
     ProductionInput* clone() const ;
-    void copyParam( const Input* aInput );
+    
+    virtual void copyParam( const Input* aInput,
+                            const int aPeriod );
+
     void copyParamsInto( ProductionInput& aProductionInput ) const;
     void copyParamsInto( DemandInput& aDemandInput ) const { assert( false ); }
     static const std::string& getXMLNameStatic();

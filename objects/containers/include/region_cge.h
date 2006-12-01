@@ -41,6 +41,7 @@ class RegionCGE : public Region
     friend class SectorReport;
     friend class SGMGenTable;
     friend class InputOutputTable;
+    friend class XMLDBOutputter;
 public:
     RegionCGE();
     ~RegionCGE(); 
@@ -48,19 +49,18 @@ public:
     virtual void completeInit( const GlobalTechnologyDatabase* aGlobalTechDB );
     virtual void initCalc( const int period);
     virtual void calc( const int period, const bool aDoCalibrations );
-    void updateMarketplace( const int period );
-    void updateAllOutputContainers( const int period );
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
-    void accept( IVisitor* aVisitor, const int period ) const;
-    void csvSGMGenFile( std::ostream& aFile ) const;
+    virtual void updateMarketplace( const int period );
+    virtual void updateAllOutputContainers( const int period );
+    virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
+    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
+    virtual void csvSGMGenFile( std::ostream& aFile ) const;
 
 protected:
     const static std::string XML_NAME; //!< node name for toXML method.
     std::vector<FinalDemandSector*> finalDemandSector; //!< vector of pointers to supply sector objects
     std::vector<FactorSupply*> factorSupply; //!< vector of pointers to factor supply objects
 	std::vector<SGMGenTable*> mOutputContainers; //!< vector of output containers
-    std::map<std::string,int> finalDemandSectorNameMap; //!< Map of FinalDemandSector name to integer position in vector. 
-    std::map<std::string,int> factorSupplyNameMap; //!< Map of factor supply name to integer position in vector. 
+    std::vector<NationalAccount*> mNationalAccounts; //!< vector of NationalAccounts, one for each period.
 
     typedef std::vector<FinalDemandSector*>::iterator FinalDemandSectorIterator;
     typedef std::vector<FinalDemandSector*>::const_iterator CFinalDemandSectorIterator;

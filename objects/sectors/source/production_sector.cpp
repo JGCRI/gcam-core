@@ -68,15 +68,15 @@ bool ProductionSector::XMLDerivedClassParse( const string& nodeName, const DOMNo
         mInvestor.reset( new MarketBasedInvestor() );
         mInvestor->XMLParse( curr );
     }
-	else if( nodeName == "market" ){
-		mMarketName = XMLHelper<string>::getValue( curr );
-	}
+    else if( nodeName == "market" ){
+        mMarketName = XMLHelper<string>::getValue( curr );
+    }
     // Note: This behavior is either on or off, not by period currently.
     else if( nodeName == "FixedPricePath" ){
         mIsFixedPrice = XMLHelper<bool>::getValue( curr );
-	} 
+    } 
     else if( nodeName == "ghgEmissCoef" ){
-		ghgEmissCoefMap[ XMLHelper<string>::getAttr( curr, "name" ) ] = XMLHelper<double>::getValue( curr );
+        ghgEmissCoefMap[ XMLHelper<string>::getAttr( curr, "name" ) ] = XMLHelper<double>::getValue( curr );
     } 
     else if( nodeName == "IsEnergyGood" ){
         mIsEnergyGood = XMLHelper<bool>::getValue( curr );
@@ -104,7 +104,7 @@ void ProductionSector::toInputXMLDerived( std::ostream& out, Tabs* tabs ) const 
     if( mInvestor.get() ){
         mInvestor->toInputXML( out, tabs );
     }
-	// write out the market string.
+    // write out the market string.
     XMLWriteElement( mMarketName, "market", out, tabs );
     XMLWriteElementCheckDefault( mIsFixedPrice, "FixedPricePath", out, tabs );
     XMLWriteElementCheckDefault( mIsEnergyGood, "IsEnergyGood", out, tabs );
@@ -122,9 +122,9 @@ void ProductionSector::toInputXMLDerived( std::ostream& out, Tabs* tabs ) const 
 void ProductionSector::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
     if( mInvestor.get() ){
         mInvestor->toDebugXML( period, out, tabs );
-	}
-	
-	// write out the market string.
+    }
+    
+    // write out the market string.
     XMLWriteElement( mMarketName, "market", out, tabs );
     XMLWriteElement( mIsFixedPrice, "FixedPricePath", out, tabs, false );
     XMLWriteElement( mIsEnergyGood, "IsEnergyGood", out, tabs );
@@ -151,12 +151,12 @@ void ProductionSector::completeInit( const IInfo* aRegionInfo,
 {
     // Call parent class complete init.
     Sector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator, aGlobalTechDB );
-	// Set the market.
-	setMarket();
+    // Set the market.
+    setMarket();
     // Initialize the investment object to the default if one has not been read in.
     if( !mInvestor.get() ){
-		ILogger& mainLog = ILogger::getLogger( "main_log" );
-		mainLog.setLevel( ILogger::DEBUG );
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::DEBUG );
         mainLog << "Creating default investment type for sector " << name << "." << endl;
         mInvestor.reset( new Accelerator() );
     }
@@ -176,16 +176,16 @@ void ProductionSector::completeInit( const IInfo* aRegionInfo,
 *          The read-in prices will be used as the initial prices for the Market,
 *          for fixed price path sectors this will also be the final price.
 */
-void ProductionSector::setMarket() {	
-	// Check if the market name was not read-in
-	if( mMarketName.empty()  ){
-		ILogger& mainLog = ILogger::getLogger( "main_log" );
-		mainLog.setLevel( ILogger::DEBUG );
-		mainLog << "Market name for production sector was not read-in. Defaulting to region name." << endl;
-		mMarketName = regionName;
-	}
-	
-	// Create the market.
+void ProductionSector::setMarket() {    
+    // Check if the market name was not read-in
+    if( mMarketName.empty()  ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::DEBUG );
+        mainLog << "Market name for production sector was not read-in. Defaulting to region name." << endl;
+        mMarketName = regionName;
+    }
+    
+    // Create the market.
     Marketplace* marketplace = scenario->getMarketplace();
     if( marketplace->createMarket( regionName, mMarketName, name, IMarketType::NORMAL ) ) {
         // Set the base year price which the sector reads in, into the mFixedPrices vector.
@@ -197,11 +197,11 @@ void ProductionSector::setMarket() {
             // in period zero. 
             if( !mIsFixedPrice ){
                 if( period > 0 ){
-			        marketplace->setMarketToSolve( name, regionName, period );
+                    marketplace->setMarketToSolve( name, regionName, period );
                 }
-		    }
+            }
             else {
-				marketplace->getMarketInfo( name, regionName, period, true )->setBoolean( "IsFixedPrice", true );
+                marketplace->getMarketInfo( name, regionName, period, true )->setBoolean( "IsFixedPrice", true );
             }
         }
     }
@@ -214,18 +214,40 @@ void ProductionSector::setMarket() {
 * \param aDemographics The demographics object.
 * \param aPeriod Period for which to initialize the ProductionSector.
 */
-void ProductionSector::initCalc( NationalAccount& aNationalAccount,
+void ProductionSector::initCalc( NationalAccount* aNationalAccount,
                                  const Demographic* aDemographics,
                                  const int aPeriod )
 {
-	calcPriceReceived( aPeriod );
+    // retained earnings parameter calculation
+    // for base year only, better in completeInit but NationalAccount not accessible.
+    if ( aPeriod == 0 && moreSectorInfo.get() && aNationalAccount ) {
+        Marketplace* marketplace = scenario->getMarketplace();
+        double corpIncTaxRate = aNationalAccount->getAccountValue(NationalAccount::CORPORATE_INCOME_TAX_RATE);
+        double totalRetEarnings = aNationalAccount->getAccountValue(NationalAccount::RETAINED_EARNINGS);
+        double totalProfits2 = aNationalAccount->getAccountValue(NationalAccount::CORPORATE_PROFITS);
+        double totalProfits = marketplace->getDemand("Capital", regionName, aPeriod);
+        // Set retained earnings to zero by setting MAX_CORP_RET_EARNINGS_RATE
+        // to 0. This is for the technology sectors, like the transportation
+        // vehicle sectors. All of the profits goes to dividends and there are
+        // no retained earnings.
+        // SHK  4/21/2005
+        double retEarnParam = 0;
+        if( moreSectorInfo->getValue(MoreSectorInfo::MAX_CORP_RET_EARNINGS_RATE) != 0 ) {
+            retEarnParam = log( 1 - (totalRetEarnings/(totalProfits*moreSectorInfo->getValue(MoreSectorInfo::MAX_CORP_RET_EARNINGS_RATE)
+                *(1 - corpIncTaxRate)))) / marketplace->getPrice("Capital", regionName, aPeriod );
+        }
+        moreSectorInfo->setType(MoreSectorInfo::RET_EARNINGS_PARAM, retEarnParam);
+        moreSectorInfo->setType(MoreSectorInfo::CORP_INCOME_TAX_RATE, corpIncTaxRate);
+    }
+
+    calcPriceReceived( aPeriod );
 
     // Setup the market information on the sector.
-	IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( name, regionName, 0, true );
+    IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( name, regionName, 0, true );
     
     // Shouldn't all this be in complete init?
     // Set whether it is an energy or material good. 
-	marketInfo->setBoolean( "IsEnergyGood", mIsEnergyGood );
+    marketInfo->setBoolean( "IsEnergyGood", mIsEnergyGood );
     marketInfo->setBoolean( "IsPrimaryEnergyGood", mIsPrimaryEnergyGood );
     marketInfo->setBoolean( "IsSecondaryEnergyGood", mIsSecondaryEnergyGood );
     
@@ -242,12 +264,12 @@ void ProductionSector::initCalc( NationalAccount& aNationalAccount,
     }
     
     // The ITC is being read in at the sector level but set to the national level?
-	if( moreSectorInfo.get() ){
-		aNationalAccount.setAccount( NationalAccount::INVESTMENT_TAX_CREDIT, 
-			moreSectorInfo->getValue( MoreSectorInfo::INVEST_TAX_CREDIT_RATE ) );
-	}
+    if( moreSectorInfo.get() ){
+        aNationalAccount->setAccount( NationalAccount::INVESTMENT_TAX_CREDIT, 
+            moreSectorInfo->getValue( MoreSectorInfo::INVEST_TAX_CREDIT_RATE ) );
+    }
 
-	Sector::initCalc( aNationalAccount, aDemographics, aPeriod );
+    Sector::initCalc( aNationalAccount, aDemographics, aPeriod );
 }
 
 /*! \brief Returns the output of the ProductionSector.
@@ -298,7 +320,7 @@ double ProductionSector::getPrice( const int aPeriod ) const {
 void ProductionSector::operate( NationalAccount& aNationalAccount, const Demographic* aDemographic,
                                 const int aPeriod )
 {
-	calcPriceReceived( aPeriod );
+    calcPriceReceived( aPeriod );
     operateOldCapital( aDemographic, aNationalAccount, aPeriod );
     calcInvestment( aDemographic, aNationalAccount, aPeriod );
     operateNewCapital( aDemographic, aNationalAccount, aPeriod );
@@ -366,7 +388,7 @@ void ProductionSector::operateNewCapital( const Demographic* aDemographic, Natio
 * \return The constant XML_NAME.
 */
 const std::string& ProductionSector::getXMLName() const {
-	return getXMLNameStatic();
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -380,7 +402,7 @@ const std::string& ProductionSector::getXMLName() const {
 */
 const std::string& ProductionSector::getXMLNameStatic() {
     const static string XML_NAME = "productionSector";
-	return XML_NAME;
+    return XML_NAME;
 }
 
 /*! \brief Calculate the price received for the sector good.
@@ -393,13 +415,13 @@ const std::string& ProductionSector::getXMLNameStatic() {
 void ProductionSector::calcPriceReceived( const int period ){
 
     Marketplace* marketplace = scenario->getMarketplace();
-	// set price received in market info
-	double priceReceived = ( marketplace->getPrice( name, regionName, period ) + 
-		( moreSectorInfo->getValue( MoreSectorInfo::TRANSPORTATION_COST )
-		* moreSectorInfo->getValue( MoreSectorInfo::TRAN_COST_MULT ) ) )
-		/ ( 1 + moreSectorInfo->getValue( MoreSectorInfo::IND_BUS_TAX_RATE ) );
-	// set price received in market info
-	FunctionUtils::setPriceReceived( regionName, name, period, priceReceived );
+    // set price received in market info
+    double priceReceived = ( marketplace->getPrice( name, regionName, period ) + 
+        ( moreSectorInfo->getValue( MoreSectorInfo::TRANSPORTATION_COST )
+        * moreSectorInfo->getValue( MoreSectorInfo::TRAN_COST_MULT ) ) )
+        / ( 1 + moreSectorInfo->getValue( MoreSectorInfo::IND_BUS_TAX_RATE ) );
+    // set price received in market info
+    FunctionUtils::setPriceReceived( regionName, name, period, priceReceived );
 }
 
 /*! \brief Update an OutputContainer for reporting.
@@ -411,8 +433,9 @@ void ProductionSector::calcPriceReceived( const int period ){
 * \param aPeriod Period in which to perform the update.
 */
 void ProductionSector::accept( IVisitor* aVisitor, const int aPeriod ) const {
+    // Update the output container for the derived class.
+    aVisitor->startVisitProductionSector( this, aPeriod );
     // Update the base class
     Sector::accept( aVisitor, aPeriod );
-    // Update the output container for the derived class.
-    aVisitor->updateProductionSector( this, aPeriod );
+    aVisitor->endVisitProductionSector( this, aPeriod );
 }

@@ -263,7 +263,7 @@ double AGHG::calcInputEmissions( const vector<Input*>& aInputs, const string& aR
     for( CInputIterator input = aInputs.begin(); input != aInputs.end(); ++input ){
         // Add on the physical amount of the input multplied by the amount of
         // emissions per unit of physical output.
-        totalEmissions += (*input)->getDemandPhysical( aRegionName ) 
+        totalEmissions += (*input)->getDemandPhysical( aRegionName, aPeriod ) 
                              * (*input)->getGHGCoefficient( getName(), aRegionName );      
     }
     return totalEmissions;

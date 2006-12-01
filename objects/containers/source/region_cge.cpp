@@ -67,7 +67,7 @@ const string RegionCGE::XML_NAME = "regionCGE";
 RegionCGE::RegionCGE() {
     // Resize all vectors to maximum period
     const int maxper = scenario->getModeltime()->getmaxper();
-    nationalAccount.resize( maxper );
+    mNationalAccounts.resize( maxper );
 
     // create empty tables for reporting
     createSGMGenTables();
@@ -118,10 +118,14 @@ void RegionCGE::clear(){
     for ( FactorSupplyIterator facIter = factorSupply.begin(); facIter != factorSupply.end(); ++facIter ) {
         delete *facIter;
     }
-	// delete memory for SGM gen output tables
-	for( vector<SGMGenTable*>::iterator iter = mOutputContainers.begin(); iter != mOutputContainers.end(); ++iter ){
-		delete *iter;
-	}
+    // delete memory for SGM gen output tables
+    for( vector<SGMGenTable*>::iterator iter = mOutputContainers.begin(); iter != mOutputContainers.end(); ++iter ){
+        delete *iter;
+    }
+
+    for( vector<NationalAccount*>::iterator iter = mNationalAccounts.begin(); iter != mNationalAccounts.end(); ++iter ) {
+        delete *iter;
+    }
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -152,13 +156,24 @@ const std::string& RegionCGE::getXMLNameStatic() {
 //! Parse xml file for data
 bool RegionCGE::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
     if( nodeName == FinalDemandSector::getXMLNameStatic() ){
-        parseContainerNode( curr, finalDemandSector, finalDemandSectorNameMap, new FinalDemandSector( Region::getName() ) );
+        parseContainerNode( curr, finalDemandSector, new FinalDemandSector( Region::getName() ) );
     }
     else if( nodeName == FactorSupply::getXMLNameStatic() ){
-        parseContainerNode( curr, factorSupply, factorSupplyNameMap, new FactorSupply() );
+        parseContainerNode( curr, factorSupply, new FactorSupply() );
     }
     else if( nodeName == ProductionSector::getXMLNameStatic() ){
-        parseContainerNode( curr, supplySector, supplySectorNameMap, new ProductionSector( name ) );
+        parseContainerNode( curr, supplySector, new ProductionSector( name ) );
+    }
+    else if( nodeName == NationalAccount::getXMLNameStatic() ){
+        int per = scenario->getModeltime()->getyr_to_per( XMLHelper<int>::getAttr( curr, "year" ) );
+        
+        // Make sure that we had a valid year
+        assert( per != 0 );
+
+        if( !mNationalAccounts[ per ] ) {
+            mNationalAccounts[ per ] = new NationalAccount();
+        }
+        mNationalAccounts[ per ]->XMLParse( curr );
     }
     else {
         return false;
@@ -178,7 +193,7 @@ void RegionCGE::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
 
 //! Output debug info for derived class
 void RegionCGE::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
-    nationalAccount[ period ].toDebugXML( period, out, tabs );
+    mNationalAccounts[ period ]->toDebugXML( period, out, tabs );
     for ( unsigned int i = 0; i < finalDemandSector.size(); i ++ ) {
         finalDemandSector[i]->toDebugXML( period, out, tabs );
     }
@@ -190,14 +205,28 @@ void RegionCGE::toDebugXMLDerived( const int period, std::ostream& out, Tabs* ta
 //! Complete the initialization.
 void RegionCGE::completeInit( const GlobalTechnologyDatabase* aGlobalTechDB ) {
     Region::completeInit( aGlobalTechDB );
+
+    // initialize demographic
+    if( demographic.get() ){
+        demographic->completeInit();
+    }
+    for( SectorIterator sectorIter = supplySector.begin(); sectorIter != supplySector.end(); ++sectorIter ) {
+        ( *sectorIter )->completeInit( 0, 0, 0, aGlobalTechDB );
+    }
     for( unsigned int i = 0; i < finalDemandSector.size(); i++) {
         // Pass null for the dependency finder argument as CGE regions don't
         // have dependencies. Pass null for the regional land allocator 
         // because CGE regions do not currently use one.
-        finalDemandSector[i]->completeInit( mRegionInfo.get(), 0, 0, aGlobalTechDB );
+        finalDemandSector[i]->completeInit( 0, 0, 0, aGlobalTechDB );
     }
     for( unsigned int i = 0; i < factorSupply.size(); i++) {
         factorSupply[i]->completeInit( name );
+    }
+    // Make sure we have a NationalAccount for each period.
+    for(unsigned int i = 0; i < mNationalAccounts.size(); i++) {
+        if( !mNationalAccounts[i] ) {
+            mNationalAccounts[i] = new NationalAccount();
+        }
     }
 }
 
@@ -209,11 +238,13 @@ void RegionCGE::initCalc( const int period )
         factorSupply[i]->initCalc( name, period );
     }
 
-    Region::initCalc( period );
+    for( SectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ){
+        (*currSector)->initCalc( mNationalAccounts[ period ], demographic.get(), period );
+    }
 
     // SGM sequence of procedures
     for ( unsigned int i = 0; i < finalDemandSector.size(); i++ ) {
-        finalDemandSector[i]->initCalc( nationalAccount[ period ], demographic.get(), period );
+        finalDemandSector[i]->initCalc( mNationalAccounts[ period ], demographic.get(), period );
     }
 }
 
@@ -222,7 +253,7 @@ void RegionCGE::initCalc( const int period )
 * \param period Model time period
 */
 void RegionCGE::calc( const int period, const bool aDoCalibrations ) {
-    nationalAccount[ period ].reset();
+    mNationalAccounts[ period ]->reset();
     // calls operate for both production and final demand sectors
     operate( period ); // This sector function operates existing capital, invests, and operates total.
 
@@ -231,10 +262,10 @@ void RegionCGE::calc( const int period, const bool aDoCalibrations ) {
 //! Function which operates the capital for all production sectors.
 void RegionCGE::operate( const int period ){
     for( vector<Sector*>::iterator currSec = supplySector.begin(); currSec != supplySector.end(); ++currSec ){
-        (*currSec)->operate( nationalAccount[ period ], demographic.get(), period );
+        (*currSec)->operate( *mNationalAccounts[ period ], demographic.get(), period );
     }
     for (unsigned int i = 0; i < finalDemandSector.size(); i++) {
-        finalDemandSector[i]->operate( nationalAccount[period], demographic.get(), period );
+        finalDemandSector[i]->operate( *mNationalAccounts[period], demographic.get(), period );
     }
 }
 
@@ -244,7 +275,9 @@ void RegionCGE::operate( const int period ){
  * \param period The period is usually the base period
  */
 void RegionCGE::updateMarketplace( const int period ) {
-    Region::updateMarketplace( period );
+    for( vector<Sector*>::iterator currSec = supplySector.begin(); currSec != supplySector.end(); ++currSec ){
+        (*currSec)->updateMarketplace( period );
+    }
     for (unsigned int i = 0; i < finalDemandSector.size(); i++) {
         finalDemandSector[i]->updateMarketplace( period );
     }
@@ -259,7 +292,7 @@ void RegionCGE::csvSGMOutputFile( ostream& aFile, const int period ) const {
     vector<IVisitor*> outputContainers; // vector of output containers
 
     aFile << "Region:  " << name << endl << endl;
-    nationalAccount[ period ].csvSGMOutputFile( aFile, period );
+    mNationalAccounts[ period ]->csvSGMOutputFile( aFile, period );
 
     for( vector<Sector*>::const_iterator currSec = supplySector.begin(); currSec != supplySector.end(); ++currSec ){
         (*currSec)->csvSGMOutputFile( aFile, period );
@@ -274,22 +307,22 @@ void RegionCGE::csvSGMOutputFile( ostream& aFile, const int period ) const {
     aFile << endl;
 
 
-	// Add outputcontainers here.
-	outputContainers.push_back( new SocialAccountingMatrix( name, aFile ) );
-	outputContainers.push_back( new DemandComponentsTable( aFile ) );
+    // Add outputcontainers here.
+    outputContainers.push_back( new SocialAccountingMatrix( name, aFile ) );
+    outputContainers.push_back( new DemandComponentsTable( aFile ) );
     outputContainers.push_back( new SectorResults( name, aFile ) );
     outputContainers.push_back( new GovtResults( name, aFile ) );
     outputContainers.push_back( new InputOutputTable( name, aFile ) );
-	
+    
     // load values into all tables
-	for (unsigned int i = 0; i < outputContainers.size(); i++) { 
-		accept( outputContainers[ i ], period );
-	}
+    for (unsigned int i = 0; i < outputContainers.size(); i++) { 
+        accept( outputContainers[ i ], period );
+    }
 
-	// print out all tables
-	for( unsigned int i = 0; i < outputContainers.size(); i++) {
-		outputContainers[ i ]->finish();
-	}
+    // print out all tables
+    for( unsigned int i = 0; i < outputContainers.size(); i++) {
+        outputContainers[ i ]->finish();
+    }
     
     // clean up memory.
     for( vector<IVisitor*>::iterator iter = outputContainers.begin(); iter != outputContainers.end(); ++iter ){
@@ -297,28 +330,38 @@ void RegionCGE::csvSGMOutputFile( ostream& aFile, const int period ) const {
     }
 }
 
-void RegionCGE::accept( IVisitor* aVisitor, const int period ) const {
-    aVisitor->startVisitRegionCGE( this, period );
-	Region::accept( aVisitor, period );
+void RegionCGE::accept( IVisitor* aVisitor, const int aPeriod ) const {
+    aVisitor->startVisitRegionCGE( this, aPeriod );
+    Region::accept( aVisitor, aPeriod );
 
-	// loop for final demand sectors
-	for( CFinalDemandSectorIterator currSec = finalDemandSector.begin(); currSec != finalDemandSector.end(); ++currSec ){
-		(*currSec)->accept( aVisitor, period );
+    // for national account
+    if( aPeriod == -1 ){
+        for( unsigned int i = 0; i < mNationalAccounts.size(); ++i ){
+            mNationalAccounts[ i ]->accept( aVisitor, aPeriod );
+        }
     }
-	// loop for factor supply sectors
-	for( CFactorSupplyIterator currSec = factorSupply.begin(); currSec != factorSupply.end(); ++currSec ){
-		(*currSec)->accept( aVisitor, period );
+    else {
+        mNationalAccounts[ aPeriod ]->accept( aVisitor, aPeriod );
     }
-    aVisitor->endVisitRegionCGE( this, period );
+
+    // loop for final demand sectors
+    for( CFinalDemandSectorIterator currSec = finalDemandSector.begin(); currSec != finalDemandSector.end(); ++currSec ){
+        (*currSec)->accept( aVisitor, aPeriod );
+    }
+    // loop for factor supply sectors
+    for( CFactorSupplyIterator currSec = factorSupply.begin(); currSec != factorSupply.end(); ++currSec ){
+        (*currSec)->accept( aVisitor, aPeriod );
+    }
+    aVisitor->endVisitRegionCGE( this, aPeriod );
 }
 
 //! update regional output tables for reporting
 void RegionCGE::updateAllOutputContainers( const int period ) { 
-	// update all tables for reporting
-	// load values into all tables
-	for ( unsigned int i = 0; i < mOutputContainers.size(); i++ ) { 
-		accept( mOutputContainers[ i ], period );
-	}
+    // update all tables for reporting
+    // load values into all tables
+    for ( unsigned int i = 0; i < mOutputContainers.size(); i++ ) { 
+        accept( mOutputContainers[ i ], period );
+    }
 }
 
 /*! \brief General SGM output is called at end of model run and includes all
@@ -326,9 +369,9 @@ void RegionCGE::updateAllOutputContainers( const int period ) {
 * \param aFile Output file.
 */
 void RegionCGE::csvSGMGenFile( ostream& aFile ) const {
-	// print out all tables
-	for( unsigned int i = 0; i < mOutputContainers.size(); i++) {
+    // print out all tables
+    for( unsigned int i = 0; i < mOutputContainers.size(); i++) {
         mOutputContainers[ i ]->setOutputFile( aFile );
-		mOutputContainers[ i ]->finish();
-	}
+        mOutputContainers[ i ]->finish();
+    }
 }

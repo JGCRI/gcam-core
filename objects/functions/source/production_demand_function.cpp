@@ -33,6 +33,7 @@ use of this software.
 #include "util/base/include/model_time.h"
 #include "functions/include/function_utils.h"
 #include "containers/include/iinfo.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 
@@ -71,23 +72,23 @@ double HouseholdDemandFn::calcDemand( vector<Input*>& input, double personalInco
     // Find the numeraire to determine the price paid.
     const Input* numInput = FunctionUtils::getNumeraireInput( input );
     assert( numInput );
-    const double pricePaidNumeraire = numInput->getPricePaid();
+    const double pricePaidNumeraire = numInput->getPricePaid( period );
     assert( pricePaidNumeraire > 0 );
 
     double totalDemand = 0; // total demand used for scaling
 	for ( unsigned int i = 0; i < input.size(); ++i ) {
         if( !input[ i ]->isFactorSupply() ){
-            assert( input[i]->getPricePaid() > 0 );
+            assert( input[i]->getPricePaid( period ) > 0 );
             assert( input[i]->getCoefficient() > 0 );
             assert( input[i]->getIncomeElasticity() > 0 );
 
             double demand = input[i]->getCoefficient() * 
                 pow( personalIncome / pricePaidNumeraire, input[i]->getIncomeElasticity() ) *
-				pow( input[i]->getPricePaid() / pricePaidNumeraire, input[i]->getPriceElasticity() );
+				pow( input[i]->getPricePaid( period ) / pricePaidNumeraire, input[i]->getPriceElasticity() );
 
             assert( util::isValidNumber( demand ) );
 			input[i]->setDemandCurrency( demand, regionName, sectorName, period );
-			totalDemand += demand * input[i]->getPricePaid();
+			totalDemand += demand * input[i]->getPricePaid( period );
 		}
 	}
 	return totalDemand;
@@ -102,7 +103,7 @@ double HouseholdDemandFn::calcCoefficient( vector<Input*>& input, double consump
 	for ( unsigned int i = 0; i < input.size(); ++i ) {
 		if( !input[ i ]->isFactorSupply() ){
              // if we use price paid for calcDemand probably need to use it here also
-			double tempCoefficient = input[i]->getDemandCurrency() /
+			double tempCoefficient = input[i]->getDemandCurrency( period ) /
                                      pow( consumption, input[i]->getIncomeElasticity() ) *
                                      pow( input[i]->getPrice( regionName, period ),
                                           input[i]->getPriceElasticity() );
@@ -122,14 +123,14 @@ double GovtDemandFn::calcDemand( vector<Input*>& input, double consumption,
     double totalUnscaledDemand = 0; // total demand used for scaling
     for( unsigned int i = 0; i < input.size(); ++i ){
         if ( !input[ i ]->isCapital() ) {
-            totalUnscaledDemand += input[ i ]->getCoefficient() * input[ i ]->getPricePaid();
+            totalUnscaledDemand += input[ i ]->getCoefficient() * input[ i ]->getPricePaid( period );
         }
         // input is capital
         else {
             // use numeraire price paid
             const Input* numInput = FunctionUtils::getNumeraireInput( input );
             assert( numInput );
-            const double pricePaidNumeraire = numInput->getPricePaid(); 
+            const double pricePaidNumeraire = numInput->getPricePaid( period ); 
             assert( pricePaidNumeraire > 0 );
             totalUnscaledDemand += input[ i ]->getCoefficient() * pricePaidNumeraire;
         }
@@ -159,18 +160,18 @@ double GovtDemandFn::calcCoefficient( vector<Input*>& input, double consumption,
 	double capitalDemand = 0;
 	for( unsigned int i = 0; i<input.size(); ++i ){
 		if ( input[ i ]->isCapital() ) {
-			capitalDemand = input[ i ]->getDemandCurrency();
+			capitalDemand = input[ i ]->getDemandCurrency( period );
             break;
 		}
 	}
 	// total used for government demand does not include capital
-	double tempTotal = FunctionUtils::getDemandSum( input ) - capitalDemand;
+	double tempTotal = FunctionUtils::getDemandSum( input, period ) - capitalDemand;
 	// government capital demand is calculated separatly
 	// this needs to be corrected, legacy SGM probably could not handle
 	for( unsigned int i = 0; i<input.size(); ++i ){
 		if ( !input[ i ]->isCapital() ) {
             // not sure which price
-			double tempCoefficient = input[ i ]->getDemandCurrency() 
+			double tempCoefficient = input[ i ]->getDemandCurrency( period ) 
 			                         / tempTotal 
                                      / input[ i ]->getPrice( regionName, period );
 			input[ i ]->setCoefficient( tempCoefficient );
@@ -202,7 +203,7 @@ double TradeDemandFn::calcDemand( vector<Input*>& input, double consumption, con
 			}
 			// Fixed Trade
 			else {
-				netExport = input[ i ]->getDemandCurrency();
+				netExport = input[ i ]->getDemandCurrency( period );
 			}
 			// set here adds to marketplace demand as well as setting net export in input
 			input[ i ]->setDemandCurrency( netExport, regionName, sectorName, period );
@@ -210,7 +211,7 @@ double TradeDemandFn::calcDemand( vector<Input*>& input, double consumption, con
 		}
 		// for capital, add to market demand but not to total net export
         else if( input[ i ]->isCapital() ){
-			double netExport = input[ i ]->getDemandCurrency();
+			double netExport = input[ i ]->getDemandCurrency( period );
 			// set here adds to marketplace demand
 			input[ i ]->setDemandCurrency( netExport, regionName, sectorName, period );
 			// not added to total net export?????
@@ -266,7 +267,7 @@ double AProductionFunction::calcCosts( vector<Input*>& input, const string& regi
 	for( unsigned int i = 0; i < input.size(); ++i ) {
 		// capital input name should be changed to OtherValueAdded
 		if( !input[i]->isCapital() ) {
-			totalCost += input[i]->getDemandCurrency() * input[i]->getPricePaid();
+			totalCost += input[i]->getDemandCurrency( period ) * input[i]->getPricePaid( period );
 		}
 	}
 	return totalCost;
@@ -304,7 +305,7 @@ double CESProductionFn::calcCoefficient( vector<Input*>& input, double consumpti
 	// first part of calculating coefficient, divide IO value by price
 	for ( unsigned int i = 0; i < input.size(); ++i ) {
 		if( !input[i]->isCapital() ) {
-            double tempCoefficient = input[i]->getDemandCurrency() 
+            double tempCoefficient = input[i]->getDemandCurrency( period ) 
                                      / input[ i ]->getPrice( regionName, period );
 			input[i]->setCoefficient( tempCoefficient );
 		}
@@ -323,11 +324,12 @@ double CESProductionFn::calcCoefficient( vector<Input*>& input, double consumpti
 	}
 
 	// calculate alpha 0
-	double priceOutput = FunctionUtils::getDemandSum(input)/( FunctionUtils::getDemandSum(input) + indBusTax);
+    double demandSum = FunctionUtils::getDemandSum( input, period );
+	double priceOutput = demandSum /  ( demandSum + indBusTax);
 	double rho = FunctionUtils::getRho( sigma );
 	double mu = rho/(1-rho);
 	double alphaZero = pow( priceOutput/priceNumeraire,  -(1/rho) )
-		* pow( numeraireInput->getCoefficient()/( FunctionUtils::getDemandSum(input)+indBusTax), (1/mu) );
+		* pow( numeraireInput->getCoefficient()/( demandSum + indBusTax), (1/mu) );
 
 	double Z = 1 - pow( (alphaZero * priceOutput), mu ) * total;
 
@@ -341,7 +343,7 @@ double CESProductionFn::calcCoefficient( vector<Input*>& input, double consumpti
 	}
 
 	// calculate alpha for capital
-	double capCoef = pow( (FunctionUtils::getDemandSum(input)+indBusTax)/alphaZero/capitalStock, rho) * Z;
+	double capCoef = pow( ( demandSum + indBusTax )/alphaZero/capitalStock, rho) * Z;
     Input* capInput = FunctionUtils::getCapitalInput( input );
     assert( capInput );
 	capInput->setCoefficient( capCoef );
@@ -378,7 +380,9 @@ double CESProductionFn::normalizeAlphaZero( vector<Input*>& input, double aAlpha
 * \author Sonny Kim
 * \return alpha-zero.
 */
-double CESProductionFn::transformCoefficients( vector<Input*>& input, double priceReceived, 
+double CESProductionFn::transformCoefficients( vector<Input*>& input,
+                                               double priceReceived,
+                                               const int aPeriod,
                                                double alphaZero, double sigma ) const 
 {
     /*! \pre sigma is greater than 0.05, otherwise we should be using a Leontief
@@ -402,7 +406,8 @@ double CESProductionFn::transformCoefficients( vector<Input*>& input, double pri
 * \return alpha zero.
 */
 double CESProductionFn::changeElasticity( vector<Input*>& input, double priceReceived, 
-                                         double aProfits, double capitalStock, double alphaZero, 
+                                         double aProfits, double capitalStock,
+                                         const int aPeriod, double alphaZero, 
                                          double sigmaNew, double sigmaOld ) const 
 {
     // Note: This could actually happen and we should handle it by shutting down
@@ -418,7 +423,7 @@ double CESProductionFn::changeElasticity( vector<Input*>& input, double priceRec
 		// all inputs other than capital
         double newCoef = 0;
         if(	!input[i]->isCapital() ) {
-			double priceRatio = priceReceived / input[i]->getPricePaid();
+			double priceRatio = priceReceived / input[i]->getPricePaid( aPeriod );
             newCoef = pow( input[i]->getCoefficient(), sigmaRatio1 ) * pow( priceRatio, sigmaRatio2 );
         }
 		// for capital or OVA input
@@ -493,7 +498,8 @@ double CESProductionFn::calcFinalProfitScaler( const vector<Input*>& input, cons
 		// capital contribution calculated separately, see calcCapitalScaler()
 		if( !input[i]->isCapital() ) {
 			double tempCoef = pow( input[i]->getCoefficient(), sigma );
-			tempZ += tempCoef * pow( input[i]->getPricePaid(), (-rho * sigma) );
+			tempZ += tempCoef *
+                     pow( input[i]->getPricePaid( period ), (-rho * sigma) );
 		}
 	}
 	// use price received for the good in the next equation
@@ -526,8 +532,9 @@ double CESProductionFn::calcDemand( vector<Input*>& input, double personalIncome
 	for ( unsigned int i = 0; i < input.size(); ++i ) {
 		// capital input name should be changed to OtherValueAdded
 		if( !input[i]->isCapital() ) {
-			assert( input[i]->getPricePaid() >= 0 );
-            double pricePaid = max( input[i]->getPricePaid(), util::getSmallNumber() );
+			assert( input[i]->getPricePaid( period ) >= 0 );
+            double pricePaid = max( input[i]->getPricePaid( period ),
+                                    util::getSmallNumber() );
 			double demand = pow( ( input[i]->getCoefficient() / pricePaid ), sigma ) * aShutdownCoef * Z;
 			if (demand < 0) {
 				cout << "Demand < 0 for Region: " << regionName << " Sector: " << sectorName << " Input: " << input[i]->getName() 
@@ -553,7 +560,8 @@ double CESProductionFn::calcExpProfitScaler( const vector<Input*>& input, double
 	const double rho = FunctionUtils::getRho( sigma );
     
     // Calculate the net present value multiplier to determine expected prices.
-    const double netPresentValueMult = FunctionUtils::getNetPresentValueMult( input, aLifetimeYears );
+    const double netPresentValueMult =
+        FunctionUtils::getNetPresentValueMult( input, aLifetimeYears, period );
 
 	// calculate tempZ for all inputs except capital
     double tempZ = 0; // temporary scaler
@@ -561,7 +569,8 @@ double CESProductionFn::calcExpProfitScaler( const vector<Input*>& input, double
 		// capital contribution calculated separately, see calcCapitalScaler()
 		if( !input[i]->isCapital() ) {
 			tempZ += pow(input[i]->getCoefficient(), sigma) 
-                     * pow( input[i]->getPricePaid() * netPresentValueMult , ( -rho * sigma ) );
+                     * pow( input[i]->getPricePaid( period ) *
+                     netPresentValueMult , ( -rho * sigma ) );
 		}
 	}
     // Calculate the expected price received.
@@ -595,7 +604,7 @@ double CESProductionFn::calcExpProfitRate( const vector<Input*>& input, const st
     // Note: Dividing by the numeraire price at all here may not be correct.
     const Input* numInput = FunctionUtils::getNumeraireInput( input );
     assert( numInput );
-    const double pricePaidNumeraire = numInput->getPricePaid();
+    const double pricePaidNumeraire = numInput->getPricePaid( period );
     assert( pricePaidNumeraire > 0 );
 	// returns a rate, using price ratios
     const double expPriceReceived = FunctionUtils::getExpectedPriceReceived( input, regionName, sectorName,
@@ -665,10 +674,10 @@ double CESProductionFn::calcLevelizedCost( const vector<Input*>& aInputs,
             // Check that the coefficient and adjusted price can both be raised
             // to exponents without overflowing or underflowing.
             if( aInputs[ i ]->getCoefficient() > util::getVerySmallNumber() &&
-                ( aInputs[ i ]->getPricePaid() > util::getVerySmallNumber() ) )
+                ( aInputs[ i ]->getPricePaid( aPeriod ) > util::getVerySmallNumber() ) )
             {
                 levelizedCost += pow( aInputs[ i ]->getCoefficient(), aSigma )
-                    * pow( aInputs[ i ]->getPricePaid(), exp );
+                    * pow( aInputs[ i ]->getPricePaid( aPeriod ), exp );
                 assert( util::isValidNumber( levelizedCost ) );
             }
         }
@@ -711,10 +720,10 @@ double CESProductionFn::calcVariableCost( const vector<Input*>& aInputs,
             // Check that the coefficient and adjusted price can both be raised
             // to exponents without overflowing or underflowing.
             if( aInputs[ i ]->getCoefficient() > util::getVerySmallNumber() &&
-                ( aInputs[ i ]->getPricePaid() > util::getVerySmallNumber() ) )
+                ( aInputs[ i ]->getPricePaid( aPeriod ) > util::getVerySmallNumber() ) )
             {
                 variableCost += pow( aInputs[ i ]->getCoefficient(), aSigma )
-                    * pow( aInputs[ i ]->getPricePaid(), exp );
+                    * pow( aInputs[ i ]->getPricePaid( aPeriod ), exp );
                 assert( util::isValidNumber( variableCost ) );
             }
         }
@@ -860,7 +869,7 @@ double LeontiefProductionFn::calcCoefficient( vector<Input*>& input, double cons
     // Calculate output quantity.
     double demandCurrencySum = 0; // find real name.
     for( unsigned int i = 0; i < input.size(); ++i ){
-        demandCurrencySum += input[ i ]->getDemandCurrency();
+        demandCurrencySum += input[ i ]->getDemandCurrency( period );
     }
     
     // use price received(psubj) for the good in the next equation
@@ -875,8 +884,9 @@ double LeontiefProductionFn::calcCoefficient( vector<Input*>& input, double cons
             input[ i ]->setCoefficient( capitalStock / qSubJ );
         }
         else {
-            if( input[ i ]->getPricePaid() > 0 ){
-                double currToPrice = input[ i ]->getDemandCurrency() / input[ i ]->getPricePaid();
+            if( input[ i ]->getPricePaid( period ) > 0 ){
+                double currToPrice = input[ i ]->getDemandCurrency( period ) /
+                                     input[ i ]->getPricePaid( period );
                 input[ i ]->setCoefficient( currToPrice / qSubJ );
             }
             else {
@@ -893,13 +903,15 @@ double LeontiefProductionFn::calcCoefficient( vector<Input*>& input, double cons
 * \author Josh Lurz
 * \return alpha-zero
 */
-double LeontiefProductionFn::transformCoefficients( vector<Input*>& input, double priceReceived, 
+double LeontiefProductionFn::transformCoefficients( vector<Input*>& input,
+                                                    double priceReceived,
+                                                    const int aPeriod,
                                                     double alphaZero, double sigma ) const 
 {
     // Transform the coefficients. I dont think a special branch is needed here
     // for capital bc price received should equal the price paid for capital.
     for( unsigned int i = 0; i < input.size(); ++i ){
-        if( input[ i ]->getPricePaid() > 0 ){
+        if( input[ i ]->getPricePaid( aPeriod ) > 0 ){
             double newCoef = alphaZero * input[ i ]->getCoefficient();
             input[ i ]->setCoefficient( newCoef );
         }
@@ -915,7 +927,9 @@ double LeontiefProductionFn::transformCoefficients( vector<Input*>& input, doubl
 * \author Sonny Kim
 */
 double LeontiefProductionFn::changeElasticity( vector<Input*>& input, double priceReceived, 
-                                               double aProfits, double capitalStock, double alphaZero,
+                                               double aProfits, double capitalStock,
+                                               const int aPeriod,
+                                               double alphaZero,
                                                double sigmaNew, double sigmaOld ) const 
 {
     assert( sigmaNew > 0 );
@@ -927,7 +941,7 @@ double LeontiefProductionFn::changeElasticity( vector<Input*>& input, double pri
 		// all inputs other than capital
         double priceRatio = 0;
         if(	!input[i]->isCapital() ) {
-			priceRatio = priceReceived / input[i]->getPricePaid();
+			priceRatio = priceReceived / input[i]->getPricePaid( aPeriod );
         }
 		// for capital or OVA input
 		else {
@@ -985,7 +999,9 @@ double LeontiefProductionFn::calcExpProfitRate( const vector<Input*>& input, con
                                                                       aLifetimeYears, period );
     assert( valQ >= 0 );
     assert( util::isValidNumber( valQ ) );
-    const double netPresentValueMult = FunctionUtils::getNetPresentValueMult( input, aLifetimeYears );
+    const double netPresentValueMult =
+        FunctionUtils::getNetPresentValueMult( input, aLifetimeYears, period );
+
     double sum = 0;
     for( unsigned int i = 0; i < input.size(); ++i ){
         if( !input[ i ]->isCapital() ){
@@ -1023,7 +1039,8 @@ double LeontiefProductionFn::calcLevelizedCost( const vector<Input*>& aInputs, c
                              * aInputs[ i ]->getPriceAdjustment();
         }
         else {
-            levelizedCost += aInputs[ i ]->getCoefficient() * aInputs[ i ]->getPricePaid();
+            levelizedCost += aInputs[ i ]->getCoefficient() *
+                             aInputs[ i ]->getPricePaid( aPeriod );
         }
     }
     return levelizedCost / aAlphaZero;
@@ -1052,7 +1069,8 @@ double LeontiefProductionFn::calcVariableCost( const vector<Input*>& aInputs,
     double variableCost = 0;
     for( unsigned int i = 0; i < aInputs.size(); ++i ){
         if( !aInputs[ i ]->isCapital() ){
-            variableCost += aInputs[ i ]->getCoefficient() * aInputs[ i ]->getPricePaid();
+            variableCost += aInputs[ i ]->getCoefficient() *
+                aInputs[ i ]->getPricePaid( aPeriod );
         }
     }
     
@@ -1075,7 +1093,8 @@ double LeontiefProductionFn::calcUnscaledProfits( const vector<Input*>& input, c
     double sum = 0;
     for( unsigned int i = 0; i < input.size(); ++i ){
         if( !input[ i ]->isCapital() ){
-            sum += qCapital * input[ i ]->getCoefficient() / alphaZero * input[ i ]->getPricePaid();
+            sum += qCapital * input[ i ]->getCoefficient() / alphaZero *
+                   input[ i ]->getPricePaid( period );
         }
     }
     assert( sum >= 0 );

@@ -60,13 +60,17 @@ class TechnologyType;
 
 class BaseTechnology: public IInvestable, public IVisitable, IRoundTrippable
 {
+    friend class XMLDBOutputter;
 public:
     BaseTechnology();
     BaseTechnology( const BaseTechnology& baseTechIn );
     BaseTechnology& operator= (const BaseTechnology& baseTechIn );
     virtual BaseTechnology* clone() const = 0;
     virtual ~BaseTechnology();
-    virtual void copyParam( const BaseTechnology* baseTechIn ) = 0;
+
+    virtual void copyParam( const BaseTechnology* baseTech,
+                            const int aPeriod ) = 0;
+
     virtual void copyParamsInto( GovtConsumer& govtConsumerIn ) const { assert( false ); }
     virtual void copyParamsInto( TradeConsumer& tradeConsumerIn ) const { assert( false ); }
     virtual void copyParamsInto( InvestConsumer& investConsumerIn ) const { assert( false ); }
@@ -131,7 +135,7 @@ public:
     virtual void updateMarketplace( const std::string& sectorName, const std::string& regionName,
                                     const int period ) = 0;
     virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const = 0;
-    virtual void accept( IVisitor* aVisitor, const int period ) const = 0;
+    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const = 0;
     const std::string getIdentifier() const;
     static const std::string createIdentifier( const std::string& aName, int aYear );
     void removeEmptyInputs();
@@ -140,6 +144,11 @@ public:
                            const int aPeriod ) = 0;
 protected:
     virtual bool isCoefBased() const = 0;
+    
+    virtual bool isTrade() const {
+        return false;
+    };
+
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual const std::string& getXMLName() const = 0;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
@@ -157,7 +166,7 @@ protected:
     
     std::vector<double> mOutputs; //!< Outputs
     const IFunction* prodDmdFn; //!< Pointer to function this class will use
-    Expenditure expenditure; //!< Keep track of expenditures
+    std::vector<Expenditure> expenditures; //!< Keep track of expenditures
 private:
     void clear();
     void copy( const BaseTechnology& baseTechIn );

@@ -34,12 +34,16 @@ class InvestConsumer : public Consumer
     friend class DemandComponentsTable;
     friend class SectorReport;
     friend class SGMGenTable;
+    friend class XMLDBOutputter;
 public:
-	InvestConsumer();
-	virtual InvestConsumer* clone() const;
-	void copyParam( const BaseTechnology* baseTech );
-	void copyParamsInto( InvestConsumer& investConsumerIn ) const;
-	virtual void completeInit( const std::string& regionName );
+    InvestConsumer();
+    virtual InvestConsumer* clone() const;
+
+    virtual void copyParam( const BaseTechnology* baseTech,
+                            const int aPeriod );
+
+    void copyParamsInto( InvestConsumer& investConsumerIn ) const;
+    virtual void completeInit( const std::string& regionName );
     
     virtual void initCalc( const MoreSectorInfo* aMoreSectorInfo,
                            const std::string& aRegionName, 
@@ -54,26 +58,26 @@ public:
         const std::string& aSectorName, const bool aIsNewVintageMode, const int aPeriod );
     
     void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
-	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
+    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     static const std::string& getXMLNameStatic();
 protected:
     virtual bool isCoefBased() const { return false; }
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-	virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
-	virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
+    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 
 private:
     void allocateTransportationDemand( NationalAccount& aNationalAccount, 
         const std::string& aRegionName, int aPeriod );
 
-	void allocateDistributionCost( NationalAccount& aNationalAccount, const std::string& aRegionName, 
+    void allocateDistributionCost( NationalAccount& aNationalAccount, const std::string& aRegionName, 
         int aPeriod );
 
-	void calcIncome( NationalAccount& aNationalAccount, const Demographic* aDemographics, 
+    void calcIncome( NationalAccount& aNationalAccount, const Demographic* aDemographics, 
         const std::string& aRegionName, int aPeriod );
 
-	static const std::string XML_NAME; //!< node name for toXML methods
+    static const std::string XML_NAME; //!< node name for toXML methods
 };
 
 #endif // _TRADE_CONSUMER_H_

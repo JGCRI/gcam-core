@@ -47,10 +47,12 @@ void FunctionUtils::scaleCoefficientInputs( vector<Input*>& input, double scaler
 }
 
 //! Function to return sum of all demand inputs
-double FunctionUtils::getDemandSum( const std::vector<Input*>& aInputs ) {
+double FunctionUtils::getDemandSum( const vector<Input*>& aInputs,
+                                    const int aPeriod )
+{
     double sum = 0;
     for ( unsigned int i = 0; i < aInputs.size(); ++i ) {
-        sum += aInputs[i]->getDemandCurrency(); // sum each demand
+        sum += aInputs[i]->getDemandCurrency( aPeriod );
     }
     return sum;
 }
@@ -115,16 +117,19 @@ double FunctionUtils::getRho( const double aSigma ) {
 * \details 
 * \param aInputs The vector of inputs to the production function.
 * \param aLifetimeYears The nameplate lifetime of the vintage.
+* \param aPeriod Model period.
 * \return The net present value multiplier.
 * \author Josh Lurz
 */
 double FunctionUtils::getNetPresentValueMult( const vector<Input*>& aInputs,
-                                              const double aLifetimeYears )
+                                              const double aLifetimeYears,
+                                              const int aPeriod )
 {
     // Find the capital input.
     const Input* capInput = getCapitalInput( aInputs );
     assert( capInput );
-    double discountRate = capInput->getPricePaid(); // already includes adjustments
+     // already includes adjustments
+    double discountRate = capInput->getPricePaid( aPeriod );
     
     // calculate net present value multiplier
     double netPresentValueMult = FunctionUtils::calcNetPresentValueMult( discountRate, aLifetimeYears );
@@ -261,7 +266,7 @@ double FunctionUtils::getExpectedPriceReceived( const vector<Input*>& aInputs,
 {
     // calculate expected price received for the produced good
     return getPriceReceived( aRegionName, aGoodName, aPeriod )
-           * getNetPresentValueMult( aInputs, aLifetimeYears );
+           * getNetPresentValueMult( aInputs, aLifetimeYears, aPeriod );
 }
 
 /*! \brief Apply technical change to a vector of inputs.

@@ -58,6 +58,12 @@ public:
     void startVisitRegion( const Region* aRegion, const int aPeriod );
     void endVisitRegion( const Region* aRegion, const int aPeriod );
 
+    void startVisitRegionMiniCAM( const RegionMiniCAM* aRegionMiniCAM, const int aPeriod );
+    void endVisitRegionMiniCAM( const RegionMiniCAM* aRegionMiniCAM, const int aPeriod );
+
+    void startVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod );
+    void endVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod );
+
     void startVisitResource( const Resource* aResource, const int aPeriod );
     void endVisitResource( const Resource* aResource, const int aPeriod );
     
@@ -98,6 +104,15 @@ public:
 
     void startVisitPopulation( const Population* aPopulation, const int aPeriod );
     void endVisitPopulation( const Population* aPopulation, const int aPeriod );
+
+    void startVisitPopulationMiniCAM( const PopulationMiniCAM* aPopulation, const int aPeriod );
+    void endVisitPopulationMiniCAM( const PopulationMiniCAM* aPopulation, const int aPeriod );
+
+    void startVisitPopulationSGMRate( const PopulationSGMRate* aPopulation, const int aPeriod );
+    void endVisitPopulationSGMRate( const PopulationSGMRate* aPopulation, const int aPeriod );
+
+    void startVisitPopulationSGMFixed( const PopulationSGMFixed* aPopulation, const int aPeriod );
+    void endVisitPopulationSGMFixed( const PopulationSGMFixed* aPopulation, const int aPeriod );
     
     void startVisitAgeCohort( const AgeCohort* aAgeCohort, const int aPeriod );
     void endVisitAgeCohort( const AgeCohort* aAgeCohort, const int aPeriod );
@@ -117,6 +132,37 @@ public:
     void startVisitCarbonCalc( const ICarbonCalc* aCarbon, const int aPeriod );
     void endVisitCarbonCalc( const ICarbonCalc* aCarbon, const int aPeriod );
 
+    void startVisitBaseTechnology( const BaseTechnology* aBaseTech, const int aPeriod );
+    void endVisitBaseTechnology( const BaseTechnology* aBaseTech, const int aPeriod );
+
+    void startVisitExpenditure( const Expenditure* aExpenditure, const int aPeriod );
+    void endVisitExpenditure( const Expenditure* aExpenditure, const int aPeriod );
+
+    virtual void startVisitInput( const Input* aInput, const int aPeriod );
+    virtual void endVisitInput( const Input* aInput, const int aPeriod );
+
+    virtual void startVisitHouseholdConsumer( const HouseholdConsumer* aHouseholdConsumer, 
+        const int aPeriod );
+    virtual void endVisitHouseholdConsumer( const HouseholdConsumer* aHouseholdConsumer, 
+        const int aPeriod );
+
+    virtual void startVisitGovtConsumer( const GovtConsumer* aGovtConsumer, const int aPeriod );
+    virtual void endVisitGovtConsumer( const GovtConsumer* aGovtConsumer, const int aPeriod );
+
+    virtual void startVisitTradeConsumer( const TradeConsumer* aTradeConsumer, const int aPeriod );
+    virtual void endVisitTradeConsumer( const TradeConsumer* aTradeConsumer, const int aPeriod );
+
+    virtual void startVisitInvestConsumer( const InvestConsumer* aInvestConsumer, const int aPeriod );
+    virtual void endVisitInvestConsumer( const InvestConsumer* aInvestConsumer, const int aPeriod );
+
+    virtual void startVisitProductionTechnology( const ProductionTechnology* aProductionTechnology, 
+        const int aPeriod );
+    virtual void endVisitProductionTechnology( const ProductionTechnology* aProductionTechnology, 
+        const int aPeriod );
+
+    virtual void startVisitFactorSupply( const FactorSupply* aFactorySupply, const int aPeriod );
+    virtual void endVisitFactorSupply( const FactorSupply* aFactorSupply, const int aPeriod );
+
     static bool appendData( const std::string& aData, const std::string& aLocation );
 private:
     //! Stringstream containing all the information until it is printed.
@@ -130,15 +176,13 @@ private:
 
     //! Current technology fuel stored from Technology so that GHG may access
     //! this. This is updated when the visitor reaches each Technology.
-	std::string mCurrentFuel;
-	
+    std::string mCurrentFuel;
+    
     //! Current indirect emissions for the Technology. These are more easily
     //! calculated at the Technology but logically belong in the GHG writeout.
     double mCurrIndirectEmissions;
 
-	//! Current technology year stored from Technology so that GHG may access
-    //! this. This is updated when the visitor reaches each Technology.
-    int mCurrentTechYear;
+
 
     //! Tabs object.
     std::auto_ptr<Tabs> mTabs;
@@ -176,6 +220,16 @@ private:
     };
     static std::auto_ptr<DBContainer> createContainer();
     static const std::string createContainerName( const std::string& aScenarioName );
+    
+    void writeItem( const std::string& aName,
+                    const std::string& aUnit,
+                    const double aValue,
+                    const int aPeriod );
+    
+    void writeItemUsingYear( const std::string& aName,
+                             const std::string& aUnit,
+                             const double aValue,
+                             const int aYear );
 };
 #endif //  __USE_XML_DB__
 #endif // _XML_DB_OUTPUTTER_H_

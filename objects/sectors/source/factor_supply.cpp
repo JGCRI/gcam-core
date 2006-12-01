@@ -213,6 +213,7 @@ void FactorSupply::csvSGMOutputFile( ostream& aFile, const int period ) const {
     // aFile << "Factor Supply Results" << endl << endl;
 }
 
-void FactorSupply::accept( IVisitor* aVisitor, const int period ) const {
-    aVisitor->updateFactorSupply( this, period );
+void FactorSupply::accept( IVisitor* aVisitor, const int aPeriod ) const {
+    aVisitor->startVisitFactorSupply( this, aPeriod );
+    aVisitor->endVisitFactorSupply( this, aPeriod );
 }

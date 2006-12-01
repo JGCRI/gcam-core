@@ -5,14 +5,14 @@
 #endif
 
 /*
-	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Laboratory operated by Battelle Memorial
-	Institute. Battelle has certain unperfected rights in the software
-	which should not be copied or otherwise disseminated outside your
-	organization without the express written authorization from Battelle. All rights to
-	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responsibility for the 
-	use of this software.
+    This software, which is provided in confidence, was prepared by employees
+    of Pacific Northwest National Laboratory operated by Battelle Memorial
+    Institute. Battelle has certain unperfected rights in the software
+    which should not be copied or otherwise disseminated outside your
+    organization without the express written authorization from Battelle. All rights to
+    the software are reserved by Battelle.  Battelle makes no warranty,
+    express or implied, and assumes no liability or responsibility for the 
+    use of this software.
 */
 
 /*! 
@@ -55,11 +55,11 @@ public:
     void finish() const;
     void startVisitRegionCGE( const RegionCGE* aRegion, const int aPeriod );
     void startVisitSector( const Sector* sector, const int aPeriod );
-	void updateProductionTechnology( const ProductionTechnology* prodTech, const int period );
-    void updateProductionInput( const ProductionInput* aProdInput );
-    void updateDemandInput( const DemandInput* aDemandInput );
-	void updateFactorSupply( const FactorSupply* factorSupply, const int period );
-    void updateConsumer( const Consumer* aConsumer, const int aPeriod );
+    void startVisitProductionTechnology( const ProductionTechnology* prodTech, const int aPeriod );
+    void startVisitProductionInput( const ProductionInput* aProdInput, const int aPeriod );
+    void startVisitDemandInput( const DemandInput* aDemandInput, const int aPeriod );
+    void startVisitFactorSupply( const FactorSupply* factorSupply, const int aPeriod );
+    void startVisitConsumer( const Consumer* aConsumer, const int aPeriod );
 private:
     //! The name of the file to which to write.
     std::ostream& mFile;
@@ -67,6 +67,10 @@ private:
     std::auto_ptr<StorageTable> mInternalTable; //!< The internal storage structure in row-column order.
     std::string mCurrSectorName; //!< The cached name of the current sector we are adding values for.
     bool mParsingConsumer; //!< Whether a consumer is currently being parsed.
+    
+    //! Whether an input should be visited since they should only be visited when the technology
+    //! is active.
+    bool mUseInput;
 };
 
 #endif // _INPUT_OUTPUT_TABLE_H_

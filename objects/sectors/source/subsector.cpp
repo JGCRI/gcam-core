@@ -654,7 +654,7 @@ const std::string& Subsector::getXMLNameStatic() {
 * \param aMoreSectorInfo SGM sector info object.
 * \param aPeriod Model period
 */
-void Subsector::initCalc( NationalAccount& aNationalAccount,
+void Subsector::initCalc( NationalAccount* aNationalAccount,
                           const Demographic* aDemographics,
                           const MoreSectorInfo* aMoreSectorInfo,
                           const int aPeriod )
@@ -670,7 +670,7 @@ void Subsector::initCalc( NationalAccount& aNationalAccount,
     for( unsigned int j = 0; j < baseTechs.size(); j++ ){
         if( aPeriod == 0 && baseTechs[ j ]->getYear() == modeltime->getper_to_yr( 0 ) ){
             double totalCapital = mTechTypes[ baseTechs[ j ]->getName() ]->getTotalCapitalStock( baseTechs[ j ]->getYear() );
-            baseTechs[ j ]->initCalc( aMoreSectorInfo, regionName, sectorName, aNationalAccount,
+            baseTechs[ j ]->initCalc( aMoreSectorInfo, regionName, sectorName, *aNationalAccount,
                                       aDemographics, totalCapital, aPeriod );
         
             // copy base year tech to old vintages
@@ -691,7 +691,7 @@ void Subsector::initCalc( NationalAccount& aNationalAccount,
     if(aPeriod > 0){
         for( unsigned int j = 0; j < baseTechs.size(); j++ ){
             if( baseTechs[ j ]->getYear() <= modeltime->getper_to_yr( aPeriod ) ){
-                baseTechs[ j ]->initCalc( aMoreSectorInfo, regionName, sectorName, aNationalAccount, aDemographics, 0, aPeriod );
+                baseTechs[ j ]->initCalc( aMoreSectorInfo, regionName, sectorName, *aNationalAccount, aDemographics, 0, aPeriod );
             }
         }
     }

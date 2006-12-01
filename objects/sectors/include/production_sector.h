@@ -45,7 +45,7 @@ public:
 
     double getOutput( const int aPeriod ) const;
     
-    virtual void initCalc( NationalAccount& aNationalAccount,
+    virtual void initCalc( NationalAccount* aNationalAccount,
                            const Demographic* aDemographics,
                            const int aPeriod );
 

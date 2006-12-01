@@ -27,6 +27,7 @@
 #include "util/base/include/value.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
+#include "util/base/include/time_vector.h"
 
 class IVisitor;
 class DemandInput;
@@ -44,27 +45,44 @@ class Input: public IVisitable, public IRoundTrippable
     friend class DemandComponentsTable;
     friend class SectorReport;
     friend class SGMGenTable;
+    friend class XMLDBOutputter;
 public:
     Input();
     virtual ~Input();
     virtual Input* clone() const = 0;
-    virtual void copyParam( const Input* aInput ) = 0;
+    virtual void copyParam( const Input* aInput,
+                            const int aPeriod ) = 0;
+
     virtual void copyParamsInto( ProductionInput& aInput ) const = 0;
     virtual void copyParamsInto( DemandInput& aInput ) const = 0;
     void XMLParse( const xercesc::DOMNode* node );
-    void completeInit();
+
+    void completeInit( const unsigned int aFirstOperationalPeriod );
+
+    void initCalc( const std::string& aRegionName,
+                   const bool aIsTrade,
+                   const int aPeriod );
+
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     const std::string& getName() const;
     double getConversionFactor( const std::string& aRegionName ) const;
     double getGHGCoefficient( const std::string& aGHGName, const std::string& aRegionName ) const;
-    double getDemandPhysical( const std::string& aRegionName ) const;
-    double getDemandCurrency() const;
+    
+    double getDemandPhysical( const std::string& aRegionName,
+                              const int aPeriod ) const;
+    
+    double getDemandCurrency( const int aPeriod ) const;
+
     double getTechChange( double aEnergyTechChange, double aMaterialTechChange,
                           const std::string& aRegionName ) const;
     double getPrice( const std::string& aRegionName, const int aPeriod ) const;
-    double getPricePaid() const;
-    void setPricePaid( double aPricePaid );
+    
+    double getPricePaid( const int aPeriod ) const;
+    
+    void setPricePaid( double aPricePaid,
+                       const int aPeriod );
+    
     double getPriceReceived( const std::string& aRegionName, const int aPeriod ) const;
     void setDemandCurrency( const double aDemand, const std::string& aRegionName, 
         const std::string& aSectorName, int aPeriod );
@@ -94,15 +112,29 @@ protected:
     };
     std::string mName; //!< Name of Input
     Value mCoefficient; //!< Coefficient for production or demand function
-    Value mDemandCurrency; //!< Currency Demand
+    
+    //! Read in demand currency.
+    Value mInitialDemandCurrency;
+
+    //! Currency demand by period.
+    objects::PeriodVector<Value> mDemandCurrency;
+
+    //! Price paid for input, adjusted from market price
+    objects::PeriodVector<Value> mPricePaid;
+
     mutable Value mConversionFactor; //!< Conversion Factor
     //! Cached GHG coefficient, this will have to be fixed for multiple gases.
     mutable Value mGHGCoefficient;
+
     Value mPriceAdjustFactor; //!< Price adjustment factor
-    Value mPricePaid; //!< price paid for input, adjusted from market price
+
     Value mTechnicalChange; //!< Technical Change
+
     bool mIsNumeraire; //!< Whether the input is the numeraire input.
     bool mIsCapital; //!< Whether the input is capital.
+
+    //! Whether the currency demand represents fixed trade in the good.
+    bool mIsFixedTrade;
 
     virtual const std::string& getXMLName() const = 0;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;

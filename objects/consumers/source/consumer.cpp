@@ -44,6 +44,19 @@ typedef vector<AGHG*>::iterator GHGIterator;
 Consumer::Consumer() {
 }
 
+void Consumer::initCalc( const MoreSectorInfo* aMoreSectorInfo,
+                         const string& aRegionName, 
+                         const string& aSectorName,
+                         NationalAccount& nationalAccount,
+                         const Demographic* aDemographics,
+                         const double aCapitalStock,
+                         const int aPeriod )
+{
+    BaseTechnology::initCalc( aMoreSectorInfo, aRegionName, aSectorName,
+                              nationalAccount, aDemographics, aCapitalStock,
+                              aPeriod );
+}
+
 //! Calculate Demand
 void Consumer::calcInputDemand( double aConsumption, const string& aRegionName, 
                                 const string& aSectorName, int aPeriod ) 
@@ -61,7 +74,7 @@ void Consumer::updateMarketplace( const string& aSectorName, const string& aRegi
     for( unsigned int i = 0; i < input.size(); i++ ) {
         // don't add govement deficit to marketplace demand
         if( !input[i]->isCapital() ) {
-            double tempDemand = input[ i ]->getDemandCurrency();
+            double tempDemand = input[ i ]->getDemandCurrency( aPeriod );
             assert( util::isValidNumber( tempDemand ) );
             if( tempDemand < 0 ){
                 cout << "Error: Trying to add a negative demand currency to the marketplace for " << input[ i ]->getName() << endl;
@@ -84,6 +97,7 @@ void Consumer::calcEmissions( const string& aGoodName, const string& aRegionName
 }
 
 void Consumer::accept( IVisitor* aVisitor, const int aPeriod ) const {
+    aVisitor->startVisitConsumer( this, aPeriod );
     BaseTechnology::accept( aVisitor, aPeriod );
-    aVisitor->updateConsumer( this, aPeriod );
+    aVisitor->endVisitConsumer( this, aPeriod );
 }

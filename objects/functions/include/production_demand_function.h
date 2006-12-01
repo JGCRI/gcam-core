@@ -54,14 +54,18 @@ public:
         const int aPeriod, double alphaZero = 0, double sigma = 0 ) const;
     
     // Functions defined as null in DemandFunction.
-    double transformCoefficients( std::vector<Input*>& input, double priceReceived, 
-        double alphaZero = 0, double sigma = 0 ) const 
+    double transformCoefficients( std::vector<Input*>& input,
+                                  double priceReceived,
+                                  const int aPeriod,
+                                  double alphaZero = 0,
+                                  double sigma = 0 ) const 
     { 
         return 0; 
     }
 
     double changeElasticity( std::vector<Input*>& input, double priceReceived, double aProfits, 
-        double capitalStock, double alphaZero = 0, double sigmaNew = 0, 
+        double capitalStock, const int aPeriod, double alphaZero = 0,
+        double sigmaNew = 0, 
         double sigmaOld = 0 ) const 
     { 
         return 0; 
@@ -212,11 +216,15 @@ public:
 	virtual double calcCoefficient( std::vector<Input*>& input, double consumption, const std::string& regionName,
         const std::string& sectorName, int period, double sigma = 0, double IBT = 0, double capitalStock = 0 ) const = 0;
 	
-    virtual double transformCoefficients( std::vector<Input*>& input, double priceReceived, double alphaZero = 0,
+    virtual double transformCoefficients( std::vector<Input*>& input,
+                                          double priceReceived,
+                                          const int aPeriod,
+                                          double alphaZero = 0,
         double sigma = 0 ) const = 0;
 
 	virtual double changeElasticity( std::vector<Input*>& input, double priceReceived, double aProfits,
-        double capitalStock, double alphaZero = 0, double sigmaNew = 0, double sigmaOld = 0 ) const = 0;
+        double capitalStock, const int aPeriod, double alphaZero = 0,
+        double sigmaNew = 0, double sigmaOld = 0 ) const = 0;
 	
     virtual double calcOutput( std::vector<Input*>& input, const std::string& regionName,
         const std::string& sectorName, const double aShutdownCoef,
@@ -277,11 +285,15 @@ public:
     double calcCoefficient( std::vector<Input*>& input, double consumption, const std::string& regionName,
        const std::string& sectorName, int period, double sigma = 0, double IBT = 0, double capitalStock = 0 ) const;
 
-	double transformCoefficients( std::vector<Input*>& input, double priceReceived, double alphaZero = 0,
+	double transformCoefficients( std::vector<Input*>& input,
+                                  double priceReceived,
+                                  const int aPeriod,
+                                  double alphaZero = 0,
         double sigma = 0 ) const;
 	
     double changeElasticity( std::vector<Input*>& input, double priceReceived, double aProfits,
-        double capitalStock, double alphaZero = 0, double sigmaNew = 0, double sigmaOld = 0 ) const;
+        double capitalStock, const int aPeriod, double alphaZero = 0,
+        double sigmaNew = 0, double sigmaOld = 0 ) const;
 	
     double calcOutput( std::vector<Input*>& input, const std::string& regionName,
         const std::string& sectorName, const double aShutdownCoef,
@@ -345,10 +357,14 @@ public:
     double calcCoefficient( std::vector<Input*>& input, double consumption, const std::string& regionName,
         const std::string& sectorName, int period, double sigma = 0, double IBT = 0, double capitalStock = 0 ) const;
 	
-    double transformCoefficients( std::vector<Input*>& input, double priceReceived, double alphaZero = 0,
+    double transformCoefficients( std::vector<Input*>& input,
+                                  double priceReceived,
+                                  const int aPeriod,
+                                  double alphaZero = 0,
         double sigma = 0 ) const;
 	
     double changeElasticity( std::vector<Input*>& input, double priceReceived, double aProfits, double capitalStock,
+        const int aPeriod,
         double alphaZero = 0, double sigmaNew = 0, double sigmaOld = 0 ) const;
 	
     double calcOutput( std::vector<Input*>& input, const std::string& regionName,

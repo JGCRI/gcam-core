@@ -154,7 +154,7 @@ double SimpleExpectedProfitCalculator::calcTechnologyExpectedProfitRate( const P
     // Discount the expected profit for when it will come online, at least one period.
     const Input* capInput = FunctionUtils::getInput( aTechProdFuncInfo.mInputs, "Capital" );
     assert( capInput );
-    const double pricePaidCapital = capInput->getPricePaid();
+    const double pricePaidCapital = capInput->getPricePaid( aPeriod );
     // Calculate the discounted value.
     double discountFactor = 0;
     for( int lagYear = 0; lagYear <= aDelayedInvestmentTime * aTimeStep; lagYear += aTimeStep ){

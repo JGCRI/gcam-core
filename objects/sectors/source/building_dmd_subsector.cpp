@@ -303,7 +303,7 @@ void BuildingDemandSubSector::calcPrice( const int period ) {
 * \param period Model period
 * \warning Function getFuelName will need to be changed once multiple inputs are implimented
 */
-void BuildingDemandSubSector::initCalc( NationalAccount& aNationalAccount,
+void BuildingDemandSubSector::initCalc( NationalAccount* aNationalAccount,
                                         const Demographic* aDemographics,
                                         const MoreSectorInfo* aMoreSectorInfo,
                                         const int aPeriod )

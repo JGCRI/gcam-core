@@ -45,7 +45,10 @@ class DemandInput : public Input
 public:
     DemandInput();
     DemandInput* clone() const;
-    void copyParam( const Input* aInput );
+
+    virtual void copyParam( const Input* aInput,
+                            const int aPeriod );
+
     void copyParamsInto( DemandInput& aDemandInput ) const;
     void copyParamsInto( ProductionInput& aProductionInput ) const { assert( false ); }
 

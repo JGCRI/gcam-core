@@ -36,13 +36,17 @@ class GovtConsumer : public Consumer
     friend class SectorReport;
     friend class SGMGenTable;
     friend class GovtResults;
+    friend class XMLDBOutputter;
 public:
-	GovtConsumer();
-	GovtConsumer* clone() const;
-	void copyParam( const BaseTechnology* baseTech );
-	void copyParamsInto( GovtConsumer& govtConsumerIn ) const;
+    GovtConsumer();
+    GovtConsumer* clone() const;
 
-	void completeInit( const std::string& regionName );
+    virtual void copyParam( const BaseTechnology* baseTech,
+                            const int aPeriod );
+
+    void copyParamsInto( GovtConsumer& govtConsumerIn ) const;
+
+    void completeInit( const std::string& regionName );
     
     virtual void initCalc( const MoreSectorInfo* aMoreSectorInfo,
                            const std::string& aRegionName, 
@@ -56,9 +60,9 @@ public:
         const MoreSectorInfo* aMoreSectorInfo, const std::string& aRegionName,
         const std::string& aSectorName, const bool isNewVintageMode, const int aPeriod );
 
-	void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
-	void accept( IVisitor* aVisitor, const int aPeriod ) const;
-	static const std::string& getXMLNameStatic();
+    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
+    void accept( IVisitor* aVisitor, const int aPeriod ) const;
+    static const std::string& getXMLNameStatic();
 protected:
     virtual bool isCoefBased() const { return true; }
     void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
@@ -68,30 +72,30 @@ protected:
 private:
     void calcTotalTax( NationalAccount& aNationalAccount, const std::string& aRegionName,
                        const int aPeriod );
-	void calcTransfer( NationalAccount& nationalAccount, const Demographic* demographics, 
+    void calcTransfer( NationalAccount& nationalAccount, const Demographic* demographics, 
         const std::string& regionName, int period );
-	void calcBaseCoef( NationalAccount& nationalAccount, const Demographic* aDemographics );
-	void calcGovtTaxOrSubsidy( const std::string& regionName, int period );
-	void calcGovtCapitalDemand( const std::string& regionName, int period ); // not currently used
-	void calcSubsidy( NationalAccount& nationalAccount, const std::string& regionName, int period );
+    void calcBaseCoef( NationalAccount& nationalAccount, const Demographic* aDemographics );
+    void calcGovtTaxOrSubsidy( const std::string& regionName, int period );
+    void calcGovtCapitalDemand( const std::string& regionName, int period ); // not currently used
+    void calcSubsidy( NationalAccount& nationalAccount, const std::string& regionName, int period );
     void calcDeficit( const std::string& regionName, int period );
-	void calcIncome( NationalAccount& nationalAccount, const Demographic* demographics, 
+    void calcIncome( NationalAccount& nationalAccount, const Demographic* demographics, 
         const std::string& regionName, int period );
-	
+    
     void calcBudget();
     
     // Read in parameters.
-	Value mBaseDeficit; //!< Base Real deficit
-	Value mBaseTransfer; //!< Read in base year real transfer	
-	Value mTaxProportional; //!< Proportional Tax
-	Value mTaxAdditive; //!< Additive Tax
-	Value mTaxCorporate; //!< Corporate income tax
-	Value mTaxIBT; //!< Indirect business tax
-	Value mRho;
+    Value mBaseDeficit; //!< Base Real deficit
+    Value mBaseTransfer; //!< Read in base year real transfer   
+    Value mTaxProportional; //!< Proportional Tax
+    Value mTaxAdditive; //!< Additive Tax
+    Value mTaxCorporate; //!< Corporate income tax
+    Value mTaxIBT; //!< Indirect business tax
+    Value mRho;
 
     // Calculated parameters.
     Value mBaseTransferPopCoef;
-	Value mSigma;
+    Value mSigma;
 };
 
 #endif // _GOVT_CONSUMER_H_

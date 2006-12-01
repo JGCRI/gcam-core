@@ -45,10 +45,10 @@ void SectorResults::finish() const {
     const vector<string> colNames = mInternalTable->getRowLabels();
     for( vector<string>::const_iterator col = colNames.begin(); col != colNames.end(); ++col ){
         mFile << ',' << *col;
-    }	
+    }   
     mFile << endl;
 
-	//aFile.precision(0);
+    //aFile.precision(0);
     // Write out each row of the table, representing one sector
     const vector<string> rowNames = mInternalTable->getColLabels();
     for ( vector<string>::const_iterator row = rowNames.begin(); row != rowNames.end(); ++row ){
@@ -68,35 +68,38 @@ void SectorResults::startVisitSector( const Sector* aSector, const int aPeriod )
     mCurrentSectorName = aSector->getName();
 }
 
-void SectorResults::updateProductionSector( const ProductionSector* aProdSector, const int aPeriod ) {
+void SectorResults::startVisitProductionSector( const ProductionSector* aProdSector, const int aPeriod ) {
     // Add a column for ourselves.
     mInternalTable->addColumn( aProdSector->getName() );
 }
 
-void SectorResults::updateProductionTechnology( const ProductionTechnology* aProdTechnology,
-											    const int aPeriod ) 
+void SectorResults::startVisitProductionTechnology( const ProductionTechnology* aProdTechnology,
+                                                const int aPeriod ) 
 {
-      // Add to the physical output column.
-    const Marketplace* marketplace = scenario->getMarketplace();
-    double convFactor = Input::getMarketConversionFactor( mCurrentSectorName, mCurrentRegionName );
-    mInternalTable->addToType( "Phys. Out.", mCurrentSectorName, aProdTechnology->mOutputs[ aPeriod ] * convFactor );
+    if( aPeriod == -1 || ( aProdTechnology->isAvailable( aPeriod ) && 
+        !aProdTechnology->isRetired( aPeriod ) ) ) {
+            // Add to the physical output column.
+            const Marketplace* marketplace = scenario->getMarketplace();
+            double convFactor = Input::getMarketConversionFactor( mCurrentSectorName, mCurrentRegionName );
+            mInternalTable->addToType( "Phys. Out.", mCurrentSectorName, aProdTechnology->mOutputs[ aPeriod ] * convFactor );
 
-    // Add to the sales column
-    mInternalTable->addToType( "Sales", mCurrentSectorName, aProdTechnology->expenditure.getValue( Expenditure::SALES ) );
+            // Add to the sales column
+            mInternalTable->addToType( "Sales", mCurrentSectorName, aProdTechnology->expenditures[ aPeriod ].getValue( Expenditure::SALES ) );
 
-	double priceReceived = FunctionUtils::getPriceReceived( mCurrentRegionName, mCurrentSectorName, aPeriod ); 
-    // Add to the revenue column.
-    mInternalTable->addToType( "Revenue", mCurrentSectorName,
-                                aProdTechnology->expenditure.getValue( Expenditure::SALES ) * priceReceived );
+            double priceReceived = FunctionUtils::getPriceReceived( mCurrentRegionName, mCurrentSectorName, aPeriod ); 
+            // Add to the revenue column.
+            mInternalTable->addToType( "Revenue", mCurrentSectorName,
+                aProdTechnology->expenditures[ aPeriod ].getValue( Expenditure::SALES ) * priceReceived );
 
-    // Add to the profits column.
-    mInternalTable->addToType( "Profits", mCurrentSectorName, aProdTechnology->mProfits[ aPeriod ] );
+            // Add to the profits column.
+            mInternalTable->addToType( "Profits", mCurrentSectorName, aProdTechnology->mProfits[ aPeriod ] );
 
-    // Add to the retained earnings column.
-    mInternalTable->addToType( "Retained Earnings", mCurrentSectorName,
-                               aProdTechnology->expenditure.getValue( Expenditure::RETAINED_EARNINGS ) );
+            // Add to the retained earnings column.
+            mInternalTable->addToType( "Retained Earnings", mCurrentSectorName,
+                aProdTechnology->expenditures[ aPeriod ].getValue( Expenditure::RETAINED_EARNINGS ) );
 
-    // Add to the costs column.
-    mInternalTable->addToType( "Costs", mCurrentSectorName,
-                               aProdTechnology->mCostsReporting[ aPeriod ] );
+            // Add to the costs column.
+            mInternalTable->addToType( "Costs", mCurrentSectorName,
+                aProdTechnology->mCostsReporting[ aPeriod ] );
+        }
 }

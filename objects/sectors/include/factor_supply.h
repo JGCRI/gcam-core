@@ -5,14 +5,14 @@
 #endif
 
 /*
-	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Laboratory operated by Battelle Memorial
-	Institute. Battelle has certain unperfected rights in the software
-	which should not be copied or otherwise disseminated outside your
-	organization without the express written authorization from Battelle. All rights to
-	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responsibility for the 
-	use of this software.
+    This software, which is provided in confidence, was prepared by employees
+    of Pacific Northwest National Laboratory operated by Battelle Memorial
+    Institute. Battelle has certain unperfected rights in the software
+    which should not be copied or otherwise disseminated outside your
+    organization without the express written authorization from Battelle. All rights to
+    the software are reserved by Battelle.  Battelle makes no warranty,
+    express or implied, and assumes no liability or responsibility for the 
+    use of this software.
 */
 
 /*! 
@@ -43,6 +43,7 @@ class MoreSectorInfo;
 class FactorSupply: public IVisitable, public IRoundTrippable
 {
     friend class SGMGenTable;
+    friend class XMLDBOutputter;
 public:
     FactorSupply();
     const std::string& getName() const;
@@ -54,10 +55,10 @@ public:
     void completeInit( const std::string& aRegionName );
     void initCalc( const std::string& aRegionName, const int period );
 
-	double getSupply( const std::string& aRegionName, const int period ) const;
-	void calcPricePaid( const std::string& aRegionName, const int period );
-	void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
-	void accept( IVisitor* aVisitor, const int period ) const;
+    double getSupply( const std::string& aRegionName, const int period ) const;
+    void calcPricePaid( const std::string& aRegionName, const int period );
+    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
+    void accept( IVisitor* aVisitor, const int aPeriod ) const;
 
 protected:
     void setMarket( const std::string& aRegionName );

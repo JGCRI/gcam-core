@@ -5,14 +5,14 @@
 #endif
 
 /*
-	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Laboratory operated by Battelle Memorial
-	Institute. Battelle has certain unperfected rights in the software
-	which should not be copied or otherwise disseminated outside your
-	organization without the express written authorization from Battelle. All rights to
-	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responsibility for the 
-	use of this software.
+    This software, which is provided in confidence, was prepared by employees
+    of Pacific Northwest National Laboratory operated by Battelle Memorial
+    Institute. Battelle has certain unperfected rights in the software
+    which should not be copied or otherwise disseminated outside your
+    organization without the express written authorization from Battelle. All rights to
+    the software are reserved by Battelle.  Battelle makes no warranty,
+    express or implied, and assumes no liability or responsibility for the 
+    use of this software.
 */
 
 /*! 
@@ -50,14 +50,20 @@ class ProductionTechnology : public BaseTechnology
     friend class SGMGenTable;
     friend class SectorResults;
     friend class GovtResults;
+    friend class XMLDBOutputter;
+    // eigther this is a friend or move isAvailable and isRetired to public
+    friend class InputOutputTable;
 public:
-	ProductionTechnology();
-	ProductionTechnology* clone() const;
-	~ProductionTechnology();
-    void copyParam( const BaseTechnology* baseTech );
-	void copyParamsInto( ProductionTechnology& prodTechIn ) const;
+    ProductionTechnology();
+    ProductionTechnology* clone() const;
+    ~ProductionTechnology();
 
-	virtual void completeInit( const std::string& aRegionName );
+    virtual void copyParam( const BaseTechnology* baseTech,
+                            const int aPeriod );
+
+    void copyParamsInto( ProductionTechnology& prodTechIn ) const;
+
+    virtual void completeInit( const std::string& aRegionName );
     
     virtual void initCalc( const MoreSectorInfo* aMoreSectorInfo,
                            const std::string& aRegionName, 
@@ -66,8 +72,8 @@ public:
                            const Demographic* aDemographics,
                            const double aCapitalStock,
                            const int aPeriod );
-	
-	static const std::string& getXMLNameStatic();
+    
+    static const std::string& getXMLNameStatic();
 
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic, 
         const MoreSectorInfo* aMoreSectorInfo, const std::string& aRegionName, const std::string& aSectorName, 
@@ -110,8 +116,8 @@ protected:
     virtual void calcEmissions( const std::string& aGoodName, const std::string& aRegionName, const int aPeriod );
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-	virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
-	virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
+    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 private:
      //! Lower limit of sigma for CES.
     const static double LEONTIEF_THRESHOLD;
@@ -148,11 +154,11 @@ private:
     //! A vector of cached results indexed by year for frequently called checks.
     std::vector<bool> mCachedValues;
     
-	double capital; //!< capital cost
-	double alphaZeroScaler; //!< scaler for production funtion
-	double indBusTax; //!< indirect business tax
-	double sigma1; //!< elasticity of substitution for new vintage
-	double sigma2; //!< elasticity of substitution for old vintage
+    double capital; //!< capital cost
+    double alphaZeroScaler; //!< scaler for production funtion
+    double indBusTax; //!< indirect business tax
+    double sigma1; //!< elasticity of substitution for new vintage
+    double sigma2; //!< elasticity of substitution for old vintage
     double currSigma; //!< The sigma currently being used.
     double mBasePhysicalOutput; //!< base year physical output for calculating conversion factor
     double mConversionFactor; //!< conversion factor to get physical output from currency output
@@ -165,11 +171,11 @@ private:
     int mValidCachePeriod;
 
     int lifeTime; //!< nameplate lifetime of the technology
-	int	delayedInvestTime; //!< number of years between initial investment and first operation
-	int	maxLifeTime; //!< maximum allowable lifetime
-	int	retrofitLifeTime; //!< lifetime of the technology renovation
-	int	periodIniInvest; //!< number of periods until initial investment
-	int	periodInvestUnallowed; //!< period in which investment is no longer allowed
+    int delayedInvestTime; //!< number of years between initial investment and first operation
+    int maxLifeTime; //!< maximum allowable lifetime
+    int retrofitLifeTime; //!< lifetime of the technology renovation
+    int periodIniInvest; //!< number of periods until initial investment
+    int periodInvestUnallowed; //!< period in which investment is no longer allowed
 
     
     void calcTaxes( NationalAccount& aNationalAccount, const MoreSectorInfo* aMoreSectorInfo, 

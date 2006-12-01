@@ -58,6 +58,7 @@ typedef vector<AGHG*>::iterator GHGIterator;
 BaseTechnology::BaseTechnology() {
     const int maxper = scenario->getModeltime()->getmaxper();
     mOutputs.resize( maxper );
+    expenditures.resize( maxper );
     prodDmdFn = 0;
 }
 
@@ -69,6 +70,7 @@ BaseTechnology::~BaseTechnology() {
 BaseTechnology::BaseTechnology( const BaseTechnology& baseTechIn ) {
     const int maxper = scenario->getModeltime()->getmaxper();
     mOutputs.resize( maxper );
+    expenditures.resize( maxper );
     copy( baseTechIn );
 }
 
@@ -97,15 +99,21 @@ void BaseTechnology::copy( const BaseTechnology& baseTechIn ) {
     }
 }
 
-void BaseTechnology::copyParam( const BaseTechnology* baseTechIn ) {
+void BaseTechnology::copyParam( const BaseTechnology* baseTechIn,
+                                const int aPeriod )
+{
     name = baseTechIn->name;
     categoryName = baseTechIn->categoryName;
     prodDmdFnType = baseTechIn->prodDmdFnType;
     prodDmdFn = baseTechIn->prodDmdFn;
     
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int initialYear = max( modeltime->getStartYear(), year );
+    const int initialPeriod = modeltime->getyr_to_per( initialYear );
+    
     // First loop through and remove any inputs that are not in the copy-from technology.
     for( InputIterator iter = input.begin(); iter != input.end(); ++iter ){
-        if( !isCoefBased() && (*iter)->getDemandCurrency() != 0 ){
+        if( !isCoefBased() && (*iter)->getDemandCurrency( initialPeriod ) != 0 ){
             continue;
         }
         // Doesn't exist in the other one. 
@@ -127,12 +135,16 @@ void BaseTechnology::copyParam( const BaseTechnology* baseTechIn ) {
     // For each input, check if it exists in the current technology. 
     for ( CInputIterator iter = baseTechIn->input.begin(); iter != baseTechIn->input.end(); ++iter ) {
         if( !util::hasValue( inputNameToNo, (*iter)->getName() ) ){
-            input.push_back( (*iter)->clone() );
+            Input* newInput = (*iter)->clone();
+            newInput->completeInit( initialPeriod );
+            input.push_back( newInput );
             inputNameToNo[ (*iter)->getName() ] = static_cast<int>( input.size() - 1 );
         }
         // It already exists, we need to copy into.
         else {
-            input[ util::searchForValue( inputNameToNo, (*iter)->getName() ) ]->copyParam( *iter );
+            Input* newInput = input[ util::searchForValue( inputNameToNo, (*iter)->getName() ) ];
+            newInput->copyParam( *iter, aPeriod );
+            newInput->completeInit( initialPeriod );
         }
     } // end for
     
@@ -238,7 +250,7 @@ void BaseTechnology::toDebugXML( const int period, ostream& out, Tabs* tabs ) co
     for( CGHGIterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){
         (*ghg)->toDebugXML( period, out, tabs );
     }
-    expenditure.toDebugXML( period, out, tabs );
+    expenditures[ period ].toDebugXML( period, out, tabs );
 
     XMLWriteElement( mOutputs[ period ], "output", out, tabs );
 
@@ -248,10 +260,14 @@ void BaseTechnology::toDebugXML( const int period, ostream& out, Tabs* tabs ) co
 }
 
 //! Complete the initialization of the BaseTechnology object.
-void BaseTechnology::completeInit( const std::string& regionName ) {
+void BaseTechnology::completeInit( const string& regionName ) {
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int initialYear = max( modeltime->getStartYear(), year );
+    const int initialPeriod = modeltime->getyr_to_per( initialYear );
+
     for( InputIterator anInput = input.begin(); anInput != input.end(); ++anInput ) {
          // This does not appear to do anything, might not work if it did due to later copying.
-        (*anInput)->completeInit();
+        (*anInput)->completeInit( initialPeriod );
     }
 
     // Check if CO2 is missing. 
@@ -271,13 +287,12 @@ void BaseTechnology::initCalc( const MoreSectorInfo* aMoreSectorInfo, const stri
                                const string& aSectorName, NationalAccount& nationalAccount,
                                const Demographic* aDemographics, const double aCapitalStock, const int aPeriod )
 {
-    // Only calculate price paid if the current year is equal or less than the technologies year.
-    if( scenario->getModeltime()->getper_to_yr( aPeriod ) >= year ){
-        calcPricePaid( aMoreSectorInfo, aRegionName, aSectorName, aPeriod );
-    }
-
     for( CGHGIterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){
         // (*ghg)->initCalc();
+    }
+
+    for( InputIterator i = input.begin(); i != input.end(); ++i ){
+        ( *i )->initCalc( aRegionName, isTrade(), aPeriod );
     }
 }
 
@@ -287,8 +302,13 @@ void BaseTechnology::initCalc( const MoreSectorInfo* aMoreSectorInfo, const stri
 *          to contain the correct mappings.
 */
 void BaseTechnology::removeEmptyInputs(){
+
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int initialYear = max( modeltime->getStartYear(), year );
+    const int initialPeriod = modeltime->getyr_to_per( initialYear );
+
     for( InputIterator currInput = input.begin(); currInput != input.end(); ++currInput ){
-        if( (*currInput)->getDemandCurrency() == 0 ){
+        if( (*currInput)->getDemandCurrency( initialPeriod ) == 0 ){
             // Remove the input object.
             delete *currInput;
             // Remove the dangling pointer and empty vector position. The erase
@@ -390,7 +410,7 @@ void BaseTechnology::calcPricePaid( const MoreSectorInfo* aMoreSectorInfo, const
                 ( transportationAdder * transportationMult ) ) * proportionalTax + additiveTax + carbonTax ) * 
                 input[i]->getPriceAdjustment();
         }
-        input[i]->setPricePaid( tempPricePaid );
+        input[i]->setPricePaid( tempPricePaid, aPeriod );
     }
 }
 
@@ -398,7 +418,7 @@ void BaseTechnology::updateMarketplace( const string& sectorName, const string& 
     Marketplace* marketplace = scenario->getMarketplace();
     double totalDemand = 0;
     for( InputIterator curr = input.begin(); curr != input.end(); ++curr ) {
-        double tempDemand = (*curr)->getDemandCurrency();
+        double tempDemand = (*curr)->getDemandCurrency( period );
         if( tempDemand < 0 ){
             cout << "Error trying to add negative demand currency to marketplace from BaseTechnology." << endl;
         }
@@ -416,12 +436,29 @@ void BaseTechnology::csvSGMOutputFile( ostream& aFile, const int period ) const 
     aFile << "Total Consumption" << ',' << mOutputs[ period ] << endl << endl;
 }
 
-void BaseTechnology::accept( IVisitor* aVisitor, const int period ) const
+void BaseTechnology::accept( IVisitor* aVisitor, const int aPeriod ) const
 {
-    aVisitor->updateBaseTechnology( this );
+    aVisitor->startVisitBaseTechnology( this, aPeriod );
     for( CInputIterator cInput = input.begin(); cInput != input.end(); ++cInput ) {
-        (*cInput)->accept( aVisitor, period );
+        (*cInput)->accept( aVisitor, aPeriod );
     }
+
+    if( aPeriod == -1 ) {
+        int currPeriod = 0;
+        for( vector<Expenditure>::const_iterator cExpenditure = expenditures.begin(); cExpenditure !=
+            expenditures.end(); ++cExpenditure )
+        {
+            (*cExpenditure).accept( aVisitor, currPeriod );
+            ++currPeriod;
+        }
+    } else {
+        expenditures[ aPeriod].accept( aVisitor, aPeriod );
+    }
+    for( vector<AGHG*>::const_iterator cGHG = mGhgs.begin(); cGHG != mGhgs.end(); ++cGHG ) {
+        (*cGHG)->accept( aVisitor, aPeriod );
+    }
+
+    aVisitor->endVisitBaseTechnology( this, aPeriod );
 }
 
 const string BaseTechnology::getIdentifier() const {

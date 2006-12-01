@@ -42,8 +42,10 @@ ProductionInput* ProductionInput::clone() const {
     return new ProductionInput( *this );
 }
 
-void ProductionInput::copyParam( const Input* aInput ) {
-    Input::copyParam( aInput );
+void ProductionInput::copyParam( const Input* aInput,
+                                 const int aPeriod )
+{
+    Input::copyParam( aInput, aPeriod );
     aInput->copyParamsInto( *this );
 }
 
@@ -100,6 +102,7 @@ const string& ProductionInput::getXMLNameStatic() {
 }
 
 void ProductionInput::accept( IVisitor* aVisitor, const int aPeriod ) const {
+    aVisitor->startVisitProductionInput( this, aPeriod );
     Input::accept( aVisitor, aPeriod );
-	aVisitor->updateProductionInput( this );
+    aVisitor->endVisitProductionInput( this, aPeriod );
 }

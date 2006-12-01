@@ -97,7 +97,7 @@ void StorageTable::addToType( const string& aRow, const string& aCol, const doub
 void StorageTable::setType( const string& aRow, const string& aCol,
                               const double aValue )
 {
- 	// Find the correct column.
+    // Find the correct column.
     int rowIndex = getRowIndex( aRow );
     
     // If the row does not exist insert one on the end.

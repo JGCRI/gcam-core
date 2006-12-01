@@ -68,56 +68,38 @@ void NationalAccount::XMLParse( const DOMNode* node ) {
         if( nodeName == "#text" ) {
             continue;
         }
-		else if  ( nodeName == "retainedEarning" ) {
-			addToAccount( RETAINED_EARNINGS, XMLHelper<double>::getValue( curr ) );
-		}
-		else if  ( nodeName == "dividends" ) {
-			addToAccount( DIVIDENDS, XMLHelper<double>::getValue( curr ) );
-		}
-		else if  ( nodeName == "transfers" ) {
-			addToAccount( TRANSFERS, XMLHelper<double>::getValue( curr ) );
-		}
-		else if  ( nodeName == "corporateIncomeTaxRate" ) {
-			setAccount( CORPORATE_INCOME_TAX_RATE, XMLHelper<double>::getValue( curr ) );
-		}
-		else if  ( nodeName == "exchangeRate" ) {
-			addToAccount( EXCHANGE_RATE, XMLHelper<double>::getValue( curr ) );
-		}
-		else {
-			ILogger& mainLog = ILogger::getLogger( "main_log" );
-			mainLog.setLevel( ILogger::WARNING );
-			mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLNameStatic() << "." << endl;
-		}
-	}
+        else if  ( nodeName == enumToXMLName( RETAINED_EARNINGS ) ) {
+            addToAccount( RETAINED_EARNINGS, XMLHelper<double>::getValue( curr ) );
+        }
+        else if  ( nodeName == enumToXMLName( DIVIDENDS ) ) {
+            addToAccount( DIVIDENDS, XMLHelper<double>::getValue( curr ) );
+        }
+        else if  ( nodeName == enumToXMLName( TRANSFERS ) ) {
+            addToAccount( TRANSFERS, XMLHelper<double>::getValue( curr ) );
+        }
+        else if  ( nodeName == enumToXMLName( CORPORATE_INCOME_TAX_RATE ) ) {
+            setAccount( CORPORATE_INCOME_TAX_RATE, XMLHelper<double>::getValue( curr ) );
+        }
+        else if  ( nodeName == enumToXMLName( EXCHANGE_RATE ) ) {
+            addToAccount( EXCHANGE_RATE, XMLHelper<double>::getValue( curr ) );
+        }
+        else {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLNameStatic() << "." << endl;
+        }
+    }
 }
 
 //! Output debug info to XML
 void NationalAccount::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), out, tabs );
 
-    XMLWriteElement( getAccountValue( GDP ), "GDP", out, tabs );
-    XMLWriteElement( getAccountValue( SUBSIDY ), "subsidy", out, tabs );
-    XMLWriteElement( getAccountValue( CORPORATE_PROFITS ), "corpProfits", out, tabs );
-    XMLWriteElement( getAccountValue( CORPORATE_RETAINED_EARNINGS ), "corpRetainedEarnings", out, tabs );
-    XMLWriteElement( getAccountValue( CORPORATE_INCOME_TAXES ), "corporateIncomeTax", out, tabs );
-    XMLWriteElement( getAccountValue( CORPORATE_INCOME_TAX_RATE ), "corporateIncomeTaxRate", out, tabs );
-    XMLWriteElement( getAccountValue( PERSONAL_INCOME_TAXES ), "personalIncomeTax", out, tabs );
-    XMLWriteElement( getAccountValue( INVESTMENT_TAX_CREDIT ), "investmentTaxCredit", out, tabs );
-    XMLWriteElement( getAccountValue( DIVIDENDS ), "dividends", out, tabs );
-    XMLWriteElement( getAccountValue( INDIRECT_BUSINESS_TAX ), "indirectBusinessTax", out, tabs );
-    XMLWriteElement( getAccountValue( LABOR_WAGES ), "laborWages", out, tabs );
-    XMLWriteElement( getAccountValue( LAND_RENTS ), "landRents", out, tabs );
-    XMLWriteElement( getAccountValue( TRANSFERS ), "transfers", out, tabs );
-    XMLWriteElement( getAccountValue( SOCIAL_SECURITY_TAX ), "socialSecurityTax", out, tabs );
-    XMLWriteElement( getAccountValue( INDIRECT_BUSINESS_TAX ), "exchangeRate", out, tabs );
-    XMLWriteElement( getAccountValue( GNP ), "GNP", out, tabs );
-    XMLWriteElement( getAccountValue( GNP_VA ), "GNPVA", out, tabs );
-    XMLWriteElement( getAccountValue( CONSUMPTION ), "consumption", out, tabs );
-    XMLWriteElement( getAccountValue( GOVERNMENT ), "government", out, tabs );
-    XMLWriteElement( getAccountValue( INVESTMENT ), "investment", out, tabs );
-    XMLWriteElement( getAccountValue( NET_EXPORT ), "netExport", out, tabs );
-    XMLWriteElement( getAccountValue( EXCHANGE_RATE ), "exchangeRate", out, tabs );
-    XMLWriteElement( getAccountValue( ANNUAL_INVESTMENT ), "annualInvestment", out, tabs );
+        for( int i = 0; i < NationalAccount::END; ++i ) {
+            XMLWriteElement( getAccountValue( static_cast< NationalAccount::AccountType >( i ) ),
+            enumToXMLName( static_cast< NationalAccount::AccountType >( i ) ),
+            out, tabs );
+    }
     
     XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
 }
@@ -241,7 +223,49 @@ const string& NationalAccount::enumToName( const AccountType aType ) const {
     return names[ aType ];
 }
 
+/*! \brief Convert between the NationalAccount enum type to the XML String representation
+ *
+ * \author Pralit Patel
+ * \param aType The enum NationalAccount type
+ * \return The XML string representation of the type
+ */
+const string& NationalAccount::enumToXMLName( const AccountType aType ) const {
+    /*! \pre aType is a valid account type. */
+    assert( aType < END );
+    // Create a static array of values. This will only on the first entrance to
+    // the function since this is a const static.
+
+    const static string names[] = {
+            "GDP",
+            "retainedEarning",
+            "subsidy",
+            "corpProfits",
+            "corpRetainedEarnings",
+            "corporateIncomeTax",
+            "corporateIncomeTaxRate",
+            "personalIncomeTax",
+            "investmentTaxCredit",
+            "dividends",
+            "laborWages",
+            "landRents",
+            "transfers",
+            "socialSecurityTax",
+            "indirectBusinessTax",
+            "GNP",
+            "GNPVA",
+            "consumption",
+            "government",
+            "investment",
+            "netExport",
+            "exchangeRate",
+            "annualInvestment"
+    };
+    // Return the string in the static array at the index.
+    return names[ aType ];
+}
+
 // for reporting National Account information
 void NationalAccount::accept( IVisitor* aVisitor, const int aPeriod ) const {
-    aVisitor->updateNationalAccount( this, aPeriod );
+    aVisitor->startVisitNationalAccount( this, aPeriod );
+    aVisitor->endVisitNationalAccount( this, aPeriod );
 }

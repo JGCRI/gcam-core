@@ -280,7 +280,7 @@ void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 * \param aDemographics demographics object
 * \param aPeriod Model period
 */
-void Sector::initCalc( NationalAccount& aNationalAccount,
+void Sector::initCalc( NationalAccount* aNationalAccount,
                       const Demographic* aDemographics,
                       const int aPeriod )
 {
@@ -288,27 +288,6 @@ void Sector::initCalc( NationalAccount& aNationalAccount,
     normalizeShareWeights( aPeriod );
 
     Marketplace* marketplace = scenario->getMarketplace();
-    // retained earnings parameter calculation
-    // for base year only, better in completeInit but NationalAccount not accessible.
-    // TODO: Move this to SGM sectors only.
-    if ( aPeriod == 0 && moreSectorInfo.get() ) {
-        double corpIncTaxRate = aNationalAccount.getAccountValue(NationalAccount::CORPORATE_INCOME_TAX_RATE);
-        double totalRetEarnings = aNationalAccount.getAccountValue(NationalAccount::RETAINED_EARNINGS);
-        double totalProfits2 = aNationalAccount.getAccountValue(NationalAccount::CORPORATE_PROFITS);
-        double totalProfits = marketplace->getDemand("Capital", regionName, aPeriod);
-        // Set retained earnings to zero by setting MAX_CORP_RET_EARNINGS_RATE
-        // to 0. This is for the technology sectors, like the transportation
-        // vehicle sectors. All of the profits goes to dividends and there are
-        // no retained earnings.
-        // SHK  4/21/2005
-        double retEarnParam = 0;
-        if( moreSectorInfo->getValue(MoreSectorInfo::MAX_CORP_RET_EARNINGS_RATE) != 0 ) {
-            retEarnParam = log( 1 - (totalRetEarnings/(totalProfits*moreSectorInfo->getValue(MoreSectorInfo::MAX_CORP_RET_EARNINGS_RATE)
-                *(1 - corpIncTaxRate)))) / marketplace->getPrice("Capital", regionName, aPeriod );
-        }
-        moreSectorInfo->setType(MoreSectorInfo::RET_EARNINGS_PARAM, retEarnParam);
-        moreSectorInfo->setType(MoreSectorInfo::CORP_INCOME_TAX_RATE, corpIncTaxRate);
-    }
 
     // do any sub-Sector initializations
     for ( unsigned int i = 0; i < subsec.size(); ++i ){

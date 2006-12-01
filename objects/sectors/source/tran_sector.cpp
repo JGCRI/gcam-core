@@ -41,7 +41,7 @@ TranSector::TranSector( const string regionName ): DemandSector( regionName ) {
 * \param aDemographics Regional demographics object.
 * \param aPeriod Period for which to initialize the TranSector.
 */
-void TranSector::initCalc( NationalAccount& aNationalAccount,
+void TranSector::initCalc( NationalAccount* aNationalAccount,
                            const Demographic* aDemographics,
                            const int aPeriod )
 {

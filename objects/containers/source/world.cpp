@@ -16,7 +16,7 @@
 
 #include "util/base/include/xml_helper.h"
 #include "containers/include/world.h"
-#include "containers/include/region.h"
+#include "containers/include/region_minicam.h"
 #include "containers/include/region_cge.h"
 #include "sectors/include/ag_sector.h"
 #include "containers/include/scenario.h"
@@ -85,8 +85,8 @@ void World::XMLParse( const DOMNode* node ){
             parseSingleNode( curr, globalTechDB, new GlobalTechnologyDatabase() );
         }
         // MiniCAM regions
-        else if( nodeName == Region::getXMLNameStatic() ){
-            parseContainerNode( curr, regions, regionNamesToNumbers, new Region() );
+        else if( nodeName == RegionMiniCAM::getXMLNameStatic() ){
+            parseContainerNode( curr, regions, regionNamesToNumbers, new RegionMiniCAM() );
         }
 		// Read in parameters for climate model
         else if( nodeName == MagiccModel::getXMLNameStatic() ){

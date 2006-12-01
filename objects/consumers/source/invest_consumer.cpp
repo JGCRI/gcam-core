@@ -26,8 +26,9 @@ extern Scenario* scenario;
 InvestConsumer::InvestConsumer(){
 }
 
-void InvestConsumer::copyParam( const BaseTechnology* aInvestConsumer ) {
-	BaseTechnology::copyParam( aInvestConsumer );
+void InvestConsumer::copyParam( const BaseTechnology* aInvestConsumer,
+                                const int aPeriod ) {
+    BaseTechnology::copyParam( aInvestConsumer, aPeriod );
     aInvestConsumer->copyParamsInto( *this );
 }
 
@@ -35,12 +36,12 @@ void InvestConsumer::copyParamsInto( InvestConsumer& aInvestConsumer ) const {
 }
 
 InvestConsumer* InvestConsumer::clone() const {
-	return new InvestConsumer( *this );
+    return new InvestConsumer( *this );
 }
 
 //! parses rest of InvestConsumer xml object
 bool InvestConsumer::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurr ) {
-	return false;
+    return false;
 }
 
 //! Write out additional datamembers to XML output stream.
@@ -53,8 +54,8 @@ void InvestConsumer::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* 
 
 //! Complete the initialization.
 void InvestConsumer::completeInit( const string& aRegionName ) {
-	prodDmdFnType = "InvestDemandFn";
-	BaseTechnology::completeInit( aRegionName );
+    prodDmdFnType = "InvestDemandFn";
+    BaseTechnology::completeInit( aRegionName );
 }
 
 //! initialize anything that won't change during the calcuation
@@ -62,6 +63,10 @@ void InvestConsumer::initCalc( const MoreSectorInfo* aMoreSectorInfo, const stri
                                const string& aSectorName, NationalAccount& aNationalAccount, 
                                const Demographic* aDemographics, const double aCapitalStock, const int aPeriod ) 
 {
+    Consumer::initCalc( aMoreSectorInfo, aRegionName, aSectorName,
+                        aNationalAccount, aDemographics, aCapitalStock,
+                        aPeriod );
+
     if ( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
         BaseTechnology::calcPricePaid( aMoreSectorInfo, aRegionName, aSectorName, aPeriod );
     }
@@ -72,16 +77,16 @@ void InvestConsumer::calcIncome( NationalAccount& aNationalAccount, const Demogr
                                  const string& aRegionName, int aPeriod ) 
 {
     // Whats up with these?-JPL
-	//allocateTransportationDemand( nationalAccount, regionName, period );
-	//allocateDistributionCost( nationalAccount, regionName, period );
-	expenditure.setType( Expenditure::INVESTMENT, mOutputs[ aPeriod ] );
+    //allocateTransportationDemand( nationalAccount, regionName, period );
+    //allocateDistributionCost( nationalAccount, regionName, period );
+    expenditures[ aPeriod ].setType( Expenditure::INVESTMENT, mOutputs[ aPeriod ] );
     scenario->getMarketplace()->addToDemand( "Capital", aRegionName, mOutputs[ aPeriod ], aPeriod );
-	// set National Accounts Consumption for GNP calculation
-	aNationalAccount.addToAccount( NationalAccount::GNP, 
-		   aNationalAccount.getAccountValue( NationalAccount::ANNUAL_INVESTMENT ) );
-	//aNationalAccount.addToAccount( NationalAccount::INVESTMENT, output[ aPeriod ] );
-	aNationalAccount.addToAccount( NationalAccount::INVESTMENT, 
-		   aNationalAccount.getAccountValue( NationalAccount::ANNUAL_INVESTMENT ) );
+    // set National Accounts Consumption for GNP calculation
+    aNationalAccount.addToAccount( NationalAccount::GNP, 
+           aNationalAccount.getAccountValue( NationalAccount::ANNUAL_INVESTMENT ) );
+    //aNationalAccount.addToAccount( NationalAccount::INVESTMENT, output[ aPeriod ] );
+    aNationalAccount.addToAccount( NationalAccount::INVESTMENT, 
+           aNationalAccount.getAccountValue( NationalAccount::ANNUAL_INVESTMENT ) );
 }
 
 //! calculate demand
@@ -89,16 +94,16 @@ void InvestConsumer::operate( NationalAccount& aNationalAccount, const Demograph
                              const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName, 
                              const string& aSectorName, const bool aIsNewVintageMode, int aPeriod ) 
 {
-	if( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
-        expenditure.reset();
-		// calculate prices paid for consumer inputs
-		BaseTechnology::calcPricePaid( aMoreSectorInfo, aRegionName, aSectorName, aPeriod );
-		// calculate consumption demands for each final good or service
-		calcInputDemand( aNationalAccount.getAccountValue( NationalAccount::ANNUAL_INVESTMENT ), 
+    if( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
+        expenditures[ aPeriod ].reset();
+        // calculate prices paid for consumer inputs
+        BaseTechnology::calcPricePaid( aMoreSectorInfo, aRegionName, aSectorName, aPeriod );
+        // calculate consumption demands for each final good or service
+        calcInputDemand( aNationalAccount.getAccountValue( NationalAccount::ANNUAL_INVESTMENT ), 
                          aRegionName, aSectorName, aPeriod );
-		calcIncome( aNationalAccount, aDemographics, aRegionName, aPeriod );
+        calcIncome( aNationalAccount, aDemographics, aRegionName, aPeriod );
         calcEmissions( aSectorName, aRegionName, aPeriod );
-	}
+    }
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -110,7 +115,7 @@ void InvestConsumer::operate( NationalAccount& aNationalAccount, const Demograph
 * \return The constant XML_NAME.
 */
 const string& InvestConsumer::getXMLName() const {
-	return getXMLNameStatic();
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -124,24 +129,23 @@ const string& InvestConsumer::getXMLName() const {
 */
 const string& InvestConsumer::getXMLNameStatic() {
     const static string XML_NAME = "investConsumer";
-	return XML_NAME;
+    return XML_NAME;
 }
 
 //! SGM version of outputing data members to a csv file
 void InvestConsumer::csvSGMOutputFile( ostream& aFile, const int aPeriod ) const {
-	if ( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
-		aFile << "***** Investment Sector Results *****" << endl << endl;
-		expenditure.csvSGMOutputFile( aFile, aPeriod );
-		aFile << endl;
+    if ( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
+        aFile << "***** Investment Sector Results *****" << endl << endl;
+        expenditures[ aPeriod ].csvSGMOutputFile( aFile, aPeriod );
+        aFile << endl;
 
-		aFile << "Investment Consumer Expenditure" << endl << endl;
-		BaseTechnology::csvSGMOutputFile( aFile, aPeriod );
-	}
+        aFile << "Investment Consumer Expenditure" << endl << endl;
+        BaseTechnology::csvSGMOutputFile( aFile, aPeriod );
+    }
 }
 
 void InvestConsumer::accept( IVisitor* aVisitor, const int aPeriod ) const {
-    if( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ){
-        Consumer::accept( aVisitor, aPeriod );
-	    aVisitor->updateInvestConsumer( this, aPeriod );
-    }
+    aVisitor->startVisitInvestConsumer( this, aPeriod );
+    Consumer::accept( aVisitor, aPeriod );
+    aVisitor->endVisitInvestConsumer( this, aPeriod );
 }

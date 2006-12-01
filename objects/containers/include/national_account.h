@@ -5,14 +5,14 @@
 #endif
 
 /*
-	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Laboratory operated by Battelle Memorial
-	Institute. Battelle has certain unperfected rights in the software
-	which should not be copied or otherwise disseminated outside your
-	organization without the express written authorization from Battelle. All rights to
-	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responsibility for the 
-	use of this software.
+    This software, which is provided in confidence, was prepared by employees
+    of Pacific Northwest National Laboratory operated by Battelle Memorial
+    Institute. Battelle has certain unperfected rights in the software
+    which should not be copied or otherwise disseminated outside your
+    organization without the express written authorization from Battelle. All rights to
+    the software are reserved by Battelle.  Battelle makes no warranty,
+    express or implied, and assumes no liability or responsibility for the 
+    use of this software.
 */
 
 /*! 
@@ -40,6 +40,7 @@ class Tabs;
 class NationalAccount: public IVisitable
 {
     friend class IVisitor;
+    friend class XMLDBOutputter;
 public:
     enum AccountType {
         GDP,
@@ -57,29 +58,30 @@ public:
         TRANSFERS,
         SOCIAL_SECURITY_TAX,
         INDIRECT_BUSINESS_TAX,
-		GNP,
-		GNP_VA,
-		CONSUMPTION,
-		GOVERNMENT,
-		INVESTMENT,
-		NET_EXPORT,
-		EXCHANGE_RATE,
-		ANNUAL_INVESTMENT,
+        GNP,
+        GNP_VA,
+        CONSUMPTION,
+        GOVERNMENT,
+        INVESTMENT,
+        NET_EXPORT,
+        EXCHANGE_RATE,
+        ANNUAL_INVESTMENT,
         // Insert new values before END marker.
         END
     };
-	NationalAccount();
-	static const std::string& getXMLNameStatic();
-	void XMLParse( const xercesc::DOMNode* node );
-	void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-	void reset();
+    NationalAccount();
+    static const std::string& getXMLNameStatic();
+    void XMLParse( const xercesc::DOMNode* node );
+    void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+    void reset();
     void addToAccount( const AccountType aType, const double aValue );
     void setAccount( const AccountType aType, const double aValue );
     double getAccountValue( const AccountType aType ) const;
-	void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
-	void accept( IVisitor* aVisitor, const int aPeriod ) const;
+    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
+    void accept( IVisitor* aVisitor, const int aPeriod ) const;
 private:
     const std::string& enumToName( const AccountType aType ) const;
+    const std::string& enumToXMLName( const AccountType aType ) const;
     //! Vector to hold national account values
     std::vector<double> mAccounts;
 };

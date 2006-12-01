@@ -93,7 +93,7 @@ bool BuildingSupplySector::XMLDerivedClassParse( const string& nodeName, const D
 * \author Steve Smith
 * \param period Model period
 */
-void BuildingSupplySector::initCalc( NationalAccount& aNationalAccount,
+void BuildingSupplySector::initCalc( NationalAccount* aNationalAccount,
                                      const Demographic* aDemographic,
                                      const int aPeriod )
 {

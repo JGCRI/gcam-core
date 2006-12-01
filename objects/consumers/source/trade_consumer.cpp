@@ -36,8 +36,10 @@ extern Scenario* scenario;
 TradeConsumer::TradeConsumer(){
 }
 
-void TradeConsumer::copyParam( const BaseTechnology* aTradeConsumer ) {
-    BaseTechnology::copyParam( aTradeConsumer );
+void TradeConsumer::copyParam( const BaseTechnology* aTradeConsumer,
+                               const int aPeriod )
+{
+    BaseTechnology::copyParam( aTradeConsumer, aPeriod );
     aTradeConsumer->copyParamsInto( *this );
 }
 
@@ -73,6 +75,10 @@ void TradeConsumer::initCalc( const MoreSectorInfo* aMoreSectorInfo, const strin
                               const Demographic* aDemographics, const double aCapitalStock, 
                               const int aPeriod ) 
 {
+    Consumer::initCalc( aMoreSectorInfo, aRegionName, aSectorName,
+                        aNationalAccount, aDemographics, aCapitalStock,
+                        aPeriod );
+
     if( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
         // calculate Price Paid
         BaseTechnology::calcPricePaid( aMoreSectorInfo, aRegionName, aSectorName, aPeriod );
@@ -83,9 +89,9 @@ void TradeConsumer::initCalc( const MoreSectorInfo* aMoreSectorInfo, const strin
 void TradeConsumer::calcIncome( NationalAccount& aNationalAccount, const Demographic* aDemographics, 
                                 const string& aRegionName, const string& aSectorName, int aPeriod ) 
 {
-    expenditure.reset();
+    expenditures[ aPeriod ].reset();
 	double netExport = mOutputs[ aPeriod ];
-	expenditure.setType( Expenditure::TOTAL_IMPORTS, netExport );
+	expenditures[ aPeriod ].setType( Expenditure::TOTAL_IMPORTS, netExport );
 	// set National Accounts Consumption for GNP calculation
 	aNationalAccount.addToAccount( NationalAccount::GNP, netExport );
 	aNationalAccount.addToAccount( NationalAccount::NET_EXPORT, netExport );
@@ -99,7 +105,7 @@ void TradeConsumer::operate( NationalAccount& aNationalAccount, const Demographi
 	if( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
 		// calculate prices paid for consumer inputs
 		BaseTechnology::calcPricePaid( aMoreSectorInfo, aRegionName, aSectorName, aPeriod );
-		calcInputDemand( expenditure.getValue( Expenditure::CONSUMPTION ), aRegionName, aSectorName, aPeriod );
+		calcInputDemand( expenditures[ aPeriod ].getValue( Expenditure::CONSUMPTION ), aRegionName, aSectorName, aPeriod );
 		calcIncome( aNationalAccount, aDemographics, aRegionName, aSectorName, aPeriod );
         // Trade consumer does not have emissions so it does not calculate them here.
 	}
@@ -135,7 +141,7 @@ const string& TradeConsumer::getXMLNameStatic() {
 void TradeConsumer::csvSGMOutputFile( ostream& aFile, const int aPeriod ) const {
 	if ( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
 		aFile << "***** Trade Sector Results *****" << endl << endl;
-		expenditure.csvSGMOutputFile( aFile, aPeriod );
+		expenditures[ aPeriod ].csvSGMOutputFile( aFile, aPeriod );
 		aFile << endl;
 
 		aFile << "Trade Consumer Expenditure" << endl << endl;
@@ -144,8 +150,7 @@ void TradeConsumer::csvSGMOutputFile( ostream& aFile, const int aPeriod ) const 
 }
 
 void TradeConsumer::accept( IVisitor* aVisitor, const int aPeriod ) const {
-    if( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ){
-        Consumer::accept( aVisitor, aPeriod );
-        aVisitor->updateTradeConsumer( this, aPeriod );
-    }
+    aVisitor->startVisitTradeConsumer( this, aPeriod );
+    Consumer::accept( aVisitor, aPeriod );
+    aVisitor->endVisitTradeConsumer( this, aPeriod );
 }

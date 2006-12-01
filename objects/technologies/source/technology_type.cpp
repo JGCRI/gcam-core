@@ -13,6 +13,10 @@
 #include "technologies/include/base_technology.h"
 #include "investment/include/investment_utils.h"
 #include "util/logger/include/ilogger.h"
+#include "containers/include/scenario.h"
+#include "util/base/include/model_time.h"
+
+extern Scenario* scenario;
 
 using namespace std;
 
@@ -75,11 +79,12 @@ void TechnologyType::initializeTechsFromBase( const int aBaseYear ){
     }
 
     // Initialize any previous vintages. 
+    const int basePeriod = scenario->getModeltime()->getyr_to_per( aBaseYear );
     for( VintageIterator cVintage = mVintages.begin(); cVintage != mVintages.end(); ++cVintage ){
         // Check if the year of the technology is less than or equal to the base
         // year
         if( cVintage->first < aBaseYear ){
-            cVintage->second->copyParam( baseTech );
+            cVintage->second->copyParam( baseTech, basePeriod );
         }
     }
 }
@@ -109,7 +114,9 @@ BaseTechnology* TechnologyType::initOrCreateTech( const int aNewTechYear, const 
     // Check if the technology exists. 
     BaseTechnology* newTech = util::searchForValue( mVintages, aNewTechYear );
     if( newTech != 0 ){
-        newTech->copyParam( baseTech );
+        const int newPeriod =
+            scenario->getModeltime()->getyr_to_per( aNewTechYear );
+        newTech->copyParam( baseTech, newPeriod );
         newTech = 0;
     }
     else { // Need to create the technology.

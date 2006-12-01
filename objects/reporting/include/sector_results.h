@@ -5,14 +5,14 @@
 #endif
 
 /*
-	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Laboratory operated by Battelle Memorial
-	Institute. Battelle has certain unperfected rights in the software
-	which should not be copied or otherwise disseminated outside your
-	organization without the express written authorization from Battelle. All rights to
-	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responsibility for the 
-	use of this software.
+    This software, which is provided in confidence, was prepared by employees
+    of Pacific Northwest National Laboratory operated by Battelle Memorial
+    Institute. Battelle has certain unperfected rights in the software
+    which should not be copied or otherwise disseminated outside your
+    organization without the express written authorization from Battelle. All rights to
+    the software are reserved by Battelle.  Battelle makes no warranty,
+    express or implied, and assumes no liability or responsibility for the 
+    use of this software.
 */
 
 /*! 
@@ -49,8 +49,8 @@ public:
     SectorResults( const std::string& aRegionName, std::ostream& aFile );
     void finish() const;
     void startVisitSector( const Sector* aSector, const int aPeriod );
-    void updateProductionSector( const ProductionSector* aProdSector, const int aPeriod );
-	void updateProductionTechnology( const ProductionTechnology* prodTech, const int period );
+    void startVisitProductionSector( const ProductionSector* aProdSector, const int aPeriod );
+    void startVisitProductionTechnology( const ProductionTechnology* prodTech, const int period );
 private:
     //! The current region name.
     const std::string mCurrentRegionName;

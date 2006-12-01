@@ -62,6 +62,10 @@ void OutputMetaData::toInputXML( ostream& aOut, Tabs* aTabs ) const {
         attrs[ "var" ] = *iter;
         XMLWriteElementWithAttributes( "", "summable", aOut, aTabs, attrs );
     }
+    for( CListIterator iter = mHasYearVariables.begin(); iter != mHasYearVariables.end(); ++iter ) {
+        attrs[ "var" ] = *iter;
+        XMLWriteElementWithAttributes( "", "has-year", aOut, aTabs, attrs );
+    }
     XMLWriteElement( mScenarioSummary, "summary", aOut, aTabs );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
@@ -91,6 +95,9 @@ void OutputMetaData::XMLParse( const DOMNode* aNode ) {
         }
         else if( nodeName == "summable" ){
             mSummableVariables.push_back( XMLHelper<string>::getAttr( curr, "var" ) );
+        }
+        else if( nodeName == "has-year" ){
+            mHasYearVariables.push_back( XMLHelper<string>::getAttr( curr, "var" ) );
         }
         else if ( nodeName == "summary" ){
             mScenarioSummary = XMLHelper<string>::getValue( curr );
