@@ -637,14 +637,14 @@ void HouseholdConsumer::calcBaseScalerLaborFemale( const string& regionName, con
 
 //! Calculate base scaler savings
 // Add more asserts.
-void HouseholdConsumer::calcBaseScalerSavings( const string& regionName, const int period ) {
+void HouseholdConsumer::calcBaseScalerSavings( const string& regionName, const int aPeriod ) {
     Marketplace* marketplace = scenario->getMarketplace();
     assert( mInitialSavings > 0 );
     assert( expenditures[ aPeriod ].getValue( Expenditure::DISPOSABLE_INCOME ) > 0 );
 
     baseScalerSavings = log( 1 - mInitialSavings
-                        / ( maxSavingsSupplyFrac * expenditures[ period ].getValue( Expenditure::DISPOSABLE_INCOME ) ) ) /
-                        marketplace->getPrice( "Capital", regionName, period );
+                        / ( maxSavingsSupplyFrac * expenditures[ aPeriod ].getValue( Expenditure::DISPOSABLE_INCOME ) ) ) /
+                        marketplace->getPrice( "Capital", regionName, aPeriod );
 }
 
 //! Calculate base labor demand per household
