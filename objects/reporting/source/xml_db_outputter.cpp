@@ -536,8 +536,10 @@ void XMLDBOutputter::startVisitTechnology( const technology* aTechnology,
                         aTechnology->getName(), aTechnology->year,
                         technology::getXMLNameStatic1D() );
 
+    // For now write the year of output to be the same as that of the
+    // technology, this will change with vintaging.
     XMLWriteElement( aTechnology->getOutput( aPeriod ), "output", mBuffer,
-                     mTabs.get() );
+                     mTabs.get(), aTechnology->year );
 
     // TODO: Write out secondary outputs.
 

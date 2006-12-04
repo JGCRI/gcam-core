@@ -26,6 +26,7 @@
 		<summable var="output"/>
 		<summable var="input"/>
 		<summable var="emissions"/>
+		<has-year var="output"/>
 	</output-meta-data>
 	<world>
 		<region name="USA">

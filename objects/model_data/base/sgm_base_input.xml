@@ -3,6 +3,12 @@
 <scenario name="SGM">
 	<output-meta-data>
 		<summary>SRES B2 Scenario is used for this Reference Scenario</summary>
+		<has-year var="annual-investment"/>
+		<has-year var="profit"/>
+		<has-year var="cost"/>
+		<has-year var="output"/>
+		<has-year var="price-paid"/>
+		<has-year var="demand-currency"/>
 	</output-meta-data>
 	<modeltime>
 		<startyear>1990</startyear>
