@@ -125,6 +125,8 @@ void Input::initCalc( const string& aRegionName,
     // as they are read-in.
     if( aPeriod > 0 && !mDemandCurrency[ aPeriod ].isInited() &&
         ( isCapital() || mIsFixedTrade ) ){
+        // TODO: This is wrong for the capital input of government, which
+        //       is not capital but the budget deficit.
         mDemandCurrency[ aPeriod ] = mDemandCurrency[ aPeriod - 1 ];
     }
 }
