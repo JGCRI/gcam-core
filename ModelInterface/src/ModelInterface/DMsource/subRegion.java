@@ -97,7 +97,10 @@ public class subRegion extends Region
   {
     ReferenceWrapper[] toReturn = new ReferenceWrapper[1];
     
-    if(!data.containsKey(var))
+    if(var.equals("RegionCellSize") && !data.containsKey(var)) {
+      toReturn[0] = new ReferenceWrapper(this);
+      toReturn[0].data = getGridCellSize();
+    } else if(!data.containsKey(var))
     {
       toReturn[0] = new ReferenceWrapper(this);
       for(int i = 0; i < toReturn[0].data.length; i++)
@@ -148,6 +151,58 @@ public class subRegion extends Region
     int X = (int)(Math.floor((findX-x)/resolution));
     int Y = (int)(Math.floor(((y+height)-findY)/resolution));
     return ((Matrix)((Map)data.get(var)).get(String.valueOf(year))).get(X, Y);
+  }
+
+  /**
+   * Get a matrix of grid cell sizes of this region
+   * @return Matrix represent grid cell sizes
+   */
+  public double[][] getGridCellSize() 
+  {
+	  final double POLAR_CIRCUM = 40008.00;
+	  final double EQUAT_CIRCUM = 40076.5;
+	  final double PI = 3.1415926535;
+
+	  double cellSize;
+	  double[][] weightMask = getM();
+	  //double[][] toReturn = new double[weightMask.length][weightMask[0].length];
+	  double[][] toReturn = new double[(int)(height/resolution)][(int)(width/resolution)];
+
+	  double circumAtLat; //the circumference of the earth at a specific latitude
+	  double totalWidth; //width in km of the region
+	  double totalHeight; //height in km of the region
+	  double blockWidth; //width in km of a block of data
+	  double blockHeight; //height in km of a block of data
+
+	  //holdMR[0][0] = 0;
+
+	  //for(int i = 0; i < R.length; i++)
+	  //{
+		  totalHeight = (POLAR_CIRCUM/(360/height));
+		  blockHeight = (totalHeight/weightMask.length);
+
+		  //holdMS = R[i].data;
+		  for(int iY = 0; iY < weightMask.length; iY++)
+		  {
+			  circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((y+(iY*resolution))*(PI/180)));
+			  totalWidth = (circumAtLat/(360/width));
+			  blockWidth = (totalWidth/weightMask[iY].length);
+			  cellSize = (blockWidth*blockHeight);
+
+			  for(int iX = 0; iX < weightMask[0].length; iX++)
+			  {
+				  if(!java.lang.Double.isNaN(weightMask[iY][iX]))
+				  {
+					  // multiply by weight?
+					  toReturn[iY][iX] = (cellSize);
+				  } else {
+					  toReturn[iY][iX] = java.lang.Double.NaN;
+				  }
+			  }
+		  }
+	  //}
+
+	  return toReturn;
   }
   
   public ArrayList<String> getTimeList(String var)

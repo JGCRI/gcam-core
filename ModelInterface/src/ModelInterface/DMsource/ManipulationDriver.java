@@ -555,6 +555,7 @@ public class ManipulationDriver
     
     variableList.put(VDname, VDest);
   }
+
   /**
    * Adds the corresponding positions in the two passed variables. Requires that the
    * variables are of the same shape.
@@ -2651,7 +2652,7 @@ public class ManipulationDriver
 
   }
   /**
-   * Runs a command on subregions which are extracted from the given variable.
+   * Runs a set of commands on subregions which are extracted from the given variable.
    * Subregions are defined on a specific level according to the regionDef.
    * @param command XML node defining the operation.
    */
@@ -2686,10 +2687,6 @@ public class ManipulationDriver
     //original command
     currInfo = command.getChild("command");
     originalCom = (Element)(currInfo.getChildren().get(0)); //getting the first (and only child)
-    /*
-     * TODO this will be extended so multiple commands can be run in one loop
-     * this will approximate the functionality of a for loop in, say, c++ or java
-     */
     // why copy?
     copyCom = (Element)originalCom.clone();
     List comms = currInfo.getChildren();
