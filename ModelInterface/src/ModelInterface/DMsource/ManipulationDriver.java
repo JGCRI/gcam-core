@@ -334,7 +334,11 @@ public class ManipulationDriver
     checkRegionFieldTime(reg, var, time);
     
     ref = (Region)regionList.get(reg);
-    avg = ((Boolean)dataAvgAdd.get(var)).booleanValue();
+    if(var.equals("RegionCellSize") && dataAvgAdd.get(var) == null) {
+	    avg = false;
+    } else {
+	    avg = ((Boolean)dataAvgAdd.get(var)).booleanValue();
+    }
 
     // creating the reference variable (fills with data also)
     toAdd = new ReferenceVariable(newName, ref, var, time, avg);
@@ -3560,6 +3564,12 @@ public class ManipulationDriver
       System.exit(0);
     }
     
+    // special case here where RegionCellSize is a special field which really
+    // does not exist.. if there was actually a field named RegionCellSize
+    // it will use the field instead of the special case
+    if(field.equals("RegionCellSize") && dataAvgAdd.get(field) == null) {
+	    return;
+    }
     if(dataAvgAdd.get(field) == null)
     {
       log.log(Level.SEVERE, "referenced field '"+field+"' does not exist -> terminating");
