@@ -1730,7 +1730,23 @@ public class DataBuilder
       int[] shp = ma2Array.getShape();
       resY = 180.0 / shp[shp.length-2];
       resX = 360.0 / shp[shp.length-1];
-      //System.out.println("Has shape: "+shp[0]+"x"+shp[1]+"x"+shp[2]);
+      //System.out.println("Has shape: "+shp[0]+"x"+shp[1]/*+"x"+shp[2]*/);
+      double startY;
+      double endY;
+
+      Variable latIndex = nc.findVariable("lat");
+      if(latIndex != null) {
+	      Array latArray = latIndex.read();
+	      int[] latShp = latArray.getShape();
+	      Index latI = latArray.getIndex();
+	      startY = latArray.getDouble(latI.set(0));
+	      endY = latArray.getDouble(latI.set(latShp[0]-1));
+	      resY = (startY-endY) / (shp[shp.length-2]-1);
+	      startY -= resY;
+      } else {
+	      startY = 90-resY;
+	      endY = -90;
+      }
 
       //checking for overwrite and setting basic information (avg, ref, units)
       if(dataAvg.containsKey(dataName))
@@ -1795,6 +1811,8 @@ public class DataBuilder
       System.out.println("internal time index: "+internalTimeIndex);
       System.out.println("num times: "+numTime);
       System.out.println("time step : "+timeStep);
+      System.out.println("startY: "+startY);
+      System.out.println("endY: "+endY);
       */
 
       for(int currTimeIndex = 0; currTimeIndex < numTime; currTimeIndex += timeStep)
@@ -1808,7 +1826,8 @@ public class DataBuilder
 	      } else {
 		      internalTimeIndex += timeStep;
 	      }
-	      for(double y = (90-resY); y >= -90; y-=resY)
+	      //for(double y = (90-resY); y >= -90; y-=resY)
+	      for(double y = startY; y >= endY; y-=resY)
 	      {
 		      k=0;
 		      for(double x = -180; x < 180; x+=resX)
@@ -4427,9 +4446,6 @@ public class DataBuilder
 		  }
 	  }
 
-	  // TODO: read parameters from XML
-	  // TODO: do init if necessary
-	  // TODO: read through data and add it
   }
 
 public void addFLTFile(Element currFile) 
