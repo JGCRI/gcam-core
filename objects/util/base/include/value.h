@@ -5,15 +5,15 @@
 #endif
 
 /*
-	This software, which is provided in confidence, was prepared by employees
-	of Pacific Northwest National Laboratory operated by Battelle Memorial
-	Institute. Battelle has certain unperfected rights in the software
-	which should not be copied or otherwise disseminated outside your
-	organization without the express written authorization from Battelle. All rights to
-	the software are reserved by Battelle.  Battelle makes no warranty,
-	express or implied, and assumes no liability or responsibility for the 
-	use of this software.
-*/
+ * This software, which is provided in confidence, was prepared by employees of
+ * Pacific Northwest National Laboratory operated by Battelle Memorial
+ * Institute. Battelle has certain unperfected rights in the software which
+ * should not be copied or otherwise disseminated outside your organization
+ * without the express written authorization from Battelle. All rights to
+ * the software are reserved by Battelle.  Battelle makes no warranty,
+ * express or implied, and assumes no liability or responsibility for the use of
+ * this software.
+ */
 
 /*! 
 * \file value.h
@@ -37,8 +37,6 @@
 
 class Value
 {
-public:
-
     /*!
      * \brief Output stream operator to print a Value.
      * \details Output stream operators allow classes to be printed using the <<
@@ -62,24 +60,23 @@ public:
          return aValue.read( aIStream );
      }
 
+public:
     enum Unit {
         DEFAULT,
         PETAJOULE,
 		EXAJOULE
     };
 
-    inline Value();
-    inline Value( const double aValue, const Unit aUnit = DEFAULT );
-    inline void init( const double aNewValue, const Unit aUnit = DEFAULT );
-    inline void set( const double aNewValue, const Unit aUnit = DEFAULT );
-    inline operator double() const;
-    inline double get() const;
-    inline bool isInited() const;
-    inline Value& operator+=( const Value& aValue );
-    inline Value& operator-=( const Value& aValue );
-
+    Value();
+    Value( const double aValue, const Unit aUnit = DEFAULT );
+    void init( const double aNewValue, const Unit aUnit = DEFAULT );
+    void set( const double aNewValue, const Unit aUnit = DEFAULT );
+    operator double() const;
+    double get() const;
+    bool isInited() const;
+    Value& operator+=( const Value& aValue );
+    Value& operator-=( const Value& aValue );
     Value& operator*=( const Value& aValue );
-
     Value& operator/=( const Value& aValue );
 
     // XML Function here.
@@ -92,14 +89,14 @@ private:
     Unit mUnit;
 };
 
-Value::Value(): mValue( 0 ), mIsInit( false ), mUnit( DEFAULT ){}
+inline Value::Value(): mValue( 0 ), mIsInit( false ), mUnit( DEFAULT ){}
 
 /*! 
  * \brief Create a value from a double and a unit.
  * \param aValue Initial value.
  * \param aUnit Unit.
  */
-Value::Value( const double aValue, const Unit aUnit ):
+inline Value::Value( const double aValue, const Unit aUnit ):
 mValue( aValue ),
 mIsInit( true ),
 mUnit( aUnit )
@@ -107,7 +104,7 @@ mUnit( aUnit )
 }
 
 //! Initialize the value, can only be done once.
-void Value::init( const double aNewValue, const Unit aUnit ){
+inline void Value::init( const double aNewValue, const Unit aUnit ){
     assert( util::isValidNumber( aNewValue ) );
     if( !mIsInit ){
         mValue = aNewValue;
@@ -117,7 +114,7 @@ void Value::init( const double aNewValue, const Unit aUnit ){
 }
 
 //! Set the value.
-void Value::set( const double aNewValue, const Unit aUnit ){
+inline void Value::set( const double aNewValue, const Unit aUnit ){
     assert( util::isValidNumber( aNewValue ) );
     mValue = aNewValue;
     mUnit = aUnit;
@@ -125,7 +122,7 @@ void Value::set( const double aNewValue, const Unit aUnit ){
 }
 
 //! Get the value.
-Value::operator double() const {
+inline Value::operator double() const {
     return mValue;
 }
 
@@ -144,7 +141,7 @@ double Value::get() const {
  * \param aValue Value containing the amount to add.
  * \return This value by reference for chaining.
  */
-Value& Value::operator+=( const Value& aValue ){
+inline Value& Value::operator+=( const Value& aValue ){
     // Assume that if this value is not initialized that adding to zero is
     // correct and the new value is valid.
     mIsInit = true;
@@ -160,7 +157,7 @@ Value& Value::operator+=( const Value& aValue ){
  * \param aValue Value containing the amount to subtract.
  * \return This value by reference for chaining.
  */
-Value& Value::operator-=( const Value& aValue ){
+inline Value& Value::operator-=( const Value& aValue ){
     // Assume that if this value is not initialized that subtracting from zero
     // is correct and the new value is valid.
     mIsInit = true;
@@ -203,7 +200,7 @@ inline Value& Value::operator/=( const Value& aValue ){
 }
 
 //! Check if the value has been initialized.
-bool Value::isInited() const {
+inline bool Value::isInited() const {
     return mIsInit;
 }
 
