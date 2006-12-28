@@ -24,10 +24,36 @@ namespace objects {
 }
 
 /*!
-* \ingroup Objects
-* \brief A class which defines a single market object.
-* \author Sonny Kim
-*/
+ * \ingroup Objects
+ * \brief A single market, or equation, in the model.
+ * \details A Market conceptually represents the trade for a single good in an
+ *          area in which there are no transportation costs. See Marketplace for
+ *          an explanation of a market region vs. model region. The market has a
+ *          price, supply and demand for the good. It also contains an object
+ *          with additional information about the good, the market info. Market
+ *          objects may also be used in cases where a true market is not
+ *          required, but a solved equation. See the TrialValueMarket for an
+ *          explanation of this feature.
+ *
+ *          The Market's functions are divided into two main areas:
+ 
+ *          - There are setters and accessors which are called whenever a
+ *            Marketplace function to set or get supply, demand, or price is
+ *            called. These methods may be overridden by derived Market classes
+ *            to add different behaviors to the markets. Because of this, calls
+ *            to a getter may not return the Market variable of the same name.
+ *            For example, getSupply does not necessarily return Market::supply.
+ *            It will return whatever conceptually is the supply.
+ *
+ *          - There are functions to directly set and get the underlying supply,
+ *            demand, and price variables. They are named
+ *            (set|get)Raw(Supply|Demand|Price). These functions modify the left
+ *            hand side, right hand side, and trial values of the equation the
+ *            Market represents. These are only used by the solution mechanism,
+ *            and cannot be overridden.
+ *
+ * \author Sonny Kim
+ */
 
 class Market: public IVisitable
 {

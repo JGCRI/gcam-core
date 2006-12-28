@@ -23,18 +23,73 @@ class IVisitor;
 class IInfo;
 
 /*! 
-* \ingroup Objects
-* \brief A class which describes the single global marketplace.
-* \author Sonny Kim
-* \todo The naming of get(set)MarketInfo and the (re)storeInfo needs fixing. 
-*/
+ * \ingroup Objects
+ * \brief The Marketplace is a global repository of information about the
+ *        markets, or equations, in the model.
+ * \details The Marketplace contains Markets, which may be created, modified,
+ *          and accessed from throughout the model. A Market is created using
+ *          the createMarket method. See IMarketType for the various types of
+ *          Markets that can be created.
+ *
+ *          Each Market is created with a market region. This is independent of
+ *          a Region in the model, and it may encompass multiple model Regions.
+ *          It may be a global region, containing all Markets, may be a
+ *          multi-region market, such as North America, or may contain a single
+ *          model Region. A market region represents a area in which a good may
+ *          move without a cost. Each model Region within the market region must
+ *          call createMarket to be included in the market region. Each Market
+ *          tracks model Regions it contains.
+ *
+ *          Markets are by default not solved. This means that price is not
+ *          determined by the solution mechanism to equilibriate supply and
+ *          demand. For unsolved Markets, prices must be set by the model, and
+ *          supplies must be ensured to equal demands. The model will not
+ *          successfully solve if unsolved markets are in disequalibrium. A
+ *          market can be set to solve using setMarketToSolve. If a single
+ *          region in a multi-region market sets the market to solve, all
+ *          regions will see a solved price. An initial price may be set for
+ *          solved markets. This will be used as the starting point for the
+ *          solution search. Prices should not be set for solved markets after
+ *          this point.
+ *
+ *          The main operations performed on markets once they are initialized
+ *          are to get/set the price, get/set the supply and get/set the demand.
+ *          Supplies and demands will be initialized to zero at the outset of
+ *          each iterations. For solved markets, prices will be set by the
+ *          solution mechanism to their trial values. For unsolved markets, they
+ *          will remain at whatever value they were set to.
+ *
+ *          Markets also contain an IInfo object. This is a mapping of names to
+ *          values. It should be used for additional information about the good
+ *          in the market. It should not be used as a general method to transfer
+ *          information around the model. Note that since a Market may contain
+ *          multiple regions, the market info should not be used to store region
+ *          specific values.
+ *
+ *          Market access functions have a flag, aMustExist, which specifies
+ *          whether it is an error for the market to be missing. It should be
+ *          set to true unless it is known to be possible for the market not to
+ *          exist. The market will print a warning if the flag is true and the
+ *          market does not exist. It will always return the default value when
+ *          the market does not exist. The default value is 0 for supply,
+ *          demand, and any info, and NO_MARKET_PRICE for prices.
+ *
+ * \author Sonny Kim
+ * \todo (re)storeInfo, init_to_last and initPrices should be removed.
+ * \todo setPriceVector should be removed, it can be easily implemented using
+ *       setPrice.
+ * \todo An interface should be put in front of this class for model consumers.
+ *       It should have limited functionality, offering only what is required.
+ *       A separate interface should be created for solution mechanism specific
+ *       items.
+ */
 
 class Marketplace: public IVisitable
 {
 public:
     Marketplace();
     ~Marketplace();
-    void solve( const int per );
+
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     bool createMarket( const std::string& regionName, const std::string& marketName,
                        const std::string& goodName, const IMarketType::Type aMarketType );

@@ -227,7 +227,7 @@ void Marketplace::setPriceVector( const string& goodName, const string& regionNa
 * Initialization also occurs for supply and demand markets that have prices read-in via routine:
 * setPriceVector in sector as supply and demand markets are created.
 * This has no effect for future periods as these prices are overwritten by 
-* Marketplace::init_to_last except for CalibrationMarkets.
+* Marketplace::init_to_last except for calibration markets.
 */
 void Marketplace::initPrices(){
     // initialize supply and demand sector market prices to 1.
@@ -313,8 +313,16 @@ void Marketplace::nullSuppliesAndDemands( const int period ) {
 * \param aMustExist Whether it is an error for the market not to exist.
 */
 void Marketplace::setPrice( const string& goodName, const string& regionName, const double value,
-                            const int per, bool aMustExist ){
-    
+                            const int per, bool aMustExist )
+{
+    // Print a warning message if the new price is not a finite number.
+    if ( !util::isValidNumber( value ) ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << "Error setting price in markeplace for: " << goodName << ", value: " << value << endl;
+        return;
+    }
+
     const int marketNumber = mMarketLocator->getMarketNumber( regionName, goodName );
     if ( marketNumber != MarketLocator::MARKET_NOT_FOUND ) {
         markets[ marketNumber ][ per ]->setPrice( value );
