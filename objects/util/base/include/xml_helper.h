@@ -5,16 +5,28 @@
 #endif
 
 /*!
-* \file xml_helper.h
-* \ingroup Objects
-* \brief A set of helper function for reading xml data.
-* \todo This class needs an overall cleanup
-* \warning This class is hacked b/c of poor MSVC template support. This makes it much uglier. 
-* This library contains a set of routines for reading xml data and attribute values.
-* It is a templated library so that it should work with any data type.
-*
-* \author Josh Lurz
-*/
+ * \file xml_helper.h
+ * \ingroup Objects
+ * \brief A set of helper function for reading and writing xml data.
+ * \note This file contains two things.
+ *       - XMLHelper, A static class that has methods for parsing XML data and
+ *         static data members which cache information required by the parser.
+ *       - A series of global utility functions for writing XML data.
+ * \todo XMLHelper should be converted into a non-static XMLReader class. The
+ *       static data members could then be regular data members. The interface
+ *       to the class should not use template functions, but the class could use
+ *       them as helper methods. There are several functions that are used
+ *       to read XML that are not part of XMLHelper. These should be moved in.
+ * \todo This file needs refactoring. The XML writing utility functions should
+ *       be moved to a non-static XMLWriter class. The class should store the
+ *       tabs object and output stream.
+ * \warning This class is hacked b/c of poor MSVC template support. This makes
+ *          it much uglier. 
+ * \details This library contains a set of routines for reading xml data and
+ *          attribute values. It is a templated library so that it should work
+ *          with any data type.
+ * \author Josh Lurz
+ */
 
 #include "util/base/include/definitions.h"
 #include <string>
@@ -42,10 +54,12 @@
 #include "util/base/include/time_vector.h"
 
 /*!
-* \ingroup Objects
-* \brief A basic class which is a container for a variable containing the current level of indention in the xml being written.
-* \author Josh Lurz
-*/
+ * \ingroup Objects
+ * \brief A basic class which is a container for a variable containing the
+ *        current level of indention in the xml being written.
+ * \todo Replace this class with an integer.
+ * \author Josh Lurz
+ */
 
 class Tabs {
    
@@ -74,10 +88,10 @@ public:
 };
 
 /*! 
-* \ingroup Objects
-* \brief A helper class of functions used to parse XML DOM trees.
-* \author Josh Lurz
-*/
+ * \ingroup Objects
+ * \brief A class with static functions to parse XML DOM trees.
+ * \author Josh Lurz
+ */
 
 template<class T>
 class XMLHelper {
