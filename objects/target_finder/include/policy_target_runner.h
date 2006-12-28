@@ -19,8 +19,6 @@
 * \ingroup Objects
 * \brief The PolicyTargetRunner class header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include <memory>
@@ -52,7 +50,8 @@ public:
         const std::list<std::string> aScenComponents = std::list<std::string>() );
     
     virtual bool runScenarios( const int aSingleScenario,
-                              Timer& timer );
+                               const bool aPrintDebugging,
+                               Timer& timer );
 
     virtual void printOutput( Timer& timer,
         const bool aCloseDB = true ) const;
@@ -93,11 +92,13 @@ private:
     
     bool solveInitialTarget( const unsigned int aLimitIterations,
                              const double aTolerance,
+                             const bool aPrintDebugging,
                              Timer& aTimer );
     
     bool solveFutureTarget( const unsigned int aLimitIterations,
                             const double aTolerance,
                             const int aPeriod,
+                            const bool aPrintDebugging,
                             Timer& aTimer );
     PolicyTargetRunner();
     static const std::string& getXMLNameStatic();

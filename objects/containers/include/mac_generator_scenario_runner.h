@@ -40,7 +40,8 @@ public:
         const std::list<std::string> aScenComponents = std::list<std::string>() );
     
     virtual bool runScenarios( const int aSinglePeriod,
-                              Timer& timer );
+                               const bool aPrintDebugging,
+                               Timer& timer );
 
     virtual void printOutput( Timer& timer,
         const bool aCloseDB = true ) const;

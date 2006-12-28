@@ -91,7 +91,9 @@ public:
                                  const std::string aName = "",
                                  const std::list<std::string> aScenComponents = std::list<std::string>() );
 
-    virtual bool runScenarios( const int aSinglePeriod, Timer& aTimer );
+    virtual bool runScenarios( const int aSinglePeriod,
+                               const bool aPrintDebugging,
+                               Timer& aTimer );
 
     virtual void printOutput( Timer& aTimer, const bool aCloseDB ) const;
 

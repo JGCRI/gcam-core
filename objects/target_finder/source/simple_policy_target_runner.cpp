@@ -179,12 +179,14 @@ bool SimplePolicyTargetRunner::setupScenarios( Timer& aTimer, const string aName
 * \return Whether all model runs solved successfully.
 */
 bool SimplePolicyTargetRunner::runScenarios( const int aSingleScenario,
-                                           Timer& timer ){
+                                             const bool aPrintDebugging,
+                                             Timer& timer ){
     // Search until a limit is reach or the solution is found.
     const unsigned int LIMIT_ITERATIONS = 100;
 
     // Run the model for all periods
-    bool success = mSingleScenario->runScenarios( Scenario::RUN_ALL_PERIODS, timer );
+    bool success = mSingleScenario->runScenarios( Scenario::RUN_ALL_PERIODS,
+                                                  aPrintDebugging, timer );
 
     // Construct a bisecter which has an initial trial equal to 1/2
     Bisecter bisecter( mPolicyTarget.get(), mTolerance,
@@ -209,7 +211,7 @@ bool SimplePolicyTargetRunner::runScenarios( const int aSingleScenario,
         unsigned int start = modeltime->getyr_to_per( static_cast<unsigned int>(mLowerBound->getMinX()) );
         unsigned int max = getInternalScenario()->getModeltime()->getmaxper();
         for( unsigned int i = start; i < max; i++ ){
-            success &= mSingleScenario->runScenarios( i, timer );
+            success &= mSingleScenario->runScenarios( i, aPrintDebugging, timer );
         }
 
         pair<double, bool> trial = bisecter.getNextValue();

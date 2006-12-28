@@ -75,9 +75,13 @@ bool MACGeneratorScenarioRunner::setupScenarios( Timer& aTimer, const string aNa
 * \return Whether all model runs solved successfully.
 * \author Josh Lurz
 */
-bool MACGeneratorScenarioRunner::runScenarios( const int aSinglePeriod, Timer& aTimer ) {
-    // Run the base scenario. 
-    bool success = mSingleScenario->runScenarios( Scenario::RUN_ALL_PERIODS, aTimer );
+bool MACGeneratorScenarioRunner::runScenarios( const int aSinglePeriod,
+                                               const bool aPrintDebugging,
+                                               Timer& aTimer )
+{
+    // Run the base scenario. Print debugging for the base scenario run.
+    bool success = mSingleScenario->runScenarios( Scenario::RUN_ALL_PERIODS,
+                                                  aPrintDebugging, aTimer );
 
     // Print the output now before it is overwritten.
     mSingleScenario->printOutput( aTimer, false );

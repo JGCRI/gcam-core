@@ -68,10 +68,14 @@ public:
      *          scenario runner.
      * \param aSinglePeriod The single period to run or
      *        Scenario::RUN_ALL_PERIODS to run all periods.
+     * \param aPrintDebugging Whether to print debugging information during the
+     *        periods. This is only respected for the initial run if the same
+     *        input set is being run multiple times.
      * \param aTimer Reference to the global timer.
      * \return Whether the scenario or set of scenarios ran successfully.
      */
     virtual bool runScenarios( const int aSinglePeriod,
+                               const bool aPrintDebugging,
                                Timer& aTimer ) = 0;
     
     /*!

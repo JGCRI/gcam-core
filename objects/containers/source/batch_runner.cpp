@@ -71,7 +71,17 @@ bool BatchRunner::setupScenarios( Timer& aTimer, const string aName, const list<
     return success;
 }
 
-bool BatchRunner::runScenarios( const int aSinglePeriod, Timer& aTimer ){
+bool BatchRunner::runScenarios( const int aSinglePeriod,
+                                const bool aPrintDebugging,
+                                Timer& aTimer )
+{
+    // Quick error checking for empty readin.
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    if( mComponentSet.empty() ){
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "No scenario sets to run!" << endl;
+        return false;
+    }
 
     // Initialize each components iterator to the beginning of the vector. 
     for( ComponentSet::iterator currSet = mComponentSet.begin(); currSet != mComponentSet.end(); ++currSet ){
@@ -185,11 +195,6 @@ bool BatchRunner::runSingleScenario( IScenarioRunner* aScenarioRunner,
     mainLog.setLevel( ILogger::WARNING );
     mainLog << "Running scenario " << aComponent.mName << "..." << endl;
 
-    // Set the global scenario pointer, as the internal runner was null when
-    // main tried to set it.
-    scenario = mInternalRunner->getInternalScenario();
-    assert( scenario );
-
     // Setup the scenario.
     bool success = mInternalRunner->setupScenarios( aTimer, aComponent.mName, components );
     // Check if setting up the scenario, which often includes parsing,
@@ -199,7 +204,7 @@ bool BatchRunner::runSingleScenario( IScenarioRunner* aScenarioRunner,
     }
 
     // Run the scenario.
-    success = mInternalRunner->runScenarios( Scenario::RUN_ALL_PERIODS, aTimer );
+    success = mInternalRunner->runScenarios( Scenario::RUN_ALL_PERIODS, false, aTimer );
     
     // Print the output.
     mInternalRunner->printOutput( aTimer );

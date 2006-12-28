@@ -9,8 +9,6 @@
 * \ingroup CIAM
 * \brief The ScenarioRunner class header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include <memory>
@@ -34,8 +32,15 @@ public:
     // IParsable interface
     virtual bool XMLParse( const xercesc::DOMNode* aRoot );
 
-    bool setupScenarios( Timer& timer, const std::string aName, const std::list<std::string> aScenComponents = std::list<std::string>() );
-    virtual bool runScenarios( const int aSinglePeriod, Timer& aTimer );
+    virtual bool setupScenarios( Timer& timer,
+                                 const std::string aName,
+                                 const std::list<std::string> aScenComponents =
+                                   std::list<std::string>() );
+    
+    virtual bool runScenarios( const int aSinglePeriod,
+                               const bool aPrintDebugging,
+                               Timer& aTimer );
+    
     void printOutput( Timer& timer, const bool aCloseDB = true ) const;
 	Scenario* getInternalScenario();
 	virtual const Scenario* getInternalScenario() const;
@@ -46,5 +51,5 @@ protected:
     
 	//! The internal scenario.
 	std::auto_ptr<Scenario> mScenario;
-    };
+};
 #endif // _MERGE_RUNNER_H_

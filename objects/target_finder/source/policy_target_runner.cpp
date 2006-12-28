@@ -123,7 +123,9 @@ bool PolicyTargetRunner::setupScenarios( Timer& aTimer, const string aName,
 * \return Whether all model runs solved successfully.
 * \author Josh Lurz
 */
-bool PolicyTargetRunner::runScenarios( const int aSinglePeriod, Timer& aTimer ) {
+bool PolicyTargetRunner::runScenarios( const int aSinglePeriod,
+                                       const bool aPrintDebugging,
+                                       Timer& aTimer ) {
     
     // Search until a limit is reach or the solution is found.
     const unsigned int LIMIT_ITERATIONS = 100;
@@ -141,7 +143,9 @@ bool PolicyTargetRunner::runScenarios( const int aSinglePeriod, Timer& aTimer ) 
     const Modeltime* modeltime = getInternalScenario()->getModeltime();   
     mCurrentTaxes.resize( modeltime->getmaxper(), 0 );
 
-    bool success = solveInitialTarget( LIMIT_ITERATIONS, TOLERANCE, aTimer );
+    bool success = solveInitialTarget( LIMIT_ITERATIONS, TOLERANCE,
+                                       aPrintDebugging, aTimer );
+
     mainLog.setLevel( ILogger::NOTICE );
     mainLog << "Initial target was solved with status " << success << "." << endl;
 
@@ -157,7 +161,8 @@ bool PolicyTargetRunner::runScenarios( const int aSinglePeriod, Timer& aTimer ) 
     for( int period = targetPeriod + 1; period < modeltime->getmaxper(); ++period ){
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Solving target for future period " << period << "." << endl;
-        success &= solveFutureTarget( LIMIT_ITERATIONS, TOLERANCE, period, aTimer );
+        success &= solveFutureTarget( LIMIT_ITERATIONS, TOLERANCE, period,
+                                      aPrintDebugging, aTimer );
     }
     
     mainLog.setLevel( ILogger::NOTICE );
@@ -182,12 +187,14 @@ bool PolicyTargetRunner::runScenarios( const int aSinglePeriod, Timer& aTimer ) 
 *          taxes used if success is returned.
 * \param aLimitIterations The maximum number of iterations to perform.
 * \param aTolerance The tolerance of the solution.
+* \param aPrintDebugging Whether to print debugging files.
 * \param aTimer The timer used to print out the amount of time spent performing
 *        operations.
 * \return Whether the target was met successfully.
 */
 bool PolicyTargetRunner::solveInitialTarget( const unsigned int aLimitIterations,
                                              const double aTolerance,
+                                             const bool aPrintDebugging,
                                              Timer& aTimer )
 {
     // Ensure that the policy target was created successfully.
@@ -197,7 +204,8 @@ bool PolicyTargetRunner::solveInitialTarget( const unsigned int aLimitIterations
 
     // Run the model without a tax target once to get a baseline for the
     // bisecter and to calculate the initial non-tax periods.
-    bool success = mSingleScenario->runScenarios( Scenario::RUN_ALL_PERIODS, aTimer );
+    bool success = mSingleScenario->runScenarios( Scenario::RUN_ALL_PERIODS,
+                                                  aPrintDebugging, aTimer );
 
     const Modeltime* modeltime = getInternalScenario()->getModeltime();
     // Create the bisection object. Use 0 as the initial trial value because the
@@ -227,7 +235,9 @@ bool PolicyTargetRunner::solveInitialTarget( const unsigned int aLimitIterations
         // positive tax to a tax of absolute zero.
         for( int period = 0; period < modeltime->getmaxper(); ++period ){
             if( mCurrentTaxes[ period ] > 0 ){
-                success &= mSingleScenario->runScenarios( period, aTimer );
+                success &= mSingleScenario->runScenarios( period,
+                                                          aPrintDebugging,
+                                                          aTimer );
             }
         }
     }
@@ -252,6 +262,7 @@ bool PolicyTargetRunner::solveInitialTarget( const unsigned int aLimitIterations
 * \param aLimitIterations The maximum number of iterations to perform.
 * \param aTolerance The tolerance of the solution.
 * \param aPeriod Future period.
+* \param aPrintDebugging Whether to print debugging information.
 * \param aTimer The timer used to print out the amount of time spent performing
 *        operations.
 * \return Whether the target was met successfully.
@@ -259,6 +270,7 @@ bool PolicyTargetRunner::solveInitialTarget( const unsigned int aLimitIterations
 bool PolicyTargetRunner::solveFutureTarget( const unsigned int aLimitIterations,
                                             const double aTolerance,
                                             const int aPeriod,
+                                            const bool aPrintDebugging,
                                             Timer& aTimer )
 {
     // Ensure that the policy target was created successfully.
@@ -270,7 +282,9 @@ bool PolicyTargetRunner::solveFutureTarget( const unsigned int aLimitIterations,
     // current period concentration may not be accurate and reflect the effect
     // of this tax in the current period, since this period was not run while
     // solving the previous period.
-    bool success = mSingleScenario->runScenarios( aPeriod, aTimer );
+    bool success = mSingleScenario->runScenarios( aPeriod,
+                                                  aPrintDebugging,
+                                                  aTimer );
 
     // Construct a bisecter which has an initial trial equal to the current tax.
     Bisecter bisecter( mPolicyTarget.get(), aTolerance,
@@ -293,7 +307,8 @@ bool PolicyTargetRunner::solveFutureTarget( const unsigned int aLimitIterations,
         setTrialTaxes( mPolicyTarget->getTaxName(), mCurrentTaxes );
 
         // Run the base scenario.
-        success = mSingleScenario->runScenarios( aPeriod, aTimer );
+        success = mSingleScenario->runScenarios( aPeriod, aPrintDebugging,
+                                                 aTimer );
     }
 
     if( bisecter.getIterations() >= aLimitIterations ){

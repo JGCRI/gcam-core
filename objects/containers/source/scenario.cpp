@@ -33,10 +33,13 @@ using namespace std;
 using namespace xercesc;
 
 extern ofstream outFile;
-extern time_t gGlobalTime;
+time_t gGlobalTime;
 
 //! Default construtor
 Scenario::Scenario() {
+    // Get time and date before model run.
+    time( &gGlobalTime );
+
     marketplace.reset( new Marketplace() );
 }
 
@@ -154,12 +157,6 @@ void Scenario::completeInit() {
         mainLog << "No world container was parsed from the input files." << endl;
     }
 
-    // Create the solver and initialize with a pointer to the Marketplace and World.
-    const string solverName = Configuration::getInstance()->getString( "SolverName" );
-    solver = Solver::getSolver( solverName, marketplace.get(), world.get() );
-    // Complete the init of the solution object.
-    solver->init();
-
     // Set the valid period vector to false.
     mIsValidPeriod.clear();
     mIsValidPeriod.resize( modeltime->getmaxper(), false );
@@ -264,8 +261,8 @@ bool Scenario::run( const int aSinglePeriod,
             mIsValidPeriod[ per ] = false;
         }
 
-        // Now run the requested period and all periods past it. Results past
-        // this period will no longer be valid. Do not attempt to use them!
+        // Now run the requested period. Results past this period will no longer
+        // be valid. Do not attempt to use them!
         success &= calculatePeriod( aSinglePeriod, XMLDebugFile, SGMDebugFile, &tabs, aPrintDebugging );
     }
 
@@ -316,7 +313,8 @@ bool Scenario::calculatePeriod( const int aPeriod,
     world->calc( aPeriod ); // call to calculate initial supply and demand
 
     bool success = solve( aPeriod ); // solution uses Bisect and NR routine to clear markets
-    world->finalizePeriod( aPeriod );
+
+    world->postCalc( aPeriod );
     
     // Output metadata is not required to exist.
     const list<string>& primaryFuelList = mOutputMetaData.get() ? 

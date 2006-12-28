@@ -1,9 +1,19 @@
+/*
+ * This software, which is provided in confidence, was prepared by employees of
+ * Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+ * Battelle has certain unperfected rights in the software which should not be
+ * copied or otherwise disseminated outside your organization without the
+ * express written authorization from Battelle. All rights to the software are
+ * reserved by Battelle. Battelle makes no warranty, express or implied, and
+ * assumes no liability or responsibility for the use of this software.
+ */
+
 /*! 
-* \file single_scenario_runner.cpp
-* \ingroup SingleScenarioRunner
-* \brief SingleScenarioRunner class source file.
-* \author Josh Lurz
-*/
+ * \file single_scenario_runner.cpp
+ * \ingroup SingleScenarioRunner
+ * \brief SingleScenarioRunner class source file.
+ * \author Josh Lurz
+ */
 
 #include "util/base/include/definitions.h"
 #include <cassert>
@@ -23,7 +33,6 @@ using namespace xercesc;
 
 extern Scenario* scenario;
 extern ofstream outFile;
-time_t gGlobalTime;
 
 // Function Prototypes. These need a helper class. 
 extern void createMCvarid();
@@ -32,9 +41,7 @@ extern void openDB();
 extern void createDBout();
 
 /*! \brief Constructor */
-SingleScenarioRunner::SingleScenarioRunner():mScenario( new Scenario ){
-    // Get time and date before model run.
-    time( &gGlobalTime ); 
+SingleScenarioRunner::SingleScenarioRunner(){
 }
 
 //! Destructor.
@@ -47,20 +54,22 @@ bool SingleScenarioRunner::XMLParse( const xercesc::DOMNode* aRoot ){
     return true;
 }
 
-/*! \brief Setup the Scenario to be run.
-* \details This function opens the various output files, reads in the base input
-*          file and the list of scenario components from the configuration file
-*          and passed in, and sets the name of the Scenario.
-* \param aTimer The timer used to print out the amount of time spent performing
-*        operations.
-* \param aName The name to add on to the name read in in the Configuration file.
-* \param aScenComponents A list of additional scenario components to read in.
-* \return Whether the setup completed successfully.
-*/
-bool SingleScenarioRunner::setupScenarios( Timer& timer, const string aName, const list<string> aScenComponents ){
+bool SingleScenarioRunner::setupScenarios( Timer& timer,
+                                           const string aName,
+                                           const list<string> aScenComponents )
+{
+    // Ensure that a new scenario is created for each run.
+    mScenario.reset( new Scenario );
+
+    // Set the global scenario pointer.
+    // TODO: Remove global scenario pointer.
+    scenario = mScenario.get();
+
     // Parse the input file.
     const Configuration* conf = Configuration::getInstance();
-    bool success = XMLHelper<void>::parseXML( conf->getFile( "xmlInputFileName" ), mScenario.get() );
+    bool success =
+        XMLHelper<void>::parseXML( conf->getFile( "xmlInputFileName" ),
+                                   mScenario.get() );
     
     // Check if parsing succeeded.
     if( !success ){
@@ -114,22 +123,25 @@ bool SingleScenarioRunner::setupScenarios( Timer& timer, const string aName, con
     return true;
 }
 
-/*! \brief Run a single Scenario.
-* \details This function completes the initialization and runs the Scenario.
-* \param aSinglePeriod The single period to run or Scenario::RUN_ALL_PERIODS
-*        to run all periods.
-* \param aTimer The timer used to print out the amount of time spent performing
-*        operations.
-*/
-bool SingleScenarioRunner::runScenarios( const int aSinglePeriod, Timer& aTimer ){
+bool SingleScenarioRunner::runScenarios( const int aSinglePeriod,
+                                        const bool aPrintDebugging,
+                                        Timer& aTimer )
+{
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
-    mainLog << "Starting a model run." << endl;
+    mainLog << "Starting a model run. Running ";
+    if( aSinglePeriod == -1 ){
+        mainLog << "all periods.";
+    }
+    else {
+        mainLog << aSinglePeriod;
+    }
+    mainLog << endl;
     
 	bool success = false;
 	if( mScenario.get() ){
 		// Perform the initial run of the scenario.
-        success = mScenario->run( aSinglePeriod, true );
+        success = mScenario->run( aSinglePeriod, aPrintDebugging );
 
 		// Compute model run time.
 		aTimer.stop();
@@ -146,15 +158,6 @@ bool SingleScenarioRunner::runScenarios( const int aSinglePeriod, Timer& aTimer 
     return success;
 }
 
-/*! \brief Function to perform both file and database output. 
-* \details This function write out the XML, file and database output. All file
-*          names are defined by the configuration file. All file handles are
-*          closed when the function completes.
-* \param aTimer The timer used to print out the amount of time spent performing
-*        operations.
-* \param aCloseDB Whether to close the database and output variable IDs.
-*        Defaults to true.
-*/
 void SingleScenarioRunner::printOutput( Timer& aTimer, const bool aCloseDB ) const {
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
@@ -202,20 +205,18 @@ void SingleScenarioRunner::printOutput( Timer& aTimer, const bool aCloseDB ) con
     mainLog << "Model run completed." << endl;
 }
 
-/*! \brief Get the internal scenario of the single scenario runner.
-* \return The internal scenario.
-*/
 Scenario* SingleScenarioRunner::getInternalScenario(){
 	return mScenario.get();
 }
 
-/*! \brief Get the internal scenario of the single scenario runner.
-* \return Constant pointer to the internal scenario.
-*/
 const Scenario* SingleScenarioRunner::getInternalScenario() const {
 	return mScenario.get();
 }
 
+/*!
+ * \brief Get the XML name of the class.
+ * \return The XML name of the class.
+ */
 const string& SingleScenarioRunner::getXMLNameStatic(){
 	static const string XML_NAME = "single-scenario-runner";
 	return XML_NAME;

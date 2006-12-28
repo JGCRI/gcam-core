@@ -18,7 +18,7 @@ using namespace std;
 using namespace xercesc;
 
 //! Constructor
-MergeRunner::MergeRunner(): mScenario( new Scenario ){
+MergeRunner::MergeRunner(){
 }
 
 //! Destructor
@@ -41,6 +41,12 @@ bool MergeRunner::setupScenarios( Timer& timer, const string aName, const list<s
     if( !success ){
         return false;
     }
+
+    // Need to ensure the Scenario is cleared and set.
+    mScenario.reset( new Scenario );
+
+    // Make sure the global scenario points is set.
+    scenario = mScenario.get();
 
     // Override scenario name from data file with that from configuration file
     const string overrideName = conf->getString( "scenarioName" ) + aName;
@@ -79,8 +85,10 @@ bool MergeRunner::setupScenarios( Timer& timer, const string aName, const list<s
 * \return Always returns true.
 * \author Josh Lurz
 */
-
-bool MergeRunner::runScenarios( const int aSinglePeriod, Timer& aTimer ){
+bool MergeRunner::runScenarios( const int aSinglePeriod,
+                                const bool aPrintDebugging,
+                                Timer& aTimer )
+{
     return true;
 }
 

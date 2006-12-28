@@ -60,9 +60,11 @@ public:
     void completeInit();
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    static const std::string& getXMLNameStatic();
+	static const std::string& getXMLNameStatic();
     const std::string& getName() const;
-    void initCalc( const int period ); 
+    void initCalc( const int period );
+    void postCalc( const int aPeriod );
+
     //! The type of the vector containing region atoms.
     typedef std::vector<const objects::Atom*> AtomVector;
     void calc( const int period, const AtomVector& aRegionsToCalc = AtomVector() );
@@ -81,7 +83,7 @@ public:
     const std::map<const std::string, const Curve*> getEmissionsQuantityCurves( const std::string& ghgName ) const;
     const std::map<const std::string, const Curve*> getEmissionsPriceCurves( const std::string& ghgName ) const;
     void setCalcCounter( CalcCounter* calcCounter );
-    void finalizePeriod( const int aPeriod );   
+
 	void accept( IVisitor* aVisitor, const int aPeriod ) const;
     void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     void csvSGMGenFile( std::ostream& aFile ) const;
@@ -97,11 +99,12 @@ private:
     
     //! A fast hashmap which stores a mapping of region ID atom to region
     //! location. This allows world calc calls for derivatives to be faster.
-    std::auto_ptr<FastRegionLookupMap> mRegionLookupMap;
-
+	std::auto_ptr<FastRegionLookupMap> mRegionLookupMap;
+    
     std::map<std::string, int> regionNamesToNumbers; //!< Map of region name to indice used for XML parsing.
     std::vector<Region*> regions; //!< array of pointers to Region objects
     std::auto_ptr<IClimateModel> mClimateModel; //!< The climate model.
+
     bool doCalibrations; //!< turn on or off calibration routines
     std::auto_ptr<GlobalTechnologyDatabase> globalTechDB; //!< The Global Technology Database.
 
