@@ -702,7 +702,7 @@ const vector<unsigned int> World::getRegionIndexesToCalculate( const AtomVector&
 * \param aPeriod The period to finalize.
 * \author Josh Lurz
 */
-void World::finalizePeriod( const int aPeriod ){
+void World::postCalc( const int aPeriod ){
     // Finalize sectors.
     for( RegionIterator region = regions.begin(); region != regions.end(); ++region ){
         (*region)->finalizePeriod( aPeriod );
