@@ -5,13 +5,19 @@
 #endif
 
 /*!
-* \file util.h  
-* \ingroup Objects
-* \brief A set of commonly used functions.
-* \details This is a set of functions which are frequently needed within the
-*          program.
-* \author Josh Lurz
-*/
+ * \file util.h  
+ * \ingroup Objects
+ * \brief A set of commonly used functions.
+ * \details This is a set of functions which are frequently needed within the
+ *          program.
+ * \note These are static functions within a namespace, not static class
+ *       functions. This is because partial template specialization cannot be
+ *       done for classes. The functions are in the objects namespace, also the
+ *       location of the utility container classes. The util namespace is
+ *       aliased to the objects, namespace, which means it is an alternative
+ *       name for it.
+ * \author Josh Lurz
+ */
 
 #include "util/base/include/definitions.h"
 #include <boost/static_assert.hpp>
