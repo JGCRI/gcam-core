@@ -17,8 +17,6 @@
 * calls runScenarios() to trigger running of the complete model for all periods.
 *
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -107,13 +105,6 @@ int main( int argc, char *argv[] ) {
     // deallocate memory.
     auto_ptr<IScenarioRunner> runner = ScenarioRunnerFactory::createDefault( exclusionList );
     
-    // Need to set the scenario pointer. This has to be done before XML parse is
-    // called because that requires the modeltime. TODO: Remove the global
-    // pointer!
-    // TODO: This may fail set the global scenario pointer for the batchrunner.
-    // The batch runner adjusts the pointer later.
-    scenario = runner->getInternalScenario();
-    
     // Setup the scenario.
     success = runner->setupScenarios( timer );
     // Check if setting up the scenario, which often includes parsing,
@@ -122,8 +113,9 @@ int main( int argc, char *argv[] ) {
         return 1;
     }
 
-    // Run the scenario.
-    success = runner->runScenarios( Scenario::RUN_ALL_PERIODS, timer );
+    // Run the scenario and print debugging information.
+    // TODO: Pref here?
+    success = runner->runScenarios( Scenario::RUN_ALL_PERIODS, true, timer );
 
     // Print the output.
     runner->printOutput( timer );
@@ -136,7 +128,14 @@ int main( int argc, char *argv[] ) {
     return success ? 0 : 1; 
 }
 
-//! Function to parse the arguments.
+/*!
+* \brief Function to parse the command line arguments.
+* \param argc Number of arguments.
+* \param argv List of arguments.
+* \param confArg [out] Name of the configuration file.
+* \param logFacArg [out] Name of the log configuration file.
+* \todo Allow a space between the flags and the file names.
+*/
 void parseArgs( unsigned int argc, char* argv[], string& confArg, string& logFacArg ) {
     for( unsigned int i = 1; i < argc; i++ ){
         string temp( argv[ i ] );
