@@ -19,8 +19,6 @@
 * \ingroup Objects
 * \brief GraphPrinter class header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include <iosfwd>
@@ -45,10 +43,10 @@ public:
     explicit GraphPrinter( const std::string& aRegionToPrint, std::ostream& aFile );
     void startVisitRegion( const Region* aRegion, const int aPeriod );
     void endVisitRegion( const Region* aRegion, const int aPeriod );
-    void startVisitResource( const Resource* aResource, const int aPeriod );
+    void startVisitResource( const AResource* aResource, const int aPeriod );
     void startVisitSector( const Sector* aSector, const int aPeriod );
-    void startVisitDemandSector( const DemandSector* aDemandSector, const int aPeriod );
-    void startVisitTechnology( const technology* aTechnology, const int aPeriod );
+	void startVisitDemandSector( const DemandSector* aDemandSector, const int aPeriod );
+	void startVisitTechnology( const Technology* aTechnology, const int aPeriod );
 private:
     //! The file to which to write.
     std::ostream& mFile;

@@ -14,8 +14,6 @@
 * \brief The GraphPrinter class source file.
 *
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -88,7 +86,7 @@ void GraphPrinter::endVisitRegion( const Region* aRegion, const int aPeriod ){
 * \param aResource Resource to output.
 * \param aPeriod Period for which to output.
 */
-void GraphPrinter::startVisitResource( const Resource* aResource, const int aPeriod ){
+void GraphPrinter::startVisitResource( const AResource* aResource, const int aPeriod ){
     if( !mCorrectRegion ){
         return;
     }
@@ -147,7 +145,7 @@ void GraphPrinter::startVisitDemandSector( const DemandSector* aDemandSector, co
 * \param aTechnology Technology for which to write output.
 * \param aPeriod Period to output.
 */
-void GraphPrinter::startVisitTechnology( const technology* aTechnology, const int aPeriod ){
+void GraphPrinter::startVisitTechnology( const Technology* aTechnology, const int aPeriod ){
     if( !mCorrectRegion ){
         return;
     }
@@ -177,7 +175,7 @@ void GraphPrinter::startVisitTechnology( const technology* aTechnology, const in
         }
     } 
     else {
-        graphValue = aTechnology->getInput();
+        graphValue = aTechnology->getInput( aPeriod );
     }
 
     // Add the edge to the graph with a weight determined by the value.

@@ -61,7 +61,7 @@ public:
     
     void endVisitSector( const Sector* aSector, const int aPeriod );
     
-    void startVisitTechnology( const technology* aTechnology,
+    void startVisitTechnology( const Technology* aTechnology,
                                const int aPeriod );
 private:
     /*!

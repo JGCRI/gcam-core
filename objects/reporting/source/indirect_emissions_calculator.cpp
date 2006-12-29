@@ -125,7 +125,7 @@ void IndirectEmissionsCalculator::endVisitSector( const Sector* aSector, const i
     mCurrOutput = 0;
 }
 
-void IndirectEmissionsCalculator::startVisitTechnology( const technology* aTechnology,
+void IndirectEmissionsCalculator::startVisitTechnology( const Technology* aTechnology,
                                                         const int aPeriod )
 {
     // TODO: Fix this for vintaging.
@@ -141,9 +141,9 @@ void IndirectEmissionsCalculator::startVisitTechnology( const technology* aTechn
     // Calculate indirect and total emissions. Total emissions are required to
     // calculate the indirect emissions coefficient for this sector which will
     // include direct emissions.
-    double indirectEmissions = upstreamCoef * aTechnology->getInput();
+    double indirectEmissions = upstreamCoef * aTechnology->getInput( aPeriod );
 
-    double totalEmissions = aTechnology->get_emissmap_second( "CO2" )
+    double totalEmissions = aTechnology->getEmissionsByGas( "CO2", aPeriod )
                             + indirectEmissions;
 
     // Add to the regional lists.
