@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief The SubResource class header file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 #include <xercesc/dom/DOMNode.hpp>
 #include "util/base/include/ivisitable.h"
@@ -18,6 +16,7 @@
 // Forward declarations.
 class Grade;
 class GDP;
+class IInfo;
 class IVisitor;
 
 /*! 
@@ -34,13 +33,14 @@ public:
     virtual ~SubResource();
     std::string getName() const;
     void XMLParse( const xercesc::DOMNode* tempnode );
-    void completeInit();
+    virtual void completeInit( const IInfo* aResourceInfo );
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
     virtual void cumulsupply(double prc,int per);
-    double getPrice(int per) const;
-    double getCumulProd(int per) const;
+    virtual void initCalc( const std::string& aRegionName, const std::string& aResourceName, const int aPeriod );
+    virtual void postCalc( const std::string& aRegionName, const std::string& aResourceName, const int aPeriod );
+    double getCumulProd( const int aPeriod ) const;
     virtual void annualsupply( int per, const GDP* gdp, double price1, double price2 );
     double getAnnualProd(int per) const;
     double getAvailable(int per) const;
@@ -51,15 +51,14 @@ public:
 	virtual double getAverageCapacityFactor() const;
 	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
-	virtual void initializeResource();
-	virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
-	virtual const std::string& getXMLName() const;
-	virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node ) = 0; 
-	std::string name; //!< SubResource name
-    int nograde; //!< number of grades of each SubResource
+    virtual const std::string& getXMLName() const;
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node ) = 0;
+    virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
+
+    std::string name; //!< SubResource name
+    std::auto_ptr<IInfo> mSubresourceInfo; //!< The subsector's information store.
     double priceElas; //!< price elasticity for short-term supply limit
     double minShortTermSLimit; //!< short-term supply limit.
-    std::vector<double> rscprc; //!< subresource price
     std::vector<double> techChange; //!< technical change
     std::vector<double> environCost; //!< Environmental costs
     std::vector<double> severanceTax; //!< Severence Tax (exogenous)
@@ -67,7 +66,6 @@ protected:
     std::vector<double> annualprod; //!< annual production of SubResource
     std::vector<double> cumulprod; //!< cumulative production of SubResource
     std::vector<double> gdpExpans; //!< short-term supply limit expansion elasticity w/ gdp
-    std::vector<double> scaleFactor; //!< Knob to control regional resource production. Default == 1.
     std::vector<double> cumulativeTechChange; //!< Cumulative Technical Change for this sub-sector
     // Cumulative technical change needs to be in sub-resource sector 
     std::vector<Grade*> grade; //!< amount of SubResource for each grade
@@ -82,8 +80,6 @@ private:
 * \ingroup Objects
 * \brief A class which defines a SubDepletableResource object, which is a container for multiple grade objects.
 * \author Steve Smith
-* \date $ Date $
-* \version $ Revision $
 */
 class SubDepletableResource: public SubResource {
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
@@ -93,8 +89,6 @@ class SubDepletableResource: public SubResource {
 * \ingroup Objects
 * \brief A class which defines a SubFixedResource object, which is a container for multiple grade objects.
 * \author Steve Smith
-* \date $ Date $
-* \version $ Revision $
 */
 class SubFixedResource: public SubResource {
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );

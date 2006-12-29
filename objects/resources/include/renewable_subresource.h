@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief The SubRenewableResource class header file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 #include <xercesc/dom/DOMNode.hpp>
 #include "resources/include/subresource.h"
@@ -19,6 +17,7 @@
 class Grade;
 class SubResource;
 class Tabs;
+class IInfo;
 
 /*! 
 * \ingroup Objects
@@ -35,14 +34,14 @@ protected:
 	//! subresource variance now read in rather than computed
 	double subResourceVariance;
 	//! read in average capacity factor for each subresource
-	double subResourceCapacityFactor;
-	void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
-	bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
-	void initializeResource(); 
+	double subResourceCapacityFactor;  
+ 	virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
+	virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
 public: 
 	SubRenewableResource();
+	virtual void completeInit( const IInfo* aSectorInfo );
 	void cumulsupply(double prc,int per);
-	void annualsupply( int per, const GDP* gdp, double price1, double price2 );
+    void annualsupply( int per, const GDP* gdp, double price1, double price2 );
 	double getVariance() const;
 	double getAverageCapacityFactor() const;
 };

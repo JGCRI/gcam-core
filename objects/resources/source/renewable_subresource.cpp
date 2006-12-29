@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief SubRenewableResource class source file.
 * \author Steve Smith
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -18,6 +16,7 @@
 #include "resources/include/renewable_subresource.h"
 #include "resources/include/subresource.h"
 #include "containers/include/gdp.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 using namespace xercesc;
@@ -60,23 +59,22 @@ bool SubRenewableResource::XMLDerivedClassParse( const string& nodeName, const D
 /*! Renewable resources should have only grades with well defined cost curves. 
 \todo The extra elements in the vector should be removed. 
 Also remove any grades with zero available by resetting the parameter nograde. */
-void SubRenewableResource::initializeResource( ) {   
-   SubResource::initializeResource( );
-   
-	int tempNumGrades = 1; 
-	// Start with at least one grade. Then see if others are in order above it.
-	bool badGradeFound = false;
-
-	// Note that available only exists in period 0 at present data structure.
-	for ( int i = 1; i < nograde && !badGradeFound; i++ ) {
-		if ( ( grade[ i ]->getAvail() > 0 ) && ( grade[ i ]->getAvail() > grade[ i - 1 ]->getAvail() ) ) {
-			tempNumGrades++;
-		}
-		else {
-			badGradeFound = true;
-		}
-	}
-	nograde = tempNumGrades;
+void SubRenewableResource::completeInit( const IInfo* aSectorInfo ) {   
+    double lastAvailable = 0;
+    for( vector<Grade*>::iterator i = grade.begin(); i != grade.end(); ++i ){
+        if( i != grade.begin() && (*i)->getAvail() <= lastAvailable ){
+            // Remove the bad grade.
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Removing invalid grade in subresource " << name << "." << endl;
+            delete *i;
+            grade.erase( i-- ); 
+        }
+        else {
+            lastAvailable = (*i)->getAvail();
+        }
+    }
+    SubResource::completeInit( aSectorInfo );
 }
 
 //! Write out to XML variables specific to this derived class
@@ -92,19 +90,8 @@ void SubRenewableResource::toXMLforDerivedClass( ostream& out, Tabs* tabs ) cons
 *   any preliminary calculations that need to be done before calculating
 *   production 
 */
-void SubRenewableResource::cumulsupply( double prc, int per ) {   
-	const Modeltime* modeltime = scenario->getModeltime();
 
-	// calculate total extraction cost for each grade
-	// This is a waste of time, should only do this once!
-	for ( int gr=0; gr<nograde; gr++ ) {
-		if ( per > 0 ) {
-			cumulativeTechChange[ per ] = cumulativeTechChange[ per - 1 ] * 
-				pow( ( 1.0 + techChange[ per ] ), modeltime->gettimestep( per ) );
-		}
-		// Determine cost
-		grade[ gr ]->calcCost( severanceTax[ per ],cumulativeTechChange[ per ], environCost[ per ], per );
-	}   
+void SubRenewableResource::cumulsupply( double prc, int per ) {   
 }
 
 //! calculate annual supply 
@@ -116,53 +103,66 @@ void SubRenewableResource::cumulsupply( double prc, int per ) {
 */
 void SubRenewableResource::annualsupply( int period, const GDP* gdp, double price, double prev_price ) {
 
-	double prevGradeAvail = grade[ 0 ]->getAvail(); // Lowest fraction available
+    double fractionAvailable = -1;
 
-    // Minimum cost for any production
-	double prevGradeCost = grade[ 0 ]->getCost( period );
-	
-    // default value
-	annualprod[ period ] = 0;
-	if ( price < prevGradeCost ) {
-		return;
-	}
+    // Move up the cost curve until a point is found above the current price.
+    for ( unsigned int i = 0; i < grade.size(); ++i ) {
+        if( grade[ i ]->getCost( period ) > price ){
+            // Determine the cost and available for the previous point. If
+            // this is the first point in the cost curve the previous grade
+            // is the bottom of the curve.
+            double prevGradeCost;
+            double prevGradeAvailable;
+            if( i == 0 ){
+                prevGradeCost = 0;
+                prevGradeAvailable = 0;
+            }
+            else {
+                prevGradeCost = grade[ i - 1 ]->getCost( period );
+                prevGradeAvailable = grade[ i - 1 ]->getAvail();
+            }
 
-	//! \todo perhaps turn production into a function -- arguments period, gdp, price;
+            // This should not be able to happen because the above if
+            // statement would fail.
+            assert( grade[ i ]->getCost( period ) > prevGradeCost );
+            double gradeFraction = ( price - prevGradeCost )
+                / ( grade[ i ]->getCost( period ) - prevGradeCost ); 
+            // compute production as fraction of total possible
+            fractionAvailable = prevGradeAvailable + gradeFraction
+                                * ( grade[ i ]->getAvail() - prevGradeAvailable ); 
 
-	double currentApproxGDP = gdp->getApproxGDP( period );
+            break;
+        }
+    }
 
-	// To save time without doing the loop, check first to see if price is above max price point
-	if ( price > grade[ grade.size() - 1 ]->getCost(period) ) {
-		annualprod[ period ] = grade[ grade.size() - 1 ]->getAvail() 
-			* maxSubResource  * pow( currentApproxGDP / gdp->getApproxGDP( 0 ), gdpSupplyElasticity );
-	}
-	else {
-		bool pricePointFound = false;
-		// Move up cost curve until reach price
-		for ( unsigned int increment = 1; increment < grade.size() && !pricePointFound; increment++ ) {
-			double gradeAvail = grade[ increment ]->getAvail();
-			double gradeCost = grade[ increment ]->getCost(period);
+    // If the fraction available has not been set there is not a point with a
+    // cost greater than the price. This means the price is above the curve.
+    if( fractionAvailable == -1 ){
+        double maxCost = grade[ grade.size() - 1 ]->getCost( period );
 
-			// if have reached the appropriate point in cost curve, calculate production
-			if ( price <= gradeCost && price > prevGradeCost ) {
-				// how far up this segement
-				double gradeFraction = ( price - prevGradeCost ) /  ( gradeCost - prevGradeCost ); 
+        // Use the function 1-1/(p/pMax) to determine the amount of the
+        // additional percent to use.
+        double additionalFraction = 1 - 1 / ( price / maxCost );
 
-				// compute production as fraction of total possible
-				annualprod[ period ] = prevGradeAvail + 
-					gradeFraction * ( gradeAvail - prevGradeAvail ); 
+        // Add up to an additional percent to the total resource to create a
+        // smooth derivative above the max price.
+        const double ADDITIONAL_PERCENT = 0.05;
 
-				// now convert to absolute value of production
-				annualprod[ period ] *= maxSubResource * pow( currentApproxGDP/ gdp->getApproxGDP( 0 ), gdpSupplyElasticity ); 
+        // Calculate the total fraction of the max subresource to use. Note that
+        // the max fraction available can be more than 100 percent.
+        double maxFraction = grade[ grade.size() - 1 ]->getAvail();
 
-				pricePointFound = true; // can exit loop now
-			} 
-			else {
-				prevGradeCost = gradeCost;
-				prevGradeAvail = gradeAvail;
-			} // end price if-else block
-		} // end loop
-	} // end else block
+        // Determine the maximum available fraction including the additional
+        // increment.
+        fractionAvailable = maxFraction * ( 1 + additionalFraction * ADDITIONAL_PERCENT );
+    }
+
+    // Calculate the GDP expansion constraint.
+    double expansionConstraint = pow( gdp->getApproxGDP( period ) / gdp->getApproxGDP( 0 ),
+                                      gdpSupplyElasticity );
+
+    // now convert to absolute value of production
+    annualprod[ period ] = fractionAvailable * maxSubResource * expansionConstraint;
 }
 
 /*! \brief Get the variance.
