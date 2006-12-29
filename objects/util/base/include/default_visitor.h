@@ -71,8 +71,8 @@ public:
     virtual void startVisitMale( const Male* aMale, const int aPeriod ){}
     virtual void endVisitMale( const Male* aMale, const int aPeriod ){}
 
-    virtual void startVisitResource( const Resource* aResource, const int aPeriod ){}
-    virtual void endVisitResource( const Resource* aResource, const int aPeriod ){}
+    virtual void startVisitResource( const AResource* aResource, const int aPeriod ){}
+    virtual void endVisitResource( const AResource* aResource, const int aPeriod ){}
     
     virtual void startVisitSubResource( const SubResource* aSubResource, const int aPeriod ){}
     virtual void endVisitSubResource( const SubResource* aSubResource, const int aPeriod ){}
@@ -94,8 +94,8 @@ public:
     virtual void endVisitBuildingDemandSubsector( const BuildingDemandSubSector* aSubsector,
                                                   const int aPeriod ){}
 
-    virtual void startVisitTechnology( const technology* aTechnology, const int aPeriod ){}
-    virtual void endVisitTechnology( const technology* aTechnology, const int aPeriod ){}
+    virtual void startVisitTechnology( const Technology* aTechnology, const int aPeriod ){}
+    virtual void endVisitTechnology( const Technology* aTechnology, const int aPeriod ){}
 
     virtual void startVisitBaseTechnology( const BaseTechnology* aBaseTechnology, const int aPeriod ){}
     virtual void endVisitBaseTechnology( const BaseTechnology* aBaseTechnology, const int aPeriod ){}

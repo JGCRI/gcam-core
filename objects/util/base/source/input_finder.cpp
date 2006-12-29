@@ -35,7 +35,7 @@ InputFinder::InputFinder(){
 * \param aTechnology Technology from which to update inputs.
 * \param aPeriod Period in which to update.
 */
-void InputFinder::startVisitTechnology( const technology* aTechnology, const int aPeriod ){
+void InputFinder::startVisitTechnology( const Technology* aTechnology, const int aPeriod ){
     // Check if the input is already known.
     const string input = aTechnology->getFuelName();
     if( !input.empty() && find( mInputs.begin(), mInputs.end(), input ) == mInputs.end() ){

@@ -23,7 +23,7 @@
 
 #include "util/base/include/default_visitor.h"
 #include <list>
-class technology;
+class Technology;
 
 /*! 
 * \ingroup Objects
@@ -44,7 +44,7 @@ class InputFinder : public DefaultVisitor {
 public:
     InputFinder();
 
-    virtual void startVisitTechnology( const technology* aTechnology,
+    virtual void startVisitTechnology( const Technology* aTechnology,
                                        const int aPeriod );
 
     virtual void finish() const;
