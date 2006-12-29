@@ -9,8 +9,6 @@
 * \ingroup objects
 * \brief The ghg_mac class header file.
 * \author Nick Fernandez
-* \date $Date$
-* \version $Revision$
 */
 
 #include <xercesc/dom/DOMNode.hpp>
