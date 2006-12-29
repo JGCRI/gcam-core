@@ -41,6 +41,7 @@
 #include "sectors/include/interm_supply_sector.h"
 
 #include "resources/include/resource.h"
+#include "resources/include/unlimited_resource.h"
 
 #include "demographics/include/demographic.h"
 
@@ -137,6 +138,9 @@ bool RegionMiniCAM::XMLDerivedClassParse( const std::string& nodeName, const xer
     }
     else if( nodeName == RenewableResource::getXMLNameStatic() ){
         parseContainerNode( curr, resources, new RenewableResource() );
+    }
+    else if( nodeName == UnlimitedResource::getXMLNameStatic() ){
+        parseContainerNode( curr, resources, new UnlimitedResource );
     }
     else if( nodeName == SupplySector::getXMLNameStatic() ){
         parseContainerNode( curr, supplySector, supplySectorNameMap, new SupplySector( name ) );
@@ -324,7 +328,7 @@ void RegionMiniCAM::completeInit( const GlobalTechnologyDatabase* aGlobalTechDB 
     }
 
     for( ResourceIterator resourceIter = resources.begin(); resourceIter != resources.end(); ++resourceIter ) {
-        (*resourceIter)->completeInit( name );
+        (*resourceIter)->completeInit( name, mRegionInfo.get() );
     }
 
     for( DemandSectorIterator demandSectorIter = demandSector.begin();
@@ -634,8 +638,7 @@ void RegionMiniCAM::calc( const int period, const bool doCalibrations ) {
     }
     // calculate regional GDP
     calcGDP( period );
-    // determine supply of primary resources
-    calcResourceSupply( period );
+
     // determine prices for all supply sectors (e.g., refined fuels, electricity, etc.)
     calcFinalSupplyPrice( period );
     // calculate enduse service price
@@ -648,6 +651,9 @@ void RegionMiniCAM::calc( const int period, const bool doCalibrations ) {
 
     // determine supply of final energy and other goods based on demand
     setFinalSupply( period );
+
+    // determine supply of primary resources
+    calcResourceSupply( period );
 
     if( agSectorActive && agSector.get() ){
         calcAgSector( period );
@@ -988,6 +994,11 @@ void RegionMiniCAM::initCalc( const int period )
     for ( DemandSectorIterator currSector = demandSector.begin(); currSector != demandSector.end(); ++currSector ) {
         (*currSector)->initCalc( /*nationalAccount[ period ]*/0, demographic.get(), period  );
     }
+    for( ResourceIterator currResource = resources.begin();
+        currResource != resources.end(); ++currResource )
+    {
+            (*currResource)->initCalc( name, period );
+    }
 
     // Make sure TFE is same as calibrated values
     if ( isEnergyDemandAllCalibrated( period ) ) {
@@ -1006,6 +1017,21 @@ void RegionMiniCAM::initCalc( const int period )
         }
     }
     checkData( period );
+}
+
+void RegionMiniCAM::finalizePeriod( const int aPeriod ){
+    Region::finalizePeriod( aPeriod );
+
+    // Demand sectors
+    for( DemandSectorIterator currSector = demandSector.begin(); currSector != demandSector.end(); ++currSector ){
+        (*currSector)->finalizePeriod( aPeriod );
+    }
+
+    for( ResourceIterator currResource = resources.begin();
+        currResource != resources.end(); ++currResource )
+    {
+            (*currResource)->postCalc( name, aPeriod );
+    }
 }
 
 /*
@@ -1755,7 +1781,7 @@ void RegionMiniCAM::updateSummary( const list<string>& aPrimaryFuelList, const i
     summary[period].clearfuelcons();
 
     for ( unsigned int i = 0; i < resources.size(); i++ ) {
-        summary[period].initpeprod(resources[i]->getName(),resources[i]->getAnnualProd(period));
+        summary[period].initpeprod(resources[i]->getName(),resources[i]->getAnnualProd(name, period));
     }
     for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
         // call update for demand sector

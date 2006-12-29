@@ -175,7 +175,7 @@ void GraphPrinter::startVisitTechnology( const Technology* aTechnology, const in
         }
     } 
     else {
-        graphValue = aTechnology->getInput( aPeriod );
+        graphValue = aTechnology->getInput();
     }
 
     // Add the edge to the graph with a weight determined by the value.

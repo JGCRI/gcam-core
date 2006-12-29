@@ -25,7 +25,7 @@
 // Forward declarations.
 class Population;
 class Demographic;
-class Resource;
+class AResource;
 class Sector;
 class SupplySector;
 class DemandSector;
@@ -81,6 +81,7 @@ public:
     virtual void completeInit( const GlobalTechnologyDatabase* aGlobalTechDB );
     virtual void calc( const int period, const bool doCalibrations );
     virtual void initCalc( const int period );
+    virtual void finalizePeriod( const int aPeriod );
 
     virtual void csvOutputFile() const;
     virtual void dbOutput( const std::list<std::string>& aPrimaryFuelList ) const;
@@ -108,7 +109,7 @@ protected:
     //! Map of fuel relationships used for calibration consistency adjustments
     typedef std::map<std::string, std::vector<std::string> > FuelRelationshipMap;
     std::auto_ptr<FuelRelationshipMap> fuelRelationshipMap;
-    std::vector<Resource*> resources; //!< vector of pointers toresource objects
+    std::vector<AResource*> resources; //!< vector of pointers toresource objects
     std::vector<DemandSector*> demandSector; //!< vector of pointers to demand sector objects
 
     //! Container of objects which calculate an aggregate emissions coefficient
@@ -142,8 +143,8 @@ protected:
 
     typedef std::vector<DemandSector*>::iterator DemandSectorIterator;
     typedef std::vector<DemandSector*>::const_iterator CDemandSectorIterator;
-    typedef std::vector<Resource*>::iterator ResourceIterator;
-    typedef std::vector<Resource*>::const_iterator CResourceIterator;
+    typedef std::vector<AResource*>::iterator ResourceIterator;
+    typedef std::vector<AResource*>::const_iterator CResourceIterator;
     typedef std::vector<Sector*>::iterator SectorIterator;
     typedef std::vector<Sector*>::reverse_iterator SectorReverseIterator;
     typedef std::vector<Sector*>::const_iterator CSectorIterator;

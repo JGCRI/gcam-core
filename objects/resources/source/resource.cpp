@@ -349,7 +349,13 @@ void Resource::dbOutput( const string& regname ) {
 		}
 	}
 	dboutput4(regname,"Resource","annual-production", name, mOutputUnit, temp);
-
+    temp.assign( temp.size(), 0.0 );
+	for (int m=0;m<maxper;m++) {
+		for (int i=0;i<nosubrsrc;i++) {
+            temp[m] += subResource[i]->getAnnualProd(m);
+		}
+	}
+	dboutput4(regname,"Resource","annual-production", name, "EJ", temp);
     // do for all subsectors in the sector
     for (int m=0;m<maxper;m++) {
         for (int i=0;i<nosubrsrc;i++) {

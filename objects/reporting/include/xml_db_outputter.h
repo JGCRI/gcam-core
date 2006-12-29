@@ -64,8 +64,8 @@ public:
     void startVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod );
     void endVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod );
 
-    void startVisitResource( const Resource* aResource, const int aPeriod );
-    void endVisitResource( const Resource* aResource, const int aPeriod );
+    void startVisitResource( const AResource* aResource, const int aPeriod );
+    void endVisitResource( const AResource* aResource, const int aPeriod );
     
     void startVisitSubResource( const SubResource* aSubResource, const int aPeriod );
     void endVisitSubResource( const SubResource* aSubResource, const int aPeriod );

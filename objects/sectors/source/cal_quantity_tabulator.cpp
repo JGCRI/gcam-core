@@ -43,7 +43,7 @@ void CalQuantityTabulator::startVisitRegion( const Region* aRegion,
     mCurrentRegionName = aRegion->getName();
 }
 
-void CalQuantityTabulator::startVisitResource( const Resource* aResource,
+void CalQuantityTabulator::startVisitResource( const AResource* aResource,
                                                const int aPeriod )
 {
     mCalSupplies[ aResource->getName() ].mAllFixed = false;

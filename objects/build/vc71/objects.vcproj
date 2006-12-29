@@ -333,6 +333,9 @@
 				<File
 					RelativePath="..\..\resources\source\subresource.cpp">
 				</File>
+				<File
+					RelativePath="..\..\resources\source\unlimited_resource.cpp">
+				</File>
 			</Filter>
 			<Filter
 				Name="sectors"

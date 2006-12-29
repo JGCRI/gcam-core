@@ -70,7 +70,7 @@ public:
     virtual void startVisitRegion( const Region* aRegion,
                                    const int aPeriod );
     
-    virtual void startVisitResource( const Resource* aResource,
+    virtual void startVisitResource( const AResource* aResource,
                                      const int aPeriod );
 
     virtual void startVisitSubsector( const Subsector* aSubsector,

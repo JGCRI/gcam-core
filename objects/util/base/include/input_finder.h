@@ -23,7 +23,6 @@
 
 #include "util/base/include/default_visitor.h"
 #include <list>
-class Technology;
 
 /*! 
 * \ingroup Objects

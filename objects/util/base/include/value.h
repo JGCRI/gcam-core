@@ -35,8 +35,7 @@
 * \author Josh Lurz
 */
 
-class Value
-{
+class Value {
     /*!
      * \brief Output stream operator to print a Value.
      * \details Output stream operators allow classes to be printed using the <<
@@ -132,7 +131,7 @@ inline Value::operator double() const {
  *          or warning.
  * \return The value.
  */
-double Value::get() const {
+inline double Value::get() const {
     return mValue;
 }
 
@@ -229,4 +228,3 @@ inline std::istream& Value::read( std::istream& aIStream ){
 }
 
 #endif // _VALUE_H_
-

@@ -390,7 +390,7 @@ void XMLDBOutputter::endVisitRegionCGE( const RegionCGE* aRegionCGE, const int a
     XMLWriteClosingTag( aRegionCGE->getXMLName(), mBuffer, mTabs.get() );
 }
 
-void XMLDBOutputter::startVisitResource( const Resource* aResource,
+void XMLDBOutputter::startVisitResource( const AResource* aResource,
                                          const int aPeriod )
 {
     // Write the opening resource tag and the type of the base class.
@@ -398,7 +398,7 @@ void XMLDBOutputter::startVisitResource( const Resource* aResource,
         aResource->getName(), 0, "resource" );
 }
 
-void XMLDBOutputter::endVisitResource( const Resource* aResource,
+void XMLDBOutputter::endVisitResource( const AResource* aResource,
                                        const int aPeriod )
 {
     // Write the closing resource tag.

@@ -141,9 +141,9 @@ void IndirectEmissionsCalculator::startVisitTechnology( const Technology* aTechn
     // Calculate indirect and total emissions. Total emissions are required to
     // calculate the indirect emissions coefficient for this sector which will
     // include direct emissions.
-    double indirectEmissions = upstreamCoef * aTechnology->getInput( aPeriod );
+    double indirectEmissions = upstreamCoef * aTechnology->getInput();
 
-    double totalEmissions = aTechnology->getEmissionsByGas( "CO2", aPeriod )
+    double totalEmissions = aTechnology->get_emissmap_second( "CO2" )
                             + indirectEmissions;
 
     // Add to the regional lists.
