@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief Grade class source file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -24,8 +22,7 @@ using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
-// static initialize.
-const string Grade::XML_NAME = "grade";
+
 
 //! Default constructor
 Grade::Grade() {
@@ -67,22 +64,22 @@ void Grade::XMLParse( const DOMNode* tempNode ) {
 
 //! Write datamembers to datastream in XML format for replicating input file.
 void Grade::toInputXML( ostream& out, Tabs* tabs ) const {
-	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
+    XMLWriteOpeningTag( getXMLName(), out, tabs, name );
     XMLWriteElementCheckDefault( available, "available", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( extractCost, "extractioncost", out, tabs, 0.0 );
-	XMLWriteClosingTag( getXMLName(), out, tabs );
+    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! Write datamembers to debugging datastream in XML format.
 void Grade::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     
-	XMLWriteOpeningTag( getXMLName(), out, tabs, name );
+    XMLWriteOpeningTag( getXMLName(), out, tabs, name );
     
     XMLWriteElement( available, "available", out, tabs );
     XMLWriteElement( extractCost, "extractioncost", out, tabs );
     XMLWriteElement( totalCost[period], "totalcost", out, tabs );
     
-	XMLWriteClosingTag( getXMLName(), out, tabs );
+    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -94,7 +91,7 @@ void Grade::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 * \return The constant XML_NAME.
 */
 const std::string& Grade::getXMLName() const {
-	return XML_NAME;
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -107,7 +104,8 @@ const std::string& Grade::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& Grade::getXMLNameStatic() {
-	return XML_NAME;
+    const static string XML_NAME = "grade";
+    return XML_NAME;
 }
 
 //! Total cost of each grade.
@@ -135,11 +133,35 @@ const string& Grade::getName() const {
     return name;
 }
 
+/*! \brief Perform any initializations needed before each period.
+* \details Any initializations or calcuations that only need to be done once per
+*          period(instead of every iteration) should be placed in this function.
+* \author Sonny Kim
+* \param aRegionName Region name.
+* \param aResourceName Resource name.
+* \param aPeriod Model period
+*/
+void Grade::initCalc( const string& aRegionName, const string& aResourceName, const int aPeriod ) {
+    // do nothing
+}
+
+/*! \brief Perform any initializations needed after each period.
+* \details Any initializations or calcuations that only need to be done once per
+*          period after the model is solved should be placed in this function.
+* \author Sonny Kim
+* \param aRegionName Region name.
+* \param aResourceName Resource name.
+* \param aPeriod Model period
+*/
+void Grade::postCalc( const string& aRegionName, const string& aResourceName, const int aPeriod ) {
+    // do nothing
+}
+
 /*! \brief Update a visitor for a SubResource.
 * \param aVisitor Visitor to update.
 * \param aPeriod Period to update.
 */
 void Grade::accept( IVisitor* aVisitor, const int aPeriod ) const {
-	aVisitor->startVisitGrade( this, aPeriod );
-	aVisitor->endVisitGrade( this, aPeriod );
+    aVisitor->startVisitGrade( this, aPeriod );
+    aVisitor->endVisitGrade( this, aPeriod );
 }

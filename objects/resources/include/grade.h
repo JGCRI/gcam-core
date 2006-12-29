@@ -27,28 +27,29 @@ class Tabs;
 
 class Grade: public IVisitable
 {
-	friend class XMLDBOutputter;
+    friend class XMLDBOutputter;
 public:
     Grade();
     void XMLParse( const xercesc::DOMNode* tempnode );
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-	static const std::string& getXMLNameStatic();
+    static const std::string& getXMLNameStatic();
+
+    virtual void initCalc( const std::string& aRegionName, const std::string& aResourceName, const int aPeriod );
+    virtual void postCalc( const std::string& aRegionName, const std::string& aResourceName, const int aPeriod );
+
     void calcCost( const double tax, const double cumTechChange, const double environCost, const int per );
     double getAvail() const;
     double getCost( const int per ) const;
     double getExtCost() const;
     const std::string& getName() const;
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
-private:
-	const std::string& getXMLName() const;
-    void initElementalMembers();
-	static const std::string XML_NAME; //!< node name for toXML methods
+protected:
+    virtual const std::string& getXMLName() const;
     std::string name; //!< Grade name
     double available; //!< amount of Grade for each Grade
     double extractCost; //!< extraction cost of each Grade
     std::vector<double> totalCost; //!< total cost
-
 };
 
 #endif // _GRADE_H_
