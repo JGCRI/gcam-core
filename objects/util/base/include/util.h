@@ -5,19 +5,19 @@
 #endif
 
 /*!
- * \file util.h  
- * \ingroup Objects
- * \brief A set of commonly used functions.
- * \details This is a set of functions which are frequently needed within the
- *          program.
+* \file util.h  
+* \ingroup Objects
+* \brief A set of commonly used functions.
+* \details This is a set of functions which are frequently needed within the
+*          program.
  * \note These are static functions within a namespace, not static class
  *       functions. This is because partial template specialization cannot be
  *       done for classes. The functions are in the objects namespace, also the
  *       location of the utility container classes. The util namespace is
  *       aliased to the objects, namespace, which means it is an alternative
  *       name for it.
- * \author Josh Lurz
- */
+* \author Josh Lurz
+*/
 
 #include "util/base/include/definitions.h"
 #include <boost/static_assert.hpp>
@@ -332,6 +332,43 @@ namespace objects {
             values.push_back( ( *mapIter ).second );
         }
         return values;
+    }
+
+    /*!
+     * \brief Round a double to the nearest whole number.
+     * \param aValue Value to round.
+     * \return Value rounded to the nearest whole number.
+     */
+    static int round( const double aValue ){
+        double intPart;
+        if( modf( aValue, &intPart ) > 0.5 ){
+            ++intPart;
+        }
+        return static_cast<int>( intPart );
+    }
+
+    /*!
+     * \brief Calculate the percent difference between an initial and final
+     *        value.
+     * \details Calculates the percent difference between the final and initial
+     *          values as a percent, using the initial value as the denominator.
+     *          If the initial value is zero the absolute difference will be
+     *          used. This percentage is not an absolute, and will be signed.
+     *          The difference is calculated as final minus initial.
+     * \param aInitialValue The initial value. This will be used as the
+     *        denominator.
+     * \param aFinalValue The final value.
+     * \return The percent difference between the initial and final terms.
+     */
+    static double percentDiff( const double aInitialValue,
+                               const double aFinalValue )
+    {
+        double difference = aFinalValue - aInitialValue;
+        if( aInitialValue > getSmallNumber() ){
+            difference /= aInitialValue;
+            difference *= 100;
+        }
+        return difference;
     }
 
     /*! \brief Convert a value to a string using the built in stringstream.
