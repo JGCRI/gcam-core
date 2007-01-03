@@ -82,7 +82,7 @@ public class FlatIndex implements DataIndex
     //find index bounds to work in
     min = point2index(new Point2D.Double(val.x, val.y), true);
     max = point2index(new Point2D.Double((val.x+val.width), (val.y+val.height)), false);
-    
+
     //X, and Y are now indicies
     for(int Y = (int)min.y; Y < max.y; Y++)
     {
@@ -143,10 +143,12 @@ public class FlatIndex implements DataIndex
     min = point2index(new Point2D.Double(m.x, m.y), true);
     max = point2index(new Point2D.Double((m.x+m.width+m.resolution), (m.y+m.height+m.resolution)), false);
     
-    //System.out.println("\n"+m.name);
-    //System.out.println("min X: "+(m.x)+" Y: "+(m.y));
-    //System.out.println("size X: "+(m.width)+" Y: "+(m.height));
-    //System.out.println("matrix X: "+(max.y-min.y)+" Y: "+(max.x-min.x));
+    /*
+    System.out.println("\n"+m.name);
+    System.out.println("min X: "+(m.x)+" Y: "+(m.y));
+    System.out.println("size X: "+(m.width)+" Y: "+(m.height));
+    System.out.println("matrix X: "+(max.y-min.y)+" Y: "+(max.x-min.x));
+    */
     if(((max.y-min.y) <= 0)||((max.x-min.x) <= 0))
     {
       return null;

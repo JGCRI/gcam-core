@@ -1742,9 +1742,13 @@ public class DataBuilder
 	      startY = latArray.getDouble(latI.set(0));
 	      endY = latArray.getDouble(latI.set(latShp[0]-1));
 	      resY = (startY-endY) / (shp[shp.length-2]-1);
-	      startY -= resY;
+
+	      // are the dang ol' .5s gettin in the way?
+	      startY = Math.ceil(startY) - resY;
+	      //endY = Math.floor(endY); // floor because it is negative, is it always -?
+	      endY -= resY;
       } else {
-	      startY = 90-resY;
+	      startY = 90;
 	      endY = -90;
       }
 
@@ -1827,7 +1831,7 @@ public class DataBuilder
 		      internalTimeIndex += timeStep;
 	      }
 	      //for(double y = (90-resY); y >= -90; y-=resY)
-	      for(double y = startY; y >= endY; y-=resY)
+	      for(double y = startY; y >= endY && i < shp[shp.length-2]; y-=resY)
 	      {
 		      k=0;
 		      for(double x = -180; x < 180; x+=resX)
@@ -4094,6 +4098,7 @@ public class DataBuilder
 			  //System.out.println("yLL "+yLL);
 			  readWord(input); //reading cellsize
 			  res = Double.valueOf(readNumber(input));
+			  res = 360.0 / numCols;
 			  //System.out.println("res "+res);
 			  readWord(input); //reading NODATA_value
 			  //ignore = Double.valueOf(readNumber(input));
@@ -4160,15 +4165,23 @@ public class DataBuilder
 		  for(int k = 0; k <numCols; k++)
 		  {
 			  rblock = (int)Double.parseDouble(readNumber(input));
+			  /* TODO: put in a debug construct to print this kind of thing..
+			  if(currX > -77 && currX < -75 && currY > 37 && currY < 40) {
+				  System.out.println("("+currX+", "+currY+") - "+rblock);
+			  }
+			  */
 			  if(rblock == NaN)
 			  {
 				  maskArray[i][k] = 0;
 			  } else
 			  {
 				  maskArray[i][k] = rblock;
-				  if(rblock >= 0)
+				  // check to make sure this is a valid region and the region
+				  // defs file defines this region..
+				  if(rblock >= 0 && 
+						  (holdR = (RegionMask)newRegions.get(String.valueOf(rblock))) != null)
 				  { //updating someones bounds
-					  holdR = ((RegionMask)newRegions.get(String.valueOf(rblock)));
+					  //holdR = ((RegionMask)newRegions.get(String.valueOf(rblock)));
 					  if(holdR.height==-1)
 					  { //this is the first block being added to this region nothing to
 						  // test against yet
@@ -4224,9 +4237,10 @@ public class DataBuilder
 		  for(int k = 0; k <numCols; k++)
 		  {
 			  rblock = maskArray[i][k];
-			  if((rblock > 0)&&(rblock != NaN))
+			  if((rblock > 0)&&(rblock != NaN)&&
+						  (holdR = (RegionMask)newRegions.get(String.valueOf(rblock))) != null)
 			  {
-				  holdR = ((RegionMask)newRegions.get(String.valueOf(rblock)));
+				  //holdR = ((RegionMask)newRegions.get(String.valueOf(rblock)));
 				  holdR.setPointTrue(currX, currY);
 			  }
 			  currX += res;

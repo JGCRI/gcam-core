@@ -95,10 +95,11 @@ public class RegionMask extends Rectangle2D.Double
     int lowX, highX, lowY, highY; //the range of indicies to check in the mask
     double smallX, bigX, smallY, bigY; //used for proportion finding
     double thisX, thisY; //x and y coordinates for the current place in bit mask
-    lowX = (int)(Math.floor(((X-x))/resolution));
-    highX = (int)(Math.ceil((((X+(W-resolution))-x))/resolution));
-    lowY = (int)(Math.floor((((y+height)-(Y+(H))))/resolution));
-    highY = (int)(Math.ceil((((y+height)-(Y+resolution)))/resolution));
+    // this is a long shot, but going to change the floors and ceils to rounds..
+    lowX = (int)(Math.round(((X-x))/resolution));
+    highX = (int)(Math.round((((X+(W-resolution))-x))/resolution));
+    lowY = (int)(Math.round((((y+height)-(Y+(H))))/resolution));
+    highY = (int)(Math.round((((y+height)-(Y+resolution)))/resolution));
     for(int i = (lowY); i<=(highY); i++)
     {
       if((i<bMask.length)&&(i>=0))
@@ -145,7 +146,8 @@ public class RegionMask extends Rectangle2D.Double
   public void makeMatrix()
   {
     if((height != -1)&&(width != -1))
-      bMask = new byte[(int)(height/resolution)][(int)(width/resolution)];
+	    // try rounding instead of just truncating
+      bMask = new byte[(int)Math.round(height/resolution)][(int)Math.round(width/resolution)];
   }
   /**
    * Sets the given coordinates to true in the bit mask.
@@ -155,8 +157,9 @@ public class RegionMask extends Rectangle2D.Double
    */
   public void setPointTrue(double findX, double findY)
   {
-    int X = (int)(Math.floor((findX-x)/resolution));
-    int Y = (int)(Math.floor(((y+height)-(findY+resolution))/resolution));
+	  //Why floor? going to change to round
+    int X = (int)(Math.round((findX-x)/resolution));
+    int Y = (int)(Math.round(((y+height)-(findY+resolution))/resolution));
     if(Y==-1) {
 	    //log.log(Level.WARNING, "In "+name+" Y is -1 possibly due to rounding errors, setting to 0");
 	    System.out.println("WARNING: In "+name+" Y is -1 possibly due to rounding errors, setting to 0");
