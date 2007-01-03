@@ -250,6 +250,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\containers\source\region_minicam.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\containers\source\scenario.cpp"
 					>
 				</File>
@@ -459,6 +463,10 @@
 				</File>
 				<File
 					RelativePath="..\..\resources\source\subresource.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\resources\source\unlimited_resource.cpp"
 					>
 				</File>
 			</Filter>
@@ -1119,6 +1127,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\containers\include\region_minicam.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\containers\include\scenario.h"
 					>
 				</File>
@@ -1335,11 +1347,7 @@
 				Name="resources"
 				>
 				<File
-					RelativePath="..\..\resources\include\accumulated_grade.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\resources\include\accumulated_post_grade.h"
+					RelativePath="..\..\resources\include\aresource.h"
 					>
 				</File>
 				<File
@@ -1356,6 +1364,10 @@
 				</File>
 				<File
 					RelativePath="..\..\resources\include\subresource.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\resources\include\unlimited_resource.h"
 					>
 				</File>
 			</Filter>
