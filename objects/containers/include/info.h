@@ -9,8 +9,6 @@
 * \ingroup objects
 * \brief The Info class header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>
@@ -54,17 +52,37 @@ public:
 
     const double getDouble( const std::string& aStringKey, const bool aMustExist ) const;
     
-    const std::string getString( const std::string& aStringKey, const bool aMustExist ) const;
+    const std::string& getString( const std::string& aStringKey, const bool aMustExist ) const;
 
     bool hasValue( const std::string& aStringKey ) const;
 
     void toDebugXML( const int aPeriod, Tabs* aTabs, std::ostream& aOut ) const;
 protected:
     Info( const IInfo* aParentInfo );
+
 private:
-    template<class T> bool setItemValueLocal( const std::string& aStringKey, const T& aValue );
+    /*!
+     * \brief Enum representing possible types of each item.
+     */
+    enum AnyType {
+        //! Boolean
+        eBoolean,
+
+        //! Integer
+        eInteger,
+
+        //! Double
+        eDouble,
+
+        //! String
+        eString
+    };
+
+    template<class T> bool setItemValueLocal( const std::string& aStringKey,
+                                              const AnyType aType,
+                                              const T& aValue );
     
-    template<class T> const T getItemValueLocal( const std::string& aStringKey, bool& aExists ) const;
+    template<class T> const T& getItemValueLocal( const std::string& aStringKey, bool& aExists ) const;
     
     size_t getInitialSize() const;
     
@@ -74,10 +92,15 @@ private:
     
     void printShadowWarning( const std::string& aStringKey ) const;
     
-    template<class T> bool attemptPrint( const boost::any& aValue, T aDummy, 
-                                         std::ostream& aOut, Tabs* aTabs ) const;
+    template<class T> void printItem( const boost::any& aValue,
+                                      std::ostream& aOut,
+                                      Tabs* aTabs ) const;
+
+    //! Type of the item stored as the value in the storage map.
+    typedef std::pair<AnyType, boost::any> ValueType;
+
     //! Type of the internal storage map.
-    typedef HashMap<const std::string, boost::any> InfoMap;
+    typedef HashMap<const std::string, ValueType> InfoMap;
     
     //! Internal storage mapping item names to item values.
     std::auto_ptr<InfoMap> mInfoMap;
@@ -91,9 +114,11 @@ private:
 *          exists it will update the associated value to itemValue, otherwise it
 *          will create a new name value pair.
 * \param aStringKey The string key to use as the key for this information value.
+* \param aType Enum value of the type.
 * \param aValue The value to be associated with this key. 
 */
 template<class T> bool Info::setItemValueLocal( const std::string& aStringKey,
+                                                const AnyType aType,
                                                 const T& aValue )
 {
     /*! \pre A valid key was passed. */
@@ -108,7 +133,7 @@ template<class T> bool Info::setItemValueLocal( const std::string& aStringKey,
         if( curr != mInfoMap->end() ){
             // Check that the types match.
             try {
-                boost::any_cast<T>( curr->second );
+                boost::any_cast<T>( curr->second.second );
             }
             catch( boost::bad_any_cast ){
                 printBadCastWarning( aStringKey, true );
@@ -121,7 +146,7 @@ template<class T> bool Info::setItemValueLocal( const std::string& aStringKey,
     }
 
     // Add the value regardless of whether a warning was printed.
-    mInfoMap->insert( make_pair( aStringKey, boost::any( aValue ) ) );
+    mInfoMap->insert( make_pair( aStringKey, make_pair( aType, boost::any( aValue ) ) ) );
     return true;
 }
 
@@ -135,7 +160,7 @@ template<class T> bool Info::setItemValueLocal( const std::string& aStringKey,
 *         otherwise.
 */
 template<class T>
-const T Info::getItemValueLocal( const std::string& aStringKey,
+const T& Info::getItemValueLocal( const std::string& aStringKey,
                                  bool& aExists ) const
 {
     /*! \pre A valid key was passed. */
@@ -148,7 +173,7 @@ const T Info::getItemValueLocal( const std::string& aStringKey,
         // Attempt to set the return value to the found value. This requires
         // converting the data from the actual type to the requested type.
         try {
-            return boost::any_cast<T>( curr->second );
+            return *boost::any_cast<T>( &curr->second.second );
         }
         // Catch bad data conversions and print an error.
         catch( boost::bad_any_cast ){
@@ -158,33 +183,30 @@ const T Info::getItemValueLocal( const std::string& aStringKey,
 
     // Return the default value if a successful return has not already occurred.
     aExists = false;
-    return T();
+    static const T defaultValue = T();
+    return defaultValue;
 }
 
-/*! \brief Try to print a value to XML based on a guess at its type.
-* \details Since the Info object does not directly store the type of each of its
-*          values, the only way to print values is to enumerate through all
-*          known types and attempt to cast it to each.
-* \param aValue Value stored as an any type.
-* \param aDummy Dummy parameter which determines into what type to cast.
-* \param aOut Output stream.
-* \param aTabs Tabs object.
-* \return Whether the operation was successful.
-*/
+/*!
+ * \brief Print a single any type value to XML.
+ * \param aValue Value stored as an any type.
+ * \param aOut Output stream.
+ * \param aTabs Tabs object.
+ */
 template<class T>
-bool Info::attemptPrint( const boost::any& aValue, T aDummy,
-                         std::ostream& aOut, Tabs* aTabs ) const
+void Info::printItem( const boost::any& aValue,
+                      std::ostream& aOut,
+                      Tabs* aTabs ) const
 {
-    // Since the type is unknown attempt to convert to all known types until
-    // one doesn't fail. Try and convert the value to a string.
     try {
         T value = boost::any_cast<T>( aValue );
         XMLWriteElement( value, "Value", aOut, aTabs );
-        return true;
     }
     // Catch bad data conversions.
     catch( boost::bad_any_cast ){
-        return false;
+        // Wrong type stored with the item.
+        assert( false );
     }
 }
+
 #endif // _INFO_H_

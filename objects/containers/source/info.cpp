@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief The Info class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -40,19 +38,19 @@ Info::~Info(){
 }
 
 bool Info::setBoolean( const string& aStringKey, const bool aValue ){
-    return setItemValueLocal( aStringKey, aValue );
+    return setItemValueLocal( aStringKey, eBoolean, aValue );
 }
 
 bool Info::setInteger( const string& aStringKey, const int aValue ){
-    return setItemValueLocal( aStringKey, aValue );
+    return setItemValueLocal( aStringKey, eInteger, aValue );
 }
 
 bool Info::setDouble( const string& aStringKey, const double aValue ){
-    return setItemValueLocal( aStringKey, aValue );
+    return setItemValueLocal( aStringKey, eDouble, aValue );
 }
 
 bool Info::setString( const string& aStringKey, const string& aValue ){
-    return setItemValueLocal( aStringKey, aValue );
+    return setItemValueLocal( aStringKey, eString, aValue );
 }
     
 const bool Info::getBoolean( const string& aStringKey, const bool aMustExist ) const
@@ -112,22 +110,26 @@ const double Info::getDouble( const string& aStringKey, const bool aMustExist ) 
     return value;
 }
 
-const string Info::getString( const string& aStringKey, const bool aMustExist ) const
+const string& Info::getString( const string& aStringKey, const bool aMustExist ) const
 {
     // Perform a local search.
     bool found = false;
-    string value = getItemValueLocal<string>( aStringKey, found );
-    
-    // If the item wasn't found search the parent info.
-    if( !found ){
-        if( mParentInfo ){
-            value = mParentInfo->getString( aStringKey, true );
-        }
-        // The item was not found and there was no parent to search.
-        else if( aMustExist ){
-            printItemNotFoundWarning( aStringKey );
-        }
+    const string& value = getItemValueLocal<string>( aStringKey, found );
+    if( found ){
+        return value;
     }
+
+    // If the item wasn't found search the parent info.
+    if( mParentInfo ){
+        return mParentInfo->getString( aStringKey, true );
+    }
+    // The item was not found and there was no parent to search.
+    if( aMustExist ){
+        printItemNotFoundWarning( aStringKey );
+    }
+
+    // Value will be initialized to the default value string by
+    // getItemValueLocal
     return value;
 }
 
@@ -147,24 +149,20 @@ void Info::toDebugXML( const int aperiod, Tabs* aTabs, ostream& aOut ) const {
     for( InfoMap::const_iterator item = mInfoMap->begin(); item != mInfoMap->end(); ++item ){
         XMLWriteOpeningTag( "Pair", aOut, aTabs );
         XMLWriteElement( item->first, "Key", aOut, aTabs );
-        
-        // Since the type is unknown attempt to convert to all known types until
-        // one doesn't fail.
-        while( 1 ){
-            if( attemptPrint( item->second, string(), aOut, aTabs ) ){
+        switch( item->second.first ){
+            case eBoolean:
+                printItem<bool>( item->second.second, aOut, aTabs );
                 break;
-            }
-            if( attemptPrint( item->second, double(), aOut, aTabs ) ){
+            case eInteger:
+                printItem<int>( item->second.second, aOut, aTabs );
                 break;
-            }
-            if( attemptPrint( item->second, bool(), aOut, aTabs ) ){
+            case eDouble:
+                printItem<double>( item->second.second, aOut, aTabs );
                 break;
-            }
-            if( attemptPrint( item->second, int(), aOut, aTabs ) ){
+            case eString:
+                printItem<string>( item->second.second, aOut, aTabs );
                 break;
-            }
-            // This is an unknown type. Should not be possible.
-            assert( false );
+            // No default so the compiler can flag omissions.
         }
         XMLWriteClosingTag( "Pair", aOut, aTabs );
     }
@@ -207,7 +205,7 @@ void Info::printBadCastWarning( const string& aStringKey, bool aIsUpdate ) const
     // Print different warnings for updates and gets.
     if( aIsUpdate ){
         mainLog << aStringKey << " was found but the existing and new types"
-                << "do not match." << endl;
+                << " do not match." << endl;
     }
     // It is an error during a get.
     else {

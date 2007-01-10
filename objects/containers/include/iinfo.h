@@ -9,8 +9,6 @@
 * \ingroup objects
 * \brief The IInfo interface header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 #include <string>
 #include <iosfwd>
@@ -112,11 +110,11 @@ public:
     *          returned.
 	* \param aStringKey The key for which to search the IInfo object.
 	* \param aMustExist Whether the value should exist in the IInfo.
-	* \return The string associated with the key or the empty string if it does
-    *         not exist.
+	* \return The string(by reference) associated with the key or the empty
+    *         string if it does not exist.
     */
-	virtual const std::string getString( const std::string& aStringKey,
-		                                 const bool aMustExist ) const = 0;
+	virtual const std::string& getString( const std::string& aStringKey,
+		                                  const bool aMustExist ) const = 0;
 	
 	/*! \brief Return whether a value exists in the IInfo.
 	* \details Performs a search of the IInfo object using the same method as
