@@ -882,7 +882,7 @@ namespace objects {
      * \todo Remove this after the database code is removed.
      */
     template<class T>
-    static std::vector<double> convertToVector( const objects::PeriodVector<T>& aTimeVector ) {
+    static std::vector<double> convertToVector( typename const objects::PeriodVector<T>& aTimeVector ) {
         std::vector<double> convVector( aTimeVector.size() );
         copy( aTimeVector.begin(), aTimeVector.end(), convVector.begin() );
         return convVector;

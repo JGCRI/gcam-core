@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief modeltime class source file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -40,10 +38,8 @@ void Modeltime::initElementalMembers(){
 	interYear1 = 0;
 	interYear2 = 0;
 	endYear = 0;
-	dataEndYear = 0;
+    mFinalCalibrationYear = 0;
 	maxPeriod = 0;
-	maxDataPeriod = 0;
-	dataTimeStep = 0;
 	timeStep1 = 0;
 	timeStep2 = 0;
 	timeStep3 = 0;
@@ -84,7 +80,10 @@ void Modeltime::XMLParse( const DOMNode* node ) {
         } 
         else if ( nodeName == "endyear" ){
             endYear = XMLHelper<int>::getValue( curr );
-        } 
+        }
+        else if ( nodeName == "final-calibration-year" ){
+            mFinalCalibrationYear = XMLHelper<int>::getValue( curr );
+        }
         else if ( nodeName == "timestep1" ){
             timeStep1 = XMLHelper<int>::getValue( curr );
         } 
@@ -94,12 +93,6 @@ void Modeltime::XMLParse( const DOMNode* node ) {
         else if ( nodeName == "timestep3" ){
             timeStep3 = XMLHelper<int>::getValue( curr );
         } 
-        else if ( nodeName == "dataend" ){
-            dataEndYear = XMLHelper<int>::getValue( curr );
-        } 
-        else if ( nodeName == "datatimestep" ){
-            dataTimeStep = XMLHelper<int>::getValue( curr );
-        }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
@@ -117,11 +110,10 @@ void Modeltime::toInputXML( ostream& out, Tabs* tabs ) const {
 	XMLWriteElement( interYear1, "interyear1", out, tabs );
 	XMLWriteElement( interYear2, "interyear2", out, tabs );
 	XMLWriteElement( endYear, "endyear", out, tabs );
+    XMLWriteElement( mFinalCalibrationYear, "final-calibration-year", out, tabs );
 	XMLWriteElement( timeStep1, "timestep1", out, tabs );
 	XMLWriteElement( timeStep2, "timestep2", out, tabs );
 	XMLWriteElement( timeStep3, "timestep3", out, tabs );
-	XMLWriteElement( dataEndYear, "dataend", out, tabs );
-	XMLWriteElement( dataTimeStep, "datatimestep", out, tabs );
 	
 	XMLWriteClosingTag( getXMLName(), out, tabs );
 }
@@ -135,15 +127,13 @@ void Modeltime::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 	XMLWriteElement( interYear1, "interyear1", out, tabs );
 	XMLWriteElement( interYear2, "interyear2", out, tabs );
 	XMLWriteElement( endYear, "endyear", out, tabs );
+    XMLWriteElement( mFinalCalibrationYear, "final-calibration-year", out, tabs );
 	XMLWriteElement( timeStep1, "timestep1", out, tabs );
 	XMLWriteElement( timeStep2, "timestep2", out, tabs );
 	XMLWriteElement( timeStep3, "timestep3", out, tabs );
-	XMLWriteElement( dataEndYear, "dataend", out, tabs );
-	XMLWriteElement( dataTimeStep, "datatimestep", out, tabs );
 	XMLWriteElement( periodToTimeStep[ period ], "periodToTimeStep", out, tabs );
 
 	// Write out the three vectors associated with the model period.
-	XMLWriteElement( dataOffset[ period ], "dataOffset", out, tabs );
 	XMLWriteElement( modelPeriodToYear[ period ], "modelPeriodToYear", out, tabs );
 
 	XMLWriteClosingTag( getXMLName(), out, tabs );
@@ -208,8 +198,7 @@ void Modeltime::set() {
 		mainLog << "Third time interval not divisible timeStep3" << endl; 
 	}
 	maxPeriod = numberOfPeriods1a + numberOfPeriods2a + numberOfPeriods3a; // calculate total number of periods
-	// number of periods for general data
-	maxDataPeriod = (dataEndYear - startYear)/dataTimeStep+1; // +1 for first year
+
 	// initialize per_timeStep vector
 	// retrieve timeStep for each modeling period
 	periodToTimeStep.resize(maxPeriod);
@@ -238,7 +227,7 @@ void Modeltime::set() {
 	int baseyr = startYear;
 	yearToModelPeriod[baseyr] = 0; // map object, no resize required
 	modelPeriodToYear.resize(maxPeriod);
-		
+
 	modelPeriodToYear[0] = baseyr;
 	
 	for ( int i=1;i<maxPeriod;i++) {
@@ -254,21 +243,15 @@ void Modeltime::set() {
 		baseyr += periodToTimeStep[i];
 	}
 
-	// number of model periods to reach each data period
-	dataOffset.resize(maxDataPeriod);
-	// retrieve model period from data period
-	dataPeriodToModelPeriod.resize(maxDataPeriod);
-	
-	for ( int i=0;i<maxDataPeriod;i++) {
-		int m = yearToModelPeriod[startYear + i*dataTimeStep];
-		if (maxDataPeriod == maxPeriod) {
-			dataOffset[i] = 0;
-		}
-		else {
-			dataOffset[i] = dataTimeStep/periodToTimeStep[m];
-		}
-		dataPeriodToModelPeriod[i] = m;
-	}
+    // Check that the final calibration year has been initialized.
+    if( static_cast<int>( mFinalCalibrationYear ) < startYear ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Final calibration year not read-in." << endl;
+
+        // TODO: Quit here instead of guessing at this value.
+        mFinalCalibrationYear = 1990;
+    }
 }
 
 //! Get the base period
@@ -286,6 +269,24 @@ int Modeltime::getEndYear() const {
     return endYear;
 }
 
+/*!
+* \brief Convert a period into a year.
+* \details Converts the period into a year if it is valid. If it is not a valid
+*          year the function will print a warning and return 0.
+* \param aPeriod Model period.
+* \return The first year of the period, 0 if the year is invalid.
+*/
+int Modeltime::getper_to_yr( const int aPeriod ) const {
+    if( aPeriod >= 0 && aPeriod < static_cast<int>( modelPeriodToYear.size() ) ){
+        return modelPeriodToYear[ aPeriod ];
+    }
+
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::ERROR );
+    mainLog << "Invalid period " << aPeriod << " passed to Modeltime::getper_to_yr." << endl;
+    return 0;
+}
+
 //! Convert a year to a period.
 int Modeltime::getyr_to_per( const int year ) const {
     map<int,int>::const_iterator iter = yearToModelPeriod.find( year );
@@ -298,3 +299,12 @@ int Modeltime::getyr_to_per( const int year ) const {
     }
     return iter->second; 
 }
+
+/*!
+ * \brief Get the final period in which base year calibration will occur.
+ * \return Final period in which base year calibration will occur.
+ */
+int Modeltime::getFinalCalibrationPeriod() const {
+    return getyr_to_per( mFinalCalibrationYear );
+}
+

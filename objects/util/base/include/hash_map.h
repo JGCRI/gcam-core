@@ -19,8 +19,6 @@
 * \ingroup Objects
 * \brief Header file for the HashMap class.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 #include <string>
 #include <vector>
@@ -78,12 +76,13 @@ private:
     //! Typedef which defines the type of a pair containing pointer to an Item
     //! and it's position in the bucket vector.
     typedef std::pair<Item*,size_t> ItemPair;
+    typedef std::pair<const Item*, size_t> CItemPair;
 public:
 	/*! \brief Constant iterator to a HashMap. */
 	class const_iterator {
 	public:
         const_iterator();
-		explicit const_iterator( Item* aCurrentItem,
+		explicit const_iterator( const Item* aCurrentItem,
                                  const size_t aBucketPosition,
                                  const HashMap* aParent );
 
@@ -96,7 +95,7 @@ public:
 	protected:
         //! The current item at which the iterator is pointing and it's bucket
         //! spot.
-        ItemPair mCurrentItem;
+        CItemPair mCurrentItem;
 
         //! Pointer to the parent hashmap of the iterator.
         const HashMap* mParent;
@@ -124,6 +123,7 @@ public:
     bool empty() const;
     size_t size() const;
 	std::pair<iterator, bool> insert( const std::pair<Key, Value> aKeyValuePair );
+    Value& operator[]( const Key& aKey );
 	const_iterator find( const Key& aKey ) const;
 	iterator find( const Key& aKey );
 	const_iterator begin() const;
@@ -133,8 +133,8 @@ public:
 private:
 	void resize( const size_t aNewSize );
     
-    ItemPair getFirstItem() const;
-    ItemPair getNextItem( const ItemPair& aItemPair ) const;
+    CItemPair getFirstItem() const;
+    CItemPair getNextItem( const CItemPair& aItemPair ) const;
     
     ItemPair getFirstItem();
     ItemPair getNextItem( const ItemPair& aItemPair );
@@ -286,7 +286,7 @@ HashMap<Key, Value>::insert( const std::pair<Key, Value> aKeyValuePair ){
 	// value existed.
 	if( update ){
 		curr->mKeyValuePair.second = aKeyValuePair.second;
-		return make_pair( iterator( curr, bucketSpot, this ), true );
+		return make_pair( iterator( curr, bucketSpot, this ), false );
 	}
 
 	// We are not updating, so a new value must be added.
@@ -334,14 +334,42 @@ HashMap<Key, Value>::insert( const std::pair<Key, Value> aKeyValuePair ){
 		resize( mNumEntries * RESIZE_MULTIPLE + ADDITIONAL_INCREMENT );
 	}
 	// Return that an add and not an update occurred.
-	return make_pair( iterator( newValue.get(), bucketSpot, this ), false );
+	return make_pair( iterator( newValue.get(), bucketSpot, this ), true );
 }
 
+/*!
+* \brief Returns the value at a given key by reference. Inserts the default
+*        value of the Value type if the key does not exist.
+* \warning This operation cannot be constant because it may insert the default
+*          value.
+* \param aKey Key for which to return the value.
+* \return The value at the given key by reference.
+*/
+template <class Key, class Value>
+Value&
+HashMap<Key, Value>::operator[]( const Key& aKey ){
+    // Check if the key already exists.
+    HashMap<Key, Value>::iterator currValue = find( aKey );
+
+    // Return the value if it already exists.
+    if( currValue != end() ){
+        return currValue->second;
+    }
+
+    // Insert the default value.
+    pair<iterator, bool> newPair = insert( make_pair( aKey, Value() ) );
+    assert( newPair.second );
+
+    // The first value in the iterator is a pair<Key, Value&>, so return the
+    // first->second.
+    return newPair.first->second;
+}
 
 /*! \brief Returns a mutable iterator for a given key.
 * \details
 * \param aKey Key for which to return the value.
-* \return An iterator to the requested value or the end iterator if the key was not found.
+* \return An iterator to the requested value or the end iterator if the key was
+*         not found.
 */
 template <class Key, class Value>
 typename HashMap<Key, Value>::iterator
@@ -413,8 +441,8 @@ HashMap<Key, Value>::begin() {
 template<class Key, class Value>
 typename HashMap<Key, Value>::const_iterator
 HashMap<Key, Value>::begin() const {
-    ItemPair itemPair = getFirstItem();
-	return const_iterator( itemPair.first, itemPair.second );
+    CItemPair itemPair = getFirstItem();
+	return const_iterator( itemPair.first, itemPair.second, this );
 }
 
 /*! \brief Return the end iterator.
@@ -544,18 +572,18 @@ void HashMap<Key, Value>::resize( const size_t aNewSize ){
 *         a pair containing null and zero.
 */
 template<class Key, class Value>
-typename HashMap<Key, Value>::ItemPair
+typename HashMap<Key, Value>::CItemPair
 HashMap<Key, Value>::getFirstItem() const {
     // Check for empty hashmap first to avoid a slow unsuccessful search.
     if( empty() ){
-        return ItemPair( 0, 0 );
+        return CItemPair( 0, 0 );
     }
 
     // Search starting at the beginning of the bucket vector to find the first
     // item.
     for( unsigned int i = 0; i < mBuckets.size(); i++ ){
         if( mBuckets[ i ] ){
-            return ItemPair( mBuckets[ i ], i );
+            return CItemPair( mBuckets[ i ].get() , i );
         }
     }
 
@@ -565,7 +593,7 @@ HashMap<Key, Value>::getFirstItem() const {
     assert( false );
     
     // Make the compiler happy.
-    return ItemPair( 0, 0 );
+    return CItemPair( 0, 0 );
 }
 
 /*! \brief Return the next item in the hashmap.
@@ -576,25 +604,25 @@ HashMap<Key, Value>::getFirstItem() const {
 *         iterator if it was the last item.
 */
 template<class Key, class Value>
-typename HashMap<Key, Value>::ItemPair
-HashMap<Key, Value>::getNextItem( const ItemPair& aItemPair ) const {
+typename HashMap<Key, Value>::CItemPair
+HashMap<Key, Value>::getNextItem( const CItemPair& aItemPair ) const {
     // First check if there is a next item in the current item's chain.
     if( aItemPair.first->mNext ){
         // Return a pair containing the next item and the current bucket spot
         // since the item is in the same chain.
-        return ItemPair( aItemPair.first->mNext.get(), aItemPair.second );
+        return CItemPair( aItemPair.first->mNext.get(), aItemPair.second );
     }
 
     // Otherwise search forward in the bucket vector starting at the current position.
     for( size_t i = aItemPair.second + 1; i < mBuckets.size(); ++i ){
         // If there is an item at this bucket position return it.
         if( mBuckets[ i ] ){
-            return ItemPair( mBuckets[ i ].get(), i );
+            return CItemPair( mBuckets[ i ].get(), i );
         }
     }
 
     // The end of the bucket vector was reached so there is not a next item.
-    return ItemPair( 0, 0 );
+    return CItemPair( 0, 0 );
 }
 
 /*! \brief Find the first item in the hashmap.
@@ -710,7 +738,10 @@ template<class Key, class Value>
 std::pair<Key, Value>* HashMap<Key, Value>::iterator::operator->(){
 	/*! \pre The current item pointer must be non-null. */
 	assert( const_iterator::mCurrentItem.first != 0 );
-	return &const_iterator::mCurrentItem.first->mKeyValuePair;
+
+    // The mCurrentItem is inherited from const_iterator and must be cast so
+    // that the return value is mutable.
+	return const_cast<std::pair<Key, Value>*>( &const_iterator::mCurrentItem.first->mKeyValuePair );
 }
 
 /*! \brief Dereference operator
@@ -760,7 +791,7 @@ mParent( 0 ){}
 *        vector.
 */
 template<class Key, class Value>
-HashMap<Key, Value>::const_iterator::const_iterator( Item* aCurrentItem,
+HashMap<Key, Value>::const_iterator::const_iterator( const Item* aCurrentItem,
                                                      const size_t aBucketPosition,
                                                      const HashMap* aParent )
 :mCurrentItem( aCurrentItem, aBucketPosition ),

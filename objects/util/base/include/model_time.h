@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief The Modeltime class header file.
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include <vector>
@@ -31,10 +29,12 @@ private:
     int interYear1; //!< First intermediate year.
     int interYear2; //!< Second intermediate year.
     int endYear; //!< Model end year (read-in).
-    int dataEndYear; //!< Last year for general data (read-in). 
+    
+    //! The final year in which calibration occurs.
+    unsigned int mFinalCalibrationYear;
+
     int maxPeriod; //!< Maximum number of model periods (calculated).
-    int maxDataPeriod; //!< Maximum number of data points (read-in).
-    int dataTimeStep; //!< Timestep for data points.
+
     int timeStep1; //!< Timestep from start to first intermediate year.
     int timeStep2; //!< Timestep from first to second intermediate year.
     int timeStep3; //!< Timestep from second intermediate to end year.
@@ -45,9 +45,9 @@ private:
     int numberOfPeriods3;  //!< Number of periods in third time interval.
     int numberOfPeriods3a; //!< One more in third time interval for remainder year.
     std::vector<int> periodToTimeStep; //!< Index of timesteps.
-    std::vector<int> dataPeriodToModelPeriod; //!< Index of data to model period.
-    std::vector<int> dataOffset; //!< Index of timesteps.
+
     std::vector<int> modelPeriodToYear; //!< Model period to year.
+    
     std::map<int,int> yearToModelPeriod; //!< Year to model period map object.
     static const std::string XML_NAME; //!< node name for toXML methods
 
@@ -67,9 +67,11 @@ public:
     int getEndYear() const;
     int gettimestep( const int period ) const { return periodToTimeStep[ period ]; } // years from last to current per
     int getmaxper() const { return maxPeriod; }  // max modeling periods
-    int getmaxdataper() const { return maxDataPeriod; } // data points for reading in
-    int getper_to_yr( const int period ) const { return modelPeriodToYear[ period ]; }  // year to model period
+
+    int getper_to_yr( const int period ) const;
     int getyr_to_per( const int year ) const;
+
+    int getFinalCalibrationPeriod() const;
 };
 
 #endif // _MODEL_TIME_H_

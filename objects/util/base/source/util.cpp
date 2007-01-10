@@ -14,12 +14,28 @@
 using namespace std;
 
 namespace objects {
+    /*!
+     * \brief Linearly interpolate or extrapolate a Y value for a given X value,
+     *        given two other points.
+     * \param aX The X value for which to determine a Y value.
+     * \param aX1 X value of the first point.
+     * \param aX2 X value of the second point.
+     * \param aY1 Y value of the first point.
+     * \param aY2 Y value of the second point.
+     * \return The Y value of the requested X point.
+     * \warning aX1 and aX2 must not define the same point. If they do, the only
+     *          Y value that can be returned is the Y value of that single
+     *          point.
+     */
     double linearInterpolateY( const double aX,
                                const double aX1,
                                const double aX2,
                                const double aY1,
                                const double aY2 )
     {
+        // If the given points have the same value, a line segment cannot
+        // be created and the Y value of the given X point cannot be
+        // determined unless the requested X value is the same point.
         if( util::isEqual( aX1, aX2 ) ){
             assert( isEqual( aX, aX1 ) );
             assert( isEqual( aY1, aY2 ) );

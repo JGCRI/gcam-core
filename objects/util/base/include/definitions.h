@@ -4,8 +4,8 @@
 #pragma once
 #endif
 
-/*! 
-* \file definitions.h	
+/*!
+* \file definitions.h
 * \ingroup Objects
 * \brief A set of standard definitions which should be included in all files.
 * \details This is a set of definitions, used mainly to work around platform and
@@ -25,9 +25,11 @@
 //! A flag which tells whether to attempt linking of fortran portions.
 #define __HAVE_FORTRAN__ 1
 
+#define __ACCESS_DB_OVERRIDE__ 0
+
 //! A flag which turns on or off compilation of database code. Database
 // cannot be compiled on VC8.
-#if( defined(_MSC_VER) && _MSC_VER < 1400 )
+#if( defined(_MSC_VER) && _MSC_VER < 1400 && !__ACCESS_DB_OVERRIDE__)
 #define __HAVE_DB__ 1
 #else
 #define __HAVE_DB__ 0
@@ -48,7 +50,7 @@
 #endif  // _MSC_VER
 
 // Remove the _stdcall needed for WIN32 from externs
-#if !defined(WIN32) && !defined(_stdcall) 
+#if !defined(WIN32) && !defined(_stdcall)
 #define _stdcall
 #endif
 

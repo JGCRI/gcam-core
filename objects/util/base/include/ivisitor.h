@@ -45,9 +45,7 @@ class Input;
 class FactorSupply;
 class ProductionSector;
 class AResource;
-class technology;
-// Temporary to help with merging
-typedef technology Technology;
+class Technology;
 class Expenditure;
 class AResource;
 class DemandSector;
