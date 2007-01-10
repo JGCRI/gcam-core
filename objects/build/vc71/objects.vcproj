@@ -236,6 +236,9 @@
 					RelativePath="..\..\emissions\source\asimple_carbon_calc.cpp">
 				</File>
 				<File
+					RelativePath="..\..\emissions\source\by_product.cpp">
+				</File>
+				<File
 					RelativePath="..\..\emissions\source\co2_emissions.cpp">
 				</File>
 				<File
@@ -322,6 +325,12 @@
 				Name="resources"
 				Filter="">
 				<File
+					RelativePath="..\..\resources\source\accumulated_grade.cpp">
+				</File>
+				<File
+					RelativePath="..\..\resources\source\accumulated_post_grade.cpp">
+				</File>
+				<File
 					RelativePath="..\..\resources\source\grade.cpp">
 				</File>
 				<File
@@ -344,6 +353,9 @@
 					RelativePath="..\..\sectors\source\ag_sector.cpp">
 				</File>
 				<File
+					RelativePath="..\..\sectors\source\backup_calculator_factory.cpp">
+				</File>
+				<File
 					RelativePath="..\..\sectors\source\building_dmd_sector.cpp">
 				</File>
 				<File
@@ -357,6 +369,9 @@
 				</File>
 				<File
 					RelativePath="..\..\sectors\source\cal_quantity_tabulator.cpp">
+				</File>
+				<File
+					RelativePath="..\..\sectors\source\capacity_limit_backup_calculator.cpp">
 				</File>
 				<File
 					RelativePath="..\..\sectors\source\demand_sector.cpp">
@@ -401,6 +416,9 @@
 					RelativePath="..\..\sectors\source\sector.cpp">
 				</File>
 				<File
+					RelativePath="..\..\sectors\source\sector_utils.cpp">
+				</File>
+				<File
 					RelativePath="..\..\sectors\source\subsector.cpp">
 				</File>
 				<File
@@ -411,6 +429,9 @@
 				</File>
 				<File
 					RelativePath="..\..\sectors\source\tran_subsector.cpp">
+				</File>
+				<File
+					RelativePath="..\..\sectors\source\wind_backup_calculator.cpp">
 				</File>
 			</Filter>
 			<Filter
@@ -492,7 +513,16 @@
 					RelativePath="..\..\technologies\source\cal_data_output_percap.cpp">
 				</File>
 				<File
+					RelativePath="..\..\technologies\source\capture_component_factory.cpp">
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\default_technology.cpp">
+				</File>
+				<File
 					RelativePath="..\..\technologies\source\expenditure.cpp">
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\fixed_production_state.cpp">
 				</File>
 				<File
 					RelativePath="..\..\technologies\source\food_production_technology.cpp">
@@ -510,7 +540,28 @@
 					RelativePath="..\..\technologies\source\global_technology_database.cpp">
 				</File>
 				<File
+					RelativePath="..\..\technologies\source\marginal_profit_calculator.cpp">
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\non_energy_use_capture_component.cpp">
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\nuke_fuel_technology.cpp">
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\output_factory.cpp">
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\phased_shutdown_decider.cpp">
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\power_plant_capture_component.cpp">
+				</File>
+				<File
 					RelativePath="..\..\technologies\source\primary_output.cpp">
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\production_state_factory.cpp">
 				</File>
 				<File
 					RelativePath="..\..\technologies\source\production_technology.cpp">
@@ -519,7 +570,16 @@
 					RelativePath="..\..\technologies\source\profit_shutdown_decider.cpp">
 				</File>
 				<File
+					RelativePath="..\..\technologies\source\retired_production_state.cpp">
+				</File>
+				<File
 					RelativePath="..\..\technologies\source\secondary_output.cpp">
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\shutdown_decider_factory.cpp">
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\standard_capture_component.cpp">
 				</File>
 				<File
 					RelativePath="..\..\technologies\source\technology.cpp">
@@ -529,6 +589,12 @@
 				</File>
 				<File
 					RelativePath="..\..\technologies\source\tran_technology.cpp">
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\variable_production_state.cpp">
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\vintage_production_state.cpp">
 				</File>
 			</Filter>
 			<Filter
@@ -737,6 +803,9 @@
 					RelativePath="..\..\target_finder\source\concentration_target.cpp">
 				</File>
 				<File
+					RelativePath="..\..\target_finder\source\emissions_stabalization_target.cpp">
+				</File>
+				<File
 					RelativePath="..\..\target_finder\source\forcing_target.cpp">
 				</File>
 				<File
@@ -926,6 +995,9 @@
 					RelativePath="..\..\emissions\include\asimple_carbon_calc.h">
 				</File>
 				<File
+					RelativePath="..\..\emissions\include\by_product.h">
+				</File>
+				<File
 					RelativePath="..\..\emissions\include\co2_emissions.h">
 				</File>
 				<File
@@ -948,6 +1020,9 @@
 				</File>
 				<File
 					RelativePath="..\..\emissions\include\icarbon_calc.h">
+				</File>
+				<File
+					RelativePath="..\..\emissions\include\indirect_emiss_coef.h">
 				</File>
 				<File
 					RelativePath="..\..\emissions\include\input_driver.h">
@@ -1018,6 +1093,15 @@
 				Name="resources"
 				Filter="">
 				<File
+					RelativePath="..\..\resources\include\accumulated_grade.h">
+				</File>
+				<File
+					RelativePath="..\..\resources\include\accumulated_post_grade.h">
+				</File>
+				<File
+					RelativePath="..\..\resources\include\aresource.h">
+				</File>
+				<File
 					RelativePath="..\..\resources\include\grade.h">
 				</File>
 				<File
@@ -1029,12 +1113,18 @@
 				<File
 					RelativePath="..\..\resources\include\subresource.h">
 				</File>
+				<File
+					RelativePath="..\..\resources\include\unlimited_resource.h">
+				</File>
 			</Filter>
 			<Filter
 				Name="sectors"
 				Filter="">
 				<File
 					RelativePath="..\..\sectors\include\ag_sector.h">
+				</File>
+				<File
+					RelativePath="..\..\sectors\include\backup_calculator_factory.h">
 				</File>
 				<File
 					RelativePath="..\..\sectors\include\building_dmd_sector.h">
@@ -1050,6 +1140,9 @@
 				</File>
 				<File
 					RelativePath="..\..\sectors\include\cal_quantity_tabulator.h">
+				</File>
+				<File
+					RelativePath="..\..\sectors\include\capacity_limit_backup_calculator.h">
 				</File>
 				<File
 					RelativePath="..\..\sectors\include\demand_sector.h">
@@ -1079,6 +1172,9 @@
 					RelativePath="..\..\sectors\include\forest_supply_subsector.h">
 				</File>
 				<File
+					RelativePath="..\..\sectors\include\ibackup_calculator.h">
+				</File>
+				<File
 					RelativePath="..\..\sectors\include\interm_subsector.h">
 				</File>
 				<File
@@ -1094,6 +1190,9 @@
 					RelativePath="..\..\sectors\include\sector.h">
 				</File>
 				<File
+					RelativePath="..\..\sectors\include\sector_utils.h">
+				</File>
+				<File
 					RelativePath="..\..\sectors\include\subsector.h">
 				</File>
 				<File
@@ -1105,6 +1204,60 @@
 				<File
 					RelativePath="..\..\sectors\include\tran_subsector.h">
 				</File>
+				<File
+					RelativePath="..\..\sectors\include\wind_backup_calculator.h">
+				</File>
+			</Filter>
+			<Filter
+				Name="solution"
+				Filter="">
+				<Filter
+					Name="solvers"
+					Filter="">
+					<File
+						RelativePath="..\..\solution\solvers\include\bisect_all.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\solvers\include\bisect_one.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\solvers\include\bisect_policy.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\solvers\include\bisect_policy_nr_solver.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\solvers\include\bisection_nr_solver.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\solvers\include\log_newton_raphson.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\solvers\include\log_newton_raphson_sd.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\solvers\include\solver.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\solvers\include\solver_component.h">
+					</File>
+				</Filter>
+				<Filter
+					Name="util"
+					Filter="">
+					<File
+						RelativePath="..\..\solution\util\include\calc_counter.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\include\solver_info.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\include\solver_info_set.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\include\solver_library.h">
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="technologies"
@@ -1137,7 +1290,16 @@
 					RelativePath="..\..\technologies\include\cal_data_output_percap.h">
 				</File>
 				<File
+					RelativePath="..\..\technologies\include\capture_component_factory.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\default_technology.h">
+				</File>
+				<File
 					RelativePath="..\..\technologies\include\expenditure.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\fixed_production_state.h">
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\food_production_technology.h">
@@ -1158,7 +1320,13 @@
 					RelativePath="..\..\technologies\include\ical_data.h">
 				</File>
 				<File
+					RelativePath="..\..\technologies\include\icapture_component.h">
+				</File>
+				<File
 					RelativePath="..\..\technologies\include\ioutput.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\iproduction_state.h">
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\ishutdown_decider.h">
@@ -1170,7 +1338,28 @@
 					RelativePath="..\..\technologies\include\itechnology_info.h">
 				</File>
 				<File
+					RelativePath="..\..\technologies\include\marginal_profit_calculator.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\non_energy_use_capture_component.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\nuke_fuel_technology.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\output_factory.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\phased_shutdown_decider.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\power_plant_capture_component.h">
+				</File>
+				<File
 					RelativePath="..\..\technologies\include\primary_output.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\production_state_factory.h">
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\production_technology.h">
@@ -1179,7 +1368,16 @@
 					RelativePath="..\..\technologies\include\profit_shutdown_decider.h">
 				</File>
 				<File
+					RelativePath="..\..\technologies\include\retired_production_state.h">
+				</File>
+				<File
 					RelativePath="..\..\technologies\include\secondary_output.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\shutdown_decider_factory.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\standard_capture_component.h">
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\technology.h">
@@ -1189,6 +1387,12 @@
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\tran_technology.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\variable_production_state.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\vintage_production_state.h">
 				</File>
 			</Filter>
 			<Filter
@@ -1226,6 +1430,9 @@
 					</File>
 					<File
 						RelativePath="..\..\util\base\include\iround_trippable.h">
+					</File>
+					<File
+						RelativePath="..\..\util\base\include\istandard_component.h">
 					</File>
 					<File
 						RelativePath="..\..\util\base\include\ivisitable.h">
@@ -1360,6 +1567,31 @@
 				</File>
 			</Filter>
 			<Filter
+				Name="functions"
+				Filter="">
+				<File
+					RelativePath="..\..\functions\include\demand_input.h">
+				</File>
+				<File
+					RelativePath="..\..\functions\include\function_manager.h">
+				</File>
+				<File
+					RelativePath="..\..\functions\include\function_utils.h">
+				</File>
+				<File
+					RelativePath="..\..\functions\include\ifunction.h">
+				</File>
+				<File
+					RelativePath="..\..\functions\include\input.h">
+				</File>
+				<File
+					RelativePath="..\..\functions\include\production_demand_function.h">
+				</File>
+				<File
+					RelativePath="..\..\functions\include\production_input.h">
+				</File>
+			</Filter>
+			<Filter
 				Name="climate"
 				Filter="">
 				<File
@@ -1377,6 +1609,9 @@
 				</File>
 				<File
 					RelativePath="..\..\target_finder\include\concentration_target.h">
+				</File>
+				<File
+					RelativePath="..\..\target_finder\include\emissions_stabalization_target.h">
 				</File>
 				<File
 					RelativePath="..\..\target_finder\include\forcing_target.h">
@@ -1467,82 +1702,6 @@
 				<File
 					RelativePath="..\..\investment\include\simple_expected_profit_calculator.h">
 				</File>
-			</Filter>
-			<Filter
-				Name="functions"
-				Filter="">
-				<File
-					RelativePath="..\..\functions\include\demand_input.h">
-				</File>
-				<File
-					RelativePath="..\..\functions\include\function_manager.h">
-				</File>
-				<File
-					RelativePath="..\..\functions\include\function_utils.h">
-				</File>
-				<File
-					RelativePath="..\..\functions\include\ifunction.h">
-				</File>
-				<File
-					RelativePath="..\..\functions\include\input.h">
-				</File>
-				<File
-					RelativePath="..\..\functions\include\production_demand_function.h">
-				</File>
-				<File
-					RelativePath="..\..\functions\include\production_input.h">
-				</File>
-			</Filter>
-			<Filter
-				Name="solution"
-				Filter="">
-				<Filter
-					Name="solvers"
-					Filter="">
-					<File
-						RelativePath="..\..\solution\solvers\include\bisect_all.h">
-					</File>
-					<File
-						RelativePath="..\..\solution\solvers\include\bisect_one.h">
-					</File>
-					<File
-						RelativePath="..\..\solution\solvers\include\bisect_policy.h">
-					</File>
-					<File
-						RelativePath="..\..\solution\solvers\include\bisect_policy_nr_solver.h">
-					</File>
-					<File
-						RelativePath="..\..\solution\solvers\include\bisection_nr_solver.h">
-					</File>
-					<File
-						RelativePath="..\..\solution\solvers\include\log_newton_raphson.h">
-					</File>
-					<File
-						RelativePath="..\..\solution\solvers\include\log_newton_raphson_sd.h">
-					</File>
-					<File
-						RelativePath="..\..\solution\solvers\include\solver.h">
-					</File>
-					<File
-						RelativePath="..\..\solution\solvers\include\solver_component.h">
-					</File>
-				</Filter>
-				<Filter
-					Name="util"
-					Filter="">
-					<File
-						RelativePath="..\..\solution\util\include\calc_counter.h">
-					</File>
-					<File
-						RelativePath="..\..\solution\util\include\solver_info.h">
-					</File>
-					<File
-						RelativePath="..\..\solution\util\include\solver_info_set.h">
-					</File>
-					<File
-						RelativePath="..\..\solution\util\include\solver_library.h">
-					</File>
-				</Filter>
 			</Filter>
 		</Filter>
 	</Files>
