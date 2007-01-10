@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief TotalSectorEmissions header file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>
@@ -26,7 +24,8 @@ class Tabs;
 * \details This object allows a total emissions level to be read in for a
 *          specified set of sectors. This is then used to calculate an average
 *          emissions factor for all of the sectors based on their output in a
-*          given year.
+*          given year. This object implements the visitor interface so that it
+*          can collect calibration information from the supply sectors.
 */
 class TotalSectorEmissions
 {
@@ -44,7 +43,8 @@ public:
 
     const std::string& getName() const;
 
-    void setAggregateEmissionFactor( const std::vector<Sector*>& aSectors,
+    void setAggregateEmissionFactor( const std::string& aRegionName,
+                                     const std::vector<Sector*>& aSectors,
                                      IInfo* aRegionInfo,
                                      const int aPeriod ) const;
     
@@ -53,8 +53,6 @@ public:
     static const std::string& getXMLNameStatic();
     static const std::string& aggrEmissionsPrefix();
 private:
-
-
     //! Type of sector that this GHG will be emitted from
     std::string mType;
 

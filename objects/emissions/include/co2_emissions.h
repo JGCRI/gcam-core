@@ -42,22 +42,25 @@ public:
     static const std::string& getXMLNameStatic();
 
     virtual const std::string& getName() const;
-
+    
     virtual void initCalc( const std::string& aRegionName,
                            const std::string& aFuelName,
                            const IInfo* aLocalInfo,
                            const int aPeriod );
 
-    virtual double getGHGValue( const std::string& regionName,
-                                const std::string& fuelName,
+    virtual double getGHGValue( const std::string& aRegionName,
+                                const std::string& aFuelName,
                                 const std::vector<IOutput*>& aOutputs,
-                                const double efficiency,
-                                const int period ) const;
-    virtual void calcEmission( const std::string& regionName,
-                               const std::string& fuelname,
-                               const double input,
+                                const double aEfficiency,
+                                const ICaptureComponent* aSequestrationDevice,
+                                const int aPeriod ) const;
+
+    virtual void calcEmission( const std::string& aRegionName,
+                               const std::string& aFuelname,
+                               const double aInput,
                                const std::vector<IOutput*>& aOutputs,
                                const GDP* aGDP,
+                               ICaptureComponent* aSequestrationDevice,
                                const int aPeriod );
 
 protected:

@@ -36,11 +36,6 @@ typedef vector<Input*>::const_iterator CInputIterator;
 
 //! Default constructor.
 AGHG::AGHG():
-rmfrac( 0 ),
-isGeologicSequestration( true ),
-storageCost( util::getLargeNumber() ), // default to a large cost to turn off CCS
-sequestAmountGeologic( 0 ),
-sequestAmountNonEngy( 0 ),
 // this is inefficient as it is greater than the lifetime
 // but much simpler than converting period to liftime period 
 // TODO: Fix this so it has one spot per active period.
@@ -69,12 +64,6 @@ AGHG& AGHG::operator=( const AGHG& other ){
 
 //! Copy helper function.
 void AGHG::copy( const AGHG& other ){
-    rmfrac = other.rmfrac;
-    isGeologicSequestration = other.isGeologicSequestration;
-    storageCost = other.storageCost;
-    storageName = other.storageName;
-    sequestAmountGeologic = other.sequestAmountGeologic;
-    sequestAmountNonEngy = other.sequestAmountNonEngy;
 
     mEmissions.resize( scenario->getModeltime()->getmaxper() );
     std::copy( other.mEmissions.begin(), other.mEmissions.end(), mEmissions.begin() );
@@ -104,18 +93,6 @@ void AGHG::XMLParse(const DOMNode* node) {
         if( nodeName == "#text" ){
             continue;
         }
-        else if( nodeName == "removefrac" ){
-            rmfrac = XMLHelper<double>::getValue( curr );
-        }
-        // is geologic sequestration, true or false
-        else if( nodeName == "isGeologicSequestration" ){
-            isGeologicSequestration = XMLHelper<bool>::getValue( curr );
-        }
-        // fixed storage cost read in from data
-        else if( nodeName == "storageCost" ){
-            storageName = XMLHelper<string>::getAttr( curr, "name" );
-            storageCost = XMLHelper<double>::getValue( curr );
-        }
         else if( EmissionsDriverFactory::isEmissionsDriverNode( nodeName ) ){
             auto_ptr<AEmissionsDriver> newDriver = EmissionsDriverFactory::create( nodeName );
             setEmissionsDriver( newDriver );
@@ -136,10 +113,6 @@ void AGHG::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag( getXMLName(), out, tabs, getName() );
 
     // write xml for data members
-    XMLWriteElementCheckDefault( rmfrac, "removefrac", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( isGeologicSequestration, "isGeologicSequestration", out, tabs, true );
-    XMLWriteElementCheckDefault( storageCost, "storageCost", out, tabs, util::getLargeNumber() );
-
     toInputXMLDerived( out, tabs );
     // done writing xml for data members.
 
@@ -152,33 +125,13 @@ void AGHG::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag( getXMLName(), out, tabs, getName() );
 
     // write xml for data members
-    XMLWriteElement( rmfrac, "removefrac", out, tabs );
     XMLWriteElement( mEmissions[ period ], "emission", out, tabs );
-    XMLWriteElement( isGeologicSequestration, "isGeologicSequestration", out, tabs );
-    XMLWriteElement( storageCost, "storageCost", out, tabs );
-    XMLWriteElement( sequestAmountGeologic, "sequestAmountGeologic", out, tabs );
-    XMLWriteElement( sequestAmountNonEngy, "sequestAmountNonEngy", out, tabs );
     XMLWriteElement( mEmissionsByFuel[ period ], "emissFuel", out, tabs );
 
     toDebugXMLDerived( period, out, tabs );
     // done writing xml for data members.
 
     XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
-/*!
- * \brief Get the XML node name in static form for comparison when parsing XML.
- * \details This public function accesses the private constant string, XML_NAME.
- *          This way the tag is always consistent for both read-in and output and can be easily changed.
- *          The "==" operator that is used when parsing, required this second function to return static.
- * \note A function cannot be static and virtual.
- * \note This was left as GHG, not AGHG to avoid breaking the xml database.
- * \author Jim Naslund
- * \return The constant XML_NAME as a static.
- */
-const string& AGHG::getXMLNameStatic(){
-    static const string XML_NAME = "GHG";
-    return XML_NAME;
 }
 
 /*!
@@ -204,15 +157,12 @@ double AGHG::calcOutputCoef( const vector<IOutput*>& aOutputs, const int aPeriod
  * \param aPeriod the period
  */
 void AGHG::addEmissionsToMarket( const string& aRegionName, const int aPeriod ){
-    // set emissions as demand side of gas market
-    Marketplace* marketplace = scenario->getMarketplace();
-    // Optimize special case of no-emission ghg.
-    if( mEmissions[ aPeriod ] != 0 ){
-        marketplace->addToDemand( getName(), aRegionName, mEmissions[ aPeriod ], aPeriod, false );
-    }
-    if( sequestAmountGeologic != 0 ){
-        // set sequestered amount as demand side of carbon storage market
-        marketplace->addToDemand( "carbon storage", aRegionName, sequestAmountGeologic, aPeriod, false );
+    // Emissions can be positive or negative.
+    if( !util::isEqual( mEmissions[ aPeriod ], 0.0 ) ){
+        // set emissions as demand side of gas market
+        scenario->getMarketplace()->addToDemand( getName(), aRegionName,
+                                                mEmissions[ aPeriod ],
+                                                aPeriod, false );
     }
 }
 
@@ -285,8 +235,11 @@ double AGHG::calcInputEmissions( const vector<Input*>& aInputs, const string& aR
 * \param aPeriod Period in which the emissions is occurring.
 * \note aOutput is in physical units, not currency units.
 */
-void AGHG::calcEmission( const vector<Input*> aInputs, const string& aRegionName, const string& aGoodName,
-                        const double aOutput, const int aPeriod )
+void AGHG::calcEmission( const vector<Input*> aInputs,
+                         const string& aRegionName,
+                         const string& aGoodName,
+                         const double aOutput,
+                         const int aPeriod )
 {
     // Calculate the aggregate emissions of all inputs.
     double tempEmission = calcInputEmissions( aInputs, aRegionName, aPeriod );
@@ -325,16 +278,6 @@ double AGHG::getEmission( const int aPeriod ) const {
     return mEmissions[ aPeriod ];
 }
 
-//! Return geologic sequestered ghg emissions.
-double AGHG::getSequestAmountGeologic() const {
-    return sequestAmountGeologic;
-}
-
-//! Return non-energy sequestered ghg emissions.
-double AGHG::getSequestAmountNonEngy() const {
-    return sequestAmountNonEngy;
-}
-
 //! Return ghg emissions inplicit in fuel.
 double AGHG::getEmissFuel( const int aPeriod ) const {
     return mEmissionsByFuel[ aPeriod ];
@@ -353,29 +296,6 @@ double AGHG::emissionsDriver( const double inputIn, const double outputIn ) cons
 void AGHG::setEmissionsDriver( auto_ptr<AEmissionsDriver>& aEmissionsDriver ){
     mEmissionsDriver = aEmissionsDriver;
 }
-
-/*! \brief Get the carbon tax paid for the ghg.
-* \details Calculate and return the total amount of carbon tax paid, or credit received
-* for a single greenhouse gas. The tax or credit is calculated as emissions multiplied by
-* the tax from the marketplace for the gas and the global warming potential.
-* \warning This function calculates this value dynamically which requires a call to the marketplace,
-* so it is slow. It should be avoided except for reporting purposes.
-* \param aRegionName The name of the region containing the ghg.
-* \param aPeriod The name of the period for which to calculate carbon tax paid.
-* \author Josh Lurz
-* \return The total carbon tax paid.
-*/
-double AGHG::getCarbonTaxPaid( const string& aRegionName, const int aPeriod ) const {
-    const Marketplace* marketplace = scenario->getMarketplace();
-    double GHGTax = marketplace->getPrice( getName(), aRegionName, aPeriod, false );
-    if( GHGTax == Marketplace::NO_MARKET_PRICE ){
-        GHGTax = 0;
-    }
-    // The carbon tax paid is the amount of the emission multiplied by the tax and the global
-    // warming emission. This may be a negative in the case of a credit.
-    return GHGTax * mEmissions[ aPeriod ];
-}
-
 
 /*! \brief Update a visitor with information from a GHG for a given period.
 * \param aVisitor The visitor to update.

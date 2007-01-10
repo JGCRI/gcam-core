@@ -46,7 +46,6 @@ extern Scenario* scenario;
 //! Default constructor.
 AComplexEmissions::AComplexEmissions():
 AGHG(),
-gwp( 1 ),
 emAdjust( 0 ),
 gdpCap( 0 ),
 maxCntrl( -1000 ),
@@ -55,7 +54,8 @@ gdpcap0( 0 ),
 finalEmissCoef( -1 ),
 tau( 0 ),
 adjMaxCntrl( 1 ),
-multMaxCntrl( 1 )
+multMaxCntrl( 1 ),
+gwp( 1 )
 {
 }
 
@@ -91,6 +91,7 @@ void AComplexEmissions::copy( const AComplexEmissions& other ){
     multMaxCntrl = other.multMaxCntrl;
     emAdjust = other.emAdjust;
     finalEmissCoef = other.finalEmissCoef;
+    gwp = other.gwp;
 
     // Deep copy the auto_ptrs
     if( other.ghgMac.get() ){
@@ -116,7 +117,7 @@ void AComplexEmissions::copyGHGParameters( const AGHG* prevGHG ){
         mainLog << "Bad dynamic cast occurred in copyGHGParameters." << endl;
         return;
     }
-    
+
     if ( !gwp ) { 
         gwp = prevComplexGHG->gwp; // only copy if GWP has not changed
     }
@@ -156,55 +157,27 @@ void AComplexEmissions::copyGHGParameters( const AGHG* prevGHG ){
 
 double AComplexEmissions::getGHGValue( const string& regionName, const string& fuelName,
                                        const vector<IOutput*>& aOutputs,
-                                       const double efficiency, const int period ) const {
+                                       const double efficiency,
+                                       const ICaptureComponent* aCaptureComponent,
+                                       const int period ) const
+{
     const Marketplace* marketplace = scenario->getMarketplace();
     
     // Constants
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
     const double CVRT_tg_MT = 1e-3; // to get teragrams of carbon per EJ to metric tons of carbon per GJ
     
-    // get carbon storage cost from the market
-    double marketStorageCost = Marketplace::NO_MARKET_PRICE;
-    // Get the price from the market if there is a name.
-    if( storageName != "" ){
-        marketStorageCost = marketplace->getPrice( storageName, regionName, period, false );
-    }
-    // If the market storage cost is unset use the read in storage cost.
-    if( marketStorageCost == Marketplace::NO_MARKET_PRICE ){
-        marketStorageCost = storageCost;
-    }
-    
     double GHGTax = marketplace->getPrice( getName(), regionName, period, false );
     if( GHGTax == Marketplace::NO_MARKET_PRICE ){
         GHGTax = 0;
-        // If there is no tax market, turn off sequestration technology by increasing storage cost
-        // This is still not correct.
-        marketStorageCost = util::getLargeNumber();
     }
-
-    // units for generalized cost is in 75$/gj
-    double generalizedCost = 0;
 
     // Fuel market may not exist.
     const IInfo* fuelInfo = marketplace->getMarketInfo( fuelName, regionName, period, false );
     const double coefFuel = fuelInfo ? fuelInfo->getDouble( "CO2Coef", false ) : 0;
 
     // apply carbon equivalent to emiss coefficient
-    // if remove fraction is greater than zero and storage is required
-    if (rmfrac > 0) {
-        // add geologic sequestration cost
-        if (isGeologicSequestration) {
-            generalizedCost = ((1.0 - rmfrac)*GHGTax*gwp + rmfrac*storageCost) * mEmissionsCoef->getCoef() / CVRT90;
-        }
-        // no storage cost added
-        else {
-            generalizedCost = ((1.0 - rmfrac)*GHGTax*gwp) * mEmissionsCoef->getCoef() / CVRT90;
-        }
-    }
-    // no storage required
-    else {
-        generalizedCost = GHGTax * gwp * mEmissionsCoef->getCoef() / CVRT90;
-    }
+    double generalizedCost = GHGTax * gwp * mEmissionsCoef->getCoef() / CVRT90;
 
     // The generalized cost returned by the GHG may be negative if
     // emissions crediting is occuring.
@@ -216,7 +189,9 @@ void AComplexEmissions::calcEmission( const string& regionName,
                                       const double input,
                                       const vector<IOutput*>& aOutputs,
                                       const GDP* aGDP,
-                                      const int aPeriod ){
+                                      ICaptureComponent* aCaptureComponent,
+                                      const int aPeriod )
+{
     // Primary output is always stored at position zero and used to drive
     // emissions.
     assert( aOutputs[ 0 ] );
@@ -288,6 +263,9 @@ bool AComplexEmissions::XMLDerivedClassParse( const string& nodeName, const DOMN
     else if( nodeName == "aggregate" ){
         mEmissionsCoef.reset( new AggrEmissionsCoef );
     }
+    else if( nodeName == "GWP" ){
+        gwp = XMLHelper<double>::getValue( curr );
+    }
     else{
         return false;
     }
@@ -306,6 +284,7 @@ void AComplexEmissions::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( adjMaxCntrl, "adjMaxCntrl", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( multMaxCntrl, "multMaxCntrl", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( techDiff, "techDiff", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( gwp, "GWP", out, tabs, 1.0 );
 
     // Write out the GHGMAC
     if( ghgMac.get() ){
@@ -324,6 +303,7 @@ void AComplexEmissions::toDebugXMLDerived( const int period, ostream& out, Tabs*
     XMLWriteElement( finalEmissCoef, "finalEmissCoef", out, tabs );
     XMLWriteElement( adjMaxCntrl, "adjMaxCntrl", out, tabs );
     XMLWriteElement( techDiff, "techDiff", out, tabs );
+    XMLWriteElement( gwp, "GWP", out, tabs );
 
      // Write out the GHGMAC
     if( ghgMac.get() ){

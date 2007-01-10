@@ -26,6 +26,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 
 class AEmissionsCoef;
+class GhgMAC;
 
 /*! 
  * \ingroup Objects
@@ -38,26 +39,32 @@ public:
     virtual AComplexEmissions* clone() const = 0;
 
     virtual void copyGHGParameters( const AGHG* prevGHG );
-    
+
     virtual void initCalc( const std::string& aRegionName,
                            const std::string& aFuelName,
                            const IInfo* aLocalInfo,
                            const int aPeriod );
 
-    virtual double getGHGValue( const std::string& regionName, const std::string& fuelName,
-                                const std::vector<IOutput*>& aOutputs, const double efficiency,
-                                const int period ) const;
-    virtual void calcEmission( const std::string& regionName, const std::string& fuelname,
-                               const double input, const std::vector<IOutput*>& aOutputs,
-                               const GDP* aGDP, const int aPeriod );
+    virtual double getGHGValue( const std::string& aRegionName,
+                                const std::string& aFuelName,
+                                const std::vector<IOutput*>& aOutputs,
+                                const double aEfficiency,
+                                const ICaptureComponent* aSequestrationDevice,
+                                const int aPeriod ) const;
 
+    virtual void calcEmission( const std::string& aRegionName,
+                               const std::string& aFuelname,
+                               const double aInput,
+                               const std::vector<IOutput*>& aOutputs,
+                               const GDP* aGDP,
+                               ICaptureComponent* aSequestrationDevice,
+                               const int aPeriod );
 protected:
 
     AComplexEmissions();
     AComplexEmissions( const AComplexEmissions& other );
     AComplexEmissions& operator=( const AComplexEmissions& other );
     
-    double gwp; //!< global warming poential
     double maxCntrl; //!<  final control fraction for ghg's
     double gdpcap0; //!< User inputed variable- represents midpoint of curve for control function
     double tau; //!< User inputed timescale parameter in control function
@@ -67,6 +74,9 @@ protected:
     double multMaxCntrl; //!< multiplier to maxCntrl -- changes current emissions
     double emAdjust; //!< User inputed adjustment to emissions values(0 to 1)
     double finalEmissCoef; //!< user input final emissions factor that is approached asymptotically
+    
+    //! Global warming potential of the gas.
+    double gwp;
 
     std::auto_ptr<GhgMAC> ghgMac; //!< Marginal Abatement Cost Curve Object
     std::auto_ptr<AEmissionsCoef> mEmissionsCoef; //!< emissions coefficient delegate

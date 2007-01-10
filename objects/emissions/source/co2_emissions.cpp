@@ -23,6 +23,7 @@
 #include "util/base/include/xml_helper.h"
 #include "containers/include/iinfo.h"
 #include "technologies/include/ioutput.h"
+#include "technologies/include/icapture_component.h"
 
 using namespace std;
 using namespace xercesc;
@@ -80,99 +81,77 @@ void CO2Emissions::initCalc( const string& aRegionName,
     mFuelCoefficient = fuelInfo ? fuelInfo->getDouble( "CO2Coef", false ) : 0;
 }
 
-double CO2Emissions::getGHGValue( const string& regionName, const string& fuelName,
+double CO2Emissions::getGHGValue( const string& aRegionName,
+                                  const string& aFuelName,
                                   const vector<IOutput*>& aOutputs,
-                                  const double efficiency, const int period ) const {
-    const Marketplace* marketplace = scenario->getMarketplace();
-    
+                                  const double aEfficiency,
+                                  const ICaptureComponent* aSequestrationDevice,
+                                  const int aPeriod ) const
+{
     // Constants
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
-    const double CVRT_tg_MT = 1e-3; // to get teragrams of carbon per EJ to metric tons of carbon per GJ
-    
-    // get carbon storage cost from the market
-    double marketStorageCost = Marketplace::NO_MARKET_PRICE;
-    // Get the price from the market if there is a name.
-    if( storageName != "" ){
-        marketStorageCost = marketplace->getPrice( storageName, regionName, period, false );
-    }
-    // If the market storage cost is unset use the read in storage cost.
-    if( marketStorageCost == Marketplace::NO_MARKET_PRICE ){
-        marketStorageCost = storageCost;
-    }
-    
-    double GHGTax = marketplace->getPrice( getName(), regionName, period, false );
+    // Conversion from teragrams of carbon per EJ to metric tons of carbon per GJ
+    const double CVRT_TG_MT = 1e-3; 
+
+    // Get carbon storage cost from the sequestrion device if there is one.
+    double storageCost = aSequestrationDevice ? aSequestrationDevice->getStorageCost( aRegionName,
+                                                                                      aPeriod )
+                                              : 0;
+
+    // Get the remove fraction from the sequestration device. The remove
+    // fraction is zero if there is no sequestration device.
+    double removeFraction = aSequestrationDevice ? aSequestrationDevice->getRemoveFraction() : 0;
+
+    // Get the greenhouse gas tax from the marketplace.
+    const Marketplace* marketplace = scenario->getMarketplace();
+    double GHGTax = marketplace->getPrice( getName(), aRegionName, aPeriod, false );
     if( GHGTax == Marketplace::NO_MARKET_PRICE ){
         GHGTax = 0;
-        // If there is no tax market, turn off sequestration technology by increasing storage cost
-        // This is still not correct.
-        marketStorageCost = util::getLargeNumber();
     }
 
-    // units for generalized cost is in 75$/gj
-    double generalizedCost = 0;
+    // Calculate the generalized emissions cost per unit.
+    double coefProduct = calcOutputCoef( aOutputs, aPeriod );
     
     assert( mFuelCoefficient.isInited() );
-    
-    double coefProduct = calcOutputCoef( aOutputs, period );
-    // if remove fraction is greater than zero and storage cost is required
-    if ( rmfrac > 0 ) {
-        // add geologic sequestration cost
-        if ( isGeologicSequestration ) {
-            // gwp applied only on the amount emitted
-            // account for conversion losses through efficiency
-            generalizedCost = ( ( 1.0 - rmfrac ) * GHGTax + rmfrac * marketStorageCost )
-                * ( mFuelCoefficient / efficiency - coefProduct ) / CVRT90 * CVRT_tg_MT;
-        }
-        // no sequestration or storage cost added for non-energy use of fossil fuels
-        else {
-            generalizedCost = ( ( 1.0 - rmfrac ) * GHGTax )
-                * ( mFuelCoefficient / efficiency - coefProduct ) / CVRT90 * CVRT_tg_MT;
-        }
-    }
-    // no storage required
-    else {
-        generalizedCost = GHGTax * ( mFuelCoefficient / efficiency - coefProduct ) / CVRT90 * CVRT_tg_MT;
-    }
 
-    // The generalized cost returned by the GHG may be negative if
-    // emissions crediting is occuring.
+    // units for generalized cost is in 75$/gj
+    double generalizedCost = ( ( 1 - removeFraction ) * GHGTax + removeFraction * storageCost )
+            * ( mFuelCoefficient / aEfficiency - coefProduct) / CVRT90 * CVRT_TG_MT;
+
     return generalizedCost;
 }
 
-void CO2Emissions::calcEmission( const string& regionName,
-                                 const string& fuelname,
-                                 const double input,
+void CO2Emissions::calcEmission( const string& aRegionName,
+                                 const string& aFuelname,
+                                 const double aInput,
                                  const vector<IOutput*>& aOutputs,
                                  const GDP* aGDP,
-                                 const int aPeriod ){
+                                 ICaptureComponent* aSequestrationDevice,
+                                 const int aPeriod )
+{
     // Primary output is always stored at position zero and used to drive
     // emissions.
     assert( aOutputs[ 0 ] );
     double primaryOutput = aOutputs[ 0 ]->getPhysicalOutput( aPeriod );
-
-    const Marketplace* marketplace = scenario->getMarketplace();
-
-    double coefProduct = calcOutputCoef( aOutputs, aPeriod );
     
     assert( mFuelCoefficient.isInited() );
-    
-    // sequestered emissions
-    if (rmfrac > 0) {
-        // geologic sequestration
-        if(isGeologicSequestration) {
-            sequestAmountGeologic = rmfrac * ( (input * mFuelCoefficient ) - ( primaryOutput * coefProduct ) );
-        }
-        // non-energy use of fuel, ie petrochemicals
-        else {
-            sequestAmountNonEngy = rmfrac * ( (input * mFuelCoefficient ) - ( primaryOutput * coefProduct ) );
-        }
-    }
-    // Note that negative emissions can occur here since biomass has a coef of 0. 
-    mEmissions[ aPeriod ] = ( 1.0 - rmfrac ) * ( ( input * mFuelCoefficient ) - ( primaryOutput * coefProduct ) );
-    mEmissionsByFuel[ aPeriod ] = ( 1.0 - rmfrac ) * input * mFuelCoefficient;
+    double coefProduct = calcOutputCoef( aOutputs, aPeriod );
 
-    addEmissionsToMarket( regionName, aPeriod );
+    // Note that negative emissions can occur here since biomass has a coef of 0.
+    double emissionFraction = 1 - ( aSequestrationDevice ? aSequestrationDevice->getRemoveFraction() : 0 );
+    double inputEmissions = aInput * mFuelCoefficient;
+    mEmissions[ aPeriod ] = emissionFraction * ( inputEmissions - primaryOutput * coefProduct );
+    mEmissionsByFuel[ aPeriod ] = emissionFraction * inputEmissions;
+
+    // Calculate sequestered emissions if there is a sequestration device.
+    if( aSequestrationDevice ){
+        aSequestrationDevice->calcSequesteredAmount( aRegionName, getName(), aInput, primaryOutput,
+                                                     mFuelCoefficient, coefProduct, aPeriod );
+    }
+
+    addEmissionsToMarket( aRegionName, aPeriod );
 }
+
 bool CO2Emissions::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ){
     return false;
 }

@@ -13,9 +13,9 @@
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/model_time.h"
 #include "containers/include/scenario.h"
-#include "sectors/include/sector.h"
 #include "emissions/include/total_sector_emissions.h"
-
+#include "sectors/include/cal_quantity_tabulator.h"
+#include "sectors/include/sector.h"
 
 using namespace std;
 using namespace xercesc;
@@ -24,9 +24,10 @@ extern Scenario* scenario;
 
 /*! \brief Constructor
 */
-TotalSectorEmissions::TotalSectorEmissions(){
-	mType = "none";
-	mApplicableYear = 0;
+TotalSectorEmissions::TotalSectorEmissions()
+// TODO: Storing the none string is a waste.
+: mType( "none" ),
+mApplicableYear( 0 ){
 }
 
 void TotalSectorEmissions::XMLParse( const DOMNode* aNode ){
@@ -124,13 +125,15 @@ const string& TotalSectorEmissions::aggrEmissionsPrefix() {
 *          calculate an emissions coefficient for the gas given the total
 *          emissions for the set of sectors of the specified type.
 * \author James Blackwood
+* \param aRegionName Name of the containing region.
 * \param aSectors Vector of supply sectors used to determine the total
 *        calibrated output.
 * \param aRegionInfo Region info object which will be updated to contain the
 *        emissions coefficients.
 * \param aPeriod Model period.
 */
-void TotalSectorEmissions::setAggregateEmissionFactor( const std::vector<Sector*>& aSectors,
+void TotalSectorEmissions::setAggregateEmissionFactor( const string& aRegionName,
+                                                       const std::vector<Sector*>& aSectors,
                                                        IInfo* aRegionInfo,
                                                        const int aPeriod ) const
 {
@@ -148,23 +151,39 @@ void TotalSectorEmissions::setAggregateEmissionFactor( const std::vector<Sector*
     }
 
     typedef vector<Sector*>::const_iterator SectorIterator;
-
-    double summedOutput = 0;
-    
-    // TODO: What if all sectors are not calibrated? This condition must at least be checked for.
+    // Visit all appropriate sectors and sum their emissions using a cal
+    // quantity tabulator.
+    CalQuantityTabulator tabulator( aRegionName );
+    tabulator.setApplicableSectorType( mType );
     for( SectorIterator currSector = aSectors.begin(); currSector != aSectors.end(); ++currSector ){
-        summedOutput += (*currSector)->getCalOutput( aPeriod, mType );
+        (*currSector)->accept( &tabulator, aPeriod );
     }
-    
-    if( summedOutput < util::getSmallNumber() ){
+
+    CalQuantityTabulator::CalInfoMap calInfo = tabulator.getSupplyInfo();
+    // Loop through the calibrated info map and sum output and fixed output
+    // for all sectors. Check for any uncalibrated sectors.
+    bool isAllCalibrated = true;
+    double totalSectorOutput = 0;
+    for( CalQuantityTabulator::CalInfoMap::const_iterator i = calInfo.begin(); i != calInfo.end(); ++i ){
+        CalQuantityTabulator::CalInfo currInfo = i->second;
+        isAllCalibrated &= currInfo.mAllFixed;
+        totalSectorOutput += currInfo.mFixedQuantity + currInfo.mCalQuantity;
+    }
+
+    double emissionsFactor;
+    if( !isAllCalibrated || totalSectorOutput < util::getSmallNumber() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
         mainLog << "Cannot set aggregate emissions factor for GHG " << mName
-                << " because calibrated sector output is zero." << endl;
-        return;
+                << " because sectors are not fully calibrated or have zero output." << endl;
+        // Set an emissions factor of zero after printing the warning for each
+        // use of the emissions factor.
+        emissionsFactor = 0;
     }
-    double emissionFactor = mAggregateEmissions / summedOutput;
-    
+    else {
+        emissionsFactor = mAggregateEmissions / totalSectorOutput;
+    }
+
     // Store aggregate emissions factor in region info object
-    aRegionInfo->setDouble( aggrEmissionsPrefix() + mName, emissionFactor );
+    aRegionInfo->setDouble( aggrEmissionsPrefix() + mName, emissionsFactor );
 }
