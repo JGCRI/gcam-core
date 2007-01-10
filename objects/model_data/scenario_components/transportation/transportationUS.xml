@@ -40,8 +40,8 @@
 					<speed year="1975" fillout="1">30</speed>
 					<tranTechnology name="Hydrogen">
 						<period year="1975" fillout="1">
-							<name>Hydrogen</name>
-							<year>1975</year>
+							
+							
 							<fuelname>hydrogen_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity unit="Btu/veh-mi">6352</intensity>
@@ -52,8 +52,8 @@
 							<logitexp>-3</logitexp>
 						</period>
 						<period year="2020" fillout="1">
-							<name>Hydrogen</name>
-							<year>2020</year>
+							
+							
 							<fuelname>hydrogen_td_trn</fuelname>
 							<sharewt>0.95</sharewt>
 							<intensity unit="Btu/veh-mi">6352</intensity>
@@ -66,8 +66,8 @@
 					</tranTechnology>
 					<tranTechnology name="Biomass">
 						<period year="1975" fillout="1">
-							<name>Biomass</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered biomass</fuelname>
 							<sharewt>0</sharewt>
 							<intensity unit="Btu/veh-mi">6352</intensity>
@@ -80,8 +80,8 @@
 					</tranTechnology>
 					<tranTechnology name="Electric">
 						<period year="1975" fillout="1">
-							<name>Electric</name>
-							<year>1975</year>
+							
+							
 							<fuelname>elect_td_trn</fuelname>
 							<sharewt>0.01</sharewt>
 							<intensity>6352</intensity>
@@ -94,8 +94,8 @@
 					</tranTechnology>
 					<tranTechnology name="Coal">
 						<period year="1975" fillout="1">
-							<name>Coal</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered coal</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>6352</intensity>
@@ -108,8 +108,8 @@
 					</tranTechnology>
 					<tranTechnology name="Gas">
 						<period year="1975" fillout="1">
-							<name>Gas</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered gas</fuelname>
 							<sharewt>0.04</sharewt>
 							<intensity>6352</intensity>
@@ -122,8 +122,8 @@
 					</tranTechnology>
 					<tranTechnology name="Gasoline">
 						<period year="1975" fillout="1">
-							<name>Gasoline</name>
-							<year>1975</year>
+							
+							
 							<fuelname>refined oil</fuelname>
 							<sharewt>0.95</sharewt>
 							<intensity>6352</intensity>
@@ -136,8 +136,8 @@
 					</tranTechnology>
 					<tranTechnology name="Diesel">
 						<period year="1975" fillout="1">
-							<name>Diesel</name>
-							<year>1975</year>
+							
+							
 							<fuelname>refined oil</fuelname>
 							<sharewt>0.0</sharewt>
 							<intensity>6352</intensity>
@@ -158,8 +158,8 @@
 					<speed year="1975" fillout="1">30</speed>
 					<tranTechnology name="Hydrogen">
 						<period year="1975" fillout="1">
-							<name>Hydrogen</name>
-							<year>1975</year>
+							
+							
 							<fuelname>hydrogen_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>7987</intensity>
@@ -170,8 +170,8 @@
 							<logitexp>-3</logitexp>
 						</period>
 						<period year="2020" fillout="1">
-							<name>Hydrogen</name>
-							<year>2020</year>
+							
+							
 							<fuelname>hydrogen_td_trn</fuelname>
 							<sharewt>0.95</sharewt>
 							<intensity>7987</intensity>
@@ -184,8 +184,8 @@
 					</tranTechnology>
 					<tranTechnology name="Biomass">
 						<period year="1975" fillout="1">
-							<name>Biomass</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered biomass</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>7987</intensity>
@@ -198,8 +198,8 @@
 					</tranTechnology>
 					<tranTechnology name="Electric">
 						<period year="1975" fillout="1">
-							<name>Electric</name>
-							<year>1975</year>
+							
+							
 							<fuelname>elect_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>7987</intensity>
@@ -212,8 +212,8 @@
 					</tranTechnology>
 					<tranTechnology name="Coal">
 						<period year="1975" fillout="1">
-							<name>Coal</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered coal</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>7987</intensity>
@@ -226,8 +226,8 @@
 					</tranTechnology>
 					<tranTechnology name="Gas">
 						<period year="1975" fillout="1">
-							<name>Gas</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered gas</fuelname>
 							<sharewt>0.05</sharewt>
 							<intensity>7987</intensity>
@@ -240,8 +240,8 @@
 					</tranTechnology>
 					<tranTechnology name="Gasoline">
 						<period year="1975" fillout="1">
-							<name>Gasoline</name>
-							<year>1975</year>
+							
+							
 							<fuelname>refined oil</fuelname>
 							<sharewt>0.95</sharewt>
 							<intensity>7987</intensity>
@@ -254,8 +254,8 @@
 					</tranTechnology>
 					<tranTechnology name="Diesel">
 						<period year="1975" fillout="1">
-							<name>Diesel</name>
-							<year>1975</year>
+							
+							
 							<fuelname>refined oil</fuelname>
 							<sharewt>0.0</sharewt>
 							<intensity>7987</intensity>
@@ -276,8 +276,8 @@
 					<speed year="1975" fillout="1">25</speed>
 					<tranTechnology name="Hydrogen">
 						<period year="1975" fillout="1">
-							<name>Hydrogen</name>
-							<year>1975</year>
+							
+							
 							<fuelname>hydrogen_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>27401</intensity>
@@ -290,8 +290,8 @@
 					</tranTechnology>
 					<tranTechnology name="Biomass">
 						<period year="1975" fillout="1">
-							<name>Biomass</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered biomass</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>27401</intensity>
@@ -304,8 +304,8 @@
 					</tranTechnology>
 					<tranTechnology name="Electric">
 						<period year="1975" fillout="1">
-							<name>Electric</name>
-							<year>1975</year>
+							
+							
 							<fuelname>elect_td_trn</fuelname>
 							<sharewt>0.03</sharewt>
 							<intensity>27401</intensity>
@@ -318,8 +318,8 @@
 					</tranTechnology>
 					<tranTechnology name="Coal">
 						<period year="1975" fillout="1">
-							<name>Coal</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered coal</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>27401</intensity>
@@ -332,8 +332,8 @@
 					</tranTechnology>
 					<tranTechnology name="Gas">
 						<period year="1975" fillout="1">
-							<name>Gas</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered gas</fuelname>
 							<sharewt>0.04</sharewt>
 							<intensity>27401</intensity>
@@ -346,8 +346,8 @@
 					</tranTechnology>
 					<tranTechnology name="Oil">
 						<period year="1975" fillout="1">
-							<name>Oil</name>
-							<year>1975</year>
+							
+							
 							<fuelname>refined oil</fuelname>
 							<sharewt>0.93</sharewt>
 							<intensity>27401</intensity>
@@ -368,8 +368,8 @@
 					<speed year="1975" fillout="1">35</speed>
 					<tranTechnology name="Hydrogen">
 						<period year="1975" fillout="1">
-							<name>Hydrogen</name>
-							<year>1975</year>
+							
+							
 							<fuelname>hydrogen_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>74388</intensity>
@@ -382,8 +382,8 @@
 					</tranTechnology>
 					<tranTechnology name="Biomass">
 						<period year="1975" fillout="1">
-							<name>Biomass</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered biomass</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>74388</intensity>
@@ -396,8 +396,8 @@
 					</tranTechnology>
 					<tranTechnology name="Electric">
 						<period year="1975" fillout="1">
-							<name>Electric</name>
-							<year>1975</year>
+							
+							
 							<fuelname>elect_td_trn</fuelname>
 							<sharewt>0.3</sharewt>
 							<intensity>74388</intensity>
@@ -410,8 +410,8 @@
 					</tranTechnology>
 					<tranTechnology name="Coal">
 						<period year="1975" fillout="1">
-							<name>Coal</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered coal</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>74388</intensity>
@@ -424,8 +424,8 @@
 					</tranTechnology>
 					<tranTechnology name="Gas">
 						<period year="1975" fillout="1">
-							<name>Gas</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered gas</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>74388</intensity>
@@ -438,8 +438,8 @@
 					</tranTechnology>
 					<tranTechnology name="Oil">
 						<period year="1975" fillout="1">
-							<name>Oil</name>
-							<year>1975</year>
+							
+							
 							<fuelname>refined oil</fuelname>
 							<sharewt>0.7</sharewt>
 							<intensity>74388</intensity>
@@ -460,8 +460,8 @@
 					<speed year="1975" fillout="1">400</speed>
 					<tranTechnology name="Hydrogen">
 						<period year="1975" fillout="1">
-							<name>Hydrogen</name>
-							<year>1975</year>
+							
+							
 							<fuelname>hydrogen_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>447125</intensity>
@@ -474,8 +474,8 @@
 					</tranTechnology>
 					<tranTechnology name="Biomass">
 						<period year="1975" fillout="1">
-							<name>Biomass</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered biomass</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>447125</intensity>
@@ -488,8 +488,8 @@
 					</tranTechnology>
 					<tranTechnology name="Electric">
 						<period year="1975" fillout="1">
-							<name>Electric</name>
-							<year>1975</year>
+							
+							
 							<fuelname>elect_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>447125</intensity>
@@ -502,8 +502,8 @@
 					</tranTechnology>
 					<tranTechnology name="Coal">
 						<period year="1975" fillout="1">
-							<name>Coal</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered coal</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>447125</intensity>
@@ -516,8 +516,8 @@
 					</tranTechnology>
 					<tranTechnology name="Gas">
 						<period year="1975" fillout="1">
-							<name>Gas</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered gas</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>447125</intensity>
@@ -530,8 +530,8 @@
 					</tranTechnology>
 					<tranTechnology name="Oil">
 						<period year="1975" fillout="1">
-							<name>Oil</name>
-							<year>1975</year>
+							
+							
 							<fuelname>refined oil</fuelname>
 							<sharewt>1</sharewt>
 							<intensity>447125</intensity>
@@ -552,8 +552,8 @@
 					<speed year="1975" fillout="1">5</speed>
 					<tranTechnology name="Hydrogen">
 						<period year="1975" fillout="1">
-							<name>Hydrogen</name>
-							<year>1975</year>
+							
+							
 							<fuelname>hydrogen_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>30913</intensity>
@@ -566,8 +566,8 @@
 					</tranTechnology>
 					<tranTechnology name="Biomass">
 						<period year="1975" fillout="1">
-							<name>Biomass</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered biomass</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>30913</intensity>
@@ -580,8 +580,8 @@
 					</tranTechnology>
 					<tranTechnology name="Electric">
 						<period year="1975" fillout="1">
-							<name>Electric</name>
-							<year>1975</year>
+							
+							
 							<fuelname>elect_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>30913</intensity>
@@ -594,8 +594,8 @@
 					</tranTechnology>
 					<tranTechnology name="Coal">
 						<period year="1975" fillout="1">
-							<name>Coal</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered coal</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>30913</intensity>
@@ -608,8 +608,8 @@
 					</tranTechnology>
 					<tranTechnology name="Gas">
 						<period year="1975" fillout="1">
-							<name>Gas</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered gas</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>30913</intensity>
@@ -622,8 +622,8 @@
 					</tranTechnology>
 					<tranTechnology name="Oil">
 						<period year="1975" fillout="1">
-							<name>Oil</name>
-							<year>1975</year>
+							
+							
 							<fuelname>refined oil</fuelname>
 							<sharewt>1</sharewt>
 							<intensity>30913</intensity>
@@ -644,8 +644,8 @@
 					<speed year="1975" fillout="1">35</speed>
 					<tranTechnology name="Hydrogen">
 						<period year="1975" fillout="1">
-							<name>Hydrogen</name>
-							<year>1975</year>
+							
+							
 							<fuelname>hydrogen_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>2596</intensity>
@@ -658,8 +658,8 @@
 					</tranTechnology>
 					<tranTechnology name="Biomass">
 						<period year="1975" fillout="1">
-							<name>Biomass</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered biomass</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>2596</intensity>
@@ -672,8 +672,8 @@
 					</tranTechnology>
 					<tranTechnology name="Electric">
 						<period year="1975" fillout="1">
-							<name>Electric</name>
-							<year>1975</year>
+							
+							
 							<fuelname>elect_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>2596</intensity>
@@ -686,8 +686,8 @@
 					</tranTechnology>
 					<tranTechnology name="Coal">
 						<period year="1975" fillout="1">
-							<name>Coal</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered coal</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>2596</intensity>
@@ -700,8 +700,8 @@
 					</tranTechnology>
 					<tranTechnology name="Gas">
 						<period year="1975" fillout="1">
-							<name>Gas</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered gas</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>2596</intensity>
@@ -714,8 +714,8 @@
 					</tranTechnology>
 					<tranTechnology name="Oil">
 						<period year="1975" fillout="1">
-							<name>Oil</name>
-							<year>1975</year>
+							
+							
 							<fuelname>refined oil</fuelname>
 							<sharewt>1</sharewt>
 							<intensity>2596</intensity>
@@ -769,8 +769,8 @@
 					<speed year="1975" fillout="1">30</speed>
 					<tranTechnology name="Oil">
 						<period year="1975" fillout="1">
-							<name>Oil</name>
-							<year>1975</year>
+							
+							
 							<fuelname>refined oil</fuelname>
 							<sharewt>1</sharewt>
 							<intensity>26309</intensity>
@@ -783,8 +783,8 @@
 					</tranTechnology>
 					<tranTechnology name="Gas">
 						<period year="1975" fillout="1">
-							<name>Gas</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered gas</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>26309</intensity>
@@ -797,8 +797,8 @@
 					</tranTechnology>
 					<tranTechnology name="Coal">
 						<period year="1975" fillout="1">
-							<name>Coal</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered coal</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>26309</intensity>
@@ -811,8 +811,8 @@
 					</tranTechnology>
 					<tranTechnology name="Electric">
 						<period year="1975" fillout="1">
-							<name>Electric</name>
-							<year>1975</year>
+							
+							
 							<fuelname>elect_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>26309</intensity>
@@ -825,8 +825,8 @@
 					</tranTechnology>
 					<tranTechnology name="Biomass">
 						<period year="1975" fillout="1">
-							<name>Biomass</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered biomass</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>26309</intensity>
@@ -839,8 +839,8 @@
 					</tranTechnology>
 					<tranTechnology name="Hydrogen">
 						<period year="1975" fillout="1">
-							<name>Hydrogen</name>
-							<year>1975</year>
+							
+							
 							<fuelname>hydrogen_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>26309</intensity>
@@ -877,8 +877,8 @@
 					<speed year="1975" fillout="1">35</speed>
 					<tranTechnology name="Oil">
 						<period year="1975" fillout="1">
-							<name>Oil</name>
-							<year>1975</year>
+							
+							
 							<fuelname>refined oil</fuelname>
 							<sharewt>1</sharewt>
 							<intensity>16819</intensity>
@@ -891,8 +891,8 @@
 					</tranTechnology>
 					<tranTechnology name="Gas">
 						<period year="1975" fillout="1">
-							<name>Gas</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered gas</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>16819</intensity>
@@ -905,8 +905,8 @@
 					</tranTechnology>
 					<tranTechnology name="Coal">
 						<period year="1975" fillout="1">
-							<name>Coal</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered coal</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>16819</intensity>
@@ -919,8 +919,8 @@
 					</tranTechnology>
 					<tranTechnology name="Electric">
 						<period year="1975" fillout="1">
-							<name>Electric</name>
-							<year>1975</year>
+							
+							
 							<fuelname>elect_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>16819</intensity>
@@ -933,8 +933,8 @@
 					</tranTechnology>
 					<tranTechnology name="Biomass">
 						<period year="1975" fillout="1">
-							<name>Biomass</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered biomass</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>16819</intensity>
@@ -947,8 +947,8 @@
 					</tranTechnology>
 					<tranTechnology name="Hydrogen">
 						<period year="1975" fillout="1">
-							<name>Hydrogen</name>
-							<year>1975</year>
+							
+							
 							<fuelname>hydrogen_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>16819</intensity>
@@ -985,8 +985,8 @@
 					<speed year="1975" fillout="1">400</speed>
 					<tranTechnology name="Oil">
 						<period year="1975" fillout="1">
-							<name>Oil</name>
-							<year>1975</year>
+							
+							
 							<fuelname>refined oil</fuelname>
 							<sharewt>1</sharewt>
 							<intensity>450553</intensity>
@@ -999,8 +999,8 @@
 					</tranTechnology>
 					<tranTechnology name="Gas">
 						<period year="1975" fillout="1">
-							<name>Gas</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered gas</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>450553</intensity>
@@ -1013,8 +1013,8 @@
 					</tranTechnology>
 					<tranTechnology name="Coal">
 						<period year="1975" fillout="1">
-							<name>Coal</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered coal</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>450553</intensity>
@@ -1027,8 +1027,8 @@
 					</tranTechnology>
 					<tranTechnology name="Electric">
 						<period year="1975" fillout="1">
-							<name>Electric</name>
-							<year>1975</year>
+							
+							
 							<fuelname>elect_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>450553</intensity>
@@ -1041,8 +1041,8 @@
 					</tranTechnology>
 					<tranTechnology name="Biomass">
 						<period year="1975" fillout="1">
-							<name>Biomass</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered biomass</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>450553</intensity>
@@ -1055,8 +1055,8 @@
 					</tranTechnology>
 					<tranTechnology name="Hydrogen">
 						<period year="1975" fillout="1">
-							<name>Hydrogen</name>
-							<year>1975</year>
+							
+							
 							<fuelname>hydrogen_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>450553</intensity>
@@ -1093,8 +1093,8 @@
 					<speed year="1975" fillout="1">5</speed>
 					<tranTechnology name="Oil">
 						<period year="1975" fillout="1">
-							<name>Oil</name>
-							<year>1975</year>
+							
+							
 							<fuelname>refined oil</fuelname>
 							<sharewt>1</sharewt>
 							<intensity>1288107</intensity>
@@ -1107,8 +1107,8 @@
 					</tranTechnology>
 					<tranTechnology name="Gas">
 						<period year="1975" fillout="1">
-							<name>Gas</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered gas</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>1288107</intensity>
@@ -1121,8 +1121,8 @@
 					</tranTechnology>
 					<tranTechnology name="Coal">
 						<period year="1975" fillout="1">
-							<name>Coal</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered coal</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>1288107</intensity>
@@ -1135,8 +1135,8 @@
 					</tranTechnology>
 					<tranTechnology name="Electric">
 						<period year="1975" fillout="1">
-							<name>Electric</name>
-							<year>1975</year>
+							
+							
 							<fuelname>elect_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>1288107</intensity>
@@ -1149,8 +1149,8 @@
 					</tranTechnology>
 					<tranTechnology name="Biomass">
 						<period year="1975" fillout="1">
-							<name>Biomass</name>
-							<year>1975</year>
+							
+							
 							<fuelname>delivered biomass</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>1288107</intensity>
@@ -1163,8 +1163,8 @@
 					</tranTechnology>
 					<tranTechnology name="Hydrogen">
 						<period year="1975" fillout="1">
-							<name>Hydrogen</name>
-							<year>1975</year>
+							
+							
 							<fuelname>hydrogen_td_trn</fuelname>
 							<sharewt>0</sharewt>
 							<intensity>1288107</intensity>
