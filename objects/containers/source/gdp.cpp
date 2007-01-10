@@ -336,7 +336,7 @@ void GDP::initialGDPcalc( const int period, const double population ) {
 
 	// Set flag, current GDP values are not adjusted
 	gdpAdjustedFlag[ period ] = false; 	 
-	if ( period <= modeltime->getyr_to_per( 1990 ) ) {
+    if ( period <= modeltime->getFinalCalibrationPeriod() ) {
 		gdpAdjustedFlag[ period ] = true; // GDP is never adjusted for historial periods
 	}
 
@@ -383,7 +383,7 @@ void GDP::initialGDPcalc( const int period, const double population ) {
 void GDP::adjustGDP( const int period, const double priceRatio ) {
     const Modeltime* modeltime = scenario->getModeltime();
 
-    if ( period > modeltime->getyr_to_per(1990) ) {
+    if ( period > modeltime->getFinalCalibrationPeriod() ) {
         // adjust gdp using energy cost changes and energy to gdp feedback elasticity
         gdpValueAdjusted[ period ] = gdpValue[ period ]*pow( priceRatio, mEnergyGDPElasticity );
         if ( !util::isValidNumber( gdpValueAdjusted[ period ] ) ) {
@@ -438,7 +438,8 @@ double GDP::getPPPMERRatio( const int period, const double marketGDPperCap ) {
  
     double conversionFactor;
     
-	// Don't do variable conversion if turned off for this region or if is before conversion data exist (before 1990)
+	// Don't do variable conversion if turned off for this region or if is
+    // before conversion data exist (before 1990)
    // Also don't do conversion is PPPConversionFact is < 1 since this is not defined!
 	if ( constRatio || ( period < modeltime->getyr_to_per( BASE_PPP_YEAR ) || ( PPPConversionFact < 1 ) ) ) {
 		conversionFactor = PPPConversionFact;
