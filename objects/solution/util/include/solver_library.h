@@ -23,6 +23,7 @@ class Marketplace;
 class World;
 class SolverInfo;
 class SolverInfoSet;
+class CalcCounter;
 namespace objects {
     class Atom;
 }
@@ -48,7 +49,8 @@ public:
    
    static bool bracketOne( Marketplace* marketplace, World* world, const double aBracketInterval,
                            const double aSolutionTolerance, const double aSolutionFloor,
-                           SolverInfoSet& aSolSet, SolverInfo* aSol, const int period );
+                           SolverInfoSet& aSolSet, SolverInfo* aSol, CalcCounter* aCalcCounter,
+                           const int period );
    
    static void updateMatrices( SolverInfoSet& sol, Matrix& JFSM, Matrix& JFDM, Matrix& JF );
    
@@ -56,7 +58,7 @@ public:
    
    static bool bracketAll( Marketplace* marketplace, World* world, const double bracketInterval,
                            const double aSolutionTolerance, const double aSolutionFloor,
-                           SolverInfoSet& sol, const int period );
+                           SolverInfoSet& sol, CalcCounter* aCalcCounter, const int period );
    
 private:
     typedef std::map<const objects::Atom*, std::vector<double> > RegionalMarketValues;

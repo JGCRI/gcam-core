@@ -25,6 +25,7 @@
 #include "util/base/include/util.h"
 #include "solution/util/include/solver_info.h"
 #include "solution/util/include/solver_info_set.h"
+#include "solution/util/include/calc_counter.h"
 #include "util/logger/include/ilogger.h"
 
 using namespace std;
@@ -517,13 +518,14 @@ const SolverLibrary::RegionalSDDifferences SolverLibrary::calcRegionalSDDifferen
 * \param aSolutionFloor Absolute value beneath which market is ignored 
 * \param bracketInterval Relative multipliciatve interval by which trail values
 *        are moved
-* \param solverSet Vector of market solution information 
+* \param solverSet Vector of market solution information
+* \param aCalcCounter The calculation counter.
 * \param period Model period
 * \return Whether bracketing of all markets completed successfully.
 */
 bool SolverLibrary::bracketAll( Marketplace* marketplace, World* world, const double bracketInterval,
                                 const double aSolutionTolerance, const double aSolutionFloor,
-                                SolverInfoSet& solverSet, const int period ) {
+                                SolverInfoSet& solverSet, CalcCounter* aCalcCounter, const int period ) {
     int numIterations = 0;
     bool code = false;
     bool calibrationStatus = world->getCalibrationSetting();
@@ -543,11 +545,17 @@ bool SolverLibrary::bracketAll( Marketplace* marketplace, World* world, const do
     solverLog.setLevel( ILogger::DEBUG );
     solverLog << solverSet << endl;
 
+    ILogger& singleLog = ILogger::getLogger( "single_market_log" );
+
     // sjs -- turn off calibration to let bracketing operate faster. Let calibrations happen in Bisection
     world->turnCalibrationsOff();    
 
     // Loop is done at least once.
-    do {        
+    do {
+        solverSet.printMarketInfo( "Bracket All",
+                                   aCalcCounter->getPeriodCount(),
+                                   singleLog );
+
         // Iterate through each market.
         for ( unsigned int i = 0; i < solverSet.getNumSolvable(); i++ ) {
             // Fetch the current 
@@ -625,7 +633,6 @@ bool SolverLibrary::bracketAll( Marketplace* marketplace, World* world, const do
     solverLog << "Solution Info Set before leaving bracket: " << endl;
     solverLog << solverSet << endl;
 
-    ILogger& singleLog = ILogger::getLogger( "single_market_log" );
     solverSet.printMarketInfo( "End Bracketing Attempt", 0, singleLog );
 
     if ( calibrationStatus ) {
@@ -634,18 +641,22 @@ bool SolverLibrary::bracketAll( Marketplace* marketplace, World* world, const do
     return code;
 }
 
-//! Bracketing function only
-/* Function finds bracket interval for a single market. 
-* \author Josh Lurz
-* \param aBracketInterval Multiplier to use when adjusting the bracket size.
-* \param aSolutionTolerance Solution Tolerance
-* \param aSolutionFloor Solution Floor
-* \param period Model period
-* \return Whether the market was successfully bracketed.
-*/
+/*
+ * \brief Function finds bracket interval for a single market. 
+ * \author Josh Lurz
+ * \param aBracketInterval Multiplier to use when adjusting the bracket size.
+ * \param aSolutionTolerance Solution Tolerance
+ * \param aSolutionFloor Solution Floor
+ * \param aSolSet The solver info set.
+ * \param aSol The solver info to bracket.
+ * \param aCalcCounter The calculation counter.
+ * \param period Model period
+ * \return Whether the market was successfully bracketed.
+ */
 bool SolverLibrary::bracketOne( Marketplace* marketplace, World* world, const double aBracketInterval,
                                 const double aSolutionTolerance, const double aSolutionFloor,
-                                SolverInfoSet& aSolSet, SolverInfo* aSol, const int period )
+                                SolverInfoSet& aSolSet, SolverInfo* aSol, CalcCounter* aCalcCounter,
+                                const int period )
 {
     // Turn off calibration.
     const bool calibrationStatus = world->getCalibrationSetting();
@@ -667,11 +678,17 @@ bool SolverLibrary::bracketOne( Marketplace* marketplace, World* world, const do
     solverLog << "Solution info set prior to bracket one." << endl;
     solverLog << aSolSet << endl;
 
+    ILogger& singleLog = ILogger::getLogger( "single_market_log" );
+
     aSol->resetBrackets();
     unsigned int numIterations = 0;
 
     // Loop is done at least once.
-    do {        
+    do {
+        aSolSet.printMarketInfo( "Bracket One on " + aSol->getName(),
+                                 aCalcCounter->getPeriodCount(),
+                                 singleLog );
+
         // If ED at X and L are the same sign.
         if ( util::sign( aSol->getED() ) == util::sign( aSol->getEDLeft() ) ) {
             // If Supply > Demand at point X.
@@ -717,6 +734,8 @@ bool SolverLibrary::bracketOne( Marketplace* marketplace, World* world, const do
         // Check if the market is actually solved.
         if( aSol->isSolved( aSolutionTolerance, aSolutionFloor ) ){
             aSol->setBracketed();
+            aSol->moveLeftBracketToX();
+            aSol->moveRightBracketToX();
         }
 
         aSolSet.updateToMarkets();
@@ -765,3 +784,4 @@ void SolverLibrary::restorePrices( SolverInfoSet& aSolverSet, const vector<doubl
         aSolverSet.getAny( i ).setPrice( aPrices[ i ] );
     }
 }
+

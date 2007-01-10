@@ -86,9 +86,9 @@ SolverComponent::ReturnCode BisectOne::solve( const double solutionTolerance, co
     solverLog << "BisectOne function called on market " << worstSol->getName() << "." << endl;
     unsigned int numIterations = 0;
     SolverLibrary::bracketOne( marketplace, world, BRACKET_INTERVAL, solutionTolerance,
-                               edSolutionFloor, solverSet, worstSol, period );
+                               edSolutionFloor, solverSet, worstSol, calcCounter, period );
     do {
-        solverSet.printMarketInfo( "Bisect One" + worstSol->getName(), calcCounter->getPeriodCount(), singleLog );
+        solverSet.printMarketInfo( "Bisect One on " + worstSol->getName(), calcCounter->getPeriodCount(), singleLog );
 
         // Move the left bracket in if Supply > Demand
         if ( worstSol->getED() < 0 ) {
@@ -100,13 +100,6 @@ SolverComponent::ReturnCode BisectOne::solve( const double solutionTolerance, co
         }
         // Set new trial value to center
         worstSol->setPriceToCenter();
-
-        // price=0 and supply>demand. only true for constraint case
-        // other markets cannot have supply>demand as price->0
-        // Another condition that should be moved. 
-        if ( fabs( worstSol->getPrice() ) < util::getSmallNumber() && worstSol->getED() < 0 ) { 
-            worstSol->setPrice( 0 ); 
-        } 
 
         solverSet.updateToMarkets();
         marketplace->nullSuppliesAndDemands( period );

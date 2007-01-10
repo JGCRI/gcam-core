@@ -76,10 +76,10 @@ SolverComponent::ReturnCode BisectPolicy::solve( const double solutionTolerance,
     unsigned int numIterations = 0;
     if( !worstSol->isSolved( solutionTolerance, edSolutionFloor ) ){
         SolverLibrary::bracketOne( marketplace, world, BRACKET_INTERVAL, solutionTolerance,
-                                   edSolutionFloor, solverSet, worstSol, period );
+                                   edSolutionFloor, solverSet, worstSol, calcCounter, period );
         if( !worstSol->isSolved( solutionTolerance, edSolutionFloor ) ){
             do {
-                solverSet.printMarketInfo( "BisectPolicy" + worstSol->getName(), calcCounter->getPeriodCount(), singleLog );
+                solverSet.printMarketInfo( "BisectPolicy on " + worstSol->getName(), calcCounter->getPeriodCount(), singleLog );
 
                 // Move the left bracket in if Supply > Demand
                 if ( worstSol->getED() < 0 ) {
