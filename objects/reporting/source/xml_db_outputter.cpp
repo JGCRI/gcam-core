@@ -64,6 +64,9 @@
 #include "sectors/include/more_sector_info.h"
 #include "util/base/include/util.h"
 #include "reporting/include/indirect_emissions_calculator.h"
+#include "technologies/include/default_technology.h"
+#include "technologies/include/iproduction_state.h"
+#include "util/base/include/auto_file.h"
 
 // Whether to write a text file with the contents that are to be inserted
 // into the XML database.
@@ -114,7 +117,7 @@ XMLDBOutputter::DBContainer::XMLContainerWrapper::XMLContainerWrapper( DbXml::Xm
 */
 XMLDBOutputter::XMLDBOutputter():
 mTabs( new Tabs ),
-mCurrIndirectEmissions( 0 )
+mGDP( 0 )
 {}
 
 /*!
@@ -361,6 +364,10 @@ void XMLDBOutputter::endVisitRegion( const Region* aRegion,
 }
 
 void XMLDBOutputter::startVisitRegionMiniCAM( const RegionMiniCAM* aRegionMiniCAM, const int aPeriod ) {
+    // Store the region's GDP object.
+    assert( !mGDP );
+    mGDP = aRegionMiniCAM->gdp.get();
+
     // Write the opening region tag and the type of the base class.
     XMLWriteOpeningTag( aRegionMiniCAM->getXMLName(), mBuffer, mTabs.get(),
         aRegionMiniCAM->getName(), 0, Region::getXMLNameStatic() );
@@ -368,8 +375,11 @@ void XMLDBOutputter::startVisitRegionMiniCAM( const RegionMiniCAM* aRegionMiniCA
 
 void XMLDBOutputter::endVisitRegionMiniCAM( const RegionMiniCAM* aRegionMiniCAM, const int aPeriod ) {
     assert( !mCurrentRegion.empty() );
+    assert( mGDP );
+
     // Clear the region name.
     mCurrentRegion.clear();
+    mGDP = 0;
 
     // Write the closing region tag.
     XMLWriteClosingTag( aRegionMiniCAM->getXMLName(), mBuffer, mTabs.get() );
@@ -485,11 +495,12 @@ void XMLDBOutputter::startVisitSubsector( const Subsector* aSubsector,
     // valid XML.
     const Modeltime* modeltime = scenario->getModeltime();
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
-        writeItem( "subsector-share", "%", aSubsector->share[ i ], i );
+        writeItem( "subsector-share", "%", aSubsector->calcShare( i,
+                                                                  mGDP ), i );
     }
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
         writeItem( "subsector-cost", "$1975/GJ",
-                   aSubsector->subsectorprice[ i ], i );
+                   aSubsector->getPrice( mGDP, i ), i );
     }
 }
 
@@ -524,59 +535,74 @@ void XMLDBOutputter::endVisitBuildingDemandSubsector( const BuildingDemandSubSec
     // Don't write out anything.
 }
 
-void XMLDBOutputter::startVisitTechnology( const technology* aTechnology,
+void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology,
                                            const int aPeriod )
 {
+    assert( aPeriod == -1 );
+
     // Store the fuel name so the GHG can write it out with emissions.
     mCurrentFuel = aTechnology->mTechData->getFuelName();
 
     // Write the opening technology tag and the type of the base class.
-    // TODO: Use functions to get techcost, necost, fuelcost.
     XMLWriteOpeningTag( aTechnology->getXMLName1D(), mBuffer, mTabs.get(),
                         aTechnology->getName(), aTechnology->year,
-                        technology::getXMLNameStatic1D() );
+                        DefaultTechnology::getXMLNameStatic1D() );
 
-    // For now write the year of output to be the same as that of the
-    // technology, this will change with vintaging.
-    XMLWriteElement( aTechnology->getOutput( aPeriod ), "output", mBuffer,
-                     mTabs.get(), aTechnology->year );
+    const Modeltime* modeltime = scenario->getModeltime();
 
-    // TODO: Write out secondary outputs.
-
-    // For writing the input add an attribute which specifies the fuel.
-    {
+    for( int curr = 0; curr < modeltime->getmaxper(); ++curr ){
+        if( !aTechnology->mProductionState[ curr ]->isOperating() ){
+            continue;
+        }
         map<string, string> attrs;
-        attrs[ "fuel-name" ] = aTechnology->mTechData->getFuelName();
+        attrs[ "year" ] = util::toString( modeltime->getper_to_yr( curr ) );
         attrs[ "unit" ] = "EJ";
-        XMLWriteElementWithAttributes( aTechnology->input, "input", mBuffer,
-                                       mTabs.get(), attrs );
+        XMLWriteElementWithAttributes( aTechnology->getOutput( curr ),
+                                       "output", mBuffer, mTabs.get(), attrs );
     }
+   
+    // TODO: Write out secondary outputs.
+    for( int curr = 0; curr < modeltime->getmaxper(); ++curr ){
+        if( !aTechnology->mProductionState[ curr ]->isOperating() ){
+            continue;
+        }
 
-    // Write the tech cost.
-    writeItem( "tech-cost", "$1975/GJ", aTechnology->techcost, -1 );
+        // For writing the input add an attribute which specifies the fuel.
+        map<string, string> attrs;
+        attrs[ "fuel-name" ] = mCurrentFuel;
+        attrs[ "year" ] = util::toString( modeltime->getper_to_yr( curr ) );
+        attrs[ "unit" ] = "EJ";
+        XMLWriteElementWithAttributes( aTechnology->getInput( curr ),
+            "input", mBuffer, mTabs.get(), attrs );
+    }
 
     // Write out the non-energy cost.
     writeItem( "non-energy-cost", "$1975/GJ",
                aTechnology->getNonEnergyCost( aPeriod ), -1 );
 
+
     // Write out the fuel cost.
     writeItem( "fuel-cost", "$1975/GJ",
-               aTechnology->fuelcost, -1 );
+                aTechnology->getFuelCost( mCurrentRegion,
+                                          mCurrentSector, aPeriod ), -1 );
 
-    // Write out the share.
-    writeItem( "tech-share", "%", aTechnology->share, -1 );
-
-    // Calculate the technology's indirect emissions.
-    mCurrIndirectEmissions = aTechnology->getInput()
-                             * mIndirectEmissCalc->getUpstreamEmissionsCoefficient( aTechnology->getFuelName(), aPeriod );
+    for( int curr = 0; curr < modeltime->getmaxper(); ++curr ){
+        if( !aTechnology->mProductionState[ curr ]->isOperating() ){
+            continue;
+        }
+        // Calculate the technology's indirect emissions.
+        mCurrIndirectEmissions[ curr ] = aTechnology->getInput( curr )
+         * mIndirectEmissCalc->getUpstreamEmissionsCoefficient( mCurrentFuel,
+                                                                curr );
+    }
 }
 
-void XMLDBOutputter::endVisitTechnology( const technology* aTechnology,
+void XMLDBOutputter::endVisitTechnology( const Technology* aTechnology,
                                          const int aPeriod )
 {
     // Clear the stored technology information.
     mCurrentFuel.clear();
-    mCurrIndirectEmissions = 0;
+    fill( mCurrIndirectEmissions.begin(), mCurrIndirectEmissions.end(), 0.0 );
 
     // Write the closing technology tag.
     XMLWriteClosingTag( aTechnology->getXMLName1D(), mBuffer, mTabs.get() );
@@ -591,7 +617,7 @@ void XMLDBOutputter::startVisitGHG( const AGHG* aGHG, const int aPeriod ){
 
     // Write out the opening element tag of the GHG and the type of the base class.
     XMLWriteOpeningTag( aGHG->getXMLName(), mBuffer, mTabs.get(), aGHG->getName(),
-                        0, AGHG::getXMLNameStatic() );
+                        0, "GHG" );
 
     // Write out emissions.
     map<string, string> attrs;
@@ -611,6 +637,16 @@ void XMLDBOutputter::startVisitGHG( const AGHG* aGHG, const int aPeriod ){
             attrs[ "unit" ] = "MTC";
             XMLWriteElementWithAttributes( aGHG->getEmission( i ), "emissions",
                 mBuffer, mTabs.get(), attrs );
+        }
+    }
+        // Write indirect emissions if this is CO2.
+    if( aGHG->getName() == "CO2" ){
+        for( int i = 0; i < modeltime->getmaxper(); ++i ){
+            // Skip writing zeros to save space.
+            if( util::isEqual( mCurrIndirectEmissions[ i ], 0.0 ) ){
+                continue;
+            }
+            writeItem( "indirect-emissions", "MTC", mCurrIndirectEmissions[ i ], i );
         }
     }
 }

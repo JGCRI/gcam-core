@@ -46,17 +46,17 @@ public:
 
     void finish() const;
 
-    void startVisitScenario( const Scenario* aScenario, const int aPeriod );
-    void endVisitScenario( const Scenario* aScenario, const int aPeriod );
-    
-    void startVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod );
-    void endVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod );
-    
-    void startVisitWorld( const World* aWorld, const int aPeriod );
-    void endVisitWorld( const World* aWorld, const int aPeriod );
+	void startVisitScenario( const Scenario* aScenario, const int aPeriod );
+	void endVisitScenario( const Scenario* aScenario, const int aPeriod );
+	
+	void startVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod );
+	void endVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod );
+	
+	void startVisitWorld( const World* aWorld, const int aPeriod );
+	void endVisitWorld( const World* aWorld, const int aPeriod );
 
-    void startVisitRegion( const Region* aRegion, const int aPeriod );
-    void endVisitRegion( const Region* aRegion, const int aPeriod );
+	void startVisitRegion( const Region* aRegion, const int aPeriod );
+	void endVisitRegion( const Region* aRegion, const int aPeriod );
 
     void startVisitRegionMiniCAM( const RegionMiniCAM* aRegionMiniCAM, const int aPeriod );
     void endVisitRegionMiniCAM( const RegionMiniCAM* aRegionMiniCAM, const int aPeriod );
@@ -67,8 +67,8 @@ public:
     void startVisitResource( const AResource* aResource, const int aPeriod );
     void endVisitResource( const AResource* aResource, const int aPeriod );
     
-    void startVisitSubResource( const SubResource* aSubResource, const int aPeriod );
-    void endVisitSubResource( const SubResource* aSubResource, const int aPeriod );
+	void startVisitSubResource( const SubResource* aSubResource, const int aPeriod );
+	void endVisitSubResource( const SubResource* aSubResource, const int aPeriod );
 
     void startVisitGrade( const Grade* aGrade, const int aPeriod );
     void endVisitGrade( const Grade* aGrade, const int aPeriod );
@@ -84,8 +84,8 @@ public:
     virtual void endVisitBuildingDemandSubsector( const BuildingDemandSubSector* aSubsector,
                                                   const int aPeriod );
 
-    void startVisitTechnology( const technology* aTechnology, const int aPeriod );
-    void endVisitTechnology( const technology* aTechnology, const int aPeriod );
+	void startVisitTechnology( const Technology* aTechnology, const int aPeriod );
+	void endVisitTechnology( const Technology* aTechnology, const int aPeriod );
 
     void startVisitGHG( const AGHG* aGHG, const int aPeriod );
     void endVisitGHG( const AGHG* aGHG, const int aPeriod );
@@ -180,13 +180,14 @@ private:
     
     //! Current indirect emissions for the Technology. These are more easily
     //! calculated at the Technology but logically belong in the GHG writeout.
-    double mCurrIndirectEmissions;
-
-
+    objects::PeriodVector<double> mCurrIndirectEmissions;
 
     //! Tabs object.
     std::auto_ptr<Tabs> mTabs;
    
+    //! Weak pointer to the current region's GDP object.
+    const GDP* mGDP;
+
     //! Indirect emissions calculator for the current region.
     std::auto_ptr<IndirectEmissionsCalculator> mIndirectEmissCalc;
 
