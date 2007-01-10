@@ -292,6 +292,57 @@ bool MagiccModel::setEmissions( const string& aGasName, const int aPeriod, const
     return true;
 }
 
+double MagiccModel::getEmissions( const string& aGasName,
+                                  const int aYear ) const
+{
+    // Check if the climate model has been run and that valid year is passed in.
+    if( !mIsValid || !isValidClimateModelYear( aYear ) ){
+        return -1;
+    }
+
+    // Lookup the gas index.
+    const int gasIndex = getGasIndex( aGasName );
+    
+    // Check for error.
+    if( gasIndex == INVALID_GAS_NAME ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Invalid gas name " << aGasName << " passed to the MAGICC model wrapper." << endl;
+        return -1;
+    }
+
+    // TODO: Use MAGICC's internal arrays instead of interpolating.
+    const Modeltime* modeltime = scenario->getModeltime();
+
+    int currPeriod = modeltime->getyr_to_per( aYear );
+
+    // Check if we don't need to interpolate. This will also handle the last
+    // year of period 0.
+    if( aYear == modeltime->getper_to_yr( currPeriod ) ){
+        // NOTE: MAGICC indices are shifted by 1 position because
+        //       the array does not have data for MiniCAM period 0.
+        return mEmissionsByGas[ gasIndex ][ currPeriod - 1 ];
+    }
+
+    // Find the year which is the last year of the previous period.
+    int x1 = modeltime->getper_to_yr( currPeriod - 1 );
+
+    // Find the year which is the last year of the current period.
+    int x2 = modeltime->getper_to_yr( currPeriod );
+
+    // Emissions level in the last year of the current period.
+    // NOTE: MAGICC indices are shifted by 1 position because
+    //       the array does not have data for MiniCAM period 0.
+    double y2 = mEmissionsByGas[ gasIndex ][ currPeriod - 1 ];
+
+    // Emissions level in the last year of the previous period.
+    double y1 = mEmissionsByGas[ gasIndex ][ currPeriod - 2 ];
+
+    // Linearly interpolate the emissions for the current year based on the
+    // emissions levels in the surrounding periods.
+    return static_cast<double>( ( aYear - x1 ) * ( y2 - y1 ) ) / static_cast<double>( ( x2 - x1 ) ) + y1;
+}
+
 /*! \brief Run the MAGICC emissions model.
 * \details This function will run the MAGICC model with the currently stored
 *          emissions levels. It will first extrapolate future points for each
@@ -506,6 +557,14 @@ void MagiccModel::printFileOutput() const {
     }
     // Write out the data to the text output function protocol
     fileoutput3( "global","MAGICC"," "," ","Concentration","PPM", data );
+    
+    // TEMP?
+    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
+        data[ period ] = getEmissions( "CO2", mModeltime->getper_to_yr( period ) );
+    }
+
+    // Write out the data to the text output function protocol
+    fileoutput3( "global","MAGICC"," "," ","CO2-Emissions","TgC", data );
 
     // Fill up a vector of total forcing.
     for( int period = 0; period < mModeltime->getmaxper(); ++period ){
@@ -563,6 +622,14 @@ void MagiccModel::printDBOutput() const {
     // Write out the data to the database.
      dboutput4( "global", "General", "Concentrations", "Period", "PPM", data );
  
+    // TEMP?
+    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
+        data[ period ] =
+            getEmissions( "CO2", mModeltime->getper_to_yr( period ) );
+    }
+    // Write out the data to the database.
+     dboutput4( "global", "General", "CO2 Emissions", "Period", "TgC", data );
+
     // Fill up a vector of total forcing.
     for( int period = 0; period < mModeltime->getmaxper(); ++period ){
         data[ period ] = getTotalForcing( mModeltime->getper_to_yr( period ) );

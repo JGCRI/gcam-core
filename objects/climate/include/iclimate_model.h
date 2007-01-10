@@ -79,6 +79,17 @@ public:
                                const int aPeriod,
 		                       const double aEmission ) = 0;
 
+    /*!
+    * \brief Get the level of emissions for a particular gas in a given period.
+    * \details 
+    * \param aGasName The name of the gas for which to get emissions.
+    * \param aYear The year in which to get emissions. This can be a fractional
+    *              year.
+    * \return Emissions by gas in the given period.
+    */
+    virtual double getEmissions( const std::string& aGasName,
+                                 const int aYear ) const = 0;
+
 	/*! \brief Run the climate model.
 	* \details This method performs the climate calculations. It must be called
     *          after all emissions levels are set and before any output routines

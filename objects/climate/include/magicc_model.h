@@ -54,6 +54,9 @@ public:
                                const int aPeriod,
                                const double aEmission );
     
+    virtual double getEmissions( const std::string& aGasName,
+                                 const int aYear ) const;
+
     virtual bool runModel();
 
     virtual double getConcentration( const std::string& aGasName,
