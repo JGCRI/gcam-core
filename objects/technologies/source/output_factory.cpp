@@ -23,7 +23,7 @@
 
 // Add new types here.
 #include "technologies/include/secondary_output.h"
-#include "emissions/include/by_product.h"
+// #include "emissions/include/by_product.h"
 
 using namespace std;
 
@@ -35,8 +35,9 @@ using namespace std;
  */
 bool OutputFactory::isOfType( const string& aType ) {
     // Search the list of known types.
-    return ( aType == SecondaryOutput::getXMLNameStatic() ) 
-        || ( aType == ByProduct::getXMLNameStatic() );
+    return ( aType == SecondaryOutput::getXMLNameStatic() );
+    // TODO: Enable byproducts code when nuclear is committed.
+    //   || ( aType == ByProduct::getXMLNameStatic() );
 }
 
 /*!
@@ -50,9 +51,9 @@ auto_ptr<IOutput> OutputFactory::create( const string& aType ) {
     if( aType == SecondaryOutput::getXMLNameStatic() ){
         return auto_ptr<IOutput>( new SecondaryOutput );
     }
-    if( aType == ByProduct::getXMLNameStatic() ){
-        return auto_ptr<IOutput>( new ByProduct );
-    }
+    // if( aType == ByProduct::getXMLNameStatic() ){
+    //    return auto_ptr<IOutput>( new ByProduct );
+    //}
     // Check for consistency.
     assert( !isOfType( aType ) );
 

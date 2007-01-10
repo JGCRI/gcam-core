@@ -236,9 +236,6 @@
 					RelativePath="..\..\emissions\source\asimple_carbon_calc.cpp">
 				</File>
 				<File
-					RelativePath="..\..\emissions\source\by_product.cpp">
-				</File>
-				<File
 					RelativePath="..\..\emissions\source\co2_emissions.cpp">
 				</File>
 				<File
@@ -324,12 +321,6 @@
 			<Filter
 				Name="resources"
 				Filter="">
-				<File
-					RelativePath="..\..\resources\source\accumulated_grade.cpp">
-				</File>
-				<File
-					RelativePath="..\..\resources\source\accumulated_post_grade.cpp">
-				</File>
 				<File
 					RelativePath="..\..\resources\source\grade.cpp">
 				</File>
@@ -544,9 +535,6 @@
 				</File>
 				<File
 					RelativePath="..\..\technologies\source\non_energy_use_capture_component.cpp">
-				</File>
-				<File
-					RelativePath="..\..\technologies\source\nuke_fuel_technology.cpp">
 				</File>
 				<File
 					RelativePath="..\..\technologies\source\output_factory.cpp">
@@ -995,9 +983,6 @@
 					RelativePath="..\..\emissions\include\asimple_carbon_calc.h">
 				</File>
 				<File
-					RelativePath="..\..\emissions\include\by_product.h">
-				</File>
-				<File
 					RelativePath="..\..\emissions\include\co2_emissions.h">
 				</File>
 				<File
@@ -1092,12 +1077,6 @@
 			<Filter
 				Name="resources"
 				Filter="">
-				<File
-					RelativePath="..\..\resources\include\accumulated_grade.h">
-				</File>
-				<File
-					RelativePath="..\..\resources\include\accumulated_post_grade.h">
-				</File>
 				<File
 					RelativePath="..\..\resources\include\aresource.h">
 				</File>

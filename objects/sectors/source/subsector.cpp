@@ -17,7 +17,7 @@
 #include "util/base/include/configuration.h"
 #include "sectors/include/subsector.h"
 #include "technologies/include/technology.h"
-#include "technologies/include/nuke_fuel_technology.h"
+// #include "technologies/include/nuke_fuel_technology.h"
 #include "technologies/include/itechnology.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
@@ -315,8 +315,9 @@ void Subsector::XMLParse( const DOMNode* node ) {
 
 //! Virtual function which specifies the XML name of the children of this class, the type of Technology.
 bool Subsector::isNameOfChild( const string& aTechnologyType ) const {
-    return ( aTechnologyType == DefaultTechnology::getXMLNameStatic1D()
-             || aTechnologyType == NukeFuelTechnology::getXMLNameStatic1D() );
+    return ( aTechnologyType == DefaultTechnology::getXMLNameStatic1D());
+    // TODO: Turn this back on for nuclear.
+    //         || aTechnologyType == NukeFuelTechnology::getXMLNameStatic1D() );
 }
 
 /*!
@@ -340,9 +341,11 @@ ITechnology* Subsector::createChild( const string& aTechType,
     if( aTechType == DefaultTechnology::getXMLNameStatic1D() ){
         return new DefaultTechnology( aTechName, aTechYear );
     }
-    if( aTechType == NukeFuelTechnology::getXMLNameStatic1D() ){
-        return new NukeFuelTechnology( aTechName, aTechYear );
-    }
+    
+    // TODO: Turn this back on for nuclear.
+    // if( aTechType == NukeFuelTechnology::getXMLNameStatic1D() ){
+    //    return new NukeFuelTechnology( aTechName, aTechYear );
+    // }
     /*! \invariant createChild should never be called without first checking
     *              isNameOfChild so this operation should never fail. 
     */
