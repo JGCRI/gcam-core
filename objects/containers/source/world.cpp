@@ -134,6 +134,7 @@ void World::completeInit() {
     //Inititalize Climate Model
     mClimateModel->completeInit( scenario->getName() );
 }
+
 /*! \brief Initialize the region partial derivative calculation hash map.
 * \details Constructs a mapping of region Atom to index within the region
 *          vector. This allows for rapid lookups of region numbers during
@@ -266,6 +267,16 @@ const string& World::getName() const {
 */
 void World::initCalc( const int period ) {
     Configuration* conf = Configuration::getInstance();
+    for( vector<Region*>::iterator i = regions.begin(); i != regions.end(); i++ ){
+        // Add supplies and demands to the marketplace in the base year for checking data consistency
+        // and for getting demand and supply totals.
+        // Need to update markets here after markets have been null by scenario.
+        // TODO: This should be combined with check data.
+        if( period == 0 ){
+            ( *i )->updateMarketplace( period );
+        }
+        ( *i )->initCalc( period );
+    }
     if( conf->getBool( "CalibrationActive" ) ){
         // cal consistency check needs to be before initCalc so calInput values have already been scaled if necessary
         // If any values are scaled, then this is checked at least one more time to see if further scalings are necessary
@@ -281,16 +292,6 @@ void World::initCalc( const int period ) {
     }
     // Reset the calc counter.
     calcCounter->startNewPeriod();
-    for( vector<Region*>::iterator i = regions.begin(); i != regions.end(); i++ ){
-        // Add supplies and demands to the marketplace in the base year for checking data consistency
-        // and for getting demand and supply totals.
-        // Need to update markets here after markets have been null by scenario.
-        // TODO: This should be combined with check data.
-        if( period == 0 ){
-            ( *i )->updateMarketplace( period );
-        }
-        ( *i )->initCalc( period );
-    }
 }
 
 /*! \brief Assure that calibrated inputs and outputs are consistant.
@@ -307,6 +308,7 @@ void World::initCalc( const int period ) {
 *
 * \author Steve Smith
 * \warning A simultaneity in the base year may or may not be handled correctly.
+* \todo Shouldn't this all be at the regional level?
 * \return Whether any values were adjusted this period.
 */
 bool World::checkCalConsistancy( const int period ) {
@@ -338,6 +340,7 @@ bool World::checkCalConsistancy( const int period ) {
                 }
             }
             ++iteration;
+
             // In case user sets up infinite loop in input, break.
             if (iteration > 50 ) {
                 mainLog.setLevel( ILogger::ERROR );
@@ -696,16 +699,17 @@ const vector<unsigned int> World::getRegionIndexesToCalculate( const AtomVector&
     return regionNumbersToCalc;
 }
 
-/*! \brief Function to finalize objects after a period is solved.
-* \details This function is used to calculate and store variables which are only needed after the current
-* period is complete. 
+/*! \brief Call any calculations that are only done once per period after
+*          solution is found.
+* \details This function is used to calculate and store variables which are only
+*          needed after the current period is complete. 
 * \param aPeriod The period to finalize.
-* \author Josh Lurz
+* \author Sonny Kim, Josh Lurz
 */
 void World::postCalc( const int aPeriod ){
     // Finalize sectors.
     for( RegionIterator region = regions.begin(); region != regions.end(); ++region ){
-        (*region)->finalizePeriod( aPeriod );
+        (*region)->postCalc( aPeriod );
     }
 }
 
