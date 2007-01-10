@@ -35,6 +35,12 @@ bool MergeRunner::XMLParse( const xercesc::DOMNode* aRoot ){
 bool MergeRunner::setupScenarios( Timer& timer, const string aName, const list<string> aScenComponents ){
     // Parse the input file.
     const Configuration* conf = Configuration::getInstance();
+    
+    // Need to ensure the Scenario is cleared and set.
+    mScenario.reset( new Scenario );
+    // Make sure the global scenario points is set.
+    scenario = mScenario.get();
+    
     bool success = XMLHelper<void>::parseXML( conf->getFile( "xmlInputFileName" ), mScenario.get() );
 
     // Parsing failed.
@@ -42,11 +48,7 @@ bool MergeRunner::setupScenarios( Timer& timer, const string aName, const list<s
         return false;
     }
 
-    // Need to ensure the Scenario is cleared and set.
-    mScenario.reset( new Scenario );
 
-    // Make sure the global scenario points is set.
-    scenario = mScenario.get();
 
     // Override scenario name from data file with that from configuration file
     const string overrideName = conf->getString( "scenarioName" ) + aName;
