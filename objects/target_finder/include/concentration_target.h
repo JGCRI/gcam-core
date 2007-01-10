@@ -19,8 +19,6 @@
 * \ingroup Objects
 * \brief The ConcentrationTarget class header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "target_finder/include/itarget.h"
@@ -38,9 +36,7 @@ public:
                          const double aTargetValue );
 
     virtual TrialStatus getStatus( const double aTolerance,
-                                   const unsigned int aYear ) const;
-
-    const std::string& getTaxName() const;
+                                   const double aYear ) const;
 
     static const std::string& getXMLNameStatic();
 private:
@@ -53,6 +49,5 @@ private:
 
     //! The target value.
     double mTargetValue;
-
 };
 #endif // _CONCENTRATION_TARGET_H_

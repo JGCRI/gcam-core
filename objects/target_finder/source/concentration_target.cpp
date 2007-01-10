@@ -13,8 +13,6 @@
 * \ingroup Objects
 * \brief ConcentrationTarget class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -25,6 +23,7 @@
 #include "target_finder/include/concentration_target.h"
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
+#include "util/base/include/util.h"
 
 using namespace std;
 
@@ -36,8 +35,10 @@ using namespace std;
 ConcentrationTarget::ConcentrationTarget( const IClimateModel* aClimateModel,
                                           const double aTargetValue ):
 mClimateModel( aClimateModel ),
-mTargetValue( aTargetValue ){
-    mTargetGas = Configuration::getInstance()->getString( "concentration-target-gas", "CO2" );
+mTargetValue( aTargetValue ) {
+    // Store configuration variables.
+    const Configuration* conf = Configuration::getInstance();
+    mTargetGas = conf->getString( "concentration-target-gas", "CO2" );
 }
 
 /*!
@@ -47,10 +48,12 @@ mTargetValue( aTargetValue ){
  * \return Status of the last trial.
  */
 ITarget::TrialStatus ConcentrationTarget::getStatus( const double aTolerance,
-                                                     const unsigned int aYear ) const
+                                                     const double aYear ) const
 {
     // Check if we are above or below the target.
-    const double currConcentration = mClimateModel->getConcentration( mTargetGas, aYear );
+    // TODO: Avoid loss of precision.
+    const double currConcentration =
+        mClimateModel->getConcentration( mTargetGas, util::round( aYear ) );
 
     // Determine how how far away from the target the current estimate is.
     double percentOff = ( currConcentration - mTargetValue ) / mTargetValue * 100;
@@ -74,13 +77,6 @@ ITarget::TrialStatus ConcentrationTarget::getStatus( const double aTolerance,
     }
 
     return status;
-}
-
-/*! \brief Get the name of the target gas.
-* \return The name of the current gas.
-*/
-const string& ConcentrationTarget::getTaxName() const {
-    return mTargetGas;
 }
 
 /*! \brief Return the static name of the object.

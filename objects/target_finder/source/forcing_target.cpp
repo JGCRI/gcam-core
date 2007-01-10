@@ -13,8 +13,6 @@
 * \ingroup Objects
 * \brief ForcingTarget class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -25,6 +23,7 @@
 #include "climate/include/iclimate_model.h"
 #include "target_finder/include/forcing_target.h"
 #include "util/logger/include/ilogger.h"
+#include "util/base/include/util.h"
 
 using namespace std;
 
@@ -46,19 +45,21 @@ mTargetValue( aTargetValue ){
  * \return Status of the last trial.
  */
 ITarget::TrialStatus ForcingTarget::getStatus( const double aTolerance,
-                                               const unsigned int aYear ) const
+                                               const double aYear ) const
 {
     // Check if we are above or below the target.
-    const double currForcing = mClimateModel->getTotalForcing( aYear );
+    // TODO: Avoid loss of precision.
+    const double currForcing =
+        mClimateModel->getTotalForcing( util::round( aYear ) );
 
     // Determine how how far away from the target the current estimate is.
     double percentOff = ( currForcing - mTargetValue ) / mTargetValue * 100;
     
     // Print an information message.
-    ILogger& mainLog = ILogger::getLogger( "main_log" );
-    mainLog.setLevel( ILogger::NOTICE );
-    mainLog << "Currently " << percentOff << " percent away from the forcing target." << endl;
-    mainLog << "Current: " << currForcing << " Target: " << mTargetValue << endl;
+    ILogger& targetLog = ILogger::getLogger( "target_finder_log" );
+    targetLog.setLevel( ILogger::NOTICE );
+    targetLog << "Currently " << percentOff << " percent away from the forcing target." << endl
+              << "Current: " << currForcing << " Target: " << mTargetValue << endl;
 
     TrialStatus status = UNKNOWN;
     // Check if the target is solved.
@@ -73,15 +74,6 @@ ITarget::TrialStatus ForcingTarget::getStatus( const double aTolerance,
     }
 
     return status;
-}
-
-/*! \brief Get the name of the target gas.
-* \return The name of the current gas.
-* \todo What to return?
-*/
-const string& ForcingTarget::getTaxName() const {
-    const static string TARGET_GASES = "all";
-    return TARGET_GASES;
 }
 
 /*! \brief Return the static name of the object.

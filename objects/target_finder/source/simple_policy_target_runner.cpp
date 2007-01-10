@@ -55,7 +55,8 @@ SimplePolicyTargetRunner::SimplePolicyTargetRunner()
   mTargetValue( -1 ),
   mTargetYear( 0 ),
   mTolerance( 0.005 ),
-  mHasParsedConfig( false )
+  mHasParsedConfig( false ),
+  mTaxName( "CO2" ) // Default to only taxing CO2.
 {
     mSingleScenario = ScenarioRunnerFactory::create( "single-scenario-runner" );
 
@@ -75,6 +76,10 @@ SimplePolicyTargetRunner::SimplePolicyTargetRunner()
 }
 //! Destructor.
 SimplePolicyTargetRunner::~SimplePolicyTargetRunner(){
+}
+
+const string& SimplePolicyTargetRunner::getName() const {
+    return getXMLNameStatic();
 }
 
 /*! \brief Setup the Scenario to be run.
@@ -174,6 +179,7 @@ bool SimplePolicyTargetRunner::setupScenarios( Timer& aTimer, const string aName
 *          and emmissions pathway that will cause the specified target to be reached in
 *          the end of the target period.
 * \param aSinglePeriod This parameter is currently ignored.
+* \param aPrintDebugging Whether to print debugging information.
 * \param aTimer The timer used to print out the amount of time spent performing
 *        operations.
 * \return Whether all model runs solved successfully.
@@ -185,12 +191,16 @@ bool SimplePolicyTargetRunner::runScenarios( const int aSingleScenario,
     const unsigned int LIMIT_ITERATIONS = 100;
 
     // Run the model for all periods
-    bool success = mSingleScenario->runScenarios( Scenario::RUN_ALL_PERIODS,
-                                                  aPrintDebugging, timer );
+    bool success = mSingleScenario->runScenarios( Scenario::RUN_ALL_PERIODS, false, timer );
 
     // Construct a bisecter which has an initial trial equal to 1/2
-    Bisecter bisecter( mPolicyTarget.get(), mTolerance,
-                       .5, mTargetYear, 0, 1 );
+    Bisecter bisecter( mPolicyTarget.get(),
+                       mTolerance,
+                       0,
+                       1,
+                       .5,
+                       1,
+                       mTargetYear );
 
     // Declare some variables we will be using in the loop.
     vector<double> differences = preComputeDifferences( mLowerBound->getSortedPairs(),
@@ -203,7 +213,7 @@ bool SimplePolicyTargetRunner::runScenarios( const int aSingleScenario,
         // constraint in the model.
         vector<double> emissions = preComputeEmissions( mLowerBound->getSortedPairs(), differences, scalingValue );
         combineCurves( emissions );
-        setTrialTaxes( mPolicyTarget->getTaxName(), curveToConstraintVector( mInterpolatedCurve.get() ) );
+        setTrialTaxes( curveToConstraintVector( mInterpolatedCurve.get() ) );
 
         // Run the applicable periods
         const Modeltime* modeltime = getInternalScenario()->getModeltime();
@@ -211,7 +221,7 @@ bool SimplePolicyTargetRunner::runScenarios( const int aSingleScenario,
         unsigned int start = modeltime->getyr_to_per( static_cast<unsigned int>(mLowerBound->getMinX()) );
         unsigned int max = getInternalScenario()->getModeltime()->getmaxper();
         for( unsigned int i = start; i < max; i++ ){
-            success &= mSingleScenario->runScenarios( i, aPrintDebugging, timer );
+            success &= mSingleScenario->runScenarios( i, false, timer );
         }
 
         pair<double, bool> trial = bisecter.getNextValue();
@@ -328,7 +338,9 @@ bool SimplePolicyTargetRunner::XMLParse( const xercesc::DOMNode* aRoot ){
         else if ( nodeName == "target-tolerance" ){
             mTolerance = XMLHelper<double>::getValue( curr );
         }
-
+        else if( nodeName == "tax-name" ){
+            mTaxName == XMLHelper<string>::getValue( curr );
+        }
         // Read the lower-bound and upper-bound curves
         else if ( nodeName == Curve::getXMLNameStatic() ){
             const string nameOfCurve = XMLHelper<string>::getAttr( curr, "name" );
@@ -441,13 +453,12 @@ vector<double> SimplePolicyTargetRunner::curveToConstraintVector( const Curve* a
 }
 
 /*! \brief Set the trial emissions.
-* \param aTaxName name of tax
 * \param aEmmissions emissions vector
 */
-void SimplePolicyTargetRunner::setTrialTaxes( const string& aTaxName, const vector<double>& aEmissions ) {
+void SimplePolicyTargetRunner::setTrialTaxes( const vector<double>& aEmissions ) {
     // Set the fixed constraint into the world. The world will clone this tax object,
     // this object retains ownership of the original.
-    GHGPolicy tax( aTaxName, "global" );
+    GHGPolicy tax( mTaxName, "global" );
     tax.setConstraint( aEmissions );
     mSingleScenario->getInternalScenario()->setTax( &tax );
 }

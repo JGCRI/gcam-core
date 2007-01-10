@@ -19,8 +19,6 @@
 * \ingroup Objects
 * \brief The Bisecter class header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 class ITarget;
@@ -32,18 +30,41 @@ class Bisecter {
 public:
     Bisecter( const ITarget* aTarget,
               const double aTolerance,
+              const double aMinimum,
+              const double aMaximum,
               const double aInitialValue,
-              const unsigned int aYear,
-              const double aLowerBound,
-              const double aUpperBound );
+              const double aMultiple,
+              const unsigned int aYear );
 
     std::pair<double, bool> getNextValue();
 
     unsigned int getIterations() const;
-    
-    //! A representation of an unknown bound.
-    const static int UNKNOWN = -1;
+
+    static double undefined();
 private:
+    /*
+    * \brief An enumeration of all states the bisection algorithm may be in at
+    *        the end of an iteration.
+    */
+    enum SolvedState {
+        //! Solution has been found.
+        eSolved,
+
+        //! Solution has not been found.
+        eUnsolved,
+
+        //! The difference between the upper and lower bounds is less than the
+        //! tolerance.
+        eEmptyBracket,
+
+        //! The difference between the upper bound and the current trial is less
+        //! than the tolerance.
+        eUpperBoundReached,
+
+        //! The difference between the lower bound and the current trial is less
+        //! than the tolerance.
+        eLowerBoundReached
+    };
 
     //! The target.
     const ITarget* mTarget;
@@ -51,8 +72,17 @@ private:
     //! The tolerance of the target.
     const double mTolerance;
 
-    //! The current trial value.
-    double mCurrentTrial;
+    //! The minimum of the search.
+    double mMinimum;
+
+    //! The maximum of the search.
+    double mMaximum;
+
+    //! The initial trial value.
+    double mInitialGuess;
+    
+    //! The adjustment to make during each iteration.
+    double mMultiple;
 
     //! The current lower bound.
     double mLowerBound;
@@ -60,11 +90,16 @@ private:
     //! The current upper bound.
     double mUpperBound;
 
+    //! The current trial value.
+    double mCurrentTrial;
+    
     //! The current number of trial values returned.
     unsigned int mIterations;
 
     //! Year in which the bisecter is operating.
     unsigned int mYear;
 
+    void printState( const SolvedState aState ) const;
 };
+
 #endif // _BISECTER_H_

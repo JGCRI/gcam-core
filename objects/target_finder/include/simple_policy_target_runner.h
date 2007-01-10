@@ -28,7 +28,6 @@
 class Timer;
 class ITarget;
 class Curve;
-class GHGPolicy;
 class TotalPolicyCostCalculator;
 
 typedef std::vector<std::pair<double,double> > VectorOfPairs;
@@ -62,6 +61,9 @@ typedef std::vector<std::pair<double,double> > VectorOfPairs;
  *              - \c target-tolerance SimplePolicyTargetRunner::mTargetTolerance
  *                (optional)
  *                                    The default is 0.005.
+ *              - \c tax-name SimplePolicyTargetRunner::mTaxName
+ *                (optional)
+ *                                    The default is CO2.
  *              - \c Curve SimplePolicyTargetRunner::mLowerBound
  *                  -Attributes:
  *                      - \c type PointSetCurve
@@ -105,6 +107,8 @@ class SimplePolicyTargetRunner: public IScenarioRunner, protected boost::noncopy
 public:
     virtual ~SimplePolicyTargetRunner();
 
+    virtual const std::string& getName() const;
+
     virtual bool setupScenarios( Timer& timer,
         const std::string aName = "",
         const std::list<std::string> aScenComponents = std::list<std::string>() );
@@ -136,6 +140,9 @@ protected:
     //! The type of policy target.
     std::string mTargetType;
     
+    //! The name of the tax to modify.
+    std::string mTaxName;
+
     //! The year in which to reach the target.
     unsigned int mTargetYear;
 
@@ -166,7 +173,7 @@ private:
 
     std::vector<double> curveToConstraintVector( const Curve* aCurve ) const;
     void combineCurves( const std::vector<double>& aEmissionValues ) const;
-    void setTrialTaxes( const std::string& aTaxName, const std::vector<double>& aEmissions );
+    void setTrialTaxes( const std::vector<double>& aEmissions );
     static std::vector<double> preComputeDifferences( const VectorOfPairs&,
                                                       const VectorOfPairs& );
     static std::vector<double> preComputeEmissions( const VectorOfPairs& aLower,
