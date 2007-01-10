@@ -113,7 +113,7 @@ void FoodSupplySubsector::adjustForCalibration( double aSubsectorVariableDemand,
 void FoodSupplySubsector::MCoutputAllSectors( const GDP* aGDP,
                                               const IndirectEmissionsCalculator* aIndirectEmissionsCalc,
                                               const vector<double> aSectorOutput ) const
-                                              
+{            
     Subsector::MCoutputAllSectors( aGDP,
                                    aIndirectEmissionsCalc,
                                    aSectorOutput );
