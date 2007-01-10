@@ -21,18 +21,17 @@ class IInfo;
 
 /*! 
 * \ingroup CIAM
-* \brief This building technology class calculates demand for building energy services.
-*
-* Building demand technology objects, act differently than normal technology objects in that they 
-* each generate a demand for a 
-* specific building service (heating, cooling, lighting, etc.), which is then provided by 
-* a supply sector.
-* These technologies do not consume fuels or generate GHG emissions. These come from the supply sectors.
-*
+* \brief This building technology class calculates demand for building energy
+*        services.
+* \details Building demand technology objects, act differently than normal
+*          technology objects in that they each generate a demand for a specific
+*          building service (heating, cooling, lighting, etc.), which is then
+*          provided by a supply sector. These technologies do not consume fuels
+*          or generate GHG emissions. These come from the supply sectors.
 * \author Steve Smith
 */
 
-class BuildingGenericDmdTechnology : public technology
+class BuildingGenericDmdTechnology : public Technology
 {
 public:
     BuildingGenericDmdTechnology( const std::string& aName, const int aYear );
@@ -40,26 +39,52 @@ public:
     virtual ~BuildingGenericDmdTechnology();
     virtual const std::string& getXMLName1D() const;
     static const std::string& getXMLNameStatic1D();
-    
+	
+    virtual void completeInit( const std::string& aRegionName,
+                               const std::string& aSectorName,
+                               DependencyFinder* aDepFinder,
+                               const IInfo* aSubsectorInfo,
+                               ILandAllocator* aLandAllocator,
+                               const GlobalTechnologyDatabase* aGlobalTechDB );
+
     virtual void initCalc( const std::string& aRegionName,
                            const std::string& aSectorName,
                            const IInfo* aSubsectorIInfo,
                            const Demographic* aDemographics,
                            const int aPeriod );
 
-    virtual void calcShare( const std::string& aRegionName,
-                            const std::string& aSectorName,
-                            const GDP* aGDP,
-                            const int aPeriod ); 
-    
+    virtual void postCalc( const std::string& aRegionName,
+                           const int aPeriod );	
+	
     virtual void production( const std::string& aRegionName,
-                             const std::string& aSectorName,
-                             const double aDemand,
+                             const std::string& aSectorName, 
+		                     double aVariableDemand,
+                             double aFixedOutputScaleFactor,
                              const GDP* aGDP,
                              const int aPeriod );
 
-    virtual void adjustForCalibration( double subSectorDemand, const std::string& regionName,
-		                               const IInfo* subSectorInfo, const int period );
+	virtual double getFuelCost( const std::string& aRegionName,
+                                const std::string& aSectorName,
+		                        const int aPeriod ) const;
+    
+	virtual void calcCost( const std::string& aRegionName,
+		                   const std::string& aSectorName,
+		                   const int aPeriod );
+
+    virtual double getNonEnergyCost( const int aPeriod ) const;
+	
+    virtual double calcShare( const std::string& aRegionName,
+                              const std::string& aSectorName, 
+		                      const GDP* aGDP,
+                              const int aPeriod ) const;
+
+    virtual double getEfficiency( const int aPeriod ) const;
+
+    virtual void adjustForCalibration( double aTechnologyDemand,
+                                       const std::string& aRegionName,
+                                       const IInfo* aSubSectorInfo,
+                                       const int aPeriod );
+
 protected:
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
@@ -68,8 +93,6 @@ protected:
     virtual double getEffectiveInternalGains( const std::string& regionName, const int period );
     double saturation; //!< penetration level for this technology
     double priceElasticity; //!< Price elasticity for this demand
-private:
-    static const std::string XML_NAME1D; //!< tag name for toInputXML
 };
 #endif // _BUILDING_GENERIC_TECHNOLOGY_H_
 

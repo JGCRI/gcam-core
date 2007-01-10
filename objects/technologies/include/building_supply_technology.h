@@ -30,20 +30,55 @@ class NationalAccount;
 * \author Steve Smith
 */
 
-class BuildingSupplyTechnology : public technology
+class BuildingSupplyTechnology : public Technology
 {
 public:
     BuildingSupplyTechnology( const std::string& aName, const int aYear );
-    BuildingSupplyTechnology* clone() const;
-    ~BuildingSupplyTechnology();
-    const std::string& getXMLName1D() const;
+    virtual BuildingSupplyTechnology* clone() const;
+    virtual const std::string& getXMLName1D() const;
+
     static const std::string& getXMLNameStatic1D();
-    
+	
+    virtual void completeInit( const std::string& aRegionName,
+                               const std::string& aSectorName,
+                               DependencyFinder* aDepFinder,
+                               const IInfo* aSubsectorIInfo,
+                               ILandAllocator* aLandAllocator,
+                               const GlobalTechnologyDatabase* aGlobalTechDB );
+
+    virtual void initCalc( const std::string& aRegionName,
+                           const std::string& aSectorName,
+                           const IInfo* aSubsectorIInfo,
+                           const Demographic* aDemographics,
+                           const int aPeriod );
+
+    virtual void postCalc( const std::string& aRegionName,
+                           const int aPeriod );	
+	
     virtual void production( const std::string& aRegionName,
-                             const std::string& aSectorName,
-                             const double aDemand,
+                             const std::string& aSectorName, 
+		                     double aVariableDemand,
+                             double aFixedOutputScaleFactor,
                              const GDP* aGDP,
                              const int aPeriod );
+
+	virtual double getFuelCost( const std::string& aRegionName,
+                                const std::string& aSectorName,
+		                        const int aPeriod ) const;
+    
+	virtual void calcCost( const std::string& aRegionName,
+		                   const std::string& aSectorName,
+		                   const int aPeriod );
+
+    virtual double getNonEnergyCost( const int aPeriod ) const;
+
+	virtual double calcShare( const std::string& aRegionName,
+                              const std::string& aSectorName, 
+		                      const GDP* aGDP,
+                              const int aPeriod ) const; 
+
+    virtual double getEfficiency( const int aPeriod ) const;
+
 protected:
     const std::string& getXMLName() const; 
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 

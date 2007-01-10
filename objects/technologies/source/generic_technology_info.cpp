@@ -27,8 +27,8 @@ using namespace xercesc;
 
 
 GenericTechnologyInfo::GenericTechnologyInfo( const string &aName )
-: name( aName ), mBaseEfficiency( 1 ), effPenalty( 0 ), 
-mBaseNonEnergyCost( 0 ), neCostPenalty( 0 ), fMultiplier( 1 ), 
+: name( aName ), mBaseEfficiency( 1 ), 
+mBaseNonEnergyCost( 0 ), fMultiplier( 1 ), 
 fuelPrefElasticity( 0 ) {
 }
 
@@ -52,9 +52,7 @@ void GenericTechnologyInfo::toInputXML( ostream &out, Tabs *tabs ) const {
 
     XMLWriteElement( fuelname, "fuelname", out, tabs );
     XMLWriteElementCheckDefault( mBaseEfficiency, "efficiency", out, tabs, 1.0 );
-    XMLWriteElementCheckDefault( effPenalty, "efficiencyPenalty", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( mBaseNonEnergyCost, "nonenergycost", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( neCostPenalty, "neCostPenalty", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( fuelPrefElasticity, "fuelprefElasticity", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( fMultiplier, "fMultiplier", out, tabs, 1.0 );
 
@@ -66,9 +64,7 @@ void GenericTechnologyInfo::toDebugXML( int period, ostream &out, Tabs *tabs ) c
 
     XMLWriteElement( fuelname, "fuelname", out, tabs );
     XMLWriteElementCheckDefault( mBaseEfficiency, "efficiency", out, tabs, 1.0 );
-    XMLWriteElementCheckDefault( effPenalty, "efficiencyPenalty", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( mBaseNonEnergyCost, "nonenergycost", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( neCostPenalty, "neCostPenalty", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( fuelPrefElasticity, "fuelprefElasticity", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( fMultiplier, "fMultiplier", out, tabs, 1.0 );
 
@@ -90,14 +86,6 @@ const double GenericTechnologyInfo::getNonEnergyCost() const {
     return mBaseNonEnergyCost;
 }
 
-const double GenericTechnologyInfo::getEffPenalty() const {
-    return effPenalty;
-}
-
-const double GenericTechnologyInfo::getNECostPenalty() const {
-    return neCostPenalty;
-}
-
 const double GenericTechnologyInfo::getFMultiplier() const {
     return fMultiplier;
 }
@@ -116,14 +104,6 @@ void GenericTechnologyInfo::setEfficiency( const double aEfficiency ) {
 
 void GenericTechnologyInfo::setNonEnergyCost( const double aNonEnergyCost ) {
     mBaseNonEnergyCost = aNonEnergyCost;
-}
-
-void GenericTechnologyInfo::setEffPenalty( const double aEffPenalty ) {
-    effPenalty = aEffPenalty;
-}
-
-void GenericTechnologyInfo::setNECostPenalty( const double aNECostPenalty ) {
-    neCostPenalty = aNECostPenalty;
 }
 
 void GenericTechnologyInfo::setFMultiplier( const double aFMultiplier ) {

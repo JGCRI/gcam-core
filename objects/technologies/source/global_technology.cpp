@@ -28,8 +28,9 @@ using namespace std;
 using namespace xercesc;
 
 GlobalTechnology::GlobalTechnology()
-: mBaseEfficiency( 1 ), effPenalty( 0 ), 
-mBaseNonEnergyCost( 0 ), neCostPenalty( 0 ), fMultiplier( 1 ), 
+: mBaseEfficiency( 1 ),
+mBaseNonEnergyCost( 0 ),
+fMultiplier( 1 ), 
 fuelPrefElasticity( 0 ) {
 }
 
@@ -89,14 +90,8 @@ void GlobalTechnology::XMLParse( const DOMNode *tempnode ) {
         else if( nodeName == "efficiency" ){
             mBaseEfficiency = XMLHelper<double>::getValue( curr );
         }
-        else if( nodeName == "efficiencyPenalty" ){
-            effPenalty = XMLHelper<double>::getValue( curr );
-        }
         else if( nodeName == "nonenergycost" ){
             mBaseNonEnergyCost = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "neCostPenalty" ){
-            neCostPenalty = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "fMultiplier" ){
             fMultiplier = XMLHelper<double>::getValue( curr );
@@ -114,9 +109,7 @@ void GlobalTechnology::toInputXML( ostream &out, Tabs *tabs ) const {
 
     XMLWriteElement( fuelname, "fuelname", out, tabs );
     XMLWriteElementCheckDefault( mBaseEfficiency, "efficiency", out, tabs, 1.0 );
-    XMLWriteElementCheckDefault( effPenalty, "efficiencyPenalty", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( mBaseNonEnergyCost, "nonenergycost", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( neCostPenalty, "neCostPenalty", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( fuelPrefElasticity, "fuelprefElasticity", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( fMultiplier, "fMultiplier", out, tabs, 1.0 );
 
@@ -129,9 +122,7 @@ void GlobalTechnology::toDebugXML( int period, ostream &out, Tabs *tabs ) const 
 
     XMLWriteElement( fuelname, "fuelname", out, tabs );
     XMLWriteElementCheckDefault( mBaseEfficiency, "efficiency", out, tabs, 1.0 );
-    XMLWriteElementCheckDefault( effPenalty, "efficiencyPenalty", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( mBaseNonEnergyCost, "nonenergycost", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( neCostPenalty, "neCostPenalty", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( fuelPrefElasticity, "fuelprefElasticity", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( fMultiplier, "fMultiplier", out, tabs, 1.0 );
 
@@ -176,14 +167,6 @@ const double GlobalTechnology::getNonEnergyCost() const {
     return mBaseNonEnergyCost;
 }
 
-const double GlobalTechnology::getEffPenalty() const {
-    return effPenalty;
-}
-
-const double GlobalTechnology::getNECostPenalty() const {
-    return neCostPenalty;
-}
-
 const double GlobalTechnology::getFMultiplier() const {
     return fMultiplier;
 }
@@ -201,14 +184,6 @@ void GlobalTechnology::setEfficiency( const double aEfficiency ) {
 }
 
 void GlobalTechnology::setNonEnergyCost( const double aNonEnergyCost ) {
-    assert( false );
-}
-
-void GlobalTechnology::setEffPenalty( const double aEffPenalty ) {
-    assert( false );
-}
-
-void GlobalTechnology::setNECostPenalty( const double aNECostPenalty ) {
     assert( false );
 }
 

@@ -1,13 +1,12 @@
 /*! 
 * \file technology.cpp
 * \ingroup Objects
-* \brief technology class source file.
+* \brief Technology class source file.
 * \author Sonny Kim
 */
 // Standard Library headers
 #include "util/base/include/definitions.h"
 #include <string>
-#include <iostream>
 #include <cassert>
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
@@ -22,12 +21,21 @@
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
 #include "containers/include/dependency_finder.h"
+#include "technologies/include/icapture_component.h"
+#include "technologies/include/capture_component_factory.h"
+#include "technologies/include/ishutdown_decider.h"
+#include "technologies/include/shutdown_decider_factory.h"
 #include "util/base/include/ivisitor.h"
 #include "containers/include/iinfo.h"
+
 #include "technologies/include/ioutput.h"
-#include "technologies/include/secondary_output.h"
 #include "technologies/include/primary_output.h"
+#include "technologies/include/output_factory.h"
+
 #include "technologies/include/ical_data.h"
+#include "technologies/include/iproduction_state.h"
+#include "technologies/include/production_state_factory.h"
+#include "technologies/include/marginal_profit_calculator.h"
 #include "technologies/include/generic_technology_info.h"
 #include "technologies/include/global_technology.h"
 #include "technologies/include/global_technology_database.h"
@@ -43,63 +51,78 @@ using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
-// static initialize.
-const double LOGIT_EXP_DEFAULT = -6;
 
-typedef vector<IOutput*>::const_iterator COutputIterator;
 typedef vector<IOutput*>::iterator OutputIterator;
-typedef vector<AGHG*>::const_iterator CGHGIterator;
+typedef vector<IOutput*>::const_iterator COutputIterator;
+
 typedef vector<AGHG*>::iterator GHGIterator;
-// Technology class method definition
+typedef vector<AGHG*>::const_iterator CGHGIterator;
+
+typedef vector<IProductionState*>::iterator ProductionStateIterator;
+typedef vector<IProductionState*>::const_iterator CProductionStateIterator;
+
+typedef vector<IShutdownDecider*>::iterator ShutdownDeciderIterator;
+typedef vector<IShutdownDecider*>::const_iterator CShutdownDeciderIterator;
 
 /*! 
  * \brief Constructor.
  * \param aName Technology name.
  * \param aYear Technology year.
  */
-technology::technology( const string& aName, const int aYear )
-: year ( aYear ), mName( aName ) {
-    initElementalMembers();
+Technology::Technology( const string& aName, const int aYear ): mName( aName ), year ( aYear ){
+    init();
 }
 
 //! Destructor
-technology::~technology() {
+Technology::~Technology() {
     clear();
 }
 
 //! Copy constructor
-technology::technology( const technology& techIn ) {
-    copy( techIn );
+Technology::Technology( const Technology& aTech ):mName( aTech.mName ), year( aTech.year ) {
+    init();
+    copy( aTech );
 }
 
 //! Assignment operator.
-technology& technology::operator = ( const technology& techIn ) {
+Technology& Technology::operator = ( const Technology& techIn ) {
     if( this != &techIn ) { // check for self assignment 
         clear();
+        init();
         copy( techIn );
     }
     return *this;
 }
 
 //! Helper copy function to avoid replicating code.
-void technology::copy( const technology& techIn ) {
+void Technology::copy( const Technology& techIn ) {
     mName = techIn.mName;
+    mLifetimeYears = techIn.mLifetimeYears;
     mGetGlobalTech = techIn.mGetGlobalTech;
 
     year = techIn.year;
     shrwts = techIn.shrwts;
-    fuelcost = techIn.fuelcost;
-    techcost = techIn.techcost;
     pMultiplier = techIn.pMultiplier;
     lexp = techIn.lexp;
-    share = techIn.share;
-    input = techIn.input;
-    fixedOutput = techIn.fixedOutput;
-    fixedOutputVal = techIn.fixedOutputVal;
 
-    emissmap = techIn.emissmap; 
-    emfuelmap = techIn.emfuelmap; 
-    ghgNameMap = techIn.ghgNameMap; 
+    mInput = techIn.mInput;
+    mCosts = techIn.mCosts;
+    mFixedOutput = techIn.mFixedOutput;
+
+    ghgNameMap = techIn.ghgNameMap;
+    mShutdownDecidersMap = techIn.mShutdownDecidersMap;
+
+    if( techIn.mCaptureComponent.get() ){
+        mCaptureComponent.reset( techIn.mCaptureComponent->clone() );
+    }
+    for (CGHGIterator iter = techIn.ghg.begin(); iter != techIn.ghg.end(); ++iter) {
+        ghg.push_back( (*iter)->clone() );
+    }
+    for ( CShutdownDeciderIterator iter = techIn.mShutdownDeciders.begin();
+        iter != techIn.mShutdownDeciders.end(); ++iter)
+    {
+        mShutdownDeciders.push_back( (*iter)->clone() );
+    }
 
     // all cloning should have been done before completeInit
     // because during completeInit GlobalTechnologies are fetched
@@ -121,15 +144,16 @@ void technology::copy( const technology& techIn ) {
     }
 }
 
-//! Clone Function. Returns a deep copy of the current technology.
-ITechnology* technology::clone() const {
-    return new technology( *this );
-}
-
 //! Clear member variables.
-void technology::clear(){
-    // Delete the GHGs to avoid a memory leak.
+void Technology::clear(){
+    // Delete the GHGs and shutdown deciders.
     for( GHGIterator iter = ghg.begin(); iter != ghg.end(); ++iter ) {
+        delete *iter;
+    }
+    for( ShutdownDeciderIterator iter = mShutdownDeciders.begin(); iter != mShutdownDeciders.end(); ++iter ) {
+        delete *iter;
+    }
+    for( ProductionStateIterator iter = mProductionState.begin(); iter != mProductionState.end(); ++iter ) {
         delete *iter;
     }
     for( OutputIterator iter = mOutputs.begin(); iter != mOutputs.end(); ++iter ) {
@@ -138,51 +162,40 @@ void technology::clear(){
 }
 
 //! Initialize elemental data members.
-void technology::initElementalMembers(){
+void Technology::init(){
+    // This will be reinitialized in completeInit once the technologies start
+    // year is known.
+    mLifetimeYears = -1;
+
+    const Modeltime* modeltime = scenario->getModeltime();
+    mInput.resize( modeltime->getmaxper(), 0.0 );
+    mCosts.resize( modeltime->getmaxper(), -1.0 );
+    mProductionState.resize( modeltime->getmaxper() );
     shrwts = 1;
-    fuelcost = 0;
-    techcost = 0;
     pMultiplier = 1;
-    lexp = LOGIT_EXP_DEFAULT; 
-    share = 0;
-    input = 0;
-    fixedOutput = getFixedOutputDefault(); // initialize to no fixed supply
-    fixedOutputVal = getFixedOutputDefault();
+    lexp = getLogitExpDefault(); 
+    mFixedOutput = IProductionState::fixedOutputDefault();
     mGetGlobalTech = false;
 }
 
-/*! \brief Default value for fixedOutput;
-* \author Steve Smith
-*/
-double technology::getFixedOutputDefault() {
-    return -1.0;
-}
-
-/*! \brief initialize technology with xml data
+/*! \brief initialize Technology with xml data
 *
 * \author Josh Lurz
 * \param node current node
-* \todo Add Warning when addin files add new containers (regions, sectors, technologies, etc.)
 */
-void technology::XMLParse( const DOMNode* node ) {  
+void Technology::XMLParse( const DOMNode* node ) {  
     /*! \pre Assume we are passed a valid node. */
     assert( node );
     
-    DOMNodeList* nodeList = node->getChildNodes();
+    const DOMNodeList* nodeList = node->getChildNodes();
     for( unsigned int i = 0; i < nodeList->getLength(); i++ ) {
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );      
-        
-        if( nodeName == "#text" ) {
+        const DOMNode* curr = nodeList->item( i );
+        if( curr->getNodeType() != DOMNode::ELEMENT_NODE ) {
             continue;
         }
-        else if( nodeName == "name" ) {
-            // Note: Parsing the name inside technology is now deprecated.
-            //       This will eventually be an error.
-        } 
-        else if( nodeName == "year" ){
-            // Note: Parsing the year inside technology is now deprecated.
-            //       This will eventually be an error.
+        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );        
+        if( nodeName == "lifetime" ){
+            mLifetimeYears = XMLHelper<int>::getValue( curr );
         }
         else if( nodeName == "fuelname" ){
             createTechData();
@@ -199,20 +212,12 @@ void technology::XMLParse( const DOMNode* node ) {
             createTechData();
             mTechData->setEfficiency( XMLHelper<double>::getValue( curr ) );
         }
-        else if( nodeName == "efficiencyPenalty" ){
-            createTechData();
-            mTechData->setEffPenalty( XMLHelper<double>::getValue( curr ) );
-        }
         else if( nodeName == "nonenergycost" ){
             createTechData();
             mTechData->setNonEnergyCost( XMLHelper<double>::getValue( curr ) );
         }
-        else if( nodeName == "neCostPenalty" ){
-            createTechData();
-            mTechData->setNECostPenalty( XMLHelper<double>::getValue( curr ) );
-        }
         else if( nodeName == "pMultiplier" ){
-            pMultiplier = XMLHelper<double>::getValue( curr );
+           pMultiplier = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "fMultiplier" ){
             createTechData();
@@ -222,7 +227,20 @@ void technology::XMLParse( const DOMNode* node ) {
             lexp = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "fixedOutput" ){
-            fixedOutput = XMLHelper<double>::getValue( curr );
+            mFixedOutput = XMLHelper<double>::getValue( curr );
+        }
+        else if( CaptureComponentFactory::isOfType( nodeName ) ){
+            // Check if a new capture component needs to be created because
+            // there is not currently one or the current type does not match the
+            // new type.
+            if( !mCaptureComponent.get() || !mCaptureComponent->isSameType( nodeName ) ){
+                mCaptureComponent = CaptureComponentFactory::create( nodeName );
+            }
+            mCaptureComponent->XMLParse( curr );
+        }
+        else if( ShutdownDeciderFactory::isOfType( nodeName ) ){
+            parseContainerNode( curr, mShutdownDeciders, mShutdownDecidersMap,
+                                ShutdownDeciderFactory::create( nodeName ).release() );
         }
         else if( nodeName == CalDataInput::getXMLNameStatic() ){
             parseSingleNode( curr, mCalValue, new CalDataInput );
@@ -236,24 +254,19 @@ void technology::XMLParse( const DOMNode* node ) {
         else if( GHGFactory::isGHGNode( nodeName ) ){
             parseContainerNode( curr, ghg, ghgNameMap, GHGFactory::create( nodeName ).release() );
         }
-        else if( nodeName == SecondaryOutput::getXMLNameStatic() ){
-            parseContainerNode( curr, mOutputs, new SecondaryOutput );
-        }
-        else if( nodeName == "note" ){
-            note = XMLHelper<string>::getValue( curr );
+        else if( OutputFactory::isOfType( nodeName ) ){
+            parseContainerNode( curr, mOutputs, OutputFactory::create( nodeName ).release() );
         }
         else if( nodeName == GlobalTechnology::getXMLNameStatic() ) {
             mGetGlobalTech = true;
         }
         // parse derived classes
-        else if( XMLDerivedClassParse( nodeName, curr ) ){
-        } 
-        else {
+        else if( !XMLDerivedClassParse( nodeName, curr ) ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLName1D() << "." << endl;
+            mainLog << "Unrecognized text string: " << nodeName
+                    << " found while parsing " << getXMLName1D() << "." << endl;
         }
-
     }
 }
 
@@ -264,18 +277,11 @@ void technology::XMLParse( const DOMNode* node ) {
  *           to false as the generic technology is overiding it.
  *  \author Pralit Patel
  */
-void technology::createTechData() {
+void Technology::createTechData() {
     if( !mTechData.get() ) {
         mTechData.reset( new GenericTechnologyInfo( mName ) );
     }
     mGetGlobalTech = false;
-}
-
-//! Parses any input variables specific to derived classes
-bool technology::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ){
-    // do nothing. Defining method here even though it does nothing so that we do not
-    // create an abstract class.
-    return false;
 }
 
 /*!
@@ -289,7 +295,8 @@ bool technology::XMLDerivedClassParse( const string& nodeName, const DOMNode* cu
 * \author Josh Lurz
 * \warning Markets are not necesarilly set when completeInit is called
 */
-void technology::completeInit( const string& aSectorName,
+void Technology::completeInit( const string& aRegionName,
+                               const string& aSectorName,
                                DependencyFinder* aDepFinder,
                                const IInfo* aSubsectorInfo,
                                ILandAllocator* aLandAllocator,
@@ -302,6 +309,14 @@ void technology::completeInit( const string& aSectorName,
         mainLog << "Technology " << mName << " in sector " << aSectorName
             << " has an invalid year attribute." << endl;
     }
+
+    // Default the lifetime to be the timestep beginning when the Technology is
+    // created.
+    const Modeltime* modeltime = scenario->getModeltime();
+    if( mLifetimeYears == -1 ){
+        mLifetimeYears = modeltime->gettimestep( modeltime->getyr_to_per( year ) );
+    }
+
 
     if( mGetGlobalTech && aGlobalTechDB ) {
         mTechData = aGlobalTechDB->getTechnology( mName, year );
@@ -325,35 +340,94 @@ void technology::completeInit( const string& aSectorName,
     mOutputs.insert( mOutputs.begin(), new PrimaryOutput( aSectorName ) );
 
     for( unsigned int i = 0; i < mOutputs.size(); ++i ){
-        mOutputs[ i ]->completeInit( aSectorName, aDepFinder, !hasNoInputOrOutput() );
+        // TODO: Change this when dependencies are determined by period.
+        mOutputs[ i ]->completeInit( aSectorName, aDepFinder, !hasNoInputOrOutput( 0 ) );
     }
 
     // Add the input dependency to the dependency finder if there is one. There
-    // will not be one if this is a demand technology.
-
+    // will not be one if this is a demand Technology.
     if( aDepFinder ){
         // Don't add dependency if technology does not ever function. If this is
         // the case, the technology can never have an effect on the markets.
         // This is necessary for export sectors to operate correctly, but will
         // be true in general.
-        if ( !hasNoInputOrOutput() ) { // note the NOT operator
+        // TODO: Change this when dependencies are determined by period.
+        if ( !hasNoInputOrOutput( 0 ) ) { // note the NOT operator
             aDepFinder->addDependency( aSectorName, mTechData->getFuelName() );
         }
     }
 
-    // initialize fixedOutputVal
-    if ( fixedOutput >= 0 ) {
-        fixedOutputVal = fixedOutput; 
+    // Clear shareweights for fixed output technologies.
+    if( mFixedOutput != IProductionState::fixedOutputDefault() ){
+        shrwts = 0;
     }
+
+    // Calibrating to zero does not work correctly.
+    if( mCalValue.get() ){
+        bool calibrationValid = false;
+        // TODO: This code is excessively complex to handle the different permutations
+        // of calibration and fixed output. What if fixed output were its own technology?
+        // Check for attempts to calibrate fixed output.
+        if( mFixedOutput != IProductionState::fixedOutputDefault() ){
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Cannot calibrate a fixed output Technology. Turning off calibration." << endl;
+        }
+        // If the shareweights are zero we are implicitly calibrating to zero.
+        else if( shrwts < util::getSmallNumber() ){
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Ignoring calibration input for Technology " << mName
+                    << " due to a zero shareweight." << endl;
+        }
+        else if( mCalValue->getCalInput( getEfficiency( 0 ) ) < 0 ){
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::DEBUG );
+            mainLog << "Negative calibration value for technology " << mName
+                    << ". Calibration removed." << endl;
+        }
+        // TODO: Calibrating to zero does not work correctly so reset the shareweights
+        // to zero and remove the calibration input. This could be improved.
+        else if( mCalValue->getCalInput( getEfficiency( 0 ) ) < util::getSmallNumber() ){
+            shrwts = 0;
+        }
+        else {
+            calibrationValid = true;
+        }
+
+        // If the calibration setup was not valid remove the input.
+        if( !calibrationValid ){
+            mCalValue.reset( 0 );
+        }
+    }
+
+    // Accidentally missing CO2 is very easy to do, and would cause big
+    // problems. Add it automatically if it does not exist.
+    if( !util::hasValue( ghgNameMap, CO2Emissions::getXMLNameStatic() ) ){
+        // arguments: gas, unit, remove fraction, GWP, and emissions coefficient
+        // for CO2 this emissions coefficient is not used
+        ghg.push_back( new CO2Emissions() ); // at least CO2 must be present
+        ghgNameMap[ "CO2" ] = static_cast<int>( ghg.size() ) - 1;
+    }
+
+    // Initialize the capture component.
+    if( mCaptureComponent.get() ){
+        mCaptureComponent->completeInit( aRegionName, aSectorName, aDepFinder );
+    }
+
+    // Set the production state for the initial periods. Later periods will be
+    // set in postCalc. The production state represents how the technology
+    // decides to produce output.
+    setProductionState( 0 );
 }
 
 //! write object to xml output stream
-void technology::toInputXML( ostream& out, Tabs* tabs ) const {
+void Technology::toInputXML( ostream& out, Tabs* tabs ) const {
     
-    XMLWriteOpeningTag( getXMLName2D(), out, tabs, "", year );
+    XMLWriteOpeningTag( getXMLNameStatic2D(), out, tabs, "", year );
     // write the xml for the class members.
-    
     XMLWriteElementCheckDefault( shrwts, "sharewt", out, tabs, 1.0 );
+    XMLWriteElementCheckDefault( mLifetimeYears, "lifetime", out, tabs, -1 );
     
     if ( mCalValue.get() ){
         mCalValue->toInputXML( out, tabs );
@@ -367,41 +441,64 @@ void technology::toInputXML( ostream& out, Tabs* tabs ) const {
     else {
         XMLWriteElement<string>( "", GlobalTechnology::getXMLNameStatic(), out, tabs );
     }
+
     XMLWriteElementCheckDefault( pMultiplier, "pMultiplier", out, tabs, 1.0 );
-    XMLWriteElementCheckDefault( lexp, "logitexp", out, tabs, LOGIT_EXP_DEFAULT );
-    XMLWriteElementCheckDefault( fixedOutput, "fixedOutput", out, tabs, getFixedOutputDefault() );
-    XMLWriteElementCheckDefault( note, "note", out, tabs );
+    XMLWriteElementCheckDefault( lexp, "logitexp", out, tabs,  getLogitExpDefault() );
+    XMLWriteElementCheckDefault( mFixedOutput, "fixedOutput", out, tabs, IProductionState::fixedOutputDefault() );
     
+    if( mCaptureComponent.get() ){
+        mCaptureComponent->toInputXML( out, tabs );
+    }
+    
+    for( CShutdownDeciderIterator i = mShutdownDeciders.begin();
+         i != mShutdownDeciders.end(); ++i )
+    {
+        ( *i )->toInputXML( out, tabs );
+    }
+
     for( COutputIterator iter = mOutputs.begin(); iter != mOutputs.end(); ++iter ){
         ( *iter )->toInputXML( out, tabs );
     }
     for( CGHGIterator iter = ghg.begin(); iter != ghg.end(); ++iter ){
         ( *iter )->toInputXML( out, tabs );
     }
-    
+
     // finished writing xml for the class members.
     toInputXMLDerived( out, tabs );
-    XMLWriteClosingTag( getXMLName2D(), out, tabs );
+    XMLWriteClosingTag( getXMLNameStatic2D(), out, tabs );
 }
 
 //! write object to xml debugging output stream
-void technology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
-    
+void Technology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
+    // Only output technologies that are operating.
+    if( !mProductionState[ period ]->isOperating() ){
+        return;
+    }
+
     XMLWriteOpeningTag( getXMLName1D(), out, tabs, mName, year );
     // write the xml for the class members.
     
     XMLWriteElement( shrwts, "sharewt", out, tabs );
+
+    XMLWriteElement( mFixedOutput, "fixedOutput", out, tabs );
+    XMLWriteElement( mLifetimeYears, "lifetime", out, tabs );
     if ( mCalValue.get() ) {
         mCalValue->toDebugXML( out, tabs );
     }
+
     mTechData->toDebugXML( period, out, tabs );
-    XMLWriteElement( getEfficiency( period ), "efficiencyEffective", out, tabs );
-    XMLWriteElement( getNonEnergyCost( period ), "nonEnergyCostEffective", out, tabs );
+
     XMLWriteElement( pMultiplier, "pMultiplier", out, tabs );
     XMLWriteElement( lexp, "logitexp", out, tabs );
-    XMLWriteElement( share, "share", out, tabs );
-    XMLWriteElement( input, "input", out, tabs );
-    XMLWriteElement( fixedOutput, "fixedOutput", out, tabs );
+    XMLWriteElement( mInput[ period ], "input", out, tabs );
+
+    if( mCaptureComponent.get() ){
+        mCaptureComponent->toDebugXML( period, out, tabs );
+    }
+    for( CShutdownDeciderIterator i = mShutdownDeciders.begin(); i != mShutdownDeciders.end(); ++i ){
+        ( *i )->toDebugXML( period, out, tabs );
+    }
+    mProductionState[ period ]->toDebugXML( period, out, tabs );
 
     for( COutputIterator iter = mOutputs.begin(); iter != mOutputs.end(); ++iter ){
         ( *iter )->toDebugXML( period, out, tabs );
@@ -411,24 +508,12 @@ void technology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const 
     for( CGHGIterator i = ghg.begin(); i != ghg.end(); i++ ){
         ( *i )->toDebugXML( period, out, tabs );
     }
-    
+
     // finished writing xml for the class members.
     toDebugXMLDerived( period, out, tabs );
     XMLWriteClosingTag( getXMLName1D(), out, tabs );
 }
 
-/*! \brief Get the XML node name for output to XML.
-*
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overridden by derived class pointers.
-* \author Josh Lurz, James Blackwood
-* \return The constant XML_NAME.
-*/
-const string& technology::getXMLName1D() const {
-    return getXMLNameStatic1D();
-}
-
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
 *
 * This public function accesses the private constant string, XML_NAME.
@@ -438,35 +523,9 @@ const string& technology::getXMLName1D() const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const string& technology::getXMLNameStatic1D() {
-    const static string XML_NAME1D = "technology";
-    return XML_NAME1D;
-}
-
-/*! \brief Get the XML node name for output to XML.
-*
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overridden by derived class pointers.
-* \author Josh Lurz, James Blackwood
-* \return The constant XML_NAME.
-*/
-const string& technology::getXMLName2D() const {
-    return getXMLNameStatic2D();
-}
-
-/*! \brief Get the XML node name in static form for comparison when parsing XML.
-*
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* The "==" operator that is used when parsing, required this second function to return static.
-* \note A function cannot be static and virtual.
-* \author Josh Lurz, James Blackwood
-* \return The constant XML_NAME as a static.
-*/
-const string& technology::getXMLNameStatic2D() {
-    const static string XML_NAME2D = "period";
-    return XML_NAME2D;
+const std::string& Technology::getXMLNameStatic2D() {
+    const static string XML_NAME_2D = "period";
+    return XML_NAME_2D;
 }
 
 /*! \brief Perform initializations that only need to be done once per period.
@@ -476,7 +535,7 @@ const string& technology::getXMLNameStatic2D() {
 * \param aDemographics Regional demographics container.
 * \param aPeriod Model period.
 */
-void technology::initCalc( const string& aRegionName,
+void Technology::initCalc( const string& aRegionName,
                            const string& aSectorName,
                            const IInfo* aSubsectorInfo,
                            const Demographic* aDemographics,
@@ -487,21 +546,50 @@ void technology::initCalc( const string& aRegionName,
         mCalValue->initCalc( aDemographics, aPeriod );
     }
 
-    if ( mCalValue.get() && ( mCalValue->getCalInput( getEfficiency( aPeriod ) ) < 0 ) ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::DEBUG );
-        mainLog << "Negative calibration value for technology " << mName
-                << ". Calibration removed." << endl;
-        mCalValue.reset( 0 );
+    const string& fuelName = mTechData->getFuelName();
+    if( mCaptureComponent.get() ){
+        mCaptureComponent->initCalc( aRegionName, aSectorName, fuelName, aPeriod );
     }
 
+    // Check that the market for this technology is setup correctly.
+    if( !fuelName.empty() && fuelName != "renewable" && fuelName != "none" &&
+        scenario->getMarketplace()->getPrice( fuelName, aRegionName, aPeriod, false )
+        == Marketplace::NO_MARKET_PRICE )
+    {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Fuel " << fuelName << " for technology " << mName << " does not exist." << endl;
+    }
+    
     for( unsigned int i = 0; i < ghg.size(); i++ ){
-        ghg[i]->initCalc( aRegionName, mTechData->getFuelName(), aSubsectorInfo, aPeriod );
+        ghg[i]->initCalc( aRegionName, fuelName, aSubsectorInfo, aPeriod );
     }
 
     for( unsigned int i = 0; i < mOutputs.size(); ++i ){
         mOutputs[ i ]->initCalc( aRegionName, aPeriod );
     }
+}
+
+/*!
+ * \brief Initializes the production state for the period.
+ * \details Sets up the production state in the given period. Responsibility for
+ *          selecting the production state is delegated to the
+ *          ProductionStateFactory.
+ * \param aPeriod Model period.
+ */
+void Technology::setProductionState( const int aPeriod ){
+    // Check that the state for this period has not already been initialized. An
+    // assertion here usually means initCalc was called twice for a single
+    // period.
+    assert( !mProductionState[ aPeriod ] );
+    
+    const Modeltime* modeltime = scenario->getModeltime();
+    double initialOutput =
+        mOutputs[ 0 ]->getPhysicalOutput( modeltime->getyr_to_per( year ) );
+    
+    mProductionState[ aPeriod ] =
+        ProductionStateFactory::create( year, mLifetimeYears, mFixedOutput,
+                                        initialOutput, aPeriod ).release();
 }
 
 /*!
@@ -517,65 +605,71 @@ void technology::initCalc( const string& aRegionName,
  * \param aPeriod The period to calculate this value for.
  * \return Total secondary value.
  */
-double technology::calcSecondaryValue( const string& aRegionName, const int aPeriod ) const {
+double Technology::calcSecondaryValue( const string& aRegionName, const int aPeriod ) const {
     double totalValue = 0;
     // Add all costs from the GHGs.
     for( unsigned int i = 0; i < ghg.size(); ++i ){
-        totalValue -= ghg[i]->getGHGValue( aRegionName, mTechData->getFuelName(), mOutputs, getEfficiency( aPeriod ), aPeriod );
+        totalValue -= ghg[i]->getGHGValue( aRegionName,
+                                           mTechData->getFuelName(),
+                                           mOutputs,
+                                           getEfficiency( aPeriod ),
+                                           mCaptureComponent.get(),
+                                           aPeriod );
     }
 
     // Add all values from the outputs. The primary output is included in this
     // loop but will have a value of zero.
     for( unsigned int i = 0; i < mOutputs.size(); ++i ){
-        totalValue += mOutputs[ i ]->getValue( aRegionName, aPeriod );
+        totalValue += mOutputs[ i ]->getValue( aRegionName, mCaptureComponent.get(), aPeriod );
     }
     return totalValue;
 }
 
-/*! \brief Calculate technology fuel cost and total cost.
-*
-* This caculates the cost (per unit output) of this specific technology. 
-* The cost includes fuel cost, carbon value, and non-fuel costs.
-* Conversion efficiency, and optional fuelcost and total price multipliers are used if specified.
-*
-* Special check for "none" fuel is implimented here.
-*
-* \warning Check for "none" fueltype is implimented here. Need to find a better way do do this and renewable fuels.
-* \author Sonny Kim, Steve Smith
-* \param period Model regionName
-* \param period Model per
+/*!
+* \brief Perform calculations that need to be done after the solution is found
+*        for the period.
+* \param aRegionName Region name.
+* \param aPeriod Model period that has solved.
 */
-void technology::calcCost( const string& regionName, const string& sectorName, const int per ) {
-    Marketplace* marketplace = scenario->getMarketplace();
-
-     // code specical case where there is no fuel input. sjs
-     // used now to drive non-CO2 GHGs
-    double fuelprice;
-    if ( ( mTechData->getFuelName() == "none" || mTechData->getFuelName().empty() ) || 
-            mTechData->getFuelName() == "renewable" ) {
-        fuelprice = 0;
+void Technology::postCalc( const string& aRegionName, const int aPeriod ) {
+    for( unsigned int i = 0; i < mOutputs.size(); ++i ) {
+        mOutputs[ i ]->postCalc( aRegionName, aPeriod );
     }
-    else {
-        fuelprice = marketplace->getPrice( mTechData->getFuelName(), regionName, per );
-        
-        /*! \invariant The market price of the fuel must be valid. */
-        if ( fuelprice == Marketplace::NO_MARKET_PRICE ) {
-           ILogger& mainLog = ILogger::getLogger( "main_log" );
-           mainLog.setLevel( ILogger::ERROR );
-           mainLog << "Requested fuel >" << mTechData->getFuelName() << "< with no price in technology " << mName 
-                   << " in sector " << sectorName << " in region " << regionName << "." << endl;
-           // set fuelprice to a valid, although arbitrary, number
-           fuelprice = util::getLargeNumber();
-        }
-    } 
-     
-    // fMultiplier and pMultiplier are initialized to 1 for those not read in
-    fuelcost = ( fuelprice * mTechData->getFMultiplier() ) / getEfficiency( per );
-    techcost = ( fuelcost + getNonEnergyCost( per ) ) * pMultiplier;
-    techcost -= calcSecondaryValue( regionName, per );
-    
-    // techcost can drift below zero in disequalibrium.
-    techcost = max( techcost, util::getSmallNumber() );
+    // Set the production state for the next period.
+    if( aPeriod + 1 < scenario->getModeltime()->getmaxper() ){
+        setProductionState( aPeriod + 1 );
+    }
+}
+
+/*! \brief This function calculates the sum of the Carbon Values for all GHG's
+*          in this Technology.
+* \details The function first checks if a carbon tax exists for the Technology,
+*          and if it does loops through all GHGs to calculate a sum carbon
+*          value. The GHG function which it calls, getGHGValue() calculates the
+*          carbon equivalent of all GHG's contained in this Technology. The
+*          totalGHGCost attribute of the Technology is then set to this new
+*          value.
+* \author Sonny Kim, Josh Lurz
+* \param aRegionName The region containing this Technology.
+* \param aSectorName The sector containing this Technology.
+* \param aPeriod The period to calculate this value for.
+* \return The total emissions and storage cost of all ghgs.
+*/
+double Technology::getTotalGHGCost( const string& aRegionName,
+                                    const string& aSectorName,
+                                    const int aPeriod ) const
+{
+    double totalGHGCost = 0;
+    // totalGHGCost and carbontax must be in same unit as fuel price
+    for( unsigned int i = 0; i < ghg.size(); i++ ){
+        totalGHGCost += ghg[i]->getGHGValue( aRegionName,
+                                             mTechData->getFuelName(),
+                                             mOutputs,
+                                             getEfficiency( aPeriod ),
+                                             mCaptureComponent.get(),
+                                             aPeriod );
+    }
+    return totalGHGCost;
 }
 
 /*!
@@ -586,47 +680,36 @@ void technology::calcCost( const string& regionName, const string& sectorName, c
 * \param aGDP Regional GDP container.
 * \param aPeriod Model period.
 * \todo Check to see if power function for trival values really wastes time
+* \return The Technology share.
 */
-void technology::calcShare( const string& aRegionName,
-                            const string& aSectorName,
-                            const GDP* aGDP,
-                            const int aPeriod )
+double Technology::calcShare( const string& aRegionName,
+                              const string& aSectorName,
+                              const GDP* aGDP,
+                              const int aPeriod ) const
 {
-    share = shrwts * pow( techcost, lexp );
+    // A Technology which is not operating does not have a share.
+    if( !mProductionState[ aPeriod ]->isOperating() ){
+        return 0;
+    }
+
+    // Vintages and fixed output technologies should never have a share.
+    if( !mProductionState[ aPeriod ]->isNewInvestment() ||
+        mFixedOutput != IProductionState::fixedOutputDefault() ){
+        return 0;
+    }
+
+    // Calculate the new vintage share.
+    assert( getCost( aPeriod ) > 0 );
+    double share = shrwts * pow( getCost( aPeriod ), lexp );
+    
     // This is rarely used, so probably worth it to not to waste cycles on the power function. sjs
     if ( mTechData->getFuelPrefElasticity() != 0 ) {
-      double scaledGdpPerCapita = aGDP->getBestScaledGDPperCap( aPeriod );
-      share *= pow( scaledGdpPerCapita, mTechData->getFuelPrefElasticity() );
+        double scaledGdpPerCapita = aGDP->getBestScaledGDPperCap( aPeriod );
+        share *= pow( scaledGdpPerCapita, mTechData->getFuelPrefElasticity() );
     }
-}
 
-/*! \brief normalizes technology shares
-*
-* \author Sonny Kim
-* \param sum sum of sector shares
-* \warning sum must be correct sum of shares
-* \pre calcShares must be called first
-*/
-void technology::normShare(double sum) 
-{
-    if (sum==0) {
-        share = 0;
-    }
-    else {
-        share /= sum;
-    }
-}
-
-/*! \brief This function resets the value of fixed supply to the maximum value
-* See calcfixedOutput
-*
-* \author Steve Smith
-* \param per model period
-*/
-void technology::resetFixedOutput( int per ) {
-    if ( fixedOutput >= 0 ) {
-        fixedOutputVal = fixedOutput;
-    }
+    assert( share >= 0 && util::isValidNumber( share ) );
+    return share;
 }
 
 /*! \brief Return true if technology is fixed for no output or input
@@ -637,43 +720,73 @@ void technology::resetFixedOutput( int per ) {
 * \author Steve Smith
 * \return Returns wether this technology will always have no output or input
 */
-bool technology::hasNoInputOrOutput() const {
+bool Technology::hasNoInputOrOutput( const int aPeriod ) const {
     // Technology has zero fixed output if fixed output was read-in as zero.
-    return( util::isEqual( fixedOutput, 0.0 ) );
+    return( util::isEqual( mFixedOutput, 0.0 ) );
 }
 
-/*! \brief Return fixed technology output
-* 
-* returns the current value of fixed output. This may differ from the variable fixedOutput due to scale down if demand is less than the value of fixedOutput.
-*
+/*! \brief Return fixed Technology output
+* \details Returns the current value of fixed output. This may differ from the
+*          variable fixedOutput due to scale down if demand is less than the
+*          value of fixedOutput.
+* \param aRegionName Region name.
+* \param aSectorName Sector name.
 * \author Steve Smith
-* \param per model period
-* \return value of fixed output for this technology
+* \param aPeriod model period
+* \return Value of fixed output for this Technology
 */
-double technology::getFixedOutput() const {
-    // Return 0 if the fixed output value is not initialized.
-    return ( fixedOutputVal == getFixedOutputDefault() ) ? 0 : fixedOutputVal;
+double Technology::getFixedOutput( const string& aRegionName,
+                                   const string& aSectorName, 
+                                   const int aPeriod ) const
+{
+    // Check that a state has been created for the period.
+    assert( mProductionState[ aPeriod ] );
+
+    // Construct a marginal profit calculator. This allows the calculation of 
+    // marginal profits to be lazy.
+    MarginalProfitCalculator marginalProfitCalc( this );
+    return mProductionState[ aPeriod ]->calcProduction( aRegionName,
+                                                        aSectorName,
+                                                        0, // No variable output.
+                                                        &marginalProfitCalc,
+                                                        1, // Not shutting down any fixed output using
+                                                           // the scale factor.
+                                                        mShutdownDeciders,
+                                                        aPeriod );
 }
 
-/*! \brief Return fixed technology input
-* 
-* Returns the current value of fixed input. This may differ from the variable
-* fixedOutput/eff due to scale down if demand is less than the value of fixed
-* Output.
-*
+/*! \brief Return fixed Technology input
+* \details Returns the current value of fixed input. This may differ from the
+*          variable fixedOutput/eff due to scale down if demand is less than the
+*          value of fixed Output.
+* \param aRegionName Region name.
+* \param aSectorName Sector name.
+* \param aPeriod model period
+* \return value of fixed input for this Technology
 * \author Steve Smith
-* \param aPeriod Model period.
-* \return Fixed input for this technology
 */
-double technology::getFixedInput( const int aPeriod ) const {
-    // Return zero as the fixed input if the fixed output is the default value
-    // or if this is not the initial investment year of the technology.
-    if ( fixedOutputVal == getFixedOutputDefault()
-        || year != scenario->getModeltime()->getper_to_yr( aPeriod ) ) 
+double Technology::getFixedInput( const string& aRegionName,
+                                  const string& aSectorName,
+                                  const int aPeriod ) const
+{
+    // TODO: This function is very fragile.
+
+    // Efficiency should be positive because invalid efficiencies were
+    // already corrected. 
+    assert( getEfficiency( aPeriod ) > 0 );
+    double currFixedOutput = getFixedOutput( aRegionName, aSectorName, aPeriod );
+    // TODO: Fixed output of zero? What does this want to do with vintage output?
+    // This is a hack to work around assumptions about a fixed output of zero.
+    if( currFixedOutput > 0
+        || util::isEqual( mFixedOutput, 0.0 )
+        || util::isEqual( shrwts, 0.0 )
+        || mTechData->getFuelName()== "renewable" 
+        || !mProductionState[ aPeriod ]->isNewInvestment()
+        || !mProductionState[ aPeriod ]->isOperating() )
     {
-        return 0;
+        return currFixedOutput / getEfficiency( aPeriod );
     }
-    return fixedOutputVal / getEfficiency( aPeriod );
+    return -1;
 }
 
 /*
@@ -682,7 +795,7 @@ double technology::getFixedInput( const int aPeriod ) const {
  * \param aPeriod Model period.
  * \return The amount of input required for the output.
  */
-double technology::getInputRequiredForOutput( double aRequiredOutput,
+double Technology::getRequiredInputForOutput( double aRequiredOutput,
                                               const int aPeriod ) const
 {
     // Efficiency should be positive because invalid efficiencies were
@@ -691,106 +804,65 @@ double technology::getInputRequiredForOutput( double aRequiredOutput,
     return aRequiredOutput / getEfficiency( aPeriod );
 }
 
-/*! \brief Scale fixed technology supply
-* 
-* Scale down fixed supply. Used if total fixed production is greater than actual demand.
-*
-* \author Steve Smith
-* \param scaleRatio multipliciative value to scale fixed supply
-*/
-void technology::scaleFixedOutput( const double scaleRatio)
-{
-    // dmd is total subsector demand
-    if( fixedOutputVal >= 0 ) {
-        fixedOutputVal *= scaleRatio;
-    }
-}
-
-/*! \brief Adjusts shares to be consistant with any fixed production
-* 
-* Adjust shares to account for fixed supply. Sets appropriate share for fixed supply and scales shares of other technologies appropriately.
-*
-* \author Steve Smith
-* \param subsecdmd subsector demand
-* \param subsecfixedOutput total amount of fixed supply in this subsector
-* \param varShareTot Sum of shares that are not fixed
-* \param per model period
-* \warning This version may not work if more than one (or not all) technologies within each sector 
-has a fixed supply
-*/
-void technology::adjShares(double subsecdmd, double subsecfixedOutput, double varShareTot, int per)
-{
-    double remainingDemand = 0;
-    
-    if(subsecfixedOutput > 0) {
-        remainingDemand = subsecdmd - subsecfixedOutput;
-        if (remainingDemand < 0) {
-            remainingDemand = 0;
-        }
-        
-        if ( fixedOutputVal >= 0 ) {    // This tech has a fixed supply
-            if (subsecdmd > 0) {
-                share = fixedOutputVal/subsecdmd;
-                // Set value of fixed supply
-                if (fixedOutputVal > subsecdmd) {
-                    fixedOutputVal = subsecfixedOutput; // downgrade output if > fixedOutput
-                }  
-            }
-            else {
-                share = 0;
-            }
-        }
-        else {  // This tech does not have fixed supply
-            if (subsecdmd > 0) {
-                share = share * (remainingDemand/subsecdmd)/varShareTot;
-            }
-            else {
-                // Maybe not correct, but if other params are zero then something else is wrong
-                share = 0; 
-            }
-        }
-    }    
-}
-
-/*! \brief Calculates the amount of output from the technology.
-* \details Calculates the amount of output of the technology based on the share
-*          of the subsector demand. This is then used to determine the amount of
-*          input used, and emissions created.
-* \param aRegionName Region name.
-* \param aSectorName Sector name, also the name of the product.
-* \param aDemand Subsector demand for output.
+/*! \brief Calculates fuel input and Technology output.
+* \details Adds demands for fuels and ghg emissions to markets in the
+*          marketplace.
+* \param aRegionName name of the region
+* \param aSectorName name of the product for this sector
+* \param aVariableDemand Total variable demand for this subsector.
+* \param aFixedOutputScaleFactor Scale factor by which to reduce production when
+*        fixed output is greater than demand.
 * \param aGDP Regional GDP container.
 * \param aPeriod Model period.
 */
-void technology::production( const string& aRegionName,
+void Technology::production( const string& aRegionName,
                              const string& aSectorName,
-                             const double aDemand,
+                             double aVariableDemand,
+                             double aFixedOutputScaleFactor,
                              const GDP* aGDP,
                              const int aPeriod )
 {
-    assert( util::isValidNumber( aDemand ) && aDemand >= 0 );
+    // Can't have a scale factor and positive demand.
+    assert( aFixedOutputScaleFactor == 1 || aVariableDemand == 0 );
 
-    // dmd is total subsector demand. Use share to get output for each
-    // technology
-    double primaryOutput = share * aDemand;
-           
-    if ( primaryOutput < 0 ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Primary output value less than zero for technology " << mName << endl;
-    }
-    
+    // Can't have negative variable demand.
+    assert( aVariableDemand >= 0 && util::isValidNumber( aVariableDemand ) );
+
+    // Check for positive variable demand and positive fixed output.
+    assert( mFixedOutput == IProductionState::fixedOutputDefault() || util::isEqual( aVariableDemand, 0.0 ) );
+
+    // Check that a state has been created for the period.
+    assert( mProductionState[ aPeriod ] );
+
+    // Construct a marginal profit calculator. This allows the calculation of 
+    // marginal profits to be lazy.
+    MarginalProfitCalculator marginalProfitCalc( this );
+
+    // Use the production state to determine output.
+    double primaryOutput =
+        mProductionState[ aPeriod ]->calcProduction( aRegionName,
+                                                     aSectorName,
+                                                     aVariableDemand,
+                                                     &marginalProfitCalc,
+                                                     aFixedOutputScaleFactor,
+                                                     mShutdownDeciders,
+                                                     aPeriod );
+
     // Calculate input demand.
-    input = primaryOutput / getEfficiency( aPeriod );
+    // Efficiency should be positive because invalid efficiencies were
+    // already corrected. 
+    assert( getEfficiency( aPeriod ) > 0 );
+    mInput[ aPeriod ] = primaryOutput / getEfficiency( aPeriod );
 
     Marketplace* marketplace = scenario->getMarketplace();
     // set demand for fuel in marketplace
-    if( ( mTechData->getFuelName() != "renewable" ) && ( ( mTechData->getFuelName() != "none" ) ||
-            mTechData->getFuelName().empty() ) ){ 
-        marketplace->addToDemand( mTechData->getFuelName(), aRegionName, input, aPeriod );
+    
+    const string& fuelName = mTechData->getFuelName();
+    if( ( fuelName != "renewable" ) && ( fuelName != "none" ) && mInput[ aPeriod ] > util::getSmallNumber() ){ 
+        marketplace->addToDemand( fuelName, aRegionName, mInput[ aPeriod ], aPeriod );
     }
-
-    calcEmissionsAndOutputs( aRegionName, input, primaryOutput, aGDP, aPeriod );
+    // Set the supply of the good to the marketplace.
+    calcEmissionsAndOutputs( aRegionName, mInput[ aPeriod ], primaryOutput, aGDP, aPeriod );
 }
 
 /*!
@@ -805,92 +877,119 @@ void technology::production( const string& aRegionName,
  * \param aGDP Regional GDP container.
  * \param aPeriod Period.
  */
-void technology::calcEmissionsAndOutputs( const string& aRegionName,
+void Technology::calcEmissionsAndOutputs( const string& aRegionName,
                                           const double aInput,
                                           const double aPrimaryOutput,
                                           const GDP* aGDP,
                                           const int aPeriod )
 {
     for( unsigned int i = 0; i < mOutputs.size(); ++i ){
-        mOutputs[ i ]->setPhysicalOutput( aPrimaryOutput, aRegionName, aPeriod );
+        mOutputs[ i ]->setPhysicalOutput( aPrimaryOutput, aRegionName,
+                                          mCaptureComponent.get(), aPeriod );
     }
 
     // calculate emissions for each gas after setting input and output amounts
     for ( unsigned int i = 0; i < ghg.size(); ++i ) {
-        ghg[ i ]->calcEmission( aRegionName, mTechData->getFuelName(), aInput, mOutputs, aGDP, aPeriod );
+        ghg[ i ]->calcEmission( aRegionName, mTechData->getFuelName(), mInput[ aPeriod ], mOutputs,
+                                aGDP, mCaptureComponent.get(), aPeriod );
     }
 }
 
-/*! \brief Adjusts technology share weights to be consistent with calibration value.
-* This is done only if there is more than one technology
+/*! \brief Adjusts Technology share weights to be consistent with calibration value.
+* This is done only if there is more than one Technology
 * Calibration is, therefore, performed as part of the iteration process. 
 * Since this can change derivatives, best to turn calibration off when using N-R solver.
 *
-* This routine adjusts technology shareweights so that relative shares are correct for each subsector.
+* This routine adjusts Technology shareweights so that relative shares are correct for each subsector.
 * Note that all calibration values are scaled (up or down) according to total sectorDemand 
 * -- getting the overall scale correct is the job of the TFE calibration
 *
 * \author Steve Smith
-* \param subSectorDemand total demand for this subsector
+* \param aTechnologyDemand Demand for the technology's product.
+* \param aRegionName Region name.
+* \param aSubsectorInfo Subsector information object.
+* \param aPeriod Model period.
 */
-void technology::adjustForCalibration( double subSectorDemand,
-                                       const string& regionName,
-                                       const IInfo*,
-                                       const int period )
+void Technology::adjustForCalibration( double aTechnologyDemand,
+                                       const string& aRegionName,
+                                       const IInfo* aSubsectorInfo,
+                                       const int aPeriod )
 {
-   // total calibrated outputs for this sub-sector
-   double calOutput = getCalibrationOutput( period );
+    // Variable demand must be positive.
+    assert( aTechnologyDemand >= 0 );
 
-    // make sure share weights aren't zero or else can't calibrate
-    if ( ( shrwts == 0 ) && ( calOutput > 0 ) ) {
-        shrwts  = 1;
+    // Don't try and adjust the Technology if it isn't available.
+    if( !isCalibrating( aPeriod ) ){
+        return;
     }
-   
+
+    // total calibrated outputs for this sub-sector
+    double calOutput = getCalibrationOutput( aPeriod );
+
+    // Given the technology is available for calibration it must
+    // have a positive calibration value.
+    assert( calOutput >= 0 );
+
     // Adjust share weights
-    double technologyDemand = share * subSectorDemand;
-    if ( technologyDemand > 0 ) {
-        double shareScaleValue =  calOutput / technologyDemand;
-        shrwts  = shrwts * shareScaleValue;
+    if ( aTechnologyDemand > 0 ) {
+        double shareScaleValue = calOutput / aTechnologyDemand;
+        shrwts *= shareScaleValue;
     }
-    
-    // Check to make sure share weights are not less than zero (and reset if they are)
-    if ( shrwts < 0 ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Share weight is less than zero in technology " << mName << endl;
-        mainLog << "Share weight was " << shrwts << "(reset to 1)" << endl;
-        shrwts = 1;
-    }
+
+    // Share weight must be positive after adjustment.
+    assert( shrwts >= 0 );
 
     // Report if share weight gets extremely large
     const static bool debugChecking = Configuration::getInstance()->getBool( "debugChecking" );
     if ( debugChecking && shrwts > 1e6 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Large share weight in calibration for technology: " << mName << endl;
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Large share weight in calibration for Technology: " << mName << endl;
     }
 }
 
-//! calculate GHG emissions from technology use
-void technology::calcEmission( const string& aGoodName, const int aPeriod ) {
-    // alternative ghg emissions calculation
-    emissmap.clear(); // clear emissions map
-    emfuelmap.clear(); // clear emissions map
-    for ( unsigned int i = 0; i < ghg.size(); ++i) {
+//! calculate GHG emissions from Technology use
+/* \brief Get a map containing emissions by gas from the Technology.
+* \param aGoodName Name of the sector.
+* \param aPeriod Period for which to get emissions.
+* \return A map of gas name to emissions. There are more gas names than ghgs.
+*/
+const map<string, double> Technology::getEmissions( const string& aGoodName, const int aPeriod ) const {
+    map<string, double> emissions;
+    for ( unsigned int i = 0; i < ghg.size(); ++i ) {
         // emissions by gas name only
-        emissmap[ghg[i]->getName()] = ghg[i]->getEmission( aPeriod );
+        emissions[ghg[i]->getName()] = ghg[i]->getEmission( aPeriod );
         // emissions by gas and fuel names combined
         // used to calculate emissions by fuel
-        emissmap[ghg[i]->getName() + mTechData->getFuelName()] = ghg[i]->getEmission( aPeriod );
-        // add sequestered amount to emissions map
-        // used to calculate emissions by fuel
-        emissmap[ghg[i]->getName() + "sequestGeologic"] = ghg[i]->getSequestAmountGeologic();
-        emissmap[ghg[i]->getName() + "sequestNonEngy"] = ghg[i]->getSequestAmountNonEngy();
-        
-        // emfuelmap[ghg[i]->getName()] = ghg[i]->getEmissFuel();
-        // This really should include the GHG name as well.
-        emfuelmap[mTechData->getFuelName()] = ghg[i]->getEmissFuel( aPeriod );
+        emissions[ghg[i]->getName() + mTechData->getFuelName()] = ghg[i]->getEmission( aPeriod );
+        // add sequestered amount to emissions map used to calculate emissions
+        // by fuel if there are sequestered emissions.
+        if( mCaptureComponent.get() ){
+            emissions[ ghg[i]->getName() + "sequestGeologic" ] = mCaptureComponent->
+                getSequesteredAmount( ghg[ i ]->getName(),
+                true, aPeriod );
+            emissions[ ghg[i]->getName() + "sequestNonEngy" ] = mCaptureComponent->
+                getSequesteredAmount( ghg[ i ]->getName(),
+                false, aPeriod );
+        }
     }
+
+    return emissions;
+}
+
+/* \brief Get a map containing emissions by fuel from the Technology.
+* \param aGoodName Name of the sector.
+* \param aPeriod Period for which to get emissions.
+* \return A map of fuel name to emissions.
+*/
+const map<string, double> Technology::getEmissionsByFuel( const string& aGoodName, const int aPeriod ) const {
+    map<string, double> emissionsByFuel;
+    for ( unsigned int i = 0; i < ghg.size(); ++i ) {
+        emissionsByFuel[ghg[i]->getName()] = ghg[i]->getEmissFuel( aPeriod );
+        // This really should include the GHG name as well.
+        emissionsByFuel[mTechData->getFuelName()] = ghg[i]->getEmissFuel( aPeriod );
+    }
+    return emissionsByFuel;
 }
 
 /*! \brief Returns technology name
@@ -898,189 +997,237 @@ void technology::calcEmission( const string& aGoodName, const int aPeriod ) {
 * \author Sonny Kim
 * \return sector name as a string
 */
-const string& technology::getName() const {
+const string& Technology::getName() const {
     return mName;
 }
 
-/*! \brief Returns name of the fuel consumed by this technology
+/*! \brief Returns name of the fuel consumed by this Technology
 *
 * \author Sonny Kim
 * \return fuel name as a string
 */
-const string& technology::getFuelName() const {
+const string& Technology::getFuelName() const {
     return mTechData->getFuelName();
 }
 
-/*! \brief Returns the ratio of output to input for this technology
+/*! \brief Returns the ratio of output to input for this Technology
 *
 * \author Sonny Kim
-* \return efficiency (out/In) of this technology
+* \param aPeriod Model period.
+* \return efficiency (out/In) of this Technology
 */
-double technology::getEfficiency( const int aPeriod ) const {
-    // calculate effective efficiency
-    return mTechData->getEfficiency() * ( 1 - mTechData->getEffPenalty() );
+double Technology::getEfficiency( const int aPeriod ) const {
+    // calculate effective efficiency. If there is a sequestration device applied use it to
+    // calculate the efficiency, otherwise use the base efficiency.
+    double baseEfficiency = mTechData->getEfficiency();
+    return mCaptureComponent.get() ? mCaptureComponent->getEffectiveEfficiency( baseEfficiency, aPeriod ) 
+                                    : baseEfficiency;
 }
 
-/*! \brief Return fuel intensity (input over output) for this technology
+/*! \brief Return fuel intensity (input over output) for this Technology
 *
 * \author Sonny Kim
-* \return fuel intensity (input/output) of this technology
 * \todo Need to impliment method of adding appropriate units (btu/kwh; gallons/mile, etc.)
 */
-double technology::getIntensity( const int aPeriod ) const {
+double Technology::getIntensity( const int aPeriod ) const {
     // Efficiency should be positive because invalid efficiencies were
     // already corrected.
     assert( getEfficiency( aPeriod ) > 0 );
     return 1 / getEfficiency( aPeriod );
 }
 
-/*! \brief returns share for this technology
-*
-* \author Sonny Kim
-* \pre calcShare
-* \return share value
-*/
-double technology::getShare() const {
-    return share;
-}
-
-/*! \brief returns share weight for this technology
+/*! \brief returns share weight for this Technology
 *
 * \author Steve Smith
 * \return share weight
 */
-double technology::getShareWeight() const {
+double Technology::getShareWeight() const {
     return shrwts;
 }
 
-/*! \brief scale share weight for this technology
+/*! \brief scale share weight for this Technology
 *
 * \author Steve Smith
 * \param scaleValue multiplicative scaling factor for share weight
 */
-void technology::scaleShareWeight( double scaleValue ) {
+void Technology::scaleShareWeight( double scaleValue ) {
     shrwts *= scaleValue;
 }
 
-/*! \brief scale share weight for this technology
+/*! \brief scale share weight for this Technology
 *
 * \author Steve Smith
 * \param shareWeightValue new value for share weight
 */
-void technology::setShareWeight( double shareWeightValue ) {
+void Technology::setShareWeight( double shareWeightValue ) {
     shrwts = shareWeightValue;
 }
 
-/*! \brief Returns calibration status for this technoloy
-*
-* This is true if a calibration value has been read in for this technology.
-* 
-* \author Steve Smith
-* \return Boolean that is true if technoloy is calibrated
-*/
-bool technology::getCalibrationStatus( ) const {
-    return mCalValue.get() != 0;
-}
-
 //! returns true if all output is either fixed or calibrated
-bool technology::outputFixed( ) const {
-    return ( technology::getCalibrationStatus() || ( fixedOutput >= 0 ) || ( shrwts == 0 ) );
+bool Technology::isOutputFixed( const int aPeriod ) const {
+    // In the initial investment period, output is fixed under the following conditions.
+    if( mProductionState[ aPeriod ]->isNewInvestment() ){
+        return ( ( mCalValue.get() )
+               || ( mFixedOutput != IProductionState::fixedOutputDefault() ) 
+               || ( shrwts == 0 ) || mTechData->getFuelName() == "renewable" );
+    }
+    // Otherwise output is always fixed.
+    return true;
 }
 
-/*! \brief Returns true if this technology is available for production and not fixed
-*
-* A true value means that this technology is available to respond to a demand and vary its output
-* 
+/*! \brief Returns whether the Technology shareweight should be adjusted by the
+*          calibration routine.
+* \details A technology should be calibrated if it is a new vintage with a
+*          read-in calibration input or output, is not a fixed output, and has a
+*          non-zero share weight.
 * \author Steve Smith
-* \return Boolean that is true if technology is available
+* \param aPeriod Model period.
+* \return Whether the Technology shoud be calibrated.
 */
-bool technology::techAvailable( ) const {
-   if ( !technology::getCalibrationStatus() && ( fixedOutput >= 0  ||  shrwts == 0 ) ) {
-      return false;  // this sector is not available to produce variable output
-   } 
-   return true;
+bool Technology::isCalibrating( const int aPeriod ) const {
+    return ( ( shrwts > 0 )
+             && mProductionState[ aPeriod ]->isNewInvestment() 
+             && ( mCalValue.get() )
+             && ( mFixedOutput == IProductionState::fixedOutputDefault() ) );
 }
 
-//! return fuel input for technology
-double technology::getInput() const {
-    return input;
+//! return fuel input for Technology
+double Technology::getInput( const int aPeriod ) const {
+    return mInput[ aPeriod ];
 }
 
-//! return output of technology
-double technology::getOutput( const int aPeriod ) const {
+/*! \brief Return the Technology's output for a given period.
+* \details TODO
+* \param aPeriod The period for which to get output.
+* \return The output for the period.
+*/
+double Technology::getOutput( const int aPeriod ) const {
     // Primary output is at position zero.
     return mOutputs[ 0 ]->getPhysicalOutput( aPeriod );
 }
 
-//! return technology fuel cost only
-double technology::getFuelcost() const {
-    return fuelcost;
+/*! \brief Return Technology fuel cost.
+* \param aRegionName The region containing the Technology.
+* \param aSectorName The sector containing the Technology.
+* \param aPeriod Period in which to calculate the fuel cost.
+* \return A calculate fuel cost for the Technology.
+*/
+double Technology::getFuelCost( const string& aRegionName, const string& aSectorName, const int aPeriod ) const {
+    Marketplace* marketplace = scenario->getMarketplace();
+     // code specical case where there is no fuel input. sjs
+     // used now to drive non-CO2 GHGs
+    double fuelprice;
+    const string& fuelName = mTechData->getFuelName();
+    if ( fuelName == "none" || fuelName == "renewable" ) {
+        fuelprice = 0;
+    }
+    else {
+        fuelprice = marketplace->getPrice( fuelName, aRegionName, aPeriod );
+    } 
+
+    // The market price of the fuel must be valid.
+    if ( fuelprice == Marketplace::NO_MARKET_PRICE ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Requested fuel >" << fuelName << "< with no price in technology " << mName 
+            << " in sector " << aSectorName << " in region " << aRegionName << "." << endl;
+        // set fuelprice to a valid, although arbitrary, number
+        fuelprice = util::getLargeNumber();
+    }
+    // fMultiplier and pMultiplier are initialized to 1 for those not read in
+    return ( fuelprice * mTechData->getFMultiplier() ) / getEfficiency( aPeriod );
 }
 
-/*!
- * \brief Return technology input calibration value.
- * \param aPeriod Model period.
- * \return Input calibration value.
- */
-double technology::getCalibrationInput( const int aPeriod ) const {
-    // Calibration output is for the initial year of the technology.
-    if( mCalValue.get() && year == scenario->getModeltime()->getper_to_yr( aPeriod ) ){
-        return mCalValue->getCalInput( getEfficiency( aPeriod ) );
-}
-    return 0;
+//! return technology calibration value
+double Technology::getCalibrationInput( const int aPeriod ) const {
+    if( mProductionState[ aPeriod ]->isNewInvestment() ) {
+        if( mCalValue.get() ){
+            return mCalValue->getCalInput( getEfficiency( aPeriod ) );
+        }
+        if( shrwts < util::getTinyNumber() &&
+            mFixedOutput == IProductionState::fixedOutputDefault() ){
+            return 0;
+        }
+    }
+    return -1;
 }
 
 //! scale technology calibration or fixed values
-void technology::scaleCalibrationInput( const double scaleFactor ) {
+void Technology::scaleCalibrationInput( const double aScaleFactor ) {
     if ( mCalValue.get() ){
-        mCalValue->scaleValue( scaleFactor );
+        mCalValue->scaleValue( aScaleFactor );
+    }
+}
+
+/*! \brief Calculate Technology fuel cost and total cost.
+* \details This calculates the cost (per unit output) of this specific
+*          Technology. The cost includes fuel cost, carbon value, and non-fuel
+*          costs. Conversion efficiency, and optional fuelcost and total price
+*          multipliers are used if specified.
+* \author Sonny Kim, Steve Smith
+* \param aRegionName Region name.
+* \param aSectorName SectorName
+*/
+void Technology::calcCost( const string& aRegionName, const string& aSectorName, const int aPeriod ) {
+    // If it is an existing stock or is a fixed output technology it has no
+    // marginal cost.
+    if( !mProductionState[ aPeriod ]->isNewInvestment() || mFixedOutput != IProductionState::fixedOutputDefault() ){
+        mCosts[ aPeriod ] = 0;
+    }
+    else {
+        double techCost = ( getFuelCost( aRegionName, aSectorName, aPeriod )
+                            + getNonEnergyCost( aPeriod ) ) * pMultiplier
+                            - calcSecondaryValue( aRegionName, aPeriod );
+
+        assert( util::isValidNumber( techCost ) );
+
+        // techcost can drift below zero in disequalibrium.
+        mCosts[ aPeriod ] = max( techCost, util::getSmallNumber() );
     }
 }
 
 /*!
- * \brief Return technology output calibration value.
- * \param aPeriod Model period.
- * \return Output calibration value.
- */
-double technology::getCalibrationOutput( const int aPeriod ) const {
-    // Calibration output is for the initial year of the technology.
-    if( mCalValue.get() && year == scenario->getModeltime()->getper_to_yr( aPeriod ) ){
-        return mCalValue->getCalOutput( getEfficiency( aPeriod ) );
-}
-    return 0;
-}
-
-//! return the cost of technology
-double technology::getTechcost() const {
-    return techcost;
+* \brief Get the total cost of the technology for a period.
+* \details Returns the previously calculated cost for a period.
+* \pre calcCost has been called for the iteration.
+* \param aPeriod Model period.
+* \return The total Technology cost.
+*/
+double Technology::getCost( const int aPeriod ) const {
+    // Check that the cost has been calculated for the period. This could still
+    // be a stale cost however if the cost has not been calculated for the
+    // iteration.
+    assert( mCosts[ aPeriod ] != -1 );
+    return mCosts[ aPeriod ];
 }
 
-/*!
- * \brief Return the non-energy cost of the Technology
- * \param aPeriod Model period.
- * \return Non-energy cost for the Technology.
- */
-double technology::getNonEnergyCost( const int aPeriod ) const {
-   return mTechData->getNonEnergyCost() * ( 1 + mTechData->getNECostPenalty() );
-}
+//! return technology calibration value
+double Technology::getCalibrationOutput( const int aPeriod ) const {
+    // If there is fixed output there is not calibrated output.
+    assert( ! ( mFixedOutput != IProductionState::fixedOutputDefault() && mCalValue.get() ) );
 
-//! return any carbon tax and storage cost applied to technology
-double technology::getTotalGHGCost( const string& aRegionName, const int aPeriod ) const {
-    double totalValue = 0;
-    // Add all value from the GHGs.
-    for( unsigned int i = 0; i < ghg.size(); ++i ){
-        totalValue += ghg[i]->getGHGValue( aRegionName, mTechData->getFuelName(), mOutputs, getEfficiency( aPeriod ), aPeriod );
+    if( mProductionState[ aPeriod ]->isNewInvestment() ) {
+        if( mCalValue.get() ){
+            return mCalValue->getCalOutput( getEfficiency( aPeriod ) );
+        }
+        if( shrwts < util::getTinyNumber() && mFixedOutput == IProductionState::fixedOutputDefault() ){
+            return 0;
+        }
     }
-    return totalValue;
+    return -1;
 }
 
-//! return carbon taxes paid by technology
-double technology::getCarbonTaxPaid( const string& aRegionName, int aPeriod ) const {
-    double sum = 0;
-    for( CGHGIterator currGhg = ghg.begin(); currGhg != ghg.end(); ++currGhg ){
-        sum += (*currGhg)->getCarbonTaxPaid( aRegionName, aPeriod );
-    }
-    return sum;
+/*! \brief Return the non-energy cost of the Technology
+* \param aPeriod Model period.
+*/
+double Technology::getNonEnergyCost( const int aPeriod ) const {
+    // If there is a sequestration device use it to calculate the total
+    // non-energy cost, otherwise use the base non energy cost.
+    double baseNonEnergyCost = mTechData->getNonEnergyCost();
+    return mCaptureComponent.get() ? mCaptureComponent->getTotalNonEnergyCost( mTechData->getEfficiency(),
+                                                                               baseNonEnergyCost,
+                                                                               aPeriod ) 
+                                      : baseNonEnergyCost;
 }
 
 /*! \brief Return a vector listing the names of all the GHGs within the Technology.
@@ -1089,7 +1236,7 @@ double technology::getCarbonTaxPaid( const string& aRegionName, int aPeriod ) co
 * \author Josh Lurz
 * \return A vector of GHG names contained in the Technology.
 */
-const vector<string> technology::getGHGNames() const {
+const vector<string> Technology::getGHGNames() const {
     return util::getKeys( ghgNameMap );
 }
 
@@ -1097,7 +1244,7 @@ const vector<string> technology::getGHGNames() const {
 * \param prevGHG Pointer to the previous GHG object that needs to be passed to the corresponding object this period.
 * \warning Assumes there is only one GHG object with any given name
 */
-void technology::copyGHGParameters( const AGHG* prevGHG ) {
+void Technology::copyGHGParameters( const AGHG* prevGHG ) {
     const int ghgIndex = util::searchForValue( ghgNameMap, prevGHG->getName() );
 
     if ( prevGHG ) {
@@ -1109,30 +1256,25 @@ void technology::copyGHGParameters( const AGHG* prevGHG ) {
 /*! \brief Returns the pointer to a specific GHG 
 * \param aGHGName Name of GHG 
 */
-const AGHG* technology::getGHGPointer( const string& aGHGName ) {
+const AGHG* Technology::getGHGPointer( const string& aGHGName ) const {
     const int ghgIndex = util::searchForValue( ghgNameMap, aGHGName );
 
     return ghg[ ghgIndex ];
      
 }
 
-//! return map of all ghg emissions
-const map<string,double>& technology::getemissmap() const {
-    return emissmap;
-}
-
-//! return map of all ghg emissions
-const map<string,double>& technology::getemfuelmap() const {
-    return emfuelmap;
-}
-
 //! return value for ghg
-double technology::get_emissmap_second( const string& str) const {
-    return util::searchForValue( emissmap, str );
+double Technology::getEmissionsByGas( const string& aGasName, const int aPeriod ) const {
+    for( unsigned int i = 0; i < ghg.size(); ++i ){
+        if( ghg[ i ]->getName() == aGasName ){
+            return ghg[ i ]->getEmission( aPeriod );
+        }
+    }
+    return 0;
 }
 
 //! Set the technology year.
-void technology::setYear( const int aYear ) {
+void Technology::setYear( const int aYear ) {
     // This is called through parsing, so report an error to the user.
     if( aYear <= 0 ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -1144,68 +1286,147 @@ void technology::setYear( const int aYear ) {
     }
 }
 
-/*! \brief returns the number of ghg objects.
-*
-* Calcuation is done using length of GHG string to be consistant with use of ghg names to access GHG information.
-*
+/*! \brief Check for fixed demands and set values to the counter.
+* If the output of this Technology is fixed then set that value to the
+* appropriate marketplace counter. If it is not, then reset counter.
 *
 * \author Steve Smith
+* \param aRegionName Region name.
+* \param aSectorName Sector name.
+* \param aPeriod Model period.
 */
-int technology::getNumbGHGs()  const {
-    vector<string> ghgNames = getGHGNames();
-    return static_cast<int>( ghgNames.size() ); 
-}
+void Technology::tabulateFixedDemands( const string& aRegionName,
+                                       const string& aSectorName,
+                                       const int aPeriod )
+{
+    const double MARKET_NOT_FIXED = -1;
 
-/*! \brief check for fixed demands and set values to counter
-*
-* If the output of this technology is fixed then set that value to the appropriate marketplace counter
-* If it is not, then reset counter
-*
-* \author Steve Smith
-* \param period Model period
-*/
-void technology::tabulateFixedDemands( const string regionName, const int period, const IInfo* aSubsectorIInfo ) {
-    const double MKT_NOT_ALL_FIXED = -1; 
+    // Non-operating technologies have no fixed demands.
+    if( !mProductionState[ aPeriod ]->isOperating() ){
+        return;
+    }
+
     Marketplace* marketplace = scenario->getMarketplace();
+    IInfo* fuelInfo = marketplace->getMarketInfo( mTechData->getFuelName(), aRegionName, aPeriod, false );
+    if( fuelInfo ){
+        if( isOutputFixed( aPeriod ) ) {
 
-    IInfo* marketInfo = marketplace->getMarketInfo( mTechData->getFuelName(), regionName, period, false );
-    // Fuel may not have a market, as is the case with renewable.
-    if( marketInfo ){
-        if ( outputFixed() ) {
-            double fixedOrCalInput = 0;
-            double fixedInput = 0;
-            // this sector has fixed output
-            if ( technology::getCalibrationStatus() ) {
-                fixedOrCalInput = getCalibrationInput( period );
-            } else if ( fixedOutput >= 0 ) {
-                fixedOrCalInput = getFixedInput( period );
-                fixedInput = fixedOrCalInput;
+            double existingDemand = fuelInfo->getDouble( "calDemand", false );
+
+            double fixedInput = getCalibrationInput( aPeriod );
+            // this sector does not have fixed input.
+            if( fixedInput == -1 ){
+                double currFixedInput = getFixedInput( aRegionName, aSectorName, aPeriod );
+                if( currFixedInput >= 0 ){
+                    fixedInput = currFixedInput;
+                }
             }
+            // Make sure we aren't setting a negative demand into the marketplace.
+            assert( fixedInput >= 0 );
+
             // set demand for fuel in marketInfo counter
-            double existingDemand = max( marketInfo->getDouble( "calDemand", false ), 0.0 );
-            marketInfo->setDouble( "calDemand", existingDemand + fixedOrCalInput );        
-            
-            // Track fixedDemand separately since this will not be scaled. Not
-            // all markets have calFixedDemand.
-            existingDemand = max( marketInfo->getDouble( "calFixedDemand", false ), 0.0 );
-            marketInfo->setDouble( "calFixedDemand", existingDemand + fixedInput );        
+            fuelInfo->setDouble( "calDemand", max( existingDemand, 0.0 ) + fixedInput );        
         }
         else {
             // If not fixed, then set to -1 to indicate a demand that is not
             // completely fixed.
-            marketInfo->setDouble( "calDemand", MKT_NOT_ALL_FIXED );
+            fuelInfo->setDouble( "calDemand", MARKET_NOT_FIXED );
         }
     }
 }
 
-/*! \brief sets a tech share to an input amount
-*
-*
-* \author Marshall Wise
+/*! \brief Test to see if calibration worked for this Technology.
+* \author Josh Lurz
+* \param aPeriod The model period.
+* \param aCalAccuracy Accuracy (fraction) to check if calibrations are within.
+* \param aRegionName Region name.
+* \param aSectorName Sector name.
+* \param aSubsectorName Subsector name.
+* \param aPrintWarnings Whether to print a warning.
+* \return Whether calibration was successful.
 */
+bool Technology::isAllCalibrated( const int aPeriod,
+                                  double aCalAccuracy,
+                                  const string& aRegionName, 
+                                  const string& aSectorName,
+                                  const string& aSubsectorName,
+                                  const bool aPrintWarnings ) const
+{
+    // Check that the period is the new vintage period.
+    if( !mProductionState[ aPeriod ]->isNewInvestment() ){
+        return true;
+    }
 
-void technology::setTechShare(const double shareIn) {
-    share = shareIn;
+    // If the subsector is calibrated at the subsector level, check that it was successful.
+    const double calOutput = getCalibrationOutput( aPeriod );
+    if ( calOutput != -1 ) {
+        const double output = getOutput( aPeriod );
+        double relativeDiff;
+        if( calOutput > 0 ){
+            relativeDiff = fabs( output - calOutput ) / calOutput;
+        }
+        else {
+            // Use absolute accuracy since the calibrated output level is zero.
+            relativeDiff = fabs( output - calOutput );
+        }
+        if( relativeDiff > aCalAccuracy ){
+            if( aPrintWarnings ){
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::WARNING );
+                mainLog << "Calibration failed by " << relativeDiff * 100 << " percent for Technology "
+                        << mName << " in subsector " << aSubsectorName << " in sector " << aSectorName
+                        << " in region " << aRegionName << " with output " << output
+                        << " and calibration value " << calOutput << "." << endl;
+            }
+            return false;
+        }
+    }
+    // Calibration at the Technology level was successful.
+    return true;
+}
+
+/*! \brief Return the default Technology logit exponential.
+* \return The default logit exponential.
+*/
+double Technology::getLogitExpDefault(){
+    return -6;
+}
+
+/*! \brief Return the marginal revenue for this Technology's output.
+* \details The marginal revenue for the Technology is defined as the market
+*          price for the good in the given period divided by the price
+*          multiplier.
+* \param aRegionName Region name.
+* \param aSectorName Sector name.
+* \param aPeriod Model period.
+* \return The marginal revenue.
+*/
+double Technology::getMarginalRevenue( const string& aRegionName,
+                                       const string& aSectorName,
+                                       const int aPeriod ) const
+{
+    // Price multiplier must be positive.
+    assert( pMultiplier > 0 );
+
+    // TODO: Change to true when below is fixed.
+    double marginalRevenue = scenario->getMarketplace()->getPrice( aSectorName, aRegionName,
+                                                                   aPeriod, false );
+
+    // Demand sectors won't have markets so the price could be wrong here. This
+    // will be fixed by splitting demand and supply sectors.
+    // TODO: This will prevent vintaging from working for end use sectors.
+    // assert( price != Marketplace::NO_MARKET_PRICE );
+    if( marginalRevenue == Marketplace::NO_MARKET_PRICE ){
+        return 0;
+    }
+    
+    // Adjust for the price multiplier.
+    marginalRevenue /= pMultiplier;
+
+    // Add any value or costs of secondary good.
+    marginalRevenue += calcSecondaryValue( aRegionName, aPeriod );
+
+    return marginalRevenue;
 }
 
 /*! \brief Update an output container with information from a technology for a
@@ -1213,7 +1434,7 @@ void technology::setTechShare(const double shareIn) {
 * \param aOutputContainer The output container to update.
 * \param aPeriod The period for which to update.
 */
-void technology::accept( IVisitor* aVisitor, const int aPeriod ) const {
+void Technology::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitTechnology( this, aPeriod );
 
     for( unsigned int i = 0; i < mOutputs.size(); ++i ){

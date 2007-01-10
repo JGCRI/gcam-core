@@ -124,20 +124,32 @@ void SecondaryOutput::initCalc( const string& aRegionName,
     mCachedCO2Coef.set( CO2Coef * mOutputRatio );
 }
 
+void SecondaryOutput::postCalc( const string& aRegionName,
+                                const int aPeriod )
+{
+}
+
+void SecondaryOutput::scaleCoefficient( const double aScaler ){
+    // Secondary outputs do not support scaling.
+}
+
 double SecondaryOutput::calcPhysicalOutput( const double aPrimaryOutput,
-                                          const string& aRegionName,
-                                          const int aPeriod ) const
+                                            const string& aRegionName,
+                                            const ICaptureComponent* aCaptureComponent,
+                                            const int aPeriod ) const
 {
     // Secondary output is the primary output multiplied by the output ratio.
     return aPrimaryOutput * mOutputRatio;
 }
 
 void SecondaryOutput::setPhysicalOutput( const double aPrimaryOutput,
-                                          const string& aRegionName,
-                                          const int aPeriod )
+                                         const string& aRegionName,
+                                         ICaptureComponent* aCaptureComponent,
+                                         const int aPeriod )
 {
     mPhysicalOutputs[ aPeriod ].set( calcPhysicalOutput( aPrimaryOutput,
                                                          aRegionName,
+                                                         aCaptureComponent,
                                                          aPeriod ) );
 
     // Remove the secondary output from demand instead of adding to supply
@@ -154,6 +166,7 @@ double SecondaryOutput::getPhysicalOutput( const int aPeriod ) const {
 }
 
 double SecondaryOutput::getValue( const string& aRegionName,
+                                  const ICaptureComponent* aCaptureComponent,
                                   const int aPeriod ) const
 {
 

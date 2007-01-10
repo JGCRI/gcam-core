@@ -37,7 +37,7 @@ class MarginalProfitCalculator;
  *          production state defines how they determine the aggregate level of
  *          output to produce. The production state is valid only for a single
  *          period, a Technology may progress through several production states
- *          over its lifetme.
+ *          over its lifetime.
  * \author Josh Lurz
  */
 class IProductionState: public ISimpleComponent

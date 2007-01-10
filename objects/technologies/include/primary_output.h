@@ -76,17 +76,25 @@ public:
     virtual void initCalc( const std::string& aRegionName,
                            const int aPeriod );
 
+    virtual void postCalc( const std::string& aRegionName,
+                           const int aPeriod );
+
+    virtual void scaleCoefficient( const double aScaler );
+
     virtual double calcPhysicalOutput( const double aPrimaryOutput,
                                        const std::string& aRegionName,
+                                       const ICaptureComponent* aCaptureComponent,
                                        const int aPeriod ) const;
 
     virtual void setPhysicalOutput( const double aPrimaryOutput,
                                     const std::string& aRegionName,
+                                    ICaptureComponent* aCaptureComponent,
                                     const int aPeriod );
 
     virtual double getPhysicalOutput( const int aPeriod ) const;
 
     virtual double getValue( const std::string& aRegionName,
+                             const ICaptureComponent* aCaptureComponent,
                              const int aPeriod ) const;
 
     virtual double getEmissionsPerOutput( const std::string& aGHGName,

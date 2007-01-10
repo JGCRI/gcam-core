@@ -54,8 +54,7 @@ public:
     virtual const std::string& getFuelName() const;
     virtual const double getEfficiency() const;
     virtual const double getNonEnergyCost() const;
-    virtual const double getEffPenalty() const;
-    virtual const double getNECostPenalty() const;
+
     virtual const double getFMultiplier() const;
     virtual const double getFuelPrefElasticity() const;
 
@@ -63,8 +62,7 @@ public:
     virtual void setFuelName( const std::string& aFuelName );
     virtual void setEfficiency( const double aEfficiency );
     virtual void setNonEnergyCost( const double aNonEnergyCost );
-    virtual void setEffPenalty( const double aEffPenalty );
-    virtual void setNECostPenalty( const double aNECostPenalty );
+
     virtual void setFMultiplier( const double aFMultiplier );
     virtual void setFuelPrefElasticity( const double aFuelPrefElasticity );
 
@@ -77,10 +75,6 @@ protected:
 
     //! Base non-fuel costs read in(levelized).
     double mBaseNonEnergyCost;
-    
-    double effPenalty; //!< energy efficiency penalty
-
-    double neCostPenalty; //!< penalty on non-fuel costs 
 
     double fMultiplier; //!< multiplier on fuel cost or price
     double fuelPrefElasticity; //!< Fuel preference elasticity

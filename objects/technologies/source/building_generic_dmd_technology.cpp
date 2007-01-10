@@ -1,11 +1,10 @@
 /*! 
 * \file building_generic_dmd_technology.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief BuildingGenericDmdTechnology class source file.
 * \author Steve Smith
 */
 
-// Standard Library headers
 #include "util/base/include/definitions.h"
 #include <string>
 #include <cassert>
@@ -19,13 +18,12 @@
 #include "util/logger/include/ilogger.h"
 #include "containers/include/iinfo.h"
 #include "sectors/include/building_dmd_subsector.h"
+#include "technologies/include/iproduction_state.h"
 
 using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
-// static initialize.
-const string BuildingGenericDmdTechnology::XML_NAME1D = "buildingservice";
 
 // Technology class method definition
 
@@ -35,7 +33,7 @@ const string BuildingGenericDmdTechnology::XML_NAME1D = "buildingservice";
  * \param aYear Technology year.
  */
 BuildingGenericDmdTechnology::BuildingGenericDmdTechnology( const string& aName, const int aYear )
-:technology( aName, aYear ){
+:Technology( aName, aYear ){
     saturation = 1;
     priceElasticity = 0;
 }
@@ -44,9 +42,13 @@ BuildingGenericDmdTechnology::BuildingGenericDmdTechnology( const string& aName,
 BuildingGenericDmdTechnology::~BuildingGenericDmdTechnology() {
 }
 
+void BuildingGenericDmdTechnology::postCalc( const string& aRegionName, const int aPeriod ) {
+    Technology::postCalc( aRegionName, aPeriod );
+}
+
 //! Clone Function. Returns a deep copy of the current technology.
 BuildingGenericDmdTechnology* BuildingGenericDmdTechnology::clone() const {
-    return new BuildingGenericDmdTechnology( *this );
+	return new BuildingGenericDmdTechnology( *this );
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -58,7 +60,7 @@ BuildingGenericDmdTechnology* BuildingGenericDmdTechnology::clone() const {
 * \return The constant XML_NAME.
 */
 const std::string& BuildingGenericDmdTechnology::getXMLName1D() const {
-	return XML_NAME1D;
+	return getXMLNameStatic1D();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -71,7 +73,19 @@ const std::string& BuildingGenericDmdTechnology::getXMLName1D() const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& BuildingGenericDmdTechnology::getXMLNameStatic1D() {
+	const static string XML_NAME1D = "buildingservice";
 	return XML_NAME1D;
+}
+
+void BuildingGenericDmdTechnology::completeInit( const string& aRegionName,
+                                                 const string& aSectorName,
+                                                 DependencyFinder* aDepFinder,
+                                                 const IInfo* aSubsectorInfo,
+                                                 ILandAllocator* aLandAllocator,
+                                                 const GlobalTechnologyDatabase* aGlobalTechDB )
+{
+    Technology::completeInit( aRegionName, aSectorName, aDepFinder,
+                              aSubsectorInfo, aLandAllocator, aGlobalTechDB );
 }
 
 /*
@@ -90,26 +104,35 @@ void BuildingGenericDmdTechnology::initCalc( const string& aRegionName,
                                              const int aPeriod )
 {
     Marketplace* marketplace = scenario->getMarketplace();
-    string existingName;
 
-    string serviceSupplySectorName = getFuelName( );
-    string internGainsMktName = aSubsectorInfo->getString( BuildingDemandSubSector::getInternalGainsInfoName(), true );
+
+    const string internGainsMktName =
+        aSubsectorInfo->getString( BuildingDemandSubSector::getInternalGainsInfoName(), true );
     assert( !internGainsMktName.empty() ); // This should have always been properly set by the building subsecto
+    
+    const string serviceSupplySectorName = getFuelName();
     IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( serviceSupplySectorName, aRegionName, aPeriod, true );
-
+    
+    // This should have always been properly set by the building subsector
+    assert( !internGainsMktName.empty() ); 
+    
+    string existingName;
     if( !marketInfo ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
-        mainLog << "There does not appear to be a market for good "<< serviceSupplySectorName 
-                << " in region " << aRegionName << "." << endl;
-        existingName = "no market";   // do not try to set an info object to this market if there has been a user input error.
+        mainLog << "There does not appear to be a market for good " << getFuelName() 
+                << " in region "<< aRegionName << "." << endl;
+        // Do not try to set an info object to this market if there has been a
+        // user input error.
+        existingName = "no market";   
     }
     else {
         existingName = marketInfo->getString( BuildingDemandSubSector::getInternalGainsInfoName(), false );
     }
     
     if ( existingName.empty() ) {
-        // Pass the internal gains market name to the market supplying this technology
+        // Pass the internal gains market name to the market supplying this
+        // technology
         marketInfo->setString( BuildingDemandSubSector::getInternalGainsInfoName(), internGainsMktName );
     }
     else if ( existingName != internGainsMktName ) {
@@ -119,7 +142,7 @@ void BuildingGenericDmdTechnology::initCalc( const string& aRegionName,
                     <<" appears to be pointing to two different demand sectors." << endl;
     }
     
-    technology::initCalc( aRegionName, aSectorName, aSubsectorInfo, aDemographics, aPeriod );
+    Technology::initCalc( aRegionName, aSectorName, aSubsectorInfo, aDemographics, aPeriod );
 }
 
 //! Parses any input variables specific to derived classes
@@ -146,14 +169,14 @@ bool BuildingGenericDmdTechnology::XMLDerivedClassParse( const string& nodeName,
 * \param tabs A tabs object responsible for printing the correct number of tabs. 
 */
 void BuildingGenericDmdTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) const {  
-    XMLWriteElementCheckDefault( saturation, "saturation", out, tabs, 1.0 );
-    XMLWriteElementCheckDefault( priceElasticity, "pElasticity", out, tabs, 0.0 );
+	XMLWriteElementCheckDefault( saturation, "saturation", out, tabs, 1.0 );
+	XMLWriteElementCheckDefault( priceElasticity, "pElasticity", out, tabs, 0.0 );
 }	
 
 //! Write object to debugging xml output stream.
 void BuildingGenericDmdTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const { 
-    XMLWriteElement( saturation, "saturation", out, tabs );
-    XMLWriteElement( priceElasticity, "pElasticity", out, tabs );
+	XMLWriteElement( saturation, "saturation", out, tabs );
+	XMLWriteElement( priceElasticity, "pElasticity", out, tabs );
 }	
 
 /*!
@@ -163,16 +186,17 @@ void BuildingGenericDmdTechnology::toDebugXMLDerived( const int period, ostream&
 *          price is correctly calculated.
 * \author Steve Smith
 * \param aRegionName Region name.
-* \param aSectorName Sector name, also the name of the product.
+* \param aSectorName Sector name.
 * \param aGDP Regional GDP container.
 * \param aPeriod Model period.
+* \return The building demand technology share which is always one.
 */
-void BuildingGenericDmdTechnology::calcShare( const string& aRegionName,
-                                              const std::string& aSectorName,
-                                              const GDP* aGDP,
-                                              const int aPeriod )
+double BuildingGenericDmdTechnology::calcShare( const string& aRegionName,
+                                                const string& aSectorName,
+                                                const GDP* aGDP,
+                                                const int aPeriod ) const
 {
-	share = 1;
+	return 1;
 }
 
 /*! \brief calculate effective internal gains as they affect the demand for this technology
@@ -183,7 +207,7 @@ void BuildingGenericDmdTechnology::calcShare( const string& aRegionName,
 * \author Steve Smith
 */
 double BuildingGenericDmdTechnology::getEffectiveInternalGains( const string& regionName, const int period ) {
-    return 0;
+	return 0;
 }
 
 /*! \brief Adjusts technology parameters as necessary to be consistent with calibration value.
@@ -192,55 +216,65 @@ double BuildingGenericDmdTechnology::getEffectiveInternalGains( const string& re
 * is consistant with calibrated input demand. This version works for demands that do not take into account internal gains.
 *
 * \author Steve Smith
-* \param unitDemand calibrated unit demand (demand per unit floorspace) for this subsector
-* \param regionName regionName
+* \param aTechnologyDemand calibrated unit demand (demand per unit floorspace) for this subsector
+* \param aRegionName regionName
 * \param aSubSectorInfo Info object (not used for this class so name is left out) 
-* \param period model period
+* \param aPeriod model period
 */
-void BuildingGenericDmdTechnology::adjustForCalibration( double subSectorDemand, const string& regionName,
-														 const IInfo* aSubSectorInfo, const int period )
+void BuildingGenericDmdTechnology::adjustForCalibration( double aTechnologyDemand,
+                                                         const string& aRegionName,
+														 const IInfo* aSubSectorInfo,
+                                                         const int aPeriod )
 {
-    // unitDemand (demand per unit area) is passed into this routine as subSectorDemand, but not adjusted for saturation and other parameters.    
-    double unitDemand = subSectorDemand;
+    // Make sure this is only called in the technology's initial year.
+    // Make sure this is only called in the technology's initial year.
+    if( !mProductionState[ aPeriod ]->isOperating() ){
+        return;
+    }
 
+    // unitDemand (demand per unit area) is passed into this routine as
+    // subSectorDemand, but not adjusted for saturation and other parameters.    
+    double unitDemand = aTechnologyDemand;
     // Production is equal to: unitDemand * saturation *(any other parameters) * dmd
-    
-     shrwts = unitDemand / getDemandFnPrefix( regionName, period );
- }
+	shrwts = unitDemand / getDemandFnPrefix( aRegionName, aPeriod );
+    assert( shrwts >= 0 && util::isValidNumber( shrwts ) );
+}
 
 /*! \brief Calculates the amount of output from the technology.
 * \details Unlike normal technologies, this does NOT add demands for fuels and
 *          ghg emissions to markets. The BuildingGenericDmdTechnology just
 *          calculates demand for a service, the actual fuel consumption and
 *          emissions take place in the corresponding supply sectors. 
-* \param aRegionName Region name.
-* \param aSectorName Sector name, also the name of the product.
-* \param aDemand Subsector demand for output.
-* \param aGDP Regional GDP container.
-* \param aPeriod Model period.
-* \author Steve Smith
+* \param aRegionName name of the region
+* \param aSectorName name of the product for this sector
+* \param aVariableDemand Total demand for this subsector
+* \param aFixedOutputScaleFactor Scale factor to scale down fixed output.
+* \param aGDP GDP object.
+* \param aPeriod Model period
 */
 void BuildingGenericDmdTechnology::production( const string& aRegionName,
                                                const string& aSectorName,
-                                               const double aDemand,
-                                               const GDP* aGDP,
-                                               const int aPeriod )
+											   double aVariableDemand,
+                                               double aFixedOutputScaleFactor,
+											   const GDP* aGDP, const int aPeriod )
 {
-	Marketplace* marketplace = scenario->getMarketplace();
+    if( !mProductionState[ aPeriod ]->isOperating() ){
+        return;
+    }
+	
+    // dmd is in units of floor space
+	double floorSpace = aVariableDemand; 
 
-	// dmd is in units of floor space
-	double floorSpace = aDemand; 
-
-	input = shrwts * getDemandFnPrefix( aRegionName, aPeriod ) * floorSpace
+	mInput[ aPeriod ] = shrwts * getDemandFnPrefix( aRegionName, aPeriod ) * floorSpace
             + getEffectiveInternalGains( aRegionName, aPeriod );
 
-    double primaryOutput = input = max( input, 0.0 ); // Make sure internal gains do not drive service less than zero
+    double primaryOutput = mInput[ aPeriod ] = max( mInput[ aPeriod ], 0.0 ); // Make sure internal gains do not drive service less than zero
 
-    calcEmissionsAndOutputs( aRegionName, input, primaryOutput, aGDP, aPeriod );
+    calcEmissionsAndOutputs( aRegionName, mInput[ aPeriod ], primaryOutput, aGDP, aPeriod );
 
 	// set demand for fuel in marketplace
-	marketplace->addToDemand( mTechData->getFuelName(), aRegionName, input, aPeriod );
-
+	Marketplace* marketplace = scenario->getMarketplace();
+	marketplace->addToDemand( mTechData->getFuelName(), aRegionName, mInput[ aPeriod ], aPeriod );
 }
 
 //! Demand function prefix.
@@ -256,7 +290,7 @@ void BuildingGenericDmdTechnology::production( const string& aRegionName,
 * \param period Model period
 */
 double BuildingGenericDmdTechnology::getDemandFnPrefix( const string& regionName, const int period )  {
-Marketplace* marketplace = scenario->getMarketplace();
+	Marketplace* marketplace = scenario->getMarketplace();
 
     double priceRatio = ( period > 1 ) ? 
         marketplace->getPrice( mTechData->getFuelName(), regionName, period ) / 
@@ -265,5 +299,28 @@ Marketplace* marketplace = scenario->getMarketplace();
     double prefixValue = saturation * pow( priceRatio, priceElasticity );
     
     // Make sure and do not return zero
+    assert( util::isValidNumber( prefixValue ) );
     return ( prefixValue > 0 ) ? prefixValue : 1;
 }
+
+void BuildingGenericDmdTechnology::calcCost( const string& aRegionName,
+                                             const string& aSectorName,
+											 const int aPeriod )
+{
+	Technology::calcCost( aRegionName, aSectorName, aPeriod );
+}
+
+double BuildingGenericDmdTechnology::getFuelCost( const string& aRegionName, const string& aSectorName,
+												  const int aPeriod ) const 
+{
+	return Technology::getFuelCost( aRegionName, aSectorName, aPeriod );
+}
+
+double BuildingGenericDmdTechnology::getEfficiency( const int aPeriod ) const {
+    return Technology::getEfficiency( aPeriod );
+}
+
+double BuildingGenericDmdTechnology::getNonEnergyCost( const int aPeriod ) const {
+    return Technology::getNonEnergyCost( aPeriod );
+}
+

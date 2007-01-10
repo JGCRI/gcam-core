@@ -1,4 +1,4 @@
-#ifndef _BUILDING_HEAT_COOL_DMD_TECHNOLOGY_H_
+#ifndef _BUILDING_HEAT_COOL_DMD__TECHNOLOGY_H_
 #define _BUILDING_HEAT_COOL_DMD_TECHNOLOGY_H_
 #if defined(_MSC_VER)
 #pragma once
@@ -9,8 +9,6 @@
 * \ingroup CIAM
 * \brief The building heating service demand technology.
 * \author Steve Smith
-* \date $Date$
-* \version $Revision$
 */
 
 #include <xercesc/dom/DOMNode.hpp>
@@ -39,16 +37,19 @@ class BuildingHeatCoolDmdTechnology : public BuildingGenericDmdTechnology
 {
 public:
     BuildingHeatCoolDmdTechnology( const std::string& aName, const int aYear );
+
     virtual const std::string& getXMLName1D() const = 0;
-    
+
     virtual void initCalc( const std::string& aRegionName,
                            const std::string& aSectorName,
                            const IInfo* aSubsectorIInfo,
                            const Demographic* aDemographics,
                            const int aPeriod );
 
-    void adjustForCalibration( double subSectorDemand, const std::string& regionName,
-		                       const IInfo* subsectorInfo, const int period );
+    virtual void adjustForCalibration( double aTechnologyDemand,
+                                       const std::string& aRegionName,
+                                       const IInfo* aSubsectorInfo,
+                                       const int aPeriod );
 private:
     static const std::string XML_NAME1D; //!< tag name for toInputXML
 protected:
@@ -56,7 +57,7 @@ protected:
     void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual double getDemandFnPrefix( const std::string& regionName, const int period ) = 0;
-    virtual double getEffectiveInternalGains( const std::string& regionName, const int period );
+    virtual double getEffectiveInternalGains( const std::string& aRegionName, const int aPeriod );
     virtual double getInternalGainsSign() const = 0;
     std::string intGainsMarketName; // !< temporary string for internal gains market name
     double aveInsulation; // !< Average insulation level -- cached from subSector

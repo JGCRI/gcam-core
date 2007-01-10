@@ -26,20 +26,16 @@ class ILandAllocator;
 * \author James Blackwood
 */
 
-class FoodProductionTechnology : public technology {
+class FoodProductionTechnology : public Technology {
 public:
-    FoodProductionTechnology( const std::string& aName, const int aYear );
+    FoodProductionTechnology( const std::string& aName,
+                              const int aYear );
     ~FoodProductionTechnology();
     static const std::string& getXMLNameStatic1D();
     FoodProductionTechnology* clone() const;    
-
-    bool outputFixed() const;
-
-    virtual double getCalibrationOutput( const int aPeriod ) const;
-
-    virtual bool getCalibrationStatus() const;
     
-    virtual void completeInit( const std::string& aSectorName,
+    virtual void completeInit( const std::string& aRegionName,
+                               const std::string& aSectorName,
                                DependencyFinder* aDepFinder,
                                const IInfo* aSubsectorIInfo,
                                ILandAllocator* aLandAllocator,
@@ -51,33 +47,43 @@ public:
                            const Demographic* aDemographics,
                            const int aPeriod );
 
-    virtual void calcShare( const std::string& aRegionName,
-                            const std::string& aSectorName,
-                            const GDP* aGDP,
-                            const int aPeriod ); 
+    virtual void postCalc( const std::string& aRegionName,
+                           const int aPeriod );
+
+    virtual double calcShare( const std::string& aRegionName,
+                              const std::string& aSectorName,
+                              const GDP* aGDP,
+                              const int aPeriod ) const; 
     
     virtual void production( const std::string& aRegionName,
-                             const std::string& aSectorName,
-                             const double aDemand,
+                             const std::string& aSectorName, 
+                             double aVariableDemand,
+                             double aFixedOutputScaleFactor,
                              const GDP* aGDP,
                              const int aPeriod );
 
-    virtual void calcCost( const std::string& regionName,
-                           const std::string& sectorName,
-                           const int per );
+    virtual void calcCost( const std::string& aRegionName,
+                           const std::string& aSectorName,
+                           const int aPeriod );
 
-    virtual void adjustForCalibration( double subSectorDemand,
-                                       const std::string& regionName,
-                                       const IInfo* aSubsectorIInfo,
-                                       const int period );
+    virtual double getFuelCost( const std::string& aRegionName,
+                                const std::string& aSectorName,
+                                const int aPeriod ) const;
 
-    virtual double getFuelcost() const;
+    virtual double getNonEnergyCost( const int aPeriod ) const;
+
+    virtual double getEfficiency( const int aPeriod ) const;
+
+    virtual void adjustForCalibration( double aTechnologyDemand,
+                                       const std::string& aRegionName,
+                                       const IInfo* aSubsectorInfo,
+                                       const int aPeriod );
 protected:
     std::string landType; //!< Type of land that will be used for this product
     double variableCost;
     double calYield; //!< optional input of calibration yield -- used only for sectors with no current production
-    double calLandUsed; //!< input calibration value for land use 
-    double calProduction; //!< input calibrationvalue for land production
+    double calLandUsed; //!< input calibration value for land use
+
     double calObservedYield; //!< the calibrated observed yield
     double agProdChange;  //!< the technological change factor
 

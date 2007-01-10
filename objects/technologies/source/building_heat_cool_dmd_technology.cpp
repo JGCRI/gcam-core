@@ -17,6 +17,7 @@
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/iinfo.h"
+#include "technologies/include/iproduction_state.h"
 
 using namespace std;
 using namespace xercesc;
@@ -89,18 +90,20 @@ void BuildingHeatCoolDmdTechnology::initCalc( const string& aRegionName,
     aveInsulation = aSubsectorInfo->getDouble( "aveInsulation", true );
     floorToSurfaceArea = aSubsectorInfo->getDouble( "floorToSurfaceArea", true );
     BuildingGenericDmdTechnology::initCalc( aRegionName, aSectorName, aSubsectorInfo,
-                                            aDemographics, aPeriod );    
+                                            aDemographics, aPeriod );
 }
 
-/*! \brief calculate effective internal gains as they affect the demand for this technology
-*
-* For cooling technologies internal gains are negative
-* 
+/*! \brief calculate effective internal gains as they affect the demand for this
+*          technology.
+* \note For cooling technologies internal gains are negative.
+* \param aRegionName Region name.
+* \param aPeriod Model period.
 * \author Steve Smith
 */
-double BuildingHeatCoolDmdTechnology::getEffectiveInternalGains( const string& regionName, const int period ) {
+double BuildingHeatCoolDmdTechnology::getEffectiveInternalGains( const string& aRegionName, const int aPeriod ) {
 	Marketplace* marketplace = scenario->getMarketplace();
-    return getInternalGainsSign() * marketplace->getPrice( intGainsMarketName, regionName, period ) * fractionOfYearActive;
+    return getInternalGainsSign() * marketplace->getPrice( intGainsMarketName, aRegionName, aPeriod )
+           * fractionOfYearActive;
 }
 
 /*! \brief Adjusts technology parameters as necessary to be consistent with calibration value.
@@ -110,26 +113,44 @@ double BuildingHeatCoolDmdTechnology::getEffectiveInternalGains( const string& r
 * This version is for heating or cooling demands, where internal gains add or subtract from demand.
 *
 * \author Steve Smith
-* \param unitDemand calibrated unit demand (demand per unit floorspace) for this subsector
-* \param regionName regionName
+* \param aTechnologyDemand calibrated unit demand (demand per unit floorspace) for this Technology.
+* \param aRegionName regionName
 * \param aSubsectorInfo Info object (not used for this class so name is left out) 
-* \param period model period
+* \param aPeriod model period
 */
-void BuildingHeatCoolDmdTechnology::adjustForCalibration( double subSectorDemand, const string& regionName,
-														  const IInfo* aSubsectorInfo, const int period ) {
-    
-    // unitDemand (demand per unit area) is passed into this routine as subSectorDemand, but not adjusted for saturation and other parameters.    
-    double unitDemand = subSectorDemand;
+void BuildingHeatCoolDmdTechnology::adjustForCalibration( double aTechnologyDemand,
+                                                          const string& aRegionName,
+														  const IInfo* aSubsectorInfo,
+                                                          const int aPeriod )
+{
+    // Make sure this is only called in the technology's initial year.
+    if( !mProductionState[ aPeriod ]->isOperating() ){
+        return;
+    }
+
+    // unitDemand (demand per unit area) is passed into this routine as
+    // subSectorDemand, but not adjusted for saturation and other parameters.    
+    double unitDemand = aTechnologyDemand;
 
     // Production is equal to: unitDemand * saturation *(any other parameters) * dmd
     
     // Amount of service supplied is unitDemand times floorspace
+
     double floorSpace = aSubsectorInfo->getDouble( "floorSpace", true );
+    // Check that floorspace isn't zero.
+    if( floorSpace < util::getSmallNumber() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Zero floorspace in technology " << mName << "." << endl;
+        floorSpace = 1;
+    }
+
     double effectiveDemand = unitDemand * floorSpace;
     
     // Now adjust for internal gains
-    effectiveDemand -= getEffectiveInternalGains( regionName, period );
+    effectiveDemand -= getEffectiveInternalGains( aRegionName, aPeriod );
     effectiveDemand = max( effectiveDemand, 0.0 );
     
-    shrwts = ( effectiveDemand / floorSpace ) / getDemandFnPrefix( regionName, period );
+    shrwts = ( effectiveDemand / floorSpace ) / getDemandFnPrefix( aRegionName, aPeriod );
+    assert( shrwts >= 0 && util::isValidNumber( shrwts ) );
  }

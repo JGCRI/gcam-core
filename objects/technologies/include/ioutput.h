@@ -26,6 +26,7 @@
 
 class Tabs;
 class DependencyFinder;
+class ICaptureComponent;
 
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iparsable.h"
@@ -38,8 +39,8 @@ class DependencyFinder;
 *          interface. The primary output level is determined by the technology.
 *          The output levels of other outputs may be determined by the scale of
 *          the primary output, or through other means. Outputs may have positive
-*          or negative monetary value, which will be incorporated into the costs
-*          of operating the technology. Outputs may also have associated carbon
+*          or negative monetary value, which is incorporated into the costs of
+*          operating the technology. Outputs may also have associated carbon
 *          content and emissions. These are accounted for in the emissions cost
 *          and quantity calculations.
 * \author Josh Lurz
@@ -78,8 +79,8 @@ public:
     virtual bool isSameType( const std::string& aType ) const = 0;
     
     /*!
-     * \brief Return the name of the input.
-     * \return The name of the input.
+     * \brief Return the name of the output.
+     * \return The name of the output.
      */
     virtual const std::string& getName() const = 0;
 
@@ -114,6 +115,24 @@ public:
                            const int aPeriod ) = 0;
 
     /*!
+     * \brief Perform any final operations for a output in a given period.
+     * \param aRegionName Name of the containing region.
+     * \param aPeriod Model period.
+     */
+    virtual void postCalc( const std::string& aRegionName,
+                           const int aPeriod ) = 0;
+
+    /*! 
+     * \brief Scale the output coefficient by a specified value.
+     * \details Scales the output coefficient by a specified value. Outputs
+     *          are not required to support this operation.
+     * \note This is currently a workaround for biproducts not having
+             independent coefficients.
+     * \param aCoefficientScaler Coefficient scaler.
+     */
+    virtual void scaleCoefficient( const double aScaler ) = 0;
+
+    /*!
      * \brief Calculate and return the physical output determined by the
      *        specified primary output of the Technology.
      * \details Determine the level of output from the known primary output of
@@ -126,6 +145,7 @@ public:
      */
     virtual double calcPhysicalOutput( const double aPrimaryOutput,
                                        const std::string& aRegionName,
+                                       const ICaptureComponent* aCaptureComponent,
                                        const int aPeriod ) const = 0;
 
     /*!
@@ -140,6 +160,7 @@ public:
      */
     virtual void setPhysicalOutput( const double aPrimaryOutput,
                                     const std::string& aRegionName,
+                                    ICaptureComponent* aCaptureComponent,
                                     const int aPeriod ) = 0;
 
     /*!
@@ -156,6 +177,7 @@ public:
      * \return The value in the given period.
      */
     virtual double getValue( const std::string& aRegionName,
+                             const ICaptureComponent* aCaptureComponent,
                              const int aPeriod ) const = 0;
 
     /*!

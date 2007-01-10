@@ -13,6 +13,9 @@
 #include "containers/include/iinfo.h"
 #include "util/base/include/xml_helper.h"
 #include "marketplace/include/marketplace.h"
+#include "technologies/include/ical_data.h"
+#include "technologies/include/iproduction_state.h"
+#include "technologies/include/ioutput.h"
 
 using namespace std;
 using namespace xercesc;
@@ -110,8 +113,13 @@ void ForestProductionTechnology::initCalc( const string& aRegionName,
                                            const Demographic* aDemographics,
                                            const int aPeriod )
 {
-    // Set calibrated values to land allocator in case these were disrupted in previous period
-    setCalLandValues();
+    // Ideally this would use the production state but it isn't setup yet for
+    // this period.
+    if( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ){
+        // Set calibrated values to land allocator in case these were disrupted
+        // in previous period
+        setCalLandValues();
+    }
 
     FoodProductionTechnology::initCalc( aRegionName, aSectorName, aSubsectorInfo,
                                         aDemographics, aPeriod );
@@ -120,6 +128,7 @@ void ForestProductionTechnology::initCalc( const string& aRegionName,
 /*!
 * \brief Complete the initialization of the technology.
 * \note This routine is only called once per model run
+* \param aRegionName Region name.
 * \param aSectorName Sector name, also the name of the product.
 * \param aDepDefinder Regional dependency finder.
 * \param aSubsectorInfo Subsector information object.
@@ -130,14 +139,16 @@ void ForestProductionTechnology::initCalc( const string& aRegionName,
 * \author James Blackwood
 * \warning This may break if timestep is not constant for each time period.
 */
-void ForestProductionTechnology::completeInit( const string& aSectorName,
-                                              DependencyFinder* aDepFinder,
-                                              const IInfo* aSubsectorInfo,
-                                              ILandAllocator* aLandAllocator,
-                                              const GlobalTechnologyDatabase* aGlobalTechDB )
+void ForestProductionTechnology::completeInit( const string& aRegionName,
+                                               const string& aSectorName,
+                                               DependencyFinder* aDepFinder,
+                                               const IInfo* aSubsectorInfo,
+                                               ILandAllocator* aLandAllocator,
+                                               const GlobalTechnologyDatabase* aGlobalTechDB )
 {
-    technology::completeInit( aSectorName, aDepFinder, aSubsectorInfo,
-        aLandAllocator, aGlobalTechDB );
+    // TODO: Why isn't this calling the parent function?
+    Technology::completeInit( aRegionName, aSectorName, aDepFinder, aSubsectorInfo,
+                              aLandAllocator, aGlobalTechDB );
 
     // Store away the land allocator.
     mLandAllocator = aLandAllocator;
@@ -167,10 +178,10 @@ void ForestProductionTechnology::setCalLandValues() {
     int nRotPeriodSteps = mRotationPeriod / timestep;
 
     // -1 means not read in
-    if (( calProduction != -1 ) && ( calYield != -1 )) {
+    if ( mCalValue.get() && ( calYield != -1 )) {
         calObservedYield = 0;     //Yield per year
         double calObservedLandUsed = 0;  //Land harvested per period as opposed to per step-periods in calLandUsed
-        double calProductionTemp = calProduction;
+        double calProductionTemp = mCalValue->getCalOutput( 1 );
         double calYieldTemp = calYield;
         int period = modeltime->getyr_to_per(year);
         if ( !mFutureProduction.isInited() ) {
@@ -182,7 +193,7 @@ void ForestProductionTechnology::setCalLandValues() {
             // periods. Or demand that productivity change is the same for all
             // calibration periods (could test in applyAgProdChange)
             if ( i > period ) {
-                calProductionTemp += ( mFutureProduction - calProduction ) / nRotPeriodSteps;
+                calProductionTemp += ( mFutureProduction - mCalValue->getCalOutput( 1 ) ) / nRotPeriodSteps;
                 calYieldTemp = calYield * pow( 1 + agProdChange, double( timestep * ( i - 1 ) ) );
             }
 
@@ -207,19 +218,37 @@ void ForestProductionTechnology::setCalLandValues() {
 * \param aSectorName Sector name, also the name of the product.
 * \param aGDP Regional GDP container.
 * \param aPeriod Model period.
+* \return Technology share, always 1 for ForestProductionTechnologies.
 * \author James Blackwood, Steve Smith
 */
-void ForestProductionTechnology::calcShare( const string& aRegionName,
-                                            const string& aSectorName,
-                                            const GDP* aGDP,
-                                            const int aPeriod )
+double ForestProductionTechnology::calcShare( const string& aRegionName,
+                                              const string& aSectorName,
+                                              const GDP* aGDP,
+                                              const int aPeriod ) const
 {
-    double profitRate = calcProfitRate( aRegionName, getFutureMarket( aSectorName ), aPeriod );
-    mLandAllocator->setIntrinsicRate( aRegionName, landType, mName, profitRate, aPeriod );
-    
+    assert( mProductionState[ aPeriod ]->isNewInvestment() );
+
     // Forest production technologies are profit based, so the amount of output
     // they produce is independent of the share.
-    share = 1;
+    return 1;
+}
+
+void ForestProductionTechnology::calcCost( const string& aRegionName,
+                                           const string& aSectorName,
+                                           const int aPeriod )
+{
+    if( !mProductionState[ aPeriod ]->isOperating() ){
+        return;
+    }
+
+    // If yield is GCal/Ha and prices are $/GCal, then rental rate is $/Ha
+    // Passing in rate as $/GCal and setIntrinsicRate will set it to  $/Ha.
+    double profitRate = calcProfitRate( aRegionName, getFutureMarket( aSectorName ), aPeriod );
+    mLandAllocator->setIntrinsicRate( aRegionName, landType, mName, profitRate, aPeriod );
+
+    // Override costs to a non-zero value as the cost for a food production
+    // technology is not used for the shares.
+    mCosts[ aPeriod ] = 1;
 }
 
 /*! \brief Calculates the output of the technology.
@@ -234,16 +263,26 @@ void ForestProductionTechnology::calcShare( const string& aRegionName,
 *          reach equalibrium.
 * \param aRegionName Region name.
 * \param aSectorName Sector name, also the name of the product.
-* \param aDemand Subsector demand for output.
+* \param aVariableDemand Subsector demand for output.
+* \param aFixedOutputScaleFactor Fixed output scale factor.
 * \param aGDP Regional GDP container.
 * \param aPeriod Model period.
 */
 void ForestProductionTechnology::production( const string& aRegionName,
                                              const string& aSectorName,
-                                             const double aDemand,
+                                             const double aVariableDemand,
+                                             const double aFixedOutputScaleFactor,
                                              const GDP* aGDP,
                                              const int aPeriod )
 {
+    if( !mProductionState[ aPeriod ]->isOperating() ){
+            // Set physical output to zero.
+        mOutputs[ 0 ]->setPhysicalOutput( 0, aRegionName,
+                                          mCaptureComponent.get(),
+                                          aPeriod );
+        return;
+    }
+
     // Calculate profit rate.
     double profitRate = calcProfitRate( aRegionName, getFutureMarket( aSectorName ), aPeriod );
 
@@ -260,13 +299,13 @@ void ForestProductionTechnology::production( const string& aRegionName,
     // now calculate the amount to be consumed this period (ie. planted steps
     // periods ago).
     double primaryOutput = calcSupply( aRegionName, aSectorName, aPeriod );
-   
+
     // Set the input to be the land used. TODO: Determine a way to improve this.
     // This would be wrong if the fuelname had an emissions coefficient, or if
     // there were a fuel or other input. When multiple inputs are complete there
     // should be a specific land input.
-    input = mLandAllocator->getLandAllocation( landType, mName, aPeriod );
-    calcEmissionsAndOutputs( aRegionName, input, primaryOutput, aGDP, aPeriod );
+    mInput[ aPeriod ] = mLandAllocator->getLandAllocation( landType, mName, aPeriod );
+    calcEmissionsAndOutputs( aRegionName, mInput[ aPeriod ], primaryOutput, aGDP, aPeriod );
 }
 
 /*! \brief Calculate the profit rate for the technology.

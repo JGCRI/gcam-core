@@ -29,13 +29,16 @@ class DependencyFinder;
 
 class ForestProductionTechnology : public FoodProductionTechnology {
 public:
-    ForestProductionTechnology( const std::string& aName, const int aYear );
+    ForestProductionTechnology( const std::string& aName,
+                                const int aYear );
+
     ~ForestProductionTechnology();
     static const std::string& getXMLNameStatic1D();
     const std::string& getXMLName1D() const;
     ForestProductionTechnology* clone() const;
 
-    virtual void completeInit( const std::string& aSectorName,
+    virtual void completeInit( const std::string& aRegionName,
+                               const std::string& aSectorName,
                                DependencyFinder* aDepFinder,
                                const IInfo* aSubsectorIInfo,
                                ILandAllocator* aLandAllocator,
@@ -47,17 +50,21 @@ public:
                            const Demographic* aDemographics,
                            const int aPeriod );
 
-    virtual void calcShare( const std::string& aRegionName,
-                            const std::string& aSectorName,
-                            const GDP* aGDP,
-                            const int aPeriod ); 
-    
+    virtual double calcShare( const std::string& aRegionName,
+                              const std::string& aSectorName,
+                              const GDP* aGDP,
+                              const int aPeriod ) const; 
+
+    virtual void calcCost( const std::string& aRegionName,
+                           const std::string& aSectorName,
+                           const int aPeriod );
+
     virtual void production( const std::string& aRegionName,
-                             const std::string& aSectorName,
-                             const double aDemand,
+                             const std::string& aSectorName, 
+                             double aVariableDemand,
+                             double aFixedOutputScaleFactor,
                              const GDP* aGDP,
                              const int aPeriod );
-
 protected:
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
 private:

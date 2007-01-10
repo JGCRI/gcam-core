@@ -88,8 +88,18 @@ void PrimaryOutput::initCalc( const string& aRegionName,
     mCachedCO2Coef.set( productInfo ? productInfo->getDouble( "CO2Coef", false ) : 0 );
 }
 
+void PrimaryOutput::postCalc( const string& aRegionName,
+                              const int aPeriod )
+{
+}
+
+void PrimaryOutput::scaleCoefficient( const double aScaler ){
+    // Primary outputs do not support scaling.
+}
+
 double PrimaryOutput::calcPhysicalOutput( const double aPrimaryOutput,
                                           const string& aRegionName,
+                                          const ICaptureComponent* aCaptureComponent,
                                           const int aPeriod ) const
 {
     // Output of the primary output is given.
@@ -98,31 +108,41 @@ double PrimaryOutput::calcPhysicalOutput( const double aPrimaryOutput,
 
 void PrimaryOutput::setPhysicalOutput( const double aPrimaryOutput,
                                        const string& aRegionName,
+                                       ICaptureComponent* aCaptureComponent,
                                        const int aPeriod )
 {
+    // Primary output cannot be negative.
+    assert( aPrimaryOutput >= 0 );
+
     // Primary output is given by the technology.
-    mPhysicalOutputs[ aPeriod ].set( aPrimaryOutput );
+    mPhysicalOutputs[ aPeriod ] = aPrimaryOutput;
 
     // Add the primary output to the marketplace.
     // TODO: Once demand sectors are seperated this should be changed.
-    Marketplace* marketplace = scenario->getMarketplace();
-    marketplace->addToSupply( mName, aRegionName, aPrimaryOutput, aPeriod, false );
+    if( aPrimaryOutput > util::getSmallNumber() ){
+        Marketplace* marketplace = scenario->getMarketplace();
+        marketplace->addToSupply( mName, aRegionName, aPrimaryOutput, aPeriod, false );
+    }
 }
 
 double PrimaryOutput::getPhysicalOutput( const int aPeriod ) const {
-    assert( mPhysicalOutputs[ aPeriod ].isInited() );
+    // TODO: Assert here that the output has been initialized for the current
+    //       iteration. Currently this cannot check even that the period
+    //       is initialized because the value is fetched to setup the production
+    //       state, which may be before it is calculated.
     return mPhysicalOutputs[ aPeriod ];
 }
 
 double PrimaryOutput::getValue( const string& aRegionName,
-                               const int aPeriod ) const
+                                const ICaptureComponent* aCaptureComponent,
+                                const int aPeriod ) const
 {
     // The value of the primary output is fully accounted by the technology.
     return 0;
 }
 
 double PrimaryOutput::getEmissionsPerOutput( const string& aGHGName,
-                                           const int aPeriod ) const
+                                             const int aPeriod ) const
 {
     // Currently other GHGs do not use output emissions coefficients.
     assert( aGHGName == "CO2" );

@@ -90,18 +90,6 @@ public:
     virtual const double getNonEnergyCost() const = 0;
 
     /*!
-     * \brief Get the efficiency penalty of this technology.
-     * \return The efficiency penalty.
-     */
-    virtual const double getEffPenalty() const = 0;
-
-    /*!
-     * \brief Get the non energy cost penalty of this technology.
-     * \return The non energy cost penalty.
-     */
-    virtual const double getNECostPenalty() const = 0;
-
-    /*!
      * \brief Get the fMultiplier of this technology.
      * \return The fMultiplier.
      */
@@ -130,18 +118,6 @@ public:
      * \param aName The non energy cost to set.
      */
     virtual void setNonEnergyCost( const double aNonEnergyCost ) = 0;
-
-    /*!
-     * \brief Set the efficiency penalty of this technology
-     * \param aName The efficiency penalty to set.
-     */
-    virtual void setEffPenalty( const double aEffPenalty ) = 0;
-
-    /*!
-     * \brief Set the non energy cost penalty of this technology
-     * \param aName The non energy cost penalty to set.
-     */
-    virtual void setNECostPenalty( const double aNECostPenalty ) = 0;
 
     /*!
      * \brief Set the fmultiplier of this technology

@@ -54,18 +54,14 @@ class DependencyFinder;
  * \author Josh Lurz
  */
 class SecondaryOutput: public IOutput
-{ 
+{
+    friend class OutputFactory;
 public:
     /*!
      * \brief Get the XML name for the class.
      * \return The XML name for the class.
      */
     static const std::string& getXMLNameStatic();
-
-    /*!
-     * \brief Constructor.
-     */
-    SecondaryOutput();
 
     virtual SecondaryOutput* clone() const;
 
@@ -89,17 +85,25 @@ public:
     virtual void initCalc( const std::string& aRegionName,
                            const int aPeriod );
 
+    virtual void postCalc( const std::string& aRegionName,
+                           const int aPeriod );
+
+    virtual void scaleCoefficient( const double aScaler );
+
     virtual double calcPhysicalOutput( const double aPrimaryOutput,
                                        const std::string& aRegionName,
+                                       const ICaptureComponent* aCaptureComponent,
                                        const int aPeriod ) const;
 
     virtual void setPhysicalOutput( const double aPrimaryOutput,
                                     const std::string& aRegionName,
+                                    ICaptureComponent* aCaptureComponent,
                                     const int aPeriod );
 
     virtual double getPhysicalOutput( const int aPeriod ) const;
 
     virtual double getValue( const std::string& aRegionName,
+                             const ICaptureComponent* aCaptureComponent,
                              const int aPeriod ) const;
 
     virtual double getEmissionsPerOutput( const std::string& aGHGName,
@@ -108,6 +112,12 @@ public:
     virtual void accept( IVisitor* aVisitor,
                         const int aPeriod ) const;
 protected:
+    /*!
+     * \brief Protected constructor so the class can only be created by the
+     *        OutputFactory.
+     */
+    SecondaryOutput();
+
     //! Physical output by period.
     std::vector<Value> mPhysicalOutputs;
 

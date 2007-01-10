@@ -13,6 +13,9 @@
 #include "util/base/include/xml_helper.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/iinfo.h"
+#include "technologies/include/ical_data.h"
+#include "technologies/include/iproduction_state.h"
+#include "technologies/include/ioutput.h"
 
 using namespace std;
 using namespace xercesc;
@@ -25,11 +28,10 @@ extern Scenario* scenario;
  * \param aYear Technology year.
  */
 FoodProductionTechnology::FoodProductionTechnology( const string& aName, const int aYear )
-:technology( aName, aYear ){
+:Technology( aName, aYear ){
     mLandAllocator = 0;
     variableCost = 2; // Need a better default value for this (0 is probably ok, with a warning to logfile).
     calLandUsed = -1;
-    calProduction = -1;
     calYield = -1;
     calObservedYield = -1;
     agProdChange = 0;
@@ -43,8 +45,6 @@ FoodProductionTechnology::~FoodProductionTechnology() {
 
 //! Parses any input variables specific to derived classes
 bool FoodProductionTechnology::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
-    const Modeltime* modeltime = scenario->getModeltime();
-
     if ( nodeName == "variableCost" ) {
         variableCost = XMLHelper<double>::getValue( curr );
     }
@@ -56,9 +56,6 @@ bool FoodProductionTechnology::XMLDerivedClassParse( const string& nodeName, con
     }
     else if( nodeName == "calYield" ) {
         calYield = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "calProduction" ) {
-        calProduction = XMLHelper<double>::getValue( curr );
     }
     else if( nodeName == "agProdChange" ) {
         agProdChange = XMLHelper<double>::getValue( curr );
@@ -81,7 +78,6 @@ void FoodProductionTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) con
     XMLWriteElement( variableCost, "variableCost", out, tabs );
     XMLWriteElementCheckDefault( calYield, "calYield", out, tabs, -1.0 );
     XMLWriteElementCheckDefault( calLandUsed, "calLandUsed", out, tabs, -1.0 );
-    XMLWriteElementCheckDefault( calProduction, "calProduction", out, tabs, -1.0 );
     XMLWriteElementCheckDefault( agProdChange, "agProdChange", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( mAboveGroundCarbon, "above-ground-carbon", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( mBelowGroundCarbon, "below-ground-carbon", out, tabs, 0.0 );
@@ -93,7 +89,6 @@ void FoodProductionTechnology::toDebugXMLDerived( const int period, ostream& out
     XMLWriteElement( variableCost, "variableCost", out, tabs );
     XMLWriteElement( calYield, "calYield", out, tabs );
     XMLWriteElement( calLandUsed, "calLandUsed", out, tabs );
-    XMLWriteElement( calProduction, "calProduction", out, tabs );
     XMLWriteElement( agProdChange, "agProdChange", out, tabs );
     XMLWriteElement( mAboveGroundCarbon, "above-ground-carbon", out, tabs );
     XMLWriteElement( mBelowGroundCarbon, "below-ground-carbon", out, tabs );
@@ -130,35 +125,6 @@ FoodProductionTechnology* FoodProductionTechnology::clone() const {
     return new FoodProductionTechnology( *this );
 }
 
-
-bool FoodProductionTechnology::outputFixed( ) const {
-    return ( calProduction != -1 ); // this sector has fixed output
-}
-
-/*!
- * \brief Return technology output calibration value.
- * \param aPeriod Model period.
- * \return Output calibration value.
- */
-double FoodProductionTechnology::getCalibrationOutput( const int aPeriod ) const {
-    // Calibration output is for the initial year of the technology.
-    if( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ){
-        return ( calProduction != -1 ) ? calProduction : 0;
-    }
-    return 0;
-}
-
-/*! \brief Returns calibration status for this technoloy
-*
-* This is true if a calibration value has been read in for this technology.
-* 
-* \author James Blackwood
-* \return Boolean that is true if technoloy is calibrated
-*/
-bool FoodProductionTechnology::getCalibrationStatus( ) const {
-    return ( calProduction != -1 );
-}
-
 /*! 
 * \brief Perform initializations that only need to be done once per period.
 * \param aRegionName Region name.
@@ -173,14 +139,14 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
                                          const Demographic* aDemographics,
                                          const int aPeriod )
 {
-    technology::initCalc( aRegionName, aSectorName, aSubsectorInfo, aDemographics, aPeriod );
+    Technology::initCalc( aRegionName, aSectorName, aSubsectorInfo, aDemographics, aPeriod );
 
     // Only setup calibration information if this is the initial year of the
     // technology.
-    const Modeltime* modeltime = scenario->getModeltime();
-    if( aPeriod != modeltime->getyr_to_per( year ) ){
+    if( !mProductionState[ aPeriod ]->isNewInvestment() ){
         return;
     }
+    
 
     // Apply technical change.
     mLandAllocator->applyAgProdChange( landType, mName, agProdChange, aPeriod );
@@ -230,6 +196,7 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
 
     // If this is not the end period of the model, set the market info
     // variable for the next period.
+    const Modeltime* modeltime = scenario->getModeltime();
     if( aPeriod + 1 < modeltime->getmaxper() ){
         IInfo* nextPerMarketInfo = marketplace->getMarketInfo( aSectorName, aRegionName, aPeriod + 1, true );
         assert( nextPerMarketInfo );
@@ -241,24 +208,20 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
     mLandAllocator->setCarbonContent( landType, mName, mAboveGroundCarbon, mBelowGroundCarbon, aPeriod );
 }
 
-/*!
-* \brief Complete the initialization of the technology.
-* \note This routine is only called once per model run
-* \param aSectorName Sector name, also the name of the product.
-* \param aDepDefinder Regional dependency finder.
-* \param aSubsectorInfo Subsector information object.
-* \param aLandAllocator Regional land allocator.
-* \param aGlobalTechDB Global technology database.
-* \author James Blackwood
-* \warning Markets are not necesarilly set when completeInit is called
-*/
-void FoodProductionTechnology::completeInit( const string& aSectorName,
+void FoodProductionTechnology::postCalc( const string& aRegionName,
+                                         const int aPeriod )
+{
+    Technology::postCalc( aRegionName, aPeriod );
+}
+
+void FoodProductionTechnology::completeInit( const string& aRegionName,
+                                             const string& aSectorName,
                                              DependencyFinder* aDepFinder,
                                              const IInfo* aSubsectorInfo,
                                              ILandAllocator* aLandAllocator,
                                              const GlobalTechnologyDatabase* aGlobalTechDB )
 {
-    technology::completeInit( aSectorName, aDepFinder, aSubsectorInfo,
+    Technology::completeInit( aRegionName, aSectorName, aDepFinder, aSubsectorInfo,
                               aLandAllocator, aGlobalTechDB );
 
     // Store away the land allocator.
@@ -281,8 +244,9 @@ void FoodProductionTechnology::completeInit( const string& aSectorName,
 
     // TODO: We should change the input so that only one of these options can be read
     //       as they are mutually exclusive.
-    if ( ( calProduction != -1 ) && ( calLandUsed != -1 ) ) {
-        calObservedYield = calProduction / calLandUsed;
+    const int period = scenario->getModeltime()->getyr_to_per( year );
+    if ( mCalValue.get() && calLandUsed != -1 ) {
+        calObservedYield = mCalValue->getCalOutput( 1 ) / calLandUsed;
 
         // Warn the user that the calibrated yield will not be used since an
         // observed yield can be calculated.
@@ -312,47 +276,62 @@ void FoodProductionTechnology::completeInit( const string& aSectorName,
 * \param aSectorName Sector name, also the name of the product.
 * \param aGDP Regional GDP container.
 * \param aPeriod Model period.
+* \return The technology share, always 1 for FoodProductionTechnologies.
 * \author James Blackwood, Steve Smith
 */
-void FoodProductionTechnology::calcShare( const string& aRegionName,
-                                          const string& aSectorName,
-                                          const GDP* aGDP,
-                                          const int aPeriod )
+double FoodProductionTechnology::calcShare( const string& aRegionName,
+                                            const string& aSectorName,
+                                            const GDP* aGDP,
+                                            const int aPeriod ) const
 {
-    // If yield is GCal/Ha and prices are $/GCal, then rental rate is $/Ha
-    // Passing in rate as $/GCal and setIntrinsicRate will set it to  $/Ha.
-    double profitRate = calcProfitRate( aRegionName, aSectorName, aPeriod );
-    mLandAllocator->setIntrinsicRate( aRegionName, landType, mName, profitRate, aPeriod );
+    assert( mProductionState[ aPeriod ]->isNewInvestment() );
     
     // Food production technologies are profit based, so the amount of output
     // they produce is independent of the share.
-    share = 1;
+    return 1;
 }
 
-/*! \brief Calculate technology fuel cost and total cost.
-*
-* This caculates the cost (per unit output) of this specific technology. 
-* The cost includes fuel cost, carbon value, and non-fuel costs.
-* Conversion efficiency, and optional fuelcost and total price multipliers are used if specified.
-
-* \author James Blackwood
-* \todo The GHG cost is not feeding into the land use decision or technology cost right now. 
-*/
-void FoodProductionTechnology::calcCost( const string& regionName, const string& sectorName, const int per ) {
-    // Set the techcost to 1 to avoid zero shares.
-    // TODO: Fix share calculation to avoid this.
-    techcost = 1;
-}
-
-void FoodProductionTechnology::adjustForCalibration( double subSectorDemand,
-                                                     const string& regionName,
-                                                     const IInfo* aSubsectorIInfo,
-                                                     const int period )
+void FoodProductionTechnology::calcCost( const string& aRegionName,
+                                         const string& aSectorName,
+                                         const int aPeriod )
 {
-    // Calibration adjustments occur in the land allocator, so there is nothing
-    // to do here.
+    if( !mProductionState[ aPeriod ]->isOperating() ){
+        return;
+    }
+
+    // If yield is GCal/Ha and prices are $/GCal, then rental rate is $/Ha
+    // Passing in rate as $/GCal and setIntrinsicRate will set it to  $/Ha.
+    double profitRate = calcProfitRate( aRegionName, aSectorName, aPeriod );
+
+    mLandAllocator->setIntrinsicRate( aRegionName, landType, mName, profitRate, aPeriod );
+
+    // Override costs to a non-zero value as the cost for a food production
+    // technology is not used for the shares.
+    mCosts[ aPeriod ] = 1;
 }
 
+double FoodProductionTechnology::getFuelCost( const string& aRegionName,
+                                              const string& aSectorName,
+                                              const int aPeriod ) const
+{
+    return variableCost;
+}
+
+double FoodProductionTechnology::getNonEnergyCost( const int aPeriod ) const {
+    return 0;
+}
+
+double FoodProductionTechnology::getEfficiency( const int aPeriod ) const {
+    return 1;
+}
+
+void FoodProductionTechnology::adjustForCalibration( double aTechnologyDemand,
+                                                     const string& aRegionName,
+                                                     const IInfo* aSubsectorInfo,
+                                                     const int aPeriod )
+{
+    // Calibration adjustments occur in the land allocator.
+}
 
 /*! \brief Calculates the output of the technology.
 * \details Calculates the amount of current forestry output based on the amount
@@ -363,7 +342,7 @@ void FoodProductionTechnology::adjustForCalibration( double subSectorDemand,
 *          technologies within a sector will equal the demand for the sector.
 * \param aRegionName Region name.
 * \param aSectorName Sector name, also the name of the product.
-* \param aDemand Subsector demand for output.
+* \param aVariableDemand Subsector demand for output.
 * \param aGDP Regional GDP container.
 * \param aPeriod Model period.
 * \todo Need better way to deal with biomass units than the hard coded
@@ -371,10 +350,20 @@ void FoodProductionTechnology::adjustForCalibration( double subSectorDemand,
 */
 void FoodProductionTechnology::production( const string& aRegionName,
                                            const string& aSectorName,
-                                           const double aDemand,
+                                           const double aVariableDemand,
+                                           const double aFixedOutputScaleFactor,
                                            const GDP* aGDP,
                                            const int aPeriod )
 {
+    // TODO: Food production technologies are not currently vintaged.
+    if( !mProductionState[ aPeriod ]->isOperating() ){
+        // Set physical output to zero.
+        mOutputs[ 0 ]->setPhysicalOutput( 0, aRegionName,
+                                          mCaptureComponent.get(),
+                                          aPeriod );
+        return;
+    }
+
     // Calculate the profit rate.
     double profitRate = calcProfitRate( aRegionName, aSectorName, aPeriod );
 
@@ -395,8 +384,8 @@ void FoodProductionTechnology::production( const string& aRegionName,
     // This would be wrong if the fuelname had an emissions coefficient, or if
     // there were a fuel or other input. When multiple inputs are complete there
     // should be a specific land input.
-    input = mLandAllocator->getLandAllocation( landType, mName, aPeriod );
-    calcEmissionsAndOutputs( aRegionName, input, primaryOutput, aGDP, aPeriod );
+    mInput[ aPeriod ] = mLandAllocator->getLandAllocation( landType, mName, aPeriod );
+    calcEmissionsAndOutputs( aRegionName, mInput[ aPeriod ], primaryOutput, aGDP, aPeriod );
 }
 
 /*! \brief Calculate the profit rate for the technology.
@@ -468,8 +457,4 @@ double FoodProductionTechnology::calcSupply( const string& aRegionName,
 
     // Set output to yield times amount of land.
     return yield * landAllocation;
-}
-
-double FoodProductionTechnology::getFuelcost() const {
-    return variableCost;
 }
