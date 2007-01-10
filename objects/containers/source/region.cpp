@@ -217,10 +217,10 @@ void Region::completeInit( const GlobalTechnologyDatabase *aGlobalTechDB ) {
 * \todo Finish this function.
 * \author Josh Lurz
 */
-void Region::finalizePeriod( const int aPeriod ){
+void Region::postCalc( const int aPeriod ){
     // Finalize sectors.
     for( SectorIterator sector = supplySector.begin(); sector != supplySector.end(); ++sector ){
-        (*sector)->finalizePeriod( aPeriod );
+        (*sector)->postCalc( aPeriod );
     }
 }
 

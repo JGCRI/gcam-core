@@ -248,6 +248,10 @@ void RegionCGE::initCalc( const int period )
     }
 }
 
+void RegionCGE::postCalc( const int aPeriod ){
+    Region::postCalc( aPeriod );
+}
+
 /*! \brief Main regional calculation of economic supplies and demand
 *
 * \param period Model time period

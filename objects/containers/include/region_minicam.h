@@ -21,6 +21,7 @@
 #include "containers/include/region.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
+#include "util/base/include/value.h"
 
 // Forward declarations.
 class Population;
@@ -80,8 +81,10 @@ public:
     static const std::string& getXMLNameStatic();
     virtual void completeInit( const GlobalTechnologyDatabase* aGlobalTechDB );
     virtual void calc( const int period, const bool doCalibrations );
+    
     virtual void initCalc( const int period );
-    virtual void finalizePeriod( const int aPeriod );
+
+    virtual void postCalc( const int aPeriod );
 
     virtual void csvOutputFile() const;
     virtual void dbOutput( const std::list<std::string>& aPrimaryFuelList ) const;
@@ -118,13 +121,10 @@ protected:
 
     std::vector<double> calibrationGDPs; //!< GDPs to calibrate to
     std::vector<double> GDPcalPerCapita; //!< GDP per capita to calibrate to
+    
+    //! Soil carbon and land use change CO2 emissions.
+    std::vector<Value> mLandUseCO2Emissions;
 
-    //! Aggregate price for demand services.
-    std::vector<double> mEnergyServicePrice;
-
-    std::vector<double> carbonTaxPaid; //!< total regional carbon taxes paid
-    std::vector<double> TFEcalb;  //!< Total Final Energy Calibration value (cannot be equal to 0)
-    std::vector<double> TFEPerCapcalb;  //!< Total Final Energy per Capita Calibration GJ/cap (cannot be equal to 0)
 #if SORT_TESTING
     std::vector<std::string> sectorOrderList; //!< A vector listing the order in which to process the sectors.
 #endif
@@ -141,40 +141,31 @@ protected:
     //! Interest rate for the region.
     double mInterestRate;
 
-    typedef std::vector<DemandSector*>::iterator DemandSectorIterator;
-    typedef std::vector<DemandSector*>::const_iterator CDemandSectorIterator;
-    typedef std::vector<AResource*>::iterator ResourceIterator;
-    typedef std::vector<AResource*>::const_iterator CResourceIterator;
-    typedef std::vector<Sector*>::iterator SectorIterator;
-    typedef std::vector<Sector*>::reverse_iterator SectorReverseIterator;
-    typedef std::vector<Sector*>::const_iterator CSectorIterator;
-
     virtual const std::string& getXMLName() const;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
-    bool isEnergyDemandAllCalibrated( const int period ) const;
+
     void initElementalMembers();
     void setupCalibrationMarkets();
-    void checkData( const int period );
-    double getTotFinalEnergy( const int period ) const;
+
     bool reorderSectors( const std::vector<std::string>& orderList );
     void calcGDP( const int period );
     void calcResourceSupply( const int period );
     void calcFinalSupplyPrice( const int period );
-    void calcEndUsePrice( const int period );
+    double getEndUseServicePrice( const int period ) const;
     void adjustGDP( const int period );
     void calcEndUseDemand( const int period );
     void setFinalSupply( const int period );
     void calcAgSector( const int period );
     void calibrateRegion( const bool doCalibrations, const int period );
-    double calcTFEscaleFactor( const int period ) const;
+
     const std::vector<double> calcFutureGDP() const;
     void calcEmissions( const int period );
     void calcEmissFuel( const std::list<std::string>& aPrimaryFuelList, const int period );
-    void calcTotalCarbonTaxPaid( const int period );
+
     void setCO2CoefsIntoMarketplace( const int aPeriod );
-    void calibrateTFE( const int period );
+
 private:
     void clear();
     bool ensureGDP() const;

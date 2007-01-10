@@ -40,7 +40,7 @@ class Region: public IVisitable, public IRoundTrippable
     friend class XMLDBOutputter;
 public:
     Region();
-    virtual ~Region(); 
+    virtual ~Region();
     void XMLParse( const xercesc::DOMNode* node );
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
@@ -48,7 +48,10 @@ public:
     virtual void completeInit( const GlobalTechnologyDatabase* aGlobalTechDB );
     const std::string& getName() const;
     virtual void calc( const int period, const bool doCalibrations ) = 0;
+    
     virtual void initCalc( const int period ) = 0;
+    
+    virtual void postCalc( const int aPeriod ) = 0;
 
     virtual void csvOutputFile() const {};
     virtual void dbOutput( const std::list<std::string>& aPrimaryFuelList ) const {};
@@ -66,7 +69,7 @@ public:
     virtual int scaleCalInputs( const int period ) { return 0; };
     virtual void updateAllOutputContainers( const int period ) = 0;
     virtual void updateMarketplace( const int period ) {};
-    virtual void finalizePeriod( const int aPeriod );
+
     virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const {};
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     virtual void csvSGMGenFile( std::ostream& aFile ) const {};

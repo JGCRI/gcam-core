@@ -16,6 +16,7 @@
 #include <xercesc/dom/DOMNodeList.hpp>
 #include <algorithm>
 #include <memory>
+#include <stack>
 
 #include "containers/include/region_minicam.h"
 #include "containers/include/gdp.h"
@@ -66,6 +67,16 @@
 using namespace std;
 using namespace xercesc;
 
+typedef std::vector<DemandSector*>::iterator DemandSectorIterator;
+typedef std::vector<DemandSector*>::const_iterator CDemandSectorIterator;
+typedef std::vector<AResource*>::iterator ResourceIterator;
+typedef std::vector<AResource*>::const_iterator CResourceIterator;
+typedef std::vector<GHGPolicy*>::iterator GHGPolicyIterator;
+typedef std::vector<GHGPolicy*>::const_iterator CGHGPolicyIterator;
+typedef std::vector<Sector*>::iterator SectorIterator;
+typedef std::vector<Sector*>::reverse_iterator SectorReverseIterator;
+typedef std::vector<Sector*>::const_iterator CSectorIterator;
+
 extern Scenario* scenario;
 
 //! Default constructor
@@ -77,13 +88,10 @@ RegionMiniCAM::RegionMiniCAM() {
 
     // Resize all vectors to maximum period
     const int maxper = scenario->getModeltime()->getmaxper();
-    TFEcalb.resize( maxper ); // Total Final Energy calibration value
-    TFEPerCapcalb.resize( maxper ); // Total Final Energy per capita calibration value. This is converted to total TFE using population.
-    mEnergyServicePrice.resize( maxper ); // aggregate price for demand services
-    carbonTaxPaid.resize( maxper ); // total regional carbon taxes paid
-    summary.resize( maxper ); // summary object for reporting
-    calibrationGDPs.resize( maxper ); // GDPs for calibration
-    GDPcalPerCapita.resize( maxper ); // GDP per capita for calibration. This is converted to an absolute GDP using population.
+    summary.resize( maxper );
+    calibrationGDPs.resize( maxper );
+    GDPcalPerCapita.resize( maxper );
+    mLandUseCO2Emissions.resize( maxper );
 
     heatingDegreeDays = 0;
     coolingDegreeDays = 0;
@@ -185,6 +193,9 @@ bool RegionMiniCAM::XMLDerivedClassParse( const std::string& nodeName, const xer
             parseSingleNode( curr, agSector, new AgSector );
         }
     }
+    else if( nodeName == "land-use-co2-emissions" ){
+        XMLHelper<Value>::insertValueIntoVector( curr, mLandUseCO2Emissions, scenario->getModeltime() );
+    }
     // regional economic data
     else if( nodeName == "calibrationdata" ){
         // get all child nodes.
@@ -205,13 +216,6 @@ bool RegionMiniCAM::XMLDerivedClassParse( const std::string& nodeName, const xer
             // Per-capita value -- is converted to total GDP using population
             else if( nodeNameChild == "GDPcalPerCapita" ) { // TODO: MOVE TO GDP
                 XMLHelper<double>::insertValueIntoVector( currChild, GDPcalPerCapita, modeltime );
-            }
-            else if(nodeNameChild == "TFEcalb") {
-                XMLHelper<double>::insertValueIntoVector( currChild, TFEcalb, modeltime );
-            }
-            // Per-capita value -- is converted to total TFE using population
-            else if(nodeNameChild == "TFEPerCapcalb") {
-                XMLHelper<double>::insertValueIntoVector( currChild, TFEPerCapcalb, modeltime );
             }
             else {
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -283,24 +287,6 @@ void RegionMiniCAM::completeInit( const GlobalTechnologyDatabase* aGlobalTechDB 
     // Initialize the GDP
     if( gdp.get() ){
         gdp->initData( demographic.get() );
-    }
-
-    const Modeltime* modeltime = scenario->getModeltime();
-    // Change per capita calibration values into absolute values
-    for ( int period = 0; period < modeltime->getmaxper(); period++ ) {
-        // Change per capita calibration values into absolute values
-        if ( TFEPerCapcalb [ period ] != 0 && demographic.get() ) {
-            if ( TFEcalb[ period ] != 0 ) {
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::WARNING );
-                mainLog << "Both TFEcalb and TFEPerCapcalb read in region "
-                        << name << " for period " << period << ". TFEperCap used." << endl;
-            }
-            // Convert from GJ/cap to EJ. Pop is in 1000's, so need an additional 1e6 scale to get from GJ to EJ
-            // TODO: This will eventually write back out, so if this input file were used again the above warning
-            // would be triggered.
-            TFEcalb[ period ] = TFEPerCapcalb[ period ] * demographic->getTotal( period ) / 1e6;
-        }
     }
 
     // Initialize the dependency finder.
@@ -488,6 +474,7 @@ void RegionMiniCAM::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
 
     XMLWriteElementCheckDefault( heatingDegreeDays, "heatingDegreeDays", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( coolingDegreeDays, "coolingDegreeDays", out, tabs, 0.0 );
+    XMLWriteVector( mLandUseCO2Emissions, "land-use-co2-emissions", out, tabs, scenario->getModeltime() );
     XMLWriteElementCheckDefault( mRotationPeriod, "rotationPeriod", out, tabs, 0 );
     XMLWriteElementCheckDefault( mInterestRate, "interest-rate", out, tabs, 0.0 );
 
@@ -528,8 +515,8 @@ void RegionMiniCAM::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     // times a value occurs within the a range of a container. The first two
     // arguments to the function are the range of the container to search, the
     // third is the value to search for.
-    if( ( count( calibrationGDPs.begin(), calibrationGDPs.end(), 0 ) != static_cast<int>( calibrationGDPs.size() ) )
-        || ( count( TFEcalb.begin(), TFEcalb.end(), 0 ) != static_cast<int>( TFEcalb.size() ) ) ){ // makes sure tags aren't printed if no real data
+    if( ( count( calibrationGDPs.begin(), calibrationGDPs.end(), 0 )
+        != static_cast<int>( calibrationGDPs.size() ) ) ){ // makes sure tags aren't printed if no real data
 
             // Write out regional economic data
             XMLWriteOpeningTag( "calibrationdata", out, tabs );
@@ -537,9 +524,6 @@ void RegionMiniCAM::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
             // write out calibration GDP
             const Modeltime* modeltime = scenario->getModeltime();
             XMLWriteVector( calibrationGDPs, "GDPcal", out, tabs, modeltime, 0.0 );
-
-            // write out TFE calibration values
-            XMLWriteVector( TFEcalb, "TFEcalb", out, tabs, modeltime, 0.0 );
 
             XMLWriteClosingTag( "calibrationdata", out, tabs );
             // End write out regional economic data
@@ -556,10 +540,8 @@ void RegionMiniCAM::toDebugXMLDerived( const int period, std::ostream& out, Tabs
     XMLWriteElement( static_cast<unsigned int>( supplySector.size() ), "noSSec", out, tabs );
     XMLWriteElement( static_cast<unsigned int>( demandSector.size() ), "noDSec", out, tabs );
     XMLWriteElement( calibrationGDPs[ period ], "calibrationGDPs", out, tabs );
-    XMLWriteElement( mEnergyServicePrice[ period ], "mEnergyServicePrice", out, tabs );
-    XMLWriteElement( carbonTaxPaid[ period ], "carbonTaxPaid", out, tabs );
-    XMLWriteElement( TFEcalb[ period ], "TFECalb", out, tabs );
-    XMLWriteElement( getTotFinalEnergy( period ), "TotalFinalEnergy", out, tabs );
+    XMLWriteElement( getEndUseServicePrice( period ), "priceSer", out, tabs );
+    XMLWriteElement( mLandUseCO2Emissions[ period ], "land-use-co2-emissions", out, tabs );
 
     // Write out the Co2 Coefficients.
     for( map<string,double>::const_iterator coefAllIter = primaryFuelCO2Coef.begin(); coefAllIter != primaryFuelCO2Coef.end(); coefAllIter++ ) {
@@ -641,8 +623,18 @@ void RegionMiniCAM::calc( const int period, const bool doCalibrations ) {
 
     // determine prices for all supply sectors (e.g., refined fuels, electricity, etc.)
     calcFinalSupplyPrice( period );
-    // calculate enduse service price
-    calcEndUsePrice( period );
+    
+    // Add land use CO2 emissions to the marketplace.
+    Marketplace* marketplace = scenario->getMarketplace();
+
+    const double GT_TO_MMT = 1000;
+    marketplace->addToDemand( "CO2", name, mLandUseCO2Emissions[ period ] * GT_TO_MMT, period, false );
+
+    // TODO: Remove this for separate demand and supply sectors.
+    for( DemandSectorIterator currSector = demandSector.begin(); currSector != demandSector.end(); ++currSector ){
+        (*currSector)->calcCosts( period );
+    }
+
     // adjust GDP for energy cost changes
     adjustGDP( period );
 
@@ -686,10 +678,11 @@ void RegionMiniCAM::calcResourceSupply( const int period ){
     }
 }
 
-/*! Calculate prices of refined fuels and electricity.
-* \todo Move this functionality into sector.
-* \param period Model time period
-*/
+/*!
+ * \brief Calculate prices of all sectors.
+ * \todo Move this functionality into sector.
+ * \param period Model time period
+ */
 void RegionMiniCAM::calcFinalSupplyPrice( const int period ) {
     if( !ensureGDP() ){
         return;
@@ -756,34 +749,12 @@ const vector<double> RegionMiniCAM::calcFutureGDP() const {
     return gdps;
 }
 
-/*! Calculate demand sector aggregate price.
-*
-* \param period Model time period
-*/
-void RegionMiniCAM::calcEndUsePrice( const int period ) {
-    if( !ensureGDP()  ){
-            return;
+double RegionMiniCAM::getEndUseServicePrice( const int period ) const {
+	double servicePrice = 0;
+    for ( CDemandSectorIterator currDemSector = demandSector.begin(); currDemSector != demandSector.end(); ++currDemSector ) {
+        servicePrice += (*currDemSector)->getWeightedEnergyPrice( gdp.get(), period );
     }
-
-    mEnergyServicePrice[ period ] = 0;
-
-    for ( DemandSectorIterator currDemSector = demandSector.begin(); currDemSector != demandSector.end(); ++currDemSector ) {
-        (*currDemSector)->calcShare( period, gdp.get() );
-
-        // calculate service price for each demand sector
-
-        // calculate aggregate service price for region
-        mEnergyServicePrice[ period ] += (*currDemSector)->getWeightedEnergyPrice( period );
-
-        // calculate service price elasticity for each demand sector
-        // or use read in value, temporary code
-        // Note: If this is set to false the model solves better generally. -JPL
-        bool useReadinData = true;
-        // do nothing if false
-        if (!useReadinData) {
-            (*currDemSector)->calcPriceElasticity( period );
-        }
-    }
+	return servicePrice;
 }
 
 /*! Adjust regional gdp for energy.
@@ -799,8 +770,8 @@ void RegionMiniCAM::adjustGDP( const int period ){
     const Modeltime* modeltime = scenario->getModeltime();
 
     double tempratio = 1;
-    if ( period > modeltime->getyr_to_per(1990) ) {
-        tempratio = mEnergyServicePrice[period]/mEnergyServicePrice[period-1];
+    if ( period > modeltime->getFinalCalibrationPeriod() ){
+        tempratio = getEndUseServicePrice( period ) / getEndUseServicePrice( period - 1 );
     }
     gdp->adjustGDP( period, tempratio );
 }
@@ -819,19 +790,12 @@ void RegionMiniCAM::calibrateRegion( const bool doCalibrations, const int period
     if ( doCalibrations ) {
         // Calibrate demand sectors
         for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
-            demandSector[ i ]->calibrateSector( period );
+            demandSector[ i ]->calibrateSector( gdp.get(), period );
         }
 
         // Calibrate supply sectors
         for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
-            supplySector[ i ]->calibrateSector( period );
-        }
-        // Calibrate Regional TFE
-        if ( !isEnergyDemandAllCalibrated( period ) ) {
-            calibrateTFE( period );
-        } else {
-            // do nothing now. Need to make a variant of the total cal outputs
-            // function so that can compare TFE with cal value.
+            supplySector[ i ]->calibrateSector( gdp.get(), period );
         }
     }
     if( !ensureGDP() ){
@@ -843,21 +807,6 @@ void RegionMiniCAM::calibrateRegion( const bool doCalibrations, const int period
         Marketplace* marketplace = scenario->getMarketplace();
         marketplace->addToSupply( goodName, name, gdp->getGDP( period ), period );
     }
-}
-
-/*! \brief Returns whether all demand sectors have calibrated energy demands.
-* \param period Model time period
-* \return Whether all demand sectors have calibrated energy demands.
-*/
-bool RegionMiniCAM::isEnergyDemandAllCalibrated( const int period ) const {
-    // Only check if sector has non-zero energy demand
-    for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
-        if ( !demandSector[ i ]->isEnergyUseFixed( period ) ){
-            return false;
-        }
-    }
-
-    return true;
 }
 
 /*! \brief Test to see if calibration worked for all sectors in this region
@@ -876,100 +825,31 @@ bool RegionMiniCAM::isEnergyDemandAllCalibrated( const int period ) const {
 */
 bool RegionMiniCAM::isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const {
     const static bool calOn = Configuration::getInstance()->getBool( "CalibrationActive" );
+    
+    // Don't check calibration in the base period or if calibration is off.
+    if( !calOn || period == 0 ){
+        return true;
+    }
+
     bool returnVal = true;
-
-    if ( calOn || printWarnings ) {
-        for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
-            if ( !demandSector[ i ]->isAllCalibrated( period, calAccuracy, printWarnings ) ) {
-                returnVal = false;
-            }
+    for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
+        if ( !demandSector[ i ]->isAllCalibrated( period, calAccuracy, printWarnings ) ) {
+            returnVal = false;
         }
+    }
 
-        for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
-            if ( !supplySector[ i ]->isAllCalibrated( period, calAccuracy, printWarnings ) ) {
-                returnVal = false;
-            }
-        }
-
-        // Check Regional TFE calibration if exists
-        if ( ( !isEnergyDemandAllCalibrated( period ) && TFEcalb[ period ]  > 0 ) && calOn ) {
-            if ( fabs( calcTFEscaleFactor( period ) - 1.0 ) > calAccuracy ) {
-                if ( printWarnings ) {
-                    ILogger& mainLog = ILogger::getLogger( "main_log" );
-                    mainLog.setLevel( ILogger::WARNING );
-                    mainLog << "TFE Calibration is off by " << calcTFEscaleFactor( period )
-                        << " in period " <<  period << " for region " << name << "." << endl;
-                }
-                returnVal = false;
-            }
+    for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
+        if ( !supplySector[ i ]->isAllCalibrated( period, calAccuracy, printWarnings ) ) {
+            returnVal = false;
         }
     }
 
     // always return true if calibrations are not on.
-    return calOn ? returnVal : true;
-}
-
-//! Calibrate total final energy Demand for this region.
-/*! Adjusts AEEI in each demand sector until TFE is equal to the calibration value.
-/warning assumes sectors have all energy or non-energy outputs
-*/
-void RegionMiniCAM::calibrateTFE( const int period ) {
-    // Ratio of TFE in sector to cal value
-    double scaleFactor = calcTFEscaleFactor( period ); // value of zero means cal value was zero
-
-    // Don't calibrate unless non zero value of TFE
-    if ( scaleFactor  > 0 ) {
-        // Scale each sector's output to approach calibration value
-        // But only do this for sectors that have energy outputs
-        // And do not scale is all outputs are calibrated (detailed calibration will take care of this)
-        for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
-            if ( !demandSector[ i ]-> isEnergyUseFixed( period ) ) {
-                demandSector[ i ]->scaleOutput( period , scaleFactor );
-            }
-        }
-    }
-}
-
-/*! \brief Return TFE for all demand sectors
-*
-* \author Steve Smith
-* \param period Model period
-* \return Double total final energy for all demand sectors
-*/
-double RegionMiniCAM::getTotFinalEnergy( const int period ) const {
-
-    // Calculate total final energy demand for all demand sectors
-    double totalFinalEnergy = 0;
-    for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
-        totalFinalEnergy += demandSector[ i ]->getEnergyInput( period );
-    }
-
-    return totalFinalEnergy;
-}
-
-/*! \brief Return ratio of TFE and calibrated value
-*
-* Returns 0 if TFE calib value is zero, which indicates there is no calibration
-*
-* \author Steve Smith
-* \param period Model period
-* \return Double ratio TFE in model to calibrated value.
-*/
-double RegionMiniCAM::calcTFEscaleFactor( const int period ) const {
-
-    if ( TFEcalb[ period ]  > 0 ) {
-        // Calculate total final energy demand for all demand sectors
-        double totalFinalEnergy = getTotFinalEnergy( period );
-
-        if ( totalFinalEnergy > util::getVerySmallNumber() ) {
-            return TFEcalb[ period ] / totalFinalEnergy;
-        }
-    }
-    return 0;
+    return returnVal;
 }
 
 /*! \brief Call any initializations that are only done once per period.
-* \author Steve Smith
+* \author Steve Smith, Josh Lurz, Sonny Kim
 * \param period Model period
 * \todo Once postCalc is present, add a check to verify that aggregate emissions worked properly
 */
@@ -978,7 +858,10 @@ void RegionMiniCAM::initCalc( const int period )
 
     // Set aggregate emissions factor to region info if needed
     for ( unsigned int i = 0; i < mAggEmissionsCalculators.size(); i++ ) {
-        mAggEmissionsCalculators[ i ]->setAggregateEmissionFactor( supplySector, mRegionInfo.get(), period );
+        mAggEmissionsCalculators[ i ]->setAggregateEmissionFactor( name,
+                                                                   supplySector,
+                                                                   mRegionInfo.get(),
+                                                                   period );
     }
 
     mRegionInfo->setDouble( "heatingDegreeDays", heatingDegreeDays );
@@ -999,38 +882,8 @@ void RegionMiniCAM::initCalc( const int period )
     {
             (*currResource)->initCalc( name, period );
     }
-
-    // Make sure TFE is same as calibrated values
-    if ( isEnergyDemandAllCalibrated( period ) ) {
-        double totalFinalEnergy = 0;
-        for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
-            totalFinalEnergy += demandSector[ i ]->getCalAndFixedInputs( period, "allInputs" );
-        }
-        if ( TFEcalb[ period ] != 0 ) {
-            double scaleFactor = totalFinalEnergy / TFEcalb[ period ];
-            if ( fabs( scaleFactor - 1 ) > util::getSmallNumber() ) {
-                ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
-                calibrationLog.setLevel( ILogger::DEBUG );
-                calibrationLog << "TFE in region " << name << " scaled by: "<< scaleFactor << endl;
-                TFEcalb[ period ] = totalFinalEnergy;
-            }
-        }
-    }
-    checkData( period );
-}
-
-void RegionMiniCAM::finalizePeriod( const int aPeriod ){
-    Region::finalizePeriod( aPeriod );
-
-    // Demand sectors
-    for( DemandSectorIterator currSector = demandSector.begin(); currSector != demandSector.end(); ++currSector ){
-        (*currSector)->finalizePeriod( aPeriod );
-    }
-
-    for( ResourceIterator currResource = resources.begin();
-        currResource != resources.end(); ++currResource )
-    {
-            (*currResource)->postCalc( name, aPeriod );
+    for( ResourceIterator currResource = resources.begin(); currResource != resources.end(); ++currResource ){
+        (*currResource)->initCalc( name, period );
     }
 }
 
@@ -1054,20 +907,33 @@ void RegionMiniCAM::setCO2CoefsIntoMarketplace( const int aPeriod ){
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
-            // Currently this error occurs frequently, this could be NOTICE.
-            if ( coef->second == 0 ) {
-                mainLog.setLevel( ILogger::DEBUG );
-                mainLog << "Cannot set emissions factor of zero for fuel " << coef->first
+            mainLog.setLevel( ILogger::DEBUG );
+            mainLog << "Cannot set emissions factor of zero for fuel " << coef->first
                     << " because the name does not match the name of a market." << endl;
-            }
-            else {
-                mainLog.setLevel( ILogger::DEBUG );
-                mainLog << "Cannot set emissions factor for fuel " << coef->first
-                    << " because the name does not match the name of a market." << endl;
-            }
         }
     }
 }
+
+
+/*!
+ * \brief Call any calculations that are only done once per period after
+ *        solution is found.
+ * \author Sonny Kim
+ * \param aPeriod Model period
+ */
+void RegionMiniCAM::postCalc( const int aPeriod ) {
+    Region::postCalc( aPeriod );
+    
+    // Demand sectors
+    for( DemandSectorIterator currSector = demandSector.begin(); currSector != demandSector.end(); ++currSector ){
+        (*currSector)->postCalc( aPeriod );
+    }
+
+    // Post calculation for resource sectors
+    for( ResourceIterator currResource = resources.begin(); currResource != resources.end(); ++currResource ){
+        (*currResource)->postCalc( name, aPeriod );
+     }
+ }
 
 /*! \brief Adjusts calibrated demands to be consistant with calibrated supply.
 *
@@ -1085,7 +951,7 @@ void RegionMiniCAM::setCO2CoefsIntoMarketplace( const int aPeriod ){
 void RegionMiniCAM::setCalSuppliesAndDemands( const int period ) {
     // Check for fully calibrated/fixed supplies. This will search sectors and
     // resources for calibrated and fixed supples.
-    CalQuantityTabulator calSupplyTabulator;
+    CalQuantityTabulator calSupplyTabulator( "" );
     accept( &calSupplyTabulator, period );
 
     Marketplace* marketplace = scenario->getMarketplace();
@@ -1162,7 +1028,6 @@ void RegionMiniCAM::initializeCalValues( const int period ) {
         IInfo* marketInfo = marketplace->getMarketInfo( supplySector[ i ]->getName(), name, period, true );
         marketInfo->setDouble( "calSupply", DEFAULT_CAL_VALUE );
         marketInfo->setDouble( "calDemand", DEFAULT_CAL_VALUE );
-        marketInfo->setDouble( "calFixedDemand", DEFAULT_CAL_VALUE );
     }
 
     for ( unsigned int i = 0; i < resources.size(); i++ ) {
@@ -1170,7 +1035,6 @@ void RegionMiniCAM::initializeCalValues( const int period ) {
         IInfo* resourceMarketInfo = marketplace->getMarketInfo( resources[ i ]->getName(), name, period, true );
         resourceMarketInfo->setDouble( "calSupply", DEFAULT_CAL_VALUE );
         resourceMarketInfo->setDouble( "calDemand", DEFAULT_CAL_VALUE );
-        resourceMarketInfo->setDouble( "calFixedDemand", DEFAULT_CAL_VALUE );
     }
 }
 
@@ -1191,10 +1055,9 @@ void RegionMiniCAM::initializeCalValues( const int period ) {
 * \param period Model period
 */
 bool RegionMiniCAM::setImpliedCalInputs( const int period ) {
-    Configuration* conf = Configuration::getInstance();
     Marketplace* marketplace = scenario->getMarketplace();
     const double MKT_NOT_ALL_FIXED = -1;
-    bool debugChecking = conf->getBool( "debugChecking" );
+
     bool calcIsDone = true;
 
     // Instantiate the relationship map here if it does not already exist
@@ -1205,68 +1068,70 @@ bool RegionMiniCAM::setImpliedCalInputs( const int period ) {
 
     // For each sector, check if a fixed demand is an output. If supply is fixed
     // stop. Make sure all inputs are fixed demands
-    for ( unsigned int jsec = 0; jsec < supplySector.size(); jsec++ ) {
-        string sectorName = supplySector[ jsec ]->getName();
-        IInfo* sectorMarketInfo = marketplace->getMarketInfo( sectorName, name, period, true );
+    for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
+		IInfo* sectorMarketInfo =
+            marketplace->getMarketInfo( supplySector[ i ]->getName(), name,
+                                        period, true );
         double sectorCalDemand = sectorMarketInfo->getDouble( "calDemand", false );
+        double sectorCalSupply = sectorMarketInfo->getDouble( "calSupply", false );
 
         // Check to see if this sector supplies a fuel with a fixed demand. If
         // so, and this is not a fuel that already has a fixed supply, then
         // calculate the cooresponding fixed supply
-        if ( sectorCalDemand >= 0  && ( sectorMarketInfo->getDouble( "calSupply", false ) < 0 ) ) {
+        if ( sectorCalDemand >= 0 && sectorCalSupply < 0 ) {
 
             // Now prepare to loop through all the fuels used by this sector.
             // Get fuel consumption map for sector.
             InputFinder inputFinder;
-            supplySector[ jsec ]->accept( &inputFinder, period );
+            supplySector[ i ]->accept( &inputFinder, period );
             const list<string>& inputsUsed = inputFinder.getInputs();
             // Total directly calibrated outputs (not outputs infered from
             // market)
             double totalCalOutputs = 0;
-            // Count of number of fixed market inputs to this sector. This is to
-            // make sure there is only one.
-            int numbFixedMktInputs = 0;
 
-            string newFixedDemandInputName;
             typedef list<string>::const_iterator CI;
+            stack<string> adjustableInputs;
             for( CI currInput = inputsUsed.begin(); currInput != inputsUsed.end(); ++currInput ){
 
                 // If inputs are all fixed for this fuel
-                if ( supplySector[ jsec ]->inputsAllFixed( period, *currInput ) ) {
-                    totalCalOutputs += supplySector[ jsec ]->getCalAndFixedOutputs( period, *currInput );
+                if ( supplySector[ i ]->inputsAllFixed( period, *currInput ) ) {
+                    totalCalOutputs += supplySector[ i ]->getCalAndFixedOutputs( period, *currInput );
                 }
                 // else have an input that can be adjusted
                 else {
-                    numbFixedMktInputs ++;
-                    newFixedDemandInputName = *currInput;
+                    adjustableInputs.push( *currInput );
                 }
             }
 
             // If we found one, and only one, unfixed input then figure out what
             // this should be and set things appropriately
-            if ( numbFixedMktInputs == 1 ) {
+            if ( adjustableInputs.size() == 1 ) {
                 // Calculate required input (which will be set to the
                 // marketplace)
                 double requiredOutput = sectorCalDemand;
+                assert( requiredOutput >= sectorCalDemand );
+
                 // subtract other calOutputs so that we only calculate the
                 // output from the remaining fuel
                 requiredOutput -= totalCalOutputs;
 
-                if ( debugChecking ) {
-                    ILogger& dependenciesLog = ILogger::getLogger( "sector_dependencies" );
-                    dependenciesLog.setLevel( ILogger::NOTICE );
-                    dependenciesLog << "  Transitive demand for " << newFixedDemandInputName
-                            << " in sector " << sectorName
-                            << " in region " << name << " added with value " << requiredOutput << endl;
-                }
+                ILogger& dependenciesLog = ILogger::getLogger( "sector_dependencies" );
+                dependenciesLog.setLevel( ILogger::NOTICE );
+                dependenciesLog << "  Transitive demand for "
+                                << adjustableInputs.top()  
+                                << " in sector " << supplySector[ i ]->getName()
+                                << " in region " << name << " added with value "
+                                << requiredOutput << endl; 
 
-                supplySector[ jsec ]->setImpliedFixedInput( period, newFixedDemandInputName, requiredOutput );
+                supplySector[ i ]->setImpliedFixedInput( period,
+                                                         adjustableInputs.top(),
+                                                         requiredOutput );
 
                 // Now that transitive demand has been set, clear demand for
                 // this good so this won't be done again
                 sectorMarketInfo->setDouble( "calDemand", MKT_NOT_ALL_FIXED );
 
-                // Save this relationship information First element of vector is
+                // Save this relationship information. First element of vector is
                 // the root, or current root of chain and second element is a
                 // vector of dependents
 
@@ -1280,47 +1145,68 @@ bool RegionMiniCAM::setImpliedCalInputs( const int period ) {
                 // this relationship to the fuelRelationshipMap. If the current
                 // sectorName is present as a key, then it should be moved to
                 // the dependents vector with the new fuel name as the key.
-                if ( fuelRelationshipMap->find( sectorName ) != fuelRelationshipMap->end() ) {
-                    tempDependents = (*fuelRelationshipMap)[ sectorName ];
-                    fuelRelationshipMap->erase( sectorName );
-                }
+                if ( fuelRelationshipMap->find( supplySector[ i ]->getName() ) != fuelRelationshipMap->end() ) {
+                    tempDependents = (*fuelRelationshipMap)[ supplySector[ i ]->getName() ];
+                    fuelRelationshipMap->erase( supplySector[ i ]->getName() );
+                 } 
                 // If proper key is already there, then copy dependent list (the
                 // new fuelname will be added to it below)
-                else if ( fuelRelationshipMap->find( newFixedDemandInputName ) != fuelRelationshipMap->end() ) {
-                    tempDependents = (*fuelRelationshipMap)[ newFixedDemandInputName ];
+                else if ( fuelRelationshipMap->find( adjustableInputs.top() ) != fuelRelationshipMap->end() ) {
+                    tempDependents = (*fuelRelationshipMap)[ adjustableInputs.top() ];
                 }
                 // In any event, current sector should be added as a key (this
-                // overwrites previous dependents list if it existed)
-                tempDependents.push_back( sectorName );
-                (*fuelRelationshipMap)[ newFixedDemandInputName ] = tempDependents;
+                // overwrites previous dependents list if it existed).
+                tempDependents.push_back( supplySector[ i ]->getName() );
+                (*fuelRelationshipMap)[ adjustableInputs.top() ] = tempDependents;
 
                 // If this demand does not correspond to a sector with a fixed
                 // supply then we are not done with checking. Otherwise we are
                 // done for this region if no sectors satisfy this criteria.
-                const IInfo* demandMarketInfo = marketplace->getMarketInfo( newFixedDemandInputName, name, period, false );
+                const IInfo* demandMarketInfo = marketplace->getMarketInfo( adjustableInputs.top(), name, period, false );
                 if ( demandMarketInfo && demandMarketInfo->getDouble( "calSupply", true ) < 0 ) {
                     calcIsDone = false;
                 }
             }
-            else if ( numbFixedMktInputs > 1 ) {
+            else if ( adjustableInputs.size() > 1 ) {
                 // Print a warning, but only if calDemand is not zero (if
                 // calDemand is zero then this is probably not a problem)
                 if ( sectorCalDemand > 0 ) {
-                    ILogger& mainLog = ILogger::getLogger( "main_log" );
-                    mainLog.setLevel( ILogger::NOTICE );
                     ILogger& dependenciesLog = ILogger::getLogger( "sector_dependencies" );
                     dependenciesLog.setLevel( ILogger::NOTICE );
-                    mainLog << "Couldn't calculate transitive demand for input "<< newFixedDemandInputName <<" sector: " <<  sectorName << " region: " << name << endl;
-                    dependenciesLog << "Couldn't calculate transitive demand for input "<< newFixedDemandInputName <<" sector: " <<  sectorName << " region: " << name << endl;
+                    dependenciesLog << "Couldn't calculate transitive demand for inputs ";
+
+                    // TODO: This seems wrong. If there are multiple unfixed
+                    // inputs why only reset the first?
+                    string firstInput = adjustableInputs.top();
+                    while( !adjustableInputs.empty() ){
+                        dependenciesLog << adjustableInputs.top() << ", ";
+                        adjustableInputs.pop();
+                    }
+                    
+                    dependenciesLog << " for sector "
+                                    << supplySector[ i ]->getName()
+                                    << " in region " << name << endl;
+
                     // If can't calculate this demand then reset so that nothing
                     // is scaled.
-                    IInfo* demandMarketInfo = marketplace->getMarketInfo( newFixedDemandInputName, name, period, false );
+                    IInfo* demandMarketInfo = marketplace->getMarketInfo( firstInput, name, period, false );
                     if( demandMarketInfo ){
                         demandMarketInfo->setDouble( "calDemand", MKT_NOT_ALL_FIXED );
                     }
                 }
+                else {
+                    ILogger& dependenciesLog = ILogger::getLogger( "sector_dependencies" );
+                    dependenciesLog.setLevel( ILogger::NOTICE );
+                    dependenciesLog << "Couldn't calculate transitive demand for input " << adjustableInputs.top()
+                                    << " but calibrated demand is zero. " << endl;
+                }
             }
-        } // End of fixed demand transitive calculation loop
+            else {
+                ILogger& dependenciesLog = ILogger::getLogger( "sector_dependencies" );
+                dependenciesLog.setLevel( ILogger::NOTICE );
+                dependenciesLog << "Zero fixed inputs for " << supplySector[ i ]->getName() << endl;
+            }
+        } // End of fixed demand transitive calculation loop.
     } // End of sector loop
 
     return calcIsDone;
@@ -1343,14 +1229,13 @@ int RegionMiniCAM::scaleCalInputs( const int period ) {
     Marketplace* marketplace = scenario->getMarketplace();
     Configuration* conf = Configuration::getInstance();
 
-    if ( conf->getBool( "PrintSectorDependencies", false ) && !fuelRelationshipMap->empty() ) {
+    if ( !fuelRelationshipMap->empty() ) {
         ILogger& dependenciesLog = ILogger::getLogger( "sector_dependencies" );
-        dependenciesLog.setLevel( ILogger::NOTICE );
-        dependenciesLog << endl;
-        dependenciesLog << name << " REGIONAL DEPENDENCIES as used for calibration input/output adjustments. Period "<< period << endl;
-        dependenciesLog << "These are direct and transitive dependencies only for sectors that potentially have calibration adjustments" << endl;
-        typedef map<std::string, std::vector<std::string> > :: const_iterator CIMAP;
-        for( CIMAP fuelDependencyIter = fuelRelationshipMap->begin(); fuelDependencyIter != fuelRelationshipMap->end(); ++fuelDependencyIter ){
+        dependenciesLog << endl << name << " regional dependencies as used for calibration input/output adjustments. Period " 
+			            << period << endl << "These are direct and transitive dependencies only for sectors that potentially have calibration adjustments." << endl;
+        
+		typedef map<string, vector<string> >::const_iterator DepIterator;
+        for( DepIterator fuelDependencyIter = fuelRelationshipMap->begin(); fuelDependencyIter != fuelRelationshipMap->end(); ++fuelDependencyIter ){
             dependenciesLog << fuelDependencyIter->first << " - ";
             for ( unsigned int i = 0; i < fuelDependencyIter->second.size(); i ++ ) {
                 dependenciesLog << fuelDependencyIter->second[ i ] << ":";
@@ -1381,15 +1266,6 @@ int RegionMiniCAM::scaleCalInputs( const int period ) {
 
                 // If these are positive then may need to scale calInputs for this input
                 if ( ( calSupplyValue > 0 ) && ( calDemandValue > 0 ) ) {
-
-                    // First, fixed values are not scaled, so adjust for this.
-                    // The reason fixed values are not scaled is that fixed values can be used in instances where
-                    // a simultaneity would otherwise occur during calibration checking (such as export markets)
-                    double calFixedDemandValue = fuelMarketInfo->getDouble( "calFixedDemand", true );
-                    calFixedDemandValue = max( 0.0, calFixedDemandValue );
-                    calSupplyValue -= calFixedDemandValue;
-                    calDemandValue -= calFixedDemandValue;
-
                     // If these are still positive then scale calInputValues for this input
                     if ( ( calSupplyValue > 0 ) && ( calDemandValue > 0 ) ) {
                         double scaleValue = calSupplyValue / calDemandValue;
@@ -1451,20 +1327,6 @@ int RegionMiniCAM::scaleCalInputs( const int period ) {
     return numberOfScaledValues;
 }
 
-/*! \brief Perform any sector level data consistancy checks
-*
-* \author Steve Smith
-* \param period Model period
-*/
-void RegionMiniCAM::checkData( const int period ) {
-    for( SectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ){
-        (*currSector)->checkSectorCalData( period );
-    }
-    for ( DemandSectorIterator currSector = demandSector.begin(); currSector != demandSector.end(); ++currSector ) {
-        (*currSector)->checkSectorCalData( period );
-    }
-}
-
 //! Calculate regional demand for energy and other goods for all sectors.
 void RegionMiniCAM::calcEndUseDemand( const int period ) {
     if( !ensureGDP() ){
@@ -1474,7 +1336,7 @@ void RegionMiniCAM::calcEndUseDemand( const int period ) {
     for ( DemandSectorIterator currDemSector = demandSector.begin(); currDemSector != demandSector.end(); ++currDemSector ){
         // calculate aggregate demand for end-use sector services
         // set fuel demand from aggregate demand for services
-        (*currDemSector)->aggdemand( gdp.get(), period );
+        (*currDemSector)->calcAggregateDemand( gdp.get(), demographic.get(), period );
     }
 
 }
@@ -1491,6 +1353,16 @@ void RegionMiniCAM::calcEmissions( const int period ) {
     for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
         demandSector[i]->emission(period);
         summary[period].updateemiss(demandSector[i]->getemission(period));
+    }
+
+    // WARNING: These emissions are not currently added to emissions by fuel, so
+    // the totals will not be equal.
+    const double GT_TO_MMT = 1000;
+    map<string, double> landUseSummary;
+    if( mLandUseCO2Emissions[ period ].isInited() ){
+        landUseSummary[ "CO2" ] = mLandUseCO2Emissions[ period ] * GT_TO_MMT;
+        landUseSummary[ "CO2-net-terrestrial" ] = mLandUseCO2Emissions[ period ] * GT_TO_MMT;
+        summary[period].updateemiss( landUseSummary );
     }
 
     // Determine land use change emissions and add to the summary.
@@ -1515,24 +1387,11 @@ void RegionMiniCAM::calcEmissFuel( const list<string>& aPrimaryFuelList, const i
         fuelIter != aPrimaryFuelList.end(); ++fuelIter )
     {
         double primaryCoef = objects::searchForValue( primaryFuelCO2Coef, *fuelIter );
-        fuelemiss[ *fuelIter ] = summary[period].get_pemap_second( *fuelIter ) * primaryCoef;
+        fuelemiss[ *fuelIter ] = summary[period].get_pemap_second( *fuelIter )
+                                 * util::searchForValue( primaryFuelCO2Coef, *fuelIter );
     }
 
     summary[period].updateemiss(fuelemiss); // add CO2 emissions by fuel
-}
-
-//! Calculate total carbon tax paid in the region by all supply and demand
-//! sectors.
-void RegionMiniCAM::calcTotalCarbonTaxPaid( const int period ) {
-    carbonTaxPaid[ period ] = 0; // initialize total regional carbon taxes paid
-    // Loop through supply sectors.
-    for( CSectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ){
-        carbonTaxPaid[ period ] += (*currSector)->getTotalCarbonTaxPaid( period );
-    }
-    // Loop through demand sectors.
-    for( CDemandSectorIterator currSector = demandSector.begin(); currSector != demandSector.end(); ++currSector ){
-        carbonTaxPaid[ period ] += (*currSector)->getTotalCarbonTaxPaid( period );
-    }
 }
 
 //! Write all outputs to file.
@@ -1552,9 +1411,6 @@ void RegionMiniCAM::csvOutputFile() const {
         gdp->csvOutputFile( name );
     }
 
-    // regional total carbon taxes paid
-    fileoutput3(name," "," "," ","C tax revenue","Mil90$",carbonTaxPaid);
-
     // write total emissions for region
     for (int m= 0;m<maxper;m++) {
         temp[m] = summary[m].get_emissmap_second("CO2");
@@ -1566,12 +1422,6 @@ void RegionMiniCAM::csvOutputFile() const {
         temp[m] = summary[m].get_emissmap_second( "CO2NetLandUse" );
     }
     fileoutput3(name," "," "," ","Net Land Use CO2 emiss","MTC",temp);
-
-    // TFE for this region
-    for (int m= 0;m<maxper;m++) {
-        temp[m] = getTotFinalEnergy(m);
-    }
-    fileoutput3(name," "," "," ","TFE","EJ",temp);
 
     if ( mLandAllocator.get() ) {
         mLandAllocator->csvOutput( name );
@@ -1587,11 +1437,18 @@ void RegionMiniCAM::csvOutputFile() const {
         fileoutput3(name,"Pri Energy","Consumption","",pmap->first,"EJ",temp);
     }
 
+
     // regional Pri Energy Production Total
     for (int m= 0;m<maxper;m++) {
         temp[m] = summary[m].get_peprodmap_second("zTotal");
     }
     fileoutput3(name,"Pri Energy","total","","zTotal","EJ",temp);
+
+    // Calculate indirect emissions so they can be written to the database.
+    IndirectEmissionsCalculator indEmissCalc;
+    for( int i = 0; i < modeltime->getmaxper(); ++i ){
+        accept( &indEmissCalc, i );
+    }
 
     // write resource results to file
     for ( unsigned int i = 0; i < resources.size(); i++ )
@@ -1599,12 +1456,12 @@ void RegionMiniCAM::csvOutputFile() const {
 
     // write supply sector results to file
     for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
-        supplySector[i]->csvOutputFile();
+        supplySector[i]->csvOutputFile( gdp.get(), &indEmissCalc );
     }
 
     // write end-use sector demand results to file
     for ( unsigned int i = 0; i < demandSector.size(); i++ ){
-        demandSector[i]->csvOutputFile();
+        demandSector[i]->csvOutputFile( gdp.get(), &indEmissCalc );
     }
 }
 
@@ -1627,8 +1484,6 @@ void RegionMiniCAM::dbOutput( const list<string>& aPrimaryFuelList ) const {
     if ( mLandAllocator.get() ) {
         mLandAllocator->dbOutput( name );
     }
-    // regional total carbon taxes paid
-    dboutput4(name,"General","CarbonTax","revenue","90US$",carbonTaxPaid);
 
     // CO2 emissions by fuel
     for( list<string>::const_iterator fuelIter = aPrimaryFuelList.begin();
@@ -1682,30 +1537,6 @@ void RegionMiniCAM::dbOutput( const list<string>& aPrimaryFuelList ) const {
         dboutput4(name,"Emissions","by gas",gmap->first,"MTC",temp);
     }
 
-    // regional total end-use service demand for all demand sectors
-    for ( int m= 0;m<maxper;m++) {
-        temp[m] = 0; // initialize temp to 0 for each period
-        for ( unsigned int i = 0; i < demandSector.size(); i++ ) { // sum for all period and demand sectors
-            temp[m] += demandSector[i]->getService( m );
-        }
-    }
-    dboutput4(name,"End-Use Service","by Sector","zTotal","Ser Unit",temp);
-
-    // regional total end-use service demand without Tech Change for all demand sectors
-    for ( int m= 0;m<maxper;m++) {
-        temp[m] = 0; // initialize temp to 0 for each period
-        for ( unsigned int i = 0; i < demandSector.size(); i++ ) { // sum for all period and demand sectors
-            temp[m] += demandSector[i]->getServiceWoTC( m );
-        }
-    }
-    dboutput4(name,"End-Use Service","by Sector w/o TC","zTotal","Ser Unit",temp);
-
-    // TFE for this region
-    for ( int m= 0;m<maxper;m++) {
-        temp[m] = getTotFinalEnergy(m);
-    }
-    dboutput4(name,"Final Energy Cons","total","total","EJ",temp);
-
     // regional fuel consumption (primary and secondary) by fuel type
     map<string,double> tfuelmap = summary[0].getfuelcons();
     for (CI fmap=tfuelmap.begin(); fmap!=tfuelmap.end(); ++fmap) {
@@ -1713,10 +1544,10 @@ void RegionMiniCAM::dbOutput( const list<string>& aPrimaryFuelList ) const {
             temp[m] = summary[m].get_fmap_second(fmap->first);
         }
         if( fmap->first == "" ){
-            dboutput4(name,"Fuel Consumption","by fuel","No Fuelname","EJ",temp);
+            dboutput4(name,"Fuel Consumption"," Region by fuel","No Fuelname","EJ",temp);
         }
         else {
-            dboutput4(name,"Fuel Consumption","by fuel",fmap->first,"EJ",temp);
+            dboutput4(name,"Fuel Consumption"," Region by fuel",fmap->first,"EJ",temp);
         }
     }
 
@@ -1757,11 +1588,11 @@ void RegionMiniCAM::dbOutput( const list<string>& aPrimaryFuelList ) const {
 
     // write supply sector results to database
     for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
-        supplySector[i]->dbOutput( &indEmissCalc );
+        supplySector[i]->dbOutput( gdp.get(), &indEmissCalc );
     }
     // write end-use sector demand results to database
     for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
-        demandSector[i]->dbOutput( &indEmissCalc );
+        demandSector[i]->dbOutput( gdp.get(), &indEmissCalc );
     }
 }
 
@@ -1775,13 +1606,13 @@ void RegionMiniCAM::initializeAgMarketPrices( const vector<double>& pricesIn ) {
 //! update regional summaries for reporting
 void RegionMiniCAM::updateSummary( const list<string>& aPrimaryFuelList, const int period ) {
     calcEmissions( period );
-    calcTotalCarbonTaxPaid( period );
 
     summary[period].clearpeprod();
     summary[period].clearfuelcons();
+    summary[period].clearemfuelmap();
 
     for ( unsigned int i = 0; i < resources.size(); i++ ) {
-        summary[period].initpeprod(resources[i]->getName(),resources[i]->getAnnualProd(name, period));
+        summary[period].initpeprod(resources[i]->getName(),resources[i]->getAnnualProd( name, period));
     }
     for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
         // call update for demand sector
