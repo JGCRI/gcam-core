@@ -53,15 +53,16 @@ EmissionsStabalizationTarget::getStatus( const double aTolerance,
     // Determine the total system emissions. NOTE: Net terrestrial uptake
     // includes land use emissions as a negative, so they are not added here as
     // that would double account.
-    double totalEmissions = 0;
     
-    // TODO: Merge climate model and fix this!
-    // mClimateModel->getEmissions( "CO2", aYear );
-
     // NOTE: Assumes that net terrestrial uptake is not removed from industrial
     // emissions.
     int prevYear = static_cast<int>( floor( aYear ) );
     int nextYear = static_cast<int>( ceil( aYear ) );
+
+    double totalEmissions =
+        objects::linearInterpolateY( aYear, prevYear, nextYear,
+        mClimateModel->getEmissions( "CO2", prevYear ),
+        mClimateModel->getEmissions( "CO2", nextYear ) );
 
     // Year can be between two years
     double netOceanUp = objects::linearInterpolateY( aYear, prevYear, nextYear,
