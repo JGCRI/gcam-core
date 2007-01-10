@@ -7,6 +7,7 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
+#include <cassert>
 #include <xercesc/dom/DOMNode.hpp>
 #include "sectors/include/forest_supply_subsector.h"
 #include "technologies/include/forest_production_technology.h"
@@ -17,11 +18,9 @@ using namespace xercesc;
 /*! \brief Constructor.
 * \author James Blackwood
 */
-
 ForestSupplySubsector::ForestSupplySubsector( const string& regionName,
                                               const string& sectorName )
-: Subsector( regionName, sectorName )
-{
+											  : Subsector( regionName, sectorName ){
 }
 
 ForestSupplySubsector::~ForestSupplySubsector() {
@@ -51,8 +50,8 @@ bool ForestSupplySubsector::isNameOfChild( const string& nodename ) const {
  * \return A newly created technology of the specified type.
  */
 ITechnology* ForestSupplySubsector::createChild( const string& aTechType,
-                                                const string& aTechName,
-                                                const int aTechYear ) const
+                                                 const string& aTechName,
+                                                 const int aTechYear ) const
 {
     return new ForestProductionTechnology( aTechName, aTechYear );
 }
@@ -88,26 +87,25 @@ const string& ForestSupplySubsector::getXMLNameStatic() {
     return XML_NAME;
 }
 
-void ForestSupplySubsector::calcShare( const int aPeriod, const GDP* aGDP ) {
-    // call function to compute technology shares. This is required
-    // currently because costs are calculated for the technologies here.
-    calcTechShares( aGDP, aPeriod );
-
-    share[ aPeriod ] = 1;
+double ForestSupplySubsector::calcShare( const int aPeriod,
+                                         const GDP* aGDP ) const
+{
+    return 1;
 }
 
-void ForestSupplySubsector::adjustForCalibration( double sectorDemand,
-                                                  double totalfixedOutput,
-                                                  double totalCalOutputs,
-                                                  const bool allFixedOutput,
-                                                  const int period )
+void ForestSupplySubsector::adjustForCalibration( double aSubsectorVariableDemand,
+                                                  const GDP* aGDP,
+                                                  const int aPeriod )
 {
-    // All calibration occurs on the supply side. Allow technologies to perform
-    // any adjustments required. Share is always one, so the technology
-    // calibrated output is the same as totalCalOutput.
+    // Food and forestry supply sectors do not calibrate. Calibration occurs in
+    // the land allocator. Call the Technology adjustForCalibration in case it
+    // has something to do.
     for( unsigned int i = 0; i < techs.size(); ++i ){
-        techs[ i ][period]->adjustForCalibration( totalCalOutputs, regionName,
-                                                  mSubsectorInfo.get(), period );
+        // Shares are always one and so subsector variable demand is the same as
+        // technology variable demand.
+        techs[ i ][ aPeriod ]->adjustForCalibration( aSubsectorVariableDemand,
+                                                     regionName,
+                                                     mSubsectorInfo.get(),
+                                                     aPeriod );
     }
 }
-

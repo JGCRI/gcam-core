@@ -48,61 +48,63 @@ class GlobalTechnologyDatabase;
 
 class Sector: public IVisitable, public IRoundTrippable
 {
+    // TODO: Remove the need for these.
     friend class SocialAccountingMatrix;
     friend class DemandComponentsTable;
     friend class SectorReport;
     friend class SGMGenTable;
     friend class XMLDBOutputter;
+    friend class CalQuantityTabulator;
 protected:
     std::string name; //!< Sector name
+    std::string mOutputUnit; //!< unit of good or service produced by sector
+    std::string mInputUnit; //!< unit of input demanded by sector
+    std::string mPriceUnit; //!< price unit of good or service produced by sector
     std::string regionName; //!< region name
 
     //! Type of the sector.
     std::string mSectorType;
 
-    double mBaseOutput; //!< Read in base year output.
+    double mBaseOutput; //!< Read in base year output. TODO: Move to demand sector.
     std::auto_ptr<IInfo> mSectorInfo; //!< Pointer to the sector's information store.
     std::vector<Subsector*> subsec; //!< subsector objects
     typedef std::vector<Subsector*>::iterator SubsectorIterator;
     typedef std::vector<Subsector*>::const_iterator CSubsectorIterator;
     
-    //! Sector price in $/service
+    //! Sector price in $/service. TODO: Move to supply and production sector.
     double mBasePrice;
 
-    std::vector<double> fixedOutput; //!< total amount of fixed output from Sector
     std::vector<Summary> summary; //!< summary for reporting
     std::map<std::string,int> subSectorNameMap; //!< Map of subSector name to integer position in vector.
-    std::vector<bool> capLimitsPresent; //!< Flag if any capacity limits are present 
-    bool anyFixedCapacity; //!< flag set to true if any fixed capacity is present in this Sector
-    std::auto_ptr<MoreSectorInfo> moreSectorInfo; //! Additional sector information needed below sector
+	std::auto_ptr<MoreSectorInfo> moreSectorInfo; //! Additional sector information needed below sector
 
     void normalizeShareWeights( const int period );
-    double getFixedShare( const unsigned int sectorNum, const int period ) const; // utility function 
-    void production( const int period );
-    void adjustForFixedSupply( const double marketDemand, const int period );
-
-    void adjSharesCapLimit( const int period ); 
-    void checkShareSum( const int period ) const;
-    double getFixedSupply( const int period ) const; 
-    bool isCapacityLimitsInSector( const int period ) const;
-    double getCalOutput( const int period ) const;
-    double getFixedOutput( const int period, bool printValues = false ) const; 
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual const std::string& getXMLName() const = 0;
-    virtual void setMarket() = 0;
+
+	double getFixedOutput( const int period ) const;
+    double getInput( const int aPeriod ) const;
+	const std::vector<double> calcSubsectorShares( const GDP* aGDP, const int aPeriod ) const;
     static const std::string& getDefaultSectorType();
     const std::string& getSectorType() const;
 
-    virtual double getPrice( const int aPeriod ) const = 0;
     bool outputsAllFixed( const int period ) const;
-    void subsec_outfile( const IndirectEmissionsCalculator* aIndirectEmissCalc ) const;
+
+    double getCalOutput( const int period ) const;
+
+    // TODO: Make abstract.
+	virtual double getPrice( const GDP* aGDP,
+                             const int aPeriod ) const;
+
 public:
-    explicit Sector( std::string regionName );
+    explicit Sector( const std::string& aRegionName );
     virtual ~Sector();
     const std::string& getName() const;
     virtual void XMLParse( const xercesc::DOMNode* node );
+    virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
+    virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     
     virtual void completeInit( const IInfo* aRegionInfo,
                                DependencyFinder* aDepFinder,
@@ -113,49 +115,44 @@ public:
                            const Demographic* aDemographics,
                            const int aPeriod ) = 0;
 
-    virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
-    virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
 
-    virtual void calibrateSector( const int period ); 
-    virtual void checkSectorCalData( const int period );
-    void adjustForFixedOutput( const double marketDemand, const int period );
+    virtual void calibrateSector( const GDP* aGDP, const int aPeriod );
+
     bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
     
     virtual void supply( const GDP* aGDP,
                          const int aPeriod ) = 0;
+    
+    void calcCosts( const int aPeriod );
 
     virtual double getOutput( const int period ) const = 0;
 
-    bool isEnergyUseFixed( const int aPeriod ) const;
-
+    void tabulateFixedDemands( const int period, const GDP* aGDP );
     bool inputsAllFixed( const int period, const std::string& goodName ) const;
-    double getCalAndFixedInputs( const int period, const std::string& goodName, const bool bothVals = true ) const;
-    double getCalAndFixedOutputs( const int period, const std::string& goodName, const bool bothVals = true ) const;
-    double getCalOutput( const int period, const std::string aSectorType ) const;
-    void setImpliedFixedInput( const int period, const std::string& goodName, const double requiredOutput );
+
+	void setImpliedFixedInput( const int period, const std::string& goodName, const double requiredOutput );
+
     virtual void scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue );
+    double getCalAndFixedOutputs( const int period, const std::string& goodName ) const;
+    virtual void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ) = 0;
 
-    virtual void calcShare( const int period, const GDP* gdp );
-    virtual void calcFinalSupplyPrice( const GDP* aGdp, const int aPeriod ) = 0;
     void emission( const int period );
-    double getInput( const int period ) const;
-    virtual double getEnergyInput( const int period ) const;
-    virtual void csvOutputFile() const;
     
-    virtual void dbOutput( const IndirectEmissionsCalculator* aIndEmissCalc ) const = 0;
+    virtual void csvOutputFile( const GDP* aGDP,
+                                const IndirectEmissionsCalculator* aIndirectEmissCalc ) const;
 
-    double getTotalCarbonTaxPaid( const int period ) const;
+    virtual void dbOutput( const GDP* aGDP,
+                           const IndirectEmissionsCalculator* aIndEmissCalc ) const = 0;
+
     std::map<std::string, double> getfuelcons( const int period ) const;
     double getConsByFuel( const int period, const std::string& key) const;
     std::map<std::string, double> getemission( const int period ) const;
     std::map<std::string, double> getemfuelmap( const int period ) const;
-
     void updateSummary( const std::list<std::string>& aPrimaryFuelList, const int period );
-    void tabulateFixedDemands( const int period, const GDP* gdp  );
 
-    virtual void operate( NationalAccount& nationalAccount, const Demographic* aDemographic, const int period ) = 0;    void updateMarketplace( const int period );
+    virtual void operate( NationalAccount& nationalAccount, const Demographic* aDemographic, const int period ) = 0;	void updateMarketplace( const int period );
+    virtual void postCalc( const int aPeriod );
 
-    virtual void finalizePeriod( const int aPeriod );
     void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 private:

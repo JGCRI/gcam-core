@@ -29,7 +29,8 @@ const string BuildingSupplySector::XML_NAME = "buildingservicesupply";
 *
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
-BuildingSupplySector::BuildingSupplySector( const string regionName ): SupplySector( regionName ){
+BuildingSupplySector::BuildingSupplySector( const string& aRegionName )
+: SupplySector( aRegionName ){
 }
 
 //! Default destructor
@@ -97,9 +98,10 @@ void BuildingSupplySector::initCalc( NationalAccount* aNationalAccount,
                                      const Demographic* aDemographic,
                                      const int aPeriod )
 {
-    Marketplace* marketplace = scenario->getMarketplace();
-
-    double calOutput = getCalOutput( aPeriod  );
-    marketplace->getMarketInfo( name, regionName, aPeriod, true )->setDouble( "calOutput", calOutput );    
     SupplySector::initCalc( aNationalAccount, aDemographic, aPeriod );
+
+    // Can't determine calibrated output from the Technology's until initCalc is called.
+    Marketplace* marketplace = scenario->getMarketplace();
+    double calOutput = getCalOutput( aPeriod  );
+    marketplace->getMarketInfo( name, regionName, aPeriod, true )->setDouble( "calOutput", calOutput );
 }

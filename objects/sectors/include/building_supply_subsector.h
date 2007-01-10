@@ -27,15 +27,15 @@
 class BuildingSupplySubSector : public Subsector
 {
 public:
-    BuildingSupplySubSector( const std::string regionName, const std::string sectorName );
+    BuildingSupplySubSector( const std::string& regionName, const std::string& sectorName );
     static const std::string& getXMLNameStatic();
 protected:
     virtual const std::string& getXMLName() const;
     bool isNameOfChild  ( const std::string& nodename ) const;
 
     virtual ITechnology* createChild( const std::string& aTechType,
-                                     const std::string& aTechName,
-                                     const int aTechYear ) const;
+                                      const std::string& aTechName,
+                                      const int aTechYear ) const;
 
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
     double unitInternalLoads; //!< internal loads per unit service

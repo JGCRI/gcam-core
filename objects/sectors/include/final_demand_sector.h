@@ -39,7 +39,7 @@ class DependencyFinder;
 class FinalDemandSector : public Sector
 {
 public:
-	FinalDemandSector( const std::string& aRegionName );
+	explicit FinalDemandSector( const std::string& aRegionName );
 	virtual ~FinalDemandSector();
 	virtual void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ){};
 	virtual void supply( const GDP* aGDP, const int aPeriod ){};
@@ -57,10 +57,14 @@ public:
                                ILandAllocator* aLandAllocator,
                                const GlobalTechnologyDatabase* aGlobalTechDB );
 
-    virtual void dbOutput( const IndirectEmissionsCalculator* aIndEmissCalc ) const {}
+    virtual void dbOutput( const GDP* aGDP,
+                           const IndirectEmissionsCalculator* aIndEmissCalc ) const {}
 protected:
     virtual double getOutput( const int aPeriod ) const { return 0; }
-    virtual double getPrice( const int aPeriod ) const;
+	
+    virtual double getPrice( const GDP* aGDP,
+                             const int aPeriod ) const;
+
     virtual void setMarket();
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );

@@ -32,7 +32,7 @@ class ProductionSector: public Sector
 {
 
 public:
-	ProductionSector ( const std::string& aRegionName );
+	explicit ProductionSector ( const std::string& aRegionName );
 	virtual ~ProductionSector();
 	void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ){};
 	void supply( const GDP* aGDP, const int aPeriod ){};
@@ -52,11 +52,15 @@ public:
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic, const int aPeriod ); // Passing demographic here is not good.
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 
-    virtual void dbOutput( const IndirectEmissionsCalculator* aIndEmissCalc ) const {}
+    virtual void dbOutput( const GDP* aGDP,
+                           const IndirectEmissionsCalculator* aIndEmissCalc ) const {}
 protected:
 	std::map<std::string,double> ghgEmissCoefMap; //! Map of ghg name to emission coefficent
     void setMarket();
-    virtual double getPrice( const int aPeriod ) const;
+
+	virtual double getPrice( const GDP* aGDP,
+                             const int aPeriod ) const;
+
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;

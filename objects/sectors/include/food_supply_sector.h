@@ -9,8 +9,6 @@
 * \ingroup CIAM
 * \brief The FoodSupplySector class header file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>
@@ -25,16 +23,19 @@ class ILandAllocator;
  */
 class FoodSupplySector : public SupplySector {
 public:
-    FoodSupplySector( std::string& aRegionName );
+    explicit FoodSupplySector( std::string& aRegionName );
     virtual ~FoodSupplySector();
     static const std::string& getXMLNameStatic();
     virtual void completeInit( const IInfo* aRegionInfo,
                                DependencyFinder* aDepFinder,
                                ILandAllocator* aLandAllocator,
                                const GlobalTechnologyDatabase* aGlobalTechDB );
-    virtual double getPrice( const int aPeriod ) const;
+
     virtual void supply( const GDP* aGDP, const int aPeriod );
 protected:
+	virtual double getPrice( const GDP* aGDP,
+                             const int aPeriod ) const;
+
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;

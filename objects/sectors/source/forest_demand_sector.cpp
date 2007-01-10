@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief ForestDemandSector class source file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -119,47 +117,45 @@ void ForestDemandSector::completeInit( const IInfo* aRegionInfo,
 * \todo Steve: need to find way to get the name of the corresponding supply sector here
 * \pre Sector price attribute must have been previously calculated and set (via calcPrice)
 */
-void ForestDemandSector::aggdemand( const GDP* gdp, const int period ) {
+void ForestDemandSector::calcAggregateDemand( const GDP* aGDP,
+									          const Demographic* aDemographics,
+									          const int aPeriod )
+{
     Marketplace* marketplace = scenario->getMarketplace();
     const Modeltime* modeltime = scenario->getModeltime();
     double forestDemand;
     double forestDemandFuture;
-    const int future = rotationPeriod / modeltime->gettimestep( period );
+    const int future = rotationPeriod / modeltime->gettimestep( aPeriod );
 
 
     // initialize for base periods
-    if ( period == 0 ) {
+    if ( aPeriod == 0 ) {
         forestDemandFuture = forestDemand = getOutput(0); // This is not used, here just to avoid invalid values
-        techChangeCumm[ 0 ] = 1;
     }
-    else if ( period == 1 ) {
+    else if ( aPeriod == 1 ) {
         // This does not work if more than one period is calibrated. Must fix this at some point for demand sectors in general.
         // GDP is in millions and GDP/cap is in $1000 per capita, so this is pop in thousands.
-        double population1990 = gdp->getGDPNotAdjusted( 1 ) / gdp->getGDPPerCapitaNotAdjusted( 1 );
-
-        perCapitaBaseOutput = getOutput(0)/ population1990;
+        double population1990 = aGDP->getGDPNotAdjusted( 1 ) / aGDP->getGDPPerCapitaNotAdjusted( 1 );
 
         // If calibration values are set, then reset base outputs appropriately
         // This only works for a base year of 1990. Need more general method with read-in calibration flag value
-        if ( outputsAllFixed( period ) ) {
-
-            double population1990 = gdp->getGDPNotAdjusted( 1 ) / gdp->getGDPPerCapitaNotAdjusted( 1 );         
-            perCapitaBaseOutput = getCalAndFixedOutputs( period, "allInputs" , true ) / population1990;
+        if ( outputsAllFixed( aPeriod ) ) {     
+            perCapitaBaseOutput = getCalAndFixedOutputs( aPeriod, "allInputs" ) / population1990;
 
             // If output is calibrated, then re-set base output value to appropriate value
             mBaseOutput = perCapitaBaseOutput * population1990;
-            service[ 0 ] = mBaseOutput;
+            mService[ 0 ] = mBaseOutput;
         }
     }
 
-    if ( period > 0 ) {
+    if ( aPeriod > 0 ) {
         // Here, the priceRatio is calculated from the price this period over the the price in 1990
         const int normPeriod = modeltime->getyr_to_per( 1990 );
-        double currPriceRatio = getPrice( period ) / getPrice( normPeriod );
+        double currPriceRatio = getPrice( aGDP, aPeriod ) / getPrice( aGDP, normPeriod );
         // TODO: Should this have error checking as below?
 
         // The priceRatio is then passed in to calculate demand.
-        forestDemand = calcForestDemand ( gdp, period, normPeriod, currPriceRatio );
+        forestDemand = calcForestDemand ( aGDP, aPeriod, normPeriod, currPriceRatio );
 
         // Here, the priceRatio needs the prices from the future market of this product, not this market.
         double basePrice = marketplace->getPrice( prefix + demandedGoodName, regionName, normPeriod );
@@ -171,29 +167,23 @@ void ForestDemandSector::aggdemand( const GDP* gdp, const int period ) {
             futurePriceRatio = 1;
         }
         else {
-            futurePriceRatio = marketplace->getPrice( prefix + demandedGoodName, regionName, period ) / basePrice;
+            futurePriceRatio = marketplace->getPrice( prefix + demandedGoodName, regionName, aPeriod ) / basePrice;
         }
 
         // The priceRatio is then passed in to calculate demand.
-        forestDemandFuture = calcForestDemand ( gdp, (period + future), normPeriod, futurePriceRatio );
-
-        // calculate cummulative technical change using AEEI, autonomous end-use energy intensity
-        techChangeCumm[period] = techChangeCumm[period-1]*pow(1+aeei[period],modeltime->gettimestep(period));
+        forestDemandFuture = calcForestDemand ( aGDP, (aPeriod + future), normPeriod, futurePriceRatio );
     }
 
     // Save the service demand without technical change applied for comparison with miniCAM.
-    service[ period ] = forestDemand;
+    mService[ aPeriod ] = forestDemand;
 
     // demand sector output is total end-use sector demand for service
     // adjust demand using cummulative technical change
     // For forests, these functions take care of current demand for forest products
-    service[ period ] = forestDemand/techChangeCumm[period];
-
-    // sets subsector outputs, technology outputs, and market demands
-    setOutput( service[ period ], gdp, period );
+    setOutput( mService[ aPeriod ] / getTechnicalChange( aPeriod ), aGDP, aPeriod );
 
     // Need to put the demand for future forests into the marketplace
-    marketplace->addToDemand( prefix + demandedGoodName, regionName, forestDemandFuture, period ); // fuelname will be name of market, input is amount
+    marketplace->addToDemand( prefix + demandedGoodName, regionName, forestDemandFuture, aPeriod ); // fuelname will be name of market, input is amount
 }
 
 double ForestDemandSector::calcForestDemand ( const GDP* gdp, const int period, const int normPeriod, double priceRatio ) {
@@ -218,8 +208,8 @@ double ForestDemandSector::calcForestDemand ( const GDP* gdp, const int period, 
                             / gdp->getGDPPerCapitaNotAdjusted( normPeriod );
    
 
-	double forestDemand = perCapitaBaseOutput * pow(priceRatio, pElasticity[ modelPeriod ] )
-                          *pow(scaledGDPperCap,iElasticity[ modelPeriod ])
+	double forestDemand = perCapitaBaseOutput * pow(priceRatio, mPriceElasticity[ period ] )
+                          *pow(scaledGDPperCap, mIncomeElasticity[ modelPeriod ])
                           * population;
 
     assert( util::isValidNumber( forestDemand ) );

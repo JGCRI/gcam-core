@@ -9,8 +9,6 @@
 * \ingroup Objects
 * \brief The ExportSector class header file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 #include <string>
 #include "sectors/include/supply_sector.h"
@@ -39,13 +37,12 @@ public:
     virtual void supply( const GDP* aGDP,
                          const int aPeriod );
 
-
-
     static const std::string& getXMLNameStatic();
 protected:
 	void setMarket();
         
-    virtual double getPrice( const int aPeriod ) const;
+	virtual double getPrice( const GDP* aGDP,
+                             const int aPeriod ) const;
 
     virtual bool XMLDerivedClassParse( const std::string& aNodeName,
                                        const xercesc::DOMNode* aCurr ); 

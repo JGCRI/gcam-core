@@ -9,8 +9,6 @@
 * \ingroup CIAM
 * \brief The ForestDemandSector class header file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 
 #include "sectors/include/demand_sector.h"
@@ -23,7 +21,7 @@ class GDP;
  */
 class ForestDemandSector: public DemandSector {
 public:
-    ForestDemandSector( const std::string& regionName );
+    explicit ForestDemandSector( const std::string& aRegionName );
     static const std::string& getXMLNameStatic();
     
     virtual void completeInit( const IInfo* aRegionInfo,
@@ -35,7 +33,9 @@ public:
                            const Demographic* aDemographics,
                            const int aPeriod );
 
-    virtual void aggdemand( const GDP* gdp, const int period );
+    virtual void calcAggregateDemand( const GDP* aGDP,
+                                      const Demographic* aDemographic,
+                                      const int aPeriod );
 protected:
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;

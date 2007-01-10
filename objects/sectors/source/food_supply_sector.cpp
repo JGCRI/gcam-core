@@ -104,10 +104,11 @@ void FoodSupplySector::completeInit( const IInfo* aRegionInfo,
 /*! \brief Calculate the sector price.
 * \details FoodSupplySectors are solved markets, so this function is overridden
 *          to use the market price instead of an average subsector price.
+* \param aGDP Regional GDP container.
 * \param aPeriod model period.
 * \return The sector price.
 */
-double FoodSupplySector::getPrice( const int aPeriod ) const {
+double FoodSupplySector::getPrice( const GDP* aGDP, const int aPeriod ) const {
     return scenario->getMarketplace()->getPrice( name, regionName, aPeriod, true );
 }
 
@@ -142,7 +143,7 @@ void FoodSupplySector::supply( const GDP* aGDP, const int aPeriod ) {
     // supply and demand will be made equal by the market.
     for( unsigned int i = 0; i < subsec.size(); ++i ){
         // set subsector output from Sector demand
-        subsec[ i ]->setOutput( 1, aGDP, aPeriod );
+        subsec[ i ]->setOutput( 1, 1, aGDP, aPeriod );
     }  
 }
 

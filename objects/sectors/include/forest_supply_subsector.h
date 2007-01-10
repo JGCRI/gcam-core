@@ -9,8 +9,6 @@
 * \ingroup CIAM
 * \brief The ForestSupplySubsector class header file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 
 #include <string>
@@ -33,13 +31,12 @@ public:
     virtual ~ForestSupplySubsector();
     static const std::string& getXMLNameStatic();
 
-    virtual void calcShare( const int aPeriod, const GDP* aGDP );
+    virtual double calcShare( const int aPeriod,
+                              const GDP* aGDP ) const;
 
-    virtual void adjustForCalibration( double sectorDemand,
-                                       double totalfixedOutput,
-                                       double totalCalOutputs,
-                                       const bool allFixedOutput,
-                                       const int period );
+    virtual void adjustForCalibration( double aSubsectorVariableDemand,
+                                       const GDP* aGDP,
+                                       const int aPeriod );
 
 protected:
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
@@ -48,7 +45,7 @@ protected:
 
     virtual ITechnology* createChild( const std::string& aTechType,
                                      const std::string& aTechName,
-                                     const int aTechYear ) const;
+		                             const int aTechYear ) const;
 private:
 };
 #endif // _FOREST_SUPPLY_SUBSECTOR_H_

@@ -1,60 +1,58 @@
-/*! 
-* \file building_dmd_sector.cpp
-* \ingroup CIAM
-* \brief The BuildingDemandSector class source file.
-* \author Steve Smith
-* \date $Date$
-* \version $Revision$
-*/
+/*
+ * This software, which is provided in confidence, was prepared by employees of
+ * Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+ * Battelle has certain unperfected rights in the software which should not be
+ * copied or otherwise disseminated outside your organization without the
+ * express written authorization from Battelle. All rights to the software are
+ * reserved by Battelle. Battelle makes no warranty, express or implied, and
+ * assumes no liability or responsibility for the use of this software.
+ */
+
+/*!
+ * \file building_dmd_sector.cpp
+ * \ingroup Objects
+ * \brief BuildingDemandSector class source file.
+ * \author Steve Smith, Josh Lurz
+ */
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <iostream>
 #include <cmath>
+#include <algorithm>
+
 #include <xercesc/dom/DOMNode.hpp>
+#include "sectors/include/building_dmd_sector.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/scenario.h"
 #include "containers/include/gdp.h"
 #include "util/base/include/model_time.h"
-#include "containers/include/iinfo.h"
-
-#include "sectors/include/building_dmd_sector.h"
+#include "demographics/include/demographic.h"
 #include "sectors/include/building_dmd_subsector.h"
 
 using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
-// static initialize.
-const string BuildingDemandSector::XML_NAME = "buildingdemandsector";
 
-/*! \brief Default constructor.
-*
-* Constructor initializes member variables with default values, sets vector sizes, and sets value of debug flag.
-*
-* \author Sonny Kim, Steve Smith, Josh Lurz
-*/
-BuildingDemandSector::BuildingDemandSector( const string regionName ): DemandSector( regionName ){
-
-    // resize vectors
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-
-    baseScaler = -1;
-    baseService.resize( maxper, -1 );
-    
+/*!
+ * \brief Constructor.
+ * \author Steve Smith, Josh Lurz
+ * \param aRegionName Name of the containing region.
+ */
+BuildingDemandSector::BuildingDemandSector( const string& aRegionName )
+: DemandSector( aRegionName ),
+mBaseService( scenario->getModeltime()->getmaxper(), -1.0 ),
+mBaseScaler( scenario->getModeltime()->getmaxper() )
+{
 }
 
-//! Default destructor
+//! Destructor
 BuildingDemandSector::~BuildingDemandSector() {
 }
 
 /*! \brief Parses any attributes specific to derived classes
-*
-* Method parses any input data attributes (not child nodes, see XMLDerivedClassParse) that are specific to any classes derived from this class.
-*
 * \author Josh Lurz, Steve Smith
 * \param nodeName The name of the curr node. 
 * \param curr pointer to the current node in the XML input tree
@@ -63,13 +61,20 @@ BuildingDemandSector::~BuildingDemandSector() {
 bool BuildingDemandSector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
     const Modeltime* modeltime = scenario->getModeltime();
             
-    if ( DemandSector::XMLDerivedClassParse( nodeName, curr) ) {
-    }   // if false, node was not parsed so far so try to parse here
+    if ( DemandSector::XMLDerivedClassParse( nodeName, curr ) ) {
+        // if false, node was not parsed so far so try to parse here
+    }   
     else if( nodeName == BuildingDemandSubSector::getXMLNameStatic() ){
         parseContainerNode( curr, subsec, subSectorNameMap, new BuildingDemandSubSector( regionName, name ) );
     }
-    else if( nodeName == "baseservice" ){
-        XMLHelper<double>::insertValueIntoVector( curr, baseService, modeltime );
+    else if( nodeName == "base-service" ){
+        XMLHelper<double>::insertValueIntoVector( curr, mBaseService, modeltime );
+    }
+    else if( nodeName == "saturation-elasticity" ){
+        mSaturationElasticity = XMLHelper<double>::getValue( curr );
+    }
+    else if( nodeName == "saturation-point" ){
+        mSaturationPoint = XMLHelper<double>::getValue( curr );
     }
     else {
         return false;
@@ -90,15 +95,18 @@ void BuildingDemandSector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
    
     DemandSector::toInputXMLDerived( out, tabs );
-    XMLWriteVector( baseService, "baseservice", out, tabs, modeltime, 0.0 );
+    XMLWriteVector( mBaseService, "base-service", out, tabs, modeltime, 0.0 );
+    XMLWriteElement( mSaturationElasticity, "saturation-elasticity", out, tabs );
+    XMLWriteElement( mSaturationPoint, "saturation-point", out, tabs );
 }   
 
 //! Write object to debugging xml output stream.
 void BuildingDemandSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
-    XMLWriteElement( baseService[ period ], "baseservice", out, tabs );
-    XMLWriteElement( baseScaler, "base-scaler", out, tabs );
+    XMLWriteElement( mBaseService[ period ], "base-service", out, tabs );
+    XMLWriteElement( mBaseScaler[ period ], "base-scaler", out, tabs );
+    XMLWriteElement( mSaturationElasticity, "saturation-elasticity", out, tabs );
+    XMLWriteElement( mSaturationPoint, "saturation-point", out, tabs );
     DemandSector::toDebugXMLDerived( period, out, tabs );
-
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -109,8 +117,8 @@ void BuildingDemandSector::toDebugXMLDerived( const int period, ostream& out, Ta
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
-const std::string& BuildingDemandSector::getXMLName() const {
-    return XML_NAME;
+const string& BuildingDemandSector::getXMLName() const {
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -122,89 +130,107 @@ const std::string& BuildingDemandSector::getXMLName() const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const std::string& BuildingDemandSector::getXMLNameStatic() {
+const string& BuildingDemandSector::getXMLNameStatic() {
+    static const string XML_NAME = "buildingdemandsector";
     return XML_NAME;
 }
 
-/*! \brief Complete the initialization
-* Save heating and cooling degree day information into market info so that this is available to all subsectors and demands
-*
-* \author Steve Smith
-*/
+void BuildingDemandSector::completeInit( const IInfo* aRegionInfo,
+                                         DependencyFinder* aDepFinder,
+                                         ILandAllocator* aLandAllocator,
+                                         const GlobalTechnologyDatabase* aGlobalTechDB )
+{
+    DemandSector::completeInit( aRegionInfo, aDepFinder, aLandAllocator, aGlobalTechDB );
+
+    // TODO: Remove this when base class is fixed.
+    if( !mIsPerCapitaBased ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << "Detailed buildings always using a per capita base driver." << endl;
+        mIsPerCapitaBased = true;
+    }
+
+    // TODO: Remove this when base class is fixed.
+    // Income and price elasticities must be constant.
+    if( std::count( mIncomeElasticity.begin(), mIncomeElasticity.end(), mIncomeElasticity[ 0 ] ) != mIncomeElasticity.size() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << "Income elasticities should be constant." << endl;
+    }
+    if( std::count( mPriceElasticity.begin(), mPriceElasticity.end(), mPriceElasticity[ 0 ] ) != mPriceElasticity.size() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << "Price elasticities should be constant." << endl;
+    }
+}
+
 void BuildingDemandSector::initCalc( NationalAccount* aNationalAccount,
                                      const Demographic* aDemographic,
                                      const int aPeriod )
 {
-    if ( baseScaler < 0 ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Building sector base demand service not set in period " << aPeriod 
-                << " sector " << name << " region " << regionName 
-                << ".  baseScaler being set to 1." << endl;
-        baseScaler = 1;
-    }
-    
     DemandSector::initCalc( aNationalAccount, aDemographic, aPeriod );
-
 }
 
-/*! \brief Aggrgate sector energy service demand function
-*
-* Function calculates the aggregate demand for energy services and passes that down to the sub-sectors. 
-* Demand is proportional to either GDP (to a power) or GDP per capita (to a power) times population.
-*
-* \author Sonny Kim
-* \param gdp GDP object for calculating various types of gdps.
-* \param period Model period
-* \todo Sonny to add more to this description if necessary
-* \pre Sector price attribute must have been previously calculated and set (via calcPrice)
-*/
-void BuildingDemandSector::aggdemand( const GDP* gdp, const int period ) {
-      
-    double scaledGdpPerCapita = gdp->getBestScaledGDPperCap(period); 
-             
-    double scaledTotalGDP = gdp->getApproxScaledGDP(period); //gdp->getGDP(period); 
-    
-    double ser_dmd;
-    
+void BuildingDemandSector::calcAggregateDemand( const GDP* aGDP,
+                                                const Demographic* aDemographics,
+                                                const int aPeriod )
+{
     // Prices are not calculated reliably until period 1 so do not use price
     // ratio until after this note normalized to previous year not base year
     // (this is also done in detailed transportation)
     double priceRatio = 1;
-    if( period > 1 ){
-        priceRatio = getPrice( period ) / getPrice( period - 1 );
+    if( aPeriod > 1 ){
+        priceRatio = getPrice( aGDP, aPeriod ) / getPrice( aGDP, 1 );
     }
 
-    // demand for service
-    // reading in period 1 data so calibrate scaler to same for both periods
-    if ( baseService[ period ] >= 0 ) {
-         
-        // calculate base year scalers
-        baseScaler = baseService[ period ] / pow( priceRatio, pElasticity[period] );
-        
-        if ( perCapitaBased ) { // demand based on per capita GDP times population
-            baseScaler /= pow( scaledGdpPerCapita, iElasticity[period] ) * scaledTotalGDP/scaledGdpPerCapita;
-        }
-        else {
-            baseScaler /= pow( scaledTotalGDP, iElasticity[period] );
-        }
-        ser_dmd = baseService[ period ];
+    // Calculate unscaled per capita demand.
+    double income = aGDP->getApproxGDPperCap( aPeriod );
+
+    // See formula in header file for full explanation.
+    double unscaledDemand = pow( income, mIncomeElasticity[ aPeriod ] )
+                            / ( 1 + pow( income / mSaturationPoint, mSaturationElasticity.get() ) )
+                            * pow( priceRatio, mPriceElasticity[ aPeriod ] );
+
+    // Calibrate the base scaler for the period if the service demand was read
+    // in.
+    double scaledDemand;
+    if ( mBaseService[ aPeriod ] >= 0 ) {
+        // Set the scaled demand to the read-in service.
+        scaledDemand = mBaseService[ aPeriod ];
+
+        // Calculate the base scaler.
+        mBaseScaler[ aPeriod ] = scaledDemand / unscaledDemand;
     }
-    else {      // for non-base year
-        // perCapitaBased is true or false
-        if ( perCapitaBased ) { // demand based on per capita GDP
-            ser_dmd = baseScaler*pow( priceRatio, pElasticity[period] )*pow( scaledGdpPerCapita, iElasticity[period] );
-            // need to multiply above by population ratio (current population/base year
-            // population).  The gdp ratio provides the population ratio.
-            ser_dmd *= scaledTotalGDP/scaledGdpPerCapita;
-        }
-        else { // demand based on scale of GDP
-            ser_dmd = baseScaler*pow(priceRatio,pElasticity[period])*pow(scaledTotalGDP,iElasticity[period]);
-        }
+    else {
+        scaledDemand = getBaseScaler( aPeriod ) * unscaledDemand;
     }
     
-    service[period] = ser_dmd;
+    // Calculate the total service demand.
+    mService[ aPeriod ] = scaledDemand * aDemographics->getTotal( aPeriod );
 
-    // sets subsector outputs, technology outputs, and market demands
-    setOutput( service[ period ], gdp, period );
+    // Set subsector outputs, technology outputs, and market demands
+    setOutput( mService[ aPeriod ], aGDP, aPeriod );
+}
+
+/*!
+ * \brief Get the base scaler to use for calculating demand in a given period.
+ * \details Searches backwards through the previous time periods for the last
+ *          base scaler which was calculated for calibrated data.
+ * \param aPeriod Current period.
+ * \return Base scaler to use in the period. The function reports an error and
+ *         returns 1 if a base scaler is not found.
+ */
+double BuildingDemandSector::getBaseScaler( const int aPeriod ) const {
+    // Find the base scaler in the closest past year.
+    for( unsigned int i = static_cast<unsigned int>( aPeriod ); i >= 0; --i ){
+        if( mBaseScaler[ i ].isInited() ){
+            return mBaseScaler[ i ];
+        }
+    }
+
+    // There was no base scaler found so report an error.
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::ERROR );
+    mainLog << "No base scaler was found for detailed building sector " << name << "." << endl;
+    return 1;
 }

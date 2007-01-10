@@ -20,7 +20,7 @@ using namespace xercesc;
 */
 FoodSupplySubsector::FoodSupplySubsector( const string& regionName,
                                           const string& sectorName )
-: Subsector( regionName, sectorName ){
+										  : Subsector( regionName, sectorName ){
 }
 
 FoodSupplySubsector::~FoodSupplySubsector() {
@@ -50,8 +50,8 @@ bool FoodSupplySubsector::isNameOfChild( const string& nodename ) const {
  * \return A newly created technology of the specified type.
  */
 ITechnology* FoodSupplySubsector::createChild( const string& aTechType,
-                                              const string& aTechName,
-                                              const int aTechYear ) const
+                                               const string& aTechName,
+                                               const int aTechYear ) const
 {
     return new FoodProductionTechnology( aTechName, aTechYear );
 }
@@ -87,8 +87,37 @@ const string& FoodSupplySubsector::getXMLNameStatic() {
     return XML_NAME;
 }
 
-//! Outputs any variables specific to derived classes
-void FoodSupplySubsector::MCDerivedClassOutput() const {
+double FoodSupplySubsector::calcShare( const int aPeriod,
+                                       const GDP* aGDP ) const
+{
+    return 1;
+}
+
+void FoodSupplySubsector::adjustForCalibration( double aSubsectorVariableDemand,
+                                                const GDP* aGDP,
+                                                const int aPeriod )
+{
+    // Food and forestry supply sectors do not calibrate. Calibration occurs in
+    // the land allocator. Call the Technology adjustForCalibration in case it
+    // has something to do.
+    for( unsigned int i = 0; i < techs.size(); ++i ){
+        // Shares are always one and so subsector variable demand is the same as
+        // technology variable demand.
+        techs[ i ][ aPeriod ]->adjustForCalibration( aSubsectorVariableDemand,
+                                                     regionName,
+                                                     mSubsectorInfo.get(),
+                                                     aPeriod );
+    }
+}
+
+void FoodSupplySubsector::MCoutputAllSectors( const GDP* aGDP,
+                                              const IndirectEmissionsCalculator* aIndirectEmissionsCalc,
+                                              const vector<double> aSectorOutput ) const
+                                              
+    Subsector::MCoutputAllSectors( aGDP,
+                                   aIndirectEmissionsCalc,
+                                   aSectorOutput );
+
     // function protocol
     void dboutput4(string var1name,string var2name,string var3name,string var4name,
         string uname,vector<double> dout);
@@ -99,32 +128,9 @@ void FoodSupplySubsector::MCDerivedClassOutput() const {
     // do for all technologies in the Subsector
     for( unsigned int i = 0; i < techs.size(); ++i ){
         // technology fuel cost
-        for ( int m= 0;m< maxper;m++) {
-            temp[m] = techs[i][m]->getFuelcost();
+        for ( int m= 0;m < maxper;m++) {
+            temp[m] = techs[i][m]->getFuelCost( regionName, sectorName, m );
         }
         dboutput4( regionName,"Price",sectorName+" "+name+" Variable Cost",techs[i][ 0 ]->getName(),"75$/Ser",temp);
-    }
-}
-
-void FoodSupplySubsector::calcShare( const int aPeriod, const GDP* aGDP ) {
-    // call function to compute technology shares. This is required
-    // currently because costs are calculated for the technologies here.
-    calcTechShares( aGDP, aPeriod );
-
-    share[ aPeriod ] = 1;
-}
-
-void FoodSupplySubsector::adjustForCalibration( double sectorDemand,
-                                                double totalfixedOutput,
-                                                double totalCalOutputs,
-                                                const bool allFixedOutput,
-                                                const int period )
-{
-    // All calibration occurs on the supply side. Allow technologies to perform
-    // any adjustments required. Share is always one, so the technology
-    // calibrated output is the same as totalCalOutput.
-    for( unsigned int i = 0; i < techs.size(); ++i ){
-        techs[ i ][period]->adjustForCalibration( totalCalOutputs, regionName,
-                                                  mSubsectorInfo.get(), period );
     }
 }

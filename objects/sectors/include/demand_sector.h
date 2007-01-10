@@ -43,7 +43,7 @@ class IInfo;
 class DemandSector: public Sector
 {
 public:
-    DemandSector( const std::string aRegionName );
+    explicit DemandSector( const std::string& aRegionName );
     virtual ~DemandSector();
     void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod );
     void supply( const GDP* aGDP, const int aPeriod );
@@ -57,47 +57,74 @@ public:
     virtual void initCalc( NationalAccount* aNationalAccount,
                            const Demographic* aDemographics,
                            const int aPeriod );
+    
+    virtual void calcAggregateDemand( const GDP* aGDP,
+                                      const Demographic* aDemographic,
+                                      const int aPeriod );
 
-    virtual void calcPriceElasticity( const int period );
-    virtual void aggdemand( const GDP* gdp, const int period ); 
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic,
                           const int aPeriod ){}; // Passing demographic here is not good.
-    virtual void csvOutputFile() const;
 
-    virtual void dbOutput( const IndirectEmissionsCalculator* aIndEmissCalc ) const;
+    virtual void dbOutput( const GDP* aGDP,
+                           const IndirectEmissionsCalculator* aIndEmissCalc ) const;
 
-    virtual void calibrateSector( const int period );
+    virtual void csvOutputFile( const GDP* aGDP,
+                                const IndirectEmissionsCalculator* aIndirectEmissCalc ) const;
 
-    virtual double getWeightedEnergyPrice( const int aPeriod ) const;
+    virtual void calibrateSector( const GDP* aGDP, const int aPeriod );
+    
+    double getWeightedEnergyPrice( const GDP* aGDP, const int aPeriod ) const;
 
-    double getService( const int period ) const;
-
-    double getServiceWoTC( const int period ) const;
-    void scaleOutput( const int period, double scaleFactor );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
-    bool perCapitaBased; //!< demand equation based on per capita GNP, true or false.
-    double pElasticityBase; //!< base year energy price elasticity
-    std::vector<double> service; //!< total end-use sector service
-    std::vector<double> iElasticity; //!< income elasticity 
-    std::vector<double> pElasticity; //!< price elasticity.
-    std::vector<double> aeei; //!< autonomous end-use energy intensity parameter
-    std::vector<double> techChangeCumm; //!< cummulative technical change on end-use service
+    //! Demand equation based on per capita GNP, true or false.
+    // TODO: Use derived classes to remove this attribute.
+    bool mIsPerCapitaBased;
+
+    //! Whether the demand function is PPP.
+    bool mIsPPP;
+
+    //! Total end-use sector service. This parameter is read-in for base years
+    //! and calculated by the aggregate demand equation for all other years.
+    std::vector<double> mService;
     
+    //! Read-in income elasticity.
+    std::vector<double> mIncomeElasticity;
+    
+    //! Calculated price elasticity.
+    std::vector<double> mPriceElasticity;
+    
+    //! Autonomous end-use energy intensity parameter.
+    std::vector<double> mAEEI;
+    
+    //! Final energy to calibrate to.
+    std::vector<double> mCalFinalEnergy;
+
+    //! Scaler for determing demand for future years.
+    std::vector<double> mBaseScaler;
+
+    void scaleOutput( const int period, double scaleFactor );
+    double getService( const int period ) const;
+    double getEnergyInput( const int period ) const;
+
     virtual void setMarket();
-    void MCoutput_subsec( const IndirectEmissionsCalculator* aIndirectEmissCalc ) const;
+    virtual void MCoutput_subsec( const GDP* aGDP,
+                                  const IndirectEmissionsCalculator* aIndirectEmissCalc ) const;
+
     virtual double getOutput( const int aPeriod ) const;
-    virtual double getPrice( const int aPeriod ) const;
+    virtual double getPrice( const GDP* aGDP, const int aPeriod ) const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
+
     virtual const std::string& getXMLName() const; 
+    double getAdjustedPriceElasticity( const GDP* aGDP, const int aPeriod ) const;
+    double getTechnicalChange( const int aPeriod ) const;
+    double getFuelPriceRatio( const GDP* aGDP, const int aPeriod ) const;
     
     virtual void setOutput( const double aDemand,
                             const GDP* aGDP,
                             const int aPeriod );
-private:
-    static const std::string XML_NAME; //!< node name for toXML methods
 };
 
 #endif // _DEMAND_SECTOR_H_

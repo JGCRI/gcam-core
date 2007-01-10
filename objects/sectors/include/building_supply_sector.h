@@ -35,7 +35,7 @@ class Demographics;
 class BuildingSupplySector: public SupplySector
 {
 public:
-    BuildingSupplySector( const std::string regionName );
+    explicit BuildingSupplySector( const std::string& aRegionName );
     virtual ~BuildingSupplySector();
 	static const std::string& getXMLNameStatic();
     virtual void initCalc( NationalAccount* aNationalAccount,

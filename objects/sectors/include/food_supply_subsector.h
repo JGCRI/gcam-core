@@ -9,8 +9,6 @@
 * \ingroup CIAM
 * \brief The FoodSupplySubsector class header file.
 * \author James Blackwood
-* \date $Date$
-* \version $Revision$
 */
 
 #include <xercesc/dom/DOMNode.hpp>
@@ -28,23 +26,24 @@ public:
     FoodSupplySubsector( const std::string& regionName, const std::string& sectorName );
     virtual ~FoodSupplySubsector();
     static const std::string& getXMLNameStatic();
-    virtual void calcShare( const int aPeriod, const GDP* aGDP );
 
-    virtual void adjustForCalibration( double sectorDemand,
-                                       double totalfixedOutput,
-                                       double totalCalOutputs,
-                                       const bool allFixedOutput,
-                                       const int period );
+    virtual double calcShare( const int aPeriod,
+                              const GDP* aGDP ) const;
 
+    virtual void adjustForCalibration( double aSubsectorVariableDemand,
+                                       const GDP* aGDP,
+                                       const int aPeriod );
 protected:
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual const std::string& getXMLName() const;
     bool isNameOfChild( const std::string& nodename ) const;
 
     virtual ITechnology* createChild( const std::string& aTechType,
-                                     const std::string& aTechName,
-                                     const int aTechYear ) const;
+                                      const std::string& aTechName,
+                                      const int aTechYear ) const;
 
-    virtual void MCDerivedClassOutput() const;
+    virtual void MCoutputAllSectors( const GDP* aGDP,
+                                     const IndirectEmissionsCalculator* aIndirectEmissionsCalc,
+                                     const std::vector<double> aSectorOutput ) const;
 };
 #endif // _FOOD_SUPPLY_SUBSECTOR_H_

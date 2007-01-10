@@ -45,16 +45,24 @@ public:
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic,
                           const int aPeriod ){};
 
-    virtual void dbOutput( const IndirectEmissionsCalculator* aIndEmissCalc ) const;
+    virtual void dbOutput( const GDP* aGDP,
+                           const IndirectEmissionsCalculator* aIndEmissCalc ) const;
 protected:
     virtual double getOutput( const int aPeriod ) const;
-    virtual double getPrice( const int aPeriod ) const;
+    virtual double getPrice( const GDP* aGDP, const int aPeriod ) const;
     virtual void setMarket();
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
-    virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {};
+
+    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
+
 	virtual const std::string& getXMLName() const;
-	void adjustForFixedOutput( const double aMarketDemand, const int aPeriod );
+
+    //! Temporary hack for CCTP. Biomass adder.
+    std::vector<double> mBiomassAdder;
+
+    //! Whether the sector has a trial supply market.
+    bool mHasTrialSupply;
 private:
 	const static std::string XML_NAME; //!< node name for toXML methods	
 };

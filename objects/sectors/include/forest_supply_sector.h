@@ -21,7 +21,7 @@
  */
 class ForestSupplySector : public FoodSupplySector {
 public:
-	ForestSupplySector( std::string& regionName );
+	explicit ForestSupplySector( std::string& aRegionName );
 	virtual ~ForestSupplySector();
 	static const std::string& getXMLNameStatic();
 protected:

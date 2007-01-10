@@ -63,11 +63,14 @@ const string& FinalDemandSector::getXMLNameStatic() {
 	return XML_NAME;
 }
 
-/*! \brief Get the FinalDemandSector price.
-* \param aPeriod Model period.
-* \return Final demand sectors do not have a price, so return 0.
-*/
-double FinalDemandSector::getPrice( const int aPeriod ) const {
+/*!
+ * \brief Get the FinalDemandSector price.
+ * \param aGDP Regional GDP container(null for SGM).
+ * \param aPeriod Model period.
+ * \return Final demand sectors do not have a price, so return 0.
+ */
+double FinalDemandSector::getPrice( const GDP* aGDP,
+                                    const int aPeriod ) const {
     return 0;
 }
 

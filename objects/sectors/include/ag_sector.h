@@ -41,7 +41,6 @@ private:
     int regionNumber; //!< The region number of the container region.
     std::vector<double> gdp; //!< Contains the gnps passed to the AgLu model.
     std::vector<double> population; //!< Contains population passed to the AgLu model.
-    double biomassPrice; //!< Initial market biomass price passed to the AgLu model.
     std::vector<double> CO2Emissions; //!< Co2 emissions by period returned from the AgLu model.
     std::vector< std::vector<double> > prices; //!< Market prices passed into the agLU model.
     std::vector< std::vector<double> > supplies; //!< Market supplies returned from the AgLu model.
@@ -59,7 +58,6 @@ public:
     void completeInit( const std::string& regionName );
     void setGNP( const std::vector<double>& gnpsIn );
     void setPop( const std::vector<double>& popsIn );
-    void setBiomassPrice( const double bioPriceIn );
     void carbLand( const int period, const std::string& regionName );
     double getLandUseEmissions( const int aPeriod ) const;
     void runModel( const int period, const std::string& regionName );

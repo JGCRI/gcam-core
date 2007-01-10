@@ -17,8 +17,6 @@
 *  Detailed Description.
 *
 * \author Sonny Kim
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"

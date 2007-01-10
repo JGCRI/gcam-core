@@ -1,4 +1,4 @@
-/*! 
+/*
 * \file building_dmd_subsector.cpp
 * \ingroup CIAM
 * \brief The BuildingDemandSubSector class source file.
@@ -40,7 +40,7 @@ const string BuildingDemandSubSector::XML_NAME = "buildingSubSector";
 *
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
-BuildingDemandSubSector::BuildingDemandSubSector( const string regionName, const string sectorName ) : Subsector( regionName, sectorName ){
+BuildingDemandSubSector::BuildingDemandSubSector( const string& regionName, const string& sectorName ) : Subsector( regionName, sectorName ){
     
     // resize vectors
     const Modeltime* modeltime = scenario->getModeltime();
@@ -139,8 +139,8 @@ bool BuildingDemandSubSector::isNameOfChild  ( const string& nodename ) const {
  * \return A newly created technology of the specified type.
  */
 ITechnology* BuildingDemandSubSector::createChild( const string& aTechType,
-                                                  const string& aTechName,
-                                                  const int aTechYear ) const
+                                                   const string& aTechName,
+                                                   const int aTechYear ) const
 {
     if ( aTechType == BuildingGenericDmdTechnology::getXMLNameStatic1D() ) {
         return new BuildingGenericDmdTechnology( aTechName, aTechYear );
@@ -154,7 +154,7 @@ ITechnology* BuildingDemandSubSector::createChild( const string& aTechType,
 
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::ERROR );
-    mainLog << "ERROR: No building demand technology created in subsector type " << getXMLNameStatic() << endl;
+    mainLog << "No building demand technology created in subsector type " << getXMLNameStatic() << endl;
     return 0;
 }
 
@@ -213,7 +213,6 @@ void BuildingDemandSubSector::toDebugXMLDerived( const int period, ostream& out,
     XMLWriteElement( floorToSurfaceArea[ period ], "floorToSurfaceArea", out, tabs );
     XMLWriteElement( marketplace->getPrice( getInternalGainsMarketName( sectorName ), regionName, period ),
                                             "internalGains", out, tabs );
-    
 }
 
 /*! \brief Complete the initialization
@@ -234,6 +233,16 @@ void BuildingDemandSubSector::completeInit( const IInfo* aSectorInfo,
 {
     Subsector::completeInit( aSectorInfo, aDependencyFinder, aLandAllocator, aGlobalTechDB );
     setUpSubSectorMarkets();
+}
+
+/* \brief Return the average fuel price which for building demand sectors is zero since they
+* do not have a true fuel.
+* \param aGDP Regional GDP container.
+* \param aPeriod Model period.
+* \return Average fuel price, which is zero.
+*/
+double BuildingDemandSubSector::getAverageFuelPrice( const GDP* aGDP, const int period ) const {
+	return 0;
 }
 
 /*! \brief Set up the internal gain market for this building type
@@ -257,6 +266,8 @@ void BuildingDemandSubSector::setUpSubSectorMarkets() {
         // Set this market to solve
         for( int period = 1; period < maxPeriod; ++period ){
             marketplace->setMarketToSolve( intGainsMarketName, regionName, period );
+            // Also initialize calibrated internal gains to zero for every period
+			marketplace->getMarketInfo( intGainsMarketName, regionName, period, true )->setDouble( "calInternalGains", 0.0 );
         }
     }
     else {
@@ -268,30 +279,33 @@ void BuildingDemandSubSector::setUpSubSectorMarkets() {
 
 /*! \brief Adds building non-energy cost to subsector price
 *
-* The building subsector represents a building type. This building type has a non-energy cost which must
-* be added to the normal sub-sector cost (which is normally just the weighted cost of the technologies)
+* The building subsector represents a building type. This building type has a
+* non-energy cost which must be added to the normal sub-sector cost (which is
+* normally just the weighted cost of the technologies)
 *
-* The energy service price is the sum of the subsector energy service prices -- these are not shared out.
+* The energy service price is the sum of the subsector energy service prices --
+* these are not shared out.
 * 
-* No CO2 coefficient is calculated as this is a pure demand sector with no emissions.
+* No CO2 coefficient is calculated as this is a pure demand sector with no
+* emissions.
 *
 * \author Steve Smith
-* \param regionName region name
 * \param period Model period
+* \return The subsector price.
 */
-void BuildingDemandSubSector::calcPrice( const int period ) {
-    
-    subsectorprice[period] = 0; // initialize to 0 for summing
-    fuelprice[period] = 0; // initialize to 0 for summing
-    // There is no fuel price as this sector does not directly consume fuels
-    
-    for ( unsigned int i= 0; i< techs.size(); i++ ) {
-        // calculate sum of all energy service costs
-        subsectorprice[period] += techs[i][period]->getTechcost();
-      }
-    
-    subsectorprice[ period ] += nonEnergyCost [ period ];
- }
+double BuildingDemandSubSector::getPrice( const GDP* aGDP, const int period ) const {
+	double subsectorPrice = 0;
+	for ( unsigned int i = 0; i < techs.size(); i++ ) {
+		// calculate sum of all energy service costs
+		double techPrice = techs[i][period]->getCost( period );
+		if( techPrice > 0 ){
+			subsectorPrice += techPrice;
+		}
+	}
+	// This won't work for vintaging.
+	subsectorPrice += nonEnergyCost[ period ];
+	return subsectorPrice;
+}
 
 /*! \brief Perform any initializations needed for each period.
 *
@@ -376,15 +390,18 @@ void BuildingDemandSubSector::adjustTechnologyShareWeights( const int period ) {
 *
 * But each BuildingGenericDmdTechnology must have its demand calibrated
 * \author Steve Smith
-* \param sectorDemand total demand for this sector
-* \param totalfixedOutput total amount of fixed supply for this sector
+* \param sectorDemand Total variable demand for the sector.
 * \param totalCalOutputs total amount of calibrated outputs for this sector
 * \param allFixedOutput flag if all outputs from this sector are calibrated
 * \param period Model period
 * \warning This only works for one building sub-sector at present -- subsector share weights are not changed
 * \warning Function getFuelName will need to be changed once multiple inputs are implimented
 */
-void BuildingDemandSubSector::adjustForCalibration( double sectorDemand, double totalfixedOutput, double totalCalOutputs, const bool allFixedOutput, const int period ) {
+void BuildingDemandSubSector::adjustForCalibration( double aVariableDemand, const GDP* aGDP, const int period ) {
+    // Don't adjust for calibration if the calibration status is off.
+	if( !getCalibrationStatus( period ) ){
+		return;
+	}
     const Modeltime* modeltime = scenario->getModeltime();
     Marketplace* marketplace = scenario->getMarketplace();
 
@@ -392,7 +409,7 @@ void BuildingDemandSubSector::adjustForCalibration( double sectorDemand, double 
     // Note that "raw" unit demand, unadjusted by internal gains, is passed as the demand variable
     // this is so that those demand sectors that do not need internal gains or other information will  
     // not have to access the sectorInfo object.
-    mSubsectorInfo->setDouble( "floorSpace", sectorDemand );
+    mSubsectorInfo->setDouble( "floorSpace", aVariableDemand );
     
     for ( unsigned int j = 0; j < techs.size(); j++ ) {
         // calibrate buildingServiceDemands
@@ -400,11 +417,12 @@ void BuildingDemandSubSector::adjustForCalibration( double sectorDemand, double 
         // Market may not exist if the fuel is a fake fuel.
         double calOutput = marketInfo ? marketInfo->getDouble( "calOutput", true ) : 0;
         
-        // Here, pass in specific demand -- equal to demand for this service per unit floor space
-        // NOTE: this is not adjusted for saturation or other parameters, this is done in BuildingGenericDmdTechnology
+        // Here, pass in specific demand -- equal to demand for this service per
+        // unit floor space NOTE: this is not adjusted for saturation or other
+        // parameters, this is done in BuildingGenericDmdTechnology
         double unitDemand = 0;
-        if ( sectorDemand != 0 ) {
-            unitDemand = calOutput / sectorDemand;
+        if ( aVariableDemand != 0 ) {
+            unitDemand = calOutput / aVariableDemand;
         }
         techs[j][period]->adjustForCalibration( unitDemand, regionName, mSubsectorInfo.get(), period );
     }
@@ -420,18 +438,17 @@ void BuildingDemandSubSector::adjustForCalibration( double sectorDemand, double 
 * \author Steve Smith
 * \param period Model period
 */
-void BuildingDemandSubSector::setCalibrationStatus( const int period ) {
-    for ( unsigned int i= 0; i < techs.size(); i++ ) {
+bool BuildingDemandSubSector::getCalibrationStatus( const int aPeriod ) const {
+    for ( unsigned int i = 0; i < techs.size(); i++ ) {
         Marketplace* marketplace = scenario->getMarketplace();
-        const IInfo* marketInfo = marketplace->getMarketInfo( techs[ i ][ period ]->getFuelName(), regionName,
-                                                              period, false );
-        // Market may not exist if the fuel is a fake fuel.
-        double calOutput = marketInfo ? marketInfo->getDouble( "calOutput", true ) : 0;
-        if ( calOutput > 0 ) {
-            calibrationStatus[ period ] = true;
-            return;
+		const IInfo* marketInfo = marketplace->getMarketInfo( techs[ i ][ aPeriod ]->getFuelName(), regionName,
+			                                                  aPeriod, false );
+		// Market may not exist if the fuel is a fake fuel.
+        if ( marketInfo && marketInfo->getDouble( "calOutput", true ) > 0 ) {
+            return true;
         }
     }
+	return false;
 }
 
 /*! \brief returns Subsector output
@@ -454,17 +471,22 @@ double BuildingDemandSubSector::getOutput( const int period ) const {
 *
 * \author Steve Smith
 */
-void BuildingDemandSubSector::MCDerivedClassOutput( ) const {
-Marketplace* marketplace = scenario->getMarketplace();
+void BuildingDemandSubSector::MCoutputAllSectors( const GDP* aGDP,
+                                                  const IndirectEmissionsCalculator* aIndirectEmissionsCalc,
+                                                  const vector<double> aSectorOutput ) const
+{
+	Subsector::MCoutputAllSectors( aGDP, aIndirectEmissionsCalc, aSectorOutput );
+	Marketplace* marketplace = scenario->getMarketplace();
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
+	const string& priceUnit = mSubsectorInfo->getString( "priceUnit", true );
     vector<double> temp(maxper);
 
     // function protocol
     void dboutput4(string var1name,string var2name,string var3name,string var4name,
         string uname,vector<double> dout);
 
-    dboutput4( regionName, "Price", sectorName + " NE Cost", name, "75$/Ser", nonEnergyCost );
+    dboutput4( regionName, "Price", sectorName + " NE Cost", name, priceUnit, nonEnergyCost );
     
     for ( int m= 0;m<maxper;m++) {
         temp[m] =  marketplace->getPrice( getInternalGainsMarketName( sectorName ), regionName, m );
@@ -473,20 +495,34 @@ Marketplace* marketplace = scenario->getMarketplace();
 }
 
 
-/*! \brief Set building subsector output here and then call regular setoutput function.
-*
+/*! \brief Set building subsector output here and then call regular setOutput function.
 * \author Steve Smith
-* \param regionName region name
-* \param aDemand Total demand for this product.
+* \param aVariableDemand Total demand for this product
+* \param aFixedOutputScaleFactor Fixed output scale factor.
 * \param aGDP Regional GDP container.
 * \param aPeriod Model period
 */
-void BuildingDemandSubSector::setOutput( const double aDemand,
-                                         const GDP* aGDP,
+void BuildingDemandSubSector::setOutput( const double aVariableDemand,
+                                         const double aFixedOutputScaleFactor,
+										 const GDP* aGDP,
                                          const int aPeriod )
 {
-    output[ aPeriod ] = share[ aPeriod ] * aDemand; 
-    Subsector::setOutput( aDemand, aGDP, aPeriod );
+    output[ aPeriod ] = aVariableDemand; 
+    Subsector::setOutput( aVariableDemand, aFixedOutputScaleFactor, aGDP, aPeriod );
+}
+
+/*! \brief Calculate the building demand technology shares.
+* \details Building demands are not substitutive, so the shares of all
+*          technologies should be one.
+* \author Josh Lurz
+* \param aGDP GDP container.
+* \param aPeriod Model period.
+* \return A vector of technology shares.
+*/
+const vector<double> BuildingDemandSubSector::calcTechShares( const GDP* aGDP,
+                                                              const int aPeriod ) const
+{
+    return vector<double>( techs.size(), 1.0 );
 }
 
 
@@ -504,9 +540,6 @@ void BuildingDemandSubSector::calcTechShares( const GDP* aGDP, const int aPeriod
         techs[i][aPeriod]->calcCost( regionName, sectorName, aPeriod );
         // determine shares based on technology costs
         techs[i][aPeriod]->calcShare( regionName, sectorName, aGDP, aPeriod );
-        
-        /*! \invariant Technology shares must always be valid. */
-        assert( util::isValidNumber( techs[ i ][ aPeriod ]->getShare() ) );
     }
 }   
 

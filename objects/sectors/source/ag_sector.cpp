@@ -23,8 +23,6 @@ extern "C" { void _stdcall SETGNP( int&, double[] ); };
 extern "C" { double _stdcall GETGNP( int&, int& ); };
 extern "C" { void _stdcall SETPOP( int&, double[] ); };
 extern "C" { double _stdcall GETPOP( int&, int& ); };
-extern "C" { void _stdcall SETBIOMASSPRICE( double[] ); };
-extern "C" { double _stdcall GETBIOMASSPRICE( ); };
 extern "C" { void _stdcall AG2RUN( double[], int&, int&, double[], double[] ); };
 extern "C" { double _stdcall AG2CO2EMISSIONS( int&, int& ); };
 extern "C" { void _stdcall AG2LINKOUT( void ); };
@@ -49,7 +47,6 @@ AgSector::AgSector() {
    
    regionNumber = regionCount;
    regionCount++;
-   biomassPrice = 0;
    
    if( !init ){
       staticInitialize();
@@ -152,14 +149,11 @@ void AgSector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
    for ( int iter = 1; iter < modeltime->getmaxper(); iter++ ){
       XMLWriteElement( GETPOP( tempRegion, iter ), "popFromFortran", out, tabs, modeltime->getper_to_yr( iter ) );
    }
-   XMLWriteElement( GETBIOMASSPRICE(), "biomasspriceFromFortran", out, tabs );
    #endif
    
    for( int iter = 0; iter < static_cast<int>( population.size() ); iter++ ) {
       XMLWriteElement( population[ iter ], "population", out, tabs, modeltime->getper_to_yr( iter ) );
    }
-   
-   XMLWriteElement( biomassPrice, "biomassprice", out, tabs );
    
    for( int iter = 0; iter < static_cast<int>( prices[ period ].size() ); iter++ ) {
       XMLWriteElement( prices[ period ][ iter ], "prices", out, tabs, modeltime->getper_to_yr( period ) );
@@ -243,19 +237,6 @@ void AgSector::setPop( const vector<double>& popsToFortran ) {
    
    SETPOP( regionNumber, toFortran );
    delete[] toFortran;
-   #endif
-}
-
-//! Set the AgLU biomass price from the market biomass price.
-void AgSector::setBiomassPrice( const double bioPriceIn ) {
-   #if(__HAVE_FORTRAN__)
-   biomassPrice = bioPriceIn;
-   
-   double* biomassPriceArray = new double[ 1 ];
-   biomassPriceArray[ 0 ] = bioPriceIn;
-   
-   // SETBIOMASSPRICE( biomassPriceArray ); // new
-   delete[] biomassPriceArray;
    #endif
 }
 

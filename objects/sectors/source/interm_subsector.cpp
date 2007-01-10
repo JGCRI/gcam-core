@@ -1,6 +1,6 @@
 /*!
 * \file interm_subsector.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief IntermittentSubsector class source file.
 * \author Marshall Wise
 */
@@ -17,30 +17,28 @@
 #include "util/base/include/xml_helper.h"
 #include "marketplace/include/marketplace.h"
 #include "sectors/include/interm_subsector.h"
+#include "sectors/include/ibackup_calculator.h"
+#include "sectors/include/backup_calculator_factory.h"
 #include "containers/include/iinfo.h"
+#include "sectors/include/sector_utils.h"
 
 using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
-// static initialize.
-const string IntermittentSubsector::XML_NAME = "intermittent-subsector";
 
 /*! \brief Default constructor.
-*
-* Constructor passes up to Subsector constructor
-*
+* \details Constructor passes up to Subsector constructor.
 * \author Marshall Wise
 */
 
-IntermittentSubsector::IntermittentSubsector( const string regionName, const string sectorName ) : Subsector ( regionName, sectorName ){
-
-    backupCapacityPerEnergyOutput.resize( scenario->getModeltime()->getmaxper() );
-    backupCapacityFraction.resize( scenario->getModeltime()->getmaxper() );
-    resourceTechNumber = 0;
-    backupTechNumber = 1;
-    electricSectorName = "electricity";
-}
+IntermittentSubsector::IntermittentSubsector( const string& aRegionName,
+                                              const string& aSectorName ) 
+:Subsector( aRegionName, aSectorName ),
+resourceTechNumber( 0 ),
+backupTechNumber( 1 ),
+electricSectorName( "electricity" )
+{}
 
 /*! \brief Complete the initialization
 *
@@ -62,11 +60,13 @@ void IntermittentSubsector::completeInit( const IInfo* aSectorInfo,
 {
     // first call parent method
     Subsector::completeInit( aSectorInfo, aDependencyFinder, aLandAllocator, aGlobalTechDB );
-
-    // now set the trial market for electricity.
-    // TODO: What if the electricity market hadn't been created yet?
-    Marketplace* marketplace = scenario->getMarketplace();
-    marketplace->resetToPriceMarket(electricSectorName, regionName);
+    // Warn if a backup calculator was not read-in.
+    if( !mBackupCalculator.get() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << "Intermittent subsector " << name << " in sector " << sectorName << " in region " << regionName
+                << " does not have a backup calculator. Backup costs will default to zero. " << endl;
+    }
 }
 
 //! Parses any input variables specific to derived classes
@@ -82,10 +82,19 @@ bool IntermittentSubsector::XMLDerivedClassParse( const string& aNodeName,
     else if( aNodeName == "electricSectorName" ){
         electricSectorName = XMLHelper<string>::getValue( aCurr );
     }
-	else {
+    else if( BackupCalculatorFactory::isOfType( aNodeName ) ){
+        // Check if a new backup calculator needs to be created because
+        // there is not currently one or the current type does not match the
+        // new type.
+        if( !mBackupCalculator.get() || !mBackupCalculator->isSameType( aNodeName ) ){
+            mBackupCalculator = BackupCalculatorFactory::create( aNodeName );
+        }
+        mBackupCalculator->XMLParse( aCurr );
+    }
+    else {
         return false;
-	}
-	return true;
+    }
+    return true;
 }
 
 /*! \brief XML output stream for derived classes
@@ -100,39 +109,58 @@ void IntermittentSubsector::toInputXMLDerived( ostream& out, Tabs* tabs ) const 
     XMLWriteElement( backupTechNumber, "backupTechNumber", out, tabs);
     XMLWriteElement( resourceTechNumber, "resourceTechNumber", out, tabs);
     XMLWriteElement( electricSectorName, "electricSectorName", out, tabs);
-}	
+    if( mBackupCalculator.get() ){
+        mBackupCalculator->toInputXML( out, tabs );
+    }
+}   
 
 //! Write object to debugging xml output stream.
 void IntermittentSubsector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
     // Write out parent class information.
-    XMLWriteElement( backupTechNumber, "backupTechNumber", out, tabs);
-    XMLWriteElement( resourceTechNumber, "resourceTechNumber", out, tabs);
-    XMLWriteElement( electricSectorName, "electricSectorName", out, tabs);
-}
+    XMLWriteElement( backupTechNumber, "backupTechNumber", out, tabs );
+    XMLWriteElement( resourceTechNumber, "resourceTechNumber", out, tabs );
+    XMLWriteElement( electricSectorName, "electricSectorName", out, tabs );
+    XMLWriteElement( getAverageBackupCapacity( period ), "avg-backup-capacity", out, tabs );
+    XMLWriteElement( getMarginalBackupCapacity( period ), "marginal-backup-capacity", out, tabs );
 
+    XMLWriteElement( getAverageBackupCapacity( period ) * calcEnergyFromBackup(),
+                     "avg-backup-energy", out, tabs );
+    
+    XMLWriteElement( getMarginalBackupCapacity( period ) * calcEnergyFromBackup(),
+                     "marginal-backup-energy", out, tabs );
+
+    XMLWriteElement( calcEnergyFromBackup(), "energy-to-backup", out, tabs );
+
+    if( mBackupCalculator.get() ){
+        mBackupCalculator->toDebugXML( period, out, tabs );
+    }
+}
 
 /*! \brief Get the XML node name for output to XML.
 *
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
+* This public function accesses the private constant string, XML_NAME. This way
+* the tag is always consistent for both read-in and output and can be easily
+* changed. This function may be virtual to be overriden by derived class
+* pointers.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
 const string& IntermittentSubsector::getXMLName() const {
-    return XML_NAME;
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
 *
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* The "==" operator that is used when parsing, required this second function to return static.
+* This public function accesses the private constant string, XML_NAME. This way
+* the tag is always consistent for both read-in and output and can be easily
+* changed. The "==" operator that is used when parsing, required this second
+* function to return static.
 * \note A function cannot be static and virtual.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
 const string& IntermittentSubsector::getXMLNameStatic() {
+    const static string XML_NAME = "intermittent-subsector";
     return XML_NAME;
 }
 
@@ -148,155 +176,199 @@ void IntermittentSubsector::initCalc( NationalAccount* aNationalAccount,
                                       const int aPeriod )
 {
     // Call parent method
-    Subsector::initCalc( aNationalAccount, aDemographics, aMoreSectorInfo, aPeriod );
-}
-
-/*! \brief set tech shares based on backup energy needs for an intermittent
-*          resource
-*
-*  \author Marshall Wise
-* \param period model period
-*
-*/
-void IntermittentSubsector::calcTechShares( const GDP* gdp, const int period ) {
-
-
-    const double EJ_PER_GWH = 0.0000036;  // conversion: 1 gigaWattHour of electricity = 3.6E-6 ExaJoules
-    const int HOURS_PER_YEAR = 8760;   //number of hours in a year
-
-    // Call method to compute demand for backup
-    calcBackupFraction(period);
-
-    /* Convert backup capacity per unit of resource energy to energy required (in EJ)
-    per unit of resource energy (in EJ) using backup capacity factor */
-
-    double backupEnergyFraction = backupCapacityPerEnergyOutput[period] 
-                                * (HOURS_PER_YEAR
-                                * mSubsectorInfo->getDouble( "backupCapacityFactor", true )
-                                * EJ_PER_GWH);
-
-    // Assert that the read-in resourceTechNumber abd backupTechNumber are within the size of the tech vector
-    // TODO: This should be a runtime check.
-    assert(resourceTechNumber < techs.size());
-    assert(backupTechNumber < techs.size());
-
-    // Normalize shares so that they add to 1
-    techs[resourceTechNumber][period]->setTechShare(1.0 / (1.0 + backupEnergyFraction) );
-    techs[backupTechNumber][period]->setTechShare(backupEnergyFraction / (1.0 + backupEnergyFraction) );
-
-    techs[resourceTechNumber][period]->calcCost(regionName,sectorName,period);
-    techs[backupTechNumber][period]->calcCost(regionName,sectorName,period);
-}
-
-
-
-/*! \brief compute backup share needed for an intermittent resource
-*
-*  \author Marshall Wise
-*
-*/
-void IntermittentSubsector::calcBackupFraction(const int per) {
-
-    const double EJ_PER_GWH = 0.0000036;  // conversion: 1 gigaWattHour of electricity = 3.6E-6 ExaJoules
-    const int HOURS_PER_YEAR = 8760;   //number of hours in a year
+    Subsector::initCalc( aNationalAccount, aDemographics,
+                         aMoreSectorInfo, aPeriod );
     
-    // Get resource name from fuel name of technology
-	string resourceName = techs[resourceTechNumber][per]->getFuelName();
-
-    // get variance of resource from marketinfo
-    Marketplace* marketplace = scenario->getMarketplace();
-	const IInfo* marketInfo = marketplace->getMarketInfo( resourceName, regionName, per, true );
-	double variance = marketInfo->getDouble( "resourceVariance", true );
-
-	// get resource capacity factor from market info
-	double resourceCapacityFactor = marketInfo->getDouble( "resourceCapacityFactor", true );
-
-    //get trial amount of overall regional electricity supplied  (Josh, how avoid hardcode this?)
-    // trial markets have a demand but not supply
-    double elecSupply = marketplace->getDemand( electricSectorName, regionName, per );
-
-	//get amount of this resource supplied
-    double resourceSupply = marketplace->getSupply( resourceName, regionName, per );
-
-    // Using average capacity factor for resource, translate resource supplied
-    // in electricity or energy terms in EJ to equivalent capacity terms in GW
-	// or gigawatts. Note that model's enery units need to be converted to
-    // capacity units for use in the NREL WINDS operating reserve computation.
-    double resourceSupplyCapacity = 0.0;  // capacity in GW
-    if ( resourceSupply > util::getSmallNumber() ) {
-        resourceSupplyCapacity  = resourceSupply / (EJ_PER_GWH * HOURS_PER_YEAR * resourceCapacityFactor);
+    // Ask the electric sector to create a trial market for supply. Given that
+    // sector ordering has already occurred and the intermittent sector must
+    // produce electricity, this should be before initCalc of the electric
+    // sector. This is done here to ensure that the electricity market already
+    // exists.
+    if( aPeriod == 0 ){
+        SectorUtils::askToCreateTrialSupply( regionName, electricSectorName );
     }
+}
 
-	// Compute terms for Winds operating reserve due to intermittency formula
- 
-	// square the supply to use in the WINDS formula
-    double resourceSupplySquared = pow(resourceSupplyCapacity,2);
+/*! \brief Set tech shares based on backup energy needs for an intermittent
+*          resource.
+* \author Marshall Wise
+* \param aGDP Regional GDP container.
+* \param APeriod Model period.
+*/
+const vector<double> IntermittentSubsector::calcTechShares( const GDP* aGDP,
+                                                            const int aPeriod ) const
+{
+    // Note: these shares are only valid for price, not output.
 
-	// Compute reserve capacity as the product of electricity reserve margin and
-	// the total regional electric capacity (which is converted from electric
-    // supply in Energy units to capacity units using its average capacity
-	// factor).
-    double reserveTotal = mSubsectorInfo->getDouble( "elecReserveMargin", true )
-                          * elecSupply /(EJ_PER_GWH * HOURS_PER_YEAR
-                          * mSubsectorInfo->getDouble( "aveGridCapacityFactor", true ) );//in GW
-    double reserveTotalSquared  = pow(reserveTotal,2);
+    // Convert backup capacity per unit of resource energy to energy required
+    // (in EJ) per unit of resource energy (in EJ) using backup capacity factor.
+    double backupEnergyFraction = getMarginalBackupCapacity( aPeriod )
+                                  * calcEnergyFromBackup();
 
+    /*! \invariant Backup energy fraction must be positive. */
+    assert( util::isValidNumber( backupEnergyFraction ) &&
+              backupEnergyFraction >= 0 );
 
-    // Compute operating reserve capacity based on formula from NREL WINDS model.
-    // First compute in terms of backup capacity per total intermittent capacity, then convert to backup
-    // capacity as fraction of wind resource output in energy terms, since that is what the model and market
-    // are based on.
+    // Check that the read-in resourceTechNumber and backupTechNumber are within
+    // the size of the tech vector.
+    assert( resourceTechNumber < techs.size() );
+    assert( backupTechNumber < techs.size() );
 
-    backupCapacityFraction[per] = 0;  // percent of reserve capacity per unit of intermittent capacity (e.g., GW/GW)
-    backupCapacityPerEnergyOutput[per] = 0;  // reserve capacity per intermittent electricity resource output (GW/EJ)
-    if ( elecSupply > util::getSmallNumber()) {
-        backupCapacityFraction[per] = reserveTotal * (pow((1.0 + variance * resourceSupplySquared / reserveTotalSquared),0.5) - 1.0);
-        if ( resourceSupplyCapacity > util::getSmallNumber() ) {
-            // Derivative per unit of intermittent resource supply
-            backupCapacityFraction[per] /= resourceSupplyCapacity;
-            // compute backup required per resource energy output (since energy
-            // output is what the modeled market is based on). Convert
-            // intermittent resource output back to energy using the resource
-			// capacity factor. This is the main result of this method and is
-			// used in computing the per unit cost of operating reserve or
-            // backup capacity added to the cost of this subsector.
-            backupCapacityPerEnergyOutput[per] = backupCapacityFraction[per] / 
-				  ( EJ_PER_GWH * HOURS_PER_YEAR * resourceCapacityFactor);
+    // Normalize shares.
+    vector<double> techShares( 2 );
+    techShares[ resourceTechNumber ] = 1.0 / ( 1.0 + backupEnergyFraction );
+    techShares[ backupTechNumber ] = backupEnergyFraction / ( 1.0 + backupEnergyFraction );
+    return techShares;
+}
+
+/*! \brief Computes weighted cost of all technologies in Subsector plus backup
+*          costs.
+* \details Computes a total cost of the subsector by adding the weighted
+*          technology costs and adding the additional backup cost based on the
+*          backup capacity required.
+* \author Marshall Wise
+* \param aGDP Regional GDP container.
+* \param aPeriod Model period.
+* \return Total intermittent subsector cost.
+*/
+double IntermittentSubsector::getPrice( const GDP* aGDP,
+                                        const int aPeriod ) const
+{
+    // Add per unit cost of backup capacity to subsector price backup capacity
+    // is in GW/EJ, so have to convert to kW/GJ (multiply numerator by 1E6 and
+    // denominator by 1E9 to get * 1/1000) to make consistent with market price
+    // which is in $/GJ. BackupCost is in $/kw/yr.
+    // Total cost[$/GJ] = Subsector price[$/GJ] + Marginal backup[GW/EJ] * ? * Backup cost[ $/kw/yr]
+    return Subsector::getPrice( aGDP, aPeriod )
+           + getMarginalBackupCapacity( aPeriod ) / 1000
+           * mSubsectorInfo->getDouble( "backupCost", true );
+}
+
+void IntermittentSubsector::setOutput( const double aSubsectorVariableDemand, 
+                                       const double aFixedOutputScaleFactor,
+		                               const GDP* aGDP,
+                                       const int aPeriod )
+{
+    // There is currently no vintaging in IntermittentSubsectors. Set production
+    // for past technologies explicitly to zero.
+    for( unsigned int i = 0; i < techs.size(); ++i ){
+        for( int j = 0; j < aPeriod; ++j ){
+            techs[ i ][ j ]->production( regionName, sectorName, 0, 0, aGDP,
+                                         aPeriod );
         }
     }
+
+    // Calculate the energy produced from the backup. Total backup capacity is
+    // calculated as the total subsector output multiplied by the backup
+    // capacity per unit output. The backup capacity is then adjusted for the
+    // backup capacity factor and converted to energy.
+    double backupEnergy = getAverageBackupCapacity( aPeriod ) *
+                          aSubsectorVariableDemand *
+                          calcEnergyFromBackup();
+
+    // Don't allow backup energy production to exceed requested production.
+    backupEnergy = min( backupEnergy, aSubsectorVariableDemand );
+
+    // Set production from the backup technology.
+    techs[ backupTechNumber ][ aPeriod ]->production( regionName, sectorName,
+                                                      backupEnergy,
+                                                      aFixedOutputScaleFactor,
+                                                      aGDP, aPeriod );
+
+    // Remaining output is variable output.
+    techs[ resourceTechNumber ][ aPeriod ]->production( regionName, sectorName,
+                                                        aSubsectorVariableDemand - backupEnergy,
+                                                        aFixedOutputScaleFactor, aGDP, aPeriod );
 }
 
-/*! \brief Computes weighted cost of all technologies in Subsector plus backup Costs.
-*
-*
-* \author Marshall Wise
-* \param period Model period
-*/
-void IntermittentSubsector::calcPrice( const int period ) {
+/*!
+ * \brief Get the marginal backup capacity required per unit of energy output.
+ * \details Uses the internal backup calculator to determine the marginal backup
+ *          capacity per unit output. If a backup calculator was not read-in,
+ *          this is assumed to be zero.
+ * \param aPeriod Model period.
+ * \return Marginal ackup capacity per unit of energy output.
+ */
+double IntermittentSubsector::getMarginalBackupCapacity( const int aPeriod ) const {
+    double backupCapacity = 0;
+    if( mBackupCalculator.get() ){
+        const string& resourceName =
+            techs[ resourceTechNumber ][ aPeriod ]->getFuelName();
 
-    // first call parent subsector method
-    Subsector::calcPrice( period );
-	
-	/* Add per unit cost of backup capacity to subsector price
-    backup capacity is in GW/EJ, so have to convert to kW/GJ (multiply numerator by 1E6 and 
-	denominator by 1E9 to get * 1/1000) to make consistent with market price
-    which is in $/GJ.  BackupCost is in $/kw/yr. */
+        backupCapacity =
+            mBackupCalculator->getMarginalBackupCapacity( sectorName,
+                                                          electricSectorName,
+                                                          resourceName,
+                                                          regionName,
+                                                          mSubsectorInfo->getDouble( "elecReserveMargin", true ),
+                                                          mSubsectorInfo->getDouble( "aveGridCapacityFactor", true ),
+                                                          aPeriod );
+    }
 
-    subsectorprice[period] += backupCapacityPerEnergyOutput[period] / 1000
-                              * mSubsectorInfo->getDouble( "backupCost", true );
-
+    /*! \post Backup capacity is a valid number and positive. */
+    assert( backupCapacity >= 0 && util::isValidNumber( backupCapacity ) );
+    return backupCapacity;
 }
 
-/*! \brief Write resource and backup capacity results to database
-*
-* Writes outputs with titles and units appropriate to supply sectors.
-*
-* \author Marshall Wise
-*/
-void IntermittentSubsector::MCoutputSupplySector() const {
+/*!
+ * \brief Get the average backup capacity per unit output for the intermittent
+ *        subsector.
+ * \details Uses the internal backup calculator to determine the average backup
+ *          capacity per unit output. If a backup calculator was not read-in,
+ *          this is assumed to be zero.
+ * \param aPeriod Model period.
+ * \return Average backup capacity per unit output.
+ */
+double IntermittentSubsector::getAverageBackupCapacity( const int aPeriod ) const {
+    double backupCapacity = 0;
+    if( mBackupCalculator.get() ){
+        const string& resourceName =
+            techs[ resourceTechNumber ][ aPeriod ]->getFuelName();
+        
+        backupCapacity =
+           mBackupCalculator->getAverageBackupCapacity( sectorName,
+                                                        electricSectorName,
+                                                        resourceName,
+                                                        regionName,
+                                                        mSubsectorInfo->getDouble( "elecReserveMargin", true ),
+                                                        mSubsectorInfo->getDouble( "aveGridCapacityFactor", true ),
+                                                        aPeriod );
+    }
+
+    /*! \post Backup capacity is a valid number and positive. */
+    assert( backupCapacity >= 0 && util::isValidNumber( backupCapacity ) );
+    return backupCapacity;
+}
+
+/*!
+ * \brief Determine the amount of energy produced by the backup per unit of
+ *        capacity.
+ * \details Determines the amount of energy produced per unit of backup capacity
+ *          by adjusting for the backup capacity factor and converting the
+ *          resulting operating backup into energy.
+ * \return Capacity to energy production conversion factor.
+ */
+double IntermittentSubsector::calcEnergyFromBackup() const {
+    // Conversion: 1 gigaWattHour of electricity = 3.6E-6 ExaJoules
+    const double EJ_PER_GWH = 0.0000036;
+
+    // Number of hours in a year.
+    const int HOURS_PER_YEAR = 8760;
+
+    return HOURS_PER_YEAR * mSubsectorInfo->getDouble( "backupCapacityFactor", true )
+           * EJ_PER_GWH;
+}
+
+/*!
+ * \brief Write resource and backup capacity results to database
+ * \details Writes outputs with titles and units appropriate to supply sectors.
+ * \param aGDP Regional GDP container.
+ * \author Marshall Wise
+ */
+void IntermittentSubsector::MCoutputSupplySector( const GDP* aGDP ) const {
 
     // First call parent subsector class method
-    Subsector::MCoutputSupplySector();
+    Subsector::MCoutputSupplySector( aGDP );
 
     // function protocol
     void dboutput4(string var1name,string var2name,string var3name,string var4name,
@@ -317,16 +389,18 @@ void IntermittentSubsector::MCoutputSupplySector() const {
     // Intermittent Resource Subsector and Backup Capacity in GW
     for (int m= 0;m<maxper;m++) {
         // Get resource name from fuel name of technology
-	    string resourceName = techs[resourceTechNumber][m]->getFuelName();
+        string resourceName = techs[resourceTechNumber][m]->getFuelName();
         // get resource capacity factor from market info
         double resourceCapacityFactor = marketplace->getMarketInfo(resourceName,regionName,m, true )
-			                                       ->getDouble( "resourceCapacityFactor", false );
+                                                   ->getDouble( "resourceCapacityFactor", false );
         if (resourceCapacityFactor > util::getSmallNumber()) {
+            // TODO: This is wrong because output is serviced by renewable and
+            // backup with different capacity factors.
             capacityGW[m] = getOutput(m) / (EJ_PER_GWH * HOURS_PER_YEAR * resourceCapacityFactor);
-            backupCapacityGW[m] = (getOutput(m) / (EJ_PER_GWH * HOURS_PER_YEAR * resourceCapacityFactor)) * backupCapacityFraction[m];
-            backupCostCentsPerkWh[m] = backupCapacityPerEnergyOutput[m] /1000
+            backupCapacityGW[m] = getAverageBackupCapacity( m ) * getOutput( m );
+            backupCostCentsPerkWh[m] = getMarginalBackupCapacity( m ) / 1000
                                        * mSubsectorInfo->getDouble( "backupCost", true ) * CVRT90 * 0.36;
-            resourceCostCentsPerkWh[m] = subsectorprice[m] * CVRT90 * 0.36 - backupCostCentsPerkWh[m];
+            resourceCostCentsPerkWh[m] = getPrice( aGDP, m ) * CVRT90 * 0.36 - backupCostCentsPerkWh[m];
         }
     }
 

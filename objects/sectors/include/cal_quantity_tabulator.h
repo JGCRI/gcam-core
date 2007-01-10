@@ -64,7 +64,7 @@ public:
     //! information.
     typedef std::map<std::string, CalInfo> CalInfoMap;
 
-    CalQuantityTabulator();
+    CalQuantityTabulator( const std::string& aRegionName );
     
     // Documentation for visitor methods is inherited.
     virtual void startVisitRegion( const Region* aRegion,
@@ -73,22 +73,30 @@ public:
     virtual void startVisitResource( const AResource* aResource,
                                      const int aPeriod );
 
+    virtual void startVisitSector( const Sector* aSector,
+                                   const int aPeriod );
+
+    virtual void endVisitSector( const Sector* aSector,
+                                 const int aPeriod );
+
     virtual void startVisitSubsector( const Subsector* aSubsector,
                                       const int aPeriod );
 
     virtual void endVisitSubsector( const Subsector* aSubsector,
                                     const int aPeriod );
 
-    virtual void startVisitTechnology( const technology* aTechnology,
+    virtual void startVisitTechnology( const Technology* aTechnology,
                                        const int aPeriod );
 
-    virtual void endVisitTechnology( const technology* aTechnology,
+    virtual void endVisitTechnology( const Technology* aTechnology,
                                      const int aPeriod );
     
     virtual void startVisitOutput( const IOutput* aOutput,
                                    const int aPeriod );
 
-    // Non visitor interface method.
+    // Non visitor interface methods.
+    void setApplicableSectorType( const std::string& aSectorType );
+
     const CalInfoMap& getSupplyInfo() const;
 private:
     //! Map of output name to a struct containing the amount of calibrated
@@ -96,9 +104,17 @@ private:
     //! fixed.
     CalInfoMap mCalSupplies;
 
+    //! If set, the type of sector for which to tabulate calibrated and fixed
+    //! output. If this is not set(the default), all sector types will be
+    //! calibrated.
+    std::string mSectorType;
+
     //! Name of the Region the calibration and fixed outputs are currently being
     //! summed for.
     std::string mCurrentRegionName;
+
+    //! Name of the sector currently being tabulated.
+    std::string mCurrentSectorName;
 
     //! Current primary output calibration or fixed value. This is set to -1 if
     //! the Technology is variable.
@@ -124,6 +140,9 @@ private:
 
     //! Current subsector calibration state.
     CalibrationState mSubsectorState;
+
+    //! Whether the visitor is currently within a sector it should tabulate.
+    bool mShouldTabulateSector;
 };
 
 #endif // _CAL_QUANTITY_TABULATOR_H_

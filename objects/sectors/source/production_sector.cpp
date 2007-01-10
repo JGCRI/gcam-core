@@ -187,9 +187,12 @@ void ProductionSector::setMarket() {
     
     // Create the market.
     Marketplace* marketplace = scenario->getMarketplace();
+    // name is Sector name (name of good supplied or demanded)
+    // market is the name of the regional market from the input file (i.e., global, region, regional group, etc.)
     if( marketplace->createMarket( regionName, mMarketName, name, IMarketType::NORMAL ) ) {
         // Set the base year price which the sector reads in, into the mFixedPrices vector.
         // TODO: Seperate MiniCAM sector so this is not needed.
+
         mFixedPrices[ 0 ] = mBasePrice;
         marketplace->setPriceVector( name, regionName, mFixedPrices );
         for( int period = 0; period < scenario->getModeltime()->getmaxper(); ++period ){
@@ -297,13 +300,16 @@ double ProductionSector::getOutput( const int aPeriod ) const {
     return output;
 }
 
-/*! \brief Return the price of a production sector.
-* \details Production sectors always have markets, so the price of a production
-*          sector is the market price.
-* \param aPeriod Model period.
-* \return Price.
-*/
-double ProductionSector::getPrice( const int aPeriod ) const {
+/*!
+ * \brief Return the price of a production sector.
+ * \param aGDP Regional GDP container(null for SGM).
+ * \details Production sectors always have markets, so the price of a production
+ *          sector is the market price.
+ * \param aPeriod Model period.
+ * \return Price.
+ */
+double ProductionSector::getPrice( const GDP* aGDP,
+                                   const int aPeriod ) const {
     return scenario->getMarketplace()->getPrice( name, regionName, aPeriod, true );
 }
 

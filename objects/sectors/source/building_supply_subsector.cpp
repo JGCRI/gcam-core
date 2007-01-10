@@ -26,7 +26,7 @@ const string BuildingSupplySubSector::XML_NAME = "buildingsupplysubsector";
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
 
-BuildingSupplySubSector::BuildingSupplySubSector( const string regionName, const string sectorName ) : Subsector( regionName, sectorName ){
+BuildingSupplySubSector::BuildingSupplySubSector( const string& regionName, const string& sectorName ) : Subsector( regionName, sectorName ){
 
 }
 
@@ -59,7 +59,6 @@ const std::string& BuildingSupplySubSector::getXMLNameStatic() {
 *
 */
 bool BuildingSupplySubSector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
-
     return false;
 }
 
@@ -87,8 +86,8 @@ bool BuildingSupplySubSector::isNameOfChild  ( const string& nodename ) const {
  * \return A newly created technology of the specified type.
  */
 ITechnology* BuildingSupplySubSector::createChild( const string& aTechType,
-                                                  const string& aTechName,
-                                                  const int aTechYear ) const
+                                                   const string& aTechName,
+                                                   const int aTechYear ) const
 {
     return new BuildingSupplyTechnology( aTechName, aTechYear );
 }

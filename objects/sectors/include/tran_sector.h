@@ -7,10 +7,8 @@
 /*! 
 * \file tran_sector.h
 * \ingroup Objects
-* \brief The Transportation Sector header file. 
-* \author Marshall Wise, Sonny Kim, Josh Lurz
-* \date $Date$
-* \version $Revision$
+* \brief The Transportation Demand Sector header file. 
+* \author Sonny Kim, Josh Lurz, Steve Smith, Marshall Wise
 */
 
 #include <vector>
@@ -23,29 +21,30 @@ class GDP;
 
 /*! 
 * \ingroup Objects
-* \brief This class represents a specialized transporation demand sector.
+* \brief This class represents a detailed transporation demand sector
+* \brief and is derived from the Demand Sector Class.
 * \author Marshall Wise, Sonny Kim, Josh Lurz
 */
 class TranSector : public DemandSector
 {
 public:
-    TranSector( const std::string regionName );
-    
+    explicit TranSector( const std::string& aRegionName );
     virtual void initCalc( NationalAccount* aNationalAccount,
                            const Demographic* aDemographics,
                            const int aPeriod );
 
-    virtual void aggdemand( const GDP* gdp, const int period );
+    virtual void calcAggregateDemand( const GDP* aGDP,
+                                      const Demographic* aDemographics,
+                                      const int aPeriod );
+
     static const std::string& getXMLNameStatic();
-    virtual void checkSectorCalData( const int period );
+
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic,
         const int aPeriod ){}; // Passing demographic here is not good.
 protected:
     std::vector<double> percentLicensed; //!< Percent of population licensed
-    double baseScaler; //!< constant scaler to scale base output
-    double baseScalerNotLic; //!< constant scaler to scale base unlicensed output
-    double priceRatioNotLic;//!< price ratio for unlicensed population
     
+    void checkSectorCalData( const int period );
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;

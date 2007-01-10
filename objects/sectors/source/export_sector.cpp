@@ -3,8 +3,6 @@
 * \ingroup Objects
 * \brief ExportSector class source file.
 * \author Josh Lurz
-* \date $Date$
-* \version $Revision$
 */
 
 #include "util/base/include/definitions.h"
@@ -23,6 +21,7 @@
 #include "util/base/include/configuration.h"
 #include "containers/include/dependency_finder.h"
 #include "containers/include/scenario.h" // for marketplace
+#include "sectors/include/sector_utils.h"
 
 using namespace std;
 using namespace xercesc;
@@ -42,7 +41,7 @@ ExportSector::ExportSector ( const string& aRegionName ) : SupplySector ( aRegio
 * \param aPeriod Model period.
 * \return Price.
 */
-double ExportSector::getPrice( const int aPeriod ) const {
+double ExportSector::getPrice( const GDP* aGDP, const int aPeriod ) const {
     return mFixedPrices[ aPeriod ];
 }
 
@@ -54,6 +53,8 @@ double ExportSector::getPrice( const int aPeriod ) const {
 * \param aPeriod The period in which to calculate the final supply price.
 */
 void ExportSector::calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ){
+    // Calculate the costs for all subsectors.
+    calcCosts( aPeriod );
 }
 
 /*! \brief Set the ExportSector output.
@@ -65,43 +66,29 @@ void ExportSector::calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ){
 * \param aPeriod Model period
 */
 void ExportSector::supply( const GDP* aGDP, const int aPeriod ) {
-	// Set the demand for the good produced by this sector to only be the level of fixed output.
-    double marketDemand = getFixedOutput( aPeriod );
+    // Do not scale supplies because this is a global market so there
+    // is no way to determine a scaling factor.
 
-    if ( marketDemand < 0 ) {
-		ILogger& mainLog = ILogger::getLogger( "main_log" );
-		mainLog.setLevel( ILogger::ERROR );
-		mainLog << "Demand value < 0 for good " << name << " in region " << regionName << endl;
-		marketDemand = 0;
+    // Warn the user if an export sector has variable output, which is currently 
+    // not allowed.
+    // TODO: Move to completeInit/initCalc
+    if( !outputsAllFixed( aPeriod ) ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Export sector " << name << " in region " << regionName
+                << " has variable output." << endl;
     }
 
-    // Adjust shares for fixed supply
-    if ( anyFixedCapacity ) {
-        adjustForFixedOutput( marketDemand, aPeriod );
-    }
-
-    // This is where subsector and technology outputs are set
+    // Instruct technologies to only produce fixed output and no variable
+    // output. Shares do not need to be calculated because there is
+    // no variable output.
     for( unsigned int i = 0; i < subsec.size(); ++i ){
-        // set subsector output from Sector demand
-        subsec[ i ]->setOutput( marketDemand, aGDP, aPeriod );
-    }    
-    
-    const static bool debugChecking = Configuration::getInstance()->getBool( "debugChecking" );
-    if ( debugChecking ) {
-        // If the model is working correctly this should never give an error
-        // An error here means that the supply summed up from the supply sectors 
-        // is not equal to the demand that was passed in 
-        double marketSupply = getOutput( aPeriod );
-
-        // if demand identically = 1 then must be in initial iteration so is not an error
-        if ( aPeriod > 0 && fabs( marketSupply - marketDemand ) > 0.01 && marketDemand != 1 ) {
-			ILogger& mainLog = ILogger::getLogger( "main_log" );
-			mainLog.setLevel( ILogger::WARNING );
-            mainLog << regionName << " Market " <<  name << " demand and derived supply are not equal by: "
-				    << fabs( marketSupply - marketDemand ) << ": "
-					<< "S: " << marketSupply << "  D: " << marketDemand << endl;
-        }
+        subsec[ i ]->setOutput( 0, 1, aGDP, aPeriod );
     }
+
+    // This is a global market so demands do not have to equal supplies locally.
+    // Fixed output must equal output.
+    assert( util::isEqual( getFixedOutput( aPeriod ), getOutput( aPeriod ) ) );
 }
 
 /*! \brief Get the XML node name for output to XML using a virtual method so the
