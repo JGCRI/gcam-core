@@ -576,15 +576,18 @@ void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology,
             "input", mBuffer, mTabs.get(), attrs );
     }
 
+    // Determine the investment period of the technology.
+    int investPeriod = modeltime->getyr_to_per( aTechnology->year );
+
     // Write out the non-energy cost.
     writeItem( "non-energy-cost", "$1975/GJ",
-               aTechnology->getNonEnergyCost( aPeriod ), -1 );
+               aTechnology->getNonEnergyCost( investPeriod ), -1 );
 
 
     // Write out the fuel cost.
     writeItem( "fuel-cost", "$1975/GJ",
                 aTechnology->getFuelCost( mCurrentRegion,
-                                          mCurrentSector, aPeriod ), -1 );
+                                          mCurrentSector, investPeriod ), -1 );
 
     for( int curr = 0; curr < modeltime->getmaxper(); ++curr ){
         if( !aTechnology->mProductionState[ curr ]->isOperating() ){
