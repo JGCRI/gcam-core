@@ -478,6 +478,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\sectors\source\backup_calculator_factory.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\sectors\source\building_dmd_sector.cpp"
 					>
 				</File>
@@ -495,6 +499,10 @@
 				</File>
 				<File
 					RelativePath="..\..\sectors\source\cal_quantity_tabulator.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\sectors\source\capacity_limit_backup_calculator.cpp"
 					>
 				</File>
 				<File
@@ -554,6 +562,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\sectors\source\sector_utils.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\sectors\source\subsector.cpp"
 					>
 				</File>
@@ -567,6 +579,10 @@
 				</File>
 				<File
 					RelativePath="..\..\sectors\source\tran_subsector.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\sectors\source\wind_backup_calculator.cpp"
 					>
 				</File>
 			</Filter>
@@ -670,7 +686,19 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\technologies\source\capture_component_factory.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\default_technology.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\technologies\source\expenditure.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\fixed_production_state.cpp"
 					>
 				</File>
 				<File
@@ -694,7 +722,35 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\technologies\include\icapture_component.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\marginal_profit_calculator.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\non_energy_use_capture_component.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\output_factory.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\phased_shutdown_decider.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\power_plant_capture_component.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\technologies\source\primary_output.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\production_state_factory.cpp"
 					>
 				</File>
 				<File
@@ -706,7 +762,19 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\technologies\source\retired_production_state.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\technologies\source\secondary_output.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\shutdown_decider_factory.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\standard_capture_component.cpp"
 					>
 				</File>
 				<File
@@ -719,6 +787,14 @@
 				</File>
 				<File
 					RelativePath="..\..\technologies\source\tran_technology.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\variable_production_state.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\vintage_production_state.cpp"
 					>
 				</File>
 			</Filter>
@@ -979,6 +1055,10 @@
 				</File>
 				<File
 					RelativePath="..\..\target_finder\source\concentration_target.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\target_finder\source\emissions_stabalization_target.cpp"
 					>
 				</File>
 				<File
@@ -1379,6 +1459,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\sectors\include\backup_calculator_factory.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\sectors\include\building_dmd_sector.h"
 					>
 				</File>
@@ -1396,6 +1480,10 @@
 				</File>
 				<File
 					RelativePath="..\..\sectors\include\cal_quantity_tabulator.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\sectors\include\capacity_limit_backup_calculator.h"
 					>
 				</File>
 				<File
@@ -1435,6 +1523,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\sectors\include\ibackup_calculator.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\sectors\include\interm_subsector.h"
 					>
 				</File>
@@ -1455,6 +1547,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\sectors\include\sector_utils.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\sectors\include\subsector.h"
 					>
 				</File>
@@ -1468,6 +1564,10 @@
 				</File>
 				<File
 					RelativePath="..\..\sectors\include\tran_subsector.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\sectors\include\wind_backup_calculator.h"
 					>
 				</File>
 			</Filter>
@@ -1712,6 +1812,10 @@
 				</File>
 				<File
 					RelativePath="..\..\target_finder\include\concentration_target.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\target_finder\include\emissions_stabalization_target.h"
 					>
 				</File>
 				<File
@@ -1967,7 +2071,19 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\technologies\include\capture_component_factory.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\default_technology.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\technologies\include\expenditure.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\fixed_production_state.h"
 					>
 				</File>
 				<File
@@ -1999,6 +2115,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\technologies\include\iproduction_state.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\technologies\include\ishutdown_decider.h"
 					>
 				</File>
@@ -2011,7 +2131,31 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\technologies\include\marginal_profit_calculator.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\non_energy_use_capture_component.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\output_factory.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\phased_shutdown_decider.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\power_plant_capture_component.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\technologies\include\primary_output.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\production_state_factory.h"
 					>
 				</File>
 				<File
@@ -2023,7 +2167,19 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\technologies\include\retired_production_state.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\technologies\include\secondary_output.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\shutdown_decider_factory.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\standard_capture_component.h"
 					>
 				</File>
 				<File
@@ -2036,6 +2192,14 @@
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\tran_technology.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\variable_production_state.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\vintage_production_state.h"
 					>
 				</File>
 			</Filter>

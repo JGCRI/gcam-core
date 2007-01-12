@@ -658,7 +658,8 @@ void DemandSector::dbOutput( const GDP* aGDP,
     dboutput4( regionName,"End-Use Service","Elasticity",secname + "_income"," ", mIncomeElasticity );
 
     // TFE for this demand sector
-    for (int m=0;m<maxper;m++) {
+    int m;
+    for (m=0;m<maxper;m++) {
         temp[m] = getEnergyInput( m );
     }
     dboutput4(regionName,"Final Energy Cons","by Sector", name, mInputUnit, temp);
