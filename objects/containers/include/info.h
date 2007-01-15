@@ -146,7 +146,7 @@ template<class T> bool Info::setItemValueLocal( const std::string& aStringKey,
     }
 
     // Add the value regardless of whether a warning was printed.
-    mInfoMap->insert( make_pair( aStringKey, make_pair( aType, boost::any( aValue ) ) ) );
+    mInfoMap->insert( std::make_pair( aStringKey, std::make_pair( aType, boost::any( aValue ) ) ) );
     return true;
 }
 

@@ -349,7 +349,8 @@ template <class Key, class Value>
 Value&
 HashMap<Key, Value>::operator[]( const Key& aKey ){
     // Check if the key already exists.
-    HashMap<Key, Value>::iterator currValue = find( aKey );
+    typedef typename HashMap<Key, Value>::iterator hashMapIterator;
+    hashMapIterator currValue = find( aKey );
 
     // Return the value if it already exists.
     if( currValue != end() ){
@@ -357,7 +358,7 @@ HashMap<Key, Value>::operator[]( const Key& aKey ){
     }
 
     // Insert the default value.
-    pair<iterator, bool> newPair = insert( make_pair( aKey, Value() ) );
+    std::pair<iterator, bool> newPair = insert( make_pair( aKey, Value() ) );
     assert( newPair.second );
 
     // The first value in the iterator is a pair<Key, Value&>, so return the

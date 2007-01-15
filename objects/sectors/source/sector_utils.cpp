@@ -20,6 +20,7 @@
 #include <cassert>
 #include <algorithm>
 #include <numeric>
+#include <cfloat>
 
 #include "sectors/include/sector_utils.h"
 #include "containers/include/scenario.h"
