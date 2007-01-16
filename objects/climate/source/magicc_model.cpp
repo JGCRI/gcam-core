@@ -316,6 +316,11 @@ double MagiccModel::getEmissions( const string& aGasName,
 
     int currPeriod = modeltime->getyr_to_per( aYear );
 
+    // If invalid model period is passed, return -1 to indicate no valid emission data
+    if( currPeriod <= 0 ) {
+            return -1;
+    }
+
     // Check if we don't need to interpolate. This will also handle the last
     // year of period 0.
     if( aYear == modeltime->getper_to_yr( currPeriod ) ){
