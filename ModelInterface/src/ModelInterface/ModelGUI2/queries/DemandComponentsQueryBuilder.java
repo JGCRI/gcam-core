@@ -30,7 +30,7 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 	protected Map techList;
 	protected Map inputList;
 	*/
-	private static final String inputQueryPortion = "*[@type = 'input' and ((@name != 'Capital') or (@name = 'Capital' and (local-name(parent) != 'productionSector' or (local-name(parent) = 'productionSector' and @year = parent/@year))))]";
+	private static final String inputQueryPortion = "*[@type = 'input']";
 	public static String xmlName = "demandComponentsQuery";
 	public DemandComponentsQueryBuilder(QueryGenerator qgIn) {
 		super(qgIn);
@@ -113,6 +113,7 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 		return qg.currSel == 3-1;
 	}
 	public JComponentAdapter updateList(JComponentAdapter list, JLabel label) {
+		/*
 		Map temp = new HashMap();
 		temp.put("Select This!!", false);
 		switch(qg.currSel) {
@@ -121,6 +122,7 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 					label.setText("Select Stuff:");
 					break;
 			}
+			*/
 			/*
 			case 3: {
 					list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -157,6 +159,7 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 					break;
 			}
 			*/
+		/*
 			default: System.out.println("Error currSel: "+qg.currSel);
 		}
 		Vector tempVector = new Vector();
@@ -175,6 +178,7 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 		temp = null;
 		tempVector = null;
 		list.setSelectedRows(selected);
+		*/
 		return list;
 	}
 	public void updateSelected(JComponentAdapter list) {
@@ -336,12 +340,20 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 		qg.xPath = "*[@type='sector' and @name='Trade']/"+subsectorQueryPortion+"/"+technologyQueryPortion+"/"+
 			inputQueryPortion+"/demand-currency/text()";
 			*/
-		qg.xPath = sectorQueryPortion+"/"+subsectorQueryPortion+"/"+technologyQueryPortion+"/"
-			+inputQueryPortion+"/demand-currency/text()";/* | "+sectorQueryPortion+"/"+subsectorQueryPortion+"/"+
+		// TODO: rewrite this query so that it is cleaner and easier to understand what is going on.
+		qg.xPath = sectorQueryPortion+"/"+subsectorQueryPortion+"/"+baseTechnologyQueryPortion+"/"
+			+inputQueryPortion+"/demand-currency[(@year >= parent::*/parent::*/@year) and "
+			+"(((parent::*/parent::*/@name = 'Trade' or parent::*/parent::*/@name = 'Government') and (@year = parent::*/parent::*/@year)) "
+			+"or (parent::*/parent::*/@name != 'Trade' and parent::*/parent::*/@name != 'Government' and ((parent::*/@name != 'Capital') or "
+			+"(parent::*/@name = 'Capital' and (local-name(parent::*/parent) != 'productionSector' "
+			+"or (local-name(parent::*/parent) = 'productionSector' and @year = parent::*/parent::*/@year))))))]/text()";
+		
+		/* | "+sectorQueryPortion+"/"+subsectorQueryPortion+"/"+
 			technologyQueryPortion+"/*[local-name() = 'output' or local-name() = 'annual-investment']/text() | "+
 			"collection('database.dbxml')/scenario/world/Marketplace/market[child::MarketGoodOrFuel[ child::text() = /scenario/world/regionCGE/factorSupply/@name]]/supply/text()";
 			*/
 	}
+	/*
 	private Map createList(String path, boolean isGroupNames) {
 		LinkedHashMap ret = new LinkedHashMap();
 		if(!isGroupNames && qg.isSumable) {
@@ -364,6 +376,7 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 		DbViewer.xmlDB.printLockStats("DemandComponentsQueryBuilder.createList");
 		return ret;
 	}
+	*/
 	protected boolean isGlobal;
 	public String getCompleteXPath(Object[] regions) {
 		boolean added = false;
@@ -421,6 +434,10 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 					ret.add(0, "Intermediate Production");
 				}
 			}
+			if("baseTechnology".equals(XMLDB.getAttr(n, "type")) && "Government".equals(XMLDB.getAttr(n, "name")) &&
+					"Capital".equals(ret.get(0))) {
+				System.out.println("Govt Cap in year "+XMLDB.getAttr(n, "year"));
+			}
 			nBefore = n;
 			n = n.getParentNode();
 			nBefore.delete();
@@ -442,7 +459,7 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 		if(type == null) {
 			type = currNode.getNodeName();
 		}
-		if(type.equals("input") || type.equals("region")) {
+		if(type.equals("demand-currency") || type.equals("region")) {
 			String attr;
 			if(type.equals("region")) {
 				attr = "region@"+XMLDB.getAttr(currNode, "name");

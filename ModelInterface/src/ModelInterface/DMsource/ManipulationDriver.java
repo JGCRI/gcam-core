@@ -335,7 +335,7 @@ public class ManipulationDriver
     
     ref = (Region)regionList.get(reg);
     if(var.equals("RegionCellSize") && dataAvgAdd.get(var) == null) {
-	    avg = false;
+	    avg = true;
     } else {
 	    avg = ((Boolean)dataAvgAdd.get(var)).booleanValue();
     }
@@ -581,6 +581,9 @@ public class ManipulationDriver
     
     if(V1.sameShape(V2))
     {
+	    if(V1.isReference() && (((ReferenceVariable)V1).avg ^ ((ReferenceVariable)V2).avg)) {
+		    log.log(Level.WARNING, "Adding an averaged variable with one that has not");
+	    }
       VD = V1.getShape(VDname);
       variableList.put(VDname, VD);
       
@@ -611,6 +614,9 @@ public class ManipulationDriver
     
     if(V1.sameShape(V2))
     {
+	    if(V1.isReference() && (((ReferenceVariable)V1).avg ^ ((ReferenceVariable)V2).avg)) {
+		    log.log(Level.WARNING, "Subtracting an averaged variable with one that has not");
+	    }
       VD = V1.getShape(VDname);
       variableList.put(VDname, VD);
       
@@ -678,6 +684,12 @@ public class ManipulationDriver
       variableList.put(VDname, VD);
       
       VD.setData(ComponentManipulator.multiplyVar(V1.getData(), V2.getData()));
+	    if(V1.isReference() && (!((ReferenceVariable)V1).avg && !((ReferenceVariable)V2).avg)) {
+		    log.log(Level.WARNING, "Warning double weighting "+VDname);
+	    }
+	    if(V1.isReference() && (!((ReferenceVariable)V1).avg || !((ReferenceVariable)V2).avg)) {
+		    ((ReferenceVariable)VD).avg = false;
+	    }
     } else
     {
       log.log(Level.WARNING, "Command Failed: variables of different shapes.");
@@ -704,6 +716,7 @@ public class ManipulationDriver
     
     if(V1.sameShape(V2))
     {
+	    //TODO: put in checks for double weighting
       VD = V1.getShape(VDname);
       variableList.put(VDname, VD);
       
@@ -1107,6 +1120,12 @@ public class ManipulationDriver
       if(toWeight)
       {
         VD.setData(ComponentManipulator.maskRemainWeight(VSource.getData(), VMask.getData(), limit));
+	if(VSource.isReference() && (!((ReferenceVariable)VSource).avg && !((ReferenceVariable)VMask).avg)) {
+		log.log(Level.WARNING, "Warning double weighting "+VDname);
+	}
+	if(VSource.isReference() && (!((ReferenceVariable)VSource).avg || !((ReferenceVariable)VMask).avg)) {
+		((ReferenceVariable)VD).avg = false;
+	}
       } else
       {
         VD.setData(ComponentManipulator.maskRemain(VSource.getData(), VMask.getData(), limit));
@@ -1168,6 +1187,7 @@ public class ManipulationDriver
           limit = 1;
         }
         VD.setData(ComponentManipulator.maskRemoveWeight(VSource.getData(), VMask.getData(), limit));
+	// TODO: should I put checks for double weight or set avg here?
       } else
       {
         if(!userLimit)
@@ -3130,6 +3150,96 @@ public class ManipulationDriver
     regionList.put(toAdd.name, toAdd);
   }
 
+  /**
+   * Command which takes a reference variable and divides
+   * it by its weights.  This would be used when a variable has
+   * been double weighted.
+   * @see ComponentManipulator.adjustWeights
+   * @param command XML element describing which variable to divide by weights and
+   * 	where to store it.
+   */
+  private void divByAreaFractCommand(Element command) {
+	  log.log(Level.FINER, "begin function");
+	  Variable VDest;
+	  Variable VSource;
+	  Element currInfo;
+
+	  currInfo = command.getChild("target");
+	  String VDname = currInfo.getAttributeValue("name");
+	  currInfo = command.getChild("argument");
+	  VSource = getVariable(currInfo.getAttributeValue("name"));
+	   if((VSource.isReference())) {
+		  VDest = VSource.getShape(VDname);
+		  variableList.put(VDname, VDest);
+		  VDest.setData(ComponentManipulator.adjustWeights(VSource.getData(), VSource.getWeight(), false));
+		  // should I do anything with avg?
+	  } else {
+		  log.log(Level.WARNING, "Only averaged reference variables may be divided by area fraction.");
+	  }
+  }
+
+  /**
+   * Command which takes a reference variable and multiplies
+   * it by its weights.  This could be used to essentailly
+   * change a variable to averaged.
+   * @see ComponentManipulator.adjustWeights
+   * @param command XML element describing which variable to divide by weights and
+   * 	where to store it.
+   */
+  private void multByAreaFractCommand(Element command) {
+	  log.log(Level.FINER, "begin function");
+	  Variable VDest;
+	  Variable VSource;
+	  Element currInfo;
+
+	  currInfo = command.getChild("target");
+	  String VDname = currInfo.getAttributeValue("name");
+	  currInfo = command.getChild("argument");
+	  VSource = getVariable(currInfo.getAttributeValue("name"));
+	   if((VSource.isReference())) {
+		  VDest = VSource.getShape(VDname);
+		  variableList.put(VDname, VDest);
+		  VDest.setData(ComponentManipulator.adjustWeights(VSource.getData(), VSource.getWeight(), true));
+		  // should I do anything with avg?
+	  } else {
+		  log.log(Level.WARNING, "Only averaged reference variables may be multiplied by area fraction.");
+	  }
+  }
+
+  /**
+   * Debuging command used to pick out a single cell and follow its values
+   * for all of the reference variables we know about. The command will
+   * have a message with a value that is a useful message describing where
+   * this message is in the DM code.  It also will have a where child which tells
+   * which region name and it's (x, y) to pick out. An example would be: 
+   * <p><printDebug>
+   * 	<message value="Added up the PotentailForest" />
+   * 	<where region="Maryland" x="5" y="2" />
+   * </printDebug></p>
+   * @param command The xml command with the children as stated above
+   */
+  private void printDebugCommand(Element command) {
+	  //TODO: fix the XML in the comment above so it looks right if javadoc is ever run
+	  Element regionElmt = command.getChild("where");
+	  Iterator varsIt = variableList.entrySet().iterator();
+	  Region VShape = (Region)regionList.get(regionElmt.getAttributeValue("region"));
+	  int x = Integer.valueOf(regionElmt.getAttributeValue("x"));
+	  int y = Integer.valueOf(regionElmt.getAttributeValue("y"));
+	  System.out.println("================= "+command.getChild("message").getAttributeValue("value")+" in "
+			  +VShape.name+" ("+x+", "+y+") ==============================");
+	  System.out.println("Weight is "+VShape.getM()[y][x]);
+	  while(varsIt.hasNext()) {
+		  Map.Entry curr = (Map.Entry)varsIt.next();
+		  if(((Variable)curr.getValue()).isReference()) {
+			  String currVarName = (String)curr.getKey();
+			  ReferenceVariable currVar = (ReferenceVariable)curr.getValue();
+			  double [][] cData = VShape.extractRegion(currVar)[0].data;
+			  System.out.println("Variable "+currVarName+" has value "+cData[y][x]+" and avg is "+currVar.avg);
+		  }
+	  }
+	  System.out.println("=============================================================================");
+  }
+
 //*****************************************************************************
 //*********************Helper Functions****************************************
 //*****************************************************************************
@@ -3373,6 +3483,18 @@ public class ManipulationDriver
     } else if(currCom.getName().equals("zoneCombine"))
     {
       zoneCombineCommand(currCom);
+    } else if(currCom.getName().equals("divByAreaFract"))
+    {
+	    divByAreaFractCommand(currCom);
+    } else if(currCom.getName().equals("multByAreaFract"))
+    {
+	    multByAreaFractCommand(currCom);
+    } else if(currCom.getName().equals("printDebug"))
+    {
+	    printDebugCommand(currCom);
+    } else if(currCom.getName().equals("exit"))
+    {
+	    System.exit(0);
     } else
     {
       log.log(Level.WARNING, "Unknown user command -> "+currCom.getName());
@@ -3630,7 +3752,7 @@ public class ManipulationDriver
 			  currX = Integer.parseInt(attrs.getValue("x"));
 			  currY = Integer.parseInt(attrs.getValue("y"));
 			  toAddTime[currY][currX] = stringToDouble(attrs.getValue("value"));
-			  if(varName.equals("variable") && !avg)
+			  if(!varName.equals("weight") && !avg)
 			  { //this is an additive value and should be initially weighted (now)
 				  toAddTime[currY][currX] *= ((double[][])((Map)toAdd.data.get("weight")).get("0"))[currY][currX];
 			  }

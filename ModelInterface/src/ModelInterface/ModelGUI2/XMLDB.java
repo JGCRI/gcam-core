@@ -38,12 +38,28 @@ public class XMLDB {
 
 		try {
 			String path = dbPath.substring(0, dbPath.lastIndexOf(System.getProperty("file.separator")));
-			dbEnv = new Environment(new File(path), envConfig);
+			boolean didUpgradeEnv = false;
+			//try {
+				dbEnv = new Environment(new File(path), envConfig);
+				/* This code is avaibale in 2.3.8 which is not working right..
+			} catch(VersionMismatchException vme) {
+				int ans = JOptionPane.showConfirmDialog(parentFrame, "The version of the selected database does not match the version\nof the database library. Do you want to attempt to upgrade?\n\nWarning: Upgrading could cause loss of data, it is recomended\nthat you backup your database first.", "DB Version Mismatch Error", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+				if(ans == JOptionPane.YES_OPTION) {
+					System.out.println("Remove Env");
+					Environment.remove(new File(path), true, envConfig);
+					dbEnv = new Environment(new File(path), envConfig);
+					System.out.println("Done Remove env");
+					didUpgradeEnv = true;
+				} else {
+					return;
+				}
+			}
+			*/
 			LockStats ls = dbEnv.getLockStats(StatsConfig.DEFAULT);
 			System.out.println("Current Locks: "+ls.getNumLocks());
 			System.out.println("Current Lockers: "+ls.getNumLockers());
 			System.out.println("Current Deadlocks: "+ls.getNumDeadlocks());
-			System.out.println("Current Conflicts: "+ls.getNumConflicts());
+			//System.out.println("Current Conflicts: "+ls.getNumConflicts());
 			if(ls.getNumLocks() > 0) {
 				Object[] opts = {"Fix", "Continue"};
 				JOptionPane lockErrMess = new JOptionPane(
@@ -69,7 +85,7 @@ public class XMLDB {
 						System.out.println("Current Locks: "+ls.getNumLocks());
 						System.out.println("Current Lockers: "+ls.getNumLockers());
 						System.out.println("Current Deadlocks: "+ls.getNumDeadlocks());
-						System.out.println("Current Conflicts: "+ls.getNumConflicts());
+						//System.out.println("Current Conflicts: "+ls.getNumConflicts());
 					} else {
 						System.out.println("Couldn't remove DB Environment");
 						JOptionPane.showMessageDialog(parentFrame, "Couldn't remove DB Environment", "DB Fix Error",
@@ -128,10 +144,17 @@ public class XMLDB {
 				// end code to be REMOVED
 			} catch(XmlException ve) {
 				if(ve.getErrorCode() == XmlException.VERSION_MISMATCH) {
-					int ans = JOptionPane.showConfirmDialog(parentFrame, "The version of the selected database does not match the version\nof the database library. Do you want to attempt to upgrade?\n\nWarning: Upgrading could cause loss of data, it is recomended\nthat you backup your database first.", "DB Version Mismatch Error", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+					int ans;
+					if(didUpgradeEnv) {
+						ans = JOptionPane.YES_NO_OPTION;
+					} else {
+						ans = JOptionPane.showConfirmDialog(parentFrame, "The version of the selected database does not match the version\nof the database library. Do you want to attempt to upgrade?\n\nWarning: Upgrading could cause loss of data, it is recomended\nthat you backup your database first.", "DB Version Mismatch Error", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+					}
 					if(ans == JOptionPane.YES_OPTION) {
+						/*
 						JOptionPane.showMessageDialog(parentFrame, "Couldn't Upgrade the database.", 
 								"DB Upgrade Error", JOptionPane.ERROR_MESSAGE);
+								*/
 						System.out.println("Do upgrade");
 						manager.upgradeContainer(contName, uc);
 						System.out.println("Done upgrade");
@@ -177,7 +200,7 @@ public class XMLDB {
 			System.out.println("Current Locks: "+ls.getNumLocks());
 			System.out.println("Current Lockers: "+ls.getNumLockers());
 			System.out.println("Current Deadlocks: "+ls.getNumDeadlocks());
-			System.out.println("Current Conflicts: "+ls.getNumConflicts());
+			//System.out.println("Current Conflicts: "+ls.getNumConflicts());
 			System.out.println("Locks Requested: "+ls.getNumRequests());
 			System.out.println("Locks Released: "+ls.getNumReleases());
 		} catch (XmlException e) {
@@ -626,12 +649,16 @@ public class XMLDB {
 		Vector funcTemp = new Vector<String>(1,0);
 		funcTemp.add("distinct-values");
 		res = createQuery("/scenario/output-meta-data/summable/@var", null, funcTemp);
-		funcTemp = null;
 		QueryGenerator.sumableList = new Vector();
+		QueryGenerator.hasYearList = new Vector<String>();
 		try {
 			while(res.hasNext()) {
 				QueryGenerator.sumableList.add(res.next().asString());
-				//System.out.println(QueryGenerator.sumableList.toString());
+			}
+			res.delete();
+			res = createQuery("/scenario/output-meta-data/has-year/@var", null, funcTemp);
+			while(res.hasNext()) {
+				QueryGenerator.hasYearList.add(res.next().asString());
 			}
 			res.delete();
 		} catch(XmlException e) {

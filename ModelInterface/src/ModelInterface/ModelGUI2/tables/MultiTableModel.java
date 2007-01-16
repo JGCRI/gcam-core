@@ -4,6 +4,7 @@ import ModelInterface.ModelGUI2.DOMmodel;
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.queries.QueryGenerator;
 import ModelInterface.ModelGUI2.Documentation;
+import ModelInterface.ModelGUI2.XMLDB;
 
 import java.util.*;
 
@@ -155,6 +156,9 @@ public class MultiTableModel extends BaseTableModel{
 		regions.add(regionAndYear[0]);
 		years.add(regionAndYear[1]);
 		addToDataTree(tempNode, dataTree).put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
+		if(units == null) {
+			units = ((Element)tempNode.getParentNode()).getAttribute("unit");
+		}
 	  }
 	  recAddTables(dataTree, null, regions, years, "");
   	}
@@ -259,6 +263,7 @@ public class MultiTableModel extends BaseTableModel{
 						(String)wild.get(1), /*titleStr+'/'+(String)parent.getKey()*/title, (Map)parent.getValue(), doc,
 						documentation /*, (String)wild.get(2)*/); 
 			}
+			tM.units = units;
 	  		JTable jTable = new JTable(tM);
 
 	  		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -267,7 +272,7 @@ public class MultiTableModel extends BaseTableModel{
 
 	  		javax.swing.table.TableColumn col;
 	  		Iterator i = regions.iterator();
-	  		int j = 0;
+	  		int j = 1;
 	  		while(i.hasNext()) {
 		  		col = jTable.getColumnModel().getColumn(j);
 				col.setPreferredWidth(((String)i.next()).length()*5+30);
@@ -291,7 +296,7 @@ public class MultiTableModel extends BaseTableModel{
 							(int)chartDim.getHeight());
 					labelChart.setIcon(new ImageIcon(chartImage));
 				} catch(Exception e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 					labelChart.setText("Cannot Create Chart");
 				}
 				//labelChart.setIcon(tM.getChartImage());
@@ -472,6 +477,10 @@ public class MultiTableModel extends BaseTableModel{
 		  while(res.hasNext()) {
 			  tempNode = res.next();
 			  regionAndYear = qg.extractAxisInfo(tempNode.getParentNode(), tableFilterMaps);
+			  String parentNodeName = tempNode.getParentNode().getNodeName();
+			  if(units == null) {
+				  units = XMLDB.getAttr(tempNode.getParentNode(), "unit");
+			  }
 			  if(sumAll) {
 				  //regionAndYear[1] = "All "+(String)wild.get(0);
 				  regionAndYear[1] = levelValues[0];
@@ -484,7 +493,6 @@ public class MultiTableModel extends BaseTableModel{
 			  if(ret == null) {
 				  retMap.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], new Double(tempNode.asNumber()));
 			  } else {
-				  //ret += tempNode.asNumber();
 				  retMap.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], 
 						  new Double(ret.doubleValue() + tempNode.asNumber()));
 			  }

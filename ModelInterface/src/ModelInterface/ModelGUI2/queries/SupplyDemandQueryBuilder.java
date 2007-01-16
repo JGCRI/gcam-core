@@ -292,12 +292,20 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 	private void createXPath() {
 		if(qg.isSumable) {
 			qg.xPath = createListPath(6);
-			qg.yearLevel = "technology";
+			if(QueryGenerator.hasYearList.contains(qg.var)) {
+				qg.yearLevel = qg.var;
+			} else {
+				qg.yearLevel = "technology";
+			}
 		} else {
 			qg.xPath = createListPath(qg.currSel+1);
 			qg.xPath = qg.xPath.replaceFirst("/[^/]*/[^/]*$", "/" + qg.var + "/text()");
 			if(qg.currSel == 5) {
-				qg.yearLevel = "technology";
+				if(QueryGenerator.hasYearList.contains(qg.var)) {
+					qg.yearLevel = qg.var;
+				} else {
+					qg.yearLevel = "technology";
+				}
 			} else {
 				qg.yearLevel = qg.var;
 			}
@@ -370,7 +378,7 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 			if(qg.nodeLevel.equals(XMLDB.getAttr(n, "type"))) {
 				ret.add(XMLDB.getAttr(n, "name"));
 			} 
-			if(qg.yearLevel.equals(XMLDB.getAttr(n, "type"))) {
+			if(qg.yearLevel.equals(XMLDB.getAttr(n, "type")) || qg.yearLevel.equals(n.getNodeName())) {
 				ret.add(0, XMLDB.getAttr(n, "year"));
 				/*
 				//ret.add(n.getAttributes().getNamedItem("name").getNodeValue());

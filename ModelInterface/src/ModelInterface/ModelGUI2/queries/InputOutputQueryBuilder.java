@@ -113,6 +113,7 @@ public class InputOutputQueryBuilder extends QueryBuilder {
 		return qg.currSel == 3-1;
 	}
 	public JComponentAdapter updateList(JComponentAdapter list, JLabel label) {
+		/*
 		Map temp = new HashMap();
 		temp.put("Select This!!", false);
 		switch(qg.currSel) {
@@ -121,6 +122,7 @@ public class InputOutputQueryBuilder extends QueryBuilder {
 					label.setText("Select Stuff:");
 					break;
 			}
+			*/
 			/*
 			case 3: {
 					list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -157,6 +159,7 @@ public class InputOutputQueryBuilder extends QueryBuilder {
 					break;
 			}
 			*/
+		/*
 			default: System.out.println("Error currSel: "+qg.currSel);
 		}
 		Vector tempVector = new Vector();
@@ -175,6 +178,7 @@ public class InputOutputQueryBuilder extends QueryBuilder {
 		temp = null;
 		tempVector = null;
 		list.setSelectedRows(selected);
+		*/
 		return list;
 	}
 	public void updateSelected(JComponentAdapter list) {
@@ -334,9 +338,9 @@ public class InputOutputQueryBuilder extends QueryBuilder {
 		qg.var = "demand-currency";
 		// the query for getting the factor supply names is no good becauase I won't be able to filter to the correct
 		// scenarios/regions.  Plus isn't it almost always going to be Land, Labor, and Capital anyways?
-		qg.xPath = sectorQueryPortion+"/"+subsectorQueryPortion+"/"+technologyQueryPortion+"/"
+		qg.xPath = sectorQueryPortion+"/"+subsectorQueryPortion+"/"+baseTechnologyQueryPortion+"/"
 			+inputQueryPortion+"/demand-currency/text() | "+sectorQueryPortion+"/"+subsectorQueryPortion+"/"+
-			technologyQueryPortion+"/*[local-name() = 'output' or local-name() = 'annual-investment']/text() | "+
+			baseTechnologyQueryPortion+"/*[local-name() = 'output' or local-name() = 'annual-investment']/text() | "+
 			"Marketplace/market[child::MarketGoodOrFuel[ child::text() = /scenario/world/regionCGE/factorSupply/@name]]/supply/text()";
 	}
 	private Map createList(String path, boolean isGroupNames) {
@@ -400,7 +404,7 @@ public class InputOutputQueryBuilder extends QueryBuilder {
 			marketRegionQ.append(queries[2]);
 		}
 		String regionFilter = regionQ.toString();
-		System.out.println("The 3 parts are : >>"+queries[0]+"<< | >>"+queries[1]+"<< | >>"+queries[2]+"<<");
+		//System.out.println("The 3 parts are : >>"+queries[0]+"<< | >>"+queries[1]+"<< | >>"+queries[2]+"<<");
 		return regionQ.append(queries[0]).append(" | ").append(regionFilter).append(queries[1])
 			.append(" | ").append(marketRegionQ).toString();
 		/*
@@ -490,7 +494,7 @@ public class InputOutputQueryBuilder extends QueryBuilder {
 		if(type == null) {
 			type = currNode.getNodeName();
 		}
-		if(type.equals("input") || type.equals("region") || type.equals("output") || type.equals("annual-investment") ||
+		if(type.equals("demand-currency") || type.equals("region") || type.equals("output") || type.equals("annual-investment") ||
 				type.equals("supply") || type.equals("market")) {
 			String attr;
 			if(type.equals("supply")) {

@@ -115,6 +115,9 @@ public class NewDataTableModel extends BaseTableModel{
 		row.add(regionAndYear[1]);
 		// colKey;rowKey maps to the data that should go in that cell
 		data.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
+		if(units == null) {
+			units = ((Element)tempNode.getParentNode()).getAttribute("unit");
+		}
 	  }
 	  indCol = new Vector(col);
 	  indRow = new Vector(row);
@@ -519,7 +522,13 @@ public class NewDataTableModel extends BaseTableModel{
 		NumberAxis xAxis = new NumberAxis(/*ind2Name*/"Year");
 		
 		// Use the parent element name as the name of the axis.
-		NumberAxis yAxis = new NumberAxis( ind2Name);
+		String appendUnits;
+		if(units != null) {
+			appendUnits = " ("+units+")";
+		} else {
+			appendUnits = "";
+		}
+		NumberAxis yAxis = new NumberAxis(ind2Name+appendUnits);
 		
 		// This turns off always including zero in the domain.
 		xAxis.setAutoRangeIncludesZero(false);

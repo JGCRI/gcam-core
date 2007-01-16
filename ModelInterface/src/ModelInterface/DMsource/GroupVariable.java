@@ -105,7 +105,22 @@ public class GroupVariable extends Variable
     out.write("End of Group: "+name);
     out.newLine();
   }  
-  public Wrapper[] getData()
+  public Wrapper[] getData() {
+	  return getDataOrWeight(true);
+  }
+  public Wrapper[] getWeight() {
+	  return getDataOrWeight(false);
+  }
+  /**
+   * Gets the data or weight from each of the vars in
+   * this group and returns it.  If isData is true it
+   * returns Wrappers of data, if false then Wrappers
+   * of weights.
+   * @param isData Whether to get data or weights
+   * @return An array of wrappers for the data or 
+   * 	weights depending on the isData param.
+   */
+  public Wrapper[] getDataOrWeight(boolean isData)
   {
     ArrayList toRet = new ArrayList(0);
     Map.Entry ent;
@@ -117,7 +132,11 @@ public class GroupVariable extends Variable
     { //iterate through all contained variables
       ent = (Map.Entry)it.next();
       holdVar = (Variable)ent.getValue();
-      holdWrap = holdVar.getData();
+      if(isData) {
+	      holdWrap = holdVar.getData();
+      } else {
+	      holdWrap = holdVar.getWeight();
+      }
       toRet.ensureCapacity(toRet.size()+holdWrap.length);
       
       for(int i = 0; i < holdWrap.length; i++)

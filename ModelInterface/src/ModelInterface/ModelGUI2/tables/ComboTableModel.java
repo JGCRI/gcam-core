@@ -139,6 +139,9 @@ public class ComboTableModel extends BaseTableModel{
 		regions.add(regionAndYear[0]);
 		years.add(regionAndYear[1]);
 		addToDataTree(tempNode, dataTree).put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
+		if(units == null) {
+			units = ((Element)tempNode.getParentNode()).getAttribute("unit");
+		}
 	  }
 	  recAddTables(dataTree, null, regions, years, "");
 	  indCol = new Vector( regions );
@@ -262,7 +265,7 @@ public class ComboTableModel extends BaseTableModel{
 				// 		populationSGMRate@year=1985
 				StringTokenizer innerSt = new StringTokenizer( allNodeInfo, "@", false);
 				if( innerSt.countTokens() != 2 ){
-					System.out.println("BIG PROBLEM, COUNT TOKENS ISN'T 2!!!!!!!!!!");
+					System.out.println("BIG PROBLEM, COUNT TOKENS ISN'T 2!!!!!!!!!!: "+allNodeInfo);
 					return;
 				}
 				String firstHalf = innerSt.nextToken(); //	populationSGMRate
@@ -664,7 +667,18 @@ public class ComboTableModel extends BaseTableModel{
 		//NumberAxis xAxis = new NumberAxis("Year");
 		
 		// Use the parent element name as the name of the axis.
-		NumberAxis yAxis = new NumberAxis(ind1Name);
+		NumberAxis yAxis;
+		String appendUnits;
+		if(units != null) {
+			appendUnits = " ("+units+")";
+		} else {
+			appendUnits = "";
+		}
+		if(qg != null) {
+			yAxis = new NumberAxis(qg.getVariable()+appendUnits);
+		} else {
+			yAxis = new NumberAxis(ind1Name+appendUnits);
+		}
 		
 		// This turns off always including zero in the domain.
 		xAxis.setAutoRangeIncludesZero(false);
@@ -745,6 +759,9 @@ public class ComboTableModel extends BaseTableModel{
 			  tempNode = res.next();
 			  //regionAndYear = getRegionAndYearFromNode(tempNode.getParentNode(), tableFilterMaps);
 			  regionAndYear = qg.extractAxisInfo(tempNode.getParentNode(), tableFilterMaps);
+			  if(units == null) {
+				  units = XMLDB.getAttr(tempNode.getParentNode(), "unit");
+			  }
 			  if(sumAll) {
 				  //regionAndYear[1] = "All "+(String)wild.get(0);
 				  regionAndYear[1] = "All "+qg.getNodeLevel();

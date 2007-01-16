@@ -111,7 +111,7 @@ public class MatrixRepository implements DataRepository
     {
       System.out.println("SEVERE: ("+X+","+Y+") out of bounds("+xSize+","+ySize
           +") - PROGRAM TERMINATING");
-      System.exit(1);
+      //System.exit(1);
     }
 
   }

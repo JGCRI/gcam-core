@@ -19,6 +19,7 @@ public abstract class QueryBuilder implements java.io.Serializable {
 	public static final String technologyQueryPortion = "*[@type = 'technology']";
 	public static final String resourceQueryPortion = "*[@type = 'resource']";
 	public static final String subresourceQueryPortion = "*[@type = 'subresource']";
+	public static final String baseTechnologyQueryPortion = "*[@type = 'baseTechnology']";
 
 	protected QueryGenerator qg;
 	protected String queryFilter;
@@ -33,6 +34,7 @@ public abstract class QueryBuilder implements java.io.Serializable {
 	public abstract void doFinish(JComponentAdapter list);
 	public abstract JComponentAdapter doBack(JComponentAdapter list, JLabel label);
 	public abstract JComponentAdapter doNext(JComponentAdapter list, JLabel label);
+	// TODO: isAtEnd is no longer used, remove it
 	public abstract boolean isAtEnd();
 	public abstract JComponentAdapter updateList(JComponentAdapter list, JLabel label);
 	public abstract void updateSelected(JComponentAdapter list);

@@ -112,6 +112,7 @@ public class SAMQueryBuilder extends QueryBuilder {
 		return qg.currSel == 3-1;
 	}
 	public JComponentAdapter updateList(JComponentAdapter list, JLabel label) {
+		/*
 		Map temp = new HashMap();
 		temp.put("Select This!!", false);
 		switch(qg.currSel) {
@@ -120,6 +121,7 @@ public class SAMQueryBuilder extends QueryBuilder {
 					label.setText("Select Stuff:");
 					break;
 			}
+			*/
 			/*
 			case 3: {
 					list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -156,6 +158,7 @@ public class SAMQueryBuilder extends QueryBuilder {
 					break;
 			}
 			*/
+		/*
 			default: System.out.println("Error currSel: "+qg.currSel);
 		}
 		Vector tempVector = new Vector();
@@ -174,6 +177,7 @@ public class SAMQueryBuilder extends QueryBuilder {
 		temp = null;
 		tempVector = null;
 		list.setSelectedRows(selected);
+		*/
 		return list;
 	}
 	public void updateSelected(JComponentAdapter list) {
@@ -331,13 +335,27 @@ public class SAMQueryBuilder extends QueryBuilder {
 		qg.axis2Name = qg.yearLevel = "sector";
 		qg.group = true;
 		qg.var = "*";
-		qg.xPath = sectorQueryPortion+"/"+subsectorQueryPortion+"/"+technologyQueryPortion+"/"
-			+"expenditure/*[exists(index-of(('consumption', 'transfers', 'directTaxes', 'savings', 'subsidy',"+
-		        "'totalImports', 'investment', 'wages', 'landRents', 'rentals', 'indirectTaxes', 'intermediateInput',"+
-		        "'sales', 'tariffs', 'imports', 'dividends', 'retainedEarnings'), local-name()))]/text() | "+
-			"collection('database.dbxml')/scenario[@name='test' and  @date='2006-2-10T15:49:33-00:00']/world/Marketplace/market[child::MarketGoodOrFuel"+
+		/*
+		qg.xPath = sectorQueryPortion+"/"+subsectorQueryPortion+"/"+baseTechnologyQueryPortion+"/"
+			+"expenditure/*[exists(index-of(('consumption', 'transfers', 'direct-taxes', 'savings', 'subsidy',"+
+		        "'total-imports', 'investment', 'wages', 'landRents', 'rentals', 'indirect-taxes', 'intermediate-input',"+
+		        "'sales', 'tariffs', 'imports', 'dividends', 'retained-earnings'), local-name()))]/text() | "+
+			"Marketplace/market[child::MarketGoodOrFuel"+
 			"[ child::text() = 'Land' or child::text() = 'Labor'  or child::text() = 'Capital']]/supply/text()";
+			*/
+		qg.xPath = sectorQueryPortion+"/"+subsectorQueryPortion+"/"+baseTechnologyQueryPortion+"/"
+			+"expenditure/*[(local-name() = 'total-imports' and parent::*/parent::*/@name = 'Trade') or "
+			+"(local-name() = 'investment' and parent::*/parent::*/@name = 'Investment') or "
+			+"(exists(index-of(('consumption', 'transfers', 'direct-taxes', 'savings'), local-name())) and "
+			+"parent::*/parent::*/@name = 'Households') or (exists(index-of(('subsidy', 'consumption', "
+			+"'transfers', 'savings'), local-name())) and parent::*/parent::*/@name = 'Government') or "
+			+"(not(exists(index-of(('Trade', 'Investment', 'Households', 'Government'), parent::*/parent::*/@name))) "
+			+"and exists(index-of(('intermediate-input', 'wages', 'land-rents', 'rentals', 'indirect-taxes', 'sales', "
+			+"'tariffs', 'imports', 'dividends', 'direct-taxes', 'retained-earnings'), local-name())))]/text() | "
+			+"Marketplace/market[child::MarketGoodOrFuel"
+			+"[ child::text() = 'Land' or child::text() = 'Labor'  or child::text() = 'Capital']]/supply/text()";
 	}
+	/*
 	private Map createList(String path, boolean isGroupNames) {
 		LinkedHashMap ret = new LinkedHashMap();
 		if(!isGroupNames && qg.isSumable) {
@@ -360,36 +378,48 @@ public class SAMQueryBuilder extends QueryBuilder {
 		DbViewer.xmlDB.printLockStats("SAMQueryBuilder.createList");
 		return ret;
 	}
+	*/
 	protected boolean isGlobal;
 	public String getCompleteXPath(Object[] regions) {
 		boolean added = false;
-		StringBuffer ret = new StringBuffer();
+		StringBuilder ret = new StringBuilder();
+		StringBuffer marketRegionQ = new StringBuffer();
 		if(((String)regions[0]).equals("Global")) {
 			ret.append(regionQueryPortion+"/");
-			//regionSel = new int[0]; 
-			regions = new Object[0];
 			isGlobal = true;
 		} else {
 			isGlobal = false;
 		}
-		for(int i = 0; i < regions.length; ++i) {
+		for(int i = 0; i < regions.length && !isGlobal; ++i) {
 			if(!added) {
 				ret.append(regionQueryPortion.substring(0, regionQueryPortion.length()-1)).append(" and (");
+				marketRegionQ.append(" and ContainedRegion[");
 				added = true;
 			} else {
 				ret.append(" or ");
+				marketRegionQ.append(" or ");
 			}
 			ret.append("(@name='").append(regions[i]).append("')");
+			marketRegionQ.append("(child::text() = '").append(regions[i]).append("')");
 		}
+		String[] queries = qg.getXPath().split("\\s*\\|\\s*");
 		if(added) {
 			ret.append(" )]/");
+			marketRegionQ.append(" ] ]/");
+			String[] spStr = queries[1].split("\\]/");
+			marketRegionQ.insert(0, spStr[0]).append(spStr[1]).toString();
+		} else {
+			marketRegionQ.append(queries[1]);
 		}
+		return ret.append(queries[0]).append(" | ").append(marketRegionQ).toString();
+		/*
 		int pipeIndex = qg.getXPath().indexOf('|');
 		String part1 = qg.getXPath().substring(0, pipeIndex+1);
 		String part2 = qg.getXPath().substring(pipeIndex+1, qg.getXPath().length());
 		String retStr = ret.toString();
+		*/
 		//System.out.println("XPath would be: "+ret.append(part1).append(retStr).append(part2));
-		return ret.append(qg.getXPath()).toString();
+		//return ret.append(qg.getXPath()).toString();
 		/*
 		return ret.append(part1)
 			.append(" collection('database.dbxml')/scenario[ (@name='test' and @date='2006-27-9T22:20:46-00:00') ]/world/")
@@ -400,8 +430,9 @@ public class SAMQueryBuilder extends QueryBuilder {
 		Vector ret = new Vector(2, 0);
 		XmlValue nBefore;
 		String nodeLevelValue = n.getNodeName();
+		String dontChange = nodeLevelValue;
 		if(nodeLevelValue.equals("supply")) {
-			// TODO: check lock stats here, do I need to do some deleteing?
+			// TODO: check lock stats here, do I need to do some deleting?
 			XmlValue prevSib = n.getPreviousSibling();
 			while(prevSib != null && !prevSib.getNodeName().equals("MarketGoodOrFuel")) {
 				prevSib = prevSib.getPreviousSibling();
@@ -428,27 +459,27 @@ public class SAMQueryBuilder extends QueryBuilder {
 		}
 		int yearLevel = 0;
 		if(nodeLevelValue.equals("consumption") || nodeLevelValue.equals("investment") 
-				|| nodeLevelValue.equals("intermediateInput")) {
+				|| nodeLevelValue.equals("intermediate-input")) {
 			ret.add("Commodities");
 		} else if(nodeLevelValue.equals("transfers") || nodeLevelValue.equals("dividends")) {
 			ret.add("Household");
-		} else if(nodeLevelValue.equals("directTaxes")) { 
+		} else if(nodeLevelValue.equals("direct-taxes")) { 
 			ret.add("Government");
 			yearLevel = 3;
-		} else if(nodeLevelValue.equals("indirectTaxes")) {
+		} else if(nodeLevelValue.equals("indirect-taxes")) {
 			ret.add("Government");
 			yearLevel = 1;
 		} else if(nodeLevelValue.equals("tariffs")) {
 			ret.add("Government");
 			yearLevel = 2;
-		} else if(nodeLevelValue.equals("savings") || nodeLevelValue.equals("retainedEarnings")) {
+		} else if(nodeLevelValue.equals("savings") || nodeLevelValue.equals("retained-earnings")) {
 			ret.add("Capital Account");
-		} else if(nodeLevelValue.equals("subsidy") || nodeLevelValue.equals("totalImports") 
+		} else if(nodeLevelValue.equals("subsidy") || nodeLevelValue.equals("total-imports") 
 				|| nodeLevelValue.equals("sales")) {
 			ret.add("Activies");
 		} else if(nodeLevelValue.equals("wages")) {
 			ret.add("Factors: Labor");
-		} else if(nodeLevelValue.equals("landRents")) {
+		} else if(nodeLevelValue.equals("land-rents")) {
 			ret.add("Factors: Land");
 		} else if(nodeLevelValue.equals("rentals")) {
 			ret.add("Factors: Capital");
@@ -494,6 +525,9 @@ public class SAMQueryBuilder extends QueryBuilder {
 		DbViewer.xmlDB.printLockStats("SAMQueryBuilder.getRegionAndYearFromNode");
 		if(ret.size() != 2) {
 			System.out.println("Ret only has "+ret.get(0));
+		}
+		if(ret.get(0).equals("Household") && ret.get(1).equals("Household")) {
+			System.out.println(dontChange);
 		}
 		return ret.toArray();
 	}

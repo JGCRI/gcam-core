@@ -46,6 +46,7 @@ public class QueryGenerator implements java.io.Serializable{
 	String title;
 	Object[] levelValues;
 	public static Vector sumableList;
+	public static java.util.List<String> hasYearList;
 	String axis1Name;
 	String axis2Name;
 	private transient QueryBuilder qb;
@@ -86,6 +87,10 @@ public class QueryGenerator implements java.io.Serializable{
 			qb = new DemandComponentsQueryBuilder(this);
 		} else if(queryIn.getNodeName().equals(SAMQueryBuilder.xmlName)) {
 			qb = new SAMQueryBuilder(this);
+		} else if(queryIn.getNodeName().equals(SectorReportQueryBuilder.xmlName)) {
+			qb = new SectorReportQueryBuilder(this);
+		} else if(queryIn.getNodeName().equals(GovtResultsQueryBuilder.xmlName)) {
+			qb = new GovtResultsQueryBuilder(this);
 		} else {
 			qb = null;
 		}
@@ -184,10 +189,15 @@ public class QueryGenerator implements java.io.Serializable{
 		typeMap.put("GDP", new Boolean(false));
 		typeMap.put("Climate", new Boolean(false));
 		typeMap.put("LandAllocator", new Boolean(false));
+		typeMap.put("SGM Queries", new Boolean(false));
+		/*
 		typeMap.put("Input", new Boolean(false));
 		typeMap.put("Demand Components Table", new Boolean(false));
 		typeMap.put("Social Accounting Matrix", new Boolean(false));
 		typeMap.put("Input Output Table", new Boolean(false));
+		typeMap.put("Sector Report Table", new Boolean(false));
+		typeMap.put("Government Results Table", new Boolean(false));
+		*/
 		typeMap.put("Query Group", new Boolean(false));
 		final Vector types = new Vector(typeMap.keySet().size(), 0);
 		for(int i = 0; i < types.capacity(); ++i) {
@@ -360,6 +370,11 @@ public class QueryGenerator implements java.io.Serializable{
 									break;
 							}
 							case 9: {
+									types.set(selInd, new SGMQueryBuilder(thisGen));
+									break;
+							}
+							/*
+							case 10: {
 									types.set(selInd, new InputQueryBuilder(thisGen));
 									break;
 							}
@@ -375,6 +390,15 @@ public class QueryGenerator implements java.io.Serializable{
 									types.set(selInd, new InputOutputQueryBuilder(thisGen));
 									break;
 							}
+							case 13: {
+									types.set(selInd, new SectorReportQueryBuilder(thisGen));
+									break;
+							}
+							case 14: {
+									types.set(selInd, new GovtResultsQueryBuilder(thisGen));
+									break;
+							}
+							*/
 							default: {
 									System.out.println("Couldn't make type, index: "+selInd);
 							}

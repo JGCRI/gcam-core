@@ -1613,4 +1613,44 @@ public final class ComponentManipulator
     else
       return null;
   }
+
+  /**
+   * This method adjusts data by multiplying or divinding by its weights.  Such a
+   * command could be use to switch variables from averaged to additive or the other
+   * way around or fix double weighting problems. Warning, there could be numerically 
+   * unstable floating point numbers in which case values would not be as expected.
+   * @param R The wrappers for the data values which should be unweighted.
+   * @param W The wrappers for the weight values for the data passed in.
+   * @param doWeight If true multiplies by weight, false will divide by weights. 
+   * @return The wrappers for the data values multiplied/divided by their weights.
+   */
+  public static Wrapper[] adjustWeights(Wrapper[] R, Wrapper[] W, boolean doWeight) {
+	  log.log(Level.FINER, "begin function");
+	  double[][] holdMR, holdMS, holdMW;
+	  Wrapper[] toReturn = new Wrapper[R.length];
+
+	  for(int i = 0; i < R.length; i++) {
+		  holdMS = R[i].data;
+		  holdMW = W[i].data;
+		  holdMR = new double[holdMS.length][holdMS[0].length];
+		  for(int iY = 0; iY < holdMR.length; iY++) {
+			  for(int iX = 0; iX < holdMR[0].length; iX++) {
+				  if(Double.isNaN(holdMS[iY][iX])) {
+					  holdMR[iY][iX] = Double.NaN;
+				  } else {
+					  if(doWeight) {
+						  holdMR[iY][iX] = holdMS[iY][iX] * holdMW[iY][iX];
+					  } else {
+						  holdMR[iY][iX] = holdMS[iY][iX] / holdMW[iY][iX];
+					  }
+				  }
+			  }
+		  }
+
+		  toReturn[i] = R[i].makeCopy();
+		  toReturn[i].data = holdMR;
+	  }
+	  return toReturn;
+  }
+
 }

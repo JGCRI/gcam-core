@@ -32,6 +32,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	protected Frame parentFrame;
 	protected String title;
 	protected Documentation documentation;
+	protected String units;
 
 	// stuff for filtering
 	// can i move these somewhere

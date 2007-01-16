@@ -52,16 +52,16 @@ public class InputQueryBuilder extends QueryBuilder {
 				if(selectedInd.length == 0 && qg.currSel != 0) {
 					nextButton.setEnabled(false);
 					cancelButton.setText(" Cancel "/*cancelTitle*/);
-				} else if(qg.currSel == 1 || qg.currSel == 2) {
+				} else if(qg.currSel == 2 || qg.currSel == 3) { // check these
 					nextButton.setEnabled(true);
 				} else if((qg.isSumable && (selectedInd[0] == 0 || selectedInd[0] == 1)) || selectedInd.length > 1
 					|| ((String)list.getSelectedValues()[0]).startsWith("Group:")) {
 					nextButton.setEnabled(false);
 					cancelButton.setText("Finished");
-				} else if(qg.currSel != 6 && !qg.isSumable) {
+				} else if(qg.currSel != 7 && !qg.isSumable) {
 					nextButton.setEnabled(true);
 					cancelButton.setText("Finished");
-				} else if(qg.currSel != 6){
+				} else if(qg.currSel != 7){
 					nextButton.setEnabled(true);
 					cancelButton.setText(" Cancel "/*cancelTitle*/);
 				} else {
@@ -82,23 +82,20 @@ public class InputQueryBuilder extends QueryBuilder {
 		//DbViewer.xmlDB.setQueryFilter("");
 	}
 	public JComponentAdapter doBack(JComponentAdapter list, JLabel label) {
-		// doing this stuff after currSel has changed now..
-		// have to sub 1
-		if(qg.currSel == 2) {
+		if(qg.currSel == 3) {
 			sectorList = null;
-		} else if(qg.currSel == 3) {
-			subsectorList = null;
 		} else if(qg.currSel == 4) {
-			techList = null;
+			subsectorList = null;
 		} else if(qg.currSel == 5) {
+			techList = null;
+		} else if(qg.currSel == 6) {
 			inputList = null;
 		}
 		return updateList(list, label);
 	}
 	public JComponentAdapter doNext(JComponentAdapter list, JLabel label) {
-		// being moved to after currSel changed, adjust numbers
 		updateSelected(list);
-		if(qg.currSel == 3) {
+		if(qg.currSel == 4) {
 			for(Iterator it = varList.entrySet().iterator(); it.hasNext(); ) {
 				Map.Entry me = (Map.Entry)it.next();
 				if(((Boolean)me.getValue()).booleanValue()) {
@@ -110,19 +107,19 @@ public class InputQueryBuilder extends QueryBuilder {
 		return updateList(list, label);
 	}
 	public boolean isAtEnd() {
-		return qg.currSel == 7-1;
+		return qg.currSel == 8-1;
 	}
 	public JComponentAdapter updateList(JComponentAdapter list, JLabel label) {
 		Map temp = null;
 		switch(qg.currSel) {
-			case 2: {
+			case 3: {
 					list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 					temp = varList;
 					//list.setListData(varList.keySet().toArray());
 					label.setText("Select Variable:");
 					break;
 			}
-			case 3: {
+			case 4: {
 					list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 					if(sectorList == null) {
 						sectorList = createList(sectorQueryPortion+"/@name", false);
@@ -132,25 +129,25 @@ public class InputQueryBuilder extends QueryBuilder {
 					label.setText("Select Sector:");
 					break;
 			}
-			case 4: {
+			case 5: {
 					if(subsectorList == null) {
-						subsectorList = createList(createListPath(4), false);
+						subsectorList = createList(createListPath(5), false);
 					}
 					temp = subsectorList;
 					label.setText("Select Subsector:");
 					break;
 			}
-			case 5: {
+			case 6: {
 					if(techList == null) {
-						techList = createList(createListPath(5), false);
+						techList = createList(createListPath(6), false);
 					}
 					temp = techList;
 					label.setText("Select Technology:");
 					break;
 			}
-			case 6: {
+			case 7: {
 					if(inputList == null) {
-						inputList = createList(createListPath(6), false);
+						inputList = createList(createListPath(7), false);
 					}
 					temp = inputList;
 					label.setText("Select Input:");
@@ -183,23 +180,23 @@ public class InputQueryBuilder extends QueryBuilder {
 			case 1: {
 					return;
 			}
-			case 2: {
+			case 3: {
 					selected = varList;
 					break;
 			}
-			case 3: {
+			case 4: {
 					selected = sectorList;
 					break;
 			}
-			case 4: {
+			case 5: {
 					selected = subsectorList;
 					break;
 			}
-			case 5: {
+			case 6: {
 					selected = techList;
 					break;
 			}
-			case 6: {
+			case 7: {
 					selected = inputList;
 					break;
 			}
@@ -220,9 +217,9 @@ public class InputQueryBuilder extends QueryBuilder {
 		if(level == -1) {
 			gq = true;
 			qg.sumAll = qg.group = false;
-			level = 7;
+			level = 8;
 		}
-		for(int i = 0; i < level-3; ++i) {
+		for(int i = 0; i < level-4; ++i) {
 			if(i == 0) {
 				tempMap = sectorList;
 				ret.append(sectorQueryPortion.substring(0, sectorQueryPortion.length()-1));
@@ -231,7 +228,7 @@ public class InputQueryBuilder extends QueryBuilder {
 				ret.append(subsectorQueryPortion.substring(0, subsectorQueryPortion.length()-1));
 			} else if(i == 2){
 				tempMap = techList;
-				ret.append(technologyQueryPortion.substring(0, technologyQueryPortion.length()-1));
+				ret.append(baseTechnologyQueryPortion.substring(0, baseTechnologyQueryPortion.length()-1));
 				//++i;
 			} else {
 				tempMap = inputList;
@@ -273,13 +270,13 @@ public class InputQueryBuilder extends QueryBuilder {
 				ret.append("]/");
 			}
 		}
-		if(level == 3) {
+		if(level == 4) {
 			ret.append(sectorQueryPortion+"/@name");
-		} else if(level == 4) {
-			ret.append(subsectorQueryPortion+"/@name");
 		} else if(level == 5) {
-			ret.append(technologyQueryPortion+"/@name");
+			ret.append(subsectorQueryPortion+"/@name");
 		} else if(level == 6) {
+			ret.append(baseTechnologyQueryPortion+"/@name");
+		} else if(level == 7) {
 			ret.append(inputQueryPortion+"/@name");
 		} else {
 			ret.append(qg.var).append("/node()");
@@ -295,15 +292,15 @@ public class InputQueryBuilder extends QueryBuilder {
 	private String expandGroupName(String gName) {
 		String query;
 		StringBuffer ret = new StringBuffer();
-		if(qg.currSel == 3) {
+		if(qg.currSel == 4) {
 			//query = "supplysector";
 			query = sectorQueryPortion;
-		} else if(qg.currSel == 4) {
+		} else if(qg.currSel == 5) {
 			query = sectorQueryPortion+"/"+subsectorQueryPortion;
-		} else if(qg.currSel == 5){
-			query = sectorQueryPortion+"/"+subsectorQueryPortion+"/"+technologyQueryPortion;
+		} else if(qg.currSel == 6){
+			query = sectorQueryPortion+"/"+subsectorQueryPortion+"/"+baseTechnologyQueryPortion;
 		} else {
-			query = sectorQueryPortion+"/"+subsectorQueryPortion+"/"+technologyQueryPortion+
+			query = sectorQueryPortion+"/"+subsectorQueryPortion+"/"+baseTechnologyQueryPortion+
 				"/"+inputQueryPortion;
 		}
 		XmlResults res = DbViewer.xmlDB.createQuery(query+"[child::group[@name='"+gName+"']]/@name", queryFilter, queryFunctions);
@@ -320,25 +317,33 @@ public class InputQueryBuilder extends QueryBuilder {
 	}
 	private void createXPath() {
 		if(qg.isSumable) {
-			qg.xPath = createListPath(7);
-			qg.yearLevel = "technology";
+			qg.xPath = createListPath(8);
+			if(QueryGenerator.hasYearList.contains(qg.var)) {
+				qg.yearLevel = qg.var;
+			} else {
+				qg.yearLevel = "baseTechnology";
+			}
 		} else {
 			qg.xPath = createListPath(qg.currSel+1);
 			qg.xPath = qg.xPath.replaceFirst("/[^/]*/[^/]*$", "/" + qg.var + "/text()");
-			if(qg.currSel == 5 || qg.currSel == 6) {
-				qg.yearLevel = "technology";
+			if(qg.currSel == 6 || qg.currSel == 7) {
+				if(QueryGenerator.hasYearList.contains(qg.var)) {
+					qg.yearLevel = qg.var;
+				} else {
+					qg.yearLevel = "baseTechnology";
+				}
 			} else {
 				qg.yearLevel = qg.var;
 			}
 		}
 		switch(qg.currSel) {
-			case 3: qg.nodeLevel = "sector";
+			case 4: qg.nodeLevel = "sector";
 				break;
-			case 4: qg.nodeLevel = "subsector";
+			case 5: qg.nodeLevel = "subsector";
 				break;
-			case 5: qg.nodeLevel = "technology";
+			case 6: qg.nodeLevel = "baseTechnology";
 				break;
-			case 6: qg.nodeLevel = "input";
+			case 7: qg.nodeLevel = "input";
 				break;
 			default: System.out.println("Error currSel: "+qg.currSel);
 		}
@@ -401,17 +406,8 @@ public class InputQueryBuilder extends QueryBuilder {
 			if(qg.nodeLevel.equals(XMLDB.getAttr(n, "type"))) {
 				ret.add(XMLDB.getAttr(n, "name"));
 			} 
-			if(qg.yearLevel.equals(XMLDB.getAttr(n, "type"))) {
+			if(qg.yearLevel.equals(XMLDB.getAttr(n, "type")) || qg.yearLevel.equals(n.getNodeName())) {
 				ret.add(0, XMLDB.getAttr(n, "year"));
-				/*
-				//ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
-				if(!getOneAttrVal(n).equals("fillout=1")) {
-				ret.add(getOneAttrVal(n));
-				} else {
-				ret.add(getOneAttrVal(n, 1));
-				}
-				*/
-
 			} else if(XMLDB.hasAttr(n)) {
 				// are filter maps used, I don't belive filtering is currently enabled for DB Output
 				// is this a feature people would want?
@@ -448,14 +444,9 @@ public class InputQueryBuilder extends QueryBuilder {
 		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
 		if( (isGlobal && type.equals("region")) 
 				|| (qg.nodeLevel.equals("sector") && type.equals("subsector")) 
-				|| ((qg.nodeLevel.equals("sector") || qg.nodeLevel.equals("subsector")) && type.equals("technology"))
-				|| ((qg.nodeLevel.equals("sector") || qg.nodeLevel.equals("subsector") || qg.nodeLevel.equals("technology")) &&
+				|| ((qg.nodeLevel.equals("sector") || qg.nodeLevel.equals("subsector")) && type.equals("baseTechnology"))
+				|| ((qg.nodeLevel.equals("sector") || qg.nodeLevel.equals("subsector") || qg.nodeLevel.equals("baseTechnology")) &&
 						type.equals("input"))) {
-				/* || (qg.nodeLevel.matches(".*sector") && type.equals("technology"))) {
-				 * This used to be the query, but matches seems to be dominating time
-				 * in the recursiveness, so going to remove, if something break, this 
-				 * could be the source of the regression
-				 */
 			currNode.delete();
 			return tempMap;
 		}

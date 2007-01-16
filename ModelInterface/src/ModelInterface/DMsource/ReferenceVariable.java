@@ -223,6 +223,9 @@ public class ReferenceVariable extends Variable
   {
     return data;
   }
+  public Wrapper[] getWeight() {
+	  return weight;
+  }
   public void setData(Wrapper[] d)
   {
     data = d;
@@ -298,10 +301,18 @@ public class ReferenceVariable extends Variable
           {
             if(Double.isNaN(toPrint[(offsetY+iY)][(offsetX+iX)]))
             {
-              toPrint[(offsetY+iY)][(offsetX+iX)] = ((holdM[iY][iX])*holdWM[iY][iX]);
+		    if(avg) {
+			    toPrint[(offsetY+iY)][(offsetX+iX)] = ((holdM[iY][iX])*holdWM[iY][iX]);
+		    } else {
+			    toPrint[(offsetY+iY)][(offsetX+iX)] = holdM[iY][iX];
+		    }
             } else
             {
-              toPrint[(offsetY+iY)][(offsetX+iX)] += ((holdM[iY][iX])*holdWM[iY][iX]);
+		    if(avg) {
+			    toPrint[(offsetY+iY)][(offsetX+iX)] += ((holdM[iY][iX])*holdWM[iY][iX]);
+		    } else {
+			    toPrint[(offsetY+iY)][(offsetX+iX)] += holdM[iY][iX];
+		    }
               /*
               if(toPrint[(offsetY+iY)][(offsetX+iX)] > 1)
               {
@@ -354,11 +365,20 @@ public class ReferenceVariable extends Variable
           {
             if(Double.isNaN(toPrint[(offsetY+iY)][(offsetX+iX)]))
             {
-              toPrint[(offsetY+iY)][(offsetX+iX)] = ((holdM[iY][iX])*holdWM[iY][iX]);
+		    if(avg) {
+			    toPrint[(offsetY+iY)][(offsetX+iX)] = ((holdM[iY][iX])*holdWM[iY][iX]);
+		    } else {
+			    toPrint[(offsetY+iY)][(offsetX+iX)] = holdM[iY][iX];
+		    }
+
             } else
             {
               //System.out.println("added twice: "+(90-((offsetY+iY)*res))+", "+(((offsetX+iX)*res)-180));
-              toPrint[(offsetY+iY)][(offsetX+iX)] += ((holdM[iY][iX])*holdWM[iY][iX]);
+		    if(avg) {
+			    toPrint[(offsetY+iY)][(offsetX+iX)] += ((holdM[iY][iX])*holdWM[iY][iX]);
+		    } else {
+			    toPrint[(offsetY+iY)][(offsetX+iX)] += holdM[iY][iX];
+		    }
               /*
               if(toPrint[(offsetY+iY)][(offsetX+iX)] > 1)
               {

@@ -1073,6 +1073,7 @@ public class DataBuilder
     //System.out.println("yLL "+yLL);
     readWord(input); //reading cellsize
     res = Double.valueOf(readNumber(input));
+    res = 360.0 / numCols;
     //System.out.println("res "+res);
     readWord(input); //reading NODATA_value
     ignore = Double.valueOf(readNumber(input));

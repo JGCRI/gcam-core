@@ -22,7 +22,9 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.tree.TreePath;
 import javax.swing.filechooser.FileFilter;
 import java.awt.event.ActionListener;
@@ -495,7 +497,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		createButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(queryList.getSelectionCount() != 1) {
-					JOptionPane.showMessageDialog(parentFrame, "Please select one Query or Query Group before createing", 
+					JOptionPane.showMessageDialog(parentFrame, "Please select one Query or Query Group before creating", 
 						"Create Query Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -596,7 +598,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		try {
 			bt = new MultiTableModel(qg, tempFilterQuery, regionList.getSelectedValues(), parentFrame);
 		} catch(NullPointerException e) {
-			System.out.println("Warning null pointer while createing MultiTableModel");
+			System.out.println("Warning null pointer while creating MultiTableModel");
 			System.out.println("Likely the query didn't get any results");
 			bt = btBefore;
 			return null;
@@ -615,7 +617,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		try {
 			bt = new ComboTableModel(qg, tempFilterQuery, regionList.getSelectedValues(), parentFrame);
 		} catch(NullPointerException e) {
-			System.out.println("Warning null pointer while createing ComboTableModel");
+			System.out.println("Warning null pointer while creating ComboTableModel");
 			System.out.println("Likely the query didn't get any results");
 			bt = btBefore;
 			return null;
@@ -909,16 +911,77 @@ public class DbViewer implements ActionListener, MenuAdder {
 	}
 
 	protected void batchQuery(File queryFile, File excelFile) {
-		Document queries = readQueries( queryFile );
-		XPathEvaluatorImpl xpeImpl = new XPathEvaluatorImpl(queries);
-		XPathResult res = (XPathResult)xpeImpl.createExpression("/queries/node()", xpeImpl.createNSResolver(queries.getDocumentElement())).evaluate(queries.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
 		Node tempNode;
 		int[] scnSel;
 		HSSFWorkbook wb = null;
 		HSSFSheet sheet = null;
 		QueryGenerator qgTemp = null;
-		Vector tempScns = new Vector();
+		Vector tempScns = getScenarios();
 		Vector tempRegions = new Vector();
+
+		// Create a Select Scenarios dialog to get which scenarios to run
+		final JList scenarioList = new JList(tempScns); 
+		final JDialog scenarioDialog = new JDialog(parentFrame, "Select Scenarios to Run", true);
+		JPanel listPane = new JPanel();
+		JPanel buttonPane = new JPanel();
+		final JButton okButton = new JButton("Ok");
+		okButton.setEnabled(false);
+		JButton cancelButton = new JButton("Cancel");
+		listPane.setLayout( new BoxLayout(listPane, BoxLayout.Y_AXIS));
+		Container contentPane = scenarioDialog.getContentPane();
+
+		scenarioList.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				if(scenarioList.isSelectionEmpty()) {
+					okButton.setEnabled(false);
+				} else {
+					okButton.setEnabled(true);
+				}
+			}
+		});
+
+		okButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				scenarioDialog.dispose();
+			}
+		});
+
+		cancelButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				scenarioList.clearSelection();
+				scenarioDialog.dispose();
+			}
+		});
+
+		buttonPane.setLayout( new BoxLayout(buttonPane, BoxLayout.X_AXIS));
+		buttonPane.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+		buttonPane.add(Box.createHorizontalGlue());
+		buttonPane.add(okButton);
+		buttonPane.add(Box.createHorizontalStrut(10));
+		buttonPane.add(cancelButton);
+
+		JScrollPane sp = new JScrollPane(scenarioList);
+		sp.setPreferredSize(new Dimension(300, 300));
+		listPane.add(new JLabel("Select Scenarios:"));
+		listPane.add(Box.createVerticalStrut(10));
+		listPane.add(sp);
+		listPane.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+		contentPane.add(listPane, BorderLayout.PAGE_START);
+		contentPane.add(buttonPane, BorderLayout.PAGE_END);
+		scenarioDialog.pack();
+		scenarioDialog.setVisible(true);
+
+		if(scenarioList.isSelectionEmpty()) {
+			return;
+		}
+		scnSel = scenarioList.getSelectedIndices();
+
+		// read the batch query file
+		Document queries = readQueries( queryFile );
+		XPathEvaluatorImpl xpeImpl = new XPathEvaluatorImpl(queries);
+		XPathResult res = (XPathResult)xpeImpl.createExpression("/queries/node()", xpeImpl.createNSResolver(queries.getDocumentElement())).evaluate(queries.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+
+		// read/create the output excel file
 		if(excelFile.exists()) {
 			try {
 				wb = new HSSFWorkbook(new FileInputStream(excelFile));
@@ -930,24 +993,29 @@ public class DbViewer implements ActionListener, MenuAdder {
 		if(wb == null) {
 			wb = new HSSFWorkbook();
 		}
+		//TODO: add a progress bar
 		while((tempNode = res.iterateNext()) != null) {
-			tempScns.removeAllElements();
+			//tempScns.removeAllElements();
 			tempRegions.removeAllElements();
 			NodeList nl = tempNode.getChildNodes();
 			for(int i = 0; i < nl.getLength(); ++i) {
 				Element currEl = (Element)nl.item(i);
+				/* Scenarios will be selected from a dialog
 				if(currEl.getNodeName().equals("scenario")) {
 					tempScns.add("a "+currEl.getAttribute("name")+' '+currEl.getAttribute("date"));
-				} else if(currEl.getNodeName().equals("region")) {
+					*/
+				if(currEl.getNodeName().equals("region")) {
 					tempRegions.add(currEl.getAttribute("name"));
 				} else {
 					qgTemp = new QueryGenerator(currEl);
 				}
 			}
+			/*
 			scnSel = new int[tempScns.size()];
 			for(int i = 0; i < scnSel.length; ++i) {
 				scnSel[i] = i;
 			}
+			*/
 			String tempFilterQuery = createFilteredQuery(tempScns, scnSel);
 			sheet = wb.createSheet("Sheet"+String.valueOf(wb.getNumberOfSheets()+1));
 			try {

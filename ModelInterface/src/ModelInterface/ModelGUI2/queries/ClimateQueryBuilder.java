@@ -120,8 +120,8 @@ public class ClimateQueryBuilder extends QueryBuilder {
 			}
 		}
 		qg.xPath = "/climate-model/"+typeSel+"/text()";
-		qg.axis1Name = qg.yearLevel = qg.nodeLevel = typeSel;
-		qg.var = qg.axis2Name = "Year";
+		qg.var = qg.axis1Name = qg.yearLevel = qg.nodeLevel = typeSel;
+		qg.axis2Name = "Year";
 		qg.group = false;
 		qg.sumAll = false;
 	}

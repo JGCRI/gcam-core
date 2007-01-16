@@ -165,7 +165,6 @@ public class subRegion extends Region
 
 	  double cellSize;
 	  double[][] weightMask = getM();
-	  //double[][] toReturn = new double[weightMask.length][weightMask[0].length];
 	  double[][] toReturn = new double[(int)(height/resolution)][(int)(width/resolution)];
 
 	  double circumAtLat; //the circumference of the earth at a specific latitude
@@ -174,33 +173,36 @@ public class subRegion extends Region
 	  double blockWidth; //width in km of a block of data
 	  double blockHeight; //height in km of a block of data
 
-	  //holdMR[0][0] = 0;
+	  totalHeight = (POLAR_CIRCUM/(360/height));
+	  blockHeight = (totalHeight/weightMask.length);
 
-	  //for(int i = 0; i < R.length; i++)
-	  //{
-		  totalHeight = (POLAR_CIRCUM/(360/height));
-		  blockHeight = (totalHeight/weightMask.length);
+	  for(int iY = 0; iY < weightMask.length; iY++)
+	  {
+		  // Vinces way..
+		  circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((y+((weightMask.length-1-iY)*resolution))*(PI/180)));
+		  totalWidth = (circumAtLat/(360/width));
+		  blockWidth = (totalWidth/weightMask[iY].length);
+		  cellSize = (blockWidth*blockHeight);
 
-		  //holdMS = R[i].data;
-		  for(int iY = 0; iY < weightMask.length; iY++)
+		  // shui's way..
+		  /*
+		  double latS = y+((weightMask.length-1-iY)*resolution);
+		  double radiansS = (90.0 - (latS+.25))*PI/180;
+		  double cosinesS = Math.cos(radiansS) - Math.cos(radiansS+(resolution*PI)/180);
+		  double areaS = ((6371221.3*6371221.3)*PI*cosinesS/360)*(.000001);
+		  */
+
+		  for(int iX = 0; iX < weightMask[0].length; iX++)
 		  {
-			  circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((y+(iY*resolution))*(PI/180)));
-			  totalWidth = (circumAtLat/(360/width));
-			  blockWidth = (totalWidth/weightMask[iY].length);
-			  cellSize = (blockWidth*blockHeight);
-
-			  for(int iX = 0; iX < weightMask[0].length; iX++)
+			  if(!java.lang.Double.isNaN(weightMask[iY][iX]) && weightMask[iY][iX] != 0.0)
 			  {
-				  if(!java.lang.Double.isNaN(weightMask[iY][iX]))
-				  {
-					  // multiply by weight?
-					  toReturn[iY][iX] = (cellSize) * weightMask[iY][iX];
-				  } else {
-					  toReturn[iY][iX] = java.lang.Double.NaN;
-				  }
+				  toReturn[iY][iX] = (cellSize);
+				  //toReturn[iY][iX] = (areaS);
+			  } else {
+				  toReturn[iY][iX] = java.lang.Double.NaN;
 			  }
 		  }
-	  //}
+	  }
 
 	  return toReturn;
   }

@@ -45,6 +45,13 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		Object got = popList.get("populationMiniCAM");
 		return got != null && ((Boolean)got).booleanValue();
 	}
+	private boolean isTotalPopulation() {
+		if(varList == null) {
+			return false;
+		}
+		Object got = varList.get("total-population");
+		return got != null && ((Boolean)got).booleanValue();
+	}
 	public EventListener getListSelectionListener(final JComponentAdapter list, final JButton nextButton, final JButton cancelButton) {
 		queryFunctions.removeAllElements();
 		queryFunctions.add("distinct-values");
@@ -56,7 +63,8 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 					nextButton.setEnabled(false);
 					cancelButton.setText(" Cancel "/*cancelTitle*/);
 				} else if(qg.currSel < 5) {
-					if(((String)list.getSelectedValues()[0]).equals("populationMiniCAM") && qg.currSel == 3) {
+					if((((String)list.getSelectedValues()[0]).equals("populationMiniCAM") ||
+							isTotalPopulation()) && qg.currSel == 3) {
 						nextButton.setEnabled(false);
 						cancelButton.setText("Finished");
 					} else {
@@ -101,7 +109,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		updateSelected(list);
 		--qg.currSel;
 		createXPath();
-		if(isPopMiniCAMSelected()) {
+		if(isPopMiniCAMSelected() || isTotalPopulation()) {
 			qg.levelValues = list.getSelectedValues(); // doesn't make sense?
 		} else {
 			Vector temp = new Vector();
@@ -120,6 +128,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		//DbViewer.xmlDB.setQueryFunction("");
 	}
 	public boolean isAtEnd() {
+		// did not update this since it is going to be removed anyways
 		return (qg.currSel == 3 && isPopMiniCAMSelected()) || qg.currSel == 5;
 	}
 	public JComponentAdapter updateList(JComponentAdapter list, JLabel label) {
@@ -238,9 +247,15 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 			qg.yearLevel = "populationSGMRate";
 			qg.nodeLevel = "ageCohort";
 		}
+		if(isTotalPopulation()) {
+			// overwrite the nodeLevel if totalPopulation, since it is
+			// really the same fore MiniCAM or SGM
+			qg.nodeLevel = "region";
+		}
 		// default axis1Name to nodeLevel
 		qg.axis1Name = qg.nodeLevel;
 		qg.axis2Name = "Year";
+		// should total-population be group?
 		qg.group = true;
 	}
 	public String createListPath(int level) {
@@ -253,7 +268,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 				break;
 			}
 		}
-		if(isPopMiniCAMSelected()) {
+		if(isPopMiniCAMSelected() || isTotalPopulation()) {
 			return ret.append(qg.var).append("/node()").toString();
 		}
 		ret.append("ageCohort");
@@ -369,12 +384,15 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		Vector ret = new Vector(2,0);
 		XmlValue nBefore;
 		do {
-			if(n.getNodeName().equals(qg.nodeLevel) || qg.nodeLevel.equals(XMLDB.getAttr(n, "type"))) {
+			if(qg.nodeLevel.equals(XMLDB.getAttr(n, "type"))) {
+				ret.add(XMLDB.getAttr(n, "name"));
+			} else if(n.getNodeName().equals(qg.nodeLevel)) {
 				ret.add(XMLDB.getAttr(n, "ageGroup"));
-			} 
+			}
 			if(n.getNodeName().equals(qg.yearLevel)) {
 				ret.add(0, XMLDB.getAttr(n, "year"));
 			} else if(XMLDB.hasAttr(n)) {
+				// TODO: figure out if we really want to be able to filter
 				HashMap tempFilter;
 				if (filterMaps.containsKey(n.getNodeName())) {
 					tempFilter = (HashMap)filterMaps.get(n.getNodeName());

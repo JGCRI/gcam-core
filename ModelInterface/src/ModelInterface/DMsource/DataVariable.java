@@ -158,6 +158,10 @@ public class DataVariable extends Variable
   {
     return data;
   }
+  public Wrapper[] getWeight() {
+	  // TODO: maybe return a 1 wrapper with data 1x1 matrix with 1?
+	  throw new UnsupportedOperationException();
+  }
   public void setData(Wrapper[] d)
   {
     data = d;
