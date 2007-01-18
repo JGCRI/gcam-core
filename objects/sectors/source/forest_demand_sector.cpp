@@ -208,7 +208,7 @@ double ForestDemandSector::calcForestDemand ( const GDP* gdp, const int period, 
                             / gdp->getGDPPerCapitaNotAdjusted( normPeriod );
    
 
-	double forestDemand = perCapitaBaseOutput * pow(priceRatio, mPriceElasticity[ period ] )
+	double forestDemand = perCapitaBaseOutput * pow(priceRatio, mPriceElasticity[ modelPeriod ] )
                           *pow(scaledGDPperCap, mIncomeElasticity[ modelPeriod ])
                           * population;
 
