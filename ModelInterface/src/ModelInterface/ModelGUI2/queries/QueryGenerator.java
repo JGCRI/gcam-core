@@ -87,10 +87,12 @@ public class QueryGenerator implements java.io.Serializable{
 			qb = new DemandComponentsQueryBuilder(this);
 		} else if(queryIn.getNodeName().equals(SAMQueryBuilder.xmlName)) {
 			qb = new SAMQueryBuilder(this);
+			/* TODO: I lost these, need to re-write
 		} else if(queryIn.getNodeName().equals(SectorReportQueryBuilder.xmlName)) {
 			qb = new SectorReportQueryBuilder(this);
 		} else if(queryIn.getNodeName().equals(GovtResultsQueryBuilder.xmlName)) {
 			qb = new GovtResultsQueryBuilder(this);
+			*/
 		} else {
 			qb = null;
 		}
@@ -189,7 +191,7 @@ public class QueryGenerator implements java.io.Serializable{
 		typeMap.put("GDP", new Boolean(false));
 		typeMap.put("Climate", new Boolean(false));
 		typeMap.put("LandAllocator", new Boolean(false));
-		typeMap.put("SGM Queries", new Boolean(false));
+		// TODO: typeMap.put("SGM Queries", new Boolean(false));
 		/*
 		typeMap.put("Input", new Boolean(false));
 		typeMap.put("Demand Components Table", new Boolean(false));
@@ -369,10 +371,12 @@ public class QueryGenerator implements java.io.Serializable{
 									types.set(selInd, new LandAllocatorQueryBuilder(thisGen));
 									break;
 							}
+							/* TODO: Again lost, rewrite
 							case 9: {
 									types.set(selInd, new SGMQueryBuilder(thisGen));
 									break;
 							}
+							*/
 							/*
 							case 10: {
 									types.set(selInd, new InputQueryBuilder(thisGen));
