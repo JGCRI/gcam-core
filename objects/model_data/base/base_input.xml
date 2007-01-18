@@ -24,6 +24,7 @@
 		<summable var="emissions"></summable>
 		<has-year var="output"></has-year>
 		<summary>SRES B2 Scenario is used for this Reference Scenario</summary>
+		<has-year var="input"/>
 	</output-meta-data>
 	<world>
 		<region name="USA">
