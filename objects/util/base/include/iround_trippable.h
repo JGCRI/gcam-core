@@ -24,12 +24,12 @@
 class Tabs;
 #include <iosfwd>
 
-/*! \brief The IRoundTrippable interface allows an object to be returned to an
-*          XML file so that it can be read back in by a later scenario.
+/*! \brief The IRoundTrippable interface allows the data necessary to create an object 
+*          to be written to an XML file so that it can be read back in by a later scenario.
 * \details Interface which specifies that the object must implement an interface
-*          which writes out the object so it can be read back in. The interface
-*          specifies a single method, toInputXML which must output the object to
-*          the given stream. 
+*          which writes out the data necessary to create this object so it can be read back 
+*          in and used in a subsequent scenario. The interface specifies a single method, 
+*          toInputXML which must output the object to the given stream. 
 */
 
 class IRoundTrippable {

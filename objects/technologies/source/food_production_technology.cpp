@@ -30,7 +30,7 @@ extern Scenario* scenario;
 FoodProductionTechnology::FoodProductionTechnology( const string& aName, const int aYear )
 :Technology( aName, aYear ){
     mLandAllocator = 0;
-    variableCost = 2; // Need a better default value for this (0 is probably ok, with a warning to logfile).
+    variableCost = 0; // Need a better default value for this (0 is probably ok, with a warning to logfile).
     calLandUsed = -1;
     calYield = -1;
     calObservedYield = -1;
@@ -445,7 +445,7 @@ double FoodProductionTechnology::calcSupply( const string& aRegionName,
     // TODO: Determine why a small number is too large.
     // TODO: Checking the variable cost of zero is a hack so that this works
     //       for the unmanaged sector.
-    if( yield < util::getSmallNumber() && landAllocation > 0.1 && variableCost > 0 ){
+    if( yield < util::getSmallNumber() && landAllocation > 0.1 && variableCost > util::getTinyNumber() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Zero production of " << aProductName << " by technology " << mName
