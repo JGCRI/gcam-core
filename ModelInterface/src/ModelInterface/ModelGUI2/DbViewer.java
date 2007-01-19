@@ -25,6 +25,8 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.TreeModelListener;
+import javax.swing.event.TreeModelEvent;
 import javax.swing.tree.TreePath;
 import javax.swing.filechooser.FileFilter;
 import java.awt.event.ActionListener;
@@ -491,6 +493,25 @@ public class DbViewer implements ActionListener, MenuAdder {
 					editButton.setEnabled(false);
 					runQueryButton.setEnabled(false);
 				}
+			}
+		});
+		queries.addTreeModelListener(new TreeModelListener() {
+			public void treeNodesInserted(TreeModelEvent e) {
+				// right now this is the only one I care about
+				// so that I can set selection after a node is
+				// inserted
+				TreePath pathWithNewChild = e.getTreePath().pathByAddingChild(e.getChildren()[0]);
+				queryList.setSelectionPath(pathWithNewChild);
+				queryList.scrollPathToVisible(pathWithNewChild);
+			}
+			public void treeNodesChanged(TreeModelEvent e) {
+				// do nothing..
+			}
+			public void treeNodesRemoved(TreeModelEvent e) {
+				// do nothing..
+			}
+			public void treeStructureChanged(TreeModelEvent e) {
+				// do nothing..
 			}
 		});
 

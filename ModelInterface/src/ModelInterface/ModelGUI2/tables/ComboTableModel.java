@@ -254,7 +254,7 @@ public class ComboTableModel extends BaseTableModel{
 			// get rid of begin and end '/'
 			lineToParse = lineToParse.substring( 1, lineToParse.length()-1 );
 			
-			StringTokenizer st = new StringTokenizer( lineToParse, "/", false);
+			StringTokenizer st = new StringTokenizer( lineToParse, "~", false);
 			int numberOfThem = st.countTokens();
 			
 			Vector onerow = new Vector( numberOfThem );
@@ -266,6 +266,8 @@ public class ComboTableModel extends BaseTableModel{
 				StringTokenizer innerSt = new StringTokenizer( allNodeInfo, "@", false);
 				if( innerSt.countTokens() != 2 ){
 					System.out.println("BIG PROBLEM, COUNT TOKENS ISN'T 2!!!!!!!!!!: "+allNodeInfo);
+					System.out.println("lineToParse: "+lineToParse);
+					System.out.println("allNodeInfo: "+allNodeInfo);
 					return;
 				}
 				String firstHalf = innerSt.nextToken(); //	populationSGMRate
@@ -283,7 +285,7 @@ public class ComboTableModel extends BaseTableModel{
 			}
 			return;
 		}else{
-			recAddTables((Map)me.getValue(), me, regions, years, titleStr+'/'+(String)me.getKey());
+			recAddTables((Map)me.getValue(), me, regions, years, titleStr+"~"+(String)me.getKey());
 		}
 	}
   }

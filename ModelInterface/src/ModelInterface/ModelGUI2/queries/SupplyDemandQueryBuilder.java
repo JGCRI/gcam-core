@@ -426,18 +426,14 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 		if( (isGlobal && type.equals("region")) 
 				|| (qg.nodeLevel.equals("sector") && type.equals("subsector")) 
 				|| ((qg.nodeLevel.equals("sector") || qg.nodeLevel.equals("subsector")) && type.equals("technology"))) {
-				/* || (qg.nodeLevel.matches(".*sector") && type.equals("technology"))) {
-				 * This used to be the query, but matches seems to be dominating time
-				 * in the recursiveness, so going to remove, if something break, this 
-				 * could be the source of the regression
-				 */
 			currNode.delete();
 			return tempMap;
 		}
 		if(XMLDB.hasAttr(currNode) && !type.equals(qg.nodeLevel) 
 				&& !type.equals(qg.yearLevel)) {
 			String attr = XMLDB.getAllAttr(currNode);
-			attr = currNode.getNodeName()+"@"+attr;
+			//attr = currNode.getNodeName()+"@"+attr;
+			attr = type+"@"+attr;
 			if(!tempMap.containsKey(attr)) {
 				tempMap.put(attr, new HashMap());
 			}

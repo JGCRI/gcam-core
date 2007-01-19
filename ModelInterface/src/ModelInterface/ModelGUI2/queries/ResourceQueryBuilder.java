@@ -427,7 +427,8 @@ public class ResourceQueryBuilder extends QueryBuilder {
 		if(XMLDB.hasAttr(currNode) && !type.equals(qg.nodeLevel) 
 				&& !type.equals(qg.yearLevel)) {
 			String attr = XMLDB.getAllAttr(currNode);
-			attr = currNode.getNodeName()+"@"+attr;
+			//attr = currNode.getNodeName()+"@"+attr;
+			attr = type+"@"+attr;
 			if(!tempMap.containsKey(attr)) {
 				tempMap.put(attr, new TreeMap());
 			}

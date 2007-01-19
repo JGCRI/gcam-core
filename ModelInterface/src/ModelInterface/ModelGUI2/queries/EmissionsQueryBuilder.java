@@ -472,6 +472,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		}
 		//System.out.println("Looking at: "+currNode.getNodeName());
 		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
+		// TODO: I thought I was supposed to try to get rid of the matches..
 		if((currNode.getNodeName().equals("emissions")) || (type != null && ((isGlobal && type.equals("region"))
 				|| (qg.nodeLevel.equals("emissions") && (type.matches(".*sector") || type.equals("technology")))
 				|| (qg.nodeLevel.equals("sector") && type.equals("subsector")) 
@@ -490,7 +491,8 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		if(XMLDB.hasAttr(currNode) && !qg.nodeLevel.equals(type)
 				&& !qg.yearLevel.equals(type)) {
 			String attr = XMLDB.getAllAttr(currNode);
-			attr = currNode.getNodeName()+"@"+attr;
+			//attr = currNode.getNodeName()+"@"+attr;
+			attr = type+"@"+attr;
 			if(!tempMap.containsKey(attr)) {
 				tempMap.put(attr, new TreeMap());
 			}

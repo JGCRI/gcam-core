@@ -394,10 +394,16 @@ public class XMLDB {
 	public static String getAllAttr(XmlValue node) throws XmlException {
 		XmlResults attrRes = node.getAttributes();
 		XmlValue temp;
-		String ret = "";
+		String ret;
+		if((ret = getAttr(node, "name")) != null) {
+			ret = "," + ret;
+		} else {
+			ret = "";
+		}
 		while(attrRes.hasNext()) {
 			temp = attrRes.next();
-			if(temp.getNodeName().indexOf(":") == -1) {
+			if(temp.getNodeName().indexOf(":") == -1 && !temp.getNodeName().equals("name") &&
+					!temp.getNodeName().equals("type")) {
 				ret += ","+temp.getNodeName()+"="+temp.getNodeValue();
 			}
 			temp.delete();
