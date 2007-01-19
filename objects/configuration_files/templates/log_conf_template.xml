@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Josh Lurz (PNNL) -->
+<!-- 
+
+The level of warning display to the screen and to the corresponding text log file 
+is determined by the settings in the file below. The levels are:
+
+       1: DEBUG   < Messages useful for debugging.
+       2: NOTICE  < Notice. May or may not be significant.
+       3: WARNING < Something that should probably not occur.
+       4: ERROR   < An error has occurred. 
+       5: SEVERE  < Severe warning -- model can generally not continue.
+
+-->
+
 <LoggerFactory xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="LoggerFactory.xsd">
 	<Logger name="main_log" type="PlainTextLogger">
 		<FileName>logs/main_log.txt</FileName>
