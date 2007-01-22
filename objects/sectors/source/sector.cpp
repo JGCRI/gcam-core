@@ -415,7 +415,7 @@ const vector<double> Sector::calcSubsectorShares( const GDP* aGDP, const int aPe
 	
     // Normalize the shares.
 	double shareSum = SectorUtils::normalizeShares( subsecShares );
-	if( !util::isEqual( shareSum, 1.0 ) ){
+	if( !util::isEqual( shareSum, 1.0 ) && !outputsAllFixed( aPeriod ) ){
 		ILogger& mainLog = ILogger::getLogger( "main_log" );
 		mainLog.setLevel( ILogger::DEBUG );
 		mainLog << "Shares for sector " << name << " in region " << regionName 
