@@ -715,8 +715,8 @@ void DemandSector::dbOutput( const GDP* aGDP,
     dboutput4(regionName,"CO2 Emiss",secname,"zTotal","MTC",temp);
 
     // CO2 indirect emissions by sector
-    for (m= 0;m<maxper;m++) {
-        temp[m] =  aIndEmissCalc->getIndirectEmissions( name, m );
+    for (int m=0;m<maxper;m++) {
+        temp[m] = aIndEmissCalc->getIndirectEmissions( name, m );
     }
     dboutput4(regionName,"CO2 Emiss(ind)",secname,"zTotal","MTC",temp);
 
