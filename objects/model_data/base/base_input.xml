@@ -54125,6 +54125,7 @@
 			<PrimaryFuelCO2Coef name="shale oil regional">27.9</PrimaryFuelCO2Coef>
 			<PrimaryFuelCO2Coef name="wholesale gas">14.2</PrimaryFuelCO2Coef>
 			<land-use-co2-emissions year="1975" fillout="1">0</land-use-co2-emissions>
+			<interest-rate>0.05</interest-rate>
 			<GDP>
 				<PPPConvert constRatio="0">1.23</PPPConvert>
 				<baseGDP>23360</baseGDP>
