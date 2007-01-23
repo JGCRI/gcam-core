@@ -50,33 +50,33 @@ mBiomassAdder( scenario->getModeltime()->getmaxper() )
 * \param aPeriod Period for which to initialize the SupplySector.
 */
 void SupplySector::initCalc( NationalAccount* aNationalAccount,
-							const Demographic* aDemographics,
-							const int aPeriod )
+                            const Demographic* aDemographics,
+                            const int aPeriod )
 {
-	Sector::initCalc( aNationalAccount, aDemographics, aPeriod );
+    Sector::initCalc( aNationalAccount, aDemographics, aPeriod );
 
-	// Check if the sector should create a trial supply market. First check if
-	// the flag is already set. This is only done in period 1 so that other
+    // Check if the sector should create a trial supply market. First check if
+    // the flag is already set. This is only done in period 1 so that other
     // markets have a chance to set the flag.
-	if( aPeriod == 1 ){
-		if( !mHasTrialSupply ){
-			const Marketplace* marketplace = scenario->getMarketplace();
+    if( aPeriod == 1 ){
+        if( !mHasTrialSupply ){
+            const Marketplace* marketplace = scenario->getMarketplace();
 
-			// Always look for the flag in period 0.
-			const IInfo* sectorInfo = marketplace->getMarketInfo( name, regionName, 0, true );
+            // Always look for the flag in period 0.
+            const IInfo* sectorInfo = marketplace->getMarketInfo( name, regionName, 0, true );
 
-			// The sector's market info must exist.
-			assert( sectorInfo );
+            // The sector's market info must exist.
+            assert( sectorInfo );
 
-			// Set the trial supply to true if the marketinfo has a request. 
-			mHasTrialSupply = sectorInfo->getBoolean( "create-trial-supply", false );
-		}
+            // Set the trial supply to true if the marketinfo has a request. 
+            mHasTrialSupply = sectorInfo->getBoolean( "create-trial-supply", false );
+        }
 
-		// Create the trial supply market if requested.
-		if( mHasTrialSupply ){
-			SectorUtils::createTrialSupplyMarket( regionName, name );
-		}
-	}
+        // Create the trial supply market if requested.
+        if( mHasTrialSupply ){
+            SectorUtils::createTrialSupplyMarket( regionName, name );
+        }
+    }
 }
 
 /*! \brief returns Sector output.
@@ -89,26 +89,26 @@ void SupplySector::initCalc( NationalAccount* aNationalAccount,
 * \return total output
 */
 double SupplySector::getOutput( const int aPeriod ) const {
-	double output = 0;
-	for ( unsigned int i = 0; i < subsec.size(); ++i ) {
-		double subsecOutput = subsec[ i ]->getOutput( aPeriod );
-		// error check.
-		if ( !util::isValidNumber( subsecOutput ) ){
-			ILogger& mainLog = ILogger::getLogger( "main_log" );
-			mainLog.setLevel( ILogger::ERROR );
-			mainLog << "Output for subsector " << subsec[ i ]->getName() << " in Sector " << name 
-				<< " in region " << regionName <<" is not valid." << endl;
-			continue;
-		}
-		output += subsecOutput;
-	}
+    double output = 0;
+    for ( unsigned int i = 0; i < subsec.size(); ++i ) {
+        double subsecOutput = subsec[ i ]->getOutput( aPeriod );
+        // error check.
+        if ( !util::isValidNumber( subsecOutput ) ){
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Output for subsector " << subsec[ i ]->getName() << " in Sector " << name 
+                << " in region " << regionName <<" is not valid." << endl;
+            continue;
+        }
+        output += subsecOutput;
+    }
 
-	// In the base period return a read in output if there is none.
-	if( aPeriod == 0 && output == 0 ){
-		return mBaseOutput;
-	}
+    // In the base period return a read in output if there is none.
+    if( aPeriod == 0 && output == 0 ){
+        return mBaseOutput;
+    }
 
-	return output;
+    return output;
 }
 
 /*! \brief Return the price of the SupplySector.
@@ -118,7 +118,7 @@ double SupplySector::getOutput( const int aPeriod ) const {
 * \todo Move entire calculation here once demand sectors are rewritten.
 */
 double SupplySector::getPrice( const GDP* aGDP, const int aPeriod ) const {
-	return Sector::getPrice( aGDP, aPeriod );
+    return Sector::getPrice( aGDP, aPeriod );
 }
 
 /*! \brief Calculate the final supply price.
@@ -131,7 +131,7 @@ void SupplySector::calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ){
     // Calculate the costs for all subsectors.
     calcCosts( aPeriod );
 
-	// Set the price into the market.
+    // Set the price into the market.
     Marketplace* marketplace = scenario->getMarketplace();
 
     double avgMarginalPrice = getPrice( aGDP, aPeriod );
@@ -163,46 +163,46 @@ void SupplySector::calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ){
 * \param aPeriod Model period
 */
 void SupplySector::supply( const GDP* aGDP, const int aPeriod ) {
-	Marketplace* marketplace = scenario->getMarketplace();
-	// demand for the good produced by this Sector
-	double marketDemand = marketplace->getDemand( name, regionName, aPeriod );
+    Marketplace* marketplace = scenario->getMarketplace();
+    // demand for the good produced by this Sector
+    double marketDemand = marketplace->getDemand( name, regionName, aPeriod );
 
-	// Determine if fixed output must be scaled because fixed supply
-	// exceeded demand.
-	double fixedOutput = getFixedOutput( aPeriod );
-	double scaleFactor = SectorUtils::calcFixedOutputScaleFactor( marketDemand, fixedOutput );
+    // Determine if fixed output must be scaled because fixed supply
+    // exceeded demand.
+    double fixedOutput = getFixedOutput( aPeriod );
+    double scaleFactor = SectorUtils::calcFixedOutputScaleFactor( marketDemand, fixedOutput );
 
-	// Calculate the demand for new investment.
-	double newInvestment = max( marketDemand - fixedOutput, 0.0 );
-	const vector<double> subsecShares = calcSubsectorShares( aGDP, aPeriod );
+    // Calculate the demand for new investment.
+    double newInvestment = max( marketDemand - fixedOutput, 0.0 );
+    const vector<double> subsecShares = calcSubsectorShares( aGDP, aPeriod );
 
-	// This is where subsector and technology outputs are set
-	for( unsigned int i = 0; i < subsec.size(); ++i ){
-		// set subsector output from Sector demand
-		subsec[ i ]->setOutput( subsecShares[ i ] * newInvestment, scaleFactor, aGDP, aPeriod );
-	}    
+    // This is where subsector and technology outputs are set
+    for( unsigned int i = 0; i < subsec.size(); ++i ){
+        // set subsector output from Sector demand
+        subsec[ i ]->setOutput( subsecShares[ i ] * newInvestment, scaleFactor, aGDP, aPeriod );
+    }    
 
-	const static bool debugChecking = Configuration::getInstance()->getBool( "debugChecking" );
-	if ( debugChecking ) {
-		// If the model is working correctly this should never give an error
-		// An error here means that the supply summed up from the supply sectors 
-		// is not equal to the demand that was passed in 
-		double mrksupply = getOutput( aPeriod );
+    const static bool debugChecking = Configuration::getInstance()->getBool( "debugChecking" );
+    if ( debugChecking ) {
+        // If the model is working correctly this should never give an error
+        // An error here means that the supply summed up from the supply sectors 
+        // is not equal to the demand that was passed in 
+        double mrksupply = getOutput( aPeriod );
 
-		// if demand identically = 1 then must be in initial iteration so is not an error
-		if ( aPeriod > 0 && fabs(mrksupply - marketDemand ) > 0.01 && marketDemand != 1 ) {
-			ILogger& mainLog = ILogger::getLogger( "main_log" );
-			mainLog.setLevel( ILogger::WARNING );
-			mainLog << regionName << " Market "<<  name << " demand and derived supply are not equal by: ";
-			mainLog << fabs( mrksupply - marketDemand ) << ": ";
-			mainLog << "S: " << mrksupply << " D: " << marketDemand << " Fixed-Supply: " << getFixedOutput( aPeriod ) << endl;
-		}
-	}
+        // if demand identically = 1 then must be in initial iteration so is not an error
+        if ( aPeriod > 0 && fabs(mrksupply - marketDemand ) > 0.01 && marketDemand != 1 ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << regionName << " Market "<<  name << " demand and derived supply are not equal by: ";
+            mainLog << fabs( mrksupply - marketDemand ) << ": ";
+            mainLog << "S: " << mrksupply << " D: " << marketDemand << " Fixed-Supply: " << getFixedOutput( aPeriod ) << endl;
+        }
+    }
 
-	// Set the trial supply if the market exists.
-	if( mHasTrialSupply ){
-		SectorUtils::setTrialSupply( regionName, name, getOutput( aPeriod ), aPeriod );
-	}
+    // Set the trial supply if the market exists.
+    if( mHasTrialSupply ){
+        SectorUtils::setTrialSupply( regionName, name, getOutput( aPeriod ), aPeriod );
+    }
 }
 
 /*! \brief Complete the initialization of the supply sector.
@@ -215,20 +215,20 @@ void SupplySector::completeInit( const IInfo* aRegionInfo,
                                  ILandAllocator* aLandAllocator,
                                  const GlobalTechnologyDatabase* aGlobalTechDB )
 {
-	// default unit to EJ
-	if ( mOutputUnit.empty() ) {
-		mOutputUnit = "EJ"; 
-	}
-	// default unit to EJ
-	if ( mInputUnit.empty() ) {
-		mInputUnit = "EJ"; 
-	}
-	// default unit to $/GJ
-	if ( mPriceUnit.empty() ) {
-		mPriceUnit = "75$/GJ"; 
-	}
-	Sector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator, aGlobalTechDB );
-	setMarket();
+    // default unit to EJ
+    if ( mOutputUnit.empty() ) {
+        mOutputUnit = "EJ"; 
+    }
+    // default unit to EJ
+    if ( mInputUnit.empty() ) {
+        mInputUnit = "EJ"; 
+    }
+    // default unit to $/GJ
+    if ( mPriceUnit.empty() ) {
+        mPriceUnit = "75$/GJ"; 
+    }
+    Sector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator, aGlobalTechDB );
+    setMarket();
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -240,7 +240,7 @@ void SupplySector::completeInit( const IInfo* aRegionInfo,
 * \return The constant XML_NAME.
 */
 const string& SupplySector::getXMLName() const {
-	return XML_NAME;
+    return XML_NAME;
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -253,7 +253,7 @@ const string& SupplySector::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& SupplySector::getXMLNameStatic() {
-	return XML_NAME;
+    return XML_NAME;
 }
 
 /*! \brief XML output stream for derived classes
@@ -267,10 +267,10 @@ const std::string& SupplySector::getXMLNameStatic() {
 */
 void SupplySector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {  
 
-	// write the xml for the class members.
-	XMLWriteElementCheckDefault( mOutputUnit, "outputUnit", out, tabs, string("EJ") );
-	XMLWriteElementCheckDefault( mInputUnit, "inputUnit", out, tabs, string("EJ") );
-	XMLWriteElementCheckDefault( mPriceUnit, "priceUnit", out, tabs, string("75$/GJ") );
+    // write the xml for the class members.
+    XMLWriteElementCheckDefault( mOutputUnit, "outputUnit", out, tabs, string("EJ") );
+    XMLWriteElementCheckDefault( mInputUnit, "inputUnit", out, tabs, string("EJ") );
+    XMLWriteElementCheckDefault( mPriceUnit, "priceUnit", out, tabs, string("75$/GJ") );
 
     // Temporary CCTP hack.
     XMLWriteVector( mBiomassAdder, "biomass-price-adder", out, tabs, scenario->getModeltime(), 0.0 );
@@ -287,10 +287,10 @@ void SupplySector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
 */
 void SupplySector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
 
-	// write the xml for the class members.
-	XMLWriteElement( mOutputUnit, "outputUnit", out, tabs );
-	XMLWriteElement( mInputUnit, "inputUnit", out, tabs );
-	XMLWriteElement( mPriceUnit, "priceUnit", out, tabs );
+    // write the xml for the class members.
+    XMLWriteElement( mOutputUnit, "outputUnit", out, tabs );
+    XMLWriteElement( mInputUnit, "inputUnit", out, tabs );
+    XMLWriteElement( mPriceUnit, "priceUnit", out, tabs );
     XMLWriteElement( mBiomassAdder[ period ], "biomass-price-adder", out, tabs );
 }
 /*! \brief Parses any child nodes specific to derived classes
@@ -319,13 +319,18 @@ bool SupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode* 
 *
 * \author Sonny Kim, Josh Lurz, Steve Smith
 */
-void SupplySector::setMarket() {	
-	Marketplace* marketplace = scenario->getMarketplace();
-	// Creates a regional market. MiniCAM supply sectors are not independent and 
-	// cannot be members of multi-region markets.
-	if( marketplace->createMarket( regionName, regionName, name, IMarketType::NORMAL ) ) {
-		marketplace->setPrice( name, regionName, mBasePrice, 0, true );
-	}
+void SupplySector::setMarket() {    
+    Marketplace* marketplace = scenario->getMarketplace();
+    // Creates a regional market. MiniCAM supply sectors are not independent and 
+    // cannot be members of multi-region markets.
+    if( marketplace->createMarket( regionName, regionName, name, IMarketType::NORMAL ) ) {
+        marketplace->setPrice( name, regionName, mBasePrice, 0, true );
+
+        // Set price and output units for period 0 market info
+        IInfo* marketInfo = marketplace->getMarketInfo( name, regionName, 0, true );
+        marketInfo->setString( "priceUnit", mPriceUnit );
+        marketInfo->setString( "outputUnit", mOutputUnit );
+    }
 }
 
 //! Write MiniCAM style Sector output to database.
@@ -343,8 +348,8 @@ void SupplySector::dbOutput( const GDP* aGDP,
     for( int per = 0; per < maxper; ++per ){
         temp[ per ] = getOutput( per );
     }
-    dboutput4( regionName,"Secondary Energy Prod","by Sector",name,"EJ", temp );
-    dboutput4( regionName,"Secondary Energy Prod",name,"zTotal","EJ", temp );
+    dboutput4( regionName,"Secondary Energy Prod","by Sector",name,mOutputUnit, temp );
+    dboutput4( regionName,"Secondary Energy Prod",name,"zTotal",mOutputUnit, temp );
 
 
     string str; // temporary string
@@ -357,10 +362,10 @@ void SupplySector::dbOutput( const GDP* aGDP,
             temp[m] = summary[m].get_fmap_second(fmap->first);
         }
         if( fmap->first == "" ){
-            dboutput4( regionName,"Fuel Consumption",name, "No Fuelname", "EJ",temp);
+            dboutput4( regionName,"Fuel Consumption",name, "No Fuelname", mInputUnit,temp);
         }
         else {
-            dboutput4( regionName,"Fuel Consumption",name,fmap->first,"EJ",temp);
+            dboutput4( regionName,"Fuel Consumption",name,fmap->first,mInputUnit,temp);
         }
     }
 
@@ -389,7 +394,7 @@ void SupplySector::dbOutput( const GDP* aGDP,
     for ( int m=0;m<maxper;m++) {
         temp[m] = getPrice( aGDP, m );
     }
-    dboutput4( regionName,"Price",name,"zSectorAvg","$/GJ", temp );
+    dboutput4( regionName,"Price",name,"zSectorAvg",mPriceUnit, temp );
     // for electricity Sector only
     if (name == "electricity") {
         for ( int m=0;m<maxper;m++) {
@@ -402,7 +407,7 @@ void SupplySector::dbOutput( const GDP* aGDP,
     for ( int m = 0; m < maxper; m++ ) {
         temp[m] = getPrice( aGDP, m );
     }
-    dboutput4( regionName,"Price","by Sector",name,"$/GJ", temp );
+    dboutput4( regionName,"Price","by Sector",name,mPriceUnit, temp );
 
     // do for all subsectors in the Sector
     for( int m = 0; m < maxper; m++ ) {

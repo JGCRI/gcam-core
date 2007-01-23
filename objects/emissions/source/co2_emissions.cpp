@@ -16,6 +16,7 @@
  */
 
 #include "util/base/include/definitions.h"
+//#include "emissions/include/aghg.h"
 
 #include "emissions/include/co2_emissions.h"
 #include "containers/include/scenario.h"
@@ -30,6 +31,11 @@ using namespace xercesc;
 
 
 extern Scenario* scenario;
+
+//! Default Constructor with default emissions unit.
+CO2Emissions::CO2Emissions(){
+    mEmissionsUnit = "MTC";
+}
 
 //! Default Destructor.
 CO2Emissions::~CO2Emissions(){
@@ -161,7 +167,11 @@ void CO2Emissions::parseName( const string& aNameAttr ){
 }
 
 void CO2Emissions::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
+    // write the xml for the class members.
+    XMLWriteElementCheckDefault( mEmissionsUnit, "emissionsUnit", out, tabs, string("MTC") );
 }
 
 void CO2Emissions::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
+    // write the xml for the class members.
+    XMLWriteElement( mEmissionsUnit, "emissionsUnit", out, tabs );
 }

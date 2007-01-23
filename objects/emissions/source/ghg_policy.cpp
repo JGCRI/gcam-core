@@ -16,6 +16,7 @@
 #include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
+#include "containers/include/iinfo.h"
 #include "util/base/include/model_time.h"
 #include "emissions/include/ghg_policy.h"
 #include "marketplace/include/marketplace.h"
@@ -41,8 +42,8 @@ fixedTaxes( scenario->getModeltime()->getmaxper(), -1 )
 */
 GHGPolicy::GHGPolicy( const string aName,
                       const string aMarket )
-: name( aName ), 
-market( aMarket ),
+: mName( aName ), 
+mMarket( aMarket ),
 isFixedTax( false ),
 constraint( scenario->getModeltime()->getmaxper(), -1 ),
 fixedTaxes( scenario->getModeltime()->getmaxper(), -1 )
@@ -54,8 +55,8 @@ fixedTaxes( scenario->getModeltime()->getmaxper(), -1 )
 GHGPolicy::GHGPolicy( const string aName,
                       const string aMarket,
                       const vector<double>& aTaxes )
-: name( aName ), 
-market( aMarket ),
+: mName( aName ), 
+mMarket( aMarket ),
 fixedTaxes( aTaxes ),
 isFixedTax( true ),
 constraint( scenario->getModeltime()->getmaxper(), -1 ){
@@ -72,7 +73,7 @@ GHGPolicy* GHGPolicy::clone() const {
 
 //! Get the ghg policy name. 
 const string& GHGPolicy::getName() const {
-    return name;
+    return mName;
 }
 
 /*! \brief Complete the initialization of the GHG policy.
@@ -87,7 +88,13 @@ const string& GHGPolicy::getName() const {
 */
 void GHGPolicy::completeInit( const string& aRegionName ) {
     Marketplace* marketplace = scenario->getMarketplace();
-    marketplace->createMarket( aRegionName, market, name, IMarketType::GHG );
+    marketplace->createMarket( aRegionName, mMarket, mName, IMarketType::GHG );
+
+    // Set price and output units for period 0 market info
+    IInfo* marketInfo = marketplace->getMarketInfo( mName, aRegionName, 0, true );
+    //TODO: read-in as data the units of tax and emissions
+    marketInfo->setString( "priceUnit", "90$/tC" );
+    marketInfo->setString( "outputUnit", "MTC" );
     
     // Put the taxes in the market as the market prices if it is a fixed tax policy.
     if( isFixedTax ){
@@ -95,9 +102,9 @@ void GHGPolicy::completeInit( const string& aRegionName ) {
         for( unsigned int i = 0; i < fixedTaxes.size(); ++i ){
             // Make sure that the market is not solved. It could have been set
             // to solve by an earlier run.
-            marketplace->unsetMarketToSolve( name, aRegionName, i );
+            marketplace->unsetMarketToSolve( mName, aRegionName, i );
             if( fixedTaxes[ i ] != -1 ){
-                marketplace->setPrice( name, aRegionName, fixedTaxes[ i ], i );
+                marketplace->setPrice( mName, aRegionName, fixedTaxes[ i ], i );
             }
         }
     }       
@@ -106,12 +113,12 @@ void GHGPolicy::completeInit( const string& aRegionName ) {
         const Modeltime* modeltime = scenario->getModeltime();
         for( int per = 1; per < modeltime->getmaxper(); ++per ){
             if( constraint[ per ] != -1 ){
-                marketplace->setMarketToSolve( name, aRegionName, per );
+                marketplace->setMarketToSolve( mName, aRegionName, per );
                 // Adding the difference between the constraint for this period
                 // and the current supply because addToSupply adds to the current
                 // supply.  Passing false to supress a warning the first time through.
-                marketplace->addToSupply( name, aRegionName, constraint[ per ] - 
-                    marketplace->getSupply( name, aRegionName, per ), per, false );
+                marketplace->addToSupply( mName, aRegionName, constraint[ per ] - 
+                    marketplace->getSupply( mName, aRegionName, per ), per, false );
             }
         }
     }
@@ -123,7 +130,7 @@ void GHGPolicy::completeInit( const string& aRegionName ) {
 * \todo This is not entirely correct for multiple regions within a market.
 */
 bool GHGPolicy::isApplicable( const string& aRegion ) const {
-    return market == "global" || market == aRegion;
+    return mMarket == "global" || mMarket == aRegion;
 }
 
 /*!
@@ -142,7 +149,7 @@ void GHGPolicy::XMLParse( const DOMNode* node ){
     assert( node );
 
     // get the name attribute.
-    name = XMLHelper<string>::getAttr( node, "name" );
+    mName = XMLHelper<string>::getAttr( node, "name" );
 
     // get all child nodes.
     DOMNodeList* nodeList = node->getChildNodes();
@@ -156,7 +163,7 @@ void GHGPolicy::XMLParse( const DOMNode* node ){
             continue;
         }
         else if( nodeName == "market" ){
-            market = XMLHelper<string>::getValue( curr ); // should be only one market
+            mMarket = XMLHelper<string>::getValue( curr ); // should be only one market
         }
         else if( nodeName == "isFixedTax" ) {
             isFixedTax = XMLHelper<bool>::getValue( curr );
@@ -176,8 +183,8 @@ void GHGPolicy::XMLParse( const DOMNode* node ){
 //! Writes datamembers to datastream in XML format.
 void GHGPolicy::toInputXML( ostream& out, Tabs* tabs ) const {
 
-    XMLWriteOpeningTag( getXMLName(), out, tabs, name );
-    XMLWriteElement( market, "market", out, tabs );
+    XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
+    XMLWriteElement( mMarket, "market", out, tabs );
     XMLWriteElement( isFixedTax, "isFixedTax", out, tabs );
     
     const Modeltime* modeltime = scenario->getModeltime();    
@@ -191,10 +198,10 @@ void GHGPolicy::toInputXML( ostream& out, Tabs* tabs ) const {
 //! Writes datamembers to datastream in XML format.
 void GHGPolicy::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
-    XMLWriteOpeningTag( getXMLName(), out, tabs, name );
+    XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
 
     // write out the market string.
-    XMLWriteElement( market, "market", out, tabs );
+    XMLWriteElement( mMarket, "market", out, tabs );
     
     // Write whether we are a fixed tax policy.
     XMLWriteElement( isFixedTax, "isFixedTax", out, tabs );

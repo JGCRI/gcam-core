@@ -41,8 +41,8 @@ public:
     static const std::string& getXMLNameStatic();
 private:
     static const std::string XML_NAME; //!< node name for toXML methods
-    std::string name; //!< GHG name
-    std::string market; //!< Name of the market
+    std::string mName; //!< GHG name
+    std::string mMarket; //!< Name of the market
     bool isFixedTax; //!< Boolean to use fixed tax or constraint
     std::vector<double> constraint; //!< Emissions constraint by year(tgC or MTC)
     std::vector<double> fixedTaxes; //!< Fixed tax on Emissions by year($/TC)

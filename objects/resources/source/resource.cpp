@@ -68,7 +68,7 @@ void Resource::XMLParse( const DOMNode* node ){
     assert( node );
 
     // get the name attribute.
-    name = XMLHelper<string>::getAttr( node, "name" );
+    mName = XMLHelper<string>::getAttr( node, "name" );
 
     // get all child nodes.
     nodeList = node->getChildNodes();
@@ -88,7 +88,7 @@ void Resource::XMLParse( const DOMNode* node ){
             mPriceUnit = XMLHelper<string>::getValue( curr );
         }
         else if( nodeName == "market" ){
-            market = XMLHelper<string>::getValue( curr ); // only one market element.
+            mMarket = XMLHelper<string>::getValue( curr ); // only one market element.
         }
         else if( nodeName == "price" ){
             XMLHelper<double>::insertValueIntoVector( curr, rscprc, modeltime );
@@ -144,7 +144,7 @@ void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo
 void Resource::initCalc( const string& aRegionName, const int aPeriod ) {
     // call subResource initializations
     for ( unsigned int i = 0; i < subResource.size(); i++ ){
-        subResource[i]->initCalc( aRegionName, name, aPeriod );
+        subResource[i]->initCalc( aRegionName, mName, aPeriod );
     }
 }
 /*! \brief Perform any calculations needed for each period after solution is
@@ -159,18 +159,18 @@ void Resource::initCalc( const string& aRegionName, const int aPeriod ) {
 void Resource::postCalc( const string& aRegionName, const int aPeriod ) {
     // call subResource post calculations
     for ( unsigned int i = 0; i < subResource.size(); i++ ) {
-        subResource[i]->postCalc( aRegionName, name, aPeriod);
+        subResource[i]->postCalc( aRegionName, mName, aPeriod);
     }
 }
 
 //! Write datamembers to datastream in XML format for replicating input file.
 void Resource::toInputXML( ostream& out, Tabs* tabs ) const {
-    XMLWriteOpeningTag( getXMLName(), out, tabs, name );
+    XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
 
     // write the xml for the class members.
     XMLWriteElementCheckDefault( mOutputUnit, "outputUnit", out, tabs, string("EJ") );
     XMLWriteElementCheckDefault( mPriceUnit, "priceUnit", out, tabs, string("75$/GJ") );
-    XMLWriteElement( market, "market", out, tabs );
+    XMLWriteElement( mMarket, "market", out, tabs );
 
     // write out resource prices for base period only
     const Modeltime* modeltime = scenario->getModeltime();
@@ -188,13 +188,13 @@ void Resource::toInputXML( ostream& out, Tabs* tabs ) const {
 //! Write datamembers to datastream in XML format for debugging.
 void Resource::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
-    XMLWriteOpeningTag( getXMLName(), out, tabs, name );
+    XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
 
     // Write the xml for the class members.
     XMLWriteElement( mOutputUnit, "outputUnit", out, tabs );
     XMLWriteElement( mPriceUnit, "priceUnit", out, tabs );
     // Write out the market string.
-    XMLWriteElement( market, "market", out, tabs );
+    XMLWriteElement( mMarket, "market", out, tabs );
 
     // Write out resource prices for debugging period.
     XMLWriteElement( rscprc[ period ], "rscprc", out, tabs );
@@ -228,10 +228,15 @@ void Resource::setMarket( const string& regionName ) {
     Marketplace* marketplace = scenario->getMarketplace();
     const Modeltime* modeltime = scenario->getModeltime();
     // name is resource name
-    if ( marketplace->createMarket( regionName, market, name, IMarketType::NORMAL ) ) {
-        marketplace->setPriceVector( name, regionName, rscprc );
+    if ( marketplace->createMarket( regionName, mMarket, mName, IMarketType::NORMAL ) ) {
+        // Set price and output units for period 0 market info
+		IInfo* marketInfo = marketplace->getMarketInfo( mName, regionName, 0, true );
+        marketInfo->setString( "priceUnit", mPriceUnit );
+        marketInfo->setString( "outputUnit", mOutputUnit );
+
+        marketplace->setPriceVector( mName, regionName, rscprc );
         for( int per = 1; per < modeltime->getmaxper(); ++per ){
-            marketplace->setMarketToSolve( name, regionName, per );
+            marketplace->setMarketToSolve( mName, regionName, per );
         }
     }
 }
@@ -239,7 +244,7 @@ void Resource::setMarket( const string& regionName ) {
 //! Return resource name.
 
 const string& Resource::getName() const {
-    return name;
+    return mName;
 }
 
 //! Calculate total resource supply for a period.
@@ -247,20 +252,20 @@ void Resource::calcSupply( const string& regionName, const GDP* gdp, const int p
     // This code is moved down from Region
     Marketplace* marketplace = scenario->getMarketplace();
 
-    double price = marketplace->getPrice( name, regionName, period );
+    double price = marketplace->getPrice( mName, regionName, period );
     double lastPeriodPrice;
 
     if ( period == 0 ) {
         lastPeriodPrice = price;
     }
     else {
-        lastPeriodPrice = marketplace->getPrice( name, regionName, period - 1 );
+        lastPeriodPrice = marketplace->getPrice( mName, regionName, period - 1 );
     }
 
     // calculate annual supply
     annualsupply( regionName, period, gdp, price, lastPeriodPrice ); 
     // set market supply of resource
-    marketplace->addToSupply( name, regionName, annualprod[ period ], period );
+    marketplace->addToSupply( mName, regionName, annualprod[ period ], period );
 }
 
 void Resource::cumulsupply(double prc,int per)
@@ -310,11 +315,11 @@ void Resource::csvOutputFile( const string& regname )
     // function arguments are variable name, double array, db name, table name
     // the function writes all years
     // total sector output
-    fileoutput3( regname,name," "," ","production",mOutputUnit,annualprod);
+    fileoutput3( regname,mName," "," ","production",mOutputUnit,annualprod);
 
     // do for all subsectors in the sector
     for (int i=0;i<nosubrsrc;i++) {
-        subResource[i]->csvOutputFile(regname ,name);
+        subResource[i]->csvOutputFile(regname ,mName);
     }
 }
 
@@ -330,9 +335,9 @@ void Resource::dbOutput( const string& regname ) {
     // function arguments are variable name, double array, db name, table name
     // the function writes all years
     // total sector output
-    dboutput4(regname,"Pri Energy","Production by Sector",name,mOutputUnit,annualprod);
+    dboutput4(regname,"Pri Energy","Production by Sector",mName,mOutputUnit,annualprod);
     // resource price
-    dboutput4(regname,"Price","by Sector",name,mPriceUnit,rscprc);
+    dboutput4(regname,"Price","by Sector",mName,mPriceUnit,rscprc);
     // do for all subsectors in the sector
     temp.assign( temp.size(), 0.0 );
     for (int m=0;m<maxper;m++) {
@@ -340,7 +345,7 @@ void Resource::dbOutput( const string& regname ) {
             temp[m] += subResource[i]->getCumulProd(m);
         }
     }
-    dboutput4(regname,"Resource","CummProd "+name,"zTotal",mOutputUnit,temp);
+    dboutput4(regname,"Resource","CummProd "+mName,"zTotal",mOutputUnit,temp);
 
     temp.assign( temp.size(), 0.0 );
     for (int m=0;m<maxper;m++) {
@@ -348,25 +353,25 @@ void Resource::dbOutput( const string& regname ) {
             temp[m] += subResource[i]->getAnnualProd(m);
 		}
 	}
-	dboutput4(regname,"Resource","annual-production", name, mOutputUnit, temp);
+	dboutput4(regname,"Resource","annual-production", mName, mOutputUnit, temp);
     temp.assign( temp.size(), 0.0 );
 	for (int m=0;m<maxper;m++) {
 		for (int i=0;i<nosubrsrc;i++) {
             temp[m] += subResource[i]->getAnnualProd(m);
 		}
 	}
-	dboutput4(regname,"Resource","annual-production", name, "EJ", temp);
+	dboutput4(regname,"Resource","annual-production", mName, "EJ", temp);
     // do for all subsectors in the sector
     for (int m=0;m<maxper;m++) {
         for (int i=0;i<nosubrsrc;i++) {
             temp[m] += subResource[i]->getAvailable(m);
         }
     }
-    dboutput4(regname,"Resource","Available "+name,"zTotal",mOutputUnit,temp);
+    dboutput4(regname,"Resource","Available "+mName,"zTotal",mOutputUnit,temp);
 
     // do for all subsectors in the sector
     for (int i=0;i<nosubrsrc;i++) {
-        subResource[i]->dbOutput(regname,name);
+        subResource[i]->dbOutput(regname,mName);
     }
 }
 
@@ -585,7 +590,7 @@ void RenewableResource::annualsupply( const string& regionName, int per, const G
         }
 
         // add variance to marketinfo
-        IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( name, regionName, per, true );
+        IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( mName, regionName, per, true );
         marketInfo->setDouble( "resourceVariance", resourceVariance[ per ] );
 
         // add capacity factor to marketinfo

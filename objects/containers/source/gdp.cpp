@@ -31,99 +31,106 @@ const int BASE_PPP_YEAR = 1990;   // Base year for PPP conversion. PPP values ar
 /*! \todo There are uninitialized memory reads all over this file. Lines: 308, 307, 285 (roughly) */
 //! Default Constructor
 GDP::GDP() {
-	// Resize all vectors to the max period.
-	const int maxper = scenario->getModeltime()->getmaxper();
-	laborProdGrowthRate.resize( maxper );
-	laborForceParticipationPercent.resize( maxper );
-	laborForce.resize( maxper );
-	gdpValue.resize( maxper );
-	gdpPerCapita.resize( maxper );
-	gdpValueAdjusted.resize( maxper );
-	gdpPerCapitaAdjusted.resize( maxper );
-	gdpPerCapitaAdjustedPPP.resize( maxper );
+    // Resize all vectors to the max period.
+    const int maxper = scenario->getModeltime()->getmaxper();
+    laborProdGrowthRate.resize( maxper );
+    laborForceParticipationPercent.resize( maxper );
+    laborForce.resize( maxper );
+    gdpValue.resize( maxper );
+    gdpPerCapita.resize( maxper );
+    gdpValueAdjusted.resize( maxper );
+    gdpPerCapitaAdjusted.resize( maxper );
+    gdpPerCapitaAdjustedPPP.resize( maxper );
     gdpPerCapitaApproxPPP.resize( maxper );
-	gdpAdjustedFlag.resize( maxper );
-	calibrationGDPs.resize( maxper );
+    gdpAdjustedFlag.resize( maxper );
+    calibrationGDPs.resize( maxper );
     gdpValueNotAdjusted.resize( maxper );
     gdpPerCapitaNotAdjusted.resize( maxper );
     baseGDP = 0;
-	mEnergyGDPElasticity = 0;
-	PPPConversionFact = 1;
+    mEnergyGDPElasticity = 0;
+    PPPConversionFact = 1;
     PPPDelta = 0;
-	constRatio = false;
+    constRatio = false;
     baseGDP = 0;
+    mGDPUnit = "Mil90US$";
 }
 
 //! parses Population xml object
 void GDP::XMLParse( const DOMNode* node ){
-	// make sure we were passed a valid node.
-	assert( node );
+    // make sure we were passed a valid node.
+    assert( node );
 
-	DOMNodeList* nodeList = node->getChildNodes();
+    DOMNodeList* nodeList = node->getChildNodes();
     const Modeltime* modeltime = scenario->getModeltime();
 
-	for( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-		DOMNode* curr = nodeList->item( i );
+    for( unsigned int i = 0; i < nodeList->getLength(); ++i ){
+        DOMNode* curr = nodeList->item( i );
 
-		// get the name of the node.
-		string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+        // get the name of the node.
+        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
-		if( nodeName == "#text" ) {
-			continue;
-		}
-		// GDP to PPP conversion factor
+        if( nodeName == "#text" ) {
+            continue;
+        }
+        // GDP to PPP conversion factor
         // Note that variable conversion attribute defaults to true
-		else if ( nodeName == "PPPConvert" ){
-		    PPPConversionFact = XMLHelper<double>::getValue( curr );
+        else if ( nodeName == "PPPConvert" ){
+            PPPConversionFact = XMLHelper<double>::getValue( curr );
             constRatio = XMLHelper<bool>::getAttr( curr, "constRatio" );
-		}
-		// base-year GDP
-		else if ( nodeName == "baseGDP" ){
-			baseGDP = XMLHelper<double>::getValue( curr );
-		}
-		// Energy GDP elasticity. 
-		else if ( nodeName == "e_GDP_elas" ){
-			mEnergyGDPElasticity = XMLHelper<double>::getValue( curr );
-		}
-		// labor force participation rate
-		else if ( nodeName == "laborproductivity" ){
-			XMLHelper<double>::insertValueIntoVector( curr, laborProdGrowthRate, modeltime );
-		}
-		// labor force participation rate
-		else if( nodeName == "laborforce" ){
-			XMLHelper<double>::insertValueIntoVector( curr, laborForceParticipationPercent, modeltime );
-		} 
+        }
+        // base-year GDP
+        else if ( nodeName == "baseGDP" ){
+            baseGDP = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "gdpUnit" ){
+            mGDPUnit = XMLHelper<string>::getValue( curr );
+        }
+        // Energy GDP elasticity. 
+        else if ( nodeName == "e_GDP_elas" ){
+            mEnergyGDPElasticity = XMLHelper<double>::getValue( curr );
+        }
+        // labor force participation rate
+        else if ( nodeName == "laborproductivity" ){
+            XMLHelper<double>::insertValueIntoVector( curr, laborProdGrowthRate, modeltime );
+        }
+        // labor force participation rate
+        else if( nodeName == "laborforce" ){
+            XMLHelper<double>::insertValueIntoVector( curr, laborForceParticipationPercent, modeltime );
+        } 
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
-			mainLog << "Unrecognized text string: " << nodeName << " found while parsing GDP." << endl;
-		}
-	}
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing GDP." << endl;
+        }
+    }
 }
 
 //! Writes datamembers to datastream in XML format.
 void GDP::toInputXML( ostream& out, Tabs* tabs ) const {
-	XMLWriteOpeningTag( getXMLNameStatic(), out, tabs );
+    XMLWriteOpeningTag( getXMLNameStatic(), out, tabs );
 
-	// GDP to PPP conversion factor. Why isn't constRatio just seperate?
-	map<string, double> attrs;
-	attrs[ "constRatio" ] = constRatio;
-	XMLWriteElementWithAttributes( PPPConversionFact, "PPPConvert", out, tabs, attrs );
+    // GDP to PPP conversion factor. Why isn't constRatio just seperate?
+    map<string, double> attrs;
+    attrs[ "constRatio" ] = constRatio;
+    XMLWriteElementWithAttributes( PPPConversionFact, "PPPConvert", out, tabs, attrs );
 
-	// Write out base-year GDP
-	XMLWriteElement( baseGDP, "baseGDP", out, tabs);
+    // Write out base-year GDP
+    XMLWriteElement( baseGDP, "baseGDP", out, tabs);
 
-	// Write out gdp energy elasticity.
-	XMLWriteElementCheckDefault( mEnergyGDPElasticity, "e_GDP_elas", out, tabs, 0.0 );
+    // Write out gdp energy elasticity.
+    XMLWriteElementCheckDefault( mEnergyGDPElasticity, "e_GDP_elas", out, tabs, 0.0 );
 
-	const Modeltime* modeltime = scenario->getModeltime();
-	for( unsigned int iter = 0; iter < laborProdGrowthRate.size(); ++iter ){
-		XMLWriteElement( laborProdGrowthRate[ iter ], "laborproductivity", out, tabs, modeltime->getper_to_yr( iter ) );
-	}
+    // Write out gdp units.
+    XMLWriteElementCheckDefault( mGDPUnit, "gdpUnit", out, tabs, string("Mil90US$") );
 
-	for( unsigned int iter = 0; iter < laborForceParticipationPercent.size(); ++iter ){
-		XMLWriteElement( laborForceParticipationPercent[ iter ], "laborforce", out, tabs, modeltime->getper_to_yr( iter ) );
-	}
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( unsigned int iter = 0; iter < laborProdGrowthRate.size(); ++iter ){
+        XMLWriteElement( laborProdGrowthRate[ iter ], "laborproductivity", out, tabs, modeltime->getper_to_yr( iter ) );
+    }
+
+    for( unsigned int iter = 0; iter < laborForceParticipationPercent.size(); ++iter ){
+        XMLWriteElement( laborForceParticipationPercent[ iter ], "laborforce", out, tabs, modeltime->getper_to_yr( iter ) );
+    }
 
     // Would want these in an xml-output file, but not in the input file.
     // write out MER-based GDP
@@ -136,36 +143,39 @@ void GDP::toInputXML( ostream& out, Tabs* tabs ) const {
         // XMLWriteElementCheckDefault( gdpValueAdjustedPPP[ m ], "GDP(PPP)", out, tabs, 0, modeltime->getper_to_yr( m ) );
     }
 
-	XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
+    XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
 }
 
 //! Writes datamembers to debugging datastream in XML format.
 void GDP::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
-	const Modeltime* modeltime = scenario->getModeltime();
+    const Modeltime* modeltime = scenario->getModeltime();
 
-	XMLWriteOpeningTag( getXMLNameStatic(), out, tabs );
+    XMLWriteOpeningTag( getXMLNameStatic(), out, tabs );
 
-	// GDP to PPP conversion factor
-	XMLWriteElement( PPPConversionFact, "PPPConvert", out, tabs );
+    // GDP to PPP conversion factor
+    XMLWriteElement( PPPConversionFact, "PPPConvert", out, tabs );
 
-	// Write out base-year GDP
-	XMLWriteElement( baseGDP, "baseGDP", out, tabs);
+    // Write out base-year GDP
+    XMLWriteElement( baseGDP, "baseGDP", out, tabs);
 
-	// Write out gdp energy elasticity.
-	XMLWriteElementCheckDefault( mEnergyGDPElasticity, "e_GDP_elas", out, tabs, 0.0 );
+    // Write out gdp energy elasticity.
+    XMLWriteElementCheckDefault( mEnergyGDPElasticity, "e_GDP_elas", out, tabs, 0.0 );
 
-	XMLWriteElement( laborProdGrowthRate[ period ], "laborprod", out, tabs );
+    // Write out gdp units.
+    XMLWriteElement( mGDPUnit, "gdpUnit", out, tabs );
 
-	XMLWriteElement( laborForceParticipationPercent[ period ], "laborforce_p", out, tabs );
+    XMLWriteElement( laborProdGrowthRate[ period ], "laborprod", out, tabs );
 
-	XMLWriteElement( laborForce[ period ], "laborforce", out, tabs );
-	// Done writing XML for the class members.
+    XMLWriteElement( laborForceParticipationPercent[ period ], "laborforce_p", out, tabs );
 
-	// write out MER-based GDP
+    XMLWriteElement( laborForce[ period ], "laborforce", out, tabs );
+    // Done writing XML for the class members.
+
+    // write out MER-based GDP
     XMLWriteElement( gdpValueAdjusted[ period ], "GDP_MER", out, tabs );
 
-	XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
+    XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -178,7 +188,7 @@ void GDP::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& GDP::getXMLNameStatic() {
-	return XML_NAME;
+    return XML_NAME;
 }
 
 /*! \brief Initialize labor force and the GDP without adjustements (needed for AgLU)
@@ -209,17 +219,17 @@ void GDP::initData( const Demographic* regionalPop ){
 //! Create calibration markets
 void GDP::setupCalibrationMarkets( const string& regionName, const vector<double> aCalibrationGDPs ) {
 
-	const string goodName = "GDP";
-	const Modeltime* modeltime = scenario->getModeltime();
-	Marketplace* marketplace = scenario->getMarketplace();
+    const string goodName = "GDP";
+    const Modeltime* modeltime = scenario->getModeltime();
+    Marketplace* marketplace = scenario->getMarketplace();
 
-	if ( marketplace->createMarket( regionName, regionName, goodName, IMarketType::CALIBRATION ) ) {
-		vector<double> tempLFPs( modeltime->getmaxper() );
-		for( int i = 0; i < modeltime->getmaxper(); i++ ){
-			tempLFPs[ i ] = pow( 1 + laborProdGrowthRate[ i ], modeltime->gettimestep( i ) );
-		}
-		marketplace->setPriceVector( goodName, regionName, tempLFPs );
-	}
+    if ( marketplace->createMarket( regionName, regionName, goodName, IMarketType::CALIBRATION ) ) {
+        vector<double> tempLFPs( modeltime->getmaxper() );
+        for( int i = 0; i < modeltime->getmaxper(); i++ ){
+            tempLFPs[ i ] = pow( 1 + laborProdGrowthRate[ i ], modeltime->gettimestep( i ) );
+        }
+        marketplace->setPriceVector( goodName, regionName, tempLFPs );
+    }
 
     // Set the constraint.
     for( int per = 1; per < modeltime->getmaxper(); per++ ){
@@ -243,78 +253,78 @@ void GDP::setupCalibrationMarkets( const string& regionName, const vector<double
 
 //! Write back the calibrated values from the marketplace to the member variables.
 void GDP::writeBackCalibratedValues( const string& regionName, const int period ) {
-	const Marketplace* marketplace = scenario->getMarketplace();
-	const Modeltime* modeltime = scenario->getModeltime();
-	const string goodName = "GDP";
+    const Marketplace* marketplace = scenario->getMarketplace();
+    const Modeltime* modeltime = scenario->getModeltime();
+    const string goodName = "GDP";
 
-	// Only need to write back calibrated values for the current period.
-	double totalLaborProd = marketplace->getPrice( goodName, regionName, period );
+    // Only need to write back calibrated values for the current period.
+    double totalLaborProd = marketplace->getPrice( goodName, regionName, period );
 
-	laborProdGrowthRate[ period ] = pow( totalLaborProd, double( 1 ) / double( modeltime->gettimestep( period ) ) ) - 1;
+    laborProdGrowthRate[ period ] = pow( totalLaborProd, double( 1 ) / double( modeltime->gettimestep( period ) ) ) - 1;
 
-	// sjs -- put in check for illegal growth rate so that NaN does not occur
-	if ( laborProdGrowthRate[ period ] <= -1 ) {
-		cout << "ERROR: laborProd Growth Rate reset from " << laborProdGrowthRate[ period ]  << endl;
-		laborProdGrowthRate[ period ]  = -0.99;
-	}
+    // sjs -- put in check for illegal growth rate so that NaN does not occur
+    if ( laborProdGrowthRate[ period ] <= -1 ) {
+        cout << "ERROR: laborProd Growth Rate reset from " << laborProdGrowthRate[ period ] << endl;
+        laborProdGrowthRate[ period ] = -0.99;
+    }
 }
 
 //! Return the  total labor force productivity. 
 double GDP::getTotalLaborProductivity( const int period ) const {
     assert( period >= 0 && period < scenario->getModeltime()->getmaxper() );
-	const Modeltime* modeltime = scenario->getModeltime();
-	return pow( 1 + laborProdGrowthRate[ period ], modeltime->gettimestep( period ) );
+    const Modeltime* modeltime = scenario->getModeltime();
+    return pow( 1 + laborProdGrowthRate[ period ], modeltime->gettimestep( period ) );
 }
 
 //! return the labor force (actual working)
 double GDP::getLaborForce( const int per ) const {
     assert( per >= 0 && per < scenario->getModeltime()->getmaxper() );
-	return laborForce[ per ];
+    return laborForce[ per ];
 }
 
 //! Write GDP info to text file
 void GDP::csvOutputFile( const string& regionName ) const {
-   const Modeltime* modeltime = scenario->getModeltime();
-   const int maxPeriod = modeltime->getmaxper();
-   vector<double> temp( maxPeriod );
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int maxPeriod = modeltime->getmaxper();
+    vector<double> temp( maxPeriod );
 
    // function protocol
-   void fileoutput3( string var1name,string var2name,string var3name,
+void fileoutput3( string var1name,string var2name,string var3name,
         string var4name,string var5name,string uname,vector<double> dout);
 
-   // write gdp to temporary array since not all will be sent to output
-   for ( int i = 0; i < maxPeriod; i++ ) {
+    // write gdp to temporary array since not all will be sent to output
+    for ( int i = 0; i < maxPeriod; i++ ) {
         temp[ i ] = laborProdGrowthRate[ i ];
-   }
-   fileoutput3( regionName," "," "," ", "labor prod", "%/yr", temp );	
-	
-	// write gdp and adjusted gdp for region
-	fileoutput3(regionName," "," "," ","GDP","Mil90US$",gdpValueAdjusted);
-	fileoutput3(regionName," "," "," ","GDPperCap","thousand90US$",gdpPerCapitaAdjusted);
-	fileoutput3(regionName," "," "," ","PPPperCap","thousand90US$",gdpPerCapitaAdjustedPPP);
+    }
+    fileoutput3( regionName," "," "," ", "labor prod", "%/yr", temp );   
+
+    // write gdp and adjusted gdp for region
+    fileoutput3(regionName," "," "," ","GDP",mGDPUnit,gdpValueAdjusted);
+    fileoutput3(regionName," "," "," ","GDPperCap","thousand90US$",gdpPerCapitaAdjusted);
+    fileoutput3(regionName," "," "," ","PPPperCap","thousand90US$",gdpPerCapitaAdjustedPPP);
 }
 
 //! MiniCAM output to file
 void GDP::dbOutput( const string& regionName ) const {
-	const Modeltime* modeltime = scenario->getModeltime();
-	const int maxPeriod = modeltime->getmaxper();
-	vector<double> temp( maxPeriod );
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int maxPeriod = modeltime->getmaxper();
+    vector<double> temp( maxPeriod );
 
-	// function protocol
-	void dboutput4(string var1name,string var2name,string var3name,string var4name,
-		string uname,vector<double> dout);
+    // function protocol
+    void dboutput4(string var1name,string var2name,string var3name,string var4name,
+        string uname,vector<double> dout);
 
-	// labor productivity
-	for( int i = 0; i < maxPeriod; i++ ){
-		temp[ i ] = laborProdGrowthRate[ i ];
-	}
-	dboutput4( regionName, "General", "LaborProd", "GrowthRate", "perYr", temp );	
+    // labor productivity
+    for( int i = 0; i < maxPeriod; i++ ){
+        temp[ i ] = laborProdGrowthRate[ i ];
+    }
+    dboutput4( regionName, "General", "LaborProd", "GrowthRate", "perYr", temp );
 
-	// write gdp and adjusted gdp for region
-	dboutput4(regionName,"General","GDP90$","GDP(90mer)","Mil90US$", gdpValueAdjusted );
-	dboutput4(regionName,"General","GDP90$","GDPApprox(90mer)","Mil90US$", gdpValue );
-	dboutput4(regionName,"General","GDP","perCap","thousand90US$", gdpPerCapitaAdjusted );
-	dboutput4(regionName,"General","GDP90$","perCAP_PPP","thousand90US$", gdpPerCapitaAdjustedPPP );
+    // write gdp and adjusted gdp for region
+    dboutput4(regionName,"General","GDP90$","GDP(90mer)",mGDPUnit,gdpValueAdjusted);
+    dboutput4(regionName,"General","GDP90$","GDPApprox(90mer)",mGDPUnit,gdpValue);
+    dboutput4(regionName,"General","GDP","perCap","thousand90US$",gdpPerCapitaAdjusted);
+    dboutput4(regionName,"General","GDP90$","perCAP_PPP","thousand90US$",gdpPerCapitaAdjustedPPP);
 }
 
 /*! Calculate innitial regional gdps.
@@ -331,36 +341,36 @@ void GDP::dbOutput( const string& regionName ) const {
 */
 void GDP::initialGDPcalc( const int period, const double population ) {
 
-	const Modeltime* modeltime = scenario->getModeltime();
-	const int basePer = modeltime->getBasePeriod();
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int basePer = modeltime->getBasePeriod();
 
-	// Set flag, current GDP values are not adjusted
-	gdpAdjustedFlag[ period ] = false; 	 
+    // Set flag, current GDP values are not adjusted
+    gdpAdjustedFlag[ period ] = false;   
     if ( period <= modeltime->getFinalCalibrationPeriod() ) {
-		gdpAdjustedFlag[ period ] = true; // GDP is never adjusted for historial periods
-	}
+        gdpAdjustedFlag[ period ] = true; // GDP is never adjusted for historial periods
+    }
 
-	if ( period == basePer ) {
-		gdpValue[ period ] = baseGDP; 
-		gdpValueAdjusted[ period ] = gdpValue[ period ];
-	}
-	else {
-		double currentLF = getLaborForce( period );
-		double lastLF = getLaborForce( period - 1 );
-		double tlab = getTotalLaborProductivity( period );
+    if ( period == basePer ) {
+        gdpValue[ period ] = baseGDP; 
+        gdpValueAdjusted[ period ] = gdpValue[ period ];
+    }
+    else {
+        double currentLF = getLaborForce( period );
+        double lastLF = getLaborForce( period - 1 );
+        double tlab = getTotalLaborProductivity( period );
         // There is an unitialized read on the next line of a double.
-		gdpValue[ period ] = gdpValueAdjusted[ period - 1 ] * tlab * ( currentLF / lastLF );
-		gdpValueAdjusted[ period ] = gdpValue[ period ]; // Temporary value so that is never zero
-		if ( gdpValue[period] == 0 ) {
+        gdpValue[ period ] = gdpValueAdjusted[ period - 1 ] * tlab * ( currentLF / lastLF );
+        gdpValueAdjusted[ period ] = gdpValue[ period ]; // Temporary value so that is never zero
+        if ( gdpValue[period] == 0 ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
             mainLog << "GDP is equal to zero for period " << period << " during initial calculation." << endl;
-		}
-	}
+        }
+    }
     
     // TODO: Check for zero population.
-	// gdp period capita 
-	// gdpValue is in millions, population in 1000's, so result is in 1000's of dollars per capita
+    // gdp period capita 
+    // gdpValue is in millions, population in 1000's, so result is in 1000's of dollars per capita
     gdpPerCapita[ period ] = gdpValue[ period ] / population;   
    
    // Temporary values so that if requested a real value is returned (with error warning)
@@ -434,43 +444,47 @@ double GDP::calculatePPPPerCap( const int period, const double marketGDPperCap )
 */
 double GDP::getPPPMERRatio( const int period, const double marketGDPperCap ) {
     const Modeltime* modeltime = scenario->getModeltime();
-	const double CROSSOVER_POINT = 15.0; // Point at which PPP and Market values are equal ($15,000 per capita)
- 
+    const double CROSSOVER_POINT = 15.0; // Point at which PPP and Market values are equal ($15,000 per capita)
+
     double conversionFactor;
     
-	// Don't do variable conversion if turned off for this region or if is
+    // Don't do variable conversion if turned off for this region or if is
     // before conversion data exist (before 1990)
    // Also don't do conversion is PPPConversionFact is < 1 since this is not defined!
-	if ( constRatio || ( period < modeltime->getyr_to_per( BASE_PPP_YEAR ) || ( PPPConversionFact < 1 ) ) ) {
-		conversionFactor = PPPConversionFact;
-	} else {
-		// Only calculate this parameter in 1990 since won't change after that
-		if  ( period == modeltime->getyr_to_per( BASE_PPP_YEAR ) )  {
-			try { 
-				PPPDelta = log( PPPConversionFact ) / log( marketGDPperCap / CROSSOVER_POINT );
-			} catch(...) {
+    if ( constRatio || ( period < modeltime->getyr_to_per( BASE_PPP_YEAR ) || ( PPPConversionFact < 1 ) ) ) {
+        conversionFactor = PPPConversionFact;
+    }
+    else {
+        // Only calculate this parameter in 1990 since won't change after that
+        if ( period == modeltime->getyr_to_per( BASE_PPP_YEAR ) )  {
+           try { 
+               PPPDelta = log( PPPConversionFact ) / log( marketGDPperCap / CROSSOVER_POINT );
+           }
+           catch(...) {
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::ERROR );
                 mainLog << "Error calculating PPPDelta. "<< "PPPConversionFact = "<< PPPConversionFact;
-				mainLog << "; marketGDPperCap = "<< marketGDPperCap << endl;
-			}
-		}
+                mainLog << "; marketGDPperCap = "<< marketGDPperCap << endl;
+           }
+        }
 
-		// Now do the conversion. 
-		if ( marketGDPperCap > CROSSOVER_POINT ) { // If GDP/cap is > crossover point then set equal.
-			conversionFactor = 1.0;
-		} else {
-         try {
-            conversionFactor =  pow( marketGDPperCap / CROSSOVER_POINT , PPPDelta );
-         } catch(...) {
+        // Now do the conversion. 
+        if ( marketGDPperCap > CROSSOVER_POINT ) { // If GDP/cap is > crossover point then set equal.
             conversionFactor = 1.0;
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Error calculating PPP basis GDP in gdp.calculatePPPPerCap()" << endl;
-     }
-      }
-	}
-    
+        }
+        else {
+             try {
+                conversionFactor =  pow( marketGDPperCap / CROSSOVER_POINT , PPPDelta );
+             }
+             catch(...) {
+                conversionFactor = 1.0;
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::ERROR );
+                mainLog << "Error calculating PPP basis GDP in gdp.calculatePPPPerCap()" << endl;
+             }
+        }
+    }
+
     return conversionFactor;
 }
 
@@ -482,9 +496,9 @@ double GDP::getPPPMERRatio( const int period, const double marketGDPperCap ) {
 * \param period Model time period
 */
 double GDP::getApproxScaledGDPperCap( const int period ) const {
-	const Modeltime* modeltime = scenario->getModeltime();
+    const Modeltime* modeltime = scenario->getModeltime();
     if( gdpPerCapita[ modeltime->getBasePeriod() ] > 0 ){
-	    return gdpPerCapita[ period ] / gdpPerCapita[ modeltime->getBasePeriod() ];
+        return gdpPerCapita[ period ] / gdpPerCapita[ modeltime->getBasePeriod() ];
     }
 
     // Report an error that there was not a base year GDP per capita.
@@ -503,7 +517,7 @@ double GDP::getApproxScaledGDPperCap( const int period ) const {
 */
 double GDP::getApproxPPPperCap( const int period ) const {
 
-	return gdpPerCapitaApproxPPP[ period ];
+    return gdpPerCapitaApproxPPP[ period ];
 }
 
 /*! Return approximate GDP scaled to base year
@@ -514,9 +528,9 @@ double GDP::getApproxPPPperCap( const int period ) const {
 * \param period Model time period
 */
 double GDP::getApproxScaledGDP( const int period ) const {
-	const Modeltime* modeltime = scenario->getModeltime();
+    const Modeltime* modeltime = scenario->getModeltime();
     assert( gdpValue[ modeltime->getBasePeriod() ] );
-	return gdpValue[ period ] / gdpValue[ modeltime->getBasePeriod() ];
+    return gdpValue[ period ] / gdpValue[ modeltime->getBasePeriod() ];
 }
 
 /*! Return approximate GDP per capita (1000's of dollars/cap)
@@ -527,7 +541,7 @@ double GDP::getApproxScaledGDP( const int period ) const {
 * \param period Model time period
 */
 double GDP::getApproxGDPperCap( const int period ) const {
-	return gdpPerCapita[ period ];
+    return gdpPerCapita[ period ];
 }
 
 /*! Return adjusted GDP scaled to base year
@@ -538,14 +552,14 @@ double GDP::getApproxGDPperCap( const int period ) const {
 * \param period Model time period
 */
 double GDP::getScaledGDPperCap( const int period ) const {
-	if ( !gdpAdjustedFlag[ period ] ) {
+    if ( !gdpAdjustedFlag[ period ] ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Request for adjusted GDP -- not calculated yet." << endl;
-	}
-	const Modeltime* modeltime = scenario->getModeltime();
+    }
+    const Modeltime* modeltime = scenario->getModeltime();
     assert( gdpPerCapitaAdjusted[ modeltime->getBasePeriod() ] > 0 );
-	return gdpPerCapitaAdjusted[ period ] / gdpPerCapitaAdjusted[ modeltime->getBasePeriod() ];
+    return gdpPerCapitaAdjusted[ period ] / gdpPerCapitaAdjusted[ modeltime->getBasePeriod() ];
 }
 
 /*! Return GDP per capita (in $1000's of dollars)
@@ -554,12 +568,12 @@ double GDP::getScaledGDPperCap( const int period ) const {
 * \param period Model time period
 */
 double GDP::getGDPperCap( const int period ) const {
-	if ( !gdpAdjustedFlag[ period ] ) {
+    if ( !gdpAdjustedFlag[ period ] ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Request for adjusted GDP -- not calculated yet." << endl;
-	}
-	return gdpPerCapitaAdjusted[ period ];
+    }
+    return gdpPerCapitaAdjusted[ period ];
 }
 
 /*! Return approximate GDP (in $1000's of dollars, before scaling)
@@ -568,7 +582,7 @@ double GDP::getGDPperCap( const int period ) const {
 * \param period Model time period
 */
 double GDP::getApproxGDP( const int period ) const {
-	return gdpValue[ period ];
+    return gdpValue[ period ];
 }
 
 /*! Return GDP without any energy price adjustments for any period (in $1000's of dollars)
@@ -579,7 +593,7 @@ double GDP::getApproxGDP( const int period ) const {
 * \param period Model time period
 */
 double GDP::getGDPNotAdjusted( const int period ) const {
-	return gdpValueNotAdjusted[ period ];
+    return gdpValueNotAdjusted[ period ];
 }
 
 /*! Return GDP per capita without any energy price adjustments for any period (in $1000's of dollars)
@@ -590,7 +604,7 @@ double GDP::getGDPNotAdjusted( const int period ) const {
 * \param period Model time period
 */
 double GDP::getGDPPerCapitaNotAdjusted( const int period ) const {
-	return gdpPerCapitaNotAdjusted[ period ];
+    return gdpPerCapitaNotAdjusted[ period ];
 }
 
 /*! Return PPP-based GDP per capita (in $1000's of dollars)
@@ -613,12 +627,12 @@ double GDP::getPPPGDPperCap( const int period ) const {
 * \param period Model time period
 */
 double GDP::getGDP( const int period ) const {
-	if ( !gdpAdjustedFlag[ period ] ) {
+    if ( !gdpAdjustedFlag[ period ] ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Request for adjusted GDP -- not calculated yet." << endl;
-	}
-	return gdpValueAdjusted[ period ] ;
+    }
+    return gdpValueAdjusted[ period ] ;
 }
 
 /*! Return either approximate GDP or adjusted GDP scaled to base year
@@ -631,9 +645,9 @@ double GDP::getGDP( const int period ) const {
 * \param period Model time period
 */
 double GDP::getBestScaledGDPperCap( const int period ) const {
-	if ( !gdpAdjustedFlag[ period ] ) {
-		return getApproxScaledGDPperCap( period );
-	}
+    if ( !gdpAdjustedFlag[ period ] ) {
+        return getApproxScaledGDPperCap( period );
+    }
     return getScaledGDPperCap( period );
 }
 

@@ -20,6 +20,7 @@
 #include "sectors/include/subsector.h"
 #include "containers/include/scenario.h"
 #include "containers/include/gdp.h"
+#include "containers/include/iinfo.h"
 #include "demographics/include/demographic.h"
 #include "util/base/include/ivisitor.h"
 #include "reporting/include/indirect_emissions_calculator.h"
@@ -388,6 +389,10 @@ void DemandSector::completeInit( const IInfo* aRegionInfo,
         Marketplace* marketplace = scenario->getMarketplace();
         const string TFEMarketName = name + "-tfe";
         marketplace->createMarket( regionName, regionName, TFEMarketName, IMarketType::INVERSE_CALIBRATION );
+        // Set price and output units for period 0 market info
+		IInfo* marketInfo = marketplace->getMarketInfo( TFEMarketName, regionName, 0, true );
+        marketInfo->setString( "priceUnit", mPriceUnit );
+        marketInfo->setString( "outputUnit", mOutputUnit );
         for( unsigned int i = modeltime->getFinalCalibrationPeriod() + 1; i < mCalFinalEnergy.size(); ++i ){
             if( mCalFinalEnergy[ i ] != -1 ){
                 // Solve all initialized periods.

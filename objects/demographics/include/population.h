@@ -43,16 +43,17 @@ public:
     virtual void initCalc() = 0;
     virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const = 0;
 
-	double getTotal() const;
-	int getYear() const;
-	const std::string getName() const;
-	virtual double getWorkingAgePop() const = 0;
-	virtual double getWorkingAgePopMale() const = 0;
-	virtual double getWorkingAgePopFemale() const = 0;
+    double getTotal() const;
+    int getYear() const;
+    const std::string getName() const;
+    virtual double getWorkingAgePop() const = 0;
+    virtual double getWorkingAgePopMale() const = 0;
+    virtual double getWorkingAgePopFemale() const = 0;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const = 0;
 protected:
     int mYear; //!< year
     double mTotalPop; //!< total population for this year
+    std::string mPopulationUnit; //!< unit of population numbers
     int mWorkingAgeMin; //!< minimum working age.
     int mWorkingAgeMax; //!< maximum working age.
 

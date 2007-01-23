@@ -33,6 +33,8 @@
  */
 class CO2Emissions: public AGHG { 
 public:
+    CO2Emissions();
+
     virtual ~CO2Emissions();
 
     virtual CO2Emissions* clone() const;

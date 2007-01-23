@@ -17,7 +17,7 @@
 #include "util/base/include/configuration.h"
 #include "sectors/include/subsector.h"
 #include "technologies/include/technology.h"
-// #include "technologies/include/nuke_fuel_technology.h"
+#include "technologies/include/nuke_fuel_technology.h"
 #include "technologies/include/itechnology.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
@@ -427,9 +427,9 @@ void Subsector::completeInit( const IInfo* aSectorInfo,
 
     const Modeltime* modeltime = scenario->getModeltime();
     for( unsigned int j = 0; j < baseTechs.size(); ++j ){
-        if( baseTechs[ j ]->getYear() == modeltime->getper_to_yr( 0 ) ) {
+        //if( baseTechs[ j ]->getYear() == modeltime->getper_to_yr( 0 ) ) {
             baseTechs[ j ]->removeEmptyInputs();
-        }
+        //}
     }
 
     typedef vector<vector<ITechnology*> >::iterator TechVecIterator;
@@ -662,7 +662,10 @@ void Subsector::initCalc( NationalAccount* aNationalAccount,
     // Initialize the baseTechs. This might be better as a loop over tech types. 
     const Modeltime* modeltime = scenario->getModeltime();
     for( unsigned int j = 0; j < baseTechs.size(); j++ ){
-        if( aPeriod == 0 && baseTechs[ j ]->getYear() == modeltime->getper_to_yr( 0 ) ){
+		// shk modified to calculate coefficients for future technologies read-in in the base period
+        if( aPeriod == 0 && baseTechs[ j ]->getYear() == modeltime->getper_to_yr( baseTechs[ j ]->getPeriodIniInvest() )){
+        // original 
+        //if( aPeriod == 0 && baseTechs[ j ]->getYear() == modeltime->getper_to_yr( 0 ) ){
             double totalCapital = mTechTypes[ baseTechs[ j ]->getName() ]->getTotalCapitalStock( baseTechs[ j ]->getYear() );
             baseTechs[ j ]->initCalc( aMoreSectorInfo, regionName, sectorName, *aNationalAccount,
                                       aDemographics, totalCapital, aPeriod );
@@ -1361,7 +1364,7 @@ void Subsector::csvOutputFile( const GDP* aGDP,
 	for( int m = 0; m < maxper; m++ ){
         temp[ m ] = getPrice( aGDP, m );
     }
-    fileoutput3( regionName,sectorName,name," ","price",priceUnit, temp);
+    fileoutput3( regionName,sectorName,name," ","price",priceUnit,temp);
 
     for ( int m= 0;m<maxper;m++){
         temp[m] = summary[m].get_emissmap_second("CO2");
@@ -1460,12 +1463,12 @@ void Subsector::MCoutputSupplySector( const GDP* aGDP ) const {
     for( int per = 0; per < maxper; ++per ){
         temp[ per ] = getOutput( per );
     }
-    dboutput4(regionName,"Secondary Energy Prod",sectorName,name,outputUnit, temp );
+    dboutput4(regionName,"Secondary Energy Prod",sectorName,name,outputUnit,temp);
     // Subsector price
 	for( int m = 0; m < maxper; m++ ){
         temp[ m ] = getPrice( aGDP, m );
     }
-    dboutput4(regionName,"Price",sectorName,name,priceUnit, temp );
+    dboutput4(regionName,"Price",sectorName,name,priceUnit,temp);
     // for electricity sector only
     if (sectorName == "electricity") {
         for ( int m=0;m<maxper;m++) {
@@ -1487,7 +1490,8 @@ void Subsector::MCoutputSupplySector( const GDP* aGDP ) const {
             temp[m] = techs[i][m]->getOutput( m );
         }
 
-        dboutput4( regionName, "Secondary Energy Prod", sectorName + "_tech-new-investment", techs[i][ 0 ]->getName(), outputUnit, temp );
+        dboutput4( regionName, "Secondary Energy Prod", sectorName + "_tech-new-investment", 
+            techs[i][ 0 ]->getName(), outputUnit, temp );
 		
 		// Output for all vintages.
         for ( int m=0; m < maxper;m++) {

@@ -174,6 +174,15 @@ private:
     //! Current sector name.
     std::string mCurrentSector;
 
+    //! Current price unit.
+    std::string mCurrentPriceUnit;
+
+    //! Current output unit.
+    std::string mCurrentOutputUnit;
+
+    //! Current market name.
+    std::string mCurrentMarket;
+
     //! Current technology fuel stored from Technology so that GHG may access
     //! this. This is updated when the visitor reaches each Technology.
     std::string mCurrentFuel;

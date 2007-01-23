@@ -16,6 +16,8 @@
 #include "resources/include/grade.h"
 #include "util/base/include/model_time.h"
 #include "util/base/include/xml_helper.h"
+#include "containers/include/info_factory.h"
+#include "containers/include/iinfo.h"
 #include "util/base/include/ivisitor.h"
 
 using namespace std;
@@ -61,6 +63,18 @@ void Grade::XMLParse( const DOMNode* tempNode ) {
         }
     }
 }
+
+/*! \brief Complete the initialization
+*
+* This routine is only called once per model run
+*
+* \author Josh Lurz, Sonny Kim
+* \warning markets are not necesarilly set when completeInit is called
+*/
+void Grade::completeInit( const IInfo* aSubresourceInfo ) {
+    mGradeInfo.reset( InfoFactory::constructInfo( aSubresourceInfo ) ); 
+}
+
 
 //! Write datamembers to datastream in XML format for replicating input file.
 void Grade::toInputXML( ostream& out, Tabs* tabs ) const {

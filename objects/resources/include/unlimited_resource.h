@@ -100,12 +100,6 @@ protected:
     //! Read in prices.
     std::vector<double> mFixedPrices;
 
-    //! Resource name.
-    std::string mName;
-
-    //! Market name.
-    std::string mMarket;
-
     //! Capacity factor.
     Value mCapacityFactor;
 

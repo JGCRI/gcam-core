@@ -49,12 +49,8 @@ public:
     void csvOutputFile( const std::string& regname ); 
 	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
-    std::string name; //!< Resource name
-    std::string mOutputUnit; //!< unit of good or service produced by sector
-    std::string mPriceUnit; //!< price unit of good or service produced by sector
-    std::string market; //!< regional market
     int nosubrsrc; //!< number of subsectors for each Resource
-    std::auto_ptr<IInfo> mResourceInfo; //!< Pointer to the sector's information store.
+    std::auto_ptr<IInfo> mResourceInfo; //!< Pointer to the resource's information store.
     std::vector<SubResource*> subResource; //!< subsector objects for each Resource
     std::vector<double> rscprc; //!< Resource price
     std::vector<double> available; //!< total Resource available

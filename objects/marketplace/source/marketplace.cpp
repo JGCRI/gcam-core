@@ -636,18 +636,23 @@ void Marketplace::dbOutput() const {
     for (int i=0;i< static_cast<int>( markets.size() );i++) {
         string tempRegName = markets[i][0]->getRegionName();
         string tempGoodName = markets[i][0]->getGoodName();
+        const IInfo* marketInfo = markets[i][0]->getMarketInfo();
+ 
         for (j=0;j<maxPeriod;j++) {
             temp[j] = markets[i][j]->getRawPrice();
         }
-        dboutput4(markets[i][0]->getRegionName(),"Market",markets[i][0]->getGoodName(),"1_price","$/GJ",temp);
+        dboutput4(markets[i][0]->getRegionName(),"Market",markets[i][0]->getGoodName(),"1_price",
+            marketInfo->getString( "priceUnit", true ), temp);
         for (j=0;j<maxPeriod;j++) {
             temp[j] = markets[i][j]->getRawSupply();
         }
-        dboutput4(markets[i][0]->getRegionName(),"Market",markets[i][0]->getGoodName(),"2_supply","EJ",temp);
+        dboutput4(markets[i][0]->getRegionName(),"Market",markets[i][0]->getGoodName(),"2_supply",
+            marketInfo->getString( "outputUnit", true ), temp);
         for (j=0;j<maxPeriod;j++) {
             temp[j] = markets[i][j]->getRawDemand();
         }
-        dboutput4(markets[i][0]->getRegionName(),"Market",markets[i][0]->getGoodName(),"3_demand","EJ",temp);
+        dboutput4(markets[i][0]->getRegionName(),"Market",markets[i][0]->getGoodName(),"3_demand",
+            marketInfo->getString( "outputUnit", true ), temp);
     }
 }
 
@@ -677,14 +682,17 @@ void Marketplace::csvOutputFile( string marketsToPrint ) const {
     // write market prices and supply (or demand)
     for ( unsigned int i = 0; i < markets.size(); i++ ) {
       if ( marketsToPrint == "" || markets[i][0]->getRegionName() == marketsToPrint ) {
+        const IInfo* marketInfo = markets[i][0]->getMarketInfo();
         for ( int j = 0; j < maxPeriod; j++ ) {
             temp[j] = markets[i][j]->getRawPrice();
         }
-        fileoutput3(markets[i][0]->getRegionName(),"market",markets[i][0]->getGoodName()," ","price","$/GJ",temp);
+        fileoutput3(markets[i][0]->getRegionName(),"market",markets[i][0]->getGoodName()," ","price",
+            marketInfo->getString( "priceUnit", true ), temp);
         for ( int j = 0; j < maxPeriod; j++ ) {
             temp[j] = markets[i][j]->getRawSupply();
         }
-        fileoutput3(markets[i][0]->getRegionName(),"market",markets[i][0]->getGoodName()," ","supply","EJ",temp);
+        fileoutput3(markets[i][0]->getRegionName(),"market",markets[i][0]->getGoodName()," ","supply",
+            marketInfo->getString( "outputUnit", true ), temp);
       }
     }
 }

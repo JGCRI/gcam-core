@@ -156,6 +156,8 @@ protected:
      * \return The constant XML_NAME.
      */
     virtual const std::string& getXMLName() const = 0;
+    //! Unit of emissions
+    std::string mEmissionsUnit; 
 
     double calcInputEmissions( const std::vector<Input*>& aInputs, const std::string& aRegionName, const int aPeriod ) const;
 

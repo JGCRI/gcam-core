@@ -114,7 +114,7 @@ void SubResource::XMLParse( const DOMNode* node ){
 *
 * This routine is only called once per model run
 *
-* \author Josh Lurz
+* \author Josh Lurz, Sonny Kim
 * \warning markets are not necesarilly set when completeInit is called
 */
 void SubResource::completeInit( const IInfo* aResourceInfo ) {
@@ -128,6 +128,11 @@ void SubResource::completeInit( const IInfo* aResourceInfo ) {
         mainLog << "Short-term capacity price elasticity is zero in sub-resource: "
                 << name << endl;
     }
+    // call completeInit for grades
+    for( vector<Grade*>::iterator gradeIter = grade.begin(); gradeIter != grade.end(); gradeIter++ ) {
+        ( *gradeIter )->completeInit( mSubresourceInfo.get() );
+    }
+
 }
 
 /*! \brief Perform any initializations needed for each period.

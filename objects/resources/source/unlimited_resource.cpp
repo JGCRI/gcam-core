@@ -75,7 +75,12 @@ void UnlimitedResource::XMLParse( const DOMNode* node ){
         if( nodeName == "#text" ) {
             continue;
         }
-
+        else if( nodeName == "outputUnit" ){
+            mOutputUnit = XMLHelper<string>::getValue( curr );
+        }
+        else if( nodeName == "priceUnit" ){
+            mPriceUnit = XMLHelper<string>::getValue( curr );
+        }
         else if( nodeName == "market" ){
             mMarket = XMLHelper<string>::getValue( curr );
         }
@@ -106,6 +111,14 @@ const string& UnlimitedResource::getXMLName() const {
 void UnlimitedResource::completeInit( const string& aRegionName,
                                       const IInfo* aRegionInfo )
 {
+    // default unit to EJ
+    if ( mOutputUnit.empty() ) {
+        mOutputUnit = "EJ"; 
+    }
+    // default unit to $/GJ
+    if ( mPriceUnit.empty() ) {
+        mPriceUnit = "75$/GJ"; 
+    }
     // Setup markets for this resource.
     setMarket( aRegionName );
 }
@@ -209,7 +222,7 @@ void UnlimitedResource::csvOutputFile( const string& aRegionName )
     for( int i = 0; i < maxper; ++i ){
         temp[ i ] = getAnnualProd( aRegionName, i );
     }
-    fileoutput3( aRegionName , mName," "," ","production","EJ", temp );
+    fileoutput3( aRegionName , mName," "," ","production", mOutputUnit, temp );
 }
 
 void UnlimitedResource::dbOutput( const string& aRegionName ) {
@@ -223,7 +236,7 @@ void UnlimitedResource::dbOutput( const string& aRegionName ) {
     for( int i = 0; i < maxper; ++i ){
         temp[ i ] = getAnnualProd( aRegionName, i );
     }
-    dboutput4(aRegionName,"Pri Energy","Production by Sector", mName,"EJ", temp );
+    dboutput4(aRegionName,"Pri Energy","Production by Sector", mName, mOutputUnit, temp );
 }
 
 void UnlimitedResource::setCalibratedSupplyInfo( const int aPeriod,
@@ -254,6 +267,11 @@ void UnlimitedResource::setMarket( const string& aRegionName ) {
     marketplace->createMarket( aRegionName, mMarket, mName,
                                IMarketType::NORMAL );
 
+    // Set price and output units for period 0 market info
+    IInfo* marketInfo = marketplace->getMarketInfo( mName, aRegionName, 0, true );
+    marketInfo->setString( "priceUnit", mPriceUnit );
+    marketInfo->setString( "outputUnit", mOutputUnit );
+    
     // Set the read-in fixed prices for each period.
     const Modeltime* modeltime = scenario->getModeltime();
     for( int i = 0; i < modeltime->getmaxper(); ++i ){

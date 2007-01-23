@@ -15,6 +15,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include "util/base/include/ivisitable.h"
 class Tabs;
+class IInfo;
 
 /*! 
 * \ingroup Objects
@@ -31,6 +32,7 @@ class Grade: public IVisitable
 public:
     Grade();
     void XMLParse( const xercesc::DOMNode* tempnode );
+    virtual void completeInit( const IInfo* aSubresourceInfo );
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
@@ -47,6 +49,7 @@ public:
 protected:
     virtual const std::string& getXMLName() const;
     std::string name; //!< Grade name
+    std::auto_ptr<IInfo> mGradeInfo; //!< The Grade's information store.
     double available; //!< amount of Grade for each Grade
     double extractCost; //!< extraction cost of each Grade
     std::vector<double> totalCost; //!< total cost

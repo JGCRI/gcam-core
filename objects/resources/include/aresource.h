@@ -74,6 +74,14 @@ public:
 protected:
     // For the database output
     virtual const std::string& getXMLName() const = 0;
+    //! Resource name.
+    std::string mName;
+    //! Unit of resource output
+    std::string mOutputUnit; 
+    //! Unit of resource price
+    std::string mPriceUnit; 
+    //! Market name.
+    std::string mMarket;
 };
 
 // Inline function definitions

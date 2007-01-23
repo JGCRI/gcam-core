@@ -32,6 +32,7 @@ Population::Population(){
     mTotalPop = -1;
     mWorkingAgeMin = WORKING_AGE_MIN_DEFAULT;
     mWorkingAgeMax = WORKING_AGE_MAX_DEFAULT;
+    mPopulationUnit = "thous";
 }
 
 //! Population destructor. 
@@ -70,6 +71,9 @@ void Population::XMLParse( const xercesc::DOMNode* node ){
         string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
         if( nodeName == "#text" ) {
             continue;
+        }
+        else if( nodeName == "populationUnit" ){
+            mPopulationUnit = XMLHelper<string>::getValue( curr );
         }
         else if( nodeName == "min-working-age" ){
             mWorkingAgeMin = XMLHelper<int>::getValue( curr );
