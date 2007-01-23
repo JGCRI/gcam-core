@@ -17,7 +17,7 @@
 #include "util/base/include/configuration.h"
 #include "sectors/include/subsector.h"
 #include "technologies/include/technology.h"
-#include "technologies/include/nuke_fuel_technology.h"
+//#include "technologies/include/nuke_fuel_technology.h"
 #include "technologies/include/itechnology.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
@@ -662,10 +662,7 @@ void Subsector::initCalc( NationalAccount* aNationalAccount,
     // Initialize the baseTechs. This might be better as a loop over tech types. 
     const Modeltime* modeltime = scenario->getModeltime();
     for( unsigned int j = 0; j < baseTechs.size(); j++ ){
-		// shk modified to calculate coefficients for future technologies read-in in the base period
-        if( aPeriod == 0 && baseTechs[ j ]->getYear() == modeltime->getper_to_yr( baseTechs[ j ]->getPeriodIniInvest() )){
-        // original 
-        //if( aPeriod == 0 && baseTechs[ j ]->getYear() == modeltime->getper_to_yr( 0 ) ){
+        if( aPeriod == 0 && baseTechs[ j ]->getYear() == modeltime->getper_to_yr( 0 ) ){
             double totalCapital = mTechTypes[ baseTechs[ j ]->getName() ]->getTotalCapitalStock( baseTechs[ j ]->getYear() );
             baseTechs[ j ]->initCalc( aMoreSectorInfo, regionName, sectorName, *aNationalAccount,
                                       aDemographics, totalCapital, aPeriod );
