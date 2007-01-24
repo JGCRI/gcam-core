@@ -21,6 +21,7 @@
 #include "util/base/include/configuration.h"
 #include "containers/include/dependency_finder.h"
 #include "containers/include/scenario.h" // for marketplace
+#include "containers/include/iinfo.h"
 #include "sectors/include/sector_utils.h"
 
 using namespace std;
@@ -166,6 +167,11 @@ void ExportSector::setMarket() {
 	// Creates a regional market. MiniCAM supply sectors are not independent and 
 	// cannot be members of multi-region markets.
     if( marketplace->createMarket( regionName, mMarketName, name, IMarketType::NORMAL ) ) {
+        // Set price and output units for period 0 market info
+        IInfo* marketInfo = marketplace->getMarketInfo( name, regionName, 0, true );
+        marketInfo->setString( "priceUnit", mPriceUnit );
+        marketInfo->setString( "outputUnit", mOutputUnit );
+
         // Set the base year price which the sector reads in, into the mFixedPrices vector.
         // TODO: Seperate SupplySector so this is not needed.
         mFixedPrices[ 0 ] = mBasePrice;

@@ -155,6 +155,11 @@ void FoodSupplySector::setMarket() {
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
     // name is resource name
     if ( marketplace->createMarket( regionName, mMarketName, name, IMarketType::NORMAL ) ) {
+        // Set price and output units for period 0 market info
+        IInfo* marketInfo = marketplace->getMarketInfo( name, regionName, 0, true );
+        marketInfo->setString( "priceUnit", mPriceUnit );
+        marketInfo->setString( "outputUnit", mOutputUnit );
+
         vector <double> tempCalPrice( maxper, calPrice / CVRT90 ); // market prices are in $1975
         marketplace->setPriceVector( name, regionName, tempCalPrice );
 

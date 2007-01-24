@@ -180,6 +180,9 @@ private:
     //! Current output unit.
     std::string mCurrentOutputUnit;
 
+    //! Current Input unit.
+    std::string mCurrentInputUnit;
+
     //! Current market name.
     std::string mCurrentMarket;
 

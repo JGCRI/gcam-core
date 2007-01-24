@@ -71,7 +71,7 @@
 
 // Whether to write a text file with the contents that are to be inserted
 // into the XML database.
-#define DEBUG_XML_DB 0
+#define DEBUG_XML_DB 1
 
 #ifdef DEBUG_XML_DB
 #include "util/base/include/auto_file.h"
@@ -474,6 +474,9 @@ void XMLDBOutputter::endVisitGrade( const Grade* aGrade, const int aPeriod ){
 void XMLDBOutputter::startVisitSector( const Sector* aSector, const int aPeriod ){
     // Store the sector name.
     mCurrentSector = aSector->getName();
+    mCurrentPriceUnit = aSector->mPriceUnit;
+    mCurrentOutputUnit = aSector->mOutputUnit;
+    mCurrentInputUnit = aSector->mInputUnit;
 
     // Write the opening sector tag and the type of the base class.
     XMLWriteOpeningTag( aSector->getXMLName(), mBuffer, mTabs.get(),
@@ -486,6 +489,9 @@ void XMLDBOutputter::endVisitSector( const Sector* aSector, const int aPeriod ){
 
     // Clear the current sector.
     mCurrentSector.clear();
+    mCurrentPriceUnit.clear();
+    mCurrentOutputUnit.clear();
+    mCurrentInputUnit.clear();
 }
 
 void XMLDBOutputter::startVisitSubsector( const Subsector* aSubsector,
@@ -563,7 +569,7 @@ void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology,
         }
         map<string, string> attrs;
         attrs[ "year" ] = util::toString( modeltime->getper_to_yr( curr ) );
-        attrs[ "unit" ] = "EJ";
+        attrs[ "unit" ] = mCurrentOutputUnit;
         XMLWriteElementWithAttributes( aTechnology->getOutput( curr ),
                                        "output", mBuffer, mTabs.get(), attrs );
     }
@@ -578,7 +584,7 @@ void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology,
         map<string, string> attrs;
         attrs[ "fuel-name" ] = mCurrentFuel;
         attrs[ "year" ] = util::toString( modeltime->getper_to_yr( curr ) );
-        attrs[ "unit" ] = "EJ";
+        attrs[ "unit" ] = mCurrentInputUnit;
         XMLWriteElementWithAttributes( aTechnology->getInput( curr ),
             "input", mBuffer, mTabs.get(), attrs );
     }
@@ -586,13 +592,23 @@ void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology,
     // Determine the investment period of the technology.
     int investPeriod = modeltime->getyr_to_per( aTechnology->year );
 
-    // Write out the non-energy cost.
-    writeItem( "non-energy-cost", "$1975/GJ",
+    // Write out the non-energy cost assumed to be in same unit as sector price.
+    writeItem( "non-energy-cost", mCurrentPriceUnit,
                aTechnology->getNonEnergyCost( investPeriod ), -1 );
 
 
-    // Write out the fuel cost.
-    writeItem( "fuel-cost", "$1975/GJ",
+    // Get fuel cost from marketplace and write out.
+    // Period 0 market info contains price and output units.
+    const Marketplace* marketplace = scenario->getMarketplace();
+    string tempPriceUnit("$1975/GJ"); // default price unit
+    if( !mCurrentFuel.empty() && 
+        marketplace->getMarketInfo( mCurrentFuel, mCurrentRegion, 0, false ) ){
+
+        tempPriceUnit.clear();
+        tempPriceUnit = marketplace->getMarketInfo( mCurrentFuel, mCurrentRegion, 0, true )
+                      ->getString( "priceUnit", true );
+    }
+    writeItem( "fuel-cost", tempPriceUnit,
                 aTechnology->getFuelCost( mCurrentRegion,
                                           mCurrentSector, investPeriod ), -1 );
 

@@ -14,6 +14,7 @@
 #include "containers/include/gdp.h"
 #include "demographics/include/demographic.h"
 #include "containers/include/scenario.h"
+#include "containers/include/iinfo.h"
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
 #include "marketplace/include/imarket_type.h"
@@ -224,6 +225,11 @@ void GDP::setupCalibrationMarkets( const string& regionName, const vector<double
     Marketplace* marketplace = scenario->getMarketplace();
 
     if ( marketplace->createMarket( regionName, regionName, goodName, IMarketType::CALIBRATION ) ) {
+        // Set price and output units for period 0 market info
+		IInfo* marketInfo = marketplace->getMarketInfo( goodName, regionName, 0, true );
+        marketInfo->setString( "priceUnit", "LaborProd" );
+        marketInfo->setString( "outputUnit", "LaborProd" );
+
         vector<double> tempLFPs( modeltime->getmaxper() );
         for( int i = 0; i < modeltime->getmaxper(); i++ ){
             tempLFPs[ i ] = pow( 1 + laborProdGrowthRate[ i ], modeltime->gettimestep( i ) );

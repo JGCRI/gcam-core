@@ -57,6 +57,8 @@ adjMaxCntrl( 1 ),
 multMaxCntrl( 1 ),
 gwp( 1 )
 {
+    // default unit for emissions
+    mEmissionsUnit = "tg";
 }
 
 //! Default destructor.
@@ -92,6 +94,7 @@ void AComplexEmissions::copy( const AComplexEmissions& other ){
     emAdjust = other.emAdjust;
     finalEmissCoef = other.finalEmissCoef;
     gwp = other.gwp;
+    mEmissionsUnit = other.mEmissionsUnit;
 
     // Deep copy the auto_ptrs
     if( other.ghgMac.get() ){
@@ -285,6 +288,7 @@ void AComplexEmissions::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( multMaxCntrl, "multMaxCntrl", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( techDiff, "techDiff", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( gwp, "GWP", out, tabs, 1.0 );
+    XMLWriteElement( mEmissionsUnit, "emissionsUnit", out, tabs );
 
     // Write out the GHGMAC
     if( ghgMac.get() ){
@@ -304,6 +308,7 @@ void AComplexEmissions::toDebugXMLDerived( const int period, ostream& out, Tabs*
     XMLWriteElement( adjMaxCntrl, "adjMaxCntrl", out, tabs );
     XMLWriteElement( techDiff, "techDiff", out, tabs );
     XMLWriteElement( gwp, "GWP", out, tabs );
+    XMLWriteElement( mEmissionsUnit, "emissionsUnit", out, tabs );
 
      // Write out the GHGMAC
     if( ghgMac.get() ){
