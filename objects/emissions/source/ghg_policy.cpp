@@ -93,8 +93,8 @@ void GHGPolicy::completeInit( const string& aRegionName ) {
     // Set price and output units for period 0 market info
     IInfo* marketInfo = marketplace->getMarketInfo( mName, aRegionName, 0, true );
     //TODO: read-in as data the units of tax and emissions
-    marketInfo->setString( "priceUnit", "90$/tC" );
-    marketInfo->setString( "outputUnit", "MTC" );
+    marketInfo->setString( "price-unit", "1990$/tC" );
+    marketInfo->setString( "output-unit", "MTC" );
     
     // Put the taxes in the market as the market prices if it is a fixed tax policy.
     if( isFixedTax ){

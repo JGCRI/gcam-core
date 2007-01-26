@@ -642,17 +642,17 @@ void Marketplace::dbOutput() const {
             temp[j] = markets[i][j]->getRawPrice();
         }
         dboutput4(markets[i][0]->getRegionName(),"Market",markets[i][0]->getGoodName(),"1_price",
-            marketInfo->getString( "priceUnit", true ), temp);
+            marketInfo->getString( "price-unit", true ), temp);
         for (j=0;j<maxPeriod;j++) {
             temp[j] = markets[i][j]->getRawSupply();
         }
         dboutput4(markets[i][0]->getRegionName(),"Market",markets[i][0]->getGoodName(),"2_supply",
-            marketInfo->getString( "outputUnit", true ), temp);
+            marketInfo->getString( "output-unit", true ), temp);
         for (j=0;j<maxPeriod;j++) {
             temp[j] = markets[i][j]->getRawDemand();
         }
         dboutput4(markets[i][0]->getRegionName(),"Market",markets[i][0]->getGoodName(),"3_demand",
-            marketInfo->getString( "outputUnit", true ), temp);
+            marketInfo->getString( "output-unit", true ), temp);
     }
 }
 
@@ -687,12 +687,12 @@ void Marketplace::csvOutputFile( string marketsToPrint ) const {
             temp[j] = markets[i][j]->getRawPrice();
         }
         fileoutput3(markets[i][0]->getRegionName(),"market",markets[i][0]->getGoodName()," ","price",
-            marketInfo->getString( "priceUnit", true ), temp);
+            marketInfo->getString( "price-unit", true ), temp);
         for ( int j = 0; j < maxPeriod; j++ ) {
             temp[j] = markets[i][j]->getRawSupply();
         }
         fileoutput3(markets[i][0]->getRegionName(),"market",markets[i][0]->getGoodName()," ","supply",
-            marketInfo->getString( "outputUnit", true ), temp);
+            marketInfo->getString( "output-unit", true ), temp);
       }
     }
 }

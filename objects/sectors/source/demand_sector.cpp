@@ -124,9 +124,6 @@ void DemandSector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
 
     // write the xml for the class members.
-    XMLWriteElementCheckDefault( mOutputUnit, "outputUnit", out, tabs, string("SerUnit") );
-    XMLWriteElementCheckDefault( mInputUnit, "inputUnit", out, tabs, string("EJ") );
-    XMLWriteElementCheckDefault( mPriceUnit, "priceUnit", out, tabs, string("75$/Ser") );
     XMLWriteElementCheckDefault( mIsPerCapitaBased, "perCapitaBased", out, tabs, false );
 
     XMLWriteVector( mPriceElasticity, "priceelasticity", out, tabs, modeltime, 0.0 );
@@ -147,10 +144,6 @@ void DemandSector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
 void DemandSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
 
     // write the xml for the class members.
-    // write out the market string.
-    XMLWriteElement( mOutputUnit, "outputUnit", out, tabs );
-    XMLWriteElement( mInputUnit, "inputUnit", out, tabs );
-    XMLWriteElement( mPriceUnit, "priceUnit", out, tabs );
     XMLWriteElement( mIsPerCapitaBased, "perCapitaBased", out, tabs );
     XMLWriteElement( getTechnicalChange( period ), "tech-change", out, tabs );
 
@@ -357,7 +350,7 @@ void DemandSector::completeInit( const IInfo* aRegionInfo,
     }
     // default unit to $/Service
     if ( mPriceUnit.empty() ) {
-        mPriceUnit = "75$/Ser"; 
+        mPriceUnit = "1975$/Ser"; 
     }
     
     // All demand sectors must have a non-zero base output.
@@ -391,8 +384,8 @@ void DemandSector::completeInit( const IInfo* aRegionInfo,
         marketplace->createMarket( regionName, regionName, TFEMarketName, IMarketType::INVERSE_CALIBRATION );
         // Set price and output units for period 0 market info
 		IInfo* marketInfo = marketplace->getMarketInfo( TFEMarketName, regionName, 0, true );
-        marketInfo->setString( "priceUnit", mPriceUnit );
-        marketInfo->setString( "outputUnit", mOutputUnit );
+        marketInfo->setString( "price-unit", mPriceUnit );
+        marketInfo->setString( "output-unit", mOutputUnit );
         for( unsigned int i = modeltime->getFinalCalibrationPeriod() + 1; i < mCalFinalEnergy.size(); ++i ){
             if( mCalFinalEnergy[ i ] != -1 ){
                 // Solve all initialized periods.

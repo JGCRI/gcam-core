@@ -225,7 +225,7 @@ void SupplySector::completeInit( const IInfo* aRegionInfo,
     }
     // default unit to $/GJ
     if ( mPriceUnit.empty() ) {
-        mPriceUnit = "75$/GJ"; 
+        mPriceUnit = "1975$/GJ"; 
     }
     Sector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator, aGlobalTechDB );
     setMarket();
@@ -267,11 +267,6 @@ const std::string& SupplySector::getXMLNameStatic() {
 */
 void SupplySector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {  
 
-    // write the xml for the class members.
-    XMLWriteElementCheckDefault( mOutputUnit, "outputUnit", out, tabs, string("EJ") );
-    XMLWriteElementCheckDefault( mInputUnit, "inputUnit", out, tabs, string("EJ") );
-    XMLWriteElementCheckDefault( mPriceUnit, "priceUnit", out, tabs, string("75$/GJ") );
-
     // Temporary CCTP hack.
     XMLWriteVector( mBiomassAdder, "biomass-price-adder", out, tabs, scenario->getModeltime(), 0.0 );
 }
@@ -288,9 +283,6 @@ void SupplySector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
 void SupplySector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
 
     // write the xml for the class members.
-    XMLWriteElement( mOutputUnit, "outputUnit", out, tabs );
-    XMLWriteElement( mInputUnit, "inputUnit", out, tabs );
-    XMLWriteElement( mPriceUnit, "priceUnit", out, tabs );
     XMLWriteElement( mBiomassAdder[ period ], "biomass-price-adder", out, tabs );
 }
 /*! \brief Parses any child nodes specific to derived classes
@@ -328,8 +320,8 @@ void SupplySector::setMarket() {
 
         // Set price and output units for period 0 market info
         IInfo* marketInfo = marketplace->getMarketInfo( name, regionName, 0, true );
-        marketInfo->setString( "priceUnit", mPriceUnit );
-        marketInfo->setString( "outputUnit", mOutputUnit );
+        marketInfo->setString( "price-unit", mPriceUnit );
+        marketInfo->setString( "output-unit", mOutputUnit );
     }
 }
 

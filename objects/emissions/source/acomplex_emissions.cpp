@@ -278,6 +278,7 @@ bool AComplexEmissions::XMLDerivedClassParse( const string& nodeName, const DOMN
 void AComplexEmissions::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     // Write out the EmissionsCoef
     mEmissionsCoef->toInputXML( out, tabs );
+    XMLWriteElement( mEmissionsUnit, "emissions-unit", out, tabs );
     XMLWriteElementCheckDefault( gwp, "GWP", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( emAdjust, "emAdjust", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( maxCntrl, "maxCntrl", out, tabs, -1000.0 );
@@ -288,7 +289,6 @@ void AComplexEmissions::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( multMaxCntrl, "multMaxCntrl", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( techDiff, "techDiff", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( gwp, "GWP", out, tabs, 1.0 );
-    XMLWriteElement( mEmissionsUnit, "emissionsUnit", out, tabs );
 
     // Write out the GHGMAC
     if( ghgMac.get() ){
@@ -299,6 +299,7 @@ void AComplexEmissions::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
 void AComplexEmissions::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
     // Write out the EmissionsCoef
     mEmissionsCoef->toDebugXML( out, tabs );
+    XMLWriteElement( mEmissionsUnit, "emissions-unit", out, tabs );
     XMLWriteElement( gwp, "GWP", out, tabs );
     XMLWriteElement( emAdjust, "emAdjust", out, tabs );
     XMLWriteElement( maxCntrl, "maxCntrl", out, tabs );
@@ -308,7 +309,6 @@ void AComplexEmissions::toDebugXMLDerived( const int period, ostream& out, Tabs*
     XMLWriteElement( adjMaxCntrl, "adjMaxCntrl", out, tabs );
     XMLWriteElement( techDiff, "techDiff", out, tabs );
     XMLWriteElement( gwp, "GWP", out, tabs );
-    XMLWriteElement( mEmissionsUnit, "emissionsUnit", out, tabs );
 
      // Write out the GHGMAC
     if( ghgMac.get() ){

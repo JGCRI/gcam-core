@@ -81,10 +81,10 @@ void Resource::XMLParse( const DOMNode* node ){
         if( nodeName == "#text" ) {
             continue;
         }
-        else if( nodeName == "outputUnit" ){
+        else if( nodeName == "output-unit" ){
             mOutputUnit = XMLHelper<string>::getValue( curr );
         }
-        else if( nodeName == "priceUnit" ){
+        else if( nodeName == "price-unit" ){
             mPriceUnit = XMLHelper<string>::getValue( curr );
         }
         else if( nodeName == "market" ){
@@ -118,13 +118,13 @@ void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo
     }
     // default unit to $/GJ
     if ( mPriceUnit.empty() ) {
-        mPriceUnit = "75$/GJ"; 
+        mPriceUnit = "1975$/GJ"; 
     }
     // Allocate the resource info.
     mResourceInfo.reset( InfoFactory::constructInfo( aRegionInfo ) );
     // Set output and price unit of resource into the resource info.
-    mResourceInfo->setString( "outputUnit", mOutputUnit );
-    mResourceInfo->setString( "priceUnit", mPriceUnit );
+    mResourceInfo->setString( "output-unit", mOutputUnit );
+    mResourceInfo->setString( "price-unit", mPriceUnit );
 
     for( vector<SubResource*>::iterator subResIter = subResource.begin(); subResIter != subResource.end(); subResIter++ ) {
         ( *subResIter )->completeInit( mResourceInfo.get() );
@@ -168,8 +168,8 @@ void Resource::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
 
     // write the xml for the class members.
-    XMLWriteElementCheckDefault( mOutputUnit, "outputUnit", out, tabs, string("EJ") );
-    XMLWriteElementCheckDefault( mPriceUnit, "priceUnit", out, tabs, string("75$/GJ") );
+    XMLWriteElement( mOutputUnit, "output-unit", out, tabs );
+    XMLWriteElement( mPriceUnit, "price-unit", out, tabs );
     XMLWriteElement( mMarket, "market", out, tabs );
 
     // write out resource prices for base period only
@@ -191,8 +191,8 @@ void Resource::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
 
     // Write the xml for the class members.
-    XMLWriteElement( mOutputUnit, "outputUnit", out, tabs );
-    XMLWriteElement( mPriceUnit, "priceUnit", out, tabs );
+    XMLWriteElement( mOutputUnit, "output-unit", out, tabs );
+    XMLWriteElement( mPriceUnit, "price-unit", out, tabs );
     // Write out the market string.
     XMLWriteElement( mMarket, "market", out, tabs );
 
@@ -231,8 +231,8 @@ void Resource::setMarket( const string& regionName ) {
     if ( marketplace->createMarket( regionName, mMarket, mName, IMarketType::NORMAL ) ) {
         // Set price and output units for period 0 market info
 		IInfo* marketInfo = marketplace->getMarketInfo( mName, regionName, 0, true );
-        marketInfo->setString( "priceUnit", mPriceUnit );
-        marketInfo->setString( "outputUnit", mOutputUnit );
+        marketInfo->setString( "price-unit", mPriceUnit );
+        marketInfo->setString( "output-unit", mOutputUnit );
 
         marketplace->setPriceVector( mName, regionName, rscprc );
         for( int per = 1; per < modeltime->getmaxper(); ++per ){

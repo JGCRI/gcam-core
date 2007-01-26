@@ -75,10 +75,10 @@ void UnlimitedResource::XMLParse( const DOMNode* node ){
         if( nodeName == "#text" ) {
             continue;
         }
-        else if( nodeName == "outputUnit" ){
+        else if( nodeName == "output-unit" ){
             mOutputUnit = XMLHelper<string>::getValue( curr );
         }
-        else if( nodeName == "priceUnit" ){
+        else if( nodeName == "price-unit" ){
             mPriceUnit = XMLHelper<string>::getValue( curr );
         }
         else if( nodeName == "market" ){
@@ -117,7 +117,7 @@ void UnlimitedResource::completeInit( const string& aRegionName,
     }
     // default unit to $/GJ
     if ( mPriceUnit.empty() ) {
-        mPriceUnit = "75$/GJ"; 
+        mPriceUnit = "1975$/GJ"; 
     }
     // Setup markets for this resource.
     setMarket( aRegionName );
@@ -150,6 +150,8 @@ void UnlimitedResource::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
 
     // write the xml for the class members.
+    XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
+    XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
     XMLWriteElement( mMarket, "market", aOut, aTabs );
     
     XMLWriteElementCheckDefault( mCapacityFactor, "capacity-factor", aOut,
@@ -173,6 +175,8 @@ void UnlimitedResource::toDebugXML( const int aPeriod,
 
     // Write the xml for the class members.
     // Write out the market string.
+    XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
+    XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
     XMLWriteElement( mMarket, "market", aOut, aTabs );
     XMLWriteElement( mCapacityFactor, "capacity-factor", aOut, aTabs );
     XMLWriteElement( mVariance, "variance", aOut, aTabs );
@@ -269,8 +273,8 @@ void UnlimitedResource::setMarket( const string& aRegionName ) {
 
     // Set price and output units for period 0 market info
     IInfo* marketInfo = marketplace->getMarketInfo( mName, aRegionName, 0, true );
-    marketInfo->setString( "priceUnit", mPriceUnit );
-    marketInfo->setString( "outputUnit", mOutputUnit );
+    marketInfo->setString( "price-unit", mPriceUnit );
+    marketInfo->setString( "output-unit", mOutputUnit );
     
     // Set the read-in fixed prices for each period.
     const Modeltime* modeltime = scenario->getModeltime();

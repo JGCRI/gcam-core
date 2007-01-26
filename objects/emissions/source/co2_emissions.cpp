@@ -120,7 +120,7 @@ double CO2Emissions::getGHGValue( const string& aRegionName,
     
     assert( mFuelCoefficient.isInited() );
 
-    // units for generalized cost is in 75$/gj
+    // units for generalized cost is in 1975$/GJ
     double generalizedCost = ( ( 1 - removeFraction ) * GHGTax + removeFraction * storageCost )
             * ( mFuelCoefficient / aEfficiency - coefProduct) / CVRT90 * CVRT_TG_MT;
 
@@ -168,10 +168,10 @@ void CO2Emissions::parseName( const string& aNameAttr ){
 
 void CO2Emissions::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     // write the xml for the class members.
-    XMLWriteElementCheckDefault( mEmissionsUnit, "emissionsUnit", out, tabs, string("MTC") );
+    XMLWriteElementCheckDefault( mEmissionsUnit, "emissions-unit", out, tabs, string("MTC") );
 }
 
 void CO2Emissions::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
     // write the xml for the class members.
-    XMLWriteElement( mEmissionsUnit, "emissionsUnit", out, tabs );
+    XMLWriteElement( mEmissionsUnit, "emissions-unit", out, tabs );
 }

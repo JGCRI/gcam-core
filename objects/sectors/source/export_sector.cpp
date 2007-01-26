@@ -169,8 +169,8 @@ void ExportSector::setMarket() {
     if( marketplace->createMarket( regionName, mMarketName, name, IMarketType::NORMAL ) ) {
         // Set price and output units for period 0 market info
         IInfo* marketInfo = marketplace->getMarketInfo( name, regionName, 0, true );
-        marketInfo->setString( "priceUnit", mPriceUnit );
-        marketInfo->setString( "outputUnit", mOutputUnit );
+        marketInfo->setString( "price-unit", mPriceUnit );
+        marketInfo->setString( "output-unit", mOutputUnit );
 
         // Set the base year price which the sector reads in, into the mFixedPrices vector.
         // TODO: Seperate SupplySector so this is not needed.

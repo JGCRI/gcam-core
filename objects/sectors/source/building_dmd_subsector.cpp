@@ -479,7 +479,8 @@ void BuildingDemandSubSector::MCoutputAllSectors( const GDP* aGDP,
 	Marketplace* marketplace = scenario->getMarketplace();
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
-	const string& priceUnit = mSubsectorInfo->getString( "priceUnit", true );
+	const string& priceUnit = mSubsectorInfo->getString( "price-unit", true );
+	const string& outputUnit = mSubsectorInfo->getString( "output-unit", true );
     vector<double> temp(maxper);
 
     // function protocol
@@ -491,7 +492,7 @@ void BuildingDemandSubSector::MCoutputAllSectors( const GDP* aGDP,
     for ( int m= 0;m<maxper;m++) {
         temp[m] =  marketplace->getPrice( getInternalGainsMarketName( sectorName ), regionName, m );
     }
-    dboutput4( regionName, "General", sectorName + " internalGains", name, "??", temp );
+    dboutput4( regionName, "General", sectorName + " internalGains", name, outputUnit, temp );
 }
 
 

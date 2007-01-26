@@ -64,11 +64,11 @@ bool SectorUtils::createTrialSupplyMarket( const string& aRegion,
     // Get marketInfo for sector to set marketInfo for trial sector.
     // Sector and it's trial market must have same output units
     const IInfo* marketInfoSupplySector = marketplace->getMarketInfo( aSector, aRegion, 0, true );
-    const string outputUnitStr = marketInfoSupplySector->getString( "outputUnit", true );
+    const string outputUnitStr = marketInfoSupplySector->getString( "output-unit", true );
     // no operating trial market for base period, although vector always contains base period
     IInfo* marketInfoTrialSupplySector = marketplace->getMarketInfo( trialName, aRegion, 0, true );
-    marketInfoTrialSupplySector->setString( "priceUnit", outputUnitStr );
-    marketInfoTrialSupplySector->setString( "outputUnit", outputUnitStr );
+    marketInfoTrialSupplySector->setString( "price-unit", outputUnitStr );
+    marketInfoTrialSupplySector->setString( "output-unit", outputUnitStr );
 
     // Set the market to solve.
     for( int per = 1; per < scenario->getModeltime()->getmaxper(); ++per ){

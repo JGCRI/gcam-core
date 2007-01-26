@@ -72,7 +72,7 @@ void Population::XMLParse( const xercesc::DOMNode* node ){
         if( nodeName == "#text" ) {
             continue;
         }
-        else if( nodeName == "populationUnit" ){
+        else if( nodeName == "population-unit" ){
             mPopulationUnit = XMLHelper<string>::getValue( curr );
         }
         else if( nodeName == "min-working-age" ){
@@ -96,6 +96,7 @@ void Population::XMLParse( const xercesc::DOMNode* node ){
 void Population::toInputXML( std::ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag ( getXMLName(), out, tabs , "", mYear);
 
+    XMLWriteElement( mPopulationUnit, "population-unit", out, tabs );
     XMLWriteElementCheckDefault( mTotalPop, "totalPop", out, tabs );
     XMLWriteElementCheckDefault( mWorkingAgeMin, "min-working-age", out, tabs, WORKING_AGE_MIN_DEFAULT );
     XMLWriteElementCheckDefault( mWorkingAgeMax, "max-working-age", out, tabs, WORKING_AGE_MAX_DEFAULT );
@@ -110,6 +111,7 @@ void Population::toInputXML( std::ostream& out, Tabs* tabs ) const {
 void Population::toDebugXML( std::ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag ( getXMLName(), out, tabs , "", mYear);
 
+    XMLWriteElement( mPopulationUnit, "population-unit", out, tabs );
     XMLWriteElement( mTotalPop, "totalPop", out, tabs );
     XMLWriteElement( mWorkingAgeMin, "min-working-age", out, tabs );
     XMLWriteElement( mWorkingAgeMax, "max-working-age", out, tabs );

@@ -53,7 +53,7 @@ GDP::GDP() {
     PPPDelta = 0;
     constRatio = false;
     baseGDP = 0;
-    mGDPUnit = "Mil90US$";
+    mGDPUnit = "Million1990US$";
 }
 
 //! parses Population xml object
@@ -83,7 +83,7 @@ void GDP::XMLParse( const DOMNode* node ){
         else if ( nodeName == "baseGDP" ){
             baseGDP = XMLHelper<double>::getValue( curr );
         }
-        else if( nodeName == "gdpUnit" ){
+        else if( nodeName == "GDP-unit" ){
             mGDPUnit = XMLHelper<string>::getValue( curr );
         }
         // Energy GDP elasticity. 
@@ -122,7 +122,7 @@ void GDP::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( mEnergyGDPElasticity, "e_GDP_elas", out, tabs, 0.0 );
 
     // Write out gdp units.
-    XMLWriteElementCheckDefault( mGDPUnit, "gdpUnit", out, tabs, string("Mil90US$") );
+    XMLWriteElement( mGDPUnit, "GDP-unit", out, tabs );
 
     const Modeltime* modeltime = scenario->getModeltime();
     for( unsigned int iter = 0; iter < laborProdGrowthRate.size(); ++iter ){
@@ -164,7 +164,7 @@ void GDP::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( mEnergyGDPElasticity, "e_GDP_elas", out, tabs, 0.0 );
 
     // Write out gdp units.
-    XMLWriteElement( mGDPUnit, "gdpUnit", out, tabs );
+    XMLWriteElement( mGDPUnit, "GDP-unit", out, tabs );
 
     XMLWriteElement( laborProdGrowthRate[ period ], "laborprod", out, tabs );
 
@@ -227,8 +227,8 @@ void GDP::setupCalibrationMarkets( const string& regionName, const vector<double
     if ( marketplace->createMarket( regionName, regionName, goodName, IMarketType::CALIBRATION ) ) {
         // Set price and output units for period 0 market info
 		IInfo* marketInfo = marketplace->getMarketInfo( goodName, regionName, 0, true );
-        marketInfo->setString( "priceUnit", "LaborProd" );
-        marketInfo->setString( "outputUnit", "LaborProd" );
+        marketInfo->setString( "price-unit", "LaborProd" );
+        marketInfo->setString( "output-unit", "LaborProd" );
 
         vector<double> tempLFPs( modeltime->getmaxper() );
         for( int i = 0; i < modeltime->getmaxper(); i++ ){

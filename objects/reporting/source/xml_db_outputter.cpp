@@ -71,7 +71,7 @@
 
 // Whether to write a text file with the contents that are to be inserted
 // into the XML database.
-#define DEBUG_XML_DB 1
+#define DEBUG_XML_DB 0
 
 #ifdef DEBUG_XML_DB
 #include "util/base/include/auto_file.h"
@@ -407,6 +407,10 @@ void XMLDBOutputter::startVisitResource( const AResource* aResource,
     // Write the opening resource tag and the type of the base class.
     XMLWriteOpeningTag( aResource->getXMLName(), mBuffer, mTabs.get(),
         aResource->getName(), 0, "resource" );
+
+    // Store resource units
+    mCurrentPriceUnit = aResource->mPriceUnit;
+    mCurrentOutputUnit = aResource->mOutputUnit;
 }
 
 void XMLDBOutputter::endVisitResource( const AResource* aResource,
@@ -414,6 +418,9 @@ void XMLDBOutputter::endVisitResource( const AResource* aResource,
 {
     // Write the closing resource tag.
     XMLWriteClosingTag( aResource->getXMLName(), mBuffer, mTabs.get() );
+    // Clear the current resource.
+    mCurrentPriceUnit.clear();
+    mCurrentOutputUnit.clear();
 }
 
 void XMLDBOutputter::startVisitSubResource( const SubResource* aSubResource,
@@ -423,13 +430,10 @@ void XMLDBOutputter::startVisitSubResource( const SubResource* aSubResource,
     XMLWriteOpeningTag( aSubResource->getXMLName(), mBuffer, mTabs.get(),
         aSubResource->getName(), 0, "subresource" );
 
-    // default determined in Resource
-    const string outputUnitStr = aSubResource->mSubresourceInfo.get()->getString( "outputUnit", true );
-
     // Write out annual production.
     const Modeltime* modeltime = scenario->getModeltime();
     for( int per = 0; per < modeltime->getmaxper(); ++per ){
-        writeItem( "production", outputUnitStr, aSubResource->getAnnualProd( per ), per );
+        writeItem( "production", mCurrentOutputUnit, aSubResource->getAnnualProd( per ), per );
     }
 }
 
@@ -451,18 +455,15 @@ void XMLDBOutputter::startVisitGrade( const Grade* aGrade, const int aPeriod ){
     // Write the opening subresource tag and.
     XMLWriteOpeningTag( aGrade->getXMLName(), mBuffer, mTabs.get(), aGrade->getName() );
 
-    // default determined in Resource
-    const string priceUnitStr = aGrade->mGradeInfo.get()->getString( "priceUnit", true );
-    const string outputUnitStr = aGrade->mGradeInfo.get()->getString( "outputUnit", true );
     // Write out the cost.
     const Modeltime* modeltime = scenario->getModeltime();
     for( int per = 0; per < modeltime->getmaxper(); ++per ){
-        writeItem( "cost", priceUnitStr, aGrade->getCost( per ), per );
+        writeItem( "cost", mCurrentPriceUnit, aGrade->getCost( per ), per );
     }
 
     // Output the available. This doesn't currently work correctly.
     for( int per = 0; per < modeltime->getmaxper(); ++per ){
-        writeItem( "available", outputUnitStr, aGrade->getAvail(), per );
+        writeItem( "available", mCurrentOutputUnit, aGrade->getAvail(), per );
     }
 }
 
@@ -472,7 +473,7 @@ void XMLDBOutputter::endVisitGrade( const Grade* aGrade, const int aPeriod ){
 }
 
 void XMLDBOutputter::startVisitSector( const Sector* aSector, const int aPeriod ){
-    // Store the sector name.
+    // Store the sector name and units.
     mCurrentSector = aSector->getName();
     mCurrentPriceUnit = aSector->mPriceUnit;
     mCurrentOutputUnit = aSector->mOutputUnit;
@@ -501,9 +502,6 @@ void XMLDBOutputter::startVisitSubsector( const Subsector* aSubsector,
     XMLWriteOpeningTag( aSubsector->getXMLName(), mBuffer, mTabs.get(),
         aSubsector->getName(), 0, Subsector::getXMLNameStatic() );
 
-    // default determined in Sector
-    const string priceUnitStr = aSubsector->mSubsectorInfo.get()->getString( "priceUnit", true );
-    const string outputUnitStr = aSubsector->mSubsectorInfo.get()->getString( "outputUnit", true );
     // Loop over the periods to output subsector information.
     // The loops are separated so the types are grouped together, as is required for
     // valid XML.
@@ -512,7 +510,7 @@ void XMLDBOutputter::startVisitSubsector( const Subsector* aSubsector,
         writeItem( "subsector-share", "%", aSubsector->calcShare( i, mGDP ), i );
     }
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
-        writeItem( "subsector-cost", priceUnitStr, aSubsector->getPrice( mGDP, i ), i );
+        writeItem( "subsector-cost", mCurrentPriceUnit, aSubsector->getPrice( mGDP, i ), i );
     }
 }
 
@@ -530,15 +528,13 @@ void XMLDBOutputter::startVisitBuildingDemandSubsector( const BuildingDemandSubS
     const Marketplace* marketplace = scenario->getMarketplace();
     const string intGainsMarketName
         = aSubsector->getInternalGainsMarketName( mCurrentSector );
-
-    const string outputUnitStr = aSubsector->mSubsectorInfo.get()->getString( "outputUnit", true );
  
     const Modeltime* modeltime = scenario->getModeltime();
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
         double internalGains = marketplace->getPrice( intGainsMarketName,
                                                       mCurrentRegion, i );
 
-        writeItem( "internal-gains", outputUnitStr, internalGains, i );
+        writeItem( "internal-gains", mCurrentOutputUnit, internalGains, i );
     }
 }
 
@@ -596,19 +592,8 @@ void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology,
     writeItem( "non-energy-cost", mCurrentPriceUnit,
                aTechnology->getNonEnergyCost( investPeriod ), -1 );
 
-
-    // Get fuel cost from marketplace and write out.
-    // Period 0 market info contains price and output units.
-    const Marketplace* marketplace = scenario->getMarketplace();
-    string tempPriceUnit("$1975/GJ"); // default price unit
-    if( !mCurrentFuel.empty() && 
-        marketplace->getMarketInfo( mCurrentFuel, mCurrentRegion, 0, false ) ){
-
-        tempPriceUnit.clear();
-        tempPriceUnit = marketplace->getMarketInfo( mCurrentFuel, mCurrentRegion, 0, true )
-                      ->getString( "priceUnit", true );
-    }
-    writeItem( "fuel-cost", tempPriceUnit,
+    // Write out fuel cost which include fuel price, efficiency and tech change.
+    writeItem( "fuel-cost", mCurrentPriceUnit,
                 aTechnology->getFuelCost( mCurrentRegion,
                                           mCurrentSector, investPeriod ), -1 );
 
@@ -722,10 +707,10 @@ void XMLDBOutputter::startVisitMarket( const Market* aMarket,
     // Store unit information from base period
     if( aMarket->period == 0 ) {
         if( mCurrentPriceUnit.empty() ){
-            mCurrentPriceUnit = aMarket->getMarketInfo()->getString( "priceUnit", true );
+            mCurrentPriceUnit = aMarket->getMarketInfo()->getString( "price-unit", true );
         }
         if( mCurrentOutputUnit.empty() ){
-            mCurrentOutputUnit = aMarket->getMarketInfo()->getString( "outputUnit", true );
+            mCurrentOutputUnit = aMarket->getMarketInfo()->getString( "output-unit", true );
         }
     }
 
@@ -873,7 +858,7 @@ void XMLDBOutputter::endVisitAgeCohort( const AgeCohort* aAgeCohort, const int a
 
 void XMLDBOutputter::startVisitGender( const Gender* aGender, const int aPeriod ){
     XMLWriteOpeningTag( aGender->getXMLName(), mBuffer, mTabs.get() );
-    writeItem( "population", "1000s", aGender->getPopulation(), 0 );
+    writeItem( "population", "thous", aGender->getPopulation(), 0 );
 }
 
 void XMLDBOutputter::endVisitGender( const Gender* aGender, const int aPeriod ){
@@ -896,11 +881,11 @@ void XMLDBOutputter::startVisitGDP( const GDP* aGDP, const int aPeriod ){
         writeItem( "gdp-mer", aGDP->mGDPUnit, aGDP->getGDP( i ), i );
     }
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
-        writeItem( "gdp-per-capita-mer", "Thous90US$", aGDP->getGDPperCap( i ),
+        writeItem( "gdp-per-capita-mer", "Thous90US$/per", aGDP->getGDPperCap( i ),
                    i );
     }
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
-        writeItem( "gdp-per-capita-ppp", "Thous90US$",
+        writeItem( "gdp-per-capita-ppp", "Thous90US$/per",
                    aGDP->getPPPGDPperCap( i ), i );
     }
 }

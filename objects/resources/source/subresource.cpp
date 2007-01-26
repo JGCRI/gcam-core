@@ -453,8 +453,8 @@ void SubResource::dbOutput( const string &regname, const string& secname ){
     int m=0;
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
-    const string outputUnit = mSubresourceInfo->getString( "outputUnit", true );
-    const string priceUnit = mSubresourceInfo->getString( "priceUnit", true );
+    const string outputUnit = mSubresourceInfo->getString( "output-unit", true );
+    const string priceUnit = mSubresourceInfo->getString( "price-unit", true );
     vector<double> temp(maxper);
     string tssname = name; // tempory subsector name
 
@@ -495,7 +495,7 @@ void SubResource::csvOutputFile( const string &regname, const string& sname) {
         string var4name,string var5name,string uname,vector<double> dout);
 
     const int maxper = modeltime->getmaxper();
-    const string outputUnit = mSubresourceInfo->getString( "outputUnit", true );
+    const string outputUnit = mSubresourceInfo->getString( "output-unit", true );
     vector<double> temp(maxper);
 
     // function arguments are variable name, double array, db name, table name

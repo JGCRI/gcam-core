@@ -322,7 +322,7 @@ void TranSubsector::MCoutputAllSectors( const GDP* aGDP,
 	void dboutput4(string var1name,string var2name,string var3name,string var4name,
 		string uname,vector<double> dout);
 	const int maxPeriod = scenario->getModeltime()->getmaxper();
-	const string& priceUnit = mSubsectorInfo->getString( "priceUnit", true );
+	const string& priceUnit = mSubsectorInfo->getString( "price-unit", true );
 	vector<double> temp( maxPeriod );
 	// Subsector timeValue price
 	for( int per = 0; per < maxPeriod; ++per ){

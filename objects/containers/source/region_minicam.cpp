@@ -1686,6 +1686,11 @@ void RegionMiniCAM::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitRegionMiniCAM( this, aPeriod );
     Region::accept( aVisitor, aPeriod );
 
+    // Visit GDP object
+    if ( gdp.get() ){
+        gdp->accept( aVisitor, aPeriod );
+    }
+
     // Visit LandAllocator object
     if ( mLandAllocator.get() ){
         mLandAllocator->accept( aVisitor, aPeriod );

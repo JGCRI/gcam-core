@@ -1346,8 +1346,8 @@ void Subsector::csvOutputFile( const GDP* aGDP,
     
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
-	const string& outputUnit = mSubsectorInfo->getString( "outputUnit", true );
-	const string& priceUnit = mSubsectorInfo->getString( "priceUnit", true );
+	const string& outputUnit = mSubsectorInfo->getString( "output-unit", true );
+	const string& priceUnit = mSubsectorInfo->getString( "price-unit", true );
     vector<double> temp(maxper);
     
     // function arguments are variable name, double array, db name, table name
@@ -1452,8 +1452,8 @@ void Subsector::MCoutputSupplySector( const GDP* aGDP ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
     const double CVRT_90 = 2.212; //  convert '75 price to '90 price
-	const string& outputUnit = mSubsectorInfo->getString( "outputUnit", true );
-	const string& priceUnit = mSubsectorInfo->getString( "priceUnit", true );
+	const string& outputUnit = mSubsectorInfo->getString( "output-unit", true );
+	const string& priceUnit = mSubsectorInfo->getString( "price-unit", true );
     vector<double> temp(maxper);
     
     // total Subsector output
@@ -1520,8 +1520,8 @@ void Subsector::MCoutputDemandSector( const GDP* aGDP ) const {
         string uname,vector<double> dout);
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
-	const string& outputUnit = mSubsectorInfo->getString( "outputUnit", true );
-	const string& priceUnit = mSubsectorInfo->getString( "priceUnit", true );
+	const string& outputUnit = mSubsectorInfo->getString( "output-unit", true );
+	const string& priceUnit = mSubsectorInfo->getString( "price-unit", true );
     vector<double> temp(maxper);
     
     // total Subsector output
@@ -1581,9 +1581,9 @@ void Subsector::MCoutputAllSectors( const GDP* aGDP,
         string uname,vector<double> dout);
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
-	const string outputUnit = mSubsectorInfo->getString( "outputUnit", true );
-	const string inputUnit = mSubsectorInfo->getString( "inputUnit", true );
-	const string priceUnit = mSubsectorInfo->getString( "priceUnit", true );
+	const string outputUnit = mSubsectorInfo->getString( "output-unit", true );
+	const string inputUnit = mSubsectorInfo->getString( "input-unit", true );
+	const string priceUnit = mSubsectorInfo->getString( "price-unit", true );
     vector<double> temp(maxper);
     
     // Subsector share

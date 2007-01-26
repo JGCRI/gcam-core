@@ -87,8 +87,8 @@ void ForestSupplySector::setMarket() {
     if ( marketplace->createMarket( regionName, mMarketName, name, IMarketType::NORMAL ) ) {
         // Set price and output units for period 0 market info
         IInfo* marketInfo = marketplace->getMarketInfo( name, regionName, 0, true );
-        marketInfo->setString( "priceUnit", mPriceUnit );
-        marketInfo->setString( "outputUnit", mOutputUnit );
+        marketInfo->setString( "price-unit", mPriceUnit );
+        marketInfo->setString( "output-unit", mOutputUnit );
 
         marketplace->setPriceVector( name, regionName, tempCalPrice );
         // Do not solve the period 1 market in forestry because supply is
@@ -107,8 +107,8 @@ void ForestSupplySector::setMarket() {
     if ( marketplace->createMarket( regionName, mMarketName, futureMarket, IMarketType::NORMAL ) ) {
         // Set price and output units for period 0 market info
         IInfo* marketInfo = marketplace->getMarketInfo( futureMarket, regionName, 0, true );
-        marketInfo->setString( "priceUnit", mPriceUnit );
-        marketInfo->setString( "outputUnit", mOutputUnit );
+        marketInfo->setString( "price-unit", mPriceUnit );
+        marketInfo->setString( "output-unit", mOutputUnit );
 
         marketplace->setPriceVector( futureMarket, regionName, tempCalPrice );
         for( int per = 1; per < modeltime->getmaxper(); ++per ){

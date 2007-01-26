@@ -142,13 +142,13 @@ void Sector::XMLParse( const DOMNode* node ){
                 // Warning?
             }
         }
-        else if( nodeName == "outputUnit" ){
+        else if( nodeName == "output-unit" ){
 			mOutputUnit = XMLHelper<string>::getValue( curr );
         }
-        else if( nodeName == "inputUnit" ){
+        else if( nodeName == "input-unit" ){
 			mInputUnit = XMLHelper<string>::getValue( curr );
         }
-        else if( nodeName == "priceUnit" ){
+        else if( nodeName == "price-unit" ){
 			mPriceUnit = XMLHelper<string>::getValue( curr );
         }
         else if( nodeName == "sectorType" ){
@@ -199,9 +199,9 @@ void Sector::completeInit( const IInfo* aRegionInfo, DependencyFinder* aDepFinde
     // Allocate the sector info.
     mSectorInfo.reset( InfoFactory::constructInfo( aRegionInfo ) );
 	// Set output and price unit of sector into sector info.
-	mSectorInfo->setString( "outputUnit", mOutputUnit );
-	mSectorInfo->setString( "inputUnit", mInputUnit );
-	mSectorInfo->setString( "priceUnit", mPriceUnit );
+	mSectorInfo->setString( "output-unit", mOutputUnit );
+	mSectorInfo->setString( "input-unit", mInputUnit );
+	mSectorInfo->setString( "price-unit", mPriceUnit );
 
     // Complete the subsector initializations. 
     for( vector<Subsector*>::iterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
@@ -224,6 +224,10 @@ void Sector::toInputXML( ostream& out, Tabs* tabs ) const {
 
     // write the xml for the class members.
     XMLWriteElementCheckDefault( mSectorType, "sectorType", out, tabs, getDefaultSectorType() );
+    XMLWriteElement( mOutputUnit, "output-unit", out, tabs );
+    XMLWriteElement( mInputUnit, "input-unit", out, tabs );
+    XMLWriteElement( mPriceUnit, "price-unit", out, tabs );
+
     XMLWriteElementCheckDefault( mBasePrice, "price", out, tabs, 0.0, modeltime->getper_to_yr( 0 ) );
     XMLWriteElementCheckDefault( mBaseOutput, "output", out, tabs, 0.0, modeltime->getper_to_yr( 0 ) );
 
@@ -257,6 +261,10 @@ void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
 
     // write the xml for the class members.
+    XMLWriteElement( mOutputUnit, "output-unit", out, tabs );
+    XMLWriteElement( mInputUnit, "input-unit", out, tabs );
+    XMLWriteElement( mPriceUnit, "price-unit", out, tabs );
+
     // Write out the data in the vectors for the current period.
     XMLWriteElement( getInput( period ), "input", out, tabs );
     XMLWriteElement( getOutput( period ), "output", out, tabs );
