@@ -50,7 +50,7 @@ private:
 * \ingroup Objects
 * \brief This is a proxy or wrapper class which allows the IParsable functions to be translated into
 * the static LoggerFactory calls. This is required because a static class cannot have virtual functions,
-* nor can it inherit them. This class does not have any datamembers, or functions not defined by the
+* nor can it inherit them. This class does not have any data members, or functions not defined by the
 * IParsable class. This class also ensures that the LoggerFactory::cleanUp method is called, so this wrapper 
 * class should not be destroyed until the end of the model.
 * \todo LoggerFactory should be converted to a singleton instead of a static class so that this is not 

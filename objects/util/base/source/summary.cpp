@@ -60,7 +60,7 @@ const Summary::SummaryItem& Summary::getSequesteredAmountMap() const {
 	return sequesteredAmount;
 }
 
-//! Add the passed fuelmap to the summary fuelinfo map 
+//! Add the passed fuel map to the summary fuelinfo map 
 /* The consumption values in the fuelinfo map that is passed are added 
 to the summary object maps fuelcons and pecons.
 
@@ -70,7 +70,7 @@ void Summary::updatefuelcons( const list<string>& aPrimaryFuelList, const Summar
 	// map all primary and secondary fuel consumption
 	for (CSummaryIterator fmap=fuelinfo.begin(); fmap!=fuelinfo.end(); ++fmap) {	// iterate to one less than the end
 		fuelcons[fmap->first] += fmap->second; // Add values from the passed map to fuelcons
-        // Don't need a zTotal b/c the fuels are uncomparable. 
+        // Don't need a zTotal b/c the fuels are not comparable. 
 	}
 
 	// map primary energy consumption only.

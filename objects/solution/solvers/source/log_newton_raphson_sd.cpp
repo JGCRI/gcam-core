@@ -24,7 +24,7 @@ using namespace std;
 
 const string LogNewtonRaphsonSaveDeriv::SOLVER_NAME = "LogNewtonRaphsonSaveDeriv";
 
-//! Default Constructor. Need to call constructor of class next up in heigharcy. Constructs the base class. 
+//! Default Constructor. Need to call constructor of class next up in hierarchy. Constructs the base class. 
 LogNewtonRaphsonSaveDeriv::LogNewtonRaphsonSaveDeriv( Marketplace* aMarketplaceIn, World* aWorld,
                                                       CalcCounter* aCalcCounter, double aDeltaPrice ):
 LogNewtonRaphson( aMarketplaceIn, aWorld, aCalcCounter, aDeltaPrice ),

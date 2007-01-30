@@ -238,7 +238,7 @@ void Market::initPrice() {
 }
 
 /*! \brief Sets the price variable to the value specified.
-* \details This method is used when it is neccessary to set the price variable
+* \details This method is used when it is necessary to set the price variable
 *          to a value regardless of the type of the market. Note that all the
 *          functions with "Raw" in the name have this behavior.
 * \warning This function is not virtual.

@@ -6,7 +6,7 @@
 
 /*
  * This software, which is provided in confidence, was prepared by employees of
- * Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+ * Pacific Northwest National Laboratory operated by Battelle Memorial Institute.
  * Battelle has certain unperfected rights in the software which should not be
  * copied or otherwise disseminated outside your organization without the
  * express written authorization from Battelle. All rights to the software are
@@ -36,7 +36,7 @@ class IInfo;
  * \ingroup Objects
  * \brief A class which defines a single building demand sector.
  * \details The building demand sector calculates the demand for building
- *          servicies in terms of square feet. The actual building service is
+ *          services in terms of square feet. The actual building service is
  *          supplied by a number of separate supply sectors. No energy is used
  *          directly by this sector or its technologies. The building model first
  *          calculates a per capita demand for the service, and then converts

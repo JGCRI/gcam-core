@@ -131,7 +131,7 @@ void World::completeInit() {
         mClimateModel.reset( new MagiccModel( scenario->getModeltime() ) );
     }
     
-    //Inititalize Climate Model
+    // Initialize Climate Model
     mClimateModel->completeInit( scenario->getName() );
 }
 

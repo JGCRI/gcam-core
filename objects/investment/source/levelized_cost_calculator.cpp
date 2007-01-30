@@ -122,14 +122,14 @@ double LevelizedCostCalculator::calcSectorExpectedProfitRate( const vector<IInve
 *          calculate a base levelized cost. This levelized cost is then adjusted
 *          for the investment tax credit. Adjustments should also be made for
 *          technologies with longer lifetimes or which have delays before they
-*          come online, but this has not been implemented.
-* \param aTechProdFuncInfo A structure containing the neccessary data items to
+*          come on-line, but this has not been implemented.
+* \param aTechProdFuncInfo A structure containing the necessary data items to
 *        call the production technology's levelized cost function.
 * \param aRegionName Name of the region in which investment is occurring.
 * \param aGoodName Name of the sector in which investment is occurring.
-* \param aDelayedInvestmentTime The lag before this technology will come online.
+* \param aDelayedInvestmentTime The lag before this technology will come on-line.
 * \param aLifetime Nameplate lifetime of the technology.
-* \param aTimestep Length in years of the timestep.
+* \param aTimestep Length in years of the time step.
 * \param aPeriod Period in which to calculate the levelized cost.
 * \return Levelized cost per unit of output for the technology.
 * \todo Need to handle lifetime and delayed investment time.

@@ -1,6 +1,6 @@
 /*
  * This software, which is provided in confidence, was prepared by employees of
- * Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+ * Pacific Northwest National Laboratory operated by Battelle Memorial Institute.
  * Battelle has certain unperfected rights in the software which should not be
  * copied or otherwise disseminated outside your organization without the
  * express written authorization from Battelle. All rights to the software are
@@ -237,7 +237,7 @@ bool PolicyTargetRunner::runScenarios( const int aSinglePeriod,
     // The earliest year the model can stabilize. TODO: Improve this logic.
     const int EARLIEST_TARGET_YEAR = 2050;
     auto_ptr<ITarget> stableTarget =
-        TargetFactory::create( "stabalization-target",
+        TargetFactory::create( "stabilization-target",
                                getInternalScenario()->getClimateModel(),
                                0 ); // TODO
 
@@ -287,7 +287,7 @@ bool PolicyTargetRunner::runScenarios( const int aSinglePeriod,
             static_cast<unsigned int>( floor( trial.first ) ) );
 
         // Convert the period back into a year to determine if the year lies on
-        // a period boundry.
+        // a period boundary.
         if( modeltime->getper_to_yr( targetPeriod ) == trial.first ){
             ++targetPeriod;
         }
@@ -308,7 +308,7 @@ bool PolicyTargetRunner::runScenarios( const int aSinglePeriod,
     targetLog << "Target finding for all years completed with status "
               << success << "." << endl;
 
-    // Print the output before the total cost calculatur modifies the scenario.
+    // Print the output before the total cost calculator modifies the scenario.
     mSingleScenario->printOutput( aTimer, false );
 
     // Initialize the total policy cost calculator if the user requested that
@@ -320,7 +320,7 @@ bool PolicyTargetRunner::runScenarios( const int aSinglePeriod,
         success &= mPolicyCostCalculator->calculateAbatementCostCurve();
     }
 
-    // Return whether the initial run and all datapoint calculations completed
+    // Return whether the initial run and all data point calculations completed
     // successfully.
     return success;
 }
@@ -539,10 +539,10 @@ const string& PolicyTargetRunner::getXMLNameStatic(){
  * \param aHotellingRate The growth rate of the tax. This value is often linked
  *        to the interest rate.
  * \param aInitialYear The first year a tax will be set. The tax in this year
- *        will be the given initial tax. This may be an intermediate year, ie
+ *        will be the given initial tax. This may be an intermediate year, i.e.
  *        not a model period. This must be within the range of the model years.
  * \param aFinalYear The final year for which to calculate a tax. This may be an
- *        intermediate year, ie not a model period. This must be within the
+ *        intermediate year, i.e. not a model period. This must be within the
  *        range of the model years.
  * \return A vector by time period containing the tax path. If the initial and
  *         final years are not within the initial and final periods of the model

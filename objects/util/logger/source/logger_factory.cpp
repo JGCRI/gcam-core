@@ -68,7 +68,7 @@ ILogger& ILogger::getLogger( const string& aLoggerName ){
     return LoggerFactory::getLogger( aLoggerName );
 }
 
-//! Returns the instance of the Logger, creating it if neccessary.
+//! Returns the instance of the Logger, creating it if necessary.
 Logger& LoggerFactory::getLogger( const string& aLoggerName ) {
 	map<string,Logger*>::const_iterator logIter = mLoggers.find( aLoggerName );
 	

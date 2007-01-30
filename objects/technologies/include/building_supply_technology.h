@@ -20,11 +20,11 @@ class NationalAccount;
 
 /*! 
 * \ingroup CIAM
-* \brief This building supply technology class incorporates internal gains calcuation
+* \brief This building supply technology class incorporates internal gains calculation
 *
-* Internal gains are added to a specifed market.
+* Internal gains are added to a specified market.
 *
-* Temporarilly, the internal gain market is specified via data, but this will eventually be passed through 
+* Temporarily, the internal gain market is specified via data, but this will eventually be passed through 
 * Info
 *
 * \author Steve Smith

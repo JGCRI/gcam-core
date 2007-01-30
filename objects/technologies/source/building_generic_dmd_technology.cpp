@@ -55,7 +55,7 @@ BuildingGenericDmdTechnology* BuildingGenericDmdTechnology::clone() const {
 *
 * This public function accesses the private constant string, XML_NAME.
 * This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
+* This function may be virtual to be overridden by derived class pointers.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
@@ -182,7 +182,7 @@ void BuildingGenericDmdTechnology::toDebugXMLDerived( const int period, ostream&
 /*!
 * \brief calculate technology unnormalized shares
 * \details Building technologies are really just calculating demands for
-*          specific servicies so shares are always 1. This ensures that sector
+*          specific services so shares are always 1. This ensures that sector
 *          price is correctly calculated.
 * \author Steve Smith
 * \param aRegionName Region name.
@@ -213,7 +213,7 @@ double BuildingGenericDmdTechnology::getEffectiveInternalGains( const string& re
 /*! \brief Adjusts technology parameters as necessary to be consistent with calibration value.
 *
 * For these demand "technologies" the unitDemand needs to be adjusted so that output
-* is consistant with calibrated input demand. This version works for demands that do not take into account internal gains.
+* is consistent with calibrated input demand. This version works for demands that do not take into account internal gains.
 *
 * \author Steve Smith
 * \param aTechnologyDemand calibrated unit demand (demand per unit floorspace) for this subsector

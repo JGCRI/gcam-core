@@ -18,7 +18,7 @@ class Demographic;
 
 /*! 
 * \ingroup Objects
-* \brief This class defines an object which contains the GDP information and calcuations for a single region
+* \brief This class defines an object which contains the GDP information and calculations for a single region
 * along with function which can be used to access the GDP in various ways.
 * \details This class all controls the read-in and initialization of this data along with calibration
 * of GDP. The class contains code to check if adjusted GDP values exist when they are requested and 
@@ -43,7 +43,7 @@ private:
     std::vector<double> gdpValueAdjustedPPP; //!< regional adjusted GDP in PPP terms
     std::vector<double> gdpPerCapitaAdjusted; //!< regional gross domestic product per capita in constant dollars ($)
     std::vector<double> gdpPerCapitaAdjustedPPP; //!< regional gross domestic product per capita in constant dollars ($)
-    std::vector<double> gdpPerCapitaApproxPPP; //!< approxlimate regional GDP per capita PPP terms (before energy price adjustment)
+    std::vector<double> gdpPerCapitaApproxPPP; //!< approximate regional GDP per capita PPP terms (before energy price adjustment)
     std::vector<bool> gdpAdjustedFlag; //!< flag to tell if GDPs have been adjusted yet
     std::vector<double> calibrationGDPs; //!< Calibration values for GDP (constant dollars)
     std::string mGDPUnit; //!< Unit for GDP

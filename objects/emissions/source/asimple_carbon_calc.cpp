@@ -165,7 +165,7 @@ void ASimpleCarbonCalc::calcAboveGroundCarbonEmission( const unsigned int aYear,
     mTotalEmissions[ aYear ] += ( prevCarbon - currCarbon );
 
     // If this is the current year being calculated store the emission
-    // seperately so it can be removed in future iterations.
+    // separately so it can be removed in future iterations.
     if( aIsCurrentYear ){
         mCurrentEmissions[ aYear ] += ( prevCarbon - currCarbon );
     }
@@ -214,7 +214,7 @@ void ASimpleCarbonCalc::calcBelowGroundCarbonEmission( const unsigned int aYear,
         // Check if the future emissions are below a minimum. This is an
         // optimization to avoid iterating over years with negligible emissions.
         if( futureAnnualEmiss < util::getSmallNumber() ){
-            // Integrate the remaing emissions tail and add the emission in the
+            // Integrate the remaining emissions tail and add the emission in the
             // current year. The integral from t to infinity of the above
             // function is deltaC * e^(-t/Tau) so multiple the future annual
             // emission by Tau to determine the remaining emissions.

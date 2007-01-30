@@ -36,7 +36,7 @@ namespace objects {
     *          string point to the same Atom. It is also faster to compare two Atoms
     *          than two strings as all that is required is checking if the pointers
     *          are equal. Lastly, Atoms are optimized for hash-map storage as they
-    *          precompute their hash code. This means seaching for Atoms in a
+    *          precompute their hash code. This means searching for Atoms in a
     *          hashmap is nearly as fast as an array reference unless there is a
     *          collision. Atoms cannot be changed once they are created. The memory
     *          management of Atoms is handled by the AtomRegistry and occurs
@@ -62,7 +62,7 @@ namespace objects {
 
 	/*! \brief Atom hash function specialization.
 	* \details This function allows the boost hash function to hook into the Atom's
-	*          precomputed hashcode so that calls to boost the hash function
+	*          precomputed hash code so that calls to boost the hash function
 	*          specialized on Atom pointers will call this function and use the
 	*          precomputed value.
 	*/
@@ -81,8 +81,8 @@ namespace objects {
 	}
 
 	/*! \brief Get the precomputed hash code for the Atom.
-	* \details Atoms precompute there hashcode to optimize lookups. 
-	* \return The hashcode for the atom.
+	* \details Atoms precompute there hash code to optimize lookups. 
+	* \return The hash code for the atom.
 	*/
 	const size_t Atom::getHashCode() const {
 		return mHashCode;

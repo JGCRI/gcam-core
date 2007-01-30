@@ -115,7 +115,7 @@ void TranSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs )
 	XMLWriteElement( percentLicensed[ period ], "percentLicensed", out, tabs );
 }
 
-/*! \brief Perform any sector level calibration data consistancy checks
+/*! \brief Perform any sector level calibration data consistency checks
 *
 * Check to make sure that total calibrated outputs are equal to sector demand in base period.
 * \author Steve Smith

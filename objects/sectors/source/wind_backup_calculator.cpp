@@ -93,7 +93,7 @@ double WindBackupCalculator::getAverageBackupCapacity( const string& aSector,
     assert( aAverageGridCapacityFactor > 0 );
     
     // This can be called from initCalc and the value may not be initialized
-    // yet. Should be correct in equalibrium.
+    // yet. Should be correct in equilibrium.
     double resourceCapacityFactor = SectorUtils::getCapacityFactor( aResource, aRegion, aPeriod );
 
     if( resourceCapacityFactor < util::getSmallNumber() ){

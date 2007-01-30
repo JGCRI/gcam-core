@@ -93,7 +93,7 @@ protected:
 	//! Defines the minimum level of messages which should be printed.
     ILogger::WarningLevel mMinLogWarningLevel;
 
-	//! Defines the mininum level of warnings to print to the console.
+	//! Defines the minimum level of warnings to print to the console.
 	ILogger::WarningLevel mMinToScreenWarningLevel;
 
 	//! Defines the current warning level.

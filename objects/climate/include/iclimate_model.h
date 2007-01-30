@@ -149,7 +149,7 @@ public:
 
 	/*! \brief Print the output of the climate model to a file.
 	* \details Writes a subset of the output of the model to a file. The path to
-    *          the file is currently hardcoded due to limitations in the output
+    *          the file is currently hard-coded due to limitations in the output
     *          routines. This file is the same as all other CSV output is
     *          written to.
 	* \pre The model must be run before output can be written.

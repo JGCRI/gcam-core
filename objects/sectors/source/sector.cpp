@@ -191,7 +191,7 @@ void Sector::XMLParse( const DOMNode* node ){
 * \param aDepFinder Regional dependency finder.
 * \param aLandAllocator Regional land allocator.
 * \param aGlobalTechDB Global Technology database.
-* \warning markets are not necesarilly set when completeInit is called
+* \warning markets are not necessarily set when completeInit is called
 */
 void Sector::completeInit( const IInfo* aRegionInfo, DependencyFinder* aDepFinder, 
                            ILandAllocator* aLandAllocator, const GlobalTechnologyDatabase* aGlobalTechDB )
@@ -292,7 +292,7 @@ void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
 /*! \brief Perform any initializations needed for each period.
 *
-* Any initializations or calcuations that only need to be done once per period
+* Any initializations or calculations that only need to be done once per period
 * (instead of every iteration) should be placed in this function.
 *
 * \author Steve Smith
@@ -328,7 +328,7 @@ void Sector::tabulateFixedDemands( const int period, const GDP* gdp ) {
     }
 }
 
-/*! \brief Scales sub-sector share weights so that they equal number of subsectors.
+/*! \brief Scales subsector share weights so that they equal number of subsectors.
 *
 * This is needed so that 1) share weights can be easily interpreted (> 1 means favored) and so that
 * future share weights can be consistently applied relative to calibrated years.
@@ -509,7 +509,7 @@ bool Sector::outputsAllFixed( const int period ) const {
  *       the model encounters the condition, it will set variable output to zero
  *       and scale fixed output to equal total output. The price will be set as
  *       the previous period's price. This is not generally an issue in
- *       equalibrium, as the socio-economic scenarios used have increasing
+ *       equilibrium, as the socio-economic scenarios used have increasing
  *       output, and depreciation of capital causes new capital to be required.
  *       If this became an issue, there are two potential solutions: A fraction
  *       of marginal output could be forced into the Sector, which would assist
@@ -809,10 +809,10 @@ void Sector::postCalc( const int aPeriod ){
     }
 }
 
-/*! \brief For outputing SGM data to a flat csv File
+/*! \brief For outputting SGM data to a flat csv File
 * 
 * \author Pralit Patel
-* \param period The period which we are outputing for
+* \param period The period which we are outputting for
 */
 void Sector::csvSGMOutputFile( ostream& aFile, const int period ) const {
 

@@ -44,7 +44,7 @@ class GlobalTechnologyDatabase;
 * \brief A class which defines a single Subsector of the model.
 * \details The subsector contains a group of technology objects, which produce
 *          and consume commodities in the marketplace. Each Subsector has
-*          attributes such as share, share weight and a logit expoential.
+*          attributes such as share, share weight and a logit exponential.
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
 

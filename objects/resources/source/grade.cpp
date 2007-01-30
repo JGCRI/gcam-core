@@ -69,14 +69,14 @@ void Grade::XMLParse( const DOMNode* tempNode ) {
 * This routine is only called once per model run
 *
 * \author Josh Lurz, Sonny Kim
-* \warning markets are not necesarilly set when completeInit is called
+* \warning markets are not necessarily set when completeInit is called
 */
 void Grade::completeInit( const IInfo* aSubresourceInfo ) {
     mGradeInfo.reset( InfoFactory::constructInfo( aSubresourceInfo ) ); 
 }
 
 
-//! Write datamembers to datastream in XML format for replicating input file.
+//! Write data members to data stream in XML format for replicating input file.
 void Grade::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag( getXMLName(), out, tabs, name );
     XMLWriteElementCheckDefault( available, "available", out, tabs, 0.0 );
@@ -84,7 +84,7 @@ void Grade::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
-//! Write datamembers to debugging datastream in XML format.
+//! Write data members to debugging data stream in XML format.
 void Grade::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     
     XMLWriteOpeningTag( getXMLName(), out, tabs, name );

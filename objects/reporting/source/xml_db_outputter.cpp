@@ -99,7 +99,7 @@ XMLDBOutputter::DBContainer::DBContainer():mDBEnvironment( 0 ){
 
 /*! \brief Destructor for the database container.
 * \details This is a workaround for memory deallocation problems. Forcing the
-*          container to deallocate first is neccessary, and would not work with
+*          container to deallocate first is necessary, and would not work with
 *          simple class ordering.
 */
 XMLDBOutputter::DBContainer::~DBContainer() {
@@ -174,7 +174,7 @@ void XMLDBOutputter::finish() const {
     }
 }
 
-/*! \brief Create an intiialized XML database manager.
+/*! \brief Create an initialized XML database manager.
 * \return An auto pointer to an initialized XML database manager, null if one
 *         could not be created.
 */

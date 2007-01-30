@@ -35,7 +35,7 @@ using namespace xercesc;
 extern ofstream outFile;
 time_t gGlobalTime;
 
-//! Default construtor
+//! Default constructor
 Scenario::Scenario() {
     // Get time and date before model run.
     time( &gGlobalTime );

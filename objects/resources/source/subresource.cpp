@@ -115,7 +115,7 @@ void SubResource::XMLParse( const DOMNode* node ){
 * This routine is only called once per model run
 *
 * \author Josh Lurz, Sonny Kim
-* \warning markets are not necesarilly set when completeInit is called
+* \warning markets are not necessarily set when completeInit is called
 */
 void SubResource::completeInit( const IInfo* aResourceInfo ) {
     mSubresourceInfo.reset( InfoFactory::constructInfo( aResourceInfo ) ); 
@@ -136,7 +136,7 @@ void SubResource::completeInit( const IInfo* aResourceInfo ) {
 }
 
 /*! \brief Perform any initializations needed for each period.
-* \details Any initializations or calcuations that only need to be done once per
+* \details Any initializations or calculations that only need to be done once per
 *          period(instead of every iteration) should be placed in this function.
 * \author Sonny Kim
 * \param aRegionName Region name.
@@ -164,7 +164,7 @@ void SubResource::initCalc( const string& aRegionName, const string& aResourceNa
 }
 
 /*! \brief Perform any initializations needed after each period.
-* \details Any initializations or calcuations that only need to be done once
+* \details Any initializations or calculations that only need to be done once
 *          after each period(instead of every iteration) should be placed in
 *          this function.
 * \author Sonny Kim
@@ -193,7 +193,7 @@ void SubResource::postCalc( const string& aRegionName, const string& aResourceNa
 void SubResource::toXMLforDerivedClass( ostream& out, Tabs* tabs ) const {   
 }   
 
-//! Write datamembers to datastream in XML format for replicating input file.
+//! Write data members to data stream in XML format for replicating input file.
 void SubResource::toInputXML( ostream& out, Tabs* tabs ) const {
 
     const Modeltime* modeltime = scenario->getModeltime();

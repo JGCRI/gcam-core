@@ -81,10 +81,10 @@ void Expenditure::setType( const ExpenditureType aType, const double aValue ) {
     mExpenditures[ aType ] = aValue;
 }
 
-/*! \brief For outputing SGM data to a flat csv File
+/*! \brief For outputting SGM data to a flat csv File
 * 
 * \author Pralit Patel
-* \param period The period which we are outputing for
+* \param period The period which we are outputting for
 */
 void Expenditure::csvSGMOutputFile( ostream& aFile, const int period ) const {
     for( int i = 0; i < END; ++i ){

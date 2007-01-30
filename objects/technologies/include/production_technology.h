@@ -51,7 +51,7 @@ class ProductionTechnology : public BaseTechnology
     friend class SectorResults;
     friend class GovtResults;
     friend class XMLDBOutputter;
-    // eigther this is a friend or move isAvailable and isRetired to public
+    // either this is a friend or move isAvailable and isRetired to public
     friend class InputOutputTable;
 public:
     ProductionTechnology();

@@ -48,7 +48,7 @@ electricSectorName( "electricity" )
 * \param aLandAllocator Regional land allocator.
 * \param aGlobalTechDB Global technology database.
 * \author Marshall Wise
-* \warning markets are not necesarilly set when completeInit is called. For the
+* \warning markets are not necessarily set when completeInit is called. For the
 *          intermittent subsector, use this to make sure there is a trial market
 *          set for electricity as there might not be one set if there are no
 *          simultaneities
@@ -140,7 +140,7 @@ void IntermittentSubsector::toDebugXMLDerived( const int period, ostream& out, T
 *
 * This public function accesses the private constant string, XML_NAME. This way
 * the tag is always consistent for both read-in and output and can be easily
-* changed. This function may be virtual to be overriden by derived class
+* changed. This function may be virtual to be overridden by derived class
 * pointers.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.

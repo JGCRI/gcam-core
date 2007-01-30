@@ -1,6 +1,6 @@
 /*
  * This software, which is provided in confidence, was prepared by employees of
- * Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+ * Pacific Northwest National Laboratory operated by Battelle Memorial Institute.
  * Battelle has certain unperfected rights in the software which should not be
  * copied or otherwise disseminated outside your organization without the
  * express written authorization from Battelle. All rights to the software are
@@ -48,12 +48,12 @@ class Modeltime;
  *          climate parameters reaches the target level. This year may be past
  *          the final model year, in which case the price path would be a
  *          Hotelling price path. The optimal year to reach the constraint is
- *          defined as the point where net system emissions are zero, ie net
+ *          defined as the point where net system emissions are zero, i.e. net
  *          industrial emissions equal net ocean uptake plus net terrestrial
  *          emissions. The second level search determines the initial carbon
  *          price to reach the target climate parameter in the trial year. The
  *          scenario runner then finds a carbon price for each period after the
- *          target is reached independently so that the climate paramater
+ *          target is reached independently so that the climate parameter
  *          remains at the target level. If the optimal year is between model
  *          years, the scenario runner will readjust the carbon tax in the final
  *          period so that the climate parameter does not exceed the target.
@@ -160,7 +160,7 @@ private:
     //! The first year to tax.
     unsigned int mFirstTaxYear;
     
-    //! The maximum number of bisection iterations to perform when determing the
+    //! The maximum number of bisection iterations to perform when determining the
     //! initial tax or the trial tax in a single future period past the
     //! stabilization year.
     unsigned int mMaxIterations;

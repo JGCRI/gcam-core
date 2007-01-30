@@ -56,7 +56,7 @@ BuildingDemandSubSector::BuildingDemandSubSector( const string& regionName, cons
 *
 * This public function accesses the private constant string, XML_NAME.
 * This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
+* This function may be virtual to be overridden by derived class pointers.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
@@ -109,7 +109,7 @@ const string BuildingDemandSubSector::getInternalGainsMarketName( const string a
 * Virtual function which specifies the XML name of the possible technology children of this class.
 * This function allows all technologies to be properly parsed using the base subsector code.
 * \author Steve Smith
-* \pre Needs cooresponding createChild() function
+* \pre Needs corresponding createChild() function
 * \return True if nodename is a valid child of this class.
 */
 bool BuildingDemandSubSector::isNameOfChild  ( const string& nodename ) const {
@@ -224,7 +224,7 @@ void BuildingDemandSubSector::toDebugXMLDerived( const int period, ostream& out,
 * \param aDependencyFinder The regional dependency finder.
 * \param aLandAllocator Regional land allocator.
 * \param aGlobalTechDB Global technology database.
-* \warning markets are not necesarilly set when completeInit is called
+* \warning markets are not necessarily set when completeInit is called
 */
 void BuildingDemandSubSector::completeInit( const IInfo* aSectorInfo,
                                             DependencyFinder* aDependencyFinder,
@@ -280,7 +280,7 @@ void BuildingDemandSubSector::setUpSubSectorMarkets() {
 /*! \brief Adds building non-energy cost to subsector price
 *
 * The building subsector represents a building type. This building type has a
-* non-energy cost which must be added to the normal sub-sector cost (which is
+* non-energy cost which must be added to the normal subsector cost (which is
 * normally just the weighted cost of the technologies)
 *
 * The energy service price is the sum of the subsector energy service prices --
@@ -315,7 +315,7 @@ double BuildingDemandSubSector::getPrice( const GDP* aGDP, const int period ) co
 * \author Steve Smith
 * \todo IInfo needs to be updated to handle string values so that internal gain market name can be passed and not specified in the input data
 * \param period Model period
-* \warning Function getFuelName will need to be changed once multiple inputs are implimented
+* \warning Function getFuelName will need to be changed once multiple inputs are implemented
 */
 void BuildingDemandSubSector::initCalc( NationalAccount* aNationalAccount,
                                         const Demographic* aDemographics,
@@ -394,8 +394,8 @@ void BuildingDemandSubSector::adjustTechnologyShareWeights( const int period ) {
 * \param totalCalOutputs total amount of calibrated outputs for this sector
 * \param allFixedOutput flag if all outputs from this sector are calibrated
 * \param period Model period
-* \warning This only works for one building sub-sector at present -- subsector share weights are not changed
-* \warning Function getFuelName will need to be changed once multiple inputs are implimented
+* \warning This only works for one building subsector at present -- subsector share weights are not changed
+* \warning Function getFuelName will need to be changed once multiple inputs are implemented
 */
 void BuildingDemandSubSector::adjustForCalibration( double aVariableDemand, const GDP* aGDP, const int period ) {
     // Don't adjust for calibration if the calibration status is off.
@@ -467,7 +467,7 @@ double BuildingDemandSubSector::getOutput( const int period ) const {
    return output[period];
 }
 
-/*! \brief Output variables specific to building demand sub-sector.
+/*! \brief Output variables specific to building demand subsector.
 *
 * \author Steve Smith
 */

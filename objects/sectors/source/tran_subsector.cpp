@@ -107,7 +107,7 @@ bool TranSubsector::XMLDerivedClassParse( const string& nodeName, const DOMNode*
 * Virtual function which specifies the XML name of the possible technology children of this class.
 * This function allows all technologies to be properly parsed using the base subsector code.
 * \author Steve Smith
-* \pre Needs cooresponding createChild() function
+* \pre Needs corresponding createChild() function
 * \return True if nodename is a valid child of this class.
 */
 bool TranSubsector::isNameOfChild  ( const string& nodename ) const {
@@ -178,10 +178,10 @@ void TranSubsector::completeInit( const IInfo* aSectorInfo,
 
 /*!
 * \brief Perform any initializations needed for each period.
-* \details Perform any initializations or calcuations that only need to be done
+* \details Perform any initializations or calculations that only need to be done
 *          once per period (instead of every iteration) should be placed in this
 *          function.
-* \warning The ghg part of this routine assumes the existance of technologies in
+* \warning The ghg part of this routine assumes the existence of technologies in
 *          the previous and future periods
 * \author Steve Smith, Sonny Kim
 * \param aNationalAccount National accounts container.
@@ -252,7 +252,7 @@ double TranSubsector::getTimeValue( const GDP* aGDP, const int aPeriod ) const {
 */
 double TranSubsector::getGeneralizedPrice( const GDP* aGDP, const int aPeriod ) const {
 	// add cost of time spent on travel by converting gdp/cap into an hourly
-	// wage and multipling by average speed.
+	// wage and multiplying by average speed.
 	// The price unit is $ per service, e.g. $/pass-mi or $/ton-mi
 	return Subsector::getPrice( aGDP, aPeriod ) + getTimeValue( aGDP, aPeriod );
 }

@@ -61,12 +61,12 @@ protected:
     double minShortTermSLimit; //!< short-term supply limit.
     std::vector<double> techChange; //!< technical change
     std::vector<double> environCost; //!< Environmental costs
-    std::vector<double> severanceTax; //!< Severence Tax (exogenous)
+    std::vector<double> severanceTax; //!< Severance Tax (exogenous)
     std::vector<double> available; //!< total available resource
     std::vector<double> annualprod; //!< annual production of SubResource
     std::vector<double> cumulprod; //!< cumulative production of SubResource
     std::vector<double> gdpExpans; //!< short-term supply limit expansion elasticity w/ gdp
-    std::vector<double> cumulativeTechChange; //!< Cumulative Technical Change for this sub-sector
+    std::vector<double> cumulativeTechChange; //!< Cumulative Technical Change for this subsector
     // Cumulative technical change needs to be in sub-resource sector 
     std::vector<Grade*> grade; //!< amount of SubResource for each grade
     std::map<std::string,int> gradeNameMap; //!< Map of grade name to integer position in vector. 

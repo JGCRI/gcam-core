@@ -122,7 +122,7 @@ double NationalAccount::getAccountValue( const AccountType aType ) const {
 
 //! Reset the national account values
 void NationalAccount::reset() {
-    // save tranfer amount calculated from government's initCalc
+    // save transfer amount calculated from government's initCalc
     // this is a giant hack. store the values that should not be reset.
     double tempTransfers = mAccounts[ TRANSFERS ];
     assert( tempTransfers > 0 );
@@ -137,10 +137,10 @@ void NationalAccount::reset() {
     mAccounts[ INVESTMENT_TAX_CREDIT ] = tempInvTaxCreditRate;
 }
 
-/*! \brief For outputing SGM data to a flat csv File
+/*! \brief For outputting SGM data to a flat csv File
  * 
  * \author Pralit Patel
- * \param period The period which we are outputing for
+ * \param period The period which we are outputting for
  */
 void NationalAccount::csvSGMOutputFile( ostream& aFile, const int period ) const {
     // write headers

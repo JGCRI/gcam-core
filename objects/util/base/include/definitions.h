@@ -22,7 +22,7 @@
 
 // Configuration constants.
 
-//! A flag which tells whether to attempt linking of fortran portions.
+//! A flag which tells whether to attempt linking of Fortran portions.
 #define __HAVE_FORTRAN__ 1
 
 #define __ACCESS_DB_OVERRIDE__ 0

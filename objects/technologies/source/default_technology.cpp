@@ -130,7 +130,7 @@ double DefaultTechnology::getNonEnergyCost( const int aPeriod ) const {
 bool DefaultTechnology::XMLDerivedClassParse( const string& aNodeName,
                                               const DOMNode* aCurr )
 {
-    // Empty implemenation as the base class will parse all the variables
+    // Empty implementation as the base class will parse all the variables
     // in XMLParse.
     return false;
 }
@@ -138,7 +138,7 @@ bool DefaultTechnology::XMLDerivedClassParse( const string& aNodeName,
 void DefaultTechnology::toInputXMLDerived( ostream& aOut,
                                            Tabs* aTabs ) const
 {
-    // Empty implemenation as the base class will print all the variables
+    // Empty implementation as the base class will print all the variables
     // in toInputXML.
 }
 
@@ -146,6 +146,6 @@ void DefaultTechnology::toDebugXMLDerived( const int aPeriod,
                                            ostream& aOut,
                                            Tabs* aTabs ) const
 {
-    // Empty implemenation as the base class will print all the variables
+    // Empty implementation as the base class will print all the variables
     // in toDebugXML.
 }

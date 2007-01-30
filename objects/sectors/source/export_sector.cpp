@@ -173,7 +173,7 @@ void ExportSector::setMarket() {
         marketInfo->setString( "output-unit", mOutputUnit );
 
         // Set the base year price which the sector reads in, into the mFixedPrices vector.
-        // TODO: Seperate SupplySector so this is not needed.
+        // TODO: Separate SupplySector so this is not needed.
         mFixedPrices[ 0 ] = mBasePrice;
 
 		// Initializes prices with any values that are read-in. 

@@ -1,6 +1,6 @@
 /*
  * This software, which is provided in confidence, was prepared by employees of
- * Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+ * Pacific Northwest National Laboratory operated by Battelle Memorial Institute.
  * Battelle has certain unperfected rights in the software which should not be
  * copied or otherwise disseminated outside your organization without the
  * express written authorization from Battelle. All rights to the software are
@@ -90,18 +90,18 @@ bool BatchRunner::runScenarios( const int aSinglePeriod,
     
     // The scenarios are created by determining all possible combinations of
     // file sets. The algorithm operates as follows:
-    // 1) Set the current fileset in each component to the initial position.
+    // 1) Set the current file set in each component to the initial position.
     // 2) Run the scenario.
     // 3) Set the current component to the first.
-    // 4) Increment the current fileset in the current component.
+    // 4) Increment the current file set in the current component.
     // 5a) If this is a valid position in the current component and go to 2.
-    // 5b) Otherwise, reset the current fileset in the current component to
+    // 5b) Otherwise, reset the current file set in the current component to
     //     the first position.
     // 6a) If the current component is the last component exit the algorithm.
     // 6b) Otherwise, increment the current component and go to 4.
     //
-    // Example: assume there are two components A and B. A has two filesets
-    // named 1 and 2, and B has two filesets named 3 and 4. The scenarios would
+    // Example: assume there are two components A and B. A has two file sets
+    // named 1 and 2, and B has two file sets named 3 and 4. The scenarios would
     // be run in the order: [A1, B1], [A2, B1], [A1, B2], [A2, B2]
     //
     // All generated scenarios are run with each scenario runner in the order in
@@ -109,7 +109,7 @@ bool BatchRunner::runScenarios( const int aSinglePeriod,
     bool shouldExit = false;
     bool success = true;
     while( !shouldExit ){
-        // The datastructure containing the current run.
+        // The data structure containing the current run.
         Component fileSetsToRun;
 
         // Loop through the ComponentSet to create the current scenario.
@@ -162,7 +162,7 @@ void BatchRunner::printOutput( Timer& aTimer, const bool aCloseDB ) const {
  * \brief Run a single scenario created by the BatchRunner.
  * \details Expands the list of FileSets into a list of scenario components
  *          files to parse. The scenario name is created by combining the names
- *          of all the filesets with the name read from the configruration file.
+ *          of all the file sets with the name read from the configuration file.
  *          The function selects the appropriate type of ScenarioRunner from the
  *          configuration file, and initializes it with the list of scenario
  *          components. It then runs the Scenario and prints its output.

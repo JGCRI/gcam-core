@@ -21,7 +21,7 @@ class IInfo;
 * \details The ExportSector currently is a SupplySector with all fixed output
 *          and a read-in international market. It also reads-in prices which are
 *          used as the market prices for the good. It creates a non-regional
-*          market for the ExportGood, and ensures that simultanaeties are not
+*          market for the ExportGood, and ensures that simultaneities are not
 *          created for it. The ExportSector does not reset the market price.
 * \todo Improve this class so more dynamic behavior is possible.
 * \author Josh Lurz

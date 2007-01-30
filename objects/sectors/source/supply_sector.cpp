@@ -156,7 +156,7 @@ void SupplySector::calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ){
 
 /*! \brief Set supply Sector output
 * \details This routine takes the market demand and propagates that through the
-*          supply sub-sectors where it is shared out (and subsequently passed to
+*          supply subsectors where it is shared out (and subsequently passed to
 *          the technology level within each sub-Sector to be shared out).
 * \author Sonny Kim
 * \param aGDP GDP object uses to calculate various types of GDPs.
@@ -401,7 +401,7 @@ void SupplySector::dbOutput( const GDP* aGDP,
     }
     dboutput4( regionName,"Price","by Sector",name,mPriceUnit, temp );
 
-    // do for all subsectors in the Sector
+    // do for all sub sectors in the Sector
     for( int m = 0; m < maxper; m++ ) {
         temp[ m ] = getOutput( m );
     }
@@ -412,7 +412,7 @@ void SupplySector::dbOutput( const GDP* aGDP,
         subsec[ i ]->MCoutputAllSectors( aGDP, aIndEmissCalc, temp );
     }
 
-    // do for all subsectors in the Sector
+    // do for all sub sectors in the Sector
     for( unsigned int i = 0; i < subsec.size(); ++i ){
         // output or demand for each technology
         subsec[ i ]->csvOutputFile( aGDP, aIndEmissCalc );

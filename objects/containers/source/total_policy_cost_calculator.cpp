@@ -125,7 +125,7 @@ bool TotalPolicyCostCalculator::calculateAbatementCostCurve() {
 
 /*! \brief Run a trial for each point and store the abatement curves.
 * \details First calculates a fraction of the total carbon tax to use, based 
-* on the trial number and the total number of points, so that the datapoints are equally
+* on the trial number and the total number of points, so that the data points are equally
 * distributed from 0 to the full carbon tax for each period. It then calculates and 
 * sets the fixed tax for each year. The scenario is then run, and the emissions and 
 * tax curves are stored for each region.
@@ -142,7 +142,7 @@ bool TotalPolicyCostCalculator::runTrials(){
     for( unsigned int currPoint = 0; currPoint < mNumPoints; currPoint++ ){
         // Determine the fraction of the full tax this tax will be.
         const double fraction = static_cast<double>( currPoint ) / static_cast<double>( mNumPoints );
-        // Iterate through the regions to set different taxes for each if neccessary.
+        // Iterate through the regions to set different taxes for each if necessary.
         // Currently this will set the same for all of them.
         for( CRegionCurvesIterator rIter = mEmissionsTCurves[ mNumPoints ].begin(); rIter != mEmissionsTCurves[ mNumPoints ].end(); ++rIter ){
             // Vector which will contain taxes for this trial.

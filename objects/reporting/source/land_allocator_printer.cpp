@@ -48,7 +48,7 @@ mPrintValues( aPrintValues ),
 mPrintSpecificRegion( aPrintSpecificRegion )
 {
     // Imbue the output stream with the default locale from the user's machine.
-    // This is done so thousands seperators will be outputted.
+    // This is done so thousands separators will be outputted.
     mFile.imbue( locale( "" ) );
 }
 

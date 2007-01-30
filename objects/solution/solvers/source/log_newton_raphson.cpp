@@ -81,7 +81,7 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
     singleLog.setLevel( ILogger::DEBUG );
 
     if( solverSet.getNumSolvable() == 0 ){
-        solverLog << "Exiting newton raphson early. No non-singular markets." << endl;
+        solverLog << "Exiting Newton-Raphson early. No non-singular markets." << endl;
         return SUCCESS; // Need a new code here.
     }
 
@@ -186,7 +186,7 @@ SolverComponent::ReturnCode LogNewtonRaphson::calculateDerivatives( SolverInfoSe
     JF = SolverLibrary::invertMatrix( JF, isSingular );
     if( isSingular ) {
         solverLog.setLevel( ILogger::ERROR );
-        solverLog << "Matrix came back as singluar, could not invert." << endl;
+        solverLog << "Matrix came back as singular, could not invert." << endl;
         solverLog.setLevel( ILogger::NOTICE );
         return FAILURE_SINGULAR_MATRIX;
     } 

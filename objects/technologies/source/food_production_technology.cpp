@@ -30,7 +30,7 @@ extern Scenario* scenario;
 FoodProductionTechnology::FoodProductionTechnology( const string& aName, const int aYear )
 :Technology( aName, aYear ){
     mLandAllocator = 0;
-    variableCost = 0; // Need a better default value for this (0 is probably ok, with a warning to logfile).
+    variableCost = 0; // Need a better default value for this (0 is probably ok, with a warning to a log file).
     calLandUsed = -1;
     calYield = -1;
     calObservedYield = -1;
@@ -98,7 +98,7 @@ void FoodProductionTechnology::toDebugXMLDerived( const int period, ostream& out
 *
 * This public function accesses the private constant string, XML_NAME.
 * This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
+* This function may be virtual to be overridden by derived class pointers.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
@@ -256,7 +256,7 @@ void FoodProductionTechnology::completeInit( const string& aRegionName,
             mainLog << "Calibrated yield will be overridden by the observed yield." << endl;
         }
 
-        // Want to pass in yied in units of GCal/kHa
+        // Want to pass in yield in units of GCal/kHa
         mLandAllocator->setCalLandAllocation( landType, mName, calLandUsed, techPeriod, techPeriod );
         mLandAllocator->setCalObservedYield( landType, mName, calObservedYield, techPeriod );
     } 
@@ -267,10 +267,10 @@ void FoodProductionTechnology::completeInit( const string& aRegionName,
 
 /*!
 * \brief Calculate unnormalized technology unnormalized shares.
-* \details Since food and forestry technolgies are profit based, they do not
+* \details Since food and forestry technologies are profit based, they do not
 *          directly calculate a share. Instead, their share of total supply is
 *          determined by the sharing which occurs in the land allocator. To
-*          facilitate this the technology sets the intrinisic rate for the land
+*          facilitate this the technology sets the intrinsic rate for the land
 *          use into the land allocator. The technology share itself is set to 1.
 * \param aRegionName Region name.
 * \param aSectorName Sector name, also the name of the product.
@@ -338,7 +338,7 @@ void FoodProductionTechnology::adjustForCalibration( double aTechnologyDemand,
 *          of planted forestry land and it's yield. Forestry production
 *          technologies are profit based and determine their supply
 *          independently of the passed in subsector demand. However, since this
-*          is a solved market, in equalibrium the sum of the production of
+*          is a solved market, in equilibrium the sum of the production of
 *          technologies within a sector will equal the demand for the sector.
 * \param aRegionName Region name.
 * \param aSectorName Sector name, also the name of the product.

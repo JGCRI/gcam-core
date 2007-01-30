@@ -133,7 +133,7 @@ bool Marketplace::createMarket( const string& regionName, const string& marketNa
 
 /*! \brief Restructures a market to account for simultaneities.
 *
-* Changes the named market to a price market, which suplies a trial price for a secondary good.
+* Changes the named market to a price market, which supplies a trial price for a secondary good.
 * It also adds a corresponding demand market that provides a trial value for demand.
 * Markets are subclassed to allow Market::addToDemand, Market::getDemand, Market::getPrice, etc. to act 
 * differently for PriceMarket and DemandMarket so that these changes are transparent to the 
@@ -163,7 +163,7 @@ void Marketplace::resetToPriceMarket( const string& goodName, const string& regi
         mainLog << "Cannot reset market type other than normal to a price market." << endl;
     }
     else {
-        // Setup the coresponding demand markets
+        // Setup the corresponding demand markets
         string marketName = markets[ marketNumber ][ 0 ]->getRegionName();
         string demandGoodName = goodName + "Demand_int";
         createMarket( regionName, marketName, demandGoodName, IMarketType::DEMAND );

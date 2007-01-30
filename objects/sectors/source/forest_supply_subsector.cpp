@@ -31,7 +31,7 @@ ForestSupplySubsector::~ForestSupplySubsector() {
 * Virtual function which specifies the XML name of the possible technology children of this class.
 * This function allows all technologies to be properly parsed using the base subsector code.
 * \author Steve Smith
-* \pre Needs cooresponding createChild() function
+* \pre Needs corresponding createChild() function
 * \return True if nodename is a valid child of this class.
 */
 bool ForestSupplySubsector::isNameOfChild( const string& nodename ) const {
@@ -65,7 +65,7 @@ bool ForestSupplySubsector::XMLDerivedClassParse( const string& nodeName, const 
 *
 * This public function accesses the private constant string, XML_NAME.
 * This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
+* This function may be virtual to be overridden by derived class pointers.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */

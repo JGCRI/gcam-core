@@ -94,7 +94,7 @@ Otherwise, always use iosfwd as this will make compilation faster.
 \section modelques Model Questions
 
 \subsection modelques1 How do the simultaneity markets work?
-When a NormalMarket is turned into a simultaneity market, the NormalMarket is seperated into two markets, a PriceMarket and a DemandMarket. 
+When a NormalMarket is turned into a simultaneity market, the NormalMarket is separated into two markets, a PriceMarket and a DemandMarket. 
 Both markets are solved, but only the PriceMarket is accessable from outside the marketplace. Both markets contain a pointer to the other market. 
 Calls to PriceMarket::getDemand, PriceMarket::getSupply, PriceMarket::addToDemand, and PriceMarket::addToSupply are redirected to the DemandMarket. 
 PriceMarket::setPrice is also a special function, it sets demand equal to the new price and supply equal to the current price. DemandMarket::getDemand

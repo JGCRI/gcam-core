@@ -116,7 +116,7 @@ void InputOutputTable::startVisitProductionInput( const ProductionInput* aProdIn
 {
     if( mUseInput ) {
         // Add the currency demand.
-        // The capital row is not truely capital but other value added.
+        // The capital row is not truly capital but other value added.
         // The row is only the OVA row in ProductionSectors, it behaves as capital in Consumers.
         if( aProdInput->isCapital() && !mParsingConsumer ){
             mInternalTable->addToType( "OVA", mCurrSectorName, 

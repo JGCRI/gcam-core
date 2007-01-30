@@ -103,9 +103,9 @@ int MarketLocator::addMarket( const string& aMarket,
 * \return The market number or MARKET_NOT_FOUND if it is not present.
 */
 int MarketLocator::getMarketNumber( const string& aRegion, const string& aGoodName ) const {
-    // Compile in extra timing. Note that timing causes signifigant overhead, so
+    // Compile in extra timing. Note that timing causes significant overhead, so
     // timed runs will take longer. The result is useful to compare across timed
-    // runs, not vs untimed runs.
+    // runs, not vs non-timed runs.
 #if PERFORM_TIMING
     Timer timer;
     timer.start();

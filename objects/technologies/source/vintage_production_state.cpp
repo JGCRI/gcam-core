@@ -89,7 +89,7 @@ double VintageProductionState::calcProduction( const string& aRegionName,
  * \param aMarginalProfitCalc Calculator of the marginal profit rate for the
  *        Technology.
  * \param aPeriod Model period.
- * \return The aggregate shutdown coefficent.
+ * \return The aggregate shutdown coefficient.
  */
 double VintageProductionState::calcShutdownCoefficient( const string& aRegionName,
 										                const string& aSectorName,

@@ -53,7 +53,7 @@ bool PopulationSGMFixed::XMLDerivedClassParse( const std::string& nodeName, cons
     return true;
 }
 
-//! Write out rest of datamembers to XML output stream.
+//! Write out rest of data members to XML output stream.
 void PopulationSGMFixed::toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {
     for( vector<AgeCohort *>::const_iterator i = ageCohort.begin(); i != ageCohort.end(); i++ ){
         ( *i )->toInputXML( out, tabs );
@@ -72,7 +72,7 @@ void PopulationSGMFixed::completeInit( const vector<double>& femalePopFromPrev, 
     calcPop();
 }
 
-//! initialize anything that won't change during the calcuation
+//! initialize anything that won't change during the calculation
 void PopulationSGMFixed::initCalc(){
 }
 
@@ -120,7 +120,7 @@ double PopulationSGMFixed::getWorkingAgePopFemale() const { // ages 15-65
 *
 * This public function accesses the private constant string, XML_NAME.
 * This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
+* This function may be virtual to be overridden by derived class pointers.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */

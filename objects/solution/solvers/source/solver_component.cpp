@@ -120,7 +120,7 @@ void SolverComponent::startMethod(){
 }
 
 // Temporarily put solver class definitions here.
-// TODO: Determine if a source file is neccessary.
+// TODO: Determine if a source file is necessary.
 //! Factory method.
 std::auto_ptr<Solver> Solver::getSolver( const string& aSolverName, Marketplace* aMarketplace, World* aWorld ){
     if( aSolverName == BisectPolicyNRSolver::getName() ){

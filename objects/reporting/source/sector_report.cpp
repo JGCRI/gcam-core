@@ -64,7 +64,7 @@ void SectorReport::finish() const {
         }
         mFile << endl;
 
-        // Note: This is structuarlly different from SAM. This goes through the rows and prints
+        // Note: This is structurally different from SAM. This goes through the rows and prints
         // out each of the category values.
         for ( vector<string>::const_iterator row = rowNames.begin(); row != rowNames.end(); ++row ){
             mFile << *row;

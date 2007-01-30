@@ -134,7 +134,7 @@ bool ExplicitPointSet::setX( const double yValue, const double xValue ){
     return ( point != 0 );
 }
 
-//! Remove a datapoint from the point set based on an x value.
+//! Remove a data point from the point set based on an x value.
 bool ExplicitPointSet::removePointFindX( const double xValue ){
     DataPoint* point = findX( xValue );
     if( point ){
@@ -147,7 +147,7 @@ bool ExplicitPointSet::removePointFindX( const double xValue ){
     return ( point != 0 );
 }
 
-//! Remove a datapoint from the point set based on a y value.
+//! Remove a data point from the point set based on a y value.
 bool ExplicitPointSet::removePointFindY( const double yValue ){
     DataPoint* point = findY( yValue );
     if( point ){

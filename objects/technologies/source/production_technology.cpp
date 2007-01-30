@@ -371,7 +371,7 @@ void ProductionTechnology::operate( NationalAccount& aNationalAccount, const Dem
             
              // TODO: Move this to setInvestment
             // Add annual investment in new production technology to National Accounts
-            // and to maketplace demand for capital or annual investments, coordinate with Josh
+            // and to marketplace demand for capital or annual investments, coordinate with Josh
             // Not for old vintages where investment does not occur
             if( aIsNewVintageMode && isNewInvestment( aPeriod ) ){
                 aNationalAccount.addToAccount(NationalAccount::ANNUAL_INVESTMENT, mAnnualInvestment );
@@ -559,8 +559,8 @@ double ProductionTechnology::getExpectedProfitRate( const NationalAccount& aNati
     }
     
     // Calculate the number of years in the lifetime. This would not be correct
-    // with variable timesteps. This would cause problems with variable
-    // timesteps.
+    // with variable time steps. This would cause problems with variable
+    // time steps.
     const int timeStep = scenario->getModeltime()->gettimestep( aPeriod );
     const int lifetimeYears = lifeTime * timeStep;
     
@@ -600,7 +600,7 @@ double ProductionTechnology::getCapitalOutputRatio( const IDistributor* aDistrib
     // Only new investment has a capital to output ratio.
     if( isNewInvestment( aPeriod ) ){
         // Calculate the number of years in the lifetime. This would not be
-        // correct with variable timesteps.
+        // correct with variable time steps.
         const double lifetimeYears = lifeTime * scenario->getModeltime()->gettimestep( aPeriod );
         return prodDmdFn->getCapitalOutputRatio( input, aRegionName, aSectorName,
                                                  lifetimeYears, aPeriod, alphaZeroScaler,
@@ -678,7 +678,7 @@ void ProductionTechnology::postCalc( const string& aRegionName, const string& aS
     if( !isRetired( aPeriod ) && year <= scenario->getModeltime()->getper_to_yr( aPeriod ) ){
         // Save cost, profit rate, and output. Profit rate is needed to convert
         // elasticities, not just for reporting. Calculate the number of years
-        // in the lifetime. This would not be correct with variable timesteps.
+        // in the lifetime. This would not be correct with variable time steps.
         const double lifetimeYears = lifeTime * scenario->getModeltime()->gettimestep( aPeriod );
         double shutdownCoef = calcShutdownCoef( aRegionName, aSectorName, aPeriod );
         mProfits[ aPeriod ] = prodDmdFn->calcProfits( input, aRegionName, aSectorName, shutdownCoef,
@@ -692,7 +692,7 @@ void ProductionTechnology::postCalc( const string& aRegionName, const string& aS
         if( isNewInvestment( aPeriod ) ){
             // This is the unadjusted expected profit rate, doesn't use helper
             // object. Calculate the number of years in the lifetime. This would
-            // not be correct with variable timesteps.
+            // not be correct with variable time steps.
             const double lifetimeYears = lifeTime * scenario->getModeltime()->gettimestep( aPeriod );
             mExpectedProfitRateReporting = prodDmdFn->calcExpProfitRate( input, aRegionName, aSectorName,
                 lifetimeYears, aPeriod,
@@ -783,14 +783,14 @@ bool ProductionTechnology::calcIsNewInvestment( const int aPeriod ) const {
 bool ProductionTechnology::calcIsRetired( const int aPeriod ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     // Return whether the period is past the lifetime of the technology as
-    // calculated from when it came online.
+    // calculated from when it came on-line.
     return( modeltime->getper_to_yr( aPeriod ) >= ( year + delayedInvestTime 
                                                   + lifeTime * modeltime->gettimestep( aPeriod ) ) );
 }
 
-/*! \brief Calculate dynamically whether a technology is available to go online.
+/*! \brief Calculate dynamically whether a technology is available to go on-line.
 * \param aPeriod The current period.
-* \return Whether the technology has gone online.
+* \return Whether the technology has gone on-line.
 * \warning This function is slower than the cached version and should only be
 *          used to setup the cache or by the optimized version of the function
 *          when the cached value is not available for a period.
@@ -798,6 +798,6 @@ bool ProductionTechnology::calcIsRetired( const int aPeriod ) const {
 * \author Josh Lurz
 */
 bool ProductionTechnology::calcIsAvailable( const int aPeriod ) const {
-    // Return whether we are past the year when the technology came online.
+    // Return whether we are past the year when the technology came on-line.
     return ( scenario->getModeltime()->getper_to_yr( aPeriod ) >= year + delayedInvestTime );
 }

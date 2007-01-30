@@ -216,7 +216,7 @@ void LandNode::setUnmanagedLandAllocation( const string& aRegionName,
 
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
         // Scale the child land allocation so the sum of this node's land
-        // allocation is equal to the indended allocation.
+        // allocation is equal to the intended allocation.
         double newAllocation = mChildren[ i ]->getTotalLandAllocation( eUnmanaged, aPeriod )
             * landAllocationScaleFactor;
 

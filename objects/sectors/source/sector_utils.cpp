@@ -1,6 +1,6 @@
 /*
  * This software, which is provided in confidence, was prepared by employees of
- * Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+ * Pacific Northwest National Laboratory operated by Battelle Memorial Institute.
  * Battelle has certain unperfected rights in the software which should not be
  * copied or otherwise disseminated outside your organization without the
  * express written authorization from Battelle. All rights to the software are
@@ -80,7 +80,7 @@ bool SectorUtils::createTrialSupplyMarket( const string& aRegion,
 
 /*!
  * \brief Set the trial value of supply for a given sector.
- * \details Sets the known value of the trial market such that at equalibrium,
+ * \details Sets the known value of the trial market such that at equilibrium,
  *          the set value is equal to the trial value.
  * \author Josh Lurz
  * \param aRegion Region of the market.
@@ -114,7 +114,7 @@ void SectorUtils::setTrialSupply( const string& aRegion,
 
 /*!
  * \brief Get the trial value of supply for a given sector.
- * \details Gets the trial value of the trial market such that at equalibrium,
+ * \details Gets the trial value of the trial market such that at equilibrium,
  *          the known value is equal to the trial value.
  * \author Josh Lurz
  * \param aRegion Region of the market.
@@ -150,7 +150,7 @@ double SectorUtils::getTrialSupply( const string& aRegion,
     
     // Trial markets do not solve well when the value of one side is zero. When
     // the known value is set into the trial market 1 is added, so it must be
-    // removed here. Trial price may be less than 1 in disequalibrium.
+    // removed here. Trial price may be less than 1 in disequilibrium.
     return max( trialPrice - 1, 0.0 );
 }
 

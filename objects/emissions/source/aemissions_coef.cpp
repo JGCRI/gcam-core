@@ -1,6 +1,6 @@
 /*
  * This software, which is provided in confidence, was prepared by employees of
- * Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+ * Pacific Northwest National Laboratory operated by Battelle Memorial Institute.
  * Battelle has certain unperfected rights in the software which should not be
  * copied or otherwise disseminated outside your organization without the express
  * written authorization from Battelle. All rights to the software are reserved
@@ -94,8 +94,8 @@ double AEmissionsCoef::calcMaxCntrl( const double aFinalEmissCoef, const double 
 }
 
 /*
- * \brief Returns whether or not the calcMaxCntrl function needs the B and multplier variables.
- * \return Whether or not the calcMaxCntrl function needs the B and multplier variables.
+ * \brief Returns whether or not the calcMaxCntrl function needs the B and multiplier variables.
+ * \return Whether or not the calcMaxCntrl function needs the B and multiplier variables.
  */
 bool AEmissionsCoef::needsCalcForAdjustment() const {
     return false;

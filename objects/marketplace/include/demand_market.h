@@ -15,7 +15,7 @@
 
 /*!
 * \ingroup Objects
-* \brief A class which defines a DemandMarket object for use in solving simultinaity markets.
+* \brief A class which defines a DemandMarket object for use in solving simultaneous markets.
 * \author Steve Smith
 */
 

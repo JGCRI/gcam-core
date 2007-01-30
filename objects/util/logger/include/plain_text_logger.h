@@ -21,7 +21,7 @@
 * \brief This is a class which implements the Logger interface.. 
 *
 * This Logger is very simple and prints log messages to a file in a plain text format.
-* It does support nesting and options to activate or deactive sections of the log line.
+* It does support nesting and options to activate or deactivate sections of the log line.
 *
 * \author Josh Lurz
 * \warning Since PlainTextLoggers can only be created by the LoggerFactory, public functions not in the Logger interface will be unusable.

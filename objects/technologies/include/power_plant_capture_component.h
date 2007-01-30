@@ -1,6 +1,6 @@
 /*
  * This software, which is provided in confidence, was prepared by employees of
- * Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+ * Pacific Northwest National Laboratory operated by Battelle Memorial Institute.
  * Battelle has certain unperfected rights in the software which should not be
  * copied or otherwise disseminated outside your organization without the
  * express written authorization from Battelle. All rights to the software are
@@ -142,7 +142,7 @@ protected:
     //! Non-energy cost penalty.
     double mNonEnergyCostPenalty;
 
-    //! Stored emissions coefficienct for the fuel.
+    //! Stored emissions coefficient for the fuel.
     Value mCachedFuelCoef;
 };
 

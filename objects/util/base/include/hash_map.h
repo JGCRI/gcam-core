@@ -310,7 +310,7 @@ HashMap<Key, Value>::insert( const std::pair<Key, Value> aKeyValuePair ){
 #endif
 	}
 	// The ratio of entries to the maximum size of the map at which to increase
-	// the map size. This is currently a low threshhold as the maps are adjusted
+	// the map size. This is currently a low threshold as the maps are adjusted
     // for performance not size. This may need to be adjusted for small maps.
 	const double CAPACITY_THRESHHOLD = 0.4;
 

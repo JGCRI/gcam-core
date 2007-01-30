@@ -112,7 +112,7 @@ void OutputGrowthCalculator::toInputXML( ostream& aOut, Tabs* aTabs ) const {
 *          then backs out the trial investment using an average sector capital
 *          to output ratio.
 * \note This calculation is only performed on the first iteration of a period,
-*       so the final equalibrium output will not be exactly the last period's
+*       so the final equilibrium output will not be exactly the last period's
 *       output multiplied by the growth rate as the capital to output ratio will
 *       have adjusted during solution.
 * \param aInvestables The investable children of this investment object.
@@ -137,7 +137,7 @@ double OutputGrowthCalculator::calcInvestmentDependencyScalar( const vector<IInv
                                                                const int aPeriod ) 
 {
     // TODO: We should store the entire scalar for the period, not just TESTK
-    // like fortran does.
+    // like Fortran does.
     
     // Calculate the starting level of capital.
     const double baseCapital = InvestmentUtils::calcBaseCapital( aRegionName, aPrevInvestment,
@@ -284,7 +284,7 @@ double OutputGrowthCalculator::calcOutputGap( const vector<IInvestable*>& aInves
         const double capQuotient = ( capOutputRatio > 0 ) ? 1 / capOutputRatio : 0;
 
         // Add the previous periods investment.
-        // I think these are only right for a 5 year timestep.
+        // I think these are only right for a 5 year time step.
         totalPrevAnnualInvestment += aInvestables[ i ]->getAnnualInvestment( aPeriod - 1 ) *
                                      capQuotient * 2;
         // Add any fixed investment.

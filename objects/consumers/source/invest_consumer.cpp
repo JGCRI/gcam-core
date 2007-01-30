@@ -44,7 +44,7 @@ bool InvestConsumer::XMLDerivedClassParse( const string& aNodeName, const DOMNod
     return false;
 }
 
-//! Write out additional datamembers to XML output stream.
+//! Write out additional data members to XML output stream.
 void InvestConsumer::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
 }
 
@@ -58,7 +58,7 @@ void InvestConsumer::completeInit( const string& aRegionName ) {
     BaseTechnology::completeInit( aRegionName );
 }
 
-//! initialize anything that won't change during the calcuation
+//! initialize anything that won't change during the calculation
 void InvestConsumer::initCalc( const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName, 
                                const string& aSectorName, NationalAccount& aNationalAccount, 
                                const Demographic* aDemographics, const double aCapitalStock, const int aPeriod ) 

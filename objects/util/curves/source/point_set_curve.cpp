@@ -265,7 +265,7 @@ double PointSetCurve::getIntegral( const double lowDomain, const double highDoma
  *        aLowDomain assuming the X values are years.
  * \details Computes a sum of the discounted y values of the curve from
  *          aLowDomain to aHighDomain inclusive using the given interest rate.
- *          The present valeu in any year is calculated as:
+ *          The present value in any year is calculated as:
  *          pv(x, yearsInFuture, discountRate) = x / ( 1 + discountRate )^n
  * \param aLowDomain Year to begin discounting costs from inclusively. This is the base year.
  * \param aHighDomain Last year to add the discounted value for, inclusive.

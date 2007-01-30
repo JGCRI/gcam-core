@@ -126,7 +126,7 @@ inline Value::operator double() const {
 }
 
 /*!
- * \brief Get the value in an unambigous way.
+ * \brief Get the value in an unambiguous way.
  * \details Only use this function when using the Value directly gives an error
  *          or warning.
  * \return The value.

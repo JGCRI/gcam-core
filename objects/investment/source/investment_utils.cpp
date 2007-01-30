@@ -124,7 +124,7 @@ double InvestmentUtils::normalizeShares( vector<double>& aShares ){
     // Calculate the total of the shares so they can be normalized.
     const double sum = accumulate( aShares.begin(), aShares.end(), 0.0 );
 
-    // Check for an unnormalizable vector.
+    // Check for an un-normalizable vector.
     if( sum > 0 ){
         // Adjust all the shares.
         for( unsigned int i = 0; i < aShares.size(); ++i ){

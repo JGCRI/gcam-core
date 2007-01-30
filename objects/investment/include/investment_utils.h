@@ -61,7 +61,7 @@ public:
      *          IInvestable objects. This is legal given that the template class
      *          passed in is a subtype of IInvestable. This will fail at
      *          compilation time if this is not true. This must be done
-     *          explicitally because even if class B inherits from class A,
+     *          explicitly because even if class B inherits from class A,
      *          vector<B> does not inherit from vector<A>.
      * \param aSubtypeVector A vector of subtypes of IInvestable to upcast.
      * \return A vector of IInvestable pointers corresponding to the subtype

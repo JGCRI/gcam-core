@@ -76,7 +76,7 @@ protected:
     //! Region name of the parent sector.
     std::string mRegionName;
 
-    //! Sector name for which the MarketBasedInvestor is determing investment.
+    //! Sector name for which the MarketBasedInvestor is determining investment.
     std::string mSectorName;
 
     //! Name of the market solved for investment.

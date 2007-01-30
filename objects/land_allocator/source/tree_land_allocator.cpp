@@ -120,7 +120,7 @@ void TreeLandAllocator::completeInit( const string& aRegionName,
 }
 
 /*!
- * \brief Check whether the rotation period is valid and the timesteps are
+ * \brief Check whether the rotation period is valid and the time steps are
  *        equal.
  * \details Checks whether the model periods are all equal and evenly divide
  *          into the number of rotation years. Prints a warning if either
@@ -140,13 +140,13 @@ void TreeLandAllocator::checkRotationPeriod( const IInfo* aRegionInfo ) const {
     }
 
     // A check to verify that the rotation period is a multiple of the model's
-    // timestep.
+    // time step.
     const int rotationPeriod = aRegionInfo->getInteger( "rotationPeriod", true );
     for( int period = 0; period < modeltime->getmaxper(); ++period ) {
         if( rotationPeriod % modeltime->gettimestep( period ) != 0 ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::DEBUG );
-            mainLog << "Rotation period is not evenly divisible by timestep in period "
+            mainLog << "Rotation period is not evenly divisible by time step in period "
                     << period << "." << endl;
         }
     }

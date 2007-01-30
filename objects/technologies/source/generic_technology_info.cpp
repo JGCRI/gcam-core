@@ -1,6 +1,6 @@
 /*
  * This software, which is provided in confidence, was prepared by employees of
- * Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+ * Pacific Northwest National Laboratory operated by Battelle Memorial Institute.
  * Battelle has certain unperfected rights in the software which should not be
  * copied or otherwise disseminated outside your organization without the
  * express written authorization from Battelle. All rights to the software are
@@ -41,14 +41,14 @@ void GenericTechnologyInfo::completeInit() {
     if( mBaseEfficiency <= 0 ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Resetting invalid effiency for Technology " << name << endl;
+        mainLog << "Resetting invalid efficiency for Technology " << name << endl;
         mBaseEfficiency =  1;
     }
 }
 
 //! write object to xml output stream
 void GenericTechnologyInfo::toInputXML( ostream &out, Tabs *tabs ) const {
-    // don't write open/close tags for xml becaues that is the way it was read.
+    // don't write open/close tags for xml because that is the way it was read.
 
     XMLWriteElement( fuelname, "fuelname", out, tabs );
     XMLWriteElementCheckDefault( mBaseEfficiency, "efficiency", out, tabs, 1.0 );
@@ -60,7 +60,7 @@ void GenericTechnologyInfo::toInputXML( ostream &out, Tabs *tabs ) const {
 
 //! write object to xml debugging output stream
 void GenericTechnologyInfo::toDebugXML( int period, ostream &out, Tabs *tabs ) const {
-    // don't write open/close tags for xml becaues that is the way it was read.
+    // don't write open/close tags for xml because that is the way it was read.
 
     XMLWriteElement( fuelname, "fuelname", out, tabs );
     XMLWriteElementCheckDefault( mBaseEfficiency, "efficiency", out, tabs, 1.0 );

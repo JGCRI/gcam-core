@@ -1,6 +1,6 @@
 /*
  * This software, which is provided in confidence, was prepared by employees of
- * Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+ * Pacific Northwest National Laboratory operated by Battelle Memorial Institute.
  * Battelle has certain unperfected rights in the software which should not be
  * copied or otherwise disseminated outside your organization without the
  * express written authorization from Battelle. All rights to the software are
@@ -26,8 +26,8 @@
 class IClimateModel;
 
 /*!
- * \brief An emissions stabalization target.
- * \details A target for stabalizing emissions such that industrial emissions
+ * \brief An emissions stabilization target.
+ * \details A target for stabilizing emissions such that industrial emissions
  *          in the target period are equal to the net land use emissions plus
  *          the rate of ocean uptake.
  */

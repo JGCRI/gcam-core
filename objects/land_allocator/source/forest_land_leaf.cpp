@@ -121,11 +121,11 @@ void ForestLandLeaf::setCalLandAllocation( const string& aLandType,
     // periods(current land is now free for reallocation).
     double totalAllocatedLand = 0;
 
-    // TODO: It would be better to use mSteps to determing how for into the future
+    // TODO: It would be better to use mSteps to determining how for into the future
     // to sum but that variable is not set until complete init, which is before
     // this method.
     for( unsigned int i = aCurrentPeriod + 1; i < mLandToBeHarvested.size(); ++i ){
-        // Use the timestep from the last model period if the period is greater
+        // Use the time step from the last model period if the period is greater
         // than the maximum model period.
         int modelPeriod = min( modeltime->getmaxper() - 1, static_cast<int>( i ) );
         totalAllocatedLand += mLandToBeHarvested[ i ]

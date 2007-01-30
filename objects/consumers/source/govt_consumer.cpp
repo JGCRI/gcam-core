@@ -128,7 +128,7 @@ void GovtConsumer::completeInit( const string& aRegionName ) {
     }
 }
 
-//! initialize anything that won't change during the calcuation
+//! initialize anything that won't change during the calculation
 void GovtConsumer::initCalc( const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName,
                              const string& aSectorName, NationalAccount& nationalAccount,
                              const Demographic* aDemographics, const double aCapitalStock, const int aPeriod )

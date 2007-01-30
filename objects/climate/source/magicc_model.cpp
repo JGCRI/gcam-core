@@ -86,7 +86,7 @@ void MagiccModel::completeInit( const string& aScenarioName ){
     // Resize to the number of gases based on the gas name vector.
     mEmissionsByGas.resize( getNumGases() );
 
-    // Resize all the vectors to the number of datapoints for MAGICC.
+    // Resize all the vectors to the number of data points for MAGICC.
     // Add comment here.
     const int numGasPoints = mModeltime->getmaxper() + 2;
     for( unsigned int i = 0; i < mEmissionsByGas.size(); ++i ){
@@ -96,7 +96,7 @@ void MagiccModel::completeInit( const string& aScenarioName ){
     readFile();
     mIsValid = false;
     
-    // Set up coorespondence for output gas names
+    // Set up correspondence for output gas names
     // Setup the gas name vector.
     mOutputGasNameMap[ "total" ] = 0;
     mOutputGasNameMap[ "CO2" ] = 1;
@@ -185,7 +185,7 @@ void MagiccModel::XMLParse( const DOMNode* node ){
     }
 }
 
-//! Writes datamembers to datastream in XML format.
+//! Writes data members to data stream in XML format.
 void MagiccModel::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), out, tabs );
 
@@ -210,7 +210,7 @@ void MagiccModel::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
 }
 
-//! Writes datamembers to debugging datastream in XML format.
+//! Writes data members to debugging data stream in XML format.
 void MagiccModel::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
     XMLWriteOpeningTag( getXMLNameStatic(), out, tabs );

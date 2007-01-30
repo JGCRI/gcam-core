@@ -138,7 +138,7 @@ void TranTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* ta
 * \param aSubsectorInfo Subsector information object.
 * \param aLandAllocator Regional land allocator.
 * \author Josh Lurz
-* \warning Markets are not necesarilly set when completeInit is called
+* \warning Markets are not necessarily set when completeInit is called
 */
 void TranTechnology::completeInit( const string& aRegionName,
                                    const string& aSectorName,

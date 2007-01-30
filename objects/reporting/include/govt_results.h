@@ -41,7 +41,7 @@ class StorageTable;
 
 /*! 
 * \ingroup Objects
-* \brief A visitor which collects the total results for the goverment final
+* \brief A visitor which collects the total results for the government final
 *        demand sector.
 * \details ADD HERE
 * \author Josh Lurz

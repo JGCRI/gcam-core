@@ -77,7 +77,7 @@ bool SolverLibrary::isWithinTolerance( const double excessDemand, const double d
     return ( getRelativeED( excessDemand, demand, excessDemandSolutionFloor ) < solutionTolerance );
 }
 
-/*! \brief Function to calculate partial derivatives for Newton-Rhaphson method, NR_Ron()
+/*! \brief Function to calculate partial derivatives for Newton-Raphson method, NR_Ron()
 *
 * This function calculates matrices of partial derivatives of supplies and demands for all markets which are currently being solved.
 * The function uses the fact that changing a regional price while holding all other prices constant can only change markets within that region.

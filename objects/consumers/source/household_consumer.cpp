@@ -415,7 +415,7 @@ double HouseholdConsumer::getLaborSupply() const {
 }
 //! calculate income
 void HouseholdConsumer::calcIncome( NationalAccount& nationalAccount, const string& regionName, int period ) {
-    // national accounts give national totals, how to divide these totals to each comsumer
+    // national accounts give national totals, how to divide these totals to each consumer
     // type has not been developed
     // social security tax calculation requires total supply of labor wages
     const Modeltime* modelTime = scenario->getModeltime();
@@ -514,7 +514,7 @@ void HouseholdConsumer::operate( NationalAccount& aNationalAccount, const Demogr
         calcIncome( aNationalAccount, aRegionName, aPeriod );
         // calculate consumption demands for each final good or service. Use the
         // trial value for the budget since the household land and labor demands
-        // are not yet known. This is explicitally solving the Consumption =
+        // are not yet known. This is explicitly solving the Consumption =
         // Budget equation. The reason this cannot be directly solved for is
         // that households may demand land and labor, which would increase their
         // income, and increase their budget.

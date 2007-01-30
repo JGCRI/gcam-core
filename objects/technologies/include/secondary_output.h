@@ -6,7 +6,7 @@
 
 /*
  * This software, which is provided in confidence, was prepared by employees of
- * Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+ * Pacific Northwest National Laboratory operated by Battelle Memorial Institute.
  * Battelle has certain unperfected rights in the software which should not be
  * copied or otherwise disseminated outside your organization without the
  * express written authorization from Battelle. All rights to the software are
@@ -36,7 +36,7 @@ class DependencyFinder;
  * \details Secondary outputs represent a product produced in conjunction with a
  *          primary product which may have a positive value. Output of the
  *          secondary output is not optimized, it is always produced at a fixed
- *          ratio to the primary output, and may not be discared. The revenue
+ *          ratio to the primary output, and may not be discarded. The revenue
  *          from the secondary output must not exceed the cost of the primary
  *          output. The secondary output must be the primary output of another
  *          sector, and the total secondary output of the good must not exceed

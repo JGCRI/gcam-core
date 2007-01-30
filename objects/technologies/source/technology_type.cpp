@@ -138,7 +138,7 @@ BaseTechnology* TechnologyType::initOrCreateTech( const int aNewTechYear, const 
 * \param aPeriod The period in which to set the investment.
 * \return The total amount of annual investment that occurred.
 * \author Josh Lurz
-* \todo period and current year are reduntant.
+* \todo period and current year are redundant.
 */
 double TechnologyType::setTotalInvestment( const string& aRegionName, const int aPrevYear, const int aCurrentYear,
                                            const double aAnnualInvestment, const int aPeriod )

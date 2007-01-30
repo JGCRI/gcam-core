@@ -55,7 +55,7 @@ const ALandAllocatorItem* ALandAllocatorItem::getParent() const {
 /*!
  * \brief Returns the intrinsic rate for the specified period.
  * \param aPeriod The period to get the rate for.
- * \return double reprenting the intrinsic rate of this item for the specified
+ * \return double representing the intrinsic rate of this item for the specified
  *         period.
  */
 double ALandAllocatorItem::getInstrinsicRate( const int aPeriod ) const {
@@ -87,7 +87,7 @@ void ALandAllocatorItem::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTa
     
     XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, mName );
 
-    // write out basic datamembers
+    // write out basic data members
     XMLWriteElement( mIntrinsicRate[ aPeriod ], "IntrinsicRate", aOut, aTabs );
     XMLWriteElement( mShare[ aPeriod ], "share", aOut, aTabs );
 

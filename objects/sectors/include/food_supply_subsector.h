@@ -17,7 +17,7 @@
 /*! 
 * \ingroup Objects
 * \brief A class which defines a single FoodSupplySubsector of the model.
-* \details This subsector exists soley to create FoodProductionTechnologies.
+* \details This subsector exists solely to create FoodProductionTechnologies.
 * \author James Blackwood
 */
 

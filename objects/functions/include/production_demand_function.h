@@ -344,7 +344,7 @@ private:
 * \ingroup Objects
 * \brief Defines the Leontief production function.
 * \details TODO
-* \todo Evaluate if CES production functions with zero elasticies could replace
+* \todo Evaluate if CES production functions with zero elasticities could replace
 *       this class.
 * \author Pralit Patel, Sonny Kim, Josh Lurz
 */

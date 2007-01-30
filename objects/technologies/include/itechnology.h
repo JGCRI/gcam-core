@@ -6,7 +6,7 @@
 
 /*
  * This software, which is provided in confidence, was prepared by employees of
- * Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+ * Pacific Northwest National Laboratory operated by Battelle Memorial Institute.
  * Battelle has certain unperfected rights in the software which should not be
  * copied or otherwise disseminated outside your organization without the
  * express written authorization from Battelle. All rights to the software are
@@ -43,7 +43,7 @@ class GlobalTechnologyDatabase;
 * \ingroup Objects
 * \brief This class defines the interface for what it means to be a MiniCAM technology.
 *
-* This inteface is abstract.  All MiniCAM technologies will implement these methods.
+* This interface is abstract.  All MiniCAM technologies will implement these methods.
 *
 * \author Pralit Patel
 */

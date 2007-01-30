@@ -21,7 +21,7 @@ class GDP;
 
 /*! 
 * \ingroup Objects
-* \brief This class represents a detailed transporation demand sector
+* \brief This class represents a detailed transportation demand sector
 * \brief and is derived from the Demand Sector Class.
 * \author Marshall Wise, Sonny Kim, Josh Lurz
 */

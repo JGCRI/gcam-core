@@ -72,7 +72,7 @@ public:
      * \param aInvestables The subsectors of the ProductionSector as an
      *        IInvestable vector.
      * \param aNationalAccount Regional national accounts container.
-     * \param aDemographic Regional demograpics container.
+     * \param aDemographic Regional demographics container.
      * \param aPeriod Model period for which to calculate investment.
      */
     virtual double calcAndDistributeInvestment( std::vector<IInvestable*>& aInvestables,

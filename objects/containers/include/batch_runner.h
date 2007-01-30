@@ -6,7 +6,7 @@
 
 /*
  * This software, which is provided in confidence, was prepared by employees of
- * Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+ * Pacific Northwest National Laboratory operated by Battelle Memorial Institute.
  * Battelle has certain unperfected rights in the software which should not be
  * copied or otherwise disseminated outside your organization without the
  * express written authorization from Battelle. All rights to the software are
@@ -31,7 +31,7 @@ class Timer;
 /*! 
  * \ingroup Objects
  * \brief A scenario runner which reads in set of input files and runs multiple
- *        scenarios by determing all possible permutations of these sets of
+ *        scenarios by determining all possible permutations of these sets of
  *        files.
  * \details This class runs multiple scenarios by creating combinations of the
  *          sets of files within each component. For each scenario, one file set

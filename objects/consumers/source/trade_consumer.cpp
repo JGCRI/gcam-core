@@ -69,7 +69,7 @@ void TradeConsumer::completeInit( const string& aRegionName ) {
 	BaseTechnology::completeInit( aRegionName );
 }
 
-//! initialize anything that won't change during the calcuation
+//! initialize anything that won't change during the calculation
 void TradeConsumer::initCalc( const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName, 
                               const string& aSectorName, NationalAccount& aNationalAccount, 
                               const Demographic* aDemographics, const double aCapitalStock, 

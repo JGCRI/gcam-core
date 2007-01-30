@@ -1,11 +1,11 @@
 /*
 * This software, which is provided in confidence, was prepared by employees of
-* Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+* Pacific Northwest National Laboratory operated by Battelle Memorial Institute.
 * Battelle has certain unperfected rights in the software which should not be
 * copied or otherwise disseminated outside your organization without the express
 * written authorization from Battelle. All rights to the software are reserved
 * by Battelle. Battelle makes no warranty, express or implied, and assumes no
-* liability or responisbility for the use of this software.
+* liability or responsibility for the use of this software.
 */
 
 /*! 

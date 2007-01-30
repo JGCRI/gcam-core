@@ -1,6 +1,6 @@
 /*
  * This software, which is provided in confidence, was prepared by employees of
- * Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+ * Pacific Northwest National Laboratory operated by Battelle Memorial Institute.
  * Battelle has certain unperfected rights in the software which should not be
  * copied or otherwise disseminated outside your organization without the express
  * written authorization from Battelle. All rights to the software are reserved
@@ -132,7 +132,7 @@ void AComplexEmissions::copyGHGParameters( const AGHG* prevGHG ){
     adjMaxCntrl = prevComplexGHG->adjMaxCntrl;
 
     // Adjust for maximum control level once GDP per capita is determined
-    // This could better be put into a post-calculation processing function if we implimented that in general
+    // This could better be put into a post-calculation processing function if we implemented that in general
     adjustMaxCntrl( prevComplexGHG->gdpCap );
 
     // Copy values that could change, so only copy if these are still zero (and, thus, were never read-in)
@@ -183,7 +183,7 @@ double AComplexEmissions::getGHGValue( const string& regionName, const string& f
     double generalizedCost = GHGTax * gwp * mEmissionsCoef->getCoef() / CVRT90;
 
     // The generalized cost returned by the GHG may be negative if
-    // emissions crediting is occuring.
+    // emissions crediting is occurring.
     return generalizedCost;
 }
 
@@ -375,7 +375,7 @@ double AComplexEmissions::controlFunction( const double maxCntrlIn, const double
 /*! \brief adjusts maxCntrl (and then gdpcap0 to recalibrate emissions) based on the read in multiplier adjMaxCntrl
 *\ detailed adjMaxCntrl is a read in variable that represents a multiplier to maxCntrl.
 * This is used to adjust the maximum emissions control level while leaving current emissions constant.
-* the function multiplies maxCntrl by this value, and chacks to make sure maxCntrl has not been
+* the function multiplies maxCntrl by this value, and checks to make sure maxCntrl has not been
 * given a multiplier that makes it greater that 100.  If this happens, it sets maxCntrl to 100
 * and resets adjMaxCntrl to the value necessary to make maxCntrl 100.
 * It then solves the control function for gdpcap0, keeping the base year emissions the same,

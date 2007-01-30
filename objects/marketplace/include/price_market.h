@@ -16,7 +16,7 @@ class Tabs;
 
 /*!
 * \ingroup Objects
-* \brief A derived class which defines a single PriceMarket object for use in solving simultinaity markets.
+* \brief A derived class which defines a single PriceMarket object for use in solving simultaneous markets.
 * \author Steve Smith
 */
 

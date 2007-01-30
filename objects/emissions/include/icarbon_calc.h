@@ -122,7 +122,7 @@ public:
      *          Since carbon uptake and emissions may have a long timescale,
      *          this potential carbon contained may not equal the actual carbon
      *          contained. Above ground carbon is the carbon content of
-     *          vegitation.
+     *          vegetation.
      * \param aYear Year.
      * \return Total potential above ground carbon.
      */

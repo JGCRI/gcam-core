@@ -73,7 +73,7 @@ const string& Region::getName() const {
 *          of objects. As the XML data is parsed, new objects are continually
 *          added to the object container using the push_back routine.
 * \param node XML DOM node of the region
-* \todo Change the diagnosic "assert( node );" to fail with a more informative
+* \todo Change the diagnostic "assert( node );" to fail with a more informative
 *       error (file, previous node?, location?)
 */
 void Region::XMLParse( const DOMNode* node ){
@@ -247,7 +247,7 @@ void Region::accept( IVisitor* aVisitor, const int aPeriod ) const {
 /*! \brief Set a policy for the region.
 * \details Searches through the list of the region's taxes for a tax with the
 *          same name as aTax. If the tax is found, it is deleted and replaced
-*          with aTax. Otherwsie aTax is added to the end of the tax vector.
+*          with aTax. Otherwise aTax is added to the end of the tax vector.
 * \param aTax Tax to add.
 */
 void Region::setTax( const GHGPolicy* aTax ){

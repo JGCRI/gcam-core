@@ -165,7 +165,7 @@ public:
 
     static bool appendData( const std::string& aData, const std::string& aLocation );
 private:
-    //! Stringstream containing all the information until it is printed.
+    //! std::stringstream containing all the information until it is printed.
     mutable std::stringstream mBuffer;
     
     //! Current region name.
@@ -191,7 +191,7 @@ private:
     std::string mCurrentFuel;
     
     //! Current indirect emissions for the Technology. These are more easily
-    //! calculated at the Technology but logically belong in the GHG writeout.
+    //! calculated at the Technology but logically belong in the GHG output.
     objects::PeriodVector<double> mCurrIndirectEmissions;
 
     //! Tabs object.
@@ -203,7 +203,7 @@ private:
     //! Indirect emissions calculator for the current region.
     std::auto_ptr<IndirectEmissionsCalculator> mIndirectEmissCalc;
 
-    /*! \brief Contains all objects neccessary to operate on a container.
+    /*! \brief Contains all objects necessary to operate on a container.
     * \details This struct defines the set of objects that must have the same
     *          lifetime so that the XML database outputter can operate on the
     *          container. The struct also ensures that the objects are deleted

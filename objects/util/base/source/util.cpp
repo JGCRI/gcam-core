@@ -48,7 +48,7 @@ namespace objects {
 	* \details Returns a string equivalent to the string passed into the
 	*          function but with spaces replaced with underscores. Each space
     *          will be replaced by exactly one underscore, multiple spaces are
-    *          not concatonated. Other whitespace characters are not replaced.
+    *          not concatenated. Other whitespace characters are not replaced.
 	* \param aString The string in which spaces should be replaced by
 	*        underscores.
     * \return String with spaces replaced with underscores.

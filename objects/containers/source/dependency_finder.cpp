@@ -68,18 +68,18 @@ bool DependencyFinder::addDependency( const string& aSector, const string& aDepe
 /*! \brief Find an ordering of the sectors in the dependency finder which orders
 *          each sector before each sector that depends on it.
 * \details This is referred to as a topological sort. The algorithm is as
-*          follows: Search the adjacency matrix for a vertice, in this
+*          follows: Search the adjacency matrix for a vertex, in this
 *          implementation a column in the matrix, with no dependencies. If there
 *          is none, the graph has a cycle and cannot currently be ordered. To
 *          correct this, call findAndBreakCycle to remove a single cycle from
-*          the matrix so the algorithm can continue. Next, add the vertice found
+*          the matrix so the algorithm can continue. Next, add the vertex found
 *          in the previous step to the ordering, and remove it and all
 *          dependencies on it from the adjacency matrix. Start over at the first
 *          step. Repeat this process until there are no nodes left in the graph.
 *          Once this function has been called, the caller may then call
 *          getOrdering to return the ordered vector.
 * \note This function removes nodes by setting the removed flag to true instead
-*       of actually removing the vertice.
+*       of actually removing the vertex.
 * \pre All relevant objects must have called addDependency() to add their dependencies to the matrix.
 * \todo The control flow of this function could be less confusing.
 * \sa getOrdering
@@ -95,9 +95,9 @@ void DependencyFinder::createOrdering() {
     while( mOrdering.size() < mDependencyMatrix.size() ){
         unsigned int verticeToRemove = INT_MAX;
 
-        // Search for a vertice with no dependencies.
+        // Search for a vertex with no dependencies.
         for( unsigned int i = 0; i < mDependencyMatrix.size(); ++i ){
-            // Only search the vertice if it has not been removed.
+            // Only search the vertex if it has not been removed.
             if( removed[ i ] ){
                 continue;
             }
@@ -121,9 +121,9 @@ void DependencyFinder::createOrdering() {
             }
         }
 
-        // Check if we found a vertice to remove.
+        // Check if we found a vertex to remove.
         if( verticeToRemove == INT_MAX ){
-            // Since there was no vertice with zero dependencies, this graph has
+            // Since there was no vertex with zero dependencies, this graph has
             // a cycle.
             ILogger& depFinderLog = ILogger::getLogger( "sector_dependencies" );
             depFinderLog.setLevel( ILogger::DEBUG );
@@ -141,7 +141,7 @@ void DependencyFinder::createOrdering() {
             }
         }
         else {
-            // Add the vertice found to the ordering and remove it from the
+            // Add the vertex found to the ordering and remove it from the
             // matrix.
             mOrdering.push_back( getNameFromIndex( verticeToRemove ) );
             removed[ verticeToRemove ] = true;

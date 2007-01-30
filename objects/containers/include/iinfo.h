@@ -53,7 +53,7 @@ public:
 	virtual bool setInteger( const std::string& aStringKey,
 		                     const int aValue ) = 0;
 	
-	/*! \brief Set a dobule value for a given key.
+	/*! \brief Set a double value for a given key.
 	* \details Updates the value associated with the key if it is already
     *          present, and creates a new key-value pair if it does not exist.
 	* \param aStringKey The key for which to set or update the value.

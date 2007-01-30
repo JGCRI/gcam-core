@@ -147,7 +147,7 @@ void GDP::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
 }
 
-//! Writes datamembers to debugging datastream in XML format.
+//! Writes data members to debugging data stream in XML format.
 void GDP::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
     const Modeltime* modeltime = scenario->getModeltime();
@@ -192,7 +192,7 @@ const std::string& GDP::getXMLNameStatic() {
     return XML_NAME;
 }
 
-/*! \brief Initialize labor force and the GDP without adjustements (needed for AgLU)
+/*! \brief Initialize labor force and the GDP without adjustments (needed for AgLU)
 *
 * This initialization function sets the labor force values and the time series for
 * unadjusted GDP.
@@ -333,9 +333,9 @@ void GDP::dbOutput( const string& regionName ) const {
     dboutput4(regionName,"General","GDP90$","perCAP_PPP","thousand90US$",gdpPerCapitaAdjustedPPP);
 }
 
-/*! Calculate innitial regional gdps.
+/*! Calculate initial regional gdps.
 *
-*  Routine calcuates GDPs without current period energy adjustment.
+*  Routine calculates GDPs without current period energy adjustment.
 *  The gdpValue and gdpPerCapita variables have values that are approximations to the current GDP,
 *  these use the adjusted GDP value from the previous period, 
 *  without adjusting for energy feedbacks in the current period
@@ -364,7 +364,7 @@ void GDP::initialGDPcalc( const int period, const double population ) {
         double currentLF = getLaborForce( period );
         double lastLF = getLaborForce( period - 1 );
         double tlab = getTotalLaborProductivity( period );
-        // There is an unitialized read on the next line of a double.
+        // There is an uninitialized read on the next line of a double.
         gdpValue[ period ] = gdpValueAdjusted[ period - 1 ] * tlab * ( currentLF / lastLF );
         gdpValueAdjusted[ period ] = gdpValue[ period ]; // Temporary value so that is never zero
         if ( gdpValue[period] == 0 ) {

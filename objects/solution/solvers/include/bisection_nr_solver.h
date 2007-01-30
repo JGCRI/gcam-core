@@ -21,7 +21,7 @@ class Marketplace;
 class World;
 /*! 
 * \ingroup Objects
-* \brief A class which defines an An instance of the Solver class which uses bisection first and then Newton-Rhaphson.
+* \brief A class which defines an An instance of the Solver class which uses bisection first and then Newton-Raphson.
 * \author Josh Lurz
 */
 

@@ -166,7 +166,7 @@ double GovtDemandFn::calcCoefficient( vector<Input*>& input, double consumption,
 	}
 	// total used for government demand does not include capital
 	double tempTotal = FunctionUtils::getDemandSum( input, period ) - capitalDemand;
-	// government capital demand is calculated separatly
+	// government capital demand is calculated separately
 	// this needs to be corrected, legacy SGM probably could not handle
 	for( unsigned int i = 0; i<input.size(); ++i ){
 		if ( !input[ i ]->isCapital() ) {
@@ -191,7 +191,7 @@ double TradeDemandFn::calcDemand( vector<Input*>& input, double consumption, con
 	double totalNetExport = 0; // total demand used for scaling
 	Marketplace* marketplace = scenario->getMarketplace();
 	for( unsigned int i = 0; i<input.size(); ++i ){
-        // Trade exists in all comodities except land and labor.
+        // Trade exists in all commodities except land and labor.
         if( !input[ i ]->isFactorSupply() ){
 			// Open Trade
             double netExport;
@@ -625,7 +625,7 @@ double CESProductionFn::calcExpProfitRate( const vector<Input*>& input, const st
 *          by the discount factor, which is equal to the interest rate
 *          multiplied by the input's price adjustment. The rho and exp exponents
 *          are used to allow substitution between inputs to a limited degree.
-*          This function does not correct for the non-sensical levelized cost of
+*          This function does not correct for the nonsensical levelized cost of
 *          zero, it only avoids calculating invalid exponents. It is assumed the
 *          caller will determine how to handle the zero. 
 * 
@@ -685,7 +685,7 @@ double CESProductionFn::calcLevelizedCost( const vector<Input*>& aInputs,
     /*! \post Levelized cost is greater than zero, as output must not be free. */
     assert( levelizedCost > 0 );
     // Make sure this calculation succeeds even if levelized cost is
-    // non-sensical.
+    // nonsensical.
     return ( levelizedCost > 0 ) ? pow( levelizedCost, aSigma ) / aAlphaZero: 0;
 }
 

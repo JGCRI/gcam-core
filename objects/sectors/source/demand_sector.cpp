@@ -169,7 +169,7 @@ void DemandSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs
 *
 * This public function accesses the private constant string, XML_NAME.
 * This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
+* This function may be virtual to be overridden by derived class pointers.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
@@ -201,7 +201,7 @@ void DemandSector::setMarket() {
 }
 
 /*! \brief Calibrate sector output
-* \details This performs supply sector technology and sub-sector output/input
+* \details This performs supply sector technology and subsector output/input
 *          calibration. Determines total amount of calibrated and fixed output
 *          and passes that down to the subsectors. The first part of this code
 *          is similar to that for the supply sectors. The second portion is
@@ -316,7 +316,7 @@ void DemandSector::scaleOutput( int period, double scaleFactor ) {
 
 /*! \brief Perform any initializations needed for each period.
 *
-* Any initializations or calcuations that only need to be done once per period
+* Any initializations or calculations that only need to be done once per period
 * (instead of every iteration) should be placed in this function.
 *
 * \author James Blackwood
@@ -460,7 +460,7 @@ double DemandSector::getFuelPriceRatio( const GDP* aGDP, const int aPeriod ) con
 /*! \brief Aggregate sector energy service demand function.
 *
 * Function calculates the aggregate demand for energy services and passes that
-* down to the sub-sectors. Demand is proportional to either GDP (to a power) or
+* down to the subsectors. Demand is proportional to either GDP (to a power) or
 * GDP per capita (to a power) times population.
 *
 * \author Sonny Kim

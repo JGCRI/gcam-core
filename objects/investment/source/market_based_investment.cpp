@@ -48,7 +48,7 @@ mFixedInvestments( scenario->getModeltime()->getmaxper(), -1.0 ){
 /*! \brief Complete the initialization of the market based investor.
 * \details This function performs a series of tasks needed before it can be
 *          used. It stores the region and sector name, and then sets up the
-*          neccessary market. This is done by constructing a unique market name,
+*          necessary market. This is done by constructing a unique market name,
 *          creating the market, and setting the market to solve for all periods
 *          where investment is not fixed at the sector level.
 * \param aRegionName Name of the region containing this investor.
@@ -175,7 +175,7 @@ void MarketBasedInvestor::toInputXML( ostream& aOut, Tabs* aTabs ) const {
 *          parameter in the market, or the price unless the sector investment is
 *          fixed. If the sector is fixed, the market should not have been set to
 *          solve, and the trial value is ignored. This trial investment does not
-*          include subsector and techology fixed investment, it is only the
+*          include subsector and technology fixed investment, it is only the
 *          variable investment. It then sets one side of the equation, supply,
 *          to the price received for the good. It sets the other side of the
 *          equation, demand, to the average levelized cost for the sector. This

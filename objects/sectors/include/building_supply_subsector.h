@@ -18,7 +18,7 @@
 * \ingroup CIAM
 * \brief A class which defines a building supply Subsector of the model.
 
-* This subsector supplies building servicies. The main differences 
+* This subsector supplies building services. The main differences 
 * to provide calibration and internal load values to the building demand subsectors and techs
 
 * \author Steve Smith

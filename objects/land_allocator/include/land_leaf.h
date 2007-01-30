@@ -24,10 +24,10 @@ class LandNode;
 /*!
  * \brief A LandLeaf is the leaf of a land allocation tree.
  * \details A leaf in the land allocator which represents the land used to
- *          produce a single crop. Land leaves can be seperated into two
+ *          produce a single crop. Land leaves can be separated into two
  *          categories, managed land leaves which are created by farming
  *          technologies, and unmanaged land leaves which are created through
- *          input to contain unmanaged arrable land.
+ *          input to contain unmanaged arable land.
  *
  *          <b>XML specification for LandLeaf</b>
  *          - XML name: Not parsed

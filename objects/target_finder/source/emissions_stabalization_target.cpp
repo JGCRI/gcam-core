@@ -1,6 +1,6 @@
 /*
  * This software, which is provided in confidence, was prepared by employees of
- * Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+ * Pacific Northwest National Laboratory operated by Battelle Memorial Institute.
  * Battelle has certain unperfected rights in the software which should not be
  * copied or otherwise disseminated outside your organization without the
  * express written authorization from Battelle. All rights to the software are
@@ -107,6 +107,6 @@ EmissionsStabalizationTarget::getStatus( const double aTolerance,
  * \return The static name of the object.
  */
 const string& EmissionsStabalizationTarget::getXMLNameStatic(){
-	static const string XML_NAME = "stabalization-target";
+	static const string XML_NAME = "stabilization-target";
 	return XML_NAME;
 }

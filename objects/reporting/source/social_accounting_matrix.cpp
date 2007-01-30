@@ -47,7 +47,7 @@ SocialAccountingMatrix::SocialAccountingMatrix( const string& aRegionName, ostre
 mFile( aFile ), mRegionName( aRegionName ), mTable( new StorageTable ){
 }
 
-/*! \brief For outputing SGM data to a flat csv File
+/*! \brief For outputting SGM data to a flat csv File
  * 
  * \author Pralit Patel
  */

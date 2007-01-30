@@ -6,7 +6,7 @@
 
 /*
  * This software, which is provided in confidence, was prepared by employees of
- * Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+ * Pacific Northwest National Laboratory operated by Battelle Memorial Institute.
  * Battelle has certain unperfected rights in the software which should not be
  * copied or otherwise disseminated outside your organization without the express
  * written authorization from Battelle. All rights to the software are reserved
@@ -62,7 +62,7 @@ protected:
     double ashRetention; //!< percentage of output that remains in ash form
     double percentSulfur; //!< sulfur content of input (percentage)  
     double gjPerTonne; //!< fuel energy(in GJ) per metric ton
-    double finalSulfur; // Asymtotic final sulfur content (percentage) 
+    double finalSulfur; // Asymptotic final sulfur content (percentage) 
 };
 
 #endif // _SO2_EMISSIONS_H_

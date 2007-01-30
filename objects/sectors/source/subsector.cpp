@@ -412,7 +412,7 @@ bool Subsector::XMLDerivedClassParse( const string& nodeName, const DOMNode* cur
 * \param aLandAllocator Regional land allocator.
 * \param aGlobalTechDB Global Technology database.
 * \author Josh Lurz
-* \warning markets are not necesarilly set when completeInit is called
+* \warning markets are not necessarily set when completeInit is called
 */
 void Subsector::completeInit( const IInfo* aSectorInfo,
                               DependencyFinder* aDependencyFinder,
@@ -635,10 +635,10 @@ const string& Subsector::getXMLNameStatic() {
 
 /*!
 * \brief Perform any initializations needed for each period.
-* \details Perform any initializations or calcuations that only need to be done
+* \details Perform any initializations or calculations that only need to be done
 *          once per period (instead of every iteration) should be placed in this
 *          function.
-* \warning The ghg part of this routine assumes the existance of technologies in
+* \warning The ghg part of this routine assumes the existence of technologies in
 *          the previous and future periods
 * \author Steve Smith, Sonny Kim
 * \param aNationalAccount National accounts container.
@@ -782,7 +782,7 @@ double Subsector::getAverageFuelPrice( const GDP* aGDP, const int aPeriod) const
 
 /*! \brief calculate Technology shares within Subsector
 *
-* Calls Technology objects to first calculate cost, then their share. Follos this by normalizing shares. 
+* Calls Technology objects to first calculate cost, then their share. Follows this by normalizing shares. 
 *
 * \author Marshall Wise, Josh Lurz
 * \param regionName region name
@@ -823,7 +823,7 @@ void Subsector::calcCosts( const int aPeriod ){
 }
 
 /*! \brief calculate Subsector unnormalized shares
-* \details Calculates the un-normalized share for this sector. Also claculates
+* \details Calculates the unnormalized share for this sector. Also calculates
 *          the sector aggregate price (or cost)
 * \author Sonny Kim, Josh Lurz
 * \param period model period
@@ -879,7 +879,7 @@ double Subsector::getFixedOutput( const int period ) const {
 *
 * Can turn this feature off by setting the scaleYear before the calibration year (e.g., 1975, or even zero)
 *
-* If scaleYear is set to be the calibration year then shareweights are kept constant
+* If scaleYear is set to be the calibration year then share weights are kept constant
 *
 * \author Steve Smith
 * \param period Model period
@@ -889,7 +889,7 @@ void Subsector::interpolateShareWeights( const int period ) {
     const Modeltime* modeltime = scenario->getModeltime();
 
     // if previous period was calibrated, then adjust future share weights Only
-    // scale shareweights if after the final calibration year.
+    // scale share weights if after the final calibration year.
     if ( ( period > modeltime->getFinalCalibrationPeriod() ) 
         && getCalibrationStatus( period - 1 )
         && Configuration::getInstance()->getBool( "CalibrationActive" ) )
@@ -901,7 +901,7 @@ void Subsector::interpolateShareWeights( const int period ) {
         if  ( endPeriod >= ( period - 1) ) {
             ILogger& mainLog = ILogger::getLogger( "cal_log" );
             mainLog.setLevel( ILogger::DEBUG );
-            mainLog << "Interpolating shareweights for subsector " << name
+            mainLog << "Interpolating share weights for subsector " << name
                 << " in sector " << sectorName << " from starting period of "
                 << period - 1 << " with scale year " << scaleYear
                 << " and starting value " << shrwts[ period - 1 ] << "." << endl;
@@ -914,18 +914,18 @@ void Subsector::interpolateShareWeights( const int period ) {
     }
 }
 
-/*! \brief Wrapper method for calls to normalize and/or interpolate Technology shareweights  
+/*! \brief Wrapper method for calls to normalize and/or interpolate Technology share weights  
 *
 * \author Steve Smith
 * \param period Model period
 */
 void Subsector::adjustTechnologyShareWeights( const int period ) {
     if ( techs.size() > 1 ) {
-        // First renormalize share weights
+        // First re-normalize share weights
         normalizeTechShareWeights( period - 1 );
     }
 
-    // Linearlly interpolate Technology shareweights
+    // Linearly interpolate Technology share weights
 	const Modeltime* modeltime = scenario->getModeltime();
     techShareWeightLinearInterpFn( period - 1, modeltime->getyr_to_per( techScaleYear ) );
 }
@@ -946,7 +946,7 @@ void Subsector::shareWeightLinearInterpFn( const int beginPeriod,  const int end
         shareIncrement = ( shrwts[ endPeriod ] - shrwts[ beginPeriod ] ) / ( endPeriod - beginPeriod );
     } 
     else if ( endPeriod == beginPeriod ) {
-        // If end period equals the begining period then this is a flag to keep the weights the same, so make increment zero
+        // If end period equals the beginning period then this is a flag to keep the weights the same, so make increment zero
         // and loop over rest of periods
         loopPeriod = modeltime->getmaxper();  
         shareIncrement = 0;
@@ -958,7 +958,7 @@ void Subsector::shareWeightLinearInterpFn( const int beginPeriod,  const int end
 
     ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
     calibrationLog.setLevel( ILogger::DEBUG );
-    calibrationLog << "Shareweights interpolated with increment " << shareIncrement 
+    calibrationLog << "Share weights interpolated with increment " << shareIncrement 
                    << " for subsector " << name << " in sector " << sectorName << " in region " << regionName << endl;
 }
 
@@ -1104,7 +1104,7 @@ bool Subsector::isAllCalibrated( const int aPeriod, double aCalAccuracy, const b
 * -- getting the overall scale correct is the job of the TFE calibration
 *
 * Routine takes into account fixed supply, which is assumed to take precedence over calibration values
-* Note that this routine doesn't notice if the calibration is at the Technology or sub-sector level, 
+* Note that this routine doesn't notice if the calibration is at the Technology or subsector level, 
 * this is taken care of by routine getTotalCalOutputs.
 *
 * Routine also calls adjustment to scale Technology share weights if necessary.
@@ -1120,7 +1120,7 @@ void Subsector::adjustForCalibration( double aSubsectorVariableDemand, const GDP
 		return;
 	}
 
-	// total calibrated outputs for this sub-sector
+	// total calibrated outputs for this subsector
 	double calOutputSubsect = getTotalCalOutputs( aPeriod );
     
 	// Adjust the subsector shareweight if the entire subsector is fixed or if
@@ -1150,7 +1150,7 @@ void Subsector::adjustForCalibration( double aSubsectorVariableDemand, const GDP
 
 /*! \brief returns the total calibrated output from this sector.
 *
-* Routine adds up calibrated values from both the sub-sector and (if not calibrated at Subsector), Technology levels.
+* Routine adds up calibrated values from both the subsector and (if not calibrated at Subsector), Technology levels.
 * This returns only calibrated outputs, not values otherwise fixed (as fixed or zero share weights)
 *
 * \author Steve Smith
@@ -1229,7 +1229,7 @@ bool Subsector::setImpliedFixedInput( const int period, const string& goodName, 
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::WARNING );
                 mainLog << "More than one technology input would have been changed" 
-                    << " in sub-sector " << name << " in sector " << sectorName
+                    << " in subsector " << name << " in sector " << sectorName
                     << " in region " << regionName << endl; 
             }
         }
@@ -1269,7 +1269,7 @@ void Subsector::scaleCalibratedValues( const int period, const string& goodName,
 
 /*! \brief returns true if all output is either fixed or calibrated.
 *
-* If output is is calibrated, fixed, or share weight is zero for this Subsector or all technologies in this sub-sector returns true.
+* If output is is calibrated, fixed, or share weight is zero for this Subsector or all technologies in this subsector returns true.
 *
 * \author Steve Smith
 * \param period Model period
@@ -1282,7 +1282,7 @@ bool Subsector::allOutputFixed( const int period ) const {
         return true;
     }
 
-    // if not fixed at sub-sector level, then check at the technology level
+    // if not fixed at subsector level, then check at the technology level
     for( unsigned int i = 0; i < techs.size(); ++i ){
         if ( !( techs[ i ][ period ]->isOutputFixed( period ) ) ) {
             return false;
@@ -1837,7 +1837,7 @@ double Subsector::distributeInvestment( const IDistributor* aDistributor,
     return mInvestments[ aPeriod ];
 }
 
-/*! \brief returns gets fuel consumption map for this sub-sector
+/*! \brief returns gets fuel consumption map for this subsector
 *
 * \author Sonny Kim, Josh Lurz
 * \param period Model period
@@ -1851,7 +1851,7 @@ map<string, double> Subsector::getfuelcons( const int period ) const {
     return summary[period].getfuelcons();
 }
 
-/*! \brief returns GHG emissions map for this sub-sector
+/*! \brief returns GHG emissions map for this subsector
 *
 * \author Sonny Kim, Josh Lurz
 * \param period Model period
@@ -1861,7 +1861,7 @@ map<string, double> Subsector::getemission( const int period ) const {
     return summary[ period ].getemission();
 }
 
-/*! \brief returns map of GHG emissions by fuel for this sub-sector
+/*! \brief returns map of GHG emissions by fuel for this subsector
 *
 * \author Sonny Kim, Josh Lurz
 * \param period Model period

@@ -58,7 +58,7 @@ void BisectionNRSolver::init() {
 /*! \brief Solution method to solve all markets for one period.
 * \details This is the main solution function called from within the Marketplace. It is called once for each period to clear all 
 * markets which should be solved. This solve method first brackets the markets, then uses several iterations of bisection_all to move 
-* the prices into the range of the solution, and then uses Newton-Rhaphson to clear the markets.
+* the prices into the range of the solution, and then uses Newton-Raphson to clear the markets.
 * \param period The period to solve.
 * \return Whether the markets all solved.
 */
@@ -89,7 +89,7 @@ bool BisectionNRSolver::solve( const int period ) {
     static const int CAL_LOOP_LIMIT = 30; // Max number of iterations to allow inner loop to run for calibration fix (this does not have to be terribly small, since loop will exit once model does not solve)
     static const int MAX_CAL_ATTEMPTS = 15; // Number of times to try to fix calibration
     
-    int maxTotalCalcs = MAX_CALCS; // put this into a variable so can be reset by calibration adjustement if necessary
+    int maxTotalCalcs = MAX_CALCS; // put this into a variable so can be reset by calibration adjustment if necessary
     int calFixAttempts = 0;
     
     // Create and initialize the SolutionInfoSet. 
@@ -164,7 +164,7 @@ bool BisectionNRSolver::solve( const int period ) {
         // Sequence for calling NR and they try bisecting a single market if not solved.
         NRandSingleBisect( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_REL_ED_FOR_NR, MAX_CALCS_NR, MAX_CALCS_BISECT_ONE, sol, 3, period );
         
-        // Repeat this solution sequence once to allow for bisect one to occur and newton-rhapson to try to solve 
+        // Repeat this solution sequence once to allow for bisect one to occur and Newton-Raphson to try to solve 
         // again before the top of the loop is reached and potentially bracket_all
         NRandSingleBisect( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_REL_ED_FOR_NR, MAX_CALCS_NR, MAX_CALCS_BISECT_ONE, sol, 1, period );
 

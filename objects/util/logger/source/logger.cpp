@@ -71,7 +71,7 @@ void Logger::setLevel( const ILogger::WarningLevel aLevel ){
 
 //! Receive a single character from the underlying stream and buffer it, printing the buffer it is a newline.
 int Logger::receiveCharFromUnderStream( int ch ) {
-    // Only receieve the character or print to the screen if it needed.
+    // Only receive the character or print to the screen if it needed.
     if( mCurrentWarningLevel >= mMinLogWarningLevel || mCurrentWarningLevel >= mMinToScreenWarningLevel ){
         if( ch == '\n' ){
             char tempBuf[ MAX_LINE_SIZE ];

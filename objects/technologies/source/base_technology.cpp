@@ -118,7 +118,7 @@ void BaseTechnology::copyParam( const BaseTechnology* baseTechIn,
         }
         // Doesn't exist in the other one. 
         if( !util::hasValue( baseTechIn->inputNameToNo, (*iter)->getName() ) ){
-            // Remove the map entry for it. This is not strictly neccessary.
+            // Remove the map entry for it. This is not strictly necessary.
             map<string,int>::iterator mapEntry = inputNameToNo.find( (*iter)->getName() );
             assert( mapEntry != inputNameToNo.end() ); 
             inputNameToNo.erase( mapEntry );
@@ -331,7 +331,7 @@ void BaseTechnology::removeEmptyInputs(){
     resetMapIndices( input, inputNameToNo );
 }
 
-//! Ininialize prodDmdFn by choosing the appropriate type
+//! Initialize prodDmdFn by choosing the appropriate type
 void BaseTechnology::initProdDmdFn() {
     assert( !prodDmdFnType.empty() );
     prodDmdFn = FunctionManager::getFunction( prodDmdFnType );
@@ -392,7 +392,7 @@ void BaseTechnology::calcPricePaid( const MoreSectorInfo* aMoreSectorInfo, const
     Marketplace* marketplace = scenario->getMarketplace();
     for( unsigned int i = 0; i < input.size(); i++ ) {
         // Could this be simplified some by moving it into input? Possibly a derived class for capital?
-        // fails without using inputName in augument, don't know the cause
+        // fails without using inputName in argument, don't know the cause
         double tempPricePaid = 0;
         if( input[ i ]->isCapital() ){
             tempPricePaid = input[ i ]->getPrice( aRegionName, aPeriod ) + input[i]->getPriceAdjustment();

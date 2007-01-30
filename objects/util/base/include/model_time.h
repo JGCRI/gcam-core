@@ -17,7 +17,7 @@
 #include "util/base/include/iround_trippable.h"
 /*! 
 * \ingroup Objects
-* \brief A class which defines the time information neccessary for the model to run.
+* \brief A class which defines the time information necessary for the model to run.
 * \todo This class needs to be cleaned up and documented. 
 * \author Sonny Kim
 */
@@ -35,16 +35,16 @@ private:
 
     int maxPeriod; //!< Maximum number of model periods (calculated).
 
-    int timeStep1; //!< Timestep from start to first intermediate year.
-    int timeStep2; //!< Timestep from first to second intermediate year.
-    int timeStep3; //!< Timestep from second intermediate to end year.
+    int timeStep1; //!< Time step from start to first intermediate year.
+    int timeStep2; //!< Time step from first to second intermediate year.
+    int timeStep3; //!< Time step from second intermediate to end year.
     int numberOfPeriods1;  //!< Number of periods in first time interval.
     int numberOfPeriods1a; //!< One more in first time interval for remainder year.
     int numberOfPeriods2;  //!< Number of periods in second time interval.
     int numberOfPeriods2a; //!< One more in second time interval for remainder year.
     int numberOfPeriods3;  //!< Number of periods in third time interval.
     int numberOfPeriods3a; //!< One more in third time interval for remainder year.
-    std::vector<int> periodToTimeStep; //!< Index of timesteps.
+    std::vector<int> periodToTimeStep; //!< Index of time steps.
 
     std::vector<int> modelPeriodToYear; //!< Model period to year.
     

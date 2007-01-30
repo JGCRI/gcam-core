@@ -35,7 +35,7 @@ private:
 	SummaryItem emissfuel;  //!< map of ghg emissions implicit in fuel
 	SummaryItem sequesteredAmount;  //!< map of sequestered amount of emissions
 public:
-	Summary(); // default construtor
+	Summary(); // default constructor
 	void initfuelcons( const std::string& fname, const double value );
 	void initpeprod( const std::string& fname, const double value );
 	const SummaryItem& getfuelcons() const;

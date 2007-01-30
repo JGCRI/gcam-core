@@ -70,7 +70,7 @@ void GHGMarket::setPriceFromLast( const double lastPrice ) {
             price = lastPrice;
         }
     }
-    // There is no else here becuase we do not want to override prices in the case of a fixed tax.
+    // There is no else here because we do not want to override prices in the case of a fixed tax.
 }
 
 double GHGMarket::getPrice() const {

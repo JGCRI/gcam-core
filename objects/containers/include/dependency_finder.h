@@ -37,7 +37,7 @@ class Marketplace;
 *          data structures are mDependencyMatrix and mSectorIndices.
 *          mDependencyMatrix is a two-dimensional matrix where each cell
 *          represents whether there is a dependency from the column sector to
-*          the row sector. mSectorIndices conains a mapping of sector name to
+*          the row sector. mSectorIndices contains a mapping of sector name to
 *          the index in mDependencyMatrix. Both of these data structures are
 *          updated by the addDependency function.
 * \author Josh Lurz

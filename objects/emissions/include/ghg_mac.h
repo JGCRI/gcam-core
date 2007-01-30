@@ -65,7 +65,7 @@ protected:
     //! Base year from which to start decreasing costs
     int baseCostYear; 
     
-    //! Year in which maximum reduction should be implimented
+    //! Year in which maximum reduction should be implemented
     int finalReductionYear; 
     
     //! turns off reductions if carbon Price is less than 0;

@@ -55,7 +55,7 @@ public:
     virtual void dbOutput( const GDP* aGDP,
                            const IndirectEmissionsCalculator* aIndEmissCalc ) const {}
 protected:
-	std::map<std::string,double> ghgEmissCoefMap; //! Map of ghg name to emission coefficent
+	std::map<std::string,double> ghgEmissCoefMap; //! Map of ghg name to emission coefficient
     void setMarket();
 
 	virtual double getPrice( const GDP* aGDP,

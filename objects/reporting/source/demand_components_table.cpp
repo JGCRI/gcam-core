@@ -57,7 +57,7 @@ void DemandComponentsTable::finish() const {
     }
     mFile << endl;
 
-    // Note: This is structurly different from SAM. This goes through the rows and prints
+    // Note: This is structurally different from SAM. This goes through the rows and prints
     // out each of the category values.
     mFile.precision(0);
 
@@ -83,7 +83,7 @@ void DemandComponentsTable::startVisitRegionCGE( const RegionCGE* regionCGE, con
         mTable->addColumn( getLabel( CategoryType( i ) ) );
     }
     // Add the rows in the right order.
-    // This has to be done explicitally because the rows are added later by input, so the
+    // This has to be done explicitly because the rows are added later by input, so the
     // ordering would be wrong.
     for( unsigned int i = 0; i < regionCGE->supplySector.size(); ++i ){
         mTable->addToType( regionCGE->supplySector[ i ]->getName(), "Trade", 0 ); // Column doesn't matter.

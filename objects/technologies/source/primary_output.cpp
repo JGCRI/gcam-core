@@ -1,6 +1,6 @@
 /*
  * This software, which is provided in confidence, was prepared by employees of
- * Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+ * Pacific Northwest National Laboratory operated by Battelle Memorial Institute.
  * Battelle has certain unperfected rights in the software which should not be
  * copied or otherwise disseminated outside your organization without the
  * express written authorization from Battelle. All rights to the software are
@@ -118,7 +118,7 @@ void PrimaryOutput::setPhysicalOutput( const double aPrimaryOutput,
     mPhysicalOutputs[ aPeriod ] = aPrimaryOutput;
 
     // Add the primary output to the marketplace.
-    // TODO: Once demand sectors are seperated this should be changed.
+    // TODO: Once demand sectors are separated this should be changed.
     if( aPrimaryOutput > util::getSmallNumber() ){
         Marketplace* marketplace = scenario->getMarketplace();
         marketplace->addToSupply( mName, aRegionName, aPrimaryOutput, aPeriod, false );

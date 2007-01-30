@@ -199,7 +199,7 @@ const std::string& AgSector::getXMLNameStatic() {
 * This routine is only called once per model run
 *
 * \author Josh Lurz
-* \warning markets are not necesarilly set when completeInit is called
+* \warning markets are not necessarily set when completeInit is called
 */
 void AgSector::completeInit( const string& regionName ) {
 

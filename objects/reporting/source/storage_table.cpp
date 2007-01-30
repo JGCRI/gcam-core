@@ -154,7 +154,7 @@ const vector<string> StorageTable::getRowLabels() const {
 //! Get the list of all column labels.
 const vector<string> StorageTable::getColLabels() const {
     // Create a copy of the internal labels and tack total onto it if it does not exist.
-    // Maybe users should have to request total explicitally?
+    // Maybe users should have to request total explicitly?
     vector<string> colLabels( mColLabels );
     if( find( colLabels.begin(), colLabels.end(), "Total" ) == colLabels.end() ){
         colLabels.push_back( "Total" );

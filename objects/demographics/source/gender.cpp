@@ -15,7 +15,7 @@
 using namespace std;
 using namespace xercesc;
 
-// static initializion
+// static initialization
 const string Gender::XML_NAME = "gender";
 
 //! Default constructor

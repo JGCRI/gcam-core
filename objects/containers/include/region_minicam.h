@@ -112,7 +112,7 @@ protected:
     //! Map of fuel relationships used for calibration consistency adjustments
     typedef std::map<std::string, std::vector<std::string> > FuelRelationshipMap;
     std::auto_ptr<FuelRelationshipMap> fuelRelationshipMap;
-    std::vector<AResource*> resources; //!< vector of pointers toresource objects
+    std::vector<AResource*> resources; //!< vector of pointers to resource objects
     std::vector<DemandSector*> demandSector; //!< vector of pointers to demand sector objects
 
     //! Container of objects which calculate an aggregate emissions coefficient

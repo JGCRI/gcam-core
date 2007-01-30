@@ -116,13 +116,13 @@ double SimpleExpectedProfitCalculator::calcSectorExpectedProfitRate( const vecto
 
 /*! \brief Calculate the expected profit of a technology.
 * \details
-* \param aTechProdFuncInfo A structure containing the neccessary data items to
+* \param aTechProdFuncInfo A structure containing the necessary data items to
 *        call the production technology's expected profit function.
 * \param aRegionName Name of the region in which investment is occurring.
 * \param aGoodName Name of the sector in which investment is occurring.
-* \param aDelayedInvestmentTime The lag before this technology will come online.
+* \param aDelayedInvestmentTime The lag before this technology will come on-line.
 * \param aLifetime Nameplate lifetime of the technology.
-* \param aTimestep Length in years of the timestep.
+* \param aTimestep Length in years of the time step.
 * \param aPeriod Period in which to calculate the expected profit rate.
 * \return Final expected profit rate for the technology.
 */
@@ -151,7 +151,7 @@ double SimpleExpectedProfitCalculator::calcTechnologyExpectedProfitRate( const P
     // Increase the raw expected profit by the investment tax credit rate.
     expectedProfit /= ( 1 - aNationalAccount.getAccountValue( NationalAccount::INVESTMENT_TAX_CREDIT ) );
 
-    // Discount the expected profit for when it will come online, at least one period.
+    // Discount the expected profit for when it will come on-line, at least one period.
     const Input* capInput = FunctionUtils::getInput( aTechProdFuncInfo.mInputs, "Capital" );
     assert( capInput );
     const double pricePaidCapital = capInput->getPricePaid( aPeriod );

@@ -44,8 +44,8 @@ SupplyDemandCurve::~SupplyDemandCurve() {
 * \param world The World object to use for World::calc
 * \param marketplace The marketplace to use to store and restore information.
 * \param period The period to perform the calculations on.
-* \todo It would be good if this used a similiar logic to SolverLibrary::derivatives to save time. 
-* \todo Unhardcode the prices. 
+* \todo It would be good if this used a similar logic to SolverLibrary::derivatives to save time. 
+* \todo Un-hardcode the prices. 
 */
 
 void SupplyDemandCurve::calculatePoints( const int numPoints, World* world, Marketplace* marketplace, const int period ) {

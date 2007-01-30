@@ -69,16 +69,16 @@ void CalcCounter::startNewPeriod(){
     methodCounts.clear();
 }
 
-/*! \brief Utility helper function to convert to an integer from the cieling of a double.
+/*! \brief Utility helper function to convert to an integer from the ceiling of a double.
 * \param value Double value to convert.
-* \return Integer with the value of the cieling of the double passed in.
+* \return Integer with the value of the ceiling of the double passed in.
 */
 int CalcCounter::convertToInt( const double value ) {
     return static_cast<int>( ceil( value ) );
 }
 
-/*! \brief Print out the information countained within the CalcCounter.
-* \param out Outputstream to print to.
+/*! \brief Print out the information contained within the CalcCounter.
+* \param out output stream to print to.
 */
 void CalcCounter::print( ostream& out ) const {
     out << "Period Count: " << periodCount << endl;

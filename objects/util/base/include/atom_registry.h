@@ -41,7 +41,7 @@ namespace objects {
     *        model.
     * \details The AtomRegistry is a class which tracks all Atoms within the model
     *          and ensures they are unique. It also is responsible for deallocating
-    *          Atoms. The AtomRegistry is a singleton class which is only accessable
+    *          Atoms. The AtomRegistry is a singleton class which is only accessible
     *          through the static getInstance function. This returns the global
     *          instance of the registry. Registries cannot be allocated and the
     *          single instance is deallocated automatically when the model

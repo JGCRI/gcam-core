@@ -141,7 +141,7 @@ void FactorSupply::completeInit( const string& aRegionName ) {
 }
 /*! \brief Perform any initializations needed for each period.
 *
-* Any initializations or calcuations that only need to be done once per period (instead of every iteration) should be placed in this function.
+* Any initializations or calculations that only need to be done once per period (instead of every iteration) should be placed in this function.
 *
 * \author Sonny Kim
 * \param aRegionName region name

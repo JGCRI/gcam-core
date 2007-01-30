@@ -271,10 +271,10 @@ void Technology::XMLParse( const DOMNode* node ) {
 }
 
 /*! \brief Creates a generic technology info
- *  \details Will create and set a new generic technolgy
+ *  \details Will create and set a new generic technology
  *           info if mTechData has not already been set.
  *           Also will reset the flag to get a global technology
- *           to false as the generic technology is overiding it.
+ *           to false as the generic technology is overriding it.
  *  \author Pralit Patel
  */
 void Technology::createTechData() {
@@ -293,7 +293,7 @@ void Technology::createTechData() {
 * \param aLandAllocator Regional land allocator.
 * \param aGlobalTechDB Global Technology database.
 * \author Josh Lurz
-* \warning Markets are not necesarilly set when completeInit is called
+* \warning Markets are not necessarily set when completeInit is called
 */
 void Technology::completeInit( const string& aRegionName,
                                const string& aSectorName,
@@ -310,7 +310,7 @@ void Technology::completeInit( const string& aRegionName,
             << " has an invalid year attribute." << endl;
     }
 
-    // Default the lifetime to be the timestep beginning when the Technology is
+    // Default the lifetime to be the time step beginning when the Technology is
     // created.
     const Modeltime* modeltime = scenario->getModeltime();
     if( mLifetimeYears == -1 ){
@@ -357,7 +357,7 @@ void Technology::completeInit( const string& aRegionName,
         }
     }
 
-    // Clear shareweights for fixed output technologies.
+    // Clear share weights for fixed output technologies.
     if( mFixedOutput != IProductionState::fixedOutputDefault() ){
         shrwts = 0;
     }
@@ -386,7 +386,7 @@ void Technology::completeInit( const string& aRegionName,
             mainLog << "Negative calibration value for technology " << mName
                     << ". Calibration removed." << endl;
         }
-        // TODO: Calibrating to zero does not work correctly so reset the shareweights
+        // TODO: Calibrating to zero does not work correctly so reset the share weights
         // to zero and remove the calibration input. This could be improved.
         else if( mCalValue->getCalInput( getEfficiency( 0 ) ) < util::getSmallNumber() ){
             shrwts = 0;
@@ -679,7 +679,7 @@ double Technology::getTotalGHGCost( const string& aRegionName,
 * \param aSectorName Sector name, also the name of the product.
 * \param aGDP Regional GDP container.
 * \param aPeriod Model period.
-* \todo Check to see if power function for trival values really wastes time
+* \todo Check to see if power function for trivial values really wastes time
 * \return The Technology share.
 */
 double Technology::calcShare( const string& aRegionName,
@@ -718,7 +718,7 @@ double Technology::calcShare( const string& aRegionName,
 * At present, this can only be guaranteed by assigning a fixedOutput value of zero.
 *
 * \author Steve Smith
-* \return Returns wether this technology will always have no output or input
+* \return Returns whether this technology will always have no output or input
 */
 bool Technology::hasNoInputOrOutput( const int aPeriod ) const {
     // Technology has zero fixed output if fixed output was read-in as zero.
@@ -900,7 +900,7 @@ void Technology::calcEmissionsAndOutputs( const string& aRegionName,
 * Calibration is, therefore, performed as part of the iteration process. 
 * Since this can change derivatives, best to turn calibration off when using N-R solver.
 *
-* This routine adjusts Technology shareweights so that relative shares are correct for each subsector.
+* This routine adjusts echnology share weights so that relative shares are correct for each subsector.
 * Note that all calibration values are scaled (up or down) according to total sectorDemand 
 * -- getting the overall scale correct is the job of the TFE calibration
 *
@@ -923,7 +923,7 @@ void Technology::adjustForCalibration( double aTechnologyDemand,
         return;
     }
 
-    // total calibrated outputs for this sub-sector
+    // total calibrated outputs for this subsector
     double calOutput = getCalibrationOutput( aPeriod );
 
     // Given the technology is available for calibration it must
@@ -1027,7 +1027,7 @@ double Technology::getEfficiency( const int aPeriod ) const {
 /*! \brief Return fuel intensity (input over output) for this Technology
 *
 * \author Sonny Kim
-* \todo Need to impliment method of adding appropriate units (btu/kwh; gallons/mile, etc.)
+* \todo Need to implement method of adding appropriate units (btu/kwh; gallons/mile, etc.)
 */
 double Technology::getIntensity( const int aPeriod ) const {
     // Efficiency should be positive because invalid efficiencies were
@@ -1075,14 +1075,14 @@ bool Technology::isOutputFixed( const int aPeriod ) const {
     return true;
 }
 
-/*! \brief Returns whether the Technology shareweight should be adjusted by the
+/*! \brief Returns whether the Technology share weight should be adjusted by the
 *          calibration routine.
 * \details A technology should be calibrated if it is a new vintage with a
 *          read-in calibration input or output, is not a fixed output, and has a
 *          non-zero share weight.
 * \author Steve Smith
 * \param aPeriod Model period.
-* \return Whether the Technology shoud be calibrated.
+* \return Whether the Technology should be calibrated.
 */
 bool Technology::isCalibrating( const int aPeriod ) const {
     return ( ( shrwts > 0 )
@@ -1114,7 +1114,7 @@ double Technology::getOutput( const int aPeriod ) const {
 */
 double Technology::getFuelCost( const string& aRegionName, const string& aSectorName, const int aPeriod ) const {
     Marketplace* marketplace = scenario->getMarketplace();
-     // code specical case where there is no fuel input. sjs
+     // code special case where there is no fuel input. sjs
      // used now to drive non-CO2 GHGs
     double fuelprice;
     const string& fuelName = mTechData->getFuelName();
@@ -1162,7 +1162,7 @@ void Technology::scaleCalibrationInput( const double aScaleFactor ) {
 /*! \brief Calculate Technology fuel cost and total cost.
 * \details This calculates the cost (per unit output) of this specific
 *          Technology. The cost includes fuel cost, carbon value, and non-fuel
-*          costs. Conversion efficiency, and optional fuelcost and total price
+*          costs. Conversion efficiency, and optional fuel cost and total price
 *          multipliers are used if specified.
 * \author Sonny Kim, Steve Smith
 * \param aRegionName Region name.
@@ -1181,7 +1181,7 @@ void Technology::calcCost( const string& aRegionName, const string& aSectorName,
 
         assert( util::isValidNumber( techCost ) );
 
-        // techcost can drift below zero in disequalibrium.
+        // techcost can drift below zero in disequilibrium.
         mCosts[ aPeriod ] = max( techCost, util::getSmallNumber() );
     }
 }

@@ -48,7 +48,7 @@ double PopulationMiniCAM::getWorkingAgePop() const { // ages 15-65
     return mTotalPop;
 }
 
-//! Write out datamembers to XML output stream.
+//! Write out data members to XML output stream.
 void PopulationMiniCAM::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     // do nothing
 }

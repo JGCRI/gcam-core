@@ -31,7 +31,7 @@ class Input;
 class IFunction;
 struct TechChange;
 
-/*! \brief A structure which contains the information neccessary for a
+/*! \brief A structure which contains the information necessary for a
 *          production function.
 */
 struct ProductionFunctionInfo {

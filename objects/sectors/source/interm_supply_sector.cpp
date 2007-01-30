@@ -38,7 +38,7 @@ backupCost( 0 )
 *
 * This public function accesses the private constant string, XML_NAME. This way
 * the tag is always consistent for both read-in and output and can be easily
-* changed. This function may be virtual to be overriden by derived class
+* changed. This function may be virtual to be overridden by derived class
 * pointers.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
@@ -125,7 +125,7 @@ void IntermittentSupplySector::toDebugXMLDerived( const int period, ostream& out
     XMLWriteElement( backupCost, "backupCost", out, tabs );
 }
 
-/*! \brief Complete the initialization of the intermittent suppply sector.
+/*! \brief Complete the initialization of the intermittent supply sector.
 * \details The intermittent supply sector overrides the SupplySector
 *          completeInit so that it can create a trial market for the
 *          intermittent supply. This is required to determine the capacity share
@@ -155,7 +155,7 @@ void IntermittentSupplySector::initCalc( NationalAccount* aNationalAccount,
                                          const Demographic* aDemographics,
                                          const int aPeriod )
 {
-    // add items to sectorinfo must be done before Sector:initCalc() so that
+    // add items to sector info must be done before Sector:initCalc() so that
     // information is available to subsector and technology initCalc() routines
 	mSectorInfo->setDouble( "elecReserveMargin", elecReserveMargin );
     mSectorInfo->setDouble( "aveGridCapacityFactor", aveGridCapacityFactor );

@@ -171,7 +171,7 @@ void ProductionSector::completeInit( const IInfo* aRegionInfo,
 *          ProductionSector is not a fixed-price sector, and setting the flag in
 *          the IInfo which tells whether the market is a fixed price
 *          market. Fixed price markets are sectors which do not have solved
-*          prices, the equalibrium price is always the initial price. This is
+*          prices, the equilibrium price is always the initial price. This is
 *          for specifying price paths exogenously, usually for resource sectors.
 *          The read-in prices will be used as the initial prices for the Market,
 *          for fixed price path sectors this will also be the final price.
@@ -191,7 +191,7 @@ void ProductionSector::setMarket() {
     // market is the name of the regional market from the input file (i.e., global, region, regional group, etc.)
     if( marketplace->createMarket( regionName, mMarketName, name, IMarketType::NORMAL ) ) {
         // Set the base year price which the sector reads in, into the mFixedPrices vector.
-        // TODO: Seperate MiniCAM sector so this is not needed.
+        // TODO: Separate MiniCAM sector so this is not needed.
 
         mFixedPrices[ 0 ] = mBasePrice;
         marketplace->setPriceVector( name, regionName, mFixedPrices );
@@ -388,7 +388,7 @@ void ProductionSector::operateNewCapital( const Demographic* aDemographic, Natio
 /*! \brief Get the XML node name for output to XML.
 * \details This public function accesses the private constant string, XML_NAME.
 *          This way the tag is always consistent for both read-in and output and
-*          can be easily changed. This function may be virtual to be overriden
+*          can be easily changed. This function may be virtual to be overridden
 *          by derived class pointers.
 * \author Josh Lurz, Sonny Kim
 * \return The constant XML_NAME.

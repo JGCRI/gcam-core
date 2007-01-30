@@ -47,8 +47,8 @@ vector<string> gHashes;
 CdbDBEngine dben;
 CdbDatabase db;
 CdbTableDef DBoutTD; // table definitions for creating tables in the database
-CdbField tfield; // tempory field for creating fields in tables
-CdbRecordset DBoutrst; // recordset for writing results
+CdbField tfield; // temporary field for creating fields in tables
+CdbRecordset DBoutrst; // record set for writing results
 const char *DBout = "DBout"; // name of the table for outputs compatible with dataviewer
 #endif
 
@@ -127,7 +127,7 @@ void dboutput4(string var1name,string var2name,string var3name,string var4name,
 				DBoutrst.SetField(0L, COleVariant(runID,VT_I4)); // run id
 				DBoutrst.SetField(1L, COleVariant(short(iter->second))); // region id
 				DBoutrst.SetField(2L, COleVariant(var2name.c_str(), VT_BSTRT)); // category
-				DBoutrst.SetField(3L, COleVariant(var3name.c_str(), VT_BSTRT)); // subscategory
+				DBoutrst.SetField(3L, COleVariant(var3name.c_str(), VT_BSTRT)); // subcategory
 				DBoutrst.SetField(4L, COleVariant(var4name.c_str(), VT_BSTRT)); // variable
 				DBoutrst.SetField(5L, COleVariant(uname.c_str(), VT_BSTRT)); // units
 				// get scenario name and output to dbout
@@ -172,7 +172,7 @@ void closeDB() {
 
 /*! \brief Create and open the main database output table.
 * 
-* Recordset for dbout table is opened here for writing to by output_helper.cpp 
+* Record set for dbout table is opened here for writing to by output_helper.cpp 
 * The code to delete and create new dbout table is commented out.
 * Results are continually appended to the dbout table.  This function no longer
 * clears out and recreates the dbout table.
@@ -183,7 +183,7 @@ are recreated in createMCvarid().
 */
 
 void createDBout() {
-    // open DBout table as a recordset (DBoutrst) for writing
+    // open DBout table as a record set (DBoutrst) for writing
     DBoutrst = db.OpenRecordset(DBout,dbOpenDynaset);
     // **** End DBout table *****   
 }
@@ -198,8 +198,8 @@ void createMCvarid() {
 	try { db.TableDefs.Delete(dbtrun); } 
 	catch (...) {cout<<"\nError deleting "<<dbtrun<<" table\n";}
 	// Reusing RunLabelTD and tfield to add fields to the table
-	CdbField tfield; // tempory field for creating fields in tables
-	CdbTableDef RunLabelTD = db.CreateTableDef(dbtrun);	// tempory RunLabel table definition
+	CdbField tfield; // temporary field for creating fields in tables
+	CdbTableDef RunLabelTD = db.CreateTableDef(dbtrun);	// temporary RunLabel table definition
 	// create run id field
 	tfield = RunLabelTD.CreateField("RunID",dbLong);
 	RunLabelTD.Fields.Append(tfield);
@@ -241,7 +241,7 @@ void createMCvarid() {
 	try {db.TableDefs.Append(RegionInfoTD);}
 	catch(...) { cout<<"\nError appending "<<dbtregion<<" table to database\n";}
 
-	// create a recordset for the region info table
+	// create a record set for the region info table
 	CdbRecordset RegionInfoRst = db.OpenRecordset(dbtregion,dbOpenDynaset);
 	typedef map<string,int>:: const_iterator CI;
 	string regstr; // temporary string for region names

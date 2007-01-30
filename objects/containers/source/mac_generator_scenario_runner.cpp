@@ -33,7 +33,7 @@ MACGeneratorScenarioRunner::MACGeneratorScenarioRunner(){
     if( conf->getBool( "debugChecking" ) && conf->getBool( "CalibrationActive" ) ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Calibration is incompatable with the generation of marginal abatement curves." << endl;
+        mainLog << "Calibration is incompatible with the generation of marginal abatement curves." << endl;
     }
     else {
         // Create the policy cost calculator.

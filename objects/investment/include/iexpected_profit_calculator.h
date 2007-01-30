@@ -61,7 +61,7 @@ public:
      *          using the given parameters and the passed in investable
      *          children.
      * \param aInvestables Children of the current sector or subsector for which
-     *        to calcuate the average expected profit rate.
+     *        to calculate the average expected profit rate.
      * \param aNationalAccount Regional national accounts container.
      * \param aRegionName Name of the region in which expected profit rates are
      *        being calculated.
@@ -95,9 +95,9 @@ public:
      * \param aSectorName Name of the sector for which expected profit rates are
      *        being calculated.
      * \param aDelayedInvestmentTime Amount of time between the investment
-     *        occurring and the ProductionTechnology being brought online.
+     *        occurring and the ProductionTechnology being brought on-line.
      * \param aLifetime Lifetime of the ProductionTechnology.
-     * \param aTimeStep Timestep for the period in which investment is
+     * \param aTimeStep Time step for the period in which investment is
      *        occurring.
      * \param aPeriod Period in which to calculate expected profits.
      * \return The expected profit rate for the ProductionTechnology.

@@ -29,7 +29,7 @@ class IInfo;
  *          required. The backup Technology may produce a small amount of
  *          output, and emissions. The intermittent and backup technologies do
  *          not compete. The intermittent subsector has a backup calculator,
- *          which is responsible for determing the average and marginal quanity
+ *          which is responsible for determining the average and marginal quantity
  *          of backup capacity required. The backup calculator sets the shares
  *          of the technologies using the marginal backup requirements. These
  *          shares are used for the cost calculation, but not the output

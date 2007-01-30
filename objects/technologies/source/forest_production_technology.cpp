@@ -72,7 +72,7 @@ void ForestProductionTechnology::toDebugXMLDerived( const int period, ostream& o
 *
 * This public function accesses the private constant string, XML_NAME.
 * This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
+* This function may be virtual to be overridden by derived class pointers.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
@@ -135,7 +135,7 @@ void ForestProductionTechnology::initCalc( const string& aRegionName,
 * \param aLandAllocator Regional land allocator.
 * \param aGlobalTechDB Global Technology database.
 * \author Josh Lurz
-* \warning Markets are not necesarilly set when completeInit is called
+* \warning Markets are not necessarily set when completeInit is called
 * \author James Blackwood
 * \warning This may break if timestep is not constant for each time period.
 */
@@ -209,10 +209,10 @@ void ForestProductionTechnology::setCalLandValues() {
 
 /*!
 * \brief Calculate unnormalized technology unnormalized shares.
-* \details Since food and forestry technolgies are profit based, they do not
+* \details Since food and forestry technologies are profit based, they do not
 *          directly calculate a share. Instead, their share of total supply is
 *          determined by the sharing which occurs in the land allocator. To
-*          facilitate this the technology sets the intrinisic rate for the land
+*          facilitate this the technology sets the intrinsic rate for the land
 *          use into the land allocator. The technology share itself is set to 1.
 * \param aRegionName Region name.
 * \param aSectorName Sector name, also the name of the product.
@@ -256,11 +256,11 @@ void ForestProductionTechnology::calcCost( const string& aRegionName,
 *          of planted forestry land and it's yield. Forestry production
 *          technologies are profit based and determine their supply
 *          independently of the passed in subsector demand. However, since this
-*          is a solved market, in equalibrium the sum of the production of
+*          is a solved market, in equilibrium the sum of the production of
 *          technologies within a sector will equal the demand for the sector.
 *          For forestry this supply is fixed because trees were planted several
 *          periods before. Since the supply is inelastic, demand must adjust to
-*          reach equalibrium.
+*          reach equilibrium.
 * \param aRegionName Region name.
 * \param aSectorName Sector name, also the name of the product.
 * \param aVariableDemand Subsector demand for output.
@@ -335,7 +335,7 @@ double ForestProductionTechnology::calcProfitRate( const string& aRegionName,
 
 /*! \brief Calculate the factor which discounts the future value of the forest
 *          harvest between the future harvest period and the current period and
-*          levelizes across the number of years during which the trees are
+*          levels across the number of years during which the trees are
 *          grown.
 * \return The discount factor.
 */

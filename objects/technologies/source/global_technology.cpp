@@ -1,6 +1,6 @@
 /*
  * This software, which is provided in confidence, was prepared by employees of
- * Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+ * Pacific Northwest National Laboratory operated by Battelle Memorial Institute.
  * Battelle has certain unperfected rights in the software which should not be
  * copied or otherwise disseminated outside your organization without the
  * express written authorization from Battelle. All rights to the software are
@@ -34,7 +34,7 @@ fMultiplier( 1 ),
 fuelPrefElasticity( 0 ) {
 }
 
-/*! Should not be called becuase GlobalTechnologies can not be cloned.
+/*! Should not be called because GlobalTechnologies can not be cloned.
  * \warning will assert(false)
  * \return Nothing.
  */
@@ -48,7 +48,7 @@ void GlobalTechnology::completeInit() {
     if( mBaseEfficiency <= 0 ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Resetting invalid effiency for Technology " << name << endl;
+        mainLog << "Resetting invalid efficiency for Technology " << name << endl;
         mBaseEfficiency =  1;
     }
 }
@@ -143,7 +143,7 @@ const std::string& GlobalTechnology::getXMLNameStatic() {
     return XML_NAME;
 }
 
-/*! Get the year of this GlobalTechnolgy
+/*! Get the year of this GlobalTechnology
  *
  * \return The year.
  */

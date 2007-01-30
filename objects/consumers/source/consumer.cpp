@@ -72,7 +72,7 @@ void Consumer::updateMarketplace( const string& aSectorName, const string& aRegi
     Marketplace* marketplace = scenario->getMarketplace();
     double totalDemand = 0;
     for( unsigned int i = 0; i < input.size(); i++ ) {
-        // don't add govement deficit to marketplace demand
+        // don't add government deficit to marketplace demand
         if( !input[i]->isCapital() ) {
             double tempDemand = input[ i ]->getDemandCurrency( aPeriod );
             assert( util::isValidNumber( tempDemand ) );

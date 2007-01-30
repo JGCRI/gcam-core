@@ -100,7 +100,7 @@ protected:
     //! Final energy to calibrate to.
     std::vector<double> mCalFinalEnergy;
 
-    //! Scaler for determing demand for future years.
+    //! Scaler for determining demand for future years.
     std::vector<double> mBaseScaler;
 
     void scaleOutput( const int period, double scaleFactor );

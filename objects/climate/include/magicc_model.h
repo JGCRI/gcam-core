@@ -24,7 +24,7 @@ class IVisitor;
 * \brief An implementation of the IClimateModel interface using the MAGICC
 *        climate module.
 * \details The MagiccModel performs climate calculations by passing data to and
-*          from the MAGICC fortran module. No climate calculating code is
+*          from the MAGICC Fortran module. No climate calculating code is
 *          contained in the C++ MagiccModel code. This wrapper is responsible
 *          for reading in a set of default gas emissions for each gas by period,
 *          overriding those with values from the model where calculated, and

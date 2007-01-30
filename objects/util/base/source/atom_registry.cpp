@@ -89,10 +89,10 @@ namespace objects {
 		return true;
 	}
 
-	/*! \brief Return whether deallocation of atoms is currently occuring.
+	/*! \brief Return whether deallocation of atoms is currently occurring.
 	* \details This function is only compiled if CHECK_DEALLOCATION is turned on. It
 	*          allows Atoms to determine if the AtomRegistry is currently
-	*          deallocating Atoms, which means it is permissable for the Atom
+	*          deallocating Atoms, which means it is permissible for the Atom
 	*          destructor to be called. This is only for error checking.
 	* \return Whether deallocation of atoms is currently occurring.
 	*/

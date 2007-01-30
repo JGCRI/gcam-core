@@ -40,9 +40,12 @@ class GlobalTechnologyDatabase;
 /*! 
 * \ingroup Objects
 * \brief This class represents a single good that is produced, transformed, or consumed.
-
-* All production, consumption, and transformation (other than resource extraction) is contained within the Sector class. Each Sector represents a distinct good that can either be supplied or demanded. The demand Sector derived from this class contains a few classes where changes are necessary, although most of the basic mechanisms are unchanged.
-
+*
+* All production, consumption, and transformation (other than resource extraction)
+* is contained within the Sector class. Each Sector represents a distinct good that
+* can either be supplied or demanded. The demand Sector derived from this class contains
+* a few classes where changes are necessary, although most of the basic mechanisms are unchanged.
+*
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
 
@@ -150,7 +153,8 @@ public:
     std::map<std::string, double> getemfuelmap( const int period ) const;
     void updateSummary( const std::list<std::string>& aPrimaryFuelList, const int period );
 
-    virtual void operate( NationalAccount& nationalAccount, const Demographic* aDemographic, const int period ) = 0;	void updateMarketplace( const int period );
+    virtual void operate( NationalAccount& nationalAccount, const Demographic* aDemographic, const int period ) = 0;
+	void updateMarketplace( const int period );
     virtual void postCalc( const int aPeriod );
 
     void csvSGMOutputFile( std::ostream& aFile, const int period ) const;

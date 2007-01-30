@@ -21,12 +21,12 @@ DataPoint::DataPoint() {
 DataPoint::~DataPoint(){
 }
 
-//! Returns if two datapoints are equal.
+//! Returns if two data points are equal.
 bool DataPoint::operator==( const DataPoint& rhs ) const {
     return( ( getX() == rhs.getX() ) && ( ( getY() == rhs.getY() ) ) );
 }
 
-//! Returns if two datapoints are not equal.
+//! Returns if two data points are not equal.
 bool DataPoint::operator!=( const DataPoint& rhs ) const {
     return !( *this == rhs );
 }

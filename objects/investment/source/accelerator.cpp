@@ -52,7 +52,7 @@ mFixedInvestments( scenario->getModeltime()->getmaxper(), -1.0 )
 }
 
 /*! \brief Destructor
-* \note Needed so that that destructor is not inlined in the header before the
+* \note Needed so that that destructor is not in-lined in the header before the
 *       IGrowthCalculator class is fully defined.
 */
 Accelerator::~Accelerator(){

@@ -116,7 +116,7 @@ void GHGPolicy::completeInit( const string& aRegionName ) {
                 marketplace->setMarketToSolve( mName, aRegionName, per );
                 // Adding the difference between the constraint for this period
                 // and the current supply because addToSupply adds to the current
-                // supply.  Passing false to supress a warning the first time through.
+                // supply.  Passing false to suppress a warning the first time through.
                 marketplace->addToSupply( mName, aRegionName, constraint[ per ] - 
                     marketplace->getSupply( mName, aRegionName, per ), per, false );
             }
@@ -180,7 +180,7 @@ void GHGPolicy::XMLParse( const DOMNode* node ){
     }
 }
 
-//! Writes datamembers to datastream in XML format.
+//! Writes data members to data stream in XML format.
 void GHGPolicy::toInputXML( ostream& out, Tabs* tabs ) const {
 
     XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
@@ -195,7 +195,7 @@ void GHGPolicy::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
-//! Writes datamembers to datastream in XML format.
+//! Writes data members to data stream in XML format.
 void GHGPolicy::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
     XMLWriteOpeningTag( getXMLName(), out, tabs, mName );

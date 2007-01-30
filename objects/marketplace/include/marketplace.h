@@ -41,10 +41,10 @@ class IInfo;
  *          tracks model Regions it contains.
  *
  *          Markets are by default not solved. This means that price is not
- *          determined by the solution mechanism to equilibriate supply and
+ *          determined by the solution mechanism to equilibrate supply and
  *          demand. For unsolved Markets, prices must be set by the model, and
  *          supplies must be ensured to equal demands. The model will not
- *          successfully solve if unsolved markets are in disequalibrium. A
+ *          successfully solve if unsolved markets are in disequilibrium. A
  *          market can be set to solve using setMarketToSolve. If a single
  *          region in a multi-region market sets the market to solve, all
  *          regions will see a solved price. An initial price may be set for

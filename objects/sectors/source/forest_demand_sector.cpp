@@ -53,7 +53,7 @@ void ForestDemandSector::toDebugXMLDerived( const int period, std::ostream& out,
 *
 * This public function accesses the private constant string, XML_NAME.
 * This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
+* This function may be virtual to be overridden by derived class pointers.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
@@ -77,7 +77,7 @@ const std::string& ForestDemandSector::getXMLNameStatic() {
 
 /*! \brief Perform any initializations needed for each period.
 *
-* Any initializations or calcuations that only need to be done once per period
+* Any initializations or calculations that only need to be done once per period
 * (instead of every iteration) should be placed in this function.
 *
 * \author James Blackwood
@@ -106,9 +106,9 @@ void ForestDemandSector::completeInit( const IInfo* aRegionInfo,
 	rotationPeriod = aRegionInfo->getInteger( "rotationPeriod", true );
 }
 
-/*! \brief Aggrgate sector forest service demand function
+/*! \brief Aggregate sector forest service demand function
 *
-* Function calculates the aggregate demand for forest services and passes that down to the sub-sectors. 
+* Function calculates the aggregate demand for forest services and passes that down to the subsectors. 
 * Demand is proportional to GDP (to a power) times population.
 *
 * \author Sonny Kim, Steve Smith, James Blackwood
@@ -178,7 +178,7 @@ void ForestDemandSector::calcAggregateDemand( const GDP* aGDP,
     mService[ aPeriod ] = forestDemand;
 
     // demand sector output is total end-use sector demand for service
-    // adjust demand using cummulative technical change
+    // adjust demand using cumulative technical change
     // For forests, these functions take care of current demand for forest products
     setOutput( mService[ aPeriod ] / getTechnicalChange( aPeriod ), aGDP, aPeriod );
 

@@ -41,7 +41,7 @@ BuildingSupplySector::~BuildingSupplySector() {
 *
 * This public function accesses the private constant string, XML_NAME.
 * This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overriden by derived class pointers.
+* This function may be virtual to be overridden by derived class pointers.
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
@@ -81,14 +81,14 @@ bool BuildingSupplySector::XMLDerivedClassParse( const string& nodeName, const D
     else {
         return false;
     }
-    // If was true somewhere above then noce was parsed
+    // If was true somewhere above then node was parsed
     return true;
 }
 
-/*! \brief Perform any sector level calibration data consistancy checks
+/*! \brief Perform any sector level calibration data consistency checks
 *
 * For the buildings service supply sectors need to supply total calibrated output
-* to the building demand sub-sector through use of market info mechanism. (The building
+* to the building demand subsector through use of market info mechanism. (The building
 * demand subsector needs this information to calibrate demands)
 *
 * \author Steve Smith

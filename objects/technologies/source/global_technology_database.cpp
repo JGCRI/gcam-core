@@ -1,6 +1,6 @@
 /*
  * This software, which is provided in confidence, was prepared by employees of
- * Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+ * Pacific Northwest National Laboratory operated by Battelle Memorial Institute.
  * Battelle has certain unperfected rights in the software which should not be
  * copied or otherwise disseminated outside your organization without the
  * express written authorization from Battelle. All rights to the software are
@@ -36,7 +36,7 @@ extern Scenario* scenario;
 typedef std::vector<boost::shared_ptr<GlobalTechnology> >::iterator GlobalTechListIterator;
 typedef std::vector<boost::shared_ptr<GlobalTechnology> >::const_iterator CGlobalTechListIterator;
 
-//! Default construtor
+//! Default constructor
 GlobalTechnologyDatabase::GlobalTechnologyDatabase() {
 }
 

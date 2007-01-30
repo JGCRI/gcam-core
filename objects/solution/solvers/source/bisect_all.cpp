@@ -44,16 +44,16 @@ const string& BisectAll::getName() const {
 /*! \brief Bisection Solution Mechanism (all markets)
 * \details This solution mechanism bisects all markets at once. 
 * \todo Update this documentation.
-* Bisection is always periodformed at least a few times. Bisection stops if the maximum 
+* Bisection is always period-formed at least a few times. Bisection stops if the maximum 
 * relative ED does not change at a rate larger than BREAK_OUT_THRESHOLD.
 * If the maximum relative "ED" is larger than BRACKET_THRESHOLD, then the unsolved markets
 * are re-bracketed. Then bisection continues. The bracketing interval is smaller than that
-* used initially so as to not periodturb trial values too much. If a further re-bracket
+* used initially so as to not perturb trial values too much. If a further re-bracket
 * is necessary, the bracketing interval is decreased further. 
 *
 * Also, the price and demand markets are very prone to move outside their brackets.
-* A check for that is periodformed each time and the brackets are adjusted accordingly.
-* This check is critical for solution with simultuantey.
+* A check for that is period-formed each time and the brackets are adjusted accordingly.
+* This check is critical for solution with simultaneously.
 *
 * Tracking the excess demand is turned on from the logging configuration file.
 * \author Sonny Kim, Josh Lurz, Steve Smith

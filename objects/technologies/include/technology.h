@@ -111,7 +111,7 @@ class Tabs;
  * \todo Document input.
  * \todo Better document the plug-in points for the derived classes.
  * \note Technology is the abstract base class for the various Technology
- *       implementations. It contains default implemenations of the abstract
+ *       implementations. It contains default implementations of the abstract
  *       functions which may be called by the derived classes to perform the
  *       default actions.
  * \author Sonny Kim, Josh Lurz

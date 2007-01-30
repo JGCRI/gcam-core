@@ -390,7 +390,7 @@ void RegionMiniCAM::setupCalibrationMarkets() {
 * \return Whether all sectors had orderings in the passed in order list.
 */
 bool RegionMiniCAM::reorderSectors( const vector<string>& aOrderList ){
-    // Check for an empty order list in which case the reordering shoud be
+    // Check for an empty order list in which case the reordering should be
     // skipped. This occurs for SGM.
     if( aOrderList.empty() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -417,7 +417,7 @@ bool RegionMiniCAM::reorderSectors( const vector<string>& aOrderList ){
     for( NameIterator currSectorName = aOrderList.begin(); currSectorName != aOrderList.end(); ++currSectorName ){
         NameMapIterator origSectorPosition = originalNameMap.find( *currSectorName );
 
-        // Check if the sector name in the sector orderling list exists
+        // Check if the sector name in the sector ordering list exists
         // currently.
         if( origSectorPosition != originalNameMap.end() ){
             // Assign the sector.
@@ -935,7 +935,7 @@ void RegionMiniCAM::postCalc( const int aPeriod ) {
      }
  }
 
-/*! \brief Adjusts calibrated demands to be consistant with calibrated supply.
+/*! \brief Adjusts calibrated demands to be consistent with calibrated supply.
 *
 * The result of this routine, once called for all regions, is a set of calSupply
 * and calDemand values in marketInfo. The calSupply variable has a non-negative

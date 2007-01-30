@@ -23,7 +23,7 @@ class SolverInfoSet;
 
 /*! 
 * \ingroup Objects
-* \brief A SolverComponent based on the newton raphson algorithm using logarithmic values. 
+* \brief A SolverComponent based on the Newton-Raphson algorithm using logarithmic values. 
 * \author Josh Lurz
 */
 

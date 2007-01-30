@@ -82,7 +82,7 @@ double ProfitShutdownDecider::calcShutdownCoef( const ProductionFunctionInfo* aF
     // There is no shutdown decision in the base period.
     if( aPeriod > 0 ){
         double profitRate;
-        // Calcuate the profit rate dynamically.
+        // Calculate the profit rate dynamically.
         if( aCalculatedProfitRate == getUncalculatedProfitRateConstant() ){
             // Calculate the unscaled profits.
             assert( aFuncInfo );

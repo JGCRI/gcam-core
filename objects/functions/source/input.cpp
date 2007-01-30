@@ -190,7 +190,7 @@ const string& Input::getName() const {
 *          from a currency to a physical demand. To determine the coefficient,
 *          the function checks the internally cached value, and if that has not
 *          been set it queries the market info for the good.
-* \param aRegionName The region name containing the input, neccessary to check
+* \param aRegionName The region name containing the input, necessary to check
 *        the market info.
 * \return The currency to physical conversion factor.
 * \author Josh Lurz
@@ -221,12 +221,12 @@ double Input::getConversionFactor( const string& aRegionName ) const {
 }
 
 /*! \brief Get the emissions gas coefficient for an input.
-* \details This function returns the emissions gas coefficent for an input. To
+* \details This function returns the emissions gas coefficient for an input. To
 *          determine the coefficient, the function checks the internally cached
 *          value, and if that has not been set it queries the market info for
 *          the good.
 * \param aGHGName Name of the GHG to return the coefficient for.
-* \param aRegionName The region name containing the input, neccessary to check
+* \param aRegionName The region name containing the input, necessary to check
 *        the market info.
 * \return The emissions coefficient.
 * \todo This doesn't work for multiple gases.
@@ -329,7 +329,7 @@ void Input::setDemandCurrency( double aDemandCurrency,
 
     mDemandCurrency[ aPeriod ] = aDemandCurrency;
     Marketplace* marketplace = scenario->getMarketplace();
-    /* Removing this check becuase it is activated by trade and the government. 
+    /* Removing this check because it is activated by trade and the government. 
     if( aDemandCurrency < 0 ){
         cout << "Adding negative demand currency for input " << mName 
              << " from " << aSectorName << " in " << aRegionName << "." <<endl;

@@ -32,9 +32,9 @@ private:
     static int regionCount; //!< Tracks how many AgSectors have been instantiated.
     static const int numAgMarkets; //!<Number of internally solved ag markets.
     static bool init; //!< Whether the static data has been initialized.
-    static std::map<std::string, int> nameToIndiceMap; //! Converts market name into market indice.
+    static std::map<std::string, int> nameToIndiceMap; //! Converts market name into market index.
     static std::vector<std::string> marketNameVector; //! Contains the names of all agLu markets.
-    static std::map<int, std::string> indiceToNameMap; //! Contains a mapping of indice to name.
+    static std::map<int, std::string> indiceToNameMap; //! Contains a mapping of index to name.
 	const static std::string XML_NAME; //!< node name for toXML methods
 
     std::string name; //!< Name of the agricultural sector.

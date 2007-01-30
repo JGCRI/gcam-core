@@ -75,12 +75,12 @@ void XYDataPoint::setY( const double yValue ){
     y = yValue;
 }
 
-//! Print the datapoint.
+//! Print the data point.
 void XYDataPoint::print( ostream& out ) const {
     out << x << "," << y << endl;
 }
 
-//! Print the datapoint to an XML stream.
+//! Print the data point to an XML stream.
 void XYDataPoint::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag( DataPoint::getXMLNameStatic(), out, tabs, "", 0, getXMLName() );
     XMLWriteElement( x, "x", out, tabs );

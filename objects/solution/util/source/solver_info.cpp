@@ -339,10 +339,10 @@ void SolverInfo::calcSupplyElas( const SolverInfoSet& solvableMarkets ) {
 
 /*! \brief This function checks for any SolutionInfo objects that are converging too slowly
 * and resets the bracket.
-* \return Whether the market was rebracketed 
+* \return Whether the market was re-bracketed 
 */
 bool SolverInfo::checkAndResetBrackets(){
-    // try rebracketing if the current bracket is empty.
+    // try re-bracketing if the current bracket is empty.
     // if ( getBracketSize() < util::getSmallNumber() ) {
     if( !isWithinTolerance( 0.001 * 10, 0.01 ) ){ // TEMP HARDCODING
         resetBrackets();

@@ -107,7 +107,7 @@ const SolverInfoSet::UpdateCode SolverInfoSet::updateSolvable( const bool isNR )
         }
     }
 
-    // Loop through the unsolvables to see if they should be added to the solved. 
+    // Loop through the unsolvable set to see if they should be added to the solved. 
     // This will double check markets that were just added, slightly inefficient.
     for( SetIterator iter = unsolvable.begin(); iter != unsolvable.end(); ++iter ){
         // If it should be solved for the current method, move it to the solvable vector.

@@ -79,7 +79,7 @@ void Demographic::XMLParse( const xercesc::DOMNode* node ){
     }
 }
 
-//! Write out datamembers to XML output stream.
+//! Write out data members to XML output stream.
 void Demographic::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag ( getXMLName(), out, tabs );
 

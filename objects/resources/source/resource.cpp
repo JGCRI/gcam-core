@@ -44,9 +44,9 @@ Resource::Resource(){
     // resize vectors not read in
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
-    available.resize(maxper); // total resource availabl
+    available.resize(maxper); // total resource available
     annualprod.resize(maxper); // annual production rate of resource
-    cummprod.resize(maxper); // cummulative production of resource
+    cummprod.resize(maxper); // cumulative production of resource
     rscprc.resize( maxper ); 
 }
 
@@ -106,7 +106,7 @@ void Resource::XMLParse( const DOMNode* node ){
 * This routine is only called once per model run
 *
 * \author Josh Lurz
-* \warning markets are not necesarilly set when completeInit is called
+* \warning markets are not necessarily set when completeInit is called
 */
 
 void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo ) {
@@ -135,7 +135,7 @@ void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo
 }
 
 /*! \brief Perform any initializations needed for each period.
-* \details Any initializations or calcuations that only need to be done once per
+* \details Any initializations or calculations that only need to be done once per
 *          period(instead of every iteration) should be placed in this function.
 * \author Sonny Kim
 * \param aRegionName Region name.
@@ -149,7 +149,7 @@ void Resource::initCalc( const string& aRegionName, const int aPeriod ) {
 }
 /*! \brief Perform any calculations needed for each period after solution is
 *          found.
-* \details Any calcuations that only need to be done once per period after
+* \details Any calculations that only need to be done once per period after
 *          solution is found(instead of every iteration) should be placed in
 *          this function.
 * \author Sonny Kim
@@ -163,7 +163,7 @@ void Resource::postCalc( const string& aRegionName, const int aPeriod ) {
     }
 }
 
-//! Write datamembers to datastream in XML format for replicating input file.
+//! Write data members to data stream in XML format for replicating input file.
 void Resource::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
 
@@ -176,7 +176,7 @@ void Resource::toInputXML( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     XMLWriteElement( rscprc[ 0 ], "price", out, tabs, modeltime->getper_to_yr( 0 ) );
 
-    // write out the depresource objects.
+    // write out the subresource objects.
     for( vector<SubResource*>::const_iterator i = subResource.begin(); i != subResource.end(); i++ ){
         ( *i )->toInputXML( out, tabs );
     }
@@ -185,7 +185,7 @@ void Resource::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
-//! Write datamembers to datastream in XML format for debugging.
+//! Write data members to data stream in XML format for debugging.
 void Resource::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
     XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
@@ -211,7 +211,7 @@ void Resource::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     // Write out the number of sub-resources.
     XMLWriteElement( nosubrsrc, "nosubrsrc", out, tabs );
 
-    // Write out the depresource objects.
+    // Write out the subresource objects.
     for( vector<SubResource*>::const_iterator i = subResource.begin(); i != subResource.end(); i++ ){
         ( *i )->toDebugXML( period, out, tabs );
     }
@@ -288,7 +288,7 @@ void Resource::annualsupply( const string& regionName, int per, const GDP* gdp, 
     annualprod[per]=0.0;
     available[per]=0.0;
 
-    // calculate cummulative production
+    // calculate cumulative production
     cumulsupply(price,per);
 
     // sum annual production of each subsector
@@ -553,7 +553,7 @@ bool RenewableResource::XMLDerivedClassParse( const string& nodeName, const DOMN
 void RenewableResource::annualsupply( const string& regionName, int per, const GDP* gdp, double price, double prev_price )
 {
 
-    // calculate cummulative production
+    // calculate cumulative production
     cumulsupply(price,per);
 
     // clear out sums for this iteration
@@ -569,7 +569,7 @@ void RenewableResource::annualsupply( const string& regionName, int per, const G
         available[per] += subResource[i]->getAvailable(per);
         // and compute weighted average variance
         resourceVariance[per] += subResource[i]->getAnnualProd(per) * subResource[i]->getVariance();
-        // and compute weighted average capacityfactor
+        // and compute weighted average capacity factor
         resourceCapacityFactor[per] += subResource[i]->getAnnualProd(per) * subResource[i]->getAverageCapacityFactor();
     }
 

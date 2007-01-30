@@ -55,7 +55,7 @@ protected:
     std::vector<double> rscprc; //!< Resource price
     std::vector<double> available; //!< total Resource available
     std::vector<double> annualprod; //!< annual production rate of Resource
-    std::vector<double> cummprod; //!< cummulative production of Resource
+    std::vector<double> cummprod; //!< cumulative production of Resource
     std::map<std::string,int> subResourceNameMap; //!< Map of subResource name to integer position in vector. 
     virtual bool XMLDerivedClassParse( const std::string& aNodeName,
                                        const xercesc::DOMNode* aNode ) = 0;

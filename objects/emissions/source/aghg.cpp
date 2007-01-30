@@ -37,7 +37,7 @@ typedef vector<Input*>::const_iterator CInputIterator;
 //! Default constructor.
 AGHG::AGHG():
 // this is inefficient as it is greater than the lifetime
-// but much simpler than converting period to liftime period 
+// but much simpler than converting period to lifetime period 
 // TODO: Fix this so it has one spot per active period.
 mEmissions( scenario->getModeltime()->getmaxper() ),
 mEmissionsByFuel( scenario->getModeltime()->getmaxper() )
@@ -247,7 +247,7 @@ void AGHG::calcEmission( const vector<Input*> aInputs,
     // Calculate the aggregate emissions of all inputs.
     double tempEmission = calcInputEmissions( aInputs, aRegionName, aPeriod );
     
-    // Determine the output coefficient. The output coefficent will not exist for consumers.
+    // Determine the output coefficient. The output coefficient will not exist for consumers.
     const static string COEF_STRING = "coefficient";
     Marketplace* marketplace = scenario->getMarketplace();
     const IInfo* outputMarketInfo = marketplace->getMarketInfo( aGoodName, aRegionName, 0, false );

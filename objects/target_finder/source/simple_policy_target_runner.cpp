@@ -1,6 +1,6 @@
 /*
 * This software, which is provided in confidence, was prepared by employees of
-* Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+* Pacific Northwest National Laboratory operated by Battelle Memorial Institute.
 * Battelle has certain unperfected rights in the software which should not be
 * copied or otherwise disseminated outside your organization without the express
 * written authorization from Battelle. All rights to the software are reserved
@@ -116,7 +116,7 @@ bool SimplePolicyTargetRunner::setupScenarios( Timer& aTimer, const string aName
     // Vector of strings to hold input errors.
     vector<string> errorMsgs;
 
-    // Evalutes to true if all the variables that should have been defined were actually defined.
+    // Evaluates to true if all the variables that should have been defined were actually defined.
     // False otherwise.
     if( !( mLowerBound.get() != 0 && mUpperBound.get() != 0 && !mTargetType.empty()
         && mTargetValue != -1 && mTargetYear != 0 ) ){
@@ -130,7 +130,7 @@ bool SimplePolicyTargetRunner::setupScenarios( Timer& aTimer, const string aName
         success = false;
     }
     // Evaluates to true if the lower bound has less than or equal to the number of periods
-    // It is unneccesary to check the upper bound because the two curves are guaranteed to have
+    // It is unnecessary to check the upper bound because the two curves are guaranteed to have
     // the same number of points.
     if( mLowerBound->getSortedPairs().size() 
         > (unsigned int)getInternalScenario()->getModeltime()->getmaxper() ){

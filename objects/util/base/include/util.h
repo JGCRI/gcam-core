@@ -32,7 +32,7 @@
 #include <cassert>
 
 // Boost static asserts do not work when included from multiple namespaces.
-// Seperate them into their own unique namespace.
+// Separate them into their own unique namespace.
 namespace conditionsCheck {
     BOOST_STATIC_ASSERT( std::numeric_limits<double>::has_quiet_NaN );
     BOOST_STATIC_ASSERT( std::numeric_limits<double>::has_infinity );

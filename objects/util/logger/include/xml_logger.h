@@ -20,7 +20,7 @@
 * \brief This is a class which implements the Logger interface.. 
 *
 * This Logger prints message to a log file in an XML format as defined by the XMLLog schema..
-* It does not support nesting or options to activate or deactive sections of the log message.
+* It does not support nesting or options to activate or deactivate sections of the log message.
 * It does support the option to print absolute or relative pathnames.
 *
 * \author Josh Lurz

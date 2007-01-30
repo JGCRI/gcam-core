@@ -30,7 +30,7 @@ class IInfo;
 * These technologies do not consume fuels or generate GHG emissions. These come from the supply sectors.
 *
 * The building cooling service is identical to the building heating service except for the use of cooling degree days
-* instead of heatingdegreedays and a change of sign on the internal gains calcuation.
+* instead of heating degree days and a change of sign on the internal gains calculation.
 * \author Steve Smith
 */
 

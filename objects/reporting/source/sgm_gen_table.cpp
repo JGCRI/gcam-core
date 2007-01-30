@@ -81,7 +81,7 @@ double SGMGenTable::getValue( const int aTypeRow, const string aTypeCol ) const 
     return util::searchForValue( util::searchForValue( mTable, aTypeRow ), aTypeCol );
 }
 
-/*! \brief For outputing SGM data to a flat csv File
+/*! \brief For outputting SGM data to a flat csv File
 *
 */
 void SGMGenTable::finish() const {
@@ -90,7 +90,7 @@ void SGMGenTable::finish() const {
     if ( !mTable.empty() ){ // don't print if empty
 
         *mFile << mHeader << endl;
-        // Note: This is structuarlly different from SAM. This goes through the rows and prints
+        // Note: This is structurally different from SAM. This goes through the rows and prints
         // out each of the category values.
         // write column labels
         *mFile << "Year" << ',';
@@ -198,7 +198,7 @@ void SGMGenTable::startVisitDemographic( const Demographic* aDemographic, const 
 
 // Write to SGM general table.
 // This routine assumes that only and all operating technology vintages are passed in as
-// an arguement.
+// an argument.
 void SGMGenTable::startVisitConsumer( const Consumer* aConsumer, const int aPeriod )
 {
     // Only update the current consumer.
@@ -305,7 +305,7 @@ void SGMGenTable::startVisitInvestConsumer( const InvestConsumer* investConsumer
 
 // Write to SGM general table.
 // This routine assumes that only and all operating technology vintages are passed in as
-// an arguement.
+// an argument.
 void SGMGenTable::startVisitProductionTechnology( const ProductionTechnology* prodTech,
                                                  const int aPeriod )
 {
@@ -346,7 +346,7 @@ void SGMGenTable::startVisitProductionTechnology( const ProductionTechnology* pr
             }
             // special code to add renewable, nuclear and hydro electricity to primary energy consumption
             if( mCurrentSectorName == "ElectricityGeneration" ) {
-                // TODO: use average fossil efficiency instead of hardcoded 0.3
+                // TODO: use average fossil efficiency instead of hard-coded 0.3
                 double fossilEfficiency = 0.3;
                 if( prodTech->categoryName == "Renewable"){
                     addToType( mModeltime->getper_to_yr( aPeriod ), prodTech->name,
@@ -365,7 +365,7 @@ void SGMGenTable::startVisitProductionTechnology( const ProductionTechnology* pr
             }
             // special code to add renewable, nuclear and hydro electricity to primary energy production
             if( mCurrentSectorName == "ElectricityGeneration" ) {
-                // TODO: use average fossil efficiency instead of hardcoded 0.3
+                // TODO: use average fossil efficiency instead of hard-coded 0.3
                 double fossilEfficiency = 0.3;
                 if( prodTech->categoryName == "Renewable"){
                     addToType( mModeltime->getper_to_yr( aPeriod ), prodTech->name,

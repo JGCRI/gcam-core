@@ -6,7 +6,7 @@
 
 /*
  * This software, which is provided in confidence, was prepared by employees of
- * Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+ * Pacific Northwest National Laboratory operated by Battelle Memorial Institute.
  * Battelle has certain unperfected rights in the software which should not be
  * copied or otherwise disseminated outside your organization without the
  * express written authorization from Battelle. All rights to the software are
@@ -126,7 +126,7 @@ public:
      * \brief Scale the output coefficient by a specified value.
      * \details Scales the output coefficient by a specified value. Outputs
      *          are not required to support this operation.
-     * \note This is currently a workaround for biproducts not having
+     * \note This is currently a workaround for byproducts not having
              independent coefficients.
      * \param aCoefficientScaler Coefficient scaler.
      */

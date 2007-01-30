@@ -39,7 +39,7 @@ class NationalAccount;
 *          reach a proscribed level of output. This growth rate is read-in to
 *          the model and may vary by period. Note that since the trial capital
 *          required to grow output is only calculated once per period, the
-*          equalibrium level of output for this sector will not exactly equal
+*          equilibrium level of output for this sector will not exactly equal
 *          the previous period's output times the growth rate.
 * \note This object encapsulates the DEMK functionality of Legacy-SGM.
 * \author Josh Lurz

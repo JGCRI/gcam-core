@@ -163,7 +163,7 @@ void GhgMAC::XMLParse( const xercesc::DOMNode* node ){
     macCurve.reset( new PointSetCurve( currPoints ) );
 }
 
-//! Write out the datamembers of the GHGMac in an XML format.
+//! Write out the data members of the GHGMac in an XML format.
 void GhgMAC::toInputXML( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
 
@@ -188,7 +188,7 @@ void GhgMAC::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
-//! Write out datamembers for debugging in an XML format.
+//! Write out data members for debugging in an XML format.
 void GhgMAC::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag( getXMLName(), out, tabs, name );
 

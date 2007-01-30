@@ -34,7 +34,7 @@ class LandNode;
 /*!
 * \brief An enum containing the possible types for items in a tree.
 * \note This enum is defined outside the ALandAllocatorItem because
-*       ALandAllocatorItem is a templated class, so the enum would be a
+*       ALandAllocatorItem is a template class, so the enum would be a
 *       dependent type.
 */
 enum TreeItemType {

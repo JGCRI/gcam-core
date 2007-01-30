@@ -141,7 +141,7 @@ protected:
     virtual void toInputXMLDerived( std::ostream& aOutput,
                                     Tabs* aTabs ) const;
 private:
-    //! Land allocated in 1000's of hectars
+    //! Land allocated in 1000's of hectares
     objects::PeriodVector<Value> mLandAllocation;
 
     const ALandAllocatorItem* findParentOfType( const std::string& aType ) const;

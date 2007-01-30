@@ -90,7 +90,7 @@ public:
      * \param aRegionName Name of the containing region.
      * \param aLandType Land type of the product.
      * \param aProductName Name of the product.
-     * \param aIntrinsicRate Intrinisic rate of the product.
+     * \param aIntrinsicRate Intrinsic rate of the product.
      * \param aPeriod Model period.
      * \author James Blackwood
      */

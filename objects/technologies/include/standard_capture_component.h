@@ -1,6 +1,6 @@
 /*
  * This software, which is provided in confidence, was prepared by employees of
- * Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+ * Pacific Northwest National Laboratory operated by Battelle Memorial Institute.
  * Battelle has certain unperfected rights in the software which should not be
  * copied or otherwise disseminated outside your organization without the
  * express written authorization from Battelle. All rights to the software are
@@ -33,7 +33,7 @@
  * \details This object is responsible for controlling and calculating the cost
  *          for sequestered emissions using simple multiplicative penalties on
  *          efficiency and non-energy cost. The standard capture component
- *          applies multiplicative penalities to the non-energy costs and the
+ *          applies multiplicative penalties to the non-energy costs and the
  *          Technology efficiency. A separate storage cost per unit of
  *          sequestered emissions is also calculated, this is determined by a
  *          storage market if one was read in and exists, or a fallback read-in

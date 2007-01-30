@@ -36,7 +36,7 @@ template <class T, class U> class HashMap;
 /*! 
 * \ingroup Objects
 * \brief A class which contains all the model's regions.  These regions may be MiniCAM (partial
-* eqilibrium) regions or SGM (general equilibrium) regions as they are derived
+* equilibrium) regions or SGM (general equilibrium) regions as they are derived
 * from the Region base class.
 *
 * The World class object is contained by the Scenario class object.  The world object controls

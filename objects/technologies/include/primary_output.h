@@ -6,7 +6,7 @@
 
 /*
  * This software, which is provided in confidence, was prepared by employees of
- * Pacific Northwest National Labratory operated by Battelle Memorial Institute.
+ * Pacific Northwest National Laboratory operated by Battelle Memorial Institute.
  * Battelle has certain unperfected rights in the software which should not be
  * copied or otherwise disseminated outside your organization without the
  * express written authorization from Battelle. All rights to the software are
@@ -37,7 +37,7 @@ class DependencyFinder;
  *          sector containing a Technology. The primary output should always be
  *          chosen such that the revenue from the primary output always exceeds
  *          any revenue from secondary outputs. Primary outputs have expenses and
- *          revenues calculated directly by the Technolgy object.
+ *          revenues calculated directly by the Technology object.
  *          
  *          <b>XML specification for PrimaryOutput</b>
  *          - XML name: None. The primary output is generated automatically
