@@ -587,26 +587,26 @@ void XMLWriteElementCheckDefault( const T value, const std::string elementName, 
 /*! 
 * \brief Function which writes out the values contained in a vector. 
 * \details This function is used to write out the values of a vector in XML format, along with their year tag.
-* The function will also avoid writing out elements if they have default values, and will collapse consecutive 
+* The function will also avoid writing out elements if they all have default values, and will collapse consecutive 
 * equal values into one element with a fillout attribute.
-* \param outputVector The vector of values to write out.
-* \param elementName The elementName to write out for each value.
-* \param out Stream to print to.
-* \param tabs A tabs object responsible for printing the correct number of tabs. 
+* \param aOutputVector The vector of values to write out.
+* \param aElementName The elementName to write out for each value.
+* \param aOut Stream to print to.
+* \param aTabs A tabs object responsible for printing the correct number of tabs. 
 * \param modeltime A pointer to the global modeltime object. 
-* \param defaultValue Default value for items in this vector. 
+* \param aDefaultValue Default value for items in this vector. 
 */
 template<class T>
-void XMLWriteVector( const std::vector<T>& outputVector, const std::string& elementName, std::ostream& out, Tabs* tabs, const Modeltime* modeltime, const T defaultValue = T() ) {
+void XMLWriteVector( const std::vector<T>& aOutputVector, const std::string& aElementName, std::ostream& aOut, Tabs* aTabs, const Modeltime* modeltime, const T aDefaultValue = T() ) {
 
-    for( unsigned int i = 0; i < outputVector.size(); i++ ){
+    for( unsigned int i = 0; i < aOutputVector.size(); i++ ){
         // Determine the correct year. 
         unsigned int year = modeltime->getper_to_yr( i );
 
         // Determine if we can use fillout.
         unsigned int canSkip = 0;
-        for( unsigned int j = i + 1; j < outputVector.size(); j++ ){
-            if( util::isEqual( outputVector.at( i ), outputVector.at( j ) ) ){
+        for( unsigned int j = i + 1; j < aOutputVector.size(); j++ ){
+            if( util::isEqual( aOutputVector.at( i ), aOutputVector.at( j ) ) ){
                 canSkip++;
             }
             else {
@@ -616,11 +616,15 @@ void XMLWriteVector( const std::vector<T>& outputVector, const std::string& elem
         if( canSkip > 0 ){
             // Need to write out the default value because they could be cleared
             // by an earlier fillout.
-            XMLWriteElement( outputVector.at( i ), elementName, out, tabs, year, "", true );
-            i += canSkip;
-        } else {
-            // Can't skip any. write normally.
-            XMLWriteElementCheckDefault( outputVector.at( i ), elementName, out, tabs, defaultValue, year );
+            XMLWriteElement( aOutputVector.at( i ), aElementName, aOut, aTabs, year, "", true );
+            // If canSkip gets to last element in vector, value of i forces breakout of first FOR loop.
+            i += canSkip; 
+        } 
+        else {
+            // Can't skip at all or can't skip anymore.
+            // Write out default if fillout and other values are being used together,
+            // or if fillout is not used and all values are unique.
+            XMLWriteElement( aOutputVector.at( i ), aElementName, aOut, aTabs, year, "", false );
         }
     }
 }
@@ -629,7 +633,7 @@ void XMLWriteVector( const std::vector<T>& outputVector, const std::string& elem
 * \brief Function which writes out the values contained in a YearVector. 
 * \details This function is used to write out the values of a YearVector in XML
 *          format, along with their year tag. The function will also avoid
-*          writing out elements if they have default values, and will collapse
+*          writing out elements if they all have default values, and will collapse
 *          consecutive equal values into one element with a fillout attribute.
 * \param aOutputVector The YearVector of values to write out.
 * \param aElementName The elementName to write out for each value.
@@ -659,11 +663,17 @@ void XMLWriteVector( const objects::YearVector<T>& aOutputVector,
             }
         }
         if( canSkip > 0 ){
-            XMLWriteElementCheckDefault( aOutputVector[ i ], aElementName, aOut, aTabs, aDefaultValue, i, "", true );
-            i += canSkip;
-        } else {
-            // Can't skip any. write normally.
-            XMLWriteElementCheckDefault( aOutputVector[ i ], aElementName, aOut, aTabs, aDefaultValue, i );
+            // Need to write out the default value because they could be cleared
+            // by an earlier fillout.
+            XMLWriteElement( aOutputVector[ i ], aElementName, aOut, aTabs, i, "", true );
+            // If canSkip gets to last element in vector, value of i forces breakout of first FOR loop.
+            i += canSkip; 
+        } 
+        else {
+            // Can't skip at all or can't skip anymore.
+            // Write out default if fillout and other values are being used together,
+            // or if fillout is not used and all values are unique.
+            XMLWriteElement( aOutputVector[ i ], aElementName, aOut, aTabs, i, "", false );
         }
     }
 }
@@ -672,7 +682,7 @@ void XMLWriteVector( const objects::YearVector<T>& aOutputVector,
 * \brief Function which writes out the values contained in a PeriodVector. 
 * \details This function is used to write out the values of a PeriodVector in XML
 *          format, along with their year tag. The function will also avoid
-*          writing out elements if they have default values, and will collapse
+*          writing out elements if they all have default values, and will collapse
 *          consecutive equal values into one element with a fillout attribute.
 * \param aOutputVector The PeriodVector of values to write out.
 * \param aElementName The elementName to write out for each value.
@@ -705,11 +715,17 @@ void XMLWriteVector( const objects::PeriodVector<T>& aOutputVector,
             }
         }
         if( canSkip > 0 ){
-            XMLWriteElementCheckDefault( aOutputVector[ i ], aElementName, aOut, aTabs, aDefaultValue, year, "", true );
-            i += canSkip;
-        } else {
-            // Can't skip any. write normally.
-            XMLWriteElementCheckDefault( aOutputVector[ i ], aElementName, aOut, aTabs, aDefaultValue, year );
+            // Need to write out the default value because they could be cleared
+            // by an earlier fillout.
+            XMLWriteElement( aOutputVector[ i ], aElementName, aOut, aTabs, year, "", true );
+            // If canSkip gets to last element in vector, value of i forces breakout of first FOR loop.
+            i += canSkip; 
+        } 
+        else {
+            // Can't skip at all or can't skip anymore.
+            // Write out default if fillout and other values are being used together,
+            // or if fillout is not used and all values are unique.
+            XMLWriteElement( aOutputVector[ i ], aElementName, aOut, aTabs, year, "", false );
         }
     }
 }
