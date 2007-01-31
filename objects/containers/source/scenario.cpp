@@ -660,9 +660,6 @@ void Scenario::writeOutputFiles() const {
 
 //! Output Scenario members to the database.
 void Scenario::dbOutput() const {
-    // Write the main output file.
-    printOutputXML();
-
     // Output metadata is not required to exist.
     const list<string>& primaryFuelList = mOutputMetaData.get() ? 
                                           mOutputMetaData->getPrimaryFuelList() 

@@ -72,6 +72,7 @@ public:
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
     const IClimateModel* getClimateModel() const;
     static const std::string& getXMLNameStatic();
+    void printOutputXML() const;
 
     //! Constant which when passed to the run method means to run all model periods.
     const static int RUN_ALL_PERIODS = -1;
@@ -128,7 +129,6 @@ private:
     void closeDebuggingFiles( std::ofstream& aXMLDebugFile,
         std::ofstream& aSGMDebugFile,
         Tabs* aTabs ) const;
-    void printOutputXML() const;
 };
 
 #endif // _SCENARIO_H_

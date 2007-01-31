@@ -197,6 +197,9 @@ void SingleScenarioRunner::printOutput( Timer& aTimer, const bool aCloseDB ) con
         outFile.close();
     }
 
+    // Print the XML file for the XML database.
+    scenario->printOutputXML();
+
      // Print the timestamps.
     aTimer.stop();
     mainLog.setLevel( ILogger::DEBUG );
