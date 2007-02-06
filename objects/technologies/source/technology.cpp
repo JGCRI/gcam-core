@@ -374,7 +374,8 @@ void Technology::completeInit( const string& aRegionName,
             mainLog << "Cannot calibrate a fixed output Technology. Turning off calibration." << endl;
         }
         // If the shareweights are zero we are implicitly calibrating to zero.
-        else if( shrwts < util::getSmallNumber() ){
+        else if( ( shrwts < util::getSmallNumber() ) 
+                && ( mCalValue->getCalInput( getEfficiency( 0 ) ) > 0 ) ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
             mainLog << "Ignoring calibration input for Technology " << mName
