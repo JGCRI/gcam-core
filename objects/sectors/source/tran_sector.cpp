@@ -43,8 +43,19 @@ void TranSector::initCalc( NationalAccount* aNationalAccount,
 						  const Demographic* aDemographics,
 						  const int aPeriod )
 {
+    // If inputs are all fixed (or calibrated), then service must be set equal to calibrated inputs.
+    if ( inputsAllFixed( aPeriod, "allInputs" ) ) {
+        mService[ aPeriod ] = getCalOutput( aPeriod );
+    }
+
+    // Demand function won't work if mService[0] is 0
+    // Demand sector assures that getOutput is non zero for period 0
+    if ( mService[ 0 ] == 0 ) {
+        mService[ 0 ] = getOutput( 0 );
+    }
+
 	DemandSector::initCalc( aNationalAccount, aDemographics, aPeriod );
-    checkSectorCalData( aPeriod );
+
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -115,24 +126,6 @@ void TranSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs )
 	XMLWriteElement( percentLicensed[ period ], "percentLicensed", out, tabs );
 }
 
-/*! \brief Perform any sector level calibration data consistency checks
-*
-* Check to make sure that total calibrated outputs are equal to sector demand in base period.
-* \author Steve Smith
-* \param period Model period
-* \bug This does not check calibration status.
-*/
-void TranSector::checkSectorCalData( const int period ) {
-	// For any periods where inputs are calibrated, must make sure that read-in calibration is equal to service demand. 
-	// Adjust aggregate demand to match calibrated outputs of all inputs to this sector are calibrated
-	if ( inputsAllFixed( period, "allInputs" ) ) {
-		mService[0] = getCalOutput( period );
-		double scaleFactor = getCalOutput( period ) / mService[0];
-		ILogger& mainLog = ILogger::getLogger( "main_log" );
-		mainLog.setLevel( ILogger::DEBUG );
-		mainLog << "Calibrated Demand Scaled by " << scaleFactor << " in region " << regionName << " sector " << name << endl;
-	}
-}
 
 /*! \brief Function to calculate sector service demand.
 *
@@ -143,27 +136,35 @@ void TranSector::checkSectorCalData( const int period ) {
 */
 void TranSector::calcAggregateDemand( const GDP* aGDP, const Demographic* aDemographics, const int aPeriod ) { 
 
-	// read-in values for mService for periods 0 and 1 are required
-	// for all other periods
-	if (aPeriod > 1 ) {
-		// note normalized to previous year not base year
-		// has implications for how technical change is applied
-		double priceRatio = getPrice( aGDP, aPeriod ) / getPrice( aGDP, aPeriod - 1 );
-		double priceRatioNotLic = priceRatio;
-		if (mIsPerCapitaBased) {
-			double perCapGDPRatio = aGDP->getGDPperCap( aPeriod ) / aGDP->getGDPperCap( aPeriod - 1 );
-			double populationRatio = aDemographics->getTotal( aPeriod )
-				/ aDemographics->getTotal( aPeriod - 1 );
-			mService[ aPeriod ] = mService[ aPeriod - 1 ] * pow( priceRatio, mPriceElasticity[ aPeriod ] )
-				* pow( perCapGDPRatio, mIncomeElasticity[ aPeriod ] )
-				* populationRatio;
-		}
-		else {
-			double gdpRatio = aGDP->getGDP( aPeriod ) / aGDP->getGDP( aPeriod - 1 );
-			mService[ aPeriod ] = mService[ aPeriod - 1 ] * pow( priceRatio, mPriceElasticity[ aPeriod ] )
-				* pow( gdpRatio, mIncomeElasticity[ aPeriod ] );
-		}
-	}
+    // Start out with mBaseScaler (so that has valid value for per 0)
+    if ( aPeriod == 0 ) {
+        mService[ aPeriod ] = mBaseScaler[ aPeriod ];
+    }
+    // For period 1.
+    // All the ratios are 1, so the equation falls out to the following.
+    else if ( aPeriod == 1) {
+        mService[ aPeriod ] = mBaseScaler[ aPeriod ] * mService[ aPeriod - 1 ];
+    }
+    // For all other periods.
+    else {
+        // note all ratios are normalized to previous year not base year
+        // has implications for how technical change is applied
+        double priceRatio = getPrice( aGDP, aPeriod ) / getPrice( aGDP, aPeriod - 1 );
+        if ( mIsPerCapitaBased ) {
+            double perCapGDPRatio = aGDP->getGDPperCap( aPeriod ) / aGDP->getGDPperCap( aPeriod - 1 );
+            double populationRatio = aDemographics->getTotal( aPeriod ) / aDemographics->getTotal( aPeriod - 1 );
+            mService[ aPeriod ] = mBaseScaler[ aPeriod ]
+                                * mService[ aPeriod - 1 ] * pow( priceRatio, mPriceElasticity[ aPeriod ] )
+                                * pow( perCapGDPRatio, mIncomeElasticity[ aPeriod ] )
+                                * populationRatio;                
+        }
+        else {
+            double gdpRatio = aGDP->getGDP( aPeriod ) / aGDP->getGDP( aPeriod - 1 );
+            mService[ aPeriod ] = mBaseScaler[ aPeriod ]
+                                * mService[ aPeriod - 1 ] * pow( priceRatio, mPriceElasticity[ aPeriod ] )
+                                * pow( gdpRatio, mIncomeElasticity[ aPeriod ] );
+        }
+    }
 
 	// sets subsector outputs, technology outputs, and market demands
 	setOutput( mService[ aPeriod ] / getTechnicalChange( aPeriod ), aGDP , aPeriod);

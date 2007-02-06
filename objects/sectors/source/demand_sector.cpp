@@ -210,22 +210,30 @@ void DemandSector::setMarket() {
 *          technologies. If all subsector demands are calibrated (or zero) then
 *          also adjusts AEEI in order to be consistent with calibrated values.
 * \author Steve Smith
-* \param regionName region name
+* \param aGDP GDP object
 * \param period Model period
 */
 void DemandSector::calibrateSector( const GDP* aGDP, const int period ) {
     double totalCalOutputs = getCalOutput( period );
-    double marketDemand;
+    double marketDemand = 0;
 
-    // TODO: Is this logic right? Shouldn't the cal output still be taken into
-    // account if there is fixed output?
-    if ( outputsAllFixed( period ) && util::isEqual( getFixedOutput( period ), 0.0 ) ) {
-        marketDemand = totalCalOutputs; // If all outputs are calibrated, then make demand equal to calibrated outputs for consistancy
-    }
+    if ( outputsAllFixed( period ) ) {
+        if (util::isEqual( getFixedOutput( period ), 0.0 ) ) {
+            marketDemand = totalCalOutputs; 
+            // If all outputs are calibrated, then make demand equal to 
+            // calibrated outputs for consistency
+        }
+        else {
+            // If there is fixed output, then these are not changed, 
+            // so pass only the amount that can be rescaled
+            marketDemand = max( getOutput( period ) - getFixedOutput( period ), 0.0 );
+        }
+    } 
     else {
-        marketDemand = max( getOutput( period ) - getFixedOutput( period ), 0.0 );
+       // demand for the good produced by this sector
+       marketDemand = getOutput( period ); 
     }
-
+ 
     const vector<double> subsecShares = calcSubsectorShares( aGDP, period );
     for ( unsigned int i = 0; i < subsec.size(); ++i ) {
         subsec[i]->adjustForCalibration( subsecShares[ i ] * marketDemand, aGDP, period );
@@ -307,11 +315,6 @@ void DemandSector::setOutput( const double aDemand, const GDP* aGDP, const int a
 void DemandSector::scaleOutput( int period, double scaleFactor ) {
 
     mBaseScaler[ period ] *= scaleFactor;
-
-    ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
-    calibrationLog.setLevel( ILogger::DEBUG );
-    calibrationLog << "Scaled demand sector output for " << regionName << " " << name
-        << " by " << scaleFactor << " using period 0 base output." << endl;
 }
 
 /*! \brief Perform any initializations needed for each period.
@@ -361,21 +364,10 @@ void DemandSector::completeInit( const IInfo* aRegionInfo,
         mBaseOutput = 1;
     }
 
-    // Check that price elasticities were not read-in for base years.
-    const Modeltime* modeltime = scenario->getModeltime();
-    for( int i = 0; i <= modeltime->getFinalCalibrationPeriod(); ++i ){
-        if( !util::isEqual( mPriceElasticity[ i ], 0.0 ) ){
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Price elasticity for demand sector " << name
-                    << " in region " << regionName << " for calibration year "
-                    << modeltime->getper_to_yr( i ) << endl;
-            mPriceElasticity[ i ] = 0;
-        }
-    }
-
     // units must be set before calling base sector complete init
     Sector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator, aGlobalTechDB );
+
+    const Modeltime* modeltime = scenario->getModeltime();
 
     // Set up demand sector calibration market.
     if( count( mCalFinalEnergy.begin(), mCalFinalEnergy.end(), -1 ) != 0 ){
@@ -546,8 +538,9 @@ void DemandSector::calcAggregateDemand( const GDP* aGDP,
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
         mainLog << "Service of " << mService[ aPeriod ]
-                << " is less than or equal to zero for demand sector "
-                << name << ". " << "Current price is "
+                << " is <= to zero for demand sector "
+                << name << " in region " << regionName <<". " 
+                << "Current price is "
                 << getPrice( aGDP, aPeriod ) << "." << endl;
     }
 
@@ -787,7 +780,7 @@ double DemandSector::getEnergyInput( const int period ) const {
 * \author Josh Lurz
 */
 double DemandSector::getOutput( int aPeriod ) const {
-    // In the base period return a read in output.
+    // In the base period return a read in output. (Note - Transsector currently uses this property.)
     if( aPeriod == 0 ){
         return mBaseOutput;
     }
