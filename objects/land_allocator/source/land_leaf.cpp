@@ -271,6 +271,8 @@ void LandLeaf::setIntrinsicRate( const string& aRegionName,
 
 /*! \brief Calculates the carbon value per hectare for this land type.
 * \author James Blackwood, Josh Lurz
+* \param aRegionName Region name.
+* \param aPeriod Model period.
 */
 double LandLeaf::getCarbonValue( const string& aRegionName, const int aPeriod ) const {
     // Check that the interest rate was initialized.
