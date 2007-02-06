@@ -13,9 +13,9 @@
 
 #include <string>
 #include "sectors/include/subsector.h"
+#include "sectors/include/ibackup_calculator.h"
 
 class GDP;
-class IBackupCalculator;
 class IInfo;
 
 /*!
