@@ -899,7 +899,7 @@ void Subsector::interpolateShareWeights( const int period ) {
             endPeriod = modeltime->getyr_to_per( scaleYear );
         }
         if  ( endPeriod >= ( period - 1) ) {
-            ILogger& mainLog = ILogger::getLogger( "cal_log" );
+            ILogger& mainLog = ILogger::getLogger( "calibration_log" );
             mainLog.setLevel( ILogger::DEBUG );
             mainLog << "Interpolating share weights for subsector " << name
                 << " in sector " << sectorName << " from starting period of "
