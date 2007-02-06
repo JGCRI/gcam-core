@@ -141,7 +141,7 @@ void BuildingHeatCoolDmdTechnology::adjustForCalibration( double aTechnologyDema
     if( floorSpace < util::getSmallNumber() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Zero floorspace in technology " << mName << "." << endl;
+        mainLog << "Floorspace equal to " << floorSpace <<" in technology " << mName << "." << endl;
         floorSpace = 1;
     }
 

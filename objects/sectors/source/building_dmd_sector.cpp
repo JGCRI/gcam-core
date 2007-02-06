@@ -200,6 +200,11 @@ void BuildingDemandSector::calcAggregateDemand( const GDP* aGDP,
 
         // Calculate the base scaler.
         mBaseScaler[ aPeriod ] = scaledDemand / unscaledDemand;
+        
+        // Set all future basescalers to this value. This could go to postcalc, but is all changing in multi-inputs anyway.
+        for ( int aTempPeriod = aPeriod + 1;  aTempPeriod < mBaseScaler.size(); ++aTempPeriod ) {
+            mBaseScaler[ aTempPeriod ] = mBaseScaler[ aPeriod ];
+        }
     }
     else {
         scaledDemand = getBaseScaler( aPeriod ) * unscaledDemand;

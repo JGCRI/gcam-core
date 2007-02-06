@@ -50,6 +50,7 @@ BuildingDemandSubSector::BuildingDemandSubSector( const string& regionName, cons
     nonEnergyCost.resize( maxper, 0 );
     aveInsulation.resize( maxper, 0 );
     floorToSurfaceArea.resize( maxper, 0 );
+    periodWasCalibrated.resize( maxper, false );
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -351,7 +352,7 @@ void BuildingDemandSubSector::initCalc( NationalAccount* aNationalAccount,
     // This needs to be set before Subsector::initCalc() is called since that is where share weights are interpolated
     
     // print warning to log if a value was read in
-    if ( techScaleYear != modeltime->getEndYear() ) {
+    if ( aPeriod == 0 && techScaleYear != modeltime->getEndYear() ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::DEBUG );
         mainLog << "techScaleYear was read in for building subsector " << name << ". Value ignored. " << endl;        
@@ -399,7 +400,16 @@ void BuildingDemandSubSector::adjustTechnologyShareWeights( const int period ) {
 */
 void BuildingDemandSubSector::adjustForCalibration( double aVariableDemand, const GDP* aGDP, const int period ) {
     // Don't adjust for calibration if the calibration status is off.
-	if( !getCalibrationStatus( period ) ){
+
+	if( !getCalibrationStatus( period ) && period == 1 ){
+        // If no inputs are calibrated something is wrong -- this must always be the 
+        // case so that building demand techs can scale their outputs. 
+        
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "No building service demands for sector "<< getName() << " have been calibrated. ";
+        mainLog << "The input data for building service sectors may be missing calibration information." << endl;
+      
 		return;
 	}
     const Modeltime* modeltime = scenario->getModeltime();
@@ -409,26 +419,48 @@ void BuildingDemandSubSector::adjustForCalibration( double aVariableDemand, cons
     // Note that "raw" unit demand, unadjusted by internal gains, is passed as the demand variable
     // this is so that those demand sectors that do not need internal gains or other information will  
     // not have to access the sectorInfo object.
+    // The location of this set is problematic -- should be where can assure this is total demand. Revisit in new demand structure.
     mSubsectorInfo->setDouble( "floorSpace", aVariableDemand );
     
     for ( unsigned int j = 0; j < techs.size(); j++ ) {
         // calibrate buildingServiceDemands
-        const IInfo* marketInfo = marketplace->getMarketInfo( techs[j][period]->getFuelName(), regionName, period, false );
+        IInfo* marketInfo = marketplace->getMarketInfo( techs[j][period]->getFuelName(), regionName, period, false );
         // Market may not exist if the fuel is a fake fuel.
-        double calOutput = marketInfo ? marketInfo->getDouble( "calOutput", true ) : 0;
+        double calOutput = marketInfo->getDouble( "calOutput", true );
         
-        // Here, pass in specific demand -- equal to demand for this service per
-        // unit floor space NOTE: this is not adjusted for saturation or other
-        // parameters, this is done in BuildingGenericDmdTechnology
-        double unitDemand = 0;
-        if ( aVariableDemand != 0 ) {
-            unitDemand = calOutput / aVariableDemand;
+        // Output from this period is calibrated, so calculate unit demand
+        // and scale share weights            
+        if ( calOutput > 0 ) {
+            // Check for consistency of calOutput with calSupply. 
+            // These could be different if cal values were scaled.
+            // calSupply and calDemand are set only if all outputs from a sector are calibrated.
+            // calOutput is set regardless. If calSupply is set, however, 
+            // calOutput should be re-set to be equal to this value.
+            double calSupply = marketInfo->getDouble( "calSupply", true );
+            
+            // Reset calOutput value if not equal
+            if ( calSupply > 0 && calSupply != calOutput ) {
+                marketInfo->setDouble( "calOutput", calSupply );
+                calOutput = calSupply;
+            }
+            
+            // Here, pass in specific demand -- equal to demand for this service per
+            // unit floor space NOTE: this is not adjusted for saturation or other
+            // parameters, this is done in BuildingGenericDmdTechnology
+            double unitDemand = 0;
+            if ( aVariableDemand != 0 ) {
+                unitDemand = calOutput / aVariableDemand;
+            }
+            
+            techs[j][period]->adjustForCalibration( unitDemand, regionName, mSubsectorInfo.get(), period );
+            
+            // If are adjusting for calibration, then will want to keep technology share weights constant after this point.
+            techScaleYear = modeltime->getper_to_yr( period );
+            
+            //Also set flag to indicate this period had calibration information
+            periodWasCalibrated[ period ] = true;
         }
-        techs[j][period]->adjustForCalibration( unitDemand, regionName, mSubsectorInfo.get(), period );
-    }
-    
-    // If are adjusting for calibration, then will want to keep technology share weights constant after this point.
-    techScaleYear = modeltime->getper_to_yr( period );
+     }
 }
 
 /*! \brief Sets the calibrationStatus variable to true if this Subsector, or underlying technologies, are calibrated.
@@ -439,6 +471,10 @@ void BuildingDemandSubSector::adjustForCalibration( double aVariableDemand, cons
 * \param period Model period
 */
 bool BuildingDemandSubSector::getCalibrationStatus( const int aPeriod ) const {
+    if ( periodWasCalibrated[ aPeriod ] ) {
+        return true;
+    }
+    
     for ( unsigned int i = 0; i < techs.size(); i++ ) {
         Marketplace* marketplace = scenario->getMarketplace();
 		const IInfo* marketInfo = marketplace->getMarketInfo( techs[ i ][ aPeriod ]->getFuelName(), regionName,

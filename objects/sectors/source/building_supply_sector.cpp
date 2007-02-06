@@ -100,8 +100,65 @@ void BuildingSupplySector::initCalc( NationalAccount* aNationalAccount,
 {
     SupplySector::initCalc( aNationalAccount, aDemographic, aPeriod );
 
+    // Store calibrated output
+    // Note that cannot use existing calSupply market information variable as this is only
+    // set if all outputs are calibrated. For calibration of buildings sectors we must have calibrated
+    // output, even if entire sector is not calibrated (which could cause problems, as noted in postCalc() warning
+    
     // Can't determine calibrated output from the Technology's until initCalc is called.
-    Marketplace* marketplace = scenario->getMarketplace();
     double calOutput = getCalOutput( aPeriod  );
+    Marketplace* marketplace = scenario->getMarketplace();
     marketplace->getMarketInfo( name, regionName, aPeriod, true )->setDouble( "calOutput", calOutput );
+    
+    if ( aPeriod == 1 && calOutput == 0 ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "No calibrated output for sector " << getName() << " in region " << regionName
+                << " was not found. This may cause erratic model behavior." << endl;
+    }
 }
+
+/*! \brief Perform any functions that are needed after the iteration has finished.
+*
+* \author Steve Smith
+* \param aPeriod Period for which to peform any post calcuations
+*/
+void BuildingSupplySector::postCalc( const int aPeriod )
+{
+    const double CAL_DATA_RESET = -10;
+    
+    // Remove calibration information as flag to demand sectors that output is 
+    // for next period (if output is calibrated, initCalc will add this information)
+    Marketplace* marketplace = scenario->getMarketplace();
+    
+    double calOutput = marketplace->getMarketInfo( name, regionName, aPeriod, true )->getDouble( "calOutput", true );
+    double calSupply = marketplace->getMarketInfo( name, regionName, aPeriod, true )->getDouble( "calSupply", true );
+
+    // While calSupply and calOutput may not be equal (due to calibration adjustments in World::checkCalConsistancy() )
+    // The sector should have fully calibrated outputs for a base year, or else something may be wrong so emit
+    // a warning.
+    
+    if ( calSupply < 0 && calOutput > 0 ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Output from sector " << getName() << " in region " << regionName
+                << " was not 100% fixed or calibrated. This may cause calibration to fail." << endl;
+    }
+    
+    ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
+    calibrationLog.setLevel( ILogger::DEBUG );
+    calibrationLog << "calOutput in marketplace for sector " << getName() << " in region " << regionName;
+    calibrationLog << " reset to null from value: " 
+                   << marketplace->getMarketInfo( name, regionName, aPeriod, true )->getDouble( "calOutput", true )
+                   << endl;
+
+    calibrationLog << "calSupply for sector " << getName() << " in region " << regionName;
+    calibrationLog << " was : " 
+                   << marketplace->getMarketInfo( name, regionName, aPeriod, true )->getDouble( "calSupply", true )
+                   << endl;
+
+    marketplace->getMarketInfo( name, regionName, aPeriod, true )->setDouble( "calOutput", CAL_DATA_RESET );
+
+    SupplySector::postCalc( aPeriod );
+}
+

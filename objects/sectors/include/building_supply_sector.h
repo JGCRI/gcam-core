@@ -38,9 +38,13 @@ public:
     explicit BuildingSupplySector( const std::string& aRegionName );
     virtual ~BuildingSupplySector();
 	static const std::string& getXMLNameStatic();
+
     virtual void initCalc( NationalAccount* aNationalAccount,
                            const Demographic* aDemographics,
                            const int aPeriod );
+
+    virtual void postCalc( const int aPeriod );
+
 protected:
  	virtual const std::string& getXMLName() const; 
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 

@@ -29,7 +29,9 @@ class IInfo;
 *          Therefore, this subsector does not share between technologies. This
 *          subsector also mediates information flow between the supply sectors
 *          and the building demand technologies through Info and other
-*          mechanisms.
+*          mechanisms. The technology shareweight interpolation functionality
+*          is used to copy the demand "technology" shareweights forward after
+*          calibration.
 * \author Steve Smith
 */
 
@@ -93,6 +95,7 @@ protected:
     std::vector<double> aveInsulation; //!< average insulation value (J/s-m^2) for this building type
     std::vector<double> floorToSurfaceArea; //!< conversion from floor space to surface area for this building type
     std::vector<double> nonEnergyCost; //!< non energy service costs of this building type (e.g., construction/rental, etc.)
+    std::vector<bool> periodWasCalibrated; //!< Flag to indicate that past period had calibrated building values
 private:
     static const std::string XML_NAME; //!< node name for toXML methods
 };
