@@ -188,6 +188,7 @@ void ForestProductionTechnology::setCalLandValues() {
             nRotPeriodSteps = 0;
         }
 
+        // Loop through to set current and future land and production from forests.
         for ( int i = period; i <= period + nRotPeriodSteps; i++ ) {
             // Need to do be able to somehow get productivity change from other
             // periods. Or demand that productivity change is the same for all
