@@ -44,7 +44,7 @@ ITechnologyInfo* GlobalTechnology::clone() {
 }
 
 void GlobalTechnology::completeInit() {
-    // Check for non-sensical efficiency.
+    // Check for nonsensical efficiency.
     if( mBaseEfficiency <= 0 ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );

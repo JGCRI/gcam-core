@@ -1496,7 +1496,7 @@ void RegionMiniCAM::dbOutput( const list<string>& aPrimaryFuelList ) const {
         dboutput4(name,"CO2 Emiss","by Fuel",*fuelIter,"MTC",temp);
     }
     // add amount of geologic sequestration to emissions by fuel
-    // todo change hardcoded category name
+    // todo change hard-coded category name
     for ( int m= 0;m<maxper;m++) {
         // note the negative value for sequestered amount
         temp[m] = - summary[m].get_emissmap_second( "CO2sequestGeologic" );
@@ -1505,7 +1505,7 @@ void RegionMiniCAM::dbOutput( const list<string>& aPrimaryFuelList ) const {
     dboutput4(name,"CO2 Emiss","by Fuel","geologic sequestration","MTC",temp);
 
     // add amount of sequestration from non-energy use to emissions by fuel
-    // todo change hardcoded category name
+    // todo change hard-coded category name
     for ( int m= 0;m<maxper;m++) {
         // note the negative value for sequestered amount
         temp[m] = - summary[m].get_emissmap_second( "CO2sequestNonEngy" );

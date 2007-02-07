@@ -5,7 +5,7 @@
  * copied or otherwise disseminated outside your organization without the
  * express written authorization from Battelle. All rights to the software are
  * reserved by Battelle. Battelle makes no warranty, express or implied, and
- * assumes no liability or responisbility for the use of this software.
+ * assumes no liability or responsibility for the use of this software.
  */
 
 #ifndef _SECTOR_UTILS_H_

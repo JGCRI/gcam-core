@@ -614,7 +614,7 @@ bool Scenario::solve( const int period ){
 }
 
 //! Output Scenario members to a CSV file.
-// I don't really like this function being hardcoded to an output file, but its very hardcoded.
+// I don't really like this function being hard-coded to an output file, but its very hard-coded.
 void Scenario::writeOutputFiles() const {
     // main output file for sgm, general results.
     {
