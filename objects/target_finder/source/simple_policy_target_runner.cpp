@@ -176,7 +176,7 @@ bool SimplePolicyTargetRunner::setupScenarios( Timer& aTimer, const string aName
 
 /*! \brief Runs the scenario and adjusts the emissions until a target is reached.
 * \details Performs a bisection search on the two curves that are read in.  Determines
-*          and emmissions pathway that will cause the specified target to be reached in
+*          an emissions pathway that will cause the specified target to be reached in
 *          the end of the target period.
 * \param aSinglePeriod This parameter is currently ignored.
 * \param aPrintDebugging Whether to print debugging information.
@@ -267,7 +267,7 @@ void SimplePolicyTargetRunner::printOutput( Timer& timer, const bool aCloseDB ) 
         mPolicyCostCalculator->printOutput();
     }
 
-    // Open the XML output file and write the final emmissions pathway to it.  It will
+    // Open the XML output file and write the final emissions pathway to it.  It will
     // automatically be closed.
     AutoOutputFile out( "sPolicyOutputFileName", "sPolicyFinalEmissionsCurve.xml" );
     Tabs tabs;
