@@ -33,7 +33,7 @@
  *          is required to have a one-to-one ratio of backup capacity to output.
  *          This is represented as an "S" shaped curve, so that the second
  *          derivatives are continuous at zero and one, and there is a smooth
- *          transformation inbetween.<br>
+ *          transformation in-between.<br>
  *
  *          Backup capacity required per unit of output is calculated as:
  *          \f[ b_c = \frac{b_{frac}}{\frac{EJ}{GWH} * \frac{hours}{year} * CF_i} \f]
