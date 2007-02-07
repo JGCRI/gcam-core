@@ -179,7 +179,7 @@ double AComplexEmissions::getGHGValue( const string& regionName, const string& f
     const IInfo* fuelInfo = marketplace->getMarketInfo( fuelName, regionName, period, false );
     const double coefFuel = fuelInfo ? fuelInfo->getDouble( "CO2Coef", false ) : 0;
 
-    // apply carbon equivalent to emiss coefficient
+    // apply carbon equivalent to emission coefficient
     double generalizedCost = GHGTax * gwp * mEmissionsCoef->getCoef() / CVRT90;
 
     // The generalized cost returned by the GHG may be negative if

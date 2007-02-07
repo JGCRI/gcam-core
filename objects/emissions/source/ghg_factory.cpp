@@ -31,7 +31,7 @@ using namespace std;
 /*!
  * \brief Return a new instance of a component of the requested type.
  * \details This class returns a GHG of the requested type.  It is 
- *          hardcoded to set the emissions drivers for CO2 and SO2.
+ *          hard-coded to set the emissions drivers for CO2 and SO2.
  *          It reads the emissions driver for a generic GHG from
  *          the input XML.
  * \warning This allows the user to create a GHG object that does

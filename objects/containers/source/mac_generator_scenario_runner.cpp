@@ -65,7 +65,7 @@ bool MACGeneratorScenarioRunner::setupScenarios( Timer& aTimer, const string aNa
 /*! \brief Function which handles running the scenario and optionally computing
 *          a cost curve.
 * \details This function wraps around the scenario so that scenario can be
-*          called multiple times if neccessary to create an abatement cost
+*          called multiple times if necessary to create an abatement cost
 *          curve. This function first calls the scenario regularly, outputs all
 *          data, and then calls scenario several more times and calculates the
 *          abatement cost.
