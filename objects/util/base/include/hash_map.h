@@ -39,7 +39,7 @@
 #endif
 /*!
 * \ingroup Objects
-* \brief A templated object which implements a mapping of key to value using a
+* \brief A template object which implements a mapping of key to value using a
 *        hash function to determine the position of a key in the internal
 *        storage.
 * \details The hashmap is a type of map which allows fast access to values by
