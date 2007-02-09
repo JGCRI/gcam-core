@@ -227,7 +227,7 @@ void BuildingDemandSector::calcAggregateDemand( const GDP* aGDP,
  */
 double BuildingDemandSector::getBaseScaler( const int aPeriod ) const {
     // Find the base scaler in the closest past year.
-    for( unsigned int i = static_cast<unsigned int>( aPeriod ); i >= 0; --i ){
+    for( int i = aPeriod; i >= 0; --i ){
         if( mBaseScaler[ i ].isInited() ){
             return mBaseScaler[ i ];
         }
