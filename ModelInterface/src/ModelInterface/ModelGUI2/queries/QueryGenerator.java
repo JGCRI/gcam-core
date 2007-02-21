@@ -52,6 +52,7 @@ public class QueryGenerator implements java.io.Serializable{
 	private transient QueryBuilder qb;
 	int currSel;
 	String labelColumnName;
+	String comments;
 	public QueryGenerator(Frame parentFrameIn) {
 		qb = null;
 		isSumable = false;
@@ -110,6 +111,8 @@ public class QueryGenerator implements java.io.Serializable{
 				axis2Name = ((Element)nl.item(i)).getAttribute("name");
 			} else if(nl.item(i).getNodeName().equals("chartLabelColumn")) {
 				labelColumnName = nl.item(i).getFirstChild().getNodeValue();
+			} else if(nl.item(i).getNodeName().equals("comments")) {
+				comments = nl.item(i).getFirstChild().getNodeValue();
 			} else if (nl.item(i).getNodeName().equals("xPath")) {
 				var = ((Element)nl.item(i)).getAttribute("dataName");
 				if( ((Element)nl.item(i)).getAttribute("sumAll").equals("true")) {
@@ -606,6 +609,9 @@ public class QueryGenerator implements java.io.Serializable{
 			temp.appendChild(doc.createTextNode(xPath));
 		}
 		queryNode.appendChild(temp);
+		temp = doc.createElement("comments");
+		temp.appendChild(doc.createTextNode(comments));
+		queryNode.appendChild(temp);
 		return queryNode;
 	}
 	/**
@@ -627,6 +633,12 @@ public class QueryGenerator implements java.io.Serializable{
 	}
 	public Object[] getLevelValues() {
 		return levelValues;
+	}
+	public String getComments() {
+		return comments != null ? comments : title;
+	}
+	public void setComments(String commentsIn) {
+		comments = commentsIn;
 	}
 	public String getYearLevel() {
 		return yearLevel;

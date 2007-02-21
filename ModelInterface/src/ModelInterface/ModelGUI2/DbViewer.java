@@ -577,7 +577,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 							}
 							if(ret != null) {
 								//tablePanel.removeAll();
-								tablesTabs.addTab(qg.toString(), new TabCloseIcon(), ret);
+								tablesTabs.addTab(qg.toString(), new TabCloseIcon(), ret, qg.getComments());
 								// fire this here, or after they are all done??
 								((InterfaceMain)parentFrame).fireProperty("Query", null, bt);
 							}
