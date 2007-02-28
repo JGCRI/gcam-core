@@ -482,6 +482,12 @@ void XMLDBOutputter::startVisitSector( const Sector* aSector, const int aPeriod 
     // Write the opening sector tag and the type of the base class.
     XMLWriteOpeningTag( aSector->getXMLName(), mBuffer, mTabs.get(),
         aSector->getName(), 0, "sector" );
+
+    // Loop over the periods to output sector information.
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( int i = 0; i < modeltime->getmaxper(); ++i ){
+        writeItem( "cost", mCurrentPriceUnit, aSector->getPrice( mGDP, i ), i );
+    }
 }
 
 void XMLDBOutputter::endVisitSector( const Sector* aSector, const int aPeriod ){
@@ -510,7 +516,7 @@ void XMLDBOutputter::startVisitSubsector( const Subsector* aSubsector,
         writeItem( "subsector-share", "%", aSubsector->calcShare( i, mGDP ), i );
     }
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
-        writeItem( "subsector-cost", mCurrentPriceUnit, aSubsector->getPrice( mGDP, i ), i );
+        writeItem( "cost", mCurrentPriceUnit, aSubsector->getPrice( mGDP, i ), i );
     }
 }
 
@@ -596,6 +602,10 @@ void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology,
     writeItem( "fuel-cost", mCurrentPriceUnit,
                 aTechnology->getFuelCost( mCurrentRegion,
                                           mCurrentSector, investPeriod ), -1 );
+
+    // Write out total cost which includes fuel and non-energy costs.
+    writeItem( "cost", mCurrentPriceUnit,
+                aTechnology->getCost( investPeriod ), -1 );
 
     for( int curr = 0; curr < modeltime->getmaxper(); ++curr ){
         if( !aTechnology->mProductionState[ curr ]->isOperating() ){
