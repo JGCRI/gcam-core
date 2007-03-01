@@ -759,25 +759,21 @@ public class ComboTableModel extends BaseTableModel{
 	  try {
 		  while(res.hasNext()) {
 			  tempNode = res.next();
-			  //regionAndYear = getRegionAndYearFromNode(tempNode.getParentNode(), tableFilterMaps);
 			  regionAndYear = qg.extractAxisInfo(tempNode.getParentNode(), tableFilterMaps);
 			  if(units == null) {
 				  units = XMLDB.getAttr(tempNode.getParentNode(), "unit");
 			  }
 			  if(sumAll) {
-				  //regionAndYear[1] = "All "+(String)wild.get(0);
 				  regionAndYear[1] = "All "+qg.getNodeLevel();
 			  }
 			  regions.add(regionAndYear[0]);
 			  years.add(regionAndYear[1]);
-			  Map retMap = qg.addToDataTree(new XmlValue(tempNode), dataTree); //.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
-			  //Map retMap = addToDataTree(new XmlValue(tempNode), dataTree); //.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
+			  Map retMap = qg.addToDataTree(new XmlValue(tempNode), dataTree); 
 			  DbViewer.xmlDB.printLockStats("addToDataTree");
 			  Double ret = (Double)retMap.get((String)regionAndYear[0]+";"+(String)regionAndYear[1]);
 			  if(ret == null) {
 				  retMap.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], new Double(tempNode.asNumber()));
 			  } else {
-				  //ret += tempNode.asNumber();
 				  retMap.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], 
 						  new Double(ret.doubleValue() + tempNode.asNumber()));
 			  }
@@ -804,8 +800,6 @@ public class ComboTableModel extends BaseTableModel{
 	  }
 	  indCol = new Vector( regions );
 	  ind1Name = qg.getAxis1Name();
-	  //ind1Name = qg.getNodeLevel();
-	  //ind2Name = (String)wild.get(1);
 	}
 
   	private Object[] getRegionAndYearFromNode(XmlValue n, Map filterMaps) throws Exception {

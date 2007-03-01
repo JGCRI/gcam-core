@@ -375,20 +375,16 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 		Vector ret = new Vector(2, 0);
 		XmlValue nBefore;
 		do {
-			if(qg.nodeLevel.equals(XMLDB.getAttr(n, "type"))) {
-				ret.add(XMLDB.getAttr(n, "name"));
+			if(qg.nodeLevel.equals(XMLDB.getAttr(n, "type")) || qg.nodeLevel.equals(n.getNodeName())) {
+				String nameAttrVal = XMLDB.getAttr(n, "name");
+				if(nameAttrVal == null) {
+					nameAttrVal = XMLDB.getAttr(n, "fuel-name");
+				}
+				// else problems!!
+				ret.add(nameAttrVal);
 			} 
 			if(qg.yearLevel.equals(XMLDB.getAttr(n, "type")) || qg.yearLevel.equals(n.getNodeName())) {
 				ret.add(0, XMLDB.getAttr(n, "year"));
-				/*
-				//ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
-				if(!getOneAttrVal(n).equals("fillout=1")) {
-				ret.add(getOneAttrVal(n));
-				} else {
-				ret.add(getOneAttrVal(n, 1));
-				}
-				*/
-
 			} else if(XMLDB.hasAttr(n)) {
 				// are filter maps used, I don't belive filtering is currently enabled for DB Output
 				// is this a feature people would want?

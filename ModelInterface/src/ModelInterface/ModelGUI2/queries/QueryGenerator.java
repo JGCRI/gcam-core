@@ -112,7 +112,10 @@ public class QueryGenerator implements java.io.Serializable{
 			} else if(nl.item(i).getNodeName().equals("chartLabelColumn")) {
 				labelColumnName = nl.item(i).getFirstChild().getNodeValue();
 			} else if(nl.item(i).getNodeName().equals("comments")) {
-				comments = nl.item(i).getFirstChild().getNodeValue();
+				Node cmtNodeTemp = nl.item(i).getFirstChild();
+				if(cmtNodeTemp != null) {
+					comments = cmtNodeTemp.getNodeValue();
+				}
 			} else if (nl.item(i).getNodeName().equals("xPath")) {
 				var = ((Element)nl.item(i)).getAttribute("dataName");
 				if( ((Element)nl.item(i)).getAttribute("sumAll").equals("true")) {

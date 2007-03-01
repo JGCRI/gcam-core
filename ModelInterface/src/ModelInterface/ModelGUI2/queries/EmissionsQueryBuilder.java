@@ -195,6 +195,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			}
 			case 2: {
 					selected = ghgList;
+					qg.isSumable = true;
 					break;
 			}
 			case 3: {
