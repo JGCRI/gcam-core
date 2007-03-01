@@ -332,8 +332,7 @@ void XMLDBOutputter::endVisitOutputMetaData( const OutputMetaData* aOutputMetaDa
 
 void XMLDBOutputter::startVisitWorld( const World* aWorld, const int aPeriod ){
     // Write the opening world tag.
-    XMLWriteOpeningTag( aWorld->getXMLNameStatic(), mBuffer, mTabs.get(),
-                        aWorld->getName() );
+    XMLWriteOpeningTag( aWorld->getXMLNameStatic(), mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::endVisitWorld( const World* aWorld, const int aPeriod ){
@@ -884,7 +883,7 @@ void XMLDBOutputter::startVisitGDP( const GDP* aGDP, const int aPeriod ){
     // valid XML.
     const Modeltime* modeltime = scenario->getModeltime();
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
-        writeItem( "total-labor-productivity", "%",
+        writeItem( "total-labor-productivity", "%/yr",
                    aGDP->getTotalLaborProductivity( i ), i );
     }
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
