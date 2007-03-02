@@ -2,7 +2,9 @@ package ModelInterface.ModelGUI2;
 
 import ModelInterface.InterfaceMain;
 import ModelInterface.ModelGUI2.queries.QueryGenerator;
+import ModelInterface.ModelGUI2.undo.MiUndoableEditListener;
 import ModelInterface.ModelGUI2.undo.QueryAddRemoveUndoableEdit;
+import ModelInterface.ModelGUI2.undo.EditQueryUndoableEdit;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,6 +16,7 @@ import javax.swing.event.TreeModelEvent;
 
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEdit;
+import javax.swing.event.UndoableEditEvent;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -24,11 +27,13 @@ import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 import java.io.IOException;
 
-public class QueryTreeModel implements TreeModel {
+public class QueryTreeModel implements TreeModel, MiUndoableEditListener {
 	protected QueryGroup root;
 	protected ArrayList<TreeModelListener> tmListeners;
+	protected int changes;
 	public QueryTreeModel(Node n) {
-		root = new QueryGroup("All", recCreateTree(n));
+		root = new QueryGroup("queries", recCreateTree(n));
+		changes = 0;
 		tmListeners = new ArrayList<TreeModelListener>();
 		addTreeModelListener(new QueryTreeModelListener());
 	}
@@ -137,6 +142,26 @@ public class QueryTreeModel implements TreeModel {
 			fireTreeNodesRemoved(this, path.getParentPath(), index, lastComp);
 		}
 	}
+	public void doEdit(final TreePath editPath) {
+		final Object[] children = { editPath.getLastPathComponent() };
+		if(!(children[0] instanceof QueryGenerator)) {
+			// TODO: support editing query groups
+			return;
+		}
+		final QueryTreeModel thisListener = this;
+		Thread editThread = new Thread(new Runnable() {
+			public void run() {
+				if(((QueryGenerator)children[0]).editDialog(thisListener)) {
+					TreePath parentPath = editPath.getParentPath();
+					int[] childInds = { getIndexOfChild(parentPath.getLastPathComponent(),
+						children[0]) };
+					fireTreeNodesChanged(thisListener, parentPath, childInds, children);
+				}
+				// else no changes, do nothing
+			}
+		});
+		editThread.start();
+	}
 	public Node getAsNode(Document doc) {
 		addQueryGroup(doc, doc.getDocumentElement(), root);
 		return doc.getDocumentElement();
@@ -204,6 +229,9 @@ public class QueryTreeModel implements TreeModel {
 		public String getName() {
 			return groupName;
 		}
+		public void setName(String nameIn) {
+			groupName = nameIn;
+		}
 		public ArrayList getQueryList() {
 			return qList;
 		}
@@ -227,25 +255,73 @@ public class QueryTreeModel implements TreeModel {
 			undoManager = main.getUndoManager();
 		}
 		public void treeNodesChanged(TreeModelEvent e) {
-			// don't care about this
+			if(e.getSource() instanceof QueryTreeModel) {
+				increaseChanges();
+			}
 		}
 		public void treeNodesInserted(TreeModelEvent e) {
 			if(e.getSource() instanceof QueryTreeModel) {
+				increaseChanges();
 				addEdit(new QueryAddRemoveUndoableEdit(e, true));
 			}
 		}
 		public void treeNodesRemoved(TreeModelEvent e) {
 			if(e.getSource() instanceof QueryTreeModel) {
+				increaseChanges();
 				addEdit(new QueryAddRemoveUndoableEdit(e, false));
 			}
 		}
 		public void treeStructureChanged(TreeModelEvent e) {
 			// don't care about this
+			// can only happen with inserts and deletes 
 		}
 		private void addEdit(UndoableEdit e) {
 			undoManager.addEdit(e);
 			main.refreshUndoRedo();
 		}
+	}
+	public void undoPerformed(UndoableEditEvent e) {
+		if(e.getEdit() instanceof QueryAddRemoveUndoableEdit || 
+				e.getEdit() instanceof EditQueryUndoableEdit) {
+			decreaseChanges();
+		} 
+	}
+
+	public void redoPerformed(UndoableEditEvent e) {
+		if(e.getEdit() instanceof QueryAddRemoveUndoableEdit || 
+				e.getEdit() instanceof EditQueryUndoableEdit) {
+			increaseChanges();
+		}
+	}	
+
+	private void increaseChanges() {
+		// TODO: Worry about threading
+		++changes;
+		if(changes == 1) {
+			root.setName(root.getName()+"*");
+			int[] indices = { 0 };
+			Object[] children = { root };
+			TreePath parentPath = new TreePath(root);//.getParentPath();
+			fireTreeNodesChanged(root, parentPath, indices, children);
+		}
+	}
+
+	private void decreaseChanges() {
+		// TODO: Worry about threading
+		--changes;
+		if(!hasChanges()) {
+			root.setName(root.getName()
+					.substring(0, root.getName().length()-1));
+			int[] indices = { 0 };
+			Object[] children = { root };
+			TreePath parentPath = new TreePath(root);//.getParentPath();
+			fireTreeNodesChanged(root, parentPath, indices, children);
+		}
+	}
+
+	public boolean hasChanges() {
+		// TODO: Worry about threading
+		return changes != 0;
 	}
 }
 
