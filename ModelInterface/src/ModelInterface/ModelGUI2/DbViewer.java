@@ -112,12 +112,18 @@ public class DbViewer implements ActionListener, MenuAdder {
 						xmlDB.closeDB();
 						xmlDB = null;
 						try {
-							Document tempDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-			.getDOMImplementation().createDocument(null, "queries", null);
-							queries.getAsNode(tempDoc);
-							//writeDocument(tempDoc, queryFile);
-							writeFile(new File(((InterfaceMain)parentFrame).getProperties().getProperty("queryFile"))
-								, tempDoc);
+							if(queries.hasChanges() && JOptionPane.showConfirmDialog(
+									parentFrame, 
+									"The Queries have been modified.  Do You want to save them?",
+									"Confirm Save Queries", JOptionPane.YES_NO_OPTION,
+									JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+								Document tempDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+									.getDOMImplementation().createDocument(null, "queries", null);
+								queries.getAsNode(tempDoc);
+								//writeDocument(tempDoc, queryFile);
+								writeFile(new File(((InterfaceMain)parentFrame).getProperties().getProperty("queryFile"))
+									, tempDoc);
+							}
 						} catch(Exception e) {
 							e.printStackTrace();
 						}
@@ -408,6 +414,12 @@ public class DbViewer implements ActionListener, MenuAdder {
 		queries = getQueries();
 		scnList = new JList(scns);
 		regionList = new JList(regions);
+		if(scns.size() != 0) {
+			scnList.setSelectedIndex(scns.size()-1);
+		}
+		if(regions.size() != 0) {
+			regionList.setSelectedIndex(0);
+		}
 		final JTree queryList = new JTree(queries);
 		queryList.setTransferHandler(new QueryTransferHandler(queriesDoc, implls));
 		queryList.setDragEnabled(true);
@@ -555,7 +567,6 @@ public class DbViewer implements ActionListener, MenuAdder {
 				if(scnSel.length == 0) {
 					JOptionPane.showMessageDialog(parentFrame, "Please select Scenarios to run the query against", 
 						"Run Query Error", JOptionPane.ERROR_MESSAGE);
-					//batchQuery(new File("bq.xml"), new File("c:\\test.xls"));
 				} else if(regionSel.length == 0) {
 					JOptionPane.showMessageDialog(parentFrame, "Please select Regions to run the query against", 
 						"Run Query Error", JOptionPane.ERROR_MESSAGE);
@@ -563,9 +574,10 @@ public class DbViewer implements ActionListener, MenuAdder {
 					JOptionPane.showMessageDialog(parentFrame, "Please select a query to run", 
 						"Run Query Error", JOptionPane.ERROR_MESSAGE);
 				} else {
-					String tempFilterQuery = createFilteredQuery(scns, scnSel/*, regions, regionSel*/);
+					String tempFilterQuery = createFilteredQuery(scns, scnSel);
 					parentFrame.getGlassPane().setVisible(true);
 					TreePath[] selPaths = queryList.getSelectionPaths();
+					boolean movedTabAlready = false;
 					for(int i = 0; i < selPaths.length; ++i) {
 						try {
 							QueryGenerator qg = (QueryGenerator)selPaths[i].getLastPathComponent();
@@ -576,8 +588,12 @@ public class DbViewer implements ActionListener, MenuAdder {
 								ret = createSingleTableContent(qg, tempFilterQuery);
 							}
 							if(ret != null) {
-								//tablePanel.removeAll();
-								tablesTabs.addTab(qg.toString(), new TabCloseIcon(), ret, qg.getComments());
+								tablesTabs.addTab(qg.toString(), new TabCloseIcon(), ret, 
+										createCommentTooltip(selPaths[i]));
+								if(!movedTabAlready) {
+									tablesTabs.setSelectedIndex(tablesTabs.getTabCount()-1);
+									movedTabAlready = true;
+								}
 								// fire this here, or after they are all done??
 								((InterfaceMain)parentFrame).fireProperty("Query", null, bt);
 							}
@@ -585,7 +601,6 @@ public class DbViewer implements ActionListener, MenuAdder {
 							System.out.println("Warning: Caught "+cce+" likely a QueryGroup was in the selection");
 						}
 					}
-					//tablePanel.add(Box.createVerticalGlue());
 					parentFrame.getGlassPane().setVisible(false);
 					// need old value/new value?
 					// fire off property or something we did query
@@ -601,8 +616,9 @@ public class DbViewer implements ActionListener, MenuAdder {
 				} else {
 					TreePath[] selPaths = queryList.getSelectionPaths();
 					for(int i = 0; i < selPaths.length; ++i) {
-						QueryGenerator tempQG = (QueryGenerator)selPaths[i].getLastPathComponent();
-						tempQG.editDialog();
+						//QueryGenerator tempQG = (QueryGenerator)selPaths[i].getLastPathComponent();
+						//tempQG.editDialog();
+						queries.doEdit(selPaths[i]);
 					}
 				}
 			}
@@ -1135,5 +1151,15 @@ public class DbViewer implements ActionListener, MenuAdder {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	private String createCommentTooltip(TreePath path) {
+		QueryGenerator qg = (QueryGenerator)path.getLastPathComponent();
+		StringBuilder ret = new StringBuilder("<html>");
+		for(int i = 1; i < path.getPathCount() -1; ++i) {
+			ret.append(path.getPathComponent(i)).append(":<br>");
+		}
+		ret.append(qg).append("<br><br>Comments:<br>")
+			.append(qg.getComments()).append("</html>");
+		return ret.toString();
 	}
 }

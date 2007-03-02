@@ -484,6 +484,9 @@ public class NewDataTableModel extends BaseTableModel{
 			} else {
 				rowNameFull = (String)getValueAt(row,0);
 			}
+			if(rowNameFull.equals("Total")) {
+				continue;
+			}
 			
 			// Split out the name attribute if it contains it.
 			String rowName;

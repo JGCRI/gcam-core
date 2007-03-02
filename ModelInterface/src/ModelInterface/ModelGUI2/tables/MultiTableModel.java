@@ -247,7 +247,7 @@ public class MultiTableModel extends BaseTableModel{
    *        years row axis attributes
    *        title a string describing the path in which the data in the table is coming from
    */
-  private void recAddTables(Map dataTree, Map.Entry parent, TreeSet regions, TreeSet years, String titleStr) {
+  private void recAddTables(Map dataTree, Map.Entry parent, Set regions, Set years, String titleStr) {
 	Iterator it = dataTree.entrySet().iterator();
 	while(it.hasNext()) {
 		Map.Entry me = (Map.Entry)it.next();
@@ -442,10 +442,8 @@ public class MultiTableModel extends BaseTableModel{
 		wild.add(qgIn.getNodeLevel());
 		wild.add(qgIn.getYearLevel());
 		System.out.println("Query is "+qgIn.getCompleteXPath(regions));
-		//FileChooserDemo.xmlDB.setQueryFunction("");
 		System.out.println("Before Function: "+System.currentTimeMillis());
 		buildTable(DbViewer.xmlDB.createQuery(qgIn.getCompleteXPath(regions), queryFilter, null), qgIn.isSumAll(), qgIn.getLevelValues());
-		//DbViewer.xmlDB.setQueryFilter("");
 		tableEditor = new TableEditor();
 		tableRenderer = new TableRenderer();
 		activeRows = new Vector(tables.size());
@@ -469,8 +467,8 @@ public class MultiTableModel extends BaseTableModel{
 	  }
 	  XmlValue tempNode;
 	  Object[] regionAndYear;
-	  TreeSet regions = new TreeSet();
-	  TreeSet years = new TreeSet();
+	  Set regions = new TreeSet();
+	  Set years = new LinkedHashSet();
 	  tableFilterMaps = new LinkedHashMap();
 	  Map dataTree = new TreeMap();
 	  try {
@@ -487,7 +485,7 @@ public class MultiTableModel extends BaseTableModel{
 			  }
 			  regions.add(regionAndYear[0]);
 			  years.add(regionAndYear[1]);
-			  Map retMap = qg.addToDataTree(new XmlValue(tempNode), dataTree); //.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
+			  Map retMap = qg.addToDataTree(new XmlValue(tempNode), dataTree); 
 			  DbViewer.xmlDB.printLockStats("addToDataTree");
 			  Double ret = (Double)retMap.get((String)regionAndYear[0]+";"+(String)regionAndYear[1]);
 			  if(ret == null) {
@@ -496,12 +494,24 @@ public class MultiTableModel extends BaseTableModel{
 				  retMap.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], 
 						  new Double(ret.doubleValue() + tempNode.asNumber()));
 			  }
+			  ret = (Double)retMap.get((String)regionAndYear[0]+";Total");
+			  if(ret == null) {
+				  retMap.put((String)regionAndYear[0]+";Total", new Double(tempNode.asNumber()));
+			  } else {
+				  retMap.put((String)regionAndYear[0]+";Total", 
+						  new Double(ret.doubleValue() + tempNode.asNumber()));
+			  }
 			  tempNode.delete();
 		  }
 		  res.delete();
 		  DbViewer.xmlDB.printLockStats("buildTable");
 	  } catch(Exception e) {
 		  e.printStackTrace();
+	  }
+	  years.add("Total");
+	  
+	  if(remove1975) {
+		  regions.remove("1975");
 	  }
 	  System.out.println("After build Tree: "+System.currentTimeMillis());
 	  recAddTables(dataTree, null, regions, years, "");

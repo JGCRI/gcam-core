@@ -4,6 +4,7 @@ import ModelInterface.InterfaceMain;
 import ModelInterface.ModelGUI2.XMLDB;
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.undo.EditQueryUndoableEdit;
+import ModelInterface.ModelGUI2.undo.MiUndoableEditListener;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -637,8 +638,23 @@ public class QueryGenerator implements java.io.Serializable{
 	public Object[] getLevelValues() {
 		return levelValues;
 	}
+	/**
+	 * Returns the comments. If the comments are null
+	 * it will default to the title.
+	 * @return The comments.
+	 * @see getRealComments()
+	 */
 	public String getComments() {
-		return comments != null ? comments : title;
+		return comments != null ? comments : "<i>None</i>";
+	}
+	/**
+	 * Returns the comments no foolin around like
+	 * getComments.
+	 * @return The comments.
+	 * @see getComments()
+	 */
+	public String getRealComments() {
+		return comments;
 	}
 	public void setComments(String commentsIn) {
 		comments = commentsIn;
@@ -755,7 +771,8 @@ public class QueryGenerator implements java.io.Serializable{
 		currNode.delete();
 		return tempMap;
 	}
-	public String editDialog() {
+	public boolean editDialog(final MiUndoableEditListener listener) {
+		final Object lock = new Object();
 		String oldTitle = title;
 		final JDialog editDialog = new JDialog(InterfaceMain.getInstance(), "Edit Query", false);
 		final QueryGenerator thisGen = this;
@@ -775,6 +792,7 @@ public class QueryGenerator implements java.io.Serializable{
 		final JCheckBox sumAllCheckBox = new JCheckBox("Sum All", sumAll);
 		final JCheckBox groupCheckBox = new JCheckBox("Group", group);
 		final JTextField labelCol = new JTextField(labelColumnName, 30);
+		final JTextArea commentsTextA = new JTextArea(comments, 4, 30);
 		Component seperator = Box.createRigidArea(new Dimension(20, 10));
 		all.setLayout(new BoxLayout(all, BoxLayout.Y_AXIS));
 		all.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -849,15 +867,27 @@ public class QueryGenerator implements java.io.Serializable{
 		tempPanel = new JPanel();
 		tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.X_AXIS));
 		tempPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		tempPanel.add(new JLabel("Comments: "));
+		tempPanel.add(seperator);
+		tempPanel.add(commentsTextA);
+		tempPanel.add(Box.createHorizontalGlue());
+		all.add(tempPanel);
+
+		tempPanel = new JPanel();
+		tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.X_AXIS));
+		tempPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		tempPanel.add(Box.createHorizontalGlue());
 		tempPanel.add(okButton);
 		tempPanel.add(seperator);
 		tempPanel.add(cancelButton);
 		all.add(tempPanel);
 
+		final boolean[] didChange = new boolean[1];
+		didChange[0] = false;
+
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EditQueryUndoableEdit eqEdit = new EditQueryUndoableEdit(thisGen);
+				EditQueryUndoableEdit eqEdit = new EditQueryUndoableEdit(thisGen, listener);
 				eqEdit.setOldValues(thisGen);
 				title = titleTextF.getText();
 				axis1Name = a1NameTextF.getText();
@@ -869,14 +899,28 @@ public class QueryGenerator implements java.io.Serializable{
 				xPath = xPathTextF.getText();
 				sumAll = sumAllCheckBox.isSelected();
 				group = groupCheckBox.isSelected();
+				comments = commentsTextA.getText();
 				eqEdit.setNewValues(thisGen);
-				InterfaceMain.getInstance().getUndoManager().addEdit(eqEdit);
-				InterfaceMain.getInstance().refreshUndoRedo();
+				if(eqEdit.hasRealChanges()) {
+					InterfaceMain.getInstance().getUndoManager().addEdit(eqEdit);
+					InterfaceMain.getInstance().refreshUndoRedo();
+					didChange[0] = true;
+				} else {
+					// not needed
+					eqEdit.die();
+				}
+				synchronized(lock) {
+					lock.notifyAll();
+				}
 				editDialog.dispose();
 			}
 		});
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// don't have to update didChange
+				synchronized(lock) {
+					lock.notifyAll();
+				}
 				editDialog.dispose();
 			}
 		});
@@ -884,6 +928,13 @@ public class QueryGenerator implements java.io.Serializable{
 		editDialog.getContentPane().add(all);
 		editDialog.pack();
 		editDialog.setVisible(true);
-		return oldTitle;
+		try {
+			synchronized(lock) {
+				lock.wait();
+			}
+		} catch(InterruptedException ie) {
+			ie.printStackTrace();
+		}
+		return didChange[0];
 	}
 }

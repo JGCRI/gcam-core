@@ -1,6 +1,5 @@
 package ModelInterface.ModelGUI2.undo;
 
-import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.CannotRedoException;
 
@@ -12,7 +11,7 @@ import java.util.List;
 
 import ModelInterface.ModelGUI2.QueryTreeModel;
 
-public class QueryAddRemoveUndoableEdit extends AbstractUndoableEdit {
+public class QueryAddRemoveUndoableEdit extends MiAbstractUndoableEdit {
 
 	private QueryTreeModel qt;
 	private TreePath path;
@@ -28,6 +27,7 @@ public class QueryAddRemoveUndoableEdit extends AbstractUndoableEdit {
 		parent = (QueryTreeModel.QueryGroup)path.getLastPathComponent();
 		indices = e.getChildIndices();
 		children = e.getChildren();
+		addListener(qt);
 	}
 
 	public boolean canUndo() {
@@ -57,6 +57,7 @@ public class QueryAddRemoveUndoableEdit extends AbstractUndoableEdit {
 			} else {
 				doAdd();
 			}
+			fireUndoPerformed(this, this);
 		} else {
 			throw new CannotUndoException();
 		}
@@ -69,6 +70,7 @@ public class QueryAddRemoveUndoableEdit extends AbstractUndoableEdit {
 			} else {
 				doRemove();
 			}
+			fireRedoPerformed(this, this);
 		} else {
 			throw new CannotRedoException();
 		}

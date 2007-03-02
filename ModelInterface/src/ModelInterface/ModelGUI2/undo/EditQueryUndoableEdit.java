@@ -1,16 +1,16 @@
 package ModelInterface.ModelGUI2.undo;
 
-import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.CannotRedoException;
 
 import ModelInterface.ModelGUI2.queries.QueryGenerator;
 
-public class EditQueryUndoableEdit extends AbstractUndoableEdit {
+public class EditQueryUndoableEdit extends MiAbstractUndoableEdit {
 
 	private QueryGenerator qg;
 	private boolean hasSetOldValues;
 	private boolean hasSetNewValues;
+	private boolean hasRealChanges;
 
 	private String oldTitle;
 	private String oldAxis1Name;
@@ -22,6 +22,7 @@ public class EditQueryUndoableEdit extends AbstractUndoableEdit {
 	private String oldXPath;
 	private boolean oldSumAll;
 	private boolean oldGroup;
+	private String oldComments;
 
 	private String newTitle;
 	private String newAxis1Name;
@@ -33,10 +34,12 @@ public class EditQueryUndoableEdit extends AbstractUndoableEdit {
 	private String newXPath;
 	private boolean newSumAll;
 	private boolean newGroup;
+	private String newComments;
 
-	public EditQueryUndoableEdit(QueryGenerator qgIn) {
+	public EditQueryUndoableEdit(QueryGenerator qgIn, MiUndoableEditListener listener) {
 		qg = qgIn;
-		hasSetOldValues = hasSetNewValues = false;
+		hasRealChanges = hasSetOldValues = hasSetNewValues = false;
+		addListener(listener);
 	}
 
 	public void setOldValues(QueryGenerator qgIn) {
@@ -50,21 +53,48 @@ public class EditQueryUndoableEdit extends AbstractUndoableEdit {
 		oldXPath = qgIn.getXPath();
 		oldSumAll = qgIn.isSumAll();
 		oldGroup = qgIn.isGroup();
+		oldComments = qgIn.getRealComments();
 		hasSetOldValues = true;
 	}
 
 	public void setNewValues(QueryGenerator qgIn) {
-		newTitle = qgIn.toString();
-		newAxis1Name = qgIn.getAxis1Name();
-		newAxis2Name = qgIn.getAxis2Name();
-		newNodeLevel = qgIn.getNodeLevel();
-		newYearLevel = qgIn.getYearLevel();
-		newVar = qgIn.getVariable();
-		newLabelColumnName = qgIn.getChartLabelColumnName();
-		newXPath = qgIn.getXPath();
-		newSumAll = qgIn.isSumAll();
-		newGroup = qgIn.isGroup();
+		System.out.println("hasRealChanges "+hasRealChanges);
+		hasRealChanges = hasRealChanges || !doDiffCheck(oldTitle, newTitle = qgIn.toString());
+		System.out.println("hasRealChanges "+hasRealChanges);
+		hasRealChanges = hasRealChanges || !doDiffCheck(oldAxis1Name, newAxis1Name = qgIn.getAxis1Name());
+		hasRealChanges = hasRealChanges || !doDiffCheck(oldAxis2Name, newAxis2Name = qgIn.getAxis2Name());
+		hasRealChanges = hasRealChanges || !doDiffCheck(oldNodeLevel, newNodeLevel = qgIn.getNodeLevel());
+		hasRealChanges = hasRealChanges || !doDiffCheck(oldYearLevel, newYearLevel = qgIn.getYearLevel());
+		hasRealChanges = hasRealChanges || !doDiffCheck(oldVar, newVar = qgIn.getVariable());
+		hasRealChanges = hasRealChanges || !doDiffCheck(oldLabelColumnName,
+			newLabelColumnName = qgIn.getChartLabelColumnName());
+		hasRealChanges = hasRealChanges || !doDiffCheck(oldXPath, newXPath = qgIn.getXPath());
+		hasRealChanges = hasRealChanges || oldSumAll != (newSumAll = qgIn.isSumAll());
+		hasRealChanges = hasRealChanges || oldGroup != (newGroup = qgIn.isGroup());
+		hasRealChanges = hasRealChanges || !doDiffCheck(oldComments, newComments = qgIn.getRealComments());
 		hasSetNewValues = true;
+	}
+
+	/**
+	 * Check an an old value and a new value to see
+	 * if they are different.  Uses oldVal.equals(newVal) 
+	 * and also checks nulls. It also counts a newVal of
+	 * "" the same as null.
+	 * @param oldVal The old value to check with.
+	 * @param newVal The new value to check with.
+	 * @return True if they are the same, false otherwise.
+	 */ 
+	private boolean doDiffCheck(Object oldVal, Object newVal) {
+		return ((oldVal == null) && (newVal == null || newVal.equals(""))) ||
+				oldVal.equals(newVal);
+	}
+
+	public boolean hasRealChanges() {
+		if(!hasSetOldValues || !hasSetNewValues) {
+			// error?
+			return false;
+		}
+		return hasRealChanges;
 	}
 
 	public boolean canUndo() {
@@ -91,6 +121,7 @@ public class EditQueryUndoableEdit extends AbstractUndoableEdit {
 			qg.setXPath(oldXPath);
 			qg.setSumAll(oldSumAll);
 			qg.setGroup(oldGroup);
+			fireUndoPerformed(this, this);
 		} else {
 			throw new CannotUndoException();
 		}
@@ -108,6 +139,7 @@ public class EditQueryUndoableEdit extends AbstractUndoableEdit {
 			qg.setXPath(newXPath);
 			qg.setSumAll(newSumAll);
 			qg.setGroup(newGroup);
+			fireRedoPerformed(this, this);
 		} else {
 			throw new CannotRedoException();
 		}

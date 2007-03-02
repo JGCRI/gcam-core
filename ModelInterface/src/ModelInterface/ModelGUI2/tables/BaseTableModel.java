@@ -2,6 +2,7 @@ package ModelInterface.ModelGUI2.tables;
 
 import ModelInterface.ModelGUI2.DOMmodel;
 import ModelInterface.ModelGUI2.Documentation;
+import ModelInterface.InterfaceMain;
 
 import java.util.*;
 import javax.swing.table.AbstractTableModel;
@@ -33,6 +34,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	protected String title;
 	protected Documentation documentation;
 	protected String units;
+	protected boolean remove1975;
 
 	// stuff for filtering
 	// can i move these somewhere
@@ -44,7 +46,18 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	/** 
 	 * Default Constuctor
 	 */
-	public BaseTableModel() {}
+	public BaseTableModel() {
+		// TODO: Create a prefrence to control removing 
+		// the year1975.  Currently this value is just 
+		// taken from the global properties file but it 
+		// should be able to change while the Interface is 
+		// running perhaps even on a per-query basis.
+		Properties globalProperties = InterfaceMain.getInstance().getProperties();
+		String remove75Str;
+		globalProperties.setProperty("remove1975", 
+				remove75Str = globalProperties.getProperty("remove1975", "true"));
+		remove1975 = Boolean.parseBoolean(remove75Str);
+	}
 
 	/**
 	 * Constuctor initializes some necessary data members
@@ -60,6 +73,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 		this.documentation = documentationIn;
 		this.title = ((DOMmodel.DOMNodeAdapter)tp.getLastPathComponent()).getNode().getNodeName();
 		final BaseTableModel thisTableModel = this;
+
 		parentFrame.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent e) {
 				if(e.getPropertyName().equals("Control") || (e.getPropertyName().equals("Table") &&

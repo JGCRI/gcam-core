@@ -340,7 +340,7 @@ public class ComboTableModel extends BaseTableModel{
 				return indRow.get( ((Integer)activeRows.get( row )).intValue() % (indRow.size()) );
 			// these columns represent data
 			}else{
-				Object temp = ((Map)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) );
+				Object temp = ((Map)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( (Integer)activeRows.get(row), col ) );
 				if(temp instanceof Node) {
 					return new Double(((Node)temp).getNodeValue());
 				} else if(temp instanceof Double) {
@@ -369,6 +369,22 @@ public class ComboTableModel extends BaseTableModel{
 			//return ((Node)((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) )).getNodeValue();
 		}
 		return "";
+	}
+
+	/**
+	 * Determine if there is a real data value pointed to at
+	 * at the passed in row and col. This equates to checking
+	 * in the correct Map in TreeMapVector and see if the 
+	 * key at this pos exists.
+	 * @param row The row to check.
+	 * @param col The column to check.
+	 * @return True if there is a real value, false otherwise. 
+	 */ 
+	protected boolean hasValueAt(int row, int col) {
+		return col > leftHeaderVector.size() && 
+			((Map)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() 
+					 / (indRow.size()))).containsKey( 
+					 getKey( (Integer)activeRows.get(row), col ) );
 	}
 
 	/**
@@ -645,8 +661,8 @@ public class ComboTableModel extends BaseTableModel{
 					fullColumn = fullColumn.split("=")[1];
 				}
 				double year = Double.parseDouble( fullColumn );
-				if(yValue != 0 || ((Map)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() 
-								/ (indRow.size()))).get( getKey( row, col ) ) != null) {
+				// only add if yValue is a legit value
+				if(yValue != 0 || hasValueAt(row, col)) {
 					currSeries.add( year, yValue);
 				}
 				/*
@@ -730,11 +746,28 @@ public class ComboTableModel extends BaseTableModel{
 		buildTable(DbViewer.xmlDB.createQuery(qgIn.getCompleteXPath(regions), filterQuery, null), qgIn.isSumAll(), qgIn.getLevelValues());
 		//DbViewer.xmlDB.setQueryFilter("");
 		ind2Name = qgIn.getVariable();
-		activeRows = new Vector( leftSideVector.size() * indRow.size() );
-		for(int i = 0; i < (leftSideVector.size() * indRow.size() ); i++) {
-			activeRows.add(new Integer(i));
-		}
 		indCol.add(0, ind1Name);
+		activeRows = new Vector( leftSideVector.size() * indRow.size() );
+		//int wouldRemove = 0;
+		for(int i = 0; i < (leftSideVector.size() * indRow.size() ); i++) {
+			boolean allNulls = true;
+			for( int col = leftHeaderVector.size() + 1; col < getColumnCount() && allNulls; ++col ) {
+				if(((Map)TreeMapVector.get( i 
+						/ (indRow.size()))).get( getKey( i, col ) ) != null) {
+					allNulls = false;
+				}
+			}
+			// also check levelValues?
+			if(!allNulls) {
+				activeRows.add(new Integer(i));
+				/*
+			} else {
+				activeRows.add(new Integer(i));
+				++wouldRemove;
+				*/
+			}
+		}
+		//System.out.println("Would have cut down "+wouldRemove+" rows");
 		setColNameIndex(qg.getChartLabelColumnName());
 	}
 	private void buildTable(XmlResults res, boolean sumAll, Object[] levelValues) {
@@ -784,6 +817,9 @@ public class ComboTableModel extends BaseTableModel{
 	  } catch(Exception e) {
 		  e.printStackTrace();
 	  }
+	  if(remove1975) {
+		  regions.remove("1975");
+	  }
 	  recAddTables(dataTree, null, regions, years, "");
 	  System.out.println("Level Selected: "+levelValues);
 	  // if we are supposed to have more values then found, add the row,
@@ -801,75 +837,6 @@ public class ComboTableModel extends BaseTableModel{
 	  indCol = new Vector( regions );
 	  ind1Name = qg.getAxis1Name();
 	}
-
-  	private Object[] getRegionAndYearFromNode(XmlValue n, Map filterMaps) throws Exception {
-	  Vector ret = new Vector(2,0);
-	  XmlValue nBefore;
-	  do {
-		  if(n.getNodeName().equals((String)wild.get(0))) {
-			  ret.add(XMLDB.getAttr(n));
-		  } 
-		  if(n.getNodeName().equals((String)wild.get(1))) {
-			  ret.add(XMLDB.getAttr(n, "year"));
-			  /*
-			  //ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
-			  if(!getOneAttrVal(n).equals("fillout=1")) {
-			  	ret.add(getOneAttrVal(n));
-			  } else {
-			        ret.add(getOneAttrVal(n, 1));
-			  }
-			  */
-
-		  } else if(XMLDB.hasAttr(n)) {
-			  Map tempFilter;
-	           	  if (filterMaps.containsKey(n.getNodeName())) {
-	                          tempFilter = (Map)filterMaps.get(n.getNodeName());
-                          } else {
-                                  tempFilter = new HashMap();
-                          }
-			  String attr = XMLDB.getAttr(n);
-			  if (!tempFilter.containsKey(attr)) {
-                          	tempFilter.put(attr, new Boolean(true));
-                          	filterMaps.put(n.getNodeName(), tempFilter);
-			  }
-		  }
-		  nBefore = n;
-		  n = n.getParentNode();
-		  nBefore.delete();
-	  } while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
-	  //} while(!n.isType(XmlValue.DOCUMENT_NODE)); // isType doesn't seem to work at least not how I thought it would
-	  //} while(n.getNodeType() != Node.DOCUMENT_NODE /*&& (region == null || year == null)*/);
-	  n.delete();
-	  DbViewer.xmlDB.printLockStats("getRegionAndYearFromNode");
-	  return ret.toArray();
-  	}
-
-  private Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {
-	  if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
-		  currNode.delete();
-		  return dataTree;
-	  }
-	  Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
-	  // used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
-	  String w = (String)wild.get(0);
-	  //if(currNode.getNodeName().matches(".*sector") || currNode.getNodeName().equals("technology")) {
-	  if((w.equals("supplysector") && currNode.getNodeName().equals("subsector")) || (w.matches(".*sector") && currNode.getNodeName().equals("technology"))) {
-	  //if( ((((String)wild.get(0)).matches(".*[Ss]ector") || ((String)wild.get(1)).matches(".*[Ss]ector"))) && currNode.getNodeName().equals(".*[Ss]ector") ) {
-		  currNode.delete();
-		  return tempMap;
-	  }
-	  if(XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals((String)wild.get(0)) && !currNode.getNodeName().equals((String)wild.get(1))) {
-		String attr = XMLDB.getAllAttr(currNode);
-		attr = currNode.getNodeName()+"@"+attr;
-		if(!tempMap.containsKey(attr)) {
-			tempMap.put(attr, new TreeMap());
-		}
-		currNode.delete();
-		return (Map)tempMap.get(attr);
-	  } 
-	  currNode.delete();
-	  return tempMap;
-  }
   public void exportToExcel(HSSFSheet sheet, HSSFWorkbook wb, HSSFPatriarch dp) {
 	  HSSFRow row = sheet.createRow(sheet.getLastRowNum()+1);
 	  row.createCell((short)0).setCellValue(title);
