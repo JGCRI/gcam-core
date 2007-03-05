@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Iterator;
 import java.util.Vector;
+import java.util.List;
 import java.util.LinkedHashMap;
 import java.util.HashMap;
 import java.util.TreeMap;
@@ -409,6 +410,11 @@ public class ResourceQueryBuilder extends QueryBuilder {
 	}
 	public Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {
 		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
+			List<String> defaultCollapse = new Vector<String>(3);
+			defaultCollapse.add("resource");
+			defaultCollapse.add("subresource");
+			defaultCollapse.add("grade");
+			qg.createCollapseList(defaultCollapse);
 			currNode.delete();
 			return dataTree;
 		}
@@ -418,9 +424,7 @@ public class ResourceQueryBuilder extends QueryBuilder {
 			type = currNode.getNodeName();
 		}
 		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
-		if( (isGlobal && type.equals("region")) 
-				|| (qg.nodeLevel.equals("resource") && type.equals("subresource")) 
-				|| (qg.nodeLevel.matches(".*resource") && type.equals("grade"))) {
+		if( (isGlobal && type.equals("region")) || qg.collapseOnList.contains(type)) {
 			currNode.delete();
 			return tempMap;
 		}

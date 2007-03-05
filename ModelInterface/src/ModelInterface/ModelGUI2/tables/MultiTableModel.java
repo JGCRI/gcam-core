@@ -282,7 +282,8 @@ public class MultiTableModel extends BaseTableModel{
 		  		j++;
 	  		}
 			CopyPaste copyPaste = new CopyPaste( jTable );
-	  		JScrollPane tV = new JScrollPane(jTable);
+	  		JScrollPane tV = new JScrollPane(jTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER,
+					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 			JScrollPane tableView = tV;
 			if(me.getValue() instanceof Double) {
 				JPanel tpanel = new JPanel();
@@ -310,7 +311,10 @@ public class MultiTableModel extends BaseTableModel{
 	  		if(tables == null) {
 		  		tables = new Vector();
 	  		}
-			tables.add(titleStr+"/");
+			String labelStr = titleStr.replace("/", ",   ").replace("@", ": ");
+			labelStr = labelStr.substring(2, labelStr.length());
+			//tables.add(titleStr+"/");
+			tables.add(labelStr);
 	  		tables.add(tableView);
 			return;
 		} else {
@@ -449,6 +453,12 @@ public class MultiTableModel extends BaseTableModel{
 		activeRows = new Vector(tables.size());
 		for(int i = 0; i < tables.size(); i++) {
 			activeRows.add(new Integer(i));
+		}
+		int numTables = getRowCount() / 2;
+		if(numTables > 1) {
+			title += " ("+numTables+" Tables)";
+		} else {
+			title += " (1 Table)";
 		}
 	}
 	private void buildTable(XmlResults res, boolean sumAll, Object[] levelValues) {

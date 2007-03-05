@@ -13,6 +13,7 @@ import org.w3c.dom.NodeList;
 
 import java.awt.Frame;
 import java.util.Vector;
+import java.util.List;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.HashMap;
@@ -20,6 +21,8 @@ import java.util.TreeMap;
 import java.util.Map.Entry;
 import java.util.Iterator;
 import java.util.EventListener;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,6 +53,7 @@ public class QueryGenerator implements java.io.Serializable{
 	public static java.util.List<String> hasYearList;
 	String axis1Name;
 	String axis2Name;
+	List<String> collapseOnList;
 	private transient QueryBuilder qb;
 	int currSel;
 	String labelColumnName;
@@ -645,7 +649,7 @@ public class QueryGenerator implements java.io.Serializable{
 	 * @see getRealComments()
 	 */
 	public String getComments() {
-		return comments != null ? comments : "<i>None</i>";
+		return comments != null && !comments.equals("") ? comments : "<i>None</i>";
 	}
 	/**
 	 * Returns the comments no foolin around like
@@ -936,5 +940,31 @@ public class QueryGenerator implements java.io.Serializable{
 			ie.printStackTrace();
 		}
 		return didChange[0];
+	}
+	/**
+	 * Creates a list of nodes to collapse on.  This is
+	 * based on a list of default values that could be collapsed
+	 * on which is pased in.  Then it will look at the types in
+	 * the XPath and remove any found from the collapse list. For
+	 * example we have default collapse list of: sector, subsector,
+	 * technology and an XPath like *[\@type = 'sector' and ((\@name='electricity') )]
+	 * //*[\@type = 'technology']/output/node()"
+	 *
+	 * Only subsector would be left in the list and thus collapsed upon.
+	 * @param defaultCollapse Nodes which could be collapsed upon.
+	 */
+	public void createCollapseList(List<String> defaultCollapse) {
+		// copy the list?
+		collapseOnList = defaultCollapse;
+		Matcher extractType = Pattern.compile("[^\\/]*@type\\s*=\\s*'(\\w+)'[^\\/]*\\/").matcher(xPath);
+		boolean matchesOne = false;
+		while(extractType.find()) {
+			matchesOne = true;
+			collapseOnList.remove(extractType.group(1));
+		}
+		if(!matchesOne) {
+			// better to not collapse on anything
+			collapseOnList.clear();
+		}
 	}
 }

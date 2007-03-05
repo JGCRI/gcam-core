@@ -86,7 +86,7 @@ public class EditQueryUndoableEdit extends MiAbstractUndoableEdit {
 	 */ 
 	private boolean doDiffCheck(Object oldVal, Object newVal) {
 		return ((oldVal == null) && (newVal == null || newVal.equals(""))) ||
-				oldVal.equals(newVal);
+				newVal.equals(oldVal);
 	}
 
 	public boolean hasRealChanges() {
@@ -106,7 +106,7 @@ public class EditQueryUndoableEdit extends MiAbstractUndoableEdit {
 	}
 
 	public String getPresentationName() {
-		return "Edit Query";
+		return "Edit Query "+qg.toString();
 	}
 
 	public void undo() throws CannotUndoException {
@@ -121,6 +121,7 @@ public class EditQueryUndoableEdit extends MiAbstractUndoableEdit {
 			qg.setXPath(oldXPath);
 			qg.setSumAll(oldSumAll);
 			qg.setGroup(oldGroup);
+			qg.setComments(oldComments);
 			fireUndoPerformed(this, this);
 		} else {
 			throw new CannotUndoException();
@@ -139,6 +140,7 @@ public class EditQueryUndoableEdit extends MiAbstractUndoableEdit {
 			qg.setXPath(newXPath);
 			qg.setSumAll(newSumAll);
 			qg.setGroup(newGroup);
+			qg.setComments(newComments);
 			fireRedoPerformed(this, this);
 		} else {
 			throw new CannotRedoException();

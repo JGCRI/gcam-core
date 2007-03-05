@@ -109,8 +109,6 @@ public class DbViewer implements ActionListener, MenuAdder {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if(evt.getPropertyName().equals("Control")) {
 					if(evt.getOldValue().equals(controlStr) || evt.getOldValue().equals(controlStr+"Same")) {
-						xmlDB.closeDB();
-						xmlDB = null;
 						try {
 							if(queries.hasChanges() && JOptionPane.showConfirmDialog(
 									parentFrame, 
@@ -134,6 +132,11 @@ public class DbViewer implements ActionListener, MenuAdder {
 						((InterfaceMain)parentFrame).getUndoManager().discardAllEdits();
 						((InterfaceMain)parentFrame).refreshUndoRedo();
 						parentFrame.getContentPane().removeAll();
+
+						// closing the db should be the last thing to do in case
+						// other things have pointers to db objects.
+						xmlDB.closeDB();
+						xmlDB = null;
 					}
 					if(evt.getNewValue().equals(controlStr)) {
 						String queryFileName;
@@ -468,17 +471,17 @@ public class DbViewer implements ActionListener, MenuAdder {
 		listPane.add(listScroll);
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout( new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-		buttonPanel.add(Box.createHorizontalGlue());
 		JButton createButton = new JButton("Create");
 		JButton removeButton = new JButton("Remove");
-		final JButton runQueryButton = new JButton("Query");
+		final JButton runQueryButton = new JButton("Run Query");
 		final JButton editButton = new JButton("Edit");
 		editButton.setEnabled(false);
 		runQueryButton.setEnabled(false);
+		buttonPanel.add(runQueryButton);
+		buttonPanel.add(Box.createHorizontalGlue());
 		buttonPanel.add(createButton);
 		buttonPanel.add(removeButton);
 		buttonPanel.add(editButton);
-		buttonPanel.add(runQueryButton);
 		listPane.add(buttonPanel);
 
 		queriesSplit.setLeftComponent(scenarioRegionSplit);
@@ -1154,12 +1157,12 @@ public class DbViewer implements ActionListener, MenuAdder {
 	}
 	private String createCommentTooltip(TreePath path) {
 		QueryGenerator qg = (QueryGenerator)path.getLastPathComponent();
-		StringBuilder ret = new StringBuilder("<html>");
+		StringBuilder ret = new StringBuilder("<html><table cellpadding=\"2\"><tr><td>");
 		for(int i = 1; i < path.getPathCount() -1; ++i) {
 			ret.append(path.getPathComponent(i)).append(":<br>");
 		}
 		ret.append(qg).append("<br><br>Comments:<br>")
-			.append(qg.getComments()).append("</html>");
+			.append(qg.getComments()).append("</td></tr></table></html>");
 		return ret.toString();
 	}
 }

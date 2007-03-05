@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Iterator;
 import java.util.Vector;
+import java.util.List;
 import java.util.LinkedHashMap;
 import java.util.HashMap;
 import java.util.TreeMap;
@@ -463,6 +464,12 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 	}
 	public Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {
 		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
+			List<String> defaultCollapse = new Vector<String>(4);
+			defaultCollapse.add("sector");
+			defaultCollapse.add("subsector");
+			defaultCollapse.add("technology");
+			defaultCollapse.add("emissions");
+			qg.createCollapseList(defaultCollapse);
 			currNode.delete();
 			return dataTree;
 		}
@@ -471,21 +478,8 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		if(type == null) {
 			type = currNode.getNodeName();
 		}
-		//System.out.println("Looking at: "+currNode.getNodeName());
 		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
-		// TODO: I thought I was supposed to try to get rid of the matches..
-		if((currNode.getNodeName().equals("emissions")) || (type != null && ((isGlobal && type.equals("region"))
-				|| (qg.nodeLevel.equals("emissions") && (type.matches(".*sector") || type.equals("technology")))
-				|| (qg.nodeLevel.equals("sector") && type.equals("subsector")) 
-				|| (qg.nodeLevel.matches(".*sector") && type.equals("technology"))))) {
-			/*
-		if((qg.nodeLevel.equals("emissions") && (currNode.getNodeName().matches(".*sector") || currNode.getNodeName().equals("technology")))
-				|| currNode.getNodeName().equals("emissions")
-				|| (isGlobal && currNode.getNodeName().equals("region")) 
-				|| (qg.nodeLevel.equals("supplysector") && currNode.getNodeName().equals("subsector")) 
-				|| (qg.nodeLevel.matches(".*sector") && currNode.getNodeName().equals("technology"))) {
-				*/
-			//System.out.println("Colapsing: "+currNode.getNodeName());
+		if((isGlobal && type.equals("region")) || qg.collapseOnList.contains(type)) {
 			currNode.delete();
 			return tempMap;
 		}

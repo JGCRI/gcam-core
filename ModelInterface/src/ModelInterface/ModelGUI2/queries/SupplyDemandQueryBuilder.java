@@ -13,6 +13,7 @@ import javax.swing.ListSelectionModel;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 import java.util.LinkedHashMap;
 import java.util.HashMap;
@@ -410,6 +411,11 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 	}
 	public Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {
 		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
+			List<String> defaultCollapse = new Vector<String>(3);
+			defaultCollapse.add("sector");
+			defaultCollapse.add("subsector");
+			defaultCollapse.add("technology");
+			qg.createCollapseList(defaultCollapse);
 			currNode.delete();
 			return dataTree;
 		}
@@ -419,9 +425,7 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 			type = currNode.getNodeName();
 		}
 		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
-		if( (isGlobal && type.equals("region")) 
-				|| (qg.nodeLevel.equals("sector") && type.equals("subsector")) 
-				|| ((qg.nodeLevel.equals("sector") || qg.nodeLevel.equals("subsector")) && type.equals("technology"))) {
+		if( (isGlobal && type.equals("region")) || qg.collapseOnList.contains(type)) {
 			currNode.delete();
 			return tempMap;
 		}
