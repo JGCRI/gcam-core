@@ -606,6 +606,10 @@ void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology,
     writeItem( "cost", mCurrentPriceUnit,
                 aTechnology->getCost( investPeriod ), -1 );
 
+    // Write efficiency of the technology.
+    writeItem( "efficiency", "%",
+                aTechnology->getEfficiency( investPeriod ), -1 );
+
     for( int curr = 0; curr < modeltime->getmaxper(); ++curr ){
         if( !aTechnology->mProductionState[ curr ]->isOperating() ){
             continue;
