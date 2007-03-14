@@ -53,6 +53,7 @@
 #include "emissions/include/icarbon_calc.h"
 #include "util/base/include/atom.h"
 #include "land_allocator/include/land_node.h"
+#include "technologies/include/ioutput.h"
 #include "technologies/include/base_technology.h"
 #include "technologies/include/expenditure.h"
 #include "technologies/include/production_technology.h"
@@ -564,6 +565,7 @@ void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology,
 
     const Modeltime* modeltime = scenario->getModeltime();
 
+    // Write out primary output.
     for( int curr = 0; curr < modeltime->getmaxper(); ++curr ){
         if( !aTechnology->mProductionState[ curr ]->isOperating() ){
             continue;
@@ -575,7 +577,7 @@ void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology,
                                        "output", mBuffer, mTabs.get(), attrs );
     }
    
-    // TODO: Write out secondary outputs.
+    // Write out input
     for( int curr = 0; curr < modeltime->getmaxper(); ++curr ){
         if( !aTechnology->mProductionState[ curr ]->isOperating() ){
             continue;
@@ -590,6 +592,23 @@ void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology,
             "input", mBuffer, mTabs.get(), attrs );
     }
 
+    // Write out secondary outputs.
+    // TODO: This is a stopgap solution. Need to consider how to do this in the long run.
+    for( int iOutput = 1; iOutput < aTechnology->mOutputs.size(); ++iOutput ){    
+        for( int curr = 0; curr < modeltime->getmaxper(); ++curr ){
+            if( !aTechnology->mProductionState[ curr ]->isOperating() ){
+                continue;
+            }
+            map<string, string> attrs;
+            attrs[ "year" ] = util::toString( modeltime->getper_to_yr( curr ) );
+            attrs[ "name" ] = aTechnology->mOutputs[ iOutput ]->getName( ); 
+           //TODO need to add units for this
+           // attrs[ "unit" ] = mCurrentOutputUnit; 
+            XMLWriteElementWithAttributes( aTechnology->mOutputs[ iOutput ]->getPhysicalOutput( curr ),
+                                           "secondary-output", mBuffer, mTabs.get(), attrs );
+        }
+    }
+    
     // Determine the investment period of the technology.
     int investPeriod = modeltime->getyr_to_per( aTechnology->year );
 
