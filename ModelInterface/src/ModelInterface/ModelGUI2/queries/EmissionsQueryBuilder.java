@@ -2,6 +2,7 @@ package ModelInterface.ModelGUI2.queries;
 
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.XMLDB;
+import ModelInterface.common.DataPair;
 
 import javax.swing.JList;
 import javax.swing.JButton;
@@ -334,8 +335,9 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			query = sectorQueryPortion+"/"+subsectorQueryPortion+"/"+technologyQueryPortion;
 		}
 		// do I need to substr the ] out of query and add AND ??
-		XmlResults res = DbViewer.xmlDB.createQuery(query+"[child::group[@name='"+gName+"']]/@name", 
-				queryFilter, queryFunctions);
+		XmlResults res = DbViewer.xmlDB.createQuery(queryFilter+query+
+				"[child::group[@name='"+gName+"']]/@name", 
+				queryFunctions, null, null);
 		try {
 			while(res.hasNext()) {
 				ret.append("(@name='").append(res.next().asString()).append("') or ");
@@ -350,18 +352,18 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 	private void createXPath() {
 		qg.xPath = createListPath(8);
 		switch(qg.currSel) {
-			case 3: qg.nodeLevel = "emissions";
+			case 3: qg.nodeLevel = new DataPair<String, String>("emissions", "fuel-name");
 				break;
-			case 4: qg.nodeLevel = "sector";
+			case 4: qg.nodeLevel = new DataPair<String, String>("sector", "name");
 				break;
-			case 5: qg.nodeLevel = "subsector";
+			case 5: qg.nodeLevel = new DataPair<String, String>("subsector", "name");
 				break;
-			case 6: qg.nodeLevel = "technology";
+			case 6: qg.nodeLevel = new DataPair<String, String>("technology", "name");
 				break;
 			default: System.out.println("Error currSel: "+qg.currSel);
 		}
-		qg.axis1Name = qg.nodeLevel;
-		qg.yearLevel = "emissions";
+		qg.axis1Name = qg.nodeLevel.getKey();
+		qg.yearLevel = new DataPair<String, String>("emissions", "year");
 		qg.axis2Name = "Year";
 	}
 	private Map createList(String path, boolean isGroupNames) {
@@ -371,7 +373,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			ret.put("Sum All", new Boolean(false));
 			ret.put("Group All", new Boolean(false));
 		}
-		XmlResults res = DbViewer.xmlDB.createQuery(path, queryFilter, queryFunctions);
+		XmlResults res = DbViewer.xmlDB.createQuery(queryFilter+path, queryFunctions, null, null);
 		try {
 			while(res.hasNext()) {
 				if(!isGroupNames) {
@@ -387,7 +389,6 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		DbViewer.xmlDB.printLockStats("createList");
 		return ret;
 	}
-	protected boolean isGlobal;
 	public String getCompleteXPath(Object[] regions) {
 		boolean added = false;
 		StringBuffer ret = new StringBuffer();
@@ -417,29 +418,26 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		Vector ret = new Vector(2, 0);
 		XmlValue nBefore;
 		do {
-			if(qg.nodeLevel.equals(XMLDB.getAttr(n, "type")) || qg.nodeLevel.equals(n.getNodeName())) {
-				String temp = XMLDB.getAttr(n, "name");
-				//System.out.println("HERE IN nodeLevel: "+temp);
-				if(temp == null) {
-					ret.add(XMLDB.getAttr(n, "fuel-name"));
+			if(qg.nodeLevel.getKey().equals(XMLDB.getAttr(n, "type")) || qg.nodeLevel.getKey().equals(n.getNodeName())) {
+				if(qg.nodeLevel.getValue() == null) {
+					String temp = XMLDB.getAttr(n, "name");
+					if(temp == null) {
+						ret.add(XMLDB.getAttr(n, "fuel-name"));
+					} else {
+						ret.add(temp);
+					}
 				} else {
-					ret.add(temp);
+					ret.add(XMLDB.getAttr(n, qg.nodeLevel.getValue()));
 				}
-				//ret.add(XMLDB.getAttr(n));
 			} 
 			//if(n.getNodeName().equals(qg.yearLevel)) {  Do I want to make this change??
-			if(qg.yearLevel.equals(XMLDB.getAttr(n, "type")) || qg.yearLevel.equals(n.getNodeName())) {
+			if(qg.yearLevel.getKey().equals(XMLDB.getAttr(n, "type")) || qg.yearLevel.getKey().equals(n.getNodeName())) {
 				//System.out.println("HERE IN yearLevel: "+XMLDB.getAttr(n, "year"));
-				ret.add(0, XMLDB.getAttr(n, "year"));
-				/*
-				//ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
-				if(!getOneAttrVal(n).equals("fillout=1")) {
-				ret.add(getOneAttrVal(n));
+				if(qg.yearLevel.getValue() == null) {
+					ret.add(0, XMLDB.getAttr(n, "year"));
 				} else {
-				ret.add(getOneAttrVal(n, 1));
+					ret.add(XMLDB.getAttr(n, qg.yearLevel.getValue()));
 				}
-				*/
-
 			} else if(XMLDB.hasAttr(n)) {
 				Map tempFilter;
 				if (filterMaps.containsKey(n.getNodeName())) {
@@ -483,8 +481,8 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			currNode.delete();
 			return tempMap;
 		}
-		if(XMLDB.hasAttr(currNode) && !qg.nodeLevel.equals(type)
-				&& !qg.yearLevel.equals(type)) {
+		if(XMLDB.hasAttr(currNode) && !qg.nodeLevel.getKey().equals(type)
+				&& !qg.yearLevel.getKey().equals(type)) {
 			String attr = XMLDB.getAllAttr(currNode);
 			//attr = currNode.getNodeName()+"@"+attr;
 			attr = type+"@"+attr;

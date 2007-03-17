@@ -2,6 +2,7 @@ package ModelInterface.ModelGUI2.queries;
 
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.XMLDB;
+import ModelInterface.common.DataPair;
 
 import javax.swing.JList;
 import javax.swing.JButton;
@@ -120,19 +121,20 @@ public class ClimateQueryBuilder extends QueryBuilder {
 			}
 		}
 		qg.xPath = "/climate-model/"+typeSel+"/text()";
-		qg.var = qg.axis1Name = qg.yearLevel = qg.nodeLevel = typeSel;
+		qg.var = qg.axis1Name = typeSel;
+		qg.yearLevel = new DataPair<String, String>(typeSel, "year");
+		qg.nodeLevel = new DataPair<String, String>(typeSel, null);
 		qg.axis2Name = "Year";
 		qg.group = false;
 		qg.sumAll = false;
 	}
-	protected boolean isGlobal;
 	public String getCompleteXPath(Object[] regions) {
 		// ignoring selected regions
 		return qg.xPath;
 	}
 	public Object[] extractAxisInfo(XmlValue n, Map filterMaps) throws Exception {
 		Object[] ret = new Object[2];
-		ret[0] = XMLDB.getAttr(n, "year");
+		ret[0] = XMLDB.getAttr(n, qg.yearLevel.getValue());
 		ret[1] = n.getNodeName();
 		DbViewer.xmlDB.printLockStats("ClimateQueryBuilder.extractAxisInfo");
 		return ret;

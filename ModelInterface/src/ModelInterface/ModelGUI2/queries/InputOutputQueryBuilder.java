@@ -2,6 +2,7 @@ package ModelInterface.ModelGUI2.queries;
 
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.XMLDB;
+import ModelInterface.common.DataPair;
 
 import javax.swing.JList;
 import javax.swing.JButton;
@@ -332,8 +333,10 @@ public class InputOutputQueryBuilder extends QueryBuilder {
 	}
 	*/
 	private void createXPath() {
-		qg.axis1Name = qg.nodeLevel = "input";
-		qg.axis2Name = qg.yearLevel = "sector";
+		qg.axis1Name = "input";
+		qg.nodeLevel = new DataPair<String, String>("input", "name");
+		qg.axis2Name = "sector";
+		qg.yearLevel = new DataPair<String, String>("sector", "name");
 		qg.group = true;
 		qg.var = "demand-currency";
 		// the query for getting the factor supply names is no good becauase I won't be able to filter to the correct
@@ -349,7 +352,7 @@ public class InputOutputQueryBuilder extends QueryBuilder {
 			ret.put("Sum All", new Boolean(false));
 			ret.put("Group All", new Boolean(false));
 		}
-		XmlResults res = DbViewer.xmlDB.createQuery(path, queryFilter, queryFunctions);
+		XmlResults res = DbViewer.xmlDB.createQuery(queryFilter+path, queryFunctions, null, null);
 		try {
 			while(res.hasNext()) {
 				if(!isGroupNames) {
@@ -365,7 +368,6 @@ public class InputOutputQueryBuilder extends QueryBuilder {
 		DbViewer.xmlDB.printLockStats("InputOutputQueryBuilder.createList");
 		return ret;
 	}
-	protected boolean isGlobal;
 	public String getCompleteXPath(Object[] regions) {
 		boolean added = false;
 		StringBuilder regionQ = new StringBuilder();
@@ -454,11 +456,19 @@ public class InputOutputQueryBuilder extends QueryBuilder {
 		XmlValue nBefore;
 		boolean isProductionSector = false;
 		do {
-			if(qg.nodeLevel.equals(XMLDB.getAttr(n, "type"))) {
-				ret.add(XMLDB.getAttr(n, "name"));
+			if(qg.nodeLevel.getKey().equals(XMLDB.getAttr(n, "type"))) {
+				if(qg.nodeLevel.getValue() == null) {
+					ret.add(XMLDB.getAttr(n, "name"));
+				} else { 
+					ret.add(XMLDB.getAttr(n, qg.nodeLevel.getValue()));
+				}
 			} 
-			if(qg.yearLevel.equals(XMLDB.getAttr(n, "type"))) {
-				ret.add(0, XMLDB.getAttr(n, "name"));
+			if(qg.yearLevel.getKey().equals(XMLDB.getAttr(n, "type"))) {
+				if(qg.yearLevel.getValue() == null) {
+					ret.add(0, XMLDB.getAttr(n, "name"));
+				} else {
+					ret.add(XMLDB.getAttr(n, qg.yearLevel.getValue()));
+				}
 				if(isOutput) {
 					//System.out.println("Did set output");
 					ret.add(ret.get(0));

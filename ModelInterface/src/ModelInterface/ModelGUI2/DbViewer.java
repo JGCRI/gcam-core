@@ -6,6 +6,7 @@ import ModelInterface.ModelGUI2.tables.BaseTableModel;
 import ModelInterface.ModelGUI2.tables.ComboTableModel;
 import ModelInterface.ModelGUI2.tables.MultiTableModel;
 import ModelInterface.ModelGUI2.tables.CopyPaste;
+import ModelInterface.ModelGUI2.tables.TableTransferHandler;
 import ModelInterface.ModelGUI2.queries.QueryGenerator;
 import ModelInterface.common.FileChooser;
 import ModelInterface.common.FileChooserFactory;
@@ -31,6 +32,9 @@ import javax.swing.tree.TreePath;
 import javax.swing.filechooser.FileFilter;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
@@ -313,6 +317,12 @@ public class DbViewer implements ActionListener, MenuAdder {
 	private void doOpenDB(File dbFile) {
 		((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", dbFile.getParent());
 		xmlDB = new XMLDB(dbFile.getAbsolutePath(), parentFrame);
+
+		tablesTabs.setTransferHandler(new TableTransferHandler());
+		TabDragListener dragListener = new TabDragListener();
+		tablesTabs.addMouseListener(dragListener);
+		tablesTabs.addMouseMotionListener(dragListener);
+
 		createTableSelector();
 		parentFrame.setTitle("["+dbFile+"] - ModelInterface");
 	}
@@ -321,7 +331,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		XmlValue temp;
 		Vector ret = new Vector();
 		try {
-			XmlResults res = xmlDB.createQuery("/scenario", null, null);
+			XmlResults res = xmlDB.createQuery("/scenario", null, null, null);
 			while(res.hasNext()) {
 				temp = res.next();
 				XmlDocument tempDoc = temp.asDocument();
@@ -344,7 +354,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 	// still have the docName for use when managing the database.
 	// I am leaveing the fields open to direct access as this is merely a struct
 	// and there is no point in create getter/setters
-	private class ScenarioListItem {
+	public class ScenarioListItem {
 		String docName;
 		String scnName;
 		String scnDate;
@@ -357,6 +367,15 @@ public class DbViewer implements ActionListener, MenuAdder {
 			// do not display docName to avoid clutter
 			return scnName+' '+scnDate;
 		}
+		public String getDocName() {
+			return docName;
+		}
+		public String getScnName() {
+			return scnName;
+		}
+		public String getScnDate() {
+			return scnDate;
+		}
 	}
 
 	protected Vector getRegions() {
@@ -365,7 +384,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		Vector ret = new Vector();
 		try {
 			XmlResults res = xmlDB.createQuery("/scenario/world/"+
-					ModelInterface.ModelGUI2.queries.QueryBuilder.regionQueryPortion+"/@name", null, funcTemp);
+					ModelInterface.ModelGUI2.queries.QueryBuilder.regionQueryPortion+"/@name", funcTemp, null, null);
 			while(res.hasNext()) {
 				ret.add(res.next().asString());
 			}
@@ -384,27 +403,6 @@ public class DbViewer implements ActionListener, MenuAdder {
 		XPathEvaluatorImpl xpeImpl = new XPathEvaluatorImpl(queriesDoc);
 		XPathResult res = (XPathResult)xpeImpl.createExpression("/queries", xpeImpl.createNSResolver(queriesDoc.getDocumentElement())).evaluate(queriesDoc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
 		return new QueryTreeModel(res.iterateNext());
-	}
-
-	protected String createFilteredQuery(Vector scns, int[] scnSel/*, Vector regions, int[]regionSel*/) {
-		StringBuffer ret = new StringBuffer("/");
-		boolean added = false;
-		for(int i = 0; i < scnSel.length; ++i) {
-			//String[] attrs = ((String)scns.get(scnSel[i])).split("\\s");
-			ScenarioListItem temp = (ScenarioListItem)scns.get(scnSel[i]);
-			if(!added) {
-				ret.append("scenario[ ");
-				added = true;
-			} else {
-				ret.append(" or ");
-			}
-			//ret.append("(@name='").append(attrs[1]).append("' and @date='").append(attrs[2]).append("')");
-			ret.append("(@name='").append(temp.scnName).append("' and @date='").append(temp.scnDate).append("')");
-		}
-		ret.append(" ]/world/");
-		System.out.println(ret);
-		return ret.toString();
-		//xmlDB.setQueryFilter(ret.toString());
 	}
 
 	protected void createTableSelector() {
@@ -577,18 +575,17 @@ public class DbViewer implements ActionListener, MenuAdder {
 					JOptionPane.showMessageDialog(parentFrame, "Please select a query to run", 
 						"Run Query Error", JOptionPane.ERROR_MESSAGE);
 				} else {
-					String tempFilterQuery = createFilteredQuery(scns, scnSel);
 					parentFrame.getGlassPane().setVisible(true);
 					TreePath[] selPaths = queryList.getSelectionPaths();
 					boolean movedTabAlready = false;
 					for(int i = 0; i < selPaths.length; ++i) {
 						try {
 							QueryGenerator qg = (QueryGenerator)selPaths[i].getLastPathComponent();
-							Container ret = null;
+							JComponent ret = null;
 							if(qg.isGroup()) {
-								ret = createGroupTableContent(qg, tempFilterQuery);
+								ret = createGroupTableContent(qg);
 							} else {
-								ret = createSingleTableContent(qg, tempFilterQuery);
+								ret = createSingleTableContent(qg);
 							}
 							if(ret != null) {
 								tablesTabs.addTab(qg.toString(), new TabCloseIcon(), ret, 
@@ -633,11 +630,13 @@ public class DbViewer implements ActionListener, MenuAdder {
 		parentFrame.setVisible(true);
 	}
 
-	private Container createGroupTableContent(QueryGenerator qg, String tempFilterQuery) {
+	private JComponent createGroupTableContent(QueryGenerator qg) {
 		BaseTableModel btBefore = bt;
 		try {
-			bt = new MultiTableModel(qg, tempFilterQuery, regionList.getSelectedValues(), parentFrame);
+			bt = new MultiTableModel(qg, scnList.getSelectedValues(), 
+					regionList.getSelectedValues(), parentFrame);
 		} catch(NullPointerException e) {
+			e.printStackTrace();
 			System.out.println("Warning null pointer while creating MultiTableModel");
 			System.out.println("Likely the query didn't get any results");
 			bt = btBefore;
@@ -652,10 +651,11 @@ public class DbViewer implements ActionListener, MenuAdder {
 		return jsp;
 	}
 
-	private Container createSingleTableContent(QueryGenerator qg, String tempFilterQuery) {
+	private JComponent createSingleTableContent(QueryGenerator qg) {
 		BaseTableModel btBefore = bt;
 		try {
-			bt = new ComboTableModel(qg, tempFilterQuery, regionList.getSelectedValues(), parentFrame);
+			bt = new ComboTableModel(qg, scnList.getSelectedValues(), 
+					regionList.getSelectedValues(), parentFrame);
 		} catch(NullPointerException e) {
 			System.out.println("Warning null pointer while creating ComboTableModel");
 			System.out.println("Likely the query didn't get any results");
@@ -952,7 +952,6 @@ public class DbViewer implements ActionListener, MenuAdder {
 
 	protected void batchQuery(File queryFile, File excelFile) {
 		Node tempNode;
-		int[] scnSel;
 		HSSFWorkbook wb = null;
 		HSSFSheet sheet = null;
 		QueryGenerator qgTemp = null;
@@ -1014,7 +1013,6 @@ public class DbViewer implements ActionListener, MenuAdder {
 		if(scenarioList.isSelectionEmpty()) {
 			return;
 		}
-		scnSel = scenarioList.getSelectedIndices();
 
 		// read the batch query file
 		Document queries = readQueries( queryFile );
@@ -1035,34 +1033,26 @@ public class DbViewer implements ActionListener, MenuAdder {
 		}
 		//TODO: add a progress bar
 		while((tempNode = res.iterateNext()) != null) {
-			//tempScns.removeAllElements();
 			tempRegions.removeAllElements();
 			NodeList nl = tempNode.getChildNodes();
 			for(int i = 0; i < nl.getLength(); ++i) {
 				Element currEl = (Element)nl.item(i);
-				/* Scenarios will be selected from a dialog
-				if(currEl.getNodeName().equals("scenario")) {
-					tempScns.add("a "+currEl.getAttribute("name")+' '+currEl.getAttribute("date"));
-					*/
 				if(currEl.getNodeName().equals("region")) {
 					tempRegions.add(currEl.getAttribute("name"));
 				} else {
 					qgTemp = new QueryGenerator(currEl);
 				}
 			}
-			/*
-			scnSel = new int[tempScns.size()];
-			for(int i = 0; i < scnSel.length; ++i) {
-				scnSel[i] = i;
-			}
-			*/
-			String tempFilterQuery = createFilteredQuery(tempScns, scnSel);
 			sheet = wb.createSheet("Sheet"+String.valueOf(wb.getNumberOfSheets()+1));
 			try {
 				if(qgTemp.isGroup()) {
-					(new MultiTableModel(qgTemp, tempFilterQuery, tempRegions.toArray(), parentFrame)).exportToExcel(sheet, wb, sheet.createDrawingPatriarch());
+					(new MultiTableModel(qgTemp, scenarioList.getSelectedValues(), 
+							     tempRegions.toArray(), 
+							     parentFrame)).exportToExcel(sheet, wb, sheet.createDrawingPatriarch());
 				} else {
-					(new ComboTableModel(qgTemp, tempFilterQuery, tempRegions.toArray(), parentFrame)).exportToExcel(sheet, wb, sheet.createDrawingPatriarch());
+					(new ComboTableModel(qgTemp, scenarioList.getSelectedValues(), 
+							     tempRegions.toArray(), 
+							     parentFrame)).exportToExcel(sheet, wb, sheet.createDrawingPatriarch());
 				}
 			} catch(NullPointerException e) {
 				System.out.println("Warning possible that a query didn't get results");
@@ -1164,5 +1154,44 @@ public class DbViewer implements ActionListener, MenuAdder {
 		ret.append(qg).append("<br><br>Comments:<br>")
 			.append(qg.getComments()).append("</td></tr></table></html>");
 		return ret.toString();
+	}
+	private class TabDragListener implements MouseListener, MouseMotionListener {
+		MouseEvent firstMouseEvent = null;
+		public void mousePressed(MouseEvent e) {
+			if(tablesTabs.getTabCount() > 0 && 
+					tablesTabs.getBoundsAt(tablesTabs.getSelectedIndex()).contains(e.getPoint())) {
+				firstMouseEvent = e;
+				e.consume();
+			}
+		}
+		public void mouseDragged(MouseEvent e) {
+			if(firstMouseEvent != null) {
+				e.consume();
+
+				//TODO: maybe cut would be possible, for now just copy
+				// if we do cut we would probably want to do ctrl mask
+				// for cut not paste.
+				int action = TransferHandler.COPY;
+
+				int dx = Math.abs(e.getX() - firstMouseEvent.getX());
+				int dy = Math.abs(e.getY() - firstMouseEvent.getY());
+				// Arbitrarily define a 5-pixel shift as the
+				// official beginning of a drag.
+				if (dx > 5 || dy > 5) {
+					JComponent c = (JComponent)e.getSource();
+					//Tell the transfer handler to initiate the drag.
+					tablesTabs.getTransferHandler().exportAsDrag(tablesTabs, 
+							firstMouseEvent, action);
+					firstMouseEvent = null;
+				}
+
+			}
+		}
+		// all the events we don't care about..
+		public void mouseMoved(MouseEvent e) {}
+		public void mouseEntered(MouseEvent e) {}
+		public void mouseExited(MouseEvent e) {}
+		public void mouseClicked(MouseEvent e) {}
+		public void mouseReleased(MouseEvent e) {}
 	}
 }

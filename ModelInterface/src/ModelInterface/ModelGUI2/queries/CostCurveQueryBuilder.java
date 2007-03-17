@@ -2,6 +2,7 @@ package ModelInterface.ModelGUI2.queries;
 
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.XMLDB;
+import ModelInterface.common.DataPair;
 
 import javax.swing.JList;
 import javax.swing.JButton;
@@ -145,18 +146,22 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 		}
 		if(typeSel.equals("RegionalDiscountedCosts")) {
 			qg.xPath = "/text()";
-			qg.axis1Name = qg.yearLevel = qg.nodeLevel = "DiscountedCost";
+			qg.axis1Name = "DiscountedCost";
+			qg.yearLevel = new DataPair<String, String>("DiscountedCost", null);
+			qg.nodeLevel = new DataPair<String, String>("DiscountedCost", null);
 			qg.axis2Name = "Region";
 			qg.var = "Discounted Cost";
 		} else if(typeSel.equals("RegionalUndiscountedCosts")) {
 			qg.xPath = "/text()";
-			qg.axis1Name = qg.yearLevel = qg.nodeLevel = "UndiscountedCost";
+			qg.axis1Name = "UndiscountedCost";
+			qg.yearLevel = new DataPair<String, String>("UndiscountedCost", null);
+			qg.nodeLevel = new DataPair<String, String>("UndiscountedCost", null);
 			qg.axis2Name = "Region";
 			qg.var = "Undiscounted Cost";
 		} else {
 			qg.xPath = "PointSet/DataPoint/y/text()";
-			qg.nodeLevel = "Curve";
-			qg.yearLevel = "DataPoint";
+			qg.nodeLevel = new DataPair<String, String>("Curve", null);
+			qg.yearLevel = new DataPair<String, String>("DataPoint", null);
 			qg.axis1Name = "Region";
 			qg.var = "Cost";
 			if(typeSel.equals("RegionalCostCurvesByPeriod")) {
@@ -168,7 +173,6 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 		qg.group = false;
 		qg.sumAll = false;
 	}
-	protected boolean isGlobal;
 	public String getCompleteXPath(Object[] regions) {
 		System.out.println("Trying to complete xpath");
 		StringBuffer strBuff = new StringBuffer();
@@ -228,9 +232,9 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 		Vector ret = new Vector(2, 0);
 		XmlValue nBefore;
 		do {
-			if(n.getNodeName().equals(qg.nodeLevel)) {
-				if(qg.nodeLevel.equals("UndiscountedCost") || qg.nodeLevel.equals("DiscountedCost")) {
-					ret.add(qg.nodeLevel);
+			if(n.getNodeName().equals(qg.nodeLevel.getKey())) {
+				if(qg.nodeLevel.getKey().equals("UndiscountedCost") || qg.nodeLevel.getKey().equals("DiscountedCost")) {
+					ret.add(qg.nodeLevel.getKey());
 					/*
 				} else if(qg.yearLevel.equals("DataPoint")) {
 					// check the locks after this line, It might leave some
@@ -263,8 +267,8 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 					
 				//ret.add(XMLDB.getAttr(n, "name"));
 			} 
-			if(n.getNodeName().equals(qg.yearLevel)) {
-				if(qg.nodeLevel.equals("UndiscountedCost") || qg.nodeLevel.equals("DiscountedCost")) {
+			if(n.getNodeName().equals(qg.yearLevel.getKey())) {
+				if(qg.nodeLevel.getKey().equals("UndiscountedCost") || qg.nodeLevel.getKey().equals("DiscountedCost")) {
 					if(isGlobal) {
 						ret.add(0, "Global");
 					} else {
@@ -291,7 +295,7 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 				}
 				*/
 
-			} else if(XMLDB.hasAttr(n) && !n.getNodeName().equals(qg.nodeLevel)) {
+			} else if(XMLDB.hasAttr(n) && !n.getNodeName().equals(qg.nodeLevel.getKey())) {
 				Map tempFilter;
 				if (filterMaps.containsKey(n.getNodeName())) {
 					tempFilter = (HashMap)filterMaps.get(n.getNodeName());
@@ -324,8 +328,8 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 			return tempMap;
 		}
 		*/
-		if(XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals(qg.nodeLevel) 
-				&& !currNode.getNodeName().equals(qg.yearLevel)) {
+		if(XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals(qg.nodeLevel.getKey()) 
+				&& !currNode.getNodeName().equals(qg.yearLevel.getKey())) {
 			String attr = XMLDB.getAllAttr(currNode);
 			attr = currNode.getNodeName()+"@"+attr;
 			if(!tempMap.containsKey(attr)) {

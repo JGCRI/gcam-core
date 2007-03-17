@@ -437,7 +437,7 @@ public class MultiTableModel extends BaseTableModel{
 	}
 
 	QueryGenerator qg;
-	public MultiTableModel(QueryGenerator qgIn, String queryFilter, Object[] regions, JFrame parentFrameIn) {
+	public MultiTableModel(QueryGenerator qgIn, Object[] scenarios, Object[] regions, JFrame parentFrameIn) {
 		qg = qgIn;
 		parentFrame = parentFrameIn;
 		//title = qgIn.getVariable();
@@ -447,7 +447,7 @@ public class MultiTableModel extends BaseTableModel{
 		wild.add(qgIn.getYearLevel());
 		System.out.println("Query is "+qgIn.getCompleteXPath(regions));
 		System.out.println("Before Function: "+System.currentTimeMillis());
-		buildTable(DbViewer.xmlDB.createQuery(qgIn.getCompleteXPath(regions), queryFilter, null), qgIn.isSumAll(), qgIn.getLevelValues());
+		buildTable(DbViewer.xmlDB.createQuery(qgIn, scenarios, regions), qgIn.isSumAll(), qgIn.getLevelValues());
 		tableEditor = new TableEditor();
 		tableRenderer = new TableRenderer();
 		activeRows = new Vector(tables.size());
@@ -485,7 +485,6 @@ public class MultiTableModel extends BaseTableModel{
 		  while(res.hasNext()) {
 			  tempNode = res.next();
 			  regionAndYear = qg.extractAxisInfo(tempNode.getParentNode(), tableFilterMaps);
-			  String parentNodeName = tempNode.getParentNode().getNodeName();
 			  if(units == null) {
 				  units = XMLDB.getAttr(tempNode.getParentNode(), "unit");
 			  }
@@ -590,5 +589,14 @@ public class MultiTableModel extends BaseTableModel{
   public void annotate(int[] rows, int[] cols, Documentation documentation) {
 	  JTable jTable = (JTable)((JScrollPane)getValueAt(rows[0], cols[0])).getViewport().getView();
 	  ((BaseTableModel)jTable.getModel()).annotate(jTable.getSelectedRows(), jTable.getSelectedColumns(), documentation);
+  }
+  public String exportToText() {
+	  String lineEnding = System.getProperty("line.separator");
+	  StringBuilder ret = new StringBuilder();
+	  for(int i = 0; i < getRowCount(); i += 2) {
+		  ret.append(getValueAt(i, 0).toString()).append(lineEnding)
+					  .append(getModelAt(i+1).exportToText());
+	  }
+	  return ret.toString();
   }
 }

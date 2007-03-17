@@ -2,6 +2,7 @@ package ModelInterface.ModelGUI2.queries;
 
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.XMLDB;
+import ModelInterface.common.DataPair;
 
 import javax.swing.JList;
 import javax.swing.JButton;
@@ -291,7 +292,7 @@ public class ResourceQueryBuilder extends QueryBuilder {
 			query = "*/"+subresourceQueryPortion+"/grade[child::group[@name='"+gName+"']]/@name";
 		}
 		//XmlResults res = DbViewer.xmlDB.createQuery(query+"[child::group[@name='"+gName+"']]/@name");
-		XmlResults res = DbViewer.xmlDB.createQuery(query, queryFilter, queryFunctions);
+		XmlResults res = DbViewer.xmlDB.createQuery(queryFilter+query, queryFunctions, null, null);
 		try {
 			while(res.hasNext()) {
 				ret.append("(@name='").append(res.next().asString()).append("') or ");
@@ -306,19 +307,19 @@ public class ResourceQueryBuilder extends QueryBuilder {
 	private void createXPath() {
 		qg.xPath = createListPath(6);
 		switch(qg.currSel) {
-			case 3: qg.nodeLevel = "resource";
+			case 3: qg.nodeLevel = new DataPair<String, String>("resource", "name");
 				qg.axis1Name = "resource";
 				break;
-			case 4: qg.nodeLevel = "subresource";
-				qg.axis1Name = qg.nodeLevel;
+			case 4: qg.nodeLevel = new DataPair<String, String>("subresource", "name");
+				qg.axis1Name = qg.nodeLevel.getKey();
 				break;
-			case 5: qg.nodeLevel = "grade";
-				qg.axis1Name = qg.nodeLevel;
+			case 5: qg.nodeLevel = new DataPair<String, String>("grade", "name");
+				qg.axis1Name = qg.nodeLevel.getKey();
 				break;
 			default: System.out.println("Error currSel: "+qg.currSel);
 		}
 		// default axis1Name to nodeLevel
-		qg.yearLevel = qg.var;
+		qg.yearLevel = new DataPair<String, String>(qg.var, "year");
 		qg.axis2Name = "Year";
 	}
 	private Map createList(String path, boolean isGroupNames) {
@@ -327,7 +328,7 @@ public class ResourceQueryBuilder extends QueryBuilder {
 			ret.put("Sum All", new Boolean(false));
 			ret.put("Group All", new Boolean(false));
 		}
-		XmlResults res = DbViewer.xmlDB.createQuery(path, queryFilter, queryFunctions);
+		XmlResults res = DbViewer.xmlDB.createQuery(queryFilter+path, queryFunctions, null, null);
 		try {
 			while(res.hasNext()) {
 				if(!isGroupNames) {
@@ -343,7 +344,6 @@ public class ResourceQueryBuilder extends QueryBuilder {
 		DbViewer.xmlDB.printLockStats("createList");
 		return ret;
 	}
-	protected boolean isGlobal;
 	public String getCompleteXPath(Object[] regions) {
 		boolean added = false;
 		StringBuffer ret = new StringBuffer();
@@ -373,20 +373,19 @@ public class ResourceQueryBuilder extends QueryBuilder {
 		Vector ret = new Vector(2, 0);
 		XmlValue nBefore;
 		do {
-			if(n.getNodeName().matches(qg.nodeLevel) || qg.nodeLevel.equals(XMLDB.getAttr(n, "type"))) {
-				ret.add(XMLDB.getAttr(n, "name"));
-			} 
-			if(n.getNodeName().equals(qg.yearLevel)) {
-				ret.add(0, XMLDB.getAttr(n, "year"));
-				/*
-				//ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
-				if(!getOneAttrVal(n).equals("fillout=1")) {
-				ret.add(getOneAttrVal(n));
+			if(n.getNodeName().matches(qg.nodeLevel.getKey()) || qg.nodeLevel.getKey().equals(XMLDB.getAttr(n, "type"))) {
+				if(qg.nodeLevel.getValue() == null) {
+					ret.add(XMLDB.getAttr(n, "name"));
 				} else {
-				ret.add(getOneAttrVal(n, 1));
+					ret.add(XMLDB.getAttr(n, qg.nodeLevel.getValue()));
 				}
-				*/
-
+			} 
+			if(n.getNodeName().equals(qg.yearLevel.getKey())) {
+				if(qg.yearLevel.getValue() == null) {
+					ret.add(0, XMLDB.getAttr(n, "year"));
+				} else {
+					ret.add(XMLDB.getAttr(n, qg.yearLevel.getValue()));
+				}
 			} else if(XMLDB.hasAttr(n)) {
 				Map tempFilter;
 				if (filterMaps.containsKey(n.getNodeName())) {
@@ -428,8 +427,8 @@ public class ResourceQueryBuilder extends QueryBuilder {
 			currNode.delete();
 			return tempMap;
 		}
-		if(XMLDB.hasAttr(currNode) && !type.equals(qg.nodeLevel) 
-				&& !type.equals(qg.yearLevel)) {
+		if(XMLDB.hasAttr(currNode) && !type.equals(qg.nodeLevel.getKey()) 
+				&& !type.equals(qg.yearLevel.getKey())) {
 			String attr = XMLDB.getAllAttr(currNode);
 			//attr = currNode.getNodeName()+"@"+attr;
 			attr = type+"@"+attr;

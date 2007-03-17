@@ -615,4 +615,25 @@ public abstract class BaseTableModel extends AbstractTableModel {
 		// correct event to fire?
 		fireTableStructureChanged();
 	}
+
+	/**
+	 * Used to export a table to text. There is a newline between rows and
+	 * a tab between columns.
+	 * @return A String which represents this table.
+	 */
+       public String exportToText() {
+	       String lineEnding = System.getProperty("line.separator");
+	       StringBuilder ret = new StringBuilder();
+	       for(int i = 0; i < getColumnCount(); ++i) {
+		       ret.append(getColumnName(i)).append("\t");
+	       }
+	       ret.append(lineEnding);
+	       for(int row = 0; row < getRowCount(); ++row) {
+		       for(int col = 0; col < getColumnCount(); ++col) {
+			       ret.append(getValueAt(row, col).toString()).append("\t");
+		       }
+		       ret.append(lineEnding);
+	       }
+	       return ret.toString();
+       }
 }

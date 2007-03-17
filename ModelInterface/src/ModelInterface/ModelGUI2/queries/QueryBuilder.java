@@ -24,6 +24,7 @@ public abstract class QueryBuilder implements java.io.Serializable {
 	protected QueryGenerator qg;
 	protected String queryFilter;
 	protected Vector<String> queryFunctions;
+	boolean isGlobal;
 	protected QueryBuilder(QueryGenerator qgIn) {
 		qg = qgIn;
 		queryFilter = "";

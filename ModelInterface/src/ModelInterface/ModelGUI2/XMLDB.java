@@ -1,6 +1,8 @@
 package ModelInterface.ModelGUI2;
 
 import ModelInterface.ModelGUI2.queries.*;
+import ModelInterface.ModelGUI2.xmldb.QueryBinding;
+import ModelInterface.ModelGUI2.xmldb.QueryBindingFactory;
 
 import java.io.*;
 import java.util.*;
@@ -39,9 +41,9 @@ public class XMLDB {
 		try {
 			String path = dbPath.substring(0, dbPath.lastIndexOf(System.getProperty("file.separator")));
 			boolean didUpgradeEnv = false;
-			//try {
+			try {
 				dbEnv = new Environment(new File(path), envConfig);
-				/* This code is avaibale in 2.3.8 which is not working right..
+				// This code is avaibale in 2.3.8 which is not working right..
 			} catch(VersionMismatchException vme) {
 				int ans = JOptionPane.showConfirmDialog(parentFrame, "The version of the selected database does not match the version\nof the database library. Do you want to attempt to upgrade?\n\nWarning: Upgrading could cause loss of data, it is recomended\nthat you backup your database first.", "DB Version Mismatch Error", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 				if(ans == JOptionPane.YES_OPTION) {
@@ -54,7 +56,7 @@ public class XMLDB {
 					return;
 				}
 			}
-			*/
+			// end 2.3.8 code
 			LockStats ls = dbEnv.getLockStats(StatsConfig.DEFAULT);
 			System.out.println("Current Locks: "+ls.getNumLocks());
 			System.out.println("Current Lockers: "+ls.getNumLockers());
@@ -240,12 +242,6 @@ public class XMLDB {
 	public void removeDoc(String docName) {
 		try {
 			System.out.println("Removing :"+docName);
-			/*
-			XmlResults res = createQuery("/scenario");
-			while(res.hasNext()) {
-				myContainer.deleteDocument(res.next().asDocument(), uc);
-			}
-			*/
 			myContainer.deleteDocument(docName, uc);
 			printLockStats("removeDoc");
 		} catch(XmlException e) {
@@ -276,43 +272,12 @@ public class XMLDB {
 		}
 		return false;
 	}
-	
-	public XmlResults createQuery(String query, String queryFilter, Vector<String> queryFunctions) {
-		StringBuilder queryBuff = new StringBuilder();
-		String[] queries = query.split("\\s*\\|\\s*");
-		if(queryFunctions != null) {
-			for(Iterator i = queryFunctions.iterator(); i.hasNext(); ) {
-				queryBuff.append(i.next()).append('(');
-			}
-		}
-		for(String currQuery : queries) {
-			queryBuff.append("collection('").append(contName).append("')");
-			if(queryFilter != null) {
-				queryBuff.append(queryFilter);
-			}
-			queryBuff.append(currQuery).append(" | ");
-		}
-		queryBuff.delete(queryBuff.length()-3, queryBuff.length());
-		if(queryFunctions != null) {
-			for(int i = 0; i < queryFunctions.size(); ++i) {
-				if(queryFunctions.get(i).startsWith("declare")) {
-					queryBuff.append(", ())");
-				} else {
-					queryBuff.append(')');
-				}
-			}
-		}
-		/*
-		query = queryFunction + "collection('"+contName+"')" + queryFilter + query;
-		if(!queryFunction.equals("")) {
-			if(queryFunction.startsWith("declare")) {
-				query += ", ())";
-			} else {
-				query += ")";
-			}
-		}
-		*/
-		System.out.println("About to perform query: "+queryBuff.toString());
+
+	public XmlResults createQuery(String query, Vector<String> queryFunctions, 
+			Object[] scenarios, Object[] regions) {
+		String queryComplete = QueryBindingFactory.getQueryBinding(query, queryFunctions, contName)
+			.bindToQuery(scenarios, regions);
+		System.out.println("About to perform query: "+queryComplete);
 		try {
 			XmlQueryContext qc = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
 			/*
@@ -320,7 +285,25 @@ public class XMLDB {
 			System.out.println("Query Plan: "+qeTemp.getQueryPlan());
 			return qeTemp.execute(qc);
 			*/
-			return manager.query(queryBuff.toString(), qc);
+			return manager.query(queryComplete, qc);
+		} catch(XmlException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public XmlResults createQuery(QueryGenerator qg, Object[] scenarios, Object[] regions) {
+		String queryComplete = QueryBindingFactory.getQueryBinding(qg, contName)
+			.bindToQuery(scenarios, regions);
+		System.out.println("About to perform query: "+queryComplete);
+		try {
+			XmlQueryContext qc = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
+			/*
+			XmlQueryExpression qeTemp = manager.prepare(queryBuff.toString(), qc);
+			System.out.println("Query Plan: "+qeTemp.getQueryPlan());
+			return qeTemp.execute(qc);
+			*/
+			return manager.query(queryComplete, qc);
 		} catch(XmlException e) {
 			e.printStackTrace();
 			return null;
@@ -403,7 +386,8 @@ public class XMLDB {
 		while(attrRes.hasNext()) {
 			temp = attrRes.next();
 			if(temp.getNodeName().indexOf(":") == -1 && !temp.getNodeName().equals("name") &&
-					!temp.getNodeName().equals("type")) {
+					!temp.getNodeName().equals("type") && 
+					!temp.getNodeName().equals("year")) {
 				ret += ","+temp.getNodeName()+"="+temp.getNodeValue();
 			}
 			temp.delete();
@@ -413,7 +397,10 @@ public class XMLDB {
 		return ret.substring(1);
 	}
 	public String getQueryFunctionAsDistinctNames() {
+		/* Does not work anymore since BDBXML 2.3
 		return "declare function local:distinct-node-names ($arg as node()*, $before_a as xs:string*) as xs:string* {    for $a at $apos in $arg  let $b := fn:local-name($a), $c_before := fn:count($before_a) + $apos - $apos, $before_a := fn:distinct-values(fn:insert-before($before_a, 0, $b))  where not(fn:count($before_a) = $c_before)  return $b }; local:distinct-node-names";
+		*/
+		return "declare function local:distinct-node-names ($args as node()*) as xs:string* { fn:distinct-values(for $nname in $args return fn:local-name($nname)) }; local:distinct-node-names";
 	}
 	public void setValue(XmlValue val, String content) {
 		try {
@@ -430,7 +417,12 @@ public class XMLDB {
 	public void addVarMetaData(Frame parentFrame) {
 		try {
 			XmlQueryContext qc = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Eager);
-			final XmlResults res = manager.query("collection('"+contName+"')/*[fn:empty(dbxml:metadata('var'))]", qc);
+			printLockStats("Before check md query");
+			// since we moved to dbxml 2.3 it can't find var through queries (namespace issue?) so we will
+			// now search for demographicsVar
+			final XmlResults res = manager.query(
+					"collection('"+contName+"')/*[fn:empty(dbxml:metadata('var'))]", qc);
+			printLockStats("after check md query");
 			uc.setApplyChangesToContainers(true);
 			// instead of having to determine the size of prog bar, should be figured out
 			// by the number of query builders..
@@ -446,23 +438,28 @@ public class XMLDB {
 					try {
 					XmlResults tempRes;
 					XmlValue tempVal;
-					//int numDone = 0;
 					while(res.hasNext()) {
 						System.out.println("Getting new MetaData");
+						printLockStats("before get tempVal");
 						tempVal = res.next();
-						String path = "local:distinct-node-names(/scenario/world/*[@type='region']/demographics//*[fn:count(child::text()) = 1], ())";
+						printLockStats("after get tempVal");
+						String path = "local:distinct-node-names(/scenario/world/*[@type='region']/demographics//*[fn:count(child::text()) = 1])";
 						tempRes = getVars(tempVal, path);
 						StringBuffer strBuff = new StringBuffer();
 						while(tempRes.hasNext()) {
+							System.out.println("adding");
 							strBuff.append(tempRes.next().asString());
 							strBuff.append(';');
 						}
+						printLockStats("after first var look-up");
 						XmlDocument docTemp = tempVal.asDocument();
+						printLockStats("after get document");
 						docTemp.setMetaData("", "demographicsVar", new XmlValue(strBuff.toString()));
 						tempRes.delete();
 						SwingUtilities.invokeLater(incProgress);
+						printLockStats("After done adding demoVar");
 
-						path = "local:distinct-node-names(/scenario/world/*[@type='region']/*[@type='sector']/*[@type='subsector']/*[@type='technology']/*[fn:count(child::text()) = 1], ())";
+						path = "local:distinct-node-names(/scenario/world/*[@type='region']/*[@type='sector']/*[@type='subsector']/*[@type='technology']/*[fn:count(child::text()) = 1])";
 						tempRes = getVars(tempVal, path);
 						strBuff = new StringBuffer();
 						while(tempRes.hasNext()) {
@@ -494,7 +491,7 @@ public class XMLDB {
 						tempRes.delete();
 						SwingUtilities.invokeLater(incProgress);
 
-						path = "local:distinct-node-names(/scenario/world/climate-model/*[fn:count(child::text()) = 1], ())";
+						path = "local:distinct-node-names(/scenario/world/climate-model/*[fn:count(child::text()) = 1])";
 						tempRes = getVars(tempVal, path);
 						strBuff = new StringBuffer();
 						while(tempRes.hasNext()) {
@@ -505,7 +502,7 @@ public class XMLDB {
 						tempRes.delete();
 						SwingUtilities.invokeLater(incProgress);
 
-						path = "local:distinct-node-names(//LandLeaf/*[fn:count(child::text()) = 1], ())";
+						path = "local:distinct-node-names(//LandLeaf/*[fn:count(child::text()) = 1])";
 						tempRes = getVars(tempVal, path);
 						strBuff = new StringBuffer();
 						while(tempRes.hasNext()) {
@@ -516,7 +513,7 @@ public class XMLDB {
 						tempRes.delete();
 						SwingUtilities.invokeLater(incProgress);
 
-						path = "local:distinct-node-names(/scenario/world/*[@type='region']/GDP/*[fn:count(child::text()) = 1], ())";
+						path = "local:distinct-node-names(/scenario/world/*[@type='region']/GDP/*[fn:count(child::text()) = 1])";
 						tempRes = getVars(tempVal, path);
 						strBuff = new StringBuffer();
 						while(tempRes.hasNext()) {
@@ -533,8 +530,6 @@ public class XMLDB {
 					res.delete();
 					printLockStats("addVarMetaData1");
 					getVarMetaData();
-					//waiting = false;
-					//makeWait();
 					if(jd != null) {
 						SwingUtilities.invokeLater(new Runnable() {
 							public void run(){
@@ -551,14 +546,11 @@ public class XMLDB {
 			e.printStackTrace();
 			closeDB();
 		}
-		//waiting = true;
-		//makeWait();
 		printLockStats("addVarMetaData2");
 	}
 
 	protected XmlResults getVars(XmlValue contextVal, String path) {
 		try {
-			//System.out.println("Doesn't have metadata: "+contextVal.asDocument().getName());
 			XmlQueryContext qc = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
 
 			/* The xQuery more readable:
@@ -572,7 +564,17 @@ public class XMLDB {
 			* };
 			* local:distinct-node-names(/scenario/world/region/supplysector/subsector/technology/*[fn:count(child::text()) = 1], ())
 			*/
+			/* The above seems to be broken with the new XQuery lib in dbxml 2.3
+			 * so here goes another shot..
+			 * declare function local:distinct-node-names ($args as node()*) as xs:string* { 
+			 *	fn:distinct-values(for $nname in $args return fn:local-name($nname))
+			 * }; 
+			 * local:distinct-node-names(/scenario/world/region/supplysector/subsector/technology/*[fn:count(child::text()) = 1])
+			 */ 
+			/* Does not work since BDBXML 2.3
 			String queryStr = "declare function local:distinct-node-names ($arg as node()*, $before_a as xs:string*) as xs:string* {    for $a at $apos in $arg  let $b := fn:local-name($a), $c_before := fn:count($before_a) + $apos - $apos, $before_a := fn:distinct-values(fn:insert-before($before_a, 0, $b))  where not(fn:count($before_a) = $c_before)  return $b }; "+path;
+			*/
+			String queryStr = "declare function local:distinct-node-names ($args as node()*) as xs:string* { fn:distinct-values(for $nname in $args return fn:local-name($nname)) }; "+path;
 			XmlQueryExpression qe = manager.prepare(queryStr, qc);
 			return qe.execute(contextVal, qc);
 		} catch(XmlException e) {
@@ -582,7 +584,7 @@ public class XMLDB {
 		}
 	}
 	protected void getVarMetaData() {
-		XmlResults res = createQuery("/*[fn:exists(dbxml:metadata('var'))]", null, null);
+		XmlResults res = createQuery("/*[fn:exists(dbxml:metadata('var'))]", null, null, null);
 		SupplyDemandQueryBuilder.varList = new LinkedHashMap();
 		DemographicsQueryBuilder.varList = new LinkedHashMap();
 		EmissionsQueryBuilder.ghgList = new LinkedHashMap();
@@ -598,46 +600,41 @@ public class XMLDB {
 				System.out.println("Gathering metadata from a doc "+docTemp.getName());
 				XmlMetaDataIterator it = docTemp.getMetaDataIterator();
 				while((md = it.next()) != null) {
-					if(md.get_name().equals("var")) {
+					if(md.get_value().isNull()) {
+						System.out.println("Got null metadata value for "+md.get_name());
+					} else if(md.get_name().equals("var")) {
 						String[] vars = md.get_value().asString().split(";");
 						for(int i = 0; i < vars.length; ++i) {
-							//System.out.println(vars[i]);
 							SupplyDemandQueryBuilder.varList.put(vars[i], new Boolean(false));
 						}
 					} else if(md.get_name().equals("demographicsVar")) {
 						String[] vars = md.get_value().asString().split(";");
 						for(int i = 0; i < vars.length; ++i) {
-							//System.out.println(vars[i]);
 							DemographicsQueryBuilder.varList.put(vars[i], new Boolean(false));
 						}
 					} else if(md.get_name().equals("ghgNames")) {
 						String[] vars = md.get_value().asString().split(";");
 						for(int i = 0; i < vars.length; ++i) {
-							//System.out.println(vars[i]);
 							EmissionsQueryBuilder.ghgList.put(vars[i], new Boolean(false));
 						}
 					} else if(md.get_name().equals("fuelNames")) {
 						String[] vars = md.get_value().asString().split(";");
 						for(int i = 0; i < vars.length; ++i) {
-							//System.out.println(vars[i]);
 							EmissionsQueryBuilder.fuelList.put(vars[i], new Boolean(false));
 						}
 					} else if(md.get_name().equals("GDPVar")) {
 						String[] vars = md.get_value().asString().split(";");
 						for(int i = 0; i < vars.length; ++i) {
-							//System.out.println(vars[i]);
 							GDPQueryBuilder.varList.put(vars[i], new Boolean(false));
 						}
 					} else if(md.get_name().equals("ClimateVar")) {
 						String[] vars = md.get_value().asString().split(";");
 						for(int i = 0; i < vars.length; ++i) {
-							//System.out.println(vars[i]);
 							ClimateQueryBuilder.varList.put(vars[i], new Boolean(false));
 						}
 					} else if(md.get_name().equals("LandAllocationVar")) {
 						String[] vars = md.get_value().asString().split(";");
 						for(int i = 0; i < vars.length; ++i) {
-							//System.out.println(vars[i]);
 							LandAllocatorQueryBuilder.varList.put(vars[i], new Boolean(false));
 						}
 					}
@@ -654,7 +651,7 @@ public class XMLDB {
 		// maybe summable list should be cached..
 		Vector funcTemp = new Vector<String>(1,0);
 		funcTemp.add("distinct-values");
-		res = createQuery("/scenario/output-meta-data/summable/@var", null, funcTemp);
+		res = createQuery("/scenario/output-meta-data/summable/@var", funcTemp, null, null);
 		QueryGenerator.sumableList = new Vector();
 		QueryGenerator.hasYearList = new Vector<String>();
 		try {
@@ -662,7 +659,7 @@ public class XMLDB {
 				QueryGenerator.sumableList.add(res.next().asString());
 			}
 			res.delete();
-			res = createQuery("/scenario/output-meta-data/has-year/@var", null, funcTemp);
+			res = createQuery("/scenario/output-meta-data/has-year/@var", funcTemp, null, null);
 			while(res.hasNext()) {
 				QueryGenerator.hasYearList.add(res.next().asString());
 			}

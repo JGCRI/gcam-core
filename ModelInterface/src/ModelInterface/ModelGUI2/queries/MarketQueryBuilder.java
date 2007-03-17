@@ -2,6 +2,7 @@ package ModelInterface.ModelGUI2.queries;
 
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.XMLDB;
+import ModelInterface.common.DataPair;
 
 import javax.swing.JList;
 import javax.swing.JButton;
@@ -168,8 +169,8 @@ public class MarketQueryBuilder extends QueryBuilder {
 	}
 	private String expandGroupName(String gName) {
 		StringBuffer ret = new StringBuffer();
-		XmlResults res = DbViewer.xmlDB.createQuery("market/[child::group[@name='"+gName+"']]/@name",
-				queryFilter, queryFunctions);
+		XmlResults res = DbViewer.xmlDB.createQuery(queryFilter+"market/[child::group[@name='"+gName+"']]/@name",
+				queryFunctions, null, null);
 		try {
 			while(res.hasNext()) {
 				ret.append("(child::text()='").append(res.next().asString()).append("') or ");
@@ -183,10 +184,10 @@ public class MarketQueryBuilder extends QueryBuilder {
 	}
 	private void createXPath() {
 		qg.xPath = createListPath(0);
-		qg.nodeLevel = "market";
+		qg.nodeLevel = new DataPair<String, String>("market", "name");
 		// default axis1Name to nodeLevel
-		qg.axis1Name = qg.nodeLevel;
-		qg.yearLevel = "market";
+		qg.axis1Name = qg.nodeLevel.getKey();
+		qg.yearLevel = new DataPair<String, String>("market", "year");
 		qg.axis2Name = "Year";
 		qg.group = true;
 	}
@@ -228,7 +229,7 @@ public class MarketQueryBuilder extends QueryBuilder {
 			ret.put("Group All", new Boolean(false));
 		}
 		*/
-		XmlResults res = DbViewer.xmlDB.createQuery(path, queryFilter, queryFunctions);
+		XmlResults res = DbViewer.xmlDB.createQuery(queryFilter+path, queryFunctions, null, null);
 		try {
 			while(res.hasNext()) {
 				if(!isGroupNames) {
@@ -271,34 +272,18 @@ public class MarketQueryBuilder extends QueryBuilder {
 		Vector ret = new Vector(2, 0);
 		XmlValue nBefore;
 		do {
-			if(n.getNodeName().equals(qg.nodeLevel)) {
-				ret.add(XMLDB.getAttr(n, "name"));
-				/*
-				XmlValue tempNode = n.getFirstChild();
-				XmlValue delT;
-				while(tempNode != null) {
-					if(tempNode.getNodeName().equals(qg.yearLevel)) {
-						System.out.println("About to add: "+tempNode.getFirstChild().getNodeValue());
-						ret.add(0, tempNode.getFirstChild().getNodeValue());
-						tempNode.delete();
-						tempNode = null;
-					} else {
-						delT = tempNode;
-						tempNode = tempNode.getNextSibling();
-						delT.delete();
-					}
-				}
-				*/
-			if(n.getNodeName().equals(qg.yearLevel)) {
-				ret.add(0, XMLDB.getAttr(n, "year"));
-				/*
-				//ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
-				if(!getOneAttrVal(n).equals("fillout=1")) {
-				ret.add(getOneAttrVal(n));
+			if(n.getNodeName().equals(qg.nodeLevel.getKey())) {
+				if(qg.nodeLevel.getValue() == null) {
+					ret.add(XMLDB.getAttr(n, "name"));
 				} else {
-				ret.add(getOneAttrVal(n, 1));
+					ret.add(XMLDB.getAttr(n, qg.nodeLevel.getValue()));
 				}
-				*/
+			if(n.getNodeName().equals(qg.yearLevel.getKey())) {
+				if(qg.yearLevel.getValue() == null) {
+					ret.add(0, XMLDB.getAttr(n, "year"));
+				} else {
+					ret.add(XMLDB.getAttr(n, qg.yearLevel.getValue()));
+				}
 			}
 
 			} else if(XMLDB.hasAttr(n)) {
@@ -329,8 +314,8 @@ public class MarketQueryBuilder extends QueryBuilder {
 		}
 		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
 		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
-		if(XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals(qg.nodeLevel) 
-				&& !currNode.getNodeName().equals(qg.yearLevel)) {
+		if(XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals(qg.nodeLevel.getKey()) 
+				&& !currNode.getNodeName().equals(qg.yearLevel.getKey())) {
 			String attr = XMLDB.getAllAttr(currNode);
 			attr = currNode.getNodeName()+"@"+attr;
 			if(!tempMap.containsKey(attr)) {

@@ -1016,7 +1016,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		}
 		if(!attr.equals("")) {
 			boolean gotSome = false;
-			Pattern pat = Pattern.compile("\\s*(\\w+)=([^,]+)\\s*(,|\\z)");
+			Pattern pat = Pattern.compile("\\s*([\\w\\-]+)=([^,]+)\\s*(,|\\z)");
 			Matcher mt = pat.matcher(attr);
 			while(mt.find()) {
 				try {

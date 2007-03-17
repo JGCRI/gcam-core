@@ -2,6 +2,7 @@ package ModelInterface.ModelGUI2.queries;
 
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.XMLDB;
+import ModelInterface.common.DataPair;
 
 import javax.swing.JList;
 import javax.swing.JButton;
@@ -166,15 +167,14 @@ public class GDPQueryBuilder extends QueryBuilder {
 			}
 		}
 		qg.xPath = "GDP/"+typeSel+"/text()";
-		qg.nodeLevel = "region";
-		qg.yearLevel = typeSel;
+		qg.nodeLevel = new DataPair<String, String>("region", "name");
+		qg.yearLevel = new DataPair<String, String>(typeSel, "year");
 		qg.axis1Name = "Region";
 		qg.axis2Name = "Year";
 		qg.var = typeSel;
 		qg.sumAll = false;
 		qg.group = false;
 	}
-	boolean isGlobal;
 	public String getCompleteXPath(Object[] regions) {
 		System.out.println("Trying to complete xpath");
 		StringBuffer strBuff = new StringBuffer();
@@ -198,15 +198,23 @@ public class GDPQueryBuilder extends QueryBuilder {
 		Vector ret = new Vector(2, 0);
 		XmlValue nBefore;
 		do {
-			if(qg.nodeLevel.equals(XMLDB.getAttr(n, "type"))) {
+			if(qg.nodeLevel.getKey().equals(XMLDB.getAttr(n, "type"))) {
 				if(!isGlobal) {
-					ret.add(XMLDB.getAttr(n, "name"));
+					if(qg.nodeLevel.getValue() == null) {
+						ret.add(XMLDB.getAttr(n, "name"));
+					} else {
+						ret.add(XMLDB.getAttr(n, qg.nodeLevel.getValue()));
+					}
 				} else {
 					ret.add("Global");
 				}
 			} 
-			if(n.getNodeName().equals(qg.yearLevel)) {
-				ret.add(0, XMLDB.getAttr(n, "year"));
+			if(n.getNodeName().equals(qg.yearLevel.getKey())) {
+				if(qg.yearLevel.getValue() == null) {
+					ret.add(0, XMLDB.getAttr(n, "year"));
+				} else {
+					ret.add(0, XMLDB.getAttr(n, qg.yearLevel.getValue()));
+				}
 			} else if(XMLDB.hasAttr(n)) {
 				Map tempFilter;
 				if (filterMaps.containsKey(n.getNodeName())) {
@@ -241,8 +249,8 @@ public class GDPQueryBuilder extends QueryBuilder {
 			return tempMap;
 		}
 		*/
-		if(XMLDB.hasAttr(currNode) && !qg.nodeLevel.equals(XMLDB.getAttr(currNode, "type"))
-				&& !currNode.getNodeName().equals(qg.yearLevel)) {
+		if(XMLDB.hasAttr(currNode) && !qg.nodeLevel.getKey().equals(XMLDB.getAttr(currNode, "type"))
+				&& !currNode.getNodeName().equals(qg.yearLevel.getKey())) {
 			String attr = XMLDB.getAllAttr(currNode);
 			attr = currNode.getNodeName()+"@"+attr;
 			if(!tempMap.containsKey(attr)) {

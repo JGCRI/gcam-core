@@ -34,6 +34,9 @@ public class TabCloseIcon implements Icon {
 				@Override public void mouseReleased( MouseEvent e ) {
 					// asking for isConsumed is *very* important, otherwise more than one tab might get closed!
 					if ( !e.isConsumed()  &&   position.contains( e.getX(), e.getY() ) ) {
+						System.out.println("Thinks it was pressed");
+						System.out.println("Click was at: "+e.getPoint());
+						System.out.println("Recatangle was at: "+position);
 						//final int index = tabPane.getSelectedIndex();
 						final int index = tabPane.indexAtLocation(e.getX(), e.getY());
 						InterfaceMain.getInstance().fireProperty("Query", 

@@ -11,6 +11,7 @@ import javax.swing.UIManager;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import javax.swing.undo.UndoManager;
@@ -94,6 +95,15 @@ public class InterfaceMain extends JFrame implements ActionListener {
 			}
 		});
 		*/
+
+		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+			public void uncaughtException(Thread t, Throwable e) {
+				JOptionPane.showMessageDialog(null, e, "Unexpected Error", 
+					JOptionPane.ERROR_MESSAGE);
+				// still print the stack trace to the console for debugging
+				e.printStackTrace();
+			}
+		});
 
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {

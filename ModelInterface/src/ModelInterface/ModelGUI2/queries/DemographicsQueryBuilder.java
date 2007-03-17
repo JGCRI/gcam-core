@@ -2,6 +2,7 @@ package ModelInterface.ModelGUI2.queries;
 
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.XMLDB;
+import ModelInterface.common.DataPair;
 
 import javax.swing.JList;
 import javax.swing.JButton;
@@ -222,8 +223,9 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 	}
 	private String expandGroupName(String gName) {
 		StringBuffer ret = new StringBuffer();
-		XmlResults res = DbViewer.xmlDB.createQuery("*/ageCohort[child::group[@name='"+gName+"']]/@ageGroup",
-				queryFilter, queryFunctions);
+		XmlResults res = DbViewer.xmlDB.createQuery(queryFilter+
+				"*/ageCohort[child::group[@name='"+gName+"']]/@ageGroup",
+				queryFunctions, null, null);
 		try {
 			while(res.hasNext()) {
 				ret.append("(child::text()='").append(res.next().asString()).append("') or ");
@@ -238,22 +240,22 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 	private void createXPath() {
 		qg.xPath = createListPath(0);
 		if(isPopMiniCAMSelected()) {
-			qg.yearLevel = "populationMiniCAM";
-			qg.nodeLevel = "region";
+			qg.yearLevel = new DataPair<String, String>("populationMiniCAM", "year");
+			qg.nodeLevel = new DataPair<String, String>("region", "name");
 		} else if(popList.get("populationSGMFixed") != null && ((Boolean)popList.get("populationSGMFixed")).booleanValue()) {
-			qg.yearLevel = "populationSGMFixed";
-			qg.nodeLevel = "ageCohort";
+			qg.yearLevel = new DataPair<String, String>("populationSGMFixed", "year");
+			qg.nodeLevel = new DataPair<String, String>("ageCohort", "ageGroup");
 		} else {
-			qg.yearLevel = "populationSGMRate";
-			qg.nodeLevel = "ageCohort";
+			qg.yearLevel = new DataPair<String, String>("populationSGMRate", "year");
+			qg.nodeLevel = new DataPair<String, String>("ageCohort", "ageGroup");
 		}
 		if(isTotalPopulation()) {
 			// overwrite the nodeLevel if totalPopulation, since it is
 			// really the same fore MiniCAM or SGM
-			qg.nodeLevel = "region";
+			qg.nodeLevel = new DataPair<String, String>("region", "name");
 		}
 		// default axis1Name to nodeLevel
-		qg.axis1Name = qg.nodeLevel;
+		qg.axis1Name = qg.nodeLevel.getKey();
 		qg.axis2Name = "Year";
 		// should total-population be group?
 		qg.group = true;
@@ -338,7 +340,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 			ret.put("Group All", new Boolean(false));
 		}
 		*/
-		XmlResults res = DbViewer.xmlDB.createQuery(path, queryFilter, queryFunctions);
+		XmlResults res = DbViewer.xmlDB.createQuery(queryFilter+path, queryFunctions, null, null);
 		try {
 			while(res.hasNext()) {
 				if(!isGroupNames) {
@@ -354,7 +356,6 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		DbViewer.xmlDB.printLockStats("createList");
 		return ret;
 	}
-	protected boolean isGlobal;
 	public String getCompleteXPath(Object[] regions)  {
 		boolean added = false;
 		StringBuffer ret = new StringBuffer();
@@ -384,13 +385,25 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		Vector ret = new Vector(2,0);
 		XmlValue nBefore;
 		do {
-			if(qg.nodeLevel.equals(XMLDB.getAttr(n, "type"))) {
-				ret.add(XMLDB.getAttr(n, "name"));
-			} else if(n.getNodeName().equals(qg.nodeLevel)) {
-				ret.add(XMLDB.getAttr(n, "ageGroup"));
+			if(qg.nodeLevel.getKey().equals(XMLDB.getAttr(n, "type"))) {
+				if(qg.nodeLevel.getValue() == null) {
+					ret.add(XMLDB.getAttr(n, "name"));
+				} else {
+					ret.add(XMLDB.getAttr(n, qg.nodeLevel.getValue()));
+				}
+			} else if(n.getNodeName().equals(qg.nodeLevel.getKey())) {
+				if(qg.nodeLevel.getValue() == null) {
+					ret.add(XMLDB.getAttr(n, "ageGroup"));
+				} else {
+					ret.add(XMLDB.getAttr(n, qg.nodeLevel.getValue()));
+				}
 			}
-			if(n.getNodeName().equals(qg.yearLevel)) {
-				ret.add(0, XMLDB.getAttr(n, "year"));
+			if(n.getNodeName().equals(qg.yearLevel.getKey())) {
+				if(qg.yearLevel.getValue() == null) {
+					ret.add(0, XMLDB.getAttr(n, "year"));
+				} else {
+					ret.add(XMLDB.getAttr(n, qg.yearLevel.getValue()));
+				}
 			} else if(XMLDB.hasAttr(n)) {
 				// TODO: figure out if we really want to be able to filter
 				HashMap tempFilter;
@@ -427,9 +440,9 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 			}
 			currNode.delete();
 			return (Map)tempMap.get(attr);
-		} else if(XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals(qg.nodeLevel) 
-				&& !qg.nodeLevel.equals(XMLDB.getAttr(currNode, "type"))
-				&& !currNode.getNodeName().equals(qg.yearLevel)) {
+		} else if(XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals(qg.nodeLevel.getKey()) 
+				&& !qg.nodeLevel.getKey().equals(XMLDB.getAttr(currNode, "type"))
+				&& !currNode.getNodeName().equals(qg.yearLevel.getKey())) {
 			String attr = XMLDB.getAllAttr(currNode);
 			attr = currNode.getNodeName()+"@"+attr;
 			if(!tempMap.containsKey(attr)) {

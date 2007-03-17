@@ -2,6 +2,7 @@ package ModelInterface.ModelGUI2.queries;
 
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.XMLDB;
+import ModelInterface.common.DataPair;
 
 import javax.swing.JList;
 import javax.swing.JButton;
@@ -332,8 +333,10 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 	}
 	*/
 	private void createXPath() {
-		qg.axis1Name = qg.nodeLevel = "input";
-		qg.axis2Name = qg.yearLevel = "sector";
+		qg.axis1Name = "input";
+		qg.nodeLevel = new DataPair<String, String>("input", "name");
+		qg.axis2Name = "sector";
+		qg.yearLevel = new DataPair<String, String>("sector", "name");
 		qg.group = true;
 		qg.var = "demand-currency";
 		/*
@@ -377,7 +380,6 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 		return ret;
 	}
 	*/
-	protected boolean isGlobal;
 	public String getCompleteXPath(Object[] regions) {
 		boolean added = false;
 		StringBuffer ret = new StringBuffer();
@@ -417,11 +419,11 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 		Vector ret = new Vector(2, 0);
 		XmlValue nBefore;
 		do {
-			if(qg.nodeLevel.equals(XMLDB.getAttr(n, "type"))) {
-				ret.add(XMLDB.getAttr(n, "name"));
+			if(qg.nodeLevel.getKey().equals(XMLDB.getAttr(n, "type"))) {
+				ret.add(XMLDB.getAttr(n, qg.nodeLevel.getValue()));
 			} 
-			if(qg.yearLevel.equals(XMLDB.getAttr(n, "type"))) {
-				String sectorType = XMLDB.getAttr(n, "name");
+			if(qg.yearLevel.getKey().equals(XMLDB.getAttr(n, "type"))) {
+				String sectorType = XMLDB.getAttr(n, qg.yearLevel.getValue());
 				if(sectorType.equals("Household")) {
 					ret.add(0, "Consumption");
 				} else if(sectorType.equals("Government")) {

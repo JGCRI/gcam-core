@@ -4,6 +4,7 @@ import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.CannotRedoException;
 
 import ModelInterface.ModelGUI2.queries.QueryGenerator;
+import ModelInterface.common.DataPair;
 
 public class EditQueryUndoableEdit extends MiAbstractUndoableEdit {
 
@@ -14,9 +15,9 @@ public class EditQueryUndoableEdit extends MiAbstractUndoableEdit {
 
 	private String oldTitle;
 	private String oldAxis1Name;
-	private String oldNodeLevel;
+	private DataPair<String, String> oldNodeLevel;
 	private String oldAxis2Name;
-	private String oldYearLevel;
+	private DataPair<String, String> oldYearLevel;
 	private String oldVar;
 	private String oldLabelColumnName;
 	private String oldXPath;
@@ -26,9 +27,9 @@ public class EditQueryUndoableEdit extends MiAbstractUndoableEdit {
 
 	private String newTitle;
 	private String newAxis1Name;
-	private String newNodeLevel;
+	private DataPair<String, String> newNodeLevel;
 	private String newAxis2Name;
-	private String newYearLevel;
+	private DataPair<String, String> newYearLevel;
 	private String newVar;
 	private String newLabelColumnName;
 	private String newXPath;
@@ -46,8 +47,8 @@ public class EditQueryUndoableEdit extends MiAbstractUndoableEdit {
 		oldTitle = qgIn.toString();
 		oldAxis1Name = qgIn.getAxis1Name();
 		oldAxis2Name = qgIn.getAxis2Name();
-		oldNodeLevel = qgIn.getNodeLevel();
-		oldYearLevel = qgIn.getYearLevel();
+		oldNodeLevel = qgIn.getNodeLevelPair();
+		oldYearLevel = qgIn.getYearLevelPair();
 		oldVar = qgIn.getVariable();
 		oldLabelColumnName = qgIn.getChartLabelColumnName();
 		oldXPath = qgIn.getXPath();
@@ -63,8 +64,13 @@ public class EditQueryUndoableEdit extends MiAbstractUndoableEdit {
 		System.out.println("hasRealChanges "+hasRealChanges);
 		hasRealChanges = hasRealChanges || !doDiffCheck(oldAxis1Name, newAxis1Name = qgIn.getAxis1Name());
 		hasRealChanges = hasRealChanges || !doDiffCheck(oldAxis2Name, newAxis2Name = qgIn.getAxis2Name());
-		hasRealChanges = hasRealChanges || !doDiffCheck(oldNodeLevel, newNodeLevel = qgIn.getNodeLevel());
-		hasRealChanges = hasRealChanges || !doDiffCheck(oldYearLevel, newYearLevel = qgIn.getYearLevel());
+
+		// the equals for DataPair isn't implemented so this is probably better..
+		hasRealChanges = hasRealChanges || !doDiffCheck(oldNodeLevel.getKey(), (newNodeLevel = qgIn.getNodeLevelPair()).getKey());
+		hasRealChanges = hasRealChanges || !doDiffCheck(oldNodeLevel.getValue(), newNodeLevel.getValue());
+		hasRealChanges = hasRealChanges || !doDiffCheck(oldYearLevel.getKey(), (newYearLevel = qgIn.getYearLevelPair()).getKey());
+		hasRealChanges = hasRealChanges || !doDiffCheck(oldYearLevel.getValue(), newYearLevel.getValue());
+
 		hasRealChanges = hasRealChanges || !doDiffCheck(oldVar, newVar = qgIn.getVariable());
 		hasRealChanges = hasRealChanges || !doDiffCheck(oldLabelColumnName,
 			newLabelColumnName = qgIn.getChartLabelColumnName());

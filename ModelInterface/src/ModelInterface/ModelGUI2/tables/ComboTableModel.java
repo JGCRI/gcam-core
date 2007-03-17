@@ -738,12 +738,12 @@ public class ComboTableModel extends BaseTableModel{
 	}
 
 	protected QueryGenerator qg;
-	public ComboTableModel(QueryGenerator qgIn, String filterQuery, Object[] regions, JFrame parentFrameIn) {
+	public ComboTableModel(QueryGenerator qgIn, Object[] scenarios, Object[] regions, JFrame parentFrameIn) {
 		qg = qgIn;
 		parentFrame = parentFrameIn;
 		//title = qgIn.getVariable();
 		title = qgIn.toString();
-		buildTable(DbViewer.xmlDB.createQuery(qgIn.getCompleteXPath(regions), filterQuery, null), qgIn.isSumAll(), qgIn.getLevelValues());
+		buildTable(DbViewer.xmlDB.createQuery(qgIn, scenarios, regions), qgIn.isSumAll(), qgIn.getLevelValues());
 		//DbViewer.xmlDB.setQueryFilter("");
 		ind2Name = qgIn.getVariable();
 		indCol.add(0, ind1Name);

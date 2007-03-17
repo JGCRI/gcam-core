@@ -1,6 +1,7 @@
 package ModelInterface.ModelGUI2.queries;
 
 import ModelInterface.InterfaceMain;
+import ModelInterface.common.DataPair;
 import ModelInterface.ModelGUI2.XMLDB;
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.undo.EditQueryUndoableEdit;
@@ -42,8 +43,6 @@ public class QueryGenerator implements java.io.Serializable{
 	private transient Frame parentFrame;
 	String xPath;
 	String var;
-	String nodeLevel;
-	String yearLevel;
 	boolean sumAll;
 	boolean group;
 	boolean isSumable;
@@ -53,6 +52,14 @@ public class QueryGenerator implements java.io.Serializable{
 	public static java.util.List<String> hasYearList;
 	String axis1Name;
 	String axis2Name;
+
+	// The level has a pair of a nodename
+	// and the attribute name to pull data from
+	// if the attribute name is null it will
+	// assume the usual.
+	DataPair<String, String> nodeLevel;
+	DataPair<String, String> yearLevel;
+
 	List<String> collapseOnList;
 	private transient QueryBuilder qb;
 	int currSel;
@@ -109,10 +116,10 @@ public class QueryGenerator implements java.io.Serializable{
 		NodeList nl = queryIn.getChildNodes();
 		for(int i = 0; i < nl.getLength(); ++i) {
 			if(nl.item(i).getNodeName().equals("axis1")) {
-				nodeLevel = nl.item(i).getFirstChild().getNodeValue();
+				nodeLevel = parseAxisLevel(nl.item(i).getFirstChild().getNodeValue());
 				axis1Name = ((Element)nl.item(i)).getAttribute("name");
 			} else if(nl.item(i).getNodeName().equals("axis2")) {
-				yearLevel = nl.item(i).getFirstChild().getNodeValue();
+				yearLevel = parseAxisLevel(nl.item(i).getFirstChild().getNodeValue());
 				axis2Name = ((Element)nl.item(i)).getAttribute("name");
 			} else if(nl.item(i).getNodeName().equals("chartLabelColumn")) {
 				labelColumnName = nl.item(i).getFirstChild().getNodeValue();
@@ -151,17 +158,17 @@ public class QueryGenerator implements java.io.Serializable{
 					//DbViewer.xmlDB.setQueryFunction("distinct-values(");
 					//DbViewer.xmlDB.setQueryFilter("/scenario/world/region/");
 					int skip = 0;
-					if(nodeLevel.equals("sector")) {
+					if(nodeLevel.getKey().equals("sector")) {
 						currSel = 3;
-					} else if(nodeLevel.equals("subsector")) {
+					} else if(nodeLevel.getKey().equals("subsector")) {
 						currSel = 4;
 						skip = 1;
-					} else if(nodeLevel.equals("technology")){
+					} else if(nodeLevel.getKey().equals("technology")){
 						currSel = 5;
 						skip = 2;
-					} else if(nodeLevel.equals("grade")) {
+					} else if(nodeLevel.getKey().equals("grade")) {
 						skip = 2;
-					} else if(nodeLevel.equals("input")) {
+					} else if(nodeLevel.getKey().equals("input")) {
 						currSel = 6;
 						skip = 3;
 					}
@@ -520,8 +527,8 @@ public class QueryGenerator implements java.io.Serializable{
 		}
 		Vector funcTemp = new Vector<String>(1,0);
 		funcTemp.add("distinct-values");
-		XmlResults res = DbViewer.xmlDB.createQuery(query+"[child::group[@name='"+gName+"']]/@name", 
-				"/scenario/world/region", funcTemp);
+		XmlResults res = DbViewer.xmlDB.createQuery("/scenario/world/region"+
+				query+"[child::group[@name='"+gName+"']]/@name", funcTemp, null, null);
 		funcTemp = null;
 		try {
 			while(res.hasNext()) {
@@ -546,10 +553,28 @@ public class QueryGenerator implements java.io.Serializable{
 	public void setVariable(String varIn) {
 		var = varIn;
 	}
+	/**
+	 * Gets the nodeLevel node name. Without the
+	 * attribute name.
+	 * @return The nodeLevel node name.
+	 */
 	public String getNodeLevel() {
+		return nodeLevel.getKey();
+	}
+	public DataPair<String, String> getNodeLevelPair() {
 		return nodeLevel;
 	}
+	/**
+	 * Sets the nodeLevel node name.  It does not
+	 * parse the attribute name here.
+	 * @param nodeLevelIn A node name.
+	 */ 
 	public void setNodeLevel(String nodeLevelIn) {
+		// should I look for an @ sign to make sure
+		// no attribute name was passed as well?
+		nodeLevel.setKey(nodeLevelIn);
+	}
+	public void setNodeLevel(DataPair<String, String> nodeLevelIn) {
 		nodeLevel = nodeLevelIn;
 	}
 	public String getAxis1Name() {
@@ -587,11 +612,11 @@ public class QueryGenerator implements java.io.Serializable{
 		queryNode.setAttribute("title", title);
 		temp = doc.createElement("axis1");
 		temp.setAttribute("name", axis1Name);
-		temp.appendChild(doc.createTextNode(nodeLevel));
+		temp.appendChild(doc.createTextNode(displayAxisLevel(nodeLevel)));
 		queryNode.appendChild(temp);
 		temp = doc.createElement("axis2");
 		temp.setAttribute("name", axis2Name);
-		temp.appendChild(doc.createTextNode(yearLevel));
+		temp.appendChild(doc.createTextNode(displayAxisLevel(yearLevel)));
 		queryNode.appendChild(temp);
 		if(labelColumnName != null && !labelColumnName.equals("")) {
 			temp = doc.createElement("chartLabelColumn");
@@ -663,10 +688,28 @@ public class QueryGenerator implements java.io.Serializable{
 	public void setComments(String commentsIn) {
 		comments = commentsIn;
 	}
+	/**
+	 * Get the yearLevel node name. Without the
+	 * attribute name.
+	 * @return The yearLevel node name.
+	 */ 
 	public String getYearLevel() {
+		return yearLevel.getKey();
+	}
+	public DataPair<String, String> getYearLevelPair() {
 		return yearLevel;
 	}
+	/**
+	 * Sets the yearLevel node name. Does not 
+	 * parse the attribute name here.
+	 * @param yL A node name.
+	 */ 
 	public void setYearLevel(String yL) {
+		// check for @ to make sure there
+		// is not attribute name?
+		yearLevel.setKey(yL);
+	}
+	public void setYearLevel(DataPair<String, String>  yL) {
 		yearLevel = yL;
 	}
 	public String getChartLabelColumnName() {
@@ -725,12 +768,31 @@ public class QueryGenerator implements java.io.Serializable{
 	protected Object[] defaultAxisInfo(XmlValue n, Map filterMaps) throws Exception {
 		Vector ret = new Vector(2,0);
 		XmlValue nBefore;
+		if(nodeLevel.getKey().equals("keyword")) {
+			nBefore = n.getNextSibling();
+			while(!nBefore.isNull()) {
+				if(nBefore.getNodeName().equals(nodeLevel.getKey()) &&
+					XMLDB.getAttr(nBefore, nodeLevel.getValue()) != null) {
+					ret.add(XMLDB.getAttr(nBefore, nodeLevel.getValue()));
+					break;
+				}
+				nBefore = nBefore.getNextSibling();
+			}
+		}
 		do {
-			if(n.getNodeName().equals(nodeLevel)) {
-				ret.add(XMLDB.getAttr(n));
+			if(n.getNodeName().equals(nodeLevel.getKey())) {
+				if(nodeLevel.getValue() == null) {
+					ret.add(XMLDB.getAttr(n));
+				} else {
+					ret.add(XMLDB.getAttr(n, nodeLevel.getValue()));
+				}
 			} 
-			if(n.getNodeName().equals(yearLevel)) {
-				ret.add(0, XMLDB.getAttr(n, "year"));
+			if(n.getNodeName().equals(yearLevel.getKey())) {
+				if(yearLevel.getValue() == null) {
+					ret.add(0, XMLDB.getAttr(n, "year"));
+				} else {
+					ret.add(0, XMLDB.getAttr(n, yearLevel.getValue()));
+				}
 			} else if(XMLDB.hasAttr(n)) {
 				HashMap tempFilter;
 				if (filterMaps.containsKey(n.getNodeName())) {
@@ -754,18 +816,25 @@ public class QueryGenerator implements java.io.Serializable{
 	}
 	protected Map defaultAddToDataTree(XmlValue currNode, Map dataTree) throws Exception {
 		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
+			List<String> defaultCollapse = new Vector<String>();
+			createCollapseList(defaultCollapse);
 			currNode.delete();
 			return dataTree;
 		}
 		Map tempMap = defaultAddToDataTree(currNode.getParentNode(), dataTree);
-		if( (isGlobal && currNode.getNodeName().equals("region")) || 
-				(currNode.getNodeName().matches(".*sector") || currNode.getNodeName().equals("technology"))) {
+		String type = XMLDB.getAttr(currNode, "type");
+		if(type == null) {
+			type = currNode.getNodeName();
+		}
+		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
+		if( (isGlobal && type.equals("region")) || collapseOnList.contains(type)) {
 			currNode.delete();
 			return tempMap;
 		}
-		if(XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals(nodeLevel) && !currNode.getNodeName().equals(yearLevel)) {
+		if(XMLDB.hasAttr(currNode) && !type.equals(nodeLevel.getKey()) && 
+				!type.equals(yearLevel.getKey())) {
 			String attr = XMLDB.getAllAttr(currNode);
-			attr = currNode.getNodeName()+"@"+attr;
+			attr = type+"@"+attr;
 			if(!tempMap.containsKey(attr)) {
 				tempMap.put(attr, new TreeMap());
 			}
@@ -788,9 +857,9 @@ public class QueryGenerator implements java.io.Serializable{
 		JPanel tempPanel;
 		final JTextField titleTextF = new JTextField(title, 30);
 		final JTextField a1NameTextF = new JTextField(axis1Name, 30);
-		final JTextField a1TextF = new JTextField(nodeLevel, 20);
+		final JTextField a1TextF = new JTextField(displayAxisLevel(nodeLevel), 20);
 		final JTextField a2NameTextF = new JTextField(axis2Name, 30);
-		final JTextField a2TextF = new JTextField(yearLevel, 20);
+		final JTextField a2TextF = new JTextField(displayAxisLevel(yearLevel), 20);
 		final JTextField dataNameTextF = new JTextField(var, 30);
 		final JTextField xPathTextF = new JTextField(xPath, 50);
 		final JCheckBox sumAllCheckBox = new JCheckBox("Sum All", sumAll);
@@ -818,11 +887,11 @@ public class QueryGenerator implements java.io.Serializable{
 		tempPanel = new JPanel();
 		tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.X_AXIS));
 		tempPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		tempPanel.add(new JLabel("Axis 1 Name: "));
+		tempPanel.add(new JLabel("Y-Axis Name: "));
 		tempPanel.add(seperator);
 		tempPanel.add(a1NameTextF);
 		tempPanel.add(seperator);
-		tempPanel.add(new JLabel("  Axis 1 Node: "));
+		tempPanel.add(new JLabel("  Y-Axis Node: "));
 		tempPanel.add(seperator);
 		tempPanel.add(a1TextF);
 		tempPanel.add(Box.createHorizontalGlue());
@@ -831,11 +900,11 @@ public class QueryGenerator implements java.io.Serializable{
 		tempPanel = new JPanel();
 		tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.X_AXIS));
 		tempPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		tempPanel.add(new JLabel("Axis 2 Name: "));
+		tempPanel.add(new JLabel("X-Axis Name: "));
 		tempPanel.add(seperator);
 		tempPanel.add(a2NameTextF);
 		tempPanel.add(seperator);
-		tempPanel.add(new JLabel("  Axis 2 Node: "));
+		tempPanel.add(new JLabel("  X-Axis Node: "));
 		tempPanel.add(seperator);
 		tempPanel.add(a2TextF);
 		tempPanel.add(Box.createHorizontalGlue());
@@ -895,9 +964,9 @@ public class QueryGenerator implements java.io.Serializable{
 				eqEdit.setOldValues(thisGen);
 				title = titleTextF.getText();
 				axis1Name = a1NameTextF.getText();
-				nodeLevel = a1TextF.getText();
+				nodeLevel = parseAxisLevel(a1TextF.getText());
 				axis2Name = a2NameTextF.getText();
-				yearLevel = a2TextF.getText();
+				yearLevel = parseAxisLevel(a2TextF.getText());
 				var = dataNameTextF.getText();
 				labelColumnName = labelCol.getText();
 				xPath = xPathTextF.getText();
@@ -947,8 +1016,8 @@ public class QueryGenerator implements java.io.Serializable{
 	 * on which is pased in.  Then it will look at the types in
 	 * the XPath and remove any found from the collapse list. For
 	 * example we have default collapse list of: sector, subsector,
-	 * technology and an XPath like *[\@type = 'sector' and ((\@name='electricity') )]
-	 * //*[\@type = 'technology']/output/node()"
+	 * technology and an XPath like *[@type = 'sector' and ((@name='electricity') )]
+	 * //*[@type = 'technology']/output/node()"
 	 *
 	 * Only subsector would be left in the list and thus collapsed upon.
 	 * @param defaultCollapse Nodes which could be collapsed upon.
@@ -956,15 +1025,62 @@ public class QueryGenerator implements java.io.Serializable{
 	public void createCollapseList(List<String> defaultCollapse) {
 		// copy the list?
 		collapseOnList = defaultCollapse;
-		Matcher extractType = Pattern.compile("[^\\/]*@type\\s*=\\s*'(\\w+)'[^\\/]*\\/").matcher(xPath);
+		Matcher extractType = Pattern.compile("[^\\/]*@type\\s*=\\s*'(\\w+)'\\s*(\\(:\\s*collapse\\s*:\\))?[^\\/]*\\/").matcher(xPath);
 		boolean matchesOne = false;
 		while(extractType.find()) {
 			matchesOne = true;
-			collapseOnList.remove(extractType.group(1));
+			if(extractType.group(2) == null) {
+				collapseOnList.remove(extractType.group(1));
+			} else if(!collapseOnList.contains(extractType.group(1))) {
+				// make sure that this is added to the list if not already
+				// there
+				collapseOnList.add(extractType.group(1));
+			}
 		}
 		if(!matchesOne) {
 			// better to not collapse on anything
-			collapseOnList.clear();
+			// or maybe not 
+			//collapseOnList.clear();
+		}
+	}
+
+	/**
+	 * Parses an axis level to get a nodename and an attribute name.  The
+	 * expected format is (node name)[@(attribute name)]. Should there be
+	 * no attribute it will be set to null and the usual tries at attribute names
+	 * will be tried(usually name or year).
+	 * @param axisValue An unparsed axis value with a node name and possible attribute name.
+	 * @return A pair with the node name and attribute name for the axis.
+	 */
+	private DataPair<String, String> parseAxisLevel(String axisValue) {
+		int atPos = axisValue.indexOf('@');
+		if(atPos == -1) {
+			return new DataPair<String, String>(axisValue, null);
+		} else {
+			return new DataPair<String, String>(axisValue.substring(0, atPos-1),
+					axisValue.substring(atPos+1, axisValue.length()-1));
+		}
+	}
+
+	/**
+	 * Takes and axis level and assembles it for display.  It will put it
+	 * in the format: (node name)[@(attribute name)].
+	 * @param axisLevel A parsed pair of node and attribute names.
+	 * @return a String in the correct format.
+	 */
+	private String displayAxisLevel(DataPair<String, String> axisLevel) {
+		if(axisLevel.getValue() == null) {
+			return axisLevel.getKey();
+		} else {
+			return axisLevel.getKey()+"[@"+axisLevel.getValue()+"]";
+		}
+	}
+
+	public void setGlobal(boolean newGlobal) {
+		if(qb != null) {
+			qb.isGlobal = newGlobal;
+		} else {
+			isGlobal = newGlobal;
 		}
 	}
 }

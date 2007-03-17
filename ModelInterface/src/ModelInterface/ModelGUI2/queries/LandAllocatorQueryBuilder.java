@@ -2,6 +2,7 @@ package ModelInterface.ModelGUI2.queries;
 
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.XMLDB;
+import ModelInterface.common.DataPair;
 
 import javax.swing.JList;
 import javax.swing.JTree;
@@ -106,9 +107,9 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 	*/
 	private JTreeAdapter getLandUseTree() {
 		// region query portion!!
-		queryFilter = "/scenario/world/region";
+		queryFilter = "/scenario/world/"+regionQueryPortion+"/";
 		queryFunctions.clear();
-		XmlResults res = DbViewer.xmlDB.createQuery("/LandAllocatorNode[@name='root']", queryFilter, queryFunctions);
+		XmlResults res = DbViewer.xmlDB.createQuery(queryFilter+"/LandAllocatorNode[@name='root']", queryFunctions, null, null);
 		XmlValue val;
 		// for some reason JTree doesn't accept Maps, only Hashtables
 		Hashtable<String, Hashtable> landUseTree = new Hashtable<String, Hashtable>();
@@ -235,13 +236,13 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 		}
 		ret.append("//").append(nameSel).append("/text()");
 		qg.xPath = ret.toString();
-		qg.axis1Name = qg.yearLevel = nameSel;
-		qg.nodeLevel = selPath[selPath.length -1].toString();
+		qg.axis1Name = nameSel;
+		qg.yearLevel = new DataPair<String, String>(nameSel, "year");
+		qg.nodeLevel = new DataPair<String, String>(selPath[selPath.length -1].toString(), null);
 		qg.var = qg.axis2Name = "Year";
 		qg.group = false;
 		qg.sumAll = false;
 	}
-	protected boolean isGlobal;
 	public String getCompleteXPath(Object[] regions) {
 		StringBuilder ret = new StringBuilder();
 		boolean added = false;
@@ -270,7 +271,7 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 	public Object[] extractAxisInfo(XmlValue n, Map filterMaps) throws Exception {
 		Object[] ret = new Object[2];
 		ret[0] = XMLDB.getAttr(n, "year");
-		ret[1] = qg.nodeLevel.split(" ", 2)[1];
+		ret[1] = qg.nodeLevel.getKey().split(" ", 2)[1];
 		DbViewer.xmlDB.printLockStats("LandAllocatorQueryBuilder.extractAxisInfo");
 		return ret;
 	}
@@ -283,11 +284,11 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 		}
 		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
 		// is the nodeLevel always going to be the same as year if not need to add the check here
-		String[] nodeLevelSplit = qg.nodeLevel.split(" ", 2);
+		String[] nodeLevelSplit = qg.nodeLevel.getKey().split(" ", 2);
 		if(!passedIt && (nodeLevelSplit[0].equals(currNode.getNodeName()) && nodeLevelSplit[1].equals(XMLDB.getAttr(currNode, "name"))) ) {
 			passedIt = true;
 		}
-		if(!passedIt && XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals(qg.yearLevel) /*&& 
+		if(!passedIt && XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals(qg.yearLevel.getKey()) /*&& 
 				!(nodeLevelSplit.equals(currNode.getNodeName()) && nodeLevelSplit.equals(XMLDB.getAttr(currNode, "name")))*/ ) {
 			String attr = XMLDB.getAllAttr(currNode);
 			attr = currNode.getNodeName()+"@"+attr;

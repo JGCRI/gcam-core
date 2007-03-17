@@ -2,6 +2,7 @@ package ModelInterface.ModelGUI2.queries;
 
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.XMLDB;
+import ModelInterface.common.DataPair;
 
 import javax.swing.JList;
 import javax.swing.JButton;
@@ -303,7 +304,8 @@ public class InputQueryBuilder extends QueryBuilder {
 			query = sectorQueryPortion+"/"+subsectorQueryPortion+"/"+baseTechnologyQueryPortion+
 				"/"+inputQueryPortion;
 		}
-		XmlResults res = DbViewer.xmlDB.createQuery(query+"[child::group[@name='"+gName+"']]/@name", queryFilter, queryFunctions);
+		XmlResults res = DbViewer.xmlDB.createQuery(queryFilter+query+"[child::group[@name='"+gName+"']]/@name", 
+				queryFunctions, null, null);
 		try {
 			while(res.hasNext()) {
 				ret.append("(@name='").append(res.next().asString()).append("') or ");
@@ -316,39 +318,43 @@ public class InputQueryBuilder extends QueryBuilder {
 		return ret.toString();
 	}
 	private void createXPath() {
+		String yearLevel = null;
 		if(qg.isSumable) {
 			qg.xPath = createListPath(8);
 			if(QueryGenerator.hasYearList.contains(qg.var)) {
-				qg.yearLevel = qg.var;
+				yearLevel = qg.var;
 			} else {
-				qg.yearLevel = "baseTechnology";
+				yearLevel = "baseTechnology";
 			}
 		} else {
 			qg.xPath = createListPath(qg.currSel+1);
 			qg.xPath = qg.xPath.replaceFirst("/[^/]*/[^/]*$", "/" + qg.var + "/text()");
 			if(qg.currSel == 6 || qg.currSel == 7) {
 				if(QueryGenerator.hasYearList.contains(qg.var)) {
-					qg.yearLevel = qg.var;
+					yearLevel = qg.var;
 				} else {
-					qg.yearLevel = "baseTechnology";
+					yearLevel = "baseTechnology";
 				}
 			} else {
-				qg.yearLevel = qg.var;
+				yearLevel = qg.var;
 			}
 		}
+		qg.yearLevel = new DataPair<String, String>(yearLevel, "year");
+		String nodeLevel = null;
 		switch(qg.currSel) {
-			case 4: qg.nodeLevel = "sector";
+			case 4: nodeLevel = "sector";
 				break;
-			case 5: qg.nodeLevel = "subsector";
+			case 5: nodeLevel = "subsector";
 				break;
-			case 6: qg.nodeLevel = "baseTechnology";
+			case 6: nodeLevel = "baseTechnology";
 				break;
-			case 7: qg.nodeLevel = "input";
+			case 7: nodeLevel = "input";
 				break;
 			default: System.out.println("Error currSel: "+qg.currSel);
 		}
+		qg.nodeLevel = new DataPair<String, String>(nodeLevel, "name");
 		// default axis1Name to nodeLevel
-		qg.axis1Name = qg.nodeLevel;
+		qg.axis1Name = nodeLevel;
 		qg.axis2Name = "Year";
 	}
 	private Map createList(String path, boolean isGroupNames) {
@@ -357,7 +363,7 @@ public class InputQueryBuilder extends QueryBuilder {
 			ret.put("Sum All", new Boolean(false));
 			ret.put("Group All", new Boolean(false));
 		}
-		XmlResults res = DbViewer.xmlDB.createQuery(path, queryFilter, queryFunctions);
+		XmlResults res = DbViewer.xmlDB.createQuery(queryFilter+path, queryFunctions, null, null);
 		try {
 			while(res.hasNext()) {
 				if(!isGroupNames) {
@@ -373,7 +379,6 @@ public class InputQueryBuilder extends QueryBuilder {
 		DbViewer.xmlDB.printLockStats("InputQueryBuilder.createList");
 		return ret;
 	}
-	protected boolean isGlobal;
 	public String getCompleteXPath(Object[] regions) {
 		boolean added = false;
 		StringBuffer ret = new StringBuffer();
@@ -403,11 +408,19 @@ public class InputQueryBuilder extends QueryBuilder {
 		Vector ret = new Vector(2, 0);
 		XmlValue nBefore;
 		do {
-			if(qg.nodeLevel.equals(XMLDB.getAttr(n, "type"))) {
-				ret.add(XMLDB.getAttr(n, "name"));
+			if(qg.nodeLevel.getKey().equals(XMLDB.getAttr(n, "type"))) {
+				if(qg.nodeLevel.getValue() == null) {
+					ret.add(XMLDB.getAttr(n, "name"));
+				} else { 
+					ret.add(XMLDB.getAttr(n, qg.nodeLevel.getValue()));
+				}
 			} 
-			if(qg.yearLevel.equals(XMLDB.getAttr(n, "type")) || qg.yearLevel.equals(n.getNodeName())) {
-				ret.add(0, XMLDB.getAttr(n, "year"));
+			if(qg.yearLevel.getKey().equals(XMLDB.getAttr(n, "type")) || qg.yearLevel.getKey().equals(n.getNodeName())) {
+				if(qg.yearLevel.getValue() == null) {
+					ret.add(0, XMLDB.getAttr(n, "year"));
+				} else { 
+					ret.add(XMLDB.getAttr(n, qg.yearLevel.getValue()));
+				}
 			} else if(XMLDB.hasAttr(n)) {
 				// are filter maps used, I don't belive filtering is currently enabled for DB Output
 				// is this a feature people would want?
@@ -443,15 +456,15 @@ public class InputQueryBuilder extends QueryBuilder {
 		}
 		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
 		if( (isGlobal && type.equals("region")) 
-				|| (qg.nodeLevel.equals("sector") && type.equals("subsector")) 
-				|| ((qg.nodeLevel.equals("sector") || qg.nodeLevel.equals("subsector")) && type.equals("baseTechnology"))
-				|| ((qg.nodeLevel.equals("sector") || qg.nodeLevel.equals("subsector") || qg.nodeLevel.equals("baseTechnology")) &&
+				|| (qg.nodeLevel.getKey().equals("sector") && type.equals("subsector")) 
+				|| ((qg.nodeLevel.getKey().equals("sector") || qg.nodeLevel.getKey().equals("subsector")) && type.equals("baseTechnology"))
+				|| ((qg.nodeLevel.getKey().equals("sector") || qg.nodeLevel.getKey().equals("subsector") || qg.nodeLevel.getKey().equals("baseTechnology")) &&
 						type.equals("input"))) {
 			currNode.delete();
 			return tempMap;
 		}
-		if(XMLDB.hasAttr(currNode) && !type.equals(qg.nodeLevel) 
-				&& !type.equals(qg.yearLevel)) {
+		if(XMLDB.hasAttr(currNode) && !type.equals(qg.nodeLevel.getKey()) 
+				&& !type.equals(qg.yearLevel.getKey())) {
 			String attr = XMLDB.getAllAttr(currNode);
 			attr = currNode.getNodeName()+"@"+attr;
 			if(!tempMap.containsKey(attr)) {
