@@ -275,26 +275,17 @@ public class XMLDB {
 
 	public XmlResults createQuery(String query, Vector<String> queryFunctions, 
 			Object[] scenarios, Object[] regions) {
-		String queryComplete = QueryBindingFactory.getQueryBinding(query, queryFunctions, contName)
-			.bindToQuery(scenarios, regions);
-		System.out.println("About to perform query: "+queryComplete);
-		try {
-			XmlQueryContext qc = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
-			/*
-			XmlQueryExpression qeTemp = manager.prepare(queryBuff.toString(), qc);
-			System.out.println("Query Plan: "+qeTemp.getQueryPlan());
-			return qeTemp.execute(qc);
-			*/
-			return manager.query(queryComplete, qc);
-		} catch(XmlException e) {
-			e.printStackTrace();
-			return null;
-		}
+		return createQuery(QueryBindingFactory.getQueryBinding(query, queryFunctions, contName),
+				scenarios, regions);
 	}
 
 	public XmlResults createQuery(QueryGenerator qg, Object[] scenarios, Object[] regions) {
-		String queryComplete = QueryBindingFactory.getQueryBinding(qg, contName)
-			.bindToQuery(scenarios, regions);
+		return createQuery(QueryBindingFactory.getQueryBinding(qg, contName), scenarios,
+				regions);
+	}
+
+	public XmlResults createQuery(QueryBinding queryBinding, Object[] scenarios, Object[] regions) {
+		String queryComplete = queryBinding.bindToQuery(scenarios, regions);
 		System.out.println("About to perform query: "+queryComplete);
 		try {
 			XmlQueryContext qc = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
@@ -329,9 +320,18 @@ public class XMLDB {
 		XmlResults attrRes = val.getAttributes();
 		boolean ret = attrRes.hasNext();
 		attrRes.delete();
-		//printLockStats("hasNext"); should be lock safe, now can make it static
-		return ret;
-		//return val.getAttributes().hasNext();
+		if(!ret) {
+			//printLockStats("hasNext"); should be lock safe, now can make it static
+			return ret;
+		} else {
+			// have to make sure the values getAllAttr ignores
+			// are ignored here as well
+			if(getAllAttr(val).equals("")) {
+				return false;
+			} else {
+				return true;
+			}
+		}
 	}
 
 	public static String getAttr(XmlValue node) throws XmlException {
@@ -387,6 +387,7 @@ public class XMLDB {
 			temp = attrRes.next();
 			if(temp.getNodeName().indexOf(":") == -1 && !temp.getNodeName().equals("name") &&
 					!temp.getNodeName().equals("type") && 
+					!temp.getNodeName().equals("unit") && 
 					!temp.getNodeName().equals("year")) {
 				ret += ","+temp.getNodeName()+"="+temp.getNodeValue();
 			}
@@ -394,7 +395,11 @@ public class XMLDB {
 		}
 		attrRes.delete();
 		//printLockStats("getAllAtr"); should be lock safe, now can make it static
-		return ret.substring(1);
+		if(!ret.equals("")) {
+			return ret.substring(1);
+		} else {
+			return ret;
+		}
 	}
 	public String getQueryFunctionAsDistinctNames() {
 		/* Does not work anymore since BDBXML 2.3

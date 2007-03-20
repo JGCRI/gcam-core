@@ -485,8 +485,9 @@ public class MultiTableModel extends BaseTableModel{
 		  while(res.hasNext()) {
 			  tempNode = res.next();
 			  regionAndYear = qg.extractAxisInfo(tempNode.getParentNode(), tableFilterMaps);
+			  units = XMLDB.getAttr(tempNode.getParentNode(), "unit");
 			  if(units == null) {
-				  units = XMLDB.getAttr(tempNode.getParentNode(), "unit");
+				  units = "None Specified";
 			  }
 			  if(sumAll) {
 				  //regionAndYear[1] = "All "+(String)wild.get(0);
@@ -510,6 +511,8 @@ public class MultiTableModel extends BaseTableModel{
 				  retMap.put((String)regionAndYear[0]+";Total", 
 						  new Double(ret.doubleValue() + tempNode.asNumber()));
 			  }
+			  retMap.put("Units;"+(String)regionAndYear[1], units);
+			  retMap.put("Units;Total", units);
 			  tempNode.delete();
 		  }
 		  res.delete();
@@ -518,6 +521,7 @@ public class MultiTableModel extends BaseTableModel{
 		  e.printStackTrace();
 	  }
 	  years.add("Total");
+	  regions.add("Units");
 	  
 	  if(remove1975) {
 		  regions.remove("1975");

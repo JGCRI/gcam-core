@@ -386,7 +386,9 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		XmlValue nBefore;
 		do {
 			if(qg.nodeLevel.getKey().equals(XMLDB.getAttr(n, "type"))) {
-				if(qg.nodeLevel.getValue() == null) {
+				if(qg.nodeLevel.getKey().equals("region") && isGlobal) {
+					ret.add("Global");
+				} else if(qg.nodeLevel.getValue() == null) {
 					ret.add(XMLDB.getAttr(n, "name"));
 				} else {
 					ret.add(XMLDB.getAttr(n, qg.nodeLevel.getValue()));

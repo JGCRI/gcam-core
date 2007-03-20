@@ -252,7 +252,7 @@ public class NewDataTableModel extends BaseTableModel{
 			return indRow.get(row);
 		}
 		if(doc == null) {
-			Double ret = (Double)data.get(getKey(row,col));
+			Object ret = data.get(getKey(row,col));
 			if(ret == null) {
 				return new Double(0.0);
 			}
@@ -499,6 +499,10 @@ public class NewDataTableModel extends BaseTableModel{
 			XYSeries currSeries = new XYSeries(rowName, false, false);
 			// Skip column 1 because it contained the label.
 			for( int col = 1; col < getColumnCount(); ++col ){
+				String fullColumn = getColumnName(col);
+				if(fullColumn.equals("Units")) {
+					continue;
+				}
 				//double yValue = Double.parseDouble( (String)getValueAt(row, col) );
 				Object gotVal = getValueAt(row, col);
 				double yValue;
@@ -509,7 +513,6 @@ public class NewDataTableModel extends BaseTableModel{
 				} else {
 					yValue = Double.parseDouble(gotVal.toString());
 				}
-				String fullColumn = getColumnName(col);
 				// Get the year part of it.
 				if(fullColumn.indexOf('=') != -1) {
 					fullColumn = fullColumn.split("=")[1];

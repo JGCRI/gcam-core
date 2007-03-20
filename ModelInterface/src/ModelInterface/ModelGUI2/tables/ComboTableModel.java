@@ -347,6 +347,8 @@ public class ComboTableModel extends BaseTableModel{
 					return (Double)temp;
 				} else if(temp == null && doc == null) {
 					return new Double(0.0);
+				} else {
+					return temp;
 				}
 				//return new Double(((Node)((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) )).getNodeValue());
 			}
@@ -654,8 +656,11 @@ public class ComboTableModel extends BaseTableModel{
 			XYSeries currSeries = new XYSeries(rowName);
 			// Skip column 1 because it contained the label.
 			for( int col = leftHeaderVector.size() + 1; col < getColumnCount(); ++col ){
-				double yValue = ( (Double)getValueAt(row, col) ).doubleValue();
 				String fullColumn = getColumnName(col);
+				if(fullColumn.equals("Units")) {
+					continue;
+				}
+				double yValue = ( (Double)getValueAt(row, col) ).doubleValue();
 				// Get the year part of it.
 				if(fullColumn.indexOf("=") != -1) {
 					fullColumn = fullColumn.split("=")[1];
@@ -793,8 +798,9 @@ public class ComboTableModel extends BaseTableModel{
 		  while(res.hasNext()) {
 			  tempNode = res.next();
 			  regionAndYear = qg.extractAxisInfo(tempNode.getParentNode(), tableFilterMaps);
+			  units = XMLDB.getAttr(tempNode.getParentNode(), "unit");
 			  if(units == null) {
-				  units = XMLDB.getAttr(tempNode.getParentNode(), "unit");
+				  units = "None Specified";
 			  }
 			  if(sumAll) {
 				  regionAndYear[1] = "All "+qg.getNodeLevel();
@@ -810,8 +816,10 @@ public class ComboTableModel extends BaseTableModel{
 				  retMap.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], 
 						  new Double(ret.doubleValue() + tempNode.asNumber()));
 			  }
+			  retMap.put("Units;"+(String)regionAndYear[1], units);
 			  tempNode.delete();
 		  }
+		  regions.add("Units");
 		  res.delete();
 		  DbViewer.xmlDB.printLockStats("buildTable");
 	  } catch(Exception e) {
