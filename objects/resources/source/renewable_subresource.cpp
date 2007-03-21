@@ -181,3 +181,15 @@ double SubRenewableResource::getAverageCapacityFactor() const {
 	return subResourceCapacityFactor;
 }
 
+const std::string& SubRenewableResource::getXMLName() const
+{
+   return getXMLNameStatic();
+}
+
+const std::string& SubRenewableResource::getXMLNameStatic()
+{
+   static const std::string XMLName = "sub-renewable-resource";
+   return XMLName;
+}
+
+

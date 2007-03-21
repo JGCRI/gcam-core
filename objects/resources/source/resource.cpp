@@ -25,6 +25,7 @@
 #include "marketplace/include/imarket_type.h"
 #include "resources/include/resource.h"
 #include "resources/include/renewable_subresource.h"
+#include "resources/include/smooth_renewable_subresource.h"
 #include "util/base/include/ivisitor.h"
 #include "containers/include/info_factory.h"
 #include "containers/include/iinfo.h"
@@ -94,6 +95,7 @@ void Resource::XMLParse( const DOMNode* node ){
             XMLHelper<double>::insertValueIntoVector( curr, rscprc, modeltime );
         }
         else if( XMLDerivedClassParse( nodeName, curr ) ){
+            // no-op
         }
         else {
             cout << "Unrecognized text string: " << nodeName << " found while parsing Resource." << endl;
@@ -132,6 +134,8 @@ void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo
 
     // Set markets for this sector
     setMarket( aRegionName );
+
+    // TODO - KGW put values in market
 }
 
 /*! \brief Perform any initializations needed for each period.
@@ -494,9 +498,14 @@ bool FixedResource::XMLDerivedClassParse( const string& nodeName, const DOMNode*
 // *******************************************************************
 
 //! \brief set the size for the resourceVariance member
-RenewableResource::RenewableResource(){
-    resourceVariance.resize( scenario->getModeltime()->getmaxper() );
-    resourceCapacityFactor.resize( scenario->getModeltime()->getmaxper() );
+RenewableResource::RenewableResource()
+   : mAveTotalIrradiance( -1 ),
+     mRatioDirectToTotal( -1 ),
+     mNoSunDays( -1 ),
+     mGridConnectionCost( -1 )
+{
+   resourceVariance.resize( scenario->getModeltime()->getmaxper() );
+   resourceCapacityFactor.resize( scenario->getModeltime()->getmaxper() );
 }
 
 
@@ -536,12 +545,31 @@ const std::string& RenewableResource::getXMLNameStatic() {
 * \param nodeName name of the current node 
 * \return Whether an element was parsed.
 */
-bool RenewableResource::XMLDerivedClassParse( const string& nodeName, const DOMNode* node ) {
-    if( nodeName == SubResource::getXMLNameStatic() || nodeName == SubRenewableResource::getXMLNameStatic() ){
-        parseContainerNode( node, subResource, subResourceNameMap, new SubRenewableResource() );
-        return true;
-    }
-    return false;
+bool RenewableResource::XMLDerivedClassParse( const string& nodeName, const DOMNode* node )
+{
+//    if ( nodeName == "ave-total-irradiance" ) {
+//       mAveTotalIrradiance = XMLHelper<double>::getValue( node );
+//    }
+//    else if ( nodeName == "ratio-direct-to-total" ) {
+//       mRatioDirectToTotal = XMLHelper<double>::getValue( node );
+//    }
+//    else if ( nodeName == "no-sun-days" ) {
+//       mNoSunDays = XMLHelper<double>::getValue( node );
+//    }
+//    else if ( nodeName == "grid-connection-cost" ) {
+//       mGridConnectionCost = XMLHelper<double>::getValue( node );
+//    }
+// 
+   if( nodeName == SubResource::getXMLNameStatic() ||
+       nodeName == SubRenewableResource::getXMLNameStatic() ) {
+      parseContainerNode( node, subResource, subResourceNameMap, new SubRenewableResource() );
+      return true;
+   }
+   else if ( nodeName == SmoothRenewableSubresource::getXMLNameStatic() ) {
+     parseContainerNode( node, subResource, subResourceNameMap, new SmoothRenewableSubresource() );
+     return true;
+   }
+   return false;
 }
 
 //! Calculate annual production

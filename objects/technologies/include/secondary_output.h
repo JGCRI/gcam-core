@@ -111,6 +111,13 @@ public:
 
     virtual void accept( IVisitor* aVisitor,
                         const int aPeriod ) const;
+
+    // Documentation is inherited.
+    virtual void setLandAllocator(
+       ILandAllocator*    aLandAllocator,
+       const std::string& aName,
+       const std::string& aLandType ) {}
+
 protected:
     /*!
      * \brief Protected constructor so the class can only be created by the

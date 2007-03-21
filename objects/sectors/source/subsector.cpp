@@ -491,7 +491,7 @@ bool Subsector::initializeTechVector( vector<ITechnology*>& aTechVector,
 
     // Complete the initialization of a valid vector.
     for( TechIterator tech = aTechVector.begin(); tech != aTechVector.end(); ++tech ) {
-        ( *tech )->completeInit( aSectorName, aSectorName, aDependencyFinder,
+        ( *tech )->completeInit( aRegionName, aSectorName, aDependencyFinder,
                                  aSubsecInfo, aLandAllocator, aGlobalTechDB );
     }
     return false;

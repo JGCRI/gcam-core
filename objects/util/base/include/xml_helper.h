@@ -21,7 +21,7 @@
  *       be moved to a non-static XMLWriter class. The class should store the
  *       tabs object and output stream.
  * \warning This class is hacked b/c of poor MSVC template support. This makes
- *          it much uglier. 
+ *          it much uglier.
  * \details This library contains a set of routines for reading xml data and
  *          attribute values. It is a templated library so that it should work
  *          with any data type.
@@ -62,32 +62,56 @@
  */
 
 class Tabs {
-   
+
 private:
-  int numTabs; //!< Current number of tabs to write out in order to properly format xml.
+    //! Current number of tabs to write out in order to properly format xml.
+   unsigned short mNumTabs;
+   //! Number of spaces making up a tab
+   unsigned short mTabWidth;
+   //! Use tabs or spaces
+   bool mUseTabs;
 public:
-    //! Constructor
-    Tabs() { numTabs = 0; }
+
+   enum { DEFAULT_TAB_WIDTH = 3 };
+
+   //! Constructor
+   Tabs(
+      bool           aUseTabs  = true,
+      unsigned short aTabWidth = DEFAULT_TAB_WIDTH )
+      : mNumTabs(0), mTabWidth(aTabWidth), mUseTabs(aUseTabs) {}
 
    //! Increase the current level of indentation.
-   void increaseIndent(){ numTabs++; }
-   
-   //! Decrease the current level of indentation. 
-   void decreaseIndent(){ numTabs--; }
-   
-   //! Write out the contained number of tabs to the specified output stream.
-   /*!
-   \param out Stream to which to write the tabs->
-   \return void
-   */
+   void increaseIndent() { ++mNumTabs; }
+
+   //! Decrease the current level of indentation.
+   void decreaseIndent() {
+      if ( mNumTabs ) {
+        --mNumTabs;
+      }
+   }
+
+   /*! Write out the contained number of tabs to the specified output stream.
+    *
+    * \param out Stream to which to write the tabs->
+    * \return void
+    */
    void writeTabs( std::ostream& out ) const {
-      for ( int i = 0; i < numTabs; i++ ){
-         out << "\t";
+      if ( mUseTabs ) {
+         for ( int i = 0; i != mNumTabs; ++i ) {
+            out << "\t";
+         }
+      }
+      else if ( mTabWidth ) {
+         std::string::size_type  n = mTabWidth * mNumTabs;
+         if ( n ) {
+            std::string spaces( n, ' ' );
+            out << spaces;
+         }
       }
    }
 };
 
-/*! 
+/*!
  * \ingroup Objects
  * \brief A class with static functions to parse XML DOM trees.
  * \author Josh Lurz
@@ -103,10 +127,10 @@ public:
    static void insertValueIntoVector( const xercesc::DOMNode* node,
                                       std::vector<T>& insertToVector,
                                       const Modeltime* modeltime );
-   
+
    static void insertValueIntoVector( const xercesc::DOMNode* aNode,
                                       objects::YearVector<T>& aYearVector );
-   
+
    static void insertValueIntoVector( const xercesc::DOMNode* aNode,
                                       objects::PeriodVector<T>& aPeriodVector,
                                       const Modeltime* aModeltime );
@@ -126,7 +150,7 @@ private:
 /*! \brief Returns the data value associated with the element node.
 * \details This function first finds the child node of this element, a text node which contains the data value.
 * It then converts the data using the stringstream library into the requested data type and returns the value.
-* The function will throw an error if the input node is not an element, but will return the default value if the element has no data value. 
+* The function will throw an error if the input node is not an element, but will return the default value if the element has no data value.
 * \warning Since this function has a templated type only for the return argument, it must be called as getXMLValue<type>.
 * \param node A pointer to a node for which to return the value.
 * \return Value of type T from child of node.
@@ -135,12 +159,12 @@ private:
 template<class T>
 T XMLHelper<T>::getValue( const xercesc::DOMNode* node ){
    // make sure we were passed a valid node reference which is an element.
-   assert( node ); 
+   assert( node );
    assert( node->getNodeType() == xercesc::DOMNode::ELEMENT_NODE );
-   
+
    // get the first child, which should contain the value.
    xercesc::DOMNode* curr = node->getFirstChild();
-   
+
    // make sure that the above returned a TEXT_NODE, otherwise value will not be correct.
    if ( !curr || curr->getNodeType() != xercesc::DOMNode::TEXT_NODE ){
       return T();
@@ -188,19 +212,19 @@ template<class T>
 T XMLHelper<T>::getAttr( const xercesc::DOMNode* node, const std::string attrName ) {
    /*! \pre Make sure we were passed a valid node reference. */
    assert( node );
-   
+
    /*! \pre Make sure it is an element before we cast, if function is used correctly it will be. */
    assert( node->getNodeType() == xercesc::DOMNode::ELEMENT_NODE );
-   
+
    // need to cast node to an element.
    const xercesc::DOMElement* element = static_cast<const xercesc::DOMElement*>( node );
-   
+
    // get the attribute with the name which was passed in.
-   
+
    XMLCh* nameChars = xercesc::XMLString::transcode( attrName.c_str() );
    xercesc::DOMAttr* nameAttr = element->getAttributeNode( nameChars );
    xercesc::XMLString::release( &nameChars );
-  
+
    // Check if the name attribute exists.
    if( !nameAttr ){
       return T();
@@ -233,8 +257,8 @@ T XMLHelper<T>::getAttr( const xercesc::DOMNode* node, const std::string attrNam
    }
 }
 
-/*! 
-* \brief Function which takes a node and inserts its value into the correct position 
+/*!
+* \brief Function which takes a node and inserts its value into the correct position
 * in an argument vector based on the year attribute.
 * Updated to fill out for the rest of the time period if the fillout attribute is true.
 *
@@ -249,14 +273,14 @@ T XMLHelper<T>::getAttr( const xercesc::DOMNode* node, const std::string attrNam
 
 template<class T>
 void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* node, std::vector<T>& insertToVector, const Modeltime* modeltime ) {
-   
+
    /*! \pre Make sure we were passed a valid node reference. */
    assert( node );
-   
+
    const int year = XMLHelper<int>::getAttr( node, "year" );
    // boolean to fill out the readin value to all the periods
    const bool fillout = XMLHelper<bool>::getAttr( node, "fillout" );
-   
+
    // Check to make sure the year attribute returned non-zero.
    if (  year == 0 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -264,7 +288,7 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* node, std::vec
         mainLog << "Year value not set for vector input tag >>" << XMLHelper<std::string>::safeTranscode( node->getNodeName() ) << "<<" << std::endl;
         return;
    }
-   
+
    const int maxperiod = modeltime->getmaxper();
    int period = modeltime->getyr_to_per( year );
 
@@ -276,11 +300,11 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* node, std::vec
         mainLog << "Period value is out of bounds for vector input tag >>" << XMLHelper<std::string>::safeTranscode( node->getNodeName() ) << "<<" << std::endl;
         return;
    }
-   
+
    // Check that the period is less than the size of the vector.
    assert( period < static_cast<int>( insertToVector.size() ) );
    insertToVector[ period ] =  XMLHelper<T>::getValue( node );
-   
+
    if (fillout) {
       // Check that the max period is equal to the size of the vector.
       assert( maxperiod == static_cast<int>( insertToVector.size()) );
@@ -291,7 +315,7 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* node, std::vec
    }
 }
 
-/*! 
+/*!
 * \brief Function which takes a node and inserts its value into the correct
 *        position in a YearVector based on the year XML attribute. If the XML
 *        attribute "fillout" is set the data will be copied to the end of the
@@ -311,12 +335,12 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* aNode,
 {
    /*! \pre Make sure we were passed a valid node reference. */
    assert( aNode );
-   
+
    const int year = XMLHelper<int>::getAttr( aNode, "year" );
 
    // boolean to fill out the readin value to all the periods
    const bool fillout = XMLHelper<bool>::getAttr( aNode, "fillout" );
-   
+
    // Check to make sure the year attribute returned non-zero.
    if( year == 0 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -331,7 +355,7 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* aNode,
    if( pos == aYearVector.end() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Year value is out of bounds for input tag:" 
+        mainLog << "Year value is out of bounds for input tag:"
                 << XMLHelper<std::string>::safeTranscode( aNode->getNodeName() )
                 << "." << std::endl;
         return;
@@ -342,7 +366,7 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* aNode,
 
    // Assign the value into the vector.
    *pos = value;
-   
+
    if( fillout ) {
        // Set the value for all years after the current point.
        ++pos;
@@ -352,7 +376,7 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* aNode,
    }
 }
 
-/*! 
+/*!
 * \brief Function which takes a node and inserts its value into the correct
 *        position in a PeriodVector based on the year XML attribute. If the XML
 *        attribute "fillout" is set the data will be copied to the end of the
@@ -371,14 +395,14 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* aNode,
                                           objects::PeriodVector<T>& aPeriodVector,
                                           const Modeltime* aModeltime )
 {
-   
+
    /*! \pre Make sure we were passed a valid node reference. */
    assert( aNode );
-   
+
    const int year = XMLHelper<int>::getAttr( aNode, "year" );
    // boolean to fill out the readin value to all the periods
    const bool fillout = XMLHelper<bool>::getAttr( aNode, "fillout" );
-   
+
    // Check to make sure the year attribute returned non-zero.
    if( year == 0 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -388,7 +412,7 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* aNode,
                 << "<<" << std::endl;
         return;
    }
-   
+
    int period = aModeltime->getyr_to_per( year );
 
    // Check that the period returned correctly.
@@ -401,9 +425,9 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* aNode,
                 << "<<" << std::endl;
         return;
    }
-   
+
    aPeriodVector[ period ] =  XMLHelper<T>::getValue( aNode );
-   
+
    if( fillout ) {
       // will not do if period is already last period or maxperiod
       for ( unsigned int i = period + 1; i < aPeriodVector.size(); ++i ) {
@@ -412,7 +436,7 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* aNode,
    }
 }
 
-/*! 
+/*!
 * \brief Return the period cooresponding to the year in the node,
 * works analogous to insertValueIntoVector, returning the appropriate period
 * \warning Make sure the node passed as an argument as a year attribute.
@@ -427,7 +451,7 @@ int XMLHelper<T>::getNodePeriod ( const xercesc::DOMNode* node, const Modeltime*
 
     const int year = XMLHelper<int>::getAttr( node, "year" );
 
-    // Check to make sure the year attribute returned non-zero. 
+    // Check to make sure the year attribute returned non-zero.
     assert( year != 0 );
 
     int period = modeltime->getyr_to_per( year );
@@ -443,8 +467,8 @@ int XMLHelper<T>::getNodePeriod ( const xercesc::DOMNode* node, const Modeltime*
 * convert the buffer into a string and free the buffer. This function should always be used instead
 * of the XMLString::transcode( XMLCh* ).
 * \warning Always use this function instead of XMLString::transcode( XMLCh* ) otherwise memory will leak.
-* \warning This function replaces XMLString::transcode( XMLCh* ) but not XMLString::transcode( char* ). 
-* The latter version is used to create an XMLCh* string. This must still be done with XMLString::transcode. 
+* \warning This function replaces XMLString::transcode( XMLCh* ) but not XMLString::transcode( char* ).
+* The latter version is used to create an XMLCh* string. This must still be done with XMLString::transcode.
 * Be very careful to free memory when doing so.
 * \param toTranscode string to be converted to a standard string.
 * \return An STL string equivalent to the XMLCh* string passed into the function.
@@ -459,28 +483,28 @@ std::string XMLHelper<T>::safeTranscode( const XMLCh* toTranscode ) {
 }
 
 //! Function to write the argument element to xml in proper format.
-/*! 
+/*!
 * This function is used to write a single element containing a single value and an optional year to the output stream
 * in XML. If the year is not passed in, the function will not print the year attribute.
 * \param value Value to print to XML.
 * \param elementName Name of the element.
 * \param out Stream to print to.
-* \param tabs A tabs object responsible for printing the correct number of tabs. 
+* \param tabs A tabs object responsible for printing the correct number of tabs.
 * \param year Optional year value to print as an attribute.
 * \param name Optional name value to print as an attribute.
 * \param fillout Optional attribute which specifies the value should be applied to all following time periods.
 */
 template<class T>
 void XMLWriteElement( const T value, const std::string elementName, std::ostream& out, const Tabs* tabs, const int year = 0, const std::string name = "", const bool fillout = false ) {
-   
+
    tabs->writeTabs( out );
-   
+
    out << "<" << elementName;
-   
+
    if ( name != "" ) {
       out << " name=\"" << name << "\"";
    }
-   
+
    if( year != 0 ){
       out << " year=\"" << year << "\"";
    }
@@ -488,19 +512,19 @@ void XMLWriteElement( const T value, const std::string elementName, std::ostream
        out << " fillout=\"" << 1 << "\"";
    }
    out << ">";
-   
+
    out << value;
-   
+
    out << "</" << elementName << ">" << std::endl;
 }
 //! Function to write the argument element to xml with a integer attribute in proper format.
-/*! 
+/*!
 * This function is used to write a single element containing a single value along with an integer attribute to the output stream
 * in XML.
 * \param value Value to print to XML.
 * \param elementName Name of the element.
 * \param out Stream to print to.
-* \param tabs A tabs object responsible for printing the correct number of tabs. 
+* \param tabs A tabs object responsible for printing the correct number of tabs.
 * \param aAttrs Map of attribute name to attribute value.
 */
 template<class T, class U>
@@ -521,20 +545,20 @@ void XMLWriteElementWithAttributes( const T value, const std::string elementName
 * \details This function is used to write an opening XML tag and an optional name and year to the output stream.
 * The name and year are optional attributes. The name and year may be left out, or only the year may be left out, but
 * the year cannot be written without a year unless the empty string is included in the function arguments, due
-* to the way that C++ default arguments work. If the arguments are left out, the function will not write the attribute. 
+* to the way that C++ default arguments work. If the arguments are left out, the function will not write the attribute.
 * The function increases the indent level after writing the tag so that subsequent elements are correctly indented.
 * \param elementName Name of the element.
 * \param out Stream to print to.
-* \param Tabs The number of tabs to print before the element. 
+* \param Tabs The number of tabs to print before the element.
 * \param name Optional name value to print as an attribute.
 * \param year Optional year value to print as an attribute.
-* \param type Optional type name to print as an attribute. 
+* \param type Optional type name to print as an attribute.
 */
 inline void XMLWriteOpeningTag( const std::string& elementName, std::ostream& out, Tabs* tabs, const std::string& name = "", const int year = 0, const std::string& type = "" ) {
 
     tabs->writeTabs( out );
     out << "<" << elementName;
-    
+
     if( year ){
         out << " year=\"" << year << "\"";
     }
@@ -546,33 +570,33 @@ inline void XMLWriteOpeningTag( const std::string& elementName, std::ostream& ou
     }
     out << ">" << std::endl;
     tabs->increaseIndent();
-} 
+}
 
 /*!  \brief Write a closing XML tag.
 * \details This function is used to write a closing XML tag. It decreases the indent before writing the tag,
 * and adds a newline.
-* \note Closing tags cannot have attributes. 
+* \note Closing tags cannot have attributes.
 * \param elementName Name of the element.
 * \param out Stream to print to.
-* \param tabs The number of tabs to print before the element. 
+* \param tabs The number of tabs to print before the element.
 */
 inline void XMLWriteClosingTag( const std::string& elementName, std::ostream& out, Tabs* tabs ) {
-    
+
     tabs->decreaseIndent();
     tabs->writeTabs( out );
     out << "</" << elementName;
     out << ">" << std::endl;
-} 
+}
 
 //! Function to write the argument element to xml in proper format if it is not equal to the default value for the element..
-/*! 
+/*!
 * This function is used to write a single element containing a single value and an optional year to the output stream
 * in XML if the value is not equal to the default value.. If the year is not passed in, the function will not print the year attribute.
 * \param value Value to print to XML.
 * \param elementName Name of the element.
 * \param out Stream to print to.
-* \param tabs A tabs object responsible for printing the correct number of tabs. 
-* \param defaultValue Default value to compare the value to. 
+* \param tabs A tabs object responsible for printing the correct number of tabs.
+* \param defaultValue Default value to compare the value to.
 * \param year Optional year value to print as an attribute.
 * \param name Optional name value to print as an attribute.
 * \param fillout Optional boolean whether to add the fillout attribute with a true value.
@@ -584,23 +608,23 @@ void XMLWriteElementCheckDefault( const T value, const std::string elementName, 
    }
 }
 
-/*! 
-* \brief Function which writes out the values contained in a vector. 
+/*!
+* \brief Function which writes out the values contained in a vector.
 * \details This function is used to write out the values of a vector in XML format, along with their year tag.
-* The function will also avoid writing out elements if they all have default values, and will collapse consecutive 
+* The function will also avoid writing out elements if they all have default values, and will collapse consecutive
 * equal values into one element with a fillout attribute.
 * \param aOutputVector The vector of values to write out.
 * \param aElementName The elementName to write out for each value.
 * \param aOut Stream to print to.
-* \param aTabs A tabs object responsible for printing the correct number of tabs. 
-* \param modeltime A pointer to the global modeltime object. 
-* \param aDefaultValue Default value for items in this vector. 
+* \param aTabs A tabs object responsible for printing the correct number of tabs.
+* \param modeltime A pointer to the global modeltime object.
+* \param aDefaultValue Default value for items in this vector.
 */
 template<class T>
 void XMLWriteVector( const std::vector<T>& aOutputVector, const std::string& aElementName, std::ostream& aOut, Tabs* aTabs, const Modeltime* modeltime, const T aDefaultValue = T() ) {
 
     for( unsigned int i = 0; i < aOutputVector.size(); i++ ){
-        // Determine the correct year. 
+        // Determine the correct year.
         unsigned int year = modeltime->getper_to_yr( i );
 
         // Determine if we can use fillout.
@@ -618,8 +642,8 @@ void XMLWriteVector( const std::vector<T>& aOutputVector, const std::string& aEl
             // by an earlier fillout.
             XMLWriteElement( aOutputVector.at( i ), aElementName, aOut, aTabs, year, "", true );
             // If canSkip gets to last element in vector, value of i forces breakout of first FOR loop.
-            i += canSkip; 
-        } 
+            i += canSkip;
+        }
         else {
             // Can't skip at all or can't skip anymore.
             // Write out default if fillout and other values are being used together,
@@ -629,8 +653,8 @@ void XMLWriteVector( const std::vector<T>& aOutputVector, const std::string& aEl
     }
 }
 
-/*! 
-* \brief Function which writes out the values contained in a YearVector. 
+/*!
+* \brief Function which writes out the values contained in a YearVector.
 * \details This function is used to write out the values of a YearVector in XML
 *          format, along with their year tag. The function will also avoid
 *          writing out elements if they all have default values, and will collapse
@@ -639,9 +663,9 @@ void XMLWriteVector( const std::vector<T>& aOutputVector, const std::string& aEl
 * \param aElementName The elementName to write out for each value.
 * \param aOut Stream to print to.
 * \param aTabs A tabs object responsible for printing the correct number of
-*        tabs. 
+*        tabs.
 * \param aFirstYear The year of the first element in the vector.
-* \param aDefaultValue Default value for items in this vector. 
+* \param aDefaultValue Default value for items in this vector.
 */
 template<class T>
 void XMLWriteVector( const objects::YearVector<T>& aOutputVector,
@@ -667,8 +691,8 @@ void XMLWriteVector( const objects::YearVector<T>& aOutputVector,
             // by an earlier fillout.
             XMLWriteElement( aOutputVector[ i ], aElementName, aOut, aTabs, i, "", true );
             // If canSkip gets to last element in vector, value of i forces breakout of first FOR loop.
-            i += canSkip; 
-        } 
+            i += canSkip;
+        }
         else {
             // Can't skip at all or can't skip anymore.
             // Write out default if fillout and other values are being used together,
@@ -678,8 +702,8 @@ void XMLWriteVector( const objects::YearVector<T>& aOutputVector,
     }
 }
 
-/*! 
-* \brief Function which writes out the values contained in a PeriodVector. 
+/*!
+* \brief Function which writes out the values contained in a PeriodVector.
 * \details This function is used to write out the values of a PeriodVector in XML
 *          format, along with their year tag. The function will also avoid
 *          writing out elements if they all have default values, and will collapse
@@ -688,9 +712,9 @@ void XMLWriteVector( const objects::YearVector<T>& aOutputVector,
 * \param aElementName The elementName to write out for each value.
 * \param aOut Stream to print to.
 * \param aTabs A tabs object responsible for printing the correct number of
-*        tabs. 
+*        tabs.
 * \param aModeltime The Modeltime object.
-* \param aDefaultValue Default value for items in this vector. 
+* \param aDefaultValue Default value for items in this vector.
 */
 template<class T>
 void XMLWriteVector( const objects::PeriodVector<T>& aOutputVector,
@@ -701,7 +725,7 @@ void XMLWriteVector( const objects::PeriodVector<T>& aOutputVector,
                      const T aDefaultValue = T() )
 {
     for( unsigned int i = 0; i < aOutputVector.size(); i++ ){
-        // Determine the correct year. 
+        // Determine the correct year.
         unsigned int year = aModeltime->getper_to_yr( i );
 
         // Determine if we can use fillout.
@@ -719,8 +743,8 @@ void XMLWriteVector( const objects::PeriodVector<T>& aOutputVector,
             // by an earlier fillout.
             XMLWriteElement( aOutputVector[ i ], aElementName, aOut, aTabs, year, "", true );
             // If canSkip gets to last element in vector, value of i forces breakout of first FOR loop.
-            i += canSkip; 
-        } 
+            i += canSkip;
+        }
         else {
             // Can't skip at all or can't skip anymore.
             // Write out default if fillout and other values are being used together,
@@ -732,7 +756,7 @@ void XMLWriteVector( const objects::PeriodVector<T>& aOutputVector,
 
 /*!
 * \brief Function to parse an XML file, returning a pointer to the root.
-* 
+*
 * This is a very simple function which calls the parse function and handles the exceptions which it may throw.
 * It also takes care of fetching the document and its root element.
 * \param aXMLFile The name of the file to parse.
@@ -776,7 +800,7 @@ bool XMLHelper<T>::parseXML( const std::string& aXMLFile, IParsable* aModelEleme
 }
 
 /*! \brief Function which initializes the XML Platform and creates an instance
-* of an error handler and parser. 
+* of an error handler and parser.
 * \note Logs are not initialized yet so they cannot be used.
 * \author Josh Lurz
 */
@@ -790,8 +814,8 @@ void XMLHelper<T>::initParser() {
         std::cout << "Severe error during XML Platform initialization: "<< std::endl << message << std::endl;
         exit( -1 );
     }
-    
-    // Initialize the instances of the parser and error handler. 
+
+    // Initialize the instances of the parser and error handler.
     *getParserPointerInternal() = new xercesc::XercesDOMParser();
     (*getParserPointerInternal())->setValidationScheme( xercesc::XercesDOMParser::Val_Always );
     (*getParserPointerInternal())->setDoNamespaces( false );
@@ -827,7 +851,7 @@ const std::string& XMLHelper<T>::name(){
 * \details This function first checks if the parser has already been initialized.
 * If it hasn't, it initializes the parser. It then returns a pointer to the parser.
 * \author Josh Lurz
-* \warning The user must call cleanupParser after the parser is finished being used 
+* \warning The user must call cleanupParser after the parser is finished being used
 * to prevent a memory leak.
 * \return A pointer to a XercesDOMParser.
 */
@@ -837,8 +861,8 @@ xercesc::XercesDOMParser* XMLHelper<T>::getParser() {
     if( !(*getParserPointerInternal()) ){
         initParser();
     }
-    
-    // Return a pointer to the already initialized parser. 
+
+    // Return a pointer to the already initialized parser.
     return *getParserPointerInternal();
 }
 
@@ -870,8 +894,8 @@ static void resetMapIndices( const std::vector<T>& aItems, std::map<std::string,
     aIndiceMap.clear();
     for( int i = 0; i < static_cast<int>( aItems.size() ); ++i ){
         aIndiceMap[ aItems[ i ]->getName() ] = i;
-    }  
-} 
+    }
+}
 
 /*! \brief Function which positions a node containing children within a vector
 *          of its parent, and if successful parses the new node.
@@ -879,7 +903,7 @@ static void resetMapIndices( const std::vector<T>& aItems, std::map<std::string,
 *          to determine if the model node which corresponds to the input should
 *          be added, modified, or deleted. After it determines this it will make
 *          this change to the data structure passed in.
-* \param aNode The node pointing to the container node in the XML tree. 
+* \param aNode The node pointing to the container node in the XML tree.
 * \param aContainerSet The vector of objects of the type pointed to by node.
 * \param aNewObject An object to use if the xml node is unique. This node is
 *        deleted if it is not needed.
@@ -889,7 +913,7 @@ static void resetMapIndices( const std::vector<T>& aItems, std::map<std::string,
 */
 template<class T, class U>
 bool parseContainerNode( const xercesc::DOMNode* aNode,
-                         std::vector<T*>& aContainerSet, 
+                         std::vector<T*>& aContainerSet,
                          U* aNewObject,
                          const std::string& aIDAttr = XMLHelper<std::string>::name() )
 {
@@ -901,41 +925,41 @@ bool parseContainerNode( const xercesc::DOMNode* aNode,
     // Have an auto_ptr keep the new memory.
     std::auto_ptr<U> newObjWrapper( aNewObject );
 
-    // First determine if the node exists. 
+    // First determine if the node exists.
     const std::string objName = XMLHelper<std::string>::getAttr( aNode, aIDAttr );
-    
+
     // Search the insert to vector for an item with the name.
     typename std::vector<T*>::iterator iter = util::searchForValue( aContainerSet, objName );
-   
-    // Determine if we should be deleting a node. 
+
+    // Determine if we should be deleting a node.
     bool shouldDelete = XMLHelper<bool>::getAttr( aNode, "delete" );
-    
-    // Check if the node already exists in the model tree. 
-    if( iter != aContainerSet.end() ){     
+
+    // Check if the node already exists in the model tree.
+    if( iter != aContainerSet.end() ){
         // Modify or delete the node based on the contents of the delete attribute.
         if( shouldDelete ) {
             // Perform deletion.
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::DEBUG );
             mainLog << "Deleting node: " << objName << std::endl;
-            
+
             // Clean up the memory the vector points at.
             delete *iter;
 
-            // Remove the pointer from the vector. 
+            // Remove the pointer from the vector.
             aContainerSet.erase( iter );
         }
         // Parse the XML data into the existing node to modify it.
         else {
            (*iter)->XMLParse( aNode );
         }
-    } 
+    }
     // The node does not already exist.
     else if( shouldDelete ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Could not delete node " << objName << " as it does not exist." << std::endl;
-    } 
+    }
     else if( XMLHelper<bool>::getAttr( aNode, "nocreate" ) ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
@@ -973,7 +997,7 @@ typedef const std::string (*AttrGetter) (const xercesc::DOMNode* aNode);
 *          to determine if the model node which corresponds to the input should
 *          be added, modified, or deleted. After it determines this it will make
 *          this change to the data structure passed in.
-* \param aNode The node pointing to the container node in the XML tree. 
+* \param aNode The node pointing to the container node in the XML tree.
 * \param aContainerSet The vector of objects of the type pointed to by node.
 * \param aNewObject An object to use if the xml node is unique. This node is
 *        deleted if it is not needed.
@@ -982,7 +1006,7 @@ typedef const std::string (*AttrGetter) (const xercesc::DOMNode* aNode);
 */
 template<class T, class U>
 void parseContainerNode( const xercesc::DOMNode* aNode,
-                         std::vector<T>& aContainerSet, 
+                         std::vector<T>& aContainerSet,
                          U& aNewObject,
                          AttrGetter aAttrGetter = &parseNameAttr )
 {
@@ -993,16 +1017,16 @@ void parseContainerNode( const xercesc::DOMNode* aNode,
     // elements of the model properly implement the interface. IParsable*
     // parsable = aNewNode;
 
-    // First determine if the node exists. 
-    
+    // First determine if the node exists.
+
     // Search the insert to vector for an item with the name.
     typename std::vector<T>::iterator iter = util::searchForValue( aContainerSet, aObjName );
-   
-    // Determine if we should be deleting a node. 
+
+    // Determine if we should be deleting a node.
     bool shouldDelete = XMLHelper<bool>::getAttr( aNode, "delete" );
-    
-    // Check if the node already exists in the model tree. 
-    if( iter != aContainerSet.end() ){     
+
+    // Check if the node already exists in the model tree.
+    if( iter != aContainerSet.end() ){
         // Modify or delete the node based on the contents of the delete attribute.
         if( shouldDelete ) {
             // Perform deletion.
@@ -1010,21 +1034,21 @@ void parseContainerNode( const xercesc::DOMNode* aNode,
             mainLog.setLevel( ILogger::DEBUG );
             mainLog << "Deleting node: " << aObjName << std::endl;
 
-            // Remove the pointer from the vector. 
+            // Remove the pointer from the vector.
             aContainerSet.erase( iter );
         }
         // Parse the XML data into the existing node to modify it.
         else {
            (*iter)->XMLParse( aNode );
         }
-    } 
+    }
     // The node does not already exist.
     else {
         if( shouldDelete ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
             mainLog << "Could not delete node " << aObjName << " as it does not exist." << std::endl;
-        } 
+        }
         else if( XMLHelper<bool>::getAttr( aNode, "nocreate" ) ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::NOTICE );
@@ -1038,63 +1062,63 @@ void parseContainerNode( const xercesc::DOMNode* aNode,
 }
 
 /*! \brief Function which parses a node containing model-children, such as a region, and determines what to do with it.
-* \details This function will look at the name and delete attributes of the node to determine if the model node which 
-* corresponds to the input should be added, modified, or deleted. After it determines this it will make this change 
-* to the model tree. 
-* \param node The node pointing to the container node in the XML tree. 
+* \details This function will look at the name and delete attributes of the node to determine if the model node which
+* corresponds to the input should be added, modified, or deleted. After it determines this it will make this change
+* to the model tree.
+* \param node The node pointing to the container node in the XML tree.
 * \param insertToVector The vector of objects of the type pointed to by node.
 * \param corrMap The map of node name attributes to locations within insertToVector.
 * \param newNode An object to use if the xml node is unique. This node is deleted if it is not needed.
 * \param attrName Name of the attribute which contains the name identifier.
 * \todo Remove this function and use only the above variant once the entire model is converted.
 */
-template<class T, class U> 
-void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToVector, 
+template<class T, class U>
+void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToVector,
                          std::map<std::string,int>& corrMap, T* newNode, const std::string& attrName = "name" )
 {
     assert( node );
     // Have an auto_ptr keep the new memory.
     std::auto_ptr<T> newNodePtr( newNode );
 
-    // First determine if the node exists. 
+    // First determine if the node exists.
     const std::string objName = XMLHelper<std::string>::getAttr( node, attrName );
     std::map<std::string,int>::const_iterator iter = corrMap.find( objName );
-   
-    // Determine if we should be deleting a node. 
+
+    // Determine if we should be deleting a node.
     bool shouldDelete = XMLHelper<bool>::getAttr( node, "delete" );
-    
-    // Check if the node already exists in the model tree. 
-    if( iter != corrMap.end() ){     
+
+    // Check if the node already exists in the model tree.
+    if( iter != corrMap.end() ){
         // Modify or delete the node based on the contents of the delete attribute.
         if( shouldDelete ) {
             // Perform deletion.
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::DEBUG );
             mainLog << "Deleting node: " << objName << std::endl;
-            
+
             // Create an iterator which points at the location which should be deleted.
             typedef typename std::vector<U>::iterator VectorIterator;
             VectorIterator delIter = insertToVector.begin() + iter->second;
             // Clean up the memory the vector points at.
             delete *delIter;
-            // Remove the pointer from the vector. 
+            // Remove the pointer from the vector.
             insertToVector.erase( delIter );
 
             // Now reset the map. There is probably a more efficient way to do this.
             resetMapIndices( insertToVector, corrMap );
         }
-        // Otherwise modify node. 
+        // Otherwise modify node.
         else {
            insertToVector[ iter->second ]->XMLParse( node );
         }
-    } 
+    }
     // The node does not already exist.
     else {
         if( shouldDelete ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
             mainLog << "Could not delete node " << objName << " as it does not exist." << std::endl;
-        } 
+        }
         else if( XMLHelper<bool>::getAttr( node, "nocreate" ) ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::NOTICE );
@@ -1113,15 +1137,15 @@ void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToV
 *          the model node which corresponds to the input should be added,
 *          modified, or deleted and makes the corresponding change to the model
 *          tree.
-* \param aNode The node pointing to the container node in the XML tree. 
+* \param aNode The node pointing to the container node in the XML tree.
 * \param aContainer The auto_ptr which contains the model's corrsponding object.
 * \param aNewNode An object to insert into the model tree if the node is unique.
 *        This node is deleted if it is not needed.
 * \param aAttrName Name of the attribute which contains the name identifier.
 * \sa parseContainerNode
 */
-template<class T, class U> 
-void parseSingleNode( const xercesc::DOMNode* aNode, std::auto_ptr<U>& aContainer, 
+template<class T, class U>
+void parseSingleNode( const xercesc::DOMNode* aNode, std::auto_ptr<U>& aContainer,
                       T* aNewNode, const std::string& aAttrName = "name" )
 {
     assert( aNode );
@@ -1130,9 +1154,9 @@ void parseSingleNode( const xercesc::DOMNode* aNode, std::auto_ptr<U>& aContaine
     // Have an auto_ptr keep the new memory.
     std::auto_ptr<T> newNodePtr( aNewNode );
 
-    // Determine if we should be deleting a node. 
+    // Determine if we should be deleting a node.
     bool shouldDelete = XMLHelper<bool>::getAttr( aNode, "delete" );
-    
+
     // Check if the container has already been created.
     if( aContainer.get() ){
         // Modify or delete the node based on the contents of the delete attribute.
@@ -1143,11 +1167,11 @@ void parseSingleNode( const xercesc::DOMNode* aNode, std::auto_ptr<U>& aContaine
             mainLog << "Deleting node: " << XMLHelper<std::string>::getAttr( aNode, aAttrName ) << std::endl;
             aContainer.reset( 0 );
         }
-        // Otherwise modify node. 
+        // Otherwise modify node.
         else {
            aContainer->XMLParse( aNode );
         }
-    } 
+    }
     // The node does not already exist.
     else {
         if( shouldDelete ) {
@@ -1155,7 +1179,7 @@ void parseSingleNode( const xercesc::DOMNode* aNode, std::auto_ptr<U>& aContaine
             mainLog.setLevel( ILogger::ERROR );
             mainLog << "Could not delete node " << XMLHelper<std::string>::getAttr( aNode, aAttrName )
                     << " as it does not exist." << std::endl;
-        } 
+        }
         else if( XMLHelper<bool>::getAttr( aNode, "nocreate" ) ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::NOTICE );

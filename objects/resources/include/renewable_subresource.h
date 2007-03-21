@@ -35,14 +35,17 @@ protected:
 	double subResourceVariance;
 	//! read in average capacity factor for each subresource
 	double subResourceCapacityFactor;  
+   virtual const std::string& getXMLName() const;
  	virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
 	virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
 public: 
 	SubRenewableResource();
 	virtual void completeInit( const IInfo* aSectorInfo );
-	void cumulsupply(double prc,int per);
-    void annualsupply( int per, const GDP* gdp, double price1, double price2 );
-	double getVariance() const;
-	double getAverageCapacityFactor() const;
+   virtual void cumulsupply(double prc,int per);
+   virtual void annualsupply( int per, const GDP* gdp, double price1, double price2 );
+   virtual double getVariance() const;
+   virtual double getAverageCapacityFactor() const;
+   //! Return the XML tag name
+   static const std::string& getXMLNameStatic( void );
 };
 #endif // _RENEWABLE_SUBRESOURCE_H_

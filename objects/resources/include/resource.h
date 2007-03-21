@@ -103,17 +103,28 @@ private:
 */
 class RenewableResource: public Resource {
 public: 
-    RenewableResource();
+   RenewableResource();
     static const std::string& getXMLNameStatic();
 protected:
-    std::vector<double> resourceVariance; //!< average resource variance computed from subresources
-    std::vector<double> resourceCapacityFactor; //!< average resource capacity factor computed from subresources
+   //! average resource variance computed from subresources
+   std::vector<double> resourceVariance;
+   //! average resource capacity factor computed from subresources
+   std::vector<double> resourceCapacityFactor;
+   //! average total irradiance (W/m^2 )
+   double mAveTotalIrradiance;
+   //! ratio direct to total (unitless)
+   double mRatioDirectToTotal;
+   //! days with no sun (days)
+   double mNoSunDays;
+   //! grid connection cost ($/MW capacity)
+   double mGridConnectionCost;
     bool XMLDerivedClassParse( const std::string& nodename, const xercesc::DOMNode* node );
-    const std::string& getXMLName() const;
+   virtual const std::string& getXMLName() const;
     void annualsupply( const std::string& regionName, int per, const GDP* gdp, double price, double prev_price );
 private:
     static const std::string XML_NAME; //!< node name for toXML methods
 };
 
 #endif // _RESOURCE_H_
+
 

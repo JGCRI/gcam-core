@@ -331,6 +331,9 @@
 					RelativePath="..\..\resources\source\resource.cpp">
 				</File>
 				<File
+					RelativePath="..\..\resources\source\smooth_renewable_subresource.cpp">
+				</File>
+				<File
 					RelativePath="..\..\resources\source\subresource.cpp">
 				</File>
 				<File
@@ -556,6 +559,9 @@
 				</File>
 				<File
 					RelativePath="..\..\technologies\source\profit_shutdown_decider.cpp">
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\residue_biomass_production.cpp">
 				</File>
 				<File
 					RelativePath="..\..\technologies\source\retired_production_state.cpp">
@@ -1090,6 +1096,9 @@
 					RelativePath="..\..\resources\include\resource.h">
 				</File>
 				<File
+					RelativePath="..\..\resources\include\smooth_renewable_subresource.h">
+				</File>
+				<File
 					RelativePath="..\..\resources\include\subresource.h">
 				</File>
 				<File
@@ -1347,6 +1356,9 @@
 					RelativePath="..\..\technologies\include\profit_shutdown_decider.h">
 				</File>
 				<File
+					RelativePath="..\..\technologies\include\residue_biomass_production.h">
+				</File>
+				<File
 					RelativePath="..\..\technologies\include\retired_production_state.h">
 				</File>
 				<File
@@ -1435,6 +1447,9 @@
 						RelativePath="..\..\util\base\include\timer.h">
 					</File>
 					<File
+						RelativePath="..\..\util\base\include\TValidatorInfo.h">
+					</File>
+					<File
 						RelativePath="..\..\util\base\include\util.h">
 					</File>
 					<File
@@ -1466,6 +1481,9 @@
 				<Filter
 					Name="curves"
 					Filter="">
+					<File
+						RelativePath="..\..\util\curves\include\cost_curve.h">
+					</File>
 					<File
 						RelativePath="..\..\util\curves\include\curve.h">
 					</File>

@@ -102,6 +102,13 @@ public:
 
     virtual void accept( IVisitor* aVisitor,
                         const int aPeriod ) const;
+
+    // Documentation is inherited.
+    virtual void setLandAllocator(
+       ILandAllocator*    aLandAllocator,
+       const std::string& aName,
+       const std::string& aLandType ) {}
+
 protected:
     //! Physical output by period.
     std::vector<Value> mPhysicalOutputs;

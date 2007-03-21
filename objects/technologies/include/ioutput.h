@@ -31,6 +31,7 @@ class ICaptureComponent;
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iparsable.h"
 #include "util/base/include/iround_trippable.h"
+#include "land_allocator/include/iland_allocator.h"
 /*! 
 * \ingroup Objects
 * \brief Represents a single generic output of a Technology.
@@ -197,6 +198,17 @@ public:
     // Documentation is inherited.
     virtual void accept( IVisitor* aVisitor,
                         const int aPeriod ) const = 0;
+
+    /*!
+     * \brief Set the land allocator
+     * \param aLandAllocator - the new land allocator
+     * \param aName - the name of the technology
+     * \param aLandType - the land type
+     */
+    virtual void setLandAllocator(
+       ILandAllocator*    aLandAllocator,
+       const std::string& aName,
+       const std::string& aLandType ) = 0;
 };
 
 // Inline function definitions.

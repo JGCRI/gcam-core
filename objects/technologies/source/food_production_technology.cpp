@@ -221,11 +221,23 @@ void FoodProductionTechnology::completeInit( const string& aRegionName,
                                              ILandAllocator* aLandAllocator,
                                              const GlobalTechnologyDatabase* aGlobalTechDB )
 {
-    Technology::completeInit( aRegionName, aSectorName, aDepFinder, aSubsectorInfo,
-                              aLandAllocator, aGlobalTechDB );
-
     // Store away the land allocator.
     mLandAllocator = aLandAllocator;
+
+    // Setup the land allocators for the secondary outputs
+    if ( mOutputs.size() ) {
+        // Technology::completeInit() will add the primary output.
+        // At this point, all are secondary outputs
+        for ( vector<IOutput*>::iterator x = mOutputs.begin(); x != mOutputs.end(); ++x ) {
+           ( *x )->setLandAllocator( aLandAllocator, mName, landType );
+        }
+    }
+
+    // Note: Technology::completeInit() loops through the outputs.
+    //       Therefore, if any of the outputs need the land allocator,
+    //       the call to Technology::completeInit() must come afterwards
+    Technology::completeInit( aRegionName, aSectorName, aDepFinder, aSubsectorInfo,
+                              aLandAllocator, aGlobalTechDB );
 
     // Setup the land usage for this production.
     int techPeriod = scenario->getModeltime()->getyr_to_per( year );
