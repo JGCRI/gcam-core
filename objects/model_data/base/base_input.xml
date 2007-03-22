@@ -21809,7 +21809,7 @@
 					<sharewt year="2050">0.571429</sharewt>
 					<sharewt year="2065">0.714286</sharewt>
 					<sharewt year="2080">0.857143</sharewt>
-					<sharewt year="2095">0</sharewt>
+					<sharewt year="2095">1.0</sharewt>
 					<logitexp year="1975" fillout="1">-3</logitexp>
 					<fuelprefElasticity year="1975" fillout="1">0</fuelprefElasticity>
 					<FixedInvestment year="1975" fillout="1">-1</FixedInvestment>
@@ -26533,7 +26533,7 @@
 					<sharewt year="2050">0.571429</sharewt>
 					<sharewt year="2065">0.714286</sharewt>
 					<sharewt year="2080">0.857143</sharewt>
-					<sharewt year="2095">0</sharewt>
+					<sharewt year="2095">1.0</sharewt>
 					<logitexp year="1975" fillout="1">-3</logitexp>
 					<fuelprefElasticity year="1975" fillout="1">0</fuelprefElasticity>
 					<FixedInvestment year="1975" fillout="1">-1</FixedInvestment>
@@ -31385,7 +31385,7 @@
 					<sharewt year="2050">0.571429</sharewt>
 					<sharewt year="2065">0.714286</sharewt>
 					<sharewt year="2080">0.857143</sharewt>
-					<sharewt year="2095">0</sharewt>
+					<sharewt year="2095">1.0</sharewt>
 					<logitexp year="1975" fillout="1">-3</logitexp>
 					<fuelprefElasticity year="1975" fillout="1">0</fuelprefElasticity>
 					<FixedInvestment year="1975" fillout="1">-1</FixedInvestment>
@@ -31474,7 +31474,7 @@
 					<sharewt year="2050">0.571429</sharewt>
 					<sharewt year="2065">0.714286</sharewt>
 					<sharewt year="2080">0.857143</sharewt>
-					<sharewt year="2095">0</sharewt>
+					<sharewt year="2095">1.0</sharewt>
 					<logitexp year="1975" fillout="1">-3</logitexp>
 					<fuelprefElasticity year="1975" fillout="1">0</fuelprefElasticity>
 					<FixedInvestment year="1975" fillout="1">-1</FixedInvestment>
@@ -36364,7 +36364,7 @@
 					<sharewt year="2050">0.571429</sharewt>
 					<sharewt year="2065">0.714286</sharewt>
 					<sharewt year="2080">0.857143</sharewt>
-					<sharewt year="2095">0</sharewt>
+					<sharewt year="2095">1.0</sharewt>
 					<logitexp year="1975" fillout="1">-3</logitexp>
 					<fuelprefElasticity year="1975" fillout="1">0</fuelprefElasticity>
 					<FixedInvestment year="1975" fillout="1">-1</FixedInvestment>
@@ -36453,7 +36453,7 @@
 					<sharewt year="2050">0.571429</sharewt>
 					<sharewt year="2065">0.714286</sharewt>
 					<sharewt year="2080">0.857143</sharewt>
-					<sharewt year="2095">0</sharewt>
+					<sharewt year="2095">1.0</sharewt>
 					<logitexp year="1975" fillout="1">-3</logitexp>
 					<fuelprefElasticity year="1975" fillout="1">0</fuelprefElasticity>
 					<FixedInvestment year="1975" fillout="1">-1</FixedInvestment>
@@ -51158,7 +51158,7 @@
 					<sharewt year="2050">0.571429</sharewt>
 					<sharewt year="2065">0.714286</sharewt>
 					<sharewt year="2080">0.857143</sharewt>
-					<sharewt year="2095">0</sharewt>
+					<sharewt year="2095">1.0</sharewt>
 					<logitexp year="1975" fillout="1">-3</logitexp>
 					<fuelprefElasticity year="1975" fillout="1">0</fuelprefElasticity>
 					<FixedInvestment year="1975" fillout="1">-1</FixedInvestment>
@@ -55270,8 +55270,6 @@
 					<sharewt year="1975" fillout="1">1</sharewt>
 					<logitexp year="1975" fillout="1">-3</logitexp>
 					<fuelprefElasticity year="1975" fillout="1">0</fuelprefElasticity>
-					<backupTechNumber>1</backupTechNumber>
-					<resourceTechNumber>0</resourceTechNumber>
 					<electricSectorName>electricity</electricSectorName>
 					<capacity-limit-backup-calculator>
 						<capacity-limit>0.6</capacity-limit>
@@ -60963,7 +60961,7 @@
 					<sharewt year="2050">0.571429</sharewt>
 					<sharewt year="2065">0.714286</sharewt>
 					<sharewt year="2080">0.857143</sharewt>
-					<sharewt year="2095">0</sharewt>
+					<sharewt year="2095">1.0</sharewt>
 					<logitexp year="1975" fillout="1">-3</logitexp>
 					<fuelprefElasticity year="1975" fillout="1">0</fuelprefElasticity>
 					<FixedInvestment year="1975" fillout="1">-1</FixedInvestment>
@@ -65771,7 +65769,7 @@
 					<sharewt year="2050">0.571429</sharewt>
 					<sharewt year="2065">0.714286</sharewt>
 					<sharewt year="2080">0.857143</sharewt>
-					<sharewt year="2095">0</sharewt>
+					<sharewt year="2095">1.0</sharewt>
 					<logitexp year="1975" fillout="1">-3</logitexp>
 					<fuelprefElasticity year="1975" fillout="1">0</fuelprefElasticity>
 					<FixedInvestment year="1975" fillout="1">-1</FixedInvestment>
