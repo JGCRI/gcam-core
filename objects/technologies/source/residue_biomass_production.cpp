@@ -65,10 +65,6 @@ double ResidueBiomassProduction::calcPhysicalOutput(
    const ICaptureComponent* aCaptureComponent,
    const int                aPeriod ) const
 {
-#if !defined( _MSC_VER )
-   using std::assert;
-#endif
-
    if ( aPrimaryOutput <= 0 )
    {
       return 0;
@@ -240,10 +236,6 @@ double ResidueBiomassProduction::getEmissionsPerOutput(
    const std::string& aGHGName,
    const int          aPeriod ) const
 {
-#if !defined( _MSC_VER )
-   using std::assert;
-#endif
-
    // Currently other GHGs do not use output emissions coefficients.
    assert( aGHGName == "CO2" );
    assert( mCachedCO2Coef.isInited() );
@@ -255,10 +247,6 @@ double ResidueBiomassProduction::getEmissionsPerOutput(
 // Documentation is inherited.
 double ResidueBiomassProduction::getPhysicalOutput( const int aPeriod ) const
 {
-#if !defined( _MSC_VER )
-   using std::assert;
-#endif
-
    if ( !mPhysicalOutputs.size() )
    // initialise
    {
@@ -300,10 +288,6 @@ void ResidueBiomassProduction::initCalc(
    const std::string& aRegionName,
    const int          aPeriod )
 {
-#if !defined( _MSC_VER )
-   using std::assert;
-#endif
-
    assert( scenario != 0 );
    const Marketplace*   pMarketplace = scenario->getMarketplace();
    assert( pMarketplace != 0 );
@@ -354,10 +338,6 @@ void ResidueBiomassProduction::setPhysicalOutput(
    ICaptureComponent* aCaptureComponent,
    const int          aPeriod )
 {
-#if !defined( _MSC_VER )
-   using std::assert;
-#endif
-
    assert( scenario != 0 );
 
    if ( !mPhysicalOutputs.size() )
