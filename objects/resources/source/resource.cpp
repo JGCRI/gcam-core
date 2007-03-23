@@ -14,6 +14,7 @@
 #include <cassert>
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
+#include <xercesc/dom/DOMNamedNodeMap.hpp>
 
 // class headers
 #include "util/base/include/xml_helper.h"
@@ -93,6 +94,14 @@ void Resource::XMLParse( const DOMNode* node ){
         }
         else if( nodeName == "price" ){
             XMLHelper<double>::insertValueIntoVector( curr, rscprc, modeltime );
+        }
+        else if( nodeName == "keyword" ){
+            DOMNamedNodeMap* keywordAttributes = curr->getAttributes();
+            for( unsigned int attrNum = 0; attrNum < keywordAttributes->getLength(); ++attrNum ) {
+                DOMNode* attrTemp = keywordAttributes->item( attrNum );
+                mKeywordMap[ XMLHelper<string>::safeTranscode( attrTemp->getNodeName() ) ] = 
+                    XMLHelper<string>::safeTranscode( attrTemp->getNodeValue() );
+            }
         }
         else if( XMLDerivedClassParse( nodeName, curr ) ){
             // no-op

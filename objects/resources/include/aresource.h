@@ -82,6 +82,8 @@ protected:
     std::string mPriceUnit; 
     //! Market name.
     std::string mMarket;
+    //! A map of a keyword to its keyword group
+    std::map<std::string, std::string> mKeywordMap;
 };
 
 // Inline function definitions

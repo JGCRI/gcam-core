@@ -81,6 +81,9 @@ protected:
     std::map<std::string,int> subSectorNameMap; //!< Map of subSector name to integer position in vector.
 	std::auto_ptr<MoreSectorInfo> moreSectorInfo; //! Additional sector information needed below sector
 
+    //! A map of a keyword to its keyword group
+    std::map<std::string, std::string> mKeywordMap;
+
     void normalizeShareWeights( const int period );
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;

@@ -411,6 +411,19 @@ void XMLDBOutputter::startVisitResource( const AResource* aResource,
     // Store resource units
     mCurrentPriceUnit = aResource->mPriceUnit;
     mCurrentOutputUnit = aResource->mOutputUnit;
+
+    //write out the output
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( int per = 0; per < modeltime->getmaxper(); ++per ){
+        writeItem( "output", mCurrentOutputUnit, 
+            aResource->getAnnualProd( mCurrentRegion, per ), per );
+    }
+
+    // We want to write the keywords last due to limitations in 
+    // XPath we could be searching for them using following-sibling
+    if( !aResource->mKeywordMap.empty() ) {
+        XMLWriteElementWithAttributes( "", "keyword", mBuffer, mTabs.get(), aResource->mKeywordMap );
+    }
 }
 
 void XMLDBOutputter::endVisitResource( const AResource* aResource,
@@ -487,6 +500,12 @@ void XMLDBOutputter::startVisitSector( const Sector* aSector, const int aPeriod 
     const Modeltime* modeltime = scenario->getModeltime();
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
         writeItem( "cost", mCurrentPriceUnit, aSector->getPrice( mGDP, i ), i );
+    }
+
+    // We want to write the keywords last due to limitations in 
+    // XPath we could be searching for them using following-sibling
+    if( !aSector->mKeywordMap.empty() ) {
+        XMLWriteElementWithAttributes( "", "keyword", mBuffer, mTabs.get(), aSector->mKeywordMap );
     }
 }
 
@@ -637,6 +656,12 @@ void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology,
         mCurrIndirectEmissions[ curr ] = aTechnology->getInput( curr )
          * mIndirectEmissCalc->getUpstreamEmissionsCoefficient( mCurrentFuel,
                                                                 curr );
+    }
+
+    // We want to write the keywords last due to limitations in 
+    // XPath we could be searching for them using following-sibling
+    if( !aTechnology->mKeywordMap.empty() ) {
+        XMLWriteElementWithAttributes( "", "keyword", mBuffer, mTabs.get(), aTechnology->mKeywordMap );
     }
 }
 

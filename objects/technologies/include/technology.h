@@ -306,6 +306,9 @@ protected:
     int mLifetimeYears;
     
     static double getLogitExpDefault();
+
+    //! A map of a keyword to its keyword group
+    std::map<std::string, std::string> mKeywordMap;
     
     void setProductionState( const int aPeriod );
 
