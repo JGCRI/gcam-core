@@ -251,9 +251,10 @@ public class MultiTableModel extends BaseTableModel{
 	Iterator it = dataTree.entrySet().iterator();
 	while(it.hasNext()) {
 		Map.Entry me = (Map.Entry)it.next();
-		if(me.getValue() instanceof Node || me.getValue() instanceof Double) {
+		if(me.getValue() instanceof Node || me.getValue() instanceof Double || 
+				me.getValue() instanceof String) {
 			NewDataTableModel tM;
-			if(me.getValue() instanceof Double) {
+			if(me.getValue() instanceof Double || me.getValue() instanceof String) {
 				tM = new NewDataTableModel(regions, qg.getAxis1Name()/*(String)wild.get(0)*/, years, 
 						qg.getVariable(), /*titleStr+'/'+(String)parent.getKey()*/title, (Map)parent.getValue(), doc,
 						null); 
@@ -597,6 +598,7 @@ public class MultiTableModel extends BaseTableModel{
   public String exportToText() {
 	  String lineEnding = System.getProperty("line.separator");
 	  StringBuilder ret = new StringBuilder();
+	  ret.append(title).append(lineEnding);
 	  for(int i = 0; i < getRowCount(); i += 2) {
 		  ret.append(getValueAt(i, 0).toString()).append(lineEnding)
 					  .append(getModelAt(i+1).exportToText());

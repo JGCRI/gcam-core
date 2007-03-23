@@ -10,7 +10,7 @@ import java.util.Map;
  * TODO: Figure out if I should implement equals/hashCode 
  * @author Pralit Patel
  */ 
-public class DataPair<K,V> implements Map.Entry<K,V> {
+public class DataPair<K,V> implements Map.Entry<K,V>, java.io.Serializable {
 	/**
 	 * Key.
 	 */

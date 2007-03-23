@@ -242,7 +242,7 @@ public class ComboTableModel extends BaseTableModel{
 	Iterator it = dataTree.entrySet().iterator();
 	while(it.hasNext()) {	
 		Map.Entry me = (Map.Entry)it.next();
-		if(me.getValue() instanceof Node || me.getValue() instanceof Double) {
+		if(me.getValue() instanceof Node || me.getValue() instanceof Double || me.getValue() instanceof String) {
 			TreeMapVector.add( (Map)parent.getValue() );
 			
 			// create a left side 2d vector, add it to LeftSideVector

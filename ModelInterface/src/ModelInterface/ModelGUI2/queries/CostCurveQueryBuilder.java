@@ -176,8 +176,9 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 	public String getCompleteXPath(Object[] regions) {
 		System.out.println("Trying to complete xpath");
 		StringBuffer strBuff = new StringBuffer();
-		if(qg.nodeLevel.equals("DiscountedCost") || qg.nodeLevel.equals("UndiscountedCost")) {
-			strBuff.append("CostCurvesInfo/").append("Regional").append(qg.nodeLevel).append("s/").append(qg.nodeLevel);
+		if(qg.nodeLevel.getKey().equals("DiscountedCost") || qg.nodeLevel.getKey().equals("UndiscountedCost")) {
+			strBuff.append("CostCurvesInfo/").append("Regional").append(qg.nodeLevel.getKey())
+				.append("s/").append(qg.nodeLevel.getKey());
 			if(((String)regions[0]).equals("Global")) {
 				strBuff.append("/").append(qg.xPath);
 				isGlobal = true;

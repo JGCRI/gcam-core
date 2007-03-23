@@ -146,7 +146,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 						String queryFileName;
 						Properties prop = ((InterfaceMain)parentFrame).getProperties();
 						// I should probably stop being lazy
-						prop.setProperty("queryFile", queryFileName = prop.getProperty("queryFile", "queries.xml"));
+						prop.setProperty("queryFile", queryFileName = 
+								prop.getProperty("queryFile", "standard_queries.xml"));
 						// TODO: move to load preferences
 						scenarioRegionSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true);
 						scenarioRegionSplit.setResizeWeight(.5);

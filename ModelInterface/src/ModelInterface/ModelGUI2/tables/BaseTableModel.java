@@ -624,6 +624,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
        public String exportToText() {
 	       String lineEnding = System.getProperty("line.separator");
 	       StringBuilder ret = new StringBuilder();
+	       ret.append(title).append(lineEnding);
 	       for(int i = 0; i < getColumnCount(); ++i) {
 		       ret.append(getColumnName(i)).append("\t");
 	       }
