@@ -44,4 +44,11 @@ public abstract class QueryBuilder implements java.io.Serializable {
   	public abstract Object[] extractAxisInfo(XmlValue n, Map filterMaps) throws Exception; 
 	public abstract Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception; 
 	public abstract String getXMLName();
+
+	public String getNodeLevelPath() {
+		return qg.defaultGetNodeLevelPath();
+	}
+	public String getForNodeLevelPath(String nodeLevelValue) {
+		return qg.defaultGetForNodeLevelPath(nodeLevelValue);
+	}
 }

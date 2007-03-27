@@ -9,6 +9,7 @@ import ModelInterface.InterfaceMain;
 import ModelInterface.ModelGUI2.undo.FlipUndoableEdit;
 import ModelInterface.ModelGUI2.undo.FilterUndoableEdit;
 import ModelInterface.ModelGUI2.undo.TableUndoableEdit;
+import ModelInterface.ModelGUI2.xmldb.QueryBinding;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
@@ -743,12 +744,18 @@ public class ComboTableModel extends BaseTableModel{
 	}
 
 	protected QueryGenerator qg;
-	public ComboTableModel(QueryGenerator qgIn, Object[] scenarios, Object[] regions, JFrame parentFrameIn) {
+	public ComboTableModel(QueryGenerator qgIn, Object[] scenarios, Object[] regions, JFrame parentFrameIn, 
+			QueryBinding singleBinding) {
 		qg = qgIn;
 		parentFrame = parentFrameIn;
 		//title = qgIn.getVariable();
 		title = qgIn.toString();
-		buildTable(DbViewer.xmlDB.createQuery(qgIn, scenarios, regions), qgIn.isSumAll(), qgIn.getLevelValues());
+		if(singleBinding == null) {
+			buildTable(DbViewer.xmlDB.createQuery(qgIn, scenarios, regions), qgIn.isSumAll(), qgIn.getLevelValues());
+		} else {
+			buildTable(DbViewer.xmlDB.createQuery(singleBinding, scenarios, regions), 
+					qgIn.isSumAll(), qgIn.getLevelValues());
+		}
 		//DbViewer.xmlDB.setQueryFilter("");
 		ind2Name = qgIn.getVariable();
 		indCol.add(0, ind1Name);
@@ -779,7 +786,7 @@ public class ComboTableModel extends BaseTableModel{
 	  try {
 		  if(!res.hasNext()) {
 			  System.out.println("Query didn't get any results");
-			  JOptionPane.showMessageDialog(parentFrame, "Query didn't get any results", "Build Table Error",
+			  JOptionPane.showMessageDialog(parentFrame, "The Query did not get any results.", "Build Table Error",
 					  JOptionPane.ERROR_MESSAGE);
 			  // display an error on the screen
 			  return;

@@ -468,7 +468,7 @@ public class MultiTableModel extends BaseTableModel{
 		  if(!res.hasNext()) {
 			  System.out.println("Query didn't get any results");
 			  // display an error on the screen
-			  JOptionPane.showMessageDialog(parentFrame, "Query didn't get any results", "Build Table Error",
+			  JOptionPane.showMessageDialog(parentFrame, "The Query did not get any results", "Build Table Error",
 					  JOptionPane.ERROR_MESSAGE);
 			  return;
 		  }

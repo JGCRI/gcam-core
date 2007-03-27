@@ -65,6 +65,8 @@ public class QueryGenerator implements java.io.Serializable{
 	int currSel;
 	String labelColumnName;
 	String comments;
+	private transient SingleQueryExtension singleExtension;
+
 	public QueryGenerator(Frame parentFrameIn) {
 		qb = null;
 		isSumable = false;
@@ -1082,5 +1084,72 @@ public class QueryGenerator implements java.io.Serializable{
 		} else {
 			isGlobal = newGlobal;
 		}
+	}
+
+	/**
+	 * Gets a path which will result in a list
+	 * of node level values.
+	 * @return The path that will give nodeLevel values.
+	 */
+	public String getNodeLevelPath() {
+		if(qb != null) {
+			return qb.getNodeLevelPath();
+		} else {
+			return defaultGetNodeLevelPath();
+		}
+	}
+
+	/**
+	 * Get a path that will only get values when the nodeLevel
+	 * value is the value passed in.
+	 * @param nodeLevelValue The node level value to filter for.
+	 * @return The path that gets the desired result set.
+	 */
+	public String getForNodeLevelPath(String nodeLevelValue) {
+		if(qb != null) {
+			return qb.getForNodeLevelPath(nodeLevelValue);
+		} else {
+			return defaultGetForNodeLevelPath(nodeLevelValue);
+		}
+	}
+
+	public String defaultGetNodeLevelPath() {
+		String nodeLevelAttrName = nodeLevel.getValue();
+		if(nodeLevelAttrName == null) {
+			nodeLevelAttrName = "name";
+		}
+		return "/ancestor::*[@type='"+nodeLevel.getKey()+"' or local-name()='"+
+			nodeLevel.getKey()+"']/@"+nodeLevelAttrName;
+	}
+
+	public String defaultGetForNodeLevelPath(String nodeLevelValue) {
+		String nodeLevelAttrName = nodeLevel.getValue();
+		if(nodeLevelAttrName == null) {
+			nodeLevelAttrName = "name";
+		}
+		return "[ancestor::*[(@type='"+nodeLevel.getKey()+"' or local-name()='"+
+			nodeLevel.getKey()+"') and @"+nodeLevelAttrName+"='"+
+			nodeLevelValue+"']]";
+	}
+
+	/**
+	 * Return wether or not the single query
+	 * extension has been created.
+	 * @return True if it has been created, false otherwise.
+	 */
+	public boolean hasSingleQueryExtension() {
+		return singleExtension != null;
+	}
+
+	/**
+	 * Get the single query extension.  This is only created
+	 * if it is requested.
+	 * @return The single query extension for this query.
+	 */
+	public SingleQueryExtension getSingleQueryExtension() {
+		if(singleExtension == null) {
+			singleExtension = new SingleQueryExtension(this);
+		}
+		return singleExtension;
 	}
 }

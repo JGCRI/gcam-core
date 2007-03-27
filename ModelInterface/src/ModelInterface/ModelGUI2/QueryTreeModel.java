@@ -2,6 +2,7 @@ package ModelInterface.ModelGUI2;
 
 import ModelInterface.InterfaceMain;
 import ModelInterface.ModelGUI2.queries.QueryGenerator;
+import ModelInterface.ModelGUI2.queries.SingleQueryExtension;
 import ModelInterface.ModelGUI2.undo.MiUndoableEditListener;
 import ModelInterface.ModelGUI2.undo.QueryAddRemoveUndoableEdit;
 import ModelInterface.ModelGUI2.undo.EditQueryUndoableEdit;
@@ -57,26 +58,46 @@ public class QueryTreeModel implements TreeModel, MiUndoableEditListener {
 		tmListeners.add(l);
 	}
 	public Object getChild(Object parent, int index) {
-		if(!(parent instanceof QueryGroup) || parent == null) {
-			// should throw some exception
+		if(getChildCount(parent) <= 0) {
 			return null;
 		}
-		return ((QueryGroup)parent).getQueryList().get(index);
+		if(parent instanceof QueryGroup) {
+			return ((QueryGroup)parent).getQueryList().get(index);
+		} else {
+			return ((QueryGenerator)parent).getSingleQueryExtension()
+				.getSingleQueryValueAt(index);
+		}
 	}
 	public int getChildCount(Object parent) {
-		if(!(parent instanceof QueryGroup) || parent == null) {
+		if((!(parent instanceof QueryGroup) && !(parent instanceof QueryGenerator))
+				|| parent == null) {
 			// should throw some exception
 			return -1;
 		}
-		return ((QueryGroup)parent).getQueryList().size();
+		if(parent instanceof QueryGroup) {
+			return ((QueryGroup)parent).getQueryList().size();
+		} else {
+			return ((QueryGenerator)parent).getSingleQueryExtension()
+				.getNumValues();
+		}
 	}
 	public int getIndexOfChild(Object parent, Object child) {
-		if(!(parent instanceof QueryGroup) || (!(child instanceof QueryGroup) && !(child instanceof QueryGenerator)) || 
-				parent == null || child == null) {
+		if((!(parent instanceof QueryGroup) && !(parent instanceof QueryGenerator)) || 
+				(!(child instanceof QueryGroup) && !(child instanceof QueryGenerator) && 
+				!(child instanceof SingleQueryExtension.SingleQueryValue)) ||
+				 parent == null || child == null) {
 			// should throw some exception
 			return -1;
 		}
-		return ((QueryGroup)parent).getQueryList().indexOf(child);
+		if(isLeaf(parent)) {
+			return -1;
+		}
+		if(parent instanceof QueryGroup) {
+			return ((QueryGroup)parent).getQueryList().indexOf(child);
+		} else {
+			return ((QueryGenerator)parent).getSingleQueryExtension()
+				.getIndexOfValue((SingleQueryExtension.SingleQueryValue)child);
+		}
 	}
 	public Object getRoot() {
 		return root;
@@ -85,12 +106,17 @@ public class QueryTreeModel implements TreeModel, MiUndoableEditListener {
 		if(node == null) {
 			return false;
 		} else if(node instanceof QueryGenerator) {
-			return true;
+			if(!((QueryGenerator)node).hasSingleQueryExtension()){
+			       return true;
+			} else {
+				return ((QueryGenerator)node).getSingleQueryExtension()
+					.getNumValues() == 0;
+			}
 		} else if(node instanceof QueryGroup) {
 			return false;
 		} else {
-			// error?
-			return false;
+			// single queries
+			return true;
 		}
 	}
 	public void removeTreeModelListener(TreeModelListener l) {
@@ -178,6 +204,28 @@ public class QueryTreeModel implements TreeModel, MiUndoableEditListener {
 			}
 			currNode.appendChild(tempNode);
 		}
+	}
+	public void showSingleQuery(SingleQueryExtension se, TreePath parentPath) {
+		int numValues = se.getNumValues();
+		int[] childIndices = new int[numValues];
+		Object[] children = new Object[numValues];
+		for(int i = 0; i < numValues; ++i) {
+			childIndices[i] = i;
+			children[i] = se.getSingleQueryValueAt(i);
+		}
+		fireTreeNodesInserted(se, parentPath, childIndices, children);
+	}
+	public void hideSingleQuery(SingleQueryExtension se, TreePath parentPath) {
+		int numValues = se.getNumValues();
+		int[] childIndices = new int[numValues];
+		Object[] children = new Object[numValues];
+		for(int i = 0; i < numValues; ++i) {
+			childIndices[i] = i;
+			children[i] = se.getSingleQueryValueAt(i);
+		}
+		// let se know if can reset it's list..
+		se.resetList();
+		fireTreeNodesRemoved(se, parentPath, childIndices, children);
 	}
 	public void fireTreeNodesChanged(Object source, TreePath path, int[] childIndices, Object[] children) {
 		TreeModelEvent e = new TreeModelEvent(source, path, childIndices, children);

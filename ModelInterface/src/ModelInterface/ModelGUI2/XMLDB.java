@@ -273,6 +273,10 @@ public class XMLDB {
 		return false;
 	}
 
+	public String getContainer() {
+		return contName;
+	}
+
 	public XmlResults createQuery(String query, Vector<String> queryFunctions, 
 			Object[] scenarios, Object[] regions) {
 		return createQuery(QueryBindingFactory.getQueryBinding(query, queryFunctions, contName),

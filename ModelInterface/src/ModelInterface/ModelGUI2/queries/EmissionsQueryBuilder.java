@@ -432,7 +432,6 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			} 
 			//if(n.getNodeName().equals(qg.yearLevel)) {  Do I want to make this change??
 			if(qg.yearLevel.getKey().equals(XMLDB.getAttr(n, "type")) || qg.yearLevel.getKey().equals(n.getNodeName())) {
-				//System.out.println("HERE IN yearLevel: "+XMLDB.getAttr(n, "year"));
 				if(qg.yearLevel.getValue() == null) {
 					ret.add(0, XMLDB.getAttr(n, "year"));
 				} else {

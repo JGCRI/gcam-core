@@ -8,6 +8,8 @@ import ModelInterface.ModelGUI2.tables.MultiTableModel;
 import ModelInterface.ModelGUI2.tables.CopyPaste;
 import ModelInterface.ModelGUI2.tables.TableTransferHandler;
 import ModelInterface.ModelGUI2.queries.QueryGenerator;
+import ModelInterface.ModelGUI2.queries.SingleQueryExtension;
+import ModelInterface.ModelGUI2.xmldb.QueryBinding;
 import ModelInterface.common.FileChooser;
 import ModelInterface.common.FileChooserFactory;
 import ModelInterface.MenuAdder;
@@ -116,7 +118,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 						try {
 							if(queries.hasChanges() && JOptionPane.showConfirmDialog(
 									parentFrame, 
-									"The Queries have been modified.  Do You want to save them?",
+									"The Queries have been modified.  Do you want to save them?",
 									"Confirm Save Queries", JOptionPane.YES_NO_OPTION,
 									JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
 								Document tempDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
@@ -470,8 +472,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 		listPane.add(listScroll);
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout( new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-		JButton createButton = new JButton("Create");
-		JButton removeButton = new JButton("Remove");
+		final JButton createButton = new JButton("Create");
+		final JButton removeButton = new JButton("Remove");
 		final JButton runQueryButton = new JButton("Run Query");
 		final JButton editButton = new JButton("Edit");
 		editButton.setEnabled(false);
@@ -500,13 +502,44 @@ public class DbViewer implements ActionListener, MenuAdder {
 
 		queryList.addTreeSelectionListener(new TreeSelectionListener() {
 			public void valueChanged(TreeSelectionEvent e) {
-				if(queries.isLeaf(e.getPath().getLastPathComponent())) {
-					editButton.setEnabled(true);
-					runQueryButton.setEnabled(true);
-				} else {
-					editButton.setEnabled(false);
-					runQueryButton.setEnabled(false);
+				boolean canEdit = true;
+				boolean canRun = true;
+				boolean canCreate = true;
+				boolean canRemove = true;
+				if(queryList.getSelectionPaths() != null) {
+					for(TreePath path : queryList.getSelectionPaths()) {
+						Object selectedObj = path.getLastPathComponent();
+						if(selectedObj instanceof QueryGenerator) {
+							if(!((QueryGenerator)selectedObj).hasSingleQueryExtension()) {
+								// only add the listeners the first time.
+								SingleQueryExtension se = ((QueryGenerator)selectedObj)
+									.getSingleQueryExtension();
+								queryList.addTreeSelectionListener(se);
+								scnList.addListSelectionListener(se);
+								// make sure it doesn't miss this event
+								if(scns.size() != 0 && scnList.getSelectedIndex() != -1) {
+									se.setScenario((ScenarioListItem)scns.get(scnList.getSelectedIndex()));
+								}
+								se.valueChanged(e);
+							}
+						} else if(selectedObj instanceof SingleQueryExtension.SingleQueryValue) {
+							canEdit = false;
+							if(!((SingleQueryExtension.SingleQueryValue)
+										selectedObj).canExecute()) {
+								canRun = false;
+							}
+							canCreate = false;
+							canRemove = false;
+						} else  {
+							canEdit = false;
+							canRun = false;
+						}
+					}
 				}
+				editButton.setEnabled(canEdit);
+				runQueryButton.setEnabled(canRun);
+				createButton.setEnabled(canCreate);
+				removeButton.setEnabled(canRemove);
 			}
 		});
 		queries.addTreeModelListener(new TreeModelListener() {
@@ -514,9 +547,11 @@ public class DbViewer implements ActionListener, MenuAdder {
 				// right now this is the only one I care about
 				// so that I can set selection after a node is
 				// inserted
-				TreePath pathWithNewChild = e.getTreePath().pathByAddingChild(e.getChildren()[0]);
-				queryList.setSelectionPath(pathWithNewChild);
-				queryList.scrollPathToVisible(pathWithNewChild);
+				if(!(e.getChildren()[0] instanceof SingleQueryExtension.SingleQueryValue)) {
+					TreePath pathWithNewChild = e.getTreePath().pathByAddingChild(e.getChildren()[0]);
+					queryList.setSelectionPath(pathWithNewChild);
+					queryList.scrollPathToVisible(pathWithNewChild);
+				}
 			}
 			public void treeNodesChanged(TreeModelEvent e) {
 				// do nothing..
@@ -581,12 +616,20 @@ public class DbViewer implements ActionListener, MenuAdder {
 					boolean movedTabAlready = false;
 					for(int i = 0; i < selPaths.length; ++i) {
 						try {
-							QueryGenerator qg = (QueryGenerator)selPaths[i].getLastPathComponent();
+							QueryGenerator qg = null;
+							QueryBinding singleBinding = null;
+							if(selPaths[i].getLastPathComponent() instanceof QueryGenerator) {
+								qg = (QueryGenerator)selPaths[i].getLastPathComponent();
+							} else {
+								singleBinding = ((SingleQueryExtension.SingleQueryValue)selPaths[i].
+									getLastPathComponent()).getAsQueryBinding();
+								qg = (QueryGenerator)selPaths[i].getParentPath().getLastPathComponent();
+							}
 							JComponent ret = null;
-							if(qg.isGroup()) {
+							if(qg.isGroup() && singleBinding == null) {
 								ret = createGroupTableContent(qg);
 							} else {
-								ret = createSingleTableContent(qg);
+								ret = createSingleTableContent(qg, singleBinding);
 							}
 							if(ret != null) {
 								tablesTabs.addTab(qg.toString(), new TabCloseIcon(), ret, 
@@ -652,11 +695,11 @@ public class DbViewer implements ActionListener, MenuAdder {
 		return jsp;
 	}
 
-	private JComponent createSingleTableContent(QueryGenerator qg) {
+	private JComponent createSingleTableContent(QueryGenerator qg, QueryBinding singleBinding) {
 		BaseTableModel btBefore = bt;
 		try {
 			bt = new ComboTableModel(qg, scnList.getSelectedValues(), 
-					regionList.getSelectedValues(), parentFrame);
+					regionList.getSelectedValues(), parentFrame, singleBinding);
 		} catch(NullPointerException e) {
 			System.out.println("Warning null pointer while creating ComboTableModel");
 			System.out.println("Likely the query didn't get any results");
@@ -1053,7 +1096,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 				} else {
 					(new ComboTableModel(qgTemp, scenarioList.getSelectedValues(), 
 							     tempRegions.toArray(), 
-							     parentFrame)).exportToExcel(sheet, wb, sheet.createDrawingPatriarch());
+							     parentFrame, null)).exportToExcel(sheet, wb, sheet.createDrawingPatriarch());
 				}
 			} catch(NullPointerException e) {
 				System.out.println("Warning possible that a query didn't get results");
@@ -1147,12 +1190,18 @@ public class DbViewer implements ActionListener, MenuAdder {
 		}
 	}
 	private String createCommentTooltip(TreePath path) {
-		QueryGenerator qg = (QueryGenerator)path.getLastPathComponent();
+		QueryGenerator qg;
+		if(path.getLastPathComponent() instanceof QueryGenerator) {
+			qg = (QueryGenerator)path.getLastPathComponent();
+		} else {
+			// SingleQueryValue..
+			qg = (QueryGenerator)path.getParentPath().getLastPathComponent();
+		}
 		StringBuilder ret = new StringBuilder("<html><table cellpadding=\"2\"><tr><td>");
 		for(int i = 1; i < path.getPathCount() -1; ++i) {
 			ret.append(path.getPathComponent(i)).append(":<br>");
 		}
-		ret.append(qg).append("<br><br>Comments:<br>")
+		ret.append(path.getLastPathComponent()).append("<br><br>Comments:<br>")
 			.append(qg.getComments()).append("</td></tr></table></html>");
 		return ret.toString();
 	}

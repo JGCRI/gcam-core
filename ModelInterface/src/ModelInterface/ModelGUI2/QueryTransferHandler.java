@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.io.IOException;
 
 import ModelInterface.ModelGUI2.queries.QueryGenerator;
+import ModelInterface.ModelGUI2.queries.SingleQueryExtension;
 import ModelInterface.ModelGUI2.QueryTreeModel;
 import ModelInterface.ModelGUI2.QueryTreeModel.QueryGroup;
 
@@ -203,7 +204,9 @@ public class QueryTransferHandler extends TransferHandler {
 				paths = ((JTree)comp).getSelectionPaths();
 			}
 			for(TreePath path : paths) {
-				qt.remove(path);
+				if(!(path.getLastPathComponent() instanceof SingleQueryExtension.SingleQueryValue)) {
+					qt.remove(path);
+				}
 			}
 		} else if(action == NONE) {
 			dragPaths = null;
@@ -221,11 +224,19 @@ public class QueryTransferHandler extends TransferHandler {
 			this.qt = qt;
 			TreePath[] paths = qt.getSelectionPaths();
 			if(paths.length == 1) {
-				data = qt.getSelectionPath().getLastPathComponent();
+				if(paths[0].getLastPathComponent() instanceof SingleQueryExtension.SingleQueryValue) {
+					data = convertSingleToQueryGenerator(paths[0]);
+				} else {
+					data = paths[0].getLastPathComponent();
+				}
 			} else {
 				ArrayList dataGrouped = new ArrayList(paths.length);
 				for(TreePath path : paths) {
-					dataGrouped.add(path.getLastPathComponent());
+					if(path.getLastPathComponent() instanceof SingleQueryExtension.SingleQueryValue) {
+						dataGrouped.add(convertSingleToQueryGenerator(path));
+					} else {
+						dataGrouped.add(path.getLastPathComponent());
+					}
 				}
 				data = ((QueryTreeModel)qt.getModel()).createQueryGroup("MultipleQuerySelection", dataGrouped);
 			}
@@ -278,6 +289,21 @@ public class QueryTransferHandler extends TransferHandler {
 					return toSerialize;
 				}
 			}
+		}
+		private QueryGenerator convertSingleToQueryGenerator(TreePath path) {
+			if(!(path.getLastPathComponent() instanceof SingleQueryExtension.SingleQueryValue)) {
+				// error?
+				return null;
+			}
+			QueryGenerator qgTemp = new QueryGenerator(((QueryGenerator)path
+						.getParentPath().getLastPathComponent()).getAsNode(doc));
+			String singleTitle = ((SingleQueryExtension.SingleQueryValue)path.getLastPathComponent())
+				.toString();
+			qgTemp.setTitle(qgTemp.toString()+": "+singleTitle);
+			qgTemp.setXPath(qgTemp.getXPath()+qgTemp
+					.getForNodeLevelPath(singleTitle));
+			qgTemp.setGroup(false);
+			return qgTemp;
 		}
 	}
 }
