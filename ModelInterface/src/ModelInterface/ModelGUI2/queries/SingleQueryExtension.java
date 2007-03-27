@@ -240,12 +240,17 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 				public void run() {
 					Object[] scenarios = { currScenario };
 					Object[] regions = { "Global" };
-					XmlResults res = DbViewer.xmlDB.
-						createQuery(new SingleQueryListQueryBinding(qg, DbViewer.xmlDB.getContainer()), 
-							scenarios, regions);
 					List<SingleQueryValue> tempValues;
-					XmlValue curr;
 					try {
+						XmlResults res = DbViewer.xmlDB.createQuery(new SingleQueryListQueryBinding(qg, 
+								DbViewer.xmlDB.getContainer()), scenarios, regions);
+						// createQuery won't pass along the XmlException so we will
+						// have to check for null
+						if(res == null) {
+							throw new XmlException(XmlException.XPATH_PARSER_ERROR,
+								"Probably invalid syntax", null, 0);
+						}
+						XmlValue curr;
 						if(!res.hasNext()) {
 							tempValues = noResultsList;
 						} else {
