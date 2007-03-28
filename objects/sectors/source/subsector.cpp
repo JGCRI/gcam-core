@@ -1068,7 +1068,7 @@ void Subsector::setOutput( const double aSubsectorVariableDemand,
 										 aFixedOutputScaleFactor, aGDP, aPeriod );
 			}
 			else {
-				// calculate Technology output and fuel input from Subsector output
+				// calculate Technology output and fuel input for past vintages
 				techs[i][j]->production( regionName, sectorName, 0,
 										 aFixedOutputScaleFactor, aGDP, aPeriod );
 			}
