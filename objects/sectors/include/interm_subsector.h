@@ -84,6 +84,9 @@ protected:
 	//! Ordering number of technology with backupsector input(typically 1).
     unsigned int backupTechNumber; 
 
+	//! Ordering number of technology with backupsector input(typically 1).
+    std::string mBackupTechName; 
+
     const std::string& getXMLName() const;
 
 	double getMarginalBackupCapacity( const int aPeriod ) const;

@@ -60,6 +60,7 @@ void IntermittentSubsector::completeInit( const IInfo* aSectorInfo,
 {
     // first call parent method
     Subsector::completeInit( aSectorInfo, aDependencyFinder, aLandAllocator, aGlobalTechDB );
+
     // Warn if a backup calculator was not read-in.
     if( !mBackupCalculator.get() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -67,13 +68,64 @@ void IntermittentSubsector::completeInit( const IInfo* aSectorInfo,
         mainLog << "Intermittent subsector " << name << " in sector " << sectorName << " in region " << regionName
                 << " does not have a backup calculator. Backup costs will default to zero. " << endl;
     }
+
+    unsigned int aResourceNumber = -1;
+    int aPeriod = 1;
+    // Determine backup technology number if backup tech name was read in
+    if ( mBackupTechName != "" ) {
+        backupTechNumber = -1;
+        
+        for( unsigned int i = 0; i < techs.size(); ++i ) {
+            if ( techs[ i ][ aPeriod ]->getName() == mBackupTechName ) {
+                backupTechNumber = i;
+            }
+            else 
+            {
+                aResourceNumber = i;
+            }
+        }
+ 
+        if ( backupTechNumber == -1 ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "backupTechName " << mBackupTechName << " not found in sector " << sectorName << " in region " << regionName
+                    << ".  Resetting tech number to 1. " << endl;
+            backupTechNumber = 1;
+         }
+    }
+
+    // Set a resource number if resource number is equal to backup resource
+    if ( resourceTechNumber == backupTechNumber && aResourceNumber > 0 ) {
+        resourceTechNumber = aResourceNumber;
+    }
+    
+    // Check that the read-in resourceTechNumber and backupTechNumber are within
+    // the size of the tech vector.
+    if( resourceTechNumber >= techs.size() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "resourceTechNumber in subsector " << name << " in sector " << sectorName << " in region " << regionName
+                << " is not Valid. Resetting to 1. " << endl;
+        resourceTechNumber = 1;
+    }
+    if( backupTechNumber >= techs.size() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "backupTechNumber in subsector " << name << " in sector " << sectorName << " in region " << regionName
+                << " is not Valid. Resetting to 0. " << endl;
+        resourceTechNumber = 0;
+    }
+
 }
 
 //! Parses any input variables specific to derived classes
 bool IntermittentSubsector::XMLDerivedClassParse( const string& aNodeName,
                                                   const DOMNode* aCurr )
 {
-    if( aNodeName == "backupTechNumber" ){
+    if( aNodeName == "backup-tech-name" ){
+        mBackupTechName = XMLHelper<string>::getValue( aCurr );
+    }
+    else if( aNodeName == "backupTechNumber" ){
         backupTechNumber = XMLHelper<int>::getValue( aCurr );
     }
     else if( aNodeName == "resourceTechNumber" ){
@@ -109,6 +161,7 @@ void IntermittentSubsector::toInputXMLDerived( ostream& out, Tabs* tabs ) const 
     XMLWriteElement( backupTechNumber, "backupTechNumber", out, tabs);
     XMLWriteElement( resourceTechNumber, "resourceTechNumber", out, tabs);
     XMLWriteElement( electricSectorName, "electricSectorName", out, tabs);
+    XMLWriteElement( mBackupTechName, "backup-tech-name", out, tabs);
     if( mBackupCalculator.get() ){
         mBackupCalculator->toInputXML( out, tabs );
     }
@@ -120,6 +173,7 @@ void IntermittentSubsector::toDebugXMLDerived( const int period, ostream& out, T
     XMLWriteElement( backupTechNumber, "backupTechNumber", out, tabs );
     XMLWriteElement( resourceTechNumber, "resourceTechNumber", out, tabs );
     XMLWriteElement( electricSectorName, "electricSectorName", out, tabs );
+    XMLWriteElement( mBackupTechName, "backup-tech-name", out, tabs);
     XMLWriteElement( getAverageBackupCapacity( period ), "avg-backup-capacity", out, tabs );
     XMLWriteElement( getMarginalBackupCapacity( period ), "marginal-backup-capacity", out, tabs );
 
@@ -198,26 +252,26 @@ void IntermittentSubsector::initCalc( NationalAccount* aNationalAccount,
 const vector<double> IntermittentSubsector::calcTechShares( const GDP* aGDP,
                                                             const int aPeriod ) const
 {
-    // Note: these shares are only valid for price, not output.
+    // Note: these shares are only valid for calculting cost of renew supply (minus backup), not output.
+	vector<double> techShares( techs.size() );
+	for( unsigned int i = 0; i < techs.size(); ++i ){
+        // Calculate for all techs except for backup technology
+		if ( i != backupTechNumber ) {
+            // determine shares based on Technology costs
+            techShares[ i ] = techs[i][aPeriod]->calcShare( regionName, sectorName, aGDP, aPeriod );
 
-    // Convert backup capacity per unit of resource energy to energy required
-    // (in EJ) per unit of resource energy (in EJ) using backup capacity factor.
-    double backupEnergyFraction = getMarginalBackupCapacity( aPeriod )
-                                  * calcEnergyFromBackup();
+            // Check that Technology shares are valid.
+            assert( util::isValidNumber( techShares[ i ] ) );
+        }
+        else
+        {
+            techShares[ backupTechNumber ] = 0;
+        }
+	}
 
-    /*! \invariant Backup energy fraction must be positive. */
-    assert( util::isValidNumber( backupEnergyFraction ) &&
-              backupEnergyFraction >= 0 );
+	// Normalize technology shares.
+	SectorUtils::normalizeShares( techShares );
 
-    // Check that the read-in resourceTechNumber and backupTechNumber are within
-    // the size of the tech vector.
-    assert( resourceTechNumber < techs.size() );
-    assert( backupTechNumber < techs.size() );
-
-    // Normalize shares.
-    vector<double> techShares( 2 );
-    techShares[ resourceTechNumber ] = 1.0 / ( 1.0 + backupEnergyFraction );
-    techShares[ backupTechNumber ] = backupEnergyFraction / ( 1.0 + backupEnergyFraction );
     return techShares;
 }
 
@@ -274,11 +328,19 @@ void IntermittentSubsector::setOutput( const double aSubsectorVariableDemand,
                                                       backupEnergy,
                                                       aFixedOutputScaleFactor,
                                                       aGDP, aPeriod );
+    // Calculate the technology shares.
+	const vector<double> shares = calcTechShares( aGDP, aPeriod );
 
-    // Remaining output is variable output.
-    techs[ resourceTechNumber ][ aPeriod ]->production( regionName, sectorName,
-                                                        aSubsectorVariableDemand - backupEnergy,
-                                                        aFixedOutputScaleFactor, aGDP, aPeriod );
+    double totalNonBackupOutput = aSubsectorVariableDemand - backupEnergy;
+    
+   // Set output for all non-backup technologies 
+    for( unsigned int i = 0; i < techs.size(); ++i ){
+		if ( i != backupTechNumber ) {
+            techs[ i ][ aPeriod ]->production( regionName, sectorName,
+                                               totalNonBackupOutput * shares[ i ],
+                                               aFixedOutputScaleFactor, aGDP, aPeriod );
+        }
+    }
 }
 
 /*!
