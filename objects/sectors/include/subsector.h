@@ -95,7 +95,7 @@ protected:
     void normalizeTechShareWeights( const int period );
     virtual void adjustTechnologyShareWeights( const int period );
     void techShareWeightLinearInterpFn( const int beginPeriod,  const int endPeriod );
-    void parseBaseTechHelper( const xercesc::DOMNode* curr, BaseTechnology* newTech );
+    void parseBaseTechHelper( const xercesc::DOMNode* curr, BaseTechnology* aNewTech );
     virtual bool isNameOfChild  ( const std::string& nodename ) const;
     
     virtual ITechnology* createChild( const std::string& aTechType,
