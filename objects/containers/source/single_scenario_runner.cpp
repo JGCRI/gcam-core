@@ -197,6 +197,11 @@ void SingleScenarioRunner::printOutput( Timer& aTimer, const bool aCloseDB ) con
         outFile.close();
     }
 
+#if( __USE_XML_DB__ )	
+    mainLog.setLevel( ILogger::NOTICE );
+    mainLog << "Starting output to XML Database." << endl;
+#endif
+
     // Print the XML file for the XML database.
     scenario->printOutputXML();
 
