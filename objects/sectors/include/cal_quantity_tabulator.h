@@ -91,7 +91,7 @@ public:
     virtual void endVisitTechnology( const Technology* aTechnology,
                                      const int aPeriod );
     
-    virtual void startVisitOutput( const IOutput* aOutput,
+    virtual void startVisitOutput( IOutput* aOutput,
                                    const int aPeriod );
 
     // Non visitor interface methods.

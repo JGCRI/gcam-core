@@ -130,7 +130,7 @@ public :
       const double             aPrimaryOutput,
       const std::string&       aRegionName,
       const ICaptureComponent* aCaptureComponent,
-      const int                aPeriod ) const;
+      const int                aPeriod );
 
    // Documentation is inherited.
    virtual ResidueBiomassProduction* clone( void ) const
@@ -261,6 +261,14 @@ private :
 
    //! The cost curve calculator
    ObjECTS::TCostCurve<> mCostCurve;
+
+   // These variables are for debugging purposes. Values are written to debug.xml
+   //! Mass in crop residue
+   double mResMass;
+
+   //! Mass in crop
+   double mCropMass;
+
 };
 
 #endif   // __RESIDUEBIOMASSPRODUCTION_H

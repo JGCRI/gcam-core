@@ -150,7 +150,7 @@ void CalQuantityTabulator::endVisitTechnology( const Technology* aTechnology,
     mCurrentOutput = 0;
 }
 
-void CalQuantityTabulator::startVisitOutput( const IOutput* aOutput,
+void CalQuantityTabulator::startVisitOutput( IOutput* aOutput,
                                              const int aPeriod )
 {
     if( !mShouldTabulateSector ){

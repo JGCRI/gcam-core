@@ -147,7 +147,7 @@ public:
     virtual double calcPhysicalOutput( const double aPrimaryOutput,
                                        const std::string& aRegionName,
                                        const ICaptureComponent* aCaptureComponent,
-                                       const int aPeriod ) const = 0;
+                                       const int aPeriod ) = 0;
 
     /*!
      * \brief Set the physical output determined by the specified primary output

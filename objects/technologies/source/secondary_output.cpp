@@ -136,7 +136,7 @@ void SecondaryOutput::scaleCoefficient( const double aScaler ){
 double SecondaryOutput::calcPhysicalOutput( const double aPrimaryOutput,
                                             const string& aRegionName,
                                             const ICaptureComponent* aCaptureComponent,
-                                            const int aPeriod ) const
+                                            const int aPeriod )
 {
     // Secondary output is the primary output multiplied by the output ratio.
     return aPrimaryOutput * mOutputRatio;

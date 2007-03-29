@@ -63,7 +63,7 @@ double ResidueBiomassProduction::calcPhysicalOutput(
    const double             aPrimaryOutput,
    const std::string&       aRegionName,
    const ICaptureComponent* aCaptureComponent,
-   const int                aPeriod ) const
+   const int                aPeriod )
 {
    if ( aPrimaryOutput <= 0 )
    {
@@ -109,16 +109,16 @@ double ResidueBiomassProduction::calcPhysicalOutput(
    }
 
    // Compute the amount of crop produced (Equation 1)
-   double   cropMass = area * yield * mMassConversion;
+      mCropMass = area * yield * mMassConversion;
 
    // Equation 2 is mHarvestIndex
 
    // Compute the above-ground biomass (Equation 3)
-   double   resMass = cropMass *
+   double   mResMass = mCropMass *
       ( double( 1 ) - std::pow( mHarvestIndex, double( 1 ) ) );
 
    // Compute the below-ground biomass(Equation 4)
-   //double   rootMass = mRootToShoot  * ( cropMass + resMass );
+   //double   rootMass = mRootToShoot  * ( mCropMass + mResMass );
 
    // Equation 5 is the mErosCtrl variable
 
@@ -128,7 +128,7 @@ double ResidueBiomassProduction::calcPhysicalOutput(
 
    // Compute the amount of residue biomass available to the energy sector
    // (Equation 7)
-   double   resAvail = resMass - meanErosCtrl /*- resFeed*/;
+   double   resAvail = mResMass - meanErosCtrl /*- resFeed*/;
    if ( resAvail <= 0 )
    {
       return 0;
@@ -391,6 +391,8 @@ void ResidueBiomassProduction::toDebugXML(
    XMLWriteElement( mMassConversion, "mass-conversion", aOut, aTabs );
    XMLWriteElement( mMassToEnergy, "mass-to-energy", aOut, aTabs );
    XMLWriteElement( mCostCurve.getMidprice(), "mid-price", aOut, aTabs );
+   XMLWriteElement( mResMass, "Residue Mass", aOut, aTabs );
+   XMLWriteElement( mCropMass, "Crop Mass", aOut, aTabs );
    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
