@@ -115,7 +115,7 @@ double ResidueBiomassProduction::calcPhysicalOutput(
 
    // Compute the above-ground biomass (Equation 3)
    double   resMass = cropMass *
-      ( std::pow( mHarvestIndex, double( 1 ) ) - double( 1 ) );
+      ( double( 1 ) - std::pow( mHarvestIndex, double( 1 ) ) );
 
    // Compute the below-ground biomass(Equation 4)
    //double   rootMass = mRootToShoot  * ( cropMass + resMass );
