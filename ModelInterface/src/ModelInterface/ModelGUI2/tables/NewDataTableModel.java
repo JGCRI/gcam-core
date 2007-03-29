@@ -14,6 +14,7 @@ import java.util.TreeMap;
 import java.util.Map;
 import java.util.TreeSet;
 import java.util.Vector;
+import java.util.Iterator;
 
 import javax.swing.JTable;
 import javax.swing.JFrame;
@@ -184,6 +185,14 @@ public class NewDataTableModel extends BaseTableModel{
 		indCol = new Vector(set1);
 		indCol.add(0,set1Name);
 		indRow = new Vector(set2);
+		if(indCol.contains("Units")) {
+			for(Iterator i = indRow.iterator(); i.hasNext(); ) {
+				String currRowName = (String)i.next();
+				if(!dataIn.containsKey("Units;"+currRowName)) {
+					i.remove();
+				}
+			}
+		}
 		data = dataIn;
 		flipped = false;
 		doc = docIn;
