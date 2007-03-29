@@ -613,7 +613,7 @@ void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology,
 
     // Write out secondary outputs.
     // TODO: This is a stopgap solution. Need to consider how to do this in the long run.
-    for( int iOutput = 1; iOutput < aTechnology->mOutputs.size(); ++iOutput ){    
+    for( unsigned iOutput = 1; iOutput < aTechnology->mOutputs.size(); ++iOutput ){    
         for( int curr = 0; curr < modeltime->getmaxper(); ++curr ){
             if( !aTechnology->mProductionState[ curr ]->isOperating() ){
                 continue;
