@@ -105,12 +105,16 @@ public class QueryTransferHandler extends TransferHandler {
 		try {
 			if(hasLocalGen && lastAction == MOVE) {
 				qg = (QueryGenerator)t.getTransferData(localQueryGeneratorFlavor);
+				qg.resetQueryBuilder();
 			} else if(hasSerialGen) {
 				qg = (QueryGenerator)t.getTransferData(serialQueryGeneratorFlavor);
+				qg.resetQueryBuilder();
 			} else if(hasLocalGroup && lastAction == MOVE) {
 				qGroup = (QueryGroup)t.getTransferData(localQueryGroupFlavor);
+				qGroup.resetQueryBuilders();
 			} else if(hasSerialGroup) {
 				qGroup = (QueryGroup)t.getTransferData(serialQueryGroupFlavor);
+				qGroup.resetQueryBuilders();
 			} else if(hasLocalNode) {
 				// I don't think nodes are serializable..
 				node = (Node)t.getTransferData(localNodeFlavor);

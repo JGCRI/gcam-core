@@ -61,7 +61,7 @@ public class QueryGenerator implements java.io.Serializable{
 	DataPair<String, String> yearLevel;
 
 	List<String> collapseOnList;
-	private transient QueryBuilder qb;
+	private QueryBuilder qb;
 	int currSel;
 	String labelColumnName;
 	String comments;
@@ -1151,5 +1151,14 @@ public class QueryGenerator implements java.io.Serializable{
 			singleExtension = new SingleQueryExtension(this);
 		}
 		return singleExtension;
+	}
+
+	/**
+	 * Reset the QueryBuilder.  The query builder needs to be reset
+	 * after a copy/paste mainly becuase it's pointer back to the
+	 * QueryGenerator is lost.
+	 */
+	public void resetQueryBuilder() {
+		qb.setQueryGenerator(this);
 	}
 }

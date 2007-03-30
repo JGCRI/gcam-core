@@ -286,6 +286,15 @@ public class QueryTreeModel implements TreeModel, MiUndoableEditListener {
 		public String toString() {
 			return groupName;
 		}
+		public void resetQueryBuilders() {
+			for(int i = 0; i < qList.size(); ++i) {
+				if(qList.get(i) instanceof QueryGenerator) {
+					((QueryGenerator)qList.get(i)).resetQueryBuilder();
+				} else {
+					((QueryGroup)qList.get(i)).resetQueryBuilders();
+				}
+			}
+		}
 		private void writeObject(ObjectOutputStream out) throws IOException {
 			out.writeObject(groupName);
 			out.writeObject(qList);

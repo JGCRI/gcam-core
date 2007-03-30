@@ -21,7 +21,7 @@ public abstract class QueryBuilder implements java.io.Serializable {
 	public static final String subresourceQueryPortion = "*[@type = 'subresource']";
 	public static final String baseTechnologyQueryPortion = "*[@type = 'baseTechnology']";
 
-	protected QueryGenerator qg;
+	protected transient QueryGenerator qg;
 	protected String queryFilter;
 	protected Vector<String> queryFunctions;
 	boolean isGlobal;
@@ -50,5 +50,9 @@ public abstract class QueryBuilder implements java.io.Serializable {
 	}
 	public String getForNodeLevelPath(String nodeLevelValue) {
 		return qg.defaultGetForNodeLevelPath(nodeLevelValue);
+	}
+	// this gets reset when copy/pasted
+	void setQueryGenerator(QueryGenerator qgIn) {
+		qg = qgIn;
 	}
 }
