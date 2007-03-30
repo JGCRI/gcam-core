@@ -138,8 +138,13 @@ public class QueryTreeModel implements TreeModel, MiUndoableEditListener {
 		TreePath parentPath;
 		if(path.getLastPathComponent() instanceof QueryGroup) {
 			parentPath = path;
-		} else {
+		} else if(path.getLastPathComponent() instanceof QueryGenerator) {
 			parentPath = path.getParentPath();
+		} else if(path.getLastPathComponent() instanceof SingleQueryExtension.SingleQueryValue) {
+			parentPath = path.getParentPath().getParentPath();
+		} else {
+			System.out.println("ERROR: could not find parent, not going to add");
+			return;
 		}
 		QueryGroup parent = (QueryGroup)parentPath.getLastPathComponent();
 		int[] index = new int[1];
