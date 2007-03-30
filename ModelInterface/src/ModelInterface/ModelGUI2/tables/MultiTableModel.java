@@ -441,7 +441,6 @@ public class MultiTableModel extends BaseTableModel{
 	public MultiTableModel(QueryGenerator qgIn, Object[] scenarios, Object[] regions, JFrame parentFrameIn) {
 		qg = qgIn;
 		parentFrame = parentFrameIn;
-		//title = qgIn.getVariable();
 		title = qgIn.toString();
 		wild = new ArrayList();
 		wild.add(qgIn.getNodeLevel());
@@ -455,12 +454,15 @@ public class MultiTableModel extends BaseTableModel{
 		for(int i = 0; i < tables.size(); i++) {
 			activeRows.add(new Integer(i));
 		}
+		// add some html to make it look nice
+		title = "<html><body><b>"+title+"</b> Comments: "+qg.getComments();
 		int numTables = getRowCount() / 2;
 		if(numTables > 1) {
 			title += " ("+numTables+" Tables)";
 		} else {
 			title += " (1 Table)";
 		}
+		title += "</body></html>";
 	}
 	private void buildTable(XmlResults res, boolean sumAll, Object[] levelValues) {
 		System.out.println("In Function: "+System.currentTimeMillis());
@@ -598,7 +600,21 @@ public class MultiTableModel extends BaseTableModel{
   public String exportToText() {
 	  String lineEnding = System.getProperty("line.separator");
 	  StringBuilder ret = new StringBuilder();
-	  ret.append(title).append(lineEnding);
+	  // excel doesn't handle html properly so we will have 
+	  // to build the title without html
+	  String tempTitle = qg.toString() + " Comments: ";
+	  String comments = qg.getRealComments();
+	  if(comments == null) {
+		  comments = "None";
+	  }
+	  tempTitle += comments;
+	  int numTables = getRowCount() / 2;
+	  if(numTables > 1) {
+		  tempTitle += " ("+numTables+" Tables)";
+	  } else {
+		  tempTitle += " (1 Table)";
+	  }
+	  ret.append(tempTitle).append(lineEnding);
 	  for(int i = 0; i < getRowCount(); i += 2) {
 		  ret.append(getValueAt(i, 0).toString()).append(lineEnding)
 					  .append(getModelAt(i+1).exportToText());
