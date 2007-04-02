@@ -14,6 +14,7 @@
 #include <vector>
 #include <map>
 #include "resources/include/aresource.h"
+#include "util/base/include/object_meta_info.h"
 
 // Forward declaration.
 class SubResource;
@@ -49,6 +50,10 @@ public:
     void csvOutputFile( const std::string& regname ); 
 	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
+
+    typedef ObjECTS::TObjectMetaInfo<> object_meta_info_type;
+    typedef std::vector<object_meta_info_type> object_meta_info_vector_type;
+
     int nosubrsrc; //!< number of subsectors for each Resource
     std::auto_ptr<IInfo> mResourceInfo; //!< Pointer to the resource's information store.
     std::vector<SubResource*> subResource; //!< subsector objects for each Resource
@@ -56,7 +61,8 @@ protected:
     std::vector<double> available; //!< total Resource available
     std::vector<double> annualprod; //!< annual production rate of Resource
     std::vector<double> cummprod; //!< cumulative production of Resource
-    std::map<std::string,int> subResourceNameMap; //!< Map of subResource name to integer position in vector. 
+    std::map<std::string,int> subResourceNameMap; //!< Map of subResource name to integer position in vector.
+    object_meta_info_vector_type mObjectMetaInfo; //!< Vector of object meta info to pass to the market
     virtual bool XMLDerivedClassParse( const std::string& aNodeName,
                                        const xercesc::DOMNode* aNode ) = 0;
     virtual const std::string& getXMLName() const = 0;
@@ -110,14 +116,7 @@ protected:
    std::vector<double> resourceVariance;
    //! average resource capacity factor computed from subresources
    std::vector<double> resourceCapacityFactor;
-   //! average total irradiance (W/m^2 )
-   double mAveTotalIrradiance;
-   //! ratio direct to total (unitless)
-   double mRatioDirectToTotal;
-   //! days with no sun (days)
-   double mNoSunDays;
-   //! grid connection cost ($/MW capacity)
-   double mGridConnectionCost;
+
     bool XMLDerivedClassParse( const std::string& nodename, const xercesc::DOMNode* node );
    virtual const std::string& getXMLName() const;
     void annualsupply( const std::string& regionName, int per, const GDP* gdp, double price, double prev_price );
@@ -126,5 +125,6 @@ private:
 };
 
 #endif // _RESOURCE_H_
+
 
 

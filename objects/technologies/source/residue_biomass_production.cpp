@@ -504,3 +504,4 @@ bool ResidueBiomassProduction::XMLParse( const xercesc::DOMNode* aNode )
 
 // end of residue_biomass_production.cpp ***********************************
 
+

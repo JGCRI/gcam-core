@@ -41,7 +41,9 @@ const string FixedResource::XML_NAME = "fixedresource";
 const string RenewableResource::XML_NAME = "renewresource";
 
 //! Default constructor.
-Resource::Resource(){
+Resource::Resource()
+    : mObjectMetaInfo()
+{
     nosubrsrc = 0;
     // resize vectors not read in
     const Modeltime* modeltime = scenario->getModeltime();
@@ -103,6 +105,13 @@ void Resource::XMLParse( const DOMNode* node ){
                     XMLHelper<string>::safeTranscode( attrTemp->getNodeValue() );
             }
         }
+        else if ( nodeName == object_meta_info_type::getXMLNameStatic() ){
+            object_meta_info_type metaInfo;
+            if ( metaInfo.XMLParse( curr ) ){
+                // Add to collection
+                mObjectMetaInfo.push_back( metaInfo );
+            }
+        }
         else if( XMLDerivedClassParse( nodeName, curr ) ){
             // no-op
         }
@@ -144,7 +153,22 @@ void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo
     // Set markets for this sector
     setMarket( aRegionName );
 
-    // TODO - KGW put values in market
+    // Put values in market
+    if ( mObjectMetaInfo.size() ) {
+        // Put values in market
+        Marketplace* pMarketplace   = scenario->getMarketplace();
+        const std::string& fuelName = getName();
+        const Modeltime* pModeltime = scenario->getModeltime();
+        size_t           numPeriods = pModeltime->getmaxper();
+        for ( size_t period = 0; period != numPeriods; ++period ) {
+            IInfo* pInfo = pMarketplace->getMarketInfo( fuelName, aRegionName, period, true );
+            if ( pInfo ) {
+                for ( object_meta_info_vector_type::const_iterator x = mObjectMetaInfo.begin(); x != mObjectMetaInfo.end(); ++x ) {
+                    pInfo->setDouble( (*x).getName(), (*x).getValue() );
+                }
+            }
+        }
+    }
 }
 
 /*! \brief Perform any initializations needed for each period.
@@ -508,10 +532,6 @@ bool FixedResource::XMLDerivedClassParse( const string& nodeName, const DOMNode*
 
 //! \brief set the size for the resourceVariance member
 RenewableResource::RenewableResource()
-   : mAveTotalIrradiance( -1 ),
-     mRatioDirectToTotal( -1 ),
-     mNoSunDays( -1 ),
-     mGridConnectionCost( -1 )
 {
    resourceVariance.resize( scenario->getModeltime()->getmaxper() );
    resourceCapacityFactor.resize( scenario->getModeltime()->getmaxper() );

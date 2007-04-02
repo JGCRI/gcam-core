@@ -155,3 +155,4 @@ void PrimaryOutput::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->endVisitOutput( this, aPeriod );
 }
 
+

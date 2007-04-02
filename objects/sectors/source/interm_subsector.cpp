@@ -21,6 +21,8 @@
 #include "sectors/include/backup_calculator_factory.h"
 #include "containers/include/iinfo.h"
 #include "sectors/include/sector_utils.h"
+#include "technologies/include/csp_technology.h"
+#include "technologies/include/default_technology.h"
 
 using namespace std;
 using namespace xercesc;
@@ -190,6 +192,30 @@ void IntermittentSubsector::toDebugXMLDerived( const int period, ostream& out, T
     }
 }
 
+bool IntermittentSubsector::isNameOfChild( const std::string& nodename ) const {
+   return nodename == CSPTechnology::getXMLNameStatic1D() ||
+          nodename == DefaultTechnology::getXMLNameStatic1D();
+}
+
+ITechnology* IntermittentSubsector::createChild( const std::string& aTechType,
+                                                 const std::string& aTechName,
+                                                 const int aTechYear ) const {
+
+    if ( !isNameOfChild( aTechType ) ) {
+        return false;
+    }
+    else if ( aTechType == CSPTechnology::getXMLNameStatic1D() ){
+       return new CSPTechnology( aTechName, aTechYear );
+    }
+    else if ( aTechType == DefaultTechnology::getXMLNameStatic1D() ){
+       return new DefaultTechnology( aTechName, aTechYear );
+    }
+    else {
+       return 0;
+    }
+}
+
+
 /*! \brief Get the XML node name for output to XML.
 *
 * This public function accesses the private constant string, XML_NAME. This way
@@ -218,7 +244,7 @@ const string& IntermittentSubsector::getXMLNameStatic() {
     return XML_NAME;
 }
 
-/*! \brief initilaization before each period
+/*! \brief initialization before each period
 *
 *
 * \author Marshall Wise

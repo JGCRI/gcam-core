@@ -100,6 +100,12 @@ protected:
 
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
+
+    virtual bool isNameOfChild  ( const std::string& nodename ) const;
+    
+    virtual ITechnology* createChild( const std::string& aTechType,
+                                      const std::string& aTechName,
+                                      const int aTechYear ) const;
 };
 
 #endif // _INTERM_SUBSECTOR_H_

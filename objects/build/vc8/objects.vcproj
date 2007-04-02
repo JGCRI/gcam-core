@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				UseUnicodeResponseFiles="true"
-				AdditionalOptions="/WL"
+				AdditionalOptions="/WL /wo4390"
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;..\..\..\..\libs\xerces-c-src_2_7_0\src&quot;;&quot;..\..\..\..\libs\boost-lib\&quot;;..\..\..\..\libs\dbxml\include;&quot;..\..\..\..\libs\mtl-2.1.2-21&quot;;..\.."
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;"
@@ -127,7 +127,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/WL"
+				AdditionalOptions="/WL /wo4390"
 				Optimization="2"
 				InlineFunctionExpansion="2"
 				OmitFramePointers="true"
@@ -691,6 +691,10 @@
 				</File>
 				<File
 					RelativePath="..\..\technologies\source\capture_component_factory.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\csp_technology.cpp"
 					>
 				</File>
 				<File
@@ -1642,6 +1646,14 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\util\base\include\object_meta_info.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\util\base\include\string_hash.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\util\base\include\summary.h"
 						>
 					</File>
@@ -1671,6 +1683,10 @@
 					</File>
 					<File
 						RelativePath="..\..\util\base\include\xml_helper.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\util\base\include\xml_pair.h"
 						>
 					</File>
 				</Filter>
@@ -2092,6 +2108,10 @@
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\capture_component_factory.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\csp_technology.h"
 					>
 				</File>
 				<File

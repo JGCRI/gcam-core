@@ -510,6 +510,9 @@
 					RelativePath="..\..\technologies\source\capture_component_factory.cpp">
 				</File>
 				<File
+					RelativePath="..\..\technologies\source\csp_technology.cpp">
+				</File>
+				<File
 					RelativePath="..\..\technologies\source\default_technology.cpp">
 				</File>
 				<File
@@ -1281,6 +1284,9 @@
 					RelativePath="..\..\technologies\include\capture_component_factory.h">
 				</File>
 				<File
+					RelativePath="..\..\technologies\include\csp_technology.h">
+				</File>
+				<File
 					RelativePath="..\..\technologies\include\default_technology.h">
 				</File>
 				<File
@@ -1435,6 +1441,12 @@
 						RelativePath="..\..\util\base\include\model_time.h">
 					</File>
 					<File
+						RelativePath="..\..\util\base\include\object_meta_info.h">
+					</File>
+					<File
+						RelativePath="..\..\util\base\include\string_hash.h">
+					</File>
+					<File
 						RelativePath="..\..\util\base\include\summary.h">
 					</File>
 					<File
@@ -1457,6 +1469,9 @@
 					</File>
 					<File
 						RelativePath="..\..\util\base\include\xml_helper.h">
+					</File>
+					<File
+						RelativePath="..\..\util\base\include\xml_pair.h">
 					</File>
 				</Filter>
 				<Filter
