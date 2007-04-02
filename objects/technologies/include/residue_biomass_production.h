@@ -130,7 +130,7 @@ public :
       const double             aPrimaryOutput,
       const std::string&       aRegionName,
       const ICaptureComponent* aCaptureComponent,
-      const int                aPeriod );
+      const int                aPeriod ) const;
 
    // Documentation is inherited.
    virtual ResidueBiomassProduction* clone( void ) const
@@ -263,11 +263,12 @@ private :
    ObjECTS::TCostCurve<> mCostCurve;
 
    // These variables are for debugging purposes. Values are written to debug.xml
+   // Are made mutable so values can be saved. Are used only for debugging so are not violating const functions.
    //! Mass in crop residue
-   double mResMass;
+   mutable double mResMass;
 
    //! Mass in crop
-   double mCropMass;
+   mutable double mCropMass;
 
 };
 

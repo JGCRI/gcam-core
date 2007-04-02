@@ -93,7 +93,7 @@ public:
     virtual double calcPhysicalOutput( const double aPrimaryOutput,
                                        const std::string& aRegionName,
                                        const ICaptureComponent* aCaptureComponent,
-                                       const int aPeriod );
+                                       const int aPeriod ) const;
 
     virtual void setPhysicalOutput( const double aPrimaryOutput,
                                     const std::string& aRegionName,

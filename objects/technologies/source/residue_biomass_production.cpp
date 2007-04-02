@@ -63,7 +63,7 @@ double ResidueBiomassProduction::calcPhysicalOutput(
    const double             aPrimaryOutput,
    const std::string&       aRegionName,
    const ICaptureComponent* aCaptureComponent,
-   const int                aPeriod )
+   const int                aPeriod ) const
 {
    if ( aPrimaryOutput <= 0 )
    {

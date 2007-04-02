@@ -100,7 +100,7 @@ void PrimaryOutput::scaleCoefficient( const double aScaler ){
 double PrimaryOutput::calcPhysicalOutput( const double aPrimaryOutput,
                                           const string& aRegionName,
                                           const ICaptureComponent* aCaptureComponent,
-                                          const int aPeriod )
+                                          const int aPeriod ) const
 {
     // Output of the primary output is given.
     return aPrimaryOutput;
