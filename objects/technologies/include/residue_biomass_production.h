@@ -270,6 +270,21 @@ private :
    //! Mass in crop
    mutable double mCropMass;
 
+   //! Crop yeild
+   mutable double mYield;
+
+   //! Residue Available
+   mutable double mResAvail;
+
+   //! Mass of biomass to be retained to prevent erosion
+   mutable double mMeanErosCtrl;
+
+   //! Max biomass energy supply
+   mutable double mMaxBioEnergySupply;
+
+   //! Fraction of max available residue harvested for energy
+   mutable double mFPrice;
+
 };
 
 #endif   // __RESIDUEBIOMASSPRODUCTION_H

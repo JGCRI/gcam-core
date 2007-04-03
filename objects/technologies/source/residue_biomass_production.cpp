@@ -89,11 +89,11 @@ double ResidueBiomassProduction::calcPhysicalOutput(
    }
 
    // Get the yield
-   double   yield = mLandAllocator->getYield(
+   mYield = mLandAllocator->getYield(
       mLandType,
       mTechnologyName,
       aPeriod );
-   if ( yield <= 0 )
+   if ( mYield <= 0 )
    {
       return 0;
    }
@@ -109,7 +109,7 @@ double ResidueBiomassProduction::calcPhysicalOutput(
    }
 
    // Compute the amount of crop produced (Equation 1)
-   mCropMass = area * yield * mMassConversion;
+   mCropMass = area * mYield * mMassConversion;
 
    // Equation 2 is mHarvestIndex
 
@@ -124,26 +124,26 @@ double ResidueBiomassProduction::calcPhysicalOutput(
 
    // Compute the mass of residue that are required to sustain
    // agriculture in terms of soil nutrients and erosion (Equation 6)
-   double   meanErosCtrl = area * mErosCtrl;
+   mMeanErosCtrl = area * mErosCtrl;
 
    // Compute the amount of residue biomass available to the energy sector
    // (Equation 7)
-   double   resAvail = mResMass - meanErosCtrl /*- resFeed*/;
-   if ( resAvail <= 0 )
+   mResAvail = mResMass - mMeanErosCtrl /*- resFeed*/;
+   if ( mResAvail <= 0 )
    {
       return 0;
    }
 
    // Compute energy content of the available biomass (Equation 8)
-   double   maxBioEnergySupply = resAvail / mMassToEnergy;
+   mMaxBioEnergySupply = mResAvail * mMassToEnergy;
 
    // Compute the fraction of the total possible supply that is
    // available at a given price (Equation 10)
-   double   fPrice = mCostCurve( price );
+   mFPrice = mCostCurve( price );
 
    //! This is the secondary output
    // Compute the quantity of a crop residue biomass (Equation 9)
-   double   resEnergy = maxBioEnergySupply * fPrice;
+   double   resEnergy = mMaxBioEnergySupply * mFPrice;
 
    return resEnergy;
 }
@@ -393,6 +393,11 @@ void ResidueBiomassProduction::toDebugXML(
    XMLWriteElement( mCostCurve.getMidprice(), "mid-price", aOut, aTabs );
    XMLWriteElement( mResMass, "Residue-Mass", aOut, aTabs );
    XMLWriteElement( mCropMass, "Crop-Mass", aOut, aTabs );
+   XMLWriteElement( mYield, "yield", aOut, aTabs );
+   XMLWriteElement( mResAvail, "resAvail", aOut, aTabs );
+   XMLWriteElement( mMeanErosCtrl, "meanErosCtrl", aOut, aTabs );
+   XMLWriteElement( mMaxBioEnergySupply, "maxBioEnergySupply", aOut, aTabs );
+   XMLWriteElement( mFPrice, "fPrice", aOut, aTabs );
    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
