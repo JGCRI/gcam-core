@@ -167,7 +167,7 @@ inline bool XMLPair<T>::parse( const xercesc::DOMNode * apNode )
    }
 
    // Get the node name (key)
-   setKey( XMLHelper<string>::safeTranscode( apNode->getNodeName() ) );
+   setKey( XMLHelper<std::string>::safeTranscode( apNode->getNodeName() ) );
 
    // Get the node value
    try
