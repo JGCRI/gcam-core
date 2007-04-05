@@ -1,6 +1,6 @@
 /* xml_pair.h
  * Created: 03/09/2007
- * Version: 03/09/2007
+ * Version: 04/05/2007
  *
  * This software, which is provided in confidence, was prepared by employees
  * of Pacific Northwest National Laboratory operated by Battelle Memorial
@@ -18,6 +18,7 @@
 // include files ***********************************************************
 
 #include "util/base/include/xml_helper.h"
+#include <xercesc/dom/DOMNode.hpp>
 #include <string>
 
 // namespaces **************************************************************
@@ -85,12 +86,6 @@ public :
       return *this;
    }
 
-    /*! Add this to the specified node
-    *  \param apNode the parent node
-    *  \return true on success, false otherwise
-    */
-   virtual bool generate( xercesc::DOMNode * apNode );
-
    /*! Get the key
     *  \return the key
     */
@@ -131,25 +126,6 @@ private :
    //! The value for the pair
    value_type  mValue;
 };
-
-// XMLPair<T>::generate ****************************************************
-
- /*! Add this to the specified node
- *  \param apNode the parent node
- *  \return true on success, false otherwise
- */
-template <class T>
-inline bool XMLPair<T>::generate( xercesc::DOMNode * apNode )
-{
-   // Validate the node
-   if ( !apNode || apNode->getNodeType() != xercesc::DOMNode::ELEMENT_NODE )
-   {
-      return false;
-   }
-   // TODO
-
-   return true;
-}
 
 // XMLPair<T>::parse *******************************************************
 
