@@ -70,6 +70,9 @@ double ResidueBiomassProduction::calcPhysicalOutput(
       return 0;
    }
 
+   // Initialize debugging vars to -1 so that know that a valid set of values are returned
+   mYield = mResMass = mCropMass = mResAvail = mMeanErosCtrl = mMaxBioEnergySupply = mFPrice = -1;
+   
    assert( scenario != 0 );
    const Marketplace*   pMarketplace = scenario->getMarketplace();
    assert( pMarketplace != 0 );
@@ -107,7 +110,7 @@ double ResidueBiomassProduction::calcPhysicalOutput(
    {
       return 0;
    }
-
+   
    // Compute the amount of crop produced (Equation 1)
    mCropMass = area * mYield * mMassConversion;
 
