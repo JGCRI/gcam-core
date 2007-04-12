@@ -34,6 +34,7 @@
 const double CSPTechnology::kWhrtoGJ = 0.0036;
 const std::string CSPTechnology::NO_SUN_DAYS_KEY = "no-sun-days";
 const std::string CSPTechnology::TOTAL_ANNUAL_IRRADIANCE_KEY = "total-annual-irradiance";
+const double DEFAULT_TOTAL_ANNUAL_IRRADIANCE = 1000.0;
 
 // Constructors: CSPTechnology *********************************************
 
@@ -122,28 +123,21 @@ void CSPTechnology::calcCost(
    const std::string& fuelName     = mTechData->getFuelName();
    const IInfo*       pInfo        = pMarketplace->getMarketInfo( fuelName, aRegionName, aPeriod, true );
 
-   if ( pInfo->hasValue( TOTAL_ANNUAL_IRRADIANCE_KEY ) )
-   {
-      double totalAnnualIrradiance = pInfo->getDouble( TOTAL_ANNUAL_IRRADIANCE_KEY, true );
-      double dConnect              = pMarketplace->getPrice( fuelName, aRegionName, aPeriod );
-      double CSPEfficiency         = getEfficiency( aPeriod );
+   double totalAnnualIrradiance = pInfo->hasValue( TOTAL_ANNUAL_IRRADIANCE_KEY ) ? pInfo->getDouble( TOTAL_ANNUAL_IRRADIANCE_KEY, true ) : DEFAULT_TOTAL_ANNUAL_IRRADIANCE;
+   double dConnect              = pMarketplace->getPrice( fuelName, aRegionName, aPeriod );
+   double CSPEfficiency         = getEfficiency( aPeriod );
 
-      // Equation 1.
-      mCGeneration = ( mFCR * mCapitalCost + mOM ) / ( totalAnnualIrradiance * mSolarFieldArea * CSPEfficiency * kWhrtoGJ );
-      // Equation 3.
-      mCSPCapacityFactor = ( totalAnnualIrradiance * mSolarFieldArea * CSPEfficiency ) / denom;
-      // Equation 2.
-      mCConnect = mFCR * dConnect * mGridConnectionCost / ( mCSPCapacityFactor * 1000 * kWhrtoGJ );
+   // Equation 1.
+   mCGeneration = ( mFCR * mCapitalCost + mOM ) / ( totalAnnualIrradiance * mSolarFieldArea * CSPEfficiency * kWhrtoGJ );
+   // Equation 3.
+   mCSPCapacityFactor = ( totalAnnualIrradiance * mSolarFieldArea * CSPEfficiency ) / denom;
+   // Equation 2.
+   mCConnect = mFCR * dConnect * mGridConnectionCost / ( mCSPCapacityFactor * 1000 * kWhrtoGJ );
 
-      /* Save to array
-      * Total cost is the sum of the generation and connection cost
-      */
-      mCosts[ aPeriod ] = std::max( mCGeneration + mCConnect, util::getSmallNumber() );
-   }
-   else
-   {
-      mCosts[ aPeriod ] = 0;
-   }
+   /* Save to array
+   * Total cost is the sum of the generation and connection cost
+   */
+   mCosts[ aPeriod ] = std::max( mCGeneration + mCConnect, util::getSmallNumber() );
 }
 
 // CSPTechnology::calcResourceArea *****************************************
@@ -181,20 +175,13 @@ double CSPTechnology::calcResourceArea(
    const std::string& fuelName     = mTechData->getFuelName();
    const IInfo*       pInfo        = pMarketplace->getMarketInfo( fuelName, aRegionName, aPeriod, true );
 
-   if ( pInfo->hasValue( TOTAL_ANNUAL_IRRADIANCE_KEY ) )
-   {
-      double totalAnnualIrradiance = pInfo->getDouble( TOTAL_ANNUAL_IRRADIANCE_KEY, true );
-      double CSPGeneration         = aVariableDemand;
-      double CSPEfficiency         =  getEfficiency( aPeriod );
-      // Equation 4.
-      double resourceArea          = CSPGeneration / ( totalAnnualIrradiance * mSolarFieldFraction * CSPEfficiency * conversionFact );
+   double totalAnnualIrradiance = pInfo->hasValue( TOTAL_ANNUAL_IRRADIANCE_KEY ) ? pInfo->getDouble( TOTAL_ANNUAL_IRRADIANCE_KEY, true ) : DEFAULT_TOTAL_ANNUAL_IRRADIANCE;
+   double CSPGeneration         = aVariableDemand;
+   double CSPEfficiency         =  getEfficiency( aPeriod );
+   // Equation 4.
+   double resourceArea          = CSPGeneration / ( totalAnnualIrradiance * mSolarFieldFraction * CSPEfficiency * conversionFact );
 
-      return resourceArea;
-   }
-   else
-   {
-      return 0;
-   }
+   return resourceArea;
 }
 
 // CSPTechnology::calcShare ************************************************
@@ -241,8 +228,6 @@ void CSPTechnology::completeInit(
       validator_type( mCapitalCost, "capital-cost", mCapitalCost > 0 ),
       validator_type( mCSPCapacityFactor, "csp-capacity-factor", mCSPCapacityFactor > 0 ),
       validator_type( mFCR, "fcr", mFCR > 0 ),
-      validator_type( mGridConnectionCost, "grid-connection-cost", mGridConnectionCost > 0 ),
-      validator_type( mOM, "om", mOM > 0 ),
       validator_type( mSolarFieldFraction, "solar-field-fraction", mSolarFieldFraction > 0 ),
       validator_type( mSolarFieldArea, "solar-field-area", mSolarFieldArea > 0 )
    };
@@ -251,20 +236,6 @@ void CSPTechnology::completeInit(
    std::string    msg       = ObjECTS::getInvalidNames(
       &validator[0],
       &validator[numParams] );
-
-   // Get marketplace and calculate costs
-   Marketplace*       pMarketplace = scenario->getMarketplace();
-   const std::string& fuelName     = mTechData->getFuelName();
-   const IInfo*       pInfo        = pMarketplace->getMarketInfo( fuelName, aRegionName, 1, true );
-
-   if ( !pInfo || !pInfo->hasValue( TOTAL_ANNUAL_IRRADIANCE_KEY ) )
-   {
-      if ( msg.length() )
-      {
-         msg += ", ";
-      }
-      msg += TOTAL_ANNUAL_IRRADIANCE_KEY;
-   }
 
    if ( msg.length() )
    // Invalid input parameter
@@ -333,6 +304,22 @@ void CSPTechnology::initCalc(
    const int          aPeriod )
 {
    parent::initCalc( aRegionName, aSectorName, aSubsectorIInfo, aDemographics, aPeriod );
+
+   // Get marketplace and make sure we have the total annual irradiance
+   Marketplace*       pMarketplace = scenario->getMarketplace();
+   const std::string& fuelName     = mTechData->getFuelName();
+   const IInfo*       pInfo        = pMarketplace->getMarketInfo( fuelName, aRegionName, aPeriod, true );
+
+   if ( !pInfo || !pInfo->hasValue( TOTAL_ANNUAL_IRRADIANCE_KEY ) )
+   // Invalid input parameter
+   {
+      ILogger& mainLog = ILogger::getLogger( "main_log" );
+      mainLog.setLevel( ILogger::ERROR );
+      mainLog << "Invalid input parameter(s) to "
+         << getXMLNameStatic1D()
+         << " in sector " << aSectorName
+         << ": " << TOTAL_ANNUAL_IRRADIANCE_KEY << std::endl;
+   }
 }
 
 // CSPTechnology::postCalc *************************************************
@@ -474,4 +461,5 @@ bool CSPTechnology::XMLDerivedClassParse(
 }
 
 // end of csp_technology.cpp ***********************************************
+
 
