@@ -120,10 +120,10 @@ protected:
     double mCapacityLimit;
 
     //! Parameter for limiting equation. A must be greater than B.
-    static const int A = 25;
+    static const int A = 15;
 
     //! Parameter for limiting equation. A must be greater than B.
-    static const int B = 10;
+    static const int B = 5;
 };
 
 #endif // _CAPACITY_LIMIT_BACKUP_CALCULATOR_H_
