@@ -95,10 +95,10 @@ public class RecentFilesList implements MenuAdder {
 				break;
 			}
 
-			// files are seperated by colons
-			String[] filesSplit = filesStr.split(":");
-			// target will be stored targetclass:actionCommand
-			String[] targetSplit = targetStr.split(":");
+			// files are seperated by semicolons
+			String[] filesSplit = filesStr.split(";");
+			// target will be stored targetclass;actionCommand
+			String[] targetSplit = targetStr.split(";");
 			if(filesSplit.length < 1 || targetSplit.length != 2) {
 				continue;
 			}
@@ -123,7 +123,7 @@ public class RecentFilesList implements MenuAdder {
 		for(int i = 0; i < theFiles.length; ++i) {
 			RecentFile f = (RecentFile)theFiles[i];
 			prop.setProperty("RecentFile"+(i+1), f.getFilePaths());
-			prop.setProperty("RecentFileTarget"+(i+1), f.getTargetName()+":"+f.getActionCommand());
+			prop.setProperty("RecentFileTarget"+(i+1), f.getTargetName()+";"+f.getActionCommand());
 		}
 	}
 
@@ -268,13 +268,13 @@ public class RecentFilesList implements MenuAdder {
 
 		/**
 		 * Get the files as absolute file paths concatonated together
-		 * with colons.
+		 * with semicolons.
 		 * @return The file paths ready to added to the properties.
 		 */
 		public String getFilePaths() {
 			StringBuilder ret = new StringBuilder();
 			for(File file : files) {
-				ret.append(file.getAbsolutePath()).append(":");
+				ret.append(file.getAbsolutePath()).append(";");
 			}
 			return ret.toString();
 		}
