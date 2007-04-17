@@ -12,7 +12,9 @@ import ModelInterface.ModelGUI2.queries.SingleQueryExtension;
 import ModelInterface.ModelGUI2.xmldb.QueryBinding;
 import ModelInterface.common.FileChooser;
 import ModelInterface.common.FileChooserFactory;
+import ModelInterface.common.RecentFilesList.RecentFile;
 import ModelInterface.MenuAdder;
+import ModelInterface.InterfaceMain;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
@@ -31,6 +33,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.tree.TreePath;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.filechooser.FileFilter;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -41,6 +44,7 @@ import java.awt.geom.Point2D;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Component;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.*;
@@ -49,6 +53,7 @@ import com.sun.org.apache.xml.internal.serialize.OutputFormat;
 import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.ls.DOMImplementationLS;
 import org.w3c.dom.ls.*;
 import org.w3c.dom.bootstrap.DOMImplementationRegistry;
@@ -81,8 +86,6 @@ import org.apache.poi.hssf.usermodel.*;
 
 import com.sleepycat.dbxml.*;
 
-import ModelInterface.InterfaceMain;
-
 public class DbViewer implements ActionListener, MenuAdder {
 	private JFrame parentFrame;
 
@@ -111,32 +114,42 @@ public class DbViewer implements ActionListener, MenuAdder {
 
 	public DbViewer(JFrame pf) {
 		parentFrame = pf;
+		final DbViewer thisViewer = this;
 		parentFrame.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if(evt.getPropertyName().equals("Control")) {
 					if(evt.getOldValue().equals(controlStr) || evt.getOldValue().equals(controlStr+"Same")) {
-						try {
+						//try {
 							if(queries.hasChanges() && JOptionPane.showConfirmDialog(
 									parentFrame, 
 									"The Queries have been modified.  Do you want to save them?",
 									"Confirm Save Queries", JOptionPane.YES_NO_OPTION,
 									JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+								writeQueries();
+								/*
 								Document tempDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
 									.getDOMImplementation().createDocument(null, "queries", null);
 								queries.getAsNode(tempDoc);
 								//writeDocument(tempDoc, queryFile);
 								writeFile(new File(((InterfaceMain)parentFrame).getProperties().getProperty("queryFile"))
 									, tempDoc);
+									*/
 							}
+							/*
 						} catch(Exception e) {
 							e.printStackTrace();
 						}
+						*/
 						Properties prop = ((InterfaceMain)parentFrame).getProperties();
 						prop.setProperty("scenarioRegionSplit", String.valueOf(scenarioRegionSplit.getDividerLocation()));
 						prop.setProperty("queriesSplit", String.valueOf(queriesSplit.getDividerLocation()));
 						prop.setProperty("tableCreatorSplit", String.valueOf(tableCreatorSplit.getDividerLocation()));
 						((InterfaceMain)parentFrame).getUndoManager().discardAllEdits();
 						((InterfaceMain)parentFrame).refreshUndoRedo();
+						((InterfaceMain)parentFrame).getSaveMenu().removeActionListener(thisViewer);
+						((InterfaceMain)parentFrame).getSaveAsMenu().removeActionListener(thisViewer);
+						((InterfaceMain)parentFrame).getSaveAsMenu().setEnabled(false);
+						((InterfaceMain)parentFrame).getSaveMenu().setEnabled(false);
 						parentFrame.getContentPane().removeAll();
 
 						// closing the db should be the last thing to do in case
@@ -171,6 +184,9 @@ public class DbViewer implements ActionListener, MenuAdder {
 						} catch(NumberFormatException nfe) {
 							System.out.println("Invalid split location preference: "+nfe);
 						}
+						((InterfaceMain)parentFrame).getSaveMenu().addActionListener(thisViewer);
+						((InterfaceMain)parentFrame).getSaveAsMenu().addActionListener(thisViewer);
+						((InterfaceMain)parentFrame).getSaveAsMenu().setEnabled(true);
 						queriesDoc = readQueries(new File(queryFileName));
 					}
 				}
@@ -261,19 +277,24 @@ public class DbViewer implements ActionListener, MenuAdder {
 
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("DB Open")) {
-			final FileFilter dbFilter = (new javax.swing.filechooser.FileFilter() {
-				public boolean accept(File f) {
-					return f.getName().toLowerCase().endsWith(".dbxml") || f.isDirectory();
-				}
-				public String getDescription() {
-					return "BDB XML Container (*.dbxml)";
-				}
-			});
-			FileChooser fc = FileChooserFactory.getFileChooser();
-			// Now open chooser
-			File[] dbFiles = fc.doFilePrompt(parentFrame, "Choose XML Database", FileChooser.LOAD_DIALOG, 
-					new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")),
-					dbFilter);
+			File[] dbFiles;
+			if(e.getSource() instanceof RecentFile) {
+				dbFiles = ((RecentFile)e.getSource()).getFiles();
+			} else {
+				final FileFilter dbFilter = (new javax.swing.filechooser.FileFilter() {
+					public boolean accept(File f) {
+						return f.getName().toLowerCase().endsWith(".dbxml") || f.isDirectory();
+					}
+					public String getDescription() {
+						return "BDB XML Container (*.dbxml)";
+					}
+				});
+				FileChooser fc = FileChooserFactory.getFileChooser();
+				// Now open chooser
+				dbFiles = fc.doFilePrompt(parentFrame, "Choose XML Database", FileChooser.LOAD_DIALOG, 
+						new File(((InterfaceMain)parentFrame).getProperties()
+							.getProperty("lastDirectory", ".")), dbFilter, this, "DB Open");
+			}
 
 			if(dbFiles != null) {
 				((InterfaceMain)parentFrame).fireControlChange(controlStr);
@@ -314,6 +335,32 @@ public class DbViewer implements ActionListener, MenuAdder {
 			}
 		} else if(e.getActionCommand().equals("Export / Print")) {
 			createReport();
+		} else if(e.getActionCommand().equals("Save")) {
+			writeQueries();
+		} else if(e.getActionCommand().equals("Save As")) {
+			System.out.println("QueryFile gives: "+
+					((InterfaceMain)parentFrame).getProperties().getProperty("queryFile", "."));
+			final FileFilter xmlFilter = new XMLFilter();
+			FileChooser fc = FileChooserFactory.getFileChooser();
+			File[] result = fc.doFilePrompt(parentFrame, null, FileChooser.SAVE_DIALOG, 
+					new File(((InterfaceMain)parentFrame).getProperties().getProperty("queryFile", ".")),
+					xmlFilter);
+			if(result != null) {
+				File file = result[0];
+				if (file.getName().indexOf('.') == -1) {
+					if (!(file.getAbsolutePath().endsWith(".xml"))) {
+						file = new File(file.getAbsolutePath() + ".xml");
+					}
+				}
+				if (!file.exists() || JOptionPane.showConfirmDialog(null,
+							"Overwrite existing file?", "Confirm Overwrite",
+							JOptionPane.YES_NO_OPTION,
+							JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+					((InterfaceMain)parentFrame).getProperties().setProperty("queryFile", 
+												 file.getAbsolutePath());
+					writeQueries();
+				}
+			}
 		}
 	}
 
@@ -424,6 +471,12 @@ public class DbViewer implements ActionListener, MenuAdder {
 		if(regions.size() != 0) {
 			regionList.setSelectedIndex(0);
 		}
+
+		//TODO: get real icons
+		final Icon queryIcon = new ImageIcon( TabCloseIcon.class.getResource("icons/closeTab.PNG"));
+		final Icon singleQueryIcon = new ImageIcon( TabCloseIcon.class.getResource("icons/mPressCloseTab.PNG"));
+
+		// initialize the queries tree
 		final JTree queryList = new JTree(queries);
 		queryList.setTransferHandler(new QueryTransferHandler(queriesDoc, implls));
 		queryList.setDragEnabled(true);
@@ -432,11 +485,28 @@ public class DbViewer implements ActionListener, MenuAdder {
 		for(int i = 0; i < queryList.getRowCount(); ++i) {
 			queryList.expandRow(i);
 		}
-		/*
-		final JSplitPane sp = new JSplitPane();
-		sp.setLeftComponent(null);
-		sp.setRightComponent(null);
-		*/
+		ToolTipManager.sharedInstance().registerComponent(queryList);
+		queryList.setCellRenderer(new DefaultTreeCellRenderer() {
+			public Component getTreeCellRendererComponent(JTree tree,
+				Object value, boolean sel, boolean expanded, boolean leaf,
+				int row, boolean hasFocus) {
+				super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf,
+					row, hasFocus);
+				if(value instanceof QueryGenerator) {
+					setToolTipText(createCommentTooltip(new TreePath(value)));
+					setIcon(queryIcon);
+				} else if(value instanceof SingleQueryExtension.SingleQueryValue) {
+					Object[] tp = new Object[] {
+						"root", // will be skipped
+						((SingleQueryExtension.SingleQueryValue)value).getParent(),
+						value
+					};
+					setToolTipText(createCommentTooltip(new TreePath(tp)));
+					setIcon(singleQueryIcon);
+				}
+				return this;
+			}
+		});
 
 		listPane.setLayout( new BoxLayout(listPane, BoxLayout.Y_AXIS));
 		listLabel = new JLabel("Scenario");
@@ -1159,6 +1229,20 @@ public class DbViewer implements ActionListener, MenuAdder {
 		} else {
 			//DocumentType DOCTYPE = impl.createDocumentType("recent", "", "");
 			return ((DOMImplementation)implls).createDocument("", "queries", null);
+		}
+	}
+	private void writeQueries() {
+		try {
+			Document tempDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+				.getDOMImplementation().createDocument(null, "queries", null);
+			queries.getAsNode(tempDoc);
+			//writeDocument(tempDoc, queryFile);
+			writeFile(new File(((InterfaceMain)parentFrame).getProperties().getProperty("queryFile"))
+					, tempDoc);
+			queries.resetChanges();
+		} catch(ParserConfigurationException pce) {
+			// TODO: error to the sceen that it could no save..
+			pce.printStackTrace();
 		}
 	}
 	public static BaseTableModel getTableModelFromComponent(java.awt.Component comp) {

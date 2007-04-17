@@ -24,6 +24,7 @@ import ModelInterface.DMsource.DMViewer;
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.InputViewer;
 import ModelInterface.PPsource.PPViewer;
+import ModelInterface.common.RecentFilesList;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -67,6 +68,8 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	private Properties savedProperties;
 
 	private UndoManager undoManager;
+
+	private List<MenuAdder> menuAdders;
 
 	/**
 	 * Main function, creates a new thread for the gui and runs it.
@@ -168,7 +171,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		submenu = new JMenu("Open");
 		submenu.setMnemonic(KeyEvent.VK_S);
 		menuMan.getSubMenuManager(FILE_MENU_POS).addMenuItem(submenu, FILE_OPEN_SUBMENU_POS);
-		menuMan.getSubMenuManager(FILE_MENU_POS).addSeparator(FILE_OPEN_SUBMENU_POS);
+		menuMan.getSubMenuManager(FILE_MENU_POS).addSeparator(FILE_OPEN_SUBMENU_POS+2);
 		//m.add(submenu);
 		//m.addSeparator();
 
@@ -217,11 +220,21 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		PPView.addMenuItems(menuMan);
 		final MenuAdder DMView = new DMViewer(this);
 		DMView.addMenuItems(menuMan);
+		final MenuAdder recentFilesList = RecentFilesList.getInstance();
+		recentFilesList.addMenuItems(menuMan);
 
 		// Create the Configuration editor and allow it to add its menu items to the
 		// menu system.
 		final MenuAdder confEditor = new ConfigurationEditor();
 		confEditor.addMenuItems(menuMan);
+		
+		menuAdders = new ArrayList<MenuAdder>(6);
+		menuAdders.add(dbView);
+		menuAdders.add(inputView);
+		menuAdders.add(PPView);
+		menuAdders.add(DMView);
+		menuAdders.add(recentFilesList);
+		menuAdders.add(confEditor);
 	}
 
 	private void finalizeMenu(MenuManager menuMan) {
@@ -444,5 +457,21 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		undoMenu.setEnabled(undoManager.canUndo());
 		redoMenu.setText(undoManager.getRedoPresentationName());
 		redoMenu.setEnabled(undoManager.canRedo());
+	}
+	/**
+	 * Get the menu adder with the specified class name.  Used
+	 * to get the instance of the menu adder that could open
+	 * a recent file.
+	 * @param classname The class that is requested.
+	 * @return The instance of the class or null if not found.
+	 */ 
+	public MenuAdder getMenuAdder(String classname) {
+		for(Iterator<MenuAdder> it = menuAdders.iterator(); it.hasNext(); ) {
+			MenuAdder curr = it.next();
+			if(curr.getClass().getName().equals(classname)) {
+				return curr;
+			}
+		}
+		return null;
 	}
 }

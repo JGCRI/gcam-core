@@ -7,6 +7,7 @@ import java.io.FilenameFilter;
 import java.awt.Component;
 import java.awt.Frame;
 import java.awt.Dialog;
+import java.awt.event.ActionListener;
 
 import ModelInterface.InterfaceMain;
 
@@ -26,6 +27,12 @@ public class AWTFileChooserWrapper implements FileChooser {
 
 	public File[] doFilePrompt(final Component parent, final String title, 
 			final int loadOrSave, final File setFile, final FileFilter fileFilter) {
+		return doFilePrompt(parent, title, loadOrSave, setFile, fileFilter, null, null);
+	}
+
+	public File[] doFilePrompt(final Component parent, final String title, 
+			final int loadOrSave, final File setFile, final FileFilter fileFilter,
+			final ActionListener l, final String actionCommand) {
 		// should I try to keep this FileDialog cached some how..
 		// most likly the parent is not going to change anyways
 		FileDialog toWrap = null;
@@ -73,6 +80,9 @@ public class AWTFileChooserWrapper implements FileChooser {
 			// selection
 			File[] ret = new File[1];
 			ret[0] = new File(toWrap.getDirectory(), result);
+			if(l != null && actionCommand != null) {
+				RecentFilesList.getInstance().addFile(ret, l, actionCommand);
+			}
 			return ret;
 		}
 	}

@@ -46,6 +46,8 @@ import ModelInterface.ModelGUI2.csvconv.DOMTreeBuilder;
 
 import ModelInterface.common.FileChooser;
 import ModelInterface.common.FileChooserFactory;
+import ModelInterface.common.RecentFilesList;
+import ModelInterface.common.RecentFilesList.RecentFile;
 
 public class InputViewer implements ActionListener, TableModelListener, MenuAdder {
 
@@ -175,6 +177,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		});
 		final PropertyChangeListener savePropListener = new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent e) {
+				// TODO: listen for undo/redo or just get it right!
 				if(e.getPropertyName().equals("Document-Modified")) {
 					((InterfaceMain)parentFrame).getSaveMenu().setEnabled(true);
 				} else if(e.getPropertyName().equals("Document-Save")) {
@@ -398,7 +401,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		String command = e.getActionCommand();
 		if (command.equals("XML file")) {
 			// Open a file
-			status = openXMLFile();
+			status = openXMLFile(e);
 			/*
 			if (!status) {
 				JOptionPane.showMessageDialog(null, "Error opening file!",
@@ -422,7 +425,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			}
 		} else if (command.equals("CSV file")) {
 			// Open a file
-			status = openCSVFile();
+			status = openCSVFile(e);
 			/*
 			if (!status) {
 				JOptionPane.showMessageDialog(null, "Error opening file!",
@@ -1205,15 +1208,21 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	/**
 	 * Creates a JFileChooser to figure out which file to parse, then parses the
 	 * file and sets doc to it
-	 * 
+	 *
+	 * @param evt The event that spured the opening 
 	 * @return true if we parsed a file, false otherwise
 	 */
-	boolean openXMLFile() {
+	boolean openXMLFile(ActionEvent evt) {
 
-		FileChooser fc = FileChooserFactory.getFileChooser();
-		File[] result = fc.doFilePrompt(parentFrame, "Open XML File", FileChooser.LOAD_DIALOG, 
-				new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")),
-				xmlFilter);
+		File[] result;
+		if(evt.getSource() instanceof RecentFile) {
+			result = ((RecentFile)evt.getSource()).getFiles();
+		} else {
+			FileChooser fc = FileChooserFactory.getFileChooser();
+			result = fc.doFilePrompt(parentFrame, "Open XML File", FileChooser.LOAD_DIALOG, 
+					new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")),
+					xmlFilter, this, "XML file");
+		}
 
 		if (result == null) {
 			return false;
@@ -1282,35 +1291,52 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	/**
 	 * Creates file choosers to get a CSV file and a header file, then processes
 	 * them with the CSV to XML converter
-	 * 
+	 *
+	 * @param evt The action that caused the openCSV to occur 
 	 * @return true if processed and created a doc, false otherwise
 	 */
-	boolean openCSVFile() {
+	boolean openCSVFile(ActionEvent evt) {
 
-		FileChooser fc = FileChooserFactory.getFileChooser();
-		File[] csvFiles = fc.doFilePrompt(parentFrame, "Open CSV Files", FileChooser.LOAD_DIALOG, 
-				new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")),
-				csvFilter);
-
-		if(csvFiles == null) {
-			return false;
+		File[] csvFiles;
+		File[] headerFiles;
+		if(evt.getSource() instanceof RecentFile) {
+			File[] files = ((RecentFile)evt.getSource()).getFiles();
+			csvFiles = new File[files.length-1];
+			headerFiles = new File[1];
+			System.arraycopy(files, 0, csvFiles, 0, csvFiles.length);
+			headerFiles[0] = files[files.length-1];
 		} else {
-			((InterfaceMain)parentFrame).fireControlChange(controlStr);
-			((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", csvFiles[0].getPath());
-
-			File[] headerFiles = fc.doFilePrompt(parentFrame, "Open Headers File", FileChooser.LOAD_DIALOG, 
+			FileChooser fc = FileChooserFactory.getFileChooser();
+			// can't use the normal recent file so will have to addFile manually
+			csvFiles = fc.doFilePrompt(parentFrame, "Open CSV Files", FileChooser.LOAD_DIALOG, 
 					new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")),
-					null);
-			if(headerFiles == null) {
-				return true;
-			} else {
-				((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", headerFiles[0].getPath());
-				// TODO: get rid of the dependency on file
-				file = headerFiles[0];
-				readCSVFile(csvFiles, headerFiles[0]);
+					csvFilter, null, null);
+			if(csvFiles == null) {
+				return false;
 			}
-
+			((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", csvFiles[0].getPath());
+			headerFiles = fc.doFilePrompt(parentFrame, "Open Headers File", FileChooser.LOAD_DIALOG, 
+					new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")),
+					null, null, null);
+			// return false or should it be true?
+			if(headerFiles == null) {
+				return false;
+			}
+			((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", headerFiles[0].getPath());
+			File[] files = new File[csvFiles.length+1];
+			System.arraycopy(csvFiles, 0, files, 0, csvFiles.length);
+			files[files.length-1] = headerFiles[0];
+			RecentFilesList.getInstance().addFile(files, this, "CSV file");
 		}
+
+		if(csvFiles == null || headerFiles == null) {
+			return false;
+		} 
+		((InterfaceMain)parentFrame).fireControlChange(controlStr);
+
+		// TODO: get rid of the dependency on file
+		file = headerFiles[0];
+		readCSVFile(csvFiles, headerFiles[0]);
 		return true;
 	}
 

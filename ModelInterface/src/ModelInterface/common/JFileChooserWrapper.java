@@ -4,6 +4,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.JFileChooser;
 import java.io.File;
 import java.awt.Component;
+import java.awt.event.ActionListener;
 
 /**
  * This class wraps a JFileChooser so that it can easily use
@@ -30,6 +31,12 @@ public class JFileChooserWrapper implements FileChooser {
 
 	public File[] doFilePrompt(final Component parent, final String title, 
 			final int loadOrSave, final File setFile, final FileFilter fileFilter) {
+		return doFilePrompt(parent, title, loadOrSave, setFile, fileFilter, null, null);
+	}
+
+	public File[] doFilePrompt(final Component parent, final String title, 
+			final int loadOrSave, final File setFile, final FileFilter fileFilter,
+			final ActionListener l, final String actionCommand) {
 		// will this inherit the comment from FileChooser, should I write
 		// a more descriptive comment 
 		// should I have a finally that cleans out the set files, file filters, etcetera ? 
@@ -55,6 +62,9 @@ public class JFileChooserWrapper implements FileChooser {
 			if (ret.length == 0) {
 				ret = new File[1];
 				ret[0] = toWrap.getSelectedFile();
+			}
+			if(l != null && actionCommand != null) {
+				RecentFilesList.getInstance().addFile(ret, l, actionCommand);
 			}
 			return ret;
 		} else {

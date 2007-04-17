@@ -135,6 +135,14 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 		public QueryBinding getAsQueryBinding() {
 			return new SingleQueryQueryBinding(displayValue, qg, DbViewer.xmlDB.getContainer());
 		}
+
+		/**
+		 * Gets the QueryGenerator that this class extends.
+		 * @return The QueryGenerator
+		 */
+		public QueryGenerator getParent() {
+			return qg;
+		}
 	}
 
 	public SingleQueryExtension(QueryGenerator qg) {

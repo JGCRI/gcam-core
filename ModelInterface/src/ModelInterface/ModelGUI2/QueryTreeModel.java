@@ -360,6 +360,8 @@ public class QueryTreeModel implements TreeModel, MiUndoableEditListener {
 		// TODO: Worry about threading
 		++changes;
 		if(changes == 1) {
+			// Do I want this here?
+			InterfaceMain.getInstance().getSaveMenu().setEnabled(true);
 			root.setName(root.getName()+"*");
 			int[] indices = { 0 };
 			Object[] children = { root };
@@ -372,6 +374,8 @@ public class QueryTreeModel implements TreeModel, MiUndoableEditListener {
 		// TODO: Worry about threading
 		--changes;
 		if(!hasChanges()) {
+			// Do I want this here?
+			InterfaceMain.getInstance().getSaveMenu().setEnabled(false);
 			root.setName(root.getName()
 					.substring(0, root.getName().length()-1));
 			int[] indices = { 0 };
@@ -384,6 +388,12 @@ public class QueryTreeModel implements TreeModel, MiUndoableEditListener {
 	public boolean hasChanges() {
 		// TODO: Worry about threading
 		return changes != 0;
+	}
+
+	public void resetChanges() {
+		while(hasChanges()) {
+			decreaseChanges();
+		}
 	}
 }
 
