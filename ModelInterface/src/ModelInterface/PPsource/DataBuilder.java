@@ -676,6 +676,10 @@ public class DataBuilder
       rName = (String)itName.next();
       holdToPrint = (LinkedHashMap)printList.get(rName);
       currReg = attributeInChild(root, "name", rName); //getting region node in currReg
+      if(currReg == null) {
+	      // this region is not in this seed file.
+	      continue;
+      }
       if(holdToPrint != null)
       {
         if(!holdToPrint.isEmpty())
@@ -1735,7 +1739,7 @@ public class DataBuilder
       double startY;
       double endY;
 
-      Variable latIndex = nc.findVariable("lat");
+      Variable latIndex = nc.findVariable(data.getDimension(shp.length-2).getName());
       if(latIndex != null) {
 	      Array latArray = latIndex.read();
 	      int[] latShp = latArray.getShape();
@@ -1747,7 +1751,7 @@ public class DataBuilder
 	      // are the dang ol' .5s gettin in the way?
 	      startY = Math.ceil(startY) - resY;
 	      //endY = Math.floor(endY); // floor because it is negative, is it always -?
-	      endY -= resY;
+	      //endY -= resY;
       } else {
 	      startY = 90;
 	      endY = -90;
@@ -1808,6 +1812,7 @@ public class DataBuilder
 	      // --internalTimeIndex;
 	      internalTimeIndex -= timeStep;
       }
+
       /*
       System.out.println("Have settings:");
       System.out.println("resY: "+resY);
@@ -1819,6 +1824,7 @@ public class DataBuilder
       System.out.println("startY: "+startY);
       System.out.println("endY: "+endY);
       */
+
 
       for(int currTimeIndex = 0; currTimeIndex < numTime; currTimeIndex += timeStep)
       {
@@ -1832,7 +1838,7 @@ public class DataBuilder
 		      internalTimeIndex += timeStep;
 	      }
 	      //for(double y = (90-resY); y >= -90; y-=resY)
-	      for(double y = startY; y >= endY && i < shp[shp.length-2]; y-=resY)
+	      for(double y = startY; y >= endY; y-=resY)
 	      {
 		      k=0;
 		      for(double x = -180; x < 180; x+=resX)
@@ -3953,9 +3959,8 @@ public class DataBuilder
           rblock = (int)ma2Array.getFloat(in.set(0, 0, i, k));
           if(rblock != NaN)
           {
-            if(rblock >= 0)
+            if(rblock >= 0 && (holdR = ((RegionMask)newRegions.get(String.valueOf(rblock)))) != null)
             { //updating someones bounds
-              holdR = ((RegionMask)newRegions.get(String.valueOf(rblock)));
               if(holdR.height==-1)
               { //this is the first block being added to this region nothing to
                 // test against yet
@@ -4010,9 +4015,9 @@ public class DataBuilder
         for(double x = -180; x < 180; x+=res)
         {
           rblock = (int)ma2Array.getFloat(in.set(0, 0, i, k));
-          if((rblock > 0)&&(rblock != NaN))
+          if((rblock > 0)&&(rblock != NaN)&&
+			  (holdR = ((RegionMask)newRegions.get(String.valueOf(rblock)))) != null)
           {
-            holdR = ((RegionMask)newRegions.get(String.valueOf(rblock)));
           	holdR.setPointTrue(x, y);
           }
           k++;

@@ -88,7 +88,7 @@ public class ReferenceWrapper extends Wrapper
     y= r.y;
     height = r.height;
     width = r.width;
-    data = new double[(int)(height/res)][(int)(width/res)];
+    data = new double[(int)Math.round(height/res)][(int)Math.round(width/res)];
     mask = r.getBitMask();
   }
   /**

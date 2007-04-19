@@ -2494,12 +2494,21 @@ public class ManipulationDriver
       ncfile.addVariableAttribute("level", "units", "level/index");
 
       //double data(time, lat, lon)
-      ncfile.addVariable("data", DataType.FLOAT, dim4);
-      ncfile.addVariableAttribute("data", "missing_value", Float.NaN);
-      //ncfile.addVariableAttribute("data", "long_name", "input");
-      //ncfile.addVariableAttribute("data", "units", "input");
+      ncfile.addVariable(varR.name, DataType.FLOAT, dim4);
+      ncfile.addVariableAttribute(varR.name, "missing_value", Float.NaN);
+      //ncfile.addVariableAttribute(varR.name, "long_name", "input");
+      ncfile.addVariableAttribute(varR.name, "average", String.valueOf(varR.avg));
+      if(varR.units != null) {
+	      ncfile.addVariableAttribute(varR.name, "units", varR.units);
+      }
+      if(varR.reference != null) {
+	      ncfile.addVariableAttribute(varR.name, "reference", varR.reference);
+      }
       
       ncfile.addGlobalAttribute("title", "Data Manipulator Output");
+      if(varR.comment != null) {
+	      ncfile.addGlobalAttribute("comments", varR.comment);
+      }
       
       //create the file
       try {
@@ -2539,7 +2548,9 @@ public class ManipulationDriver
       }
       //filling array with latitude degrees
       Index iml = latArr.getIndex();
-      degHold = 89.75f;
+      // want the index to be in the middle of the grid cell
+      // so we shift half a res down from the top
+      degHold = (float)(90.0 - (res / 2));
       for(int i = 0; i < latDim.getLength(); i++)
       {
         latArr.setFloat(iml.set(i), degHold);
@@ -2547,7 +2558,9 @@ public class ManipulationDriver
       }
       //filling array with longitude degrees
       iml = lonArr.getIndex();
-      degHold = -179.75f;
+      // want the index to be in the middle of the grid cell
+      // so we shift half a res over from the left
+      degHold = (float)(-180.0 + (res / 2));
       for(int i = 0; i < lonDim.getLength(); i++)
       {
         lonArr.setFloat(iml.set(i), degHold);
@@ -2562,7 +2575,7 @@ public class ManipulationDriver
       
       // write data out to disk
       try {
-        ncfile.write("data", dataArr);
+        ncfile.write(varR.name, dataArr);
         ncfile.flush();
         ncfile.write("latitude", latArr);
         ncfile.flush();
