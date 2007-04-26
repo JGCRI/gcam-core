@@ -100,9 +100,9 @@ protected:
     
     virtual ITechnology* createChild( const std::string& aTechType,
                                      const std::string& aTechName,
-		                             const int aTechYear ) const;
-	
-	virtual const std::vector<double> calcTechShares ( const GDP* gdp, const int period ) const;
+                                     const int aTechYear ) const;
+    
+    virtual const std::vector<double> calcTechShares ( const GDP* gdp, const int period ) const;
    
     static bool initializeTechVector( std::vector<ITechnology*>& aTechVector,
                                       const std::string& aRegionName,
@@ -134,7 +134,7 @@ public:
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
-	virtual double getPrice( const GDP* aGDP, const int aPeriod ) const;
+    virtual double getPrice( const GDP* aGDP, const int aPeriod ) const;
     bool allOutputFixed( const int period ) const;
     virtual double getAverageFuelPrice( const GDP* aGDP, const int aPeriod ) const;
     
@@ -146,22 +146,22 @@ public:
 
     virtual void setOutput( const double aVariableDemand,
                             const double aFixedOutputScaleFactor,
-		                    const GDP* aGDP,
+                            const GDP* aGDP,
                             const int aPeriod );
 
-	bool isAllCalibrated( const int aPeriod, double aCalAccuracy, const bool aPrintWarnings ) const;
-	double getFixedOutput( const int period ) const;
+    bool isAllCalibrated( const int aPeriod, double aCalAccuracy, const bool aPrintWarnings ) const;
+    double getFixedOutput( const int period ) const;
 
     virtual double getTotalCalOutputs( const int period ) const;
 
     double getCalAndFixedOutputs( const int period, const std::string& goodName ) const;
     bool inputsAllFixed( const int period, const std::string& goodName ) const;
-	bool setImpliedFixedInput( const int period, const std::string& goodName, const double requiredOutput );
+    bool setImpliedFixedInput( const int period, const std::string& goodName, const double requiredOutput );
     void csvOutputFile( const GDP* aGDP,
                         const IndirectEmissionsCalculator* aIndirectEmissCalc ) const; 
     virtual void MCoutputSupplySector( const GDP* aGDP ) const; 
     void MCoutputDemandSector( const GDP* aGDP ) const; 
-	virtual void MCoutputAllSectors( const GDP* aGDP, 
+    virtual void MCoutputAllSectors( const GDP* aGDP, 
                                      const IndirectEmissionsCalculator* aIndirectEmissCalc,
                                      const std::vector<double> aSectorOutput ) const; 
 

@@ -104,48 +104,6 @@ void UnlimitedResource::XMLParse( const DOMNode* node ){
     }
 }
 
-const string& UnlimitedResource::getXMLName() const {
-    return getXMLNameStatic();
-}
-
-void UnlimitedResource::completeInit( const string& aRegionName,
-                                      const IInfo* aRegionInfo )
-{
-    // default unit to EJ
-    if ( mOutputUnit.empty() ) {
-        mOutputUnit = "EJ"; 
-    }
-    // default unit to $/GJ
-    if ( mPriceUnit.empty() ) {
-        mPriceUnit = "1975$/GJ"; 
-    }
-    // Setup markets for this resource.
-    setMarket( aRegionName );
-}
-
-void UnlimitedResource::initCalc( const string& aRegionName,
-                                  const int aPeriod )
-{
-    // Set the capacity factor and variance.
-    IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( mName,
-                                                                   aRegionName,
-                                                                   aPeriod,
-                                                                   true );
-    assert( marketInfo );
-
-    if( mCapacityFactor.isInited() ){
-        marketInfo->setDouble( "resourceCapacityFactor", mCapacityFactor );
-    }
-    if( mVariance.isInited() ){
-        marketInfo->setDouble( "resourceVariance", mVariance );
-    }
-}
-
-void UnlimitedResource::postCalc( const string& aRegionName,
-                                  const int aPeriod )
-{
-}
-
 void UnlimitedResource::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
 
@@ -189,6 +147,48 @@ void UnlimitedResource::toDebugXML( const int aPeriod,
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
+const string& UnlimitedResource::getXMLName() const {
+    return getXMLNameStatic();
+}
+
+void UnlimitedResource::completeInit( const string& aRegionName,
+                                      const IInfo* aRegionInfo )
+{
+    // default unit to EJ
+    if ( mOutputUnit.empty() ) {
+        mOutputUnit = "EJ"; 
+    }
+    // default unit to $/GJ
+    if ( mPriceUnit.empty() ) {
+        mPriceUnit = "1975$/GJ"; 
+    }
+    // Setup markets for this resource.
+    setMarket( aRegionName );
+}
+
+void UnlimitedResource::initCalc( const string& aRegionName,
+                                  const int aPeriod )
+{
+    // Set the capacity factor and variance.
+    IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( mName,
+                                                                   aRegionName,
+                                                                   aPeriod,
+                                                                   true );
+    assert( marketInfo );
+
+    if( mCapacityFactor.isInited() ){
+        marketInfo->setDouble( "resourceCapacityFactor", mCapacityFactor );
+    }
+    if( mVariance.isInited() ){
+        marketInfo->setDouble( "resourceVariance", mVariance );
+    }
+}
+
+void UnlimitedResource::postCalc( const string& aRegionName,
+                                  const int aPeriod )
+{
+}
+
 const string& UnlimitedResource::getName() const {
     return mName;
 }
@@ -229,7 +229,7 @@ void UnlimitedResource::csvOutputFile( const string& aRegionName )
     fileoutput3( aRegionName , mName," "," ","production", mOutputUnit, temp );
 }
 
-void UnlimitedResource::dbOutput( const string& aRegionName ) {
+void UnlimitedResource::dbOutput( const string& aRegionName ){
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
     vector<double> temp(maxper);
@@ -237,10 +237,11 @@ void UnlimitedResource::dbOutput( const string& aRegionName ) {
     void dboutput4(string var1name,string var2name,string var3name,string var4name,
         string uname,vector<double> dout);
 
-    for( int i = 0; i < maxper; ++i ){
-        temp[ i ] = getAnnualProd( aRegionName, i );
+    // Subsectors do not exist for Unlimited Resource.
+    for (int m=0;m<maxper;m++) {
+        temp[m] += getAnnualProd(aRegionName, m);
     }
-    dboutput4(aRegionName,"Pri Energy","Production by Sector", mName, mOutputUnit, temp );
+    dboutput4( aRegionName, "Resource", "annual-production", mName, mOutputUnit, temp );
 }
 
 void UnlimitedResource::setCalibratedSupplyInfo( const int aPeriod,
@@ -264,7 +265,6 @@ void UnlimitedResource::setCalibratedSupplyInfo( const int aPeriod,
 * \param aRegionName Region name.
 */
 void UnlimitedResource::setMarket( const string& aRegionName ) {
-
     // Setup the market for the resource. This market will not be solved. Note
     // that in a standard Resource setMarketToSolve would be called here.
     Marketplace* marketplace = scenario->getMarketplace();

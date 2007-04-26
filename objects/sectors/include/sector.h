@@ -20,6 +20,7 @@
 #include "containers/include/national_account.h" // lets use an auto_ptr instead.
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
+#include "util/base/include/object_meta_info.h"
 
 // Forward declarations
 class Subsector;
@@ -79,20 +80,24 @@ protected:
 
     std::vector<Summary> summary; //!< summary for reporting
     std::map<std::string,int> subSectorNameMap; //!< Map of subSector name to integer position in vector.
-	std::auto_ptr<MoreSectorInfo> moreSectorInfo; //! Additional sector information needed below sector
+    std::auto_ptr<MoreSectorInfo> moreSectorInfo; //! Additional sector information needed below sector
+
+    typedef ObjECTS::TObjectMetaInfo<> object_meta_info_type;
+    typedef std::vector<object_meta_info_type> object_meta_info_vector_type;
+    object_meta_info_vector_type mObjectMetaInfo; //!< Vector of object meta info to pass to mSectorInfo
 
     //! A map of a keyword to its keyword group
     std::map<std::string, std::string> mKeywordMap;
 
     void normalizeShareWeights( const int period );
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
-    virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
+    virtual void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const = 0;
+    virtual void toDebugXMLDerived( const int period, std::ostream& aOut, Tabs* aTabs ) const = 0;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual const std::string& getXMLName() const = 0;
 
-	double getFixedOutput( const int period ) const;
+    double getFixedOutput( const int period ) const;
     double getInput( const int aPeriod ) const;
-	const std::vector<double> calcSubsectorShares( const GDP* aGDP, const int aPeriod ) const;
+    const std::vector<double> calcSubsectorShares( const GDP* aGDP, const int aPeriod ) const;
     static const std::string& getDefaultSectorType();
     const std::string& getSectorType() const;
 
@@ -101,7 +106,7 @@ protected:
     double getCalOutput( const int period ) const;
 
     // TODO: Make abstract.
-	virtual double getPrice( const GDP* aGDP,
+    virtual double getPrice( const GDP* aGDP,
                              const int aPeriod ) const;
 
 public:
@@ -109,26 +114,25 @@ public:
     virtual ~Sector();
     const std::string& getName() const;
     virtual void XMLParse( const xercesc::DOMNode* node );
-    virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
-    virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    
+    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
+    virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
+
     virtual void completeInit( const IInfo* aRegionInfo,
                                DependencyFinder* aDepFinder,
                                ILandAllocator* aLandAllocator,
                                const GlobalTechnologyDatabase* aGlobalTechDB ) = 0;
-    
+
     virtual void initCalc( NationalAccount* aNationalAccount,
                            const Demographic* aDemographics,
                            const int aPeriod ) = 0;
 
-
     virtual void calibrateSector( const GDP* aGDP, const int aPeriod );
 
     bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
-    
+
     virtual void supply( const GDP* aGDP,
                          const int aPeriod ) = 0;
-    
+
     void calcCosts( const int aPeriod );
 
     virtual double getOutput( const int period ) const = 0;
@@ -136,7 +140,7 @@ public:
     void tabulateFixedDemands( const int period, const GDP* aGDP );
     bool inputsAllFixed( const int period, const std::string& goodName ) const;
 
-	void setImpliedFixedInput( const int period, const std::string& goodName, const double requiredOutput );
+    void setImpliedFixedInput( const int period, const std::string& goodName, const double requiredOutput );
 
     virtual void scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue );
     double getCalAndFixedOutputs( const int period, const std::string& goodName ) const;
@@ -157,7 +161,7 @@ public:
     void updateSummary( const std::list<std::string>& aPrimaryFuelList, const int period );
 
     virtual void operate( NationalAccount& nationalAccount, const Demographic* aDemographic, const int period ) = 0;
-	void updateMarketplace( const int period );
+    void updateMarketplace( const int period );
     virtual void postCalc( const int aPeriod );
 
     void csvSGMOutputFile( std::ostream& aFile, const int period ) const;

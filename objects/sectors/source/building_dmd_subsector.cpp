@@ -264,6 +264,12 @@ void BuildingDemandSubSector::setUpSubSectorMarkets() {
     
     // always make internal gains trail markets regional
     if( marketplace->createMarket( regionName, regionName, intGainsMarketName, IMarketType::TRIAL_VALUE ) ) {        
+        // Set price and output units for period 0 market info
+        IInfo* marketInfo = marketplace->getMarketInfo( intGainsMarketName, regionName, 0, true );
+        marketInfo->setString( "price-unit", mSubsectorInfo->getString( "price-unit", true ) );
+        marketInfo->setString( "output-unit", mSubsectorInfo->getString( "output-unit", true ) );
+
+
         // Set this market to solve
         for( int period = 1; period < maxPeriod; ++period ){
             marketplace->setMarketToSolve( intGainsMarketName, regionName, period );

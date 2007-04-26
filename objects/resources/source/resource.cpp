@@ -42,7 +42,7 @@ const string RenewableResource::XML_NAME = "renewresource";
 
 //! Default constructor.
 Resource::Resource()
-    : mObjectMetaInfo()
+: mObjectMetaInfo()
 {
     nosubrsrc = 0;
     // resize vectors not read in
@@ -121,6 +121,80 @@ void Resource::XMLParse( const DOMNode* node ){
     }
 }
 
+//! Write data members to data stream in XML format for replicating input file.
+void Resource::toInputXML( ostream& aOut, Tabs* aTabs ) const {
+    XMLWriteOpeningTag( getXMLName(), aOut, aTabs, mName );
+
+    // write the xml for the class members.
+    XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
+    XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
+    XMLWriteElement( mMarket, "market", aOut, aTabs );
+
+    if ( mObjectMetaInfo.size() ) {
+        for ( object_meta_info_vector_type::const_iterator metaInfoIterItem = mObjectMetaInfo.begin();
+            metaInfoIterItem != mObjectMetaInfo.end(); 
+            ++metaInfoIterItem ) {
+                metaInfoIterItem->toInputXML( aOut, aTabs );
+            }
+    }
+
+    // write out resource prices for base period only
+    const Modeltime* modeltime = scenario->getModeltime();
+    XMLWriteElement( rscprc[ 0 ], "price", aOut, aTabs, modeltime->getper_to_yr( 0 ) );
+
+    // write out the subresource objects.
+    for( vector<SubResource*>::const_iterator i = subResource.begin(); i != subResource.end(); i++ ){
+        ( *i )->toInputXML( aOut, aTabs );
+    }
+
+    // finished writing xml for the class members.
+    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
+}
+
+//! Write data members to data stream in XML format for debugging.
+void Resource::toDebugXML( const int period, ostream& aOut, Tabs* aTabs ) const {
+
+    XMLWriteOpeningTag( getXMLName(), aOut, aTabs, mName );
+
+    // Write the xml for the class members.
+    XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
+    XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
+    // Write out the market string.
+    XMLWriteElement( mMarket, "market", aOut, aTabs );
+
+    if ( mObjectMetaInfo.size() ) {
+        for ( object_meta_info_vector_type::const_iterator metaInfoIterItem = mObjectMetaInfo.begin();
+            metaInfoIterItem != mObjectMetaInfo.end(); 
+            ++metaInfoIterItem ) {
+                metaInfoIterItem->toInputXML( aOut, aTabs );
+            }
+    }
+
+    // Write out resource prices for debugging period.
+    XMLWriteElement( rscprc[ period ], "rscprc", aOut, aTabs );
+
+    // Write out available resources for debugging period.
+    XMLWriteElement( available[ period ], "available", aOut, aTabs );
+
+    // Write out annualprod for debugging period.
+    XMLWriteElement( annualprod[ period ], "annualprod", aOut, aTabs );
+
+    // Write out cumulative prod for debugging period.
+    XMLWriteElement( cummprod[ period ], "cummprod", aOut, aTabs );
+
+    // Write out the number of sub-resources.
+    XMLWriteElement( nosubrsrc, "nosubrsrc", aOut, aTabs );
+
+    // Write out the subresource objects.
+    for( vector<SubResource*>::const_iterator i = subResource.begin(); i != subResource.end(); i++ ){
+        ( *i )->toDebugXML( period, aOut, aTabs );
+    }
+
+    // finished writing xml for the class members.
+
+    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
+}
+
 /*! \brief Complete the initialization
 *
 * This routine is only called once per model run
@@ -141,10 +215,19 @@ void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo
         mPriceUnit = "1975$/GJ"; 
     }
     // Allocate the resource info.
-    mResourceInfo.reset( InfoFactory::constructInfo( aRegionInfo ) );
+    mResourceInfo.reset( InfoFactory::constructInfo( aRegionInfo, aRegionName + "-" + mName ) );
     // Set output and price unit of resource into the resource info.
     mResourceInfo->setString( "output-unit", mOutputUnit );
     mResourceInfo->setString( "price-unit", mPriceUnit );
+
+    if ( mObjectMetaInfo.size() ) {
+        // Put values in mSectorInfo
+        for ( object_meta_info_vector_type::const_iterator metaInfoIterItem = mObjectMetaInfo.begin(); 
+            metaInfoIterItem != mObjectMetaInfo.end();
+            ++metaInfoIterItem ) {
+                mResourceInfo->setDouble( (*metaInfoIterItem).getName(), (*metaInfoIterItem).getValue() );
+            }
+    }
 
     for( vector<SubResource*>::iterator subResIter = subResource.begin(); subResIter != subResource.end(); subResIter++ ) {
         ( *subResIter )->completeInit( mResourceInfo.get() );
@@ -152,23 +235,6 @@ void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo
 
     // Set markets for this sector
     setMarket( aRegionName );
-
-    // Put values in market
-    if ( mObjectMetaInfo.size() ) {
-        // Put values in market
-        Marketplace* pMarketplace   = scenario->getMarketplace();
-        const std::string& fuelName = getName();
-        const Modeltime* pModeltime = scenario->getModeltime();
-        size_t           numPeriods = pModeltime->getmaxper();
-        for ( size_t period = 0; period != numPeriods; ++period ) {
-            IInfo* pInfo = pMarketplace->getMarketInfo( fuelName, aRegionName, period, true );
-            if ( pInfo ) {
-                for ( object_meta_info_vector_type::const_iterator x = mObjectMetaInfo.begin(); x != mObjectMetaInfo.end(); ++x ) {
-                    pInfo->setDouble( (*x).getName(), (*x).getValue() );
-                }
-            }
-        }
-    }
 }
 
 /*! \brief Perform any initializations needed for each period.
@@ -200,86 +266,40 @@ void Resource::postCalc( const string& aRegionName, const int aPeriod ) {
     }
 }
 
-//! Write data members to data stream in XML format for replicating input file.
-void Resource::toInputXML( ostream& out, Tabs* tabs ) const {
-    XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
-
-    // write the xml for the class members.
-    XMLWriteElement( mOutputUnit, "output-unit", out, tabs );
-    XMLWriteElement( mPriceUnit, "price-unit", out, tabs );
-    XMLWriteElement( mMarket, "market", out, tabs );
-
-    // write out resource prices for base period only
-    const Modeltime* modeltime = scenario->getModeltime();
-    XMLWriteElement( rscprc[ 0 ], "price", out, tabs, modeltime->getper_to_yr( 0 ) );
-
-    // write out the subresource objects.
-    for( vector<SubResource*>::const_iterator i = subResource.begin(); i != subResource.end(); i++ ){
-        ( *i )->toInputXML( out, tabs );
-    }
-
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
-//! Write data members to data stream in XML format for debugging.
-void Resource::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
-
-    XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
-
-    // Write the xml for the class members.
-    XMLWriteElement( mOutputUnit, "output-unit", out, tabs );
-    XMLWriteElement( mPriceUnit, "price-unit", out, tabs );
-    // Write out the market string.
-    XMLWriteElement( mMarket, "market", out, tabs );
-
-    // Write out resource prices for debugging period.
-    XMLWriteElement( rscprc[ period ], "rscprc", out, tabs );
-
-    // Write out available resources for debugging period.
-    XMLWriteElement( available[ period ], "available", out, tabs );
-
-    // Write out annualprod for debugging period.
-    XMLWriteElement( annualprod[ period ], "annualprod", out, tabs );
-
-    // Write out cumulative prod for debugging period.
-    XMLWriteElement( cummprod[ period ], "cummprod", out, tabs );
-
-    // Write out the number of sub-resources.
-    XMLWriteElement( nosubrsrc, "nosubrsrc", out, tabs );
-
-    // Write out the subresource objects.
-    for( vector<SubResource*>::const_iterator i = subResource.begin(); i != subResource.end(); i++ ){
-        ( *i )->toDebugXML( period, out, tabs );
-    }
-
-    // finished writing xml for the class members.
-
-    XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
-
 //! Create markets
-void Resource::setMarket( const string& regionName ) {
+void Resource::setMarket( const string& aRegionName ) {
 
-    Marketplace* marketplace = scenario->getMarketplace();
-    const Modeltime* modeltime = scenario->getModeltime();
+    Marketplace* pMarketplace   = scenario->getMarketplace();
+    const Modeltime* pModeltime = scenario->getModeltime();
     // name is resource name
-    if ( marketplace->createMarket( regionName, mMarket, mName, IMarketType::NORMAL ) ) {
+    if ( pMarketplace->createMarket( aRegionName, mMarket, mName, IMarketType::NORMAL ) ) {
         // Set price and output units for period 0 market info
-		IInfo* marketInfo = marketplace->getMarketInfo( mName, regionName, 0, true );
-        marketInfo->setString( "price-unit", mPriceUnit );
-        marketInfo->setString( "output-unit", mOutputUnit );
+        IInfo* pMarketInfo = pMarketplace->getMarketInfo( mName, aRegionName, 0, true );
+        pMarketInfo->setString( "price-unit", mPriceUnit );
+        pMarketInfo->setString( "output-unit", mOutputUnit );
 
-        marketplace->setPriceVector( mName, regionName, rscprc );
-        for( int per = 1; per < modeltime->getmaxper(); ++per ){
-            marketplace->setMarketToSolve( mName, regionName, per );
+        pMarketplace->setPriceVector( mName, aRegionName, rscprc );
+        for( int period = 1; period < pModeltime->getmaxper(); ++period ){
+            pMarketplace->setMarketToSolve( mName, aRegionName, period );
+        }
+    }
+    // Put values in market.
+    if ( mObjectMetaInfo.size() ) {
+        // Put values in market
+        for ( int period = 0; period < pModeltime->getmaxper(); ++period ) {
+            IInfo* pMarketInfo = pMarketplace->getMarketInfo( mName, aRegionName, period, true );
+            if ( pMarketInfo ) {
+                for ( object_meta_info_vector_type::const_iterator metaInfoIterItem = mObjectMetaInfo.begin();
+                    metaInfoIterItem != mObjectMetaInfo.end(); 
+                    ++metaInfoIterItem ) {
+                        pMarketInfo->setDouble( (*metaInfoIterItem).getName(), (*metaInfoIterItem).getValue() );
+                    }
+            }
         }
     }
 }
 
 //! Return resource name.
-
 const string& Resource::getName() const {
     return mName;
 }
@@ -368,11 +388,6 @@ void Resource::dbOutput( const string& regname ) {
     // function protocol
     void dboutput4(string var1name,string var2name,string var3name,string var4name,
         string uname,vector<double> dout);
-
-    // function arguments are variable name, double array, db name, table name
-    // the function writes all years
-    // total sector output
-    dboutput4(regname,"Pri Energy","Production by Sector",mName,mOutputUnit,annualprod);
     // resource price
     dboutput4(regname,"Price","by Sector",mName,mPriceUnit,rscprc);
     // do for all subsectors in the sector
@@ -386,18 +401,13 @@ void Resource::dbOutput( const string& regname ) {
 
     temp.assign( temp.size(), 0.0 );
     for (int m=0;m<maxper;m++) {
-		for (int i=0;i<nosubrsrc;i++) {
+        for (int i=0;i<nosubrsrc;i++) {
             temp[m] += subResource[i]->getAnnualProd(m);
-		}
-	}
-	dboutput4(regname,"Resource","annual-production", mName, mOutputUnit, temp);
+        }
+    }
+    dboutput4(regname,"Resource","annual-production", mName, mOutputUnit, temp);
+
     temp.assign( temp.size(), 0.0 );
-	for (int m=0;m<maxper;m++) {
-		for (int i=0;i<nosubrsrc;i++) {
-            temp[m] += subResource[i]->getAnnualProd(m);
-		}
-	}
-	dboutput4(regname,"Resource","annual-production", mName, "EJ", temp);
     // do for all subsectors in the sector
     for (int m=0;m<maxper;m++) {
         for (int i=0;i<nosubrsrc;i++) {
@@ -533,8 +543,8 @@ bool FixedResource::XMLDerivedClassParse( const string& nodeName, const DOMNode*
 //! \brief set the size for the resourceVariance member
 RenewableResource::RenewableResource()
 {
-   resourceVariance.resize( scenario->getModeltime()->getmaxper() );
-   resourceCapacityFactor.resize( scenario->getModeltime()->getmaxper() );
+    resourceVariance.resize( scenario->getModeltime()->getmaxper() );
+    resourceCapacityFactor.resize( scenario->getModeltime()->getmaxper() );
 }
 
 
@@ -576,29 +586,16 @@ const std::string& RenewableResource::getXMLNameStatic() {
 */
 bool RenewableResource::XMLDerivedClassParse( const string& nodeName, const DOMNode* node )
 {
-//    if ( nodeName == "ave-total-irradiance" ) {
-//       mAveTotalIrradiance = XMLHelper<double>::getValue( node );
-//    }
-//    else if ( nodeName == "ratio-direct-to-total" ) {
-//       mRatioDirectToTotal = XMLHelper<double>::getValue( node );
-//    }
-//    else if ( nodeName == "no-sun-days" ) {
-//       mNoSunDays = XMLHelper<double>::getValue( node );
-//    }
-//    else if ( nodeName == "grid-connection-cost" ) {
-//       mGridConnectionCost = XMLHelper<double>::getValue( node );
-//    }
-// 
-   if( nodeName == SubResource::getXMLNameStatic() ||
-       nodeName == SubRenewableResource::getXMLNameStatic() ) {
-      parseContainerNode( node, subResource, subResourceNameMap, new SubRenewableResource() );
-      return true;
-   }
-   else if ( nodeName == SmoothRenewableSubresource::getXMLNameStatic() ) {
-     parseContainerNode( node, subResource, subResourceNameMap, new SmoothRenewableSubresource() );
-     return true;
-   }
-   return false;
+    if( nodeName == SubResource::getXMLNameStatic() ||
+        nodeName == SubRenewableResource::getXMLNameStatic() ) {
+            parseContainerNode( node, subResource, subResourceNameMap, new SubRenewableResource() );
+            return true;
+        }
+    else if ( nodeName == SmoothRenewableSubresource::getXMLNameStatic() ) {
+        parseContainerNode( node, subResource, subResourceNameMap, new SmoothRenewableSubresource() );
+        return true;
+    }
+    return false;
 }
 
 //! Calculate annual production

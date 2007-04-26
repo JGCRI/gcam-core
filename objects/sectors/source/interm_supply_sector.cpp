@@ -58,7 +58,7 @@ const std::string& IntermittentSupplySector::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& IntermittentSupplySector::getXMLNameStatic() {
-	const static string XML_NAME = "intermittent-supplysector";
+    const static string XML_NAME = "intermittent-supplysector";
     return XML_NAME;
 }
 
@@ -112,7 +112,7 @@ void IntermittentSupplySector::toInputXMLDerived( ostream& out, Tabs* tabs ) con
     XMLWriteElementCheckDefault( aveGridCapacityFactor, "aveGridCapacityFactor", out, tabs, 1.0);
     XMLWriteElementCheckDefault( backupCapacityFactor, "backupCapacityFactor", out, tabs, 0.0);
     XMLWriteElementCheckDefault( backupCost, "backupCost", out, tabs, 0.0);
-}	
+}
 
 //! Write object to debugging xml output stream.
 void IntermittentSupplySector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
@@ -140,8 +140,8 @@ void IntermittentSupplySector::completeInit( const IInfo* aRegionInfo,
                                              ILandAllocator* aLandAllocator,
                                              const GlobalTechnologyDatabase* aGlobalTechDB )
 {
-	// Call the parent supply sector complete init.
-	SupplySector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator, aGlobalTechDB );
+    // Call the parent supply sector complete init.
+    SupplySector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator, aGlobalTechDB );
 }
 
 /*! \brief Perform any initializations needed for each period.
@@ -157,7 +157,7 @@ void IntermittentSupplySector::initCalc( NationalAccount* aNationalAccount,
 {
     // add items to sector info must be done before Sector:initCalc() so that
     // information is available to subsector and technology initCalc() routines
-	mSectorInfo->setDouble( "elecReserveMargin", elecReserveMargin );
+    mSectorInfo->setDouble( "elecReserveMargin", elecReserveMargin );
     mSectorInfo->setDouble( "aveGridCapacityFactor", aveGridCapacityFactor );
     mSectorInfo->setDouble( "backupCapacityFactor", backupCapacityFactor );
     mSectorInfo->setDouble( "backupCost", backupCost );

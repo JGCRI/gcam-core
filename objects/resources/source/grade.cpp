@@ -72,7 +72,7 @@ void Grade::XMLParse( const DOMNode* tempNode ) {
 * \warning markets are not necessarily set when completeInit is called
 */
 void Grade::completeInit( const IInfo* aSubresourceInfo ) {
-    mGradeInfo.reset( InfoFactory::constructInfo( aSubresourceInfo ) ); 
+    mGradeInfo.reset( InfoFactory::constructInfo( aSubresourceInfo, name ) ); 
 }
 
 

@@ -55,7 +55,7 @@ demand( 0 ),
 storedDemand( 0 ),
 supply( 0 ),
 storedSupply( 0 ),
-mMarketInfo( InfoFactory::constructInfo( 0 ) )
+mMarketInfo( InfoFactory::constructInfo( 0, regionNameIn+goodNameIn ) )
 {
     // Store the market name so that it can be returned without any allocations.
     mName = region + good;
@@ -85,7 +85,7 @@ storedDemand( aMarket.storedDemand ),
 supply( aMarket.supply ),
 storedSupply( aMarket.storedSupply ),
 mContainedRegions( aMarket.mContainedRegions ),
-mMarketInfo( InfoFactory::constructInfo( 0 ) ){
+mMarketInfo( InfoFactory::constructInfo( 0,aMarket.mName ) ){
     // TODO: Cannot currently copy the market info.
 }
 

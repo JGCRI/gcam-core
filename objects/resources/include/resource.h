@@ -36,8 +36,8 @@ public:
     Resource();
     virtual ~Resource();
     void XMLParse( const xercesc::DOMNode* node );
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
-    void toDebugXML( const int period, std::ostream &out, Tabs* tabs ) const;
+    void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
+    void toDebugXML( const int period, std::ostream& aOut, Tabs* aTabs ) const;
     const std::string& getName() const; 
     void completeInit( const std::string& aRegionName, const IInfo* aRegionInfo );
     
@@ -48,7 +48,7 @@ public:
     virtual double getAnnualProd( const std::string& aRegionName, const int aPeriod ) const;
     void dbOutput( const std::string& regname ); 
     void csvOutputFile( const std::string& regname ); 
-	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
+    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
 
     typedef ObjECTS::TObjectMetaInfo<> object_meta_info_type;

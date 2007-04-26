@@ -16,6 +16,7 @@
 #include "containers/include/scenario.h"
 #include "util/base/include/configuration.h"
 #include "util/base/include/ivisitor.h"
+#include "containers/include/iinfo.h"
 
 // Fortran calls.
 #if(__HAVE_FORTRAN__)
@@ -313,6 +314,11 @@ void AgSector::setMarket( const string& regionName ) {
 		// check if should set ag bio market
 		if ( ( *i != "biomass") || setAgBioMarket ) {
 			marketplace->createMarket( regionName, "global", *i, IMarketType::NORMAL );
+            // Set price and output units for period 0 market info
+            IInfo* marketInfo = marketplace->getMarketInfo( *i, regionName, 0, true );
+            marketInfo->setString( "price-unit", "1975$/GJ" );
+            marketInfo->setString( "output-unit", "kcal/per/day" );
+
             for( int per = 1; per < modeltime->getmaxper(); ++per ){
                 marketplace->setMarketToSolve ( *i, regionName, per );
             }
@@ -321,6 +327,10 @@ void AgSector::setMarket( const string& regionName ) {
    
    // Add the regional markets.
    marketplace->createMarket( regionName, regionName, marketNameVector[ 6 ], IMarketType::NORMAL );
+   // Set price and output units for period 0 market info
+   IInfo* marketInfo = marketplace->getMarketInfo( marketNameVector[ 6 ], regionName, 0, true );
+   marketInfo->setString( "price-unit", "1975$/GJ" );
+   marketInfo->setString( "output-unit", "kcal/per/day" );
    for( int per = 1; per < modeltime->getmaxper(); ++per ){
       marketplace->setMarketToSolve ( marketNameVector[ 6 ], regionName, per );           
    }

@@ -1348,7 +1348,7 @@
 			</supplysector>
 			<supplysector name="nuclearFuelGenII">
 				<output-unit>EJ</output-unit>
-				<input-unit>EJ</input-unit>
+				<input-unit>MMT</input-unit>
 				<price-unit>1975$/GJ</price-unit>
 				<price year="1975">0.797045</price>
 				<output year="1975">1.2888</output>
@@ -3309,8 +3309,8 @@
 				</subresource>
 			</renewresource>
 			<depresource name="uranium">
-				<output-unit>EJ</output-unit>
-				<price-unit>1975$/GJ</price-unit>
+				<output-unit>MMT</output-unit>
+				<price-unit>2003$/kg</price-unit>
 				<market>global</market>
 				<price year="1975">50</price>
 				<subresource name="uraniumMining">
@@ -6206,7 +6206,7 @@
 			</supplysector>
 			<supplysector name="nuclearFuelGenII">
 				<output-unit>EJ</output-unit>
-				<input-unit>EJ</input-unit>
+				<input-unit>MMT</input-unit>
 				<price-unit>1975$/GJ</price-unit>
 				<price year="1975">0.797045</price>
 				<output year="1975">1.2888</output>
@@ -8167,8 +8167,8 @@
 				</subresource>
 			</renewresource>
 			<depresource name="uranium">
-				<output-unit>EJ</output-unit>
-				<price-unit>1975$/GJ</price-unit>
+				<output-unit>MMT</output-unit>
+				<price-unit>2003$/kg</price-unit>
 				<market>global</market>
 				<price year="1975">50</price>
 			</depresource>
@@ -11034,7 +11034,7 @@
 			</supplysector>
 			<supplysector name="nuclearFuelGenII">
 				<output-unit>EJ</output-unit>
-				<input-unit>EJ</input-unit>
+				<input-unit>MMT</input-unit>
 				<price-unit>1975$/GJ</price-unit>
 				<price year="1975">0.797045</price>
 				<output year="1975">1.2888</output>
@@ -12995,8 +12995,8 @@
 				</subresource>
 			</renewresource>
 			<depresource name="uranium">
-				<output-unit>EJ</output-unit>
-				<price-unit>1975$/GJ</price-unit>
+				<output-unit>MMT</output-unit>
+				<price-unit>2003$/kg</price-unit>
 				<market>global</market>
 				<price year="1975">50</price>
 			</depresource>
@@ -15867,7 +15867,7 @@
 			</supplysector>
 			<supplysector name="nuclearFuelGenII">
 				<output-unit>EJ</output-unit>
-				<input-unit>EJ</input-unit>
+				<input-unit>MMT</input-unit>
 				<price-unit>1975$/GJ</price-unit>
 				<price year="1975">0.797045</price>
 				<output year="1975">1.2888</output>
@@ -17820,8 +17820,8 @@
 				</subresource>
 			</renewresource>
 			<depresource name="uranium">
-				<output-unit>EJ</output-unit>
-				<price-unit>1975$/GJ</price-unit>
+				<output-unit>MMT</output-unit>
+				<price-unit>2003$/kg</price-unit>
 				<market>global</market>
 				<price year="1975">50</price>
 			</depresource>
@@ -20681,7 +20681,7 @@
 			</supplysector>
 			<supplysector name="nuclearFuelGenII">
 				<output-unit>EJ</output-unit>
-				<input-unit>EJ</input-unit>
+				<input-unit>MMT</input-unit>
 				<price-unit>1975$/GJ</price-unit>
 				<price year="1975">0.797045</price>
 				<output year="1975">1.2888</output>
@@ -22637,8 +22637,8 @@
 				</subresource>
 			</renewresource>
 			<depresource name="uranium">
-				<output-unit>EJ</output-unit>
-				<price-unit>1975$/GJ</price-unit>
+				<output-unit>MMT</output-unit>
+				<price-unit>2003$/kg</price-unit>
 				<market>global</market>
 				<price year="1975">50</price>
 			</depresource>
@@ -25497,7 +25497,7 @@
 			</supplysector>
 			<supplysector name="nuclearFuelGenII">
 				<output-unit>EJ</output-unit>
-				<input-unit>EJ</input-unit>
+				<input-unit>MMT</input-unit>
 				<price-unit>1975$/GJ</price-unit>
 				<price year="1975">0.797045</price>
 				<output year="1975">1.2888</output>
@@ -27455,8 +27455,8 @@
 				</subresource>
 			</renewresource>
 			<depresource name="uranium">
-				<output-unit>EJ</output-unit>
-				<price-unit>1975$/GJ</price-unit>
+				<output-unit>MMT</output-unit>
+				<price-unit>2003$/kg</price-unit>
 				<market>global</market>
 				<price year="1975">50</price>
 			</depresource>
@@ -30349,7 +30349,7 @@
 			</supplysector>
 			<supplysector name="nuclearFuelGenII">
 				<output-unit>EJ</output-unit>
-				<input-unit>EJ</input-unit>
+				<input-unit>MMT</input-unit>
 				<price-unit>1975$/GJ</price-unit>
 				<price year="1975">0.797045</price>
 				<output year="1975">1.2888</output>
@@ -32323,8 +32323,8 @@
 				</subresource>
 			</renewresource>
 			<depresource name="uranium">
-				<output-unit>EJ</output-unit>
-				<price-unit>1975$/GJ</price-unit>
+				<output-unit>MMT</output-unit>
+				<price-unit>2003$/kg</price-unit>
 				<market>global</market>
 				<price year="1975">50</price>
 			</depresource>
@@ -35328,7 +35328,7 @@
 			</supplysector>
 			<supplysector name="nuclearFuelGenII">
 				<output-unit>EJ</output-unit>
-				<input-unit>EJ</input-unit>
+				<input-unit>MMT</input-unit>
 				<price-unit>1975$/GJ</price-unit>
 				<price year="1975">0.797045</price>
 				<output year="1975">1.2888</output>
@@ -37278,8 +37278,8 @@
 				</subresource>
 			</renewresource>
 			<depresource name="uranium">
-				<output-unit>EJ</output-unit>
-				<price-unit>1975$/GJ</price-unit>
+				<output-unit>MMT</output-unit>
+				<price-unit>2003$/kg</price-unit>
 				<market>global</market>
 				<price year="1975">50</price>
 			</depresource>
@@ -40150,7 +40150,7 @@
 			</supplysector>
 			<supplysector name="nuclearFuelGenII">
 				<output-unit>EJ</output-unit>
-				<input-unit>EJ</input-unit>
+				<input-unit>MMT</input-unit>
 				<price-unit>1975$/GJ</price-unit>
 				<price year="1975">0.797045</price>
 				<output year="1975">1.2888</output>
@@ -42130,8 +42130,8 @@
 				</subresource>
 			</renewresource>
 			<depresource name="uranium">
-				<output-unit>EJ</output-unit>
-				<price-unit>1975$/GJ</price-unit>
+				<output-unit>MMT</output-unit>
+				<price-unit>2003$/kg</price-unit>
 				<market>global</market>
 				<price year="1975">50</price>
 			</depresource>
@@ -45152,7 +45152,7 @@
 			</supplysector>
 			<supplysector name="nuclearFuelGenII">
 				<output-unit>EJ</output-unit>
-				<input-unit>EJ</input-unit>
+				<input-unit>MMT</input-unit>
 				<price-unit>1975$/GJ</price-unit>
 				<price year="1975">0.797045</price>
 				<output year="1975">1.2888</output>
@@ -47134,8 +47134,8 @@
 				</subresource>
 			</renewresource>
 			<depresource name="uranium">
-				<output-unit>EJ</output-unit>
-				<price-unit>1975$/GJ</price-unit>
+				<output-unit>MMT</output-unit>
+				<price-unit>2003$/kg</price-unit>
 				<market>global</market>
 				<price year="1975">50</price>
 			</depresource>
@@ -50122,7 +50122,7 @@
 			</supplysector>
 			<supplysector name="nuclearFuelGenII">
 				<output-unit>EJ</output-unit>
-				<input-unit>EJ</input-unit>
+				<input-unit>MMT</input-unit>
 				<price-unit>1975$/GJ</price-unit>
 				<price year="1975">0.797045</price>
 				<output year="1975">1.2888</output>
@@ -52101,8 +52101,8 @@
 				</subresource>
 			</renewresource>
 			<depresource name="uranium">
-				<output-unit>EJ</output-unit>
-				<price-unit>1975$/GJ</price-unit>
+				<output-unit>MMT</output-unit>
+				<price-unit>2003$/kg</price-unit>
 				<market>global</market>
 				<price year="1975">50</price>
 			</depresource>
@@ -55086,7 +55086,7 @@
 			</supplysector>
 			<supplysector name="nuclearFuelGenII">
 				<output-unit>EJ</output-unit>
-				<input-unit>EJ</input-unit>
+				<input-unit>MMT</input-unit>
 				<price-unit>1975$/GJ</price-unit>
 				<price year="1975">0.797045</price>
 				<output year="1975">1.2888</output>
@@ -57045,8 +57045,8 @@
 				</subresource>
 			</renewresource>
 			<depresource name="uranium">
-				<output-unit>EJ</output-unit>
-				<price-unit>1975$/GJ</price-unit>
+				<output-unit>MMT</output-unit>
+				<price-unit>2003$/kg</price-unit>
 				<market>global</market>
 				<price year="1975">50</price>
 			</depresource>
@@ -59925,7 +59925,7 @@
 			</supplysector>
 			<supplysector name="nuclearFuelGenII">
 				<output-unit>EJ</output-unit>
-				<input-unit>EJ</input-unit>
+				<input-unit>MMT</input-unit>
 				<price-unit>1975$/GJ</price-unit>
 				<price year="1975">0.797045</price>
 				<output year="1975">1.2888</output>
@@ -61861,8 +61861,8 @@
 				</subresource>
 			</renewresource>
 			<depresource name="uranium">
-				<output-unit>EJ</output-unit>
-				<price-unit>1975$/GJ</price-unit>
+				<output-unit>MMT</output-unit>
+				<price-unit>2003$/kg</price-unit>
 				<market>global</market>
 				<price year="1975">50</price>
 			</depresource>
@@ -64733,7 +64733,7 @@
 			</supplysector>
 			<supplysector name="nuclearFuelGenII">
 				<output-unit>EJ</output-unit>
-				<input-unit>EJ</input-unit>
+				<input-unit>MMT</input-unit>
 				<price-unit>1975$/GJ</price-unit>
 				<price year="1975">0.797045</price>
 				<output year="1975">1.2888</output>
@@ -66712,8 +66712,8 @@
 				</subresource>
 			</renewresource>
 			<depresource name="uranium">
-				<output-unit>EJ</output-unit>
-				<price-unit>1975$/GJ</price-unit>
+				<output-unit>MMT</output-unit>
+				<price-unit>2003$/kg</price-unit>
 				<market>global</market>
 				<price year="1975">50</price>
 			</depresource>

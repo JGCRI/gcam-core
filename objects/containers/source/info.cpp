@@ -22,8 +22,9 @@ using namespace std;
 * \param aParentInfo A pointer to the parent Info object of this Info object
 *        which may be null.
 */
-Info::Info( const IInfo* aParentInfo ) :
+Info::Info( const IInfo* aParentInfo, const string& aOwnerName ) :
 mParentInfo( aParentInfo ),
+mOwnerName( aOwnerName ),
 mInfoMap( new InfoMap( getInitialSize() ) )
 {
 }
@@ -62,10 +63,10 @@ const bool Info::getBoolean( const string& aStringKey, const bool aMustExist ) c
     // If the item wasn't found search the parent info.
     if( !found ){
         if( mParentInfo ){
-            value = mParentInfo->getBoolean( aStringKey, true );
+            value = mParentInfo->getBooleanHelper( aStringKey, found );
         }
-        // The item was not found and there was no parent to search.
-        else if( aMustExist ){
+        // The item must exist and was not found or there was no parent to search.
+        if( aMustExist && !found ){
             printItemNotFoundWarning( aStringKey );
         }
     }
@@ -81,10 +82,10 @@ const int Info::getInteger( const string& aStringKey, const bool aMustExist ) co
     // If the item wasn't found search the parent info.
     if( !found ){
         if( mParentInfo ){
-            value = mParentInfo->getInteger( aStringKey, true );
+            value = mParentInfo->getIntegerHelper( aStringKey, found );
         }
-        // The item was not found and there was no parent to search.
-        else if( aMustExist ){
+        // The item must exist and was not found or there was no parent to search.
+        if( aMustExist && !found ){
             printItemNotFoundWarning( aStringKey );
         }
     }
@@ -100,10 +101,10 @@ const double Info::getDouble( const string& aStringKey, const bool aMustExist ) 
     // If the item wasn't found search the parent info.
     if( !found ){
         if( mParentInfo ){
-            value = mParentInfo->getDouble( aStringKey, true );
+            value = mParentInfo->getDoubleHelper( aStringKey, found );
         }
-        // The item was not found and there was no parent to search.
-        else if( aMustExist ){
+        // The item must exist and was not found or there was no parent to search.
+        if( aMustExist && !found ){
             printItemNotFoundWarning( aStringKey );
         }
     }
@@ -115,21 +116,66 @@ const string& Info::getString( const string& aStringKey, const bool aMustExist )
     // Perform a local search.
     bool found = false;
     const string& value = getItemValueLocal<string>( aStringKey, found );
-    if( found ){
-        return value;
+    if( !found ){
+        // If the item wasn't found search the parent info.
+        if( mParentInfo ){
+            return mParentInfo->getStringHelper( aStringKey, found );
+        }
+        // The item must exist and was not found or there was no parent to search.
+        if( aMustExist && !found ){
+            printItemNotFoundWarning( aStringKey );
+        }
     }
-
-    // If the item wasn't found search the parent info.
-    if( mParentInfo ){
-        return mParentInfo->getString( aStringKey, true );
-    }
-    // The item was not found and there was no parent to search.
-    if( aMustExist ){
-        printItemNotFoundWarning( aStringKey );
-    }
-
     // Value will be initialized to the default value string by
     // getItemValueLocal
+    return value;
+}
+
+const bool Info::getBooleanHelper( const string& aStringKey, bool& aFound ) const
+{
+    // Perform a local search.
+    bool value = getItemValueLocal<bool>( aStringKey, aFound );
+    
+    // If the item wasn't found and parent exists, search the parent info.
+    if( !aFound && mParentInfo ){
+        value = mParentInfo->getBooleanHelper( aStringKey, aFound );
+    }
+    return value;
+}
+
+const int Info::getIntegerHelper( const string& aStringKey, bool& aFound ) const
+{
+    // Perform a local search.
+    int value = getItemValueLocal<int>( aStringKey, aFound );
+    
+    // If the item wasn't found and parent exists, search the parent info.
+    if( !aFound && mParentInfo ){
+        value = mParentInfo->getIntegerHelper( aStringKey, aFound );
+    }
+    return value;
+}
+
+const double Info::getDoubleHelper( const string& aStringKey, bool& aFound ) const
+{
+    // Perform a local search.
+    double value = getItemValueLocal<double>( aStringKey, aFound );
+    
+    // If the item wasn't found and parent exists, search the parent info.
+    if( !aFound && mParentInfo ){
+        value = mParentInfo->getDoubleHelper( aStringKey, aFound );
+    }
+    return value;
+}
+
+const string& Info::getStringHelper( const string& aStringKey, bool& aFound ) const
+{
+    // Perform a local search.
+    const string& value = getItemValueLocal<string>( aStringKey, aFound );
+    
+    // If the item wasn't found and parent exists, search the parent info.
+    if( !aFound && mParentInfo ){
+        return mParentInfo->getStringHelper( aStringKey, aFound );
+    }
     return value;
 }
 
@@ -191,7 +237,7 @@ void Info::printItemNotFoundWarning( const string& aStringKey ) const {
     // Print a warning message.
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
-    mainLog << aStringKey << " was not found in the information store." << endl;
+    mainLog << aStringKey << " from " << mOwnerName << " was not found in the information store." << endl;
 }
 
 /*! \brief Print a warning that the existing value was of a wrong type.
@@ -204,12 +250,12 @@ void Info::printBadCastWarning( const string& aStringKey, bool aIsUpdate ) const
 
     // Print different warnings for updates and gets.
     if( aIsUpdate ){
-        mainLog << aStringKey << " was found but the existing and new types"
+        mainLog << aStringKey << " from " << mOwnerName << " was found but the existing and new types"
                 << " do not match." << endl;
     }
     // It is an error during a get.
     else {
-        mainLog << aStringKey << " cannot be retrieved because the current"
+        mainLog << aStringKey << " from " << mOwnerName << " cannot be retrieved because the current"
                 << "and requested types do not match." << endl;
     }
 }
@@ -220,6 +266,6 @@ void Info::printBadCastWarning( const string& aStringKey, bool aIsUpdate ) const
 */
 void Info::printShadowWarning( const string& aStringKey ) const {
     ILogger& mainLog = ILogger::getLogger( "main_log" );
-    mainLog.setLevel( ILogger::ERROR );
-    mainLog << aStringKey << " will shadow a variable in a parent Info." << endl;
+    mainLog.setLevel( ILogger::WARNING );
+    mainLog << aStringKey << " from " << mOwnerName << " will shadow a variable in a parent Info." << endl;
 }

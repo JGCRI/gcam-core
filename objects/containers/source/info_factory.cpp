@@ -16,6 +16,6 @@ using namespace std;
 *        permitted.
 * \return A newly constructed Info object with the given parent.
 */
-IInfo* InfoFactory::constructInfo( const IInfo* aParentInfo ){
-	return new Info( aParentInfo );
+IInfo* InfoFactory::constructInfo( const IInfo* aParentInfo, const string& aOwnerName ){
+    return new Info( aParentInfo, aOwnerName );
 }

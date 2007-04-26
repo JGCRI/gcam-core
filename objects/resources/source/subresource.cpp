@@ -118,7 +118,7 @@ void SubResource::XMLParse( const DOMNode* node ){
 * \warning markets are not necessarily set when completeInit is called
 */
 void SubResource::completeInit( const IInfo* aResourceInfo ) {
-    mSubresourceInfo.reset( InfoFactory::constructInfo( aResourceInfo ) ); 
+    mSubresourceInfo.reset( InfoFactory::constructInfo( aResourceInfo, name ) ); 
     // update the available resource for period 0
     // this function must be called after all the grades have been parsed and nograde set
     updateAvailable( 0 );
@@ -461,7 +461,7 @@ void SubResource::dbOutput( const string &regname, const string& secname ){
     // function arguments are variable name, double array, db name, table name
     // the function writes all years
     // total subsector output
-    dboutput4(regname,"Pri Energy Production",secname,name,outputUnit,annualprod);
+    //dboutput4(regname,"Primary Energy", "Production for " + secname,name,outputUnit,annualprod);
     //    dboutput4(regname,"Resource",secname,str,"EJ",available);
     dboutput4(regname,"Resource","Available "+secname,name,outputUnit,available);
     dboutput4(regname,"Resource","CummProd "+secname,name,outputUnit,cumulprod);

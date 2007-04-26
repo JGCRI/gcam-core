@@ -279,10 +279,10 @@ const vector<double> IntermittentSubsector::calcTechShares( const GDP* aGDP,
                                                             const int aPeriod ) const
 {
     // Note: these shares are only valid for calculting cost of renew supply (minus backup), not output.
-	vector<double> techShares( techs.size() );
-	for( unsigned int i = 0; i < techs.size(); ++i ){
+    vector<double> techShares( techs.size() );
+    for( unsigned int i = 0; i < techs.size(); ++i ){
         // Calculate for all techs except for backup technology
-		if ( i != backupTechNumber ) {
+        if ( i != backupTechNumber ) {
             // determine shares based on Technology costs
             techShares[ i ] = techs[i][aPeriod]->calcShare( regionName, sectorName, aGDP, aPeriod );
 
@@ -293,10 +293,10 @@ const vector<double> IntermittentSubsector::calcTechShares( const GDP* aGDP,
         {
             techShares[ backupTechNumber ] = 0;
         }
-	}
+    }
 
-	// Normalize technology shares.
-	SectorUtils::normalizeShares( techShares );
+    // Normalize technology shares.
+    SectorUtils::normalizeShares( techShares );
 
     return techShares;
 }
@@ -326,7 +326,7 @@ double IntermittentSubsector::getPrice( const GDP* aGDP,
 
 void IntermittentSubsector::setOutput( const double aSubsectorVariableDemand, 
                                        const double aFixedOutputScaleFactor,
-		                               const GDP* aGDP,
+                                       const GDP* aGDP,
                                        const int aPeriod )
 {
     // There is currently no vintaging in IntermittentSubsectors. Set production

@@ -267,7 +267,7 @@ void RegionMiniCAM::completeInit( const GlobalTechnologyDatabase* aGlobalTechDB 
     Region::completeInit( aGlobalTechDB );
 
     // Region info has no parent Info.
-    mRegionInfo.reset( InfoFactory::constructInfo( 0 ) );
+    mRegionInfo.reset( InfoFactory::constructInfo( 0, name ) );
     mRegionInfo->setInteger( "rotationPeriod", mRotationPeriod );
 
     if( mInterestRate == 0 ){
@@ -1553,27 +1553,30 @@ void RegionMiniCAM::dbOutput( const list<string>& aPrimaryFuelList ) const {
 
     // region primary energy consumption by fuel type
     map<string,double> tpemap = summary[0].getpecons();
-    for (CI pmap=tpemap.begin(); pmap!=tpemap.end(); ++pmap) {
-        for ( int m= 0;m<maxper;m++) {
+    for (CI pmap = tpemap.begin(); pmap != tpemap.end(); ++pmap) {
+        for ( int m = 0; m < maxper; ++m ) {
             temp[m] = summary[m].get_pemap_second(pmap->first);
         }
-        dboutput4(name,"Pri Energy","Consumption by fuel",pmap->first,"EJ",temp);
+        dboutput4(name,"Primary Energy","Consumption by fuel(renew error)",pmap->first,"EJ",temp);
+    }
+
+    // regional Pri Energy Production by fuel type
+    tpemap = summary[0].getpeprod();
+    for (CI pmap = tpemap.begin(); pmap != tpemap.end(); ++pmap) {
+        for ( int m = 0; m < maxper; ++m ) {
+            temp[m] = summary[m].get_peprodmap_second(pmap->first);
+        }
+        dboutput4(name,"Primary Energy","Production by fuel(renew error)",pmap->first,"EJ",temp);
     }
 
     // region primary energy trade by fuel type
     tpemap = summary[0].getpetrade();
-    for (CI pmap=tpemap.begin(); pmap!=tpemap.end(); ++pmap) {
-        for ( int m= 0;m<maxper;m++) {
+    for (CI pmap = tpemap.begin(); pmap != tpemap.end(); ++pmap) {
+        for ( int m = 0; m < maxper; ++m ) {
             temp[m] = summary[m].get_petrmap_second(pmap->first);
         }
-        dboutput4(name,"Pri Energy","Trade by fuel",pmap->first,"EJ",temp);
+        dboutput4(name,"Primary Energy","Trade by fuel",pmap->first,"EJ",temp);
     }
-
-    // regional Pri Energy Production Total
-    for ( int m= 0;m<maxper;m++) {
-        temp[m] = summary[m].get_peprodmap_second("zTotal");
-    }
-    dboutput4(name,"Pri Energy","Production by Sector","zTotal","EJ",temp);
 
     // write resource results to database
     for ( unsigned int i = 0; i < resources.size(); i++ ) {
@@ -1612,7 +1615,8 @@ void RegionMiniCAM::updateSummary( const list<string>& aPrimaryFuelList, const i
     summary[period].clearemfuelmap();
 
     for ( unsigned int i = 0; i < resources.size(); i++ ) {
-        summary[period].initpeprod(resources[i]->getName(),resources[i]->getAnnualProd( name, period));
+        summary[period].initpeprod( aPrimaryFuelList, resources[i]->getName(),
+            resources[i]->getAnnualProd( name, period) );
     }
     for ( unsigned int i = 0; i < demandSector.size(); i++ ) {
         // call update for demand sector

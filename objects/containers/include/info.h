@@ -39,28 +39,39 @@ public:
     ~Info();
 
     bool setBoolean( const std::string& aStringKey, const bool aValue );
-    
+
     bool setInteger( const std::string& aStringKey, const int aValue );
-    
+
     bool setDouble( const std::string& aStringKey, const double aValue );
-    
+
     bool setString( const std::string& aStringKey, const std::string& aValue );
-    
+
     const bool getBoolean( const std::string& aStringKey, const bool aMustExist ) const;
 
     const int getInteger( const std::string& aStringKey, const bool aMustExist ) const;
 
     const double getDouble( const std::string& aStringKey, const bool aMustExist ) const;
-    
+
     const std::string& getString( const std::string& aStringKey, const bool aMustExist ) const;
+
+    const bool getBooleanHelper( const std::string& aStringKey, bool& aFound ) const;
+
+    const int getIntegerHelper( const std::string& aStringKey, bool& aFound ) const;
+
+    const double getDoubleHelper( const std::string& aStringKey, bool& aFound ) const;
+
+    const std::string& getStringHelper( const std::string& aStringKey, bool& aFound ) const;
 
     bool hasValue( const std::string& aStringKey ) const;
 
     void toDebugXML( const int aPeriod, Tabs* aTabs, std::ostream& aOut ) const;
 protected:
-    Info( const IInfo* aParentInfo );
+    Info( const IInfo* aParentInfo, const std::string& aOwnerName );
 
 private:
+
+    std::string mOwnerName;
+
     /*!
      * \brief Enum representing possible types of each item.
      */
@@ -81,17 +92,17 @@ private:
     template<class T> bool setItemValueLocal( const std::string& aStringKey,
                                               const AnyType aType,
                                               const T& aValue );
-    
+
     template<class T> const T& getItemValueLocal( const std::string& aStringKey, bool& aExists ) const;
-    
+
     size_t getInitialSize() const;
-    
+
     void printItemNotFoundWarning( const std::string& aStringKey ) const;
-    
+
     void printBadCastWarning( const std::string& aStringKey, bool aIsUpdate ) const;
-    
+
     void printShadowWarning( const std::string& aStringKey ) const;
-    
+
     template<class T> void printItem( const boost::any& aValue,
                                       std::ostream& aOut,
                                       Tabs* aTabs ) const;
@@ -101,7 +112,7 @@ private:
 
     //! Type of the internal storage map.
     typedef HashMap<const std::string, ValueType> InfoMap;
-    
+
     //! Internal storage mapping item names to item values.
     std::auto_ptr<InfoMap> mInfoMap;
 

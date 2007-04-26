@@ -54,13 +54,13 @@ public:
     static const std::string& getXMLNameStatic();
 
     UnlimitedResource();
-    
+
     virtual ~UnlimitedResource();
-    
+
     virtual const std::string& getXMLName() const;
-    
+
     virtual void XMLParse( const xercesc::DOMNode* aNode );
-    
+
     virtual void toInputXML( std::ostream& aOut,
                              Tabs* aTabs ) const;
 
@@ -72,13 +72,13 @@ public:
 
     virtual void completeInit( const std::string& aRegionName,
                                const IInfo* aRegionInfo );
-    
+
     virtual void initCalc( const std::string& aRegionName,
                            const int aPeriod );
 
     virtual void postCalc( const std::string& aRegionName,
                            const int aPeriod );
-    
+
     virtual void calcSupply( const std::string& aRegionName,
                              const GDP* aGDP,
                              const int aPeriod );

@@ -14,6 +14,7 @@
 
 #include "util/base/include/xml_helper.h"
 #include "sectors/include/supply_sector.h"
+#include "sectors/include/interm_subsector.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
 #include "sectors/include/subsector.h"
@@ -297,6 +298,11 @@ bool SupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode* 
     // Temporary hack for CCTP.
     if( nodeName == "biomass-price-adder" ){
         XMLHelper<double>::insertValueIntoVector( curr, mBiomassAdder, scenario->getModeltime() );
+    }
+    else if( nodeName == IntermittentSubsector::getXMLNameStatic() ){
+        parseContainerNode( curr, subsec, subSectorNameMap, new IntermittentSubsector( regionName, name ) );
+       // Set that this sector requires a trial supply market.
+       mHasTrialSupply = true;
     }
     else {
         return false;

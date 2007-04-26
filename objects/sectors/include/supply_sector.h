@@ -23,7 +23,7 @@ class DependencyFinder;
 class SupplySector: public Sector
 {
 public:
-	explicit SupplySector( const std::string& aRegionName );
+    explicit SupplySector( const std::string& aRegionName );
     virtual ~SupplySector(){};
     static const std::string& getXMLNameStatic();
     
@@ -37,8 +37,8 @@ public:
                            const Demographic* aDemographics,
                            const int aPeriod );
 
-	virtual void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod );
-	
+    virtual void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod );
+    
     virtual void supply( const GDP* aGDP,
                          const int aPeriod );
 
@@ -56,7 +56,7 @@ protected:
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 
-	virtual const std::string& getXMLName() const;
+    virtual const std::string& getXMLName() const;
 
     //! Temporary hack for CCTP. Biomass adder.
     std::vector<double> mBiomassAdder;
@@ -64,7 +64,7 @@ protected:
     //! Whether the sector has a trial supply market.
     bool mHasTrialSupply;
 private:
-	const static std::string XML_NAME; //!< node name for toXML methods	
+    const static std::string XML_NAME; //!< node name for toXML methods 
 };
 
 #endif // _SUPPLY_SECTOR_H_

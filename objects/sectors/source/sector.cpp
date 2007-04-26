@@ -1,4 +1,4 @@
-/*! 
+/*!
 * \file sector.cpp
 * \ingroup Objects
 * \brief Sector class source file.
@@ -48,7 +48,10 @@ extern Scenario* scenario;
 *
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
-Sector::Sector( const string& aRegionName ): regionName( aRegionName ){
+Sector::Sector( const string& aRegionName )
+    : regionName( aRegionName ),
+      mObjectMetaInfo()
+{
     mSectorType = getDefaultSectorType();
     mBaseOutput = 0;
     mBasePrice = 0;
@@ -144,13 +147,13 @@ void Sector::XMLParse( const DOMNode* node ){
             }
         }
         else if( nodeName == "output-unit" ){
-			mOutputUnit = XMLHelper<string>::getValue( curr );
+            mOutputUnit = XMLHelper<string>::getValue( curr );
         }
         else if( nodeName == "input-unit" ){
-			mInputUnit = XMLHelper<string>::getValue( curr );
+            mInputUnit = XMLHelper<string>::getValue( curr );
         }
         else if( nodeName == "price-unit" ){
-			mPriceUnit = XMLHelper<string>::getValue( curr );
+            mPriceUnit = XMLHelper<string>::getValue( curr );
         }
         else if( nodeName == "sectorType" ){
             mSectorType = XMLHelper<string>::getValue( curr );
@@ -167,17 +170,27 @@ void Sector::XMLParse( const DOMNode* node ){
                         << " are not read in."<< endl;
             }
         }
+        else if ( nodeName == object_meta_info_type::getXMLNameStatic() ){
+            /* Read in object meta info here into mObjectMetaInfo.  This
+             * will be copied into mSectorInfo in completeInit()
+             */
+            object_meta_info_type metaInfo;
+            if ( metaInfo.XMLParse( curr ) ){
+                // Add to collection
+                mObjectMetaInfo.push_back( metaInfo );
+            }
+        }
         else if( nodeName == MoreSectorInfo::getXMLNameStatic() ) {
             parseSingleNode( curr, moreSectorInfo, new MoreSectorInfo );
         }
-		else if( nodeName == Subsector::getXMLNameStatic() ){
+        else if( nodeName == Subsector::getXMLNameStatic() ){
             parseContainerNode( curr, subsec, subSectorNameMap, new Subsector( regionName, name ) );
         }
         else if( nodeName == "keyword" ){
             DOMNamedNodeMap* keywordAttributes = curr->getAttributes();
             for( unsigned int attrNum = 0; attrNum < keywordAttributes->getLength(); ++attrNum ) {
                 DOMNode* attrTemp = keywordAttributes->item( attrNum );
-                mKeywordMap[ XMLHelper<string>::safeTranscode( attrTemp->getNodeName() ) ] = 
+                mKeywordMap[ XMLHelper<string>::safeTranscode( attrTemp->getNodeName() ) ] =
                     XMLHelper<string>::safeTranscode( attrTemp->getNodeValue() );
             }
         }
@@ -191,6 +204,103 @@ void Sector::XMLParse( const DOMNode* node ){
     }
 }
 
+/*! \brief Write object to xml output stream
+*
+* Method writes the contents of this object to the XML output stream.
+*
+* \author Josh Lurz
+* \param out reference to the output stream
+* \param tabs A tabs object responsible for printing the correct number of tabs.
+*/
+void Sector::toInputXML( ostream& aOut, Tabs* aTabs ) const {
+    const Modeltime* modeltime = scenario->getModeltime();
+
+    XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, name );
+
+    // write the xml for the class members.
+    XMLWriteElementCheckDefault( mSectorType, "sectorType", aOut, aTabs, getDefaultSectorType() );
+    XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
+    XMLWriteElement( mInputUnit, "input-unit", aOut, aTabs );
+    XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
+
+    XMLWriteElementCheckDefault( mBasePrice, "price", aOut, aTabs, 0.0, modeltime->getper_to_yr( 0 ) );
+    XMLWriteElementCheckDefault( mBaseOutput, "output", aOut, aTabs, 0.0, modeltime->getper_to_yr( 0 ) );
+
+    if ( mObjectMetaInfo.size() ) {
+        for ( object_meta_info_vector_type::const_iterator metaInfoIterItem = mObjectMetaInfo.begin();
+            metaInfoIterItem != mObjectMetaInfo.end(); 
+            ++metaInfoIterItem ) {
+                metaInfoIterItem->toInputXML( aOut, aTabs );
+            }
+    }
+
+    // write out variables for derived classes
+    toInputXMLDerived( aOut, aTabs );
+
+    if( moreSectorInfo.get() ){
+        moreSectorInfo->toInputXML( aOut, aTabs );
+    }
+
+    // write out the subsector objects.
+    for( CSubsectorIterator k = subsec.begin(); k != subsec.end(); k++ ){
+        ( *k )->toInputXML( aOut, aTabs );
+    }
+
+    // finished writing xml for the class members.
+    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
+}
+
+/*! \brief Write information useful for debugging to XML output stream
+*
+* Function writes market and other useful info to XML. Useful for debugging.
+*
+* \author Josh Lurz
+* \param period model period
+* \param out reference to the output stream
+* \param aTabs A tabs object responsible for printing the correct number of tabs.
+*/
+void Sector::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
+
+    XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, name );
+
+    // write the xml for the class members.
+    XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
+    XMLWriteElement( mInputUnit, "input-unit", aOut, aTabs );
+    XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
+
+    // Write out the data in the vectors for the current period.
+    XMLWriteElement( getInput( aPeriod ), "input", aOut, aTabs );
+    XMLWriteElement( getOutput( aPeriod ), "output", aOut, aTabs );
+    XMLWriteElement( getFixedOutput( aPeriod ), "fixed-output", aOut, aTabs );
+    XMLWriteElement( outputsAllFixed( aPeriod ), "outputs-all-fixed", aOut, aTabs );
+    XMLWriteElement( getCalOutput( aPeriod ), "cal-output", aOut, aTabs );
+
+    if ( mObjectMetaInfo.size() ) {
+        for ( object_meta_info_vector_type::const_iterator metaInfoIterItem = mObjectMetaInfo.begin();
+            metaInfoIterItem != mObjectMetaInfo.end(); 
+            ++metaInfoIterItem ) {
+                metaInfoIterItem->toInputXML( aOut, aTabs );
+            }
+    }
+
+    toDebugXMLDerived (aPeriod, aOut, aTabs);
+
+    if( moreSectorInfo.get() ){
+        moreSectorInfo->toDebugXML( aPeriod, aOut, aTabs );
+    }
+    // Write out the summary
+    // summary[ aPeriod ].toDebugXML( aPeriod, aOut );
+
+    // write out the subsector objects.
+    for( CSubsectorIterator j = subsec.begin(); j != subsec.end(); j++ ){
+        ( *j )->toDebugXML( aPeriod, aOut, aTabs );
+    }
+
+    // finished writing xml for the class members.
+
+    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
+}
+
 /*! \brief Complete the initialization
 *
 * This routine is only called once per model run
@@ -202,101 +312,29 @@ void Sector::XMLParse( const DOMNode* node ){
 * \param aGlobalTechDB Global Technology database.
 * \warning markets are not necessarily set when completeInit is called
 */
-void Sector::completeInit( const IInfo* aRegionInfo, DependencyFinder* aDepFinder, 
+void Sector::completeInit( const IInfo* aRegionInfo, DependencyFinder* aDepFinder,
                            ILandAllocator* aLandAllocator, const GlobalTechnologyDatabase* aGlobalTechDB )
 {
     // Allocate the sector info.
-    mSectorInfo.reset( InfoFactory::constructInfo( aRegionInfo ) );
-	// Set output and price unit of sector into sector info.
-	mSectorInfo->setString( "output-unit", mOutputUnit );
-	mSectorInfo->setString( "input-unit", mInputUnit );
-	mSectorInfo->setString( "price-unit", mPriceUnit );
+    mSectorInfo.reset( InfoFactory::constructInfo( aRegionInfo, regionName + "-" + name ) );
+    // Set output and price unit of sector into sector info.
+    mSectorInfo->setString( "output-unit", mOutputUnit );
+    mSectorInfo->setString( "input-unit", mInputUnit );
+    mSectorInfo->setString( "price-unit", mPriceUnit );
 
-    // Complete the subsector initializations. 
+    if ( mObjectMetaInfo.size() ) {
+        // Put values in mSectorInfo
+        for ( object_meta_info_vector_type::const_iterator metaInfoIterItem = mObjectMetaInfo.begin(); 
+                                                           metaInfoIterItem != mObjectMetaInfo.end();
+                                                           ++metaInfoIterItem ) {
+            mSectorInfo->setDouble( (*metaInfoIterItem).getName(), (*metaInfoIterItem).getValue() );
+       }
+    }
+
+    // Complete the subsector initializations.
     for( vector<Subsector*>::iterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
         ( *subSecIter )->completeInit( mSectorInfo.get(), aDepFinder, aLandAllocator, aGlobalTechDB );
     }
-}
-
-/*! \brief Write object to xml output stream
-*
-* Method writes the contents of this object to the XML output stream.
-*
-* \author Josh Lurz
-* \param out reference to the output stream
-* \param tabs A tabs object responsible for printing the correct number of tabs. 
-*/
-void Sector::toInputXML( ostream& out, Tabs* tabs ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
-
-    // write the xml for the class members.
-    XMLWriteElementCheckDefault( mSectorType, "sectorType", out, tabs, getDefaultSectorType() );
-    XMLWriteElement( mOutputUnit, "output-unit", out, tabs );
-    XMLWriteElement( mInputUnit, "input-unit", out, tabs );
-    XMLWriteElement( mPriceUnit, "price-unit", out, tabs );
-
-    XMLWriteElementCheckDefault( mBasePrice, "price", out, tabs, 0.0, modeltime->getper_to_yr( 0 ) );
-    XMLWriteElementCheckDefault( mBaseOutput, "output", out, tabs, 0.0, modeltime->getper_to_yr( 0 ) );
-
-    // write out variables for derived classes
-    toInputXMLDerived( out, tabs );
-
-    if( moreSectorInfo.get() ){
-        moreSectorInfo->toInputXML( out, tabs );
-    }
-
-    // write out the subsector objects.
-    for( CSubsectorIterator k = subsec.begin(); k != subsec.end(); k++ ){
-        ( *k )->toInputXML( out, tabs );
-    }
-
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
-/*! \brief Write information useful for debugging to XML output stream
-*
-* Function writes market and other useful info to XML. Useful for debugging.
-*
-* \author Josh Lurz
-* \param period model period
-* \param out reference to the output stream
-* \param tabs A tabs object responsible for printing the correct number of tabs.
-*/
-void Sector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
-
-    XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
-
-    // write the xml for the class members.
-    XMLWriteElement( mOutputUnit, "output-unit", out, tabs );
-    XMLWriteElement( mInputUnit, "input-unit", out, tabs );
-    XMLWriteElement( mPriceUnit, "price-unit", out, tabs );
-
-    // Write out the data in the vectors for the current period.
-    XMLWriteElement( getInput( period ), "input", out, tabs );
-    XMLWriteElement( getOutput( period ), "output", out, tabs );
-    XMLWriteElement( getFixedOutput( period ), "fixed-output", out, tabs );
-    XMLWriteElement( outputsAllFixed( period ), "outputs-all-fixed", out, tabs );
-    XMLWriteElement( getCalOutput( period ), "cal-output", out, tabs );
-
-    toDebugXMLDerived (period, out, tabs);
-
-    if( moreSectorInfo.get() ){
-        moreSectorInfo->toDebugXML( period, out, tabs );
-    }
-    // Write out the summary
-    // summary[ period ].toDebugXML( period, out );
-
-    // write out the subsector objects.
-    for( CSubsectorIterator j = subsec.begin(); j != subsec.end(); j++ ){
-        ( *j )->toDebugXML( period, out, tabs );
-    }
-
-    // finished writing xml for the class members.
-
-    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 /*! \brief Perform any initializations needed for each period.
@@ -382,7 +420,7 @@ void Sector::normalizeShareWeights( const int period ) {
 *
 * Compares the sum of calibrated + fixed values to output of sector.
 * Will optionally print warning to the screen (and eventually log file).
-* 
+*
 * If all outputs are not calibrated then this does not check for consistency.
 *
 * \author Steve Smith
@@ -391,13 +429,13 @@ void Sector::normalizeShareWeights( const int period ) {
 * \param printWarnings if true prints a warning
 * \return Boolean true if calibration is ok.
 */
-bool Sector::isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const {	
-	bool isAllCalibrated = true;
-	// Check if each subsector is calibrated.
-	for( unsigned int i = 0; i < subsec.size(); ++i ){
-		isAllCalibrated &= subsec[ i ]->isAllCalibrated( period, calAccuracy, printWarnings );
-	}
-	return isAllCalibrated;
+bool Sector::isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const {
+   bool isAllCalibrated = true;
+   // Check if each subsector is calibrated.
+   for( unsigned int i = 0; i < subsec.size(); ++i ){
+      isAllCalibrated &= subsec[ i ]->isAllCalibrated( period, calAccuracy, printWarnings );
+   }
+   return isAllCalibrated;
 }
 
 /*!
@@ -424,56 +462,56 @@ void Sector::calcCosts( const int aPeriod ){
 * \return A vector of normalized shares, one per subsector, ordered by subsector.
 */
 const vector<double> Sector::calcSubsectorShares( const GDP* aGDP, const int aPeriod ) const {
-	// Calculate unnormalized shares.
-	vector<double> subsecShares( subsec.size() );
-	for( unsigned int i = 0; i < subsec.size(); ++i ){
-		subsecShares[ i ] = subsec[ i ]->calcShare( aPeriod, aGDP );
-	}
-	
+   // Calculate unnormalized shares.
+   vector<double> subsecShares( subsec.size() );
+   for( unsigned int i = 0; i < subsec.size(); ++i ){
+      subsecShares[ i ] = subsec[ i ]->calcShare( aPeriod, aGDP );
+   }
+
     // Normalize the shares.
-	double shareSum = SectorUtils::normalizeShares( subsecShares );
-	if( !util::isEqual( shareSum, 1.0 ) && !outputsAllFixed( aPeriod ) ){
-		ILogger& mainLog = ILogger::getLogger( "main_log" );
-		mainLog.setLevel( ILogger::DEBUG );
-		mainLog << "Shares for sector " << name << " in region " << regionName 
-			    << " did not normalize correctly. Sum is " << shareSum << "." << endl;
-	}
-	/*! \post There is one share per subsector. */
-	assert( subsecShares.size() == subsec.size() );
-	return subsecShares;
+   double shareSum = SectorUtils::normalizeShares( subsecShares );
+   if( !util::isEqual( shareSum, 1.0 ) && !outputsAllFixed( aPeriod ) ){
+      ILogger& mainLog = ILogger::getLogger( "main_log" );
+      mainLog.setLevel( ILogger::DEBUG );
+      mainLog << "Shares for sector " << name << " in region " << regionName
+             << " did not normalize correctly. Sum is " << shareSum << "." << endl;
+   }
+   /*! \post There is one share per subsector. */
+   assert( subsecShares.size() == subsec.size() );
+   return subsecShares;
 }
 
 /*! \brief Calculate and return weighted average price of subsectors.
 * \param period Model period
-* \return The weighted sector price. 
+* \return The weighted sector price.
 * \author Sonny Kim, Josh Lurz, James Blackwood
 * \param period Model period
 * \return Weighted sector price.
 */
 double Sector::getPrice( const GDP* aGDP, const int aPeriod ) const {
-	const vector<double> subsecShares = calcSubsectorShares( aGDP, aPeriod );
-	double sectorPrice = 0;
+   const vector<double> subsecShares = calcSubsectorShares( aGDP, aPeriod );
+   double sectorPrice = 0;
     for ( unsigned int i = 0; i < subsec.size(); ++i ){
         // Subsectors with no share cannot affect price. The getPrice function
         // is constant it so skipping it will not avoid any side effects.
         if( subsecShares[ i ] > util::getSmallNumber() ){
-		    double currPrice = subsec[ i ]->getPrice( aGDP, aPeriod );
-		    // Check for negative prices returned by fixed investment.
+          double currPrice = subsec[ i ]->getPrice( aGDP, aPeriod );
+          // Check for negative prices returned by fixed investment.
             if( currPrice > util::getSmallNumber() ){
-			    sectorPrice += subsecShares[ i ] * currPrice;
-		    }
+             sectorPrice += subsecShares[ i ] * currPrice;
+          }
         }
     }
 
-	// Check if the overall price is zero, this would cause infinite demand.
-	if( sectorPrice < util::getSmallNumber() ){
-		ILogger& mainLog = ILogger::getLogger( "main_log" );
-		mainLog.setLevel( ILogger::DEBUG );
-		mainLog << "Zero price for sector " << name << " in region " << regionName
+   // Check if the overall price is zero, this would cause infinite demand.
+   if( sectorPrice < util::getSmallNumber() ){
+      ILogger& mainLog = ILogger::getLogger( "main_log" );
+      mainLog.setLevel( ILogger::DEBUG );
+      mainLog << "Zero price for sector " << name << " in region " << regionName
                 << " Resetting to last period's price." << endl;
-		sectorPrice = aPeriod > 0 ? getPrice( aGDP, aPeriod - 1 ) : 1;
-	}
-	return sectorPrice;
+      sectorPrice = aPeriod > 0 ? getPrice( aGDP, aPeriod - 1 ) : 1;
+   }
+   return sectorPrice;
 }
 
 /*! \brief Returns true if all sub-Sector outputs are fixed or calibrated.
@@ -525,7 +563,7 @@ bool Sector::outputsAllFixed( const int period ) const {
  *       the model to solve but not be economically consistent. The economically
  *       consistent solution would be to back down the supply schedule and
  *       shutdown the marginal fixed output producer.
- * 
+ *
  * \author Steve Smith, Josh Lurz
  * \param period Model period
  * \return Total fixed output.
@@ -540,7 +578,7 @@ double Sector::getFixedOutput( const int period ) const {
 
 /*! \brief Return subsector total calibrated outputs.
 *
-* Returns the total calibrated outputs from all subsectors and technologies. 
+* Returns the total calibrated outputs from all subsectors and technologies.
 * Note that any calibrated input values are converted to outputs and are included.
 *
 * This returns only calibrated outputs, not values otherwise fixed (as fixed or zero share weights)
@@ -559,7 +597,7 @@ double Sector::getCalOutput( const int period  ) const {
 
 /*! \brief Return subsector total fixed or calibrated inputs.
 *
-* Returns the total fixed inputs from all subsectors and technologies. 
+* Returns the total fixed inputs from all subsectors and technologies.
 * Note that any calibrated output values are converted to inputs and are included.
 *
 * \author Steve Smith
@@ -575,7 +613,7 @@ double Sector::getCalAndFixedOutputs( const int period, const string& goodName )
     return sumCalOutputValues;
 }
 
-/*! \brief Sets the input value needed to produce the required output to the marketplace 
+/*! \brief Sets the input value needed to produce the required output to the marketplace
 *
 * \author Steve Smith
 * \param period Model period
@@ -583,21 +621,21 @@ double Sector::getCalAndFixedOutputs( const int period, const string& goodName )
 * \param requiredOutput Amount of output to produce
 */
 void Sector::setImpliedFixedInput( const int period, const string& goodName,
-								   const double requiredOutput )
+                           const double requiredOutput )
 {
     bool inputWasChanged = false;
     for ( unsigned int i = 0; i < subsec.size(); ++i ){
         if ( !inputWasChanged ) {
             inputWasChanged = subsec[ i ]->setImpliedFixedInput( period, goodName,
-				                                                 requiredOutput );
+                                                             requiredOutput );
         }
-		else {
-			if( subsec[ i ]->setImpliedFixedInput( period, goodName, requiredOutput ) ){
+      else {
+         if( subsec[ i ]->setImpliedFixedInput( period, goodName, requiredOutput ) ){
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::NOTICE );
                 mainLog << "caldemands for more than one subsector were changed for good "
-					    << goodName << " in sector " << name << " in region "
-						<< regionName << endl; 
+                   << goodName << " in sector " << name << " in region "
+                  << regionName << endl;
             }
         }
     }
@@ -605,7 +643,7 @@ void Sector::setImpliedFixedInput( const int period, const string& goodName,
 
 /*! \brief Returns true if all subsector inputs for the the specified good are fixed.
 *
-* Fixed inputs can be by either fixedCapacity, calibration, or zero share. 
+* Fixed inputs can be by either fixedCapacity, calibration, or zero share.
 *
 * \author Steve Smith
 * \param period Model period
@@ -626,7 +664,7 @@ bool Sector::inputsAllFixed( const int period, const std::string& goodName ) con
 * \author Steve Smith
 * \param period Model period
 * \param goodName market good to return inputs for
-* \param scaleValue multipliciative scaler for calibrated values 
+* \param scaleValue multipliciative scaler for calibrated values
 * \return total calibrated inputs
 */
 void Sector::scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue ) {
@@ -637,7 +675,7 @@ void Sector::scaleCalibratedValues( const int period, const std::string& goodNam
 
 /*! \brief Calibrate Sector output.
 *
-* This performs supply Sector technology and sub-Sector output/input calibration. 
+* This performs supply Sector technology and sub-Sector output/input calibration.
 Determines total amount of calibrated and fixed output and passes that down to the subsectors.
 
 * Note that this routine only performs subsector and technology-level calibration. Total final energy calibration is done by Region::calibrateTFE and GDP calibration is set up in Region::calibrateRegion.
@@ -646,14 +684,14 @@ Determines total amount of calibrated and fixed output and passes that down to t
 * \param period Model period
 */
 void Sector::calibrateSector( const GDP* aGDP, const int aPeriod ) {
-	double marketDemand = scenario->getMarketplace()->getDemand( name, regionName, aPeriod );
-	// Calculate the demand for new investment.
-	double variableDemand = max( marketDemand - getFixedOutput( aPeriod ), 0.0 );
+   double marketDemand = scenario->getMarketplace()->getDemand( name, regionName, aPeriod );
+   // Calculate the demand for new investment.
+   double variableDemand = max( marketDemand - getFixedOutput( aPeriod ), 0.0 );
 
-	const vector<double> subsecShares = calcSubsectorShares( aGDP, aPeriod );
-	for ( unsigned int i = 0; i < subsec.size(); ++i ){
-		subsec[ i ]->adjustForCalibration( subsecShares[ i ] * variableDemand, aGDP, aPeriod );
-	}
+   const vector<double> subsecShares = calcSubsectorShares( aGDP, aPeriod );
+   for ( unsigned int i = 0; i < subsec.size(); ++i ){
+      subsec[ i ]->adjustForCalibration( subsecShares[ i ] * variableDemand, aGDP, aPeriod );
+   }
 }
 
 
@@ -669,7 +707,7 @@ void Sector::calibrateSector( const GDP* aGDP, const int aPeriod ) {
 void Sector::emission( const int period ) {
     summary[ period ].clearemiss(); // clear emissions map
     summary[ period ].clearemfuelmap(); // clear emissions fuel map
-	for( unsigned int i = 0; i < subsec.size(); ++i ){
+   for( unsigned int i = 0; i < subsec.size(); ++i ){
         subsec[ i ]->emission( period );
         summary[ period ].updateemiss( subsec[ i ]->getemission( period )); // by gas
         summary[ period ].updateemfuelmap( subsec[ i ]->getemfuelmap( period )); // by fuel and gas
@@ -713,10 +751,10 @@ void Sector::csvOutputFile( const GDP* aGDP,
     for( int per = 0; per < maxper; ++per ){
         temp[ per ] = getInput( per );
     }
-    // total Sector eneryg input
+    // total Sector energy input
     fileoutput3( regionName, name, " ", " ", "consumption", mOutputUnit, temp );
     // Sector price
-	for( int per = 0; per < maxper; ++per ){
+   for( int per = 0; per < maxper; ++per ){
         temp[ per ] = getPrice( aGDP, per );
     }
     fileoutput3( regionName, name, " ", " ", "price", mPriceUnit, temp);
@@ -789,12 +827,12 @@ void Sector::updateSummary( const list<string>& aPrimaryFuelList, const int peri
         // call update summary for subsector
         subsec[ i ]->updateSummary( period );
         // sum subsector fuel consumption for Sector fuel consumption
-        summary[ period ].updatefuelcons( aPrimaryFuelList, subsec[ i ]->getfuelcons( period )); 
+        summary[ period ].updatefuelcons( aPrimaryFuelList, subsec[ i ]->getfuelcons( period ));
     }
 }
 
 /*! \brief Initialize the marketplaces in the base year to get initial demands from each technology in subsector
-* 
+*
 * \author Pralit Patel
 * \param period The period is usually the base period
 */
@@ -806,7 +844,7 @@ void Sector::updateMarketplace( const int period ) {
 
 /*! \brief Function to finalize objects after a period is solved.
 * \details This function is used to calculate and store variables which are only needed after the current
-* period is complete. 
+* period is complete.
 * \param aPeriod The period to finalize.
 * \todo Finish this function.
 * \author Josh Lurz
@@ -819,7 +857,7 @@ void Sector::postCalc( const int aPeriod ){
 }
 
 /*! \brief For outputting SGM data to a flat csv File
-* 
+*
 * \author Pralit Patel
 * \param period The period which we are outputting for
 */
@@ -832,7 +870,7 @@ void Sector::csvSGMOutputFile( ostream& aFile, const int period ) const {
     sectorReport->finish();
     for( unsigned int i = 0; i < subsec.size(); i++ ) {
         subsec[ i ]->csvSGMOutputFile( aFile, period );
-    }    
+    }
 }
 
 void Sector::accept( IVisitor* aVisitor, const int aPeriod ) const {

@@ -1338,9 +1338,6 @@
 					RelativePath="..\..\technologies\include\non_energy_use_capture_component.h">
 				</File>
 				<File
-					RelativePath="..\..\technologies\include\nuke_fuel_technology.h">
-				</File>
-				<File
 					RelativePath="..\..\technologies\include\output_factory.h">
 				</File>
 				<File

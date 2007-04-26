@@ -114,12 +114,14 @@ double CO2Emissions::getGHGValue( const string& aRegionName,
     if( GHGTax == Marketplace::NO_MARKET_PRICE ){
         GHGTax = 0;
     }
-
-    // Calculate the generalized emissions cost per unit.
+    
+    // get the summation of emissions coefficients from all outputs
+    // SHK 3/15/07: is this correct?
     double coefProduct = calcOutputCoef( aOutputs, aPeriod );
     
     assert( mFuelCoefficient.isInited() );
 
+    // Calculate the generalized emissions cost per unit.
     // units for generalized cost is in 1975$/GJ
     double generalizedCost = ( ( 1 - removeFraction ) * GHGTax + removeFraction * storageCost )
             * ( mFuelCoefficient / aEfficiency - coefProduct) / CVRT90 * CVRT_TG_MT;
@@ -141,12 +143,15 @@ void CO2Emissions::calcEmission( const string& aRegionName,
     double primaryOutput = aOutputs[ 0 ]->getPhysicalOutput( aPeriod );
     
     assert( mFuelCoefficient.isInited() );
+    // get the summation of emissions coefficients from all outputs
+    // SHK 3/15/07: is this correct?
     double coefProduct = calcOutputCoef( aOutputs, aPeriod );
 
     // Note that negative emissions can occur here since biomass has a coef of 0.
     double emissionFraction = 1 - ( aSequestrationDevice ? aSequestrationDevice->getRemoveFraction() : 0 );
     double inputEmissions = aInput * mFuelCoefficient;
-    mEmissions[ aPeriod ] = emissionFraction * ( inputEmissions - primaryOutput * coefProduct );
+    double outputEmissions = primaryOutput * coefProduct;
+    mEmissions[ aPeriod ] = emissionFraction * ( inputEmissions - outputEmissions );
     mEmissionsByFuel[ aPeriod ] = emissionFraction * inputEmissions;
 
     // Calculate sequestered emissions if there is a sequestration device.

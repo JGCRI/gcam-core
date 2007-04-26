@@ -22,7 +22,7 @@ class IInfo;
 */
 class InfoFactory {
 public:
-	static IInfo* constructInfo( const IInfo* aParent );
+    static IInfo* constructInfo( const IInfo* aParent, const std::string& aOwnerName );
 };
 
 #endif // _INFO_FACTORY_H_
