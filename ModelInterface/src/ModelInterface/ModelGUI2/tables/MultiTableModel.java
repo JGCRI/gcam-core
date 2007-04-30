@@ -286,7 +286,7 @@ public class MultiTableModel extends BaseTableModel{
 	  		JScrollPane tV = new JScrollPane(jTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER,
 					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 			JScrollPane tableView = tV;
-			if(me.getValue() instanceof Double) {
+			if(me.getValue() instanceof Double || me.getValue() instanceof String) {
 				JPanel tpanel = new JPanel();
 				JSplitPane sp = new JSplitPane();
 
