@@ -880,21 +880,31 @@ public class QueryGenerator implements java.io.Serializable{
 		JPanel all = new JPanel();
 		JPanel tempPanel;
 		final JTextField titleTextF = new JTextField(title, 30);
-		final JTextField a1NameTextF = new JTextField(axis1Name, 30);
+		final JTextField a1NameTextF = new JTextField(axis1Name, 15);
 		final JTextField a1TextF = new JTextField(displayAxisLevel(nodeLevel), 20);
-		final JTextField a2NameTextF = new JTextField(axis2Name, 30);
+		final JTextField a2NameTextF = new JTextField(axis2Name, 15);
 		final JTextField a2TextF = new JTextField(displayAxisLevel(yearLevel), 20);
-		final JTextField dataNameTextF = new JTextField(var, 30);
+		final JTextField dataNameTextF = new JTextField(var, 20);
 		final JTextComponent xPathTextF = xPath.contains("\n") ? new JTextArea(xPath, 6, 50) : new JTextField(xPath, 50);
 		final JCheckBox sumAllCheckBox = new JCheckBox("Sum All", sumAll);
 		final JCheckBox groupCheckBox = new JCheckBox("Group", group);
 		final JCheckBox buildListCheckBox = new JCheckBox("Build List", buildSingleQueryList);
-		final JTextField labelCol = new JTextField(labelColumnName, 30);
-		final JTextArea commentsTextA = new JTextArea(comments, 4, 30);
+		final JTextField labelCol = new JTextField(labelColumnName, 15);
+		final JTextArea commentsTextA = new JTextArea(comments, 4, 45);
+
+		// set all of the text field's max size to be it's preferred size
+		titleTextF.setMaximumSize(titleTextF.getPreferredSize());
+		a1NameTextF.setMaximumSize(a1NameTextF.getPreferredSize());
+		a1TextF.setMaximumSize(a1TextF.getPreferredSize());
+		a2NameTextF.setMaximumSize(a2NameTextF.getPreferredSize());
+		a2TextF.setMaximumSize(a2TextF.getPreferredSize());
+		dataNameTextF.setMaximumSize(dataNameTextF.getPreferredSize());
+		xPathTextF.setMaximumSize(xPathTextF.getPreferredSize());
+		labelCol.setMaximumSize(labelCol.getPreferredSize());
+
 		Component seperator = Box.createRigidArea(new Dimension(20, 10));
 		all.setLayout(new BoxLayout(all, BoxLayout.Y_AXIS));
 		all.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		all.add(new JLabel("Edit Query"));
 
 		tempPanel = new JPanel();
 		tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.X_AXIS));
@@ -903,12 +913,12 @@ public class QueryGenerator implements java.io.Serializable{
 		tempPanel.add(seperator);
 		tempPanel.add(titleTextF);
 		tempPanel.add(seperator);
+		tempPanel.add(Box.createHorizontalGlue());
 		tempPanel.add(sumAllCheckBox);
 		tempPanel.add(seperator);
 		tempPanel.add(groupCheckBox);
 		tempPanel.add(seperator);
 		tempPanel.add(buildListCheckBox);
-		tempPanel.add(Box.createHorizontalGlue());
 		all.add(tempPanel);
 
 		tempPanel = new JPanel();
@@ -918,10 +928,10 @@ public class QueryGenerator implements java.io.Serializable{
 		tempPanel.add(seperator);
 		tempPanel.add(a1NameTextF);
 		tempPanel.add(seperator);
+		tempPanel.add(Box.createHorizontalGlue());
 		tempPanel.add(new JLabel("  Y-Axis Node: "));
 		tempPanel.add(seperator);
 		tempPanel.add(a1TextF);
-		tempPanel.add(Box.createHorizontalGlue());
 		all.add(tempPanel);
 
 		tempPanel = new JPanel();
@@ -931,10 +941,10 @@ public class QueryGenerator implements java.io.Serializable{
 		tempPanel.add(seperator);
 		tempPanel.add(a2NameTextF);
 		tempPanel.add(seperator);
+		tempPanel.add(Box.createHorizontalGlue());
 		tempPanel.add(new JLabel("  X-Axis Node: "));
 		tempPanel.add(seperator);
 		tempPanel.add(a2TextF);
-		tempPanel.add(Box.createHorizontalGlue());
 		all.add(tempPanel);
 
 		tempPanel = new JPanel();
@@ -943,38 +953,43 @@ public class QueryGenerator implements java.io.Serializable{
 		tempPanel.add(new JLabel("Data Name: "));
 		tempPanel.add(seperator);
 		tempPanel.add(dataNameTextF);
+		tempPanel.add(seperator);
 		tempPanel.add(Box.createHorizontalGlue());
-		all.add(tempPanel);
-
-		tempPanel = new JPanel();
-		tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.X_AXIS));
-		tempPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		tempPanel.add(new JLabel("Chart Label Column: "));
 		tempPanel.add(seperator);
 		tempPanel.add(labelCol);
-		tempPanel.add(Box.createHorizontalGlue());
 		all.add(tempPanel);
 
 		tempPanel = new JPanel();
 		tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.X_AXIS));
 		tempPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		tempPanel.add(new JLabel("XPATH: "));
+		JPanel textAreaLabelPanel = new JPanel();
+		textAreaLabelPanel.setLayout(new BoxLayout(textAreaLabelPanel, BoxLayout.Y_AXIS));
+		textAreaLabelPanel.add(Box.createRigidArea(new Dimension(2, 2)));
+		textAreaLabelPanel.add(new JLabel("XPATH: "));
+		textAreaLabelPanel.add(Box.createVerticalGlue());
+		tempPanel.add(textAreaLabelPanel);
 		tempPanel.add(seperator);
+		tempPanel.add(Box.createHorizontalGlue());
 		if(xPathTextF instanceof JTextArea) {
 			tempPanel.add(new JScrollPane(xPathTextF));
 		} else {
 			tempPanel.add(xPathTextF);
 		}
-		tempPanel.add(Box.createHorizontalGlue());
 		all.add(tempPanel);
 
 		tempPanel = new JPanel();
 		tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.X_AXIS));
 		tempPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		tempPanel.add(new JLabel("Comments: "));
+		textAreaLabelPanel = new JPanel();
+		textAreaLabelPanel.setLayout(new BoxLayout(textAreaLabelPanel, BoxLayout.Y_AXIS));
+		textAreaLabelPanel.add(Box.createRigidArea(new Dimension(2, 2)));
+		textAreaLabelPanel.add(new JLabel("Comments: "));
+		textAreaLabelPanel.add(Box.createVerticalGlue());
+		tempPanel.add(textAreaLabelPanel);
 		tempPanel.add(seperator);
-		tempPanel.add(new JScrollPane(commentsTextA));
 		tempPanel.add(Box.createHorizontalGlue());
+		tempPanel.add(new JScrollPane(commentsTextA));
 		all.add(tempPanel);
 
 		tempPanel = new JPanel();
