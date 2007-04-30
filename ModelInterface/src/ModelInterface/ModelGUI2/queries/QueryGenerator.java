@@ -26,6 +26,7 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
 import java.awt.*;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
@@ -46,6 +47,7 @@ public class QueryGenerator implements java.io.Serializable{
 	boolean sumAll;
 	boolean group;
 	boolean isSumable;
+	boolean buildSingleQueryList;
 	String title;
 	Object[] levelValues;
 	public static Vector sumableList;
@@ -70,6 +72,7 @@ public class QueryGenerator implements java.io.Serializable{
 	public QueryGenerator(Frame parentFrameIn) {
 		qb = null;
 		isSumable = false;
+		buildSingleQueryList = true;
 		xPath = "";
 		parentFrame = parentFrameIn;
 		sumAll = false;
@@ -141,6 +144,11 @@ public class QueryGenerator implements java.io.Serializable{
 					group = true;
 				} else {
 					group = false;
+				}
+				if( ((Element)nl.item(i)).getAttribute("buildList").equals("") || ((Element)nl.item(i)).getAttribute("buildList").equals("true")) {
+					buildSingleQueryList = true;
+				} else {
+					buildSingleQueryList = false;
 				}
 				xPath = nl.item(i).getFirstChild().getNodeValue();
 				if(((!sumAll && !group) || (sumAll && group)) && !(qb instanceof CostCurveQueryBuilder)
@@ -603,6 +611,15 @@ public class QueryGenerator implements java.io.Serializable{
 	public void setGroup(boolean g) {
 		group = g;
 	}
+	public boolean isBuildList() {
+		return buildSingleQueryList;
+	}
+	public void setBuildList(boolean list) {
+		if(singleExtension != null) {
+			singleExtension.setEnabled(list);
+		}
+		buildSingleQueryList = list;
+	}
 	public Node getAsNode(Document doc) {
 		Element queryNode; 
 		if(qb == null) {
@@ -636,6 +653,11 @@ public class QueryGenerator implements java.io.Serializable{
 			temp.setAttribute("group", "true");
 		} else {
 			temp.setAttribute("group", "false");
+		}
+		if(buildSingleQueryList) {
+			temp.setAttribute("buildList", "true");
+		} else {
+			temp.setAttribute("buildList", "false");
 		}
 		if(sumAll && group) {
 			// do something else
@@ -863,9 +885,10 @@ public class QueryGenerator implements java.io.Serializable{
 		final JTextField a2NameTextF = new JTextField(axis2Name, 30);
 		final JTextField a2TextF = new JTextField(displayAxisLevel(yearLevel), 20);
 		final JTextField dataNameTextF = new JTextField(var, 30);
-		final JTextField xPathTextF = new JTextField(xPath, 50);
+		final JTextComponent xPathTextF = xPath.contains("\n") ? new JTextArea(xPath, 6, 50) : new JTextField(xPath, 50);
 		final JCheckBox sumAllCheckBox = new JCheckBox("Sum All", sumAll);
 		final JCheckBox groupCheckBox = new JCheckBox("Group", group);
+		final JCheckBox buildListCheckBox = new JCheckBox("Build List", buildSingleQueryList);
 		final JTextField labelCol = new JTextField(labelColumnName, 30);
 		final JTextArea commentsTextA = new JTextArea(comments, 4, 30);
 		Component seperator = Box.createRigidArea(new Dimension(20, 10));
@@ -883,6 +906,8 @@ public class QueryGenerator implements java.io.Serializable{
 		tempPanel.add(sumAllCheckBox);
 		tempPanel.add(seperator);
 		tempPanel.add(groupCheckBox);
+		tempPanel.add(seperator);
+		tempPanel.add(buildListCheckBox);
 		tempPanel.add(Box.createHorizontalGlue());
 		all.add(tempPanel);
 
@@ -935,7 +960,11 @@ public class QueryGenerator implements java.io.Serializable{
 		tempPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		tempPanel.add(new JLabel("XPATH: "));
 		tempPanel.add(seperator);
-		tempPanel.add(xPathTextF);
+		if(xPathTextF instanceof JTextArea) {
+			tempPanel.add(new JScrollPane(xPathTextF));
+		} else {
+			tempPanel.add(xPathTextF);
+		}
 		tempPanel.add(Box.createHorizontalGlue());
 		all.add(tempPanel);
 
@@ -944,7 +973,7 @@ public class QueryGenerator implements java.io.Serializable{
 		tempPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		tempPanel.add(new JLabel("Comments: "));
 		tempPanel.add(seperator);
-		tempPanel.add(commentsTextA);
+		tempPanel.add(new JScrollPane(commentsTextA));
 		tempPanel.add(Box.createHorizontalGlue());
 		all.add(tempPanel);
 
@@ -974,9 +1003,15 @@ public class QueryGenerator implements java.io.Serializable{
 				xPath = xPathTextF.getText();
 				sumAll = sumAllCheckBox.isSelected();
 				group = groupCheckBox.isSelected();
+				setBuildList(buildListCheckBox.isSelected());
 				comments = commentsTextA.getText();
 				eqEdit.setNewValues(thisGen);
 				if(eqEdit.hasRealChanges()) {
+					// fake an undo event so that the single query can know if
+					// it has to do something about this.
+					if(hasSingleQueryExtension()) {
+						singleExtension.undoPerformed(new javax.swing.event.UndoableEditEvent(eqEdit, eqEdit));
+					}
 					InterfaceMain.getInstance().getUndoManager().addEdit(eqEdit);
 					InterfaceMain.getInstance().refreshUndoRedo();
 					didChange[0] = true;
@@ -1143,11 +1178,13 @@ public class QueryGenerator implements java.io.Serializable{
 
 	/**
 	 * Get the single query extension.  This is only created
-	 * if it is requested.
-	 * @return The single query extension for this query.
+	 * if it is requested. If build list is set to false
+	 * null will be returned.
+	 * @return The single query extension for this query or null if
+	 * 	build list is false.
 	 */
 	public SingleQueryExtension getSingleQueryExtension() {
-		if(singleExtension == null) {
+		if(singleExtension == null && buildSingleQueryList) {
 			singleExtension = new SingleQueryExtension(this);
 		}
 		return singleExtension;

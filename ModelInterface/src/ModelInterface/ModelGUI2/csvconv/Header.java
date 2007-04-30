@@ -179,4 +179,20 @@ public class Header {
 		}
 		return parent.getName().equals(parentName);
 	}
+
+	public String toString() {
+		String ret;
+		if(isGPPathOnly) {
+			ret = "@";
+		} else {
+			ret = "";
+		}
+		if(grandParent != null) {
+			ret += grandParent+"/.../";
+		}
+		if(parent != null) {
+			ret += parent+"/";
+		}
+		return ret+child;
+	}
 }

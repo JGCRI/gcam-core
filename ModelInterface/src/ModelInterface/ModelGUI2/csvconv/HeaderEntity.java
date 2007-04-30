@@ -197,4 +197,24 @@ public class HeaderEntity {
 		return name.hashCode() ^ attributes.hashCode() ^ Boolean.valueOf(readData).hashCode()
 			^ Boolean.valueOf(readAttr).hashCode() ^ Boolean.valueOf(hasSpecificAttrVal).hashCode();
 	}
+
+	public String toString() {
+		StringBuilder ret = new StringBuilder();
+		if(readData || readAttr) {
+			ret.append("+");
+		}
+		if(!attributes.isEmpty()) {
+			ret.append("{");
+			for(Iterator<Map.Entry<String, String>> it = attributes.entrySet().iterator(); it.hasNext(); ) {
+				Map.Entry<String, String> curr = it.next();
+				ret.append(curr.getKey());
+				if(curr.getValue() != null) {
+					ret.append("=").append(curr.getValue());
+				}
+				ret.append(";");
+			}
+			ret.deleteCharAt(ret.length()-1).append("}");
+		}
+		return ret.append(name).toString();
+	}
 }

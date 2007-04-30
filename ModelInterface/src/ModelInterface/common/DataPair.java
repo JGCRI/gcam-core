@@ -7,7 +7,6 @@ import java.util.Map;
  * just put to related values together so that they
  * can be stuffed into some datastructure.  The need for 
  * something like this happens more often then expected.
- * TODO: Figure out if I should implement equals/hashCode 
  * @author Pralit Patel
  */ 
 public class DataPair<K,V> implements Map.Entry<K,V>, java.io.Serializable {
@@ -75,5 +74,19 @@ public class DataPair<K,V> implements Map.Entry<K,V>, java.io.Serializable {
 		return oldV;
 	}
 
-	// do I need to implement equals/hasCode?
+	public boolean equals(Object o) {
+	       if(o == null || !(o instanceof DataPair)) {
+		       return false;
+	       }
+	       DataPair d = (DataPair)o;
+	       return key.equals(d.key) && value.equals(d.value);
+	}
+
+	public int hashCode() {
+		return (key != null? key.hashCode() : 0) ^ (value != null? value.hashCode() : 0);
+	}
+
+	public String toString() {
+		return "DataPair["+key+"; "+value+"]";
+	}
 }

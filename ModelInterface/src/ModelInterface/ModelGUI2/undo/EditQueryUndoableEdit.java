@@ -23,6 +23,7 @@ public class EditQueryUndoableEdit extends MiAbstractUndoableEdit {
 	private String oldXPath;
 	private boolean oldSumAll;
 	private boolean oldGroup;
+	private boolean oldBuildSingleList;
 	private String oldComments;
 
 	private String newTitle;
@@ -35,12 +36,16 @@ public class EditQueryUndoableEdit extends MiAbstractUndoableEdit {
 	private String newXPath;
 	private boolean newSumAll;
 	private boolean newGroup;
+	private boolean newBuildSingleList;
 	private String newComments;
 
 	public EditQueryUndoableEdit(QueryGenerator qgIn, MiUndoableEditListener listener) {
 		qg = qgIn;
 		hasRealChanges = hasSetOldValues = hasSetNewValues = false;
 		addListener(listener);
+		if(qg.hasSingleQueryExtension() && qg.getSingleQueryExtension() != null) {
+			addListener(qg.getSingleQueryExtension());
+		}
 	}
 
 	public void setOldValues(QueryGenerator qgIn) {
@@ -54,30 +59,45 @@ public class EditQueryUndoableEdit extends MiAbstractUndoableEdit {
 		oldXPath = qgIn.getXPath();
 		oldSumAll = qgIn.isSumAll();
 		oldGroup = qgIn.isGroup();
+		oldBuildSingleList = qgIn.isBuildList();
 		oldComments = qgIn.getRealComments();
 		hasSetOldValues = true;
 	}
 
 	public void setNewValues(QueryGenerator qgIn) {
-		System.out.println("hasRealChanges "+hasRealChanges);
-		hasRealChanges = hasRealChanges || !doDiffCheck(oldTitle, newTitle = qgIn.toString());
-		System.out.println("hasRealChanges "+hasRealChanges);
-		hasRealChanges = hasRealChanges || !doDiffCheck(oldAxis1Name, newAxis1Name = qgIn.getAxis1Name());
-		hasRealChanges = hasRealChanges || !doDiffCheck(oldAxis2Name, newAxis2Name = qgIn.getAxis2Name());
+		boolean temp;
+		temp = !doDiffCheck(oldTitle, newTitle = qgIn.toString());
+		hasRealChanges = hasRealChanges || temp;
+		temp = !doDiffCheck(oldAxis1Name, newAxis1Name = qgIn.getAxis1Name());
+		hasRealChanges = hasRealChanges || temp;
+		temp = !doDiffCheck(oldAxis2Name, newAxis2Name = qgIn.getAxis2Name());
+		hasRealChanges = hasRealChanges || temp;
 
 		// the equals for DataPair isn't implemented so this is probably better..
-		hasRealChanges = hasRealChanges || !doDiffCheck(oldNodeLevel.getKey(), (newNodeLevel = qgIn.getNodeLevelPair()).getKey());
-		hasRealChanges = hasRealChanges || !doDiffCheck(oldNodeLevel.getValue(), newNodeLevel.getValue());
-		hasRealChanges = hasRealChanges || !doDiffCheck(oldYearLevel.getKey(), (newYearLevel = qgIn.getYearLevelPair()).getKey());
-		hasRealChanges = hasRealChanges || !doDiffCheck(oldYearLevel.getValue(), newYearLevel.getValue());
+		temp = !doDiffCheck(oldNodeLevel.getKey(), (newNodeLevel = qgIn.getNodeLevelPair()).getKey());
+		hasRealChanges = hasRealChanges || temp;
+		temp = !doDiffCheck(oldNodeLevel.getValue(), newNodeLevel.getValue());
+		hasRealChanges = hasRealChanges || temp;
+		temp = !doDiffCheck(oldYearLevel.getKey(), (newYearLevel = qgIn.getYearLevelPair()).getKey());
+		hasRealChanges = hasRealChanges || temp;
+		temp = !doDiffCheck(oldYearLevel.getValue(), newYearLevel.getValue());
+		hasRealChanges = hasRealChanges || temp;
 
-		hasRealChanges = hasRealChanges || !doDiffCheck(oldVar, newVar = qgIn.getVariable());
-		hasRealChanges = hasRealChanges || !doDiffCheck(oldLabelColumnName,
+		temp = !doDiffCheck(oldVar, newVar = qgIn.getVariable());
+		hasRealChanges = hasRealChanges || temp;
+		temp = !doDiffCheck(oldLabelColumnName,
 			newLabelColumnName = qgIn.getChartLabelColumnName());
-		hasRealChanges = hasRealChanges || !doDiffCheck(oldXPath, newXPath = qgIn.getXPath());
-		hasRealChanges = hasRealChanges || oldSumAll != (newSumAll = qgIn.isSumAll());
-		hasRealChanges = hasRealChanges || oldGroup != (newGroup = qgIn.isGroup());
-		hasRealChanges = hasRealChanges || !doDiffCheck(oldComments, newComments = qgIn.getRealComments());
+		hasRealChanges = hasRealChanges || temp;
+		temp = !doDiffCheck(oldXPath, newXPath = qgIn.getXPath());
+		hasRealChanges = hasRealChanges || temp;
+		temp = oldSumAll != (newSumAll = qgIn.isSumAll());
+		hasRealChanges = hasRealChanges || temp;
+		temp = oldGroup != (newGroup = qgIn.isGroup());
+		hasRealChanges = hasRealChanges || temp;
+		temp = oldBuildSingleList != (newBuildSingleList = qgIn.isBuildList());
+		hasRealChanges = hasRealChanges || temp;
+		temp = !doDiffCheck(oldComments, newComments = qgIn.getRealComments());
+		hasRealChanges = hasRealChanges || temp;
 		hasSetNewValues = true;
 	}
 
@@ -101,6 +121,23 @@ public class EditQueryUndoableEdit extends MiAbstractUndoableEdit {
 			return false;
 		}
 		return hasRealChanges;
+	}
+
+	/**
+	 * Return true if the xpath changed, false otherwise.
+	 * @return True if the xpath chagned, else false.
+	 */
+	public boolean didXPathChange() {
+		return !doDiffCheck(oldXPath, newXPath);
+	}
+
+	/**
+	 * Return true if the node level chagned, false otherwise.
+	 * @return True if the node level chagned, else false.
+	 */
+	public boolean didNodeLevelChange() {
+		return !doDiffCheck(oldNodeLevel.getKey(), newNodeLevel.getKey()) || 
+				!doDiffCheck(oldNodeLevel.getValue(), newNodeLevel.getValue());
 	}
 
 	public boolean canUndo() {
@@ -127,6 +164,7 @@ public class EditQueryUndoableEdit extends MiAbstractUndoableEdit {
 			qg.setXPath(oldXPath);
 			qg.setSumAll(oldSumAll);
 			qg.setGroup(oldGroup);
+			qg.setBuildList(oldBuildSingleList);
 			qg.setComments(oldComments);
 			fireUndoPerformed(this, this);
 		} else {
@@ -146,6 +184,7 @@ public class EditQueryUndoableEdit extends MiAbstractUndoableEdit {
 			qg.setXPath(newXPath);
 			qg.setSumAll(newSumAll);
 			qg.setGroup(newGroup);
+			qg.setBuildList(newBuildSingleList);
 			qg.setComments(newComments);
 			fireRedoPerformed(this, this);
 		} else {

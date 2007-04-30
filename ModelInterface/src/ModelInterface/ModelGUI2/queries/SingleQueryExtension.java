@@ -10,16 +10,22 @@ import javax.swing.JList;
 
 import javax.swing.tree.TreePath;
 
+import javax.swing.event.UndoableEditEvent;
+
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 
+import ModelInterface.common.DataPair;
 import ModelInterface.ModelGUI2.xmldb.QueryBinding;
 import ModelInterface.ModelGUI2.xmldb.SingleQueryQueryBinding;
 import ModelInterface.ModelGUI2.xmldb.SingleQueryListQueryBinding;
 import ModelInterface.ModelGUI2.QueryTreeModel;
 import ModelInterface.ModelGUI2.DbViewer;
+import ModelInterface.ModelGUI2.undo.MiUndoableEditListener;
+import ModelInterface.ModelGUI2.undo.EditQueryUndoableEdit;
 
 import com.sleepycat.dbxml.XmlResults;
 import com.sleepycat.dbxml.XmlValue;
@@ -31,7 +37,7 @@ import com.sleepycat.dbxml.XmlException;
  * looking to compare a single value through scenarios or regions.
  * @author Pralit Patel
  */
-public class SingleQueryExtension implements TreeSelectionListener, ListSelectionListener {
+public class SingleQueryExtension implements TreeSelectionListener, ListSelectionListener, MiUndoableEditListener {
 	/**
 	 * A List of the current node level values which could be 
 	 * used to create a Single Query.
@@ -39,16 +45,16 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 	private List<SingleQueryValue> currValues;
 
 	/**
-	 * The current scenario in which to look.
+	 * The current scenario/regions in which to look.
 	 */
-	private DbViewer.ScenarioListItem currScenario;
+	private DataPair<List<DbViewer.ScenarioListItem>, List<String>> currSelection;
 
 	/**
-	 * A Map of scenario names to node level values which 
+	 * A Map of scenario/region names to node level values which 
 	 * acts a a cache to avoid doing queries when we already
 	 * have the values.
 	 */
-	private Map<String, List<SingleQueryValue>> singleLevelCache;
+	private Map<DataPair<List<DbViewer.ScenarioListItem>, List<String>>, List<SingleQueryValue>> singleLevelCache;
 
 	/**
 	 * The parent query which this class extends to 
@@ -91,6 +97,31 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 	 */
 	private final List<SingleQueryValue> noResultsList = 
 		new ArrayList<SingleQueryValue>(1);
+
+	/**
+	 * If this Single Query Extension should show a list
+	 * or not.
+	 */
+	private boolean isEnabled;
+
+	/**
+	 * Could be run at anytime to disable this single
+	 * query extension.
+	 */
+	private Runnable doDisable = null;
+
+	/**
+	 * Could be run at anytime to enable this single
+	 * query extension.
+	 */
+	private Runnable doEnable = null;
+	
+	/**
+	 * The thread that is set when gathering the single
+	 * query list.  This thread will be interrupted before
+	 * a new one is allowed to be set.
+	 */
+	private Thread gatherThread = null;
 
 	/**
 	 * A simple class which holds a single query value which
@@ -146,20 +177,35 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 	}
 
 	public SingleQueryExtension(QueryGenerator qg) {
-		System.out.println("Creating Single Query for "+qg);
 		this.qg = qg;
 		isSelected = false;
-		singleLevelCache = new HashMap<String, List<SingleQueryValue>>();
+		singleLevelCache = 
+			new HashMap<DataPair<List<DbViewer.ScenarioListItem>, List<String>>, List<SingleQueryValue>>();
 		generatingList.add(generatingLabel);
 		noResultsList.add(noResults);
+		currSelection = null;
+		isEnabled = true;
 	}
 
 	/**
-	 * We have to be able to set the currScenario initially.
-	 * @param currScenario The scenario to set.
+	 * We have to be able to set the currSelection initially.
+	 * @param currScenario The scenarios to set.
+	 * @param currRegion The regions to set.
 	 */
-	public void setScenario(DbViewer.ScenarioListItem currScenario) {
-		this.currScenario = currScenario;
+	public void setSelection(DbViewer.ScenarioListItem[] currScenario, String[] currRegion) {
+		if(currSelection == null) {
+			currSelection = new DataPair<List<DbViewer.ScenarioListItem>, List<String>>();
+		}
+		if(currScenario.length != 0) {
+			currSelection.setKey(Arrays.asList(currScenario));
+		} else {
+			currSelection.setKey(null);
+		}
+		if(currRegion.length != 0) {
+			currSelection.setValue(Arrays.asList(currRegion));
+		} else {
+			currSelection.setValue(null);
+		}
 	}
 
 	/**
@@ -177,43 +223,115 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 		}
 		for(TreePath path : selectedPaths) {
 			Object[] pathValues = path.getPath();
-			if(pathValues[pathValues.length-1] == qg 
-					|| pathValues[pathValues.length-2] == qg) {
+			// check the selected value or its parent to see if it is
+			// this extension's query generator
+			if(pathValues.length > 1 && (pathValues[pathValues.length-1] == qg 
+					|| pathValues[pathValues.length-2] == qg)) {
 				return path;
 			}
 		}
 		return null;
 	}
 
+	/**
+	 * Listen for selection changes in a list.  The lists that we 
+	 * care about are the scenario list and region list.  When 
+	 * they change we need to update the currSelection and force
+	 * a refresh of the list.
+	 * @param e The event that represents the list selection change.
+	 */
 	public void valueChanged(ListSelectionEvent e) {
-		Object ret = ((JList)e.getSource()).getSelectedValue();
-		if(ret != null) {
-			// just get the first scenario
-			ret = ((JList)e.getSource()).getModel().getElementAt(0);
+		if(!isEnabled) {
+			return;
 		}
-		currScenario = (DbViewer.ScenarioListItem)ret;
+		Object[] ret = ((JList)e.getSource()).getSelectedValues();
+		if(ret == null) {
+			return;
+		}
+
+		// figure out which list the event came from, we only care about the
+		// scneario and region lists.
+		if(((JList)e.getSource()).getName().equals(DbViewer.SCENARIO_LIST_NAME)) {
+			DbViewer.ScenarioListItem[] selScn = new DbViewer.ScenarioListItem[ret.length];
+			System.arraycopy(ret, 0, selScn, 0, ret.length);
+			if(selScn.length != 0) {
+				List<DbViewer.ScenarioListItem> oldList = currSelection.setKey(Arrays.asList(selScn));
+			} else {
+				currSelection.setKey(null);
+			}
+		} else if(((JList)e.getSource()).getName().equals(DbViewer.REGION_LIST_NAME)) {
+			String[] selRegions = new String[ret.length];
+			System.arraycopy(ret, 0, selRegions, 0, ret.length);
+			if(selRegions.length != 0) {
+				List<String> oldList = currSelection.setValue(Arrays.asList(selRegions));
+			} else {
+				currSelection.setValue(null);
+			}
+		}
+
+		// only want to force the update if it is already showing
+		// otherwise changing scenarios or regions could be horribly
+		// slow.
+		if(isSelected && isEnabled) {
+			doDisable.run();
+			doEnable.run();
+		}
 	}
 
+	/**
+	 * Listen for tree selection changes.  We only care about the
+	 * changes for the query tree.  If this extension's query
+	 * generator was selected and this extension was not showing
+	 * we need to show the list.  If this extension was showing and
+	 * the selection no longer contains the parent query generator or
+	 * a single item from this list we need to hide our list.
+	 * @param e The event that represents the tree selection.
+	 */
 	public void valueChanged(TreeSelectionEvent e) {
+		if(!isEnabled) {
+			return;
+		}
 		if(!(e.getSource() instanceof JTree)) {
 			// don't care about this event..
 			return;
 		}
-		QueryTreeModel qt = (QueryTreeModel)((JTree)e.getSource()).getModel();
+		final JTree tree = (JTree)e.getSource();
+		final QueryTreeModel qt = (QueryTreeModel)tree.getModel();
 		boolean wasSelected = isSelected;
 		TreePath parentPath = shouldSelect(e);
 		if(parentPath != null && parentPath.getLastPathComponent() instanceof SingleQueryValue) {
 			parentPath = parentPath.getParentPath();
 		}
 		isSelected = parentPath != null;
+		// wasn't selected before but is now so we need to show
 		if(!wasSelected && isSelected) {
-			showList(qt, parentPath, (JTree)e.getSource());
+			// the doDisable/Enable need to be initialized
+			// the first time we show.
+			if(doDisable == null) {
+				final TreePath parentPathF = parentPath;
+				doDisable = new Runnable() {
+					public void run() {
+						isSelected = false;
+						hideList(qt, parentPathF);
+						resetList();
+					}
+				};
+				doEnable = new Runnable() {
+					public void run() {
+						isSelected = true;
+						showList(qt, parentPathF, tree);
+					}
+				};
+			}
+
+			showList(qt, parentPath, tree);
 		} else if(wasSelected && !isSelected) {
+			// was selected before but not anymore so hide
 			for(TreePath path : e.getPaths()) {
 				Object[] pathValues = path.getPath();
 				// should is check isAddedPath ?
-				if(pathValues[pathValues.length-1] == qg 
-						|| pathValues[pathValues.length-2] == qg) {
+				if(pathValues.length > 1 && (pathValues[pathValues.length-1] == qg 
+						|| pathValues[pathValues.length-2] == qg)) {
 					parentPath = path;
 					break;
 				}
@@ -231,23 +349,72 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 	}
 
 	/**
+	 * Listen for an undo event and if it is for and edit
+	 * query undo and that query changes it's xpath or
+	 * nodel level we need to reset the cache.
+	 * @param e The event that represents the undo.
+	 */
+	public void undoPerformed(UndoableEditEvent e) {
+		if(!(e.getSource() instanceof EditQueryUndoableEdit)) {
+			// not intrested..
+			return;
+		}
+		EditQueryUndoableEdit ed = (EditQueryUndoableEdit)e.getSource();
+		if(ed.didXPathChange() || ed.didNodeLevelChange()) {
+			resetCache();
+		}
+	}
+
+	/**
+	 * Listen for an redo event and if it is for and edit
+	 * query and that query changes it's xpath or
+	 * nodel level we need to reset the cache.
+	 * @param e The event that represents the redo.
+	 */
+	public void redoPerformed(UndoableEditEvent e) {
+		if(!(e.getSource() instanceof EditQueryUndoableEdit)) {
+			// not intrested..
+			return;
+		}
+		EditQueryUndoableEdit ed = (EditQueryUndoableEdit)e.getSource();
+		if(ed.didXPathChange() || ed.didNodeLevelChange()) {
+			resetCache();
+		}
+	}
+
+	/**
 	 * Sets the currValues to the correct list of values and
 	 * tells the query tree to update accordingly.
 	 * @param qt The query tree model which will show the currValues
 	 * @param parentPath The path to where we will show the currValues
 	 */
 	private void showList(final QueryTreeModel qt, final TreePath parentPath, final JTree tree) {
-		if(currScenario == null) {
+		// let the gather thread know it needs to stop if it still active
+		setGatherThread(null);
+
+		// if we don't have a selection of scenario or region we can't
+		// have a list
+		if(currSelection == null || currSelection.getKey() == null ||
+				currSelection.getValue() == null) {
 			currValues = noResultsList;
-		} else if(singleLevelCache.containsKey(currScenario.toString())) {
-			currValues = singleLevelCache.get(currScenario.toString());
+		} else if(singleLevelCache.containsKey(currSelection)) {
+			// we already have the list in the cache so use it
+			currValues = singleLevelCache.get(currSelection);
 		} else {
+			// we need to query to get the list, in the mean time
+			// we will set the list to a generating message which
+			// will be updated with a real list when we finish 
+			// querying
 			currValues = generatingList;
 			final SingleQueryExtension thisClass = this;
-			new Thread(new Runnable() {
+
+			// make sure we only have one thread gathering at a time
+			// so we don't kill the system when a user is just trying
+			// to set their scenarios and regions
+			setGatherThread(new Thread(new Runnable() {
 				public void run() {
-					Object[] scenarios = { currScenario };
-					Object[] regions = { "Global" };
+					Object[] scenarios = currSelection.getKey().toArray();
+					Object[] regions = currSelection.getValue().toArray();
 					List<SingleQueryValue> tempValues;
 					try {
 						XmlResults res = DbViewer.xmlDB.createQuery(new SingleQueryListQueryBinding(qg, 
@@ -275,9 +442,10 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 						e.printStackTrace();
 						tempValues = noResultsList;
 					}
-					singleLevelCache.put(currScenario.toString(), tempValues);
+					singleLevelCache.put(currSelection, tempValues);
+
 					// make sure we are still selected
-					if(isSelected) {
+					if(isSelected && !Thread.currentThread().isInterrupted()) {
 						// get rid of generating then add real values
 						hideList(qt, parentPath);
 						currValues = tempValues;
@@ -286,11 +454,17 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 										(int)(getNumValues()/2))));
 					}
 				}
-			}).start();
+			}));
+			gatherThread.start();
 		}
-		qt.showSingleQuery(this, parentPath);
-		tree.makeVisible(parentPath.pathByAddingChild(getSingleQueryValueAt(
-						(int)(getNumValues()/2))));
+
+		// make sure that the gather thread did not beat us to the punch
+		// and already update the list with real values
+		if(gatherThread == null || gatherThread.isAlive()) {
+			qt.showSingleQuery(this, parentPath);
+			tree.makeVisible(parentPath.pathByAddingChild(getSingleQueryValueAt(
+							(int)(getNumValues()/2))));
+		}
 	}
 
 	/**
@@ -302,6 +476,32 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 	private void hideList(QueryTreeModel qt, TreePath parentPath) {
 		qt.hideSingleQuery(this, parentPath);
 	}
+
+	/**
+	 * Sets the gatherThread to the new thread.  If gatherThread
+	 * was not null and still alive it must be interrupted first
+	 * before proceeding.
+	 * @param newThread The new thread to set.
+	 */
+       private void setGatherThread(Thread newThread) {
+	       if(gatherThread != null && gatherThread.isAlive()) {
+		       gatherThread.interrupt();
+		       // should I join?
+	       }
+	       gatherThread = newThread;
+       }
+
+       /**
+	* Reset the cache and force a refresh if we
+	* are still visable.
+	*/
+       private void resetCache() {
+	       singleLevelCache.clear();
+	       if(isSelected && isEnabled) {
+		       doDisable.run();
+		       doEnable.run();
+	       }
+       }
 
 	/**
 	 * So that we can know when to reset currValues.
@@ -341,5 +541,23 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 	 */
        public int getIndexOfValue(SingleQueryValue value) {
 	       return currValues.indexOf(value);
+       }
+
+       /**
+	* Set if this Single Query Extension should
+	* be enabled or not.
+	* @param enable If this extension will be enabled.
+	*/
+       public void setEnabled(boolean enable) {
+	       if(isEnabled && !enable && doDisable != null) {
+		       isEnabled = false;
+		       // don't bother with the thread?
+		       doDisable.run();
+	       } else if(!isEnabled && enable && doEnable != null) {
+		       isEnabled = true;
+		       doEnable.run();
+	       }
+	       // else nothing has really changed.
+	       isEnabled = enable;
        }
 }

@@ -51,6 +51,11 @@ public class RecentFilesList implements MenuAdder {
 	private int recentFilesLength;
 
 	/**
+	 * The max length a file name in the list can be.
+	 */
+	private static final int MAX_TITLE_LENGTH = 40;
+
+	/**
 	 * Private constructor.
 	 */
 	private RecentFilesList() {
@@ -204,7 +209,7 @@ public class RecentFilesList implements MenuAdder {
 		 * @param actionCommand The command to give the ActionEvent.
 		 */
 		public RecentFile(File[] files, String targetName, String actionCommand) {
-			super(actionCommand+": "+files[0].getName());
+			super(createTitle(actionCommand, files[0].getAbsolutePath()));
 			this.files = files;
 			this.targetName = targetName;
 			this.actionCommand = actionCommand;
@@ -315,6 +320,25 @@ public class RecentFilesList implements MenuAdder {
 
 		public int hashCode() {
 			return files.hashCode() ^ targetName.hashCode() ^ actionCommand.hashCode();
+		}
+	}
+
+	/**
+	 * Create a title that is no longer that MAX_TITLE_LENGTH.  The rest will
+	 * be abbreviated with a .. also the full file path may be viewed through
+	 * the tool tip.
+	 * @param actionCommand The action command used to open the file.
+	 * @param fileName The file name to abbreviate.
+	 * @return The title that is no longer than MAX_TITLE_LENGTH
+	 */
+	private static String createTitle(String actionCommand, String fileName) {
+		// subtract off the actionCommand length and 4 for ": .."
+		int maxFileLen = MAX_TITLE_LENGTH - actionCommand.length() - 4;
+		if(fileName.length() <= maxFileLen) {
+			return actionCommand+": "+fileName;
+		} else {
+			return actionCommand+": .."+fileName.substring(
+					fileName.length() - maxFileLen -1, fileName.length());
 		}
 	}
 }

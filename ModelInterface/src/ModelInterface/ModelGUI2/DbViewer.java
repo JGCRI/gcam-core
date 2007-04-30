@@ -112,6 +112,9 @@ public class DbViewer implements ActionListener, MenuAdder {
 	private JSplitPane queriesSplit;
 	private JSplitPane tableCreatorSplit;
 
+	public static final String SCENARIO_LIST_NAME = "scenario list";
+	public static final String REGION_LIST_NAME = "region list";
+
 	public DbViewer(JFrame pf) {
 		parentFrame = pf;
 		final DbViewer thisViewer = this;
@@ -464,7 +467,9 @@ public class DbViewer implements ActionListener, MenuAdder {
 		regions = getRegions();
 		queries = getQueries();
 		scnList = new JList(scns);
+		scnList.setName(SCENARIO_LIST_NAME);
 		regionList = new JList(regions);
+		regionList.setName(REGION_LIST_NAME);
 		if(scns.size() != 0) {
 			scnList.setSelectedIndex(scns.size()-1);
 		}
@@ -584,13 +589,25 @@ public class DbViewer implements ActionListener, MenuAdder {
 								// only add the listeners the first time.
 								SingleQueryExtension se = ((QueryGenerator)selectedObj)
 									.getSingleQueryExtension();
-								queryList.addTreeSelectionListener(se);
-								scnList.addListSelectionListener(se);
-								// make sure it doesn't miss this event
-								if(scns.size() != 0 && scnList.getSelectedIndex() != -1) {
-									se.setScenario((ScenarioListItem)scns.get(scnList.getSelectedIndex()));
+								// could be null if it is not to
+								// build list
+								if(se != null) {
+									queryList.addTreeSelectionListener(se);
+									scnList.addListSelectionListener(se);
+									regionList.addListSelectionListener(se);
+
+									// make sure it doesn't miss this event
+									Object[] selObjScen = scnList.getSelectedValues();
+									ScenarioListItem[] selScenarios = 
+										new ScenarioListItem[selObjScen.length];
+									System.arraycopy(selObjScen, 0, selScenarios, 0, selObjScen.length);
+
+									Object[] selObjRegion = regionList.getSelectedValues();
+									String[] selRegions = new String[selObjRegion.length];
+									System.arraycopy(selObjRegion, 0, selRegions, 0, selObjRegion.length);
+									se.setSelection(selScenarios, selRegions);
+									se.valueChanged(e);
 								}
-								se.valueChanged(e);
 							}
 						} else if(selectedObj instanceof SingleQueryExtension.SingleQueryValue) {
 							canEdit = false;
@@ -1299,7 +1316,10 @@ public class DbViewer implements ActionListener, MenuAdder {
 			}
 		}
 		public void mouseDragged(MouseEvent e) {
-			if(firstMouseEvent != null) {
+			// make sure that there was a press first and that that tab has not
+			// since been closed
+			if(firstMouseEvent != null && tablesTabs.getTabCount() > 0 &&
+					tablesTabs.getBoundsAt(tablesTabs.getSelectedIndex()).contains(e.getPoint())) {
 				e.consume();
 
 				//TODO: maybe cut would be possible, for now just copy

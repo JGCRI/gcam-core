@@ -804,6 +804,12 @@ public class ComboTableModel extends BaseTableModel{
 		  while(res.hasNext()) {
 			  tempNode = res.next();
 			  regionAndYear = qg.extractAxisInfo(tempNode.getParentNode(), tableFilterMaps);
+			  if(regionAndYear.length < 2) {
+				  JOptionPane.showMessageDialog(parentFrame, 
+						  "Could not determine how to categorize data.\nPlease check your axis node values.", 
+						  "Build Table Error",
+						  JOptionPane.ERROR_MESSAGE);
+			  }
 			  units = XMLDB.getAttr(tempNode.getParentNode(), "unit");
 			  if(units == null) {
 				  units = "None Specified";
