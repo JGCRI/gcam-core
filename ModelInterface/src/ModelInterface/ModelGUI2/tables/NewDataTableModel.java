@@ -620,8 +620,10 @@ public class NewDataTableModel extends BaseTableModel{
 	  }
 	  try {
 		  java.awt.image.BufferedImage chartImage = createChart(0,0).createBufferedImage(350,350);
-		  int where = wb.addPicture(org.jfree.chart.ChartUtilities.encodeAsPNG(chartImage), HSSFWorkbook.PICTURE_TYPE_PNG);
-		  System.out.println("Added to "+where);
+		  // WARNING: This is a hack because of java some how looking to load some class that did
+		  // not exist.  Instead of using the utilities which uses the Factory which uses the 
+		  // reflextion which causes that mess I will use this encoder directly.
+		  int where = wb.addPicture(new org.jfree.chart.encoders.SunJPEGEncoderAdapter().encode(chartImage), HSSFWorkbook.PICTURE_TYPE_JPEG);
 		  dp.createPicture(new HSSFClientAnchor(0,0,50,50,(short)(getColumnCount()+1),
 					  sheet.getLastRowNum()-getRowCount(),(short)(getColumnCount()+5),sheet.getLastRowNum()+1), where);
 	  } catch(java.io.IOException ioe) {

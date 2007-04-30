@@ -42,7 +42,6 @@ import com.sleepycat.dbxml.XmlValue;
 import com.sleepycat.dbxml.XmlResults;
 import com.sleepycat.dbxml.XmlException;
 
-
 public class ComboTableModel extends BaseTableModel{
 
 	/**
@@ -872,7 +871,11 @@ public class ComboTableModel extends BaseTableModel{
 	  }
 	  try {
 		  java.awt.image.BufferedImage chartImage = createChart(0,0).createBufferedImage(350,350);
-		  int where = wb.addPicture(org.jfree.chart.ChartUtilities.encodeAsPNG(chartImage), HSSFWorkbook.PICTURE_TYPE_PNG);
+		  // WARNING: This is a hack because of java some how looking to load some class that did
+		  // not exist.  Instead of using the utilities which uses the Factory which uses the 
+		  // reflextion which causes that mess I will use this encoder directly.
+		  int where = wb.addPicture(new org.jfree.chart.encoders.SunJPEGEncoderAdapter().encode(chartImage)
+				  , HSSFWorkbook.PICTURE_TYPE_JPEG);
 		  dp.createPicture(new HSSFClientAnchor(0,0,50,50,(short)(getColumnCount()+1),
 					  1,(short)(getColumnCount()+4),getRowCount()+5), where);
 	  } catch(java.io.IOException ioe) {
