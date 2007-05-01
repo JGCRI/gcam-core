@@ -809,6 +809,10 @@
 					RelativePath="..\..\technologies\source\vintage_production_state.cpp"
 					>
 				</File>
+				<File
+					RelativePath="..\..\technologies\source\wind_technology.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="util"
@@ -2244,6 +2248,10 @@
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\vintage_production_state.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\wind_technology.h"
 					>
 				</File>
 			</Filter>
