@@ -1,7 +1,7 @@
 /*!
  * csp_technology.cpp
  * Created: 03/06/2007
- * Version: 03/22/2007
+ * Version: 04/24/2007
  *
  * This software, which is provided in confidence, was prepared by employees
  * of Pacific Northwest National Laboratory operated by Battelle Memorial
@@ -21,6 +21,7 @@
 #include "technologies/include/iproduction_state.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/iinfo.h"
+#include "sectors/include/sector_utils.h"
 #include "util/base/include/TValidatorInfo.h"
 #include "util/base/include/util.h"
 #include "util/base/include/xml_helper.h"
@@ -32,6 +33,7 @@
 // constants ***************************************************************
 
 const double CSPTechnology::kWhrtoGJ = 0.0036;
+const std::string CSPTechnology::ELECTRIC_SECTOR_NAME_KEY = "electricSectorName";
 const std::string CSPTechnology::NO_SUN_DAYS_KEY = "no-sun-days";
 const std::string CSPTechnology::TOTAL_ANNUAL_IRRADIANCE_KEY = "total-annual-irradiance";
 const double DEFAULT_TOTAL_ANNUAL_IRRADIANCE = 1000.0;
@@ -48,9 +50,12 @@ CSPTechnology::CSPTechnology(
    : parent( aName, aYear ),
      mCapitalCost( 3486 ),
      mCSPCapacityFactor( 1 ),
+     mElectricSectorName(),
      mFCR( 0.0856 ),
      mGridConnectionCost( 1500 ),
      mOM( 47.87 ),
+     mRegionName(),
+     mSectorName(),
      mSolarFieldFraction( 0.3 ),
      mSolarFieldArea( 6.9 )
 {
@@ -63,9 +68,12 @@ CSPTechnology::CSPTechnology( const CSPTechnology& other )
    : parent( other ),
      mCapitalCost( other.mCapitalCost ),
      mCSPCapacityFactor( other.mCSPCapacityFactor ),
+     mElectricSectorName( other.mElectricSectorName ),
      mFCR( other.mFCR ),
      mGridConnectionCost( other.mGridConnectionCost ),
      mOM( other.mOM ),
+     mRegionName( other.mRegionName ),
+     mSectorName( other.mSectorName ),
      mSolarFieldFraction( other.mSolarFieldFraction ),
      mSolarFieldArea( other.mSolarFieldArea )
 {
@@ -90,9 +98,12 @@ CSPTechnology& CSPTechnology::operator = ( const CSPTechnology& other )
       parent::operator = ( other );
       mCapitalCost        = other.mCapitalCost;
       mCSPCapacityFactor  = other.mCSPCapacityFactor;
+      mElectricSectorName = other.mElectricSectorName;
       mFCR                = other.mFCR;
       mGridConnectionCost = other.mGridConnectionCost;
       mOM                 = other.mOM;
+      mRegionName         = other.mRegionName;
+      mSectorName         = other.mSectorName;
       mSolarFieldFraction = other.mSolarFieldFraction;
       mSolarFieldArea     = other.mSolarFieldArea;
    }
@@ -177,7 +188,7 @@ double CSPTechnology::calcResourceArea(
 
    double totalAnnualIrradiance = pInfo->hasValue( TOTAL_ANNUAL_IRRADIANCE_KEY ) ? pInfo->getDouble( TOTAL_ANNUAL_IRRADIANCE_KEY, true ) : DEFAULT_TOTAL_ANNUAL_IRRADIANCE;
    double CSPGeneration         = aVariableDemand;
-   double CSPEfficiency         =  getEfficiency( aPeriod );
+   double CSPEfficiency         = getEfficiency( aPeriod );
    // Equation 4.
    double resourceArea          = CSPGeneration / ( totalAnnualIrradiance * mSolarFieldFraction * CSPEfficiency * conversionFact );
 
@@ -255,7 +266,31 @@ void CSPTechnology::completeInit(
 // Documentation is inherited
 double CSPTechnology::getEfficiency( const int aPeriod ) const
 {
-   return parent::getEfficiency( aPeriod );
+   const double maxLoss        = 0.55;  // 55%
+   const double b              = 3.0;
+   const double IPFraction     = 0.25;  // 25%
+   const double elecCapacity   = 1;
+   const double sectorCapacity = 1;
+
+   // Compute the CSP penetration level
+   double CSPPenetration = 0;
+   if ( aPeriod > 0 )
+   {
+      double elecSupply   = SectorUtils::getTrialSupply( mRegionName, mElectricSectorName, aPeriod );
+      if ( elecSupply > 0 )
+      {
+         double sectorSupply = SectorUtils::getTrialSupply( mRegionName, mSectorName, aPeriod );
+         CSPPenetration = ( sectorSupply / ( elecSupply * IPFraction ) ) * ( elecCapacity / sectorCapacity );
+      }
+   }
+
+   // Compute the CSP loss
+   double CSPLoss = std::min( maxLoss * std::pow( CSPPenetration, b ), 0.99 );
+
+   // Compute the efficiency
+   double result = parent::getEfficiency( aPeriod ) * ( 1.0 - CSPLoss );
+
+   return result;
 }
 
 // CSPTechnology::getFuelCost **********************************************
@@ -304,6 +339,22 @@ void CSPTechnology::initCalc(
    const int          aPeriod )
 {
    parent::initCalc( aRegionName, aSectorName, aSubsectorIInfo, aDemographics, aPeriod );
+
+   // Cache the region name
+   mRegionName = aRegionName;
+
+   // Cache the sector name
+   mSectorName = aSectorName;
+
+   // Cache the electric sector name
+   if ( aSubsectorIInfo->hasValue( ELECTRIC_SECTOR_NAME_KEY ) )
+   {
+      mElectricSectorName = aSubsectorIInfo->getString( ELECTRIC_SECTOR_NAME_KEY, true );
+   }
+   else
+   {
+      mElectricSectorName = "electricity";
+   }
 
    // Get marketplace and make sure we have the total annual irradiance
    Marketplace*       pMarketplace = scenario->getMarketplace();
@@ -461,5 +512,8 @@ bool CSPTechnology::XMLDerivedClassParse(
 }
 
 // end of csp_technology.cpp ***********************************************
+
+
+
 
 

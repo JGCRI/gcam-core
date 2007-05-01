@@ -1,7 +1,7 @@
 /*!
  * csp_technology.h
  * Created: 02/27/2007
- * Version: 03/16/2007
+ * Version: 04/23/2007
  *
  * This software, which is provided in confidence, was prepared by employees
  * of Pacific Northwest National Laboratory operated by Battelle Memorial
@@ -174,6 +174,7 @@ protected :
 private :
 
    static const double      kWhrtoGJ;
+   static const std::string ELECTRIC_SECTOR_NAME_KEY;
    static const std::string NO_SUN_DAYS_KEY;
    static const std::string TOTAL_ANNUAL_IRRADIANCE_KEY;
 
@@ -189,6 +190,9 @@ private :
    //! The average capacity factor for the CSP plant. [unitless] (used internally)
    double mCSPCapacityFactor;
 
+   //! The current electrical sector name (cached)
+   std::string mElectricSectorName;
+
    //! [unitless]
    double mFCR;
 
@@ -197,6 +201,12 @@ private :
 
    //! [$]
    double mOM;
+
+   //! The current region name (cached)
+   std::string mRegionName;
+
+   //! The current sector name (cached)
+   std::string mSectorName;
 
    /*! The fraction of the resource area that is actually occupied
     *  by the solar field. [unitless]
@@ -209,4 +219,7 @@ private :
 #endif   // __CSP_TECHNOLOGY_H
 
 // end of csp_technology.h *************************************************
+
+
+
 
