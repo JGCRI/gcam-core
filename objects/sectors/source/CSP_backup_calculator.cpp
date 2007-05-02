@@ -75,19 +75,45 @@ const string& CSPBackupCalculator::getXMLNameStatic() {
 
 // Documentation is inherited.
 bool CSPBackupCalculator::XMLParse( const xercesc::DOMNode* node ){
-    // This backup calculator does not need to parse any data.
+    /*! \pre make sure we were passed a valid node. */
+    assert( node );
+
+    // get all child nodes.
+    DOMNodeList* nodeList = node->getChildNodes();
+    const Modeltime* modeltime = scenario->getModeltime();
+
+    // loop through the child nodes.
+    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
+        DOMNode* curr = nodeList->item( i );
+        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+
+        if( nodeName == "#text" ) {
+            continue;
+        }
+        else if( nodeName == "max-backup-fraction" ){
+            mMaxBackupFraction = XMLHelper<double>::getValue( curr );
+        }
+        else {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLNameStatic() << "." << endl;
+            return false;
+        }
+    }
     return true;
 }
 
 // Documentation is inherited.
 void CSPBackupCalculator::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
+    XMLWriteElement( mMaxBackupFraction, "max-backup-fraction", aOut, aTabs );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
 // Documentation is inherited.
 void CSPBackupCalculator::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
+    XMLWriteElement( mMaxBackupFraction, "max-backup-fraction", aOut, aTabs ); // should I write with a default?
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 

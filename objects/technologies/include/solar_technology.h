@@ -1,5 +1,5 @@
 /*!
- * csp_technology.h
+ * solar_technology.h
  * Created: 02/27/2007
  * Version: 04/23/2007
  *
@@ -13,8 +13,8 @@
  * for the use of this software.
  */
 
-#if !defined( __CSP_TECHNOLOGY_H )
-#define __CSP_TECHNOLOGY_H     // prevent multiple includes
+#if !defined( __SOLAR_TECHNOLOGY_H )
+#define __SOLAR_TECHNOLOGY_H     // prevent multiple includes
 
 // include files ***********************************************************
 
@@ -22,7 +22,7 @@
 
 // namespaces **************************************************************
 
-// class: CSPTechnology ****************************************************
+// class: SolarTechnology ****************************************************
 
 /*!
  * \ingroup objects::biomass
@@ -30,25 +30,25 @@
  * \details This class contains a set of routines that implement
  *          technology for Concentrated Solar Power (CSP)
  *
- *   <b>XML specification for CSPTechnology</b>
- *   - XML name: \c csp-technology
+ *   <b>XML specification for SolarTechnology</b>
+ *   - XML name: \c solar-technology
  *   - Contained by: Technology
  *   - Parsing inherited from class: None.
  *   - Attributes: none
  *   - Elements:
- *   - \c capital-cost CSPTechnology::mCapitalCost
- *   - \c csp-capacity-factor CSPTechnology::mCSPCapacityFactor
- *   - \c fcr CSPTechnology::mFCR
- *   - \c grid-connection-cost CSPTechnology::mGridConnectionCost
- *   - \c om CSPTechnology::mOM
- *   - \c solar-field-fraction CSPTechnology::mSolarFieldFraction
- *   - \c solar-field-area CSPTechnology::mSolarFieldArea
+ *   - \c capital-cost SolarTechnology::mCapitalCost
+ *   - \c csp-capacity-factor SolarTechnology::mCSPCapacityFactor
+ *   - \c fcr SolarTechnology::mFCR
+ *   - \c grid-connection-cost SolarTechnology::mGridConnectionCost
+ *   - \c om SolarTechnology::mOM
+ *   - \c solar-field-fraction SolarTechnology::mSolarFieldFraction
+ *   - \c solar-field-area SolarTechnology::mSolarFieldArea
  *
  * \author Kevin Walker
  * \date $ Date $
  * \version $ Revision $
  */
-class CSPTechnology : public Technology
+class SolarTechnology : public Technology
 {
 public :
 
@@ -58,22 +58,22 @@ public :
     *  \param aName the name of the technology
     *  \param aYear the year
     */
-   CSPTechnology(
+   SolarTechnology(
       const std::string& aName = std::string(),
       const int          aYear = -1 );
    /*! Copy constructor
     *  \param other the instance to copy
     */
-   CSPTechnology( const CSPTechnology& other );
+   SolarTechnology( const SolarTechnology& other );
 
    //! Destructor
-   virtual ~CSPTechnology(void);
+   virtual ~SolarTechnology(void);
 
    /*! Assignment operator
     *  \param other the instance to copy
     *  \return *this
     */
-   CSPTechnology& operator = ( const CSPTechnology& other );
+   SolarTechnology& operator = ( const SolarTechnology& other );
 
    // Documentation is inherited
    virtual void calcCost(
@@ -89,7 +89,7 @@ public :
       const int          aPeriod ) const;
 
    // Documentation is inherited
-   virtual CSPTechnology* clone( void ) const;
+   virtual SolarTechnology* clone( void ) const;
 
    // Documentation is inherited
    virtual void completeInit(
@@ -176,7 +176,10 @@ private :
    static const double      kWhrtoGJ;
    static const std::string ELECTRIC_SECTOR_NAME_KEY;
    static const std::string NO_SUN_DAYS_KEY;
-   static const std::string TOTAL_ANNUAL_IRRADIANCE_KEY;
+   //static const std::string TOTAL_ANNUAL_IRRADIANCE_KEY;
+
+   //! The key used for total annual irradiance
+   std::string mTotalAnnualIrradianceKey;
 
    //! Capital cost [$/MW Capacity]
    double mCapitalCost;
@@ -214,12 +217,14 @@ private :
    double mSolarFieldFraction;
 
    double mSolarFieldArea;
+
+   //! The max loss percent
+   double mMaxLoss;
 };
 
-#endif   // __CSP_TECHNOLOGY_H
+#endif   // __SOLAR_TECHNOLOGY_H
 
-// end of csp_technology.h *************************************************
-
+// end of solar_technology.h *************************************************
 
 
 

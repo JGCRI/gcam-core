@@ -694,7 +694,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\technologies\source\csp_technology.cpp"
+					RelativePath="..\..\technologies\source\solar_technology.cpp"
 					>
 				</File>
 				<File
@@ -2115,7 +2115,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\technologies\include\csp_technology.h"
+					RelativePath="..\..\technologies\include\solar_technology.h"
 					>
 				</File>
 				<File

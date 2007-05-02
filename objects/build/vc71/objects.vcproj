@@ -513,7 +513,7 @@
 					RelativePath="..\..\technologies\source\capture_component_factory.cpp">
 				</File>
 				<File
-					RelativePath="..\..\technologies\source\csp_technology.cpp">
+					RelativePath="..\..\technologies\source\solar_technology.cpp">
 				</File>
 				<File
 					RelativePath="..\..\technologies\source\default_technology.cpp">
@@ -1293,7 +1293,7 @@
 					RelativePath="..\..\technologies\include\capture_component_factory.h">
 				</File>
 				<File
-					RelativePath="..\..\technologies\include\csp_technology.h">
+					RelativePath="..\..\technologies\include\solar_technology.h">
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\default_technology.h">
