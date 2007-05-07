@@ -143,7 +143,7 @@ void SolarTechnology::calcCost(
    // Equation 3.
    mCSPCapacityFactor = ( totalAnnualIrradiance * mSolarFieldArea * CSPEfficiency ) / denom;
    // Equation 2.
-   mCConnect = mFCR * dConnect * mGridConnectionCost / ( mCSPCapacityFactor * 1000 * kWhrtoGJ );
+   mCConnect = mFCR * dConnect * mGridConnectionCost / ( mCSPCapacityFactor * 1000 * kWhrtoGJ * 24.0 * 365.0 );
 
    /* Save to array
    * Total cost is the sum of the generation and connection cost
@@ -522,6 +522,7 @@ bool SolarTechnology::XMLDerivedClassParse(
 }
 
 // end of solar_technology.cpp ***********************************************
+
 
 
 
