@@ -38,7 +38,7 @@ CSPBackupCalculator::CSPBackupCalculator()
     // Maximum Backup Fraction is the maximum backup fraction required.
     mMaxBackupFraction = 0.403;
     // Fraction of electric sector that is intermediate and peak
-    mIPFraction = 0.25;
+    mIPFraction = 0.15;
     // exponent parameter a
     A = 4.0;
 }
@@ -233,4 +233,5 @@ double CSPBackupCalculator::calcIntermittentShare( const string& aSector,
     }
     return elecShare;
 }
+
 

@@ -268,7 +268,7 @@ double SolarTechnology::getEfficiency( const int aPeriod ) const
 {
    //const double maxLoss        = 0.55;  // 55%
    const double b              = 3.0;
-   const double IPFraction     = 0.25;  // 25%
+   const double IPFraction     = 0.15;  // 15%
    const double elecCapacity   = 1;
    const double sectorCapacity = 1;
 
@@ -522,6 +522,7 @@ bool SolarTechnology::XMLDerivedClassParse(
 }
 
 // end of solar_technology.cpp ***********************************************
+
 
 
 
