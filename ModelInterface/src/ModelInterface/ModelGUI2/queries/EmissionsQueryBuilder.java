@@ -461,12 +461,6 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 	}
 	public Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {
 		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
-			List<String> defaultCollapse = new Vector<String>(4);
-			defaultCollapse.add("sector");
-			defaultCollapse.add("subsector");
-			defaultCollapse.add("technology");
-			defaultCollapse.add("emissions");
-			qg.createCollapseList(defaultCollapse);
 			currNode.delete();
 			return dataTree;
 		}
@@ -476,7 +470,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			type = currNode.getNodeName();
 		}
 		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
-		if((isGlobal && type.equals("region")) || qg.collapseOnList.contains(type)) {
+		if((isGlobal && type.equals("region")) || qg.getCollapseOnList().contains(type)) {
 			currNode.delete();
 			return tempMap;
 		}
@@ -496,5 +490,14 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 	}
 	public String getXMLName() {
 		return xmlName;
+	}
+	public List<String> getDefaultCollpaseList() {
+		List<String> defaultCollapse = new Vector<String>(5);
+		defaultCollapse.add("sector");
+		defaultCollapse.add("subsector");
+		defaultCollapse.add("technology");
+		defaultCollapse.add("emissions");
+		defaultCollapse.add("GHG");
+		return defaultCollapse;
 	}
 }

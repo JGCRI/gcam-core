@@ -414,13 +414,17 @@ public class XMLDB {
 	public void setValue(XmlValue val, String content) {
 		try {
 			XmlModify mod = manager.createModify();
-			//XmlUpdateContext uc = manager.createUpdateContext();
-			uc.setApplyChangesToContainers(false);
+			uc.setApplyChangesToContainers(true);
 			XmlQueryContext qc = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
-			mod.addUpdateStep(manager.prepare("./node()", qc), content);
-			mod.execute(val.getParentNode(), qc, uc);
+			mod.addUpdateStep(manager.prepare("self::node()", qc), content);
+			mod.execute(val, qc, uc);
+			uc.setApplyChangesToContainers(false);
+			mod.delete();
+			qc.delete();
 		} catch(XmlException e) {
 			e.printStackTrace();
+		} finally {
+			printLockStats("XMLDB.setValue");
 		}
 	}
 	public void addVarMetaData(Frame parentFrame) {

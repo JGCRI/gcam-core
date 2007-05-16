@@ -6,6 +6,7 @@ import com.sleepycat.dbxml.XmlValue;
 import java.util.Map;
 import java.util.Vector;
 import java.util.EventListener;
+import java.util.List;
 
 public abstract class QueryBuilder implements java.io.Serializable {
 
@@ -55,4 +56,5 @@ public abstract class QueryBuilder implements java.io.Serializable {
 	void setQueryGenerator(QueryGenerator qgIn) {
 		qg = qgIn;
 	}
+	public abstract List<String> getDefaultCollpaseList();
 }

@@ -1021,12 +1021,22 @@ public class QueryGenerator implements java.io.Serializable{
 				setBuildList(buildListCheckBox.isSelected());
 				comments = commentsTextA.getText();
 				eqEdit.setNewValues(thisGen);
+				// only create an undoable edit if the user really made changes 
+				// to something rather than just hitting ok
 				if(eqEdit.hasRealChanges()) {
+					// if the xpath or node level changed we will have
+					// to trash the old collapseOnList
+					if(eqEdit.didNodeLevelChange() || eqEdit.didXPathChange()) {
+						resetCollapseOnList();
+					}
+
 					// fake an undo event so that the single query can know if
 					// it has to do something about this.
 					if(hasSingleQueryExtension()) {
 						singleExtension.undoPerformed(new javax.swing.event.UndoableEditEvent(eqEdit, eqEdit));
 					}
+
+					// add the edit and refresh the menu
 					InterfaceMain.getInstance().getUndoManager().addEdit(eqEdit);
 					InterfaceMain.getInstance().refreshUndoRedo();
 					didChange[0] = true;
@@ -1063,6 +1073,19 @@ public class QueryGenerator implements java.io.Serializable{
 		return didChange[0];
 	}
 	/**
+	 * Gets the list types such as sector that this query builder will 
+	 * collpase on when creating a table.  If the collapseOnList has not
+	 * been initialized it will be then returned.
+	 * @return The collpase on list.
+	 */
+	public List<String> getCollapseOnList() {
+		if(collapseOnList == null) {
+			// create it
+			createCollapseList(qb != null? qb.getDefaultCollpaseList() : new Vector<String>());
+		}
+		return collapseOnList;
+	}
+	/**
 	 * Creates a list of nodes to collapse on.  This is
 	 * based on a list of default values that could be collapsed
 	 * on which is pased in.  Then it will look at the types in
@@ -1074,7 +1097,7 @@ public class QueryGenerator implements java.io.Serializable{
 	 * Only subsector would be left in the list and thus collapsed upon.
 	 * @param defaultCollapse Nodes which could be collapsed upon.
 	 */
-	public void createCollapseList(List<String> defaultCollapse) {
+	private void createCollapseList(List<String> defaultCollapse) {
 		// copy the list?
 		collapseOnList = defaultCollapse;
 		Matcher extractType = Pattern.compile("[^\\/]*@type\\s*=\\s*'(\\w+)'\\s*(\\(:\\s*collapse\\s*:\\))?[^\\/]*\\/").matcher(xPath);
@@ -1094,6 +1117,15 @@ public class QueryGenerator implements java.io.Serializable{
 			// or maybe not 
 			//collapseOnList.clear();
 		}
+	}
+
+	/**
+	 * Resets the collapse on this.  This maybe necessary if the xpath
+	 * changes.  A subsequent call to getCollapseOnList will have
+	 * a newly initiallized collapseOnList
+	 */
+	public void resetCollapseOnList() {
+		collapseOnList = null;
 	}
 
 	/**
@@ -1174,12 +1206,23 @@ public class QueryGenerator implements java.io.Serializable{
 
 	public String defaultGetForNodeLevelPath(String nodeLevelValue) {
 		String nodeLevelAttrName = nodeLevel.getValue();
+		String[] levels = nodeLevelValue.split("/");
 		if(nodeLevelAttrName == null) {
 			nodeLevelAttrName = "name";
 		}
-		return "[ancestor::*[(@type='"+nodeLevel.getKey()+"' or local-name()='"+
-			nodeLevel.getKey()+"') and @"+nodeLevelAttrName+"='"+
-			nodeLevelValue+"']]";
+		StringBuilder ret = new StringBuilder("[ancestor::*[(@type='");
+		ret.append(nodeLevel.getKey()).append("' or local-name()='");
+		ret.append(nodeLevel.getKey()).append("') and @");
+		ret.append(nodeLevelAttrName).append("='").append(levels[levels.length-1]).append("']");
+		for(int i = 0; i < levels.length-1; ++i) {
+			int colonPos = levels[i].indexOf(':');
+			String currType = levels[i].substring(0, colonPos);
+			String currVal = levels[i].substring(colonPos+2, levels[i].length());
+			ret.append(" and ancestor::*[@type='").append(currType);
+			ret.append("' and @name='").append(currVal).append("']");
+		}
+		ret.append("]");
+		return ret.toString();
 	}
 
 	/**

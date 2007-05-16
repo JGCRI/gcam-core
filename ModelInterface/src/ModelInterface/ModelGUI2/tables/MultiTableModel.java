@@ -265,7 +265,7 @@ public class MultiTableModel extends BaseTableModel{
 						documentation /*, (String)wild.get(2)*/); 
 			}
 			tM.units = units;
-	  		JTable jTable = new JTable(tM);
+			JTable jTable = tM.getAsSortedTable();
 
 	  		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	 
@@ -591,7 +591,7 @@ public class MultiTableModel extends BaseTableModel{
 		if(ret instanceof JSplitPane) {
 			ret = ((JScrollPane)((JSplitPane)ret).getLeftComponent()).getViewport().getView();
 		}
-		return (BaseTableModel)((JTable)ret).getModel();
+		return (BaseTableModel)((TableSorter)((JTable)ret).getModel()).getTableModel();
 	}
 
 

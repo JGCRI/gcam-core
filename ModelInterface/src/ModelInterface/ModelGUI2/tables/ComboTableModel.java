@@ -422,6 +422,19 @@ public class ComboTableModel extends BaseTableModel{
 	}
 
 	/**
+	 * Get the class for the data that will be in the specified class.  This
+	 * will return String.class for the left lable columnd and the last column
+	 * which is the units column elseDouble.class for the rest.
+	 * @param columnIndex The column being queried.
+	 * @return Double.class for leftHeaderVector.size()  
+	 * 	&lt columnIndex &lt getColumnCount()-1 else String.class
+	 */
+	public Class getColumnClass(int columnIndex) {
+		return (columnIndex > leftHeaderVector.size()) 
+			&& (columnIndex < getColumnCount()-1)? Double.class : String.class;
+	}
+
+	/**
 	 * Used to tell which cells are editable, which are all but the path columns and 
 	 * the column for row headers.
 	 * @param row the row position being queryed
@@ -639,7 +652,12 @@ public class ComboTableModel extends BaseTableModel{
 			// Row name is at element zero.
 			//String rowNameFull = (String)getValueAt(row,0);
 			String rowNameFull;
-			if(chartLabelCol >= 0) {
+			if(qg != null && qg.isGroup()) {
+				// If the qg is group and it is creating a combo table
+				// that means it is a single query.  That means we 
+				// want the labels to be a combo for scenario+region
+				rowNameFull = (String)getValueAt(row, 0)+" "+(String)getValueAt(row, 1);
+			} else if(chartLabelCol >= 0) {
 				rowNameFull = (String)getValueAt(row, chartLabelCol);
 			} else {
 				rowNameFull = (String)indRow.get( ((Integer)activeRows.get( row )).intValue() % (indRow.size()) );
@@ -647,7 +665,7 @@ public class ComboTableModel extends BaseTableModel{
 			
 			// Split out the name attribute if it contains it.
 			String rowName;
-			if( rowNameFull.indexOf('=') != -1 ){
+			if( !(qg != null && qg.isGroup()) && rowNameFull.indexOf('=') != -1 ){
 				rowName = rowNameFull.split("=")[ 1 ];
 			}
 			else {
@@ -867,7 +885,7 @@ public class ComboTableModel extends BaseTableModel{
 	  for(int rowN = 0; rowN < getRowCount(); ++rowN) {
 		  row = sheet.createRow(sheet.getLastRowNum()+1);
 		  for(int col = 0; col < getColumnCount(); ++col) {
-			  Object obj = getValueAt(rowN, col);
+			  Object obj = sortedTable.getValueAt(rowN, col);
 			  if(obj instanceof Double) {
 				  row.createCell((short)col).setCellValue(((Double)obj).doubleValue());
 			  } else {

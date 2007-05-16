@@ -11,6 +11,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.ListSelectionModel;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Iterator;
@@ -344,5 +345,8 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 	}
 	public String getXMLName() {
 		return xmlName;
+	}
+	public List<String> getDefaultCollpaseList() {
+		return new Vector<String>();
 	}
 }

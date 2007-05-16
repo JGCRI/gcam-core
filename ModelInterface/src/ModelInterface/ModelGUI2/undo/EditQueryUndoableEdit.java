@@ -154,6 +154,11 @@ public class EditQueryUndoableEdit extends MiAbstractUndoableEdit {
 
 	public void undo() throws CannotUndoException {
 		if(canUndo()) {
+			// if the xpath or node level changed we will have
+			// to trash the old collapseOnList
+			if(didNodeLevelChange() || didXPathChange()) {
+				qg.resetCollapseOnList();
+			}
 			qg.setTitle(oldTitle);
 			qg.setAxis1Name(oldAxis1Name);
 			qg.setAxis2Name(oldAxis2Name);
@@ -174,6 +179,11 @@ public class EditQueryUndoableEdit extends MiAbstractUndoableEdit {
 
 	public void redo() throws CannotRedoException {
 		if(canRedo()) {
+			// if the xpath or node level changed we will have
+			// to trash the old collapseOnList
+			if(didNodeLevelChange() || didXPathChange()) {
+				qg.resetCollapseOnList();
+			}
 			qg.setTitle(newTitle);
 			qg.setAxis1Name(newAxis1Name);
 			qg.setAxis2Name(newAxis2Name);

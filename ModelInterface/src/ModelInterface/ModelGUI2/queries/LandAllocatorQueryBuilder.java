@@ -19,6 +19,7 @@ import javax.swing.tree.TreePath;
 import java.util.Map;
 import java.util.Iterator;
 import java.util.Vector;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.TreeMap;
@@ -303,5 +304,8 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 	}
 	public String getXMLName() {
 		return xmlName;
+	}
+	public List<String> getDefaultCollpaseList() {
+		return new Vector<String>();
 	}
 }

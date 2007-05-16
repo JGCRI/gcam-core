@@ -2,9 +2,11 @@ package ModelInterface.ModelGUI2;
 
 import ModelInterface.ConfigurationEditor.guihelpers.XMLFileFilter;
 import ModelInterface.ConfigurationEditor.utils.FileUtils;
+import ModelInterface.ModelGUI2.undo.RenameScenarioUndoableEdit;
 import ModelInterface.ModelGUI2.tables.BaseTableModel;
 import ModelInterface.ModelGUI2.tables.ComboTableModel;
 import ModelInterface.ModelGUI2.tables.MultiTableModel;
+import ModelInterface.ModelGUI2.tables.TableSorter;
 import ModelInterface.ModelGUI2.tables.CopyPaste;
 import ModelInterface.ModelGUI2.tables.TableTransferHandler;
 import ModelInterface.ModelGUI2.queries.QueryGenerator;
@@ -35,6 +37,7 @@ import javax.swing.event.TreeModelEvent;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.undo.UndoableEdit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
@@ -399,6 +402,11 @@ public class DbViewer implements ActionListener, MenuAdder {
 		}
 		xmlDB.printLockStats("getScenarios");
 		return ret;
+	}
+
+	public void resetScenarioList() {
+		scns = getScenarios();
+		scnList.setListData(scns);
 	}
 
 	// A simple class to hold scenario info that will be displayed in a JList
@@ -794,10 +802,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 			return null;
 		}
 		btBefore = null;
-		//TableSorter sorter = new TableSorter(bt);
-		jTable = new JTable(bt);
+		jTable = bt.getAsSortedTable();
 		new CopyPaste(jTable);
-		//sorter.setTableHeader(jTable.getTableHeader());
 
 		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
@@ -873,17 +879,36 @@ public class DbViewer implements ActionListener, MenuAdder {
 	
 	private void manageDB() {
 		final JDialog filterDialog = new JDialog(parentFrame, "Manage Database", true);
+		final DbViewer thisViewer = this;
 		JPanel listPane = new JPanel();
 		JPanel buttonPane = new JPanel();
-		JButton addButton = new JButton("Add");
-		JButton removeButton = new JButton("Remove");
-		JButton exportButton = new JButton("Export");
-		JButton doneButton = new JButton("Done");
+		final JButton addButton = new JButton("Add");
+		final JButton removeButton = new JButton("Remove");
+		final JButton renameButton = new JButton("Rename");
+		final JButton exportButton = new JButton("Export");
+		final JButton doneButton = new JButton("Done");
 		listPane.setLayout( new BoxLayout(listPane, BoxLayout.Y_AXIS));
 		Container contentPane = filterDialog.getContentPane();
+		removeButton.setEnabled(false);
+		renameButton.setEnabled(false);
+		exportButton.setEnabled(false);
 
 		//Vector scns = getScenarios();
 		final JList list = new JList(scns);
+
+		list.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				if(list.getSelectedIndex() == -1) {
+					removeButton.setEnabled(false);
+					renameButton.setEnabled(false);
+					exportButton.setEnabled(false);
+				} else {
+					removeButton.setEnabled(true);
+					renameButton.setEnabled(true);
+					exportButton.setEnabled(true);
+				}
+			}
+		});
 		
 		final DirtyBit dirtyBit = new DirtyBit();
 		addButton.addActionListener(new ActionListener() {
@@ -915,6 +940,78 @@ public class DbViewer implements ActionListener, MenuAdder {
 				}
 				scns = getScenarios();
 				list.setListData(scns);
+			}
+		});
+		renameButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				final Object[] renameList = list.getSelectedValues();
+				if(renameList.length == 0) {
+					return;
+				}
+				final JDialog renameScenarioDialog = new JDialog(parentFrame, "Rename Scenarios", true);
+				renameScenarioDialog.setResizable(false);
+				final List<JTextField> renameBoxes = new ArrayList<JTextField>(renameList.length);
+				JPanel renameBoxPanel = new JPanel();
+				renameBoxPanel.setLayout(new BoxLayout(renameBoxPanel, BoxLayout.Y_AXIS));
+				Component verticalSeparator = Box.createVerticalStrut(5);
+
+				for(int i = 0; i < renameList.length; ++i) {
+					ScenarioListItem currItem = (ScenarioListItem)renameList[i];
+					JPanel currPanel = new JPanel();
+					currPanel.setLayout(new BoxLayout(currPanel, BoxLayout.X_AXIS));
+					JLabel currLabel = new JLabel("<html>Rename <b>"+currItem.scnName+
+						"</b> on <b>"+currItem.scnDate+"</b> to:</html>");
+					JTextField currTextBox = new JTextField(currItem.scnName, 20);
+					currTextBox.setMaximumSize(currTextBox.getPreferredSize());
+					renameBoxes.add(currTextBox);
+					currPanel.add(currLabel);
+					currPanel.add(Box.createHorizontalGlue());
+					renameBoxPanel.add(currPanel);
+					currPanel = new JPanel();
+					currPanel.setLayout(new BoxLayout(currPanel, BoxLayout.X_AXIS));
+					currPanel.add(currTextBox);
+					currPanel.add(Box.createHorizontalGlue());
+					renameBoxPanel.add(currPanel);
+					renameBoxPanel.add(verticalSeparator);
+				}
+
+				JPanel renameButtonPanel = new JPanel();
+				final JButton renameOK = new JButton("  OK  ");
+				final JButton renameCancel = new JButton("Cancel");
+				renameButtonPanel.setLayout(new BoxLayout(renameButtonPanel, BoxLayout.X_AXIS));
+				renameButtonPanel.add(Box.createHorizontalGlue());
+				renameButtonPanel.add(renameOK);
+				renameButtonPanel.add(renameCancel);
+				ActionListener renameButtonListener = new ActionListener() {
+					public void actionPerformed(ActionEvent renameEvt) {
+						if(renameEvt.getSource() == renameOK) {
+							for(int i = 0; i < renameList.length; ++i) {
+								ScenarioListItem currItem = (ScenarioListItem)renameList[i];
+								String currText = renameBoxes.get(i).getText(); 
+								// only do it if the name really is different
+								if(!currItem.scnName.equals(currText)) {
+									// the undoable edit will take care of doing
+									// the rename
+									UndoableEdit renameEdit = new RenameScenarioUndoableEdit(thisViewer, 
+											currItem, currText);
+									InterfaceMain.getInstance().getUndoManager().addEdit(renameEdit);
+									InterfaceMain.getInstance().refreshUndoRedo();
+								}
+							}
+						}
+						//scns = getScenarios();
+						list.setListData(scns);
+						renameScenarioDialog.dispose();
+					}
+				};
+				renameOK.addActionListener(renameButtonListener);
+				renameCancel.addActionListener(renameButtonListener);
+
+				renameBoxPanel.add(renameButtonPanel);
+				renameBoxPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+				renameScenarioDialog.getContentPane().add(renameBoxPanel);
+				renameScenarioDialog.pack();
+				renameScenarioDialog.setVisible(true);
 			}
 		});
 		exportButton.addActionListener(new ActionListener() {
@@ -970,6 +1067,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 		buttonPane.add(addButton);
 		buttonPane.add(Box.createHorizontalStrut(10));
 		buttonPane.add(removeButton);
+		buttonPane.add(Box.createHorizontalStrut(10));
+		buttonPane.add(renameButton);
 		buttonPane.add(Box.createHorizontalStrut(10));
 		buttonPane.add(exportButton);
 		buttonPane.add(Box.createHorizontalStrut(10));
@@ -1267,7 +1366,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		try {
 			c = ((JScrollPane)comp).getViewport().getView();
 			if(c instanceof JSplitPane) {
-				return (BaseTableModel)((JTable)((JScrollPane)((JSplitPane)c).getLeftComponent()).getViewport().getView()).getModel();
+				return (BaseTableModel)((TableSorter)((JTable)((JScrollPane)((JSplitPane)c).getLeftComponent()).getViewport().getView()).getModel()).getTableModel();
 			} else {
 				return (BaseTableModel)((JTable)c).getModel();
 			}

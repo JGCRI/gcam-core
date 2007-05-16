@@ -418,7 +418,7 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 					List<SingleQueryValue> tempValues;
 					try {
 						XmlResults res = DbViewer.xmlDB.createQuery(new SingleQueryListQueryBinding(qg, 
-								DbViewer.xmlDB.getContainer()), scenarios, regions);
+								DbViewer.xmlDB.getContainer(), qg.getCollapseOnList()), scenarios, regions);
 						// createQuery won't pass along the XmlException so we will
 						// have to check for null
 						if(res == null) {

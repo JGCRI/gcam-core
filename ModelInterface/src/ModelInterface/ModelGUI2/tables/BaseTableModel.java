@@ -17,6 +17,7 @@ import java.awt.Component;
 import java.awt.Color;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableModel;
 
 //import java.sql.Statement;
 import org.apache.poi.hssf.usermodel.*;
@@ -35,6 +36,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	protected Documentation documentation;
 	protected String units;
 	protected boolean remove1975;
+	protected TableSorter sortedTable;
 
 	// stuff for filtering
 	// can i move these somewhere
@@ -57,6 +59,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 		globalProperties.setProperty("remove1975", 
 				remove75Str = globalProperties.getProperty("remove1975", "true"));
 		remove1975 = Boolean.parseBoolean(remove75Str);
+		sortedTable = new TableSorter(this);
 	}
 
 	/**
@@ -631,10 +634,16 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	       ret.append(lineEnding);
 	       for(int row = 0; row < getRowCount(); ++row) {
 		       for(int col = 0; col < getColumnCount(); ++col) {
-			       ret.append(getValueAt(row, col).toString()).append("\t");
+			       ret.append(sortedTable.getValueAt(row, col).toString()).append("\t");
 		       }
 		       ret.append(lineEnding);
 	       }
 	       return ret.toString();
+       }
+
+       public JTable getAsSortedTable() {
+	       JTable ret = new JTable(sortedTable);
+	       sortedTable.setTableHeader(ret.getTableHeader());
+	       return ret;
        }
 }

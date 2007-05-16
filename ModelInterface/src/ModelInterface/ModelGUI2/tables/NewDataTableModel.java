@@ -296,6 +296,17 @@ public class NewDataTableModel extends BaseTableModel{
 	}
 
 	/**
+	 * Get the class for the data that will be in the specified class.  This
+	 * will return String.class for the first and the last columns and
+	 * Double.class for the rest.
+	 * @param columnIndex The column being queried.
+	 * @return Double.class for 1 &lt columnIndex &lt getColumnCount()-1 else String.class
+	 */
+	public Class getColumnClass(int columnIndex) {
+		return (1 < columnIndex) && (columnIndex < getColumnCount()-1)? Double.class : String.class;
+	}
+
+	/**
 	 * Used to tell which cells are editable, which are all but the first column, which is 
 	 * reserved for row headers
 	 * @param row the row position being queryed
@@ -610,7 +621,7 @@ public class NewDataTableModel extends BaseTableModel{
 	  for(int rowN = 0; rowN < getRowCount(); ++rowN) {
 		  row = sheet.createRow(sheet.getLastRowNum()+1);
 		  for(int col = 0; col < getColumnCount(); ++col) {
-			  Object obj = getValueAt(rowN, col);
+			  Object obj = sortedTable.getValueAt(rowN, col);
 			  if(obj instanceof Double) {
 				  row.createCell((short)col).setCellValue(((Double)obj).doubleValue());
 			  } else {
