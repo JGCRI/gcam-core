@@ -806,6 +806,7 @@ public class ComboTableModel extends BaseTableModel{
 			  JOptionPane.showMessageDialog(parentFrame, "The Query did not get any results.", "Build Table Error",
 					  JOptionPane.ERROR_MESSAGE);
 			  // display an error on the screen
+			  res.delete();
 			  return;
 		  }
 	  } catch(XmlException e) {
@@ -828,7 +829,9 @@ public class ComboTableModel extends BaseTableModel{
 						  "Build Table Error",
 						  JOptionPane.ERROR_MESSAGE);
 			  }
-			  units = XMLDB.getAttr(tempNode.getParentNode(), "unit");
+			  XmlValue delValue = tempNode.getParentNode();
+			  units = XMLDB.getAttr(delValue, "unit");
+			  delValue.delete();
 			  if(units == null) {
 				  units = "None Specified";
 			  }

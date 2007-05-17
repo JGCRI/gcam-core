@@ -21,6 +21,7 @@ public class XMLDB {
 	XmlContainer myContainer;
 	XmlUpdateContext uc;
 	String contName;
+	private volatile int numVals;
 	/*
 	String queryFilter;
 	String queryFunction;
@@ -39,6 +40,9 @@ public class XMLDB {
 		//envConfig.setNoLocking(true);
 
 		try {
+			numVals = 0;
+			//XmlManager.setLogCategory(XmlManager.CATEGORY_ALL, true);
+			//XmlManager.setLogLevel(XmlManager.LEVEL_ALL, true);
 			String path = dbPath.substring(0, dbPath.lastIndexOf(System.getProperty("file.separator")));
 			boolean didUpgradeEnv = false;
 			try {
@@ -115,10 +119,11 @@ public class XMLDB {
 				closeDB();
 				System.exit(0);
 				*/
-				System.out.println("Is node container: "+cconfig.getNodeContainer());
+				//System.out.println("Is node container: "+cconfig.getNodeContainer());
 
 				myContainer = manager.openContainer(contName, cconfig);
 				// testing index code here should be REMOVED
+				/*
 				System.out.println("Default Index: "+myContainer.getIndexSpecification().getDefaultIndex());
 				XmlIndexSpecification is = myContainer.getIndexSpecification();
 				//is.addIndex("", "name", "edge-attribute-equality-string");
@@ -129,6 +134,7 @@ public class XMLDB {
 					System.out.println("Index Name: "+dec.uri+":"+dec.name+" Index: "+dec.index);
 				}
 				System.out.println("Is node indexed: "+myContainer.getIndexNodes());
+				*/
 
 				/*
 				XmlQueryContext qc = manager.createQueryContext();
@@ -196,6 +202,8 @@ public class XMLDB {
 		if(!lockCheck) {
 			return;
 		}
+		System.out.println("At: "+where+" with numVals: "+numVals);
+		/*
 		try {
 			System.out.println("At: "+where);
 			LockStats ls = manager.getEnvironment().getLockStats(StatsConfig.DEFAULT);
@@ -210,6 +218,7 @@ public class XMLDB {
 		} catch (DatabaseException dbe) {
 			dbe.printStackTrace();
 		}
+		*/
 	}
 	public void addFile(String fileName) {
 	    XmlDocumentConfig docConfig = new XmlDocumentConfig();
@@ -298,7 +307,8 @@ public class XMLDB {
 			System.out.println("Query Plan: "+qeTemp.getQueryPlan());
 			return qeTemp.execute(qc);
 			*/
-			return manager.query(queryComplete, qc);
+			System.out.println("Number of values are currently: "+numVals);
+			return new XmlResultsWrapper(manager.query(queryComplete, qc));
 		} catch(XmlException e) {
 			e.printStackTrace();
 			return null;
@@ -313,6 +323,7 @@ public class XMLDB {
 				// didn't open sucessfully
 				return;
 			}
+			System.out.println("Number of values are currently: "+numVals);
 			myContainer.close();
 			manager.close();
 		} catch (XmlException e) {
@@ -433,8 +444,8 @@ public class XMLDB {
 			printLockStats("Before check md query");
 			// since we moved to dbxml 2.3 it can't find var through queries (namespace issue?) so we will
 			// now search for demographicsVar
-			final XmlResults res = manager.query(
-					"collection('"+contName+"')/*[fn:empty(dbxml:metadata('var'))]", qc);
+			final XmlResults res = new XmlResultsWrapper(manager.query(
+					"collection('"+contName+"')/*[fn:empty(dbxml:metadata('var'))]", qc));
 			printLockStats("after check md query");
 			uc.setApplyChangesToContainers(true);
 			// instead of having to determine the size of prog bar, should be figured out
@@ -451,17 +462,27 @@ public class XMLDB {
 					try {
 					XmlResults tempRes;
 					XmlValue tempVal;
+					XmlValue delVal;
+					//XmlDocument docTemp; 
+					java.util.List<String> getVarFromDoucmentNames = new ArrayList<String>();
 					while(res.hasNext()) {
-						System.out.println("Getting new MetaData");
-						printLockStats("before get tempVal");
 						tempVal = res.next();
-						printLockStats("after get tempVal");
+						//docTemp = tempVal.asDocument();
+						getVarFromDoucmentNames.add(tempVal.getNodeHandle());
+						//docTemp.delete();
+						tempVal.delete();
+					}
+					res.delete();
+					for(Iterator<String> it = getVarFromDoucmentNames.iterator(); it.hasNext(); ) {
+						tempVal = myContainer.getNode(it.next(), 0);
+						System.out.println("Getting new MetaData");
 						String path = "local:distinct-node-names(/scenario/world/*[@type='region']/demographics//*[fn:count(child::text()) = 1])";
 						tempRes = getVars(tempVal, path);
 						StringBuffer strBuff = new StringBuffer();
 						while(tempRes.hasNext()) {
-							System.out.println("adding");
-							strBuff.append(tempRes.next().asString());
+							delVal = tempRes.next();
+							strBuff.append(delVal.asString());
+							delVal.delete();
 							strBuff.append(';');
 						}
 						printLockStats("after first var look-up");
@@ -476,11 +497,14 @@ public class XMLDB {
 						tempRes = getVars(tempVal, path);
 						strBuff = new StringBuffer();
 						while(tempRes.hasNext()) {
-							strBuff.append(tempRes.next().asString());
+							//System.out.println("adding");
+							delVal = tempRes.next();
+							strBuff.append(delVal.asString());
+							delVal.delete();
 							strBuff.append(';');
 						}
-						docTemp.setMetaData("", "var", new XmlValue(strBuff.toString()));
 						tempRes.delete();
+						docTemp.setMetaData("", "var", new XmlValue(strBuff.toString()));
 						SwingUtilities.invokeLater(incProgress);
 
 						XmlQueryContext qcL = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
@@ -488,7 +512,9 @@ public class XMLDB {
 						tempRes = qe.execute(tempVal, qcL);
 						strBuff = new StringBuffer();
 						while(tempRes.hasNext()) {
-							strBuff.append(tempRes.next().asString()).append(';');
+							delVal = tempRes.next();
+							strBuff.append(delVal.asString()).append(';');
+							delVal.delete();
 						}
 						docTemp.setMetaData("", "ghgNames", new XmlValue(strBuff.toString()));
 						tempRes.delete();
@@ -498,7 +524,9 @@ public class XMLDB {
 						tempRes = qe.execute(tempVal, qcL);
 						strBuff = new StringBuffer();
 						while(tempRes.hasNext()) {
-							strBuff.append(tempRes.next().asString()).append(';');
+							delVal = tempRes.next();
+							strBuff.append(delVal.asString()).append(';');
+							delVal.delete();
 						}
 						docTemp.setMetaData("", "fuelNames", new XmlValue(strBuff.toString()));
 						tempRes.delete();
@@ -508,7 +536,9 @@ public class XMLDB {
 						tempRes = getVars(tempVal, path);
 						strBuff = new StringBuffer();
 						while(tempRes.hasNext()) {
-							strBuff.append(tempRes.next().asString());
+							delVal = tempRes.next();
+							strBuff.append(delVal.asString());
+							delVal.delete();
 							strBuff.append(';');
 						}
 						docTemp.setMetaData("", "ClimateVar", new XmlValue(strBuff.toString()));
@@ -519,7 +549,9 @@ public class XMLDB {
 						tempRes = getVars(tempVal, path);
 						strBuff = new StringBuffer();
 						while(tempRes.hasNext()) {
-							strBuff.append(tempRes.next().asString());
+							delVal = tempRes.next();
+							strBuff.append(delVal.asString());
+							delVal.delete();
 							strBuff.append(';');
 						}
 						docTemp.setMetaData("", "LandAllocationVar", new XmlValue(strBuff.toString()));
@@ -530,7 +562,9 @@ public class XMLDB {
 						tempRes = getVars(tempVal, path);
 						strBuff = new StringBuffer();
 						while(tempRes.hasNext()) {
-							strBuff.append(tempRes.next().asString());
+							delVal = tempRes.next();
+							strBuff.append(delVal.asString());
+							delVal.delete();
 							strBuff.append(';');
 						}
 						docTemp.setMetaData("", "GDPVar", new XmlValue(strBuff.toString()));
@@ -589,7 +623,7 @@ public class XMLDB {
 			*/
 			String queryStr = "declare function local:distinct-node-names ($args as node()*) as xs:string* { fn:distinct-values(for $nname in $args return fn:local-name($nname)) }; "+path;
 			XmlQueryExpression qe = manager.prepare(queryStr, qc);
-			return qe.execute(contextVal, qc);
+			return new XmlResultsWrapper(qe.execute(contextVal, qc));
 		} catch(XmlException e) {
 			e.printStackTrace();
 			closeDB();
@@ -613,44 +647,47 @@ public class XMLDB {
 				System.out.println("Gathering metadata from a doc "+docTemp.getName());
 				XmlMetaDataIterator it = docTemp.getMetaDataIterator();
 				while((md = it.next()) != null) {
-					if(md.get_value().isNull()) {
+					XmlValue mdVal = md.get_value();
+					if(mdVal.isNull()) {
 						System.out.println("Got null metadata value for "+md.get_name());
 					} else if(md.get_name().equals("var")) {
-						String[] vars = md.get_value().asString().split(";");
+						String[] vars = mdVal.asString().split(";");
 						for(int i = 0; i < vars.length; ++i) {
 							SupplyDemandQueryBuilder.varList.put(vars[i], new Boolean(false));
 						}
 					} else if(md.get_name().equals("demographicsVar")) {
-						String[] vars = md.get_value().asString().split(";");
+						String[] vars = mdVal.asString().split(";");
 						for(int i = 0; i < vars.length; ++i) {
 							DemographicsQueryBuilder.varList.put(vars[i], new Boolean(false));
 						}
 					} else if(md.get_name().equals("ghgNames")) {
-						String[] vars = md.get_value().asString().split(";");
+						String[] vars = mdVal.asString().split(";");
 						for(int i = 0; i < vars.length; ++i) {
 							EmissionsQueryBuilder.ghgList.put(vars[i], new Boolean(false));
 						}
 					} else if(md.get_name().equals("fuelNames")) {
-						String[] vars = md.get_value().asString().split(";");
+						String[] vars = mdVal.asString().split(";");
 						for(int i = 0; i < vars.length; ++i) {
 							EmissionsQueryBuilder.fuelList.put(vars[i], new Boolean(false));
 						}
 					} else if(md.get_name().equals("GDPVar")) {
-						String[] vars = md.get_value().asString().split(";");
+						String[] vars = mdVal.asString().split(";");
 						for(int i = 0; i < vars.length; ++i) {
 							GDPQueryBuilder.varList.put(vars[i], new Boolean(false));
 						}
 					} else if(md.get_name().equals("ClimateVar")) {
-						String[] vars = md.get_value().asString().split(";");
+						String[] vars = mdVal.asString().split(";");
 						for(int i = 0; i < vars.length; ++i) {
 							ClimateQueryBuilder.varList.put(vars[i], new Boolean(false));
 						}
 					} else if(md.get_name().equals("LandAllocationVar")) {
-						String[] vars = md.get_value().asString().split(";");
+						String[] vars = mdVal.asString().split(";");
 						for(int i = 0; i < vars.length; ++i) {
 							LandAllocatorQueryBuilder.varList.put(vars[i], new Boolean(false));
 						}
 					}
+					mdVal.delete();
+					md.delete();
 				}
 				it.delete();
 				docTemp.delete();
@@ -667,14 +704,19 @@ public class XMLDB {
 		res = createQuery("/scenario/output-meta-data/summable/@var", funcTemp, null, null);
 		QueryGenerator.sumableList = new Vector();
 		QueryGenerator.hasYearList = new Vector<String>();
+		XmlValue delValue;
 		try {
 			while(res.hasNext()) {
-				QueryGenerator.sumableList.add(res.next().asString());
+				delValue = res.next();
+				QueryGenerator.sumableList.add(delValue.asString());
+				delValue.delete();
 			}
 			res.delete();
 			res = createQuery("/scenario/output-meta-data/has-year/@var", funcTemp, null, null);
 			while(res.hasNext()) {
-				QueryGenerator.hasYearList.add(res.next().asString());
+				delValue = res.next();
+				QueryGenerator.hasYearList.add(delValue.asString());
+				delValue.delete();
 			}
 			res.delete();
 		} catch(XmlException e) {
@@ -700,5 +742,74 @@ public class XMLDB {
 		filterDialog.pack();
 		filterDialog.setVisible(true);
 		return filterDialog;
+	}
+	// the following classes can be used in order to figure out if any 
+	// references managed to avoid manual deletion which could lead to
+	// references still alive at db close time which is bad. Use in
+	// conjunction with createQuery so it will create the wrapped
+	// version and the wrapped version will also create wrapped versions
+	public class XmlResultsWrapper extends XmlResults {
+		private boolean didDelete = false;
+		public XmlResultsWrapper(XmlResults in) throws XmlException {
+			// it should copy it right? If so I can delete it.
+			super(in);
+			++numVals;
+			in.delete();
+		}
+		public XmlValue next() throws XmlException {
+			return new XmlValueWrapper(super.next());
+		}
+		public void delete() {
+			// only allow deleting one time to avoid double counting
+			if(!didDelete) {
+				--numVals;
+				super.delete();
+				didDelete = true;
+			}
+		}
+		public void finalize() {
+			// do nothing so I know I don't have to rely on gc
+		}
+	}
+	public class XmlValueWrapper extends XmlValue {
+		private boolean didDelete = false;
+		public XmlValueWrapper(XmlValue in) throws XmlException {
+			// again copies right?
+			super(in);
+			++numVals;
+			in.delete();
+		}
+		public void delete() {
+			// only allow deleting one time to avoid double counting
+			if(!didDelete) {
+				--numVals;
+				super.delete();
+				didDelete = true;
+			}
+		}
+		public XmlResults getAttributes() throws XmlException {
+			return new XmlResultsWrapper(super.getAttributes());
+		}
+		public XmlValue getFirstChild() throws XmlException {
+			return new XmlValueWrapper(super.getFirstChild());
+		}
+		public XmlValue getLastChild() throws XmlException {
+			return new XmlValueWrapper(super.getLastChild());
+		}
+		public XmlValue getNextSibling() throws XmlException {
+			return new XmlValueWrapper(super.getNextSibling());
+		}
+		public XmlValue getOwnerElement() throws XmlException {
+			return new XmlValueWrapper(super.getOwnerElement());
+		}
+		public XmlValue getParentNode() throws XmlException {
+			return new XmlValueWrapper(super.getParentNode());
+		}
+		public XmlValue getPreviousSibling() throws XmlException {
+			return new XmlValueWrapper(super.getPreviousSibling());
+		}
+		public void finalize() {
+			// do nothing so I know I don't have to rely on gc
+		}
 	}
 }

@@ -44,9 +44,6 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.xpath.XPathExpression;
 import org.w3c.dom.xpath.XPathResult;
 
-import com.sleepycat.dbxml.XmlValue;
-import com.sleepycat.dbxml.XmlException;
-
 public class NewDataTableModel extends BaseTableModel{
 	/**
 	 * 

@@ -381,6 +381,7 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 	public Object[] extractAxisInfo(XmlValue n, Map filterMaps) throws Exception {
 		Vector ret = new Vector(2, 0);
 		XmlValue nBefore;
+		XmlValue delTemp;
 		if(qg.nodeLevel.getKey().equals("keyword")) {
 			nBefore = n.getNextSibling();
 			while(!nBefore.isNull()) {
@@ -389,8 +390,11 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 					ret.add(XMLDB.getAttr(nBefore, qg.nodeLevel.getValue()));
 					break;
 				}
+				delTemp = nBefore;
 				nBefore = nBefore.getNextSibling();
+				delTemp.delete();
 			}
+			nBefore.delete();
 		}
 		do {
 			if(qg.nodeLevel.getKey().equals(XMLDB.getAttr(n, "type")) || qg.nodeLevel.getKey().equals(n.getNodeName())) {
@@ -411,7 +415,7 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 				} else {
 					ret.add(0, XMLDB.getAttr(n, qg.yearLevel.getValue()));
 				}
-			} else if(XMLDB.hasAttr(n)) {
+			}/* else if(XMLDB.hasAttr(n)) {
 				// are filter maps used, I don't belive filtering is currently enabled for DB Output
 				// is this a feature people would want?
 				Map tempFilter;
@@ -426,6 +430,7 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 					filterMaps.put(n.getNodeName(), tempFilter);
 				}
 			}
+			*/
 			nBefore = n;
 			n = n.getParentNode();
 			nBefore.delete();

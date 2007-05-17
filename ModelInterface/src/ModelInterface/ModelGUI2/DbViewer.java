@@ -443,11 +443,14 @@ public class DbViewer implements ActionListener, MenuAdder {
 		Vector funcTemp = new Vector<String>(1,0);
 		funcTemp.add("distinct-values");
 		Vector ret = new Vector();
+		XmlValue temp;
 		try {
 			XmlResults res = xmlDB.createQuery("/scenario/world/"+
 					ModelInterface.ModelGUI2.queries.QueryBuilder.regionQueryPortion+"/@name", funcTemp, null, null);
 			while(res.hasNext()) {
-				ret.add(res.next().asString());
+				temp = res.next();
+				ret.add(temp.asString());
+				temp.delete();
 			}
 			res.delete();
 		} catch(XmlException e) {

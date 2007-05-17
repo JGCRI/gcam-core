@@ -264,7 +264,14 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 
 					ret.add(tn.getFirstChild().getFirstChild().getNodeValue());
 					*/
-					ret.add(n.getFirstChild().getNextSibling().getFirstChild().getNodeValue());
+					XmlValue delValue = n.getFirstChild();
+					nBefore = delValue.getNextSibling();
+					delValue.delete();
+					delValue = nBefore;
+					nBefore = delValue.getFirstChild();
+					delValue.delete();
+					ret.add(nBefore.getNodeValue());
+					nBefore.delete();
 				}
 					
 				//ret.add(XMLDB.getAttr(n, "name"));
@@ -285,7 +292,14 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 					// check the locks after this line, It might leave some
 					//ret.add(0, n.getFirstChild().getFirstChil!().getNodeValue());
 					//ret.add(0, n.getFirstChild().getNodeValue());
-					ret.add(0, n.getFirstChild().getNextSibling().getFirstChild().getNodeValue());
+					XmlValue delValue = n.getFirstChild();
+					nBefore = delValue.getNextSibling();
+					delValue.delete();
+					delValue = nBefore;
+					nBefore = delValue.getFirstChild();
+					delValue.delete();
+					ret.add(0, nBefore.getNodeValue());
+					nBefore.delete();
 				}
 
 				/*
@@ -297,7 +311,7 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 				}
 				*/
 
-			} else if(XMLDB.hasAttr(n) && !n.getNodeName().equals(qg.nodeLevel.getKey())) {
+			} /*else if(XMLDB.hasAttr(n) && !n.getNodeName().equals(qg.nodeLevel.getKey())) {
 				Map tempFilter;
 				if (filterMaps.containsKey(n.getNodeName())) {
 					tempFilter = (HashMap)filterMaps.get(n.getNodeName());
@@ -310,6 +324,7 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 					filterMaps.put(n.getNodeName(), tempFilter);
 				}
 			}
+			*/
 			nBefore = n;
 			n = n.getParentNode();
 			nBefore.delete();

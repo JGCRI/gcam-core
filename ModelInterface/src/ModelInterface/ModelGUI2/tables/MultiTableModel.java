@@ -445,8 +445,8 @@ public class MultiTableModel extends BaseTableModel{
 		wild = new ArrayList();
 		wild.add(qgIn.getNodeLevel());
 		wild.add(qgIn.getYearLevel());
-		System.out.println("Query is "+qgIn.getCompleteXPath(regions));
-		System.out.println("Before Function: "+System.currentTimeMillis());
+		//System.out.println("Query is "+qgIn.getCompleteXPath(regions));
+		//System.out.println("Before Function: "+System.currentTimeMillis());
 		buildTable(DbViewer.xmlDB.createQuery(qgIn, scenarios, regions), qgIn.isSumAll(), qgIn.getLevelValues());
 		tableEditor = new TableEditor();
 		tableRenderer = new TableRenderer();
@@ -472,6 +472,7 @@ public class MultiTableModel extends BaseTableModel{
 			  // display an error on the screen
 			  JOptionPane.showMessageDialog(parentFrame, "The Query did not get any results", "Build Table Error",
 					  JOptionPane.ERROR_MESSAGE);
+			  res.delete();
 			  return;
 		  }
 	  } catch(XmlException e) {
@@ -495,7 +496,9 @@ public class MultiTableModel extends BaseTableModel{
 						  JOptionPane.ERROR_MESSAGE);
 			  }
 
-			  units = XMLDB.getAttr(tempNode.getParentNode(), "unit");
+			  XmlValue delVal = tempNode.getParentNode();
+			  units = XMLDB.getAttr(delVal, "unit");
+			  delVal.delete();
 			  if(units == null) {
 				  units = "None Specified";
 			  }
@@ -536,9 +539,9 @@ public class MultiTableModel extends BaseTableModel{
 	  if(remove1975) {
 		  regions.remove("1975");
 	  }
-	  System.out.println("After build Tree: "+System.currentTimeMillis());
+	  //System.out.println("After build Tree: "+System.currentTimeMillis());
 	  recAddTables(dataTree, null, regions, years, "");
-	  System.out.println("After Add table: "+System.currentTimeMillis());
+	  //System.out.println("After Add table: "+System.currentTimeMillis());
 	  /* Figure out what to do for level selected
 	  System.out.println("Level Selected: "+levelValues);
 	  if(!sumAll && levelValues != null && years.size() != levelValues.length) {
