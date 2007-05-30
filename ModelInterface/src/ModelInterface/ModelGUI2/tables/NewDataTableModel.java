@@ -77,9 +77,10 @@ public class NewDataTableModel extends BaseTableModel{
 	        wild.set(0, ((DOMmodel.DOMNodeAdapter)wild.get(0)).getNode().getNodeName());
 	        wild.set(1, ((DOMmodel.DOMNodeAdapter)wild.get(1)).getNode().getNodeName());
 		buildTable(treePathtoXPath(tp, doc.getDocumentElement(), 1));
-		indCol.add(0,w3 /*set2Name*/);
+		//indCol.add(0,w3 /*set2Name*/);
 		ind1Name = (String)wild.get(0);
 		ind2Name = (String)wild.get(1);
+		indCol.add(0, ind1Name);
 		flipped = false;
 		documentationRenderer = getDocumentationRenderer();
 	}
@@ -113,9 +114,6 @@ public class NewDataTableModel extends BaseTableModel{
 		row.add(regionAndYear[1]);
 		// colKey;rowKey maps to the data that should go in that cell
 		data.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
-		if(units == null) {
-			units = ((Element)tempNode.getParentNode()).getAttribute("unit");
-		}
 	  }
 	  indCol = new Vector(col);
 	  indRow = new Vector(row);
@@ -263,18 +261,6 @@ public class NewDataTableModel extends BaseTableModel{
 				return new Double(0.0);
 			}
 			return ret;
-			/*
-			XmlValue ret = ((XmlValue)data.get(getKey(row,col)));
-			if(ret == null) {
-				return "";
-			}
-			try {
-				return ret.getNodeValue();
-			} catch(Exception e) {
-				e.printStackTrace();
-				return null;
-			}
-			*/
 		}
 		Node ret = ((Node)data.get(getKey(row,col)));
 		if(ret == null) {
@@ -300,6 +286,11 @@ public class NewDataTableModel extends BaseTableModel{
 	 * @return Double.class for 1 &lt columnIndex &lt getColumnCount()-1 else String.class
 	 */
 	public Class getColumnClass(int columnIndex) {
+		// TODO: figure out if I was to return Doubles or just do strings
+		// 	 if we are viewing an input files. 
+		if(doc != null) {
+			return String.class;
+		}
 		return (1 < columnIndex) && (columnIndex < getColumnCount()-1)? Double.class : String.class;
 	}
 

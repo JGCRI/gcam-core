@@ -29,7 +29,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JSeparator;
 import javax.swing.ListSelectionModel;
-import javax.swing.JFileChooser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -54,6 +53,10 @@ import javax.xml.xpath.XPathConstants;
 
 import org.w3c.dom.ls.LSParser;
 import org.w3c.dom.ls.LSInput;
+
+import ModelInterface.InterfaceMain;
+import ModelInterface.common.FileChooser;
+import ModelInterface.common.FileChooserFactory;
 
 public class Documentation {
 	private Vector<DocumentationElement> documentations;
@@ -346,15 +349,15 @@ public class Documentation {
 		if(documentationURI == null) {
 			JOptionPane.showMessageDialog(ModelInterface.InterfaceMain.getInstance(), 
 				"Please select a documentation file, or type in the name of a\nnew documentation file to create a new one.\nYou must save the XML to save the link to the documentation file.", "Add new Documentation File", JOptionPane.INFORMATION_MESSAGE);
-			JFileChooser fc = new JFileChooser();
-			fc.setCurrentDirectory(new File(ModelInterface.InterfaceMain.getInstance().getProperties().getProperty("lastDirectory", ".")));
-			fc.setFileFilter(new XMLFilter());
-			int result = fc.showOpenDialog(ModelInterface.InterfaceMain.getInstance());
-
-			if (result == JFileChooser.CANCEL_OPTION) {
+			final InterfaceMain parentFrame = InterfaceMain.getInstance();
+			FileChooser fc = FileChooserFactory.getFileChooser();
+			File[] result = fc.doFilePrompt(parentFrame, "Select Documentation File", FileChooser.SAVE_DIALOG, 
+					new File(parentFrame.getProperties().getProperty("lastDirectory", ".")),
+					new XMLFilter());
+			if(result == null) {
 				return;
-			} else if (result == JFileChooser.APPROVE_OPTION) {
-				URI relDocumentationURI = documentationURI = fc.getSelectedFile().toURI();
+			} else {
+				URI relDocumentationURI = documentationURI = result[0].toURI();
 				String docURIStr = doc.getDocumentURI();
 				if(docURIStr == null) {
 					// warn that couldn't get doc's URI going to set as full path
@@ -376,7 +379,7 @@ public class Documentation {
 				}
 				doc.getDocumentElement().setAttribute("documentation", relDocumentationURI.toString());
 				ModelInterface.InterfaceMain.getInstance().fireProperty("Document-Modified", null, doc);
-				if(fc.getSelectedFile().exists()) {
+				if(result[0].exists()) {
 					System.out.println("Opening existing doc");
 					openDocumentation();
 				}

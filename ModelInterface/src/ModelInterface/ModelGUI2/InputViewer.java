@@ -766,25 +766,31 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 						int row = jTable.rowAtPoint(p);
 						int col = jTable.columnAtPoint(p);
 
-						JFreeChart chart;
-						if (jTable.getModel() instanceof TableSorter) {
-							chart = ((BaseTableModel) ((TableSorter) jTable
-									.getModel()).getTableModel()).createChart(row, col);
-						} else {
-							chart = ((BaseTableModel) jTable.getModel())
+						try {
+							JFreeChart chart;
+							if (jTable.getModel() instanceof TableSorter) {
+								chart = ((BaseTableModel) ((TableSorter) jTable
+										.getModel()).getTableModel()).createChart(row, col);
+							} else {
+								chart = ((BaseTableModel) jTable.getModel())
 									.createChart(row, col);
+							}
+							// Turn the chart into an image.
+							BufferedImage chartImage = chart.createBufferedImage(
+									500, 500);
+
+							JLabel labelChart = new JLabel();
+							labelChart.setIcon(new ImageIcon(chartImage));
+							chartPanel.add(labelChart);
+							chartPanel.add(Box.createVerticalStrut(10));
+
+							chartWindow.pack();
+							chartWindow.setVisible(true);
+						} catch(NumberFormatException nfe) {
+							JOptionPane.showMessageDialog(parentFrame, 
+									"Could not create a chart: No year values to chart.", 
+									"Could Not Create", JOptionPane.ERROR_MESSAGE);
 						}
-						// Turn the chart into an image.
-						BufferedImage chartImage = chart.createBufferedImage(
-								500, 500);
-
-						JLabel labelChart = new JLabel();
-						labelChart.setIcon(new ImageIcon(chartImage));
-						chartPanel.add(labelChart);
-						chartPanel.add(Box.createVerticalStrut(10));
-
-						chartWindow.pack();
-						chartWindow.setVisible(true);
 					}
 				});
 			}

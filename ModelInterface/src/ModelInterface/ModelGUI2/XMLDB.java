@@ -223,29 +223,12 @@ public class XMLDB {
 	public void addFile(String fileName) {
 	    XmlDocumentConfig docConfig = new XmlDocumentConfig();
 	    docConfig.setGenerateName(true);
-	    //docConfig.setLockMode(LockMode.DEGREE_2);
 	    try {
-		    /*
-		    FileReader is = new FileReader(fileName);
-		    StringWriter sw = new StringWriter();
-		    char[] buff = new char[4 * 1024];
-		    int len;
-		    while((len = is.read(buff, 0, 4 * 1024)) != -1) {
-			    sw.write(buff, 0, len);
-		    }
-		    myContainer.putDocument("", sw.toString(), uc, docConfig);
-		    */
 		    myContainer.putDocument("run", manager.createLocalFileInputStream(fileName), uc, docConfig);
 		    printLockStats("addFile");
 		    //myContainer.sync();
 	    } catch(XmlException e) {
 		    e.printStackTrace();
-		    /*
-	    } catch(FileNotFoundException fe) {
-		    fe.printStackTrace();
-	    } catch(IOException ioe) {
-		    ioe.printStackTrace();
-		    */
 	    }
 	}
 	public void removeDoc(String docName) {
@@ -269,6 +252,7 @@ public class XMLDB {
 			XmlDocument doc = myContainer.getDocument(aDocName);
 			OutputStream fileOutput = new BufferedOutputStream(new FileOutputStream(aLocation));
 			fileOutput.write(doc.getContent());
+			doc.delete();
 			fileOutput.close();
 			return true;
 		}
@@ -307,8 +291,11 @@ public class XMLDB {
 			System.out.println("Query Plan: "+qeTemp.getQueryPlan());
 			return qeTemp.execute(qc);
 			*/
+			/*
 			System.out.println("Number of values are currently: "+numVals);
 			return new XmlResultsWrapper(manager.query(queryComplete, qc));
+			*/
+			return manager.query(queryComplete, qc);
 		} catch(XmlException e) {
 			e.printStackTrace();
 			return null;
@@ -442,16 +429,14 @@ public class XMLDB {
 		try {
 			XmlQueryContext qc = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Eager);
 			printLockStats("Before check md query");
-			// since we moved to dbxml 2.3 it can't find var through queries (namespace issue?) so we will
-			// now search for demographicsVar
-			final XmlResults res = new XmlResultsWrapper(manager.query(
-					"collection('"+contName+"')/*[fn:empty(dbxml:metadata('var'))]", qc));
+			final XmlResults res = manager.query(
+					"collection('"+contName+"')/*[fn:empty(dbxml:metadata('var'))]", qc);
 			printLockStats("after check md query");
 			uc.setApplyChangesToContainers(true);
 			// instead of having to determine the size of prog bar, should be figured out
 			// by the number of query builders..
 			final JProgressBar progBar = new JProgressBar(0, res.size()*7);
-			final JDialog jd = createProgressBarGUI(parentFrame, progBar);
+			final JDialog jd = createProgressBarGUI(parentFrame, progBar, "Getting Variables", "Finding new variables");
 			(new Thread(new Runnable() {
 				public void run() {
 					Runnable incProgress = (new Runnable() {
@@ -623,7 +608,7 @@ public class XMLDB {
 			*/
 			String queryStr = "declare function local:distinct-node-names ($args as node()*) as xs:string* { fn:distinct-values(for $nname in $args return fn:local-name($nname)) }; "+path;
 			XmlQueryExpression qe = manager.prepare(queryStr, qc);
-			return new XmlResultsWrapper(qe.execute(contextVal, qc));
+			return qe.execute(contextVal, qc);
 		} catch(XmlException e) {
 			e.printStackTrace();
 			closeDB();
@@ -724,15 +709,16 @@ public class XMLDB {
 		}
 		printLockStats("getVarMetaData");
 	}
-	private JDialog createProgressBarGUI(Frame parentFrame, JProgressBar progBar) {
+	// TODO: this is a util method and should be moved somewhere else
+	public static JDialog createProgressBarGUI(Frame parentFrame, JProgressBar progBar, String title, String labelStr) {
 		if(progBar.getMaximum() == 0) {
 			return null;
 		}
-		JDialog filterDialog = new JDialog(parentFrame, "Getting Variables", false);
+		JDialog filterDialog = new JDialog(parentFrame, title, false);
 		JPanel all = new JPanel();
 		all.setLayout( new BoxLayout(all, BoxLayout.Y_AXIS));
 		progBar.setPreferredSize(new Dimension(200, 20));
-		JLabel label = new JLabel("Finding new variables");
+		JLabel label = new JLabel(labelStr);
 		Container contentPane = filterDialog.getContentPane();
 		all.add(label, BorderLayout.PAGE_START);
 		all.add(Box.createVerticalStrut(10));

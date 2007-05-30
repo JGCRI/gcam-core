@@ -338,7 +338,10 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 			}
 			if(parentPath == null) {
 				System.out.println("Trouble: wasn't able to find parent in old selection");
-				// about to get some null pointer action
+				// about to get some null pointer action so lets just give doDisable a try, 
+				// if that has not been set we have no other choices
+				doDisable.run();
+				return;
 			}
 			if(parentPath.getLastPathComponent() instanceof SingleQueryValue) {
 				parentPath = parentPath.getParentPath();

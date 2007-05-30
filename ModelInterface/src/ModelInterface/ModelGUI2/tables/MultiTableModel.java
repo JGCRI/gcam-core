@@ -491,9 +491,12 @@ public class MultiTableModel extends BaseTableModel{
 			  regionAndYear = qg.extractAxisInfo(tempNode.getParentNode(), tableFilterMaps);
 			  if(regionAndYear.length < 2) {
 				  JOptionPane.showMessageDialog(parentFrame, 
-						  "Could not determine how to categorize data.\nPlease check your axis node values.", 
+						  "Could not determine how to categorize the results.\nPlease check your axis node values.", 
 						  "Build Table Error",
 						  JOptionPane.ERROR_MESSAGE);
+				  tempNode.delete();
+				  res.delete();
+				  return;
 			  }
 
 			  XmlValue delVal = tempNode.getParentNode();
@@ -566,10 +569,7 @@ public class MultiTableModel extends BaseTableModel{
 	  for(int rowN = 0; rowN < getRowCount(); rowN +=2) {
 		  row = sheet.createRow(sheet.getLastRowNum()+1);
 		  row.createCell((short)0).setCellValue(getValueAt(rowN,0).toString());
-		  //System.out.println("Table? "+getValueAt(rowN+1,0));
-		  //((BaseTableModel)getValueAt(rowN+1,0)).exportToExcel(sheet, wb);
-		  ((NewDataTableModel)((JTable)((JScrollPane)((JSplitPane)((JScrollPane)getValueAt(rowN+1, 0)).getViewport().getView())
-		   	.getLeftComponent()).getViewport().getView()).getModel()).exportToExcel(sheet, wb, dp);
+		  getModelAt(rowN+1).exportToExcel(sheet, wb, dp);
 	  }
   }
 	public boolean equals(Object other) {
@@ -579,8 +579,6 @@ public class MultiTableModel extends BaseTableModel{
 			return false;
 		} else if(other instanceof NewDataTableModel) {
 			for(int i = 1; i < getRowCount(); i += 2) {
-				//System.out.println("checking other against: "+((JScrollPane)getValueAt(i, 0)).getViewport().getView());
-				//if(((JTable)((JScrollPane)getValueAt(i, 0)).getViewport().getView()).getModel() == other) {
 				if(getModelAt(i) == other) {
 					return true;
 				}
