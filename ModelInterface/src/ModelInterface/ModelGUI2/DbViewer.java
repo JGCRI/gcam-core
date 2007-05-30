@@ -50,6 +50,8 @@ import java.awt.Container;
 import java.awt.Component;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.awt.Cursor;
+import java.awt.event.MouseAdapter;
 import java.util.*;
 
 import com.sun.org.apache.xml.internal.serialize.OutputFormat;
@@ -489,8 +491,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 		}
 
 		//TODO: get real icons
-		final Icon queryIcon = new ImageIcon( TabCloseIcon.class.getResource("icons/closeTab.PNG"));
-		final Icon singleQueryIcon = new ImageIcon( TabCloseIcon.class.getResource("icons/mPressCloseTab.PNG"));
+		final Icon queryIcon = new ImageIcon( TabCloseIcon.class.getResource("icons/group-query.png"));
+		final Icon singleQueryIcon = new ImageIcon( TabCloseIcon.class.getResource("icons/single-query.png"));
 
 		// initialize the queries tree
 		final JTree queryList = new JTree(queries);
@@ -882,6 +884,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 	
 	private void manageDB() {
 		final JDialog filterDialog = new JDialog(parentFrame, "Manage Database", true);
+		filterDialog.getGlassPane().addMouseListener( new MouseAdapter() {});
+		filterDialog.getGlassPane().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		final DbViewer thisViewer = this;
 		JPanel listPane = new JPanel();
 		JPanel buttonPane = new JPanel();
@@ -926,23 +930,25 @@ public class DbViewer implements ActionListener, MenuAdder {
 					dirtyBit.setDirty();
 					((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", 
 						 xmlFiles[0].getParent());
-					parentFrame.getGlassPane().setVisible(true);
+					filterDialog.getGlassPane().setVisible(true);
 					xmlDB.addFile(xmlFiles[0].getAbsolutePath());
 					scns = getScenarios();
 					list.setListData(scns);
-					parentFrame.getGlassPane().setVisible(false);
+					filterDialog.getGlassPane().setVisible(false);
 				}
 			}
 		});
 		removeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Object[] remList = list.getSelectedValues();
+				filterDialog.getGlassPane().setVisible(true);
 				for(int i = 0; i < remList.length; ++i) {
 					dirtyBit.setDirty();
 					xmlDB.removeDoc(((ScenarioListItem)remList[i]).docName);
 				}
 				scns = getScenarios();
 				list.setListData(scns);
+				filterDialog.getGlassPane().setVisible(false);
 			}
 		});
 		renameButton.addActionListener(new ActionListener() {
@@ -1033,15 +1039,10 @@ public class DbViewer implements ActionListener, MenuAdder {
 					File exportLocation = FileUtils.selectFile(parentFrame,
 							new XMLFileFilter(), null, true);
 					if (exportLocation != null) {
+						filterDialog.getGlassPane().setVisible(true);
 						boolean success = xmlDB.exportDoc(((ScenarioListItem)selectedList[i]).docName, 
 							exportLocation);
-						/*
-						boolean success = xmlDB.exportDoc(((String) selectedList[i]).substring(0,
-								((String) selectedList[i]).indexOf(' ')),
-								exportLocation);
-						boolean success = xmlDB.exportDoc((String)selectedList[i],
-								exportLocation);
-								*/
+						filterDialog.getGlassPane().setVisible(false);
 						if(success) {
 							JOptionPane.showMessageDialog(parentFrame, "Scenario export succeeded.");
 						}
@@ -1250,7 +1251,19 @@ public class DbViewer implements ActionListener, MenuAdder {
 		// read the batch query file
 		Document queries = readQueries( queryFile );
 		XPathEvaluatorImpl xpeImpl = new XPathEvaluatorImpl(queries);
-		XPathResult res = (XPathResult)xpeImpl.createExpression("/queries/node()", xpeImpl.createNSResolver(queries.getDocumentElement())).evaluate(queries.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+		XPathResult res = (XPathResult)xpeImpl.createExpression("/queries/node()", xpeImpl.createNSResolver(queries.getDocumentElement())).evaluate(queries.getDocumentElement(), XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+
+		final int numQueries = res.getSnapshotLength();
+		final JProgressBar progressBar = new JProgressBar(0, numQueries);
+		// TODO: createProgressBarGUI should be moved somewhere else
+		final JDialog progressDialog = XMLDB.createProgressBarGUI(parentFrame, progressBar, 
+				"Running Queries", "Run and Export Progress");
+		// the createProgressBarGUI sets it visible
+		final Runnable increaseProgress = new Runnable() {
+			public void run() {
+				progressBar.setValue(progressBar.getValue()+1);
+			}
+		};
 
 		// read/create the output excel file
 		if(excelFile.exists()) {
@@ -1264,8 +1277,9 @@ public class DbViewer implements ActionListener, MenuAdder {
 		if(wb == null) {
 			wb = new HSSFWorkbook();
 		}
-		//TODO: add a progress bar
-		while((tempNode = res.iterateNext()) != null) {
+		//while((tempNode = res.iterateNext()) != null) {
+		for(int snapshotIndex = 0; snapshotIndex < numQueries; ++snapshotIndex) {
+			tempNode = res.snapshotItem(snapshotIndex);
 			tempRegions.removeAllElements();
 			NodeList nl = tempNode.getChildNodes();
 			for(int i = 0; i < nl.getLength(); ++i) {
@@ -1290,6 +1304,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 			} catch(NullPointerException e) {
 				System.out.println("Warning possible that a query didn't get results");
 				e.printStackTrace();
+			} finally {
+				SwingUtilities.invokeLater(increaseProgress);
 			}
 		}
 		try {
@@ -1304,6 +1320,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 			JOptionPane.showMessageDialog(parentFrame,
 					"There was an error while trying to write results",
 					"Batch Query Error", JOptionPane.ERROR_MESSAGE);
+		} finally {
+			progressDialog.dispose();
 		}
 	}
 
