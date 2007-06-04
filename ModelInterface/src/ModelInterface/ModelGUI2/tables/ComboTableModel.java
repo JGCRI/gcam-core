@@ -767,13 +767,16 @@ public class ComboTableModel extends BaseTableModel{
 		parentFrame = parentFrameIn;
 		//title = qgIn.getVariable();
 		title = qgIn.toString();
+		boolean isTotal = false;
 		if(singleBinding == null) {
-			buildTable(DbViewer.xmlDB.createQuery(qgIn, scenarios, regions), qgIn.isSumAll(), qgIn.getLevelValues());
+			buildTable(DbViewer.xmlDB.createQuery(qgIn, scenarios, regions), qgIn.isSumAll(), 
+					qgIn.getLevelValues(), isTotal);
 		} else {
+			// TODO: figure out a better way of telling if this is a Total
+			isTotal = !(singleBinding instanceof ModelInterface.ModelGUI2.xmldb.SingleQueryQueryBinding);
 			buildTable(DbViewer.xmlDB.createQuery(singleBinding, scenarios, regions), 
-					qgIn.isSumAll(), qgIn.getLevelValues());
+					qgIn.isSumAll(), qgIn.getLevelValues(), isTotal);
 		}
-		//DbViewer.xmlDB.setQueryFilter("");
 		ind2Name = qgIn.getVariable();
 		indCol.add(0, ind1Name);
 		activeRows = new Vector( leftSideVector.size() * indRow.size() );
@@ -799,7 +802,7 @@ public class ComboTableModel extends BaseTableModel{
 		//System.out.println("Would have cut down "+wouldRemove+" rows");
 		setColNameIndex(qg.getChartLabelColumnName());
 	}
-	private void buildTable(XmlResults res, boolean sumAll, Object[] levelValues) {
+	private void buildTable(XmlResults res, boolean sumAll, Object[] levelValues, boolean isTotal) {
 	  try {
 		  if(!res.hasNext()) {
 			  System.out.println("Query didn't get any results");
@@ -831,6 +834,9 @@ public class ComboTableModel extends BaseTableModel{
 				  tempNode.delete();
 				  res.delete();
 				  return;
+			  }
+			  if(isTotal) {
+				  regionAndYear[1] = "Total";
 			  }
 			  XmlValue delValue = tempNode.getParentNode();
 			  units = XMLDB.getAttr(delValue, "unit");

@@ -22,6 +22,7 @@ import ModelInterface.common.DataPair;
 import ModelInterface.ModelGUI2.xmldb.QueryBinding;
 import ModelInterface.ModelGUI2.xmldb.SingleQueryQueryBinding;
 import ModelInterface.ModelGUI2.xmldb.SingleQueryListQueryBinding;
+import ModelInterface.ModelGUI2.xmldb.QueryBindingFactory;
 import ModelInterface.ModelGUI2.QueryTreeModel;
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.undo.MiUndoableEditListener;
@@ -164,7 +165,11 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 		 * 	single value that was selected.
 		 */
 		public QueryBinding getAsQueryBinding() {
-			return new SingleQueryQueryBinding(displayValue, qg, DbViewer.xmlDB.getContainer());
+			if(!displayValue.equals("Total")) {
+				return new SingleQueryQueryBinding(displayValue, qg, DbViewer.xmlDB.getContainer());
+			} else {
+				return QueryBindingFactory.getQueryBinding(qg, DbViewer.xmlDB.getContainer());
+			}
 		}
 
 		/**
@@ -438,6 +443,9 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 								SingleQueryValue tempValue = new SingleQueryValue(curr.asString());
 								curr.delete();
 								tempValues.add(tempValue);
+							}
+							if(qg.isGroup()) {
+								tempValues.add(new SingleQueryValue("Total"));
 							}
 						}
 						res.delete();
