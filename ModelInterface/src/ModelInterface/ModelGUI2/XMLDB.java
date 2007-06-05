@@ -6,7 +6,6 @@ import ModelInterface.ModelGUI2.xmldb.QueryBindingFactory;
 
 import java.io.*;
 import java.util.*;
-import java.awt.Frame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,10 +25,10 @@ public class XMLDB {
 	String queryFilter;
 	String queryFunction;
 	*/
-	public XMLDB(String db, Frame parentFrame) {
+	public XMLDB(String db, JFrame parentFrame) {
 		openDB(db, parentFrame);
 	}
-	public void openDB(String dbPath, Frame parentFrame) {
+	public void openDB(String dbPath, JFrame parentFrame) {
 		EnvironmentConfig envConfig = new EnvironmentConfig();
 		envConfig.setAllowCreate(true);
 		envConfig.setCacheSize(100 * 1024 * 1024 );
@@ -164,7 +163,16 @@ public class XMLDB {
 								"DB Upgrade Error", JOptionPane.ERROR_MESSAGE);
 								*/
 						System.out.println("Do upgrade");
-						manager.upgradeContainer(contName, uc);
+						//manager.upgradeContainer(contName, uc);
+						parentFrame.getGlassPane().setVisible(true);
+						boolean didUpgradeWork = upgradeDatabase(path, contName);
+						parentFrame.getGlassPane().setVisible(false);
+						if(!didUpgradeWork) {
+							JOptionPane.showMessageDialog(parentFrame, 
+									"An error occured while upgrading the database.", 
+									"DB Upgrade Error", JOptionPane.ERROR_MESSAGE);
+							return;
+						}
 						System.out.println("Done upgrade");
 						myContainer = manager.openContainer(contName, cconfig);
 						System.out.println("Done open");
@@ -708,6 +716,71 @@ public class XMLDB {
 			e.printStackTrace();
 		}
 		printLockStats("getVarMetaData");
+	}
+	/**
+	 * Trys to upgrade the database at the passed in location.  This will
+	 * rely on the db_upgrade database utility to be located in the same directory
+	 * as the jar.
+	 * @param path The path to the directory of where the database is.
+	 * @param name The file name of the database.
+	 * @return True if it worked false otherwise.
+	 */
+	private static boolean upgradeDatabase(String path, String name) {
+		// do I need to worry about escaping the path?
+		final String command = "dbxml -h \""+path+"\""; 
+		//System.out.println("Command is: "+command);
+		final String[] env = new String[1];
+		final String upgradeCommand = "upgradeContainer "+name;
+		final String exitCommand = "exit";
+		env[0] = "DYLD_LIBRARY_PATH="+System.getProperty("java.library.path");
+		//System.out.println("env is: "+env[0]);
+		boolean ret = false;
+		try {
+			final Process proc = Runtime.getRuntime().exec(command, env);
+			java.io.BufferedWriter writer = new java.io.BufferedWriter(new java.io.OutputStreamWriter(proc.getOutputStream()));
+			writer.write(upgradeCommand, 0, upgradeCommand.length());
+			writer.newLine();
+			writer.flush();
+			writer.write(exitCommand, 0, exitCommand.length());
+			writer.newLine();
+			writer.flush();
+			/*
+			new Thread(new Runnable() {
+				public void run() {
+					for(int i = 0; i < 5; ++i) {
+						try {
+							System.out.println("Doing stuff");
+					java.io.BufferedReader buff = new java.io.BufferedReader(new java.io.InputStreamReader(proc.getErrorStream()));
+					String read;
+					while(buff.ready() && (read = buff.readLine()) != null) {
+						System.out.println(read);
+					}
+					buff.close();
+					buff = new java.io.BufferedReader(new java.io.InputStreamReader(proc.getInputStream()));
+					while(buff.ready() && (read = buff.readLine()) != null) {
+						System.out.println(read);
+					}
+					buff.close();
+					System.out.println("Before sleep");
+					Thread.sleep(10000);
+					System.out.println("After sleep");
+						} catch(Exception e) {
+							e.printStackTrace();
+						}
+					}
+					System.out.println("Before destroy");
+					proc.destroy();
+					System.out.println("After destroy");
+				}
+			}).start();
+			*/
+
+			ret = proc.waitFor() == 0;
+			//System.out.println("return value: "+proc.exitValue());
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return ret;
 	}
 	// TODO: this is a util method and should be moved somewhere else
 	public static JDialog createProgressBarGUI(Frame parentFrame, JProgressBar progBar, String title, String labelStr) {
