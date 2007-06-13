@@ -114,7 +114,7 @@ public:
 
     // Documentation is inherited.
     virtual void setLandAllocator(
-       ILandAllocator*    aLandAllocator,
+       const ILandAllocator*    aLandAllocator,
        const std::string& aName,
        const std::string& aLandType ) {}
 

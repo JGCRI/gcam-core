@@ -146,7 +146,20 @@ void ForestProductionTechnology::completeInit( const string& aRegionName,
                                                ILandAllocator* aLandAllocator,
                                                const GlobalTechnologyDatabase* aGlobalTechDB )
 {
-    // TODO: Why isn't this calling the parent function?
+    // Setup the land allocators for the secondary outputs
+    if ( mOutputs.size() ) {
+        // Technology::completeInit() will add the primary output.
+        // At this point, all are secondary outputs
+        for ( vector<IOutput*>::iterator outputIter = mOutputs.begin(); outputIter != mOutputs.end(); ++outputIter ) {
+           ( *outputIter )->setLandAllocator( aLandAllocator, mName, landType );
+        }
+    }
+
+    // TODO: Change to be able to call the parent function.
+    // Right now doesn't work since two classes aren't derived from common parent.
+    // To do this, likely need a     ILandAllocator::LandUsageType getLandType() function so as to
+    // create the proper land leaf type.
+    
     Technology::completeInit( aRegionName, aSectorName, aDepFinder, aSubsectorInfo,
                               aLandAllocator, aGlobalTechDB );
 

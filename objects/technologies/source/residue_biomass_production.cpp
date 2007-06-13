@@ -323,7 +323,7 @@ void ResidueBiomassProduction::scaleCoefficient( const double aScaler )
 
 // Documentation is inherited.
 void ResidueBiomassProduction::setLandAllocator(
-   ILandAllocator*    aLandAllocator,
+   const ILandAllocator*    aLandAllocator,
    const std::string& aName,
    const std::string& aLandType )
 {

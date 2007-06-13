@@ -188,7 +188,7 @@ public :
 
    // Documentation is inherited.
     virtual void setLandAllocator(
-       ILandAllocator*    aLandAllocator,
+       const ILandAllocator*    aLandAllocator,
        const std::string& aName,
        const std::string& aLandType );
 
@@ -236,7 +236,7 @@ private :
    Value mCachedCO2Coef;
 
    //! The land allocator
-   ILandAllocator* mLandAllocator;
+   const ILandAllocator* mLandAllocator;
 
    //! The name of the technology
    std::string mTechnologyName;

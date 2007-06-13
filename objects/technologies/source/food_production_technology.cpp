@@ -228,8 +228,8 @@ void FoodProductionTechnology::completeInit( const string& aRegionName,
     if ( mOutputs.size() ) {
         // Technology::completeInit() will add the primary output.
         // At this point, all are secondary outputs
-        for ( vector<IOutput*>::iterator x = mOutputs.begin(); x != mOutputs.end(); ++x ) {
-           ( *x )->setLandAllocator( aLandAllocator, mName, landType );
+        for ( vector<IOutput*>::iterator outputIter = mOutputs.begin(); outputIter != mOutputs.end(); ++outputIter ) {
+           ( *outputIter )->setLandAllocator( aLandAllocator, mName, landType );
         }
     }
 
