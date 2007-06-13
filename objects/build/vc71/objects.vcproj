@@ -567,7 +567,7 @@
 					RelativePath="..\..\technologies\source\profit_shutdown_decider.cpp">
 				</File>
 				<File
-					RelativePath="..\..\technologies\source\residue_biomass_production.cpp">
+					RelativePath="..\..\technologies\source\residue_biomass_output.cpp">
 				</File>
 				<File
 					RelativePath="..\..\technologies\source\retired_production_state.cpp">
@@ -1368,7 +1368,7 @@
 					RelativePath="..\..\technologies\include\profit_shutdown_decider.h">
 				</File>
 				<File
-					RelativePath="..\..\technologies\include\residue_biomass_production.h">
+					RelativePath="..\..\technologies\include\residue_biomass_output.h">
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\retired_production_state.h">

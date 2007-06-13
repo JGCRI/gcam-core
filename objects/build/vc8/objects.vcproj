@@ -770,7 +770,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\technologies\source\residue_biomass_production.cpp"
+					RelativePath="..\..\technologies\source\residue_biomass_output.cpp"
 					>
 				</File>
 				<File
@@ -2211,7 +2211,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\technologies\include\residue_biomass_production.h"
+					RelativePath="..\..\technologies\include\residue_biomass_output.h"
 					>
 				</File>
 				<File
