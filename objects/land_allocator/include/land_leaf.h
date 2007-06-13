@@ -37,6 +37,7 @@ class LandNode;
  *          - Elements: None
  */
 class LandLeaf : public ALandAllocatorItem {
+    friend class XMLDBOutputter;
 public:
     LandLeaf( const ALandAllocatorItem* aParent,
               const std::string& aName );

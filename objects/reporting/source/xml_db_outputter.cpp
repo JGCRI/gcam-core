@@ -841,6 +841,15 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
                              aClimateModel->getNetOceanUptake( year ),
                              year );
     }
+
+    // Global-mean temperature
+    for( int year = scenario->getModeltime()->getStartYear();
+         year <= endingYear; year += outputInterval )
+    {
+        writeItemUsingYear( "global-mean-temperature", "degreesC",
+                             aClimateModel->getTemperature( year ),
+                             year );
+    }
 }
 
 void XMLDBOutputter::endVisitClimateModel( const IClimateModel* aClimateModel,
@@ -978,6 +987,22 @@ void XMLDBOutputter::startVisitLandLeaf( const LandLeaf* aLandLeaf,
            aLandLeaf->getTotalLandAllocation( ALandAllocatorItem::eAnyLand, i ),
            i );
     }
+    
+    for( int i = 0; i < modeltime->getmaxper(); ++i ){
+        writeItem( "intrinsic-rate", "$/kHa", aLandLeaf->mIntrinsicRate[ i ], i );
+    }
+
+    //TODO
+    // Could save space by checking if this is an unmanaged land leaf, which does not have this value
+    // Or using a derived class write pattern
+    for( int i = 0; i < modeltime->getmaxper(); ++i ){
+        writeItem( "intrinsic-yield-mode", "GCal/kHa", aLandLeaf->mIntrinsicYieldMode[ i ], i );
+    }
+
+    for( int i = 0; i < modeltime->getmaxper(); ++i ){
+        writeItem( "cal-observed-yield", "GCal/kHa", aLandLeaf->mCalObservedYield[ i ], i );
+    }
+
 }
 
 void XMLDBOutputter::endVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod ){

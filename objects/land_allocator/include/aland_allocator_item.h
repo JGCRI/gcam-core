@@ -73,6 +73,7 @@ class ALandAllocatorItem : public TreeItem<ALandAllocatorItem>,
                            public IRoundTrippable,
                            private boost::noncopyable
 {
+    friend class XMLDBOutputter;
 public:
     typedef TreeItem<ALandAllocatorItem> ParentTreeType;
 
@@ -230,6 +231,7 @@ public:
      *        is within.
      * \param aPeriod Period.
      * \note This function must be called in order of increasing periods.
+     * \todo find better way of specifying share for the intrinsic yield calc for good with no initial share - perhaps read in a "comparable" share
      * \author James Blackwood
      */
     virtual void setIntrinsicYieldMode( const double aIntrinsicYieldAbove,
@@ -407,6 +409,7 @@ public:
      * \param aRegionName Region name.
      * \param aPeriod Model period
      * \author Steve Smith
+     * \todo Change name of this function to something more clear (perhaps setUnmanagedLandRates).
      */
     virtual void setUnmanagedLandValues( const std::string& aRegionName,
                                          const int aPeriod ) = 0;
