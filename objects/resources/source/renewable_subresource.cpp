@@ -157,12 +157,12 @@ void SubRenewableResource::annualsupply( int period, const GDP* gdp, double pric
         fractionAvailable = maxFraction * ( 1 + additionalFraction * ADDITIONAL_PERCENT );
     }
 
-    // Calculate the GDP expansion constraint.
-    double expansionConstraint = pow( gdp->getApproxGDP( period ) / gdp->getApproxGDP( 0 ),
+    // Calculate the amount of resource expansion due to GDP increase.
+    double resourceSupplyIncrease = pow( gdp->getApproxGDP( period ) / gdp->getApproxGDP( 0 ),
                                       gdpSupplyElasticity );
 
     // now convert to absolute value of production
-    annualprod[ period ] = fractionAvailable * maxSubResource * expansionConstraint;
+    annualprod[ period ] = fractionAvailable * maxSubResource * resourceSupplyIncrease;
 }
 
 /*! \brief Get the variance.
