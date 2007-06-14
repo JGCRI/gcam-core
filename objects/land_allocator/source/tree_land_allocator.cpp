@@ -169,8 +169,9 @@ void TreeLandAllocator::adjustTotalLand( const int aPeriod ){
     if ( totalManagedLand - mLandAllocation[ aPeriod ] > util::getSmallNumber() ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::DEBUG );
-        mainLog << "The total managed land allocated is greater than the total land in " << mName
-                << " in " << scenario->getModeltime()->getper_to_yr( aPeriod ) << " by "
+        mainLog << "The total managed land allocated is greater than the total land value of "
+                << mLandAllocation[ aPeriod ] 
+                << " in year " << scenario->getModeltime()->getper_to_yr( aPeriod ) << " by "
                 << totalManagedLand - mLandAllocation[ aPeriod ] 
                 << "(" << 100 * ( totalManagedLand - mLandAllocation[ aPeriod ] ) / mLandAllocation[ aPeriod ]
                 << "%)" << endl;
