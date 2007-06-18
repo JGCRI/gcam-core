@@ -56,7 +56,7 @@ void SmoothRenewableSubresource::annualsupply(
 
    // Make supply increase continuously with price to improve convergence.
    fractionAvailable *=
-      ( 1 + std::pow( ( aPrice / 2.0 ), mPriceExponent ) );
+      std::pow( ( 1 + ( aPrice / 2.0 ) ), mPriceExponent );
 
    // Calculate expansion in supply due to GDP increase
    double gpdSupplyExpansion = std::pow(
