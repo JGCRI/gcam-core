@@ -26,7 +26,7 @@ extern Scenario* scenario;
 * \author James Blackwood
 */
 FoodSupplySector::FoodSupplySector( std::string& regionName ): SupplySector( regionName ) {
-    calPrice = 0;
+    calPrice = -1.0;
     mSectorType = "Agriculture"; //Default sector type for ag production sectors
 }
 
@@ -65,7 +65,7 @@ bool FoodSupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNo
 */
 void FoodSupplySector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     SupplySector::toInputXMLDerived( out, tabs );
-    XMLWriteElementCheckDefault( calPrice, "calPrice", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( calPrice, "calPrice", out, tabs, -1.0 );
     XMLWriteElementCheckDefault( mMarketName, "market", out, tabs, string( "" ) );
 }	
 
@@ -163,13 +163,14 @@ void FoodSupplySector::setMarket() {
         vector <double> tempCalPrice( maxper, calPrice / CVRT90 ); // market prices are in $1975
         marketplace->setPriceVector( name, regionName, tempCalPrice );
 
-        // TODO: If there is a calibrated price why does the market need to be
-        // solved?
         for( int per = 1; per < modeltime->getmaxper(); ++per ){
             marketplace->setMarketToSolve( name, regionName, per );
         }
-        for( int per = 0; per < modeltime->getmaxper(); ++per ){
-            marketplace->getMarketInfo( name, regionName, per, true )->setDouble( "calPrice", calPrice );
+        // Don't set calPrice if not valid
+        if ( calPrice > 0 ) {
+            for( int per = 0; per < modeltime->getmaxper(); ++per ){
+                marketplace->getMarketInfo( name, regionName, per, true )->setDouble( "calPrice", calPrice );
+            }
         }
     }
 }
