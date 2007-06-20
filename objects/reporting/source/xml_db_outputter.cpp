@@ -193,7 +193,27 @@ auto_ptr<XMLDBOutputter::DBContainer> XMLDBOutputter::createContainer() {
 
     // Get the location to open the environment.
     const Configuration* conf = Configuration::getInstance();
-    const string environmentLocation = conf->getFile( "xmldb-environment", "." );
+    const string xmldbContainerName = conf->getFile( "xmldb-location", "database.dbxml" );
+    string environmentLocation;
+
+    // The path separator could go either way.
+    int indexOfDir = xmldbContainerName.find_last_of( '/' );
+    // string::npos means that it was not found.
+    if( indexOfDir == string::npos ) {
+        // was not a UNIX path separator, try Windows
+        indexOfDir = xmldbContainerName.find_last_of( '\\' );    
+        if( indexOfDir == string::npos ) {
+            // No path separators mean current directory.
+            environmentLocation = ".";
+        }
+    }
+ 
+    // if indexOfDir has a real value then substring out the path
+    // otherwise it will already have been set to "."
+    if( indexOfDir != string::npos ) {
+        environmentLocation = xmldbContainerName.substr( 0, 
+            indexOfDir );
+    }
 
     // Open the environment.
     dbContainer->mDBEnvironment->open( environmentLocation.c_str(),
@@ -204,11 +224,10 @@ auto_ptr<XMLDBOutputter::DBContainer> XMLDBOutputter::createContainer() {
                                                  DBXML_ADOPT_DBENV ) );
 
     // Open the container. It will be closed automatically when the manager goes out of scope.
-    const string containerName = conf->getFile( "xmldb-location", "database.dbxml" );
-
     try {
         dbContainer->mContainerWrapper.reset( new DBContainer::XMLContainerWrapper(
-                                             dbContainer->mManager->openContainer( containerName, DB_CREATE | DBXML_INDEX_NODES) ) );
+                                             dbContainer->mManager->openContainer( xmldbContainerName, 
+                                             DB_CREATE | DBXML_INDEX_NODES) ) );
     }
     catch ( const DbXml::XmlException& e ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
