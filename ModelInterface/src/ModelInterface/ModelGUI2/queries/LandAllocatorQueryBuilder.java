@@ -121,6 +121,8 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 			}
 		} catch(XmlException xe) {
 			xe.printStackTrace();
+		} finally {
+			res.delete();
 		}
 		DbViewer.xmlDB.printLockStats("LandAllocatorQueryBuilder.getLandUseTree");
 		JTree retTree = new JTree((Hashtable<String, Hashtable>)landUseTree);

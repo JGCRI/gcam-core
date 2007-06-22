@@ -1254,6 +1254,9 @@ public class QueryGenerator implements java.io.Serializable{
 	 * QueryGenerator is lost.
 	 */
 	public void resetQueryBuilder() {
+		if(qb == null) {
+			return;
+		}
 		qb.setQueryGenerator(this);
 	}
 }
