@@ -55,9 +55,12 @@ void SmoothRenewableSubresource::annualsupply(
    double fractionAvailable = mCostCurve( aPrice );
 
    // Make supply increase continuously with price to improve convergence.
+   // Default mPriceExponent value is very small so as not to significantly change resource base 
+   // The factor of 5 below is arbitary, but was chosen so as to not change results signifiantly.
+   // The equation below changes max resource value (using default  mPriceExponent) by 1% at 2 * mid-price.
    fractionAvailable *=
-      std::pow( ( 1 + ( aPrice / 2.0 ) ), mPriceExponent );
-
+      std::pow( ( 1 + ( aPrice / ( 5.0 * mCostCurve.getMidprice() ) ) ), mPriceExponent );
+    
    // Calculate expansion in supply due to GDP increase
    double gpdSupplyExpansion = std::pow(
       aGDP->getApproxGDP( aPeriod ) / aGDP->getApproxGDP( 0 ),
