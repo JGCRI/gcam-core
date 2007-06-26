@@ -121,6 +121,16 @@ void AComplexEmissions::copyGHGParameters( const AGHG* prevGHG ){
         return;
     }
 
+
+    // Chech the consistency of GHG driver from input file
+    // this will call the getGHGDriverName from base class (AGHG) to retrieve the GHG driver tag
+    if ( getGHGDriverName() != prevGHG->getGHGDriverName() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Warning, the driver has been changed from "<< prevGHG->getGHGDriverName() << " to "
+                << getGHGDriverName() << ". This may cause a calculation error." << endl;
+    }
+
     if ( !gwp ) { 
         gwp = prevComplexGHG->gwp; // only copy if GWP has not changed
     }
@@ -458,7 +468,4 @@ void AComplexEmissions::initCalc( const string& aRegionName,
     }
 
 }
-
-
-
 

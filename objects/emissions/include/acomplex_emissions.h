@@ -27,6 +27,7 @@
 
 class AEmissionsCoef;
 class GhgMAC;
+class AEmissionsDriver;
 
 /*! 
  * \ingroup Objects
@@ -97,4 +98,5 @@ private:
 };
 
 #endif // _ACOMPLEX_EMISSIONS_H_
+
 

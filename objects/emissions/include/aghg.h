@@ -125,6 +125,8 @@ public:
     double getEmissFuel( const int aPeriod ) const;
     bool getEmissionsCoefInputStatus() const;
     void setEmissionsCoefInputStatus();
+    std::string getGHGDriverName() const ;  // return a GHG driver name
+
 
     /*!
      * \brief Perform initializations that only need to be done once per period.
@@ -140,6 +142,7 @@ public:
 
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     void setEmissionsDriver( std::auto_ptr<AEmissionsDriver>& aEmissionsDriver );
+
 protected:
 
     AGHG();
@@ -208,7 +211,9 @@ protected:
     
 private:
     void copy( const AGHG& other );
+
 };
 
 #endif // _AGHG_H_
+
 
