@@ -691,6 +691,36 @@ void Subsector::initCalc( NationalAccount* aNationalAccount,
     }
 
     interpolateShareWeights( aPeriod );
+
+   // Pass forward any emissions information
+    for ( unsigned int i= 0; i< techs.size() && aPeriod > 0 && aPeriod < modeltime->getmaxper() ; i++ ) {
+        std::vector<std::string> ghgNames;
+        ghgNames = techs[i][aPeriod]->getGHGNames();
+        
+        int numberOfGHGs =  techs[ i ][ aPeriod ]->getNumbGHGs();
+
+        if ( numberOfGHGs != techs[i][ aPeriod - 1 ]->getNumbGHGs() && aPeriod > 1 ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << name << " Number of GHG objects changed in period " << aPeriod;
+            mainLog << " to " << numberOfGHGs <<", tech: ";
+            mainLog << techs[i][ aPeriod ]->getName();
+            mainLog << ", sub-s: "<< name << ", sect: " << sectorName << ", region: " << regionName << endl;
+        }
+        // If number of GHG's decreased, then copy GHG objects
+        // This would allow user to input a GHG object only in one period
+        if ( numberOfGHGs < techs[i][ aPeriod - 1 ]->getNumbGHGs() ) {
+            // TODO
+        }
+        
+        // New method
+        if ( aPeriod > 1 ) { // Note the hard coded base period
+         for ( int j=0 ; j<numberOfGHGs; j++ ) {
+            techs[i][ aPeriod ]->copyGHGParameters( techs[i][ aPeriod - 1]->getGHGPointer( ghgNames[j]  ) );
+         } // End For
+        }
+      
+    } // End For
 }
 
 /*! \brief check for fixed demands and set values to counter
