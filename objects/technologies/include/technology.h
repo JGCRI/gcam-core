@@ -214,6 +214,7 @@ public:
     double getTotalGHGCost( const std::string& aRegionName, const std::string& aSectorName, 
                             const int aPeriod ) const;
     double getShareWeight() const;
+    virtual int getNumbGHGs() const;
     void copyGHGParameters( const AGHG* prevGHG );
 
     virtual const AGHG* getGHGPointer( const std::string& aGHGName ) const;

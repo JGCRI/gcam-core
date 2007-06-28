@@ -1250,6 +1250,19 @@ const vector<string> Technology::getGHGNames() const {
     return util::getKeys( ghgNameMap );
 }
 
+/*! \brief returns the number of ghg objects.
+*
+* Calcuation is done using length of GHG string to be consistant with use of ghg names to access GHG information.
+*
+*
+* \author Steve Smith
+*/
+int Technology::getNumbGHGs()  const {
+    vector<string> ghgNames = getGHGNames();
+    return static_cast<int>( ghgNames.size() ); 
+}
+
+
 /*! \brief Copies parameters across periods for a specific GHG 
 * \param prevGHG Pointer to the previous GHG object that needs to be passed to the corresponding object this period.
 * \warning Assumes there is only one GHG object with any given name
