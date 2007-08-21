@@ -141,6 +141,7 @@ public:
                             const int aPeriod ) const = 0;
 
     virtual double getShareWeight() const = 0;
+    virtual int getNumbGHGs()  const = 0;
     virtual void copyGHGParameters( const AGHG* prevGHG ) = 0;
 
     virtual const AGHG* getGHGPointer( const std::string& aGHGName ) const = 0;
