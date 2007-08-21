@@ -264,6 +264,7 @@ void Sector::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, name );
 
     // write the xml for the class members.
+    XMLWriteElement( mSectorType, "sectorType", aOut, aTabs );
     XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
     XMLWriteElement( mInputUnit, "input-unit", aOut, aTabs );
     XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
