@@ -36,7 +36,7 @@ class AggrEmissionsCoef : public AEmissionsCoef{
 public:
     virtual AggrEmissionsCoef* clone() const;
 
-    virtual void initCalc( const IInfo* aSubsectorInfo, const std::string& aName );
+    virtual void initCalc( const IInfo* aSubsectorInfo, const std::string& aName, const int aPeriod );
     
     virtual const std::string& getXMLName() const;
 };

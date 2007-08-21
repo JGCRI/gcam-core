@@ -32,7 +32,7 @@ ReadEmissionsCoef* ReadEmissionsCoef::clone() const {
     return new ReadEmissionsCoef( *this );
 }
 
-void ReadEmissionsCoef::initCalc( const IInfo* aSubsectorInfo, const string& aName ){
+void ReadEmissionsCoef::initCalc( const IInfo* aSubsectorInfo, const string& aName, const int aPeriod ){
 }
 
 void ReadEmissionsCoef::overrideCoef( const double aEmissionsCoef ){

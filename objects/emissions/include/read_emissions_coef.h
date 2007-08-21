@@ -37,7 +37,7 @@ public:
     ReadEmissionsCoef( const double aEmissionsCoef );
     virtual ReadEmissionsCoef* clone() const;
 
-    virtual void initCalc( const IInfo* aSubsectorInfo, const std::string& aName );
+    virtual void initCalc( const IInfo* aSubsectorInfo, const std::string& aName, const int aPeriod );
     virtual void overrideCoef( const double aEmissionsCoef );
         
     virtual const std::string& getXMLName() const;

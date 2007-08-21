@@ -39,7 +39,7 @@ public:
     virtual InputEmissionsCoef* clone() const;
 
     virtual void updateCoef( const double aOutput );
-    virtual void initCalc( const IInfo* aSubsectorInfo, const std::string& aName );
+    virtual void initCalc( const IInfo* aSubsectorInfo, const std::string& aName, const int aPeriod );
     virtual double getEmissions( const double aOutput ) const;
     virtual double getInputEmissions() const;
     virtual double calcMaxCntrl( const double aFinalEmissCoef, const double aB,

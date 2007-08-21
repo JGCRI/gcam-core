@@ -52,6 +52,7 @@ public:
 
     static const std::string& getXMLNameStatic();
     static const std::string& aggrEmissionsPrefix();
+    static const std::string& aggrEmissionsYearPrefix();
 private:
     //! Type of sector that this GHG will be emitted from
     std::string mType;

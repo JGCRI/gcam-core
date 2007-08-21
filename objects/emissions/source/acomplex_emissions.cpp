@@ -448,7 +448,7 @@ void AComplexEmissions::initCalc( const string& aRegionName,
         mEmissionsCoef.reset( new ReadEmissionsCoef( 0 ) );
     }
 
-    mEmissionsCoef->initCalc( aLocalInfo, getName() );
+    mEmissionsCoef->initCalc( aLocalInfo, getName(), aPeriod );
 
     // If a finalEmissCoef or maxCntrl were read in, a tau and gdpcap0
     // must also have been read in.

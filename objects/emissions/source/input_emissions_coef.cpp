@@ -41,7 +41,7 @@ void InputEmissionsCoef::updateCoef( const double aOutput ){
     mEmissionsCoef = aOutput > util::getSmallNumber() ? mInputEmissions / aOutput : 0;
 }
 
-void InputEmissionsCoef::initCalc( const IInfo* aSubsectorInfo, const string& aName ){
+void InputEmissionsCoef::initCalc( const IInfo* aSubsectorInfo, const string& aName, const int aPeriod ){
 }
 
 double InputEmissionsCoef::getEmissions( const double aOutput ) const {

@@ -119,6 +119,16 @@ const string& TotalSectorEmissions::aggrEmissionsPrefix() {
     return AGGR_EM_PREFIX;
 }
 
+/*! \brief Returns prefix to use for storing aggregate emissions factor 
+*          applicable year in info object.
+* \author Steve Smith
+* \return The prefix string
+*/
+const string& TotalSectorEmissions::aggrEmissionsYearPrefix() {
+    const static string AGGR_EM_PREFIX_YEAR = "AggrEmissionYear"; 
+    return AGGR_EM_PREFIX_YEAR;
+}
+
 /*! \brief Sets aggregate emissions factor into the region info object.
 * \details Calculates the total calibrated output for sectors of the specified
 *          type in the specified year from the list of sectors. This is used to
@@ -137,6 +147,9 @@ void TotalSectorEmissions::setAggregateEmissionFactor( const string& aRegionName
                                                        IInfo* aRegionInfo,
                                                        const int aPeriod ) const
 {
+    // Write applicable year to info object
+    aRegionInfo->setDouble( aggrEmissionsYearPrefix() + mName, mApplicableYear );
+    
     // Check if the object is applicable in the current period.
     const Modeltime* modeltime = scenario->getModeltime();
     if ( mApplicableYear <= 0 || modeltime->getyr_to_per( mApplicableYear ) != aPeriod ) {
