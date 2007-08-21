@@ -31,6 +31,30 @@ LandLeaf( aParent, "" )
 UnmanagedLandLeaf::~UnmanagedLandLeaf() {
 }
 
+void UnmanagedLandLeaf::completeInit( const string& aRegionName,
+                             const IInfo* aRegionInfo )
+{
+    // Call parent
+    LandLeaf::completeInit( aRegionName, aRegionInfo );
+    
+    // If land value was not set for some period, set for all periods.
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( int period = 0; period < modeltime->getmaxper(); period++ ) {
+        if ( !mLandAllocation[ period ].isInited() ) {
+            if ( period > 0 && mLandAllocation[ period - 1 ].isInited() ) {
+                mLandAllocation[ period ] = mLandAllocation[ period - 1 ];
+            }
+            else {
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::NOTICE );
+                mainLog << "Land for unmanged Land-Leaf " << getName() 
+                        << " was not allocated in period " << period << endl;
+            }
+        }
+    }
+    
+}
+
 bool UnmanagedLandLeaf::XMLDerivedClassParse( const string& aNodeName,
                                               const DOMNode* aCurr )
 {
@@ -188,7 +212,6 @@ double UnmanagedLandLeaf::getTotalLandAllocation( const LandAllocationType aType
     }
     return 0;
 }
-
 void UnmanagedLandLeaf::checkCalObservedYield( const int aPeriod ) const {
     // Unmanaged land leaves do not have to have a calibrated observed yield, so
     // no checking is done.

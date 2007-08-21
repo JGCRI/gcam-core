@@ -37,6 +37,9 @@ public:
     virtual ~UnmanagedLandLeaf();
     static const std::string& getXMLNameStatic();
 
+    virtual void completeInit( const std::string& aRegionName, 
+                               const IInfo* aRegionInfo );
+    
     virtual void setUnmanagedLandAllocation( const std::string& aRegionName,
                                              const double aNewUnmanaged,
                                              const int aPeriod );
