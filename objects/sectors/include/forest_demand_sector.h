@@ -47,6 +47,9 @@ private:
     static const std::string prefix;
     std::string demandedGoodName;
     double perCapitaBaseOutput;
+
+    //! Save future demand so can be written out for debugging
+    double mFutureForestDemand; 
 };
 
 #endif // _FOREST_DEMAND_SECTOR_H_

@@ -47,6 +47,7 @@ void ForestDemandSector::toInputXMLDerived( std::ostream& out, Tabs* tabs ) cons
 void ForestDemandSector::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
     // Call the xml writing routine that is one up in the chain.
     DemandSector::toDebugXMLDerived( period, out, tabs );    
+        XMLWriteElement( mFutureForestDemand, "forestFutureDemand", out, tabs );
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -124,13 +125,12 @@ void ForestDemandSector::calcAggregateDemand( const GDP* aGDP,
     Marketplace* marketplace = scenario->getMarketplace();
     const Modeltime* modeltime = scenario->getModeltime();
     double forestDemand;
-    double forestDemandFuture;
     const int future = rotationPeriod / modeltime->gettimestep( aPeriod );
 
 
     // initialize for base periods
     if ( aPeriod == 0 ) {
-        forestDemandFuture = forestDemand = getOutput(0); // This is not used, here just to avoid invalid values
+        mFutureForestDemand = forestDemand = getOutput(0); // This is not used, here just to avoid invalid values
     }
     else if ( aPeriod == 1 ) {
         // This does not work if more than one period is calibrated. Must fix this at some point for demand sectors in general.
@@ -171,7 +171,7 @@ void ForestDemandSector::calcAggregateDemand( const GDP* aGDP,
         }
 
         // The priceRatio is then passed in to calculate demand.
-        forestDemandFuture = calcForestDemand ( aGDP, (aPeriod + future), normPeriod, futurePriceRatio );
+        mFutureForestDemand = calcForestDemand ( aGDP, (aPeriod + future), normPeriod, futurePriceRatio );
     }
 
     // Save the service demand without technical change applied for comparison with miniCAM.
@@ -183,7 +183,7 @@ void ForestDemandSector::calcAggregateDemand( const GDP* aGDP,
     setOutput( mService[ aPeriod ] / getTechnicalChange( aPeriod ), aGDP, aPeriod );
 
     // Need to put the demand for future forests into the marketplace
-    marketplace->addToDemand( prefix + demandedGoodName, regionName, forestDemandFuture, aPeriod ); // fuelname will be name of market, input is amount
+    marketplace->addToDemand( prefix + demandedGoodName, regionName, mFutureForestDemand, aPeriod ); // fuelname will be name of market, input is amount
 }
 
 double ForestDemandSector::calcForestDemand ( const GDP* gdp, const int period, const int normPeriod, double priceRatio ) {
