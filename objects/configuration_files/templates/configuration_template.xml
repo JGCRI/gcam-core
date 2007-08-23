@@ -34,6 +34,7 @@
 		<Value name="region-to-graph">USA</Value>
 		<!--END User Modifiable variables-->
 		<!--START Developer Only Modifiable Variables-->
+		<Value name="debug-region">USA</Value>
 		<Value name="AbatedGasForCostCurves">CO2</Value>
 		<Value name="monitorMktName">China</Value>
 		<Value name="monitorMktGood"></Value>
