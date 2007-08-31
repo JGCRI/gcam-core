@@ -3799,10 +3799,10 @@ public class ManipulationDriver
 			  //end getting weight
 		  } else if(localName.equals("time")) {
 			  //end getting time
+			  toAddVar.put(timeName, toAddTime);
 			  toAdd.data.put(varName, toAddVar);
 		  } else if(localName.equals("data")) {
 			  //end getting data
-			  toAddVar.put(timeName, toAddTime);
 		  }
 	  }
   }
