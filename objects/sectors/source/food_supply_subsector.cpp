@@ -11,6 +11,7 @@
 
 #include "sectors/include/food_supply_subsector.h"
 #include "technologies/include/food_production_technology.h"
+#include "technologies/include/unmanaged_land_technology.h"
 #include "util/base/include/xml_helper.h"
 
 using namespace std;
@@ -35,7 +36,8 @@ FoodSupplySubsector::~FoodSupplySubsector() {
 * \return True if nodename is a valid child of this class.
 */
 bool FoodSupplySubsector::isNameOfChild( const string& nodename ) const {
-    return ( nodename == FoodProductionTechnology::getXMLNameStatic1D() );
+    return ( nodename == FoodProductionTechnology::getXMLNameStatic1D() ) ||
+           ( nodename == UnmanagedLandTechnology::getXMLNameStatic1D() );
 }
 
 /*!
@@ -53,7 +55,12 @@ ITechnology* FoodSupplySubsector::createChild( const string& aTechType,
                                                const string& aTechName,
                                                const int aTechYear ) const
 {
-    return new FoodProductionTechnology( aTechName, aTechYear );
+    if ( aTechType == FoodProductionTechnology::getXMLNameStatic1D() ) {
+      return new FoodProductionTechnology( aTechName, aTechYear );
+    }
+    else if ( aTechType == UnmanagedLandTechnology::getXMLNameStatic1D() ) {
+      return new UnmanagedLandTechnology( aTechName, aTechYear );
+    }
 }
 
 //! Parses any input variables specific to derived classes
