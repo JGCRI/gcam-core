@@ -71,7 +71,7 @@ double ResidueBiomassOutput::calcPhysicalOutput(
    }
 
    // Initialize debugging vars to -1 so that know that a valid set of values are returned
-   mYield = mResMass = mCropMass = mResAvail = mMeanErosCtrl = mMaxBioEnergySupply = mFPrice = -1;
+   mResMass = mCropMass = mResAvail = mMeanErosCtrl = mMaxBioEnergySupply = mFPrice = -1;
    
    assert( scenario != 0 );
    const Marketplace*   pMarketplace = scenario->getMarketplace();
@@ -91,16 +91,6 @@ double ResidueBiomassOutput::calcPhysicalOutput(
       return 0;
    }
 
-   // Get the yield
-   mYield = mLandAllocator->getYield(
-      mLandType,
-      mTechnologyName,
-      aPeriod );
-   if ( mYield <= 0 )
-   {
-      return 0;
-   }
-
    // Get the area
    double   area = mLandAllocator->getLandAllocation(
       mLandType,
@@ -112,7 +102,7 @@ double ResidueBiomassOutput::calcPhysicalOutput(
    }
    
    // Compute the amount of crop produced (Equation 1)
-   mCropMass = area * mYield * mMassConversion;
+   mCropMass = aPrimaryOutput * mMassConversion;
 
    // Equation 2 is mHarvestIndex
 
@@ -190,11 +180,11 @@ void ResidueBiomassOutput::completeInit(
       validator_type(
          mErosCtrl,
          "eros-ctrl",
-         mErosCtrl > 0 ),
+         mErosCtrl >= 0 ),
       validator_type(
          mHarvestIndex,
          "harvest-index",
-         mHarvestIndex > 0 ),
+         mHarvestIndex >= 0 ),
       validator_type(
          mMassConversion,
          "mass-conversion",
@@ -396,7 +386,6 @@ void ResidueBiomassOutput::toDebugXML(
    XMLWriteElement( mCostCurve.getMidprice(), "mid-price", aOut, aTabs );
    XMLWriteElement( mResMass, "Residue-Mass", aOut, aTabs );
    XMLWriteElement( mCropMass, "Crop-Mass", aOut, aTabs );
-   XMLWriteElement( mYield, "yield", aOut, aTabs );
    XMLWriteElement( mResAvail, "resAvail", aOut, aTabs );
    XMLWriteElement( mMeanErosCtrl, "meanErosCtrl", aOut, aTabs );
    XMLWriteElement( mMaxBioEnergySupply, "maxBioEnergySupply", aOut, aTabs );

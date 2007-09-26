@@ -270,9 +270,6 @@ private :
    //! Mass in crop
    mutable double mCropMass;
 
-   //! Crop yeild
-   mutable double mYield;
-
    //! Residue Available
    mutable double mResAvail;
 
