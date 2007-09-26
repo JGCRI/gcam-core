@@ -35,10 +35,10 @@ InputEmissionsCoef* InputEmissionsCoef::clone() const {
     return new InputEmissionsCoef( *this );
 }
 
-void InputEmissionsCoef::updateCoef( const double aOutput ){
-    // Updates the emissions coefficient to be proportional to input divided by output.
+void InputEmissionsCoef::updateCoef( const double adjEmissDriver ){
+    // Updates the emissions coefficient to be proportional to emissions divided by driver.
     // Check for divide by zero.
-    mEmissionsCoef = aOutput > util::getSmallNumber() ? mInputEmissions / aOutput : 0;
+    mEmissionsCoef = adjEmissDriver > util::getSmallNumber() ? mInputEmissions / adjEmissDriver : 0;
 }
 
 void InputEmissionsCoef::initCalc( const IInfo* aSubsectorInfo, const string& aName, const int aPeriod ){
