@@ -513,9 +513,6 @@
 					RelativePath="..\..\technologies\source\capture_component_factory.cpp">
 				</File>
 				<File
-					RelativePath="..\..\technologies\source\solar_technology.cpp">
-				</File>
-				<File
 					RelativePath="..\..\technologies\source\default_technology.cpp">
 				</File>
 				<File
@@ -579,6 +576,9 @@
 					RelativePath="..\..\technologies\source\shutdown_decider_factory.cpp">
 				</File>
 				<File
+					RelativePath="..\..\technologies\source\solar_technology.cpp">
+				</File>
+				<File
 					RelativePath="..\..\technologies\source\standard_capture_component.cpp">
 				</File>
 				<File
@@ -589,6 +589,9 @@
 				</File>
 				<File
 					RelativePath="..\..\technologies\source\tran_technology.cpp">
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\unmanaged_land_technology.cpp">
 				</File>
 				<File
 					RelativePath="..\..\technologies\source\variable_production_state.cpp">
@@ -1293,9 +1296,6 @@
 					RelativePath="..\..\technologies\include\capture_component_factory.h">
 				</File>
 				<File
-					RelativePath="..\..\technologies\include\solar_technology.h">
-				</File>
-				<File
 					RelativePath="..\..\technologies\include\default_technology.h">
 				</File>
 				<File
@@ -1380,6 +1380,9 @@
 					RelativePath="..\..\technologies\include\shutdown_decider_factory.h">
 				</File>
 				<File
+					RelativePath="..\..\technologies\include\solar_technology.h">
+				</File>
+				<File
 					RelativePath="..\..\technologies\include\standard_capture_component.h">
 				</File>
 				<File
@@ -1390,6 +1393,9 @@
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\tran_technology.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\unmanaged_land_technology.h">
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\variable_production_state.h">

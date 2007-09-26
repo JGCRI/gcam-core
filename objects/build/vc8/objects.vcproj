@@ -802,6 +802,9 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\technologies\source\unmanaged_land_technology.cpp">
+				</File>
+				<File
 					RelativePath="..\..\technologies\source\variable_production_state.cpp"
 					>
 				</File>
@@ -2241,6 +2244,9 @@
 				<File
 					RelativePath="..\..\technologies\include\tran_technology.h"
 					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\unmanaged_land_technology.h">
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\variable_production_state.h"
