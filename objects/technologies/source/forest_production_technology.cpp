@@ -221,32 +221,6 @@ void ForestProductionTechnology::setCalLandValues() {
     }
 }
 
-/*!
-* \brief Calculate unnormalized technology unnormalized shares.
-* \details Since food and forestry technologies are profit based, they do not
-*          directly calculate a share. Instead, their share of total supply is
-*          determined by the sharing which occurs in the land allocator. To
-*          facilitate this the technology sets the intrinsic rate for the land
-*          use into the land allocator. The technology share itself is set to 1.
-* \param aRegionName Region name.
-* \param aSectorName Sector name, also the name of the product.
-* \param aGDP Regional GDP container.
-* \param aPeriod Model period.
-* \return Technology share, always 1 for ForestProductionTechnologies.
-* \author James Blackwood, Steve Smith
-*/
-double ForestProductionTechnology::calcShare( const string& aRegionName,
-                                              const string& aSectorName,
-                                              const GDP* aGDP,
-                                              const int aPeriod ) const
-{
-    assert( mProductionState[ aPeriod ]->isNewInvestment() );
-
-    // Forest production technologies are profit based, so the amount of output
-    // they produce is independent of the share.
-    return 1;
-}
-
 void ForestProductionTechnology::calcCost( const string& aRegionName,
                                            const string& aSectorName,
                                            const int aPeriod )
