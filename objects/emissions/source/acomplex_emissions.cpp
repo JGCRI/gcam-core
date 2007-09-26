@@ -224,11 +224,11 @@ void AComplexEmissions::calcEmission( const string& regionName,
         fControl = controlFunction( maxCntrl, tau, adjustedGdpCap0, gdpCap );
     }
 
-    double emissionsOutput = emissDriver * ( 1 - emAdjust ) * ( 1 - fControl ) * ( 1 - macReduction );
-    mEmissionsCoef->updateCoef( emissionsOutput );
+    double adjEmissDriver = emissDriver * ( 1 - emAdjust ) * ( 1 - fControl ) * ( 1 - macReduction );
+    mEmissionsCoef->updateCoef( adjEmissDriver );
  
     // This will dynamically get the emissions value.
-    mEmissions[ aPeriod ] = mEmissionsCoef->getEmissions( emissionsOutput );
+    mEmissions[ aPeriod ] = mEmissionsCoef->getEmissions( adjEmissDriver );
     mEmissionsByFuel[ aPeriod ] = mEmissions[ aPeriod ];
 
     addEmissionsToMarket( regionName, aPeriod );
