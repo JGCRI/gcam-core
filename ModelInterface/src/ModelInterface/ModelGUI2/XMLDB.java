@@ -44,9 +44,10 @@ public class XMLDB {
 			//XmlManager.setLogLevel(XmlManager.LEVEL_ALL, true);
 			String path = dbPath.substring(0, dbPath.lastIndexOf(System.getProperty("file.separator")));
 			boolean didUpgradeEnv = false;
-			try {
+			//try {
 				dbEnv = new Environment(new File(path), envConfig);
 				// This code is avaibale in 2.3.8 which is not working right..
+				/*
 			} catch(VersionMismatchException vme) {
 				int ans = JOptionPane.showConfirmDialog(parentFrame, "The version of the selected database does not match the version\nof the database library. Do you want to attempt to upgrade?\n\nWarning: Upgrading could cause loss of data, it is recomended\nthat you backup your database first.", "DB Version Mismatch Error", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 				if(ans == JOptionPane.YES_OPTION) {
@@ -59,6 +60,7 @@ public class XMLDB {
 					return;
 				}
 			}
+			*/
 			// end 2.3.8 code
 			LockStats ls = dbEnv.getLockStats(StatsConfig.DEFAULT);
 			System.out.println("Current Locks: "+ls.getNumLocks());
@@ -195,8 +197,10 @@ public class XMLDB {
 			System.out.println("Current Deadlocks: "+ls.getNumDeadlocks());
 			System.out.println("Current Conflicts: "+ls.getNumConflicts());
 			*/
-			addVarMetaData(parentFrame);
-			//getVarMetaData(); moved because of threading issues
+			//addVarMetaData(parentFrame);
+			// will just get any that has already been cached, users will have to 
+			// tell use the gui search manually since they will rarely be used now
+			getVarMetaData(); 
 		} catch (XmlException e) {
 			// TODO: Tell the user that the database wasn't opened
 			e.printStackTrace();
@@ -433,7 +437,7 @@ public class XMLDB {
 			printLockStats("XMLDB.setValue");
 		}
 	}
-	public void addVarMetaData(Frame parentFrame) {
+	public void addVarMetaData(final Frame parentFrame) {
 		try {
 			XmlQueryContext qc = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Eager);
 			printLockStats("Before check md query");
@@ -457,17 +461,20 @@ public class XMLDB {
 					XmlValue tempVal;
 					XmlValue delVal;
 					//XmlDocument docTemp; 
-					java.util.List<String> getVarFromDoucmentNames = new ArrayList<String>();
+					java.util.List<XmlValue> getVarFromDoucmentNames = new ArrayList<XmlValue>();
+					boolean gotVars = false;
 					while(res.hasNext()) {
+						gotVars = true;
 						tempVal = res.next();
 						//docTemp = tempVal.asDocument();
-						getVarFromDoucmentNames.add(tempVal.getNodeHandle());
+						getVarFromDoucmentNames.add(tempVal);
 						//docTemp.delete();
-						tempVal.delete();
+						//tempVal.delete();
 					}
 					res.delete();
-					for(Iterator<String> it = getVarFromDoucmentNames.iterator(); it.hasNext(); ) {
-						tempVal = myContainer.getNode(it.next(), 0);
+					for(Iterator<XmlValue> it = getVarFromDoucmentNames.iterator(); it.hasNext(); ) {
+						//tempVal = myContainer.getNode(it.next(), 0);
+						tempVal = it.next();
 						System.out.println("Getting new MetaData");
 						String path = "local:distinct-node-names(/scenario/world/*[@type='region']/demographics//*[fn:count(child::text()) = 1])";
 						tempRes = getVars(tempVal, path);
@@ -577,6 +584,9 @@ public class XMLDB {
 							}
 						});
 					}
+					String message = gotVars ? "Finished getting new variables." : "There were no new variables.";
+					JOptionPane.showMessageDialog(parentFrame, message, "Get Variables", 
+							JOptionPane.INFORMATION_MESSAGE);
 					} catch(XmlException e) {
 						e.printStackTrace();
 					}
@@ -625,13 +635,16 @@ public class XMLDB {
 	}
 	protected void getVarMetaData() {
 		XmlResults res = createQuery("/*[fn:exists(dbxml:metadata('var'))]", null, null, null);
-		SupplyDemandQueryBuilder.varList = new LinkedHashMap();
-		DemographicsQueryBuilder.varList = new LinkedHashMap();
-		EmissionsQueryBuilder.ghgList = new LinkedHashMap();
-		EmissionsQueryBuilder.fuelList = new LinkedHashMap();
-		GDPQueryBuilder.varList = new LinkedHashMap();
-		ClimateQueryBuilder.varList = new LinkedHashMap();
-		LandAllocatorQueryBuilder.varList = new LinkedHashMap();
+		// TODO: is is safe to assume if one is null they are all null?
+		if(SupplyDemandQueryBuilder.varList == null) {
+			SupplyDemandQueryBuilder.varList = new LinkedHashMap();
+			DemographicsQueryBuilder.varList = new LinkedHashMap();
+			EmissionsQueryBuilder.ghgList = new LinkedHashMap();
+			EmissionsQueryBuilder.fuelList = new LinkedHashMap();
+			GDPQueryBuilder.varList = new LinkedHashMap();
+			ClimateQueryBuilder.varList = new LinkedHashMap();
+			LandAllocatorQueryBuilder.varList = new LinkedHashMap();
+		}
 		XmlMetaData md;
 		try {
 			while(res.hasNext()) {

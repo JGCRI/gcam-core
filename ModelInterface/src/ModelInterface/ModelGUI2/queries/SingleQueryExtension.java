@@ -249,6 +249,13 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 		if(!isEnabled) {
 			return;
 		}
+		// we want to process the event only when the user is done
+		// making changes.
+		if(e.getValueIsAdjusting()) {
+			return;
+		}
+
+		// get the selected values, if there are none just return
 		Object[] ret = ((JList)e.getSource()).getSelectedValues();
 		if(ret == null) {
 			return;
@@ -424,6 +431,7 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 					Object[] scenarios = currSelection.getKey().toArray();
 					Object[] regions = currSelection.getValue().toArray();
 					List<SingleQueryValue> tempValues;
+					final long startTime = System.currentTimeMillis();
 					try {
 						XmlResults res = DbViewer.xmlDB.createQuery(new SingleQueryListQueryBinding(qg, 
 								DbViewer.xmlDB.getContainer(), qg.getCollapseOnList()), scenarios, regions);
@@ -453,6 +461,7 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 						e.printStackTrace();
 						tempValues = noResultsList;
 					}
+					System.out.println("Time : "+(System.currentTimeMillis()-startTime));
 					singleLevelCache.put(currSelection, tempValues);
 
 					// make sure we are still selected
@@ -494,7 +503,7 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 	 * before proceeding.
 	 * @param newThread The new thread to set.
 	 */
-       private void setGatherThread(Thread newThread) {
+       private synchronized void setGatherThread(Thread newThread) {
 	       if(gatherThread != null && gatherThread.isAlive()) {
 		       gatherThread.interrupt();
 		       // should I join?

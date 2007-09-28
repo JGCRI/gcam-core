@@ -257,6 +257,12 @@ public class QueryGenerator implements java.io.Serializable{
 		final JButton cancelButton = new JButton(cancelTitle);
 		final JButton backButton = new JButton(" < Back ");
 		final JButton nextButton = new JButton(" Next > ");
+		final JButton gatherButton = new JButton("Get New Variables");
+		gatherButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DbViewer.xmlDB.addVarMetaData(parentFrame);
+			}
+		});
 
 		final Container filterContent = filterDialog.getContentPane();
 
@@ -470,6 +476,7 @@ public class QueryGenerator implements java.io.Serializable{
 		//JPanel buttonPane = new JPanel();
 	    	buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
 	    	buttonPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		buttonPane.add(gatherButton);
 	    	buttonPane.add(Box.createHorizontalGlue());
 		buttonPane.add(backButton);
 		backButton.setEnabled(false);
@@ -1200,8 +1207,12 @@ public class QueryGenerator implements java.io.Serializable{
 		if(nodeLevelAttrName == null) {
 			nodeLevelAttrName = "name";
 		}
-		return "/ancestor::*[@type='"+nodeLevel.getKey()+"' or local-name()='"+
-			nodeLevel.getKey()+"']/@"+nodeLevelAttrName;
+		String ret = "/ancestor::*[@type='"+nodeLevel.getKey()+"'";
+		if(!shouldUseOnlyType()) {
+			ret += " or local-name()='"+nodeLevel.getKey()+"'";
+		}
+		ret += "]/@"+nodeLevelAttrName;
+		return ret;
 	}
 
 	public String defaultGetForNodeLevelPath(String nodeLevelValue) {
@@ -1211,8 +1222,13 @@ public class QueryGenerator implements java.io.Serializable{
 			nodeLevelAttrName = "name";
 		}
 		StringBuilder ret = new StringBuilder("[ancestor::*[(@type='");
-		ret.append(nodeLevel.getKey()).append("' or local-name()='");
-		ret.append(nodeLevel.getKey()).append("') and @");
+		ret.append(nodeLevel.getKey());
+		if(shouldUseOnlyType()) {
+			ret.append("') and @");
+		} else {
+			ret.append("' or local-name()='");
+			ret.append(nodeLevel.getKey()).append("') and @");
+		}
 		ret.append(nodeLevelAttrName).append("='").append(levels[levels.length-1]).append("']");
 		for(int i = 0; i < levels.length-1; ++i) {
 			int colonPos = levels[i].indexOf(':');
@@ -1223,6 +1239,12 @@ public class QueryGenerator implements java.io.Serializable{
 		}
 		ret.append("]");
 		return ret.toString();
+	}
+	private boolean shouldUseOnlyType() {
+		// this is a hack to try to speed up the query by omitting the or local-name() = ..
+		String nL = nodeLevel.getKey();
+		return (nL.equals("sector") || nL.equals("subsector") || nL.equals("technology") || 
+				nL.equals("input") || nL.equals("output") || nL.equals("GHG"));
 	}
 
 	/**

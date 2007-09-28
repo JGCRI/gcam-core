@@ -483,12 +483,6 @@ public class DbViewer implements ActionListener, MenuAdder {
 		scnList.setName(SCENARIO_LIST_NAME);
 		regionList = new JList(regions);
 		regionList.setName(REGION_LIST_NAME);
-		if(scns.size() != 0) {
-			scnList.setSelectedIndex(scns.size()-1);
-		}
-		if(regions.size() != 0) {
-			regionList.setSelectedIndex(0);
-		}
 
 		//TODO: get real icons
 		final Icon queryIcon = new ImageIcon( TabCloseIcon.class.getResource("icons/group-query.png"));
@@ -587,6 +581,15 @@ public class DbViewer implements ActionListener, MenuAdder {
 		//final JTabbedPane tablesTabs = new JTabbedPane();
 		tableCreatorSplit.setRightComponent(tablesTabs);
 
+		// I have to do this after the lists are in there scrollpanes so I 
+		// can ensure they are visible
+		if(scns.size() != 0) {
+			scnList.setSelectedIndex(scns.size()-1);
+			scnList.ensureIndexIsVisible(scns.size()-1);
+		}
+		if(regions.size() != 0) {
+			regionList.setSelectedIndex(0);
+		}
 
 		queryList.addTreeSelectionListener(new TreeSelectionListener() {
 			public void valueChanged(TreeSelectionEvent e) {
@@ -1057,7 +1060,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 		doneButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(dirtyBit.isDirty()) {
-					xmlDB.addVarMetaData(parentFrame);
+					// meta data now set on demand
+					//xmlDB.addVarMetaData(parentFrame);
 					scnList.setListData(scns);
 					regions = getRegions();
 					regionList.setListData(regions);
