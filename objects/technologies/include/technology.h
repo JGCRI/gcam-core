@@ -319,7 +319,7 @@ protected:
 
     bool isCalibrating( const int aPeriod ) const;
 
-    void calcEmissionsAndOutputs( const std::string& aRegionName,
+    virtual void calcEmissionsAndOutputs( const std::string& aRegionName,
                                   const double aInput,
                                   const double aPrimaryOutput,
                                   const GDP* aGDP,
