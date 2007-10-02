@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 
 import ModelInterface.common.DataPair;
 import ModelInterface.ModelGUI2.xmldb.QueryBinding;
@@ -30,6 +31,7 @@ import ModelInterface.ModelGUI2.undo.EditQueryUndoableEdit;
 
 import com.sleepycat.dbxml.XmlResults;
 import com.sleepycat.dbxml.XmlValue;
+import com.sleepycat.dbxml.XmlDocument;
 import com.sleepycat.dbxml.XmlException;
 
 /**
@@ -246,6 +248,8 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 	 * @param e The event that represents the list selection change.
 	 */
 	public void valueChanged(ListSelectionEvent e) {
+		/** We are not listening for these if we are just going to
+		 * pull values from cache
 		if(!isEnabled) {
 			return;
 		}
@@ -288,6 +292,7 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 			doDisable.run();
 			doEnable.run();
 		}
+		*/
 	}
 
 	/**
@@ -421,60 +426,12 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 			// will be updated with a real list when we finish 
 			// querying
 			currValues = generatingList;
-			final SingleQueryExtension thisClass = this;
 
 			// make sure we only have one thread gathering at a time
 			// so we don't kill the system when a user is just trying
 			// to set their scenarios and regions
-			setGatherThread(new Thread(new Runnable() {
-				public void run() {
-					Object[] scenarios = currSelection.getKey().toArray();
-					Object[] regions = currSelection.getValue().toArray();
-					List<SingleQueryValue> tempValues;
-					final long startTime = System.currentTimeMillis();
-					try {
-						XmlResults res = DbViewer.xmlDB.createQuery(new SingleQueryListQueryBinding(qg, 
-								DbViewer.xmlDB.getContainer(), qg.getCollapseOnList()), scenarios, regions);
-						// createQuery won't pass along the XmlException so we will
-						// have to check for null
-						if(res == null) {
-							throw new XmlException(XmlException.XPATH_PARSER_ERROR,
-								"Probably invalid syntax", null, 0);
-						}
-						XmlValue curr;
-						if(!res.hasNext()) {
-							tempValues = noResultsList;
-						} else {
-							tempValues =  new ArrayList<SingleQueryValue>();
-							while(res.hasNext()) {
-								curr = res.next();
-								SingleQueryValue tempValue = new SingleQueryValue(curr.asString());
-								curr.delete();
-								tempValues.add(tempValue);
-							}
-							if(qg.isGroup()) {
-								tempValues.add(new SingleQueryValue("Total"));
-							}
-						}
-						res.delete();
-					} catch(XmlException e) {
-						e.printStackTrace();
-						tempValues = noResultsList;
-					}
-					System.out.println("Time : "+(System.currentTimeMillis()-startTime));
-					singleLevelCache.put(currSelection, tempValues);
-
-					// make sure we are still selected
-					if(isSelected && !Thread.currentThread().isInterrupted()) {
-						// get rid of generating then add real values
-						hideList(qt, parentPath);
-						currValues = tempValues;
-						qt.showSingleQuery(thisClass, parentPath);
-						tree.makeVisible(parentPath.pathByAddingChild(getSingleQueryValueAt(
-										(int)(getNumValues()/2))));
-					}
-				}
-			}));
+			//setGatherThread(new Thread(getRunnableCreateListQuery(qt, parentPath, tree)));
+			setGatherThread(new Thread(getRunnableGetListQuery(qt, parentPath, tree)));
 			gatherThread.start();
 		}
 
@@ -579,5 +536,189 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 	       }
 	       // else nothing has really changed.
 	       isEnabled = enable;
+       }
+       /**
+	* Gets a runnable that executes a query to create the single query list.
+	* @pre currSelection must be properly set.
+	* @param qt QueryTreeModel needed to update list.
+	* @param parentPath The path needed to update list.
+	* @param tree The tree which would be updated.
+	* @return a Runnable which can be executed to create the single query list.
+	*/
+       private Runnable getRunnableCreateListQuery(final QueryTreeModel qt, final TreePath parentPath, final JTree tree) {
+	       final SingleQueryExtension thisClass = this;
+	       return (new Runnable() {
+		       public void run() {
+			       Object[] scenarios = currSelection.getKey().toArray();
+			       Object[] regions = currSelection.getValue().toArray();
+			       List<SingleQueryValue> tempValues;
+			       final long startTime = System.currentTimeMillis();
+			       try {
+				       XmlResults res = DbViewer.xmlDB.createQuery(new SingleQueryListQueryBinding(qg, 
+						       DbViewer.xmlDB.getContainer(), qg.getCollapseOnList()), scenarios, regions);
+				       // createQuery won't pass along the XmlException so we will
+				       // have to check for null
+				       if(res == null) {
+					       throw new XmlException(XmlException.XPATH_PARSER_ERROR,
+						       "Probably invalid syntax", null, 0);
+				       }
+				       XmlValue curr;
+				       if(!res.hasNext()) {
+					       tempValues = noResultsList;
+				       } else {
+					       tempValues =  new ArrayList<SingleQueryValue>();
+					       while(res.hasNext()) {
+						       curr = res.next();
+						       SingleQueryValue tempValue = new SingleQueryValue(curr.asString());
+						       curr.delete();
+						       tempValues.add(tempValue);
+					       }
+					       if(qg.isGroup()) {
+						       tempValues.add(new SingleQueryValue("Total"));
+					       }
+				       }
+				       res.delete();
+			       } catch(XmlException e) {
+				       e.printStackTrace();
+				       tempValues = noResultsList;
+			       }
+			       System.out.println("Time : "+(System.currentTimeMillis()-startTime));
+			       singleLevelCache.put(currSelection, tempValues);
+
+			       // make sure we are still selected
+			       if(isSelected && !Thread.currentThread().isInterrupted()) {
+				       // if qt is null we are just going to cache this so just
+				       // set the currValues
+				       if(qt == null) {
+					       currValues = tempValues;
+				       } else {
+					       // get rid of generating then add real values
+					       hideList(qt, parentPath);
+					       currValues = tempValues;
+					       qt.showSingleQuery(thisClass, parentPath);
+					       tree.makeVisible(parentPath.pathByAddingChild(getSingleQueryValueAt(
+									       (int)(getNumValues()/2))));
+				       }
+			       }
+		       }
+	       });
+       }
+
+       /**
+	* Gets a runnable that executes a query to get the single query list from metadata.
+	* @pre currSelection must be properly set.
+	* @param qt QueryTreeModel needed to update list.
+	* @param parentPath The path needed to update list.
+	* @param tree The tree which would be updated.
+	* @return a Runnable which can be executed to get the single query list.
+	*/
+       private Runnable getRunnableGetListQuery(final QueryTreeModel qt, final TreePath parentPath, final JTree tree) {
+	       final SingleQueryExtension thisClass = this;
+	       return (new Runnable() {
+		       public void run() {
+			       List<SingleQueryValue> tempValues = null;
+			       final long startTime = System.currentTimeMillis();
+			       try {
+				       // I am putting a Q in from of the hash code because otherwise it complains that
+				       // it is not a valid QName
+				       XmlResults res = DbViewer.xmlDB.createQuery("/singleQueryListCache/dbxml:metadata('Q"
+					       +qg.getStorageHashCode()+"')", null, null, null);
+				       boolean hasResults = false;
+				       if(res.hasNext()) {
+					       XmlValue curr = res.next();
+					       String[] values = curr.asString().split(";");
+					       curr.delete();
+					       if(!(values.length == 1 && values[0].equals(""))) {
+						       hasResults = true;
+						       tempValues =  new ArrayList<SingleQueryValue>(values.length+1);
+						       for(String val : values) {
+							       SingleQueryValue tempValue = new SingleQueryValue(val);
+							       tempValues.add(tempValue);
+						       }
+						       if(qg.isGroup()) {
+							       tempValues.add(new SingleQueryValue("Total"));
+						       }
+					       }
+				       }
+				       if(!hasResults) {
+					       tempValues = noResultsList;
+				       }
+				       res.delete();
+			       } catch(XmlException e) {
+				       e.printStackTrace();
+				       tempValues = noResultsList;
+			       }
+			       System.out.println("Time : "+(System.currentTimeMillis()-startTime));
+			       singleLevelCache.put(currSelection, tempValues);
+
+			       // make sure we are still selected
+			       if(isSelected && !Thread.currentThread().isInterrupted()) {
+				       // get rid of generating then add real values
+				       hideList(qt, parentPath);
+				       currValues = tempValues;
+				       qt.showSingleQuery(thisClass, parentPath);
+				       tree.makeVisible(parentPath.pathByAddingChild(getSingleQueryValueAt(
+								       (int)(getNumValues()/2))));
+			       }
+		       }
+	       });
+       }
+
+       /**
+	* Set up and run whatever is needed to cache the query list.
+	* @doc The cahce document that we will set the metadata on.
+	* @param scenarions The list of scenarios to scan.
+	* @param regions The list of regions to scan.
+	*/
+       public void createSingleQueryListCache(XmlDocument doc, DbViewer.ScenarioListItem[] currScenario, String[] currRegion) {
+	       // set the scenarios and regions to scan
+	       setSelection(currScenario, currRegion);
+	       boolean isSelectedBefore = isSelected;
+	       isSelected = true;
+
+	       try {
+		       // set the gather thread and run it, but we don't really need it on another thread
+		       // becuase we have to wait for it anyways.
+		       setGatherThread(new Thread(getRunnableCreateListQuery(null, null, null)));
+		       gatherThread.start();
+		       gatherThread.join();
+
+		       // don't want to cache the no results
+		       if(currValues != noResultsList) {
+			       StringBuffer buff = new StringBuffer();
+			       for(Iterator<SingleQueryValue> it = currValues.iterator(); it.hasNext(); ) {
+				       buff.append(it.next().toString()).append(";");
+			       }
+			       System.out.println("About to cache Q"+qg.getStorageHashCode()+" -> "+buff.toString());
+			       // I have to put a letter in front of the hash code because otherwise
+			       // it says it is not a valid QName
+			       doc.setMetaData("", "Q"+qg.getStorageHashCode(), new XmlValue(buff.toString()));
+			       //DbViewer.xmlDB.setMetaData(doc, "Q"+qg.getStorageHashCode(), new XmlValue(buff.toString()));
+		       }
+	       } catch(XmlException e) {
+		       // TODO: should I warn the user?
+		       e.printStackTrace();
+	       } catch(InterruptedException ie) {
+		       // ignore
+	       }
+
+	       // reset stuff
+	       singleLevelCache.clear();
+	       resetList();
+	       isSelected = isSelectedBefore;
+	       // do I need to reset the selection?
+       }
+
+       /**
+	* Determine if the this extension has been initialized.  It is
+	* initialized the first time the QueryGenerator is clicked on. It
+	* is possible to create this extension and not initialize it when 
+	* it is used to create the cache.
+	* @return True if it has been initialized else false.
+	*/
+       public boolean isInitialized() {
+	       // maybe I should use a more explicit way of knowing if this
+	       // has been initialized
+	       return doDisable != null;
        }
 }

@@ -558,10 +558,12 @@ public class DbViewer implements ActionListener, MenuAdder {
 		final JButton removeButton = new JButton("Remove");
 		final JButton runQueryButton = new JButton("Run Query");
 		final JButton editButton = new JButton("Edit");
+		final JButton getSingleQueryButton = new JButton("Update Single Queries"); // TODO: bette name
 		editButton.setEnabled(false);
 		runQueryButton.setEnabled(false);
 		buttonPanel.add(runQueryButton);
 		buttonPanel.add(Box.createHorizontalGlue());
+		buttonPanel.add(getSingleQueryButton);
 		buttonPanel.add(createButton);
 		buttonPanel.add(removeButton);
 		buttonPanel.add(editButton);
@@ -768,6 +770,19 @@ public class DbViewer implements ActionListener, MenuAdder {
 						queries.doEdit(selPaths[i]);
 					}
 				}
+			}
+		});
+
+		getSingleQueryButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				List<QueryGenerator> qgList = new ArrayList<QueryGenerator>();
+				for(int row = 0; row < queryList.getRowCount(); ++row) {
+					TreePath currPath = queryList.getPathForRow(row);
+					if(currPath.getLastPathComponent() instanceof QueryGenerator) {
+						qgList.add((QueryGenerator)currPath.getLastPathComponent());
+					}
+				}
+				createAndShowGetSingleQueries(qgList, scns, regions);
 			}
 		});
 
@@ -1471,5 +1486,89 @@ public class DbViewer implements ActionListener, MenuAdder {
 		public void mouseExited(MouseEvent e) {}
 		public void mouseClicked(MouseEvent e) {}
 		public void mouseReleased(MouseEvent e) {}
+	}
+
+	/**
+	 * Creates a dialog which will ask for scenarios, then regions, then
+	 * queries to scan for SingleQueryValues.  When finished selecting these
+	 * values it will do the scan.  This could take some time and the rest of the
+	 * GUI should be inoperable while the scan is occuring.  A progress bar will
+	 * be displayed.
+	 * @param queries All of the queries in the tree
+	 * @param scenarios All of the scenarios.
+	 * @param regions All of the regions.
+	 */
+	private void createAndShowGetSingleQueries(final List<QueryGenerator> queries, final List<ScenarioListItem> scenarios,
+			final List<String> regions) {
+		final JProgressBar scanProgress = new JProgressBar(0, queries.size());
+		final JDialog progBarDialog = XMLDB.createProgressBarGUI(parentFrame, scanProgress, 
+				"Scanning", "Updating Query Cache");
+		new Thread(new Runnable() {
+			public void run() {
+				final Runnable incProgress = new Runnable() {
+					public void run() {
+						scanProgress.setValue(scanProgress.getValue()+1);
+					}
+				};
+
+				final ScenarioListItem[] scenariosArr = new ScenarioListItem[scenarios.size()];
+				final String[] regionsArr = new String[regions.size()];
+				scenarios.toArray(scenariosArr);
+				regions.toArray(regionsArr);
+				XmlDocument doc = null;
+				try {
+					doc = xmlDB.getDocument("cache");
+				} catch(XmlException e) {
+					// might not exsist yet so create it.
+					doc = xmlDB.createDocument("cache", "<singleQueryListCache />");
+				}
+				if(doc == null) {
+					progBarDialog.setVisible(false);
+					JOptionPane.showMessageDialog(parentFrame,
+						"Could not get cache from the database.",
+						"Cache Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				System.out.println("Before anything");
+				printAllMetaData(doc);
+				for(Iterator<QueryGenerator> it = queries.iterator(); it.hasNext(); ) {
+					SingleQueryExtension se = it.next().getSingleQueryExtension();
+					if(se != null) {
+						se.createSingleQueryListCache(doc, scenariosArr, regionsArr);
+					}
+					SwingUtilities.invokeLater(incProgress);
+				}
+				System.out.println("Before delete");
+				printAllMetaData(doc);
+				doc.delete();
+				try {
+					doc = xmlDB.getDocument("cache");
+					System.out.println("Getting again after delete");
+					printAllMetaData(doc);
+					doc.delete();
+				} catch(XmlException e) {
+					e.printStackTrace();
+				}
+				progBarDialog.setVisible(false);
+			}
+		}).start();
+	}
+
+	void printAllMetaData(XmlDocument doc) {
+		System.out.println("Dumping metadata");
+		try {
+			XmlMetaDataIterator it = doc.getMetaDataIterator();
+			XmlMetaData mData;
+			while((mData = it.next()) != null) {
+				XmlValue temp = mData.get_value();
+				System.out.println(mData.get_name()+" -> "+temp.asString());
+				temp.delete();
+				mData.delete();
+			}
+			it.delete();
+		} catch(XmlException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Done dumping metadata");
 	}
 }

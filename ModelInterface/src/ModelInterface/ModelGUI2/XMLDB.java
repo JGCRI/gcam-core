@@ -278,6 +278,22 @@ public class XMLDB {
 		return false;
 	}
 
+	public XmlDocument getDocument(String docName) throws XmlException {
+		return myContainer.getDocument(docName);
+	}
+
+	public XmlDocument createDocument(String docName, String content) {
+		XmlDocumentConfig docConfig = new XmlDocumentConfig();
+		docConfig.setGenerateName(false);
+		try {
+			myContainer.putDocument("cache", content, uc, docConfig);
+			return getDocument(docName);
+		} catch(XmlException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	public String getContainer() {
 		return contName;
 	}
@@ -437,6 +453,13 @@ public class XMLDB {
 			printLockStats("XMLDB.setValue");
 		}
 	}
+	/*
+	public void setMetaData(XmlDocument doc, String name, XmlValue val) throws XmlException {
+		uc.setApplyChangesToContainers(true);
+		doc.setMetaData("", name, val);
+		uc.setApplyChangesToContainers(false);
+	}
+	*/
 	public void addVarMetaData(final Frame parentFrame) {
 		try {
 			XmlQueryContext qc = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Eager);

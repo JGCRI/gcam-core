@@ -1208,7 +1208,7 @@ public class QueryGenerator implements java.io.Serializable{
 			nodeLevelAttrName = "name";
 		}
 		String ret = "/ancestor::*[@type='"+nodeLevel.getKey()+"'";
-		if(!shouldUseOnlyType()) {
+		if(!shouldUseOnlyType(nodeLevel.getKey())) {
 			ret += " or local-name()='"+nodeLevel.getKey()+"'";
 		}
 		ret += "]/@"+nodeLevelAttrName;
@@ -1223,7 +1223,7 @@ public class QueryGenerator implements java.io.Serializable{
 		}
 		StringBuilder ret = new StringBuilder("[ancestor::*[(@type='");
 		ret.append(nodeLevel.getKey());
-		if(shouldUseOnlyType()) {
+		if(shouldUseOnlyType(nodeLevel.getKey())) {
 			ret.append("') and @");
 		} else {
 			ret.append("' or local-name()='");
@@ -1234,15 +1234,23 @@ public class QueryGenerator implements java.io.Serializable{
 			int colonPos = levels[i].indexOf(':');
 			String currType = levels[i].substring(0, colonPos);
 			String currVal = levels[i].substring(colonPos+2, levels[i].length());
-			ret.append(" and ancestor::*[@type='").append(currType);
-			ret.append("' and @name='").append(currVal).append("']");
+			ret.append("][ancestor::*[(@type='");
+			ret.append(currType);
+			if(shouldUseOnlyType(currType)) {
+				ret.append("') and @");
+			} else {
+				ret.append("' or local-name()='");
+				ret.append(currType).append("') and @");
+			}
+			// hard coding name here..
+			ret.append("name='").append(currVal).append("']");
 		}
 		ret.append("]");
 		return ret.toString();
 	}
-	private boolean shouldUseOnlyType() {
-		// this is a hack to try to speed up the query by omitting the or local-name() = ..
-		String nL = nodeLevel.getKey();
+	private boolean shouldUseOnlyType(String nL) {
+		// this is a hack to try to speed up the query by changing to ::*[@type=..] instead of 
+		// *[@type='..' or local-name()='..']
 		return (nL.equals("sector") || nL.equals("subsector") || nL.equals("technology") || 
 				nL.equals("input") || nL.equals("output") || nL.equals("GHG"));
 	}
@@ -1253,7 +1261,9 @@ public class QueryGenerator implements java.io.Serializable{
 	 * @return True if it has been created, false otherwise.
 	 */
 	public boolean hasSingleQueryExtension() {
-		return singleExtension != null;
+		// could be created but not initialized if it was
+		// just getting cache values
+		return singleExtension != null && singleExtension.isInitialized();
 	}
 
 	/**
@@ -1280,5 +1290,18 @@ public class QueryGenerator implements java.io.Serializable{
 			return;
 		}
 		qb.setQueryGenerator(this);
+	}
+
+	/**
+	 * Create a hash code that we can use to uniquely identify which queries
+	 * a stored single values list belongs to.  This will use the xPath and the
+	 * nodeLevel to determine the hashCode to use.  Note that it would not be a
+	 * good idea to use this as a generic hashCode becuase for example you would
+	 * want to consider queries with different titles to be different but that is
+	 * not the case here.
+	 * @return A hashCode derived from the xPath and nodeLevel.
+	 */
+	public int getStorageHashCode() {
+		return xPath.hashCode() ^ nodeLevel.hashCode();
 	}
 }
