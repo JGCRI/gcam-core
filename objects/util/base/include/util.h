@@ -30,6 +30,9 @@
 #include <map>
 #include <vector>
 #include <cassert>
+#include <algorithm>
+#include "util/base/include/name_equals.h"
+#include "util/logger/include/ilogger.h"
 
 // Boost static asserts do not work when included from multiple namespaces.
 // Separate them into their own unique namespace.
@@ -86,6 +89,7 @@ namespace objects {
         return iter;
     }
 
+
     /*! \brief Returns a mutable iterator to a position in the vector which
     *          contains a pointer to an object with the given name. 
     * \details This function searches linearly from the beginning of the vector
@@ -106,6 +110,115 @@ namespace objects {
             }
         }
         return iter;
+    }
+
+    template <class U, class T>
+    struct InterfaceGetter {
+    public:
+        const U* operator()( const T& aObject ){
+            return &aObject;
+        }
+    };
+
+    template <class U,class T>
+    struct InterfaceGetter<U,T*> {
+    public:
+        const U* operator()( const T* aObject ){
+            return aObject;
+        }
+    };
+
+    /*! \brief Reorder a container based on an ordering of names.
+     *  \details This function is used to reorder a a container using a supplied
+     *          ordering. This function handles errors as follows:
+     *          <ul>
+     *            <li>
+     *              If an object is not specified in the list, the function
+     *              will output an error.
+     *            </li>
+     *            <li>
+     *              If an object name in the ordering list is not an
+     *              existing sector in the model, a debugging warning will
+     *              be issued and the name will be skipped.
+     *            </li>
+     *          </ul>
+     * \param aFirst An InputIterator pointing to the start of the container.
+     * \param aLast An InputIterator pointing to the end of the container.
+     * \param aOrderList A list of names in the order in which the objects in
+     *        the container should be put. 
+     * \return Whether all objects had orderings in the passed in order list.
+     * \warning This function requires that all the strings in aOrderList are
+     *          unique.  It's behavior is undefined if the vector contains
+     *          duplicate strings.
+     */
+    template <class InputIterator, class T>
+    bool reorderContainer( InputIterator aFirst,
+                           InputIterator aLast,
+                           const std::vector<std::string>& aOrderList ){
+        bool success = true;
+
+        if( aOrderList.empty() ){
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::NOTICE );
+            mainLog << "Skipping object reordering due to an empty order list."
+                    << endl;
+            return false;
+        }
+
+        // Get the dependency finder logger.
+        ILogger& depFinderLog = ILogger::getLogger( "dependency_finder_log" );
+
+        // Construct a map of strings to bools that represent an object in the
+        // container NOT being mapped.  The bool is irrelevant because mappings
+        // will be removed as they are ordered.
+        std::map<std::string,bool> isOrdered;
+        for( InputIterator containerIter = aFirst;
+            containerIter != aLast; ++containerIter ){
+            isOrdered.insert( 
+                std::make_pair( util::InterfaceGetter<INamed,T>()( *containerIter )->getName(), true ) );
+        }
+
+        // This loop functions much like insertion sort.  aFirst initially
+        // points to the first location in the container.  The loop iterates
+        // over the name list.  During each iteration we attempt to find
+        // an iterator that points to object in the container that has the
+        // right name. If this iterator is found the values are swapped.  Otherwise
+        // a warning is emitted.
+        typedef std::vector<std::string>::const_iterator OrderIter;
+        for( OrderIter nameIter = aOrderList.begin(); 
+             nameIter != aOrderList.end(); ++nameIter ){
+            // Note that find_if uses a predicate to find the appropriate item.
+            // Consult the NameEquals class and the STL documentation for details.
+            InputIterator containerIter = std::find_if( aFirst,
+                                                        aLast,
+                                                        NameEquals<T>( *nameIter ) );
+            if( containerIter != aLast ){
+                std::swap( *aFirst, *containerIter );
+                ++aFirst;
+                // Remove it from the isOrdered vector
+                isOrdered.erase( *nameIter );
+            }
+            else {
+                // There was a name in the order that did not correspond to
+                // and object in the container.
+                depFinderLog.setLevel( ILogger::DEBUG );
+                depFinderLog << *nameIter << " is not that name of an "
+                             << "object in the container. "
+                             << "It will not be included in the ordering."
+                             << endl;
+            }
+        }
+        // Output an error if there was an item in the container that was not
+        // in the ordering.
+        for( std::map<std::string,bool>::iterator orderIter = isOrdered.begin();
+             orderIter != isOrdered.end(); ++orderIter ){
+            ILogger& mainLog = ILogger::getLogger( "main_log");
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "ERROR:" << orderIter->first
+                    << " was not assigned a position in the explicit ordering list." << endl;
+            success = false;
+        }
+        return success;
     }
 
     /*! \brief Returns whether a value with the given key exists.

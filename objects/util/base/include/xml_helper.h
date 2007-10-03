@@ -541,6 +541,48 @@ void XMLWriteElementWithAttributes( const T value, const std::string elementName
     out << ">" << value << "</" << elementName << ">" << std::endl;
 }
 
+/*! \brief Write an element XML tag.
+* \details This function is used to write an XML element tag and an optional name and tag type to the output stream.
+* The name and tag type are optional attributes. The name and tag type may be left out, but the tag will not be written
+* without both tag type and tag name present. If the arguments are left out, the function will not write the attribute.
+* The function increases the indent level after writing the tag so that subsequent elements are correctly indented.
+* \param elementName Name of the element.
+* \param out Stream to print to.
+* \param Tabs The number of tabs to print before the element.
+* \param tagType Optional tag type value to print as an attribute.
+* \param typeName Optional type name value to print as an attribute.
+*/
+
+inline void XMLWriteElementTag( const std::string& elementName, std::ostream& out, Tabs* tabs, const std::string& tagType = "", const std::string& typeName = "")
+{
+   tabs->writeTabs( out );
+
+   out << "<" << elementName;
+
+   if ( ( typeName != "" ) &&  ( tagType != "") ){
+	   out << " " << tagType << "=\"" << typeName << "\"";
+		   
+   }
+   out << ">" << std::endl;
+   tabs->increaseIndent();
+}
+
+/*!  \brief Write a closing XML tag.
+* \details This function is used to write a closing XML element tag. It decreases the indent before writing the tag,
+* and adds a newline.
+* \note Closing tags cannot have attributes.
+* \param elementName Name of the element.
+* \param out Stream to print to.
+* \param tabs The number of tabs to print before the element.
+*/
+inline void XMLWriteCloseElementTag( std::string& elementName, std::ostream& out, Tabs* tabs)
+{
+    tabs->decreaseIndent();
+    tabs->writeTabs( out );
+    out << "</" << elementName;
+    out << ">" << std::endl;
+}
+
 /*! \brief Write an opening XML tag.
 * \details This function is used to write an opening XML tag and an optional name and year to the output stream.
 * The name and year are optional attributes. The name and year may be left out, or only the year may be left out, but

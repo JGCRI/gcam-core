@@ -73,7 +73,6 @@ class ALandAllocatorItem : public TreeItem<ALandAllocatorItem>,
                            public IRoundTrippable,
                            private boost::noncopyable
 {
-    friend class XMLDBOutputter;
 public:
     typedef TreeItem<ALandAllocatorItem> ParentTreeType;
 
@@ -231,7 +230,6 @@ public:
      *        is within.
      * \param aPeriod Period.
      * \note This function must be called in order of increasing periods.
-     * \todo find better way of specifying share for the intrinsic yield calc for good with no initial share - perhaps read in a "comparable" share
      * \author James Blackwood
      */
     virtual void setIntrinsicYieldMode( const double aIntrinsicYieldAbove,
@@ -349,6 +347,25 @@ public:
     virtual void calcLandAllocation( const std::string& aRegionName,
                                      const double aLandAllocationAbove,
                                      const int aPeriod ) = 0;
+
+    //TODO: These next 3 functions need better names
+    /*!
+     * \brief This pass handles LUC flow from box models to the summer
+     */
+    virtual void calcLandAllocationPassTwo( const std::string& aRegionName,
+                                            const int aYear ) {}
+
+    /*!
+     * \brief This pass handles LUC flow from the summer to box models.
+     */
+    virtual void calcLandAllocationPassThree( const std::string& aRegionName,
+                                              const int aYear ) {}
+
+    /*!
+     * \brief This pass handles box flows within this carbon box model.
+     */
+    virtual void calcLandAllocationPassFour( const std::string& aRegionName,
+                                             const int aYear ) {}
     
     /*!
      * \brief Calculates and stores the yield for a product.
@@ -409,7 +426,6 @@ public:
      * \param aRegionName Region name.
      * \param aPeriod Model period
      * \author Steve Smith
-     * \todo Change name of this function to something more clear (perhaps setUnmanagedLandRates).
      */
     virtual void setUnmanagedLandValues( const std::string& aRegionName,
                                          const int aPeriod ) = 0;

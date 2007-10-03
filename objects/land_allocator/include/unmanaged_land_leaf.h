@@ -66,9 +66,6 @@ protected:
     //! Unadjusted land value
     objects::PeriodVector<Value> mBaseLandAllocation;
 
-    //! Container of historical land use.
-    std::auto_ptr<LandUseHistory> mLandUseHistory;
-
     virtual void initCarbonCycle();
     virtual const std::string& getXMLName() const;
 

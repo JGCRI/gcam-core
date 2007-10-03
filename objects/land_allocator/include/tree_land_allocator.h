@@ -99,6 +99,8 @@ public:
    
     virtual void calcFinalLandAllocation( const std::string& aRegionName, 
                                           const int aPeriod );
+    void calcFinalLandAllocationHelper( const std::string& aRegionName,
+                                        const int aYear );
 
     virtual void completeInit( const std::string& aRegionName, 
                                const IInfo* aRegionInfo );
@@ -131,7 +133,15 @@ public:
 
      virtual void calcLandAllocation( const std::string& aRegionName,
                                      const double aLandAllocationAbove,
-                                     const int aPeriod );
+                                     const int aYear );
+     virtual void calcLandAllocationPassTwo( const std::string& aRegionName,
+                                             const int aYear );
+
+    virtual void calcLandAllocationPassThree( const std::string& aRegionName,
+                                              const int aYear );
+
+    virtual void calcLandAllocationPassFour( const std::string& aRegionName,
+                                             const int aYear );
 protected:
     virtual const std::string& getXMLName() const;
 
@@ -144,11 +154,15 @@ private:
     //! Land allocated in 1000's of hectares
     objects::PeriodVector<Value> mLandAllocation;
 
+    //! Boolean storing whether a year has been calculated or not.
+    objects::YearVector<bool> mCalculated;
+
     const ALandAllocatorItem* findParentOfType( const std::string& aType ) const;
 
     void checkRotationPeriod( const IInfo* aRegionInfo ) const;
 
     void adjustTotalLand( const int aPeriod );
+        
 };
 
 #endif // _LAND_ALLOCATOR_ROOT_H_

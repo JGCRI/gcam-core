@@ -11,6 +11,7 @@
 #include "emissions/include/unmanaged_carbon_calc.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
+#include "ccarbon_model/include/carbon_model_utils.h"
 
 using namespace std;
 using namespace xercesc;
@@ -21,13 +22,17 @@ extern Scenario* scenario;
 * \author James Blackwood
 */
 UnmanagedCarbonCalc::UnmanagedCarbonCalc():
-mAboveGroundCarbon( getStartYear(), getEndYear() ),
-mBelowGroundCarbon( getStartYear(), getEndYear() )
+mAboveGroundCarbon( CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear() ),
+mBelowGroundCarbon( CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear() )
 {
 }
 
 //! Default destructor
 UnmanagedCarbonCalc::~UnmanagedCarbonCalc() {
+}
+
+UnmanagedCarbonCalc* UnmanagedCarbonCalc::clone() const{
+	return NULL;
 }
 
 /*! \brief Parses all XML data for the class.
@@ -79,8 +84,8 @@ void UnmanagedCarbonCalc::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aT
 
 void UnmanagedCarbonCalc::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-    XMLWriteVector( mAboveGroundCarbon, "above-ground-carbon", aOut, aTabs, getStartYear(), 0.0 );
-    XMLWriteVector( mBelowGroundCarbon, "below-ground-carbon", aOut, aTabs, getStartYear(), 0.0 );
+    XMLWriteVector( mAboveGroundCarbon, "above-ground-carbon", aOut, aTabs, CarbonModelUtils::getStartYear(), 0.0 );
+    XMLWriteVector( mBelowGroundCarbon, "below-ground-carbon", aOut, aTabs, CarbonModelUtils::getStartYear(), 0.0 );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
@@ -102,7 +107,7 @@ const string& UnmanagedCarbonCalc::getXMLNameStatic() {
 * \brief Perform initializations that only need to be done once.
 * \author James Blackwood
 */
-void UnmanagedCarbonCalc::completeInit() {
+void UnmanagedCarbonCalc::completeInit( int aKey ) {
 
 }
 
@@ -122,9 +127,13 @@ void UnmanagedCarbonCalc::setUnitBelowGroundCarbon( const double aBelowGroundCar
 
 double UnmanagedCarbonCalc::getPotentialAboveGroundCarbon( const int aYear ) const {
 
-    return interpYearHelper( mAboveGroundCarbon, getStartYear(), getEndYear(), aYear );
+    return CarbonModelUtils::interpYearHelper( mAboveGroundCarbon,
+                                           CarbonModelUtils::getStartYear(),
+                                           CarbonModelUtils::getEndYear(), aYear );
 }
 
 double UnmanagedCarbonCalc::getPotentialBelowGroundCarbon( const int aYear ) const {
-    return interpYearHelper( mBelowGroundCarbon, getStartYear(), getEndYear(), aYear );
+    return CarbonModelUtils::interpYearHelper( mBelowGroundCarbon,
+                                           CarbonModelUtils::getStartYear(),
+                                           CarbonModelUtils::getEndYear(), aYear );
 }

@@ -23,6 +23,9 @@
 using namespace std;
 using namespace xercesc;
 
+//! Map type for land allocations by year.
+typedef std::map<unsigned int, double> LandMapType;
+
 const string& LandUseHistory::getXMLNameStatic(){
     static const string XML_NAME = "land-use-history";
     return XML_NAME;
@@ -35,7 +38,12 @@ LandUseHistory::LandUseHistory()
 {
 }
 
-bool LandUseHistory::XMLParse( const DOMNode* aNode ){
+LandUseHistory::LandUseHistory(const LandUseHistory &aLandUseHistory){
+	this->mHistoricalLand = aLandUseHistory.mHistoricalLand;
+}
+
+
+bool LandUseHistory::XMLParse( const xercesc::DOMNode* aNode ){
 
     // assume we are passed a valid node.
     assert( aNode );
@@ -180,4 +188,16 @@ double LandUseHistory::getAllocation( const unsigned int aYear ) const {
     // Perform a linear interpolation to find the correct value.
     return util::linearInterpolateY( aYear, lowerBound->first, upperBound->first,
                                      lowerBound->second, upperBound->second );
+}
+
+const LandMapType LandUseHistory::getHistoricalLand() const {
+	return mHistoricalLand;
+}
+
+void LandUseHistory::printHistory() const {
+	 for( LandMapType::const_iterator i = mHistoricalLand.begin();
+         i != mHistoricalLand.end(); ++i )
+    {
+		std::cout<<i->second<<" "<<i->first<<endl;
+    }
 }

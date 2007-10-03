@@ -61,14 +61,16 @@ const string MagiccModel::sGasNames[] = { "CO2",
 */
 MagiccModel::MagiccModel( const Modeltime* aModeltime ):
 mModeltime( aModeltime ),
-mIsValid( false )
+mIsValid( false ),
+mCarbonModelStartYear( 1975 ),
+mSoilTempFeedback( -1 ),
+mHumusTempFeedback( -1 ),
+mGPPTempFeedback( -1 ),
+mClimateSensitivity( -1 ),
+mNetDeforestCarbFlux80s( -1 ),
+mOceanCarbFlux80s( -1 )
 {
-    mSoilTempFeedback = -1;
-    mHumusTempFeedback = -1;
-    mGPPTempFeedback = -1;
-    mClimateSensitivity = -1;
-    mNetDeforestCarbFlux80s = -1;
-    mOceanCarbFlux80s = -1;
+
 }
 
 /*! \brief Complete the initialization of the MagiccModel.
@@ -176,6 +178,9 @@ void MagiccModel::XMLParse( const DOMNode* node ){
         // 1980s net terrestrial Deforestation 
         else if ( nodeName == "deforestFlux80s" ){
             mNetDeforestCarbFlux80s = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "carbon-model-start-year" ){
+            mCarbonModelStartYear = XMLHelper<int>::getValue( curr );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -548,6 +553,11 @@ double MagiccModel::getTotalForcing( const int aYear ) const {
 #else
     return -1;
 #endif
+}
+
+
+int MagiccModel::getCarbonModelStartYear() const {
+    return mCarbonModelStartYear;
 }
 
 /*! \brief Write out data from the emissions model to the main csv output file.*/

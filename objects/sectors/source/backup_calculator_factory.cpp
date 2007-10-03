@@ -24,7 +24,6 @@
 // Add new types here.
 #include "sectors/include/wind_backup_calculator.h"
 #include "sectors/include/capacity_limit_backup_calculator.h"
-#include "sectors/include/CSP_backup_calculator.h"
 
 using namespace std;
 
@@ -37,8 +36,7 @@ using namespace std;
 bool BackupCalculatorFactory::isOfType( const string& aType ) {
     // Search the list of known types.
     return ( aType == WindBackupCalculator::getXMLNameStatic() 
-        || aType == CapacityLimitBackupCalculator::getXMLNameStatic() 
-        || aType == CSPBackupCalculator::getXMLNameStatic());
+        || aType == CapacityLimitBackupCalculator::getXMLNameStatic() );
 }
 
 /*!
@@ -51,9 +49,6 @@ auto_ptr<IBackupCalculator> BackupCalculatorFactory::create( const string& aType
     // Search the list of known types.
     if( aType == WindBackupCalculator::getXMLNameStatic() ) {
         return auto_ptr<IBackupCalculator>( new WindBackupCalculator );
-    }
-    if( aType == CSPBackupCalculator::getXMLNameStatic() ) {
-        return auto_ptr<IBackupCalculator>( new CSPBackupCalculator );
     }
     if( aType == CapacityLimitBackupCalculator::getXMLNameStatic() ){
         return auto_ptr<IBackupCalculator>( new CapacityLimitBackupCalculator );

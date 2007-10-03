@@ -11,6 +11,10 @@
 #include "land_allocator/include/tree_land_allocator.h"
 #include "containers/include/scenario.h"
 #include "containers/include/iinfo.h"
+#include "util/base/include/model_time.h"
+#include "ccarbon_model/include/carbon_model_utils.h"
+#include "util/base/include/configuration.h"
+#include "ccarbon_model/include/summer_box.h"
 
 using namespace std;
 using namespace xercesc;
@@ -22,7 +26,8 @@ extern Scenario* scenario;
  * \author James Blackwood
  */
 TreeLandAllocator::TreeLandAllocator()
-: LandNode( 0 )
+: LandNode( 0 ),
+  mCalculated( CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear() )
 {
 }
 
@@ -44,8 +49,8 @@ const string& TreeLandAllocator::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const string& TreeLandAllocator::getXMLNameStatic() {
-    const static string XML_NAME = "LandAllocatorRoot";
-    return XML_NAME;
+    const static string XML_NAME = "LandAllocatorRoot";	// original XML tag
+	return XML_NAME;
 }
 
 bool TreeLandAllocator::XMLParse( const DOMNode* aNode ){
@@ -96,15 +101,15 @@ void TreeLandAllocator::completeInit( const string& aRegionName,
         LandNode::setUnmanagedLandAllocation( aRegionName, unmanagedLand, period );
 
         // Check that the final allocations sum correctly.
-        assert( util::isEqual( getTotalLandAllocation( eAnyLand, period ),
-                               mLandAllocation[ period ].get(),
-                               util::getSmallNumber() ) );
-        assert( util::isEqual( getTotalLandAllocation( eUnmanaged, period ),
-                               unmanagedLand,
-                               util::getSmallNumber() ) );
-        assert( util::isEqual( getTotalLandAllocation( eManaged, period ),
-                               mLandAllocation[ period ] - unmanagedLand,
-                               util::getSmallNumber() ) );
+        //assert( util::isEqual( getTotalLandAllocation( eAnyLand, period ),
+        //                       mLandAllocation[ period ].get(),
+        //                       util::getSmallNumber() ) );
+        //assert( util::isEqual( getTotalLandAllocation( eUnmanaged, period ),
+        //                       unmanagedLand,
+        //                       util::getSmallNumber() ) );
+        //assert( util::isEqual( getTotalLandAllocation( eManaged, period ),
+        //                       mLandAllocation[ period ] - unmanagedLand,
+        //                       util::getSmallNumber() ) );
 
         setInitShares( aRegionName,
                        0, // No parent sigma
@@ -169,9 +174,8 @@ void TreeLandAllocator::adjustTotalLand( const int aPeriod ){
     if ( totalManagedLand - mLandAllocation[ aPeriod ] > util::getSmallNumber() ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::DEBUG );
-        mainLog << "The total managed land allocated is greater than the total land value of "
-                << mLandAllocation[ aPeriod ] 
-                << " in year " << scenario->getModeltime()->getper_to_yr( aPeriod ) << " by "
+        mainLog << "The total managed land allocated is greater than the total land in " << mName
+                << " in " << scenario->getModeltime()->getper_to_yr( aPeriod ) << " by "
                 << totalManagedLand - mLandAllocation[ aPeriod ] 
                 << "(" << 100 * ( totalManagedLand - mLandAllocation[ aPeriod ] ) / mLandAllocation[ aPeriod ]
                 << "%)" << endl;
@@ -336,8 +340,7 @@ void TreeLandAllocator::setInitShares( const string& aRegionName,
 double TreeLandAllocator::calcLandShares( const string& aRegionName,
                                           const double aSigmaAbove,
                                           const double aTotalBaseLand,
-                                          const int aPeriod )
-{
+                                          const int aPeriod ){
     // First adjust value of unmanaged land nodes
     setUnmanagedLandValues( aRegionName, aPeriod );
 
@@ -350,16 +353,36 @@ double TreeLandAllocator::calcLandShares( const string& aRegionName,
 
 void TreeLandAllocator::calcLandAllocation( const string& aRegionName,
                                             const double aLandAllocationAbove,
-                                            const int aPeriod )
-{
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+                                            const int aPeriod ){
+    for ( unsigned int i = 0; i < mChildren.size(); ++i ){
         mChildren[ i ]->calcLandAllocation( aRegionName, mLandAllocation[ aPeriod ], aPeriod );
     }
 }
 
+void TreeLandAllocator::calcLandAllocationPassTwo( const string& aRegionName, 
+                                                   const int aYear ){
+    for ( unsigned int i = 0; i < mChildren.size(); ++i ){
+        mChildren[ i ]->calcLandAllocationPassTwo( aRegionName, aYear );
+    }
+}
+
+void TreeLandAllocator::calcLandAllocationPassThree( const string& aRegionName, 
+                                                     const int aYear ){
+    for ( unsigned int i = 0; i < mChildren.size(); ++i ){
+        mChildren[ i ]->calcLandAllocationPassThree( aRegionName, aYear );
+    }
+}
+
+void TreeLandAllocator::calcLandAllocationPassFour( const string& aRegionName, 
+                                                    const int aYear ){
+    for ( unsigned int i = 0; i < mChildren.size(); ++i ){
+        mChildren[ i ]->calcLandAllocationPassFour( aRegionName, aYear );
+    }
+}
+
+
 void TreeLandAllocator::calcFinalLandAllocation( const string& aRegionName,
-                                                 const int aPeriod )
-{
+                                                 const int aPeriod ){
     calcLandShares( aRegionName,
                     0, // No sigma above the root.
                     0, // No land allocation above the root.
@@ -368,6 +391,37 @@ void TreeLandAllocator::calcFinalLandAllocation( const string& aRegionName,
     calcLandAllocation( aRegionName,
                         0, // No land allocation above the root.
                         aPeriod );
+
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int timeStep = modeltime->gettimestep( aPeriod );
+    const int calcYear = modeltime->getper_to_yr( aPeriod );
+    // Find any years up to the current period that have not been calculated.
+    for( int i = CarbonModelUtils::getStartYear(); i <= calcYear - timeStep; ++i ){
+        if( !mCalculated[ i ] ){
+            calcFinalLandAllocationHelper( aRegionName, i );
+            mCalculated[ i ] = true;
+        }
+    }
+    int start = calcYear - modeltime->gettimestep( modeltime->getyr_to_per( calcYear ) ) + 1;
+    start = max( start, static_cast<int>(CarbonModelUtils::getStartYear()) );
+    for( int i = start; i <= calcYear; ++i ){
+        calcFinalLandAllocationHelper( aRegionName, i );
+    }
+    SummerBox::getInstance()->resetState();
+}
+
+/*!
+ * \brief Helper function to call each phase of land use calculation.
+ * \details Land use calculation must be formed in phases for each year.
+            This function calls each phase.
+ * \param aRegionName the name of the region.
+ * \param aYear the year the calculate.
+ */
+void TreeLandAllocator::calcFinalLandAllocationHelper( const string& aRegionName,
+                                                       const int aYear ){
+    calcLandAllocationPassTwo( aRegionName, aYear );
+    calcLandAllocationPassThree( aRegionName, aYear );
+    calcLandAllocationPassFour( aRegionName, aYear );
 }
 
 void TreeLandAllocator::setCarbonContent( const string& aLandType,

@@ -72,6 +72,10 @@ class LandNode;
 class ICarbonCalc;
 class AgSector;
 class IClimateModel;
+class CarbonBox;
+class CarbonBox;
+class NPP;
+class ACarbonFlow;
 
 /*!
  * \brief An interface to a class which visits every node in the tree and
@@ -227,6 +231,12 @@ public:
 
     virtual void startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ) = 0;
     virtual void endVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ) = 0;
+    virtual void startVisitCarbonBox( const CarbonBox* aCarbonBox, const int aPeriod ) = 0;
+    virtual void endVisitCarbonBox( const CarbonBox* aCarbonBox, const int aPeriod ) = 0;
+    virtual void startVisitNPP( const NPP* aNPP, const int aPeriod ) = 0;
+    virtual void endVisitNPP( const NPP* aNPP, const int aPeriod ) = 0;
+    virtual void startVisitCarbonFlow( const ACarbonFlow* aCarbonFlow, const int aPeriod ) = 0;
+    virtual void endVisitCarbonFlow( const ACarbonFlow* aCarbonFlow, const int aPeriod ) = 0;
 
     virtual void startVisitAgSector( const AgSector* aAgSector, const int aPeriod ) = 0;
     virtual void endVisitAgSector( const AgSector* aAgSector, const int aPeriod ) = 0;

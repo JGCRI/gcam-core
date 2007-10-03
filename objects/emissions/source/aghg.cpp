@@ -309,6 +309,7 @@ void AGHG::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->endVisitGHG( this, aPeriod );
 }
 
+
 /*! \return the GHG Driver tag for each period from the input file
 */
 std::string AGHG::getGHGDriverName() const

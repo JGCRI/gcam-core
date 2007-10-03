@@ -164,6 +164,12 @@ public:
 
     virtual void startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ){}
     virtual void endVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ){}
+    virtual void startVisitCarbonBox( const CarbonBox* aCarbonBox, const int aPeriod ){};
+    virtual void endVisitCarbonBox( const CarbonBox* aCarbonBox, const int aPeriod ){};
+    virtual void startVisitNPP( const NPP* aNPP, const int aPeriod ){}
+    virtual void endVisitNPP( const NPP* aNPP, const int aPeriod ){}
+    virtual void startVisitCarbonFlow( const ACarbonFlow* aCarbonFlow, const int aPeriod ){}
+    virtual void endVisitCarbonFlow( const ACarbonFlow* aCarbonFlow, const int aPeriod ){}
 
     virtual void startVisitAgSector( const AgSector* aAgSector, const int aPeriod ){}
     virtual void endVisitAgSector( const AgSector* aAgSector, const int aPeriod ){}

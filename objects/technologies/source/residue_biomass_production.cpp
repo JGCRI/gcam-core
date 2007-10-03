@@ -1,5 +1,5 @@
 /*
- * residue_biomass_output.cpp
+ * residue_biomass_production.cpp
  * Created: 01/24/2007
  * Version: 02/21/2007
  *
@@ -21,7 +21,7 @@
 #include "containers/include/iinfo.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
-#include "technologies/include/residue_biomass_output.h"
+#include "technologies/include/residue_biomass_production.h"
 #include "util/base/include/ivisitor.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/TValidatorInfo.h"
@@ -36,10 +36,10 @@ extern Scenario* scenario;
 
 // namespaces **************************************************************
 
-// ResidueBiomassOutput::accept ****************************************
+// ResidueBiomassProduction::accept ****************************************
 
 // Documentation is inherited.
-void ResidueBiomassOutput::accept(
+void ResidueBiomassProduction::accept(
    IVisitor* aVisitor,
    const int aPeriod ) const
 {
@@ -50,7 +50,7 @@ void ResidueBiomassOutput::accept(
    }
 }
 
-// ResidueBiomassOutput::calcPhysicalOutput ****************************
+// ResidueBiomassProduction::calcPhysicalOutput ****************************
 
 /*!
  * \return the secondary output for the specified region and period
@@ -59,7 +59,7 @@ void ResidueBiomassOutput::accept(
  * \param aCaptureComponent
  * \param aPeriod
  */
-double ResidueBiomassOutput::calcPhysicalOutput(
+double ResidueBiomassProduction::calcPhysicalOutput(
    const double             aPrimaryOutput,
    const std::string&       aRegionName,
    const ICaptureComponent* aCaptureComponent,
@@ -71,7 +71,7 @@ double ResidueBiomassOutput::calcPhysicalOutput(
    }
 
    // Initialize debugging vars to -1 so that know that a valid set of values are returned
-   mResMass = mCropMass = mResAvail = mMeanErosCtrl = mMaxBioEnergySupply = mFPrice = -1;
+   mYield = mResMass = mCropMass = mResAvail = mMeanErosCtrl = mMaxBioEnergySupply = mFPrice = -1;
    
    assert( scenario != 0 );
    const Marketplace*   pMarketplace = scenario->getMarketplace();
@@ -91,6 +91,16 @@ double ResidueBiomassOutput::calcPhysicalOutput(
       return 0;
    }
 
+   // Get the yield
+   mYield = mLandAllocator->getYield(
+      mLandType,
+      mTechnologyName,
+      aPeriod );
+   if ( mYield <= 0 )
+   {
+      return 0;
+   }
+
    // Get the area
    double   area = mLandAllocator->getLandAllocation(
       mLandType,
@@ -102,7 +112,7 @@ double ResidueBiomassOutput::calcPhysicalOutput(
    }
    
    // Compute the amount of crop produced (Equation 1)
-   mCropMass = aPrimaryOutput * mMassConversion;
+   mCropMass = area * mYield * mMassConversion;
 
    // Equation 2 is mHarvestIndex
 
@@ -141,10 +151,10 @@ double ResidueBiomassOutput::calcPhysicalOutput(
    return resEnergy;
 }
 
-// ResidueBiomassOutput::completeInit **********************************
+// ResidueBiomassProduction::completeInit **********************************
 
 // Documentation is inherited.
-void ResidueBiomassOutput::completeInit(
+void ResidueBiomassProduction::completeInit(
    const std::string& aSectorName,
    DependencyFinder*  aDependencyFinder,
    const bool         aIsTechOperating )
@@ -180,11 +190,11 @@ void ResidueBiomassOutput::completeInit(
       validator_type(
          mErosCtrl,
          "eros-ctrl",
-         mErosCtrl >= 0 ),
+         mErosCtrl > 0 ),
       validator_type(
          mHarvestIndex,
          "harvest-index",
-         mHarvestIndex >= 0 ),
+         mHarvestIndex > 0 ),
       validator_type(
          mMassConversion,
          "mass-conversion",
@@ -222,10 +232,10 @@ void ResidueBiomassOutput::completeInit(
    }
 }
 
-// ResidueBiomassOutput::getEmissionsPerOutput *************************
+// ResidueBiomassProduction::getEmissionsPerOutput *************************
 
 // Documentation is inherited.
-double ResidueBiomassOutput::getEmissionsPerOutput(
+double ResidueBiomassProduction::getEmissionsPerOutput(
    const std::string& aGHGName,
    const int          aPeriod ) const
 {
@@ -235,10 +245,10 @@ double ResidueBiomassOutput::getEmissionsPerOutput(
    return mCachedCO2Coef;
 }
 
-// ResidueBiomassOutput::getPhysicalOutput *****************************
+// ResidueBiomassProduction::getPhysicalOutput *****************************
 
 // Documentation is inherited.
-double ResidueBiomassOutput::getPhysicalOutput( const int aPeriod ) const
+double ResidueBiomassProduction::getPhysicalOutput( const int aPeriod ) const
 {
    if ( !mPhysicalOutputs.size() )
    // initialise
@@ -253,10 +263,10 @@ double ResidueBiomassOutput::getPhysicalOutput( const int aPeriod ) const
    return mPhysicalOutputs[ aPeriod ];
 }
 
-// ResidueBiomassOutput::getValue **************************************
+// ResidueBiomassProduction::getValue **************************************
 
 // Documentation is inherited.
-double ResidueBiomassOutput::getValue(
+double ResidueBiomassProduction::getValue(
    const std::string&       aRegionName,
    const ICaptureComponent* aCaptureComponent,
    const int                aPeriod ) const
@@ -265,19 +275,19 @@ double ResidueBiomassOutput::getValue(
    return 0;
 }
 
-// ResidueBiomassOutput::getXMLNameStatic ******************************
+// ResidueBiomassProduction::getXMLNameStatic ******************************
 
 // Documentation is inherited.
-const std::string& ResidueBiomassOutput::getXMLNameStatic( void )
+const std::string& ResidueBiomassProduction::getXMLNameStatic( void )
 {
    static const std::string XMLName = "residue-biomass-production";
    return XMLName;
 }
 
-// ResidueBiomassOutput::initCalc **************************************
+// ResidueBiomassProduction::initCalc **************************************
 
 // Documentation is inherited.
-void ResidueBiomassOutput::initCalc(
+void ResidueBiomassProduction::initCalc(
    const std::string& aRegionName,
    const int          aPeriod )
 {
@@ -291,29 +301,29 @@ void ResidueBiomassOutput::initCalc(
       pProductInfo ? pProductInfo->getDouble( "CO2Coef", false ) : 0 );
 }
 
-// ResidueBiomassOutput::postCalc **************************************
+// ResidueBiomassProduction::postCalc **************************************
 
 // Documentation is inherited.
-void ResidueBiomassOutput::postCalc(
+void ResidueBiomassProduction::postCalc(
    const std::string& aRegionName,
    const int          aPeriod )
 {
    // Not used
 }
 
-// ResidueBiomassOutput::scaleCoefficient ******************************
+// ResidueBiomassProduction::scaleCoefficient ******************************
 
 // Documentation is inherited.
-void ResidueBiomassOutput::scaleCoefficient( const double aScaler )
+void ResidueBiomassProduction::scaleCoefficient( const double aScaler )
 {
    // Not used
 }
 
-// ResidueBiomassOutput::setLandAllocator ******************************
+// ResidueBiomassProduction::setLandAllocator ******************************
 
 // Documentation is inherited.
-void ResidueBiomassOutput::setLandAllocator(
-   const ILandAllocator*    aLandAllocator,
+void ResidueBiomassProduction::setLandAllocator(
+   ILandAllocator*    aLandAllocator,
    const std::string& aName,
    const std::string& aLandType )
 {
@@ -322,10 +332,10 @@ void ResidueBiomassOutput::setLandAllocator(
    mLandType       = aLandType;
 }
 
-// ResidueBiomassOutput::setPhysicalOutput *****************************
+// ResidueBiomassProduction::setPhysicalOutput *****************************
 
 // Documentation is inherited.
-void ResidueBiomassOutput::setPhysicalOutput(
+void ResidueBiomassProduction::setPhysicalOutput(
    const double       aPrimaryOutput,
    const std::string& aRegionName,
    ICaptureComponent* aCaptureComponent,
@@ -363,10 +373,10 @@ void ResidueBiomassOutput::setPhysicalOutput(
       true );
 }
 
-// ResidueBiomassOutput::toDebugXML ************************************
+// ResidueBiomassProduction::toDebugXML ************************************
 
 // Documentation is inherited.
-void ResidueBiomassOutput::toDebugXML(
+void ResidueBiomassProduction::toDebugXML(
    const int     aPeriod,
    std::ostream& aOut,
    Tabs*         aTabs ) const
@@ -386,6 +396,7 @@ void ResidueBiomassOutput::toDebugXML(
    XMLWriteElement( mCostCurve.getMidprice(), "mid-price", aOut, aTabs );
    XMLWriteElement( mResMass, "Residue-Mass", aOut, aTabs );
    XMLWriteElement( mCropMass, "Crop-Mass", aOut, aTabs );
+   XMLWriteElement( mYield, "yield", aOut, aTabs );
    XMLWriteElement( mResAvail, "resAvail", aOut, aTabs );
    XMLWriteElement( mMeanErosCtrl, "meanErosCtrl", aOut, aTabs );
    XMLWriteElement( mMaxBioEnergySupply, "maxBioEnergySupply", aOut, aTabs );
@@ -393,10 +404,10 @@ void ResidueBiomassOutput::toDebugXML(
    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-// ResidueBiomassOutput::toInputXML ************************************
+// ResidueBiomassProduction::toInputXML ************************************
 
 // Documentation is inherited.
-void ResidueBiomassOutput::toInputXML(
+void ResidueBiomassProduction::toInputXML(
    std::ostream& aOut,
    Tabs*         aTabs ) const
 {
@@ -412,10 +423,10 @@ void ResidueBiomassOutput::toInputXML(
    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-// ResidueBiomassOutput::XMLParse **************************************
+// ResidueBiomassProduction::XMLParse **************************************
 
 // Documentation is inherited.
-bool ResidueBiomassOutput::XMLParse( const xercesc::DOMNode* aNode )
+bool ResidueBiomassProduction::XMLParse( const xercesc::DOMNode* aNode )
 {
    // assume we are passed a valid node.
    if ( !aNode )
@@ -499,6 +510,6 @@ bool ResidueBiomassOutput::XMLParse( const xercesc::DOMNode* aNode )
    return true;
 }
 
-// end of residue_biomass_output.cpp ***********************************
+// end of residue_biomass_production.cpp ***********************************
 
 

@@ -307,33 +307,7 @@ void BuildingGenericDmdTechnology::calcCost( const string& aRegionName,
                                              const string& aSectorName,
 											 const int aPeriod )
 {
-	const double EJtoGJ = 1.0e9;
-    
-    Technology::calcCost( aRegionName, aSectorName, aPeriod );
-    
-    // Now convert the cost from $/GJ service to $/unit floorspace by using 
-    // demand function prefix (which is in units of EJ service/unit floorspace)
-    
-    mCosts[ aPeriod ] *= getEnergyToFloorSpacePriceConversion( aRegionName, aPeriod );
-}
-
-//! Units conversion for building service costs
-/*! Need to convert the cost from $/GJ_out, which is the unit for building service cost
-* to units of $/unit floorspace by using demand function prefix 
-* (which is in units of EJ service/unit floorspace) times the conversion from EJ to GJ.
-*
-* Function returns a conversion factor with units of GJ service/unit floorspace
-*
-* \author Steve Smith
-* \return Conversion Factor
-*/
-double BuildingGenericDmdTechnology::getEnergyToFloorSpacePriceConversion(
-            const string& aRegionName,
-            const int aPeriod )
-{
-	const double EJtoGJ = 1.0e9;
-    
-	return shrwts * getDemandFnPrefix( aRegionName, aPeriod ) * EJtoGJ;
+	Technology::calcCost( aRegionName, aSectorName, aPeriod );
 }
 
 double BuildingGenericDmdTechnology::getFuelCost( const string& aRegionName, const string& aSectorName,

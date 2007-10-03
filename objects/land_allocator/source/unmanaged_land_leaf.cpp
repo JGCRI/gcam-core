@@ -10,6 +10,9 @@
 #include "land_allocator/include/land_use_history.h"
 #include "util/base/include/xml_helper.h"
 #include "emissions/include/unmanaged_carbon_calc.h"
+#include "ccarbon_model/include/carbon_box_model.h"
+#include "emissions/include/aghg.h"
+#include "util/base/include/summary.h"
 #include "util/base/include/ivisitor.h"
 #include "emissions/include/ghg_factory.h"
 
@@ -20,7 +23,7 @@ using namespace xercesc;
  * \brief Default constructor.
  * \param aParent Pointer to this leafs's parent.
  * \author James Blackwood
- */
+*/
 UnmanagedLandLeaf::UnmanagedLandLeaf( const ALandAllocatorItem* aParent ):
 // Default the name to the empty string. It will be read in during XML parsing.
 LandLeaf( aParent, "" )
@@ -47,7 +50,7 @@ void UnmanagedLandLeaf::completeInit( const string& aRegionName,
             else {
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::NOTICE );
-                mainLog << "Land for unmanged Land-Leaf " << getName() 
+                mainLog << "Land for unmanaged Land-Leaf " << getName() 
                         << " was not allocated in period " << period << endl;
             }
         }
@@ -55,8 +58,8 @@ void UnmanagedLandLeaf::completeInit( const string& aRegionName,
     
 }
 
-bool UnmanagedLandLeaf::XMLDerivedClassParse( const string& aNodeName,
-                                              const DOMNode* aCurr )
+bool UnmanagedLandLeaf::XMLDerivedClassParse( const std::string& aNodeName,
+											  const xercesc::DOMNode* aCurr )
 {
     if( aNodeName == "landAllocation" ){
         XMLHelper<Value>::insertValueIntoVector( aCurr, mLandAllocation,
@@ -71,6 +74,9 @@ bool UnmanagedLandLeaf::XMLDerivedClassParse( const string& aNodeName,
     }
     else if( aNodeName == UnmanagedCarbonCalc::getXMLNameStatic() ) {
         parseSingleNode( aCurr, mCarbonContentCalc, new UnmanagedCarbonCalc );
+    }
+    else if( aNodeName == CarbonBoxModel::getXMLNameStatic() ){
+        parseSingleNode( aCurr, mCarbonContentCalc, new CarbonBoxModel );
     }
     else {
         return false;
@@ -207,7 +213,7 @@ double UnmanagedLandLeaf::getTotalLandAllocation( const LandAllocationType aType
 {
     // Check if unmanaged land should be returned.
     if( aType == eAnyLand || aType == eUnmanaged ){
-        assert( mLandAllocation[ aPeriod ].isInited() );
+        //assert( mLandAllocation[ aPeriod ].isInited() );
         return mLandAllocation[ aPeriod ];
     }
     return 0;

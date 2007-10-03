@@ -21,8 +21,7 @@
 #include "sectors/include/backup_calculator_factory.h"
 #include "containers/include/iinfo.h"
 #include "sectors/include/sector_utils.h"
-#include "technologies/include/solar_technology.h"
-#include "technologies/include/wind_technology.h"
+#include "technologies/include/csp_technology.h"
 #include "technologies/include/default_technology.h"
 
 using namespace std;
@@ -194,9 +193,8 @@ void IntermittentSubsector::toDebugXMLDerived( const int period, ostream& out, T
 }
 
 bool IntermittentSubsector::isNameOfChild( const std::string& nodename ) const {
-   return nodename == SolarTechnology::getXMLNameStatic1D() ||
-      nodename == WindTechnology::getXMLNameStatic1D() ||
-      nodename == DefaultTechnology::getXMLNameStatic1D();
+   return nodename == CSPTechnology::getXMLNameStatic1D() ||
+          nodename == DefaultTechnology::getXMLNameStatic1D();
 }
 
 ITechnology* IntermittentSubsector::createChild( const std::string& aTechType,
@@ -204,13 +202,10 @@ ITechnology* IntermittentSubsector::createChild( const std::string& aTechType,
                                                  const int aTechYear ) const {
 
     if ( !isNameOfChild( aTechType ) ) {
-       return false;
+        return false;
     }
-    else if ( aTechType == SolarTechnology::getXMLNameStatic1D() ){
-       return new SolarTechnology( aTechName, aTechYear );
-    }
-    else if ( aTechType == WindTechnology::getXMLNameStatic1D() ) {
-       return new WindTechnology( aTechName, aTechYear );
+    else if ( aTechType == CSPTechnology::getXMLNameStatic1D() ){
+       return new CSPTechnology( aTechName, aTechYear );
     }
     else if ( aTechType == DefaultTechnology::getXMLNameStatic1D() ){
        return new DefaultTechnology( aTechName, aTechYear );

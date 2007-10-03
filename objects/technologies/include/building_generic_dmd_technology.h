@@ -91,7 +91,6 @@ protected:
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual double getDemandFnPrefix( const std::string& regionName, const int period );
     virtual double getEffectiveInternalGains( const std::string& regionName, const int period );
-    double getEnergyToFloorSpacePriceConversion( const std::string& aRegionName, const int aPeriod );
     double saturation; //!< penetration level for this technology
     double priceElasticity; //!< Price elasticity for this demand
 };

@@ -10,6 +10,7 @@
 #include <cfloat>
 
 #include "emissions/include/asimple_carbon_calc.h"
+#include "ccarbon_model/include/carbon_model_utils.h"
 #include "util/base/include/ivisitor.h"
 #include "util/base/include/util.h"
 #include "land_allocator/include/land_use_history.h"
@@ -21,12 +22,13 @@ using namespace xercesc;
  * \brief Constructor.
  * \author James Blackwood
  */
-ASimpleCarbonCalc::ASimpleCarbonCalc() : mCurrentEmissions( getStartYear(), getEndYear() ),
-                                         mCalculated( getStartYear(), getEndYear() ),
-                                         mTotalEmissions( getStartYear(), getEndYear() ),
-                                         mIsFirstTime( true ),
-                                         mHistoricalShare( 0 ),
-                                         mLandUseHistory( 0 )
+ASimpleCarbonCalc::ASimpleCarbonCalc()
+: mCurrentEmissions( CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear() ),
+  mCalculated( CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear() ),
+  mTotalEmissions( CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear() ),
+  mIsFirstTime( true ),
+  mHistoricalShare( 0 ),
+  mLandUseHistory( 0 )
 {
 }
 
@@ -41,47 +43,46 @@ void ASimpleCarbonCalc::initLandUseHistory( const LandUseHistory* aHistory,
     mHistoricalShare = aShare;
 }
 
-void ASimpleCarbonCalc::calc( const int aPeriod ) {
+void ASimpleCarbonCalc::calc( const int aYear ) {
     const Modeltime* modeltime = scenario->getModeltime();
-    const int timeStep = modeltime->gettimestep( aPeriod );
-    const int calcYear = modeltime->getper_to_yr( aPeriod );
-
-    // Find any years up to the current period that have not been calculated.
-    for( int i = getStartYear(); i <= calcYear - timeStep; ++i ){
-        if( !mCalculated[ i ] ){
-            // Calculate above and below ground land use change emissions.
-            calcAboveGroundCarbonEmission( i, false );
-            calcBelowGroundCarbonEmission( i, false );
-            mCalculated[ i ] = true;
-        }
+    // If this is a land-use history year...
+    if( aYear < modeltime->getStartYear() ) {
+        calcAboveGroundCarbonEmission( aYear, false );
+        calcBelowGroundCarbonEmission( aYear, false );
     }
-
-    // Clear the current emissions as this is a new year.
-    if( mIsFirstTime[ aPeriod ] ){
-        mIsFirstTime[ aPeriod ] = false;
-        mCurrentEmissions.assign( mCurrentEmissions.size(), 0.0 );
-    }
-    // If the period was already calculated, remove the previously added
-    // emissions or uptake from the totals.
+    // Otherwise...
     else {
-        for( unsigned int i = getStartYear(); i <= getEndYear(); ++i ){
-            mTotalEmissions[ i ] -= mCurrentEmissions[ i ];
+        int aPeriod = modeltime->getyr_to_per( aYear );
+        const int timeStep = modeltime->gettimestep( aPeriod );
+        const int calcYear = aYear;
 
-            // Clear the current emissions for the year.
-            mCurrentEmissions[ i ] = 0;
+        // Clear the current emissions as this is a new year.
+        if( mIsFirstTime[ aPeriod ] ){
+            mIsFirstTime[ aPeriod ] = false;
+            mCurrentEmissions.assign( mCurrentEmissions.size(), 0.0 );
         }
-    }
+        // If the period was already calculated, remove the previously added
+        // emissions or uptake from the totals.
+        else {
+            for( int i = CarbonModelUtils::getStartYear(); i <= CarbonModelUtils::getEndYear(); ++i ){
+                mTotalEmissions[ i ] -= mCurrentEmissions[ i ];
 
-    // Calculate the present period.
-    for( int year = calcYear - timeStep + 1; year <= calcYear; ++year ){
-        calcAboveGroundCarbonEmission( year, true );
-        calcBelowGroundCarbonEmission( year, true );
-        mCalculated[ year ] = true;
+                // Clear the current emissions for the year.
+                mCurrentEmissions[ i ] = 0;
+            }
+        }
+        // Calculate the present year
+        calcAboveGroundCarbonEmission( aYear, true );
+        calcBelowGroundCarbonEmission( aYear, true );
     }
 }
 
+void ASimpleCarbonCalc::calcLandUseChange( const int aYear, FlowType aFlowType ) {
+    // Do nothing for now, this method was added for the complex carbon model...
+}
+
 double ASimpleCarbonCalc::getNetLandUseChangeEmission( const int aYear ) const {
-    assert( mCalculated[ aYear ] );
+    //assert( mCalculated[ aYear ] );
     return mTotalEmissions[ aYear ];
 }
 
@@ -101,48 +102,6 @@ void ASimpleCarbonCalc::accept( IVisitor* aVisitor, const int aPeriod ) const {
 }
 
 /*!
- * \brief Get the land usage for a year.
- * \details Returns the land usage for a year. An appropriate historical or
- *          calculated value will be returned depending on the year.
- * \return Land usage for the year.
- */
-double ASimpleCarbonCalc::getLandUse( const unsigned int aYear ) const {
-    // TODO: Make this dynamic.
-    const unsigned int basePeriod = 1;
-
-    // Store the first calculated year to save time.
-    static const unsigned int baseYear
-        = static_cast<unsigned int>( scenario->getModeltime()->getper_to_yr( basePeriod ) );
-
-    // TODO: Determine what to do if the history overlaps with calculated
-    // values.
-
-    double landUse;
-    // If the year is within the range of the history use the historical
-    // allocation. The land use history may be null if none was read-in.
-    unsigned int maxHistoryYear = 0;
-    if( mLandUseHistory ){
-        maxHistoryYear = mLandUseHistory->getMaxYear();
-    }
-
-    if( aYear < maxHistoryYear ){
-        landUse = mHistoricalShare * mLandUseHistory->getAllocation( aYear );
-    }
-    // If the year is between the last historical year and the first
-    // calculated year interpolate between the two.
-    else if( aYear < baseYear && maxHistoryYear != 0 ){
-        landUse = util::linearInterpolateY( aYear, maxHistoryYear, baseYear,
-                                            mHistoricalShare * mLandUseHistory->getAllocation( maxHistoryYear ),
-                                            mLandUse[ basePeriod ] );
-    }
-    // Otherwise use data interpolated from the current data.
-    else {
-        landUse = interpYearHelper( mLandUse, aYear );
-    }
-    return landUse;
-}
-
-/*!
  * \brief Calculate the emission from above ground carbon for a given year.
  * \details Above ground carbon is emitted as a pulse.
  * \param aYear Year.
@@ -153,10 +112,12 @@ void ASimpleCarbonCalc::calcAboveGroundCarbonEmission( const unsigned int aYear,
 {
     // Above ground carbon currently always contains the maximum potential
     // amount of carbon.
-    double prevCarbon = getLandUse( aYear - 1 )
+    double prevCarbon = CarbonModelUtils::getLandUse( aYear - 1, mLandUseHistory,
+                                                  mHistoricalShare, mLandUse )
                         * getPotentialAboveGroundCarbon( aYear - 1 );
     
-    double currCarbon = getLandUse( aYear )
+    double currCarbon = CarbonModelUtils::getLandUse( aYear, mLandUseHistory,
+                                                  mHistoricalShare, mLandUse )
                         * getPotentialAboveGroundCarbon( aYear );
     
     // Add a positive emission if the previous year contained more carbon
@@ -184,11 +145,13 @@ void ASimpleCarbonCalc::calcBelowGroundCarbonEmission( const unsigned int aYear,
     // Calculate the total emission which will be spread across the full
     // emission time.
     
-    double soilCarbonPrev = getLandUse( aYear - 1 )
-                            * getPotentialBelowGroundCarbon( aYear - 1 );
-
-    double soilCarbonCurr = getLandUse( aYear )
-                            * getPotentialBelowGroundCarbon( aYear );
+    double soilCarbonPrev = CarbonModelUtils::getLandUse( aYear - 1, mLandUseHistory,
+                                                      mHistoricalShare, mLandUse )
+                        * getPotentialAboveGroundCarbon( aYear - 1 );
+    
+    double soilCarbonCurr = CarbonModelUtils::getLandUse( aYear, mLandUseHistory,
+                                                      mHistoricalShare, mLandUse )
+                        * getPotentialAboveGroundCarbon( aYear );
 
     // Calculate the difference in carbon between the previous period and the
     // current period. If this is negative, an uptake has occurred. If this is
@@ -205,11 +168,12 @@ void ASimpleCarbonCalc::calcBelowGroundCarbonEmission( const unsigned int aYear,
 
     // Set emissions from now until the end of the model.
     bool aboveMin = true;
-    for( unsigned int year = aYear; year <= getEndYear() && aboveMin; ++year ){
+    for( int year = aYear; year <= CarbonModelUtils::getEndYear() && aboveMin; ++year ){
         // Calculate the future emissions for the year defined by the function:
         // E = deltaC/Tau * e^(-t/Tau)
-        double futureAnnualEmiss = carbonDifference / getSoilTimeScale()
-                                   * ( exp( -1 * double( year - aYear ) / getSoilTimeScale() ) );
+        double futureAnnualEmiss = carbonDifference / CarbonModelUtils::getSoilTimeScale()
+                                   * ( exp( -1 * double( year - aYear )
+                                   / CarbonModelUtils::getSoilTimeScale() ) );
 
         // Check if the future emissions are below a minimum. This is an
         // optimization to avoid iterating over years with negligible emissions.
@@ -218,7 +182,7 @@ void ASimpleCarbonCalc::calcBelowGroundCarbonEmission( const unsigned int aYear,
             // current year. The integral from t to infinity of the above
             // function is deltaC * e^(-t/Tau) so multiple the future annual
             // emission by Tau to determine the remaining emissions.
-            futureAnnualEmiss *= getSoilTimeScale();
+            futureAnnualEmiss *= CarbonModelUtils::getSoilTimeScale();
             aboveMin = false;
         }
 
@@ -236,109 +200,3 @@ void ASimpleCarbonCalc::calcBelowGroundCarbonEmission( const unsigned int aYear,
     }
 }
 
-/*!
- * \brief A static function to return the starting year to index the arrays.
- * \todo Use a read-in value for the start year.
- * \author James Blackwood
- * \return The startYear.
-*/
-const unsigned int ASimpleCarbonCalc::getStartYear() const {
-    // First model period ends in 1975 and starts in 1961.
-    return 1961;
-}
-
-/*!
- * \brief Return the last year of the climate calculation.
- * \todo Make this value dynamic.
- * \author James Blackwood
- * \return The last year of the climate calculation.
- */
-const unsigned int ASimpleCarbonCalc::getEndYear() const {
-    return 2095;
-}
-
-/*
- * \brief Returns a parameter which defines the time scale for the soil
- *        emissions decay function.
- * \return Soil decay function time scale parameter.
- * \todo This should be dynamic by land type.
- */
-double ASimpleCarbonCalc::getSoilTimeScale() const {
-    return 40;
-}
-
-/*!
- * \brief Helper function to interpolate a value for a year from a PeriodVector.
- * \details Calculates a linearly interpolated value for the year. If the year
- *          is before the first period of the vector, the first value is
- *          returned. If the year is after the last period of the vector, the
- *          last value is used. Otherwise a value is linearly interpolated
- *          between the nearest two periods.
- * \param aPeriodVector Vector from which to interpolate the value.
- * \param aYear Year for which to interpolate a value.
- * \return Interpolated value for the year.
- */
-double ASimpleCarbonCalc::interpYearHelper( const objects::PeriodVector<double>& aPeriodVector,
-                                            const unsigned int aYear )
-{
-    // If the year is before the first period of the model use the value
-    // in the base period.
-    const Modeltime* modeltime = scenario->getModeltime();
-    if( aYear <= static_cast<unsigned int>( modeltime->getStartYear() ) ){
-        return *aPeriodVector.begin();
-    }
-
-    // If the year is after the end period use the value in the last period.
-    if( aYear > static_cast<unsigned int>( modeltime->getEndYear() ) ){
-        return *aPeriodVector.last();
-    }
-    
-    // Find the period containing aYear. This cannot be zero because the year
-    // was already checked against the start year.
-    int currPeriod = modeltime->getyr_to_per( aYear );
-
-    // Find the last year of the current period.
-    int lastYear = modeltime->getper_to_yr( currPeriod );
-
-    // Find the first year of the current period.
-    int firstYear = modeltime->getper_to_yr( currPeriod - 1 );
-
-    // Interpolate the result.
-    return util::linearInterpolateY( aYear, firstYear, lastYear,
-                                     aPeriodVector[ currPeriod - 1 ],
-                                     aPeriodVector[ currPeriod ] );
-}
-
-/*!
- * \brief Helper function to interpolate a value for a year from a YearVector.
- * \details Determines a value for a given year from a YearVector. If the year
- *          is within the range of the year vector the value for the year will
- *          be returned, otherwise a value will be extrapolated. The
- *          extrapolation considers all values before the first year equal to
- *          the first year, and all values after the end year to be equal to the
- *          end year.
- * \param aYearVector Vector from which to interpolate the value.
- * \param aStartYear First year of the climate model.
- * \param aEndYear Last year of the climate model.
- * \param aYear Year for which to interpolate a value.
- * \return Interpolated value for the year.
- */
-double ASimpleCarbonCalc::interpYearHelper( const objects::YearVector<double>& aYearVector,
-                                            const unsigned int aStartYear,
-                                            const unsigned int aEndYear,
-                                            const unsigned int aYear )
-{
-    // If the year is before the first year of the carbon cycle use the value in the
-    // first year.
-    if( aYear < aStartYear ){
-        return *aYearVector.begin();
-    }
-
-    // If the year is after the last year of the carbon cycle use the value in the last year.
-    if( aYear > aEndYear ){
-        return *aYearVector.last();
-    }
-
-    // Return the value from inside the range of the vector.
-    return aYearVector[ aYear ];
-}

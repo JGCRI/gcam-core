@@ -1,7 +1,7 @@
 /*!
- * wind_technology.h
- * Created: 03/20/2007
- * Version: 03/20/2007
+ * csp_technology.h
+ * Created: 02/27/2007
+ * Version: 03/16/2007
  *
  * This software, which is provided in confidence, was prepared by employees
  * of Pacific Northwest National Laboratory operated by Battelle Memorial
@@ -13,8 +13,8 @@
  * for the use of this software.
  */
 
-#if !defined( __WIND_TECHNOLOGY_H )
-#define __WIND_TECHNOLOGY_H      // prevent multiple includes
+#if !defined( __CSP_TECHNOLOGY_H )
+#define __CSP_TECHNOLOGY_H     // prevent multiple includes
 
 // include files ***********************************************************
 
@@ -22,27 +22,33 @@
 
 // namespaces **************************************************************
 
-// class: WindTechnology ***************************************************
+// class: CSPTechnology ****************************************************
 
 /*!
  * \ingroup objects::biomass
- * \brief A technology class for wind power
+ * \brief A technology class for Concentrated Solar Power (CSP)
  * \details This class contains a set of routines that implement
- *          technology for wind power
+ *          technology for Concentrated Solar Power (CSP)
  *
- *   <b>XML specification for WindTechnology</b>
- *   - XML name: \c wind-technology
+ *   <b>XML specification for CSPTechnology</b>
+ *   - XML name: \c csp-technology
  *   - Contained by: Technology
  *   - Parsing inherited from class: None.
  *   - Attributes: none
  *   - Elements:
- *   - \c  WindTechnology::
+ *   - \c capital-cost CSPTechnology::mCapitalCost
+ *   - \c csp-capacity-factor CSPTechnology::mCSPCapacityFactor
+ *   - \c fcr CSPTechnology::mFCR
+ *   - \c grid-connection-cost CSPTechnology::mGridConnectionCost
+ *   - \c om CSPTechnology::mOM
+ *   - \c solar-field-fraction CSPTechnology::mSolarFieldFraction
+ *   - \c solar-field-area CSPTechnology::mSolarFieldArea
  *
  * \author Kevin Walker
  * \date $ Date $
  * \version $ Revision $
  */
-class WindTechnology : public Technology
+class CSPTechnology : public Technology
 {
 public :
 
@@ -52,22 +58,22 @@ public :
     *  \param aName the name of the technology
     *  \param aYear the year
     */
-   WindTechnology(
+   CSPTechnology(
       const std::string& aName = std::string(),
       const int          aYear = -1 );
    /*! Copy constructor
     *  \param other the instance to copy
     */
-   WindTechnology(const WindTechnology& other);
+   CSPTechnology( const CSPTechnology& other );
 
    //! Destructor
-   virtual ~WindTechnology(void);
+   virtual ~CSPTechnology(void);
 
    /*! Assignment operator
     *  \param other the instance to copy
     *  \return *this
     */
-   WindTechnology& operator = (const WindTechnology&);
+   CSPTechnology& operator = ( const CSPTechnology& other );
 
    // Documentation is inherited
    virtual void calcCost(
@@ -83,7 +89,7 @@ public :
       const int          aPeriod ) const;
 
    // Documentation is inherited
-   virtual WindTechnology* clone( void ) const;
+   virtual CSPTechnology* clone( void ) const;
 
    // Documentation is inherited
    virtual void completeInit(
@@ -133,46 +139,6 @@ public :
 
 protected :
 
-   //! XML tag name indices
-   enum
-   {
-      AIR_DENSITY_KEY,
-      AVERAGE_WIND_SPEED_KEY,
-      CAPITAL_COST_KEY,
-      CUTOUT_SPEED_KEY,
-      FCR_KEY,
-      GRID_CONNECTION_COST_KEY,
-      OM_KEY,
-      REFERENCE_HEIGHT_KEY,
-      ROTOR_DIAMETER_KEY,
-      TURBINE_DENSITY_KEY,
-      TURBINE_DERATING_KEY,
-      TURBINE_HUB_HEIGHT_KEY,
-      TURBINE_RATING_KEY,
-      WIND_FARM_LOSS_KEY,
-      WIND_VELOCITY_EXPONENT_KEY,
-
-      //! Number of keys
-      NUM_KEYS
-   };
-
-   static std::string sXMLTagNames[NUM_KEYS];
-
-   /*! Compute the ideal turbine output
-    *  \param aAveWindSpeed the average Wind Speed
-    *  \param aDiameter the turbine blade diameter (in meters)
-    *  \param aAirDensity the average Air density (in g/m^3)
-    */
-   static double calcIdealTurbineOutput(
-      double aAveWindSpeed,
-       double aDiameter,
-       double aAirDensity );
-
-   /*! Compute the realized turbine output
-    *  \param apInfo pointer to the market info
-    */
-   virtual double calcRealizedTurbineOutput( const IInfo* apInfo ) const;
-
    /*! Calculate the resource area in km^2
     *  \param aRegionName the region name
     *  \param aSectorName the sector name
@@ -185,27 +151,6 @@ protected :
       const std::string& aSectorName,
       double             aVariableDemand,
       const int          aPeriod );
-
-   /*! Compute the capture coefficient for a turbine with a finite power rating.
-    *  \param aAveWindSpeed the average Wind Speed
-    *  \param aRating the turbine Rating (in MW)
-    *  \param aDiameter the turbine Blade Diameter (in meters)
-    *  \param aAirDensity the average Air density (in g/m^3)
-    *  \param aCutoutSpeed the cut-out Speed (m/s)
-    */
-   static double calcTurbineCoefficient(
-      double aAveWindSpeed,
-       double aRating,
-       double aDiameter,
-       double aAirDensity,
-       double aCutoutSpeed );
-
-   double computeWindPowerVariance(
-      double aAveWindSpeed,
-      double aRating,
-      double aDiameter,
-      double aAirDensity,
-      double aCutoutSpeed ) const;
 
    // Documentation is inherited
    virtual const std::string& getXMLName1D( void ) const;
@@ -228,58 +173,40 @@ protected :
 
 private :
 
-   static const double kWhrtoGJ;
+   static const double      kWhrtoGJ;
+   static const std::string NO_SUN_DAYS_KEY;
+   static const std::string TOTAL_ANNUAL_IRRADIANCE_KEY;
 
-   //! Capital cost [2004 $/kW] based on rated capacity
+   //! Capital cost [$/MW Capacity]
    double mCapitalCost;
 
-   //! Connection cost
-   double mConnectCost;
+   //! Connection cost (used internally)
+   double mCConnect;
 
-   //! Turbine cutout speed [m/s]
-   double mCutOutSpeed;
+   //! Generation cost (used internally)
+   double mCGeneration;
 
-   //! fixed charge rate [unitless]
+   //! The average capacity factor for the CSP plant. [unitless] (used internally)
+   double mCSPCapacityFactor;
+
+   //! [unitless]
    double mFCR;
 
-   //! Generation cost
-   double mGenerationCost;
-
-   //! Grid connection cost [$/km/MW capacity] based on rated capacity
+   //! The unit connection cost [$/km/MW capacity]. 
    double mGridConnectionCost;
 
-   //! [2004 $/kW/Yr] based on rated capacity
+   //! [$]
    double mOM;
 
-   //! Realized turbine output
-   double mRealizedTurbineOutput;
+   /*! The fraction of the resource area that is actually occupied
+    *  by the solar field. [unitless]
+    */
+   double mSolarFieldFraction;
 
-   //! Turbine rotor diameter [m]
-   double mRotorDiameter;
-
-   //! Land per turbine [MW/km2]
-   double mTurbineDensity;
-
-   //! Percentage of loss from ideal operation [unitless]
-   double mTurbineDerating;
-
-   //! Turbine hub height [m]
-   double mTurbineHubHeight;
-
-   //! Turbine output rating [unitless]
-   double mTurbineRating;
-
-   //! Wind capacity factor
-   double mWindCapacityFactor;
-
-   //! Percentage of loss from turbine to grid [unitless]
-   double mWindFarmLoss;
-
-   //! Wind Power Variance
-   mutable double mWindPowerVariance;
+   double mSolarFieldArea;
 };
 
-#endif   // __WIND_TECHNOLOGY_H
+#endif   // __CSP_TECHNOLOGY_H
 
-// end of wind_technology.h ************************************************
+// end of csp_technology.h *************************************************
 

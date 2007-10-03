@@ -22,6 +22,7 @@
 #include "emissions/include/aghg.h"
 #include "sectors/include/ag_sector.h"
 #include "emissions/include/icarbon_calc.h"
+#include "ccarbon_model/include/carbon_model_utils.h"
 
 using namespace std;
 
@@ -61,6 +62,7 @@ void EmissionsSummer::startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc,
     // Add land use change emissions.
     if( mGHGName == "CO2NetLandUse" ){
         int year = scenario->getModeltime()->getper_to_yr( aPeriod );
+        year = max( static_cast<int>(CarbonModelUtils::getStartYear()), year );
         mEmissionsByPeriod[ aPeriod ] += aCarbonCalc->getNetLandUseChangeEmission( year );
     }
 }

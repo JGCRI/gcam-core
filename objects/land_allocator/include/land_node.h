@@ -19,6 +19,7 @@
 
 // Forward declarations
 class LandUseHistory;
+class ICarbonCalc;
 /*!
  * \brief A node in the land allocation tree.
  * \details A land allocator node represents a type of land available for
@@ -104,6 +105,15 @@ public:
                                      const double aLandAllocationAbove,
                                      const int aPeriod );
     
+    virtual void calcLandAllocationPassTwo( const std::string& aRegionName,
+                                            const int aYear );
+
+    virtual void calcLandAllocationPassThree( const std::string& aRegionName,
+                                              const int aYear );
+
+    virtual void calcLandAllocationPassFour( const std::string& aRegionName,
+                                             const int aYear );
+    
     virtual void calcYieldInternal( const std::string& aLandType,
                                     const std::string& aProductName,
                                     const std::string& aRegionName,
@@ -175,6 +185,9 @@ protected:
 
     //! Container of historical land use.
     std::auto_ptr<LandUseHistory> mLandUseHistory;
+
+	std::auto_ptr<ICarbonCalc> mCarbonBoxModelTemplate;
+
 };
 
 #endif // _LAND_NODE_H_

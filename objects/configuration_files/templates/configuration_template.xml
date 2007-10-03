@@ -15,6 +15,7 @@
 		<Value name="ObjectSGMFileName">../output/ObjectSGMout.csv</Value>
 		<Value name="ObjectSGMGenFileName">../output/ObjectSGMGen.csv</Value>
 		<Value name="xmldb-location">../output/database.dbxml</Value>
+		<Value name="xmldb-environment">.</Value>
 		<Value name="dbFileName">../output/output.mdb</Value>
 		<Value name="supplyDemandOutputFileName">../output/SDCurves.csv</Value>
 		<Value name="GHGInputFileName">../cvs/objects/magicc/inputs/input_gases.emk</Value>

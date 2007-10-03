@@ -100,6 +100,15 @@ public:
     virtual void calcLandAllocation( const std::string& aRegionName,
                                      const double aLandAllocationAbove,
                                      const int aPeriod );
+
+    virtual void calcLandAllocationPassTwo( const std::string& aRegionName,
+                                            const int aYear );
+
+    virtual void calcLandAllocationPassThree( const std::string& aRegionName,
+                                              const int aYear );
+
+    virtual void calcLandAllocationPassFour( const std::string& aRegionName,
+                                             const int aYear );
     
     virtual void calcYieldInternal( const std::string& aLandType,
                                     const std::string& aProductName,
@@ -152,6 +161,9 @@ public:
 
 	virtual void accept( IVisitor* aVisitor,
                          const int aPeriod ) const;
+	
+	virtual void copyCarbonBoxModel( const ICarbonCalc* aCarbonCalc );
+	virtual LandUseHistory* getLandUseHistory() const;
 
 protected:
     //! The intrinsic yield mode of the leaf.
@@ -176,6 +188,9 @@ protected:
 
     //! Interest rate stored from the region info.
     Value mInterestRate;
+
+    //! Container of historical land use.
+    std::auto_ptr<LandUseHistory> mLandUseHistory;
 
     double getCarbonValue( const std::string& aRegionName,
                            const int aPeriod ) const;

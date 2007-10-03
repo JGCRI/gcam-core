@@ -75,6 +75,8 @@ public:
 
     double getNetLandUseChangeEmission( const int aYear ) const;
 
+    virtual int getCarbonModelStartYear() const;
+
     virtual void printFileOutput() const;
     virtual void printDBOutput() const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
@@ -125,6 +127,9 @@ private:
 
     //! 1980s net terrestrial Deforestation (MAGICC Parameter DUSER)
     double mNetDeforestCarbFlux80s;
+
+    //! The year the carbon model should start running.
+    int mCarbonModelStartYear;
 };
 
 #endif // _MAGICC_MODEL_H_
