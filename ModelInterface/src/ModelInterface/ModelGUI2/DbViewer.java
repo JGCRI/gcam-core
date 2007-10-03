@@ -1500,21 +1500,29 @@ public class DbViewer implements ActionListener, MenuAdder {
 	 */
 	private void createAndShowGetSingleQueries(final List<QueryGenerator> queries, final List<ScenarioListItem> scenarios,
 			final List<String> regions) {
+		// create the progress bar
 		final JProgressBar scanProgress = new JProgressBar(0, queries.size());
 		final JDialog progBarDialog = XMLDB.createProgressBarGUI(parentFrame, scanProgress, 
 				"Scanning", "Updating Query Cache");
+		// processing should be done off of the gui thread to ensure responsiveness
 		new Thread(new Runnable() {
 			public void run() {
+				// increasing progress should be run on the gui thread so I will create
+				// this runnable and use the SwingUtilities.invokeLater to run it on there
 				final Runnable incProgress = new Runnable() {
 					public void run() {
 						scanProgress.setValue(scanProgress.getValue()+1);
 					}
 				};
 
+				// The single query extensions expect this in array form so create them now
 				final ScenarioListItem[] scenariosArr = new ScenarioListItem[scenarios.size()];
 				final String[] regionsArr = new String[regions.size()];
 				scenarios.toArray(scenariosArr);
 				regions.toArray(regionsArr);
+
+				// get the cache document, if there is an exception getting it then it 
+				// may not exsist so we can try to create it
 				XmlDocument doc = null;
 				try {
 					doc = xmlDB.getDocument("cache");
@@ -1522,6 +1530,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 					// might not exsist yet so create it.
 					doc = xmlDB.createDocument("cache", "<singleQueryListCache />");
 				}
+				// if it is still null there is a real problem so notify the user that it
+				// is not going to work and return
 				if(doc == null) {
 					progBarDialog.setVisible(false);
 					JOptionPane.showMessageDialog(parentFrame,
@@ -1529,46 +1539,25 @@ public class DbViewer implements ActionListener, MenuAdder {
 						"Cache Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				System.out.println("Before anything");
-				printAllMetaData(doc);
+				
+				// for each query that is enabled have the extension create and cache it's 
+				// single query list.  The cache will be set as metadata on the cache doc
 				for(Iterator<QueryGenerator> it = queries.iterator(); it.hasNext(); ) {
 					SingleQueryExtension se = it.next().getSingleQueryExtension();
+					// could be null if the extension is not enabled
 					if(se != null) {
 						se.createSingleQueryListCache(doc, scenariosArr, regionsArr);
 					}
 					SwingUtilities.invokeLater(incProgress);
 				}
-				System.out.println("Before delete");
-				printAllMetaData(doc);
+
+				// don't forget to write the changes to the cache back to the db
+				xmlDB.updateDocument(doc);
+
+				// clean up an take down the progress bar
 				doc.delete();
-				try {
-					doc = xmlDB.getDocument("cache");
-					System.out.println("Getting again after delete");
-					printAllMetaData(doc);
-					doc.delete();
-				} catch(XmlException e) {
-					e.printStackTrace();
-				}
 				progBarDialog.setVisible(false);
 			}
 		}).start();
-	}
-
-	void printAllMetaData(XmlDocument doc) {
-		System.out.println("Dumping metadata");
-		try {
-			XmlMetaDataIterator it = doc.getMetaDataIterator();
-			XmlMetaData mData;
-			while((mData = it.next()) != null) {
-				XmlValue temp = mData.get_value();
-				System.out.println(mData.get_name()+" -> "+temp.asString());
-				temp.delete();
-				mData.delete();
-			}
-			it.delete();
-		} catch(XmlException e) {
-			e.printStackTrace();
-		}
-		System.out.println("Done dumping metadata");
 	}
 }
