@@ -573,7 +573,7 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 						       curr.delete();
 						       tempValues.add(tempValue);
 					       }
-					       if(qg.isGroup()) {
+					       if(qg.isGroup() && qt != null) {
 						       tempValues.add(new SingleQueryValue("Total"));
 					       }
 				       }
@@ -585,8 +585,10 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 			       System.out.println("Time : "+(System.currentTimeMillis()-startTime));
 			       singleLevelCache.put(currSelection, tempValues);
 
+			       boolean wasInterrupted = Thread.interrupted();
+
 			       // make sure we are still selected
-			       if(isSelected && !Thread.currentThread().isInterrupted()) {
+			       if(isSelected && !wasInterrupted) {
 				       // if qt is null we are just going to cache this so just
 				       // set the currValues
 				       if(qt == null) {
@@ -699,7 +701,11 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 		       // TODO: should I warn the user?
 		       e.printStackTrace();
 	       } catch(InterruptedException ie) {
-		       // ignore
+		       // I need to interrupt myself again because getting this exception already
+		       // cleared the status and the scanThread needs to know not to try to scan
+		       // anymore queries.  Also let the gather thread know to stop
+		       Thread.currentThread().interrupt();
+		       gatherThread.interrupt();
 	       }
 
 	       // reset stuff

@@ -775,6 +775,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 
 		getSingleQueryButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				queryList.setSelectionRow(0);
 				List<QueryGenerator> qgList = new ArrayList<QueryGenerator>();
 				for(int row = 0; row < queryList.getRowCount(); ++row) {
 					TreePath currPath = queryList.getPathForRow(row);
@@ -1489,7 +1490,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 	}
 
 	/**
-	 * Creates a dialog which will ask for scenarios, then regions, then
+	 * Creates a dialog which will ask for scenarios, regions, and
 	 * queries to scan for SingleQueryValues.  When finished selecting these
 	 * values it will do the scan.  This could take some time and the rest of the
 	 * GUI should be inoperable while the scan is occuring.  A progress bar will
@@ -1500,12 +1501,32 @@ public class DbViewer implements ActionListener, MenuAdder {
 	 */
 	private void createAndShowGetSingleQueries(final List<QueryGenerator> queries, final List<ScenarioListItem> scenarios,
 			final List<String> regions) {
+		// create the dialog which will block the rest of the gui until it is done
+		final JDialog scanDialog = new JDialog(parentFrame, "Update Single Query Cache", true);
+		final JTabbedPane selectionTabs = new JTabbedPane();
+
+		// JLists expects these as arrays so create them now
+		final ScenarioListItem[] scenariosArr = new ScenarioListItem[scenarios.size()];
+		final String[] regionsArr = new String[regions.size()];
+		final QueryGenerator[] queriesArr = new QueryGenerator[queries.size()];
+		scenarios.toArray(scenariosArr);
+		regions.toArray(regionsArr);
+		queries.toArray(queriesArr);
+
+		// create the display components
+		final JList selectScenarios = new JList(scenariosArr);
+		final JList selectRegions = new JList(regionsArr);
+		final JList selectQueries = new JList(queriesArr);
+		final JButton scanButton = new JButton("Scan");
+		final JButton cancelButton = new JButton("Cancel");
+		final JPanel all = new JPanel();
+		final Component seperator = Box.createRigidArea(new Dimension(20, 10));
+
 		// create the progress bar
 		final JProgressBar scanProgress = new JProgressBar(0, queries.size());
-		final JDialog progBarDialog = XMLDB.createProgressBarGUI(parentFrame, scanProgress, 
-				"Scanning", "Updating Query Cache");
+		final JLabel progLabel = new JLabel("Label");
 		// processing should be done off of the gui thread to ensure responsiveness
-		new Thread(new Runnable() {
+		final Thread scanThread = new Thread(new Runnable() {
 			public void run() {
 				// increasing progress should be run on the gui thread so I will create
 				// this runnable and use the SwingUtilities.invokeLater to run it on there
@@ -1515,11 +1536,27 @@ public class DbViewer implements ActionListener, MenuAdder {
 					}
 				};
 
-				// The single query extensions expect this in array form so create them now
-				final ScenarioListItem[] scenariosArr = new ScenarioListItem[scenarios.size()];
-				final String[] regionsArr = new String[regions.size()];
-				scenarios.toArray(scenariosArr);
-				regions.toArray(regionsArr);
+				// make lists of the selected values only
+				int[] selIndexes = selectScenarios.getSelectedIndices();
+				final ScenarioListItem[] selScenarios = new ScenarioListItem[selIndexes.length];
+				int pos = 0;
+				for(int selIndex : selIndexes) {
+					selScenarios[pos++] = scenariosArr[selIndex];
+				}
+
+				selIndexes = selectRegions.getSelectedIndices();
+				final String[] selRegions = new String[selIndexes.length];
+				pos = 0;
+				for(int selIndex: selIndexes) {
+					selRegions[pos++] = regionsArr[selIndex];
+				}
+
+				selIndexes = selectQueries.getSelectedIndices();
+				final List<QueryGenerator> selQueries = new ArrayList<QueryGenerator>(selIndexes.length);
+				for(int selIndex : selIndexes) {
+					selQueries.add(queriesArr[selIndex]);
+				}
+				scanProgress.setMaximum(selIndexes.length);
 
 				// get the cache document, if there is an exception getting it then it 
 				// may not exsist so we can try to create it
@@ -1533,31 +1570,129 @@ public class DbViewer implements ActionListener, MenuAdder {
 				// if it is still null there is a real problem so notify the user that it
 				// is not going to work and return
 				if(doc == null) {
-					progBarDialog.setVisible(false);
+					scanDialog.setVisible(false);
 					JOptionPane.showMessageDialog(parentFrame,
 						"Could not get cache from the database.",
 						"Cache Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
+
+				boolean wasInterrupted = false;
 				
 				// for each query that is enabled have the extension create and cache it's 
 				// single query list.  The cache will be set as metadata on the cache doc
-				for(Iterator<QueryGenerator> it = queries.iterator(); it.hasNext(); ) {
-					SingleQueryExtension se = it.next().getSingleQueryExtension();
+				// if we got interrupted we must stop now
+				for(Iterator<QueryGenerator> it = selQueries.iterator(); it.hasNext() && !wasInterrupted; ) {
+					QueryGenerator currQG = it.next();
+					progLabel.setText("Scanning "+currQG.toString());
+					SingleQueryExtension se = currQG.getSingleQueryExtension();
 					// could be null if the extension is not enabled
 					if(se != null) {
-						se.createSingleQueryListCache(doc, scenariosArr, regionsArr);
+						se.createSingleQueryListCache(doc, selScenarios, selRegions);
 					}
 					SwingUtilities.invokeLater(incProgress);
+					wasInterrupted = Thread.interrupted();
 				}
 
 				// don't forget to write the changes to the cache back to the db
-				xmlDB.updateDocument(doc);
+				// but only if we were not canceled
+				if(!wasInterrupted) {
+					xmlDB.updateDocument(doc);
+				}
 
 				// clean up an take down the progress bar
 				doc.delete();
-				progBarDialog.setVisible(false);
+				scanDialog.setVisible(false);
 			}
-		}).start();
+		});
+
+		// default is to select all
+		selectScenarios.setSelectionInterval(0, scenariosArr.length-1);
+		selectRegions.setSelectionInterval(0, regionsArr.length-1);
+		selectQueries.setSelectionInterval(0, queriesArr.length-1);
+
+		// create the tabs for the selections
+		selectionTabs.addTab("Scenarios", new JScrollPane(selectScenarios));
+		selectionTabs.addTab("Regions", new JScrollPane(selectRegions));
+		selectionTabs.addTab("Queries", new JScrollPane(selectQueries));
+		// have it take as much room as possible
+		selectionTabs.setPreferredSize(new Dimension(400, 400));
+
+		// need to make sure the label will align to the left
+		final JPanel labelPanel = new JPanel();
+		labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.X_AXIS));
+		labelPanel.add(progLabel);
+		labelPanel.add(Box.createHorizontalGlue());
+
+		// buttons need to be layouted out horizontally
+		final JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+		buttonPanel.add(Box.createHorizontalGlue());
+		buttonPanel.add(scanButton);
+		buttonPanel.add(seperator);
+		buttonPanel.add(cancelButton);
+
+		// the cancel button will interrupt the can if it is running
+		// or just close the dialog if it is not.  note that if the 
+		// users cancels NONE of the scan will be written back to the
+		// database
+		cancelButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(scanThread.isAlive()) {
+					progLabel.setText("Canceling Scan");
+					scanThread.interrupt();
+					// will let the scan thread hide the dialog
+				} else {
+					// has not started yet so just hide it
+					scanDialog.setVisible(false);
+				}
+			}
+		});
+
+		// when the scan button is hit we will switch the content of the dialog
+		// from the selection lists to a progress bar to let the user know how
+		// things are going.  The user will still be able to cancel once the scan
+		// starts
+		scanButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				scanButton.setEnabled(false);
+
+				// set up the new content pane
+				final JPanel progPanel = new JPanel();
+				progPanel.setLayout(new BoxLayout(progPanel, BoxLayout.Y_AXIS));
+				progPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+				progPanel.add(scanProgress);
+				progPanel.add(labelPanel);
+				// make sure it is atleast 200 accross
+				progPanel.add(Box.createHorizontalStrut(200));
+				progPanel.add(Box.createVerticalGlue());
+				progPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
+				progPanel.add(seperator);
+				progPanel.add(buttonPanel);
+
+				// start scanning to cache queries
+				scanThread.start();
+
+				// display the new pane and shrink down any unnessary space
+				scanDialog.setContentPane(progPanel);
+				scanDialog.pack();
+			}
+		});
+
+		// create the layout which will be tabbed pane on top and buttons on the
+		// bottom
+		all.setLayout(new BoxLayout(all, BoxLayout.Y_AXIS));
+		all.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		all.add(selectionTabs);
+		all.add(seperator);
+		all.add(new JSeparator(SwingConstants.HORIZONTAL));
+		all.add(seperator);
+		all.add(buttonPanel);
+
+		// set the content pane for the dialog and show it
+		scanDialog.setSize(400, 400);
+		scanDialog.setResizable(false);
+		scanDialog.setContentPane(all);
+		scanDialog.setVisible(true);
 	}
 }
