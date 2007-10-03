@@ -206,7 +206,7 @@ public:
      * \param aLandType - the land type
      */
     virtual void setLandAllocator(
-       ILandAllocator*    aLandAllocator,
+       const ILandAllocator*    aLandAllocator,
        const std::string& aName,
        const std::string& aLandType ) = 0;
 };

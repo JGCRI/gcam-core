@@ -90,7 +90,7 @@ void World::XMLParse( const DOMNode* node ){
         }
 		// Read in parameters for climate model
         else if( nodeName == MagiccModel::getXMLNameStatic() ){
-            parseSingleNode( curr, mClimateModel, new MagiccModel( scenario->getModeltime() ) );
+            parseSingleNode( curr, mClimateModel , new MagiccModel( scenario->getModeltime() ) );
         }
 		// SGM regions
         else if( nodeName == RegionCGE::getXMLNameStatic() ){

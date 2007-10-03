@@ -576,7 +576,7 @@ void Technology::initCalc( const string& aRegionName,
     }
 
     for( unsigned int i = 0; i < mOutputs.size(); ++i ){
-			mOutputs[ i ]->initCalc( aRegionName, aPeriod );
+        mOutputs[ i ]->initCalc( aRegionName, aPeriod );
     }
 }
 
@@ -592,14 +592,10 @@ void Technology::setProductionState( const int aPeriod ){
     // assertion here usually means initCalc was called twice for a single
     // period.
     assert( !mProductionState[ aPeriod ] );
-    double initialOutput = 0;
+    
     const Modeltime* modeltime = scenario->getModeltime();
-	for ( int i = 0; i < mOutputs.size(); i++ ){
-		if( mOutputs[ i ] ) {
-		    initialOutput = mOutputs[ i ]->getPhysicalOutput( modeltime->getyr_to_per( year ) );
-			break;
-		}
-	}
+    double initialOutput =
+        mOutputs[ 0 ]->getPhysicalOutput( modeltime->getyr_to_per( year ) );
     
     mProductionState[ aPeriod ] =
         ProductionStateFactory::create( year, mLifetimeYears, mFixedOutput,
@@ -647,8 +643,7 @@ double Technology::calcSecondaryValue( const string& aRegionName, const int aPer
 */
 void Technology::postCalc( const string& aRegionName, const int aPeriod ) {
     for( unsigned int i = 0; i < mOutputs.size(); ++i ) {
-		if ( this->mOutputs[ i ] )
-			mOutputs[ i ]->postCalc( aRegionName, aPeriod );
+        mOutputs[ i ]->postCalc( aRegionName, aPeriod );
     }
     // Set the production state for the next period.
     if( aPeriod + 1 < scenario->getModeltime()->getmaxper() ){
@@ -899,8 +894,8 @@ void Technology::calcEmissionsAndOutputs( const string& aRegionName,
                                           const int aPeriod )
 {
     for( unsigned int i = 0; i < mOutputs.size(); ++i ){
-			mOutputs[ i ]->setPhysicalOutput( aPrimaryOutput, aRegionName,
-				                              mCaptureComponent.get(), aPeriod );
+        mOutputs[ i ]->setPhysicalOutput( aPrimaryOutput, aRegionName,
+                                          mCaptureComponent.get(), aPeriod );
     }
 
     // calculate emissions for each gas after setting input and output amounts
@@ -1118,7 +1113,7 @@ double Technology::getInput( const int aPeriod ) const {
 */
 double Technology::getOutput( const int aPeriod ) const {
     // Primary output is at position zero.
-		return mOutputs[ 0 ]->getPhysicalOutput( aPeriod );
+    return mOutputs[ 0 ]->getPhysicalOutput( aPeriod );
 }
 
 /*! \brief Return Technology fuel cost.
@@ -1466,7 +1461,7 @@ void Technology::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitTechnology( this, aPeriod );
 
     for( unsigned int i = 0; i < mOutputs.size(); ++i ){
-			mOutputs[ i ]->accept( aVisitor, aPeriod );
+        mOutputs[ i ]->accept( aVisitor, aPeriod );
     }
 
     for( unsigned int i = 0; i < ghg.size(); ++i ){

@@ -1,7 +1,7 @@
 /*!
- * csp_technology.cpp
+ * solar_technology.cpp
  * Created: 03/06/2007
- * Version: 03/22/2007
+ * Version: 04/24/2007
  *
  * This software, which is provided in confidence, was prepared by employees
  * of Pacific Northwest National Laboratory operated by Battelle Memorial
@@ -16,11 +16,12 @@
 // include files ***********************************************************
 
 #include "util/base/include/definitions.h"
-#include "technologies/include/csp_technology.h"
+#include "technologies/include/solar_technology.h"
 #include "technologies/include/marginal_profit_calculator.h"
 #include "technologies/include/iproduction_state.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/iinfo.h"
+#include "sectors/include/sector_utils.h"
 #include "util/base/include/TValidatorInfo.h"
 #include "util/base/include/util.h"
 #include "util/base/include/xml_helper.h"
@@ -31,26 +32,30 @@
 
 // constants ***************************************************************
 
-const double CSPTechnology::kWhrtoGJ = 0.0036;
-const std::string CSPTechnology::NO_SUN_DAYS_KEY = "no-sun-days";
-const std::string CSPTechnology::TOTAL_ANNUAL_IRRADIANCE_KEY = "total-annual-irradiance";
+const double SolarTechnology::kWhrtoGJ = 0.0036;
+const std::string SolarTechnology::ELECTRIC_SECTOR_NAME_KEY = "electricSectorName";
+const std::string SolarTechnology::NO_SUN_DAYS_KEY = "no-sun-days";
+//const std::string SolarTechnology::TOTAL_ANNUAL_IRRADIANCE_KEY = "total-annual-irradiance";
 const double DEFAULT_TOTAL_ANNUAL_IRRADIANCE = 1000.0;
 
-// Constructors: CSPTechnology *********************************************
+// Constructors: SolarTechnology *********************************************
 
 /*! Default constructor
  *  \param aName the name of the technology
  *  \param aYear the year
  */
-CSPTechnology::CSPTechnology(
+SolarTechnology::SolarTechnology(
    const std::string& aName,
    const int          aYear )
    : parent( aName, aYear ),
      mCapitalCost( 3486 ),
      mCSPCapacityFactor( 1 ),
+     mElectricSectorName(),
      mFCR( 0.0856 ),
      mGridConnectionCost( 1500 ),
      mOM( 47.87 ),
+     mRegionName(),
+     mSectorName(),
      mSolarFieldFraction( 0.3 ),
      mSolarFieldArea( 6.9 )
 {
@@ -59,40 +64,46 @@ CSPTechnology::CSPTechnology(
 /*! Copy constructor
  *  \param other the instance to copy
  */
-CSPTechnology::CSPTechnology( const CSPTechnology& other )
+SolarTechnology::SolarTechnology( const SolarTechnology& other )
    : parent( other ),
      mCapitalCost( other.mCapitalCost ),
      mCSPCapacityFactor( other.mCSPCapacityFactor ),
+     mElectricSectorName( other.mElectricSectorName ),
      mFCR( other.mFCR ),
      mGridConnectionCost( other.mGridConnectionCost ),
      mOM( other.mOM ),
+     mRegionName( other.mRegionName ),
+     mSectorName( other.mSectorName ),
      mSolarFieldFraction( other.mSolarFieldFraction ),
      mSolarFieldArea( other.mSolarFieldArea )
 {
 }
 
-// Destructor: CSPTechnology ***********************************************
+// Destructor: SolarTechnology ***********************************************
 
-CSPTechnology::~CSPTechnology(void)
+SolarTechnology::~SolarTechnology(void)
 {
 }
 
-// CSPTechnology::operator = ***********************************************
+// SolarTechnology::operator = ***********************************************
 
 /*! Assignment operator
  *  \param other the instance to copy
  *  \return *this
  */
-CSPTechnology& CSPTechnology::operator = ( const CSPTechnology& other )
+SolarTechnology& SolarTechnology::operator = ( const SolarTechnology& other )
 {
    if ( &other != this )
    {
       parent::operator = ( other );
       mCapitalCost        = other.mCapitalCost;
       mCSPCapacityFactor  = other.mCSPCapacityFactor;
+      mElectricSectorName = other.mElectricSectorName;
       mFCR                = other.mFCR;
       mGridConnectionCost = other.mGridConnectionCost;
       mOM                 = other.mOM;
+      mRegionName         = other.mRegionName;
+      mSectorName         = other.mSectorName;
       mSolarFieldFraction = other.mSolarFieldFraction;
       mSolarFieldArea     = other.mSolarFieldArea;
    }
@@ -100,10 +111,10 @@ CSPTechnology& CSPTechnology::operator = ( const CSPTechnology& other )
    return *this;
 }
 
-// CSPTechnology::calcCost *************************************************
+// SolarTechnology::calcCost *************************************************
 
 // Documentation is inherited
-void CSPTechnology::calcCost(
+void SolarTechnology::calcCost(
    const std::string& aRegionName,
    const std::string& aSectorName,
    const int          aPeriod )
@@ -123,7 +134,7 @@ void CSPTechnology::calcCost(
    const std::string& fuelName     = mTechData->getFuelName();
    const IInfo*       pInfo        = pMarketplace->getMarketInfo( fuelName, aRegionName, aPeriod, true );
 
-   double totalAnnualIrradiance = pInfo->hasValue( TOTAL_ANNUAL_IRRADIANCE_KEY ) ? pInfo->getDouble( TOTAL_ANNUAL_IRRADIANCE_KEY, true ) : DEFAULT_TOTAL_ANNUAL_IRRADIANCE;
+   double totalAnnualIrradiance = pInfo->hasValue( mTotalAnnualIrradianceKey ) ? pInfo->getDouble( mTotalAnnualIrradianceKey, true ) : DEFAULT_TOTAL_ANNUAL_IRRADIANCE;
    double dConnect              = pMarketplace->getPrice( fuelName, aRegionName, aPeriod );
    double CSPEfficiency         = getEfficiency( aPeriod );
 
@@ -132,7 +143,7 @@ void CSPTechnology::calcCost(
    // Equation 3.
    mCSPCapacityFactor = ( totalAnnualIrradiance * mSolarFieldArea * CSPEfficiency ) / denom;
    // Equation 2.
-   mCConnect = mFCR * dConnect * mGridConnectionCost / ( mCSPCapacityFactor * 1000 * kWhrtoGJ );
+   mCConnect = mFCR * dConnect * mGridConnectionCost / ( mCSPCapacityFactor * 1000 * kWhrtoGJ * 24.0 * 365.0 );
 
    /* Save to array
    * Total cost is the sum of the generation and connection cost
@@ -140,7 +151,7 @@ void CSPTechnology::calcCost(
    mCosts[ aPeriod ] = std::max( mCGeneration + mCConnect, util::getSmallNumber() );
 }
 
-// CSPTechnology::calcResourceArea *****************************************
+// SolarTechnology::calcResourceArea *****************************************
 
 /*! Calculate the resource area in km^2
  *  \param aRegionName the region name
@@ -149,7 +160,7 @@ void CSPTechnology::calcCost(
  *  \param aPeriod the period
  *  \return the resource area
  */
-double CSPTechnology::calcResourceArea(
+double SolarTechnology::calcResourceArea(
    const std::string& aRegionName,
    const std::string& aSectorName,
    double             aVariableDemand,
@@ -175,19 +186,19 @@ double CSPTechnology::calcResourceArea(
    const std::string& fuelName     = mTechData->getFuelName();
    const IInfo*       pInfo        = pMarketplace->getMarketInfo( fuelName, aRegionName, aPeriod, true );
 
-   double totalAnnualIrradiance = pInfo->hasValue( TOTAL_ANNUAL_IRRADIANCE_KEY ) ? pInfo->getDouble( TOTAL_ANNUAL_IRRADIANCE_KEY, true ) : DEFAULT_TOTAL_ANNUAL_IRRADIANCE;
+   double totalAnnualIrradiance = pInfo->hasValue( mTotalAnnualIrradianceKey ) ? pInfo->getDouble( mTotalAnnualIrradianceKey, true ) : DEFAULT_TOTAL_ANNUAL_IRRADIANCE;
    double CSPGeneration         = aVariableDemand;
-   double CSPEfficiency         =  getEfficiency( aPeriod );
+   double CSPEfficiency         = getEfficiency( aPeriod );
    // Equation 4.
    double resourceArea          = CSPGeneration / ( totalAnnualIrradiance * mSolarFieldFraction * CSPEfficiency * conversionFact );
 
    return resourceArea;
 }
 
-// CSPTechnology::calcShare ************************************************
+// SolarTechnology::calcShare ************************************************
 
 // Documentation is inherited
-double CSPTechnology::calcShare(
+double SolarTechnology::calcShare(
    const std::string& aRegionName,
    const std::string& aSectorName,
    const GDP*         aGDP,
@@ -196,18 +207,18 @@ double CSPTechnology::calcShare(
    return parent::calcShare( aRegionName, aSectorName, aGDP, aPeriod );
 }
 
-// CSPTechnology::clone ****************************************************
+// SolarTechnology::clone ****************************************************
 
 // Documentation is inherited
-CSPTechnology* CSPTechnology::clone( void ) const
+SolarTechnology* SolarTechnology::clone( void ) const
 {
-   return new CSPTechnology( *this );
+   return new SolarTechnology( *this );
 }
 
-// CSPTechnology::completeInit *********************************************
+// SolarTechnology::completeInit *********************************************
 
 // Documentation is inherited
-void CSPTechnology::completeInit(
+void SolarTechnology::completeInit(
    const std::string&              aRegionName,
    const std::string&              aSectorName,
    DependencyFinder*               aDepFinder,
@@ -250,18 +261,42 @@ void CSPTechnology::completeInit(
    }
 }
 
-// CSPTechnology::getEfficiency ********************************************
+// SolarTechnology::getEfficiency ********************************************
 
 // Documentation is inherited
-double CSPTechnology::getEfficiency( const int aPeriod ) const
+double SolarTechnology::getEfficiency( const int aPeriod ) const
 {
-   return parent::getEfficiency( aPeriod );
+   //const double maxLoss        = 0.55;  // 55%
+   const double b              = 3.0;
+   const double IPFraction     = 0.15;  // 15%
+   const double elecCapacity   = 1;
+   const double sectorCapacity = 1;
+
+   // Compute the CSP penetration level
+   double CSPPenetration = 0;
+   if ( aPeriod > 0 )
+   {
+      double elecSupply   = SectorUtils::getTrialSupply( mRegionName, mElectricSectorName, aPeriod );
+      if ( elecSupply > 0 )
+      {
+         double sectorSupply = SectorUtils::getTrialSupply( mRegionName, mSectorName, aPeriod );
+         CSPPenetration = ( sectorSupply / ( elecSupply * IPFraction ) ) * ( elecCapacity / sectorCapacity );
+      }
+   }
+
+   // Compute the CSP loss
+   double CSPLoss = std::min( mMaxLoss * std::pow( CSPPenetration, b ), 0.99 );
+
+   // Compute the efficiency
+   double result = parent::getEfficiency( aPeriod ) * ( 1.0 - CSPLoss );
+
+   return result;
 }
 
-// CSPTechnology::getFuelCost **********************************************
+// SolarTechnology::getFuelCost **********************************************
 
 // Documentation is inherited
-double CSPTechnology::getFuelCost(
+double SolarTechnology::getFuelCost(
    const std::string& aRegionName,
    const std::string& aSectorName,
    const int          aPeriod ) const
@@ -269,34 +304,34 @@ double CSPTechnology::getFuelCost(
    return 0;
 }
 
-// CSPTechnology::getNonEnergyCost *****************************************
+// SolarTechnology::getNonEnergyCost *****************************************
 
 // Documentation is inherited
-double CSPTechnology::getNonEnergyCost( const int aPeriod ) const
+double SolarTechnology::getNonEnergyCost( const int aPeriod ) const
 {
    return mCosts[ aPeriod ];
 }
 
-// CSPTechnology::getXMLName1D *********************************************
+// SolarTechnology::getXMLName1D *********************************************
 
 // Documentation is inherited
-const std::string& CSPTechnology::getXMLName1D( void ) const
+const std::string& SolarTechnology::getXMLName1D( void ) const
 {
    return getXMLNameStatic1D();
 }
 
-// CSPTechnology::getXMLNameStatic1D ***************************************
+// SolarTechnology::getXMLNameStatic1D ***************************************
 
-const std::string& CSPTechnology::getXMLNameStatic1D( void )
+const std::string& SolarTechnology::getXMLNameStatic1D( void )
 {
-   static const std::string XML_NAME1D = "csp-technology";
+   static const std::string XML_NAME1D = "solar-technology";
    return XML_NAME1D;
 }
 
-// CSPTechnology::initCalc *************************************************
+// SolarTechnology::initCalc *************************************************
 
 // Documentation is inherited
-void CSPTechnology::initCalc(
+void SolarTechnology::initCalc(
    const std::string& aRegionName,
    const std::string& aSectorName,
    const IInfo*       aSubsectorIInfo,
@@ -305,12 +340,28 @@ void CSPTechnology::initCalc(
 {
    parent::initCalc( aRegionName, aSectorName, aSubsectorIInfo, aDemographics, aPeriod );
 
+   // Cache the region name
+   mRegionName = aRegionName;
+
+   // Cache the sector name
+   mSectorName = aSectorName;
+
+   // Cache the electric sector name
+   if ( aSubsectorIInfo->hasValue( ELECTRIC_SECTOR_NAME_KEY ) )
+   {
+      mElectricSectorName = aSubsectorIInfo->getString( ELECTRIC_SECTOR_NAME_KEY, true );
+   }
+   else
+   {
+      mElectricSectorName = "electricity";
+   }
+
    // Get marketplace and make sure we have the total annual irradiance
    Marketplace*       pMarketplace = scenario->getMarketplace();
    const std::string& fuelName     = mTechData->getFuelName();
    const IInfo*       pInfo        = pMarketplace->getMarketInfo( fuelName, aRegionName, aPeriod, true );
 
-   if ( !pInfo || !pInfo->hasValue( TOTAL_ANNUAL_IRRADIANCE_KEY ) )
+   if ( !pInfo || !pInfo->hasValue( mTotalAnnualIrradianceKey ) )
    // Invalid input parameter
    {
       ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -318,24 +369,24 @@ void CSPTechnology::initCalc(
       mainLog << "Invalid input parameter(s) to "
          << getXMLNameStatic1D()
          << " in sector " << aSectorName
-         << ": " << TOTAL_ANNUAL_IRRADIANCE_KEY << std::endl;
+         << ": " << mTotalAnnualIrradianceKey << std::endl;
    }
 }
 
-// CSPTechnology::postCalc *************************************************
+// SolarTechnology::postCalc *************************************************
 
 // Documentation is inherited
-void CSPTechnology::postCalc(
+void SolarTechnology::postCalc(
    const std::string& aRegionName,
    const int          aPeriod )
 {
    return parent::postCalc( aRegionName, aPeriod );
 }
 
-// CSPTechnology::production ***********************************************
+// SolarTechnology::production ***********************************************
 
 // Documentation is inherited
-void CSPTechnology::production(
+void SolarTechnology::production(
    const std::string& aRegionName,
    const std::string& aSectorName,
    double             aVariableDemand,
@@ -382,10 +433,10 @@ void CSPTechnology::production(
    calcEmissionsAndOutputs( aRegionName, mInput[ aPeriod ], primaryOutput, aGDP, aPeriod );
 }
 
-// CSPTechnology::toDebugXMLDerived ****************************************
+// SolarTechnology::toDebugXMLDerived ****************************************
 
 // Documentation is inherited
-void CSPTechnology::toDebugXMLDerived(
+void SolarTechnology::toDebugXMLDerived(
    const int     period,
    std::ostream& out,
    Tabs*         tabs ) const
@@ -399,12 +450,14 @@ void CSPTechnology::toDebugXMLDerived(
    XMLWriteElement( mOM, "om", out, tabs );
    XMLWriteElement( mSolarFieldFraction, "solar-field-fraction", out, tabs );
    XMLWriteElement( mSolarFieldArea, "solar-field-area", out, tabs );
+   XMLWriteElement( mMaxLoss, "max-solar-loss", out, tabs );
+   XMLWriteElement( mTotalAnnualIrradianceKey, "irradiance-tagname", out, tabs );
 }
 
-// CSPTechnology::toInputXMLDerived ****************************************
+// SolarTechnology::toInputXMLDerived ****************************************
 
 // Documentation is inherited
-void CSPTechnology::toInputXMLDerived(
+void SolarTechnology::toInputXMLDerived(
    std::ostream& out,
    Tabs*         tabs ) const
 {
@@ -415,12 +468,14 @@ void CSPTechnology::toInputXMLDerived(
    XMLWriteElementCheckDefault( mOM, "om", out, tabs, double( 47.87 ) );
    XMLWriteElementCheckDefault( mSolarFieldFraction, "solar-field-fraction", out, tabs, double( 0.3 ) );
    XMLWriteElementCheckDefault( mSolarFieldArea, "solar-field-area", out, tabs, double( 6.9 ) );
+   XMLWriteElementCheckDefault( mMaxLoss, "max-solar-loss", out, tabs, double( 0.55 ) ); // is this default correct?
+   XMLWriteElementCheckDefault<std::string>( mTotalAnnualIrradianceKey, "irradiance-tagname", out, tabs, "total-annual-irradiance" ); // is this default correct?
 }
 
-// CSPTechnology::XMLDerivedClassParse *************************************
+// SolarTechnology::XMLDerivedClassParse *************************************
 
 // Documentation is inherited
-bool CSPTechnology::XMLDerivedClassParse(
+bool SolarTechnology::XMLDerivedClassParse(
    const std::string&      nodeName,
    const xercesc::DOMNode* curr )
 {
@@ -452,6 +507,12 @@ bool CSPTechnology::XMLDerivedClassParse(
    {
       mSolarFieldArea = XMLHelper<double>::getValue( curr );
    }
+   else if ( nodeName == "max-solar-loss" ){
+       mMaxLoss = XMLHelper<double>::getValue( curr );
+   }
+   else if ( nodeName == "irradiance-tagname" ){
+       mTotalAnnualIrradianceKey = XMLHelper<std::string>::getValue( curr );
+   }
    else
    {
       return false;
@@ -460,6 +521,10 @@ bool CSPTechnology::XMLDerivedClassParse(
    return true;
 }
 
-// end of csp_technology.cpp ***********************************************
+// end of solar_technology.cpp ***********************************************
+
+
+
+
 
 

@@ -46,17 +46,10 @@ class LandUseHistory : public IVisitable,
                        public IParsable,
                        public IRoundTrippable
 {
-    friend class XMLDBOutputter;
 public:
-	
-    //! Map type for land allocations by year.
-    typedef std::map<unsigned int, double> LandMapType;
-
     static const std::string& getXMLNameStatic();
 
     LandUseHistory();
-
-	LandUseHistory( const LandUseHistory& aLandUseHistory );
     
     // IParsable Methods.
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
@@ -80,16 +73,12 @@ public:
     unsigned int getMaxYear() const;
 
     double getAllocation( const unsigned int aYear ) const;
-
-	const  LandMapType getHistoricalLand() const;
-	void printHistory() const;
 protected:
     //! Map type for land allocations by year.
-    //typedef std::map<unsigned int, double> LandMapType;
+    typedef std::map<unsigned int, double> LandMapType;
 
     //! Sparse mapping of year to land allocation.
     LandMapType mHistoricalLand;
-
 };
 
 #endif // _HISTORICAL_LAND_USE_H_

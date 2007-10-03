@@ -692,7 +692,6 @@ void Subsector::initCalc( NationalAccount* aNationalAccount,
 
     interpolateShareWeights( aPeriod );
 
-
    // Pass forward any emissions information
     for ( unsigned int i= 0; i< techs.size() && aPeriod > 0 && aPeriod < modeltime->getmaxper() ; i++ ) {
         std::vector<std::string> ghgNames;
@@ -709,8 +708,9 @@ void Subsector::initCalc( NationalAccount* aNationalAccount,
             mainLog << ", sub-s: "<< name << ", sect: " << sectorName << ", region: " << regionName << endl;
         }
         // If number of GHG's decreased, then copy GHG objects
+        // This would allow user to input a GHG object only in one period
         if ( numberOfGHGs < techs[i][ aPeriod - 1 ]->getNumbGHGs() ) {
-            // Not sure if to impliment this or not
+            // TODO
         }
         
         // New method
@@ -719,6 +719,7 @@ void Subsector::initCalc( NationalAccount* aNationalAccount,
             techs[i][ aPeriod ]->copyGHGParameters( techs[i][ aPeriod - 1]->getGHGPointer( ghgNames[j]  ) );
          } // End For
         }
+      
     } // End For
 }
 

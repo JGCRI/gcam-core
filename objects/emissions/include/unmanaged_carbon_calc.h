@@ -34,26 +34,24 @@ class UnmanagedCarbonCalc : public ASimpleCarbonCalc {
 public:
     UnmanagedCarbonCalc();
     virtual ~UnmanagedCarbonCalc();
-	virtual UnmanagedCarbonCalc* clone() const;
 
     static const std::string& getXMLNameStatic();
 
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-    virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
+	virtual bool XMLParse( const xercesc::DOMNode* aNode );
+	virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
+	virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
 
-    virtual void completeInit( int aKey );
+	virtual void completeInit();
 
-    virtual double getPotentialAboveGroundCarbon( const int aYear ) const;
-    
+	virtual double getPotentialAboveGroundCarbon( const int aYear ) const;
+	
     virtual void setUnitAboveGroundCarbon( const double aAboveGroundCarbon,
                                            const int aPeriod );
 
-    virtual double getPotentialBelowGroundCarbon( const int aYear ) const;
+	virtual double getPotentialBelowGroundCarbon( const int aYear ) const;
 
-    virtual void setUnitBelowGroundCarbon( const double aBelowGroundCarbon,
+	virtual void setUnitBelowGroundCarbon( const double aBelowGroundCarbon,
                                            const int aPeriod );
-
 protected:
     //! Read in above ground carbon content by year.
     objects::YearVector<double> mAboveGroundCarbon;

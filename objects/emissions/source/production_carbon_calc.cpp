@@ -11,7 +11,6 @@
 #include "emissions/include/production_carbon_calc.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
-#include "ccarbon_model/include/carbon_model_utils.h"
 
 using namespace std;
 using namespace xercesc;
@@ -27,10 +26,6 @@ ProductionCarbonCalc::ProductionCarbonCalc()
 
 //! Default destructor
 ProductionCarbonCalc::~ProductionCarbonCalc() {
-}
-
-ProductionCarbonCalc* ProductionCarbonCalc::clone() const{
-	return NULL;
 }
 
 /*! \brief Parses XML for the class.
@@ -89,7 +84,7 @@ const string& ProductionCarbonCalc::getXMLNameStatic() {
     return XML_NAME;
 }
 
-void ProductionCarbonCalc::completeInit( int aKey ) {
+void ProductionCarbonCalc::completeInit() {
 
 }
 
@@ -106,10 +101,10 @@ void ProductionCarbonCalc::setUnitBelowGroundCarbon( const double aBelowGroundCa
 }
 
 double ProductionCarbonCalc::getPotentialAboveGroundCarbon( const int aYear ) const {
-    return CarbonModelUtils::interpYearHelper( mPotentialAboveGroundCarbon, aYear );
+    return interpYearHelper( mPotentialAboveGroundCarbon, aYear );
 }
 
 double ProductionCarbonCalc::getPotentialBelowGroundCarbon( const int aYear ) const {
     // Use an exponential decay function to determine emissions.
-    return CarbonModelUtils::interpYearHelper( mPotentialBelowGroundCarbon, aYear );
+    return interpYearHelper( mPotentialBelowGroundCarbon, aYear );
 }

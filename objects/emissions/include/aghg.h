@@ -128,7 +128,6 @@ public:
     std::string getGHGDriverName() const ;  // return a GHG driver name
 
 
-
     /*!
      * \brief Perform initializations that only need to be done once per period.
      * \param aRegionName Region name.

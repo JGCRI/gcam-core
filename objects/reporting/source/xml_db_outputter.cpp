@@ -69,13 +69,6 @@
 #include "technologies/include/default_technology.h"
 #include "technologies/include/iproduction_state.h"
 #include "util/base/include/auto_file.h"
-#include "land_allocator/include/land_use_history.h"
-
-#include "ccarbon_model/include/carbon_box.h"
-#include "ccarbon_model/include/carbon_box_model.h"
-#include "ccarbon_model/include/npp.h"
-#include "ccarbon_model/include/acarbon_flow.h"
-#include "ccarbon_model/include/carbon_model_utils.h"
 
 // Whether to write a text file with the contents that are to be inserted
 // into the XML database.
@@ -137,12 +130,6 @@ mGDP( 0 )
 XMLDBOutputter::~XMLDBOutputter(){
 }
 
-#include "util/base/include/auto_file.h"
-void dumpToFile( string fileName, string string ){
-    AutoOutputFile stream( fileName );
-    stream << string << endl;
-}
-
 /*! \brief Write the output to the database.
 * \details Write the accumulated output to the database. This will open the
 *          database, create a unique ID for the scenario and a container with
@@ -151,7 +138,6 @@ void dumpToFile( string fileName, string string ){
 * \author Josh Lurz
 */
 void XMLDBOutputter::finish() const {
-    //dumpToFile( "databaseXMLDump.xml", mBuffer.str() );
     // Create the database container and its related structures.
     auto_ptr<DBContainer> dbContainer( createContainer() );
 
@@ -207,7 +193,27 @@ auto_ptr<XMLDBOutputter::DBContainer> XMLDBOutputter::createContainer() {
 
     // Get the location to open the environment.
     const Configuration* conf = Configuration::getInstance();
-    const string environmentLocation = conf->getFile( "xmldb-environment", "." );
+    const string xmldbContainerName = conf->getFile( "xmldb-location", "database.dbxml" );
+    string environmentLocation;
+
+    // The path separator could go either way.
+    int indexOfDir = xmldbContainerName.find_last_of( '/' );
+    // string::npos means that it was not found.
+    if( indexOfDir == string::npos ) {
+        // was not a UNIX path separator, try Windows
+        indexOfDir = xmldbContainerName.find_last_of( '\\' );    
+        if( indexOfDir == string::npos ) {
+            // No path separators mean current directory.
+            environmentLocation = ".";
+        }
+    }
+ 
+    // if indexOfDir has a real value then substring out the path
+    // otherwise it will already have been set to "."
+    if( indexOfDir != string::npos ) {
+        environmentLocation = xmldbContainerName.substr( 0, 
+            indexOfDir );
+    }
 
     // Open the environment.
     dbContainer->mDBEnvironment->open( environmentLocation.c_str(),
@@ -218,11 +224,10 @@ auto_ptr<XMLDBOutputter::DBContainer> XMLDBOutputter::createContainer() {
                                                  DBXML_ADOPT_DBENV ) );
 
     // Open the container. It will be closed automatically when the manager goes out of scope.
-    const string containerName = conf->getFile( "xmldb-location", "database.dbxml" );
-
     try {
         dbContainer->mContainerWrapper.reset( new DBContainer::XMLContainerWrapper(
-                                             dbContainer->mManager->openContainer( containerName, DB_CREATE | DBXML_INDEX_NODES) ) );
+                                             dbContainer->mManager->openContainer( xmldbContainerName, 
+                                             DB_CREATE | DBXML_INDEX_NODES) ) );
     }
     catch ( const DbXml::XmlException& e ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -855,6 +860,15 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
                              aClimateModel->getNetOceanUptake( year ),
                              year );
     }
+
+    // Global-mean temperature
+    for( int year = scenario->getModeltime()->getStartYear();
+         year <= endingYear; year += outputInterval )
+    {
+        writeItemUsingYear( "global-mean-temperature", "degreesC",
+                             aClimateModel->getTemperature( year ),
+                             year );
+    }
 }
 
 void XMLDBOutputter::endVisitClimateModel( const IClimateModel* aClimateModel,
@@ -965,43 +979,10 @@ void XMLDBOutputter::endVisitGDP( const GDP* aGDP, const int aPeriod ){
     XMLWriteClosingTag( GDP::getXMLNameStatic(), mBuffer, mTabs.get() );
 }
 
-void XMLDBOutputter::startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc,
-                                           const int aPeriod ){
-    XMLWriteOpeningTag( CarbonBoxModel::getXMLNameStatic(), mBuffer, mTabs.get() );
-}
-void XMLDBOutputter::endVisitCarbonCalc( const ICarbonCalc* aCarbonCalc,
+void XMLDBOutputter::startVisitLandNode( const LandNode* aLandNode,
                                          const int aPeriod ){
-    XMLWriteClosingTag( CarbonBoxModel::getXMLNameStatic(), mBuffer, mTabs.get() );
-}
-
-void XMLDBOutputter::startVisitCarbonBox( const CarbonBox* aCarbonBox,
-                                          const int aPeriod ){
-    const Modeltime* modeltime = scenario->getModeltime();
-    XMLWriteOpeningTag( CarbonBox::getXMLNameStatic(), mBuffer, mTabs.get(), aCarbonBox->getName() );
-    int endingYear = max( scenario->getModeltime()->getEndYear(), 2100 ); // print at least to 2100 if interval is set appropriately
-    const Configuration* conf = Configuration::getInstance();
-    const int outputInterval = conf->getInt( "carbon-stock-output-interval", 1 );
-
-    for( int i = CarbonModelUtils::getStartYear(); i < endingYear; i += outputInterval ){
-        XMLWriteElement( aCarbonBox->mStock->getStock( i ),
-                         "carbon-stock", mBuffer, mTabs.get(), i );
-    }
-	//! not sure if I want to be generic as compare aCarbonBox->mStock->getName() == NPP::getXMLNameStatic
-	//! this will cause big O(d) comparison with an if statement.
-	//! if I specific compare with "NPP", the comparison is big O(1) instead of big (d)
-	
-	if( aCarbonBox->getName() == "NPP" ){
-		for ( int i = CarbonModelUtils::getStartYear(); i < endingYear; i +=outputInterval ){
-			XMLWriteElement( aCarbonBox->mStock->getNPPOverAreaRatio( i ),
-                         "NPPRatio", mBuffer, mTabs.get(), i );
-		} //! end of for ( int i = CarbonModelUtils::getStartYear(); i < endingYear; i +=outputInterval )
-	} //! end of if( aCarbonBox->getName() == "NPP" )
-	
-	XMLWriteClosingTag( CarbonBox::getXMLNameStatic(), mBuffer, mTabs.get() ); 
-}
-
-void XMLDBOutputter::startVisitLandNode( const LandNode* aLandNode, const int aPeriod ){
-    XMLWriteOpeningTag( LandNode::getXMLNameStatic(), mBuffer, mTabs.get(), aLandNode->getName() );
+    XMLWriteOpeningTag( LandNode::getXMLNameStatic(), mBuffer, mTabs.get(),
+                        aLandNode->getName() );
 }
 
 void XMLDBOutputter::endVisitLandNode( const LandNode* aLandNode,
@@ -1016,19 +997,6 @@ void XMLDBOutputter::startVisitLandLeaf( const LandLeaf* aLandLeaf,
     // Write the opening gdp tag.
     XMLWriteOpeningTag( "LandLeaf", mBuffer, mTabs.get(), aLandLeaf->getName() );
 
-    //Write out land use history.
-    //TODO: put this in LandUseHistory::accept() ?
-    typedef std::map<unsigned int, double> LandMapType;
-    if( aLandLeaf->mLandUseHistory.get() ) {
-        LandMapType mHistoricalLand = aLandLeaf->mLandUseHistory->mHistoricalLand;
-        XMLWriteOpeningTag( "land-use-history", mBuffer, mTabs.get() );
-        for( LandMapType::const_iterator i = mHistoricalLand.begin();
-             i != mHistoricalLand.end(); ++i ) {
-            writeItemUsingYear( "allocation", "000Ha", i->second, i->first );
-        }
-        XMLWriteClosingTag( "land-use-history", mBuffer, mTabs.get() );
-    }
-
     // Loop over the periods to output LandLeaf information.
     // The loops are separated so the types are grouped together, as is required for
     // valid XML.
@@ -1038,33 +1006,48 @@ void XMLDBOutputter::startVisitLandLeaf( const LandLeaf* aLandLeaf,
            aLandLeaf->getTotalLandAllocation( ALandAllocatorItem::eAnyLand, i ),
            i );
     }
+    
+    for( int i = 0; i < modeltime->getmaxper(); ++i ){
+        writeItem( "intrinsic-rate", "$/kHa", aLandLeaf->mIntrinsicRate[ i ], i );
+    }
+
+    //TODO
+    // Could save space by checking if this is an unmanaged land leaf, which does not have this value
+    // Or using a derived class write pattern
+    for( int i = 0; i < modeltime->getmaxper(); ++i ){
+        writeItem( "intrinsic-yield-mode", "GCal/kHa", aLandLeaf->mIntrinsicYieldMode[ i ], i );
+    }
+
+    for( int i = 0; i < modeltime->getmaxper(); ++i ){
+        writeItem( "cal-observed-yield", "GCal/kHa", aLandLeaf->mCalObservedYield[ i ], i );
+    }
+
 }
 
 void XMLDBOutputter::endVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod ){
     XMLWriteClosingTag( "LandLeaf", mBuffer, mTabs.get() );
 }
 
-//void XMLDBOutputter::startVisitCarbonCalc( const ICarbonCalc* aCarbon, const int aPeriod ){
-//    // Carbon Calc does not create a tag for the sake of simplicity for the dataviewer.  
-//    // This allows all the LandLeaf data to be at one level.
-//
-//    // Loop over the periods to output Carbon information.
-//    // The loops are separated so the types are grouped together, as is required for
-//    // valid XML.
-//
-//    // Printing yearly values would be too much data.
-//    const Modeltime* modeltime = scenario->getModeltime();
-//    for( int i = 0; i < modeltime->getmaxper(); ++i ){
-//        int year = modeltime->getper_to_yr( i );
-//        // Write out the carbon emissions.
-//        XMLWriteElement( aCarbon->getNetLandUseChangeEmission( year ),
-//                         "land-use-change-emission", mBuffer, mTabs.get(), year );
-//    }
-//}
-//void XMLDBOutputter::endVisitCarbonCalc( const ICarbonCalc* aCarbonP, const int aPeriod ){
-//	// Does nothing since the land-use-change-emission was brought a level up
-//    // in the output.
-//}
+void XMLDBOutputter::startVisitCarbonCalc( const ICarbonCalc* aCarbon, const int aPeriod ){
+    // Carbon Calc does not create a tag for the sake of simplicity for the dataviewer.
+    // This allows all the LandLeaf data to be at one level.
+
+    // Loop over the periods to output Carbon information.
+    // The loops are separated so the types are grouped together, as is required for
+    // valid XML.
+
+    // Printing yearly values would be too much data.
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( int i = 0; i < modeltime->getmaxper(); ++i ){
+        int year = modeltime->getper_to_yr( i );
+        writeItem( "land-use-change-emission", "MtC",
+                   aCarbon->getNetLandUseChangeEmission( year ), i );
+    }
+}
+void XMLDBOutputter::endVisitCarbonCalc( const ICarbonCalc* aCarbonP, const int aPeriod ){
+    // Does nothing since the land-use-change-emission was brought a level up
+    // in the output.
+}
 
 void XMLDBOutputter::startVisitBaseTechnology( const BaseTechnology* aBaseTech, const int aPeriod ) {
 

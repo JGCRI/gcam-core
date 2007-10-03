@@ -20,9 +20,6 @@
 #include "util/base/include/ivisitor.h"
 #include "emissions/include/production_carbon_calc.h"
 #include "containers/include/iinfo.h"
-#include "ccarbon_model/include/acarbon_flow.h"
-#include "land_allocator/include/land_use_history.h"
-#include <typeinfo>
 
 using namespace std;
 using namespace xercesc;
@@ -41,12 +38,11 @@ ALandAllocatorItem( aParent, eLeaf ),
 mIntrinsicYieldMode( 0 ),
 mYield( scenario->getModeltime()->getmaxper(), -1 ),
 mCalObservedYield( 0 ),
-mAgProdChange( 1 ),
-mLandUseHistory( 0 )
+mAgProdChange( 1 )
 {
     // Can't use initializer because mName is a member of ALandAllocatorItem,
     // not LandLeaf.
-	this->mName = aName;
+    mName = aName;
 }
 
 //! Destructor
@@ -69,7 +65,7 @@ ALandAllocatorItem* LandLeaf::getChildAt( const size_t aIndex ) {
     return 0;
 }
 
-bool LandLeaf::XMLParse( const xercesc::DOMNode* aNode ){
+bool LandLeaf::XMLParse( const DOMNode* aNode ){
 
     // assume we are passed a valid node.
     assert( aNode );
@@ -98,7 +94,7 @@ bool LandLeaf::XMLParse( const xercesc::DOMNode* aNode ){
     return true;
 }
 
-bool LandLeaf::XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurr ){
+bool LandLeaf::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurr ){
     // Allow derived classes to override.
     return false;
 }
@@ -126,24 +122,8 @@ void LandLeaf::completeInit( const string& aRegionName,
     // virtual function so that derived leaves may use a different default type.
     initCarbonCycle();
 
-    // Complete the carbon cycle object's initializations
-    // Get a pointer to this node's conceptual root
-    const ALandAllocatorItem* conceptualRoot = this;
-    while( conceptualRoot->getParent() && !conceptualRoot->isConceptualRoot() ){
-        conceptualRoot = conceptualRoot->getParent();
-    }
-    // Create a unique key out of the pointer's address.  The value of
-    // a pointer is simply an address.  We can cast the address the an
-    // integer to get a "key" that is unique to this node's conceptual root.
-  
-	mCarbonContentCalc->completeInit( (int)conceptualRoot );
-/*	if ( typeid(mCarbonContentCalc) == typeid(CarbonBoxModel) ){
-		tempCalc.reset( mCarbonContentCalc->clone() );
-		tempCalc->completeInit( (int)conceptualRoot );
-	}
-  */  // Ensure that a carbon cycle object has been setup.
+    // Ensure that a carbon cycle object has been setup.
     assert( mCarbonContentCalc.get() );
-
 }
 
 /*!
@@ -200,27 +180,11 @@ void LandLeaf::initLandUseHistory( const double aParentHistoryShare,
                                    const LandUseHistory* aParentHistory,
                                    const int aFirstCalibratedPeriod )
 {
-
-	  // Kludge until we figure out what do do here - sjs
-     // Set first calibrated period to 1990
-     int localFirstCalibratedPeriod = scenario->getModeltime()->getyr_to_per( 1990 );
-
     // Check that the share has been normalized.
     assert( mShare[ aFirstCalibratedPeriod ].isInited() &&
             mShare[ aFirstCalibratedPeriod ] >= 0 &&
             mShare[ aFirstCalibratedPeriod ] <= 1 );
-	/*
-	cout<<this->getName()<<endl;
-	
-	if ( typeid( *mCarbonContentCalc ) == typeid( class CarbonBoxModel ) ){
-		cout<<typeid(*mCarbonContentCalc).name()<<endl;
-		aParentHistory->printHistory();
-		cout<< aFirstCalibratedPeriod <<endl;
-		cout<<" ParentHistoryShare = "<<aParentHistoryShare<<endl;
-		cout<<" mShare[ aFirstCalibratedPeriod ] = "<< mShare[ aFirstCalibratedPeriod ]<<endl;
-		system("pause");
-	}
-	*/
+
     mCarbonContentCalc->initLandUseHistory( aParentHistory,
                                             aParentHistoryShare * mShare[ aFirstCalibratedPeriod ] );
 }
@@ -442,6 +406,10 @@ void LandLeaf::calcLandAllocation( const string& aRegionName,
     // Set the amount of land use change into the carbon content calculator.
     mCarbonContentCalc->setTotalLandUse( mLandAllocation[ aPeriod ], aPeriod );
 
+    // Calculate carbon emissions.
+    // TODO: Better location.
+    mCarbonContentCalc->calc( aPeriod );
+
     // Add emissions to the carbon market.
     // TODO: Determine how to handle this correctly.
     // Marketplace* marketplace = scenario->getMarketplace();
@@ -449,24 +417,6 @@ void LandLeaf::calcLandAllocation( const string& aRegionName,
     // double emissions = mCarbonContentCalc->getNetLandUseChangeEmission( year );
     // 
     // marketplace->addToDemand( "CO2", aRegionName, emissions, aPeriod, false );
-}
-
-
-void LandLeaf::calcLandAllocationPassTwo( const string& aRegionName,
-                                          const int aYear ){
-    mCarbonContentCalc->calcLandUseChange( aYear, eLUCFlowOut );
-}
-
-
-void LandLeaf::calcLandAllocationPassThree( const string& aRegionName,
-                                            const int aYear ){
-    mCarbonContentCalc->calcLandUseChange( aYear, eLUCFlowIn );
-}
-
-void LandLeaf::calcLandAllocationPassFour( const string& aRegionName,
-                                           const int aYear ){
-    const Modeltime* modeltime = scenario->getModeltime();
-    mCarbonContentCalc->calc( aYear );
 }
 
 void LandLeaf::calcYieldInternal( const string& aLandType,
@@ -612,14 +562,4 @@ void LandLeaf::accept( IVisitor* aVisitor, const int aPeriod ) const {
         mCarbonContentCalc->accept( aVisitor, aPeriod );
     }
     aVisitor->endVisitLandLeaf( this, aPeriod );
-}
-
-void LandLeaf::copyCarbonBoxModel( const ICarbonCalc *aCarbonCalc ) {
-	if ( aCarbonCalc != NULL ){
-		this->mCarbonContentCalc.reset( aCarbonCalc->clone() );
-	}	
-}
-
-LandUseHistory* LandLeaf::getLandUseHistory() const{
-	return this->mLandUseHistory.get();
 }

@@ -38,8 +38,7 @@ CO2Emissions::CO2Emissions(){
 }
 
 //! Default Destructor.
-CO2Emissions::~CO2Emissions()
-{
+CO2Emissions::~CO2Emissions(){
 }
 
 //! Clone operator.

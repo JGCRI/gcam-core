@@ -64,8 +64,6 @@
 
 #include "reporting/include/indirect_emissions_calculator.h"
 
-#include "containers/include/sector_cycle_breaker.h"
-
 using namespace std;
 using namespace xercesc;
 
@@ -293,10 +291,7 @@ void RegionMiniCAM::completeInit( const GlobalTechnologyDatabase* aGlobalTechDB 
 
     // Initialize the dependency finder.
     // This may need to move to init calc when markets change by period.
-    // Note that the ICycleBreaker construction is on a seperate line because
-    // C++ is given liberty when evaluating expressions across statements.
-    SectorCycleBreaker sectorCycleBreaker( scenario->getMarketplace(), name );
-    DependencyFinder depFinder( &sectorCycleBreaker );
+    DependencyFinder depFinder( scenario->getMarketplace(), name );
     for( SectorIterator sectorIter = supplySector.begin(); sectorIter != supplySector.end(); ++sectorIter ) {
         ( *sectorIter )->completeInit( mRegionInfo.get(), &depFinder, mLandAllocator.get(), aGlobalTechDB );
     }
@@ -344,21 +339,7 @@ void RegionMiniCAM::completeInit( const GlobalTechnologyDatabase* aGlobalTechDB 
     // completed their calls to aDepFinder->addDependency. This should be moved
     // to RegionMiniCAM to avoid confusion.
     depFinder.createOrdering();
-    const vector<string> orderList = depFinder.getOrdering();
- 
-    // Check for an empty order list in which case the reordering shoud be
-    // skipped. This occurs for SGM.
-    if( !orderList.empty() ){
-        util::reorderContainer<vector<Sector*>::iterator, Sector*>(
-                                supplySector.begin(), supplySector.end(),
-                                depFinder.getOrdering() );
-    }
-    else{
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "Skipping sector reordering due to an empty order list."
-                << "  This is bad." << endl;
-    }
+    reorderSectors( depFinder.getOrdering() );
 
     setupCalibrationMarkets();
 }
@@ -427,7 +408,7 @@ bool RegionMiniCAM::reorderSectors( const vector<string>& aOrderList ){
     supplySectorNameMap.clear();
 
     // Get the dependency finder logger.
-    ILogger& depFinderLog = ILogger::getLogger( "dependency_finder_log" );
+    ILogger& depFinderLog = ILogger::getLogger( "sector_dependencies" );
 
     // Loop through the sector order vector.
     typedef vector<string>::const_iterator NameIterator;
@@ -769,11 +750,11 @@ const vector<double> RegionMiniCAM::calcFutureGDP() const {
 }
 
 double RegionMiniCAM::getEndUseServicePrice( const int period ) const {
-    double servicePrice = 0;
+	double servicePrice = 0;
     for ( CDemandSectorIterator currDemSector = demandSector.begin(); currDemSector != demandSector.end(); ++currDemSector ) {
         servicePrice += (*currDemSector)->getWeightedEnergyPrice( gdp.get(), period );
     }
-    return servicePrice;
+	return servicePrice;
 }
 
 /*! Adjust regional gdp for energy.
@@ -1088,7 +1069,7 @@ bool RegionMiniCAM::setImpliedCalInputs( const int period ) {
     // For each sector, check if a fixed demand is an output. If supply is fixed
     // stop. Make sure all inputs are fixed demands
     for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
-        IInfo* sectorMarketInfo =
+		IInfo* sectorMarketInfo =
             marketplace->getMarketInfo( supplySector[ i ]->getName(), name,
                                         period, true );
         double sectorCalDemand = sectorMarketInfo->getDouble( "calDemand", false );
@@ -1134,7 +1115,7 @@ bool RegionMiniCAM::setImpliedCalInputs( const int period ) {
                 // output from the remaining fuel
                 requiredOutput -= totalCalOutputs;
 
-                ILogger& dependenciesLog = ILogger::getLogger( "dependency_finder_log" );
+                ILogger& dependenciesLog = ILogger::getLogger( "sector_dependencies" );
                 dependenciesLog.setLevel( ILogger::NOTICE );
                 dependenciesLog << "  Transitive demand for "
                                 << adjustableInputs.top()  
@@ -1190,7 +1171,7 @@ bool RegionMiniCAM::setImpliedCalInputs( const int period ) {
                 // Print a warning, but only if calDemand is not zero (if
                 // calDemand is zero then this is probably not a problem)
                 if ( sectorCalDemand > 0 ) {
-                    ILogger& dependenciesLog = ILogger::getLogger( "dependency_finder_log" );
+                    ILogger& dependenciesLog = ILogger::getLogger( "sector_dependencies" );
                     dependenciesLog.setLevel( ILogger::NOTICE );
                     dependenciesLog << "Couldn't calculate transitive demand for inputs ";
 
@@ -1214,14 +1195,14 @@ bool RegionMiniCAM::setImpliedCalInputs( const int period ) {
                     }
                 }
                 else {
-                    ILogger& dependenciesLog = ILogger::getLogger( "dependency_finder_log" );
+                    ILogger& dependenciesLog = ILogger::getLogger( "sector_dependencies" );
                     dependenciesLog.setLevel( ILogger::NOTICE );
                     dependenciesLog << "Couldn't calculate transitive demand for input " << adjustableInputs.top()
                                     << " but calibrated demand is zero. " << endl;
                 }
             }
             else {
-                ILogger& dependenciesLog = ILogger::getLogger( "dependency_finder_log" );
+                ILogger& dependenciesLog = ILogger::getLogger( "sector_dependencies" );
                 dependenciesLog.setLevel( ILogger::NOTICE );
                 dependenciesLog << "Zero fixed inputs for " << supplySector[ i ]->getName() << endl;
             }
@@ -1249,11 +1230,11 @@ int RegionMiniCAM::scaleCalInputs( const int period ) {
     Configuration* conf = Configuration::getInstance();
 
     if ( !fuelRelationshipMap->empty() ) {
-        ILogger& dependenciesLog = ILogger::getLogger( "dependency_finder_log" );
+        ILogger& dependenciesLog = ILogger::getLogger( "sector_dependencies" );
         dependenciesLog << endl << name << " regional dependencies as used for calibration input/output adjustments. Period " 
-                        << period << endl << "These are direct and transitive dependencies only for sectors that potentially have calibration adjustments." << endl;
+			            << period << endl << "These are direct and transitive dependencies only for sectors that potentially have calibration adjustments." << endl;
         
-        typedef map<string, vector<string> >::const_iterator DepIterator;
+		typedef map<string, vector<string> >::const_iterator DepIterator;
         for( DepIterator fuelDependencyIter = fuelRelationshipMap->begin(); fuelDependencyIter != fuelRelationshipMap->end(); ++fuelDependencyIter ){
             dependenciesLog << fuelDependencyIter->first << " - ";
             for ( unsigned int i = 0; i < fuelDependencyIter->second.size(); i ++ ) {

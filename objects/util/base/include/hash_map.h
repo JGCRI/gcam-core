@@ -752,10 +752,7 @@ template<class Key, class Value>
 std::pair<Key, Value>& HashMap<Key, Value>::iterator::operator*() {
 	/*! \pre The current item pointer must be non-null. */
 	assert( const_iterator::mCurrentItem.first != 0 );
-
-    // The mCurrentItem is inherited from const_iterator and must be cast so
-    // that the return value is mutable.
-	return const_cast<std::pair<Key, Value>&>( const_iterator::mCurrentItem.first->mKeyValuePair );
+	return const_iterator::mCurrentItem.first->mKeyValuePair;
 }
 
 /*! \brief Prefix increment operator.

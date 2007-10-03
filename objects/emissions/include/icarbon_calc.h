@@ -4,16 +4,6 @@
 #pragma once
 #endif
 
-/*
- * This software, which is provided in confidence, was prepared by employees of
- * Pacific Northwest National Labratory operated by Battelle Memorial Institute.
- * Battelle has certain unperfected rights in the software which should not be
- * copied or otherwise disseminated outside your organization without the
- * express written authorization from Battelle. All rights to the software are
- * reserved by Battelle. Battelle makes no warranty, express or implied, and
- * assumes no liability or responsibility for the use of this software.
- */
-
 /*! 
  * \file icarbon_calc.h
  * \ingroup Objects
@@ -25,7 +15,6 @@
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iparsable.h"
 #include "util/base/include/iround_trippable.h"
-#include "ccarbon_model/include/carbon_model_utils.h"
 // Forward declarations
 class IInfo;
 class Tabs;
@@ -57,8 +46,6 @@ public:
     //! Destructor.
     inline virtual ~ICarbonCalc();
 
-	virtual ICarbonCalc* clone() const = 0;
-
     // Documentation is inherited.
     virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
 
@@ -71,7 +58,7 @@ public:
     /*!
      * \brief Complete the initialization of the carbon calculator.
      */
-    virtual void completeInit( int aKey ) = 0;
+	virtual void completeInit() = 0;
 
     /*!
      * \brief Initialize the historical land use for the carbon calculation.
@@ -92,18 +79,7 @@ public:
      *          have not been calculated yet.
      * \param aPeriod Model period.
      */
-    virtual void calc( const int aYear ) = 0;
-
-    /*!
-     * \brief Performs flows due to land use change.
-     * \details Performs all flows of type aFlowType for the given year.  If
-     *          desired flow type is land use change in the function delegates to
-     *          the summer object; otherwise it performs the transfers of the
-     *          desired type for each box.
-     * \param aYear the year.
-     * \param aFlowType the desired flow type.
-     */
-    virtual void calcLandUseChange( const int aYear, FlowType aFlowType ) = 0;
+    virtual void calc( const int aPeriod ) = 0;
 
     /*!
      * \brief Get the net land use change emissions for a given year.
@@ -135,7 +111,7 @@ public:
      * \param aLandUse Amount of land used.
      * \param aPeriod Model period.
      */
-    virtual void setTotalLandUse( const double aLandUse,
+	virtual void setTotalLandUse( const double aLandUse,
                                   const int aPeriod ) = 0;
 
     /*!
@@ -150,7 +126,7 @@ public:
      * \param aYear Year.
      * \return Total potential above ground carbon.
      */
-    virtual double getPotentialAboveGroundCarbon( const int aYear ) const = 0;
+	virtual double getPotentialAboveGroundCarbon( const int aYear ) const = 0;
     
     /*!
      * \brief Set the potential above ground carbon per unit of land area for a
@@ -160,7 +136,7 @@ public:
      * \param aAboveGroundCarbon Potential above ground carbon content.
      * \param aPeriod Model period.
      */
-    virtual void setUnitAboveGroundCarbon( const double aAboveGroundCarbon,
+	virtual void setUnitAboveGroundCarbon( const double aAboveGroundCarbon,
                                            const int aPeriod ) = 0;
 
     /*!
@@ -174,7 +150,7 @@ public:
      * \param aYear Year.
      * \return Total potential below ground carbon.
      */
-    virtual double getPotentialBelowGroundCarbon( const int aYear ) const = 0;
+	virtual double getPotentialBelowGroundCarbon( const int aYear ) const = 0;
 
     /*!
      * \brief Set the potential below ground carbon per unit of land area for a
@@ -184,13 +160,12 @@ public:
      * \param aBelowGroundCarbon Potential below ground carbon content.
      * \param aPeriod Model period.
      */
-    virtual void setUnitBelowGroundCarbon( const double aBelowGroundCarbon,
+	virtual void setUnitBelowGroundCarbon( const double aBelowGroundCarbon,
                                            const int aPeriod ) = 0;
 
     // Documentation is inherited.
-    virtual void accept( IVisitor* aVisitor,
+	virtual void accept( IVisitor* aVisitor,
                          const int aPeriod ) const = 0;
-
 };
 
 // Inline function definitions.
