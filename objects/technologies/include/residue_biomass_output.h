@@ -32,7 +32,12 @@
  * \brief A class to output residue biomass supply to the energy
  *        market
  * \details This class contains a set of routines that implement
- *          output of residue biomass supply to the energy
+ *          output of residue biomass supply to an energy market. This object
+ *          works for both ag and non-agricultural technologies. If the parameter
+ *          mErosCtrl is not specified on input, then this object will work with
+ *          non agricultural technologies. NOTE if mErosCtrl is specified for a 
+ *          non ag technologies an error will result.
+ *
  *
  *   <b>XML specification for ResidueBiomassOutput</b>
  *   - XML name: \c residue-biomass
@@ -48,6 +53,8 @@
  *   - \c mid-price ResidueBiomassOutput::mCostCurve.get/setMidprice()
  *
  * \author Kevin Walker
+ * \todo Impliment XMLDB derived class output so that maximum supply can be written out
+ * \todo Figure out way to check for invalid input of mErosCtrl for non ag technology (need to check for existance of land allocator (easy) and existance of specified leaf)
  * \date $ Date $
  * \version $ Revision $
  */
@@ -71,7 +78,7 @@ public :
         mLandType(),
         mHarvestIndex( -1 ),
         mRootToShoot( -1 ),
-        mErosCtrl( -1 ),
+        mErosCtrl( 0 ),
         mMassConversion( -1 ),
         mMassToEnergy( -1 ),
         mCostCurve() {}
