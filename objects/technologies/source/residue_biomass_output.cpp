@@ -91,14 +91,17 @@ double ResidueBiomassOutput::calcPhysicalOutput(
       return 0;
    }
 
-   // Get the area
-   double   area = mLandAllocator->getLandAllocation(
-      mLandType,
-      mTechnologyName,
-      aPeriod );
-   if ( area <= 0 )
-   {
-      return 0;
+   // Get the area if relevant
+   double landArea = 0;
+   if ( mErosCtrl > 0 ) {
+       landArea = mLandAllocator->getLandAllocation(
+          mLandType,
+          mTechnologyName,
+          aPeriod );
+       if ( landArea <= 0 )
+       {
+          return 0;
+       }
    }
    
    // Compute the amount of crop produced (Equation 1)
@@ -117,7 +120,7 @@ double ResidueBiomassOutput::calcPhysicalOutput(
 
    // Compute the mass of residue that are required to sustain
    // agriculture in terms of soil nutrients and erosion (Equation 6)
-   mMeanErosCtrl = area * mErosCtrl;
+   mMeanErosCtrl = landArea * mErosCtrl;
 
    // Compute the amount of residue biomass available to the energy sector
    // (Equation 7)
@@ -156,9 +159,8 @@ void ResidueBiomassOutput::completeInit(
    // Validate land allocator
    // Note: The land allocator should be assigned at this point.
    //       However, it has not been initialized
-   if ( !mLandAllocator ||
-        !mTechnologyName.length() ||
-        !mLandType.length() )
+   if ( ( !mLandAllocator || !mTechnologyName.length() || !mLandType.length() ) &&
+        mErosCtrl > 0 )
    {
       ILogger& mainLog = ILogger::getLogger( "main_log" );
       mainLog.setLevel( ILogger::ERROR );
@@ -216,7 +218,8 @@ void ResidueBiomassOutput::completeInit(
    }
 
    // Residue biomass is removed from demand, so add a dependency.
-   if ( aIsTechOperating )
+   // aDependencyFinder check needed in case this is in demand technology. Can remove for multi-inputs vers.
+   if ( aIsTechOperating && aDependencyFinder ) 
    {
       aDependencyFinder->addDependency( aSectorName, getName() );
    }
@@ -403,7 +406,7 @@ void ResidueBiomassOutput::toInputXML(
    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, getName() );
    XMLWriteElement(
       mCostCurve.getCurveExponent(), "curve-exponent", aOut, aTabs );
-   XMLWriteElement( mErosCtrl, "eros-ctrl", aOut, aTabs );
+   XMLWriteElementCheckDefault( mErosCtrl, "eros-ctrl", aOut, aTabs, 0.0 );
    XMLWriteElement( mHarvestIndex, "harvest-index", aOut, aTabs );
    //XMLWriteElement( mRootToShoot, "root-to-shoot", aOut, aTabs );
    XMLWriteElement( mMassConversion, "mass-conversion", aOut, aTabs );
