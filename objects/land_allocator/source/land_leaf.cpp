@@ -180,13 +180,18 @@ void LandLeaf::initLandUseHistory( const double aParentHistoryShare,
                                    const LandUseHistory* aParentHistory,
                                    const int aFirstCalibratedPeriod )
 {
+    // Kluge until we figure out what do do here. How do we figure out what the first calibrated period
+    // is for AgLU? Presumably it will be 1990, but that could change at some point. - sjs
+    // Set first calibrated period to 1990
+    int localFirstCalibratedPeriod = min( aFirstCalibratedPeriod, scenario->getModeltime()->getyr_to_per( 1990 ) );
+    
     // Check that the share has been normalized.
-    assert( mShare[ aFirstCalibratedPeriod ].isInited() &&
-            mShare[ aFirstCalibratedPeriod ] >= 0 &&
-            mShare[ aFirstCalibratedPeriod ] <= 1 );
+    assert( mShare[ localFirstCalibratedPeriod ].isInited() &&
+            mShare[ localFirstCalibratedPeriod ] >= 0 &&
+            mShare[ localFirstCalibratedPeriod ] <= 1 );
 
     mCarbonContentCalc->initLandUseHistory( aParentHistory,
-                                            aParentHistoryShare * mShare[ aFirstCalibratedPeriod ] );
+                                            aParentHistoryShare * mShare[ localFirstCalibratedPeriod ] );
 }
 
 void LandLeaf::setIntrinsicYieldMode( const double aIntrinsicYieldAbove,
