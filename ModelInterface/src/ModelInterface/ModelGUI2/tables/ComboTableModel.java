@@ -369,6 +369,10 @@ public class ComboTableModel extends BaseTableModel{
 				*/
 			}
 			//return ((Node)((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) )).getNodeValue();
+		} catch(IndexOutOfBoundsException indEx) {
+			// can happen when the data is not at the same level in the XML in which case
+			// the label would be not applicable
+			return "N/A";
 		}
 		return "";
 	}

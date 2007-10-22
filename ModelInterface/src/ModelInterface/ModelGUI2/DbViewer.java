@@ -374,6 +374,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 
 	private void doOpenDB(File dbFile) {
 		((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", dbFile.getParent());
+		// put up a wait cursor so that the user knows things are happening while the database loads
+		parentFrame.getGlassPane().setVisible(true);
 		xmlDB = new XMLDB(dbFile.getAbsolutePath(), parentFrame);
 
 		tablesTabs.setTransferHandler(new TableTransferHandler());
@@ -790,6 +792,10 @@ public class DbViewer implements ActionListener, MenuAdder {
 		Container contentPane = parentFrame.getContentPane();
 		contentPane.add(tableCreatorSplit/*, BorderLayout.PAGE_START*/);
 		//contentPane.add(new JScrollPane(all), BorderLayout.PAGE_START);
+
+		// have to get rid of the wait cursor
+		parentFrame.getGlassPane().setVisible(false);
+
 		parentFrame.setVisible(true);
 	}
 
