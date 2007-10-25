@@ -44,10 +44,9 @@ public class XMLDB {
 			//XmlManager.setLogLevel(XmlManager.LEVEL_ALL, true);
 			String path = dbPath.substring(0, dbPath.lastIndexOf(System.getProperty("file.separator")));
 			boolean didUpgradeEnv = false;
-			//try {
+			try {
 				dbEnv = new Environment(new File(path), envConfig);
 				// This code is avaibale in 2.3.8 which is not working right..
-				/*
 			} catch(VersionMismatchException vme) {
 				int ans = JOptionPane.showConfirmDialog(parentFrame, "The version of the selected database does not match the version\nof the database library. Do you want to attempt to upgrade?\n\nWarning: Upgrading could cause loss of data, it is recomended\nthat you backup your database first.", "DB Version Mismatch Error", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 				if(ans == JOptionPane.YES_OPTION) {
@@ -60,7 +59,6 @@ public class XMLDB {
 					return;
 				}
 			}
-			*/
 			// end 2.3.8 code
 			LockStats ls = dbEnv.getLockStats(StatsConfig.DEFAULT);
 			System.out.println("Current Locks: "+ls.getNumLocks());
@@ -488,20 +486,19 @@ public class XMLDB {
 					XmlValue tempVal;
 					XmlValue delVal;
 					//XmlDocument docTemp; 
-					java.util.List<XmlValue> getVarFromDoucmentNames = new ArrayList<XmlValue>();
+					java.util.List<String> getVarFromDoucmentNames = new ArrayList<String>();
 					boolean gotVars = false;
 					while(res.hasNext()) {
 						gotVars = true;
 						tempVal = res.next();
 						//docTemp = tempVal.asDocument();
-						getVarFromDoucmentNames.add(tempVal);
+						getVarFromDoucmentNames.add(tempVal.getNodeHandle());
 						//docTemp.delete();
-						//tempVal.delete();
+						tempVal.delete();
 					}
 					res.delete();
-					for(Iterator<XmlValue> it = getVarFromDoucmentNames.iterator(); it.hasNext(); ) {
-						//tempVal = myContainer.getNode(it.next(), 0);
-						tempVal = it.next();
+					for(Iterator<String> it = getVarFromDoucmentNames.iterator(); it.hasNext(); ) {
+						tempVal = myContainer.getNode(it.next(), 0);
 						System.out.println("Getting new MetaData");
 						String path = "local:distinct-node-names(/scenario/world/*[@type='region']/demographics//*[fn:count(child::text()) = 1])";
 						tempRes = getVars(tempVal, path);
