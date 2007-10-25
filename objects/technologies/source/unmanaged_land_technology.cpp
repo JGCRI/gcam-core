@@ -213,14 +213,19 @@ void UnmanagedLandTechnology::production( const string& aRegionName,
                                              const GDP* aGDP,
                                              const int aPeriod )
 {
-    // now calculate the amount to be consumed this period (ie. planted steps
-    // periods ago).
+    // If this technology is not operating this period then return without calculating emissions
+    if( !mProductionState[ aPeriod ]->isOperating() ){
+        return;
+    }
+
+    // This technology produces no primary output
     double primaryOutput = 0;
 
     // Set the input to be the land used. 
     mInput[ aPeriod ] = mLandAllocator->getLandAllocation( landType, mLeafName, aPeriod );
 
     //TODO replace with annual veg carbon change once that is available
+    // This is a better driver of deforestation emissions than land area change
     double previousLandAllocation = 0;
     if ( aPeriod > 0 ) {
       previousLandAllocation = mLandAllocator->getLandAllocation( landType, mLeafName, aPeriod - 1 );

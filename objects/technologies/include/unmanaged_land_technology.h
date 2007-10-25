@@ -25,7 +25,8 @@ class DependencyFinder;
 * \brief Unmanaged land "production" technology.
 * \details 
 * This class allows products to be produced from unmanaged land leaves
-* as well as ghg emissions.
+* as well as ghg emissions. "Input" GHG objects will be driven by land area
+* while "Output" GHG objects will be driven by land-area change (e.g. deforestation)
 * \author Steve Smith
 */
 
