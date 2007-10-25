@@ -40,7 +40,6 @@ public:
 
     virtual void updateCoef( const double adjEmissDriver );
     virtual void initCalc( const IInfo* aSubsectorInfo, const std::string& aName, const int aPeriod );
-    virtual double getEmissions( const double aOutput ) const;
     virtual double getInputEmissions() const;
     virtual double calcMaxCntrl( const double aFinalEmissCoef, const double aB,
                                  const double aMultiplier ) const;

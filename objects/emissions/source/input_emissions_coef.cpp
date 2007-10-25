@@ -44,10 +44,6 @@ void InputEmissionsCoef::updateCoef( const double adjEmissDriver ){
 void InputEmissionsCoef::initCalc( const IInfo* aSubsectorInfo, const string& aName, const int aPeriod ){
 }
 
-double InputEmissionsCoef::getEmissions( const double aOutput ) const {
-    return mInputEmissions;
-}
-
 double InputEmissionsCoef::getInputEmissions() const {
     return mInputEmissions;
 }
