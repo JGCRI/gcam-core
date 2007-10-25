@@ -110,14 +110,14 @@ void UnmanagedCarbonCalc::setUnitAboveGroundCarbon( const double aAboveGroundCar
                                                     const int aPeriod )
 {
     // Carbon content of unmanaged land is read-in.
-    assert( false );
+    //assert( false );
 }
 
 void UnmanagedCarbonCalc::setUnitBelowGroundCarbon( const double aBelowGroundCarbon,
                                                     const int aPeriod )
 {
     // Carbon content of unmanaged land is read-in.
-    assert( false );
+    //assert( false );
 }
 
 double UnmanagedCarbonCalc::getPotentialAboveGroundCarbon( const int aYear ) const {
