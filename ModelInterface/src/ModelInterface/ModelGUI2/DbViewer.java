@@ -1214,6 +1214,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		Node tempNode;
 		HSSFWorkbook wb = null;
 		HSSFSheet sheet = null;
+		HSSFPatriarch drawingPat = null;
 		QueryGenerator qgTemp = null;
 		Vector tempScns = getScenarios();
 		Vector tempRegions = new Vector();
@@ -1223,6 +1224,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		final JDialog scenarioDialog = new JDialog(parentFrame, "Select Scenarios to Run", true);
 		JPanel listPane = new JPanel();
 		JPanel buttonPane = new JPanel();
+		final JCheckBox singleSheetCheckBox = new JCheckBox("Place all results in a single sheet", true);
 		final JButton okButton = new JButton("Ok");
 		okButton.setEnabled(false);
 		JButton cancelButton = new JButton("Cancel");
@@ -1264,6 +1266,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		listPane.add(new JLabel("Select Scenarios:"));
 		listPane.add(Box.createVerticalStrut(10));
 		listPane.add(sp);
+		listPane.add(singleSheetCheckBox);
 		listPane.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		contentPane.add(listPane, BorderLayout.PAGE_START);
 		contentPane.add(buttonPane, BorderLayout.PAGE_END);
@@ -1303,6 +1306,10 @@ public class DbViewer implements ActionListener, MenuAdder {
 		if(wb == null) {
 			wb = new HSSFWorkbook();
 		}
+		if(singleSheetCheckBox.isSelected()) {
+			sheet = wb.createSheet("Sheet"+String.valueOf(wb.getNumberOfSheets()+1));
+			drawingPat = sheet.createDrawingPatriarch();
+		}
 		//while((tempNode = res.iterateNext()) != null) {
 		for(int snapshotIndex = 0; snapshotIndex < numQueries; ++snapshotIndex) {
 			tempNode = res.snapshotItem(snapshotIndex);
@@ -1316,16 +1323,19 @@ public class DbViewer implements ActionListener, MenuAdder {
 					qgTemp = new QueryGenerator(currEl);
 				}
 			}
-			sheet = wb.createSheet("Sheet"+String.valueOf(wb.getNumberOfSheets()+1));
+			if(!singleSheetCheckBox.isSelected()) {
+				sheet = wb.createSheet("Sheet"+String.valueOf(wb.getNumberOfSheets()+1));
+				drawingPat = sheet.createDrawingPatriarch();
+			}
 			try {
 				if(qgTemp.isGroup()) {
 					(new MultiTableModel(qgTemp, scenarioList.getSelectedValues(), 
 							     tempRegions.toArray(), 
-							     parentFrame)).exportToExcel(sheet, wb, sheet.createDrawingPatriarch());
+							     parentFrame)).exportToExcel(sheet, wb, drawingPat);
 				} else {
 					(new ComboTableModel(qgTemp, scenarioList.getSelectedValues(), 
 							     tempRegions.toArray(), 
-							     parentFrame, null)).exportToExcel(sheet, wb, sheet.createDrawingPatriarch());
+							     parentFrame, null)).exportToExcel(sheet, wb, drawingPat);
 				}
 			} catch(NullPointerException e) {
 				System.out.println("Warning possible that a query didn't get results");
