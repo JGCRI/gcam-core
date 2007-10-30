@@ -1107,7 +1107,7 @@ public class QueryGenerator implements java.io.Serializable{
 	private void createCollapseList(List<String> defaultCollapse) {
 		// copy the list?
 		collapseOnList = defaultCollapse;
-		Matcher extractType = Pattern.compile("[^\\/]*@type\\s*=\\s*'(\\w+)'\\s*(\\(:\\s*collapse\\s*:\\))?[^\\/]*\\/").matcher(xPath);
+		Matcher extractType = Pattern.compile("[^\\/]*@type\\s*=\\s*'([\\w-]+)'\\s*(\\(:\\s*collapse\\s*:\\))?[^\\/]*\\/").matcher(xPath);
 		boolean matchesOne = false;
 		while(extractType.find()) {
 			matchesOne = true;

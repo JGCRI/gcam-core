@@ -893,19 +893,20 @@ public class ComboTableModel extends BaseTableModel{
 	}
   public void exportToExcel(HSSFSheet sheet, HSSFWorkbook wb, HSSFPatriarch dp) {
 	  HSSFRow row = sheet.createRow(sheet.getLastRowNum()+1);
-	  row.createCell((short)0).setCellValue(title);
-	  row = sheet.createRow(sheet.getLastRowNum()+1);
+	  row.createCell((short)0).setCellValue("title");
+	  //row = sheet.createRow(sheet.getLastRowNum()+1);
 	  for(int i = 0; i < getColumnCount(); ++i) {
-		  row.createCell((short)i).setCellValue(getColumnName(i));
+		  row.createCell((short)(i+1)).setCellValue(getColumnName(i));
 	  }
 	  for(int rowN = 0; rowN < getRowCount(); ++rowN) {
 		  row = sheet.createRow(sheet.getLastRowNum()+1);
+		  row.createCell((short)0).setCellValue(title);
 		  for(int col = 0; col < getColumnCount(); ++col) {
 			  Object obj = sortedTable.getValueAt(rowN, col);
 			  if(obj instanceof Double) {
-				  row.createCell((short)col).setCellValue(((Double)obj).doubleValue());
+				  row.createCell((short)(col+1)).setCellValue(((Double)obj).doubleValue());
 			  } else {
-				  row.createCell((short)col).setCellValue(getValueAt(rowN,col).toString());
+				  row.createCell((short)(col+1)).setCellValue(getValueAt(rowN,col).toString());
 			  }
 		  }
 	  }
