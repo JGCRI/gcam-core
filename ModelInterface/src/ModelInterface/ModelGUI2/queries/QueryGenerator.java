@@ -1207,16 +1207,23 @@ public class QueryGenerator implements java.io.Serializable{
 		if(nodeLevelAttrName == null) {
 			nodeLevelAttrName = "name";
 		}
-		String ret = "/ancestor::*[@type='"+nodeLevel.getKey()+"'";
-		if(!shouldUseOnlyType(nodeLevel.getKey())) {
-			ret += " or local-name()='"+nodeLevel.getKey()+"'";
+		if(!nodeLevel.getKey().equals("keyword")) {
+			String ret = "/ancestor::*[@type='"+nodeLevel.getKey()+"'";
+			if(!shouldUseOnlyType(nodeLevel.getKey())) {
+				ret += " or local-name()='"+nodeLevel.getKey()+"'";
+			}
+			ret += "]/@"+nodeLevelAttrName;
+			return ret;
+		} else {
+			return "/parent::*/following-sibling::keyword/@"+nodeLevel.getValue();
 		}
-		ret += "]/@"+nodeLevelAttrName;
-		return ret;
 	}
 
 	public String defaultGetForNodeLevelPath(String nodeLevelValue) {
 		String nodeLevelAttrName = nodeLevel.getValue();
+		if(nodeLevel.getKey().equals("keyword")) {
+			return "[parent::*/following-sibling::keyword/@"+nodeLevel.getValue()+"='"+nodeLevelValue+"']";
+		}
 		String[] levels = nodeLevelValue.split("/");
 		if(nodeLevelAttrName == null) {
 			nodeLevelAttrName = "name";

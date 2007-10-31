@@ -12,8 +12,7 @@ public class SingleQueryQueryBinding implements QueryBinding {
 		this.nodeLevelValue = value;
 	}
 	public String bindToQuery(Object[] scenarios, Object[] regions) {
-		return QueryBindingFactory.getQueryBinding(qg.getCompleteXPath(regions)+
-				qg.getForNodeLevelPath(nodeLevelValue), null, collection)
-			.bindToQuery(scenarios, regions);
+		return QueryBindingFactory.getQueryBinding(qg, collection).bindToQuery(scenarios, regions)+
+			qg.getForNodeLevelPath(nodeLevelValue);
 	}
 }
