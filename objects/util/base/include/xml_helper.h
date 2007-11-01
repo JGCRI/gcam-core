@@ -45,6 +45,10 @@
 #include <xercesc/sax/HandlerBase.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
 
+#if( __USE_XML_DB__ )
+#include <xqilla/utils/XQillaPlatformUtils.hpp>
+#endif
+
 #include "boost/lexical_cast.hpp"
 
 #include "util/base/include/model_time.h"
@@ -806,9 +810,15 @@ bool XMLHelper<T>::parseXML( const std::string& aXMLFile, IParsable* aModelEleme
 */
 template<class T>
 void XMLHelper<T>::initParser() {
-    // Initialize the Xerces platform.
     try {
+        // Initialize the Xerces platform.  Use the XQillaPlatformUtils to initialize
+        // Xerces if the XMLDB is in use otherwise it will not be properly initialized
+        // and will cause a crash.
+#if( __USE_XML_DB__ )
+        XQillaPlatformUtils::initialize();
+#else
         xercesc::XMLPlatformUtils::Initialize();
+#endif
     } catch ( const xercesc::XMLException& toCatch ) {
         std::string message = XMLHelper<std::string>::safeTranscode( toCatch.getMessage() );
         std::cout << "Severe error during XML Platform initialization: "<< std::endl << message << std::endl;
@@ -878,7 +888,9 @@ void XMLHelper<T>::cleanupParser(){
     delete *getParserPointerInternal();
 // The XML database will terminate xerces if it is compiled in. Terminating
 // twice will cause a crash.
-#if( !__USE_XML_DB__ )
+#if( __USE_XML_DB__ )
+    XQillaPlatformUtils::terminate();
+#else
     xercesc::XMLPlatformUtils::Terminate();
 #endif
 }

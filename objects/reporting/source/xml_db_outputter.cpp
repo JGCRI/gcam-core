@@ -215,9 +215,17 @@ auto_ptr<XMLDBOutputter::DBContainer> XMLDBOutputter::createContainer() {
             indexOfDir );
     }
 
-    // Open the environment.
-    dbContainer->mDBEnvironment->open( environmentLocation.c_str(),
-                                       DB_INIT_MPOOL | DB_CREATE | DB_INIT_LOCK, 0 );
+    try {
+        // Open the environment.
+        dbContainer->mDBEnvironment->open( environmentLocation.c_str(),
+                                        DB_INIT_MPOOL | DB_CREATE | DB_INIT_LOCK, 0 );
+    }
+    catch( const DbException& e ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "Failed to open the database environment: " << e.what() << endl;
+        return auto_ptr<DBContainer>();
+    }
 
     // Create a manager object from the environment.
     dbContainer->mManager.reset( new XmlManager( dbContainer->mDBEnvironment,
@@ -722,7 +730,7 @@ void XMLDBOutputter::startVisitGHG( const AGHG* aGHG, const int aPeriod ){
         // will waste space.
         if( !objects::isEqual<double>( currEmission, 0.0 ) ) {
             attrs[ "unit" ] = aGHG->mEmissionsUnit;
-            XMLWriteElementWithAttributes( aGHG->getEmission( i ), "emissions",
+            XMLWriteElementWithAttributes( currEmission, "emissions",
                 mBuffer, mTabs.get(), attrs );
         }
     }
