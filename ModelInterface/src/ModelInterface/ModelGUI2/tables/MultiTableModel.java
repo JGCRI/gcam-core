@@ -486,6 +486,7 @@ public class MultiTableModel extends BaseTableModel{
 	  regions.addAll(getDefaultYearList());
 	  tableFilterMaps = new LinkedHashMap();
 	  Map dataTree = new TreeMap();
+	  Map<String, String> rewriteMap = qg.getNodeLevelRewriteMap();
 	  try {
 		  while(res.hasNext()) {
 			  tempNode = res.next();
@@ -509,6 +510,10 @@ public class MultiTableModel extends BaseTableModel{
 			  if(sumAll) {
 				  //regionAndYear[1] = "All "+(String)wild.get(0);
 				  regionAndYear[1] = levelValues[0];
+			  }
+			  // check for rewrites
+			  if(rewriteMap != null && rewriteMap.containsKey(regionAndYear[1])) {
+				  regionAndYear[1] = rewriteMap.get(regionAndYear[1]);
 			  }
 			  regions.add(regionAndYear[0]);
 			  years.add(regionAndYear[1]);

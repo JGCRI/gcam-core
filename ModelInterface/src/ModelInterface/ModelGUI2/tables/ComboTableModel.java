@@ -827,6 +827,7 @@ public class ComboTableModel extends BaseTableModel{
 	  regions.addAll(getDefaultYearList());
 	  tableFilterMaps = new LinkedHashMap();
 	  Map dataTree = new TreeMap();
+	  Map<String, String> rewriteMap = qg.getNodeLevelRewriteMap();
 	  try {
 		  while(res.hasNext()) {
 			  tempNode = res.next();
@@ -851,6 +852,10 @@ public class ComboTableModel extends BaseTableModel{
 			  }
 			  if(sumAll) {
 				  regionAndYear[1] = "All "+qg.getNodeLevel();
+			  }
+			  // check for rewrites
+			  if(rewriteMap != null && rewriteMap.containsKey(regionAndYear[1])) {
+				  regionAndYear[1] = rewriteMap.get(regionAndYear[1]);
 			  }
 			  regions.add(regionAndYear[0]);
 			  years.add(regionAndYear[1]);

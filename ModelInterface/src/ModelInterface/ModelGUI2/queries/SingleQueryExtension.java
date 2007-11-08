@@ -134,22 +134,50 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 	public class SingleQueryValue {
 		/**
 		 * The string which represents the single
-		 * query value.
+		 * query value to display.
 		 */
 		private String displayValue;
 
 		/**
-		 * Constructor which just sets the displayValue.
+		 * The list of strings which represents the real values
+		 */
+		private List<String> values;
+
+		/**
+		 * Constructor which just sets the value the same as the displayValue.
 		 * @param displayValue The string which represents this
 		 * 	single query value.
 		 */
 		public SingleQueryValue(String displayValue) {
 			this.displayValue = displayValue;
+			values = new ArrayList<String>(1);
+			values.add(displayValue);
+		}
+
+		/**
+		 * Constructor which sets the display value, and the list of values
+		 * which are really represented.
+		 * @param displayValue The name of the group of values.
+		 * @param values The real values represented in the single
+		 * 	query value.
+		 */
+		public SingleQueryValue(String displayValue, List<String> values) {
+			this.displayValue = displayValue;
+			this.values = values;
 		}
 
 		public String toString() {
 			return displayValue;
 		}
+
+		/**
+		 * Gets the actual values that this SingleQueryValue
+		 * represents.
+		 * @return List of the real values.
+		 */
+	       public List<String> getValues() {
+		       return values;
+	       }
 
 		/**
 		 * Determine if this value is a real node level value and
@@ -168,7 +196,7 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 		 */
 		public QueryBinding getAsQueryBinding() {
 			if(!displayValue.equals("Total")) {
-				return new SingleQueryQueryBinding(displayValue, qg, DbViewer.xmlDB.getContainer());
+				return new SingleQueryQueryBinding(values, qg, DbViewer.xmlDB.getContainer());
 			} else {
 				return QueryBindingFactory.getQueryBinding(qg, DbViewer.xmlDB.getContainer());
 			}
@@ -570,8 +598,12 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 					       while(res.hasNext()) {
 						       curr = res.next();
 						       SingleQueryValue tempValue = new SingleQueryValue(curr.asString());
-						       curr.delete();
 						       tempValues.add(tempValue);
+						       curr.delete();
+					       }
+					       if(qt != null) {
+						       Map<String, String> rewriteMap = qg.getNodeLevelRewriteMap();
+						       addRewriteListValues(rewriteMap, tempValues);
 					       }
 					       if(qg.isGroup() && qt != null) {
 						       tempValues.add(new SingleQueryValue("Total"));
@@ -633,10 +665,14 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 					       if(!(values.length == 1 && values[0].equals(""))) {
 						       hasResults = true;
 						       tempValues =  new ArrayList<SingleQueryValue>(values.length+1);
+						       Map<String, String> rewriteMap = qg.getNodeLevelRewriteMap();
 						       for(String val : values) {
-							       SingleQueryValue tempValue = new SingleQueryValue(val);
-							       tempValues.add(tempValue);
+							       if(rewriteMap != null && !rewriteMap.containsKey(val)) {
+								       SingleQueryValue tempValue = new SingleQueryValue(val);
+								       tempValues.add(tempValue);
+							       }
 						       }
+						       addRewriteListValues(rewriteMap, tempValues);
 						       if(qg.isGroup()) {
 							       tempValues.add(new SingleQueryValue("Total"));
 						       }
@@ -726,5 +762,36 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 	       // maybe I should use a more explicit way of knowing if this
 	       // has been initialized
 	       return doDisable != null;
+       }
+
+       /**
+	* Adds values that come from the rewrite list for the node level. If the
+	* rewrite list does not exist then nothing will be added.
+	* @param rewriteMap The map that is used for rewrites on the nodeLevel. 
+	* @param values The SingleQueryValue list which we will add the values
+	* 	from the rewrite list.
+	*/
+       private void addRewriteListValues(Map<String, String> rewriteMap, List<SingleQueryValue> currValues) {
+	       if(rewriteMap == null) {
+		       // don't need to add anything so just return
+		       return;
+	       }
+	       // need to create a reverse mapping of the rewrite value to what it was 
+	       // rewriting
+	       Map<String, List<String>> reverseMapping = new HashMap<String, List<String>>();
+	       for(Iterator<Map.Entry<String, String>> it = rewriteMap.entrySet().iterator(); it.hasNext(); ) {
+		       Map.Entry<String, String> currEntry = it.next();
+		       List<String> currList = reverseMapping.get(currEntry.getValue());
+		       if(currList == null) {
+			       currList = new ArrayList<String>();
+			       reverseMapping.put(currEntry.getValue(), currList);
+		       }
+		       currList.add(currEntry.getKey());
+	       }
+	       // now that I have sorted these out it is just simply adding new SingleQueryValue to the list
+	       for(Iterator<Map.Entry<String, List<String>>> it = reverseMapping.entrySet().iterator(); it.hasNext(); ) {
+		       Map.Entry<String, List<String>> currEntry = it.next();
+		       currValues.add(new SingleQueryValue(currEntry.getKey(), currEntry.getValue()));
+	       }
        }
 }

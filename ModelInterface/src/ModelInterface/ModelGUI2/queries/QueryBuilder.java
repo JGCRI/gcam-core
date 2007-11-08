@@ -49,7 +49,7 @@ public abstract class QueryBuilder implements java.io.Serializable {
 	public String getNodeLevelPath() {
 		return qg.defaultGetNodeLevelPath();
 	}
-	public String getForNodeLevelPath(String nodeLevelValue) {
+	public String getForNodeLevelPath(List<String> nodeLevelValue) {
 		return qg.defaultGetForNodeLevelPath(nodeLevelValue);
 	}
 	// this gets reset when copy/pasted

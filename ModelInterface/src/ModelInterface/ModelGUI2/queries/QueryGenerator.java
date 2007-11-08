@@ -54,6 +54,13 @@ public class QueryGenerator implements java.io.Serializable{
 	public static java.util.List<String> hasYearList;
 	String axis1Name;
 	String axis2Name;
+	/**
+	 * A map that maps a node level to a map of node level value to 
+	 * what the value should be called.  This is used to customize labels/
+	 * grouping/colapsing for any nodel level in the result.  Not that the 
+	 * validity of these levels/values will not be checked.
+	 */
+	Map<String, Map<String, String>> labelRewriteMap;
 
 	// The level has a pair of a nodename
 	// and the attribute name to pull data from
@@ -76,6 +83,7 @@ public class QueryGenerator implements java.io.Serializable{
 		xPath = "";
 		parentFrame = parentFrameIn;
 		sumAll = false;
+		labelRewriteMap = null;
 		getQueryDialog();
 	}
 	public QueryGenerator(Node queryIn) {
@@ -132,6 +140,21 @@ public class QueryGenerator implements java.io.Serializable{
 				Node cmtNodeTemp = nl.item(i).getFirstChild();
 				if(cmtNodeTemp != null) {
 					comments = cmtNodeTemp.getNodeValue();
+				}
+			} else if(nl.item(i).getNodeName().equals("labelRewriteList")) {
+				NodeList rewriteLevelList = nl.item(i).getChildNodes();
+				labelRewriteMap = new HashMap<String, Map<String, String>>(rewriteLevelList.getLength());
+				for(int levelNum = 0; levelNum < rewriteLevelList.getLength(); ++levelNum) {
+					NodeList currLevelRewrites = rewriteLevelList.item(levelNum).getChildNodes();
+					Map<String, String> currMap = 
+						new HashMap<String, String>(currLevelRewrites.getLength());
+					for(int rewriteNum = 0; rewriteNum < currLevelRewrites.getLength(); ++rewriteNum) {
+						Element rewriteItem = (Element)currLevelRewrites.item(rewriteNum);
+						currMap.put(rewriteItem.getAttribute("from"),
+								rewriteItem.getAttribute("to"));
+					}
+					labelRewriteMap.put(((Element)rewriteLevelList.item(levelNum)).getAttribute("name"),
+							currMap);
 				}
 			} else if (nl.item(i).getNodeName().equals("xPath")) {
 				var = ((Element)nl.item(i)).getAttribute("dataName");
@@ -676,6 +699,25 @@ public class QueryGenerator implements java.io.Serializable{
 		temp = doc.createElement("comments");
 		temp.appendChild(doc.createTextNode(comments));
 		queryNode.appendChild(temp);
+		if(labelRewriteMap != null) {
+			temp = doc.createElement("labelRewriteList");
+			for(Iterator<Map.Entry<String, Map<String, String>>> itLevel = 
+					labelRewriteMap.entrySet().iterator(); itLevel.hasNext(); ) {
+				Map.Entry<String, Map<String, String>> levelEntry = itLevel.next();
+				Element levelNode = doc.createElement("level");
+				levelNode.setAttribute("name", levelEntry.getKey());
+				for(Iterator<Map.Entry<String, String>> itRewrite = 
+						levelEntry.getValue().entrySet().iterator(); itRewrite.hasNext(); ) {
+					Map.Entry<String, String> rewriteEntry = itRewrite.next();
+					Element rewriteNode = doc.createElement("rewrite");
+					rewriteNode.setAttribute("from", rewriteEntry.getKey());
+					rewriteNode.setAttribute("to", rewriteEntry.getValue());
+					levelNode.appendChild(rewriteNode);
+				}
+				temp.appendChild(levelNode);
+			}
+			queryNode.appendChild(temp);
+		}
 		return queryNode;
 	}
 	/**
@@ -1194,7 +1236,7 @@ public class QueryGenerator implements java.io.Serializable{
 	 * @param nodeLevelValue The node level value to filter for.
 	 * @return The path that gets the desired result set.
 	 */
-	public String getForNodeLevelPath(String nodeLevelValue) {
+	public String getForNodeLevelPath(List<String> nodeLevelValue) {
 		if(qb != null) {
 			return qb.getForNodeLevelPath(nodeLevelValue);
 		} else {
@@ -1219,24 +1261,36 @@ public class QueryGenerator implements java.io.Serializable{
 		}
 	}
 
-	public String defaultGetForNodeLevelPath(String nodeLevelValue) {
+	public String defaultGetForNodeLevelPath(List<String> nodeLevelValue) {
 		String nodeLevelAttrName = nodeLevel.getValue();
 		if(nodeLevel.getKey().equals("keyword")) {
-			return "[parent::*/following-sibling::keyword/@"+nodeLevel.getValue()+"='"+nodeLevelValue+"']";
+			// TODO: fix this..
+			return "[parent::*/following-sibling::keyword/@"+nodeLevel.getValue()+"='"+nodeLevelValue.get(0)+"']";
 		}
-		String[] levels = nodeLevelValue.split("/");
+		// it does not really make sense to have a multi level
+		// node level and be by a group
+		String[] levels = nodeLevelValue.get(0).split("/");
 		if(nodeLevelAttrName == null) {
 			nodeLevelAttrName = "name";
 		}
 		StringBuilder ret = new StringBuilder("[ancestor::*[(@type='");
 		ret.append(nodeLevel.getKey());
 		if(shouldUseOnlyType(nodeLevel.getKey())) {
-			ret.append("') and @");
+			ret.append("') and (@");
 		} else {
 			ret.append("' or local-name()='");
-			ret.append(nodeLevel.getKey()).append("') and @");
+			ret.append(nodeLevel.getKey()).append("') and (@");
 		}
-		ret.append(nodeLevelAttrName).append("='").append(levels[levels.length-1]).append("']");
+		if(nodeLevelValue.size() == 1) {
+			// general case, so make this faster..
+			ret.append(nodeLevelAttrName).append("='").append(levels[levels.length-1]).append("')]");
+		} else {
+			ret.deleteCharAt(ret.length()-1);
+			for(Iterator<String> it = nodeLevelValue.iterator(); it.hasNext(); ) {
+				ret.append("@").append(nodeLevelAttrName).append("='").append(it.next()).append("' or ");
+			}
+			ret.replace(ret.length()-4, ret.length(), ")]");
+		}
 		for(int i = 0; i < levels.length-1; ++i) {
 			int colonPos = levels[i].indexOf(':');
 			String currType = levels[i].substring(0, colonPos);
@@ -1311,4 +1365,14 @@ public class QueryGenerator implements java.io.Serializable{
 	public int getStorageHashCode() {
 		return xPath.hashCode() ^ nodeLevel.hashCode();
 	}
+
+	/**
+	 * Gets a map that maps a nodel level value to what it should
+	 * be rewritten as.  If no rewriting needs to occur this will 
+	 * return null.
+	 * @return a Map that will rewrite a node level.
+	 */
+       public Map<String, String> getNodeLevelRewriteMap() {
+	       return labelRewriteMap == null ? null : labelRewriteMap.get(nodeLevel.getKey());
+       }
 }
