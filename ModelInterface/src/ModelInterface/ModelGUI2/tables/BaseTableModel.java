@@ -37,6 +37,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	protected String units;
 	protected boolean remove1975;
 	protected TableSorter sortedTable;
+	private static java.util.List<String> defaultYearList;
 
 	// stuff for filtering
 	// can i move these somewhere
@@ -645,5 +646,24 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	       JTable ret = new JTable(sortedTable);
 	       sortedTable.setTableHeader(ret.getTableHeader());
 	       return ret;
+       }
+
+       public java.util.List<String> getDefaultYearList() {
+	       // the default year list could go in a preference dialog as well
+	       // WARNING: not thread safe
+	       if(defaultYearList == null) {
+		       Properties globalProperties = InterfaceMain.getInstance().getProperties();
+		       String defaultYearStr;
+		       globalProperties.setProperty("defaultYearList", defaultYearStr = 
+				       globalProperties.getProperty("defaultYearList", "1990;2005;2020;2035;2050;2065;2080;2095"));
+		       String[] yearsArr = defaultYearStr.split(";");
+		       defaultYearList = new ArrayList<String>(yearsArr.length);
+		       if(!(yearsArr.length == 1 && yearsArr[0].equals(""))) {
+			       for(String year : yearsArr ) {
+				       defaultYearList.add(year);
+			       }
+		       }
+	       }
+	       return defaultYearList;
        }
 }

@@ -314,7 +314,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 			FileChooser fc = FileChooserFactory.getFileChooser();
 			// Now open chooser
 			final FileFilter xmlFilter = new XMLFilter();
-			File[] batchFiles = fc.doFilePrompt(parentFrame, "Open bath Query File", FileChooser.LOAD_DIALOG, 
+			File[] batchFiles = fc.doFilePrompt(parentFrame, "Open batch Query File", FileChooser.LOAD_DIALOG, 
 					new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")),
 					xmlFilter);
 
@@ -1210,14 +1210,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 		}
 	}
 
-	protected void batchQuery(File queryFile, File excelFile) {
-		Node tempNode;
-		HSSFWorkbook wb = null;
-		HSSFSheet sheet = null;
-		HSSFPatriarch drawingPat = null;
-		QueryGenerator qgTemp = null;
-		Vector tempScns = getScenarios();
-		Vector tempRegions = new Vector();
+	protected void batchQuery(File queryFile, final File excelFile) {
+		final Vector tempScns = getScenarios();
 
 		// Create a Select Scenarios dialog to get which scenarios to run
 		final JList scenarioList = new JList(tempScns); 
@@ -1225,6 +1219,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		JPanel listPane = new JPanel();
 		JPanel buttonPane = new JPanel();
 		final JCheckBox singleSheetCheckBox = new JCheckBox("Place all results in a single sheet", true);
+		final JCheckBox drawPicsCheckBox = new JCheckBox("Include charts with results", true);
 		final JButton okButton = new JButton("Ok");
 		okButton.setEnabled(false);
 		JButton cancelButton = new JButton("Cancel");
@@ -1267,6 +1262,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		listPane.add(Box.createVerticalStrut(10));
 		listPane.add(sp);
 		listPane.add(singleSheetCheckBox);
+		listPane.add(drawPicsCheckBox);
 		listPane.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		contentPane.add(listPane, BorderLayout.PAGE_START);
 		contentPane.add(buttonPane, BorderLayout.PAGE_END);
@@ -1280,7 +1276,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		// read the batch query file
 		Document queries = readQueries( queryFile );
 		XPathEvaluatorImpl xpeImpl = new XPathEvaluatorImpl(queries);
-		XPathResult res = (XPathResult)xpeImpl.createExpression("/queries/node()", xpeImpl.createNSResolver(queries.getDocumentElement())).evaluate(queries.getDocumentElement(), XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+		final XPathResult res = (XPathResult)xpeImpl.createExpression("/queries/node()", xpeImpl.createNSResolver(queries.getDocumentElement())).evaluate(queries.getDocumentElement(), XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
 
 		final int numQueries = res.getSnapshotLength();
 		final JProgressBar progressBar = new JProgressBar(0, numQueries);
@@ -1293,7 +1289,15 @@ public class DbViewer implements ActionListener, MenuAdder {
 				progressBar.setValue(progressBar.getValue()+1);
 			}
 		};
+		new Thread(new Runnable() {
+			public void run() {
 
+		Node tempNode;
+		HSSFWorkbook wb = null;
+		HSSFSheet sheet = null;
+		HSSFPatriarch drawingPat = null;
+		QueryGenerator qgTemp = null;
+		Vector tempRegions = new Vector();
 		// read/create the output excel file
 		if(excelFile.exists()) {
 			try {
@@ -1308,34 +1312,57 @@ public class DbViewer implements ActionListener, MenuAdder {
 		}
 		if(singleSheetCheckBox.isSelected()) {
 			sheet = wb.createSheet("Sheet"+String.valueOf(wb.getNumberOfSheets()+1));
-			drawingPat = sheet.createDrawingPatriarch();
+			drawingPat = drawPicsCheckBox.isSelected() ? sheet.createDrawingPatriarch() : null;
 		}
-		//while((tempNode = res.iterateNext()) != null) {
 		for(int snapshotIndex = 0; snapshotIndex < numQueries; ++snapshotIndex) {
 			tempNode = res.snapshotItem(snapshotIndex);
 			tempRegions.removeAllElements();
 			NodeList nl = tempNode.getChildNodes();
+			boolean isGlobal = false;
 			for(int i = 0; i < nl.getLength(); ++i) {
 				Element currEl = (Element)nl.item(i);
 				if(currEl.getNodeName().equals("region")) {
-					tempRegions.add(currEl.getAttribute("name"));
+					String currRegionName = currEl.getAttribute("name");
+					// if Global is in the list we will run it seperately
+					if(!currRegionName.equals("Global")) {
+						tempRegions.add(currEl.getAttribute("name"));
+					} else {
+						isGlobal = true;
+					}
 				} else {
 					qgTemp = new QueryGenerator(currEl);
 				}
 			}
 			if(!singleSheetCheckBox.isSelected()) {
 				sheet = wb.createSheet("Sheet"+String.valueOf(wb.getNumberOfSheets()+1));
-				drawingPat = sheet.createDrawingPatriarch();
+				drawingPat = drawPicsCheckBox.isSelected() ? sheet.createDrawingPatriarch() : null;
 			}
 			try {
-				if(qgTemp.isGroup()) {
-					(new MultiTableModel(qgTemp, scenarioList.getSelectedValues(), 
-							     tempRegions.toArray(), 
-							     parentFrame)).exportToExcel(sheet, wb, drawingPat);
-				} else {
-					(new ComboTableModel(qgTemp, scenarioList.getSelectedValues(), 
-							     tempRegions.toArray(), 
-							     parentFrame, null)).exportToExcel(sheet, wb, drawingPat);
+				if(tempRegions.size() > 0) {
+					if(qgTemp.isGroup()) {
+						(new MultiTableModel(qgTemp, scenarioList.getSelectedValues(), 
+								     tempRegions.toArray(), 
+								     parentFrame)).exportToExcel(sheet, wb, drawingPat);
+					} else {
+						(new ComboTableModel(qgTemp, scenarioList.getSelectedValues(), 
+								     tempRegions.toArray(), 
+								     parentFrame, null)).exportToExcel(sheet, wb, drawingPat);
+					}
+				}
+				// if global was selected we will run it again.  this covers the case where
+				// Global and other regions where selected
+				if(isGlobal) {
+					tempRegions.removeAllElements();
+					tempRegions.add("Global");
+					if(qgTemp.isGroup()) {
+						(new MultiTableModel(qgTemp, scenarioList.getSelectedValues(), 
+								     tempRegions.toArray(), 
+								     parentFrame)).exportToExcel(sheet, wb, drawingPat);
+					} else {
+						(new ComboTableModel(qgTemp, scenarioList.getSelectedValues(), 
+								     tempRegions.toArray(), 
+								     parentFrame, null)).exportToExcel(sheet, wb, drawingPat);
+					}
 				}
 			} catch(NullPointerException e) {
 				System.out.println("Warning possible that a query didn't get results");
@@ -1359,6 +1386,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 		} finally {
 			progressDialog.dispose();
 		}
+		}
+		}).start();
 	}
 
 	public boolean writeFile(File file, Document theDoc) {

@@ -483,6 +483,7 @@ public class MultiTableModel extends BaseTableModel{
 	  Object[] regionAndYear;
 	  Set regions = new TreeSet();
 	  Set years = new LinkedHashSet();
+	  regions.addAll(getDefaultYearList());
 	  tableFilterMaps = new LinkedHashMap();
 	  Map dataTree = new TreeMap();
 	  try {

@@ -617,6 +617,10 @@ public class NewDataTableModel extends BaseTableModel{
 			  }
 		  }
 	  }
+	  if(dp == null) {
+		  // did not want images so just return now we are done
+		  return;
+	  }
 	  try {
 		  java.awt.image.BufferedImage chartImage = createChart(0,0).createBufferedImage(350,350);
 		  // WARNING: This is a hack because of java some how looking to load some class that did

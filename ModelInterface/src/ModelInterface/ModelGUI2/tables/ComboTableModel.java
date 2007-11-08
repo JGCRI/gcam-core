@@ -824,6 +824,7 @@ public class ComboTableModel extends BaseTableModel{
 	  Object[] regionAndYear;
 	  TreeSet regions = new TreeSet();
 	  TreeSet years = new TreeSet();
+	  regions.addAll(getDefaultYearList());
 	  tableFilterMaps = new LinkedHashMap();
 	  Map dataTree = new TreeMap();
 	  try {
@@ -894,21 +895,37 @@ public class ComboTableModel extends BaseTableModel{
   public void exportToExcel(HSSFSheet sheet, HSSFWorkbook wb, HSSFPatriarch dp) {
 	  HSSFRow row = sheet.createRow(sheet.getLastRowNum()+1);
 	  row.createCell((short)0).setCellValue("title");
+	  int isGlobal = 0;
 	  //row = sheet.createRow(sheet.getLastRowNum()+1);
 	  for(int i = 0; i < getColumnCount(); ++i) {
-		  row.createCell((short)(i+1)).setCellValue(getColumnName(i));
+		  // hack to get globals to show up in output
+		  // assumes region will always be in 1 
+		  String colName = getColumnName(i);
+		  if(i == 1 && !colName.equals("region")) {
+			  isGlobal = 1;
+			  row.createCell((short)(i+1)).setCellValue("region");
+		  }
+		  row.createCell((short)(i+1+isGlobal)).setCellValue(colName);
 	  }
 	  for(int rowN = 0; rowN < getRowCount(); ++rowN) {
 		  row = sheet.createRow(sheet.getLastRowNum()+1);
 		  row.createCell((short)0).setCellValue(title);
-		  for(int col = 0; col < getColumnCount(); ++col) {
+		  if(isGlobal == 1) {
+			  row.createCell((short)1).setCellValue(getValueAt(rowN,0).toString());
+			  row.createCell((short)2).setCellValue("Global");
+		  }
+		  for(int col = isGlobal; col < getColumnCount(); ++col) {
 			  Object obj = sortedTable.getValueAt(rowN, col);
 			  if(obj instanceof Double) {
-				  row.createCell((short)(col+1)).setCellValue(((Double)obj).doubleValue());
+				  row.createCell((short)(col+1+isGlobal)).setCellValue(((Double)obj).doubleValue());
 			  } else {
-				  row.createCell((short)(col+1)).setCellValue(getValueAt(rowN,col).toString());
+				  row.createCell((short)(col+1+isGlobal)).setCellValue(getValueAt(rowN,col).toString());
 			  }
 		  }
+	  }
+	  if(dp == null) {
+		  // did not want images so just return now we are done
+		  return;
 	  }
 	  try {
 		  java.awt.image.BufferedImage chartImage = createChart(0,0).createBufferedImage(350,350);
