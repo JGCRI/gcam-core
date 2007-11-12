@@ -435,9 +435,20 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 			return dataTree;
 		}
 		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
+		String type = XMLDB.getAttr(currNode, "type");
+		if(type == null) {
+			type = currNode.getNodeName();
+		}
 		// used to combine paths when possible to avoid large amounts of sparse tables
-		if(currNode.getNodeName().equals("male") || currNode.getNodeName().equals("female")) {
-			String attr = currNode.getNodeName();
+		if(type.equals("male") || type.equals("female")) {
+			String attr = type;
+			// check for rewrites
+			if(qg.labelRewriteMap != null && qg.labelRewriteMap.containsKey(type)) {
+				Map<String, String> currRewriteMap = qg.labelRewriteMap.get(type);
+				if(currRewriteMap.containsKey(attr)) {
+					attr = currRewriteMap.get(attr);
+				}
+			}
 			if(!tempMap.containsKey(attr)) {
 				tempMap.put(attr, new TreeMap());
 			}
@@ -447,6 +458,13 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 				&& !qg.nodeLevel.getKey().equals(XMLDB.getAttr(currNode, "type"))
 				&& !currNode.getNodeName().equals(qg.yearLevel.getKey())) {
 			String attr = XMLDB.getAllAttr(currNode);
+			// check for rewrites
+			if(qg.labelRewriteMap != null && qg.labelRewriteMap.containsKey(type)) {
+				Map<String, String> currRewriteMap = qg.labelRewriteMap.get(type);
+				if(currRewriteMap.containsKey(attr)) {
+					attr = currRewriteMap.get(attr);
+				}
+			}
 			attr = currNode.getNodeName()+"@"+attr;
 			if(!tempMap.containsKey(attr)) {
 				tempMap.put(attr, new TreeMap());

@@ -318,6 +318,13 @@ public class MarketQueryBuilder extends QueryBuilder {
 		if(XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals(qg.nodeLevel.getKey()) 
 				&& !currNode.getNodeName().equals(qg.yearLevel.getKey())) {
 			String attr = XMLDB.getAllAttr(currNode);
+			// check for rewrites
+			if(qg.labelRewriteMap != null && qg.labelRewriteMap.containsKey(currNode.getNodeName())) {
+				Map<String, String> currRewriteMap = qg.labelRewriteMap.get(currNode.getNodeName());
+				if(currRewriteMap.containsKey(attr)) {
+					attr = currRewriteMap.get(attr);
+				}
+			}
 			attr = currNode.getNodeName()+"@"+attr;
 			if(!tempMap.containsKey(attr)) {
 				tempMap.put(attr, new TreeMap());

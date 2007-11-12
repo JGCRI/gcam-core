@@ -478,6 +478,13 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 				&& !qg.yearLevel.getKey().equals(type)) {
 			String attr = XMLDB.getAllAttr(currNode);
 			//attr = currNode.getNodeName()+"@"+attr;
+			// check for rewrites
+			if(qg.labelRewriteMap != null && qg.labelRewriteMap.containsKey(type)) {
+				Map<String, String> currRewriteMap = qg.labelRewriteMap.get(type);
+				if(currRewriteMap.containsKey(attr)) {
+					attr = currRewriteMap.get(attr);
+				}
+			}
 			attr = type+"@"+attr;
 			if(!tempMap.containsKey(attr)) {
 				tempMap.put(attr, new TreeMap());

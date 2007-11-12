@@ -485,7 +485,7 @@ public class MultiTableModel extends BaseTableModel{
 	  Set years = new LinkedHashSet();
 	  regions.addAll(getDefaultYearList());
 	  tableFilterMaps = new LinkedHashMap();
-	  Map dataTree = new TreeMap();
+	  Map dataTree = new LinkedHashMap();
 	  Map<String, String> rewriteMap = qg.getNodeLevelRewriteMap();
 	  try {
 		  while(res.hasNext()) {

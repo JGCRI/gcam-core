@@ -17,6 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 import java.util.LinkedHashMap;
+import java.util.TreeMap;
 import java.util.HashMap;
 import java.util.EventListener;
 
@@ -458,6 +459,7 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 				&& !type.equals(qg.yearLevel.getKey())) {
 			String attr = XMLDB.getAllAttr(currNode);
 			//attr = currNode.getNodeName()+"@"+attr;
+			// check for rewrites
 			if(qg.labelRewriteMap != null && qg.labelRewriteMap.containsKey(type)) {
 				Map<String, String> currRewriteMap = qg.labelRewriteMap.get(type);
 				if(currRewriteMap.containsKey(attr)) {
@@ -466,7 +468,7 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 			}
 			attr = type+"@"+attr;
 			if(!tempMap.containsKey(attr)) {
-				tempMap.put(attr, new HashMap());
+				tempMap.put(attr, new TreeMap());
 			}
 			currNode.delete();
 			return (Map)tempMap.get(attr);

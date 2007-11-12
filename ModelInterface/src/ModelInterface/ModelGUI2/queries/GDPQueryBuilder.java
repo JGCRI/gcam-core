@@ -253,6 +253,18 @@ public class GDPQueryBuilder extends QueryBuilder {
 		if(XMLDB.hasAttr(currNode) && !qg.nodeLevel.getKey().equals(XMLDB.getAttr(currNode, "type"))
 				&& !currNode.getNodeName().equals(qg.yearLevel.getKey())) {
 			String attr = XMLDB.getAllAttr(currNode);
+			// TODO: clean up logic with types
+			String type = XMLDB.getAttr(currNode, "type");
+			if(type == null) {
+				type = currNode.getNodeName();
+			}
+			// check for rewrites
+			if(qg.labelRewriteMap != null && qg.labelRewriteMap.containsKey(type)) {
+				Map<String, String> currRewriteMap = qg.labelRewriteMap.get(type);
+				if(currRewriteMap.containsKey(attr)) {
+					attr = currRewriteMap.get(attr);
+				}
+			}
 			attr = currNode.getNodeName()+"@"+attr;
 			if(!tempMap.containsKey(attr)) {
 				tempMap.put(attr, new TreeMap());

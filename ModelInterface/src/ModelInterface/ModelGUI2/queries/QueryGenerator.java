@@ -907,12 +907,19 @@ public class QueryGenerator implements java.io.Serializable{
 		if(XMLDB.hasAttr(currNode) && !type.equals(nodeLevel.getKey()) && 
 				!type.equals(yearLevel.getKey())) {
 			String attr = XMLDB.getAllAttr(currNode);
+			// check for rewrites
+			if(labelRewriteMap != null && labelRewriteMap.containsKey(type)) {
+				Map<String, String> currRewriteMap = labelRewriteMap.get(type);
+				if(currRewriteMap.containsKey(attr)) {
+					attr = currRewriteMap.get(attr);
+				}
+			}
 			attr = type+"@"+attr;
 			if(!tempMap.containsKey(attr)) {
 				tempMap.put(attr, new TreeMap());
 			}
 			currNode.delete();
-			return (TreeMap)tempMap.get(attr);
+			return (Map)tempMap.get(attr);
 		} 
 		currNode.delete();
 		return tempMap;
