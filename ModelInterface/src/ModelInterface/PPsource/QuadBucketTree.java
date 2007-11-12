@@ -144,6 +144,16 @@ public class QuadBucketTree implements DataIndex
 //*********************************************************
 //*************Begin Functions Proper**********************
 //*********************************************************
+
+  public void setTrackSums(boolean trackSums) {
+	  // TODO: resolve this.
+	  throw new UnsupportedOperationException();
+  }
+  public void printSums() {
+	  // TODO: resolve this.
+	  throw new UnsupportedOperationException();
+  }
+
   //---added to correspond to DataIndex interface---
   public double getResolution()
   {

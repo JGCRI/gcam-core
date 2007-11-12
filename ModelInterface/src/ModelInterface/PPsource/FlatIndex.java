@@ -5,6 +5,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.HashMap;
+import java.util.logging.Logger;
 
 public class FlatIndex implements DataIndex
 {
@@ -15,6 +17,8 @@ public class FlatIndex implements DataIndex
   private double maxY;
   private boolean init;
   private TreeMap<String, TreeMap<String, TreeMap<Point2D.Double, Double>>> makeRegion;
+  private Map<String, Map<Double, Double>> unAlteredSums;
+  private boolean trackSums;
   
   public double resolution; //resolution of the data this index points to
   
@@ -30,6 +34,8 @@ public class FlatIndex implements DataIndex
     minY = -90;
     maxY = 90;
     resolution = -1;
+    trackSums = false;
+    unAlteredSums = new HashMap<String, Map<Double, Double>>();
   }
   
   public FlatIndex(double x1, double x2, double y1, double y2)
@@ -40,12 +46,52 @@ public class FlatIndex implements DataIndex
     minY = y1;
     maxY = y2;
     resolution = -1;
+    trackSums = false;
+    unAlteredSums = new HashMap<String, Map<Double, Double>>();
   }
   
 //*********************************************************
 //*************Begin Functions Proper**********************
 //*********************************************************
   
+  public void setTrackSums(boolean trackSums) {
+	  this.trackSums = trackSums;
+  }
+
+  public boolean getTrackSums() {
+	  return trackSums;
+  }
+
+  /**
+   * Print the gathered data sums to the screen if the trackSums flag has been set.
+   * This could be useful in debugging where values are being lost.
+   */
+  public void printSums() {
+	  // don't do anything if the flag has not been set
+	  if(trackSums) {
+		  final Logger log = Logger.getLogger("Preprocess"); //log class to use for all logging output
+		  // use a buffer so that the logs don't get jumbled with the prints
+		  final StringBuilder buff = new StringBuilder();
+		  // print each variable
+		  for(Iterator<Map.Entry<String, Map<Double, Double>>> itNames = unAlteredSums.entrySet().iterator(); 
+				  itNames.hasNext(); ) {
+			  Map.Entry<String, Map<Double, Double>> currVar = itNames.next();
+			  buff.append("<variable name=\"").append(currVar.getKey()).append("\">\n");
+			  // print each time and the sum for that time in this variable
+			  for(Iterator<Map.Entry<Double, Double>> itTimes = currVar.getValue().entrySet().iterator(); 
+					  itTimes.hasNext(); ) {
+				  Map.Entry<Double, Double> currTime = itTimes.next();
+				  log.info("Var: "+currVar.getKey()+" / Time: "+currTime.getKey()+" / Sum: "+currTime.getValue());
+				  buff.append("\t<sum time=\"").append(currTime.getKey()).append("\">").append(currTime.getValue())
+						  .append("</sum>\n");
+			  }
+			  buff.append("</variable>\n");
+		  }
+		  // use print instead of println because the buff will already have the \n in there
+		  System.out.print(buff);
+	  }
+  }
+
   public double getResolution()
   {
     return resolution;
@@ -75,6 +121,8 @@ public class FlatIndex implements DataIndex
     {
       init(val.width);
     }
+
+    addToTrackSum(val, avg);
     
     //System.out.println("block x: "+val.x+"-"+(val.x+val.width));
     //System.out.println("block y: "+val.y+"-"+(val.y+val.height));
@@ -323,5 +371,110 @@ public class FlatIndex implements DataIndex
         }
       }
     }
+  }
+
+  /**
+   * Takes all of the variables and time for a block and adds them to a world level sum.  If the val is
+   * and avg (such as a percentage value) it will be multiplied by the area of the block before added to
+   * the sum.  if trackSums has not been set this method will do nothing.
+   * @param val The DataBlock that has all of the unaltered data values for a grid cell.
+   * @param avg Whether this val would be averaged over cells or just split evenly.
+   */
+  private void addToTrackSum(DataBlock val, boolean avg) {
+	  // only track the sums if the flag has been set
+	  if(trackSums) {
+		  // go through every variable name
+		  for(Iterator<Map.Entry<String, TreeMap<Double, Double>>> itNames = val.data.entrySet().iterator(); 
+				  itNames.hasNext(); ) {
+			  Map.Entry<String, TreeMap<Double, Double>> currVar = itNames.next();
+			  Map<Double, Double> sumVar = unAlteredSums.get(currVar.getKey());
+			  // if this variable has not been summed yet add it to the map
+			  if(sumVar == null) {
+				  sumVar = new HashMap<Double, Double>();
+				  unAlteredSums.put(currVar.getKey(), sumVar);
+			  }
+			  // go through all of the times
+			  for(Iterator<Map.Entry<Double, Double>> itTimes = currVar.getValue().entrySet().iterator(); 
+					  itTimes.hasNext(); ) {
+				  Map.Entry<Double, Double> currTime = itTimes.next();
+				  // only add the data if it is not NaN
+				  if(!currTime.getValue().isNaN()) {
+					  // get the current sum, if it has yet to be summed 
+					  // set the initial to 0.0
+					  Double currSum = sumVar.get(currTime.getKey());
+					  if(currSum == null) {
+						  currSum = new Double(0.0);
+					  }
+					  // if we have an avg val then we need to calculate the area
+					  // of this cell and multiply the area with the val (which would
+					  // probably be a %) then add it to the sum, otherwise we just need
+					  // to add it to the sum
+					  if(avg) {
+						  currSum += (currTime.getValue() *
+								  getArea(val));
+					  } else {
+						  currSum += currTime.getValue();
+					  }
+					  // have to put it back into the map because Double is 
+					  // immutable
+					  sumVar.put(currTime.getKey(), currSum);
+				  }
+			  }
+		  }
+	  }
+  }
+
+  /**
+   * Calculates the earth surface area for the passed in block.  The x represents
+   * the upper left longitude, y is the upper left latitude.  The height is in latitude
+   * down from the upperleft, and width is the latitude right for the upper left.
+   * @param block A rectage that represents a block of surface area on the earth all 
+   * 	units for the block should be in latitude and longitude.
+   * @return The surface area on the earth of the passed in block in Km^2.
+   */
+  private static double getArea(Rectangle2D.Double block) {
+	  // TODO: maybe this should go somewhere else
+	  final double POLAR_CIRCUM = 40008.00;
+	  final double EQUAT_CIRCUM = 40076.5;
+	  final double blockHeightKm = (POLAR_CIRCUM/(360/block.getHeight()));
+	  final double circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((block.getY())*(Math.PI/180)));
+	  final double blockWidthKm = (circumAtLat/(360/block.getWidth()));
+	  return blockHeightKm * blockWidthKm;
+	  //double radiansS = (90.0 - (block.getY()+.25))*Math.PI/180;
+	  /* This way seems to have trouble when res is 1.0 the calculated area is cut in half
+	  double radiansS = (90.0 - (block.getY()+(block.getHeight()/2)))*Math.PI/180;
+	  double cosinesS = Math.cos(radiansS) - Math.cos(radiansS+((block.getHeight()*Math.PI)/180));
+	  double areaS = ((6371221.3*6371221.3)*Math.PI*cosinesS/360)*(.000001);
+	  return areaS;
+	  */
+  }
+  public static void main(String[] args) {
+	  // TODO: remove this when done testing
+	  FlatIndex thisInd = new FlatIndex();
+	  Block ind = new Block(0, 0, 0.5, 0.5);
+	  Block val = new Block(0, 0, 1.0, 1.0);
+	  boolean avg = true;
+	  System.out.println("Weight: "+thisInd.getWeight(ind, val, avg));
+	  Rectangle2D.Double b1 = new Rectangle2D.Double(-172.5, -46.0, 0.5, 0.5);
+	  Rectangle2D.Double b2 = new Rectangle2D.Double(172.5, 46.0, 0.5, 0.5);
+	  System.out.println(b1+" -- "+getArea(b1));
+	  System.out.println(b2+" -- "+getArea(b2));
+	  Rectangle2D.Double currBlock = new Rectangle2D.Double();
+	  double sum = 0.0;
+	  for(double y = 90.0; y > -90.0; y-=0.5) {
+		  for(double x = -180.0; x < 180.0; x+=0.5) {
+			  currBlock.setRect(x, y, 0.5, 0.5);
+			  sum += getArea(currBlock);
+		  }
+	  }
+	  System.out.println("World surface area when using 0.5 res: "+sum);
+	  sum = 0.0;
+	  for(double y = 90.0; y > -90.0; y-=1.0) {
+		  for(double x = -180.0; x < 180.0; x+=1.0) {
+			  currBlock.setRect(x, y, 1.0, 1.0);
+			  sum += getArea(currBlock);
+		  }
+	  }
+	  System.out.println("World surface area when using 1.0 res: "+sum);
   }
 }

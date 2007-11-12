@@ -225,7 +225,8 @@ public class DataBuilder
   {
     Element currFile;
     Element root = iDocument.getRootElement();
-    List fileChildren = root.getChildren("file");
+    //List fileChildren = root.getChildren("file");
+    List fileChildren = root.getChildren();
     
     if((!init)&&(Double.parseDouble(root.getAttributeValue("resolution")) > 0))
     { //getting a user resolution if supplied
@@ -250,7 +251,12 @@ public class DataBuilder
       } catch(IOException e) {}
       */
       currFile = (Element)fileChildren.get(i);
-      if(currFile.getAttributeValue("type").equals("txt"))
+      // TODO: redo this so that it doesn't call getAttributeValue everytime
+      if(currFile.getName().equals("setTrackSums")) {
+	      dataStruct.setTrackSums(Boolean.valueOf(currFile.getAttributeValue("value")));
+      } else if(currFile.getName().equals("printSums")) {
+	      dataStruct.printSums();
+      } else if(currFile.getAttributeValue("type").equals("txt"))
       {
         Element stor = currFile.getChild("storage");
         if(stor != null)
@@ -525,16 +531,18 @@ public class DataBuilder
                 while(itData.hasNext())
                 {
                   data = (Map.Entry)itData.next();
-                  //prints yIndex xIndex dataValue
-                  holder = "<data y=\""
-                      +(Math.abs((int)(((((Point2D.Double)data.getKey()).y+dataStruct.getResolution())-(normY+normH))/dataStruct.getResolution())));
-                  holder += "\" x=\""+(int)((((Point2D.Double)data.getKey()).x-normX)/dataStruct.getResolution())
-                      +"\" value=\"";
-                  //holder = "<data y=\""+(int)((Point2D.Double)data.getKey()).y;
-                  //holder += "\" x=\""+(int)((Point2D.Double)data.getKey()).x+"\" value=\"";
-                  holder += data.getValue()+"\" />";
-                  rWriter.write("\t\t\t\t"+holder);
-                  rWriter.newLine();
+		  if(!((Double)data.getValue()).isNaN()) {
+			  //prints yIndex xIndex dataValue
+			  holder = "<data y=\""
+				  +(Math.abs((int)(((((Point2D.Double)data.getKey()).y+dataStruct.getResolution())-(normY+normH))/dataStruct.getResolution())));
+			  holder += "\" x=\""+(int)((((Point2D.Double)data.getKey()).x-normX)/dataStruct.getResolution())
+				  +"\" value=\"";
+			  //holder = "<data y=\""+(int)((Point2D.Double)data.getKey()).y;
+			  //holder += "\" x=\""+(int)((Point2D.Double)data.getKey()).x+"\" value=\"";
+			  holder += data.getValue()+"\" />";
+			  rWriter.write("\t\t\t\t"+holder);
+			  rWriter.newLine();
+		  }
                 }
                 rWriter.write("\t\t\t</time>\n");
                 rWriter.flush();
@@ -731,14 +739,17 @@ public class DataBuilder
                   while(itData.hasNext())
                   {
                     data = (Map.Entry)itData.next();
-                    toChild2 = new Element("data");
-                    toChild2.setAttribute("y",String.valueOf(Math
-                        .abs((int)(((((Point2D.Double)data.getKey()).y+dataStruct.getResolution())-(normY+normH))/dataStruct.getResolution()))));
-                    toChild2.setAttribute("x", String.valueOf((int)((((Point2D.Double)data
-                        .getKey()).x-normX)/dataStruct.getResolution())));
-                    toChild2.setAttribute("value", ((Double)data.getValue()).toString());
-                    //adding the created data to this time
-                    toChild.addContent(toChild2);
+		    if(!((Double)data.getValue()).isNaN()) {
+			    toChild2 = new Element("data");
+			    toChild2.setAttribute("y",String.valueOf(Math
+						    .abs((int)(((((Point2D.Double)data.getKey()).y+dataStruct.getResolution())
+									    -(normY+normH))/dataStruct.getResolution()))));
+			    toChild2.setAttribute("x", String.valueOf((int)((((Point2D.Double)data
+									    .getKey()).x-normX)/dataStruct.getResolution())));
+			    toChild2.setAttribute("value", ((Double)data.getValue()).toString());
+			    //adding the created data to this time
+			    toChild.addContent(toChild2);
+		    }
                   }
                   //adding the created time to this variable
                   toAdd.addContent(toChild);
@@ -752,8 +763,8 @@ public class DataBuilder
                 while(itTime.hasNext())
                 {
                   time = (Map.Entry)itTime.next();
-                  tName = ((Double)time.getKey()).toString();
-                  if(attributeInChild(currVar, "value", tName) == null)
+                  tName = time.getKey().toString();
+                  if((toAdd = attributeInChild(currVar, "value", tName)) == null)
                   {
                     toAdd = new Element("time");
                     toAdd.setAttribute("value", tName);
@@ -763,20 +774,73 @@ public class DataBuilder
                     while(itData.hasNext())
                     {
                       data = (Map.Entry)itData.next();
-                      toChild = new Element("data");
-                      toChild.setAttribute("y",String.valueOf(Math
-                          .abs((int)(((((Point2D.Double)data.getKey()).y+dataStruct.getResolution())-(normY+normH))/dataStruct.getResolution()))));
-                      toChild.setAttribute("x", String.valueOf((int)((((Point2D.Double)data
-                          .getKey()).x-normX)/dataStruct.getResolution())));
-                      toChild.setAttribute("value", ((Double)data.getValue()).toString());
-                      //adding the created data to this time
-                      toAdd.addContent(toChild);
+		      if(!((Double)data.getValue()).isNaN()) {
+			      toChild = new Element("data");
+			      toChild.setAttribute("y",String.valueOf(Math
+					      .abs((int)(((((Point2D.Double)data.getKey()).y+dataStruct.getResolution())-(normY+normH))/dataStruct.getResolution()))));
+			      toChild.setAttribute("x", String.valueOf((int)((((Point2D.Double)data
+								      .getKey()).x-normX)/dataStruct.getResolution())));
+			      toChild.setAttribute("value", ((Double)data.getValue()).toString());
+			      //adding the created data to this time
+			      toAdd.addContent(toChild);
+		      }
                     }
                     //adding the created time to this variable
                     currVar.addContent(toAdd);
                   } else
-                  { //this time already exists! trying to add a data set which is already present!!!
-                    log.log(Level.WARNING, "Attempted to add a data set which already existed -> "+vName+" at "+tName);
+                  { //this time already exists! Will overwrite any new values
+                    //iterate through data, print in array style
+                    itData = ((LinkedHashMap)time.getValue()).entrySet().iterator();
+		    List children = toAdd.getChildren();
+		    //log.log(Level.FINER, "Before processing all");
+                    while(itData.hasNext())
+                    {
+                      data = (Map.Entry)itData.next();
+                      String currY = String.valueOf((Math
+                          .abs((int)(((((Point2D.Double)data.getKey()).y+dataStruct.getResolution())-(normY+normH))/dataStruct.getResolution()))));
+                      String currX = String.valueOf(((int)((((Point2D.Double)data
+                          .getKey()).x-normX)/dataStruct.getResolution())));
+		      toChild = null;
+		      //for(int childPos = 0; childPos < children.size() && toChild == null; ++childPos) {
+		      //log.log(Level.FINER, "Before loop");
+		      for(Iterator it = children.iterator(); it.hasNext() && toChild == null; ) {
+			      //Element currChild = (Element)children.get(childPos);
+			      Element currChild = (Element)it.next();
+			      if(currChild.getAttributeValue("y").equals(currY) && currChild.getAttributeValue("x").equals(currX)) {
+				      toChild = currChild;
+				      //log.log(Level.FINER, "Found It: "+toChild);
+			      }
+		      }
+		      //log.log(Level.FINER, "After loop");
+		      /*
+		      if(toChild == null) {
+			      // didn't have the value before so we will have to create it
+			      toChild = new Element("data");
+			      toChild.setAttribute("y", currY);
+			      toChild.setAttribute("x", currX);
+			      toChild.setAttribute("value", "NaN");
+		      } else {
+			      log.log(Level.FINER, "Got back "+toChild);
+		      }
+		      */
+		      //log.log(Level.FINER, "before if");
+		      //if(!((Double)data.getValue()).isNaN() || (toChild != null && !toChild.getAttribute("value").equals("NaN"))) {
+		      if(!((Double)data.getValue()).isNaN()) {
+			      if(toChild == null) {
+				      //log.log(Level.FINER, "has to create data");
+				      // for efficiencies sake avoid creating this 
+				      toChild = new Element("data");
+				      toChild.setAttribute("y", currY);
+				      toChild.setAttribute("x", currX);
+				      toAdd.addContent(toChild);
+			      }
+			      //log.log(Level.FINER, "going to set data");
+			      toChild.setAttribute("value", data.getValue().toString());
+		      }
+		      // if toChild is still NaN should I just delete it?
+		      //log.log(Level.FINER, "after if");
+		    }
+		    //log.log(Level.FINER, "After processing all");
                   }
                 }
               }
@@ -2024,8 +2088,9 @@ public class DataBuilder
       ShapefileDataStore store = new ShapefileDataStore(shapeURL);
       String name = store.getTypeNames()[0];
       FeatureSource source = store.getFeatureSource(name);
-      FeatureResults fsShape = source.getFeatures();
-      FeatureCollection collection = fsShape.collection();
+      //FeatureResults fsShape = source.getFeatures();
+      //FeatureCollection collection = fsShape.collection();
+      FeatureCollection collection = source.getFeatures();
       Iterator iter = collection.iterator();
       try
       {
@@ -2203,8 +2268,9 @@ public class DataBuilder
       ShapefileDataStore store = new ShapefileDataStore(shapeURL);
       String name = store.getTypeNames()[0];
       FeatureSource source = store.getFeatureSource(name);
-      FeatureResults fsShape = source.getFeatures();
-      FeatureCollection collection = fsShape.collection();
+      //FeatureResults fsShape = source.getFeatures();
+      //FeatureCollection collection = fsShape.collection();
+      FeatureCollection collection = source.getFeatures();
       Iterator iter = collection.iterator();
       try
       {
@@ -2923,8 +2989,9 @@ public class DataBuilder
       ShapefileDataStore store = new ShapefileDataStore(shapeURL);
       String name = store.getTypeNames()[0];
       FeatureSource source = store.getFeatureSource(name);
-      FeatureResults fsShape = source.getFeatures();
-      FeatureCollection collection = fsShape.collection();
+      //FeatureResults fsShape = source.getFeatures();
+      //FeatureCollection collection = fsShape.collection();
+      FeatureCollection collection = source.getFeatures();
       Iterator iter = collection.iterator();
       
       dataValue = new Double(1); //always sending 1 as the value, so a full overlap
@@ -3182,8 +3249,9 @@ public class DataBuilder
       ShapefileDataStore store = new ShapefileDataStore(shapeURL);
       String name = store.getTypeNames()[0];
       FeatureSource source = store.getFeatureSource(name);
-      FeatureResults fsShape = source.getFeatures();
-      FeatureCollection collection = fsShape.collection();
+      //FeatureResults fsShape = source.getFeatures();
+      //FeatureCollection collection = fsShape.collection();
+      FeatureCollection collection = source.getFeatures();
       //System.out.println("features in collection: "+collection.getCount());
       Iterator iter = collection.iterator();
       Feature inFeature;
@@ -3482,6 +3550,7 @@ public class DataBuilder
     } catch(IOException e)
     {
       log.log(Level.WARNING, "IOException!! -> "+fileName);
+      e.printStackTrace();
     }
     
     log.log(Level.FINE, "Done adding new PolyShapefileEnum");

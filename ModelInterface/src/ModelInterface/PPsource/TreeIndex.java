@@ -52,6 +52,15 @@ public class TreeIndex implements DataIndex
 //*************Begin Functions Proper**********************
 //*********************************************************
   
+  public void setTrackSums(boolean trackSums) {
+	  // TODO: resolve this.
+	  throw new UnsupportedOperationException();
+  }
+  public void printSums() {
+	  // TODO: resolve this.
+	  throw new UnsupportedOperationException();
+  }
+
   public double getResolution()
   {
     if(init)

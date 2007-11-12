@@ -43,7 +43,7 @@ import java.util.*;
 public class DataBlock extends Block
 {
   //string, object pairs describing what the data is, and then the corresponding value - ("CO2", 1452)
-  public TreeMap<String, TreeMap<Double, Double>> data;
+  public TreeMap<String, TreeMap<java.lang.Double, java.lang.Double>> data;
   //x - the longitude of the block in degrees (degrees W are negative)
   //y - the latitude of the block in degrees (degrees S are negative)
   //height - from y going N
@@ -58,7 +58,7 @@ public class DataBlock extends Block
     y = 0;
     height = 1;
     width = 1;
-    data = new TreeMap<String, TreeMap<Double, Double>>();
+    data = new TreeMap<String, TreeMap<java.lang.Double, java.lang.Double>>();
   }
   /**
    * Copy Constructor which will mimic the passed block in shape and location but NOT take its data.
@@ -70,7 +70,7 @@ public class DataBlock extends Block
     y = copy.y;
     height = copy.height;
     width = copy.width;
-    data = new TreeMap<String, TreeMap<Double, Double>>(); //dont copy the data cuz i dont need it
+    data = new TreeMap<String, TreeMap<java.lang.Double, java.lang.Double>>(); //dont copy the data cuz i dont need it
   }
   /**
    * Standard Constructor which defines the bounds of the new block.
@@ -86,6 +86,6 @@ public class DataBlock extends Block
     y = Y;
     height = H;
     width = W;
-    data = new TreeMap<String, TreeMap<Double, Double>>();
+    data = new TreeMap<String, TreeMap<java.lang.Double, java.lang.Double>>();
   }
 }
