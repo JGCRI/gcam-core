@@ -452,29 +452,37 @@ public class DataBuilder
     try
     {
       //xml header information
-      rWriter.write("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
+      rWriter.write("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>");
+      rWriter.newLine();
       rWriter.write("<input num=\""+regionList.size()+"\" res=\""+dataStruct.getResolution()+"\">");
       rWriter.newLine();
       
       //outputting the global data on variables (avg, units, reference)
-      rWriter.write("\t<variableInfo>\n");
+      rWriter.write("\t<variableInfo>");
+      rWriter.newLine();
       itVar = dataAvg.entrySet().iterator();
       while(itVar.hasNext())
       {
         var = (Map.Entry)itVar.next();
-        rWriter.write("\t\t<variable name=\""+var.getKey()+"\">\n");
-        rWriter.write("\t\t\t<average value=\""+var.getValue()+"\" />\n");
+        rWriter.write("\t\t<variable name=\""+var.getKey()+"\">");
+	rWriter.newLine();
+        rWriter.write("\t\t\t<average value=\""+var.getValue()+"\" />");
+	rWriter.newLine();
         if(dataUnits.containsKey(var.getKey()))
         {
-          rWriter.write("\t\t\t<units value=\""+dataUnits.get(var.getKey())+"\" />\n");
+          rWriter.write("\t\t\t<units value=\""+dataUnits.get(var.getKey())+"\" />");
+	  rWriter.newLine();
         }
         if(dataRef.containsKey(var.getKey()))
         {
-          rWriter.write("\t\t\t<reference value=\""+dataRef.get(var.getKey())+"\" />\n");
+          rWriter.write("\t\t\t<reference value=\""+dataRef.get(var.getKey())+"\" />");
+	  rWriter.newLine();
         }
-        rWriter.write("\t\t</variable>\n");
+        rWriter.write("\t\t</variable>");
+	rWriter.newLine();
       }
-      rWriter.write("\t</variableInfo>\n");
+      rWriter.write("\t</variableInfo>");
+      rWriter.newLine();
       
       
       itName = regionList.iterator(); //iterates through names
@@ -544,24 +552,29 @@ public class DataBuilder
 			  rWriter.newLine();
 		  }
                 }
-                rWriter.write("\t\t\t</time>\n");
+                rWriter.write("\t\t\t</time>");
+		rWriter.newLine();
                 rWriter.flush();
               }
               if(var.getKey() == "weight")
               { //weight is output not as a regular variable
-                rWriter.write("\t\t</weight>\n");
+                rWriter.write("\t\t</weight>");
+		rWriter.newLine();
               } else
               { //normal case
-                rWriter.write("\t\t</variable>\n");
+                rWriter.write("\t\t</variable>");
+		rWriter.newLine();
               }  
             }
-            rWriter.write("\t</region>\n");
+            rWriter.write("\t</region>");
+	    rWriter.newLine();
             //END WRITING REGION
           }
         }
       }
     //END WRITING LOOP
-      rWriter.write("</input>\n");
+      rWriter.write("</input>");
+      rWriter.newLine();
       rWriter.flush();
       rWriter.close();
     } catch (IOException e){}
@@ -4231,6 +4244,13 @@ public class DataBuilder
 	  }
 	  //done getting file info from XML
 
+	  // set up for the land fraction
+	  dataStruct.setTrackSums(true);
+	  final DataBlock toAdd = new DataBlock();
+	  final TreeMap<Double, Double> timeValue = new TreeMap();
+	  timeValue.put(0.0, 1.0);
+	  toAdd.data.put("landFract", timeValue);
+
 	  //reading the data from the file
 	  maskArray = new int[numRows][numCols];
 	  currY = (yLL+(numRows*res));
@@ -4250,6 +4270,10 @@ public class DataBuilder
 				  maskArray[i][k] = 0;
 			  } else
 			  {
+				  // add to the land fraction
+				  toAdd.setRect(currX, currY, res, res);
+				  dataStruct.addData(toAdd, true);
+
 				  maskArray[i][k] = rblock;
 				  // check to make sure this is a valid region and the region
 				  // defs file defines this region..
@@ -4333,7 +4357,18 @@ public class DataBuilder
 		  regionList.add(holdR.name);
 		  maskList.put(holdR.name, holdR);
 	  }
+	  addLandFractRegion();
 	  //done adding region masks
+  }
+  private void addLandFractRegion() {
+	  // special region for landFract because it needs to be world wide
+	  RegionMask holdR = new RegionMask("landFract", 0.0);
+	  holdR.x = -180.0;
+	  holdR.y = -90.0;
+	  holdR.height = 180 / dataStruct.getResolution();
+	  holdR.width = 360 / dataStruct.getResolution();
+	  regionList.add(holdR.name);
+	  maskList.put(holdR.name, holdR);
   }
   
   private void addGeoTiffFile(Element currFile)

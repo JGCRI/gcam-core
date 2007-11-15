@@ -186,6 +186,9 @@ public class FlatIndex implements DataIndex
     double[][] toMask;
     double weight;
     Block entry;
+    if(m.name.equals("landFract")) {
+	    return data.getLandFractPrintMap(resolution);
+    }
 
     //identify rectangular bounds of region
     min = point2index(new Point2D.Double(m.x, m.y), true);

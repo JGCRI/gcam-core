@@ -31,4 +31,6 @@ public interface DataRepository
   public TreeMap<String, TreeMap<Double, Double>> getAllLayers(int X, int Y);
   
   public Map<String, Map<String, Map<Point2D.Double, Double>>> getRegion(int X, int Y, double[][] weights, double xL, double yL, double res);
+
+  public Map<String, Map<String, Map<Point2D.Double, Double>>> getLandFractPrintMap(double resolution);
 }
