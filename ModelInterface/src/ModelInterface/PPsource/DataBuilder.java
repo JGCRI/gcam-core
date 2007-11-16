@@ -4357,7 +4357,7 @@ public class DataBuilder
 		  regionList.add(holdR.name);
 		  maskList.put(holdR.name, holdR);
 	  }
-	  addLandFractRegion();
+	  //addLandFractRegion();
 	  //done adding region masks
   }
   private void addLandFractRegion() {

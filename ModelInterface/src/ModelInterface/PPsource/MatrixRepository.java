@@ -245,6 +245,7 @@ public class MatrixRepository implements DataRepository
     String varName;
     Double timeName;
     double currXL, currYL;
+    double[][] landFractValues = root.get("landFract").get(0.0);
 
     toReturn.put("weight", new LinkedHashMap<String, Map<Point2D.Double, Double>>());
     holdVar = toReturn.get("weight");
@@ -260,7 +261,8 @@ public class MatrixRepository implements DataRepository
         {
           //add weight
           Point2D.Double hold = new Point2D.Double(currXL, currYL);
-          holdTime.put(hold, Double.valueOf(weights[(y)][(x)]));
+          holdTime.put(hold, Double.valueOf(weights[(y)][(x)] /
+              (landFractValues[x+X][Y-((weights.length)-y/*-1*/)]))); //took the -1 out again..
         }
         currYL -= res;
       }
@@ -272,9 +274,11 @@ public class MatrixRepository implements DataRepository
       varEntry = iV.next();
       varName = varEntry.getKey();
       // TODO: DEFINE landFract as a constant somewhere
+      /*
       if(varName.equals("landFract")) {
 	      continue;
       }
+      */
       //some variables do not exist in root.entrySet by this point
       //System.out.println(varName);
       toReturn.put(varName, new LinkedHashMap<String, Map<Point2D.Double, Double>>());
@@ -316,8 +320,8 @@ public class MatrixRepository implements DataRepository
   public Map<String, Map<String, Map<Point2D.Double, Double>>> getLandFractPrintMap(double res) {
     Map<String, Map<String, Map<Point2D.Double, Double>>> toReturn = 
 	    new LinkedHashMap<String, Map<String, Map<Point2D.Double, Double>>>(1);
-    toReturn.put("landFract", new LinkedHashMap<String, Map<Point2D.Double, Double>>());
-    Map<String, Map<Point2D.Double, Double>> holdVar = toReturn.get("landFract");
+    toReturn.put("weight", new LinkedHashMap<String, Map<Point2D.Double, Double>>());
+    Map<String, Map<Point2D.Double, Double>> holdVar = toReturn.get("weight");
     holdVar.put("0", new LinkedHashMap<Point2D.Double, Double>(1));
     Map<Point2D.Double, Double> holdTime = holdVar.get("0");
     double[][] landFractValues = root.get("landFract").get(0.0);
