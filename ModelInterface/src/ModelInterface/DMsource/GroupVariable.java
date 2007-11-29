@@ -106,21 +106,24 @@ public class GroupVariable extends Variable
     out.newLine();
   }  
   public Wrapper[] getData() {
-	  return getDataOrWeight(true);
+	  return getDataOrWeight(0);
   }
   public Wrapper[] getWeight() {
-	  return getDataOrWeight(false);
+	  return getDataOrWeight(1);
+  }
+  public Wrapper[] getLandFract() {
+	  return getDataOrWeight(2);
   }
   /**
    * Gets the data or weight from each of the vars in
-   * this group and returns it.  If isData is true it
-   * returns Wrappers of data, if false then Wrappers
-   * of weights.
-   * @param isData Whether to get data or weights
+   * this group and returns it.  If isData is 0 it
+   * returns Wrappers of data, if 1 then Wrappers
+   * of weights and if it is 2 it will return landFract.
+   * @param isData Which type of data to get(data/weight/landFract).
    * @return An array of wrappers for the data or 
    * 	weights depending on the isData param.
    */
-  public Wrapper[] getDataOrWeight(boolean isData)
+  private Wrapper[] getDataOrWeight(int isData)
   {
     ArrayList toRet = new ArrayList(0);
     Map.Entry ent;
@@ -132,10 +135,20 @@ public class GroupVariable extends Variable
     { //iterate through all contained variables
       ent = (Map.Entry)it.next();
       holdVar = (Variable)ent.getValue();
-      if(isData) {
-	      holdWrap = holdVar.getData();
-      } else {
-	      holdWrap = holdVar.getWeight();
+      switch(isData) {
+	      case 0:
+		      holdWrap = holdVar.getData();
+		      break;
+	      case 1:
+		      holdWrap = holdVar.getWeight();
+		      break;
+	      case 2:
+		      holdWrap = holdVar.getLandFract();
+		      break;
+	      default:
+		      System.out.println("ERROR while trying to get group data");
+		      holdWrap = null;
+		      break;
       }
       toRet.ensureCapacity(toRet.size()+holdWrap.length);
       

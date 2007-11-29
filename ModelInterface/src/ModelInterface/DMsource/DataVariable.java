@@ -162,6 +162,10 @@ public class DataVariable extends Variable
 	  // TODO: maybe return a 1 wrapper with data 1x1 matrix with 1?
 	  throw new UnsupportedOperationException();
   }
+  public Wrapper[] getLandFract() {
+	  // TODO: maybe return a 1 wrapper with data 1x1 matrix with 1?
+	  throw new UnsupportedOperationException();
+  }
   public void setData(Wrapper[] d)
   {
     data = d;

@@ -104,6 +104,7 @@ public abstract class Variable
   public abstract void printVerbose(BufferedWriter out) throws IOException;
   public abstract Wrapper[] getData();
   public abstract Wrapper[] getWeight();
+  public abstract Wrapper[] getLandFract();
   public abstract void setData(Wrapper[] d);
   public abstract boolean isReference();
   public abstract boolean isGroup();

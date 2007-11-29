@@ -45,6 +45,7 @@ public class ReferenceVariable extends Variable
   String units;
   boolean avg;
   Wrapper[] weight; //um ok, im storing a bitmask for this thing in itself
+  Wrapper[] landFract;
   double x;
   double y;
   double w;
@@ -94,6 +95,7 @@ public class ReferenceVariable extends Variable
     h = var.h;
     res = var.res;
     weight = var.weight;
+    landFract = var.landFract;
   }
   /**
    * Creates a reference variable with information from a region, but does not fill data.
@@ -114,6 +116,7 @@ public class ReferenceVariable extends Variable
     h = r.height;
     res = r.resolution;
     weight = r.getWorkingM("weight", "0");
+    landFract = r.getWorkingM("landFract", "0.0");
   } 
   /**
    * Creates a reference variable with information, including data of passed variable
@@ -139,6 +142,7 @@ public class ReferenceVariable extends Variable
     res = r.resolution;
     data = r.getWorkingM(v, t);
     weight = r.getWorkingM("weight", "0");
+    landFract = r.getWorkingM("landFract", "0.0");
   }
   
   //***************************************************************************
@@ -225,6 +229,9 @@ public class ReferenceVariable extends Variable
   }
   public Wrapper[] getWeight() {
 	  return weight;
+  }
+  public Wrapper[] getLandFract() {
+	  return landFract;
   }
   public void setData(Wrapper[] d)
   {

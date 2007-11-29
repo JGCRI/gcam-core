@@ -1398,7 +1398,10 @@ public class ManipulationDriver
         Vcurr = (Variable)me.getValue();
 	if((Vcurr.isReference())&&(((ReferenceVariable)Vcurr).avg))
 	{ //dont need to weight values
-		tempSum[0][0] += ((DataWrapper)(ComponentManipulator.sumValues(((ReferenceVariable)Vcurr).getData(), ((ReferenceVariable)Vcurr).weight, ((ReferenceVariable)Vcurr).x, ((ReferenceVariable)Vcurr).y, ((ReferenceVariable)Vcurr).h))[0]).data[0][0];
+		tempSum[0][0] += ((DataWrapper)(ComponentManipulator.sumValues(((ReferenceVariable)Vcurr).getData(),
+					       ((ReferenceVariable)Vcurr).weight, ((ReferenceVariable)Vcurr).getLandFract(),
+					       ((ReferenceVariable)Vcurr).x, ((ReferenceVariable)Vcurr).y, 
+					       ((ReferenceVariable)Vcurr).h))[0]).data[0][0];
 	} else
 	{
 		tempSum[0][0] += ((DataWrapper)(ComponentManipulator.sumValues(Vcurr.getData()))[0]).data[0][0];
@@ -1412,7 +1415,9 @@ public class ManipulationDriver
       
     } else if((VSource.isReference())&&(((ReferenceVariable)VSource).avg))
     { //dont need to weight values
-      VDest.setData(ComponentManipulator.sumValues(((ReferenceVariable)VSource).getData(), ((ReferenceVariable)VSource).weight, ((ReferenceVariable)VSource).x, ((ReferenceVariable)VSource).y, ((ReferenceVariable)VSource).h));
+      VDest.setData(ComponentManipulator.sumValues(((ReferenceVariable)VSource).getData(), ((ReferenceVariable)VSource).weight, 
+			      ((ReferenceVariable)VSource).getLandFract(), ((ReferenceVariable)VSource).x, ((ReferenceVariable)VSource).y, 
+			      ((ReferenceVariable)VSource).h));
     } else
     {
       VDest.setData(ComponentManipulator.sumValues(VSource.getData()));
@@ -1441,7 +1446,9 @@ public class ManipulationDriver
     
     if((VSource.isReference())&&(((ReferenceVariable)VSource).avg))
     { //dont need to weight values
-      VDest.setData(ComponentManipulator.sumArea(((ReferenceVariable)VSource).getData(), ((ReferenceVariable)VSource).weight, ((ReferenceVariable)VSource).x, ((ReferenceVariable)VSource).y, ((ReferenceVariable)VSource).h));
+      VDest.setData(ComponentManipulator.sumArea(((ReferenceVariable)VSource).getData(), ((ReferenceVariable)VSource).weight, 
+			      ((ReferenceVariable)VSource).getLandFract(), ((ReferenceVariable)VSource).x, ((ReferenceVariable)VSource).y, 
+			      ((ReferenceVariable)VSource).h));
     } else
     {
       VDest.setData(ComponentManipulator.sumArea(VSource.getData()));

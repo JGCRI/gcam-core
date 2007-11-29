@@ -179,25 +179,25 @@ public class subRegion extends Region
 	  for(int iY = 0; iY < weightMask.length; iY++)
 	  {
 		  // Vinces way..
-		  /*
 		  circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((y+((weightMask.length-1-iY)*resolution))*(PI/180)));
 		  totalWidth = (circumAtLat/(360/width));
 		  blockWidth = (totalWidth/weightMask[iY].length);
 		  cellSize = (blockWidth*blockHeight);
-		  */
 
 		  // shui's way..
+		  /*
 		  double latS = y+((weightMask.length-1-iY)*resolution);
 		  double radiansS = (90.0 - (latS+.25))*PI/180;
 		  double cosinesS = Math.cos(radiansS) - Math.cos(radiansS+(resolution*PI)/180);
 		  double areaS = ((6371221.3*6371221.3)*PI*cosinesS/360)*(.000001);
+		  */
 
 		  for(int iX = 0; iX < weightMask[0].length; iX++)
 		  {
 			  if(!java.lang.Double.isNaN(weightMask[iY][iX]) && weightMask[iY][iX] != 0.0)
 			  {
-				  //toReturn[iY][iX] = (cellSize);
-				  toReturn[iY][iX] = (areaS);
+				  toReturn[iY][iX] = (cellSize);
+				  //toReturn[iY][iX] = (areaS);
 			  } else {
 				  toReturn[iY][iX] = java.lang.Double.NaN;
 			  }
