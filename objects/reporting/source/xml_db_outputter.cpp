@@ -837,8 +837,35 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
     for( int year = scenario->getModeltime()->getStartYear();
          year <= endingYear; year += outputInterval )
     {
-         writeItemUsingYear( "co2-concentration", "PPM",
+         writeItemUsingYear( "CO2-concentration", "PPM",
                              aClimateModel->getConcentration( "CO2", year ),
+                             year );
+         writeItemUsingYear( "CH4-concentration", "PPB",
+                             aClimateModel->getConcentration( "CH4", year ),
+                             year );
+         writeItemUsingYear( "N2O-concentration", "PPB",
+                             aClimateModel->getConcentration( "N2O", year ),
+                             year );
+         writeItemUsingYear( "C2F6-concentration", "PPT",
+                             aClimateModel->getConcentration( "C2F6", year ),
+                             year );
+         writeItemUsingYear( "HCFC125-concentration", "PPT",
+                             aClimateModel->getConcentration( "HCFC125", year ),
+                             year );
+         writeItemUsingYear( "HCFC134a-concentration", "PPT",
+                             aClimateModel->getConcentration( "HCFC134A", year ),
+                             year );
+         writeItemUsingYear( "HCFC143A-concentration", "PPT",
+                             aClimateModel->getConcentration( "HCFC143A", year ),
+                             year );
+         writeItemUsingYear( "HCFC245fa-concentration", "PPT",
+                             aClimateModel->getConcentration( "HCFC245fa", year ),
+                             year );
+         writeItemUsingYear( "SF6-concentration", "PPT",
+                             aClimateModel->getConcentration( "SF6", year ),
+                             year );
+         writeItemUsingYear( "CF4-concentration", "PPT",
+                             aClimateModel->getConcentration( "CF4", year ),
                              year );
     }
 
