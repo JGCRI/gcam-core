@@ -161,7 +161,8 @@ public class subRegion extends Region
   {
 	  final double POLAR_CIRCUM = 40008.00;
 	  final double EQUAT_CIRCUM = 40076.5;
-	  final double PI = 3.1415926535;
+	  //final double PI = 3.1415926535;
+	  final double PI = Math.PI;
 
 	  double cellSize;
 	  double[][] weightMask = getM();
@@ -179,7 +180,7 @@ public class subRegion extends Region
 	  for(int iY = 0; iY < weightMask.length; iY++)
 	  {
 		  // Vinces way..
-		  circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((y+((weightMask.length-1-iY)*resolution))*(PI/180)));
+		  circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((y+(resolution/2)+((weightMask.length-1-iY)*resolution))*(PI/180)));
 		  totalWidth = (circumAtLat/(360/width));
 		  blockWidth = (totalWidth/weightMask[iY].length);
 		  cellSize = (blockWidth*blockHeight);

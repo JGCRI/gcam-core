@@ -1022,8 +1022,7 @@ public final class ComponentManipulator
       for(int iY = 0; iY < holdMS.length; iY++)
       {
         //wY = (int)(((iY*R[i].getRes())+((y+h)-(R[i].getY()+R[i].getH())))/R[i].getRes());
-        //circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((R[i].getY()+(iY*R[i].getRes()))*(PI/180)));
-        circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((R[i].getY()+((holdMS.length-1-iY)*R[i].getRes()))*(PI/180)));
+        circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((R[i].getY()+(R[i].getRes()/2)+((holdMS.length-1-iY)*R[i].getRes()))*(PI/180)));
         totalWidth = (circumAtLat/(360/R[i].getW()));
         blockWidth = (totalWidth/R[i].data[iY].length);
         cellSize = (blockWidth*blockHeight);

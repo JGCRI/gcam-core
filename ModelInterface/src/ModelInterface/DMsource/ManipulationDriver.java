@@ -494,6 +494,7 @@ public class ManipulationDriver
     VDest = new ReferenceVariable(VDname, varData[0]);
     VDest.data = new Wrapper[DWcount];
     VDest.weight = new Wrapper[DWcount];
+    VDest.landFract = new Wrapper[DWcount];
     VDest.region = null;
     
     DWcount = 0;
@@ -522,6 +523,7 @@ public class ManipulationDriver
       {
         VDest.data[DWcount] = varData[i].data[k];
         VDest.weight[DWcount] = varData[i].weight[k];
+	VDest.landFract[DWcount] = varData[i].landFract[k];
         DWcount++;
       }
     }
@@ -2076,6 +2078,7 @@ public class ManipulationDriver
     
     VDest.setData(VShape.extractRegion((ReferenceVariable)VSource));
     ((ReferenceVariable)VDest).weight = VShape.getWorkingM("weight", "0");
+    ((ReferenceVariable)VDest).landFract = VShape.getWorkingM("landFract", "0.0");
   }
   /**
    * Give the user access to a contained Child varialbe in the passed
