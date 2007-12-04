@@ -32,6 +32,8 @@ class MACGeneratorScenarioRunner: public IScenarioRunner {
 public:
     virtual ~MACGeneratorScenarioRunner();
 
+    virtual const std::string& getName() const;
+
     // IParsable interface
     virtual bool XMLParse( const xercesc::DOMNode* aRoot );
 

@@ -33,16 +33,24 @@ MACGeneratorScenarioRunner::MACGeneratorScenarioRunner(){
     if( conf->getBool( "debugChecking" ) && conf->getBool( "CalibrationActive" ) ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Calibration may be incompatible with the generation of marginal abatement curves." << endl;
+/* Temporarilly allow target finding in mainline with calibration on as this is needed for AgLU.
         mainLog << "Calibration is incompatible with the generation of marginal abatement curves." << endl;
     }
     else {
-        // Create the policy cost calculator.
+*/
+ 
+ 		// Create the policy cost calculator.
         mPolicyCostCalculator.reset( new TotalPolicyCostCalculator( mSingleScenario.get() ) );
     }
 }
 
 //! Destructor
 MACGeneratorScenarioRunner::~MACGeneratorScenarioRunner(){
+}
+
+const string& MACGeneratorScenarioRunner::getName() const {
+    return getXMLNameStatic();
 }
 
 bool MACGeneratorScenarioRunner::XMLParse( const xercesc::DOMNode* aRoot ){
