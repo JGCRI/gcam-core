@@ -63,6 +63,10 @@ ITarget::TrialStatus ConcentrationTarget::getStatus( const double aTolerance,
     mainLog.setLevel( ILogger::NOTICE );
     mainLog << "Currently " << percentOff << " percent away from the concentration target." << endl;
     mainLog << "Current: " << currConcentration << " Target: " << mTargetValue << endl;
+    // Print information to target log since target info is not available elsewhere
+    ILogger& targetLog = ILogger::getLogger( "target_finder_log" );
+    targetLog.setLevel( ILogger::NOTICE );
+    targetLog << "Target Values - Current: " << currConcentration << " Target: " << mTargetValue << endl;
 
     TrialStatus status = UNKNOWN;
     // Check if the target is solved.

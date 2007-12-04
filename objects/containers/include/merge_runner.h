@@ -27,7 +27,9 @@ class Timer;
 class MergeRunner: public IScenarioRunner {
 	friend class ScenarioRunnerFactory;
 public:
-    ~MergeRunner();
+    virtual ~MergeRunner();
+
+    virtual const std::string& getName() const;
 
     // IParsable interface
     virtual bool XMLParse( const xercesc::DOMNode* aRoot );

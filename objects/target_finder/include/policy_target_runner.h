@@ -159,6 +159,9 @@ private:
 
     //! The first year to tax.
     unsigned int mFirstTaxYear;
+
+    //! The earliest year to try for stabilization.
+    unsigned int mEarliestStabilizationYear;
     
     //! The maximum number of bisection iterations to perform when determining the
     //! initial tax or the trial tax in a single future period past the

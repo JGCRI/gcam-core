@@ -87,6 +87,8 @@ class BatchRunner: public IScenarioRunner {
 public:
     virtual ~BatchRunner();
 
+    virtual const std::string& getName() const;
+
     virtual bool setupScenarios( Timer& aTimer,
                                  const std::string aName = "",
                                  const std::list<std::string> aScenComponents = std::list<std::string>() );

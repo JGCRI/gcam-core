@@ -48,6 +48,10 @@ mInternalRunner( 0 ){
 BatchRunner::~BatchRunner(){
 }
 
+const string& BatchRunner::getName() const {
+    return getXMLNameStatic();
+}
+
 bool BatchRunner::setupScenarios( Timer& aTimer, const string aName, const list<string> aScenComponents ){
     // Get the name of the batch file from the Configuration.
     const string batchFileName = Configuration::getInstance()->getFile( "BatchFileName" );
@@ -193,13 +197,19 @@ bool BatchRunner::runSingleScenario( IScenarioRunner* aScenarioRunner,
     }
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::WARNING );
-    mainLog << "Running scenario " << aComponent.mName << "..." << endl;
+    mainLog << "Running scenario " << aComponent.mName
+            << " with scenario runner " << aScenarioRunner->getName()
+            << "." << endl;
 
     // Setup the scenario.
-    bool success = mInternalRunner->setupScenarios( aTimer, aComponent.mName, components );
+    const string runName = aComponent.mName + "_" + aScenarioRunner->getName();
+    bool success = mInternalRunner->setupScenarios( aTimer, runName, components );
     // Check if setting up the scenario, which often includes parsing,
     // succeeded.
     if( !success ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Scenario setup failed. Skipping run." << endl;
         return false;
     }
 
@@ -337,7 +347,11 @@ bool BatchRunner::XMLParseRunnerSet( const DOMNode* aNode ){
                 success = false;
             }
             else {
-                mScenarioRunners.push_back( ScenarioRunnerFactory::create( nodeName ).release() );
+                IScenarioRunner* currRunner =
+                    ScenarioRunnerFactory::create( nodeName ).release();
+                    if( currRunner->XMLParse( curr ) ){
+                        mScenarioRunners.push_back( currRunner  );
+                    }
             }
         }
         else {

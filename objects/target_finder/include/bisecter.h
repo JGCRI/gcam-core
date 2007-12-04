@@ -34,7 +34,7 @@ public:
               const double aMaximum,
               const double aInitialValue,
               const double aMultiple,
-              const unsigned int aYear );
+              const int aYear );
 
     std::pair<double, bool> getNextValue();
 
@@ -81,7 +81,7 @@ private:
     //! The initial trial value.
     double mInitialGuess;
     
-    //! The adjustment to make during each iteration.
+    //! The adjustment to make during initital set of iterations until maximum value is found.
     double mMultiple;
 
     //! The current lower bound.

@@ -49,7 +49,7 @@ Bisecter::Bisecter( const ITarget* aTarget,
                     const double aMaximum,
                     const double aInitialValue,
                     const double aMultiple,
-                    const unsigned int aYear ) :
+                    const int aYear ) :
 mTarget( aTarget ),
 mTolerance( aTolerance ),
 mMinimum( aMinimum ),
@@ -139,7 +139,7 @@ pair<double, bool> Bisecter::getNextValue() {
             else {
                 // Calculate the new current trial. This will be ignored if the target is
                 // solved.
-                mCurrentTrial = mLowerBound + ( mUpperBound - mLowerBound ) / mMultiple;
+                mCurrentTrial = mLowerBound + ( mUpperBound - mLowerBound ) / 2.0;
             }
             break;
         case ITarget::HIGH:
@@ -159,13 +159,13 @@ pair<double, bool> Bisecter::getNextValue() {
                 // lower bound. Otherwise multiply upwards until the solution is bounded.
                 else if( mMaximum != undefined() ){
                     mUpperBound = mMaximum;
-                    mCurrentTrial = mLowerBound + ( mUpperBound - mLowerBound ) / mMultiple;
+                    mCurrentTrial = mLowerBound + ( mUpperBound - mLowerBound ) / 2.0;
                 }
                 else if( mCurrentTrial == 0 ){
                     mCurrentTrial = max( mMinimum, 1.0 );
                 }
                 else {
-                    mCurrentTrial *= ( 1 + 1.0 / mMultiple );
+                    mCurrentTrial *= ( 1 + mMultiple );
                     // Don't allow the current trial to exceed the maximum.
                     if( mMaximum != undefined() ){
                         mCurrentTrial = min( mCurrentTrial, mMaximum );
@@ -183,7 +183,7 @@ pair<double, bool> Bisecter::getNextValue() {
                 }
                 else {
                     // Calculate the new current trial.
-                    mCurrentTrial = mLowerBound + ( mUpperBound - mLowerBound ) / mMultiple;
+                    mCurrentTrial = mLowerBound + ( mUpperBound - mLowerBound ) / 2.0;
                 }
             }
 

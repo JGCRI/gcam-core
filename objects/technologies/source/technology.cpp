@@ -591,6 +591,9 @@ void Technology::setProductionState( const int aPeriod ){
     // Check that the state for this period has not already been initialized. An
     // assertion here usually means initCalc was called twice for a single
     // period.
+
+    // PolicyTargetRunner crashes on this in debug mode -- evidently objects are initialized more than once
+    // So comment out for debugging.
     assert( !mProductionState[ aPeriod ] );
     
     const Modeltime* modeltime = scenario->getModeltime();

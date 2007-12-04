@@ -64,6 +64,8 @@ class Scenario;
 class SingleScenarioRunner: public IScenarioRunner {
     friend class ScenarioRunnerFactory;
 public:
+    virtual const std::string& getName() const;
+
     // IParsable interface
     virtual bool XMLParse( const xercesc::DOMNode* aRoot );
 

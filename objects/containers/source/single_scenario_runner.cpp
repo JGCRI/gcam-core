@@ -48,6 +48,10 @@ SingleScenarioRunner::SingleScenarioRunner(){
 SingleScenarioRunner::~SingleScenarioRunner(){
 }
 
+const string& SingleScenarioRunner::getName() const {
+    return getXMLNameStatic();
+}
+
 // IParsable interface
 bool SingleScenarioRunner::XMLParse( const xercesc::DOMNode* aRoot ){
     // No data to parse.
@@ -134,14 +138,15 @@ bool SingleScenarioRunner::runScenarios( const int aSinglePeriod,
         mainLog << "all periods.";
     }
     else {
-        mainLog << aSinglePeriod;
+        mainLog << "period " << aSinglePeriod;
     }
     mainLog << endl;
     
 	bool success = false;
 	if( mScenario.get() ){
 		// Perform the initial run of the scenario.
-        success = mScenario->run( aSinglePeriod, aPrintDebugging );
+        success = mScenario->run( aSinglePeriod, aPrintDebugging,
+                                  mScenario->getName() );
 
 		// Compute model run time.
 		aTimer.stop();

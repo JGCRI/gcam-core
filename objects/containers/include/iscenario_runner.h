@@ -46,6 +46,11 @@ public:
     virtual ~IScenarioRunner();
 
     /*!
+     * \brief Get the name of the scenario runner.
+     */
+    virtual const std::string& getName() const = 0;
+
+    /*!
      * \brief Setup the ScenarioRunner before running a single or series of
      *        scenarios.
      * \details This method must be called to setup the scenario runner before

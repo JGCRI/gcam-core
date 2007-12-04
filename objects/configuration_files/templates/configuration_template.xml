@@ -38,6 +38,7 @@
 		<Value name="AbatedGasForCostCurves">CO2</Value>
 		<Value name="monitorMktName">China</Value>
 		<Value name="monitorMktGood"></Value>
+		<Value name="SolverName">BisectionNRSolver</Value>
 		<!--END Developer Only Modifiable Variables-->
 	</Strings>
 	<Bools>

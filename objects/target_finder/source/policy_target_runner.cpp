@@ -49,9 +49,10 @@ const double MAX_SOLVABLE_TAX = 5000;
  * \brief Constructor.
  */
 PolicyTargetRunner::PolicyTargetRunner():
-mFirstTaxYear( 0 ),
-mMaxIterations( 0 ),
-mMaxStableIterations( 0 ),
+mFirstTaxYear( 2020 ),
+mMaxIterations( 100 ),
+mMaxStableIterations( 10 ),
+mEarliestStabilizationYear( 2050 ),
 mHasParsedConfig( false )
 {
     // Check to make sure calibration is off.
@@ -126,6 +127,9 @@ bool PolicyTargetRunner::XMLParse( const xercesc::DOMNode* aRoot ){
         else if( nodeName == "max-stable-iterations" ){
             mMaxStableIterations = XMLHelper<unsigned int>::getValue( curr );
         }
+        else if( nodeName == "earliest-stabilization-year" ){
+            mEarliestStabilizationYear = XMLHelper<unsigned int>::getValue( curr );
+        }
         // Handle unknown nodes.
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -197,16 +201,6 @@ bool PolicyTargetRunner::setupScenarios( Timer& aTimer,
         mStableTolerance = 0.1;
     }
 
-    if( mFirstTaxYear == 0 ){
-        mFirstTaxYear = 2020;
-    }
-
-    if( mMaxIterations == 0 ){
-        mMaxIterations = 100;
-    }
-    if( mMaxStableIterations == 0 ){
-        mMaxStableIterations = 10;
-    }
     return success;
 }
 
@@ -234,8 +228,6 @@ bool PolicyTargetRunner::runScenarios( const int aSinglePeriod,
     // Initialize the target which determines if the end period is stable. Use
     // the end year for stabilization.
 
-    // The earliest year the model can stabilize. TODO: Improve this logic.
-    const int EARLIEST_TARGET_YEAR = 2050;
     auto_ptr<ITarget> stableTarget =
         TargetFactory::create( "stabilization-target",
                                getInternalScenario()->getClimateModel(),
@@ -244,7 +236,7 @@ bool PolicyTargetRunner::runScenarios( const int aSinglePeriod,
     // Create a bisecter which will solve for the stabilization year.
     Bisecter stableBisecter( stableTarget.get(),
                              mStableTolerance,
-                             EARLIEST_TARGET_YEAR, // minimum
+                             mEarliestStabilizationYear, // minimum
                              modeltime->getEndYear(), // maximum
                              Bisecter::undefined(), // first trial
                              Bisecter::undefined(),
@@ -366,14 +358,19 @@ bool PolicyTargetRunner::solveInitialTarget( vector<double>& aTaxes,
     bool success = mSingleScenario->runScenarios( Scenario::RUN_ALL_PERIODS,
                                                   false, aTimer );
 
-    // Create the bisection object. Use 0 as the initial trial value because the
-    // state of the model is unknown. TODO: Can we do better?
+    // Create the bisection object for determining the initial tax rate that will meet the target
+    // in the current trail target year. Use 0 as the initial trial tax value because the
+    // state of the model is unknown. Probably need to use this since there is no way
+    // to know how low the solution tax might be.
+    
+    // Increment is 1+ this number, which is used to increase the initial trial price
+    const double INCREASE_INCREMENT = 4;
     Bisecter bisecter( aPolicyTarget,
                        aTolerance,
                        0,
                        Bisecter::undefined(),
                        Bisecter::undefined(),
-                       Bisecter::undefined(),
+                       INCREASE_INCREMENT,
                        aTargetYear );
 
     while( bisecter.getIterations() < aLimitIterations ){
