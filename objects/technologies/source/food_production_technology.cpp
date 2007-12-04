@@ -30,13 +30,14 @@ extern Scenario* scenario;
 FoodProductionTechnology::FoodProductionTechnology( const string& aName, const int aYear )
 :Technology( aName, aYear ){
     mLandAllocator = 0;
-    variableCost = 0; // Need a better default value for this (0 is probably ok, with a warning to a log file).
+    variableCost = 0;
     calLandUsed = -1;
     calYield = -1;
     calObservedYield = -1;
     agProdChange = 0;
     mAboveGroundCarbon = 0;
     mBelowGroundCarbon = 0;
+    mHarvestedToCroppedLandRatio = 1;
 }
 
 // ! Destructor
@@ -63,6 +64,9 @@ bool FoodProductionTechnology::XMLDerivedClassParse( const string& nodeName, con
     else if( nodeName == "above-ground-carbon" ){
         mAboveGroundCarbon = XMLHelper<double>::getValue( curr );
     }
+    else if( nodeName == "harvested-to-cropped-land-ratio" ){
+        mHarvestedToCroppedLandRatio = XMLHelper<double>::getValue( curr );
+    }
     else if( nodeName == "below-ground-carbon" ){
         mBelowGroundCarbon = XMLHelper<double>::getValue( curr );
     }
@@ -79,6 +83,7 @@ void FoodProductionTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) con
     XMLWriteElementCheckDefault( calYield, "calYield", out, tabs, -1.0 );
     XMLWriteElementCheckDefault( calLandUsed, "calLandUsed", out, tabs, -1.0 );
     XMLWriteElementCheckDefault( agProdChange, "agProdChange", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( mHarvestedToCroppedLandRatio, "harvested-to-cropped-land-ratio", out, tabs, 1.0 );
     XMLWriteElementCheckDefault( mAboveGroundCarbon, "above-ground-carbon", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( mBelowGroundCarbon, "below-ground-carbon", out, tabs, 0.0 );
 }
@@ -90,6 +95,7 @@ void FoodProductionTechnology::toDebugXMLDerived( const int period, ostream& out
     XMLWriteElement( calYield, "calYield", out, tabs );
     XMLWriteElement( calLandUsed, "calLandUsed", out, tabs );
     XMLWriteElement( agProdChange, "agProdChange", out, tabs );
+    XMLWriteElement( mHarvestedToCroppedLandRatio, "harvested-to-cropped-land-ratio", out, tabs );
     XMLWriteElement( mAboveGroundCarbon, "above-ground-carbon", out, tabs );
     XMLWriteElement( mBelowGroundCarbon, "below-ground-carbon", out, tabs );
 }
@@ -165,13 +171,13 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
     if( calObservedYield != -1 ) {
         double calPrice = marketInfo->getDouble( "calPrice", true );
 
-        // Calculate the calibrated variable cost.
+        // Calculate the calibrated variable cost. (Yield is adjusted from agronomic to economic yield per acre)
         // TODO: This is the only access of this variable from outside the AgLU. Change this function
         // to getCalNumeraireAveObservedRate.
         calVarCost = calPrice - mLandAllocator->getUnmanagedCalAveObservedRate( aPeriod, landType )
                                 / calcDiscountFactor()
-                                / calObservedYield;
-        assert( util::isValidNumber( calVarCost ) );
+                                / ( calObservedYield * mHarvestedToCroppedLandRatio );
+       // assert( util::isValidNumber( calVarCost ) );
         
         // Set the variable cost for the technology to the calibrated variable cost.
         if ( calVarCost > util::getSmallNumber() ) {
@@ -254,6 +260,14 @@ void FoodProductionTechnology::completeInit( const string& aRegionName,
         agProdChange = 0;
     }
 
+    if( mHarvestedToCroppedLandRatio < util::getSmallNumber() )
+    {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Invalid value of harvested-to-cropped-land-ratio. Reset to 1." << endl;
+        mHarvestedToCroppedLandRatio = 1.0;
+    }
+
     // TODO: We should change the input so that only one of these options can be read
     //       as they are mutually exclusive.
     const int period = scenario->getModeltime()->getyr_to_per( year );
@@ -269,11 +283,11 @@ void FoodProductionTechnology::completeInit( const string& aRegionName,
         }
 
         // Want to pass in yield in units of GCal/kHa
-        mLandAllocator->setCalLandAllocation( landType, mName, calLandUsed, techPeriod, techPeriod );
-        mLandAllocator->setCalObservedYield( landType, mName, calObservedYield, techPeriod );
+        mLandAllocator->setCalLandAllocation( landType, mName, calLandUsed / mHarvestedToCroppedLandRatio, techPeriod, techPeriod );
+        mLandAllocator->setCalObservedYield( landType, mName, calObservedYield * mHarvestedToCroppedLandRatio, techPeriod );
     } 
     else if ( calYield != -1 ) {
-        mLandAllocator->setCalObservedYield( landType, mName, calYield, techPeriod );
+        mLandAllocator->setCalObservedYield( landType, mName, calYield * mHarvestedToCroppedLandRatio, techPeriod );
     }
 }
 
@@ -312,7 +326,7 @@ void FoodProductionTechnology::calcCost( const string& aRegionName,
     }
 
     // If yield is GCal/Ha and prices are $/GCal, then rental rate is $/Ha
-    // Passing in rate as $/GCal and setIntrinsicRate will set it to  $/Ha.
+    // Passing in rate as $/GCal and setIntrinsicRate will transform it to  $/Ha inside the land leaf.
     double profitRate = calcProfitRate( aRegionName, aSectorName, aPeriod );
 
     mLandAllocator->setIntrinsicRate( aRegionName, landType, mName, profitRate, aPeriod );
@@ -397,6 +411,7 @@ void FoodProductionTechnology::production( const string& aRegionName,
     // there were a fuel or other input. When multiple inputs are complete there
     // should be a specific land input.
     mInput[ aPeriod ] = mLandAllocator->getLandAllocation( landType, mName, aPeriod );
+    
     calcEmissionsAndOutputs( aRegionName, mInput[ aPeriod ], primaryOutput, aGDP, aPeriod );
 }
 
@@ -449,15 +464,24 @@ double FoodProductionTechnology::calcSupply( const string& aRegionName,
                                              const string& aProductName,
                                              const int aPeriod ) const
 {
-    double yield = mLandAllocator->getYield( landType, mName, aPeriod );
-    assert( yield >= 0 );
-
+    // Get yield per acre of land
+    double economicYield = mLandAllocator->getYield( landType, mName, aPeriod );
+    assert( economicYield >= 0 );
+    
+    // Convert to agronomic yield, which is per harvest
+    // TODO: Should we write-out agronomic yield to XML DB? Might be useful to have.
+    double agronomicYield = economicYield / mHarvestedToCroppedLandRatio;
+    
     double landAllocation = mLandAllocator->getLandAllocation( landType, mName, aPeriod );
+    
+    // Convert from physical acres of land to land allocated
+    double harvestedLand = landAllocation * mHarvestedToCroppedLandRatio; 
+    
     // Check that if yield is zero the land allocation is zero.
     // TODO: Determine why a small number is too large.
     // TODO: Checking the variable cost of zero is a hack so that this works
     //       for the unmanaged sector.
-    if( yield < util::getSmallNumber() && landAllocation > 0.1 && variableCost > util::getTinyNumber() ){
+    if( agronomicYield < util::getSmallNumber() && landAllocation > 0.1 && variableCost > util::getTinyNumber() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Zero production of " << aProductName << " by technology " << mName
@@ -465,8 +489,8 @@ double FoodProductionTechnology::calcSupply( const string& aRegionName,
                 << landAllocation << "." << endl;
     }
 
-    assert( yield * landAllocation >= 0 );
+    assert( agronomicYield * harvestedLand >= 0 );
 
     // Set output to yield times amount of land.
-    return yield * landAllocation;
+    return agronomicYield * harvestedLand;
 }

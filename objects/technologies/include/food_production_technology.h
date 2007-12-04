@@ -87,6 +87,9 @@ protected:
     double calObservedYield; //!< the calibrated observed yield
     double agProdChange;  //!< the technological change factor
 
+    //! Measure of multiple cropping
+    double mHarvestedToCroppedLandRatio;
+
     //! Amount of above ground carbon(unit?).
     double mAboveGroundCarbon;
 
