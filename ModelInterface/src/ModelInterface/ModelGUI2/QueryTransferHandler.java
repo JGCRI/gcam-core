@@ -17,6 +17,7 @@ import javax.swing.JTree;
 import javax.swing.tree.TreePath;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import java.io.IOException;
 
@@ -304,8 +305,10 @@ public class QueryTransferHandler extends TransferHandler {
 			String singleTitle = ((SingleQueryExtension.SingleQueryValue)path.getLastPathComponent())
 				.toString();
 			qgTemp.setTitle(qgTemp.toString()+": "+singleTitle);
+			List<String> tempList = new ArrayList<String>(1);
+			tempList.add(singleTitle);
 			qgTemp.setXPath(qgTemp.getXPath()+qgTemp
-					.getForNodeLevelPath(singleTitle));
+					.getForNodeLevelPath(tempList));
 			qgTemp.setGroup(false);
 			return qgTemp;
 		}
