@@ -95,6 +95,8 @@ class Modeltime;
  *                   (optional) The default is 0.05.
  *              - \c first-tax-year PolicyTargetRunner::mFirstTaxYear
  *                   (optional) The default is 2020.
+ *              - \c earliest-stabilization-year PolicyTargetRunner::mEarliestStabilizationYear
+ *                   (optional) The default is 2050.
  *              - \c max-iterations PolicyTargetRunner::mMaxIterations
  *                   (optional) The default is 100.
  *              - \c max-stable-iterations
