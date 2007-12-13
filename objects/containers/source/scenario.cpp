@@ -408,6 +408,7 @@ void Scenario::writeDebuggingFiles( ostream& aXMLDebugFile,
                                     Tabs* aTabs,
                                     const int aPeriod ) const
 {
+    modeltime->toDebugXML( aPeriod, aXMLDebugFile, aTabs );
     world->toDebugXML( aPeriod, aXMLDebugFile, aTabs );
     csvSGMOutputFile( aSGMDebugFile, aPeriod );
 }
