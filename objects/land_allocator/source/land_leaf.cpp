@@ -270,6 +270,7 @@ void LandLeaf::setIntrinsicRate( const string& aRegionName,
     // It is multiplied by intrinsicYieldMode (GCal/kHa) to convert it to $/kHa.   
     // For biomass [$/GJ] * [GJ/kHa] = [$/kHa]
     // Add carbon value to intrinsic rate.
+    // TODO -- check if this is correct. Carbonvalue is applied to profit rate AND to mIntrinsicRate
     mIntrinsicRate[ aPeriod ] = max( aIntrinsicRate * mIntrinsicYieldMode[ aPeriod ] 
                                + getCarbonValue( aRegionName, aPeriod ), 0.0 );
 }
@@ -356,24 +357,38 @@ void LandLeaf::setCalObservedYield( const string& aLandType,
 void LandLeaf::applyAgProdChange( const string& aLandType,
                                   const string& aProductName,
                                   const double aAgProdChange,
-                                  const int aPeriod )
+                                  const int aHarvestPeriod, 
+                                  const int aCurrentPeriod )
 {
-    assert( aProductName == mName );
-    assert( mIntrinsicYieldMode[ aPeriod ].isInited() );
+    assert( mIntrinsicYieldMode[ aCurrentPeriod ].isInited() );
 
     double previousAgProdChange = 1;
-    if ( aPeriod > 0 ) {
-        previousAgProdChange = mAgProdChange[ aPeriod - 1 ];
+    // Do not apply productivity change until after 1990
+    // This matches what is done in the production side of the code
+    if ( aHarvestPeriod <= 1 ) {
+        mAgProdChange[ aCurrentPeriod ] = 1;
+        return;
+    }
+    else {
+        previousAgProdChange = mAgProdChange[ aCurrentPeriod - 1 ];
     }
 
     const Modeltime* modeltime = scenario->getModeltime();
-    int timestep = modeltime->gettimestep( aPeriod );
+    int timestep = modeltime->gettimestep( aCurrentPeriod );
 
-    // Store the cumulative technical change. Adjust the intrinsic yield mode
-    // by the cumulative as it was set in the base period and has not been
-    // adjusted in the interim.
-    mAgProdChange[ aPeriod ] = previousAgProdChange * pow( 1 + aAgProdChange, timestep );
-    mIntrinsicYieldMode[ aPeriod ] *= mAgProdChange[ aPeriod ];
+    // Calculate Cumulative prod change from current to harvest period.
+    // This means that calculated yields for current period are assumed to be applied
+    // to the harvest period
+    // aAgProdChange must be constant if aHarvestPeriod != aCurrentPeriod
+    for ( int aPeriod = aCurrentPeriod; aPeriod <= aHarvestPeriod; ++aPeriod ) {
+        mAgProdChange[ aPeriod ] = previousAgProdChange * pow( 1 + aAgProdChange, timestep );
+        previousAgProdChange = mAgProdChange[ aPeriod ];
+    }
+
+    // Adjust the intrinsic yield mode by cumulative prod change
+    // This function must be called only once for each period or else 
+    // agprod change will be double counted
+    mIntrinsicYieldMode[ aCurrentPeriod ] *= mAgProdChange[ aCurrentPeriod ];
 }
 
 double LandLeaf::calcLandShares( const string& aRegionName,
@@ -435,13 +450,18 @@ void LandLeaf::calcYieldInternal( const string& aLandType,
     assert( aHarvestPeriod >= aCurrentPeriod );
     assert( mIntrinsicYieldMode[ aCurrentPeriod ].isInited() );
 
-    // Compute the full profit rate including payments for carbon storage.
+    // Add carbon value
     // ProfitRate[$/GCal] = aProfitRate[$/GCal] + carbonValue[$/kHa] / intrinsicYieldMode[GCal/kHa]
+    // Note that the mIntrinsicYieldMode is used, not the actual yield (which is not known until this
+    // is finished). This may bias results.
+    // TODO -- check if this is correct. Carbonvalue is applied to profit rate AND to mIntrinsicRate
     double carbonValuePerOutput = 0;
     if( mIntrinsicYieldMode[ aCurrentPeriod ] > util::getSmallNumber() ) {
         carbonValuePerOutput = getCarbonValue( aRegionName, aCurrentPeriod ) 
                                / mIntrinsicYieldMode[ aCurrentPeriod ];
     }
+
+    // Compute the full profit rate including payments for carbon storage.
     double totalProfitRate = aProfitRate + carbonValuePerOutput;
 
     if ( totalProfitRate > util::getSmallNumber() ) {

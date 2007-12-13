@@ -93,6 +93,7 @@ public:
      * \param aIntrinsicRate Intrinsic rate of the product.
      * \param aPeriod Model period.
      * \author James Blackwood
+* \todo Change name of aIntrinsicRate to observedProfitRate (do once recent changes are comitted)
      */
     virtual void setIntrinsicRate( const std::string& aRegionName,
                                    const std::string& aLandType,
@@ -148,7 +149,8 @@ public:
     virtual void applyAgProdChange( const std::string& aLandType,
                                     const std::string& aProductName,
                                     const double aAgProdChange,
-                                    const int aPeriod ) = 0;
+                                    const int aHarvestPeriod, 
+                                    const int aCurrentPeriod ) = 0;
 
     /*!
      * \brief Calculate the yield for a land and product type given a profit

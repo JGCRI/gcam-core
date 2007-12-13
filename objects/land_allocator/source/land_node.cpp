@@ -344,13 +344,14 @@ void LandNode::setCalObservedYield( const string& aLandType,
 void LandNode::applyAgProdChange( const string& aLandType,
                                   const string& aProductName,
                                   const double aAgProdChange,
-                                  const int aPeriod )
+                                  const int aHarvestPeriod, 
+                                  const int aCurrentPeriod )
 {
     assert( aLandType == mName );
     ALandAllocatorItem* curr = findChild( aProductName, eLeaf );
     
     if( curr ){
-        curr->applyAgProdChange( aLandType, aProductName, aAgProdChange, aPeriod );
+        curr->applyAgProdChange( aLandType, aProductName, aAgProdChange, aHarvestPeriod, aCurrentPeriod );
     }
 }
 

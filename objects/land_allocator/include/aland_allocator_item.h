@@ -304,7 +304,8 @@ public:
     virtual void applyAgProdChange( const std::string& aLandType,
                                     const std::string& aProductName,
                                     const double aAgProdChange,
-                                    const int aPeriod ) = 0;
+                                    const int aHarvestPeriod, 
+                                    const int aCurrentPeriod ) = 0;
     
     /*!
      * \brief This method will calculate the share value for each leaf and node,

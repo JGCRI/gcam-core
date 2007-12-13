@@ -186,37 +186,51 @@ void ForestProductionTechnology::completeInit( const string& aRegionName,
 * \author Steve Smith
 */
 void ForestProductionTechnology::setCalLandValues() {
-    const Modeltime* modeltime = scenario->getModeltime();
-    int timestep = modeltime->gettimestep( modeltime->getyr_to_per(year));
-    int nRotPeriodSteps = mRotationPeriod / timestep;
 
     // -1 means not read in
     if ( mCalValue.get() && ( calYield != -1 )) {
-        calObservedYield = 0;     //Yield per year
-        double calObservedLandUsed = 0;  //Land harvested per period as opposed to per step-periods in calLandUsed
-        double calProductionTemp = mCalValue->getCalOutput( 1 );
-        double calYieldTemp = calYield;
-        int period = modeltime->getyr_to_per(year);
+        const Modeltime* modeltime = scenario->getModeltime();
+        int timestep = modeltime->gettimestep( modeltime->getyr_to_per(year));
+        if ( timestep == 0 ) {
+            cout << "Timestep of " << timestep << " returned for year " << year << " and period " << modeltime->getyr_to_per(year) << endl;
+        }
+        // Operating period of this technology
+        int thisPeriod = modeltime->getyr_to_per(year);
+
+        int nRotPeriodSteps = mRotationPeriod / timestep;
         if ( !mFutureProduction.isInited() ) {
             nRotPeriodSteps = 0;
         }
 
-        // Loop through to set current and future land and production from forests.
-        for ( int i = period; i <= period + nRotPeriodSteps; i++ ) {
-            // Need to do be able to somehow get productivity change from other
+        // Make sure that calibrated land-use for periods beyond rotation period is set to zero.
+        // Land allocator does not know rotation period information at this point, so it sums over all
+        // periods to determine calibrated land use, so zero out information for all these periods.
+        for ( int aHarvestPeriod = thisPeriod + nRotPeriodSteps + 1; aHarvestPeriod <= modeltime->getmaxper() + nRotPeriodSteps; aHarvestPeriod++ ) {
+            mLandAllocator->setCalLandAllocation( landType, mName, 0.0, aHarvestPeriod, thisPeriod );
+        }
+        
+        // Start with currnet period values
+        double calProductionTemp = mCalValue->getCalOutput( 1 ); // Pass in 1 since efficiency is always 1 for forests
+        double calYieldTemp = calYield;
+        
+        // Loop from current period to rotation period time steps from current period to set current and 
+        // future land allocation and production from forests. Operation of setCalLandAllocation in the forest
+        // leaf depends on all cal land-use data being present on the last call.
+        for ( int aHarvestPeriod = thisPeriod; aHarvestPeriod <= thisPeriod + nRotPeriodSteps; aHarvestPeriod++ ) {
+            // TODO: Need to do be able to somehow get productivity change from other
             // periods. Or demand that productivity change is the same for all
-            // calibration periods (could test in applyAgProdChange)
-            if ( i > period ) {
+            // calibration + future harvest periods (could test in applyAgProdChange)
+            if ( aHarvestPeriod > thisPeriod ) {
+                // increment production linearly between current and future production years
                 calProductionTemp += ( mFutureProduction - mCalValue->getCalOutput( 1 ) ) / nRotPeriodSteps;
-                calYieldTemp = calYield * pow( 1 + agProdChange, double( timestep * ( i - 1 ) ) );
+                // Apply ag productivity change to yield assuming same productivity applies to all years
+                calYieldTemp = calYield * pow( 1 + agProdChange, double( timestep * ( aHarvestPeriod - 1 ) ) );
             }
 
+            // Calculate land harvested in the harvest period
             calLandUsed = calProductionTemp / calYieldTemp;
-            mLandAllocator->setCalLandAllocation( landType, mName, calLandUsed, i, period );
-            mLandAllocator->setCalObservedYield( landType, mName, calYieldTemp, i );
-            if ( i == period ) {
-                calObservedYield = calYieldTemp;
-            }
+            mLandAllocator->setCalLandAllocation( landType, mName, calLandUsed, aHarvestPeriod, thisPeriod );
+            mLandAllocator->setCalObservedYield( landType, mName, calYieldTemp, aHarvestPeriod );
         }      
     }
 }

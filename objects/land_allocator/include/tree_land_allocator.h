@@ -67,7 +67,8 @@ public:
     virtual void applyAgProdChange( const std::string& aLandType,
                                     const std::string& aProductName,
                                     const double aAgProdChange,
-                                    const int aPeriod );
+                                    const int aHarvestPeriod, 
+                                    const int aCurrentPeriod );
 
     virtual void calcYield( const std::string& aLandType,
                             const std::string& aProductName,

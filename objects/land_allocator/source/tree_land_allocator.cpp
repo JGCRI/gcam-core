@@ -218,13 +218,14 @@ double TreeLandAllocator::getLandAllocation( const string& aLandType,
 void TreeLandAllocator::applyAgProdChange( const string& aLandType,
                                            const string& aProductName,
                                            const double aAgProdChange,
-                                           const int aPeriod )
+                                           const int aHarvestPeriod, 
+                                           const int aCurrentPeriod )
 {
     // Search for the correct land node.
     ALandAllocatorItem* node = findChild( aLandType, eNode );
     if( node ){
         node->applyAgProdChange( aLandType, aProductName,
-                                         aAgProdChange, aPeriod );
+                                         aAgProdChange, aHarvestPeriod, aCurrentPeriod );
     }
 }
 

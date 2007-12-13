@@ -1008,6 +1008,9 @@ void XMLDBOutputter::startVisitGDP( const GDP* aGDP, const int aPeriod ){
         writeItem( "gdp-per-capita-ppp", "Thous90US$/per",
                    aGDP->getPPPGDPperCap( i ), i );
     }
+    for( int i = 0; i < modeltime->getmaxper(); ++i ){
+        writeItem( "gdp-mer-no-priceadj", aGDP->mGDPUnit, aGDP->getGDPNotAdjusted( i ), i );
+    }
 }
 
 void XMLDBOutputter::endVisitGDP( const GDP* aGDP, const int aPeriod ){

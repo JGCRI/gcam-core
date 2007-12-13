@@ -152,11 +152,17 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
     if( !mProductionState[ aPeriod ]->isNewInvestment() ){
         return;
     }
-    
 
     // Apply technical change.
-    mLandAllocator->applyAgProdChange( landType, mName, agProdChange, aPeriod );
-
+    mLandAllocator->applyAgProdChange( landType, mName, agProdChange, aPeriod, aPeriod );
+    
+    // If calibration data is present for this year, then zero out previous periods ag prod change
+    if ( mCalValue.get() ) {
+        for ( int pastPeriod = 0; pastPeriod < aPeriod; ++pastPeriod ) {
+            mLandAllocator->applyAgProdChange( landType, mName, 0.0, pastPeriod, pastPeriod );
+        }
+    }
+    
     // TODO: Use a better method of passing forward calibration information.
     // Since the market may be global, create a unique regional string for the
     // calibrated variable cost. This is hacked to work for multiple technologies too

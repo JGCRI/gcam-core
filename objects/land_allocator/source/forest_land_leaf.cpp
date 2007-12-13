@@ -28,9 +28,11 @@ ForestLandLeaf::ForestLandLeaf( const ALandAllocatorItem* aParent,
                                 const string& aName  ):
 LandLeaf( aParent, aName ),
 mSteps( -1 ),
-// TODO: This needs improvement. This vector is resized again later, but values
-// are set before the resize.
-mLandToBeHarvested( scenario->getModeltime()->getmaxper() )
+// size to some reasonable maximum number for future forest rotation period
+// Will be re-sized later to appropriate number. Used 15 since could, at some point,
+// use this with smaller (say 5 year) time steps. This results in a slight oversize
+// of the forest leaf, but there are not many of these.
+mLandToBeHarvested( scenario->getModeltime()->getmaxper() + 15 )
 {
 }
 
@@ -65,15 +67,20 @@ void ForestLandLeaf::calcLandAllocation( const string& aRegionName,
                                          const double aLandAllocationAbove,
                                          const int aPeriod )
 {
-    // Check that the number of time steps is initializes.
+    // Check that the number of time steps is initialized.
     assert( mSteps != -1 );
 
     // Call standard land allocation.
+    // This determines the total land allocated to this leaf, which is all the land
+    // set aside for harvest over a a time of one rotation period into the future
     LandLeaf::calcLandAllocation( aRegionName, aLandAllocationAbove, aPeriod );
 
-    // Calculate the land allocation for the harvest period defined by this
-    // period and the constant rotation period. First calculate land already
-    // allocated to be harvested in the future.
+    // Calculate the land allocated for the harvest period defined by this
+    // period and the constant rotation period.
+    
+    // First calculate land already allocated to be harvested in 
+    // the intermediate periods between now and the future
+    // market period mSteps into the future.
     double forestLandAside = 0;
     for( int i = aPeriod + 1; i < aPeriod + mSteps; ++i ){
         forestLandAside += mLandToBeHarvested[ i ];
@@ -81,10 +88,17 @@ void ForestLandLeaf::calcLandAllocation( const string& aRegionName,
     
     // Calculate the amount of land to be harvested per year.
     const Modeltime* modeltime = scenario->getModeltime();
-    double annualizedLand = mLandAllocation[ aPeriod ] / modeltime->gettimestep( aPeriod );
+    double annualizedLand = mLandAllocation[ aPeriod ] / modeltime->gettimestep( aPeriod )
+                            - forestLandAside;
 
-    // Store the land to be harvested in the future.
-    mLandToBeHarvested[ aPeriod + mSteps ] = max( annualizedLand - forestLandAside, 0.0 );
+    // Store the land to be harvested in the future period.
+    // This is land harvested to produce one year of production.
+    mLandToBeHarvested[ aPeriod + mSteps ] = max( annualizedLand, 0.0 );
+
+    //TODO -- could improve forest allocation calculations by linearly interpolating
+    // instead of using averages by model period, although an estimate of the difference  
+    // indicates this would not have a large impact on the results.
+    
 }
 
 double ForestLandLeaf::getLandAllocation( const string& aLandType,
@@ -116,7 +130,7 @@ void ForestLandLeaf::setCalLandAllocation( const string& aLandType,
     const Modeltime* modeltime = scenario->getModeltime();
 
     mLandToBeHarvested[ aHarvestPeriod ] = aCalLandUsed;
- 
+
     // Set the land allocation to be all land that is allocated to future
     // periods(current land is now free for reallocation).
     double totalAllocatedLand = 0;
@@ -124,6 +138,10 @@ void ForestLandLeaf::setCalLandAllocation( const string& aLandType,
     // TODO: It would be better to use mSteps to determining how for into the future
     // to sum but that variable is not set until complete init, which is before
     // this method.
+    
+    // This calculation is duplicated each time this is call for a given modelPeriod,
+    // so this depends on the last call being the call with all land harvest data filled
+    // out.
     for( unsigned int i = aCurrentPeriod + 1; i < mLandToBeHarvested.size(); ++i ){
         // Use the time step from the last model period if the period is greater
         // than the maximum model period.
