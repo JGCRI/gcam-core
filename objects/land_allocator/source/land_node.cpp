@@ -246,7 +246,15 @@ void LandNode::setInitShares( const string& aRegionName,
     }
     else {
         mShare[ aPeriod ] = nodeLandAllocation / aLandAllocationAbove;
-    }
+        
+        // if aSigmaAbove is zero then set shares for all periods
+        if ( mSigma.get() > util::getSmallNumber() ) {
+            const Modeltime* modeltime = scenario->getModeltime();
+            for( int period = aPeriod; period < modeltime->getmaxper(); period++ ) {
+               mShare[ period ] = mShare[ aPeriod ];
+            }
+        }
+   }
 
     // If the current node does not have a land use history object,
     // use the parent's object and land use history share.
@@ -275,6 +283,13 @@ void LandNode::setInitShares( const string& aRegionName,
     }
 }
 
+void LandNode::resetToCalLandAllocation( const int aPeriod )
+{
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        mChildren[ i ]->resetToCalLandAllocation( aPeriod );
+    }
+}
+
 void LandNode::setIntrinsicYieldMode( const double aIntrinsicYieldAbove,
                                       const double aSigmaAbove,
                                       const int aPeriod )
@@ -282,17 +297,18 @@ void LandNode::setIntrinsicYieldMode( const double aIntrinsicYieldAbove,
     assert( mShare[ aPeriod ].isInited() );
 
     // Intrisic yields for a land type cannot be zero.
-    assert( aIntrinsicYieldAbove > util::getSmallNumber() );
+    if ( aIntrinsicYieldAbove > util::getSmallNumber() ) {
 
-    double nodeIntrinsicRate = aIntrinsicYieldAbove * pow( mShare[ aPeriod ].get(), aSigmaAbove );
-    
-    // If this is a child of the root with a sigma of zero the power of the
-    // share to the sigma will be one, and since the root has an intrinsic rate
-    // of one this will equal 1.
-    assert( aSigmaAbove > util::getSmallNumber() || util::isEqual( nodeIntrinsicRate, 1.0 ) );
+       double nodeIntrinsicRate = aIntrinsicYieldAbove * pow( mShare[ aPeriod ].get(), aSigmaAbove );
+       
+       // If this is a child of the root with a sigma of zero the power of the
+       // share to the sigma will be one, and since the root has an intrinsic rate
+       // of one this will equal 1.
+       assert( aSigmaAbove > util::getSmallNumber() || util::isEqual( nodeIntrinsicRate, 1.0 ) );
 
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->setIntrinsicYieldMode( nodeIntrinsicRate, mSigma, aPeriod );
+       for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+           mChildren[ i ]->setIntrinsicYieldMode( nodeIntrinsicRate, mSigma, aPeriod );
+       }
     }
 }
 
@@ -393,7 +409,6 @@ double LandNode::calcLandShares( const string& aRegionName,
         // rate of this node
         mIntrinsicRate[ aPeriod ] = pow( unnormalizedSum, mSigma.get() );
 
-
         // This is a temporary unnormalized share. If this is an unmanaged land node
         // within a nest that includes managed land nodes, the sigma above will be
         // set to zero during the initial setting of shares.
@@ -412,12 +427,11 @@ double LandNode::calcLandShares( const string& aRegionName,
             assert( util::isValidNumber( unnormalizedShare ) );
         }
         else {
-            // The unnormalized share cannot be calculated. If all children of a
-            // node return 0, as in the case where the sigma of the node is
-            // zero, the node will not adjust the initial shares.
+            // Can't calculate share, so return zero.
             unnormalizedShare = 0;
         }
     }
+         
     return unnormalizedShare;
 }
 

@@ -104,6 +104,9 @@ public:
     virtual void completeInit( const std::string& aRegionName, 
                                const IInfo* aRegionInfo );
     
+    virtual void initCalc( const std::string& aRegionName,
+                           const int aPeriod );
+
     virtual void setCarbonContent( const std::string& aLandType,
                                    const std::string& aProductName,
                                    const double aAboveGroundCarbon,
@@ -145,11 +148,16 @@ private:
     //! Land allocated in 1000's of hectares
     objects::PeriodVector<Value> mLandAllocation;
 
+    //! Flag to indicate that calibration data is present
+    objects::PeriodVector<bool> mCalDataExists;
+
     const ALandAllocatorItem* findParentOfType( const std::string& aType ) const;
 
     void checkRotationPeriod( const IInfo* aRegionInfo ) const;
 
     void adjustTotalLand( const int aPeriod );
+
+    void resetToCalibrationData( const std::string& aRegionName, const int aPeriod );
 };
 
 #endif // _LAND_ALLOCATOR_ROOT_H_

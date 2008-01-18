@@ -66,6 +66,8 @@ public:
                                 const LandUseHistory* aParentHistory,
                                 const int aPeriod );
 
+    virtual void resetToCalLandAllocation( const int aPeriod );
+
     virtual void setIntrinsicYieldMode( const double aIntrinsicYieldAbove,
                                         const double aSigmaAbove,
                                         const int aPeriod );
@@ -158,19 +160,28 @@ protected:
     //! The intrinsic yield mode of the leaf.
     objects::PeriodVector<Value> mIntrinsicYieldMode;
 
+    //! Multiplier to intrinsic yield mode to account for ag productivity.
+    objects::PeriodVector<Value> mIntrinsicYieldModeAgProdMultiplier;
+
     // TODO: Convert this to a PeriodVector. Currently can't because the forest
     // leaf is adding extra periods.
     //! Actual yield.
     std::vector<Value> mYield;
     
+    //! Flag to indicate that calibration data is present
+    objects::PeriodVector<bool> mCalDataExists;
+
     //! The calibrated observed yield.
     objects::PeriodVector<Value> mCalObservedYield;
 
     //! Calculated cumulative technical change.
-    objects::PeriodVector<Value> mAgProdChange;
+    std::vector<double> mAgProdChange;  
 
     //! Land allocated in 1000's of hectars
     objects::PeriodVector<Value> mLandAllocation;
+
+    //! Calibrated land allocated in 1000's of hectars
+    objects::PeriodVector<Value> mCalLandAllocation;
 
     //! Carbon content and emissions calculator for the leaf.
 	std::auto_ptr<ICarbonCalc> mCarbonContentCalc;

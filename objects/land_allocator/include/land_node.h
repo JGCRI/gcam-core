@@ -69,6 +69,8 @@ public:
                                 const LandUseHistory* aParentHistory,
                                 const int aPeriod );
 
+    virtual void resetToCalLandAllocation( const int aPeriod );
+
     virtual void setIntrinsicYieldMode( const double aIntrinsicYieldAbove,
                                         const double aSigmaAbove,
                                         const int aPeriod );

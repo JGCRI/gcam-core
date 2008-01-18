@@ -66,6 +66,9 @@ void ForestProductionTechnology::toDebugXMLDerived( const int period, ostream& o
     FoodProductionTechnology::toDebugXMLDerived( period, out, tabs);
     XMLWriteElement( mFutureProduction, "futureProduction", out, tabs );
     XMLWriteElement( interestRate, "interestRate", out, tabs );
+    
+    XMLWriteElement( mFutureYield, "Future Yield", out, tabs );
+    XMLWriteElement( mFutureLand, "Future Land Allocation", out, tabs );
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -123,6 +126,11 @@ void ForestProductionTechnology::initCalc( const string& aRegionName,
 
     FoodProductionTechnology::initCalc( aRegionName, aSectorName, aSubsectorInfo,
                                         aDemographics, aPeriod );
+
+    // Apply technical change for forests
+    // This function needs to be called again because forest tech change must be applied from now until the rotation period
+    mLandAllocator->applyAgProdChange( landType, mName, agProdChange, aPeriod + getNRotationPeriodSteps() , aPeriod );
+    
 }
 
 /*!
@@ -155,10 +163,17 @@ void ForestProductionTechnology::completeInit( const string& aRegionName,
         }
     }
 
+    // Unlike food tech's, forest techs can have ag prod change in a calibration period -- as this indicates 
+    // future productivity change. Set to zero so that is not actually applied in base period, but save value 
+    // for application to forest production leaf.
+    mSavedAgProdChange = agProdChange;
+    
     // TODO: Change to be able to call the parent function.
     // Right now doesn't work since two classes aren't derived from common parent.
+    // FoodProductionTechnology::completeInit has operations not appropriate for forests 
     // To do this, likely need a     ILandAllocator::LandUsageType getLandType() function so as to
     // create the proper land leaf type.
+    
     
     Technology::completeInit( aRegionName, aSectorName, aDepFinder, aSubsectorInfo,
                               aLandAllocator, aGlobalTechDB );
@@ -176,12 +191,27 @@ void ForestProductionTechnology::completeInit( const string& aRegionName,
     setCalLandValues();
 }
 
+int ForestProductionTechnology::getNRotationPeriodSteps( ) const {
+   const Modeltime* modeltime = scenario->getModeltime();
+   int timestep = modeltime->gettimestep( modeltime->getyr_to_per(year));
+   if ( timestep == 0 ) {
+      cout << "Timestep of " << timestep << " returned for year " << year << " and period " << modeltime->getyr_to_per(year) << endl;
+   }
+
+   int nRotPeriodSteps = mRotationPeriod / timestep;
+   if ( !mFutureProduction.isInited() ) {
+      nRotPeriodSteps = 0;
+   }
+   
+   return nRotPeriodSteps;
+}
+
 /*! \brief Sets calibrated land values to land allocator.
 *
-* This utility function is called twice. Once in completeInit so that initial
+* For forests, this utility function is called twice. Once in completeInit so that initial
 * shares can be set throughout the land allocator and again in initCalc()
-* in case shares have been disrupted by a previous call to calc() (which is what
-* currently happens in 1975).
+* in case shares have been disrupted by a previous call to calc() and to overwrite future calibration 
+* values with new values.  
 *
 * \author Steve Smith
 */
@@ -191,17 +221,12 @@ void ForestProductionTechnology::setCalLandValues() {
     if ( mCalValue.get() && ( calYield != -1 )) {
         const Modeltime* modeltime = scenario->getModeltime();
         int timestep = modeltime->gettimestep( modeltime->getyr_to_per(year));
-        if ( timestep == 0 ) {
-            cout << "Timestep of " << timestep << " returned for year " << year << " and period " << modeltime->getyr_to_per(year) << endl;
-        }
+
         // Operating period of this technology
         int thisPeriod = modeltime->getyr_to_per(year);
-
-        int nRotPeriodSteps = mRotationPeriod / timestep;
-        if ( !mFutureProduction.isInited() ) {
-            nRotPeriodSteps = 0;
-        }
-
+        // Number of model timesteps for rotation period
+        int nRotPeriodSteps = getNRotationPeriodSteps();
+        
         // Make sure that calibrated land-use for periods beyond rotation period is set to zero.
         // Land allocator does not know rotation period information at this point, so it sums over all
         // periods to determine calibrated land use, so zero out information for all these periods.
@@ -213,6 +238,8 @@ void ForestProductionTechnology::setCalLandValues() {
         double calProductionTemp = mCalValue->getCalOutput( 1 ); // Pass in 1 since efficiency is always 1 for forests
         double calYieldTemp = calYield;
         
+        // Set value of calObservedYield, so that FoodProductionTechnology::initCalc will set variable costs
+        calObservedYield = calYield;
         // Loop from current period to rotation period time steps from current period to set current and 
         // future land allocation and production from forests. Operation of setCalLandAllocation in the forest
         // leaf depends on all cal land-use data being present on the last call.
@@ -224,14 +251,14 @@ void ForestProductionTechnology::setCalLandValues() {
                 // increment production linearly between current and future production years
                 calProductionTemp += ( mFutureProduction - mCalValue->getCalOutput( 1 ) ) / nRotPeriodSteps;
                 // Apply ag productivity change to yield assuming same productivity applies to all years
-                calYieldTemp = calYield * pow( 1 + agProdChange, double( timestep * ( aHarvestPeriod - 1 ) ) );
+                // Apply ag prod change relative to this period
+                calYieldTemp = calYield * pow( 1 + mSavedAgProdChange, double( timestep * ( aHarvestPeriod - thisPeriod ) ) );
             }
-
             // Calculate land harvested in the harvest period
             calLandUsed = calProductionTemp / calYieldTemp;
             mLandAllocator->setCalLandAllocation( landType, mName, calLandUsed, aHarvestPeriod, thisPeriod );
             mLandAllocator->setCalObservedYield( landType, mName, calYieldTemp, aHarvestPeriod );
-        }      
+        }  
     }
 }
 
@@ -297,6 +324,10 @@ void ForestProductionTechnology::production( const string& aRegionName,
     double futureSupply = calcSupply( aRegionName, aSectorName, harvestPeriod );
     Marketplace* marketplace = scenario->getMarketplace();
     marketplace->addToSupply( getFutureMarket( aSectorName ), aRegionName, futureSupply, aPeriod );
+
+    // Save values for debugging
+    mFutureLand = mLandAllocator->getLandAllocation( landType, mName, aPeriod );
+    mFutureYield = futureSupply / mFutureLand;
 
     // now calculate the amount to be consumed this period (ie. planted steps
     // periods ago).

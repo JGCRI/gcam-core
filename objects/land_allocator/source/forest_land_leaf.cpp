@@ -61,6 +61,9 @@ void ForestLandLeaf::completeInit( const string& aRegionName,
     mLandToBeHarvested.resize( maxper + mSteps );
 
     LandLeaf::completeInit( aRegionName, aRegionInfo );
+
+    // Resize to account for extra forest periods
+    mAgProdChange.resize( maxper + mSteps );
 }
 
 void ForestLandLeaf::calcLandAllocation( const string& aRegionName,
@@ -131,6 +134,12 @@ void ForestLandLeaf::setCalLandAllocation( const string& aLandType,
 
     mLandToBeHarvested[ aHarvestPeriod ] = aCalLandUsed;
 
+    // Since calc assumes harvested land values are zero for all future periods, zero
+    // these out.
+    for( unsigned int aPeriod = aHarvestPeriod + 1; aPeriod < mLandToBeHarvested.size(); ++aPeriod ){
+        mLandToBeHarvested[ aPeriod ] = 0;
+    }
+    
     // Set the land allocation to be all land that is allocated to future
     // periods(current land is now free for reallocation).
     double totalAllocatedLand = 0;
@@ -141,12 +150,12 @@ void ForestLandLeaf::setCalLandAllocation( const string& aLandType,
     
     // This calculation is duplicated each time this is call for a given modelPeriod,
     // so this depends on the last call being the call with all land harvest data filled
-    // out.
-    for( unsigned int i = aCurrentPeriod + 1; i < mLandToBeHarvested.size(); ++i ){
+    // out. (i.e., must be called in order)
+    for( unsigned int aPeriod = aCurrentPeriod + 1; aPeriod < mLandToBeHarvested.size(); ++aPeriod ){
         // Use the time step from the last model period if the period is greater
         // than the maximum model period.
-        int modelPeriod = min( modeltime->getmaxper() - 1, static_cast<int>( i ) );
-        totalAllocatedLand += mLandToBeHarvested[ i ]
+        int modelPeriod = min( modeltime->getmaxper() - 1, static_cast<int>( aPeriod ) );
+        totalAllocatedLand += mLandToBeHarvested[ aPeriod ]
                               * modeltime->gettimestep( modelPeriod );
     }
     LandLeaf::setCalLandAllocation( aLandType, aProductName, totalAllocatedLand,
@@ -166,11 +175,41 @@ void ForestLandLeaf::setCalObservedYield( const string& aLandType,
     mCalObservedYield[ aPeriod ] = mYield[ aPeriod ] = aCalObservedYield;
 }
 
+void ForestLandLeaf::setIntrinsicRate( const string& aRegionName,
+                                 const string& aLandType,
+                                 const string& aProductName,
+                                 const double aIntrinsicRate,
+                                 const int aPeriod )
+{
+    assert( aProductName == mName );
+    assert( mIntrinsicYieldMode[ aPeriod ].isInited() &&
+            mIntrinsicYieldMode[ aPeriod ] >= 0 );
+
+    // forest intrinsic rate needs to have additional prod change applied as these
+    // are forests that will be harvested in the future
+     
+    // aIntrinsicRate [$/GCal] * intrinsicYieldMode [GCal/kHa] = [$/kHa]
+    // The intrinsicRate that is passed in is $/Gcal. 
+    // It is multiplied by intrinsicYieldMode (GCal/kHa) to convert it to $/kHa.   
+    // For biomass [$/GJ] * [GJ/kHa] = [$/kHa]
+    // Add carbon value to intrinsic rate.
+    // TODO -- check if this is correct. Carbonvalue is applied to profit rate AND to mIntrinsicRate
+    mIntrinsicRate[ aPeriod ] = max( aIntrinsicRate * mIntrinsicYieldMode[ aPeriod ] * mIntrinsicYieldModeAgProdMultiplier[ aPeriod ] 
+                                    + getCarbonValue( aRegionName, aPeriod ), 0.0 );
+}
+
 void ForestLandLeaf::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     LandLeaf::toDebugXMLDerived( aPeriod, aOut, aTabs );
     // Write out land to be harvested into the future as well as it may change.
     const Modeltime* modeltime = scenario->getModeltime();
-    for( int i = aPeriod; i < modeltime->getmaxper(); ++i ){
-        XMLWriteElement( mLandToBeHarvested[ i ], "landToBeHarvested", aOut, aTabs, modeltime->getper_to_yr( i ) );
+    int theYear = modeltime->getper_to_yr( aPeriod );
+    for( int i = aPeriod; i < mLandToBeHarvested.size(); ++i ){
+        if ( i < modeltime->getmaxper() ) {
+            theYear = modeltime->getper_to_yr( i );
+        }
+        else {
+            theYear += modeltime->gettimestep( modeltime->getmaxper() - 1 );
+        }
+        XMLWriteElement( mLandToBeHarvested[ i ], "landToBeHarvested", aOut, aTabs, theYear );
     }
 }

@@ -137,6 +137,14 @@ public:
                                const IInfo* aRegionInfo ) = 0;
 
     /*!
+     * \brief Complete the initialization of the ALandAllocatorItem.
+     * \param aRegionName Region name.
+     * \param aInfo Local info object.
+     */
+    virtual void initCalc( const std::string& aRegionName, 
+                           const int aPeriod ) {};
+
+    /*!
      * \brief Add a product which will use land to the land allocator.
      * \details Informs the land allocator that a technology exists which will
      *          require a land leaf. This function must be called before any
@@ -222,6 +230,13 @@ public:
                                 const double aParentHistoryShare,
                                 const LandUseHistory* aParentHistory,
                                 const int aPeriod ) = 0;
+
+    /*!
+     * \brief Sets land allocation to read-in calibration value
+     * \param aPeriod Period.
+     * \author Steve Smith
+     */
+    virtual void resetToCalLandAllocation( const int aPeriod ) {};
 
     /*!
      * \brief Sets the intrinsic yield mode for the node and its' children.

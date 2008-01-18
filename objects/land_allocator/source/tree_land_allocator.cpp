@@ -22,7 +22,7 @@ extern Scenario* scenario;
  * \author James Blackwood
  */
 TreeLandAllocator::TreeLandAllocator()
-: LandNode( 0 )
+: LandNode( 0 ), mCalDataExists( false )
 {
 }
 
@@ -77,46 +77,80 @@ void TreeLandAllocator::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteVector( mLandAllocation, "landAllocation", aOut, aTabs, scenario->getModeltime() );
 }
 
+void TreeLandAllocator::initCalc( const string& aRegionName, const int aPeriod )
+{
+    resetToCalibrationData( aRegionName, aPeriod );
+}
+
 void TreeLandAllocator::completeInit( const string& aRegionName, 
                                       const IInfo* aRegionInfo )
 {
     checkRotationPeriod( aRegionInfo );
 
-    LandNode::completeInit( aRegionName, aRegionInfo );
+    // Call generic node method (since TreeLandAllocator is just a specialized node)
+     LandNode::completeInit( aRegionName, aRegionInfo );
 
     const Modeltime* modeltime = scenario->getModeltime();
     for( int period = 0; period < modeltime->getmaxper(); period++ ) {
-        adjustTotalLand( period );
-
-        // Now re-allocate unmanaged land. Read-in land allocations are used as
-        // weights with total unmanaged land set to be equal to total land minus
-        // land allocation.
-        double unmanagedLand = mLandAllocation[ period ]
-                               - getTotalLandAllocation( eManaged, period );
-        LandNode::setUnmanagedLandAllocation( aRegionName, unmanagedLand, period );
-
-        // Check that the final allocations sum correctly.
-        assert( util::isEqual( getTotalLandAllocation( eAnyLand, period ),
-                               mLandAllocation[ period ].get(),
-                               util::getSmallNumber() ) );
-        assert( util::isEqual( getTotalLandAllocation( eUnmanaged, period ),
-                               unmanagedLand,
-                               util::getSmallNumber() ) );
-        assert( util::isEqual( getTotalLandAllocation( eManaged, period ),
-                               mLandAllocation[ period ] - unmanagedLand,
-                               util::getSmallNumber() ) );
-
-        setInitShares( aRegionName,
-                       0, // No parent sigma
-                       0, // No land allocation above this node.
-                       1, // Share of land use history is 100%.
-                       mLandUseHistory.get(),
-                       period );
-
-        setIntrinsicYieldMode( 1, // Intrinsic yield mode is one for the root.
-                               mSigma,
-                               period );
+        resetToCalibrationData( aRegionName, period );
     }
+}
+
+/*!
+ * \brief Initialize with calibrated data.
+ * \details Re-allocates unmananged land if necessary, sets initital shares based on 
+ *          calibrated data, and sets intrinsicYieldMode based on calibrated data
+ * \param aRegionInfo Region info.
+ * \param aPeriod model period.
+ */
+void TreeLandAllocator::resetToCalibrationData( const string& aRegionName, const int aPeriod ) {
+
+   if ( mCalDataExists[ aPeriod ] ) {
+      resetToCalLandAllocation( aPeriod );
+
+      adjustTotalLand( aPeriod );
+
+      // Now re-allocate unmanaged land. Read-in land allocations are used as
+      // weights with total unmanaged land set to be equal to total land minus
+      // land allocation.
+      double unmanagedLand = mLandAllocation[ aPeriod ]
+                            - getTotalLandAllocation( eManaged, aPeriod );
+      
+      // Log change in unmanaged land
+      double previousUnmanagedLand = getTotalLandAllocation( eUnmanaged, aPeriod );
+      if ( abs( previousUnmanagedLand - unmanagedLand) > 0.01 * unmanagedLand ) {
+         ILogger& mainLog = ILogger::getLogger( "main_log" );
+         mainLog.setLevel( ILogger::WARNING );
+         mainLog << "Unmanaged land in region " << aRegionName << " was reduced by " 
+                 << previousUnmanagedLand - unmanagedLand
+                 << " in period " << aPeriod
+                 << endl;
+      }
+      
+      LandNode::setUnmanagedLandAllocation( aRegionName, unmanagedLand, aPeriod );
+
+      // Check that the final allocations sum correctly.
+      assert( util::isEqual( getTotalLandAllocation( eAnyLand, aPeriod ),
+                            mLandAllocation[ aPeriod ].get(),
+                            util::getSmallNumber() ) );
+      assert( util::isEqual( getTotalLandAllocation( eUnmanaged, aPeriod ),
+                            unmanagedLand,
+                            util::getSmallNumber() ) );
+      assert( util::isEqual( getTotalLandAllocation( eManaged, aPeriod ),
+                            mLandAllocation[ aPeriod ] - unmanagedLand,
+                            util::getSmallNumber() ) );
+
+      setInitShares( aRegionName,
+                    0, // No parent sigma
+                    0, // No land allocation above this node.
+                    1, // Share of land use history is 100%.
+                    mLandUseHistory.get(),
+                    aPeriod );
+
+      setIntrinsicYieldMode( 1, // Intrinsic yield mode is one for the root.
+                            mSigma,
+                            aPeriod );
+   }
 }
 
 /*!
@@ -276,6 +310,7 @@ void TreeLandAllocator::setCalLandAllocation( const string& aLandType,
                                               const int aHarvestPeriod, 
                                               const int aCurrentPeriod )
 {
+    mCalDataExists[ aCurrentPeriod ] = true;
     // TODO: This is called before the completeInit of the LandAllocator.
     ALandAllocatorItem* node = findChild( aLandType, eNode );
     if( node ){
@@ -395,7 +430,10 @@ double TreeLandAllocator::getUnmanagedCalAveObservedRate( const int aPeriod,
         return 1;
     }
 
-    // Starting at the subtree, find the unmanaged land node.
+    // Starting at the subtree, find the unmanaged land nest.
+    // TODO this needs to be changed if unmanaged land were to be in more than
+    // one part of any specific land tree
+    // (new form for calibration equation would probably need to be derived)
     const ALandAllocatorItem* unmanagedNest
         = findItem<ALandAllocatorItem>( eBFS, subTreeRoot, IsUnmanagedNest() );
 

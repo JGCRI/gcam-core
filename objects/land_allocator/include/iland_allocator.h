@@ -217,6 +217,14 @@ public:
                                const IInfo* aRegionInfo ) = 0;
     
     /*!
+     * \brief Perform initializations that are needed before every model period
+     * \param aRegionName Region name.
+     * \param aInfo Local info object.
+     */
+    virtual void initCalc( const std::string& aRegionName, 
+                           const int aPeriod ) = 0;
+    
+    /*!
      * \brief Set the above and below ground carbon for the land type.
      * \details Agricultural technologies determine the above and below ground
      *          carbon content for the land they use. This function allows the

@@ -871,6 +871,11 @@ void RegionMiniCAM::initCalc( const int period )
     // GHGs are initialized so they can be accessed.
     setCO2CoefsIntoMarketplace( period );
 
+    // Call initCalc for land allocator first so that shares and intrinsic rates are set properly
+    if ( mLandAllocator.get() ) {
+        mLandAllocator->initCalc( name, period );
+    }
+
     for( SectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ){
         (*currSector)->initCalc( /*nationalAccount[ period ]*/0, demographic.get(), period );
     }

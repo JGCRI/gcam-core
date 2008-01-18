@@ -135,7 +135,15 @@ void AComplexEmissions::copyGHGParameters( const AGHG* prevGHG ){
         gwp = prevComplexGHG->gwp; // only copy if GWP has not changed
     }
     
-    maxCntrl = prevComplexGHG->maxCntrl;
+    if ( util::isValidNumber( prevComplexGHG->maxCntrl ) ) {
+      maxCntrl = prevComplexGHG->maxCntrl;
+    }
+    else {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Invalid calcuation of maxCntrl in GHG " << getName() << endl;    
+    }
+    
     gdpcap0 = prevComplexGHG->gdpcap0;
     tau = prevComplexGHG->tau;
 
@@ -218,9 +226,9 @@ void AComplexEmissions::calcEmission( const string& regionName,
         macReduction = ghgMac->findReduction(regionName, aPeriod);
     }
 
-    double fControl = 0;    
+    double fControl = 0;
     double adjustedGdpCap0 = adjustControlParameters( gdpCap, emissDriver, macReduction, aPeriod );
-    if ( ( finalEmissCoef > 0 ) || ( maxCntrl > -999 ) ){
+    if ( maxCntrl > -999 ) {
         fControl = controlFunction( maxCntrl, tau, adjustedGdpCap0, gdpCap );
     }
 
@@ -375,7 +383,7 @@ double AComplexEmissions::adjustControlParameters( const double gdpCap, const do
 * \param gdpCapIn the gdp per capita in PPP terms for the current period
 */
 double AComplexEmissions::controlFunction( const double maxCntrlIn, const double tauIn, const double gdpcap0In, const double gdpCapIn ){
-    if( tauIn != 0 && gdpcap0In != 0 ){
+    if( tauIn > util::getSmallNumber()  && gdpcap0In > util::getSmallNumber() ){
         const double CLOGIT = 4.394; // See above for documentation.
         return (maxCntrlIn/100) / (1 + exp( -CLOGIT * (gdpCapIn - gdpcap0In) / tauIn ));
     }
@@ -395,7 +403,9 @@ double AComplexEmissions::controlFunction( const double maxCntrlIn, const double
 * \param GDPcap the previous periods GDP per capita in PPP terms for this region
 */
 void AComplexEmissions::adjustMaxCntrl( const double GDPcap ){
-    if ( tau != 0 && gdpcap0 != 0 && adjMaxCntrl != 1 ) {
+    if ( ( tau  > util::getSmallNumber() ) && 
+         ( gdpcap0 > util::getSmallNumber() ) && 
+         ( adjMaxCntrl != 1 ) ) {
         // Note that maxCntrl is in percentage units
         maxCntrl *= adjMaxCntrl;
         if ( maxCntrl > 100 ) {

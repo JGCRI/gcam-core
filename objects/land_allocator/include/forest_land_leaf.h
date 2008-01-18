@@ -58,13 +58,18 @@ public:
                                       const double aCalObservedYield, 
                                       const int aPeriod );
 
+    virtual void setIntrinsicRate( const std::string& aRegionName,
+                                   const std::string& aLandType,
+                                   const std::string& aProductName,
+                                   const double aIntrinsicRate,
+                                   const int aPeriod );
+    
 protected:
     // TODO: Create a Value class for ints and use it here.
     int mSteps; //!< number of model time steps for a rotation period
 
     //! Land allocation set aside for future production.
     std::vector<double> mLandToBeHarvested;  
-
 
     virtual void toDebugXMLDerived( const int aPeriod,
                                     std::ostream& aOut,

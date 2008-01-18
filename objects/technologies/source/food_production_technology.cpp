@@ -153,15 +153,16 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
         return;
     }
 
-    // Apply technical change.
-    mLandAllocator->applyAgProdChange( landType, mName, agProdChange, aPeriod, aPeriod );
-    
-    // If calibration data is present for this year, then zero out previous periods ag prod change
+    // If calibration data is present for this year, then zero out ag prod change
+    // for previous periods 
     if ( mCalValue.get() ) {
-        for ( int pastPeriod = 0; pastPeriod < aPeriod; ++pastPeriod ) {
+        for ( int pastPeriod = 0; pastPeriod <= aPeriod; ++pastPeriod ) {
             mLandAllocator->applyAgProdChange( landType, mName, 0.0, pastPeriod, pastPeriod );
         }
     }
+    
+    // Apply technical change.
+    mLandAllocator->applyAgProdChange( landType, mName, agProdChange, aPeriod, aPeriod );
     
     // TODO: Use a better method of passing forward calibration information.
     // Since the market may be global, create a unique regional string for the
@@ -184,7 +185,7 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
                                 / calcDiscountFactor()
                                 / ( calObservedYield * mHarvestedToCroppedLandRatio );
        // assert( util::isValidNumber( calVarCost ) );
-        
+
         // Set the variable cost for the technology to the calibrated variable cost.
         if ( calVarCost > util::getSmallNumber() ) {
             // TODO: Add warning if there was a read-in variable cost.
@@ -195,6 +196,18 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
             mainLog.setLevel( ILogger::DEBUG );
             mainLog << "Read in value for calPrice in " << aRegionName << " "
                     << mName << " is too low by " << fabs( calVarCost ) << endl;
+        }
+        
+        // If the variable cost is very close to cal price the profit rate is small and changes quickly with price
+        // This can make the model hard to calibrate
+        if ( calVarCost > calPrice * 0.99 ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::DEBUG );
+            mainLog << "Calibrated variable cost of " << calVarCost << " in " 
+                    << aRegionName << " sector " << aSectorName
+                    << " is very close to calibrated price " 
+                    <<" (" << (calPrice-calVarCost)/calPrice*100 << "%)" 
+                    << endl;
         }
     }
     else {
@@ -218,6 +231,7 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
     // Set the above and below ground carbon for this technology.
     // TODO: This may need to be moved if the carbon content is calculated dynamically.
     mLandAllocator->setCarbonContent( landType, mName, mAboveGroundCarbon, mBelowGroundCarbon, aPeriod );
+    
 }
 
 void FoodProductionTechnology::postCalc( const string& aRegionName,
@@ -256,13 +270,12 @@ void FoodProductionTechnology::completeInit( const string& aRegionName,
     mLandAllocator->addLandUsage( landType, mName, ILandAllocator::eCrop, techPeriod );
 
     // Technical change may only be applied after the base period.
-    if( agProdChange > util::getSmallNumber() &&
-        techPeriod <= 1 )
+    if( agProdChange > util::getSmallNumber() && mCalValue.get() )
     {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Agricultural technologies may not have technical change"
-                << " in the calibration period." << endl;
+        mainLog << "Food production technologies may not have technical change"
+                << " in a calibration period." << endl;
         agProdChange = 0;
     }
 
@@ -274,10 +287,26 @@ void FoodProductionTechnology::completeInit( const string& aRegionName,
         mHarvestedToCroppedLandRatio = 1.0;
     }
 
+    setCalLandValues();
+}
+
+/*! \brief Sets calibrated land values to land allocator.
+*
+* This utility function is called once for food technologies and twice for forest 
+* technologies (see forest version of this function). Call in completeInit sets initial
+* land-use and calibration values in the land allocator.
+*
+* \author Steve Smith
+*/
+void FoodProductionTechnology::setCalLandValues() {
+
     // TODO: We should change the input so that only one of these options can be read
     //       as they are mutually exclusive.
-    const int period = scenario->getModeltime()->getyr_to_per( year );
     if ( mCalValue.get() && calLandUsed != -1 ) {
+
+        // Setup the land usage for this production.
+        int techPeriod = scenario->getModeltime()->getyr_to_per( year );
+
         calObservedYield = mCalValue->getCalOutput( 1 ) / calLandUsed;
 
         // Warn the user that the calibrated yield will not be used since an
@@ -293,6 +322,7 @@ void FoodProductionTechnology::completeInit( const string& aRegionName,
         mLandAllocator->setCalObservedYield( landType, mName, calObservedYield * mHarvestedToCroppedLandRatio, techPeriod );
     } 
     else if ( calYield != -1 ) {
+        int techPeriod = scenario->getModeltime()->getyr_to_per( year );
         mLandAllocator->setCalObservedYield( landType, mName, calYield * mHarvestedToCroppedLandRatio, techPeriod );
     }
 }

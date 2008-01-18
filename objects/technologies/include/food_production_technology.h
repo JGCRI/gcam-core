@@ -112,6 +112,8 @@ protected:
     double calcSupply( const std::string& aRegionName,
                        const std::string& aProductName,
                        const int aPeriod ) const;
+
+    void setCalLandValues( );
 };
 
 #endif // _FOOD_PRODUCTION_TECHNOLOGY_H_

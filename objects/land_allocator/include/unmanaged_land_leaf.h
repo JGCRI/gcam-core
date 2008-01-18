@@ -57,6 +57,8 @@ public:
 
     virtual bool isUnmanagedNest() const;
 
+    virtual void resetToCalLandAllocation( const int aPeriod );
+
     virtual void toInputXML( std::ostream& aOut,
                              Tabs* aTabs ) const;
 protected:

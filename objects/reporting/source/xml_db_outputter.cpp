@@ -1037,7 +1037,8 @@ void XMLDBOutputter::startVisitLandLeaf( const LandLeaf* aLandLeaf,
 
     // Loop over the periods to output LandLeaf information.
     // The loops are separated so the types are grouped together, as is required for
-    // valid XML.
+    // valid XML. Note this writes total land allocation (so all land sums to same total)
+    // This does not report the land harvested in a given year.
     const Modeltime* modeltime = scenario->getModeltime();
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
         writeItem( "land-allocation", "000Ha",

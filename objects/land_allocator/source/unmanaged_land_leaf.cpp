@@ -51,6 +51,10 @@ void UnmanagedLandLeaf::completeInit( const string& aRegionName,
                         << " was not allocated in period " << period << endl;
             }
         }
+        
+       if ( !mBaseLandAllocation[ period ].isInited() ) {
+          mBaseLandAllocation[ period ] = mLandAllocation[ period ] ;
+      }
     }
     
 }
@@ -190,6 +194,10 @@ double UnmanagedLandLeaf::calcLandShares( const string& aRegionName,
         unnormalizedShare *= mBaseLandAllocation[ aPeriod ] / aTotalBaseLand;
     }
     return unnormalizedShare;
+}
+
+void UnmanagedLandLeaf::resetToCalLandAllocation( const int aPeriod ) {
+   // Do nothing, since unmanagd land does not have a calibrated land allocation
 }
 
 bool UnmanagedLandLeaf::isUnmanagedNest() const {

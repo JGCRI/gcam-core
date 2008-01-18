@@ -84,7 +84,19 @@ private:
 
     int getHarvestPeriod( const int aCurrentPeriod ) const;
 
+    int getNRotationPeriodSteps( ) const;
+
     const std::string getFutureMarket( const std::string& aProductName ) const;
+
+    //! Future yield stored for debugging
+    double mFutureYield;
+
+    //! Future land allocation stored for debugging
+    double mFutureLand;
+
+    //! Stored Ag productivity Change
+    double mSavedAgProdChange;
+
 };
 
 #endif // _FOREST_PRODUCTION_TECHNOLOGY_H_
