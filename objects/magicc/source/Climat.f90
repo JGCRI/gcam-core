@@ -2643,7 +2643,8 @@ IF(IWrite.eq.1)THEN
  590  FORMAT (1X,'YEAR,HFC245,HFC134A,HFC125,HFC227,HFC143A,','CF4,C2F6,SF6,Qother,QMont,QStratOz,HaloTot,','KyotoTot')
  589  FORMAT (1X,I5,',',15(e15.7,',')) 
 		
-
+	IF (IWrite .eq. 1) CLOSE (8)
+!
 
 !*******************************************************************
 !*******************************************************************
@@ -2792,9 +2793,9 @@ IF(IWrite.eq.1)THEN
 	END DO
 
 	IF (IWrite .eq. 1) WRITE(9,*)
-	IF (IWrite .eq. 1) CLOSE (9)
 !     ******* END MINICAM OUTPUT ***
- 
+	IF (IWrite .eq. 1) CLOSE (9)
+!
 
 !
 !  **************************************************************
@@ -2908,7 +2909,7 @@ IF(IWrite.eq.1)THEN
  563  FORMAT (1X,'HALOtot (AND QTOTAL) DOES NOT INCLUDE STRAT O3')
  57   FORMAT (1X,'YEAR,CO2,CH4tot,N2O, HALOtot,','TROPOZ,SO4DIR,SO4IND,BIOAER,TOTAL, FOC+FBC,',' YEAR,CH4-O3,',&
  		' STRATO3, MONTDIR,QKYOTO')
- 571  FORMAT (1X,I4,10(',',e15.7),I4,10(',',e15.7))
+ 571  FORMAT (1X,I4,10(',',e15.7),',',I4,10(',',e15.7))
  58   FORMAT (1X,'** GAS BY GAS DELTA-Q FROM 1765 : MIDYEAR VALUES **')
 !
  60   FORMAT (1X,'1990 DIRECT AEROSOL FORCING          =',F6.3,'W/m**2')
@@ -4536,7 +4537,13 @@ IF(IWrite.eq.1)THEN
         EDG=EDGROSS(LEVCO2,J)
         IF(EDG.LT.0.0)EDG=0.0
         QBIO(J)=S90BIO*EDG/EDGROSS(LEVCO2,226)
+! sjs - Check if EDGROSS(1990) is < 0, if so, ramp 1990 forcing down to zero by 2050
+        IF(EDGROSS(LEVCO2,226) .LT. 0) THEN
+           QBIO(J)=S90BIO*(1.0 - (FLOAT(J)-226)/60.0)
+           IF (QBIO(J) .GT. 0 ) QBIO(J) = 0
+        ENDIF
       ENDIF
+
 !
 !  *******************************************************
 !
