@@ -232,6 +232,8 @@ public class ManipulationDriver
       currCom = (Element)coms.get(i);
       runCommand(currCom);
     }
+    // TODO: figure out a better way to know when to write these out.
+    CSVFileManager.getInstance().writeAllCSVFiles();
     log.log(Level.FINER, "All user commands have been parsed");
   }
   
@@ -1955,9 +1957,18 @@ public class ManipulationDriver
     }
     
     //need to output cuz this is an abnormally shaped return
+    currInfo = command.getChild("output");
+    Writer writer;
+    if(command.getAttributeValue("csvfile") != null) {
+	    writer = CSVFileManager.getInstance().getCSVOutputter(currInfo);
+    } else {
+	    // assume console
+	    writer = new ConsoleWriter(Console.getConsole("Default Out"));
+    }
     try
     {
-      BufferedWriter out = new BufferedWriter(new ConsoleWriter(Console.getConsole("Default Out")));
+
+      BufferedWriter out = new BufferedWriter(writer);
       VDest.printVerbose(out);
     } catch(IOException e)
     {
@@ -2137,16 +2148,28 @@ public class ManipulationDriver
       if(command.getAttributeValue("file") == null)
       {
         if(command.getAttributeValue("console") == null)
-        { //print to default console
-          try
-          {
-            //BufferedWriter out = new BufferedWriter(new PrintWriter(System.out));
-            BufferedWriter out = new BufferedWriter(new ConsoleWriter(Console.getConsole("Default Out")));
-            toPrint.printStandard(out);
-          } catch(IOException e)
-          {
-            log.log(Level.SEVERE, "IOException in -> printCommand (default console)");
-          }
+	{
+		if(command.getAttributeValue("csvfile") == null)
+		{ //print to default console
+			try
+			{
+				//BufferedWriter out = new BufferedWriter(new PrintWriter(System.out));
+				BufferedWriter out = new BufferedWriter(new ConsoleWriter(Console.getConsole("Default Out")));
+				toPrint.printStandard(out);
+			} catch(IOException e)
+			{
+				log.log(Level.SEVERE, "IOException in -> printCommand (default console)");
+			}
+		} else {
+			// print to csv
+			BufferedWriter out = new BufferedWriter(CSVFileManager.getInstance().getCSVOutputter(command));
+			try {
+				toPrint.printStandard(out);
+			} catch(IOException ioe) {
+				log.log(Level.SEVERE, "IOException in -> printCommand CSV file: "+ioe);
+			}
+			// TODO: shoud I close even though it won't do anything?
+		}
         } else
         { //print to specified console
           try

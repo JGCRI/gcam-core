@@ -4245,11 +4245,12 @@ public class DataBuilder
 	  //done getting file info from XML
 
 	  // set up for the land fraction
-	  dataStruct.setTrackSums(true);
+	  //dataStruct.setTrackSums(true);
 	  final DataBlock toAdd = new DataBlock();
 	  final TreeMap<Double, Double> timeValue = new TreeMap();
 	  timeValue.put(0.0, 1.0);
 	  toAdd.data.put("landFract", timeValue);
+	  dataAvg.put("landFract", new Boolean(true));
 
 	  //reading the data from the file
 	  maskArray = new int[numRows][numCols];
