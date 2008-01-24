@@ -72,6 +72,12 @@ class LandNode;
 class ICarbonCalc;
 class AgSector;
 class IClimateModel;
+class CarbonBox;
+class CarbonBox;
+class NPP;
+class ACarbonFlow;
+class CarbonBoxModel;
+class LandUseHistory;
 
 /*!
  * \brief An interface to a class which visits every node in the tree and
@@ -93,12 +99,16 @@ public:
     virtual void finish() const = 0;
     virtual void startVisitScenario( const Scenario* aScenario, const int aPeriod ) = 0;
     virtual void endVisitScenario( const Scenario* aScenario, const int aPeriod ) = 0;
+
     virtual void startVisitWorld( const World* aWorld, const int aPeriod ) = 0;
     virtual void endVisitWorld( const World* aWorld, const int aPeriod ) = 0;
+
     virtual void startVisitRegion( const Region* aRegion, const int aPeriod ) = 0;
     virtual void endVisitRegion( const Region* aRegion, const int aPeriod ) = 0;
+
     virtual void startVisitRegionMiniCAM( const RegionMiniCAM* aRegionMiniCAM, const int aPeriod ) = 0;
     virtual void endVisitRegionMiniCAM( const RegionMiniCAM* aRegionMiniCAM, const int aPeriod ) = 0;
+
     virtual void startVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod ) = 0;
     virtual void endVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod ) = 0;
     
@@ -224,9 +234,21 @@ public:
 
     virtual void startVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod ) = 0;
     virtual void endVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod ) = 0;
+	
+	virtual void startVisitLandUseHistory( const LandUseHistory* aLandUseHistory, const int aPeriod ) = 0;
+	virtual void endVisitLandUseHistory( const LandUseHistory* aLandUseHistory, const int aPeriod ) = 0;
 
     virtual void startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ) = 0;
     virtual void endVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ) = 0;
+
+    virtual void startVisitCarbonBox( const CarbonBox* aCarbonBox, const int aPeriod ) = 0;
+    virtual void endVisitCarbonBox( const CarbonBox* aCarbonBox, const int aPeriod ) = 0;
+
+    virtual void startVisitNPP( const NPP* aNPP, const int aPeriod ) = 0;
+    virtual void endVisitNPP( const NPP* aNPP, const int aPeriod ) = 0;
+
+    virtual void startVisitCarbonFlow( const ACarbonFlow* aCarbonFlow, const int aPeriod ) = 0;
+    virtual void endVisitCarbonFlow( const ACarbonFlow* aCarbonFlow, const int aPeriod ) = 0;
 
     virtual void startVisitAgSector( const AgSector* aAgSector, const int aPeriod ) = 0;
     virtual void endVisitAgSector( const AgSector* aAgSector, const int aPeriod ) = 0;

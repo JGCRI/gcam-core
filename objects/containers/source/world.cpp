@@ -90,7 +90,7 @@ void World::XMLParse( const DOMNode* node ){
         }
 		// Read in parameters for climate model
         else if( nodeName == MagiccModel::getXMLNameStatic() ){
-            parseSingleNode( curr, mClimateModel , new MagiccModel( scenario->getModeltime() ) );
+            parseSingleNode( curr, mClimateModel, new MagiccModel( scenario->getModeltime() ) );
         }
 		// SGM regions
         else if( nodeName == RegionCGE::getXMLNameStatic() ){
@@ -411,12 +411,22 @@ void World::runClimateModel() {
     // Declare visitors which will aggregate emissions by period.
     EmissionsSummer co2Summer( "CO2" );
     EmissionsSummer co2LandUseSummer( "CO2NetLandUse" );
+    EmissionsSummer netDef80sSummer( MagiccModel::getnetDefor80sName() );
+
+   const double MMT_TO_TG = 1000;
+        
+    // Sum 80s deforestation
+    const int dummyPeriod = 1;
+    accept( &netDef80sSummer, dummyPeriod );
+    if( netDef80sSummer.areEmissionsSet( dummyPeriod ) ){
+       mClimateModel->setEmissions( MagiccModel::getnetDefor80sName(), dummyPeriod,
+                                    netDef80sSummer.getEmissions( dummyPeriod )
+                                    / MMT_TO_TG );
+    }
 
     // The Climate model reads in data for the base period, so skip passing it in.
     for( int period = 1; period < scenario->getModeltime()->getmaxper(); ++period){
 
-        const double MMT_TO_TG = 1000;
-        
         // Sum the emissions for the period.
         accept( &co2Summer, period );
         accept( &co2LandUseSummer, period );

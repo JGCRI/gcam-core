@@ -213,3 +213,40 @@ void ForestLandLeaf::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* 
         XMLWriteElement( mLandToBeHarvested[ i ], "landToBeHarvested", aOut, aTabs, theYear );
     }
 }
+
+void ForestLandLeaf::calcYieldInternal( const string& aLandType,
+                                  const string& aProductName,
+                                  const string& aRegionName,
+                                  const double aProfitRate,
+                                  const double aAvgIntrinsicRate,
+                                  const int aHarvestPeriod,
+                                  const int aCurrentPeriod )
+{
+    assert( aHarvestPeriod >= aCurrentPeriod );
+    assert( mIntrinsicYieldMode[ aCurrentPeriod ].isInited() );
+
+/*  Code to call endogenous yield calcuation, except for current period.
+    if ( aHarvestPeriod > aCurrentPeriod ) {
+        LandLeaf::calcYieldInternal( aLandType, aProductName, aRegionName, aProfitRate,
+                                    aAvgIntrinsicRate, aHarvestPeriod,  aCurrentPeriod );
+    }
+    else {
+        mYield[ aHarvestPeriod ] = mCalObservedYield[ aHarvestPeriod ];
+    }
+ */
+     
+    // Override internal calculation and set forest yield equal to exogenous specification
+    if ( aHarvestPeriod > aCurrentPeriod ) { // check if forest leaf
+        if ( mCalDataExists[ aCurrentPeriod ] ) {
+           mYield[ aHarvestPeriod ] = mCalObservedYield[ aHarvestPeriod ];
+        }
+        else {
+             mYield[ aHarvestPeriod ] = mYield[ aHarvestPeriod - 1 ];
+            if ( mIntrinsicYieldModeAgProdMultiplier[ aCurrentPeriod ]  > util::getSmallNumber() ) {
+                mYield[ aHarvestPeriod ] *= mIntrinsicYieldModeAgProdMultiplier[ aCurrentPeriod ] / 
+                                            mIntrinsicYieldModeAgProdMultiplier[ aCurrentPeriod - 1 ];
+            }
+        }
+
+    }
+}

@@ -15,12 +15,14 @@
 #include "containers/include/scenario.h"
 #include "util/base/include/ivisitor.h"
 #include <numeric>
+#include <typeinfo>
+#include "ccarbon_model/include/carbon_box_model.h"
 
 using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
-
+typedef std::map<unsigned int, double> LandMapType;
 /*!
  * \brief Constructor.
  * \param aParent Pointer to this leafs's parent.
@@ -52,7 +54,7 @@ ALandAllocatorItem* LandNode::getChildAt( const size_t aIndex ) {
     return mChildren[ aIndex ];
 }
 
-bool LandNode::XMLParse( const DOMNode* aNode ){
+bool LandNode::XMLParse( const xercesc::DOMNode* aNode ){
 
     // assume we are passed a valid node.
     assert( aNode );
@@ -76,11 +78,14 @@ bool LandNode::XMLParse( const DOMNode* aNode ){
         else if ( nodeName == UnmanagedLandLeaf::getXMLNameStatic() ) {
             parseContainerNode( curr, mChildren, new UnmanagedLandLeaf( this ) );
         }
+		else if ( nodeName == CarbonBoxModel::getXMLNameStatic() ){
+			parseSingleNode( curr, mCarbonBoxModelTemplate, new CarbonBoxModel );
+		}
         else if( nodeName == "sigma" ) {
             mSigma = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == LandUseHistory::getXMLNameStatic() ){
-            parseSingleNode( curr, mLandUseHistory, new LandUseHistory );
+			parseSingleNode( curr, mLandUseHistory, new LandUseHistory );
         }
         else if ( !XMLDerivedClassParse( nodeName, curr ) ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -94,8 +99,8 @@ bool LandNode::XMLParse( const DOMNode* aNode ){
     return true;
 }
 
-bool LandNode::XMLDerivedClassParse( const string& aNodeName,
-                                     const DOMNode* aCurr )
+bool LandNode::XMLDerivedClassParse( const std::string& aNodeName,
+									 const xercesc::DOMNode* aCurr )
 {
     return false;
 }
@@ -110,11 +115,17 @@ void LandNode::toInputXML( ostream& out, Tabs* tabs ) const {
     if( mLandUseHistory.get() ){
         mLandUseHistory->toInputXML( out, tabs );
     }
+	
+	// write out the Carbon Model template to input.xml, if and only if, one exists
+	if ( this->mCarbonBoxModelTemplate.get() ) {
+		this->mCarbonBoxModelTemplate->toInputXML( out, tabs );
+	}
 
     // write out for mChildren
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
         mChildren[i]->toInputXML( out, tabs );
     }
+
     toInputXMLDerived( out, tabs );
     XMLWriteClosingTag( getXMLName(), out, tabs );
 }
@@ -149,8 +160,8 @@ const string& LandNode::getXMLName() const {
 * \return The XML name of the object.
 */
 const string& LandNode::getXMLNameStatic() {
-    const static string XML_NAME = "LandAllocatorNode";
-    return XML_NAME;
+    const static string XML_NAME = "LandAllocatorNode";	// origianl XML text
+	return XML_NAME;
 }
 
 void LandNode::completeInit( const string& aRegionName,
@@ -192,10 +203,16 @@ void LandNode::addLandUsage( const string& aLandType,
         LandLeaf* newLeaf = 0;
         switch( aLandUsageType ){
         case ILandAllocator::eCrop:
-            newLeaf = new LandLeaf( this, aProductName );
+			newLeaf = new LandLeaf( this, aProductName );
+			if ( mCarbonBoxModelTemplate.get() ) {
+				newLeaf->copyCarbonBoxModel( this->mCarbonBoxModelTemplate.get() );
+			}
             break;
         case ILandAllocator::eForest:
-            newLeaf = new ForestLandLeaf( this, aProductName );
+			newLeaf = new ForestLandLeaf( this, aProductName );
+			if ( mCarbonBoxModelTemplate.get() ) {
+				newLeaf->copyCarbonBoxModel( this->mCarbonBoxModelTemplate.get() );
+			}
             break;
             // No default here so that the compiler will detect 
             // a missing case.
@@ -265,8 +282,8 @@ void LandNode::setInitShares( const string& aRegionName,
         landUseShare = aParentHistoryShare * mShare[ aPeriod ];
     }
 
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->setInitShares( aRegionName,
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {		
+		mChildren[ i ]->setInitShares( aRegionName,
                                        mSigma,
                                        nodeLandAllocation,
                                        landUseShare,
@@ -455,6 +472,30 @@ void LandNode::calcLandAllocation( const string& aRegionName,
     }
 }
 
+void LandNode::calcLUCCarbonFlowsOut( const string& aRegionName,
+                                          const int aYear )
+{
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        mChildren[ i ]->calcLUCCarbonFlowsOut( aRegionName, aYear );
+    }
+}
+
+void LandNode::calcLUCCarbonFlowsIn( const string& aRegionName,
+                                            const int aYear )
+{
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        mChildren[ i ]->calcLUCCarbonFlowsIn( aRegionName, aYear );
+    }
+}
+
+void LandNode::calcCarbonBoxModel( const string& aRegionName,
+                                           const int aYear )
+{
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        mChildren[ i ]->calcCarbonBoxModel( aRegionName, aYear );
+    }
+}
+
 void LandNode::setCarbonContent( const string& aLandType,
                                  const string& aProductName,
                                  const double aAboveGroundCarbon,
@@ -613,4 +654,8 @@ void LandNode::accept( IVisitor* aVisitor, const int aPeriod ) const {
         mChildren[i]->accept( aVisitor, aPeriod );
     }
     aVisitor->endVisitLandNode( this, aPeriod );
+}
+
+LandUseHistory* LandNode::getLandUseHistory(){
+	return( this->mLandUseHistory.get() );
 }

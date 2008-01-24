@@ -38,6 +38,7 @@ FoodProductionTechnology::FoodProductionTechnology( const string& aName, const i
     mAboveGroundCarbon = 0;
     mBelowGroundCarbon = 0;
     mHarvestedToCroppedLandRatio = 1;
+    mLUCPenaltyMultiplier = 0;
 }
 
 // ! Destructor
@@ -66,6 +67,9 @@ bool FoodProductionTechnology::XMLDerivedClassParse( const string& nodeName, con
     }
     else if( nodeName == "harvested-to-cropped-land-ratio" ){
         mHarvestedToCroppedLandRatio = XMLHelper<double>::getValue( curr );
+    }
+    else if( nodeName == "luc-carbon-penalty-multiplier" ){ //sjsTEMP -- add to output streams
+        mLUCPenaltyMultiplier = XMLHelper<double>::getValue( curr );
     }
     else if( nodeName == "below-ground-carbon" ){
         mBelowGroundCarbon = XMLHelper<double>::getValue( curr );
@@ -476,6 +480,13 @@ double FoodProductionTechnology::calcProfitRate( const string& aRegionName,
     double profitRate = ( marketplace->getPrice( aProductName, aRegionName, aPeriod ) + secondaryValue ) 
                          * CVRT_75_TO_90 - variableCost;
 
+    // Add carbon penalty
+    // Check if a carbon market exists and has a non-zero price.
+    double carbonPrice = marketplace->getPrice( "CO2", aRegionName, aPeriod, false );
+    if( carbonPrice != Marketplace::NO_MARKET_PRICE ){
+       profitRate -= mLUCPenaltyMultiplier * carbonPrice;
+    }
+    
     return profitRate;
 }
 

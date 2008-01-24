@@ -75,9 +75,14 @@ public:
 
     double getNetLandUseChangeEmission( const int aYear ) const;
 
+    virtual int getCarbonModelStartYear() const;
+
     virtual void printFileOutput() const;
     virtual void printDBOutput() const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
+    
+    static const std::string& getnetDefor80sName();
+
 private:
 
     bool isValidClimateModelYear( const int aYear ) const;
@@ -102,6 +107,9 @@ private:
     //! Name of the scenario.
     std::string mScenarioName;
 
+    //! Name of a GHG input file to use.
+    std::string mGHGInputFileName;
+
     //! A reference to the scenario's modeltime object.
     const Modeltime* mModeltime;
 
@@ -125,6 +133,9 @@ private:
 
     //! 1980s net terrestrial Deforestation (MAGICC Parameter DUSER)
     double mNetDeforestCarbFlux80s;
+
+    //! The year the carbon model should start running.
+    int mCarbonModelStartYear;
 };
 
 #endif // _MAGICC_MODEL_H_

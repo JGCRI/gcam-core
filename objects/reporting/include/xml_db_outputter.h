@@ -123,14 +123,17 @@ public:
     void startVisitGDP( const GDP* aGDP, const int aPeriod );
     void endVisitGDP( const GDP* aGDP, const int aPeriod );
 
+    void startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod );
+    void endVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod );
+
+    void startVisitCarbonBox( const CarbonBox* aCarbonBox, const int aPeriod );
+	void endVisitCarbonBox( const CarbonBox* aCarbonBox, const int aPeriod );
+
     void startVisitLandNode( const LandNode* aLandNode, const int aPeriod );
     void endVisitLandNode( const LandNode* aLandNode, const int aPeriod );
 
     void startVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod );
     void endVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod );
-
-    void startVisitCarbonCalc( const ICarbonCalc* aCarbon, const int aPeriod );
-    void endVisitCarbonCalc( const ICarbonCalc* aCarbon, const int aPeriod );
 
     void startVisitBaseTechnology( const BaseTechnology* aBaseTech, const int aPeriod );
     void endVisitBaseTechnology( const BaseTechnology* aBaseTech, const int aPeriod );

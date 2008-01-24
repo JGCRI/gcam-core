@@ -29,7 +29,7 @@
 using namespace std;
 
 /*!
- *\brief Constructor
+ * \brief Constructor
  * \param Name of the region in which tabulation is occurring. This only needs
  *        to be set if tabulation starts below the regional level.
  */

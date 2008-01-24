@@ -64,6 +64,14 @@ public:
                                    const double aIntrinsicRate,
                                    const int aPeriod );
     
+    virtual void calcYieldInternal( const std::string& aLandType,
+                                    const std::string& aProductName,
+                                    const std::string& aRegionName,
+                                    const double aProfitRate,
+                                    const double aAvgIntrinsicRate,
+                                    const int aHarvestPeriod,
+                                    const int aCurrentPeriod );
+    
 protected:
     // TODO: Create a Value class for ints and use it here.
     int mSteps; //!< number of model time steps for a rotation period

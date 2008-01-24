@@ -21,6 +21,7 @@
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/summary.h"
+#include <boost/noncopyable.hpp>
 
 // Forward declarations.
 class Demographic;
@@ -35,7 +36,7 @@ class GlobalTechnologyDatabase;
 * \author Sonny Kim
 */
 
-class Region: public IVisitable, public IRoundTrippable
+class Region: public IVisitable, public IRoundTrippable, protected boost::noncopyable
 {
     friend class XMLDBOutputter;
 public:
@@ -94,4 +95,3 @@ private:
 };
 
 #endif // _REGION_H_
-

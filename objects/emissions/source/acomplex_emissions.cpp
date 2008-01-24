@@ -391,14 +391,14 @@ double AComplexEmissions::controlFunction( const double maxCntrlIn, const double
 }
 
 /*! \brief adjusts maxCntrl (and then gdpcap0 to recalibrate emissions) based on the read in multiplier adjMaxCntrl
-*\ detailed adjMaxCntrl is a read in variable that represents a multiplier to maxCntrl.
-* This is used to adjust the maximum emissions control level while leaving current emissions constant.
-* the function multiplies maxCntrl by this value, and checks to make sure maxCntrl has not been
-* given a multiplier that makes it greater that 100.  If this happens, it sets maxCntrl to 100
-* and resets adjMaxCntrl to the value necessary to make maxCntrl 100.
-* It then solves the control function for gdpcap0, keeping the base year emissions the same,
-* so that changing maxCntrl does not mess with the base year calibrations.
-* Note also that adjustMaxCntrl is run only once, in the base year when and if adjMaxCntrl != 1
+* \ detailed adjMaxCntrl is a read in variable that represents a multiplier to maxCntrl.
+			This is used to adjust the maximum emissions control level while leaving current emissions constant.
+			the function multiplies maxCntrl by this value, and checks to make sure maxCntrl has not been
+			given a multiplier that makes it greater that 100.  If this happens, it sets maxCntrl to 100
+			and resets adjMaxCntrl to the value necessary to make maxCntrl 100.
+			It then solves the control function for gdpcap0, keeping the base year emissions the same,
+			so that changing maxCntrl does not mess with the base year calibrations.
+			Note also that adjustMaxCntrl is run only once, in the base year when and if adjMaxCntrl != 1
 * \author Nick Fernandez
 * \param GDPcap the previous periods GDP per capita in PPP terms for this region
 */
@@ -428,7 +428,7 @@ void AComplexEmissions::adjustMaxCntrl( const double GDPcap ){
 * The Variable TechCh represents the percent reduction in gdpcap0 per year, due to technological change and diffusion.
 * The overall reduction in gdpcap0 is 1 + the techCh percentage raised to the power of the number of years after 
 * the base year.  When applied to the control function, this will allow emissions controls to approach maxCntrl sooner.
-*\ Author Nick Fernandez
+* \ Author Nick Fernandez
 * \param period the current period where calculations occur
 * \returns amount to reduce the parameter gdpCap0 by
 */

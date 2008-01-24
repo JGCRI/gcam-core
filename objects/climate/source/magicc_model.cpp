@@ -61,14 +61,17 @@ const string MagiccModel::sGasNames[] = { "CO2",
 */
 MagiccModel::MagiccModel( const Modeltime* aModeltime ):
 mModeltime( aModeltime ),
-mIsValid( false )
+mIsValid( false ),
+mGHGInputFileName(""),
+mCarbonModelStartYear( 1975 ), // Need to have first model year here, but should be 1990 for MAGICC. FIX.
+mSoilTempFeedback( -1 ),
+mHumusTempFeedback( -1 ),
+mGPPTempFeedback( -1 ),
+mClimateSensitivity( -1 ),
+mNetDeforestCarbFlux80s( -1 ),
+mOceanCarbFlux80s( -1 )
 {
-    mSoilTempFeedback = -1;
-    mHumusTempFeedback = -1;
-    mGPPTempFeedback = -1;
-    mClimateSensitivity = -1;
-    mNetDeforestCarbFlux80s = -1;
-    mOceanCarbFlux80s = -1;
+
 }
 
 /*! \brief Complete the initialization of the MagiccModel.
@@ -153,6 +156,10 @@ void MagiccModel::XMLParse( const DOMNode* node ){
         if( nodeName == "#text" ) {
             continue;
         }
+        // GHG input file
+        else if ( nodeName == "ghgInputFileName" ){
+            mGHGInputFileName = XMLHelper<string>::getValue( curr );
+        }
         // Climate Sensitivity
         else if ( nodeName == "climateSensitivity" ){
             mClimateSensitivity = XMLHelper<double>::getValue( curr );
@@ -176,6 +183,9 @@ void MagiccModel::XMLParse( const DOMNode* node ){
         // 1980s net terrestrial Deforestation 
         else if ( nodeName == "deforestFlux80s" ){
             mNetDeforestCarbFlux80s = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "carbon-model-start-year" ){
+            mCarbonModelStartYear = XMLHelper<int>::getValue( curr );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -265,6 +275,30 @@ bool MagiccModel::isValidClimateModelYear( const int aYear ) const {
 bool MagiccModel::setEmissions( const string& aGasName, const int aPeriod, const double aEmission ){
     // Lookup the gas index.
     const int gasIndex = getGasIndex( aGasName );
+    
+    // Capture special case where are setting 80s deforestation. 
+    // If carbon-model is present, set 80s deforestation to be consistent with this model
+    if ( aGasName == getnetDefor80sName() ) {
+        // Check to see if carbon model is present. Should a dedicated function return this?
+        if ( mCarbonModelStartYear < 1950 ) {
+             // Set 80s netDeforestation parameters in MAGICC
+            int varIndex = 5;
+            double tempValue = aEmission; // must pass to fortran by ref
+            SETPARAMETERVALUES( varIndex, tempValue );
+        } 
+        else {
+            // Check if are tring to set netDeforestation emissions and return if so
+            // since carbon model is not present.
+            if ( gasIndex == getGasIndex( "CO2NetLandUse" ) ) {
+                return true;
+            }
+        }
+        return true;
+        
+       // Looks like emissions are summed a twice, in RegionMiniCAM::calcEmissions
+       // and also World::runClimateModel. 
+       // TODO - is that necessary?
+    }
     
     // Check for error.
     if( gasIndex == INVALID_GAS_NAME ){
@@ -550,6 +584,11 @@ double MagiccModel::getTotalForcing( const int aYear ) const {
 #endif
 }
 
+
+int MagiccModel::getCarbonModelStartYear() const {
+    return mCarbonModelStartYear;
+}
+
 /*! \brief Write out data from the emissions model to the main csv output file.*/
 void MagiccModel::printFileOutput() const {
     void fileoutput3(string var1name,string var2name,string var3name,
@@ -722,8 +761,12 @@ int MagiccModel::getGasIndex( const string& aGasName ) const {
 * \todo make routine more general to interpolate between read-in periods if necessary to get model data
 */
 void MagiccModel::readFile(){
-    // Open up the file with all the gas data and read it in.
-    const string gasFileName = Configuration::getInstance()->getFile( "GHGInputFileName" );
+    // Open up the file with default emissions data and read it in.
+    // Default to value given in config file, but use read-in value if that exists
+    string gasFileName = Configuration::getInstance()->getFile( "GHGInputFileName" );
+    if ( mGHGInputFileName != "" ) {
+        gasFileName = mGHGInputFileName;
+    }
     ifstream inputGasFile;
     inputGasFile.open( gasFileName.c_str(), ios::in ); // open input file for reading
     util::checkIsOpen( inputGasFile, gasFileName );
@@ -759,4 +802,12 @@ void MagiccModel::readFile(){
         inputGasFile.ignore( 80, '\n' ); // next line
     }
     inputGasFile.close();
+}
+
+/*! \brief Return the name of the XML node for this object.
+* \return The XML element name for the object.
+*/
+const string& MagiccModel::getnetDefor80sName(){
+    const static string NET_DEF_80s_NAME = "netDef80s";
+    return NET_DEF_80s_NAME;
 }

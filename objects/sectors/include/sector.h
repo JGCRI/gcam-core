@@ -20,6 +20,7 @@
 #include "containers/include/national_account.h" // lets use an auto_ptr instead.
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
+#include "util/base/include/inamed.h"
 #include "util/base/include/object_meta_info.h"
 
 // Forward declarations
@@ -50,7 +51,9 @@ class GlobalTechnologyDatabase;
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
 
-class Sector: public IVisitable, public IRoundTrippable
+class Sector: public IVisitable,
+              public IRoundTrippable,
+              public INamed
 {
     // TODO: Remove the need for these.
     friend class SocialAccountingMatrix;
@@ -112,7 +115,7 @@ protected:
 public:
     explicit Sector( const std::string& aRegionName );
     virtual ~Sector();
-    const std::string& getName() const;
+    virtual const std::string& getName() const;
     virtual void XMLParse( const xercesc::DOMNode* node );
     virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;

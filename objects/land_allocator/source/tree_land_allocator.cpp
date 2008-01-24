@@ -11,6 +11,10 @@
 #include "land_allocator/include/tree_land_allocator.h"
 #include "containers/include/scenario.h"
 #include "containers/include/iinfo.h"
+#include "util/base/include/model_time.h"
+#include "ccarbon_model/include/carbon_model_utils.h"
+#include "util/base/include/configuration.h"
+#include "ccarbon_model/include/luc_carbon_summer.h"
 
 using namespace std;
 using namespace xercesc;
@@ -20,9 +24,12 @@ extern Scenario* scenario;
 /*!
  * \brief Constructor.
  * \author James Blackwood
+\todo Change initialization of mCalculated so that is independent of when carbon model is initialized
  */
 TreeLandAllocator::TreeLandAllocator()
-: LandNode( 0 ), mCalDataExists( false )
+: LandNode( 0 ),
+  mCalDataExists( false ), 
+  mCalculated( CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear() )
 {
 }
 
@@ -44,7 +51,7 @@ const string& TreeLandAllocator::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const string& TreeLandAllocator::getXMLNameStatic() {
-    const static string XML_NAME = "LandAllocatorRoot";
+    const static string XML_NAME = "LandAllocatorRoot";    // original XML tag
     return XML_NAME;
 }
 
@@ -372,8 +379,7 @@ void TreeLandAllocator::setInitShares( const string& aRegionName,
 double TreeLandAllocator::calcLandShares( const string& aRegionName,
                                           const double aSigmaAbove,
                                           const double aTotalBaseLand,
-                                          const int aPeriod )
-{
+                                          const int aPeriod ){
     // First adjust value of unmanaged land nodes
     setUnmanagedLandValues( aRegionName, aPeriod );
 
@@ -386,16 +392,36 @@ double TreeLandAllocator::calcLandShares( const string& aRegionName,
 
 void TreeLandAllocator::calcLandAllocation( const string& aRegionName,
                                             const double aLandAllocationAbove,
-                                            const int aPeriod )
-{
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+                                            const int aPeriod ){
+    for ( unsigned int i = 0; i < mChildren.size(); ++i ){
         mChildren[ i ]->calcLandAllocation( aRegionName, mLandAllocation[ aPeriod ], aPeriod );
     }
 }
 
+void TreeLandAllocator::calcLUCCarbonFlowsOut( const string& aRegionName, 
+                                                   const int aYear ){
+    for ( unsigned int i = 0; i < mChildren.size(); ++i ){
+        mChildren[ i ]->calcLUCCarbonFlowsOut( aRegionName, aYear );
+    }
+}
+
+void TreeLandAllocator::calcLUCCarbonFlowsIn( const string& aRegionName, 
+                                                     const int aYear ){
+    for ( unsigned int i = 0; i < mChildren.size(); ++i ){
+        mChildren[ i ]->calcLUCCarbonFlowsIn( aRegionName, aYear );
+    }
+}
+
+void TreeLandAllocator::calcCarbonBoxModel( const string& aRegionName, 
+                                                    const int aYear ){
+    for ( unsigned int i = 0; i < mChildren.size(); ++i ){
+        mChildren[ i ]->calcCarbonBoxModel( aRegionName, aYear );
+    }
+}
+
+
 void TreeLandAllocator::calcFinalLandAllocation( const string& aRegionName,
-                                                 const int aPeriod )
-{
+                                                 const int aPeriod ){
     calcLandShares( aRegionName,
                     0, // No sigma above the root.
                     0, // No land allocation above the root.
@@ -404,6 +430,45 @@ void TreeLandAllocator::calcFinalLandAllocation( const string& aRegionName,
     calcLandAllocation( aRegionName,
                         0, // No land allocation above the root.
                         aPeriod );
+
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int timeStep = modeltime->gettimestep( aPeriod );
+    const int calcYear = modeltime->getper_to_yr( aPeriod );
+    // Find any years up to the current period that have not been calculated.
+    for( int i = CarbonModelUtils::getStartYear(); i <= calcYear - timeStep; ++i ){
+        // If model crashes here on an assert in the YearVector then this is likely because 
+        // mCarbonModelStartYear was read in after the first item in the landallocator.
+        if( !mCalculated[ i ] ){
+            calcFinalLandAllocationHelper( aRegionName, i );
+            mCalculated[ i ] = true;
+        }
+    }
+    
+    // Always calculate for the years since the previous time step
+    int start = calcYear - modeltime->gettimestep( modeltime->getyr_to_per( calcYear ) ) + 1;
+    start = max( start, static_cast<int>(CarbonModelUtils::getStartYear()) );
+    for( int i = start; i <= calcYear; ++i ){
+        calcFinalLandAllocationHelper( aRegionName, i );
+    }
+}
+
+/*!
+ * \brief Helper function to call each phase of land use calculation.
+ * \details Land use calculation must be formed in phases for each year.
+            This function calls each phase.
+ * \param aRegionName the name of the region.
+ * \param aYear the year the calculate.
+ */
+void TreeLandAllocator::calcFinalLandAllocationHelper( const string& aRegionName,
+                                                       const int aYear ){
+    // The Summerbox must reset the total carbon value
+    CarbonSummer::getInstance()->resetState( aYear ); 
+    // This must be done first
+    calcLUCCarbonFlowsOut( aRegionName, aYear );
+    // This must be done second
+    calcLUCCarbonFlowsIn( aRegionName, aYear );
+    // This must be done third
+    calcCarbonBoxModel( aRegionName, aYear );
 }
 
 void TreeLandAllocator::setCarbonContent( const string& aLandType,

@@ -20,6 +20,10 @@
 #include "util/base/include/ivisitor.h"
 #include "emissions/include/production_carbon_calc.h"
 #include "containers/include/iinfo.h"
+#include "ccarbon_model/include/acarbon_flow.h"
+#include "land_allocator/include/land_use_history.h"
+#include "ccarbon_model/include/carbon_model_utils.h"
+#include <typeinfo>
 
 using namespace std;
 using namespace xercesc;
@@ -38,6 +42,7 @@ ALandAllocatorItem( aParent, eLeaf ),
 mIntrinsicYieldMode( 0 ),
 mYield( scenario->getModeltime()->getmaxper(), -1 ),
 mCalObservedYield( 0 ),
+mLandUseHistory( 0 ),
 mCalDataExists( false ),
 mIntrinsicYieldModeAgProdMultiplier ( 1 ),
 // Give enough room and re-size later
@@ -45,7 +50,7 @@ mAgProdChange( scenario->getModeltime()->getmaxper() + 15 )
 {
     // Can't use initializer because mName is a member of ALandAllocatorItem,
     // not LandLeaf.
-    mName = aName;
+    this->mName = aName;
 }
 
 //! Destructor
@@ -68,7 +73,7 @@ ALandAllocatorItem* LandLeaf::getChildAt( const size_t aIndex ) {
     return 0;
 }
 
-bool LandLeaf::XMLParse( const DOMNode* aNode ){
+bool LandLeaf::XMLParse( const xercesc::DOMNode* aNode ){
 
     // assume we are passed a valid node.
     assert( aNode );
@@ -97,7 +102,7 @@ bool LandLeaf::XMLParse( const DOMNode* aNode ){
     return true;
 }
 
-bool LandLeaf::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurr ){
+bool LandLeaf::XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurr ){
     // Allow derived classes to override.
     return false;
 }
@@ -124,6 +129,9 @@ void LandLeaf::completeInit( const string& aRegionName,
     // Set the carbon cycle object if it has not already been initialized. Use a
     // virtual function so that derived leaves may use a different default type.
     initCarbonCycle();
+
+    // Initialize the carbon-cycle object, passing in the conceptual root key
+    mCarbonContentCalc->completeInit( CarbonModelUtils::getConceptualRootKey( this ) );
 
     // Ensure that a carbon cycle object has been setup.
     assert( mCarbonContentCalc.get() );
@@ -263,6 +271,7 @@ void LandLeaf::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) c
     XMLWriteElement( mCalObservedYield[ period ], "calObservedYield", out, tabs );
     XMLWriteElement( mYield[ period ], "yield", out, tabs );
     XMLWriteElement( mAgProdChange[ period ], "agProdChange", out, tabs );
+    XMLWriteElement( mIntrinsicYieldModeAgProdMultiplier[ period ], "agProdMultiplier", out, tabs );
     XMLWriteElement( mInterestRate, "interest-rate", out, tabs );
     mCarbonContentCalc->toDebugXML( period, out, tabs );
 }
@@ -371,6 +380,7 @@ void LandLeaf::applyAgProdChange( const string& aLandType,
                                   const int aHarvestPeriod, 
                                   const int aCurrentPeriod )
 {
+    assert( aProductName == mName );
     assert( mIntrinsicYieldMode[ aCurrentPeriod ].isInited() );
 
     double previousAgProdChange = 1;
@@ -396,9 +406,7 @@ void LandLeaf::applyAgProdChange( const string& aLandType,
         previousAgProdChange = mAgProdChange[ aPeriod ];
     }
 
-    // Adjust the intrinsic yield mode by cumulative prod change
-    // This function must be called only once for each period or else 
-    // agprod change will be double counted
+    // Save amount the intrinsic yield mode is to be adjusted by cumulative prod change
     mIntrinsicYieldModeAgProdMultiplier[ aCurrentPeriod ] = mAgProdChange[ aHarvestPeriod ];
 }
 
@@ -434,20 +442,30 @@ void LandLeaf::calcLandAllocation( const string& aRegionName,
 
     mLandAllocation[ aPeriod ] = aLandAllocationAbove * mShare[ aPeriod ];
 
-    // Set the amount of land use change into the carbon content calculator.
+    // Set the amount of land use change in the carbon content calculator.
     mCarbonContentCalc->setTotalLandUse( mLandAllocation[ aPeriod ], aPeriod );
 
-    // Calculate carbon emissions.
-    // TODO: Better location.
-    mCarbonContentCalc->calc( aPeriod );
-
     // Add emissions to the carbon market.
-    // TODO: Determine how to handle this correctly.
-    // Marketplace* marketplace = scenario->getMarketplace();
-    // const int year = scenario->getModeltime()->getper_to_yr( aPeriod );
-    // double emissions = mCarbonContentCalc->getNetLandUseChangeEmission( year );
-    // 
-    // marketplace->addToDemand( "CO2", aRegionName, emissions, aPeriod, false );
+    // Land-use emissions should not be in the market. 
+    // This can never be stable with a 15-year solution period as this is an implied c-cycle inversion.
+}
+
+
+void LandLeaf::calcLUCCarbonFlowsOut( const string& aRegionName,
+                                          const int aYear ){
+    mCarbonContentCalc->setLandUseValue( aYear );
+    mCarbonContentCalc->calcLandUseChange( aYear, eLUCFlowOut );
+}
+
+
+void LandLeaf::calcLUCCarbonFlowsIn( const string& aRegionName,
+                                            const int aYear ){
+    mCarbonContentCalc->calcLandUseChange( aYear, eLUCFlowIn );
+}
+
+void LandLeaf::calcCarbonBoxModel( const string& aRegionName,
+                                           const int aYear ){
+    mCarbonContentCalc->calc( aYear );
 }
 
 void LandLeaf::calcYieldInternal( const string& aLandType,
@@ -598,4 +616,14 @@ void LandLeaf::accept( IVisitor* aVisitor, const int aPeriod ) const {
         mCarbonContentCalc->accept( aVisitor, aPeriod );
     }
     aVisitor->endVisitLandLeaf( this, aPeriod );
+}
+
+void LandLeaf::copyCarbonBoxModel( const ICarbonCalc *aCarbonCalc ) {
+    if ( aCarbonCalc != NULL ){
+        this->mCarbonContentCalc.reset( aCarbonCalc->clone() );
+    }    
+}
+
+ICarbonCalc* LandLeaf::getCarbonContentCalc() const{
+    return ( mCarbonContentCalc.get() );
 }

@@ -35,12 +35,16 @@ public:
     virtual void finish() const {}
     virtual void startVisitScenario( const Scenario* aScenario, const int aPeriod ){}
     virtual void endVisitScenario( const Scenario* aScenario, const int aPeriod ){}
+
     virtual void startVisitWorld( const World* aWorld, const int aPeriod ){}
     virtual void endVisitWorld( const World* aWorld, const int aPeriod ){}
+
     virtual void startVisitRegion( const Region* aRegion, const int aPeriod ){}
     virtual void endVisitRegion( const Region* aRegion, const int aPeriod ){}
+
     virtual void startVisitRegionMiniCAM( const RegionMiniCAM* aRegionMiniCAM, const int aPeriod ){}
     virtual void endVisitRegionMiniCAM( const RegionMiniCAM* aRegionMiniCAM, const int aPeriod ){}
+
     virtual void startVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod ){}
     virtual void endVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod ){}
     
@@ -82,10 +86,13 @@ public:
 
     virtual void startVisitSector( const Sector* aSector, const int aPeriod ){}
     virtual void endVisitSector( const Sector* aSector, const int aPeriod ){}
+
     virtual void startVisitDemandSector( const DemandSector* aDemandSector, const int aPeriod ){}
     virtual void endVisitDemandSector( const DemandSector* aDemandSector, const int aPeriod ){}
+
     virtual void startVisitProductionSector( const ProductionSector* aProdSector, const int aPeriod ){}
     virtual void endVisitProductionSector( const ProductionSector* aProdSector, const int aPeriod ){}
+
     virtual void startVisitSubsector( const Subsector* aSubsector, const int aPeriod ){}
     virtual void endVisitSubsector( const Subsector* aSubsector, const int aPeriod ){}
 
@@ -148,8 +155,10 @@ public:
 
     virtual void startVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod ){}
     virtual void endVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod ){}
+
     virtual void startVisitMarketplace( const Marketplace* aMarketplace, const int aPeriod ){}
     virtual void endVisitMarketplace( const Marketplace* aMarketplace, const int aPeriod ){}
+
     virtual void startVisitMarket( const Market* aMarket, const int aPeriod ){}
     virtual void endVisitMarket( const Market* aMarket, const int aPeriod ){}
 
@@ -162,8 +171,20 @@ public:
     virtual void startVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod ){}
     virtual void endVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod ){}
 
+	virtual void startVisitLandUseHistory( const LandUseHistory* aLandUseHistory, const int aPeriod ){};
+	virtual void endVisitLandUseHistory( const LandUseHistory* aLandUseHistory, const int aPeriod ){};
+
     virtual void startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ){}
     virtual void endVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ){}
+	
+    virtual void startVisitCarbonBox( const CarbonBox* aCarbonBox, const int aPeriod ){};
+    virtual void endVisitCarbonBox( const CarbonBox* aCarbonBox, const int aPeriod ){};
+
+    virtual void startVisitNPP( const NPP* aNPP, const int aPeriod ){}
+    virtual void endVisitNPP( const NPP* aNPP, const int aPeriod ){}
+
+    virtual void startVisitCarbonFlow( const ACarbonFlow* aCarbonFlow, const int aPeriod ){}
+    virtual void endVisitCarbonFlow( const ACarbonFlow* aCarbonFlow, const int aPeriod ){}
 
     virtual void startVisitAgSector( const AgSector* aAgSector, const int aPeriod ){}
     virtual void endVisitAgSector( const AgSector* aAgSector, const int aPeriod ){}

@@ -505,7 +505,7 @@ double Sector::getPrice( const GDP* aGDP, const int aPeriod ) const {
     }
 
    // Check if the overall price is zero, this would cause infinite demand.
-   if( sectorPrice < util::getSmallNumber() ){
+   if( sectorPrice < util::getSmallNumber() && 1==2){ //sjsTEMP do not commit
       ILogger& mainLog = ILogger::getLogger( "main_log" );
       mainLog.setLevel( ILogger::DEBUG );
       mainLog << "Zero price for sector " << name << " in region " << regionName

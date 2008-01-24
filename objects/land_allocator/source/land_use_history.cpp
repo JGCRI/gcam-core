@@ -19,9 +19,13 @@
 #include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "land_allocator/include/land_use_history.h"
+#include "util/base/include/ivisitor.h"
 
 using namespace std;
 using namespace xercesc;
+
+//! Map type for land allocations by year.
+typedef std::map<unsigned int, double> LandMapType;
 
 const string& LandUseHistory::getXMLNameStatic(){
     static const string XML_NAME = "land-use-history";
@@ -35,7 +39,12 @@ LandUseHistory::LandUseHistory()
 {
 }
 
-bool LandUseHistory::XMLParse( const DOMNode* aNode ){
+LandUseHistory::LandUseHistory(const LandUseHistory &aLandUseHistory){
+	this->mHistoricalLand = aLandUseHistory.mHistoricalLand;
+}
+
+
+bool LandUseHistory::XMLParse( const xercesc::DOMNode* aNode ){
 
     // assume we are passed a valid node.
     assert( aNode );
@@ -104,7 +113,7 @@ void LandUseHistory::toDebugXML( const int aPeriod,
 void LandUseHistory::accept( IVisitor* aVisitor,
                              const int aPeriod ) const 
 {
-    // TODO: Implement
+    // This is not called because land-use history information is printed out in the leaf instead
 }
 
 /*!
@@ -153,31 +162,45 @@ double LandUseHistory::getAllocation( const unsigned int aYear ) const {
         return 0;
     }
 
+    // If the year is above the maximum year, assume
+    // constant allocations after the last year.
+    if( aYear >= getMaxYear() ){
+        return mHistoricalLand.rbegin()->second;
+    }
+
+    // If the year is below the minimum year, assume
+    // constant allocations before the first year.
+    if( aYear <= getMinYear() ){
+        return mHistoricalLand.begin()->second;
+    }
+
     // Find the first element with a key either equal or greater than the year.
     // Note: The STL function is named strangely. This is the upper bound.
     LandMapType::const_iterator upperBound = mHistoricalLand.lower_bound( aYear );
 
-    // If the bound does not exist the year is above the maximum year. Assume
-    // constant allocations after the last year.
-    if( upperBound == mHistoricalLand.end() ){
-        return mHistoricalLand.rbegin()->second;
-    }
-
-    // Check if the upper bound is the correct year.
+    // Check if the upper bound is one of the read-in years.
     if( upperBound->first == aYear ){
         return upperBound->second;
     }
     
     // Find the previous element from the upper bound.
     LandMapType::const_iterator lowerBound = upperBound;
-
-    // If there is no previous element the value is below the minimum year.
-    // Assume constant allocations before the min year.
-    if( --lowerBound == mHistoricalLand.end() ){
-        return mHistoricalLand.begin()->second;
-    }
+    --lowerBound;
 
     // Perform a linear interpolation to find the correct value.
     return util::linearInterpolateY( aYear, lowerBound->first, upperBound->first,
                                      lowerBound->second, upperBound->second );
+
+}
+
+const LandMapType LandUseHistory::getHistoricalLand() const {
+	return mHistoricalLand;
+}
+
+void LandUseHistory::printHistory() const {
+	 for( LandMapType::const_iterator i = mHistoricalLand.begin();
+         i != mHistoricalLand.end(); ++i )
+    {
+		std::cout<<i->second<<" "<<i->first<<endl;
+    }
 }

@@ -90,6 +90,9 @@ protected:
     //! Measure of multiple cropping
     double mHarvestedToCroppedLandRatio;
 
+    //! Multiplier on profit penalty due to LUC emissions
+    double mLUCPenaltyMultiplier;
+
     //! Amount of above ground carbon(unit?).
     double mAboveGroundCarbon;
 

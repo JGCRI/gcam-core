@@ -100,6 +100,8 @@ public:
    
     virtual void calcFinalLandAllocation( const std::string& aRegionName, 
                                           const int aPeriod );
+    void calcFinalLandAllocationHelper( const std::string& aRegionName,
+                                        const int aYear );
 
     virtual void completeInit( const std::string& aRegionName, 
                                const IInfo* aRegionInfo );
@@ -135,7 +137,15 @@ public:
 
      virtual void calcLandAllocation( const std::string& aRegionName,
                                      const double aLandAllocationAbove,
-                                     const int aPeriod );
+                                     const int aYear );
+     virtual void calcLUCCarbonFlowsOut( const std::string& aRegionName,
+                                             const int aYear );
+
+    virtual void calcLUCCarbonFlowsIn( const std::string& aRegionName,
+                                              const int aYear );
+
+    virtual void calcCarbonBoxModel( const std::string& aRegionName,
+                                             const int aYear );
 protected:
     virtual const std::string& getXMLName() const;
 
@@ -147,6 +157,9 @@ protected:
 private:
     //! Land allocated in 1000's of hectares
     objects::PeriodVector<Value> mLandAllocation;
+
+    //! Boolean storing whether a year has been calculated or not.
+    objects::YearVector<bool> mCalculated;
 
     //! Flag to indicate that calibration data is present
     objects::PeriodVector<bool> mCalDataExists;

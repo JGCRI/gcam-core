@@ -177,6 +177,9 @@
 					RelativePath="..\..\containers\source\scenario_runner_factory.cpp">
 				</File>
 				<File
+					RelativePath="..\..\containers\source\sector_cycle_breaker.cpp">
+				</File>
+				<File
 					RelativePath="..\..\containers\source\single_scenario_runner.cpp">
 				</File>
 				<File
@@ -734,6 +737,12 @@
 				Name="reporting"
 				Filter="">
 				<File
+					RelativePath="..\..\reporting\source\complex_carbon_dot_printer.cpp">
+				</File>
+				<File
+					RelativePath="..\..\reporting\source\complex_carbon_printer.cpp">
+				</File>
+				<File
 					RelativePath="..\..\reporting\source\demand_components_table.cpp">
 				</File>
 				<File
@@ -880,6 +889,58 @@
 					</FileConfiguration>
 				</File>
 			</Filter>
+			<Filter
+				Name="ccarbon_model"
+				Filter="">
+				<File
+					RelativePath="..\..\ccarbon_model\source\acarbon_flow.cpp">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\acarbon_stock.cpp">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\box_flow.cpp">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\carbon_box.cpp">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\carbon_box_model.cpp">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\carbon_flow_factory.cpp">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\carbon_model_utils.cpp">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\carbon_stock.cpp">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\environmental_info.cpp">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\luc_carbon_summer.cpp">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\luc_carbon_summer_stock.cpp">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\luc_carbon_summer_sub_container.cpp">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\luc_flow_in_to_box.cpp">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\luc_flow_in_to_box_model.cpp">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\luc_flow_out.cpp">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\npp.cpp">
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -895,6 +956,9 @@
 				</File>
 				<File
 					RelativePath="..\..\containers\include\gdp.h">
+				</File>
+				<File
+					RelativePath="..\..\containers\include\icycle_breaker.h">
 				</File>
 				<File
 					RelativePath="..\..\containers\include\iinfo.h">
@@ -934,6 +998,9 @@
 				</File>
 				<File
 					RelativePath="..\..\containers\include\scenario_runner_factory.h">
+				</File>
+				<File
+					RelativePath="..\..\containers\include\sector_cycle_breaker.h">
 				</File>
 				<File
 					RelativePath="..\..\containers\include\single_scenario_runner.h">
@@ -1435,6 +1502,9 @@
 						RelativePath="..\..\util\base\include\hash_map.h">
 					</File>
 					<File
+						RelativePath="..\..\util\base\include\inamed.h">
+					</File>
+					<File
 						RelativePath="..\..\util\base\include\input_finder.h">
 					</File>
 					<File
@@ -1556,6 +1626,12 @@
 			<Filter
 				Name="reporting"
 				Filter="">
+				<File
+					RelativePath="..\..\reporting\include\complex_carbon_dot_printer.h">
+				</File>
+				<File
+					RelativePath="..\..\reporting\include\complex_carbon_printer.h">
+				</File>
 				<File
 					RelativePath="..\..\reporting\include\demand_components_table.h">
 				</File>
@@ -1728,6 +1804,64 @@
 				</File>
 				<File
 					RelativePath="..\..\investment\include\simple_expected_profit_calculator.h">
+				</File>
+			</Filter>
+			<Filter
+				Name="ccarbon_model"
+				Filter="">
+				<File
+					RelativePath="..\..\ccarbon_model\include\acarbon_flow.h">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\acarbon_stock.h">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\box_flow.h">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\carbon_box.h">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\carbon_box_model.h">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\carbon_flow_factory.h">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\carbon_model_utils.h">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\carbon_stock.h">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\environmental_info.h">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\icarbon_container.h">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\icarbon_stock.h">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\luc_carbon_summer.h">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\luc_carbon_summer_stock.h">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\luc_carbon_summer_sub_container.h">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\luc_flow_in_to_box.h">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\luc_flow_in_to_box_model.h">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\luc_flow_out.h">
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\npp.h">
 				</File>
 			</Filter>
 		</Filter>

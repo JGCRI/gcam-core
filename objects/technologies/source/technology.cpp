@@ -595,10 +595,9 @@ void Technology::setProductionState( const int aPeriod ){
     // PolicyTargetRunner crashes on this in debug mode -- evidently objects are initialized more than once
     // So comment out for debugging.
     assert( !mProductionState[ aPeriod ] );
-    
+    double initialOutput = 0;
     const Modeltime* modeltime = scenario->getModeltime();
-    double initialOutput =
-        mOutputs[ 0 ]->getPhysicalOutput( modeltime->getyr_to_per( year ) );
+    initialOutput = mOutputs[ 0 ]->getPhysicalOutput( modeltime->getyr_to_per( year ) );
     
     mProductionState[ aPeriod ] =
         ProductionStateFactory::create( year, mLifetimeYears, mFixedOutput,

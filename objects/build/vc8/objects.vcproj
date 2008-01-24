@@ -48,6 +48,7 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
+				TreatWChar_tAsBuiltInType="false"
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="util/base/include/definitions.h"
@@ -135,6 +136,193 @@
 				AdditionalIncludeDirectories="&quot;..\..\..\..\libs\xerces-c-src_2_7_0\src&quot;;&quot;..\..\..\..\libs\boost-lib\&quot;;..\..\..\..\libs\dbxml\include;&quot;..\..\..\..\libs\mtl-2.1.2-21&quot;;..\.."
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;"
 				StringPooling="true"
+				MinimalRebuild="true"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="true"
+				TreatWChar_tAsBuiltInType="false"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="util/base/include/definitions.h"
+				WarningLevel="0"
+				Detect64BitPortabilityProblems="false"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="libdb43.lib libdbxml22.lib ddao36.lib xerces-c_2.lib magicc.lib aglu.lib"
+				OutputFile="$(OutDir)/../Objects-1_0.exe"
+				LinkIncremental="1"
+				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="..\..\..\..\libs\access;..\..\..\..\libs\dbxml\lib;&quot;..\..\..\..\libs\xerces-c-src_2_7_0\lib&quot;;..\..\..\..\libs\magicclib\lib;..\..\..\..\libs\AgLib\lib"
+				IgnoreDefaultLibraryNames=""
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				OptimizeForWindows98="1"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="ReleaseQuickLink|Win32"
+			OutputDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			CharacterSet="2"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="/WL"
+				Optimization="0"
+				InlineFunctionExpansion="2"
+				OmitFramePointers="true"
+				WholeProgramOptimization="false"
+				AdditionalIncludeDirectories="&quot;..\..\..\..\libs\xerces-c-src_2_7_0\src&quot;;&quot;..\..\..\..\libs\boost-lib\&quot;;..\..\..\..\libs\dbxml\include;&quot;..\..\..\..\libs\mtl-2.1.2-21&quot;;..\.."
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;"
+				StringPooling="true"
+				MinimalRebuild="true"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="true"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="util/base/include/definitions.h"
+				WarningLevel="3"
+				Detect64BitPortabilityProblems="false"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="libdb43.lib libdbxml22.lib ddao36.lib xerces-c_2.lib magicc.lib aglu.lib"
+				OutputFile="$(OutDir)/../Objects-1_0.exe"
+				LinkIncremental="1"
+				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="..\..\..\..\libs\access;..\..\..\..\libs\dbxml\lib;&quot;..\..\..\..\libs\xerces-c-src_2_7_0\lib&quot;;..\..\..\..\libs\magicclib\lib;..\..\..\..\libs\AgLib\lib"
+				IgnoreDefaultLibraryNames=""
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				OptimizeForWindows98="1"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="DebugFast|Win32"
+			OutputDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			CharacterSet="2"
+			WholeProgramOptimization="0"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="/WL /wo4390"
+				Optimization="0"
+				InlineFunctionExpansion="0"
+				OmitFramePointers="true"
+				WholeProgramOptimization="false"
+				AdditionalIncludeDirectories="&quot;..\..\..\..\libs\xerces-c-src_2_7_0\src&quot;;&quot;..\..\..\..\libs\boost-lib\&quot;;..\..\..\..\libs\dbxml\include;&quot;..\..\..\..\libs\mtl-2.1.2-21&quot;;..\.."
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;"
+				StringPooling="false"
 				MinimalRebuild="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -259,6 +447,10 @@
 				</File>
 				<File
 					RelativePath="..\..\containers\source\scenario_runner_factory.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\containers\source\sector_cycle_breaker.cpp"
 					>
 				</File>
 				<File
@@ -507,6 +699,10 @@
 				</File>
 				<File
 					RelativePath="..\..\sectors\source\capacity_limit_backup_calculator.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\sectors\source\CSP_backup_calculator.cpp"
 					>
 				</File>
 				<File
@@ -786,6 +982,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\technologies\source\solar_technology.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\technologies\source\standard_capture_component.cpp"
 					>
 				</File>
@@ -802,7 +1002,12 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\technologies\source\unmanaged_land_technology.cpp">
+					RelativePath="..\..\technologies\source\unmanaged_land_technology.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\variable_production_state.cpp"
+					>
 				</File>
 				<File
 					RelativePath="..\..\technologies\source\variable_production_state.cpp"
@@ -980,6 +1185,14 @@
 			<Filter
 				Name="reporting"
 				>
+				<File
+					RelativePath="..\..\reporting\source\complex_carbon_dot_printer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\reporting\source\complex_carbon_printer.cpp"
+					>
+				</File>
 				<File
 					RelativePath="..\..\reporting\source\demand_components_table.cpp"
 					>
@@ -1163,6 +1376,90 @@
 							UsePrecompiledHeader="1"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseQuickLink|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="1"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="DebugFast|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="1"
+						/>
+					</FileConfiguration>
+				</File>
+			</Filter>
+			<Filter
+				Name="ccarbon_model"
+				>
+				<File
+					RelativePath="..\..\ccarbon_model\source\acarbon_flow.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\acarbon_stock.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\box_flow.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\carbon_box.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\carbon_box_model.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\carbon_flow_factory.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\carbon_model_utils.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\carbon_stock.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\environmental_info.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\luc_flow_in_to_box.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\luc_flow_in_to_box_model.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\luc_flow_out.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\npp.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\summer_box.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\summer_carbon_stock.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\source\summer_sub_container.cpp"
+					>
 				</File>
 			</Filter>
 		</Filter>
@@ -1183,6 +1480,10 @@
 				</File>
 				<File
 					RelativePath="..\..\containers\include\gdp.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\containers\include\icycle_breaker.h"
 					>
 				</File>
 				<File
@@ -1239,6 +1540,10 @@
 				</File>
 				<File
 					RelativePath="..\..\containers\include\scenario_runner_factory.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\containers\include\sector_cycle_breaker.h"
 					>
 				</File>
 				<File
@@ -1510,6 +1815,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\sectors\include\CSP_backup_calculator.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\sectors\include\demand_sector.h"
 					>
 				</File>
@@ -1629,6 +1938,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\util\base\include\inamed.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\util\base\include\input_finder.h"
 						>
 					</File>
@@ -1650,6 +1963,10 @@
 					</File>
 					<File
 						RelativePath="..\..\util\base\include\model_time.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\util\base\include\name_equals.h"
 						>
 					</File>
 					<File
@@ -1781,6 +2098,14 @@
 			<Filter
 				Name="reporting"
 				>
+				<File
+					RelativePath="..\..\reporting\include\complex_carbon_dot_printer.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\reporting\include\complex_carbon_printer.h"
+					>
+				</File>
 				<File
 					RelativePath="..\..\reporting\include\demand_components_table.h"
 					>
@@ -2230,6 +2555,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\technologies\include\solar_technology.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\technologies\include\standard_capture_component.h"
 					>
 				</File>
@@ -2246,7 +2575,8 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\technologies\include\unmanaged_land_technology.h">
+					RelativePath="..\..\technologies\include\unmanaged_land_technology.h"
+					>
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\variable_production_state.h"
@@ -2258,6 +2588,82 @@
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\wind_technology.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="ccarbon_model"
+				>
+				<File
+					RelativePath="..\..\ccarbon_model\include\acarbon_flow.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\acarbon_stock.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\box_flow.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\carbon_box.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\carbon_box_model.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\carbon_flow_factory.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\carbon_model_utils.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\carbon_stock.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\environmental_info.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\icarbon_container.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\icarbon_stock.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\luc_flow_in_to_box.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\luc_flow_in_to_box_model.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\luc_flow_out.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\npp.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\summer_box.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\summer_carbon_stock.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\ccarbon_model\include\summer_sub_container.h"
 					>
 				</File>
 			</Filter>

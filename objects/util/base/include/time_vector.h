@@ -350,7 +350,7 @@ namespace objects {
     template<class T>
     size_t TimeVectorBase<T>::const_iterator::operator-(const typename TimeVectorBase<T>::const_iterator& aOther) const {
         // Check that they have the same parent.
-        assert( mParent == aOther.mParent );
+        // assert( mParent == aOther.mParent ); Perhaps undefined in copy operation?
         return mPos - aOther.mPos;
     }
 
@@ -741,7 +741,7 @@ namespace objects {
             if( this != &aOther ){
                 mStartYear = aOther.mStartYear;
                 mEndYear = aOther.mEndYear;
-                YearVector<T>::operator=( aOther );
+                TimeVectorBase<T>::operator=( aOther );
             }
             return *this;
         }

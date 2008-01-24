@@ -365,6 +365,25 @@ public:
     virtual void calcLandAllocation( const std::string& aRegionName,
                                      const double aLandAllocationAbove,
                                      const int aPeriod ) = 0;
+
+    //TODO: These next 3 functions need better names
+    /*!
+     * \brief This pass handles LUC flow from box models to the summer
+     */
+    virtual void calcLUCCarbonFlowsOut( const std::string& aRegionName,
+                                            const int aYear ) {}
+
+    /*!
+     * \brief This pass handles LUC flow from the summer to box models.
+     */
+    virtual void calcLUCCarbonFlowsIn( const std::string& aRegionName,
+                                              const int aYear ) {}
+
+    /*!
+     * \brief This pass handles box flows within this carbon box model.
+     */
+    virtual void calcCarbonBoxModel( const std::string& aRegionName,
+                                             const int aYear ) {}
     
     /*!
      * \brief Calculates and stores the yield for a product.
@@ -500,6 +519,7 @@ public:
      * \param aRegionName Region name.
      */
     virtual void dbOutput( const std::string& aRegionName ) const = 0;
+
 protected:
     virtual void toDebugXMLDerived( const int aPeriod,
                                     std::ostream& aOut,
@@ -590,4 +610,5 @@ struct MatchesTypeAndName : public SearchPredicate {
 };
 
 #endif // _ALAND_ALLOCATOR_ITEM_H_
+
 

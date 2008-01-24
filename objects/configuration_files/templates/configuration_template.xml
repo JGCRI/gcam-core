@@ -65,6 +65,9 @@
 	</Bools>
 	<Ints>
 		<Value name="discount-start-year">2005</Value>
+		<Value name="land-use-history-interval">5</Value>
+		<Value name="carbon-stock-output-interval">5</Value>
+		<Value name="carbon-output-start-year">1900</Value>
 		<Value name="climateOutputInterval">15</Value>
 		<!--START Developer Only Modifiable Variables-->
 		<Value name="numMarketsToFindSD">10</Value>

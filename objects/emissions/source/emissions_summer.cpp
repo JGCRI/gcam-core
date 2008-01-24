@@ -22,6 +22,8 @@
 #include "emissions/include/aghg.h"
 #include "sectors/include/ag_sector.h"
 #include "emissions/include/icarbon_calc.h"
+#include "ccarbon_model/include/carbon_model_utils.h"
+#include "climate/include/magicc_model.h"
 
 using namespace std;
 
@@ -61,7 +63,16 @@ void EmissionsSummer::startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc,
     // Add land use change emissions.
     if( mGHGName == "CO2NetLandUse" ){
         int year = scenario->getModeltime()->getper_to_yr( aPeriod );
+        year = max( static_cast<int>(CarbonModelUtils::getStartYear()), year );
         mEmissionsByPeriod[ aPeriod ] += aCarbonCalc->getNetLandUseChangeEmission( year );
+    }
+    else if( mGHGName == MagiccModel::getnetDefor80sName() ){
+        double netDef80s = 0;
+        for( int aYear = 1980; aYear < 1990; ++aYear){
+            netDef80s += ( aCarbonCalc->getNetLandUseChangeEmission( aYear ) + 
+                           aCarbonCalc->getNetLandUseChangeEmission( aYear + 1 ) ) / 2;
+        }
+        mEmissionsByPeriod[ aPeriod ] += netDef80s / 10; // Return decadal average
     }
 }
 
