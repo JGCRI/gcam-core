@@ -271,8 +271,18 @@ void FoodProductionTechnology::completeInit( const string& aRegionName,
 
     // Setup the land usage for this production.
     int techPeriod = scenario->getModeltime()->getyr_to_per( year );
-    mLandAllocator->addLandUsage( landType, mName, ILandAllocator::eCrop, techPeriod );
-
+    
+    // Check for existance of land allocator so that can gracefully exit if does not exist
+    if ( mLandAllocator ) {
+        mLandAllocator->addLandUsage( landType, mName, ILandAllocator::eCrop, techPeriod );
+    }
+    else {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "No land allocator is present for Ag Production technology. Exiting model." << endl;
+        exit( -1 );
+    }
+    
     // Technical change may only be applied after the base period.
     if( agProdChange > util::getSmallNumber() && mCalValue.get() )
     {
