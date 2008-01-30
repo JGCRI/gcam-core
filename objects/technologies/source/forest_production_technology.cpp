@@ -67,8 +67,8 @@ void ForestProductionTechnology::toDebugXMLDerived( const int period, ostream& o
     XMLWriteElement( mFutureProduction, "futureProduction", out, tabs );
     XMLWriteElement( interestRate, "interestRate", out, tabs );
     
-    XMLWriteElement( mFutureYield, "Future Yield", out, tabs );
-    XMLWriteElement( mFutureLand, "Future Land Allocation", out, tabs );
+    XMLWriteElement( mFutureYield, "future-yield", out, tabs );
+    XMLWriteElement( mFutureLand, "future-land-allocation", out, tabs );
 }
 
 /*! \brief Get the XML node name for output to XML.
