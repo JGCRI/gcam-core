@@ -129,3 +129,21 @@ void ALandAllocatorItem::dbOutput( const string& aRegionName ) const {
     }
     dboutput4(aRegionName, "Land Allocation", mName,"Land Use","000Ha", temp );
 }
+
+/*! \brief Return default share for use in calculating intrinsic rates. 
+*
+* This routine provides the default numerical value for the share needed to
+* calculate the intrinsic rates. Returning an arbirary value is a hack,
+* need to find a better way to do this. Using the intrinsic rate from a
+* comparable crop that is grown in the calibration period might be a better
+* solution (or scaled to a comparable crop).
+*
+* This routine provides this value for both nodes and leaves that have no
+* land share in the calibration period.
+*
+* \author Steve Smith
+*/
+double ALandAllocatorItem::getDefaultShare( ) const {
+    return 0.25;
+}
+

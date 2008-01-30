@@ -316,7 +316,8 @@ void LandNode::setIntrinsicYieldMode( const double aIntrinsicYieldAbove,
     // Intrisic yields for a land type cannot be zero.
     if ( aIntrinsicYieldAbove > util::getSmallNumber() ) {
 
-       double nodeIntrinsicRate = aIntrinsicYieldAbove * pow( mShare[ aPeriod ].get(), aSigmaAbove );
+       double share = mShare[ aPeriod ] > util::getSmallNumber() ? mShare[ aPeriod ].get() : getDefaultShare();
+       double nodeIntrinsicRate = aIntrinsicYieldAbove * pow( share, aSigmaAbove );
        
        // If this is a child of the root with a sigma of zero the power of the
        // share to the sigma will be one, and since the root has an intrinsic rate

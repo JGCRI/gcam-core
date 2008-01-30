@@ -230,7 +230,7 @@ void LandLeaf::setIntrinsicYieldMode( const double aIntrinsicYieldAbove,
         // If share is zero and have read in a calibrated yield (e.g. biomass or
         // other new crops) then use an arbitrary 0.25 share need to figure out what
         // to read in for this, or how to specify (specify comparable?)
-        double share = mShare[ aPeriod ] > util::getSmallNumber() ? mShare[ aPeriod ].get() : 0.25;
+        double share = mShare[ aPeriod ] > util::getSmallNumber() ? mShare[ aPeriod ].get() : getDefaultShare();
         double intrinsicRate = aIntrinsicYieldAbove * pow( share, aSigmaAbove );
         double intrinsicYield = intrinsicRate * mCalObservedYield[ aPeriod ];
         if( intrinsicYield < util::getSmallNumber() ) {

@@ -550,6 +550,9 @@ protected:
      * \note This is stored to avoid a virtual function call.
      */
     TreeItemType mType;
+
+    double ALandAllocatorItem::getDefaultShare( ) const;
+    
 };
 
 typedef std::unary_function<const ALandAllocatorItem*, bool> SearchPredicate;
