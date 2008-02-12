@@ -603,8 +603,18 @@ void LandLeaf::dbOutput( const string& aRegionName ) const {
         temp[ i ] = mCarbonContentCalc->getNetLandUseChangeEmission( modeltime->getper_to_yr( i ) );
     }
     dboutput4(aRegionName, "Land Allocation", mName,"land-use-change-emission","000Ha", temp );
-
-    dboutput4(aRegionName, "Land Allocation", mName,"Ag Productivity Change","none", mAgProdChange );
+    
+    if( mAgProdChange.size() <= maxper ) {
+        dboutput4(aRegionName, "Land Allocation", mName,"Ag Productivity Change","none", mAgProdChange );
+    }
+    else {
+        // the database can only write out maxper periods of data so any data after
+        // that will have to be ignored
+        for( int i = 0; i < maxper; ++i ){
+            temp[ i ] = mAgProdChange[ i ];
+        }
+        dboutput4(aRegionName, "Land Allocation", mName,"Ag Productivity Change","none", temp );
+    }
 }
 
 void LandLeaf::accept( IVisitor* aVisitor, const int aPeriod ) const {
