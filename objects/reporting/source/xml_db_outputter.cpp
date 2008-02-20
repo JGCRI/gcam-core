@@ -56,6 +56,7 @@
 #include "land_allocator/include/land_node.h"
 #include "technologies/include/ioutput.h"
 #include "technologies/include/base_technology.h"
+#include "technologies/include/food_production_technology.h"
 #include "technologies/include/expenditure.h"
 #include "technologies/include/production_technology.h"
 #include "functions/include/input.h"
@@ -713,6 +714,23 @@ void XMLDBOutputter::endVisitTechnology( const Technology* aTechnology,
     XMLWriteClosingTag( aTechnology->getXMLName1D(), mBuffer, mTabs.get() );
 }
 
+void XMLDBOutputter::startVisitFoodProductionTechnology( const FoodProductionTechnology* aFoodProductionTechnology,
+                                                         const int aPeriod )
+{
+   
+    // Write out the non-energy cost assumed to be in same unit as sector price.
+    writeItem( "variableCost", "",
+               aFoodProductionTechnology->variableCost, -1 );
+
+    writeItem( "agProdChange", "",
+               aFoodProductionTechnology->agProdChange, -1 );
+
+}
+
+void XMLDBOutputter::endVisitFoodProductionTechnology( const FoodProductionTechnology* aTechnology,
+                                                       const int aPeriod )
+{
+}
 void XMLDBOutputter::startVisitGHG( const AGHG* aGHG, const int aPeriod ){
     // XML DB outputter should always be called on all periods at once.
     // TODO: Currently when the all periods flag is passed to subsector,

@@ -429,6 +429,10 @@ double LandLeaf::calcLandShares( const string& aRegionName,
     else {
         unnormalizedShare = pow( mIntrinsicRate[ aPeriod ].get(), 1 / aSigmaAbove );
     }
+
+    // result should be > 0.
+    assert( unnormalizedShare >= 0 );
+
     return unnormalizedShare;
 }
 
@@ -442,7 +446,7 @@ void LandLeaf::calcLandAllocation( const string& aRegionName,
 
     mLandAllocation[ aPeriod ] = aLandAllocationAbove * mShare[ aPeriod ];
 
-    // Set the amount of land use change in the carbon content calculator.
+    // Set the land use in the carbon content calculator.
     mCarbonContentCalc->setTotalLandUse( mLandAllocation[ aPeriod ], aPeriod );
 
     // Add emissions to the carbon market.

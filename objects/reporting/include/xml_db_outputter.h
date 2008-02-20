@@ -87,6 +87,9 @@ public:
 	void startVisitTechnology( const Technology* aTechnology, const int aPeriod );
 	void endVisitTechnology( const Technology* aTechnology, const int aPeriod );
 
+    virtual void startVisitFoodProductionTechnology( const FoodProductionTechnology* aTechnology, const int aPeriod );
+    virtual void endVisitFoodProductionTechnology( const FoodProductionTechnology* aTechnology, const int aPeriod );
+
     void startVisitGHG( const AGHG* aGHG, const int aPeriod );
     void endVisitGHG( const AGHG* aGHG, const int aPeriod );
 

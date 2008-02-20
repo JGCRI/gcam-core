@@ -62,11 +62,11 @@ double CarbonModelUtils::getLandUse( const unsigned int aYear,
         maxHistoryYear = aLandUseHistory->getMaxYear();
     }
 
-    const unsigned int basePeriod =
-        max( scenario->getModeltime()->getyr_to_per( max( static_cast<unsigned int>( 1975 ), maxHistoryYear ) ) + 1, 1 );
-
+    unsigned int basePeriod =
+        max( scenario->getModeltime()->getyr_to_per( max( static_cast<unsigned int>( 1975 ), maxHistoryYear ) ), 1 );
+    basePeriod = min( basePeriod, static_cast<unsigned int>(scenario->getModeltime()->getmaxper() - 1) ); 
     // Store the first calculated year to save time.
-    static const unsigned int baseYear
+    const unsigned int baseYear
         = static_cast<unsigned int>( scenario->getModeltime()->getper_to_yr( basePeriod ) );
 
     double landUse;

@@ -43,6 +43,16 @@ void UnmanagedLandLeaf::completeInit( const string& aRegionName,
     // If land value was not set for some period, set for all periods.
     const Modeltime* modeltime = scenario->getModeltime();
     for( int period = 0; period < modeltime->getmaxper(); period++ ) {
+        // Correct and warn if negative values
+        if( mLandAllocation[ period ].isInited() && mLandAllocation[ period ] < 0 ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Negative land allocation of " << mLandAllocation[ period ] << 
+                       " read in for leaf " << getName() << ". Resetting to zero." 
+                    << endl;
+            mLandAllocation[ period ] = 0;
+        }
+
         if ( !mLandAllocation[ period ].isInited() ) {
             if ( period > 0 && mLandAllocation[ period - 1 ].isInited() ) {
                 mLandAllocation[ period ] = mLandAllocation[ period - 1 ];
@@ -169,10 +179,14 @@ void UnmanagedLandLeaf::setUnmanagedLandAllocation( const string& aRegionName,
                                                     const double aNewUnmanaged,
                                                     const int aPeriod )
 {
-    // Unmanaged land leaves should always have a positive land allocation.
-    assert( aNewUnmanaged >= 0 );
-
-    mLandAllocation[ aPeriod ] = mBaseLandAllocation[ aPeriod ] = aNewUnmanaged;
+   double newLandValue = aNewUnmanaged;
+   if( aNewUnmanaged < 0 ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Negative land allocation being set for leaf " << getName() << ". Resetting to zero." << endl;
+        newLandValue = 0;
+    }
+    mLandAllocation[ aPeriod ] = mBaseLandAllocation[ aPeriod ] = newLandValue;
 }
 
 void UnmanagedLandLeaf::setUnmanagedLandValues( const string& aRegionName,
@@ -200,11 +214,21 @@ double UnmanagedLandLeaf::calcLandShares( const string& aRegionName,
         assert( mBaseLandAllocation[ aPeriod ].isInited() );
         unnormalizedShare *= mBaseLandAllocation[ aPeriod ] / aTotalBaseLand;
     }
+
+    // result should be > 0.
+    assert( unnormalizedShare >= 0 );
+
     return unnormalizedShare;
 }
 
 void UnmanagedLandLeaf::resetToCalLandAllocation( const int aPeriod ) {
-   // Do nothing, since unmanagd land does not have a calibrated land allocation
+   // Set to land-use history value if this exists
+   if( mLandUseHistory.get() ){
+      const Modeltime* modeltime = scenario->getModeltime();
+      if ( modeltime->getper_to_yr( aPeriod ) <= mLandUseHistory->getMaxYear() ) {
+         mLandAllocation[ aPeriod ] = mLandUseHistory->getAllocation( modeltime->getper_to_yr( aPeriod ) );
+      }
+   }
 }
 
 bool UnmanagedLandLeaf::isUnmanagedNest() const {

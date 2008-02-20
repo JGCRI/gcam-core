@@ -431,6 +431,14 @@ void Technology::completeInit( const string& aRegionName,
     setProductionState( 0 );
 }
 
+/*! \brief Derived class visitor.
+*
+* This may have already been implimented in multi-inputs version, so replace with that if so.
+* \author Steve Smith
+*/
+void Technology::derivedVisitorAccept( IVisitor* aVisitor, const int aPeriod ) const {
+}
+
 //! write object to xml output stream
 void Technology::toInputXML( ostream& out, Tabs* tabs ) const {
     
@@ -1469,5 +1477,6 @@ void Technology::accept( IVisitor* aVisitor, const int aPeriod ) const {
     for( unsigned int i = 0; i < ghg.size(); ++i ){
         ghg[ i ]->accept( aVisitor, aPeriod );
     }
+    derivedVisitorAccept( aVisitor, aPeriod );
     aVisitor->endVisitTechnology( this, aPeriod );
 }

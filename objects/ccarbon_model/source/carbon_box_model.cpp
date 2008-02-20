@@ -600,15 +600,18 @@ void CarbonBoxModel::doTransfers( const EnvironmentalInfo* aEnvInfo, FlowType aF
 
 double CarbonBoxModel::getNetLandUseChangeEmission( const int aYear ) const {
     const double GT_TO_MMT = 1000;
-    for( CarbonBoxConstIterator boxIter = mCarbonBoxes.begin();
-        boxIter != mCarbonBoxes.end(); ++boxIter ) {
-            if ( (*boxIter)->matches( eAtmosphere ) ) { 
-               //Net land-use emissions (for no feedbacks) is difference in atmospheric carbon stock
-               double netLandUseEmissions = (*boxIter)->getCarbonStock()->getStock( aYear ) - 
-                                            (*boxIter)->getCarbonStock()->getStock( aYear - 1 );
-               // Return emissions in units of MMT
-               return netLandUseEmissions * GT_TO_MMT;
-            }
+    // Must be at least 1 year past beginging point to get netLU emissions change
+    if ( aYear > CarbonModelUtils::getStartYear() ) {
+        for( CarbonBoxConstIterator boxIter = mCarbonBoxes.begin();
+            boxIter != mCarbonBoxes.end(); ++boxIter ) {
+                if ( (*boxIter)->matches( eAtmosphere ) ) { 
+                   //Net land-use emissions (for no feedbacks) is difference in atmospheric carbon stock
+                   double netLandUseEmissions = (*boxIter)->getCarbonStock()->getStock( aYear ) - 
+                                                (*boxIter)->getCarbonStock()->getStock( aYear - 1 );
+                   // Return emissions in units of MMT
+                   return netLandUseEmissions * GT_TO_MMT;
+                }
+        }
     }
     return 0;
 }

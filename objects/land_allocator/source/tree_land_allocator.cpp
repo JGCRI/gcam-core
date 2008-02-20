@@ -117,35 +117,39 @@ void TreeLandAllocator::resetToCalibrationData( const string& aRegionName, const
 
       adjustTotalLand( aPeriod );
 
-      // Now re-allocate unmanaged land. Read-in land allocations are used as
-      // weights with total unmanaged land set to be equal to total land minus
-      // land allocation.
-      double unmanagedLand = mLandAllocation[ aPeriod ]
-                            - getTotalLandAllocation( eManaged, aPeriod );
-      
-      // Log change in unmanaged land
-      double previousUnmanagedLand = getTotalLandAllocation( eUnmanaged, aPeriod );
-      if ( abs( previousUnmanagedLand - unmanagedLand) > 0.01 * unmanagedLand ) {
-         ILogger& mainLog = ILogger::getLogger( "main_log" );
-         mainLog.setLevel( ILogger::WARNING );
-         mainLog << "Unmanaged land in region " << aRegionName << " was reduced by " 
-                 << previousUnmanagedLand - unmanagedLand
-                 << " in period " << aPeriod
-                 << endl;
-      }
-      
-      LandNode::setUnmanagedLandAllocation( aRegionName, unmanagedLand, aPeriod );
+      // Don't do this in 1975 since values may not be correct
+      if ( aPeriod > 0 ) {
+         // Now re-allocate unmanaged land. Read-in land allocations are used as
+         // weights with total unmanaged land set to be equal to total land minus
+         // land allocation.
+         double unmanagedLand = mLandAllocation[ aPeriod ]
+                               - getTotalLandAllocation( eManaged, aPeriod );
+         
+         // Log change in unmanaged land
+         double previousUnmanagedLand = getTotalLandAllocation( eUnmanaged, aPeriod );
+         if ( abs( previousUnmanagedLand - unmanagedLand) > 0.01 * unmanagedLand ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unmanaged land in region " << aRegionName << " was reduced by " 
+                    << previousUnmanagedLand - unmanagedLand << " ("
+                    << ( previousUnmanagedLand - unmanagedLand ) / unmanagedLand << "%) "
+                    << " in period " << aPeriod
+                    << endl;
+         }
+         
+         LandNode::setUnmanagedLandAllocation( aRegionName, unmanagedLand, aPeriod );
 
-      // Check that the final allocations sum correctly.
-      assert( util::isEqual( getTotalLandAllocation( eAnyLand, aPeriod ),
-                            mLandAllocation[ aPeriod ].get(),
-                            util::getSmallNumber() ) );
-      assert( util::isEqual( getTotalLandAllocation( eUnmanaged, aPeriod ),
-                            unmanagedLand,
-                            util::getSmallNumber() ) );
-      assert( util::isEqual( getTotalLandAllocation( eManaged, aPeriod ),
-                            mLandAllocation[ aPeriod ] - unmanagedLand,
-                            util::getSmallNumber() ) );
+          // Check that the final allocations sum correctly.
+          assert( util::isEqual( getTotalLandAllocation( eAnyLand, aPeriod ),
+                                mLandAllocation[ aPeriod ].get(),
+                                util::getSmallNumber() ) );
+          assert( util::isEqual( getTotalLandAllocation( eUnmanaged, aPeriod ),
+                                unmanagedLand,
+                                util::getSmallNumber() ) );
+          assert( util::isEqual( getTotalLandAllocation( eManaged, aPeriod ),
+                                mLandAllocation[ aPeriod ] - unmanagedLand,
+                                util::getSmallNumber() ) );
+      }
 
       setInitShares( aRegionName,
                     0, // No parent sigma

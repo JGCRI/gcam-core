@@ -78,6 +78,7 @@ class NPP;
 class ACarbonFlow;
 class CarbonBoxModel;
 class LandUseHistory;
+class FoodProductionTechnology;
 
 /*!
  * \brief An interface to a class which visits every node in the tree and
@@ -167,6 +168,9 @@ public:
 
     virtual void startVisitTechnology( const Technology* aTechnology, const int aPeriod ) = 0;
     virtual void endVisitTechnology( const Technology* aTechnology, const int aPeriod ) = 0;
+
+    virtual void startVisitFoodProductionTechnology( const FoodProductionTechnology* aTechnology, const int aPeriod ) = 0;
+    virtual void endVisitFoodProductionTechnology( const FoodProductionTechnology* aTechnology, const int aPeriod ) = 0;
 
     virtual void startVisitBaseTechnology( const BaseTechnology* aBaseTechnology, const int aPeriod ) = 0;
     virtual void endVisitBaseTechnology( const BaseTechnology* aBaseTechnology, const int aPeriod ) = 0;

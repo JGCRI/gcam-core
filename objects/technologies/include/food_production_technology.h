@@ -27,6 +27,7 @@ class ILandAllocator;
 */
 
 class FoodProductionTechnology : public Technology {
+    friend class XMLDBOutputter;
 public:
     FoodProductionTechnology( const std::string& aName,
                               const int aYear );
@@ -100,10 +101,11 @@ protected:
     double mBelowGroundCarbon;
 
     ILandAllocator* mLandAllocator;
-    
+
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
+    virtual void derivedVisitorAccept( IVisitor* aVisitor, const int aPeriod ) const;    
     virtual const std::string& getXMLName1D() const;
     
     virtual double calcProfitRate( const std::string& aRegionName,

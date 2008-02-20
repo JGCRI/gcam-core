@@ -238,11 +238,10 @@ void LandNode::setUnmanagedLandAllocation( const string& aRegionName,
             * landAllocationScaleFactor;
 
         mChildren[ i ]->setUnmanagedLandAllocation( aRegionName, newAllocation, aPeriod );
-
         // Check that scaling of the child worked correctly.
         assert( util::isEqual( newAllocation,
-            mChildren[ i ]->getTotalLandAllocation( eUnmanaged, aPeriod ),
-            util::getSmallNumber() ) );
+                mChildren[ i ]->getTotalLandAllocation( eUnmanaged, aPeriod ),
+                util::getSmallNumber() ) ); 
     }
 }
 

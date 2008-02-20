@@ -16,6 +16,7 @@
 #include "technologies/include/ical_data.h"
 #include "technologies/include/iproduction_state.h"
 #include "technologies/include/ioutput.h"
+#include "util/base/include/ivisitor.h"
 
 using namespace std;
 using namespace xercesc;
@@ -68,7 +69,7 @@ bool FoodProductionTechnology::XMLDerivedClassParse( const string& nodeName, con
     else if( nodeName == "harvested-to-cropped-land-ratio" ){
         mHarvestedToCroppedLandRatio = XMLHelper<double>::getValue( curr );
     }
-    else if( nodeName == "luc-carbon-penalty-multiplier" ){ //sjsTEMP -- add to output streams
+    else if( nodeName == "luc-carbon-penalty-multiplier" ){
         mLUCPenaltyMultiplier = XMLHelper<double>::getValue( curr );
     }
     else if( nodeName == "below-ground-carbon" ){
@@ -80,6 +81,18 @@ bool FoodProductionTechnology::XMLDerivedClassParse( const string& nodeName, con
     return true;
 }
 
+/*! \brief Derived class visitor.
+*
+* This may have already been implimented in multi-inputs version, so replace with that if so.
+* \author Steve Smith
+*/
+void FoodProductionTechnology::derivedVisitorAccept( IVisitor* aVisitor, const int aPeriod ) const {
+    // Derived visit.
+    aVisitor->startVisitFoodProductionTechnology( this, aPeriod );
+    // End the derived class visit.
+    aVisitor->endVisitFoodProductionTechnology( this, aPeriod );
+}
+
 //! write object to xml output stream
 void FoodProductionTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     XMLWriteElement( landType, "landType", out, tabs );
@@ -88,6 +101,7 @@ void FoodProductionTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) con
     XMLWriteElementCheckDefault( calLandUsed, "calLandUsed", out, tabs, -1.0 );
     XMLWriteElementCheckDefault( agProdChange, "agProdChange", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( mHarvestedToCroppedLandRatio, "harvested-to-cropped-land-ratio", out, tabs, 1.0 );
+    XMLWriteElementCheckDefault( mLUCPenaltyMultiplier, "luc-carbon-penalty-multiplier", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( mAboveGroundCarbon, "above-ground-carbon", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( mBelowGroundCarbon, "below-ground-carbon", out, tabs, 0.0 );
 }
@@ -100,6 +114,7 @@ void FoodProductionTechnology::toDebugXMLDerived( const int period, ostream& out
     XMLWriteElement( calLandUsed, "calLandUsed", out, tabs );
     XMLWriteElement( agProdChange, "agProdChange", out, tabs );
     XMLWriteElement( mHarvestedToCroppedLandRatio, "harvested-to-cropped-land-ratio", out, tabs );
+    XMLWriteElement( mLUCPenaltyMultiplier, "luc-carbon-penalty-multiplier", out, tabs );
     XMLWriteElement( mAboveGroundCarbon, "above-ground-carbon", out, tabs );
     XMLWriteElement( mBelowGroundCarbon, "below-ground-carbon", out, tabs );
 }

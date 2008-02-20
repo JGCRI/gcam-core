@@ -68,6 +68,12 @@ bool LandUseHistory::XMLParse( const xercesc::DOMNode* aNode ){
             }
             else {
                 mHistoricalLand[ year ] = XMLHelper<double>::getValue( curr );
+                if ( mHistoricalLand[ year ]  <  0 ) {
+                    ILogger& mainLog = ILogger::getLogger( "main_log" );
+                    mainLog.setLevel( ILogger::ERROR );
+                    mainLog << "Negative land allocation in land-use-history. Resetting to zero." << endl;
+                    mHistoricalLand[ year ] = 0;
+                }
             }
         }
         else {

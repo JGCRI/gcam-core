@@ -310,6 +310,8 @@ protected:
 
     //! A map of a keyword to its keyword group
     std::map<std::string, std::string> mKeywordMap;
+
+    virtual void derivedVisitorAccept( IVisitor* aVisitor, const int aPeriod ) const;
     
     void setProductionState( const int aPeriod );
 
