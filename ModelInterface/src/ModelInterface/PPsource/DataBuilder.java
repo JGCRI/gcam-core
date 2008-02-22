@@ -49,6 +49,7 @@ import org.geotools.data.*;
 import org.geotools.data.shapefile.*;
 import org.geotools.data.shapefile.shp.*;
 import org.geotools.feature.*;
+import org.geotools.filter.AreaFunction;
 
 import com.vividsolutions.jts.geom.*;
 
@@ -2201,14 +2202,14 @@ public class DataBuilder
     String ref = null;
     String unit = null;
     double time = 0;
-    double res = 1;
+    double res = dataStruct.getResolution();
     double x, y, mult;
     boolean avg = true;
     boolean typeWarn = false;
     boolean overwrite = false;
-    TreeMap timeValue;
+    TreeMap timeValue = new TreeMap();
     Double dataValue;
-    DataBlock toAdd;
+    DataBlock toAdd = new DataBlock(0, 0, 0, 0);
     
   //getting file info from XML
     infoChildren = currFile.getChildren();
@@ -2221,9 +2222,6 @@ public class DataBuilder
       } else if(currElem.getName().equals("date"))
       {
         time = Double.parseDouble(currElem.getAttributeValue("value"));
-      } else if(currElem.getName().equals("res"))
-      {
-        res = Double.parseDouble(currElem.getAttributeValue("value"));
       } else if(currElem.getName().equals("average"))
       {
         avg = (Boolean.valueOf(currElem.getAttributeValue("value"))).booleanValue();
@@ -2276,6 +2274,7 @@ public class DataBuilder
     
     try
     {
+      final Double timeDouble = new Double(time);
       File shapeFile = new File(fileName);
       URL shapeURL = shapeFile.toURL();
       ShapefileDataStore store = new ShapefileDataStore(shapeURL);
@@ -2284,6 +2283,7 @@ public class DataBuilder
       //FeatureResults fsShape = source.getFeatures();
       //FeatureCollection collection = fsShape.collection();
       FeatureCollection collection = source.getFeatures();
+      AreaFunction areaCalculator = new AreaFunction();
       Iterator iter = collection.iterator();
       try
       {
@@ -2351,6 +2351,8 @@ public class DataBuilder
             double minX, maxX, minY, maxY;
             Coordinate[] coords = area.getCoordinates();
             
+	    // find the smallest box that includes all
+	    // of the coordinates of the polygon
             minX = coords[0].x;
             maxX = coords[0].x;
             minY = coords[0].y;
@@ -2368,6 +2370,8 @@ public class DataBuilder
             }
             
             //normalizes lower bounds (upper dont matter)
+	    // so that the lower left would match with the lower
+	    // left of one of our grid cells
             mult = minX/res;
             mult = Math.floor(mult);
             minX = mult*res;
@@ -2376,9 +2380,15 @@ public class DataBuilder
             mult = Math.floor(mult);
             minY = mult*res;
             
+	    // break up the box we just created into res sized boxes
+	    // and add the dataValue for the polygon for each res sized
+	    // sub-box, then find the area that the sub-box takes up of
+	    // the polygon and weight dataValue by it and add that
+	    // dataBlock to our grid
             for(double X = minX; X < maxX; X+=res)
             { // cant just += res because minX and minY arent normalized
               //normalize once before instead of every time after
+	      //do the above comments still apply?
               for(double Y = maxY; Y > minY; Y-=res)
               {
                 //there should be SOMETHING to do to weight the data for sparse
@@ -2390,9 +2400,13 @@ public class DataBuilder
                  * 2. should sparceness information be sent into the data collection
                  */
                 
-                toAdd = new DataBlock(X, Y, res, res);
-                timeValue = new TreeMap();
-                timeValue.put(new Double(time), dataValue);
+		toAdd.setRect(X, Y, res, res);
+		Coordinate[] boxPoints = {new Coordinate(X, Y), new Coordinate(X+res, Y),
+			new Coordinate(X+res, Y-res), new Coordinate(X, Y-res), new Coordinate(X, Y)};
+		Geometry subBox = new Polygon(new LinearRing(boxPoints, area.getPrecisionModel(), area.getSRID()),
+				area.getPrecisionModel(), area.getSRID());
+		final double polySubArea = areaCalculator.getArea(area.intersection(subBox));
+                timeValue.put(timeDouble, dataValue * polySubArea);
                 
                 //check overwrite bit, if so, use hold instead of dataName
                 if(overwrite)
