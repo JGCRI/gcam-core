@@ -342,7 +342,8 @@ public class DOMTreeBuilder {
 				parentStack.push(currNode);
 			}
 			Element tempParent = (Element)child.getGrandParentEntity().doCreate(doc, null, null);
-			// convert data?
+			// convert attributes if necessary before we do any comparisons
+			convertData(tempParent, (Element)currNode.getParentNode());
 			// check if this node alread exists, if not create it and append it to the tree
 			if ((retNode = compare((Element)currNode.getParentNode(), tempParent)) == null) {
 				currNode.getParentNode().appendChild(tempParent);
@@ -375,10 +376,11 @@ public class DOMTreeBuilder {
 		}
 		if(child.getParentEntity().doesSpecifyAttrValue()) {
 			Element tempParent = (Element)child.getParentEntity().doCreate(doc, null, null);
-			// convert data?
 			// if the heirarchy was just created this duplicated node is no
 			// longer necessary as the correct parent header will be found. 
 			parent = retNode.getParentNode();
+			// convert attributes if necessary before we do any comparisons
+			convertData(tempParent, (Element)parent);
 			if(didCreate) {
 				parent.removeChild(retNode);
 			}
@@ -417,8 +419,9 @@ public class DOMTreeBuilder {
 				Header currHeader2 = currList.get(0).get(0);
 				// checking if the current header has the same parents and child name, if so
 				// it belongs in this group
-				if((!currHeader.hasGrandParent() && !currHeader2.hasGrandParent() 
-							|| currHeader.getGrandParentEntity().equals(currHeader2.getGrandParentEntity())) 
+				if(((!currHeader.hasGrandParent() && !currHeader2.hasGrandParent()) ||
+							(currHeader.hasGrandParent() 
+							&& currHeader.getGrandParentEntity().equals(currHeader2.getGrandParentEntity()))) 
 						&& currHeader.getParentEntity().equals(currHeader2.getParentEntity()) 
 						&& currHeader.getChildName().equals(currHeader2.getChildName())) {
 

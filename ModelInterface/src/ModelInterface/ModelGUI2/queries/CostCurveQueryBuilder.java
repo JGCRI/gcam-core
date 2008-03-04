@@ -146,17 +146,17 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 		}
 		if(typeSel.equals("RegionalDiscountedCosts")) {
 			qg.xPath = "/text()";
-			qg.axis1Name = "DiscountedCost";
+			qg.axis2Name = "DiscountedCost";
 			qg.yearLevel = new DataPair<String, String>("DiscountedCost", null);
 			qg.nodeLevel = new DataPair<String, String>("DiscountedCost", null);
-			qg.axis2Name = "Region";
+			qg.axis1Name = "Region";
 			qg.var = "Discounted Cost";
 		} else if(typeSel.equals("RegionalUndiscountedCosts")) {
 			qg.xPath = "/text()";
-			qg.axis1Name = "UndiscountedCost";
+			qg.axis2Name = "UndiscountedCost";
 			qg.yearLevel = new DataPair<String, String>("UndiscountedCost", null);
 			qg.nodeLevel = new DataPair<String, String>("UndiscountedCost", null);
-			qg.axis2Name = "Region";
+			qg.axis1Name = "Region";
 			qg.var = "Undiscounted Cost";
 		} else {
 			qg.xPath = "PointSet/DataPoint/y/text()";
@@ -235,7 +235,7 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 		do {
 			if(n.getNodeName().equals(qg.nodeLevel.getKey())) {
 				if(qg.nodeLevel.getKey().equals("UndiscountedCost") || qg.nodeLevel.getKey().equals("DiscountedCost")) {
-					ret.add(qg.nodeLevel.getKey());
+					ret.add(0, qg.nodeLevel.getKey());
 					/*
 				} else if(qg.yearLevel.equals("DataPoint")) {
 					// check the locks after this line, It might leave some
@@ -278,9 +278,9 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 			if(n.getNodeName().equals(qg.yearLevel.getKey())) {
 				if(qg.nodeLevel.getKey().equals("UndiscountedCost") || qg.nodeLevel.getKey().equals("DiscountedCost")) {
 					if(isGlobal) {
-						ret.add(0, "Global");
+						ret.add("Global");
 					} else {
-						ret.add(0, XMLDB.getAttr(n, "name"));
+						ret.add(XMLDB.getAttr(n, "name"));
 					}
 					/*
 				} else if(qg.yearLevel.equals("DataPoint")) {

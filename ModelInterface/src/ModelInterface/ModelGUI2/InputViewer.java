@@ -1453,7 +1453,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 																			   // but
 																			   // numID
 					try {
-						intValue = Integer.parseInt(intValueStr);
+						//intValue = Integer.parseInt(intValueStr);
 
 						inputLine = inputLine.replaceAll("[,][\\s]*[,]", ""); // gets
 																			  // rid
@@ -1491,7 +1491,8 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 										JOptionPane.WARNING_MESSAGE);
 							}
 						}
-						tableIDMap.put(new Integer(intValue), inputLine);
+						//tableIDMap.put(new Integer(intValue), inputLine);
+						tableIDMap.put(intValueStr, inputLine);
 					} catch (NumberFormatException e) {
 						System.out
 								.println("*** Hashtable file formatted incorrectly ***"
@@ -1528,11 +1529,11 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 					inputLine = stdInput.readLine().trim(); // should have just the
 					// id number
 					st = new StringTokenizer(inputLine, ",", false);
-					intValue = Integer.parseInt(st.nextToken());
+					//intValue = Integer.parseInt(st.nextToken());
+					intValueStr = st.nextToken();
 
-					if (tableIDMap.containsKey(new Integer(intValue))) {
-						tree.setHeader(((String) tableIDMap.get(new Integer(
-											intValue))));
+					if (tableIDMap.containsKey(intValueStr)) {
+						tree.setHeader(((String) tableIDMap.get(intValueStr)));
 						stdInput.readLine(); // ignores this line
 						stdInput.readLine(); // ignores header line
 
@@ -1555,7 +1556,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 								}
 					} else {
 						System.out.println("***Warning: skipping table: "
-								+ intValue + "!***");
+								+ intValueStr + "!***");
 					}
 
 					if ((inputLine = stdInput.readLine()) != null) {

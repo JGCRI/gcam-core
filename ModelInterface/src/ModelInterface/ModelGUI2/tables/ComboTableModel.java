@@ -856,6 +856,10 @@ public class ComboTableModel extends BaseTableModel{
 			  // check for rewrites
 			  if(rewriteMap != null && rewriteMap.containsKey(regionAndYear[1])) {
 				  regionAndYear[1] = rewriteMap.get(regionAndYear[1]);
+				  if(regionAndYear[1].equals("")) {
+					  tempNode.delete();
+					  continue;
+				  }
 			  }
 			  regions.add(regionAndYear[0]);
 			  years.add(regionAndYear[1]);
