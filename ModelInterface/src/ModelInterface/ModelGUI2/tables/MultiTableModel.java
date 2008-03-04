@@ -4,7 +4,7 @@ import ModelInterface.ModelGUI2.DOMmodel;
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.queries.QueryGenerator;
 import ModelInterface.ModelGUI2.Documentation;
-import ModelInterface.ModelGUI2.XMLDB;
+import ModelInterface.ModelGUI2.xmldb.XMLDB;
 
 import java.util.*;
 
@@ -447,7 +447,7 @@ public class MultiTableModel extends BaseTableModel{
 		wild.add(qgIn.getYearLevel());
 		//System.out.println("Query is "+qgIn.getCompleteXPath(regions));
 		//System.out.println("Before Function: "+System.currentTimeMillis());
-		buildTable(DbViewer.xmlDB.createQuery(qgIn, scenarios, regions), qgIn.isSumAll(), qgIn.getLevelValues());
+		buildTable(XMLDB.getInstance().createQuery(qgIn, scenarios, regions), qgIn.isSumAll(), qgIn.getLevelValues());
 		tableEditor = new TableEditor();
 		tableRenderer = new TableRenderer();
 		activeRows = new Vector(tables.size());
@@ -518,7 +518,7 @@ public class MultiTableModel extends BaseTableModel{
 			  regions.add(regionAndYear[0]);
 			  years.add(regionAndYear[1]);
 			  Map retMap = qg.addToDataTree(new XmlValue(tempNode), dataTree); 
-			  DbViewer.xmlDB.printLockStats("addToDataTree");
+			  XMLDB.getInstance().printLockStats("addToDataTree");
 			  Double ret = (Double)retMap.get((String)regionAndYear[0]+";"+(String)regionAndYear[1]);
 			  if(ret == null) {
 				  retMap.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], new Double(tempNode.asNumber()));
@@ -538,7 +538,7 @@ public class MultiTableModel extends BaseTableModel{
 			  tempNode.delete();
 		  }
 		  res.delete();
-		  DbViewer.xmlDB.printLockStats("buildTable");
+		  XMLDB.getInstance().printLockStats("buildTable");
 	  } catch(Exception e) {
 		  e.printStackTrace();
 	  }

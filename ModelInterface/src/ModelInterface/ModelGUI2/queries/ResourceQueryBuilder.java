@@ -1,7 +1,6 @@
 package ModelInterface.ModelGUI2.queries;
 
-import ModelInterface.ModelGUI2.DbViewer;
-import ModelInterface.ModelGUI2.XMLDB;
+import ModelInterface.ModelGUI2.xmldb.XMLDB;
 import ModelInterface.common.DataPair;
 
 import javax.swing.JList;
@@ -73,8 +72,6 @@ public class ResourceQueryBuilder extends QueryBuilder {
 		qg.levelValues = list.getSelectedValues();
 		queryFunctions = null;
 		queryFilter = null;
-		//DbViewer.xmlDB.setQueryFunction("");
-		//DbViewer.xmlDB.setQueryFilter("");
 	}
 	public JComponentAdapter doBack(JComponentAdapter list, JLabel label) {
 		// doing this stuff after currSel has changed now..
@@ -291,8 +288,8 @@ public class ResourceQueryBuilder extends QueryBuilder {
 		} else {
 			query = "*/"+subresourceQueryPortion+"/grade[child::group[@name='"+gName+"']]/@name";
 		}
-		//XmlResults res = DbViewer.xmlDB.createQuery(query+"[child::group[@name='"+gName+"']]/@name");
-		XmlResults res = DbViewer.xmlDB.createQuery(queryFilter+query, queryFunctions, null, null);
+		//XmlResults res = XMLDB.getInstance().createQuery(query+"[child::group[@name='"+gName+"']]/@name");
+		XmlResults res = XMLDB.getInstance().createQuery(queryFilter+query, queryFunctions, null, null);
 		try {
 			while(res.hasNext()) {
 				ret.append("(@name='").append(res.next().asString()).append("') or ");
@@ -301,7 +298,7 @@ public class ResourceQueryBuilder extends QueryBuilder {
 			e.printStackTrace();
 		}
 		ret.delete(ret.length()-4, ret.length());
-		DbViewer.xmlDB.printLockStats("expandGroupName");
+		XMLDB.getInstance().printLockStats("expandGroupName");
 		return ret.toString();
 	}
 	private void createXPath() {
@@ -328,7 +325,7 @@ public class ResourceQueryBuilder extends QueryBuilder {
 			ret.put("Sum All", new Boolean(false));
 			ret.put("Group All", new Boolean(false));
 		}
-		XmlResults res = DbViewer.xmlDB.createQuery(queryFilter+path, queryFunctions, null, null);
+		XmlResults res = XMLDB.getInstance().createQuery(queryFilter+path, queryFunctions, null, null);
 		try {
 			while(res.hasNext()) {
 				if(!isGroupNames) {
@@ -341,7 +338,7 @@ public class ResourceQueryBuilder extends QueryBuilder {
 			e.printStackTrace();
 		}
 		res.delete();
-		DbViewer.xmlDB.printLockStats("createList");
+		XMLDB.getInstance().printLockStats("createList");
 		return ret;
 	}
 	public String getCompleteXPath(Object[] regions) {
@@ -404,7 +401,7 @@ public class ResourceQueryBuilder extends QueryBuilder {
 			nBefore.delete();
 		} while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
 		n.delete();
-		DbViewer.xmlDB.printLockStats("SupplyDemandQueryBuilder.getRegionAndYearFromNode");
+		XMLDB.getInstance().printLockStats("SupplyDemandQueryBuilder.getRegionAndYearFromNode");
 		return ret.toArray();
 	}
 	public Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {

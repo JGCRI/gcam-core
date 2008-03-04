@@ -242,5 +242,9 @@ public class subRegion extends Region
     
     return null;
   }
+
+  public boolean containsRegion(String regionNameIn) {
+	  return name.equals(regionNameIn);
+  }
   
 }

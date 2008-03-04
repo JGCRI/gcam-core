@@ -1,7 +1,6 @@
 package ModelInterface.ModelGUI2.queries;
 
-import ModelInterface.ModelGUI2.DbViewer;
-import ModelInterface.ModelGUI2.XMLDB;
+import ModelInterface.ModelGUI2.xmldb.XMLDB;
 import ModelInterface.common.DataPair;
 
 import javax.swing.JList;
@@ -46,8 +45,6 @@ public class InputQueryBuilder extends QueryBuilder {
 		queryFunctions.removeAllElements();
 		queryFunctions.add("distinct-values");
 		queryFilter = "/scenario/world/"+regionQueryPortion+"/";
-		//DbViewer.xmlDB.setQueryFunction("distinct-values(");
-		//DbViewer.xmlDB.setQueryFilter("/scenario/world/region/");
 		return (new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				int[] selectedInd = list.getSelectedRows();
@@ -80,8 +77,6 @@ public class InputQueryBuilder extends QueryBuilder {
 		qg.levelValues = list.getSelectedValues();
 		queryFunctions = null;
 		queryFilter = null;
-		//DbViewer.xmlDB.setQueryFunction("");
-		//DbViewer.xmlDB.setQueryFilter("");
 	}
 	public JComponentAdapter doBack(JComponentAdapter list, JLabel label) {
 		if(qg.currSel == 3) {
@@ -305,7 +300,7 @@ public class InputQueryBuilder extends QueryBuilder {
 			query = sectorQueryPortion+"/"+subsectorQueryPortion+"/"+baseTechnologyQueryPortion+
 				"/"+inputQueryPortion;
 		}
-		XmlResults res = DbViewer.xmlDB.createQuery(queryFilter+query+"[child::group[@name='"+gName+"']]/@name", 
+		XmlResults res = XMLDB.getInstance().createQuery(queryFilter+query+"[child::group[@name='"+gName+"']]/@name", 
 				queryFunctions, null, null);
 		try {
 			while(res.hasNext()) {
@@ -315,7 +310,7 @@ public class InputQueryBuilder extends QueryBuilder {
 			e.printStackTrace();
 		}
 		ret.delete(ret.length()-4, ret.length());
-		DbViewer.xmlDB.printLockStats("InputQueryBuilder.expandGroupName");
+		XMLDB.getInstance().printLockStats("InputQueryBuilder.expandGroupName");
 		return ret.toString();
 	}
 	private void createXPath() {
@@ -364,7 +359,7 @@ public class InputQueryBuilder extends QueryBuilder {
 			ret.put("Sum All", new Boolean(false));
 			ret.put("Group All", new Boolean(false));
 		}
-		XmlResults res = DbViewer.xmlDB.createQuery(queryFilter+path, queryFunctions, null, null);
+		XmlResults res = XMLDB.getInstance().createQuery(queryFilter+path, queryFunctions, null, null);
 		try {
 			while(res.hasNext()) {
 				if(!isGroupNames) {
@@ -377,7 +372,7 @@ public class InputQueryBuilder extends QueryBuilder {
 			e.printStackTrace();
 		}
 		res.delete();
-		DbViewer.xmlDB.printLockStats("InputQueryBuilder.createList");
+		XMLDB.getInstance().printLockStats("InputQueryBuilder.createList");
 		return ret;
 	}
 	public String getCompleteXPath(Object[] regions) {
@@ -442,7 +437,7 @@ public class InputQueryBuilder extends QueryBuilder {
 			nBefore.delete();
 		} while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
 		n.delete();
-		DbViewer.xmlDB.printLockStats("InputQueryBuilder.getRegionAndYearFromNode");
+		XMLDB.getInstance().printLockStats("InputQueryBuilder.getRegionAndYearFromNode");
 		return ret.toArray();
 	}
 	public Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {

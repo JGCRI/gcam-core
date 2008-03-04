@@ -2,7 +2,7 @@ package ModelInterface.ModelGUI2.queries;
 
 import ModelInterface.InterfaceMain;
 import ModelInterface.common.DataPair;
-import ModelInterface.ModelGUI2.XMLDB;
+import ModelInterface.ModelGUI2.xmldb.XMLDB;
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.undo.EditQueryUndoableEdit;
 import ModelInterface.ModelGUI2.undo.MiUndoableEditListener;
@@ -188,8 +188,8 @@ public class QueryGenerator implements java.io.Serializable{
 						pat = Pattern.compile("\\(@name='([\\w:[\\s]]+)'\\)");
 					}
 					Matcher mat = pat.matcher(xPath);
-					//DbViewer.xmlDB.setQueryFunction("distinct-values(");
-					//DbViewer.xmlDB.setQueryFilter("/scenario/world/region/");
+					//XMLDB.getInstance().setQueryFunction("distinct-values(");
+					//XMLDB.getInstance().setQueryFilter("/scenario/world/region/");
 					int skip = 0;
 					if(nodeLevel.getKey().equals("sector")) {
 						currSel = 3;
@@ -215,8 +215,8 @@ public class QueryGenerator implements java.io.Serializable{
 							--skip;
 						}
 					} 
-					//DbViewer.xmlDB.setQueryFunction("");
-					//DbViewer.xmlDB.setQueryFilter("");
+					//XMLDB.getInstance().setQueryFunction("");
+					//XMLDB.getInstance().setQueryFilter("");
 					xPath = xpTemp;
 					levelValues = temp.toArray();
 				} else {
@@ -283,7 +283,7 @@ public class QueryGenerator implements java.io.Serializable{
 		final JButton gatherButton = new JButton("Get New Variables");
 		gatherButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DbViewer.xmlDB.addVarMetaData(parentFrame);
+				XMLDB.getInstance().addVarMetaData(parentFrame);
 			}
 		});
 
@@ -567,7 +567,7 @@ public class QueryGenerator implements java.io.Serializable{
 		}
 		Vector funcTemp = new Vector<String>(1,0);
 		funcTemp.add("distinct-values");
-		XmlResults res = DbViewer.xmlDB.createQuery("/scenario/world/region"+
+		XmlResults res = XMLDB.getInstance().createQuery("/scenario/world/region"+
 				query+"[child::group[@name='"+gName+"']]/@name", funcTemp, null, null);
 		funcTemp = null;
 		try {
@@ -578,7 +578,7 @@ public class QueryGenerator implements java.io.Serializable{
 			e.printStackTrace();
 		}
 		ret.delete(ret.length()-4, ret.length());
-		DbViewer.xmlDB.printLockStats("expandGroupName");
+		XMLDB.getInstance().printLockStats("expandGroupName");
 		return ret.toString();
 	}
 	public String getXPath() {
@@ -884,7 +884,7 @@ public class QueryGenerator implements java.io.Serializable{
 			nBefore.delete();
 		} while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
 		n.delete();
-		DbViewer.xmlDB.printLockStats("getRegionAndYearFromNode");
+		XMLDB.getInstance().printLockStats("getRegionAndYearFromNode");
 		return ret.toArray();
 	}
 	protected Map defaultAddToDataTree(XmlValue currNode, Map dataTree) throws Exception {

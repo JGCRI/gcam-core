@@ -1,4 +1,4 @@
-package ModelInterface.ModelGUI2;
+package ModelInterface.ModelGUI2.xmldb;
 
 import ModelInterface.ModelGUI2.queries.*;
 import ModelInterface.ModelGUI2.xmldb.QueryBinding;
@@ -21,14 +21,57 @@ public class XMLDB {
 	XmlUpdateContext uc;
 	String contName;
 	private volatile int numVals;
-	/*
-	String queryFilter;
-	String queryFunction;
-	*/
-	public XMLDB(String db, JFrame parentFrame) {
+	private static XMLDB xmldbInstance = null;
+
+	/**
+	 * Gets the instance of the xml database.
+	 * @warning If the database is not open it will return null, ideally it
+	 * 	would throw an exception.
+	 * @return The instance of the xml database.
+	 */
+	public static XMLDB getInstance() {
+		// TODO: not thread safe
+		if(xmldbInstance == null) {
+			// should throw an exception..
+			System.out.println("The database is not open.");
+		}
+		return xmldbInstance;
+	}
+	/**
+	 * Opens a new xml database at the given location.
+	 * @param dbLocation The location of the database to open.
+	 * @param parentFrame The frame that can be used to display errors on.
+	 * @throws Exception If a database is already open or there was an error opening the database.
+	 */ 
+	public static void openDatabase(String dbLocation, JFrame parentFrame) throws Exception {
+		// TODO: not thread safe
+		if(xmldbInstance != null) {
+			throw new Exception("Could not open databse because "+xmldbInstance.contName+
+					" is still open");
+		}
+		xmldbInstance = new XMLDB(dbLocation, parentFrame);
+	}
+
+	/**
+	 * Closes the database. Note that all errors on close are ignored.
+	 */
+	public static void closeDatabase() {
+		// TODO: not thread safe
+		if(xmldbInstance != null) {
+			try {
+				xmldbInstance.closeDB();
+			} catch(XmlException e) {
+				e.printStackTrace();
+			} finally {
+				xmldbInstance = null;
+			}
+		}
+	}
+
+	private XMLDB(String db, JFrame parentFrame) throws Exception {
 		openDB(db, parentFrame);
 	}
-	public void openDB(String dbPath, JFrame parentFrame) {
+	private void openDB(String dbPath, JFrame parentFrame) throws Exception {
 		EnvironmentConfig envConfig = new EnvironmentConfig();
 		envConfig.setAllowCreate(true);
 		envConfig.setCacheSize(100 * 1024 * 1024 );
@@ -38,175 +81,100 @@ public class XMLDB {
 		//envConfig.setVerboseWaitsFor(true);
 		//envConfig.setNoLocking(true);
 
+		numVals = 0;
+		//XmlManager.setLogCategory(XmlManager.CATEGORY_ALL, true);
+		//XmlManager.setLogLevel(XmlManager.LEVEL_ALL, true);
+		String path = dbPath.substring(0, dbPath.lastIndexOf(System.getProperty("file.separator")));
+		boolean didUpgradeEnv = false;
 		try {
-			numVals = 0;
-			//XmlManager.setLogCategory(XmlManager.CATEGORY_ALL, true);
-			//XmlManager.setLogLevel(XmlManager.LEVEL_ALL, true);
-			String path = dbPath.substring(0, dbPath.lastIndexOf(System.getProperty("file.separator")));
-			boolean didUpgradeEnv = false;
-			try {
+			dbEnv = new Environment(new File(path), envConfig);
+			// This code is avaibale in 2.3.8 which is not working right..
+		} catch(VersionMismatchException vme) {
+			int ans = JOptionPane.showConfirmDialog(parentFrame, "The version of the selected database does not match the version\nof the database library. Do you want to attempt to upgrade?\n\nWarning: Upgrading could cause loss of data, it is recomended\nthat you backup your database first.", "DB Version Mismatch Error", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+			if(ans == JOptionPane.YES_OPTION) {
+				System.out.println("Remove Env");
+				Environment.remove(new File(path), true, envConfig);
 				dbEnv = new Environment(new File(path), envConfig);
-				// This code is avaibale in 2.3.8 which is not working right..
-			} catch(VersionMismatchException vme) {
-				int ans = JOptionPane.showConfirmDialog(parentFrame, "The version of the selected database does not match the version\nof the database library. Do you want to attempt to upgrade?\n\nWarning: Upgrading could cause loss of data, it is recomended\nthat you backup your database first.", "DB Version Mismatch Error", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-				if(ans == JOptionPane.YES_OPTION) {
-					System.out.println("Remove Env");
-					Environment.remove(new File(path), true, envConfig);
-					dbEnv = new Environment(new File(path), envConfig);
-					System.out.println("Done Remove env");
-					didUpgradeEnv = true;
-				} else {
-					return;
-				}
+				System.out.println("Done Remove env");
+				didUpgradeEnv = true;
+			} else {
+				throw vme;
 			}
-			// end 2.3.8 code
-			LockStats ls = dbEnv.getLockStats(StatsConfig.DEFAULT);
-			System.out.println("Current Locks: "+ls.getNumLocks());
-			System.out.println("Current Lockers: "+ls.getNumLockers());
-			System.out.println("Current Deadlocks: "+ls.getNumDeadlocks());
-			//System.out.println("Current Conflicts: "+ls.getNumConflicts());
-			if(ls.getNumLocks() > 0) {
-				Object[] opts = {"Fix", "Continue"};
-				JOptionPane lockErrMess = new JOptionPane(
-						"The current Database is locked.  This could be because\nanother application is using it.  You may be able to continue\nwithout writing to it.  If there are no other applications using\nit you can try to reset the locking subsystem.",
-						JOptionPane.ERROR_MESSAGE, JOptionPane.YES_NO_OPTION, null, opts);
-				lockErrMess.createDialog(parentFrame, "DB Locking Error").setVisible(true);
-				//System.out.println(lockErrMess.getValue());
-				if(lockErrMess.getValue().equals("Fix")) {
-					dbEnv.close();
-					System.out.println("Locking problem, attempting to reset locking subsystem");
-					Environment.remove(new File(dbPath.substring(0, dbPath.lastIndexOf(System.getProperty("file.separator")))), true, envConfig);
-					   /*
-					boolean didDel = new File(path+System.getProperty("file.separator")+"__db.001").delete();
-					didDel = didDel && new File(path+System.getProperty("file.separator")+"__db.002").delete();
-					didDel = didDel && new File(path+System.getProperty("file.separator")+"__db.003").delete();
-					*/
-					// should not always be true.. something should be done, but if the remove failed it would
-					// have probably thrown an exception anyways
-					boolean didDel = true;
-					if(didDel) {
-						dbEnv = new Environment(new File(path), envConfig);
-						ls = dbEnv.getLockStats(StatsConfig.DEFAULT);
-						System.out.println("Current Locks: "+ls.getNumLocks());
-						System.out.println("Current Lockers: "+ls.getNumLockers());
-						System.out.println("Current Deadlocks: "+ls.getNumDeadlocks());
-						//System.out.println("Current Conflicts: "+ls.getNumConflicts());
-					} else {
-						System.out.println("Couldn't remove DB Environment");
-						JOptionPane.showMessageDialog(parentFrame, "Couldn't remove DB Environment", "DB Fix Error",
-								JOptionPane.ERROR_MESSAGE);
-						return;
-					}
-				} else {
-					// want a better way to do this anyway
-					//((FileChooserDemo)parentFrame).setEnableManageDB(false);
-				}
-			}
-			XmlManagerConfig mc = new XmlManagerConfig();
-			mc.setAdoptEnvironment(true);
-			manager = new XmlManager(dbEnv, mc);
-			XmlContainerConfig cconfig = new XmlContainerConfig();
-			cconfig.setAllowCreate(true);
-			//cconfig.setIndexNodes(true);
-			contName = dbPath.substring(dbPath.lastIndexOf(System.getProperty("file.separator"))+1);
-			uc = manager.createUpdateContext();
-			try {
-				/*
-				System.out.println("Before reindex");
-				manager.reindexContainer(contName, uc, cconfig);
-				System.out.println("After reindex");
-				closeDB();
-				System.exit(0);
-				*/
-				//System.out.println("Is node container: "+cconfig.getNodeContainer());
-
-				myContainer = manager.openContainer(contName, cconfig);
-				// testing index code here should be REMOVED
-				/*
-				System.out.println("Default Index: "+myContainer.getIndexSpecification().getDefaultIndex());
-				XmlIndexSpecification is = myContainer.getIndexSpecification();
-				//is.addIndex("", "name", "edge-attribute-equality-string");
-				//is.addIndex("", "type", "edge-attribute-equality-string");
-				//myContainer.setIndexSpecification(is, uc);
-				XmlIndexDeclaration dec;
-				while((dec = is.next()) != null) {
-					System.out.println("Index Name: "+dec.uri+":"+dec.name+" Index: "+dec.index);
-				}
-				System.out.println("Is node indexed: "+myContainer.getIndexNodes());
-				*/
-
-				/*
-				XmlQueryContext qc = manager.createQueryContext();
-				XmlIndexLookup xil = manager.createIndexLookup(myContainer, "", "type", "edge-attribute-equality-string");
-				XmlResults res =  xil.execute(qc);
-				XmlValue val;
-				while((val = res.next()) != null) {
-					System.out.print("Node Name: "+val.getNodeName()+"\t");
-					System.out.println("Node Value: "+val.getNodeValue());
-					val.delete();
-				}
-				*/
-
-				//System.out.println("The Index: "+myContainer.getIndexSpecification().find("", "type").index);
-				// end code to be REMOVED
-			} catch(XmlException ve) {
-				if(ve.getErrorCode() == XmlException.VERSION_MISMATCH) {
-					int ans;
-					if(didUpgradeEnv) {
-						ans = JOptionPane.YES_NO_OPTION;
-					} else {
-						ans = JOptionPane.showConfirmDialog(parentFrame, "The version of the selected database does not match the version\nof the database library. Do you want to attempt to upgrade?\n\nWarning: Upgrading could cause loss of data, it is recomended\nthat you backup your database first.", "DB Version Mismatch Error", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-					}
-					if(ans == JOptionPane.YES_OPTION) {
-						/*
-						JOptionPane.showMessageDialog(parentFrame, "Couldn't Upgrade the database.", 
-								"DB Upgrade Error", JOptionPane.ERROR_MESSAGE);
-								*/
-						System.out.println("Do upgrade");
-						//manager.upgradeContainer(contName, uc);
-						parentFrame.getGlassPane().setVisible(true);
-						boolean didUpgradeWork = upgradeDatabase(path, contName);
-						parentFrame.getGlassPane().setVisible(false);
-						if(!didUpgradeWork) {
-							JOptionPane.showMessageDialog(parentFrame, 
-									"An error occured while upgrading the database.", 
-									"DB Upgrade Error", JOptionPane.ERROR_MESSAGE);
-							return;
-						}
-						System.out.println("Done upgrade");
-						myContainer = manager.openContainer(contName, cconfig);
-						System.out.println("Done open");
-					} else {
-						return;
-					}
-				} else {
-					// print error db not open with exepction
-					ve.printStackTrace();
-					return;
-				}
-			}
-			//int rejected = manager.getEnvironment().detectDeadlocks(LockDetectMode.OLDEST);
-			//System.out.println("Deadlock Detection found "+rejected+" rejected locks");
-			printLockStats("openDB");
-			/*
-			LockStats ls = manager.getEnvironment().getLockStats(StatsConfig.DEFAULT);
-			System.out.println("Current Locks: "+ls.getNumLocks());
-			System.out.println("Current Lockers: "+ls.getNumLockers());
-			System.out.println("Current Deadlocks: "+ls.getNumDeadlocks());
-			System.out.println("Current Conflicts: "+ls.getNumConflicts());
-			*/
-			//addVarMetaData(parentFrame);
-			// will just get any that has already been cached, users will have to 
-			// tell use the gui search manually since they will rarely be used now
-			getVarMetaData(); 
-		} catch (XmlException e) {
-			// TODO: Tell the user that the database wasn't opened
-			e.printStackTrace();
-		} catch (DatabaseException dbe) {
-			dbe.printStackTrace();
-		} catch (FileNotFoundException fe) {
-			System.out.println("Could not find path to dbXML Container: "+dbPath);
 		}
+		// end 2.3.8 code
+		LockStats ls = dbEnv.getLockStats(StatsConfig.DEFAULT);
+		System.out.println("Current Locks: "+ls.getNumLocks());
+		System.out.println("Current Lockers: "+ls.getNumLockers());
+		System.out.println("Current Deadlocks: "+ls.getNumDeadlocks());
+		//System.out.println("Current Conflicts: "+ls.getNumConflicts());
+		if(ls.getNumLocks() > 0) {
+			Object[] opts = {"Fix", "Continue"};
+			JOptionPane lockErrMess = new JOptionPane(
+					"The current Database is locked.  This could be because\nanother application is using it.  You may be able to continue\nwithout writing to it.  If there are no other applications using\nit you can try to reset the locking subsystem.",
+					JOptionPane.ERROR_MESSAGE, JOptionPane.YES_NO_OPTION, null, opts);
+			lockErrMess.createDialog(parentFrame, "DB Locking Error").setVisible(true);
+			//System.out.println(lockErrMess.getValue());
+			if(lockErrMess.getValue().equals("Fix")) {
+				dbEnv.close();
+				System.out.println("Locking problem, attempting to reset locking subsystem");
+				Environment.remove(new File(dbPath.substring(0, dbPath.lastIndexOf(System.getProperty("file.separator")))), true, envConfig);
+				/*
+				   boolean didDel = new File(path+System.getProperty("file.separator")+"__db.001").delete();
+				   didDel = didDel && new File(path+System.getProperty("file.separator")+"__db.002").delete();
+				   didDel = didDel && new File(path+System.getProperty("file.separator")+"__db.003").delete();
+				   */
+				dbEnv = new Environment(new File(path), envConfig);
+				ls = dbEnv.getLockStats(StatsConfig.DEFAULT);
+				System.out.println("Current Locks: "+ls.getNumLocks());
+				System.out.println("Current Lockers: "+ls.getNumLockers());
+				System.out.println("Current Deadlocks: "+ls.getNumDeadlocks());
+				//System.out.println("Current Conflicts: "+ls.getNumConflicts());
+			}
+		}
+		XmlManagerConfig mc = new XmlManagerConfig();
+		mc.setAdoptEnvironment(true);
+		manager = new XmlManager(dbEnv, mc);
+		XmlContainerConfig cconfig = new XmlContainerConfig();
+		cconfig.setAllowCreate(true);
+		contName = dbPath.substring(dbPath.lastIndexOf(System.getProperty("file.separator"))+1);
+		uc = manager.createUpdateContext();
+		try {
+			myContainer = manager.openContainer(contName, cconfig);
+		} catch(XmlException ve) {
+			if(ve.getErrorCode() == XmlException.VERSION_MISMATCH) {
+				int ans;
+				if(didUpgradeEnv) {
+					ans = JOptionPane.YES_NO_OPTION;
+				} else {
+					ans = JOptionPane.showConfirmDialog(parentFrame, "The version of the selected database does not match the version\nof the database library. Do you want to attempt to upgrade?\n\nWarning: Upgrading could cause loss of data, it is recomended\nthat you backup your database first.", "DB Version Mismatch Error", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+				}
+				if(ans == JOptionPane.YES_OPTION) {
+					System.out.println("Do upgrade");
+					// TODO: getting this call to work would be better than the current solution.
+					//manager.upgradeContainer(contName, uc);
+					parentFrame.getGlassPane().setVisible(true);
+					boolean didUpgradeWork = upgradeDatabase(path, contName);
+					parentFrame.getGlassPane().setVisible(false);
+					if(!didUpgradeWork) {
+						JOptionPane.showMessageDialog(parentFrame, 
+								"An error occured while upgrading the database.", 
+								"DB Upgrade Error", JOptionPane.ERROR_MESSAGE);
+						throw new Exception("Could not upgrade database.");
+					}
+					System.out.println("Done upgrade");
+					myContainer = manager.openContainer(contName, cconfig);
+					System.out.println("Done open");
+				} else {
+					throw ve;
+				}
+			} else {
+				throw ve;
+			}
+		}
+		printLockStats("openDB");
+		// will just get any that has already been cached, users will have to 
+		// tell use the gui search manually since they will rarely be used now
+		getVarMetaData(); 
 	}
 	public void printLockStats(String where) {
 		if(!lockCheck) {
@@ -339,20 +307,16 @@ public class XMLDB {
 		}
 	}
 
-	public void closeDB() {
-		try {
-			System.out.println("Closing DB");
-			printLockStats("closeDB");
-			if(myContainer == null) {
-				// didn't open sucessfully
-				return;
-			}
-			System.out.println("Number of values are currently: "+numVals);
-			myContainer.close();
-			manager.close();
-		} catch (XmlException e) {
-			e.printStackTrace();
+	private void closeDB() throws XmlException {
+		System.out.println("Closing DB");
+		printLockStats("closeDB");
+		if(myContainer == null) {
+			// didn't open sucessfully
+			return;
 		}
+		System.out.println("Number of values are currently: "+numVals);
+		myContainer.close();
+		manager.close();
 	}
 
 	public static boolean hasAttr(XmlValue val) throws XmlException {
@@ -618,7 +582,7 @@ public class XMLDB {
 			})).start();
 		} catch(XmlException e) {
 			e.printStackTrace();
-			closeDB();
+			//closeDB();
 		}
 		printLockStats("addVarMetaData2");
 	}
@@ -653,7 +617,7 @@ public class XMLDB {
 			return qe.execute(contextVal, qc);
 		} catch(XmlException e) {
 			e.printStackTrace();
-			closeDB();
+			//closeDB();
 			return null;
 		}
 	}

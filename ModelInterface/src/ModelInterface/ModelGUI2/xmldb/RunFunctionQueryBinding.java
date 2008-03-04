@@ -1,12 +1,12 @@
 package ModelInterface.ModelGUI2.xmldb;
 
-import ModelInterface.ModelGUI2.DbViewer;
+import ModelInterface.ModelGUI2.ScenarioListItem;
 import ModelInterface.ModelGUI2.queries.QueryGenerator;
 
 /**
  * This query binding is used when the query has a run function whose 
  * parameters should be a list of scenarios, regions, and a collection.
- * It will look the replace the comment paramaters with a real list.
+ * It will the replace the comment paramaters with real lists.
  * @author Pralit Patel.
  */ 
 public class RunFunctionQueryBinding implements QueryBinding {
@@ -20,7 +20,7 @@ public class RunFunctionQueryBinding implements QueryBinding {
 		StringBuilder scenarioListBuilder = new StringBuilder("(");
 		StringBuilder regionListBuilder = new StringBuilder("(");
 		for(int i = 0; i < scenarios.length; ++i) {
-			DbViewer.ScenarioListItem currScn = (DbViewer.ScenarioListItem)scenarios[i];
+			ScenarioListItem currScn = (ScenarioListItem)scenarios[i];
 			scenarioListBuilder.append("'").append(currScn.getScnName()).append(" ")
 				.append(currScn.getScnDate()).append("', ");
 		}

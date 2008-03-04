@@ -18,6 +18,9 @@ import javax.swing.undo.UndoManager;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.CannotRedoException;
 
+import org.w3c.dom.Node;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import ModelInterface.ConfigurationEditor.configurationeditor.ConfigurationEditor;
 import ModelInterface.DMsource.DMViewer;
@@ -25,6 +28,12 @@ import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.InputViewer;
 import ModelInterface.PPsource.PPViewer;
 import ModelInterface.common.RecentFilesList;
+
+import ModelInterface.ModelGUI2.XMLFilter;
+import ModelInterface.ConfigurationEditor.utils.FileUtils;
+import ModelInterface.common.FileChooser;
+import ModelInterface.common.FileChooserFactory;
+import ModelInterface.BatchRunner;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -65,6 +74,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	private JMenuItem pasteMenu;
 	private JMenuItem undoMenu;
 	private JMenuItem redoMenu;
+	private JMenuItem batchMenu;
 	private Properties savedProperties;
 
 	private UndoManager undoManager;
@@ -201,6 +211,11 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		copyMenu.setEnabled(false);
 		pasteMenu.setEnabled(false);
 
+		batchMenu = new JMenuItem("Batch File");
+		batchMenu.setEnabled(true);
+		batchMenu.addActionListener(this);
+		menuMan.getSubMenuManager(FILE_MENU_POS).addMenuItem(batchMenu, FILE_OPEN_SUBMENU_POS);
+
 		setupUndo(menuMan);
 	}
 
@@ -298,6 +313,18 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		if(e.getActionCommand().equals("Quit")) {
 			//firePropertyChange("Control", oldControl, "ModelInterface");
 			dispose();
+		} else if(e.getActionCommand().equals("Batch File")) {
+			// TODO: make it so recent files could work with this
+			FileChooser fc = FileChooserFactory.getFileChooser();
+			File[] result = fc.doFilePrompt(this, "Open Batch File", FileChooser.LOAD_DIALOG, 
+					new File(getProperties().getProperty("lastDirectory", ".")),
+					new XMLFilter());
+			if(result != null) {
+				for(File file : result) {
+					runBatch(file);
+				}
+			}
+			// TODO: message that all were run
 		}
 	}
 	public static InterfaceMain getInstance() {
@@ -328,6 +355,9 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	public JMenuItem getRedoMenu() {
 		// will this be needed since they will be setup in here?
 		return redoMenu;
+	}
+	public JMenuItem getBatchMenu() {
+		return batchMenu;
 	}
 	public void fireControlChange(String newValue) {
 		System.out.println("Going to change controls");
@@ -473,5 +503,45 @@ public class InterfaceMain extends JFrame implements ActionListener {
 			}
 		}
 		return null;
+	}
+	/**
+	 * Runs the given batch file.  Relys on the menuAdders list
+	 * and if any of the class implements BatchRunner it will pass
+	 * it off the command to that class. 
+	 * @param file The batch file to run.
+	 * @see BatchRunner 
+	 */
+	private void runBatch(File file) {
+		// don't really care about document element's name
+		Node doc = FileUtils.loadDocument(this, file, null).getDocumentElement();
+
+		// TODO: remove this check once batch queries get merged
+		if(doc.getNodeName().equals("queries")) {
+			System.out.println("Batch queries are not yet merged with this functionality.");
+			System.out.println("Please open a database then run the batch file.");
+			// TODO: print this on the screen
+			return;
+		}
+
+		NodeList commands = doc.getChildNodes();
+		for(int i = 0; i < commands.getLength(); ++i) {
+			if(commands.item(i).getNodeName().equals("class")) {
+				Element currClass = (Element)commands.item(i);
+				String className = currClass.getAttribute("name");
+				MenuAdder runner = getMenuAdder(className);
+				if(runner != null && runner instanceof BatchRunner) {
+					((BatchRunner)runner).runBatch(currClass);
+				} else {
+					System.out.println("could not find batch runner for class "+className);
+					JOptionPane.showMessageDialog(this,
+							"Could not find batch runner for class "+className,
+							"Batch File Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}
+		System.out.println("Finished running "+file);
+		JOptionPane.showMessageDialog(this,
+				"Finished running batch file "+file.getName(),
+				"Batch File Complete", JOptionPane.INFORMATION_MESSAGE);
 	}
 }

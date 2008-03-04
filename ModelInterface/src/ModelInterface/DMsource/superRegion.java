@@ -40,7 +40,7 @@ import java.util.*;
 public class superRegion extends Region
 {
   
-  ArrayList data; //a list of other stored regions, be they sub or super
+  List<Region> data; //a list of other stored regions, be they sub or super
   /**
    * Constucts a blank super region with imposible bounds all fields must
    * be set later by the user. Setting of bounds and filling of data should
@@ -57,7 +57,7 @@ public class superRegion extends Region
     width = -1;
     numSub = 0;
     level = 1;
-    data = new ArrayList();
+    data = new ArrayList<Region>();
   }
   
   public boolean isSuper()
@@ -81,7 +81,7 @@ public class superRegion extends Region
     
     for(int i = 0; i < data.size(); i++)
     {
-      holdR = (Region)data.get(i);
+      holdR = data.get(i);
       holdM = holdR.getM();
       offsetY = (int)(((y+height)-(holdR.y+holdR.height))/resolution);
       offsetX = (int)((holdR.x-x)/resolution);
@@ -128,7 +128,7 @@ public class superRegion extends Region
     
     for(int i = 0; i < data.size(); i++)
     {
-      holdR = (Region)data.get(i);
+      holdR = data.get(i);
       holdM = holdR.getM(var, year);
       holdW = holdR.getM();
       offsetY = (int)(((y+height)-(holdR.y+holdR.height))/resolution);
@@ -173,7 +173,7 @@ public class superRegion extends Region
     //?what is this doing? toReturn[0] = new DataWrapper(name, resolution, x, y, width, height);
     for(int i = 0; i < data.size(); i++)
     {
-      holdR = (Region)data.get(i);
+      holdR = data.get(i);
       holdD = holdR.getWorkingM(var, year);
       for(int k = 0; k < holdD.length; k++)
       {
@@ -187,7 +187,7 @@ public class superRegion extends Region
   
   public ArrayList<String> getTimeList(String var)
   {
-    return ((Region)data.get(0)).getTimeList(var);
+    return data.get(0).getTimeList(var);
   }
   
   public Wrapper[] extractRegion(ReferenceVariable ref)
@@ -198,7 +198,7 @@ public class superRegion extends Region
     
     for(int i = 0; i < data.size(); i++)
     {
-      currR = (Region)data.get(i);
+      currR = data.get(i);
       holdAdd = currR.extractRegion(ref);
       for(int k = 0; k < holdAdd.length; k++)
       {
@@ -207,5 +207,14 @@ public class superRegion extends Region
     }
     
     return (Wrapper[])holdWrappers.toArray(new Wrapper[0]);
+  }
+
+  public boolean containsRegion(String regionNameIn) {
+	  boolean ret = name.equals(regionNameIn);
+	  for(int i = 0; i < data.size() && !ret; ++i) {
+		  Region currR = data.get(i);
+		  ret = currR.containsRegion(regionNameIn);
+	  }
+	  return ret;
   }
 }

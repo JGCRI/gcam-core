@@ -40,6 +40,7 @@ import java.beans.PropertyChangeEvent;
 
 import ModelInterface.InterfaceMain;
 import ModelInterface.MenuAdder;
+import ModelInterface.BatchRunner;
 
 import ModelInterface.ModelGUI2.tables.*;
 import ModelInterface.ModelGUI2.csvconv.DOMTreeBuilder;
@@ -49,7 +50,7 @@ import ModelInterface.common.FileChooserFactory;
 import ModelInterface.common.RecentFilesList;
 import ModelInterface.common.RecentFilesList.RecentFile;
 
-public class InputViewer implements ActionListener, TableModelListener, MenuAdder {
+public class InputViewer implements ActionListener, TableModelListener, MenuAdder, BatchRunner {
 
 	private InputViewer thisViewer;
 
@@ -276,16 +277,6 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	public void displayJtree() {
 		Container contentPane = parentFrame.getContentPane();
 		contentPane.removeAll();
-		/*
-		if(xmlDB != null) {
-			xmlDB.closeDB();
-			//menuManage.setEnabled(false);
-			//menuExpPrn.setEnabled(false);
-		}
-		if (splitPane != null) {
-			contentPane.remove(splitPane);
-		}
-		*/
 		// Set up the tree
 		jtree = new JTree(new DOMmodel(doc, (InterfaceMain)parentFrame));
 		jtree.setEditable(true);
@@ -1744,5 +1735,74 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 
 	public Documentation getDocumentation() {
 		return documentation;
+	}
+
+	public void runBatch(Node command) {
+		NodeList children = command.getChildNodes();
+		for(int i = 0; i < children.getLength(); ++i ) {
+			Node child = children.item(i);
+			// TODO: put in a parse filter for this
+			if(child.getNodeType() != Node.ELEMENT_NODE) {
+				continue;
+			}
+			String actionCommand = ((Element)child).getAttribute("name");
+			if(actionCommand == null) {
+				continue;
+			}
+			if(actionCommand.equals("CSV file")) {
+				File headerFile = null;
+				File outFile = null;
+				ArrayList<File> csvFiles = new ArrayList<File>();
+				// read file names for header file, csv files, and the output file
+				NodeList fileNameChildren = child.getChildNodes();
+				for(int j = 0; j < fileNameChildren.getLength(); ++j) {
+					Node fileNode = fileNameChildren.item(j);
+					if(fileNode.getNodeType() != Node.ELEMENT_NODE) {
+						continue;
+					}
+					System.out.println("on "+fileNode.getNodeName());
+					File tempFile = new File(fileNode.getTextContent());
+					if(fileNode.getNodeName().equals("headerFile")) {
+						headerFile = tempFile;
+					} else if(fileNode.getNodeName().equals("outFile")) {
+						outFile = tempFile;
+					} else if(fileNode.getNodeName().equals("csvFile")) {
+						csvFiles.add(tempFile);
+					} else {
+						System.out.println("Unknown tag: "+fileNode.getNodeName());
+						// should I print this error to the screen?
+					}
+				}
+				// make sure we have enough to run the csv conversion
+				// which means we have a header file, output file, and
+				// at least one csv file.
+				if(headerFile != null && outFile != null &&
+						csvFiles.size() != 0) {
+					File[] csvFilesArr = new File[csvFiles.size()];
+					csvFilesArr = csvFiles.toArray(csvFilesArr);
+					readCSVFile(csvFilesArr, headerFile);
+					if(doc != null) {
+						// only write if there were no conversion errors
+						writeFile(outFile, doc);
+						// null out the results after they have been writen since
+						// we don't need them around
+						doc = null;
+					}
+					// if it was null there was an error during conversion and the
+					// user should have already gotten that so no need to tell them
+					// again
+				} else {
+					System.out.println("Not enough info to run conversion");
+					JOptionPane.showMessageDialog(parentFrame,
+							"Not enough info to run conversion",
+							"Batch File Error", JOptionPane.ERROR_MESSAGE);
+				}
+			} else {
+				System.out.println("Unknown command: "+actionCommand);
+				JOptionPane.showMessageDialog(parentFrame,
+						"Unknown command: "+actionCommand,
+						"Batch File Error", JOptionPane.ERROR_MESSAGE);
+			}
+		}
 	}
 }

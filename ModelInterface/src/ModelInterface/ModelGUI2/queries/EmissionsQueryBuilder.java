@@ -1,7 +1,6 @@
 package ModelInterface.ModelGUI2.queries;
 
-import ModelInterface.ModelGUI2.DbViewer;
-import ModelInterface.ModelGUI2.XMLDB;
+import ModelInterface.ModelGUI2.xmldb.XMLDB;
 import ModelInterface.common.DataPair;
 
 import javax.swing.JList;
@@ -43,8 +42,6 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		queryFunctions.removeAllElements();
 		queryFunctions.add("distinct-values");
 		queryFilter = "/scenario/world/"+regionQueryPortion+"/";
-		//DbViewer.xmlDB.setQueryFunction("distinct-values(");
-		//DbViewer.xmlDB.setQueryFilter("/scenario/world/region/");
 		return (new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				int[] selectedInd = list.getSelectedRows();
@@ -77,8 +74,6 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		qg.levelValues = list.getSelectedValues();
 		queryFunctions = null;
 		queryFilter = null;
-		//DbViewer.xmlDB.setQueryFunction("");
-		//DbViewer.xmlDB.setQueryFilter("");
 	}
 	public JComponentAdapter doBack(JComponentAdapter list, JLabel label) {
 		// doing this stuff after currSel has changed now..
@@ -335,7 +330,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			query = sectorQueryPortion+"/"+subsectorQueryPortion+"/"+technologyQueryPortion;
 		}
 		// do I need to substr the ] out of query and add AND ??
-		XmlResults res = DbViewer.xmlDB.createQuery(queryFilter+query+
+		XmlResults res = XMLDB.getInstance().createQuery(queryFilter+query+
 				"[child::group[@name='"+gName+"']]/@name", 
 				queryFunctions, null, null);
 		try {
@@ -346,7 +341,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			e.printStackTrace();
 		}
 		ret.delete(ret.length()-4, ret.length());
-		DbViewer.xmlDB.printLockStats("expandGroupName");
+		XMLDB.getInstance().printLockStats("expandGroupName");
 		return ret.toString();
 	}
 	private void createXPath() {
@@ -373,7 +368,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			ret.put("Sum All", new Boolean(false));
 			ret.put("Group All", new Boolean(false));
 		}
-		XmlResults res = DbViewer.xmlDB.createQuery(queryFilter+path, queryFunctions, null, null);
+		XmlResults res = XMLDB.getInstance().createQuery(queryFilter+path, queryFunctions, null, null);
 		try {
 			while(res.hasNext()) {
 				if(!isGroupNames) {
@@ -386,7 +381,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			e.printStackTrace();
 		}
 		res.delete();
-		DbViewer.xmlDB.printLockStats("createList");
+		XMLDB.getInstance().printLockStats("createList");
 		return ret;
 	}
 	public String getCompleteXPath(Object[] regions) {
@@ -455,7 +450,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			nBefore.delete();
 		} while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
 		n.delete();
-		DbViewer.xmlDB.printLockStats("SupplyDemandQueryBuilder.getRegionAndYearFromNode");
+		XMLDB.getInstance().printLockStats("SupplyDemandQueryBuilder.getRegionAndYearFromNode");
 		//System.out.println("Returning: "+ret);
 		return ret.toArray();
 	}

@@ -3286,6 +3286,15 @@ public class ManipulationDriver
 	  System.out.println("=============================================================================");
   }
 
+  /**
+   * Downscales emissions from the region level to the courntry level(or really an smaller 
+   * region level).  See EmissionsDownscaler.
+   * @param command The xml command used to determine how and what to downscale.
+   */
+  private void downscaleEmissionsCommand(Element command) {
+	  EmissionsDownscaler.doDownscaling(command, this);
+  }
+
 //*****************************************************************************
 //*********************Helper Functions****************************************
 //*****************************************************************************
@@ -3538,6 +3547,9 @@ public class ManipulationDriver
     } else if(currCom.getName().equals("printDebug"))
     {
 	    printDebugCommand(currCom);
+    } else if(currCom.getName().equals("downscaleEmissions"))
+    {
+	    downscaleEmissionsCommand(currCom);
     } else if(currCom.getName().equals("exit"))
     {
 	    System.exit(0);

@@ -1,7 +1,6 @@
 package ModelInterface.ModelGUI2.queries;
 
-import ModelInterface.ModelGUI2.DbViewer;
-import ModelInterface.ModelGUI2.XMLDB;
+import ModelInterface.ModelGUI2.xmldb.XMLDB;
 import ModelInterface.common.DataPair;
 
 import javax.swing.JList;
@@ -41,8 +40,6 @@ public class MarketQueryBuilder extends QueryBuilder {
 		queryFunctions.removeAllElements();
 		queryFunctions.add("distinct-values");
 		queryFilter = "/scenario/world/Marketplace/";
-		//DbViewer.xmlDB.setQueryFilter("/scenario/world/Marketplace/");
-		//DbViewer.xmlDB.setQueryFunction("distinct-values(");
 		return (new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				int[] selectedInd = list.getSelectedRows();
@@ -100,8 +97,6 @@ public class MarketQueryBuilder extends QueryBuilder {
 		qg.levelValues = list.getSelectedValues();
 		queryFunctions = null;
 		queryFilter = null;
-		//DbViewer.xmlDB.setQueryFilter("");
-		//DbViewer.xmlDB.setQueryFunction("");
 	}
 	public boolean isAtEnd() {
 		return qg.currSel == 3;
@@ -170,7 +165,7 @@ public class MarketQueryBuilder extends QueryBuilder {
 	}
 	private String expandGroupName(String gName) {
 		StringBuffer ret = new StringBuffer();
-		XmlResults res = DbViewer.xmlDB.createQuery(queryFilter+"market/[child::group[@name='"+gName+"']]/@name",
+		XmlResults res = XMLDB.getInstance().createQuery(queryFilter+"market/[child::group[@name='"+gName+"']]/@name",
 				queryFunctions, null, null);
 		try {
 			while(res.hasNext()) {
@@ -180,7 +175,7 @@ public class MarketQueryBuilder extends QueryBuilder {
 			e.printStackTrace();
 		}
 		ret.delete(ret.length()-4, ret.length());
-		DbViewer.xmlDB.printLockStats("expandGroupName");
+		XMLDB.getInstance().printLockStats("expandGroupName");
 		return ret.toString();
 	}
 	private void createXPath() {
@@ -230,7 +225,7 @@ public class MarketQueryBuilder extends QueryBuilder {
 			ret.put("Group All", new Boolean(false));
 		}
 		*/
-		XmlResults res = DbViewer.xmlDB.createQuery(queryFilter+path, queryFunctions, null, null);
+		XmlResults res = XMLDB.getInstance().createQuery(queryFilter+path, queryFunctions, null, null);
 		try {
 			while(res.hasNext()) {
 				if(!isGroupNames) {
@@ -243,7 +238,7 @@ public class MarketQueryBuilder extends QueryBuilder {
 			e.printStackTrace();
 		}
 		res.delete();
-		DbViewer.xmlDB.printLockStats("createList");
+		XMLDB.getInstance().printLockStats("createList");
 		return ret;
 	}
 	public String getCompleteXPath(Object[] regions) {
@@ -305,7 +300,7 @@ public class MarketQueryBuilder extends QueryBuilder {
 			nBefore.delete();
 		} while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
 		n.delete();
-		DbViewer.xmlDB.printLockStats("SupplyDemandQueryBuilder.getRegionAndYearFromNode");
+		XMLDB.getInstance().printLockStats("SupplyDemandQueryBuilder.getRegionAndYearFromNode");
 		return ret.toArray();
 	}
 	public Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {

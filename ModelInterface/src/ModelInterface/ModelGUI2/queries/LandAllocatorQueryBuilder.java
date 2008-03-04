@@ -1,7 +1,6 @@
 package ModelInterface.ModelGUI2.queries;
 
-import ModelInterface.ModelGUI2.DbViewer;
-import ModelInterface.ModelGUI2.XMLDB;
+import ModelInterface.ModelGUI2.xmldb.XMLDB;
 import ModelInterface.common.DataPair;
 
 import javax.swing.JList;
@@ -92,8 +91,8 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 	private void getLeaves() {
 		queryFilter = "";
 		queryFunctions.clear();
-		queryFunctions.add(DbViewer.xmlDB.getQueryFunctionAsDistinctNames());
-		XmlResults res = DbViewer.xmlDB.createQuery("//LandLeaf/*[fn:count(child::text()) = 1]", queryFilter, queryFunctions);
+		queryFunctions.add(XMLDB.getInstance().getQueryFunctionAsDistinctNames());
+		XmlResults res = XMLDB.getInstance().createQuery("//LandLeaf/*[fn:count(child::text()) = 1]", queryFilter, queryFunctions);
 		XmlValue val;
 		try {
 			while((val = res.next()) != null) {
@@ -103,14 +102,14 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 		} catch(XmlException e) {
 			e.printStackTrace();
 		}
-		DbViewer.xmlDB.printLockStats("LandAllocatorQueryBuilder.getLeaves");
+		XMLDB.getInstance().printLockStats("LandAllocatorQueryBuilder.getLeaves");
 	}
 	*/
 	private JTreeAdapter getLandUseTree() {
 		// region query portion!!
 		queryFilter = "/scenario/world/"+regionQueryPortion+"/";
 		queryFunctions.clear();
-		XmlResults res = DbViewer.xmlDB.createQuery(queryFilter+"/LandAllocatorNode[@name='root']", queryFunctions, null, null);
+		XmlResults res = XMLDB.getInstance().createQuery(queryFilter+"/LandAllocatorNode[@name='root']", queryFunctions, null, null);
 		XmlValue val;
 		// for some reason JTree doesn't accept Maps, only Hashtables
 		Hashtable<String, Hashtable> landUseTree = new Hashtable<String, Hashtable>();
@@ -124,7 +123,7 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 		} finally {
 			res.delete();
 		}
-		DbViewer.xmlDB.printLockStats("LandAllocatorQueryBuilder.getLandUseTree");
+		XMLDB.getInstance().printLockStats("LandAllocatorQueryBuilder.getLandUseTree");
 		JTree retTree = new JTree((Hashtable<String, Hashtable>)landUseTree);
 		retTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		retTree.setSelectionRow(0);
@@ -275,7 +274,7 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 		Object[] ret = new Object[2];
 		ret[0] = XMLDB.getAttr(n, "year");
 		ret[1] = qg.nodeLevel.getKey().split(" ", 2)[1];
-		DbViewer.xmlDB.printLockStats("LandAllocatorQueryBuilder.extractAxisInfo");
+		XMLDB.getInstance().printLockStats("LandAllocatorQueryBuilder.extractAxisInfo");
 		return ret;
 	}
 	private boolean passedIt;

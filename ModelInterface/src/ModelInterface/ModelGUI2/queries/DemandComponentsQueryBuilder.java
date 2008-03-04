@@ -1,7 +1,6 @@
 package ModelInterface.ModelGUI2.queries;
 
-import ModelInterface.ModelGUI2.DbViewer;
-import ModelInterface.ModelGUI2.XMLDB;
+import ModelInterface.ModelGUI2.xmldb.XMLDB;
 import ModelInterface.common.DataPair;
 
 import javax.swing.JList;
@@ -36,20 +35,11 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 	public static String xmlName = "demandComponentsQuery";
 	public DemandComponentsQueryBuilder(QueryGenerator qgIn) {
 		super(qgIn);
-		//sectorList = null;
-		//subsectorList = null;
-		//techList = null;
-		//inputList = null;
-		// for now..
-		//varList = new HashMap();
-		//varList.put("demand-currency", false);
 	}
 	public EventListener getListSelectionListener(final JComponentAdapter list, final JButton nextButton, final JButton cancelButton) {
 		queryFunctions.removeAllElements();
 		queryFunctions.add("distinct-values");
 		queryFilter = "/scenario/world/"+regionQueryPortion+"/";
-		//DbViewer.xmlDB.setQueryFunction("distinct-values(");
-		//DbViewer.xmlDB.setQueryFilter("/scenario/world/region/");
 		return (new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				int[] selectedInd = list.getSelectedRows();
@@ -83,8 +73,6 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 		qg.levelValues = list.getSelectedValues();
 		queryFunctions = null;
 		queryFilter = null;
-		//DbViewer.xmlDB.setQueryFunction("");
-		//DbViewer.xmlDB.setQueryFilter("");
 	}
 	public JComponentAdapter doBack(JComponentAdapter list, JLabel label) {
 		// doing this stuff after currSel has changed now..
@@ -320,7 +308,7 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 			query = sectorQueryPortion+"/"+subsectorQueryPortion+"/"+technologyQueryPortion+
 				"/"+inputQueryPortion;
 		}
-		XmlResults res = DbViewer.xmlDB.createQuery(query+"[child::group[@name='"+gName+"']]/@name", queryFilter, queryFunctions);
+		XmlResults res = XMLDB.getInstance().createQuery(query+"[child::group[@name='"+gName+"']]/@name", queryFilter, queryFunctions);
 		try {
 			while(res.hasNext()) {
 				ret.append("(@name='").append(res.next().asString()).append("') or ");
@@ -329,7 +317,7 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 			e.printStackTrace();
 		}
 		ret.delete(ret.length()-4, ret.length());
-		DbViewer.xmlDB.printLockStats("DemandComponentsQueryBuilder.expandGroupName");
+		XMLDB.getInstance().printLockStats("DemandComponentsQueryBuilder.expandGroupName");
 		return ret.toString();
 	}
 	*/
@@ -364,7 +352,7 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 			ret.put("Sum All", new Boolean(false));
 			ret.put("Group All", new Boolean(false));
 		}
-		XmlResults res = DbViewer.xmlDB.createQuery(path, queryFilter, queryFunctions);
+		XmlResults res = XMLDB.getInstance().createQuery(path, queryFilter, queryFunctions);
 		try {
 			while(res.hasNext()) {
 				if(!isGroupNames) {
@@ -377,7 +365,7 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 			e.printStackTrace();
 		}
 		res.delete();
-		DbViewer.xmlDB.printLockStats("DemandComponentsQueryBuilder.createList");
+		XMLDB.getInstance().printLockStats("DemandComponentsQueryBuilder.createList");
 		return ret;
 	}
 	*/
@@ -446,7 +434,7 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 			nBefore.delete();
 		} while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
 		n.delete();
-		DbViewer.xmlDB.printLockStats("DemandComponentsQueryBuilder.getRegionAndYearFromNode");
+		XMLDB.getInstance().printLockStats("DemandComponentsQueryBuilder.getRegionAndYearFromNode");
 		if(ret.size() != 2) {
 			System.out.println("Ret only has "+ret.get(0));
 		}

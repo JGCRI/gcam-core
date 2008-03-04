@@ -101,6 +101,13 @@ public abstract class Region extends Rectangle2D.Double
    */
   public abstract Wrapper[] extractRegion(ReferenceVariable ref); 
   /**
+   * Determines by name if this region or one of it's subregions is called
+   * regionNameIn.
+   * @param regionNameIn The region we are looking for.
+   * @return true if this or a contained regions is called regionNameIn.
+   */
+  public abstract boolean containsRegion(String regionNameIn);
+  /**
    * Prints this regions bit mask to the screen as a matrix of 0's (not in region)
    * and 1's (in region). Additionally gives some bounds for the region.
    *

@@ -2,7 +2,7 @@ package ModelInterface.ModelGUI2.tables;
 
 import ModelInterface.ModelGUI2.queries.QueryGenerator;
 import ModelInterface.ModelGUI2.DOMmodel;
-import ModelInterface.ModelGUI2.XMLDB;
+import ModelInterface.ModelGUI2.xmldb.XMLDB;
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.Documentation;
 import ModelInterface.InterfaceMain;
@@ -773,12 +773,12 @@ public class ComboTableModel extends BaseTableModel{
 		title = qgIn.toString();
 		boolean isTotal = false;
 		if(singleBinding == null) {
-			buildTable(DbViewer.xmlDB.createQuery(qgIn, scenarios, regions), qgIn.isSumAll(), 
+			buildTable(XMLDB.getInstance().createQuery(qgIn, scenarios, regions), qgIn.isSumAll(), 
 					qgIn.getLevelValues(), isTotal);
 		} else {
 			// TODO: figure out a better way of telling if this is a Total
 			isTotal = !(singleBinding instanceof ModelInterface.ModelGUI2.xmldb.SingleQueryQueryBinding);
-			buildTable(DbViewer.xmlDB.createQuery(singleBinding, scenarios, regions), 
+			buildTable(XMLDB.getInstance().createQuery(singleBinding, scenarios, regions), 
 					qgIn.isSumAll(), qgIn.getLevelValues(), isTotal);
 		}
 		ind2Name = qgIn.getVariable();
@@ -860,7 +860,7 @@ public class ComboTableModel extends BaseTableModel{
 			  regions.add(regionAndYear[0]);
 			  years.add(regionAndYear[1]);
 			  Map retMap = qg.addToDataTree(new XmlValue(tempNode), dataTree); 
-			  DbViewer.xmlDB.printLockStats("addToDataTree");
+			  XMLDB.getInstance().printLockStats("addToDataTree");
 			  Double ret = (Double)retMap.get((String)regionAndYear[0]+";"+(String)regionAndYear[1]);
 			  if(ret == null) {
 				  retMap.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], new Double(tempNode.asNumber()));
@@ -873,7 +873,7 @@ public class ComboTableModel extends BaseTableModel{
 		  }
 		  regions.add("Units");
 		  res.delete();
-		  DbViewer.xmlDB.printLockStats("buildTable");
+		  XMLDB.getInstance().printLockStats("buildTable");
 	  } catch(Exception e) {
 		  e.printStackTrace();
 	  }

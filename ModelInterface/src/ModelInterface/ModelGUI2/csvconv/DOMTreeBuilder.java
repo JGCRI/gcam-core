@@ -478,9 +478,9 @@ public class DOMTreeBuilder {
 								// and add the current Header to the tuple
 								// avoid warnings use my own clone
 								//currTemp = (List<Header>)((ArrayList<Header>)currTemp).clone();
-								currTemp = cloneList(currTemp);
-								currTemp.add(currHeader);
-								temp.add(currTemp);
+								List<Header> newTuple = cloneList(currTemp);
+								newTuple.add(currHeader);
+								temp.add(newTuple);
 							} else {
 								// don't duplicate the tuple, but since
 								// this is the last just go ahead and 

@@ -1,7 +1,6 @@
 package ModelInterface.ModelGUI2.queries;
 
-import ModelInterface.ModelGUI2.DbViewer;
-import ModelInterface.ModelGUI2.XMLDB;
+import ModelInterface.ModelGUI2.xmldb.XMLDB;
 import ModelInterface.common.DataPair;
 
 import javax.swing.JList;
@@ -126,8 +125,6 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 
 		queryFunctions = null;
 		queryFilter = null;
-		//DbViewer.xmlDB.setQueryFilter("");
-		//DbViewer.xmlDB.setQueryFunction("");
 	}
 	public boolean isAtEnd() {
 		// did not update this since it is going to be removed anyways
@@ -147,7 +144,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 					if(popList == null) {
 						Vector funcTemp = queryFunctions;
 						queryFunctions = new Vector<String>(1,0);
-						queryFunctions.add(DbViewer.xmlDB.getQueryFunctionAsDistinctNames());
+						queryFunctions.add(XMLDB.getInstance().getQueryFunctionAsDistinctNames());
 						popList = createList("*", false);
 						queryFunctions = funcTemp;
 					}
@@ -224,7 +221,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 	}
 	private String expandGroupName(String gName) {
 		StringBuffer ret = new StringBuffer();
-		XmlResults res = DbViewer.xmlDB.createQuery(queryFilter+
+		XmlResults res = XMLDB.getInstance().createQuery(queryFilter+
 				"*/ageCohort[child::group[@name='"+gName+"']]/@ageGroup",
 				queryFunctions, null, null);
 		try {
@@ -235,7 +232,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 			e.printStackTrace();
 		}
 		ret.delete(ret.length()-4, ret.length());
-		DbViewer.xmlDB.printLockStats("expandGroupName");
+		XMLDB.getInstance().printLockStats("expandGroupName");
 		return ret.toString();
 	}
 	private void createXPath() {
@@ -341,7 +338,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 			ret.put("Group All", new Boolean(false));
 		}
 		*/
-		XmlResults res = DbViewer.xmlDB.createQuery(queryFilter+path, queryFunctions, null, null);
+		XmlResults res = XMLDB.getInstance().createQuery(queryFilter+path, queryFunctions, null, null);
 		try {
 			while(res.hasNext()) {
 				if(!isGroupNames) {
@@ -354,7 +351,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 			e.printStackTrace();
 		}
 		res.delete();
-		DbViewer.xmlDB.printLockStats("createList");
+		XMLDB.getInstance().printLockStats("createList");
 		return ret;
 	}
 	public String getCompleteXPath(Object[] regions)  {
@@ -426,7 +423,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 			nBefore.delete();
 		} while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
 		n.delete();
-		DbViewer.xmlDB.printLockStats("getRegionAndYearFromNode");
+		XMLDB.getInstance().printLockStats("getRegionAndYearFromNode");
 		return ret.toArray();
 	}
 	public Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {

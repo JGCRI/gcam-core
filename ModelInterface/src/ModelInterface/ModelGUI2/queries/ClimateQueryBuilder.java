@@ -1,7 +1,6 @@
 package ModelInterface.ModelGUI2.queries;
 
-import ModelInterface.ModelGUI2.DbViewer;
-import ModelInterface.ModelGUI2.XMLDB;
+import ModelInterface.ModelGUI2.xmldb.XMLDB;
 import ModelInterface.common.DataPair;
 
 import javax.swing.JList;
@@ -137,7 +136,7 @@ public class ClimateQueryBuilder extends QueryBuilder {
 		Object[] ret = new Object[2];
 		ret[0] = XMLDB.getAttr(n, qg.yearLevel.getValue());
 		ret[1] = n.getNodeName();
-		DbViewer.xmlDB.printLockStats("ClimateQueryBuilder.extractAxisInfo");
+		XMLDB.getInstance().printLockStats("ClimateQueryBuilder.extractAxisInfo");
 		return ret;
 	}
 	public Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {

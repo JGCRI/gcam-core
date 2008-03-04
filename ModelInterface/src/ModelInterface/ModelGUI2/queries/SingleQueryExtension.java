@@ -20,12 +20,13 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 import ModelInterface.common.DataPair;
+import ModelInterface.ModelGUI2.xmldb.XMLDB;
 import ModelInterface.ModelGUI2.xmldb.QueryBinding;
 import ModelInterface.ModelGUI2.xmldb.SingleQueryQueryBinding;
 import ModelInterface.ModelGUI2.xmldb.SingleQueryListQueryBinding;
 import ModelInterface.ModelGUI2.xmldb.QueryBindingFactory;
 import ModelInterface.ModelGUI2.QueryTreeModel;
-import ModelInterface.ModelGUI2.DbViewer;
+import ModelInterface.ModelGUI2.ScenarioListItem;
 import ModelInterface.ModelGUI2.undo.MiUndoableEditListener;
 import ModelInterface.ModelGUI2.undo.EditQueryUndoableEdit;
 
@@ -50,14 +51,14 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 	/**
 	 * The current scenario/regions in which to look.
 	 */
-	private DataPair<List<DbViewer.ScenarioListItem>, List<String>> currSelection;
+	private DataPair<List<ScenarioListItem>, List<String>> currSelection;
 
 	/**
 	 * A Map of scenario/region names to node level values which 
 	 * acts a a cache to avoid doing queries when we already
 	 * have the values.
 	 */
-	private Map<DataPair<List<DbViewer.ScenarioListItem>, List<String>>, List<SingleQueryValue>> singleLevelCache;
+	private Map<DataPair<List<ScenarioListItem>, List<String>>, List<SingleQueryValue>> singleLevelCache;
 
 	/**
 	 * The parent query which this class extends to 
@@ -196,9 +197,9 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 		 */
 		public QueryBinding getAsQueryBinding() {
 			if(!displayValue.equals("Total")) {
-				return new SingleQueryQueryBinding(values, qg, DbViewer.xmlDB.getContainer());
+				return new SingleQueryQueryBinding(values, qg, XMLDB.getInstance().getContainer());
 			} else {
-				return QueryBindingFactory.getQueryBinding(qg, DbViewer.xmlDB.getContainer());
+				return QueryBindingFactory.getQueryBinding(qg, XMLDB.getInstance().getContainer());
 			}
 		}
 
@@ -215,7 +216,7 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 		this.qg = qg;
 		isSelected = false;
 		singleLevelCache = 
-			new HashMap<DataPair<List<DbViewer.ScenarioListItem>, List<String>>, List<SingleQueryValue>>();
+			new HashMap<DataPair<List<ScenarioListItem>, List<String>>, List<SingleQueryValue>>();
 		generatingList.add(generatingLabel);
 		noResultsList.add(noResults);
 		currSelection = null;
@@ -227,9 +228,9 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 	 * @param currScenario The scenarios to set.
 	 * @param currRegion The regions to set.
 	 */
-	public void setSelection(DbViewer.ScenarioListItem[] currScenario, String[] currRegion) {
+	public void setSelection(ScenarioListItem[] currScenario, String[] currRegion) {
 		if(currSelection == null) {
-			currSelection = new DataPair<List<DbViewer.ScenarioListItem>, List<String>>();
+			currSelection = new DataPair<List<ScenarioListItem>, List<String>>();
 		}
 		if(currScenario.length != 0) {
 			currSelection.setKey(Arrays.asList(currScenario));
@@ -296,10 +297,10 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 		// figure out which list the event came from, we only care about the
 		// scneario and region lists.
 		if(((JList)e.getSource()).getName().equals(DbViewer.SCENARIO_LIST_NAME)) {
-			DbViewer.ScenarioListItem[] selScn = new DbViewer.ScenarioListItem[ret.length];
+			ScenarioListItem[] selScn = new ScenarioListItem[ret.length];
 			System.arraycopy(ret, 0, selScn, 0, ret.length);
 			if(selScn.length != 0) {
-				List<DbViewer.ScenarioListItem> oldList = currSelection.setKey(Arrays.asList(selScn));
+				List<ScenarioListItem> oldList = currSelection.setKey(Arrays.asList(selScn));
 			} else {
 				currSelection.setKey(null);
 			}
@@ -582,8 +583,8 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 			       List<SingleQueryValue> tempValues;
 			       final long startTime = System.currentTimeMillis();
 			       try {
-				       XmlResults res = DbViewer.xmlDB.createQuery(new SingleQueryListQueryBinding(qg, 
-						       DbViewer.xmlDB.getContainer(), qg.getCollapseOnList()), scenarios, regions);
+				       XmlResults res = XMLDB.getInstance().createQuery(new SingleQueryListQueryBinding(qg, 
+						       XMLDB.getInstance().getContainer(), qg.getCollapseOnList()), scenarios, regions);
 				       // createQuery won't pass along the XmlException so we will
 				       // have to check for null
 				       if(res == null) {
@@ -655,7 +656,7 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 			       try {
 				       // I am putting a Q in from of the hash code because otherwise it complains that
 				       // it is not a valid QName
-				       XmlResults res = DbViewer.xmlDB.createQuery("/singleQueryListCache/dbxml:metadata('Q"
+				       XmlResults res = XMLDB.getInstance().createQuery("/singleQueryListCache/dbxml:metadata('Q"
 					       +qg.getStorageHashCode()+"')", null, null, null);
 				       boolean hasResults = false;
 				       if(res.hasNext()) {
@@ -667,7 +668,7 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 						       tempValues =  new ArrayList<SingleQueryValue>(values.length+1);
 						       Map<String, String> rewriteMap = qg.getNodeLevelRewriteMap();
 						       for(String val : values) {
-							       if(rewriteMap != null && !rewriteMap.containsKey(val)) {
+							       if(rewriteMap == null || !rewriteMap.containsKey(val)) {
 								       SingleQueryValue tempValue = new SingleQueryValue(val);
 								       tempValues.add(tempValue);
 							       }
@@ -708,7 +709,7 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 	* @param scenarions The list of scenarios to scan.
 	* @param regions The list of regions to scan.
 	*/
-       public void createSingleQueryListCache(XmlDocument doc, DbViewer.ScenarioListItem[] currScenario, String[] currRegion) {
+       public void createSingleQueryListCache(XmlDocument doc, ScenarioListItem[] currScenario, String[] currRegion) {
 	       // set the scenarios and regions to scan
 	       setSelection(currScenario, currRegion);
 	       boolean isSelectedBefore = isSelected;
@@ -731,7 +732,7 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 			       // I have to put a letter in front of the hash code because otherwise
 			       // it says it is not a valid QName
 			       doc.setMetaData("", "Q"+qg.getStorageHashCode(), new XmlValue(buff.toString()));
-			       //DbViewer.xmlDB.setMetaData(doc, "Q"+qg.getStorageHashCode(), new XmlValue(buff.toString()));
+			       //XMLDB.getInstance().setMetaData(doc, "Q"+qg.getStorageHashCode(), new XmlValue(buff.toString()));
 		       }
 	       } catch(XmlException e) {
 		       // TODO: should I warn the user?

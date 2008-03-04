@@ -55,11 +55,15 @@ public abstract class BaseTableModel extends AbstractTableModel {
 		// taken from the global properties file but it 
 		// should be able to change while the Interface is 
 		// running perhaps even on a per-query basis.
-		Properties globalProperties = InterfaceMain.getInstance().getProperties();
-		String remove75Str;
-		globalProperties.setProperty("remove1975", 
-				remove75Str = globalProperties.getProperty("remove1975", "true"));
-		remove1975 = Boolean.parseBoolean(remove75Str);
+		if(InterfaceMain.getInstance() != null) {
+			Properties globalProperties = InterfaceMain.getInstance().getProperties();
+			String remove75Str;
+			globalProperties.setProperty("remove1975", 
+					remove75Str = globalProperties.getProperty("remove1975", "true"));
+			remove1975 = Boolean.parseBoolean(remove75Str);
+		} else {
+			remove1975 = false;
+		}
 		sortedTable = new TableSorter(this);
 	}
 
@@ -652,16 +656,21 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	       // the default year list could go in a preference dialog as well
 	       // WARNING: not thread safe
 	       if(defaultYearList == null) {
-		       Properties globalProperties = InterfaceMain.getInstance().getProperties();
-		       String defaultYearStr;
-		       globalProperties.setProperty("defaultYearList", defaultYearStr = 
-				       globalProperties.getProperty("defaultYearList", "1990;2005;2020;2035;2050;2065;2080;2095"));
-		       String[] yearsArr = defaultYearStr.split(";");
-		       defaultYearList = new ArrayList<String>(yearsArr.length);
-		       if(!(yearsArr.length == 1 && yearsArr[0].equals(""))) {
-			       for(String year : yearsArr ) {
-				       defaultYearList.add(year);
+		       if(InterfaceMain.getInstance() != null) {
+			       Properties globalProperties = InterfaceMain.getInstance().getProperties();
+			       String defaultYearStr;
+			       globalProperties.setProperty("defaultYearList", defaultYearStr = 
+					       globalProperties.getProperty("defaultYearList", 
+						       "1990;2005;2020;2035;2050;2065;2080;2095"));
+			       String[] yearsArr = defaultYearStr.split(";");
+			       defaultYearList = new ArrayList<String>(yearsArr.length);
+			       if(!(yearsArr.length == 1 && yearsArr[0].equals(""))) {
+				       for(String year : yearsArr ) {
+					       defaultYearList.add(year);
+				       }
 			       }
+		       } else {
+			       defaultYearList = new ArrayList<String>();
 		       }
 	       }
 	       return defaultYearList;

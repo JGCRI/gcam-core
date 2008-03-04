@@ -1,6 +1,6 @@
 package ModelInterface.ModelGUI2.xmldb;
 
-import ModelInterface.ModelGUI2.DbViewer;
+import ModelInterface.ModelGUI2.ScenarioListItem;
 
 import java.util.List;
 import java.util.Iterator;
@@ -47,7 +47,7 @@ public class StandardQueryBinding implements QueryBinding {
 		StringBuilder ret = new StringBuilder("/");
 		boolean added = false;
 		for(int i = 0; i < scenarios.length; ++i) {
-			DbViewer.ScenarioListItem temp = (DbViewer.ScenarioListItem)scenarios[i];
+			ScenarioListItem temp = (ScenarioListItem)scenarios[i];
 			if(!added) {
 				ret.append("scenario[ ");
 				added = true;

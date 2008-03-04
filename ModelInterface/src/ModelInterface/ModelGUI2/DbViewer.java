@@ -11,6 +11,7 @@ import ModelInterface.ModelGUI2.tables.CopyPaste;
 import ModelInterface.ModelGUI2.tables.TableTransferHandler;
 import ModelInterface.ModelGUI2.queries.QueryGenerator;
 import ModelInterface.ModelGUI2.queries.SingleQueryExtension;
+import ModelInterface.ModelGUI2.xmldb.XMLDB;
 import ModelInterface.ModelGUI2.xmldb.QueryBinding;
 import ModelInterface.common.FileChooser;
 import ModelInterface.common.FileChooserFactory;
@@ -96,8 +97,6 @@ public class DbViewer implements ActionListener, MenuAdder {
 
 	private Document queriesDoc;
 
-	public static XMLDB xmlDB;
-
 	private static String controlStr = "DbViewer";
 
 	private JTable jTable; // does this still need to be a field?
@@ -127,27 +126,13 @@ public class DbViewer implements ActionListener, MenuAdder {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if(evt.getPropertyName().equals("Control")) {
 					if(evt.getOldValue().equals(controlStr) || evt.getOldValue().equals(controlStr+"Same")) {
-						//try {
-							if(queries.hasChanges() && JOptionPane.showConfirmDialog(
-									parentFrame, 
-									"The Queries have been modified.  Do you want to save them?",
-									"Confirm Save Queries", JOptionPane.YES_NO_OPTION,
-									JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-								writeQueries();
-								/*
-								Document tempDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-									.getDOMImplementation().createDocument(null, "queries", null);
-								queries.getAsNode(tempDoc);
-								//writeDocument(tempDoc, queryFile);
-								writeFile(new File(((InterfaceMain)parentFrame).getProperties().getProperty("queryFile"))
-									, tempDoc);
-									*/
-							}
-							/*
-						} catch(Exception e) {
-							e.printStackTrace();
+						if(queries.hasChanges() && JOptionPane.showConfirmDialog(
+								parentFrame, 
+								"The Queries have been modified.  Do you want to save them?",
+								"Confirm Save Queries", JOptionPane.YES_NO_OPTION,
+								JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+							writeQueries();
 						}
-						*/
 						Properties prop = ((InterfaceMain)parentFrame).getProperties();
 						prop.setProperty("scenarioRegionSplit", String.valueOf(scenarioRegionSplit.getDividerLocation()));
 						prop.setProperty("queriesSplit", String.valueOf(queriesSplit.getDividerLocation()));
@@ -162,8 +147,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 
 						// closing the db should be the last thing to do in case
 						// other things have pointers to db objects.
-						xmlDB.closeDB();
-						xmlDB = null;
+						XMLDB.closeDatabase();
 					}
 					if(evt.getNewValue().equals(controlStr)) {
 						String queryFileName;
@@ -200,8 +184,6 @@ public class DbViewer implements ActionListener, MenuAdder {
 				}
 			}
 		});
-
-
 
 		try {
 			System.setProperty(DOMImplementationRegistry.PROPERTY,
@@ -241,20 +223,34 @@ public class DbViewer implements ActionListener, MenuAdder {
 		final JMenuItem menuManage = makeMenuItem("Manage DB");
 		menuMan.getSubMenuManager(InterfaceMain.FILE_MENU_POS).addMenuItem(menuManage, 10);
 		menuManage.setEnabled(false);
+		/*
 		final JMenuItem menuBatch = makeMenuItem("Batch Query");
 		menuMan.getSubMenuManager(InterfaceMain.FILE_MENU_POS).addMenuItem(menuBatch, 11);
 		menuBatch.setEnabled(false);
+		*/
+		// TODO: why are there two property change listeners
+		final ActionListener thisListener = this;
 		parentFrame.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if(evt.getPropertyName().equals("Control")) {
 					if(evt.getOldValue().equals(controlStr) || 
 						evt.getOldValue().equals(controlStr+"Same")) {
 						menuManage.setEnabled(false);
-						menuBatch.setEnabled(false);
+						//menuBatch.setEnabled(false);
+						// TODO: have the inteface main hanlde all batch files including
+						// this ones
+						JMenuItem batchMenu = InterfaceMain.getInstance().getBatchMenu();
+						batchMenu.removeActionListener(thisListener);
+						batchMenu.addActionListener(InterfaceMain.getInstance());
 					} 
 					if(evt.getNewValue().equals(controlStr)) {
 						menuManage.setEnabled(true);
-						menuBatch.setEnabled(true);
+						//menuBatch.setEnabled(true);
+						// TODO: have the inteface main hanlde all batch files including
+						// this ones
+						JMenuItem batchMenu = InterfaceMain.getInstance().getBatchMenu();
+						batchMenu.removeActionListener(InterfaceMain.getInstance());
+						batchMenu.addActionListener(thisListener);
 					}
 				}
 			}
@@ -310,7 +306,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 			}
 		} else if(e.getActionCommand().equals("Manage DB")) {
 			manageDB();
-		} else if(e.getActionCommand().equals("Batch Query")) {
+		} else if(e.getActionCommand().equals("Batch File")) {
 			FileChooser fc = FileChooserFactory.getFileChooser();
 			// Now open chooser
 			final FileFilter xmlFilter = new XMLFilter();
@@ -346,8 +342,6 @@ public class DbViewer implements ActionListener, MenuAdder {
 		} else if(e.getActionCommand().equals("Save")) {
 			writeQueries();
 		} else if(e.getActionCommand().equals("Save As")) {
-			System.out.println("QueryFile gives: "+
-					((InterfaceMain)parentFrame).getProperties().getProperty("queryFile", "."));
 			final FileFilter xmlFilter = new XMLFilter();
 			FileChooser fc = FileChooserFactory.getFileChooser();
 			File[] result = fc.doFilePrompt(parentFrame, null, FileChooser.SAVE_DIALOG, 
@@ -376,7 +370,16 @@ public class DbViewer implements ActionListener, MenuAdder {
 		((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", dbFile.getParent());
 		// put up a wait cursor so that the user knows things are happening while the database loads
 		parentFrame.getGlassPane().setVisible(true);
-		xmlDB = new XMLDB(dbFile.getAbsolutePath(), parentFrame);
+		try {
+			XMLDB.openDatabase(dbFile.getAbsolutePath(), parentFrame);
+		} catch(Exception e) {
+			e.printStackTrace();
+			parentFrame.getGlassPane().setVisible(false);
+			// tell the user it didn't open.
+			JOptionPane.showMessageDialog(parentFrame, "Could not open the xml database.", 
+						"DB Open Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 
 		tablesTabs.setTransferHandler(new TableTransferHandler());
 		TabDragListener dragListener = new TabDragListener();
@@ -391,7 +394,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		XmlValue temp;
 		Vector ret = new Vector();
 		try {
-			XmlResults res = xmlDB.createQuery("/scenario", null, null, null);
+			XmlResults res = XMLDB.getInstance().createQuery("/scenario", null, null, null);
 			while(res.hasNext()) {
 				temp = res.next();
 				XmlDocument tempDoc = temp.asDocument();
@@ -404,7 +407,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		} catch(XmlException e) {
 			e.printStackTrace();
 		}
-		xmlDB.printLockStats("getScenarios");
+		XMLDB.getInstance().printLockStats("getScenarios");
 		return ret;
 	}
 
@@ -413,43 +416,13 @@ public class DbViewer implements ActionListener, MenuAdder {
 		scnList.setListData(scns);
 	}
 
-	// A simple class to hold scenario info that will be displayed in a JList
-	// don't want to display the document name becuase it adds too much clutter
-	// do I just ovrride the toString to only display what we want, and I will
-	// still have the docName for use when managing the database.
-	// I am leaveing the fields open to direct access as this is merely a struct
-	// and there is no point in create getter/setters
-	public class ScenarioListItem {
-		String docName;
-		String scnName;
-		String scnDate;
-		public ScenarioListItem(String docName, String scnName, String scnDate) {
-			this.docName = docName;
-			this.scnName = scnName;
-			this.scnDate = scnDate;
-		}
-		public String toString() {
-			// do not display docName to avoid clutter
-			return scnName+' '+scnDate;
-		}
-		public String getDocName() {
-			return docName;
-		}
-		public String getScnName() {
-			return scnName;
-		}
-		public String getScnDate() {
-			return scnDate;
-		}
-	}
-
 	protected Vector getRegions() {
 		Vector funcTemp = new Vector<String>(1,0);
 		funcTemp.add("distinct-values");
 		Vector ret = new Vector();
 		XmlValue temp;
 		try {
-			XmlResults res = xmlDB.createQuery("/scenario/world/"+
+			XmlResults res = XMLDB.getInstance().createQuery("/scenario/world/"+
 					ModelInterface.ModelGUI2.queries.QueryBuilder.regionQueryPortion+"/@name", funcTemp, null, null);
 			while(res.hasNext()) {
 				temp = res.next();
@@ -462,7 +435,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		}
 		ret.add("Global");
 		funcTemp = null;
-		xmlDB.printLockStats("getRegions");
+		XMLDB.getInstance().printLockStats("getRegions");
 		return ret;
 	}
 
@@ -956,7 +929,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 					((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", 
 						 xmlFiles[0].getParent());
 					filterDialog.getGlassPane().setVisible(true);
-					xmlDB.addFile(xmlFiles[0].getAbsolutePath());
+					XMLDB.getInstance().addFile(xmlFiles[0].getAbsolutePath());
 					scns = getScenarios();
 					list.setListData(scns);
 					filterDialog.getGlassPane().setVisible(false);
@@ -969,7 +942,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 				filterDialog.getGlassPane().setVisible(true);
 				for(int i = 0; i < remList.length; ++i) {
 					dirtyBit.setDirty();
-					xmlDB.removeDoc(((ScenarioListItem)remList[i]).docName);
+					XMLDB.getInstance().removeDoc(((ScenarioListItem)remList[i]).getDocName());
 				}
 				scns = getScenarios();
 				list.setListData(scns);
@@ -993,9 +966,9 @@ public class DbViewer implements ActionListener, MenuAdder {
 					ScenarioListItem currItem = (ScenarioListItem)renameList[i];
 					JPanel currPanel = new JPanel();
 					currPanel.setLayout(new BoxLayout(currPanel, BoxLayout.X_AXIS));
-					JLabel currLabel = new JLabel("<html>Rename <b>"+currItem.scnName+
-						"</b> on <b>"+currItem.scnDate+"</b> to:</html>");
-					JTextField currTextBox = new JTextField(currItem.scnName, 20);
+					JLabel currLabel = new JLabel("<html>Rename <b>"+currItem.getScnName()+
+						"</b> on <b>"+currItem.getScnDate()+"</b> to:</html>");
+					JTextField currTextBox = new JTextField(currItem.getScnName(), 20);
 					currTextBox.setMaximumSize(currTextBox.getPreferredSize());
 					renameBoxes.add(currTextBox);
 					currPanel.add(currLabel);
@@ -1023,7 +996,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 								ScenarioListItem currItem = (ScenarioListItem)renameList[i];
 								String currText = renameBoxes.get(i).getText(); 
 								// only do it if the name really is different
-								if(!currItem.scnName.equals(currText)) {
+								if(!currItem.getScnName().equals(currText)) {
 									// the undoable edit will take care of doing
 									// the rename
 									UndoableEdit renameEdit = new RenameScenarioUndoableEdit(thisViewer, 
@@ -1065,7 +1038,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 							new XMLFileFilter(), null, true);
 					if (exportLocation != null) {
 						filterDialog.getGlassPane().setVisible(true);
-						boolean success = xmlDB.exportDoc(((ScenarioListItem)selectedList[i]).docName, 
+						boolean success = XMLDB.getInstance()
+							.exportDoc(((ScenarioListItem)selectedList[i]).getDocName(), 
 							exportLocation);
 						filterDialog.getGlassPane().setVisible(false);
 						if(success) {
@@ -1606,11 +1580,12 @@ public class DbViewer implements ActionListener, MenuAdder {
 				// get the cache document, if there is an exception getting it then it 
 				// may not exsist so we can try to create it
 				XmlDocument doc = null;
+				XMLDB xmldbInstance = XMLDB.getInstance();
 				try {
-					doc = xmlDB.getDocument("cache");
+					doc = xmldbInstance.getDocument("cache");
 				} catch(XmlException e) {
 					// might not exsist yet so create it.
-					doc = xmlDB.createDocument("cache", "<singleQueryListCache />");
+					doc = xmldbInstance.createDocument("cache", "<singleQueryListCache />");
 				}
 				// if it is still null there is a real problem so notify the user that it
 				// is not going to work and return
@@ -1642,7 +1617,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 				// don't forget to write the changes to the cache back to the db
 				// but only if we were not canceled
 				if(!wasInterrupted) {
-					xmlDB.updateDocument(doc);
+					xmldbInstance.updateDocument(doc);
 				}
 
 				// clean up an take down the progress bar

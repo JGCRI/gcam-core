@@ -37,7 +37,8 @@ public class CopyPaste implements ActionListener{
 	  // need to make this false if it is db
 	  // only way i can think of right now
 	  // is to check the xmlDB
-	  pasteMenu.setEnabled(ModelInterface.ModelGUI2.DbViewer.xmlDB == null);
+	  //TODO: figure out how to do this
+	  //pasteMenu.setEnabled(ModelInterface.ModelGUI2.DbViewer.xmlDB == null);
 	  final CopyPaste thisCP = this;
 	  InterfaceMain.getInstance().addPropertyChangeListener(new PropertyChangeListener() {
 		  public void propertyChange(PropertyChangeEvent e) {

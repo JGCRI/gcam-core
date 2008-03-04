@@ -7,8 +7,9 @@ import com.sleepycat.dbxml.XmlResults;
 import com.sleepycat.dbxml.XmlValue;
 import com.sleepycat.dbxml.XmlException;
 
-import ModelInterface.ModelGUI2.DbViewer.ScenarioListItem;
+import ModelInterface.ModelGUI2.ScenarioListItem;
 import ModelInterface.ModelGUI2.DbViewer;
+import ModelInterface.ModelGUI2.xmldb.XMLDB;
 
 public class RenameScenarioUndoableEdit extends MiAbstractUndoableEdit {
 
@@ -65,12 +66,12 @@ public class RenameScenarioUndoableEdit extends MiAbstractUndoableEdit {
 	 * @param toName The scenario will be named after this method.
 	 */
 	private void doRename(String fromName, String toName) {
-		XmlResults res = DbViewer.xmlDB.createQuery(
+		XmlResults res = XMLDB.getInstance().createQuery(
 				"/scenario[@date='"+oldName.getScnDate()+"' and @name='"+fromName+"']/@name", null, null, null);
 		try { 
 			// if it has no results that is bad.. I'll just go with the null pointer exception
 			XmlValue context = res.next();
-			DbViewer.xmlDB.setValue(context, toName);
+			XMLDB.getInstance().setValue(context, toName);
 			viewer.resetScenarioList();
 			context.delete();
 		} catch(XmlException e) {
