@@ -18,6 +18,9 @@ import javax.swing.tree.TreePath;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.HashMap;
 
 import java.io.IOException;
 
@@ -25,6 +28,7 @@ import ModelInterface.ModelGUI2.queries.QueryGenerator;
 import ModelInterface.ModelGUI2.queries.SingleQueryExtension;
 import ModelInterface.ModelGUI2.QueryTreeModel;
 import ModelInterface.ModelGUI2.QueryTreeModel.QueryGroup;
+import ModelInterface.common.DataPair;
 
 public class QueryTransferHandler extends TransferHandler {
 	private Document doc;
@@ -228,20 +232,39 @@ public class QueryTransferHandler extends TransferHandler {
 		public TransferableQuery(JTree qt) {
 			this.qt = qt;
 			TreePath[] paths = qt.getSelectionPaths();
+			List<String> tempSingleNameList;
 			if(paths.length == 1) {
 				if(paths[0].getLastPathComponent() instanceof SingleQueryExtension.SingleQueryValue) {
-					data = convertSingleToQueryGenerator(paths[0]);
+					tempSingleNameList = new ArrayList<String>(1);
+					tempSingleNameList.add(paths[0].getLastPathComponent().toString());
+					Map.Entry<QueryGenerator, List<String>> tempPair =
+						new DataPair<QueryGenerator, List<String>>(
+								getSingleQueryParent(paths[0]), tempSingleNameList);
+					data = convertSingleToQueryGenerator(tempPair);
 				} else {
 					data = paths[0].getLastPathComponent();
 				}
 			} else {
 				ArrayList dataGrouped = new ArrayList(paths.length);
+				Map<QueryGenerator, List<String>> tempSingleQueryMerge = 
+					new HashMap<QueryGenerator, List<String>>();
 				for(TreePath path : paths) {
 					if(path.getLastPathComponent() instanceof SingleQueryExtension.SingleQueryValue) {
-						dataGrouped.add(convertSingleToQueryGenerator(path));
+						QueryGenerator tempParent = getSingleQueryParent(path);
+						tempSingleNameList = tempSingleQueryMerge.get(tempParent);
+						if(tempSingleNameList == null) {
+							tempSingleNameList = new ArrayList<String>();
+						}
+						tempSingleNameList.add(path.getLastPathComponent().toString());
+						tempSingleQueryMerge.put(tempParent, tempSingleNameList);
 					} else {
 						dataGrouped.add(path.getLastPathComponent());
 					}
+				}
+				// add all the merged single queries if any
+				for(Iterator<Map.Entry<QueryGenerator, List<String>>> it = tempSingleQueryMerge.entrySet().iterator();
+						it.hasNext(); ) {
+					dataGrouped.add(convertSingleToQueryGenerator(it.next()));
 				}
 				data = ((QueryTreeModel)qt.getModel()).createQueryGroup("MultipleQuerySelection", dataGrouped);
 			}
@@ -295,21 +318,23 @@ public class QueryTransferHandler extends TransferHandler {
 				}
 			}
 		}
-		private QueryGenerator convertSingleToQueryGenerator(TreePath path) {
+		private QueryGenerator getSingleQueryParent(TreePath path) {
 			if(!(path.getLastPathComponent() instanceof SingleQueryExtension.SingleQueryValue)) {
 				// error?
 				return null;
 			}
-			QueryGenerator qgTemp = new QueryGenerator(((QueryGenerator)path
-						.getParentPath().getLastPathComponent()).getAsNode(doc));
-			String singleTitle = ((SingleQueryExtension.SingleQueryValue)path.getLastPathComponent())
-				.toString();
+			return (QueryGenerator)path.getParentPath().getLastPathComponent();
+		}
+		private QueryGenerator convertSingleToQueryGenerator(Map.Entry<QueryGenerator, List<String>> single) {
+			QueryGenerator qgTemp = new QueryGenerator(single.getKey().getAsNode(doc));
+			List<String> tempList = single.getValue();
+			String singleTitle = tempList.size() == 1 ? tempList.get(0) :
+				"single values ("+tempList.size()+")";
 			qgTemp.setTitle(qgTemp.toString()+": "+singleTitle);
-			List<String> tempList = new ArrayList<String>(1);
-			tempList.add(singleTitle);
 			qgTemp.setXPath(qgTemp.getXPath()+qgTemp
 					.getForNodeLevelPath(tempList));
 			qgTemp.setGroup(false);
+			qgTemp.setBuildList(false);
 			return qgTemp;
 		}
 	}
