@@ -225,6 +225,34 @@ public class DOMTreeBuilder {
 	}
 
 	/**
+	 * Attempts to merge attributes from the existing node to the new node
+	 * given that they have the same node name and the new node does not 
+	 * already have any attribute names in common with the existing node.
+	 * The new node will have been modified only if true was returned.
+	 * @param existingNode The node to merge attributes from.
+	 * @param newNode The node to merge attributes to.
+	 * @return True if any attributes were merged, false otherwise.
+	 */
+	private static boolean mergeNode(Element existingNode, Element newNode) {
+		NamedNodeMap existingAttrs = existingNode.getAttributes();
+		// first check to make sure there aren't any conflicts
+		for(int i = 0; i < existingAttrs.getLength(); ++i) {
+			if(newNode.hasAttribute(existingAttrs.item(i).getNodeName())) {
+				// they have an attr name in common
+				return false;
+			}
+		}
+
+		// they don't have any attrs in common so add all of existingAttrs
+		// to newNode
+		for(int i = 0; i < existingAttrs.getLength(); ++i) {
+			Node currAttr = existingAttrs.item(i);
+			newNode.setAttribute(currAttr.getNodeName(), currAttr.getNodeValue());
+		}
+		return true;
+	}
+
+	/**
 	 * Check to see if a node has next data.  If it does return it.
 	 * @param curr The node to check.
 	 * @return The text node if it had any text data, null otherwise.
@@ -330,6 +358,7 @@ public class DOMTreeBuilder {
 	private Node getRealParent( Node parent, Header child) {
 		Node retNode = parent;
 		boolean didCreate = false;
+		boolean didMerge = false;
 		if(child.hasGrandParent()) {
 			Stack<Node> parentStack = new Stack<Node>();
 			parentStack.push(retNode);
@@ -345,6 +374,7 @@ public class DOMTreeBuilder {
 			// convert attributes if necessary before we do any comparisons
 			convertData(tempParent, (Element)currNode.getParentNode());
 			// check if this node alread exists, if not create it and append it to the tree
+			didMerge = mergeNode((Element)currNode, tempParent);
 			if ((retNode = compare((Element)currNode.getParentNode(), tempParent)) == null) {
 				currNode.getParentNode().appendChild(tempParent);
 				retNode = tempParent;
@@ -381,7 +411,7 @@ public class DOMTreeBuilder {
 			parent = retNode.getParentNode();
 			// convert attributes if necessary before we do any comparisons
 			convertData(tempParent, (Element)parent);
-			if(didCreate) {
+			if(didCreate || (didMerge && !retNode.hasChildNodes())) {
 				parent.removeChild(retNode);
 			}
 			// if the parent already exists use it, if not append the new one.
