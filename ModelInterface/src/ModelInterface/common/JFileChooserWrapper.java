@@ -48,6 +48,14 @@ public class JFileChooserWrapper implements FileChooser {
 		}
 		// TODO: find out if this will this be ok with a null FileFilter
 		toWrap.setFileFilter(fileFilter);
+
+		// TODO: find a better way as this is a hack
+		if(fileFilter.getDescription().startsWith("Directory")) {
+			toWrap.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		} else {
+			toWrap.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		}
+
 		int result = JFileChooser.CANCEL_OPTION;
 		if(loadOrSave == FileChooser.LOAD_DIALOG) {
 			result = toWrap.showOpenDialog(parent);

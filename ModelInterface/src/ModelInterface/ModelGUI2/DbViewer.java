@@ -920,7 +920,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 			public void actionPerformed(ActionEvent e) {
 				FileChooser fc = FileChooserFactory.getFileChooser();
 				final FileFilter xmlFilter = new XMLFilter();
-				File[] xmlFiles = fc.doFilePrompt(parentFrame, "Open XML File", FileChooser.LOAD_DIALOG,
+				final File[] xmlFiles = fc.doFilePrompt(parentFrame, "Open XML File", FileChooser.LOAD_DIALOG,
 					new File(((InterfaceMain)parentFrame).getProperties().  getProperty("lastDirectory", ".")),
 					xmlFilter);
 
@@ -928,11 +928,28 @@ public class DbViewer implements ActionListener, MenuAdder {
 					dirtyBit.setDirty();
 					((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", 
 						 xmlFiles[0].getParent());
-					filterDialog.getGlassPane().setVisible(true);
-					XMLDB.getInstance().addFile(xmlFiles[0].getAbsolutePath());
-					scns = getScenarios();
-					list.setListData(scns);
-					filterDialog.getGlassPane().setVisible(false);
+					final JProgressBar progBar = new JProgressBar(0, xmlFiles.length);
+					final JDialog jd = XMLDB.createProgressBarGUI(parentFrame, progBar, "Adding Runs",
+						"Importing runs into the database");
+					final Runnable incProgress = (new Runnable() {
+						public void run() {
+							progBar.setValue(progBar.getValue() + 1);
+						}
+					});
+					jd.setVisible(true);
+					// run the import off the gui thread which ensures progress updates correctly
+					// and keeps the gui responsive
+					new Thread(new Runnable() {
+						public void run() {
+							for(int addFileIndex = 0; addFileIndex < xmlFiles.length; ++addFileIndex) {
+								XMLDB.getInstance().addFile(xmlFiles[addFileIndex].getAbsolutePath());
+								SwingUtilities.invokeLater(incProgress);
+							}
+							scns = getScenarios();
+							list.setListData(scns);
+							jd.setVisible(false);
+						}
+					}).start();
 				}
 			}
 		});
@@ -1032,16 +1049,66 @@ public class DbViewer implements ActionListener, MenuAdder {
 			 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 			 */
 			public void actionPerformed(ActionEvent aEvent) {
-				Object[] selectedList = list.getSelectedValues();
-				for (int i = 0; i < selectedList.length; ++i) {
-					File exportLocation = FileUtils.selectFile(parentFrame,
-							new XMLFileFilter(), null, true);
-					if (exportLocation != null) {
-						filterDialog.getGlassPane().setVisible(true);
-						boolean success = XMLDB.getInstance()
-							.exportDoc(((ScenarioListItem)selectedList[i]).getDocName(), 
-							exportLocation);
-						filterDialog.getGlassPane().setVisible(false);
+				final Object[] selectedList = list.getSelectedValues();
+				final boolean isSingleSelection = selectedList.length == 1;
+				FileFilter fileFilter;
+				String saveDialogTitle;
+				if(isSingleSelection) {
+					fileFilter = new XMLFileFilter();
+					saveDialogTitle = "Save As XML";
+				} else {
+					fileFilter = new FileFilter() {
+						public boolean accept(File f) {
+							return f.isDirectory();
+						}
+						public String getDescription() {
+							return "Directory to export into";
+						}
+					};
+					saveDialogTitle = "Select Export Directory";
+				}
+				FileChooser fc = FileChooserFactory.getFileChooser();
+				final File[] exportLocation = fc.doFilePrompt(parentFrame, saveDialogTitle, FileChooser.SAVE_DIALOG,
+					new File(((InterfaceMain)parentFrame).getProperties().  getProperty("lastDirectory", ".")),
+					fileFilter);
+				if(isSingleSelection && !exportLocation[0].getName().endsWith(".xml")) {
+					exportLocation[0] = new File(exportLocation[0].getParentFile(), 
+							exportLocation[0].getName()+".xml");
+				}
+				if (exportLocation == null) {
+					// user canceled, nothing to do
+					return;
+				}
+				final JProgressBar progBar = new JProgressBar(0, selectedList.length);
+				final JDialog jd = XMLDB.createProgressBarGUI(parentFrame, progBar, "Exporting Runs",
+						"Exporting runs from the database");
+				final Runnable incProgress = (new Runnable() {
+					public void run() {
+						progBar.setValue(progBar.getValue() + 1);
+					}
+				});
+				jd.setVisible(true);
+				// run the export off the gui thread which ensures progress updates correctly
+				// and keeps the gui responsive
+				new Thread(new Runnable() {
+					public void run() {
+						boolean success = true;
+						for (int i = 0; i < selectedList.length; ++i) {
+							ScenarioListItem currItem = (ScenarioListItem)selectedList[i];
+							File exportFile;
+							if(isSingleSelection) {
+								exportFile = exportLocation[0];
+							} else {
+								String exportFileName = currItem.getScnName()+"_"+
+									currItem.getScnDate().replaceAll(":", "_")+".xml";
+								exportFile = new File(exportLocation[0], exportFileName);
+							}
+							success = success && XMLDB.getInstance()
+								.exportDoc(currItem.getDocName(), 
+								exportFile);
+							SwingUtilities.invokeLater(incProgress);
+						}
+						jd.setVisible(false);
 						if(success) {
 							JOptionPane.showMessageDialog(parentFrame, "Scenario export succeeded.");
 						}
@@ -1049,7 +1116,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 							JOptionPane.showMessageDialog(parentFrame, "Scenario export failed.", null, JOptionPane.ERROR_MESSAGE);
 						}
 					}
-				}
+				}).start();
 			}
 
 		});

@@ -789,6 +789,7 @@ public class XMLDB {
 			return null;
 		}
 		JDialog filterDialog = new JDialog(parentFrame, title, false);
+		filterDialog.setAlwaysOnTop(true);
 		JPanel all = new JPanel();
 		all.setLayout( new BoxLayout(all, BoxLayout.Y_AXIS));
 		progBar.setPreferredSize(new Dimension(200, 20));
