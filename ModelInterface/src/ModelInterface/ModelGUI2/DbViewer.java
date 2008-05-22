@@ -398,7 +398,6 @@ public class DbViewer implements ActionListener, MenuAdder {
 			while(res.hasNext()) {
 				temp = res.next();
 				XmlDocument tempDoc = temp.asDocument();
-				//ret.add(tempDoc.getName().replace(' ', '_')+" "+XMLDB.getAttr(temp, "name")+ " "+XMLDB.getAttr(temp, "date"));
 				ret.add(new ScenarioListItem(tempDoc.getName(), XMLDB.getAttr(temp, "name"), XMLDB.getAttr(temp, "date")));
 				tempDoc.delete();
 				temp.delete();
@@ -1259,8 +1258,9 @@ public class DbViewer implements ActionListener, MenuAdder {
 		final JDialog scenarioDialog = new JDialog(parentFrame, "Select Scenarios to Run", true);
 		JPanel listPane = new JPanel();
 		JPanel buttonPane = new JPanel();
-		final JCheckBox singleSheetCheckBox = new JCheckBox("Place all results in a single sheet", true);
+		final JCheckBox singleSheetCheckBox = new JCheckBox("Place all results in different sheet", false);
 		final JCheckBox drawPicsCheckBox = new JCheckBox("Include charts with results", true);
+		final JCheckBox seperateRunsCheckBox = new JCheckBox("Split runs into different sheets", false);
 		final JButton okButton = new JButton("Ok");
 		okButton.setEnabled(false);
 		JButton cancelButton = new JButton("Cancel");
@@ -1304,6 +1304,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		listPane.add(sp);
 		listPane.add(singleSheetCheckBox);
 		listPane.add(drawPicsCheckBox);
+		listPane.add(seperateRunsCheckBox);
 		listPane.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		contentPane.add(listPane, BorderLayout.PAGE_START);
 		contentPane.add(buttonPane, BorderLayout.PAGE_END);
@@ -1320,7 +1321,17 @@ public class DbViewer implements ActionListener, MenuAdder {
 		final XPathResult res = (XPathResult)xpeImpl.createExpression("/queries/node()", xpeImpl.createNSResolver(queries.getDocumentElement())).evaluate(queries.getDocumentElement(), XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
 
 		final int numQueries = res.getSnapshotLength();
-		final JProgressBar progressBar = new JProgressBar(0, numQueries);
+		final Vector<Object[]> toRunScns = new Vector<Object[]>();
+		if(!seperateRunsCheckBox.isSelected()) {
+			toRunScns.add(scenarioList.getSelectedValues());
+		} else {
+			for(Object currScn : scenarioList.getSelectedValues()) {
+				Object[] temp = new Object[1];
+				temp[0] = currScn;
+				toRunScns.add(temp);
+			}
+		}
+		final JProgressBar progressBar = new JProgressBar(0, numQueries*toRunScns.size());
 		// TODO: createProgressBarGUI should be moved somewhere else
 		final JDialog progressDialog = XMLDB.createProgressBarGUI(parentFrame, progressBar, 
 				"Running Queries", "Run and Export Progress");
@@ -1351,7 +1362,9 @@ public class DbViewer implements ActionListener, MenuAdder {
 		if(wb == null) {
 			wb = new HSSFWorkbook();
 		}
-		if(singleSheetCheckBox.isSelected()) {
+		for(Iterator<Object[]> itScn = toRunScns.iterator(); itScn.hasNext(); ) {
+			Object[] currScns = itScn.next();
+		if(!singleSheetCheckBox.isSelected()) {
 			sheet = wb.createSheet("Sheet"+String.valueOf(wb.getNumberOfSheets()+1));
 			drawingPat = drawPicsCheckBox.isSelected() ? sheet.createDrawingPatriarch() : null;
 		}
@@ -1374,18 +1387,18 @@ public class DbViewer implements ActionListener, MenuAdder {
 					qgTemp = new QueryGenerator(currEl);
 				}
 			}
-			if(!singleSheetCheckBox.isSelected()) {
+			if(singleSheetCheckBox.isSelected()) {
 				sheet = wb.createSheet("Sheet"+String.valueOf(wb.getNumberOfSheets()+1));
 				drawingPat = drawPicsCheckBox.isSelected() ? sheet.createDrawingPatriarch() : null;
 			}
 			try {
 				if(tempRegions.size() > 0) {
 					if(qgTemp.isGroup()) {
-						(new MultiTableModel(qgTemp, scenarioList.getSelectedValues(), 
+						(new MultiTableModel(qgTemp, currScns, 
 								     tempRegions.toArray(), 
 								     parentFrame)).exportToExcel(sheet, wb, drawingPat);
 					} else {
-						(new ComboTableModel(qgTemp, scenarioList.getSelectedValues(), 
+						(new ComboTableModel(qgTemp, currScns, 
 								     tempRegions.toArray(), 
 								     parentFrame, null)).exportToExcel(sheet, wb, drawingPat);
 					}
@@ -1396,11 +1409,11 @@ public class DbViewer implements ActionListener, MenuAdder {
 					tempRegions.removeAllElements();
 					tempRegions.add("Global");
 					if(qgTemp.isGroup()) {
-						(new MultiTableModel(qgTemp, scenarioList.getSelectedValues(), 
+						(new MultiTableModel(qgTemp, currScns, 
 								     tempRegions.toArray(), 
 								     parentFrame)).exportToExcel(sheet, wb, drawingPat);
 					} else {
-						(new ComboTableModel(qgTemp, scenarioList.getSelectedValues(), 
+						(new ComboTableModel(qgTemp, currScns, 
 								     tempRegions.toArray(), 
 								     parentFrame, null)).exportToExcel(sheet, wb, drawingPat);
 					}
@@ -1411,6 +1424,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 			} finally {
 				SwingUtilities.invokeLater(increaseProgress);
 			}
+		}
 		}
 		try {
 			FileOutputStream fos = new FileOutputStream(excelFile);
