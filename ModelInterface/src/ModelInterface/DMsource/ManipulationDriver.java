@@ -2484,9 +2484,28 @@ public class ManipulationDriver
     
     currInfo = command.getChild("source");
     var = getVariable(currInfo.getAttributeValue("name"));
-    if((var.isReference())&&(!var.isGroup()))
+    if(var.isReference())
     {//this exists and is a reference variable, now make me a file!
-      varR = (ReferenceVariable)var;
+      List<Map.Entry<String, ReferenceVariable>> timeSet;
+      if(!var.isGroup()) {
+	      varR = (ReferenceVariable)var;
+	      // create a one entry map so that we can get it's time right
+	      Map<String, ReferenceVariable> tempMap = new HashMap<String, ReferenceVariable>(1);
+	      // TODO: get the real time associated with this ref var,
+	      // we may need to store the time str within the ref var
+	      tempMap.put("1", varR);
+	      timeSet = new ArrayList(tempMap.entrySet());
+      } else if(var.isGroup() && ((GroupVariable)var).isTime) {
+	      GroupVariable varG = (GroupVariable)var;
+	      timeSet = new ArrayList((Set<Map.Entry<String, ReferenceVariable>>)varG.data.entrySet());
+	      // use the first in group as ref for all since they should
+	      // all have the same shape
+	      varR = timeSet.get(0).getValue();
+      } else {
+	      // don't know about this one
+	      log.log(Level.WARNING, "Variable: "+currInfo.getAttributeValue("name")+" is not grouped by time.");
+	      return;
+      }
       res = varR.res;
       currInfo = command.getChild("file");
       fileName = currInfo.getAttributeValue("name"); //storing netcdf file name
@@ -2500,13 +2519,13 @@ public class ManipulationDriver
       //define dimensions
       Dimension latDim = ncfile.addDimension("latitude", (int)Math.round(180/res));
       Dimension lonDim = ncfile.addDimension("longitude", (int)Math.round(360/res));
-      Dimension timeDim = ncfile.addDimension("time", 1);
+      Dimension timeDim = ncfile.addDimension("time", timeSet.size());
       Dimension lvlDim = ncfile.addDimension("level", 1);
    
       //define Variables
       ArrayList<Dimension> dim4 = new ArrayList<Dimension>(4);
-      dim4.add(timeDim);
       dim4.add(lvlDim);
+      dim4.add(timeDim);
       dim4.add(latDim);
       dim4.add(lonDim);
 
@@ -2519,7 +2538,7 @@ public class ManipulationDriver
       ncfile.addVariableAttribute("longitude", "units", "longitude");
    
       //float time(time) ;
-      ncfile.addVariable("time", DataType.FLOAT, new Dimension[] {timeDim});
+      ncfile.addVariable("time", DataType.INT, new Dimension[] {timeDim});
       ncfile.addVariableAttribute("time", "units", "year");
       
       //float level(level) ;
@@ -2527,20 +2546,20 @@ public class ManipulationDriver
       ncfile.addVariableAttribute("level", "units", "level/index");
 
       //double data(time, lat, lon)
-      ncfile.addVariable(varR.name, DataType.FLOAT, dim4);
-      ncfile.addVariableAttribute(varR.name, "missing_value", Float.NaN);
-      //ncfile.addVariableAttribute(varR.name, "long_name", "input");
-      ncfile.addVariableAttribute(varR.name, "average", String.valueOf(varR.avg));
+      ncfile.addVariable(var.name, DataType.FLOAT, dim4);
+      ncfile.addVariableAttribute(var.name, "missing_value", Float.NaN);
+      //ncfile.addVariableAttribute(var.name, "long_name", "input");
+      ncfile.addVariableAttribute(var.name, "average", String.valueOf(varR.avg));
       if(varR.units != null) {
-	      ncfile.addVariableAttribute(varR.name, "units", varR.units);
+	      ncfile.addVariableAttribute(var.name, "units", varR.units);
       }
       if(varR.reference != null) {
-	      ncfile.addVariableAttribute(varR.name, "reference", varR.reference);
+	      ncfile.addVariableAttribute(var.name, "reference", varR.reference);
       }
       
       ncfile.addGlobalAttribute("title", "Data Manipulator Output");
-      if(varR.comment != null) {
-	      ncfile.addGlobalAttribute("comments", varR.comment);
+      if(var.comment != null) {
+	      ncfile.addGlobalAttribute("comments", var.comment);
       }
       
       //create the file
@@ -2552,11 +2571,10 @@ public class ManipulationDriver
       }
       log.log(Level.FINE, "NetCDF file '"+fileName+"' created");
 
-      myData = varR.buildWorldMatrix();
-      ArrayFloat dataArr = new ArrayFloat.D4(1, 1, latDim.getLength(), lonDim.getLength());
+      ArrayFloat dataArr = new ArrayFloat.D4(1, timeDim.getLength(), latDim.getLength(), lonDim.getLength());
       ArrayFloat latArr = new ArrayFloat.D1(latDim.getLength());
       ArrayFloat lonArr = new ArrayFloat.D1(lonDim.getLength());
-      ArrayFloat timeArr = new ArrayFloat.D1(1);
+      ArrayInt timeArr = new ArrayInt.D1(timeDim.getLength());
       ArrayFloat lvlArr = new ArrayFloat.D1(1);
       
       //filling the array with the data
@@ -2566,18 +2584,21 @@ public class ManipulationDriver
       //System.out.println("lon: "+lonDim.getLength());
       //System.out.println("y: "+myData.length);
       //System.out.println("x: "+myData[0].length);
-      for(int i = 0; i < latDim.getLength(); i++)
-      {
-        for(int j = 0; j < lonDim.getLength(); j++)
-        {
-          /*
-          if(myData[i][j] > 1)
-          {
-            System.out.println("this isnt right: "+myData[i][j]+" at: "+i+", "+j);
-          }
-          */
-          dataArr.setFloat(ima.set(0,0,i,j), (float)myData[i][j]);
-        }
+      for(int t = 0; t < timeDim.getLength(); t++) {
+	      myData = timeSet.get(t).getValue().buildWorldMatrix();
+	      for(int i = 0; i < latDim.getLength(); i++)
+	      {
+		      for(int j = 0; j < lonDim.getLength(); j++)
+		      {
+			      /*
+				 if(myData[i][j] > 1)
+				 {
+				 System.out.println("this isnt right: "+myData[i][j]+" at: "+i+", "+j);
+				 }
+				 */
+			      dataArr.setFloat(ima.set(0,t,i,j), (float)myData[i][j]);
+		      }
+	      }
       }
       //filling array with latitude degrees
       Index iml = latArr.getIndex();
@@ -2599,28 +2620,32 @@ public class ManipulationDriver
         lonArr.setFloat(iml.set(i), degHold);
         degHold += res;
       }
-      //time array is empty
       iml = timeArr.getIndex();
-      timeArr.setFloat(iml.set(0), 1);
+      for(int t = 0; t < timeDim.getLength(); ++t) {
+	      timeArr.setInt(iml.set(t), (int)Double.parseDouble(timeSet.get(t).getKey()));
+      }
       //level array is empty
       iml = lvlArr.getIndex();
       lvlArr.setFloat(iml.set(0), 1);
       
       // write data out to disk
       try {
-        ncfile.write(varR.name, dataArr);
+        ncfile.write(var.name, dataArr);
         ncfile.flush();
         ncfile.write("latitude", latArr);
         ncfile.flush();
         ncfile.write("longitude", lonArr);
         ncfile.flush();
         ncfile.write("time", timeArr);
+        ncfile.flush();
         ncfile.write("level", lvlArr);
       } catch (IOException e) {
-        log.log(Level.SEVERE, "NetCDF file failed to write data values -> aborting");
+        log.log(Level.SEVERE, "NetCDF file failed to write data values -> "+e);
+	e.printStackTrace();
         System.exit(0);
       } catch (InvalidRangeException e) {
-        log.log(Level.SEVERE, "NetCDF file failed to write data values -> aborting");
+        log.log(Level.SEVERE, "NetCDF file failed to write data values -> "+e);
+	e.printStackTrace();
         System.exit(0);
       }
       
@@ -3361,9 +3386,17 @@ public class ManipulationDriver
     } else
     {
       mantissa = Double.parseDouble(sc.substring(0, E));
-      if(sc.substring(E+1, E+2).equals("+"))
+      char afterE = sc.charAt(E+1);
+      if(afterE == '+') {
         expSignPos = true;
-      exponent = Double.parseDouble(sc.substring(E+2, sc.length()));
+	exponent = Double.parseDouble(sc.substring(E+2, sc.length()));
+      } else if(afterE == '-') {
+	exponent = Double.parseDouble(sc.substring(E+2, sc.length()));
+      } else {
+	// no sign and is positive
+        expSignPos = true;
+	exponent = Double.parseDouble(sc.substring(E+1, sc.length()));
+      }
       if(expSignPos)
         expValue = Math.pow(10, exponent);
       else
