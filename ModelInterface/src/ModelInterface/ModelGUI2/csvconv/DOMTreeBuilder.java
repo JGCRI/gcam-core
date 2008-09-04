@@ -43,6 +43,24 @@ public class DOMTreeBuilder {
 	 */ 
 	private boolean buildMap;
 
+	/**
+	 * A Map used to map a node name to what it should be renamed to.
+	 * This becuase necessary when you have an arbitrary number of 
+	 * nestings with the same node name.  The current header strategy
+	 * is limited in that it must have different names which leads
+	 * to the need to be able to rename nodes back to what they should
+	 * be.
+	 */
+	private final Map<String, String> renameNodeMap = new HashMap<String, String>();
+
+	/**
+	 * A reading flag which indicates the current tables only purpose
+	 * is to read in a renameNodeMap.  The renaming will be done before
+	 * the next table is processed or if the user trys to get the tree.
+	 * The headers will be null when this flag is set.
+	 */
+	private boolean renameNodeNames;
+
 	/** Default constructor.
 	* Initializes the lookUpMap.
 	*/
@@ -50,6 +68,7 @@ public class DOMTreeBuilder {
 		doc = null;
 		lookUpMap = new HashMap<String, Map<String, String>>();
 		buildMap = false;
+		renameNodeNames = false;
 	}
 
 	/** Set the header.
@@ -58,6 +77,10 @@ public class DOMTreeBuilder {
 	*
 	*/
 	public void setHeader(String headerIn) throws Exception {
+		if(renameNodeNames) {
+			doRenameNodes(doc.getDocumentElement());
+			renameNodeNames = false;
+		}
 		// if the header starts with MAP that means it is
 		// only intended to set up a look-up-map
 		if(headerIn.matches(".*MAP,.*")) {
@@ -66,6 +89,11 @@ public class DOMTreeBuilder {
 			headerIn = headerIn.substring(headerIn.indexOf(",")+1);
 		} else {
 			buildMap = false;
+		}
+		if(headerIn.matches(".*NODE_RENAME.*")) {
+			renameNodeNames = true;
+			head = null;
+			return;
 		}
 		head = new Headers(headerIn);
 		// create the document if it has been created alredy and if we have a 
@@ -84,6 +112,10 @@ public class DOMTreeBuilder {
 	*   \warning user must set a header before calling this function.
 	*/
 	public void addToTree (ArrayList<String> data) throws Exception {
+		if(renameNodeNames) {
+			addToRenameMap(data);
+			return;
+		}
 		if (head == null && !buildMap) {
 			System.out.println("Warning, no header set, skipping data");
 			return;
@@ -104,6 +136,10 @@ public class DOMTreeBuilder {
 		// don't do this anymore until I can 
 		// figure out why it was needed
 		//finalize(doc.getDocumentElement());
+		if(renameNodeNames) {
+			doRenameNodes(doc.getDocumentElement());
+			renameNodeNames = false;
+		}
 		return doc;
 	}
 
@@ -131,6 +167,31 @@ public class DOMTreeBuilder {
 		// put for all headers as they are to share the same map
 		for(int i = 0; i < head.getNumHeaders(); i++) {
 			lookUpMap.put(head.getHeader(i).getChildName(),tempMap);
+		}
+	}
+
+	/**
+	 * Process the current line of data to fill in the node rename map.
+	 * @param dataArr The current row from the data table. 
+	 */
+	private void addToRenameMap(List<String> dataArr) {
+		renameNodeMap.put(dataArr.get(0), dataArr.get(1));
+	}
+
+	/**
+	 * Renames a node name if the node name appears in the renameNodeMap to what
+	 * ever it points to.  This will recursively process the whole tree so excessive
+	 * calls should be avoided.
+	 * @param node The current node being processed.
+	 */
+	public void doRenameNodes(Node node) {
+		String renameTo = renameNodeMap.get(node.getNodeName());
+		if(renameTo != null) {
+			node = doc.renameNode(node, "", renameTo);
+		}
+		NodeList nl = node.getChildNodes();
+		for( int i = 0; i < nl.getLength(); ++i) {
+			doRenameNodes(nl.item(i));
 		}
 	}
 
