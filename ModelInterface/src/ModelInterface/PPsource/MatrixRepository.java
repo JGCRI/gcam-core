@@ -110,7 +110,7 @@ public class MatrixRepository implements DataRepository
     } catch(ArrayIndexOutOfBoundsException e)
     {
       System.out.println("SEVERE: ("+X+","+Y+") out of bounds("+xSize+","+ySize
-          +") - PROGRAM TERMINATING");
+          +") with value: "+value+" - PROGRAM TERMINATING");
       //System.exit(1);
     }
 
@@ -165,16 +165,18 @@ public class MatrixRepository implements DataRepository
       thisTime = holdEntry.getKey();
       if(!overwrite.containsKey(thisTime))
       {
-        //this time didnt exist in what we are overwriting, cant merge them
-        return -1;
-      }
-      holdTime = holdEntry.getValue();
-      overwriteTime = overwrite.get(thisTime);
+	      // new time so just add the time
+	      overwrite.put(thisTime, holdEntry.getValue());
+      } else {
+	      // really need to merge data
+	      holdTime = holdEntry.getValue();
+	      overwriteTime = overwrite.get(thisTime);
 
-      //actually putting them together
-      overwriteTime = overMerge(overwriteTime, holdTime);
-      //replaciung the old info with this new info
-      overwrite.put(thisTime, overwriteTime);
+	      //actually putting them together
+	      overwriteTime = overMerge(overwriteTime, holdTime);
+	      //replaciung the old info with this new info
+	      overwrite.put(thisTime, overwriteTime);
+      }
     }
 
     //we have completely put hold's data in the passed var

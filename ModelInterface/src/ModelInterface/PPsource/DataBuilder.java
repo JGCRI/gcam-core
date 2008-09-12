@@ -257,6 +257,8 @@ public class DataBuilder
 	      dataStruct.setTrackSums(Boolean.valueOf(currFile.getAttributeValue("value")));
       } else if(currFile.getName().equals("printSums")) {
 	      dataStruct.printSums();
+      } else if(currFile.getName().equals("seed")) {
+	      // skip this
       } else if(currFile.getAttributeValue("type").equals("txt"))
       {
         Element stor = currFile.getChild("storage");
@@ -916,6 +918,10 @@ public class DataBuilder
     TreeMap timeValue;
     Double dataValue;
     DataBlock toAdd;
+    int skipLines = 0;
+    double startLat = 90;
+    double endLat = -90;
+    double NaN = -9999;
     
     //check if tags are contained in the xml file, dont get them later
     tagged = (Boolean.valueOf(currFile.getAttributeValue("tagged"))).booleanValue();
@@ -943,6 +949,18 @@ public class DataBuilder
       } else if(currElem.getName().equals("units"))
       {
         unit = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("NaN"))
+      {
+        NaN = Double.parseDouble(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("skip-lines"))
+      {
+        skipLines = Integer.parseInt(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("start-latitude"))
+      {
+        startLat = Double.parseDouble(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("end-latitude"))
+      {
+        endLat = Double.parseDouble(currElem.getAttributeValue("value"));
       } else if(currElem.getName().equals("format"))
       {
         if(currElem.getAttributeValue("value").equals("scientific"))
@@ -970,6 +988,17 @@ public class DataBuilder
       System.exit(1);
     }
   //txt file opened
+    
+    // skip lines if necessary before reading any values
+    try {
+	    for(int currLine = 0; currLine < skipLines; ++currLine) {
+		    String skippedLine = input.readLine();
+		    log.log(Level.FINER, "Skipped: "+skippedLine);
+	    }
+    } catch(IOException ioe) {
+	    log.log(Level.SEVERE, "Error reading data: "+ioe);
+	    System.exit(1);
+    }
 
     
     
@@ -1019,11 +1048,17 @@ public class DataBuilder
     
     
     
+    
+    double curri =0;
+    double currk =0;
+    try {
   //reading the data from the file
-    for(double i = (90-res); i >= -90; i-=res)
+    for(double i = (startLat-res); i >= endLat; i-=res)
     {
       for(double k = -180; k < 179.9999; k+=res)
       {
+	      curri = i;
+	      currk = k;
         //System.out.println(k);
         if(dec)
         { //numbers stored in decimal format
@@ -1032,6 +1067,7 @@ public class DataBuilder
         { //numbers stored in scientific notation
           dataValue = new Double(scientificToDouble(readWord(input)));
         }
+	if(dataValue != NaN) {
         toAdd = new DataBlock(k, i, res, res);
         timeValue = new TreeMap();
         timeValue.put(time, dataValue);
@@ -1050,7 +1086,12 @@ public class DataBuilder
       //merging this data into the current tree
         dataStruct.addData(toAdd, avg);
       }
+      }
     }
+  } catch(NullPointerException e) {
+	  log.log(Level.WARNING, "Error reading data at (lat,long) ("+curri+", "+currk+"): "+e);
+	  e.printStackTrace();
+  }
     
     //done adding all data, if overwrite, must merge with old data now
     if(overwrite)
@@ -2468,12 +2509,15 @@ public class DataBuilder
     double res = 1;
     double NaN = -9999;
     HashMap nameMap = null;
+    double startLat = 90;
+    double endLat = -90;
     List infoChildren;
     Element currElem;
     TreeMap timeValue;
     Double dataValue;
     DataBlock toAdd;
     TreeMap<String, Boolean> overwrite = new TreeMap<String, Boolean>();
+    int skipLines = 0;
     
     //check if tags are contained in the xml file, dont get them later
     tagged = (Boolean.valueOf(currFile.getAttributeValue("tagged"))).booleanValue();
@@ -2538,6 +2582,15 @@ public class DataBuilder
       } else if(currElem.getName().equals("NaN"))
       {
         NaN = Double.parseDouble(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("skip-lines"))
+      {
+        skipLines = Integer.parseInt(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("start-latitude"))
+      {
+        startLat = Double.parseDouble(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("end-latitude"))
+      {
+        endLat = Double.parseDouble(currElem.getAttributeValue("value"));
       } else if(currElem.getName().equals("name"))
       {
         fileName = currElem.getAttributeValue("value");
@@ -2560,7 +2613,16 @@ public class DataBuilder
     }
   //txt file opened
 
-    
+    // skip lines if necessary before reading any values
+    try {
+	    for(int currLine = 0; currLine < skipLines; ++currLine) {
+		    String skippedLine = input.readLine();
+		    log.log(Level.FINER, "Skipped: "+skippedLine);
+	    }
+    } catch(IOException ioe) {
+	    log.log(Level.SEVERE, "Error reading data: "+ioe);
+	    System.exit(1);
+    }
     
     if(tagged)
     { //if didnt get these before in the xml file
@@ -2589,9 +2651,8 @@ public class DataBuilder
 
     
     
-    
   //reading the data from the file
-    for(double i = (90-res); i >= -90; i-=res)
+    for(double i = (startLat-res); i >= endLat; i-=res)
     {
       for(double k = -180; k < 179.9999; k+=res)
       {
@@ -2934,7 +2995,7 @@ public class DataBuilder
     double time = 0;
     double res = 1;
     double x, y, mult;
-    boolean avg = false; //avg is always false for coverage readings
+    boolean avg = true; //avg is always true for coverage readings
     boolean typeWarn = false;
     TreeMap timeValue;
     TreeMap<String, Boolean> overwrite = new TreeMap<String, Boolean>();
@@ -3164,6 +3225,7 @@ public class DataBuilder
     } catch(IOException e)
     {
       log.log(Level.WARNING, "IOException!! -> "+fileName);
+      e.printStackTrace();
     }
     log.log(Level.FINE, "Done adding new PointShapefileEnum");
   }
@@ -3187,7 +3249,7 @@ public class DataBuilder
     double time = 0;
     double res = 1;
     double x, y, mult;
-    boolean avg = false; //avg is always false for coverage readings
+    boolean avg = true; //avg is always true for coverage readings
     boolean typeWarn = false;
     TreeMap timeValue;
     TreeMap<String, Boolean> overwrite = new TreeMap<String, Boolean>();
@@ -3238,8 +3300,7 @@ public class DataBuilder
           nameConvention = "single";
           dataName = currElem.getAttributeValue("value");
         }
-      } else if(currElem.getName().equals("date"))
-      {
+      } else if(currElem.getName().equals("date")) {
         time = Double.parseDouble(currElem.getAttributeValue("value"));
       } else if(currElem.getName().equals("res"))
       {
@@ -3992,7 +4053,6 @@ public class DataBuilder
      */
     log.log(Level.FINER, "begin function");
     
-    double res = 1;
     int rblock, NaN;
     String fileName = "init";
     String dataVar = "ctry";
@@ -4001,16 +4061,14 @@ public class DataBuilder
     Element currInfo;
     RegionMask holdR;
     TreeMap<String, RegionMask> newRegions = new TreeMap<String, RegionMask>();
+    TreeMap<String, RegionMask> nameReverseMap = new TreeMap<String, RegionMask>();
     
   //getting file info from XML file
     infoList = currFile.getChildren();
     for(int i = 0; i < infoList.size(); i++)
     {
       currInfo = (Element)infoList.get(i);
-      if(currInfo.getName().equals("res"))
-      {
-        res = Double.parseDouble(currInfo.getAttributeValue("value"));
-      } else if(currInfo.getName().equals("name"))
+      if(currInfo.getName().equals("name"))
       {
         fileName = currInfo.getAttributeValue("value");
       } else if(currInfo.getName().equals("variable"))
@@ -4024,7 +4082,15 @@ public class DataBuilder
         {
           currR = (Element)rList.get(k);
           holdK = currR.getAttributeValue("key");
-          holdR = new RegionMask(currR.getAttributeValue("value"), res);
+	  String regionName = currR.getAttributeValue("value");
+	  // have to account for numerous keys to 1 region name
+	  // so we have a reverse map and have the key point to the
+	  // correct single instance of the RegionMask
+	  holdR = nameReverseMap.get(regionName);
+	  if(holdR == null) {
+		  holdR = new RegionMask(regionName, 0);
+		  nameReverseMap.put(regionName, holdR);
+	  }
           newRegions.put(holdK, holdR);
         }
       } else
@@ -4042,28 +4108,110 @@ public class DataBuilder
       NetcdfFile nc = NetcdfFile.open(fileName);
       /* Read a variable named ctry from the file, it contains the masks */
       Variable data = nc.findVariable(dataVar);
+      int[] shp = data.getShape();
+      /*
+      for(int i = 0; i < shp.length; ++i){
+	      System.out.println(i+" -- "+shp[i]);
+      }
+      */
+
+      // get the lat index from the data to get correct lat coordinates
+      Variable latVar = nc.findVariable(data.getDimension(shp.length-2).getName());
+      Array latArray = latVar.read();
+      int[] latShp = latArray.getShape();
+      Index latI = latArray.getIndex();
+      double startY = latArray.getDouble(latI.set(0));
+      double endY = latArray.getDouble(latI.set(latShp[0]-1));
+      double resY = (startY - endY) / (shp[shp.length-2]-1);
+      // move from middle of the cell to lower left of the cell
+      startY = startY - resY/2;
+      endY = endY - resY/2;
+
+      // get the lon index from the data to get correct lon coordinates
+      Variable lonVar = nc.findVariable(data.getDimension(shp.length-1).getName());
+      Array lonArray = lonVar.read();
+      int[] lonShp = lonArray.getShape();
+      Index lonI = lonArray.getIndex();
+      double startX = lonArray.getDouble(lonI.set(0));
+      double endX = lonArray.getDouble(lonI.set(lonShp[0]-1));
+      double resX = (endX - startX) / (shp[shp.length-1]-1);
+      //double resX = 360.0 / shp[shp.length-1];
+      // move from middle of the cell to lower left of the cell
+      startX = startX - resX/2;
+      endX = endX - resX/2;
+
+      /*
+      System.out.println("startY: "+startY);
+      System.out.println("endY: "+endY);
+      System.out.println("startX: "+startX);
+      System.out.println("endX: "+endX);
+      System.out.println("resY: "+resY);
+      System.out.println("resX: "+resX);
+      for(int i = 0; i < latShp[0]; ++i) {
+	      System.out.println(i+" -- "+latArray.getDouble(latI.set(i)));
+      }
+      System.exit(0);
+      */
+
+      // I have to reset the resolution in the regions masks now that
+      // we know what it is
+      for(Iterator<Map.Entry<String, RegionMask>> it = newRegions.entrySet().iterator(); it.hasNext(); ) {
+	      it.next().getValue().resolution = resX;
+      }
+
       Array ma2Array = data.read();
       Index in = ma2Array.getIndex();
       int i = 0;
       int k = 0;
       NaN = (int)data.findAttribute("missing_value").getNumericValue().floatValue();
-      for(double y = (90-res); y >= -90; y-=res)
+
+      // set up for the land fraction
+      //dataStruct.setTrackSums(true);
+      final DataBlock toAdd = new DataBlock();
+      final TreeMap<Double, Double> timeValue = new TreeMap();
+      timeValue.put(0.0, 1.0);
+      toAdd.data.put("landFract", timeValue);
+      dataAvg.put("landFract", new Boolean(true));
+
+      /*
+      double landArea = 0;
+      double surfaceArea = 0;
+      Rectangle2D.Double currBlock = new Rectangle2D.Double();
+      */
+
+      double y = startY;
+      double x = startX;
+      for(i = 0; i < shp[shp.length-2]; ++i )
+      //for(/*double y = startY*/; y >= endY; y-=resY)
       {
-        k = 0;
-        for(double x = -180; x < 180; x+=res)
+        //k = 0;
+	x = startX;
+	for(k = 0; k < shp[shp.length-1]; ++k)
+        //for(/*double x = startX*/; x <= endX; x+=resX)
         {
           rblock = (int)ma2Array.getFloat(in.set(0, 0, i, k));
+	  /*
+	  currBlock.setRect(x, y, resX, resY);
+	  double area = FlatIndex.getArea(currBlock);
+	  surfaceArea += area;
+	  */
           if(rblock != NaN)
           {
             if(rblock >= 0 && (holdR = ((RegionMask)newRegions.get(String.valueOf(rblock)))) != null)
-            { //updating someones bounds
+            { 
+	      //landArea += area;
+	      // add to the land fraction
+	      toAdd.setRect(x, y, resX, resY);
+	      dataStruct.addData(toAdd, true);
+
+	      //updating someones bounds
               if(holdR.height==-1)
               { //this is the first block being added to this region nothing to
                 // test against yet
                 holdR.y = y;
                 holdR.x = x;
-                holdR.height = res;
-                holdR.width = res;
+                holdR.height = resY;
+                holdR.width = resX;
               } else
               { //test against old bounds, if outside them, change them
                 if(y<holdR.y)
@@ -4076,18 +4224,26 @@ public class DataBuilder
                   holdR.width += (holdR.x-x);
                   holdR.x = x;
                 }
-                if((x+res)>(holdR.x+holdR.width))
+                if((x+resX)>(holdR.x+holdR.width))
                 {
-                  holdR.width = ((x+res)-holdR.x);
+                  holdR.width = ((x+resX)-holdR.x);
                 }
               }
             }
           }
-          k++;
+          //k++;
+	  x += resX;
         } //these two are kindof important, thats how we iterate through the data! huzzah!
-        i++;
+        //i++;
+	y -= resY;
       }
+      /*
+      System.out.println("When done: "+i+" -- "+k);
+      System.out.println("When done: "+y+" -- "+x);
       //DONE CREATING MASK MATRIX AND FINDING BOUNDS
+      System.out.println("Surface area: "+surfaceArea);
+      System.out.println("Land area: "+landArea);
+      */
       
       //initializing byte matrix for each region
       Iterator it = newRegions.entrySet().iterator();
@@ -4105,10 +4261,14 @@ public class DataBuilder
       //MAIN BYTEMASK CREATION LOOP
       i = 0;
       k = 0;
-      for(double y = (90-res); y >= -90; y-=res)
+      y = startY;
+      for(i = 0; i < shp[shp.length-2]; ++i)
+      //for(/*double y = startY*/; y >= endY; y-=resY)
       {
         k=0;
-        for(double x = -180; x < 180; x+=res)
+	x = startX;
+	for(k = 0; k < shp[shp.length-1]; ++k)
+        //for(/*double x = startX*/; x <= endX; x+=resX)
         {
           rblock = (int)ma2Array.getFloat(in.set(0, 0, i, k));
           if((rblock > 0)&&(rblock != NaN)&&
@@ -4116,9 +4276,11 @@ public class DataBuilder
           {
           	holdR.setPointTrue(x, y);
           }
-          k++;
+          //k++;
+	  x += resX;
         }
-        i++;
+        //i++;
+	y -= resY;
       }
       //DONE SETTING MASKS   
     } catch (java.io.IOException e) {
@@ -4266,6 +4428,12 @@ public class DataBuilder
 	  toAdd.data.put("landFract", timeValue);
 	  dataAvg.put("landFract", new Boolean(true));
 
+	  /*
+	  double landArea = 0;
+	  double surfaceArea = 0;
+	  Rectangle2D.Double currBlock = new Rectangle2D.Double();
+	  */
+
 	  //reading the data from the file
 	  maskArray = new int[numRows][numCols];
 	  currY = (yLL+(numRows*res));
@@ -4279,12 +4447,16 @@ public class DataBuilder
 			  if(currX > -77 && currX < -75 && currY > 37 && currY < 40) {
 				  System.out.println("("+currX+", "+currY+") - "+rblock);
 			  }
+			  currBlock.setRect(currX, currY, res, res);
+			  double area = FlatIndex.getArea(currBlock);
+			  surfaceArea += area;
 			  */
 			  if(rblock == NaN)
 			  {
 				  maskArray[i][k] = 0;
 			  } else
 			  {
+				  //landArea += area;
 				  // add to the land fraction
 				  toAdd.setRect(currX, currY, res, res);
 				  dataStruct.addData(toAdd, true);
@@ -4326,6 +4498,10 @@ public class DataBuilder
 		  }
 		  currY -= res;
 	  }
+	  /*
+	  System.out.println("Surface area: "+surfaceArea);
+	  System.out.println("Land area: "+landArea);
+	  */
 	  try {
 		  input.close();
 	  } catch(IOException ioe) {

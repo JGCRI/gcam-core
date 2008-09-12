@@ -435,7 +435,7 @@ public class FlatIndex implements DataIndex
    * 	units for the block should be in latitude and longitude.
    * @return The surface area on the earth of the passed in block in Km^2.
    */
-  private static double getArea(Rectangle2D.Double block) {
+  public static double getArea(Rectangle2D.Double block) {
 	  // TODO: maybe this should go somewhere else
 	  final double POLAR_CIRCUM = 40008.00;
 	  final double EQUAT_CIRCUM = 40076.5;
@@ -479,5 +479,14 @@ public class FlatIndex implements DataIndex
 		  }
 	  }
 	  System.out.println("World surface area when using 1.0 res: "+sum);
+	  sum = 0.0;
+	  final double res = 0.0833333333333;
+	  for(double y = 90.0; y > -90.0; y-=res) {
+		  for(double x = -180.0; x < 180.0; x+=res) {
+			  currBlock.setRect(x, y, res, res);
+			  sum += getArea(currBlock);
+		  }
+	  }
+	  System.out.println("World surface area when using 5min res: "+sum);
   }
 }
