@@ -337,7 +337,7 @@ public class ManipulationDriver
     
     ref = (Region)regionList.get(reg);
     if(var.equals("RegionCellSize") && dataAvgAdd.get(var) == null) {
-	    avg = true;
+	    avg = false;
     } else {
 	    avg = ((Boolean)dataAvgAdd.get(var)).booleanValue();
     }
@@ -940,6 +940,66 @@ public class ManipulationDriver
       
       VDest.setData(ComponentManipulator.lessThan(VSource.getData(), limit, snap));
     }
+  }
+/**
+   * Allows only values less than or equal to either a scalar or corresponding
+   * positions in another variable to remain. The rest are set to 0.
+   * @param command XML node defining the operation.
+   */
+  private void parseLessThanOrEqualCommand(Element command)
+  {
+	  log.log(Level.FINER, "begin function");
+	  Variable VDest;
+	  Variable VSource;
+	  Variable VMask = null;
+	  Element currInfo;
+	  String snapVal;
+	  double limit = 0;
+	  boolean reg = false;
+	  boolean snap = false;
+
+	  currInfo = command.getChild("target");
+	  String VDname = currInfo.getAttributeValue("name");
+	  currInfo = command.getChild("argument");
+	  VSource = getVariable(currInfo.getAttributeValue("name"));
+	  currInfo = command.getChild("limit");
+	  if(currInfo!=null)
+	  { //this command gives a limit
+		  limit = Double.parseDouble(currInfo.getAttributeValue("value"));
+		  snapVal = currInfo.getAttributeValue("snaptolimit");
+		  if((snapVal != null)&&(snapVal.equals("true")))
+		  {
+			  snap = true;
+		  }
+	  } else
+	  { // this command gives a corresponding region
+		  reg = true;
+		  currInfo = command.getChild("mask");
+		  VMask = getVariable(currInfo.getAttributeValue("name"));
+	  }
+
+	  if(reg)
+	  {
+		  throw new UnsupportedOperationException();
+		  /*
+		  if(VSource.sameShape(VMask))
+		  {
+			  VDest = VSource.getShape(VDname);
+			  variableList.put(VDname, VDest);
+
+			  VDest.setData(ComponentManipulator.lessThanRegion(VSource.getData(), VMask.getData()));
+		  } else
+		  {
+			  log.log(Level.WARNING, "Command Failed: variables of different shapes.");
+		  }
+		  */
+	  } else
+	  {
+		  VDest = VSource.getShape(VDname);
+		  variableList.put(VDname, VDest);
+
+		  VDest.setData(ComponentManipulator.lessThanOrEqual(VSource.getData(), limit, snap));
+	  }
   }
   /**
    * Randomly removes cells not already equal to NaN from the variable.
@@ -1959,7 +2019,7 @@ public class ManipulationDriver
     //need to output cuz this is an abnormally shaped return
     currInfo = command.getChild("output");
     Writer writer;
-    if(command.getAttributeValue("csvfile") != null) {
+    if(currInfo.getAttributeValue("csvfile") != null) {
 	    writer = CSVFileManager.getInstance().getCSVOutputter(currInfo);
     } else {
 	    // assume console
@@ -2598,6 +2658,11 @@ public class ManipulationDriver
 				 */
 			      dataArr.setFloat(ima.set(0,t,i,j), (float)myData[i][j]);
 		      }
+	      }
+	      myData = null;
+	      // only garbage collect every 25th time
+	      if(t % 25 == 0) {
+		      System.gc();
 	      }
       }
       //filling array with latitude degrees
@@ -3317,7 +3382,7 @@ public class ManipulationDriver
    * @param command The xml command used to determine how and what to downscale.
    */
   private void downscaleEmissionsCommand(Element command) {
-	  EmissionsDownscaler.doDownscaling(command, this);
+	  //EmissionsDownscaler.doDownscaling(command, this);
   }
 
 //*****************************************************************************
@@ -3463,6 +3528,9 @@ public class ManipulationDriver
     } else if(currCom.getName().equals("parseLessThan"))
     {
       parseLessThanCommand(currCom);
+    } else if(currCom.getName().equals("parseLessThanOrEqual"))
+    {
+      parseLessThanOrEqualCommand(currCom);
     } else if(currCom.getName().equals("removeRandom"))
     {
       removeRandomCommand(currCom);

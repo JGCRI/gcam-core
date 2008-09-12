@@ -380,6 +380,47 @@ public final class ComponentManipulator
     }
     return toReturn;
   }
+  public static Wrapper[] lessThanOrEqual(Wrapper[] R, double limit, boolean snap)
+  {
+	  log.log(Level.FINER, "begin function");
+	  double[][] holdMR;
+	  double[][] holdMS;
+	  Wrapper[] toReturn = new Wrapper[R.length];
+	  double fail = Double.NaN;
+	  if(snap)
+	  { //failing values will always be set to this, which will be either limit of NaN
+		  fail = limit;
+	  }
+
+	  for(int i = 0; i < R.length; i++)
+	  {
+		  holdMS = R[i].data;
+		  holdMR = new double[holdMS.length][holdMS[0].length];
+		  for(int iY = 0; iY < holdMR.length; iY++)
+		  {
+			  for(int iX = 0; iX < holdMR[0].length; iX++)
+			  {
+				  if(!Double.isNaN(holdMS[iY][iX]))
+				  {
+					  if(holdMS[iY][iX] <= limit)
+					  {
+						  holdMR[iY][iX] = holdMS[iY][iX];
+					  } else
+					  {
+						  holdMR[iY][iX] = fail;
+					  }
+				  } else
+				  {
+					  holdMR[iY][iX] = Double.NaN;
+				  }
+			  }
+		  }
+
+		  toReturn[i] = R[i].makeCopy();
+		  toReturn[i].data = holdMR;
+	  }
+	  return toReturn;
+  }
   public static Wrapper[] lessThanRegion(Wrapper[] R, Wrapper[] M)
   {
     log.log(Level.FINER, "begin function");
