@@ -3,20 +3,20 @@ Variable ID,,,,,,,,,
 200,,,,,,,,,
 ,,,,sharewt,,,,,
 region,supplysector,subsector,scaleYear,2020,2035,2050,2065,2080,2095
-Africa,electricity,wind,1975,0.167,0.333,0.5,0.667,0.833,1
-Australia_NZ,electricity,wind,1975,0.167,0.333,0.5,0.667,0.833,1
-Canada,electricity,wind,1975,0.167,0.333,0.5,0.667,0.833,1
-China,electricity,wind,1975,0.167,0.333,0.5,0.667,0.833,1
-Eastern Europe,electricity,wind,1975,0.167,0.333,0.5,0.667,0.833,1
-Former Soviet Union,electricity,wind,1975,0.167,0.333,0.5,0.667,0.833,1
-India,electricity,wind,1975,0.167,0.333,0.5,0.667,0.833,1
-Japan,electricity,wind,1975,0.167,0.333,0.5,0.667,0.833,1
-Korea,electricity,wind,1975,0.167,0.333,0.5,0.667,0.833,1
-Latin America,electricity,wind,1975,0.167,0.333,0.5,0.667,0.833,1
-Middle East,electricity,wind,1975,0.167,0.333,0.5,0.667,0.833,1
-Southeast Asia,electricity,wind,1975,0.167,0.333,0.5,0.667,0.833,1,,
-USA,electricity,wind,1975,0.167,0.333,0.5,0.667,0.833,1,,
-Western Europe,electricity,wind,1975,0.167,0.333,0.5,0.667,0.833,1,,
+Africa,electricity,wind,2005,1,1,1,1,1,1
+Australia_NZ,electricity,wind,2005,1,1,1,1,1,1
+Canada,electricity,wind,2005,1,1,1,1,1,1
+China,electricity,wind,2005,1,1,1,1,1,1
+Eastern Europe,electricity,wind,2005,1,1,1,1,1,1
+Former Soviet Union,electricity,wind,2005,1,1,1,1,1,1
+India,electricity,wind,2005,1,1,1,1,1,1
+Japan,electricity,wind,2005,1,1,1,1,1,1
+Korea,electricity,wind,2005,1,1,1,1,1,1
+Latin America,electricity,wind,2005,1,1,1,1,1,1
+Middle East,electricity,wind,2005,1,1,1,1,1,1
+Southeast Asia,electricity,wind,2005,1,1,1,1,1,1,,
+USA,electricity,wind,2005,1,1,1,1,1,1,,
+Western Europe,electricity,wind,2005,1,1,1,1,1,1,,
 
 INPUT_TABLE,,,,,,,,,,,
 Variable ID,,,,,,,,,,,

@@ -4,7 +4,7 @@
       <region name="USA">
          <supplysector name="electricity">
             <subsector name="coal">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -284,7 +284,7 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -638,7 +638,7 @@
                </technology>
             </subsector>
             <subsector name="oil">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -992,7 +992,7 @@
                </technology>
             </subsector>
             <subsector name="biomass">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -1344,7 +1344,7 @@
                </technology>
             </subsector>
             <subsector name="nuclear">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
             </subsector>
          </supplysector>
@@ -1352,7 +1352,7 @@
       <region name="Canada">
          <supplysector name="electricity">
             <subsector name="coal">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -1632,7 +1632,7 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -1986,7 +1986,7 @@
                </technology>
             </subsector>
             <subsector name="oil">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -2340,7 +2340,7 @@
                </technology>
             </subsector>
             <subsector name="biomass">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -2692,7 +2692,7 @@
                </technology>
             </subsector>
             <subsector name="nuclear">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
             </subsector>
          </supplysector>
@@ -2700,7 +2700,7 @@
       <region name="Western Europe">
          <supplysector name="electricity">
             <subsector name="coal">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -2980,7 +2980,7 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -3334,7 +3334,7 @@
                </technology>
             </subsector>
             <subsector name="oil">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -3688,7 +3688,7 @@
                </technology>
             </subsector>
             <subsector name="biomass">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -4040,7 +4040,7 @@
                </technology>
             </subsector>
             <subsector name="nuclear">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
             </subsector>
          </supplysector>
@@ -4048,7 +4048,7 @@
       <region name="Japan">
          <supplysector name="electricity">
             <subsector name="coal">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -4328,7 +4328,7 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -4682,7 +4682,7 @@
                </technology>
             </subsector>
             <subsector name="oil">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -5036,7 +5036,7 @@
                </technology>
             </subsector>
             <subsector name="biomass">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -5388,7 +5388,7 @@
                </technology>
             </subsector>
             <subsector name="nuclear">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
             </subsector>
          </supplysector>
@@ -5396,7 +5396,7 @@
       <region name="Australia_NZ">
          <supplysector name="electricity">
             <subsector name="coal">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -5676,7 +5676,7 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -6030,7 +6030,7 @@
                </technology>
             </subsector>
             <subsector name="oil">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -6384,7 +6384,7 @@
                </technology>
             </subsector>
             <subsector name="biomass">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -6736,7 +6736,7 @@
                </technology>
             </subsector>
             <subsector name="nuclear">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
             </subsector>
          </supplysector>
@@ -6744,7 +6744,7 @@
       <region name="Former Soviet Union">
          <supplysector name="electricity">
             <subsector name="coal">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -7024,7 +7024,7 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -7378,7 +7378,7 @@
                </technology>
             </subsector>
             <subsector name="oil">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -7732,7 +7732,7 @@
                </technology>
             </subsector>
             <subsector name="biomass">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -8084,7 +8084,7 @@
                </technology>
             </subsector>
             <subsector name="nuclear">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
             </subsector>
          </supplysector>
@@ -8092,7 +8092,7 @@
       <region name="China">
          <supplysector name="electricity">
             <subsector name="coal">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -8372,7 +8372,7 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -8726,7 +8726,7 @@
                </technology>
             </subsector>
             <subsector name="oil">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -9080,7 +9080,7 @@
                </technology>
             </subsector>
             <subsector name="biomass">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -9432,7 +9432,7 @@
                </technology>
             </subsector>
             <subsector name="nuclear">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
             </subsector>
          </supplysector>
@@ -9440,7 +9440,7 @@
       <region name="Middle East">
          <supplysector name="electricity">
             <subsector name="coal">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -9720,7 +9720,7 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -10074,7 +10074,7 @@
                </technology>
             </subsector>
             <subsector name="oil">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -10428,7 +10428,7 @@
                </technology>
             </subsector>
             <subsector name="biomass">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -10780,7 +10780,7 @@
                </technology>
             </subsector>
             <subsector name="nuclear">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
             </subsector>
          </supplysector>
@@ -10788,7 +10788,7 @@
       <region name="Africa">
          <supplysector name="electricity">
             <subsector name="coal">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -11068,7 +11068,7 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -11422,7 +11422,7 @@
                </technology>
             </subsector>
             <subsector name="oil">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -11776,7 +11776,7 @@
                </technology>
             </subsector>
             <subsector name="biomass">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -12128,7 +12128,7 @@
                </technology>
             </subsector>
             <subsector name="nuclear">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
             </subsector>
          </supplysector>
@@ -12136,7 +12136,7 @@
       <region name="Latin America">
          <supplysector name="electricity">
             <subsector name="coal">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -12416,7 +12416,7 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -12770,7 +12770,7 @@
                </technology>
             </subsector>
             <subsector name="oil">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -13124,7 +13124,7 @@
                </technology>
             </subsector>
             <subsector name="biomass">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -13476,7 +13476,7 @@
                </technology>
             </subsector>
             <subsector name="nuclear">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
             </subsector>
          </supplysector>
@@ -13484,7 +13484,7 @@
       <region name="Southeast Asia">
          <supplysector name="electricity">
             <subsector name="coal">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -13764,7 +13764,7 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -14118,7 +14118,7 @@
                </technology>
             </subsector>
             <subsector name="oil">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -14472,7 +14472,7 @@
                </technology>
             </subsector>
             <subsector name="biomass">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -14824,7 +14824,7 @@
                </technology>
             </subsector>
             <subsector name="nuclear">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
             </subsector>
          </supplysector>
@@ -14832,7 +14832,7 @@
       <region name="Eastern Europe">
          <supplysector name="electricity">
             <subsector name="coal">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -15112,7 +15112,7 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -15466,7 +15466,7 @@
                </technology>
             </subsector>
             <subsector name="oil">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -15820,7 +15820,7 @@
                </technology>
             </subsector>
             <subsector name="biomass">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -16172,7 +16172,7 @@
                </technology>
             </subsector>
             <subsector name="nuclear">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
             </subsector>
          </supplysector>
@@ -16180,7 +16180,7 @@
       <region name="Korea">
          <supplysector name="electricity">
             <subsector name="coal">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -16460,7 +16460,7 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -16814,7 +16814,7 @@
                </technology>
             </subsector>
             <subsector name="oil">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -17168,7 +17168,7 @@
                </technology>
             </subsector>
             <subsector name="biomass">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -17520,7 +17520,7 @@
                </technology>
             </subsector>
             <subsector name="nuclear">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
             </subsector>
          </supplysector>
@@ -17528,7 +17528,7 @@
       <region name="India">
          <supplysector name="electricity">
             <subsector name="coal">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -17808,7 +17808,7 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -18162,7 +18162,7 @@
                </technology>
             </subsector>
             <subsector name="oil">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -18516,7 +18516,7 @@
                </technology>
             </subsector>
             <subsector name="biomass">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -18868,7 +18868,7 @@
                </technology>
             </subsector>
             <subsector name="nuclear">
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <techScaleYear>1975</techScaleYear>
             </subsector>
          </supplysector>

@@ -67,7 +67,7 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2020</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
@@ -324,7 +324,7 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2020</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
@@ -581,7 +581,7 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2020</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
@@ -838,7 +838,7 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2020</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
@@ -1095,7 +1095,7 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2020</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
@@ -1352,7 +1352,7 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2020</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
@@ -1609,7 +1609,7 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2020</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
@@ -1866,7 +1866,7 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2020</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
@@ -2123,7 +2123,7 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2020</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
@@ -2380,7 +2380,7 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2020</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
@@ -2637,7 +2637,7 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2020</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
@@ -2894,7 +2894,7 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2020</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
@@ -3151,7 +3151,7 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2020</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
@@ -3408,7 +3408,7 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2020</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>

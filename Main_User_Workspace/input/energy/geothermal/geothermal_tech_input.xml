@@ -7,7 +7,7 @@
                <logitexp fillout="1" year="1975">-3</logitexp>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="1975">1</sharewt>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
@@ -242,7 +242,7 @@
                <logitexp fillout="1" year="1975">-3</logitexp>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="1975">1</sharewt>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
@@ -271,7 +271,7 @@
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
-                        <calibrated-value>0.129816</calibrated-value>
+                        <calibrated-value>0.126936</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
@@ -282,7 +282,7 @@
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
-                        <calibrated-value>0.257364</calibrated-value>
+                        <calibrated-value>0.25398</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2020">
@@ -355,7 +355,7 @@
                <logitexp fillout="1" year="1975">-3</logitexp>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="1975">1</sharewt>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
@@ -468,7 +468,7 @@
                <logitexp fillout="1" year="1975">-3</logitexp>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="1975">1</sharewt>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
@@ -581,7 +581,7 @@
                <logitexp fillout="1" year="1975">-3</logitexp>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="1975">1</sharewt>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
@@ -937,7 +937,7 @@
                <logitexp fillout="1" year="1975">-3</logitexp>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="1975">1</sharewt>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
@@ -1050,7 +1050,7 @@
                <logitexp fillout="1" year="1975">-3</logitexp>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="1975">1</sharewt>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
@@ -1163,7 +1163,7 @@
                <logitexp fillout="1" year="1975">-3</logitexp>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>2095</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="1975">1</sharewt>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
@@ -1276,10 +1276,10 @@
                <logitexp fillout="1" year="1975">-3</logitexp>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>1975</scaleYear>
-               <sharewt year="1975">0</sharewt>
-               <sharewt year="1990">0</sharewt>
-               <sharewt year="2005">0</sharewt>
+               <scaleYear>2005</scaleYear>
+               <sharewt year="1975">1</sharewt>
+               <sharewt year="1990">1</sharewt>
+               <sharewt year="2005">1</sharewt>
                <sharewt year="2020">0</sharewt>
                <sharewt year="2035">0</sharewt>
                <sharewt year="2050">0</sharewt>
@@ -1305,7 +1305,7 @@
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
-                        <calibrated-value>0</calibrated-value>
+                        <calibrated-value>0.00288</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -1317,7 +1317,7 @@
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
-                        <calibrated-value>0</calibrated-value>
+                        <calibrated-value>0.003384</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>0</sharewt>
                   </period>

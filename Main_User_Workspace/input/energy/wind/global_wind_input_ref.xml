@@ -4,8 +4,13 @@
       <region name="Africa">
          <supplysector name="electricity">
             <subsector name="wind">
-               <scaleYear>1975</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
                <technology name="wind">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
@@ -281,8 +286,13 @@
       <region name="Australia_NZ">
          <supplysector name="electricity">
             <subsector name="wind">
-               <scaleYear>1975</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
                <technology name="wind">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
@@ -558,8 +568,13 @@
       <region name="Canada">
          <supplysector name="electricity">
             <subsector name="wind">
-               <scaleYear>1975</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
                <technology name="wind">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
@@ -835,8 +850,13 @@
       <region name="China">
          <supplysector name="electricity">
             <subsector name="wind">
-               <scaleYear>1975</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
                <technology name="wind">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
@@ -1112,8 +1132,13 @@
       <region name="Eastern Europe">
          <supplysector name="electricity">
             <subsector name="wind">
-               <scaleYear>1975</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
                <technology name="wind">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
@@ -1389,8 +1414,13 @@
       <region name="Former Soviet Union">
          <supplysector name="electricity">
             <subsector name="wind">
-               <scaleYear>1975</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
                <technology name="wind">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
@@ -1666,8 +1696,13 @@
       <region name="India">
          <supplysector name="electricity">
             <subsector name="wind">
-               <scaleYear>1975</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
                <technology name="wind">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
@@ -1943,8 +1978,13 @@
       <region name="Japan">
          <supplysector name="electricity">
             <subsector name="wind">
-               <scaleYear>1975</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
                <technology name="wind">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
@@ -2220,8 +2260,13 @@
       <region name="Korea">
          <supplysector name="electricity">
             <subsector name="wind">
-               <scaleYear>1975</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
                <technology name="wind">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
@@ -2497,8 +2542,13 @@
       <region name="Latin America">
          <supplysector name="electricity">
             <subsector name="wind">
-               <scaleYear>1975</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
                <technology name="wind">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
@@ -2774,8 +2824,13 @@
       <region name="Middle East">
          <supplysector name="electricity">
             <subsector name="wind">
-               <scaleYear>1975</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
                <technology name="wind">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
@@ -3051,8 +3106,13 @@
       <region name="Southeast Asia">
          <supplysector name="electricity">
             <subsector name="wind">
-               <scaleYear>1975</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
                <technology name="wind">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
@@ -3328,8 +3388,13 @@
       <region name="USA">
          <supplysector name="electricity">
             <subsector name="wind">
-               <scaleYear>1975</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
                <technology name="wind">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
@@ -3605,8 +3670,13 @@
       <region name="Western Europe">
          <supplysector name="electricity">
             <subsector name="wind">
-               <scaleYear>1975</scaleYear>
+               <scaleYear>2005</scaleYear>
                <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
                <technology name="wind">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">

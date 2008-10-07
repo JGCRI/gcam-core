@@ -34,11 +34,11 @@ Variable ID,,,,,,,,
 15,,,,,,,,
 Fossil - Reference - scaleYear and techScaleYear,,,,,,,,
 region,Supply Sector,Subsector,scaleYear,techScaleYear,,,,
-ALL,electricity,coal,2095,1975,,,,
-ALL,electricity,gas,2095,1975,,,,
-ALL,electricity,oil,2095,1975,,,,
-ALL,electricity,biomass ,2095,1975,,,,
-ALL,electricity,nuclear,2095,1975,,,,
+ALL,electricity,coal,2005,1975,,,,
+ALL,electricity,gas,2005,1975,,,,
+ALL,electricity,oil,2005,1975,,,,
+ALL,electricity,biomass ,2005,1975,,,,
+ALL,electricity,nuclear,2005,1975,,,,
 ,,,,,,,,
 table not read,,,,,,,,
 Variable ID,,,,,,,,
@@ -250,7 +250,7 @@ ALL,electricity,coal,Coal (IGCC)_CCS,0.00,0.00,4.18,4.18,3.78,3.23,3.21,3.05,3.0
 ALL,electricity,gas,Gas (CC)_CCS,0.00,0.00,1.72,1.72,1.51,1.34,1.31,1.26,1.24
 ALL,electricity,oil,Oil (IGCC)_CCS,0.00,0.00,3.76,3.76,3.30,2.91,2.85,2.74,2.70
 ,,,,,,,,,,,,
-Bio CCS not used,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
 18,,,,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input
 Fossil - Reference - Base (w/o capture) Nonenergy Cost (1975$),,,,costs,costs,costs,costs,costs,costs,costs,costs,costs
@@ -267,7 +267,7 @@ ALL,electricity,coal,Coal (IGCC)_CCS,regional coal,1.00,1.00,0.43,0.43,0.45,0.47
 ALL,electricity,gas,Gas (CC)_CCS,wholesale gas,1.00,1.00,0.55,0.55,0.60,0.64,0.67,0.69,0.70
 ALL,electricity,oil,Oil (IGCC)_CCS,refined liquids electricity,1.00,1.00,0.43,0.43,0.45,0.47,0.49,0.50,0.50
 ,,,,,,,,,,,,,
-Bio CCS not used,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,
 16,,,,,,,,,,,,,
 Fossil - Reference w/o capture- fuelname and efficiencies,,,,,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency
@@ -284,7 +284,7 @@ electricity,coal,Coal (IGCC)_CCS,0.00,0.00,0.90,0.91,0.92,0.93,0.94,0.94,0.94,,
 electricity,gas,Gas (CC)_CCS,0.00,0.00,0.90,0.91,0.92,0.93,0.94,0.94,0.94,,
 electricity,oil,Oil (IGCC)_CCS,0.00,0.00,0.90,0.91,0.92,0.93,0.94,0.94,0.94,,
 ,,,,,,,,,,,,,
-Bio CCS not used,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,
 10021,,,,,,,,,,,
 Fossil - Reference - CO2 Capture Removal Fraction (% of CO2 captured),,,,technology/period           period/../power-plant-capture-component/+remove-fraction,,,,,,,
@@ -301,7 +301,7 @@ electricity,coal,Coal (IGCC)_CCS,1.00000,1.00000,0.00256,0.00227,0.00201,0.00178
 electricity,gas,Gas (CC)_CCS,1.00000,1.00000,0.00467,0.00441,0.00416,0.00392,0.00392,0.00392,0.00392
 electricity,oil,Oil (IGCC)_CCS,1.00000,1.00000,0.00339,0.00320,0.00301,0.00284,0.00284,0.00284,0.00284
 ,,,,,,,,,,,
-Bio CCS not used,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,
 Variable ID,,,,,,,,,,,
 10022,,,,,,,,,,,
 Fossil - Reference - CO2 Capture Energy Requirement (GJ electricity per kg Carbon),,,,technology/period           period/../power-plant-capture-component/+capture-energy,,,,,,,
@@ -318,7 +318,7 @@ electricity,coal,Coal (IGCC)_CCS,0.0000,0.0000,0.0104,0.0100,0.0097,0.0093,0.009
 electricity,gas,Gas (CC)_CCS,0.0000,0.0000,0.0284,0.0274,0.0265,0.0255,0.0255,0.0255,0.0255
 electricity,oil,Oil (IGCC)_CCS,0.0000,0.0000,0.0206,0.0199,0.0192,0.0185,0.0185,0.0185,0.0185
 ,,,,,,,,,,,
-Bio CCS not used,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,
 Variable ID,,,,,,,,,,,
 10023,,,,,,,,,,,
 Fossil - Reference - CO2 Capture non-Energy Cost (1975$ per kg Carbon),,,,technology/period           period/../power-plant-capture-component/+non-energy-penalty,,,,,,,
@@ -335,7 +335,7 @@ electricity,coal,Coal (IGCC)_CCS,carbon-storage,carbon-storage,carbon-storage,ca
 electricity,gas,Gas (CC)_CCS,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage
 electricity,oil,Oil (IGCC)_CCS,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage
 ,,,,,,,,,,,,
-Bio CCS not used,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
 10024,,,,,,,,,,,,
 Fossil - Reference - CO2 Capture Storage Market Name,,,,technology/period           period/../}power-plant-capture-component/+storage-market,,,,,,,,
@@ -353,7 +353,7 @@ ALL,electricity,coal,Coal (IGCC)_CCS,0,0,0,1,1,1,1,1,1
 ALL,electricity,gas,Gas (CC)_CCS,0,0,0,1,1,1,1,1,1
 ALL,electricity,oil,Oil (IGCC)_CCS,0,0,0,1,1,1,1,1,1
 ,,,,,,,,,,,,
-Bio CCS not used,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
 37,,,,,,,,,,,,
 Fossil - Reference - sharewt (tech level),,,,,,,,,,,,
@@ -370,7 +370,7 @@ ALL,electricity,coal,Coal (IGCC)_CCS,-1,-1,-1,45,45,45,45,45,45
 ALL,electricity,gas,Gas (CC)_CCS,-1,-1,-1,45,45,45,45,45,45
 ALL,electricity,oil,Oil (IGCC)_CCS,-1,-1,-1,45,45,45,45,45,45
 ,,,,,,,,,,,,
-Bio CCS not used,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
 39,,,,,,,,,,,,
 Fossil - Reference - lifetime,,,,,,,,,,,,
@@ -387,7 +387,7 @@ ALL,electricity,coal,Coal (IGCC)_CCS,-10,-10,-10,-10,-10,-10,-10,-10,-10
 ALL,electricity,gas,Gas (CC)_CCS,-10,-10,-10,-10,-10,-10,-10,-10,-10
 ALL,electricity,oil,Oil (IGCC)_CCS,-10,-10,-10,-10,-10,-10,-10,-10,-10
 ,,,,,,,,,,,,
-Bio CCS not used,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
 40,,,,,,,,,,,,
 Fossil - Reference - logitexp (tech level),,,,,,,,,,,,
@@ -405,7 +405,7 @@ ALL,electricity,coal,Coal (IGCC)_CCS,0.025,0.025,0.0075,0.0075,0.0075,0.0075,0.0
 ALL,electricity,gas,Gas (CC)_CCS,0.025,0.025,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
 ALL,electricity,oil,Oil (IGCC)_CCS,0.025,0.025,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
 ,,,,,,,,,,,,
-Bio CCS not used,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
 43,,,,,,,,,,,,
 Fossil - Reference - shutdown-rate - using technology as grandparent,,,,,,,,,,,,
@@ -422,7 +422,7 @@ ALL,electricity,coal,Coal (IGCC)_CCS
 ALL,electricity,gas,Gas (CC)_CCS
 ALL,electricity,oil,Oil (IGCC)_CCS
 ,,,
-Bio CCS not used,,,
+INPUT_TABLE,,,
 Variable ID,,,
 30,,,
 list techs to give it a  <profit-shutdown-decider,,,
@@ -439,7 +439,7 @@ ALL,electricity,coal,Coal (IGCC)_CCS
 ALL,electricity,gas,Gas (CC)_CCS
 ALL,electricity,oil,Oil (IGCC)_CCS
 ,,,
-Bio CCS not used,,,
+INPUT_TABLE,,,
 Variable ID,,,
 41,,,
 "list techs to give it a  <CO2 name =""CO2"" tag",,,
