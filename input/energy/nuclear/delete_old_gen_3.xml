@@ -1,0 +1,102 @@
+<scenario>
+	<world>
+		<region name="USA">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III" delete="1"/>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="Canada">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III" delete="1"/>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="Western Europe">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III" delete="1"/>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="Japan">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III" delete="1"/>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="Australia_NZ">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III" delete="1"/>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="Former Soviet Union">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III" delete="1"/>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="China">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III" delete="1"/>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="Middle East">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III" delete="1"/>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="Africa">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III" delete="1"/>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="Latin America">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III" delete="1"/>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="Southeast Asia">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III" delete="1"/>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="Eastern Europe">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III" delete="1"/>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="Korea">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III" delete="1"/>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="India">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III" delete="1"/>
+				</subsector>
+			</supplysector>
+		</region>
+	</world>
+</scenario>

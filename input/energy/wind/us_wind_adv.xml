@@ -1,0 +1,2184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <supplysector name="electricity">
+            <subsector name="wind">
+               <technology name="wind">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <renewresource name="Class 3 wind">
+            <object-meta-info name="average-wind-speed">
+               <value unit="m!s">6.70</value>
+            </object-meta-info>
+            <object-meta-info name="reference-height">
+               <value unit="m">50</value>
+            </object-meta-info>
+            <object-meta-info name="wind-velocity-exponent">
+               <value>0.142857143</value>
+            </object-meta-info>
+            <object-meta-info name="resourceCapacityFactor">
+               <value>0.35</value>
+            </object-meta-info>
+            <smooth-renewable-subresource name="wind">
+               <maxSubResource>720211</maxSubResource>
+               <mid-price>7.5982</mid-price>
+               <curve-exponent>1.449</curve-exponent>
+               <subResourceVariance>0.3</subResourceVariance>
+               <price-exponent>0</price-exponent>
+               <gdpExpans fillout="1" year="1975">0</gdpExpans>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="Class 4 wind">
+            <object-meta-info name="average-wind-speed">
+               <value unit="m!s">7.25</value>
+            </object-meta-info>
+            <object-meta-info name="reference-height">
+               <value unit="m">50</value>
+            </object-meta-info>
+            <object-meta-info name="wind-velocity-exponent">
+               <value>0.142857143</value>
+            </object-meta-info>
+            <object-meta-info name="resourceCapacityFactor">
+               <value>0.35</value>
+            </object-meta-info>
+            <smooth-renewable-subresource name="wind">
+               <maxSubResource>291188</maxSubResource>
+               <mid-price>9.0549</mid-price>
+               <curve-exponent>1.695</curve-exponent>
+               <subResourceVariance>0.3</subResourceVariance>
+               <price-exponent>0</price-exponent>
+               <gdpExpans fillout="1" year="1975">0</gdpExpans>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="Class 5 wind">
+            <object-meta-info name="average-wind-speed">
+               <value unit="m!s">7.75</value>
+            </object-meta-info>
+            <object-meta-info name="reference-height">
+               <value unit="m">50</value>
+            </object-meta-info>
+            <object-meta-info name="wind-velocity-exponent">
+               <value>0.142857143</value>
+            </object-meta-info>
+            <object-meta-info name="resourceCapacityFactor">
+               <value>0.35</value>
+            </object-meta-info>
+            <smooth-renewable-subresource name="wind">
+               <maxSubResource>49549</maxSubResource>
+               <mid-price>14.0443</mid-price>
+               <curve-exponent>1.673</curve-exponent>
+               <subResourceVariance>0.3</subResourceVariance>
+               <price-exponent>0</price-exponent>
+               <gdpExpans fillout="1" year="1975">0</gdpExpans>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="Class 6 wind">
+            <object-meta-info name="average-wind-speed">
+               <value unit="m!s">8.40</value>
+            </object-meta-info>
+            <object-meta-info name="reference-height">
+               <value unit="m">50</value>
+            </object-meta-info>
+            <object-meta-info name="wind-velocity-exponent">
+               <value>0.142857143</value>
+            </object-meta-info>
+            <object-meta-info name="resourceCapacityFactor">
+               <value>0.35</value>
+            </object-meta-info>
+            <smooth-renewable-subresource name="wind">
+               <maxSubResource>13598</maxSubResource>
+               <mid-price>14.7409</mid-price>
+               <curve-exponent>2.168</curve-exponent>
+               <subResourceVariance>0.3</subResourceVariance>
+               <price-exponent>0</price-exponent>
+               <gdpExpans fillout="1" year="1975">0</gdpExpans>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="Class 7 wind">
+            <object-meta-info name="average-wind-speed">
+               <value unit="m!s">9.95</value>
+            </object-meta-info>
+            <object-meta-info name="reference-height">
+               <value unit="m">50</value>
+            </object-meta-info>
+            <object-meta-info name="wind-velocity-exponent">
+               <value>0.142857143</value>
+            </object-meta-info>
+            <object-meta-info name="resourceCapacityFactor">
+               <value>0.35</value>
+            </object-meta-info>
+            <smooth-renewable-subresource name="wind">
+               <maxSubResource>6154</maxSubResource>
+               <mid-price>21.9813</mid-price>
+               <curve-exponent>2.537</curve-exponent>
+               <subResourceVariance>0.3</subResourceVariance>
+               <price-exponent>0</price-exponent>
+               <gdpExpans fillout="1" year="1975">0</gdpExpans>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="WindAndAuxiliary">
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <electric-sector-name>electricity</electric-sector-name>
+            <electricity-reserve-margin>0.15</electricity-reserve-margin>
+            <average-grid-capacity-factor>0.6</average-grid-capacity-factor>
+            <backup-capacity-factor>0.05</backup-capacity-factor>
+            <backup-cost>30</backup-cost>
+            <subsector name="WindAndAuxiliary">
+               <wind-technology name="Wind class 3">
+                  <period year="1975">
+                     <capital-cost unit="1975USD!kW">422.19</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">58</rotor-diameter>
+                     <lifetime>15</lifetime>
+                     <minicam-energy-input name="Class 3 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">63.5</turbine-hub-height>
+                     <turbine-rating unit="MW">1</turbine-rating>
+                     <wind-farm-loss>0.138</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="1990">
+                     <capital-cost unit="1975USD!kW">415.91</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">58</rotor-diameter>
+                     <lifetime>15</lifetime>
+                     <minicam-energy-input name="Class 3 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">63.5</turbine-hub-height>
+                     <turbine-rating unit="MW">1</turbine-rating>
+                     <wind-farm-loss>0.138</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2005">
+                     <capital-cost unit="1975USD!kW">409.72</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">77</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 3 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">80</turbine-hub-height>
+                     <turbine-rating unit="MW">1.5</turbine-rating>
+                     <wind-farm-loss>0.120</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2020">
+                     <capital-cost unit="1975USD!kW">377.07</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">7.34</om>
+                     <rotor-diameter unit="m">108</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 3 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.068</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2035">
+                     <capital-cost unit="1975USD!kW">332.48</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">5.86</om>
+                     <rotor-diameter unit="m">108</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 3 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.066</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2050">
+                     <capital-cost unit="1975USD!kW">326.86</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.63</om>
+                     <rotor-diameter unit="m">108</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 3 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.064</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2065">
+                     <capital-cost unit="1975USD!kW">322.00</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.50</om>
+                     <rotor-diameter unit="m">108</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 3 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.062</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.049</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2080">
+                     <capital-cost unit="1975USD!kW">317.20</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.36</om>
+                     <rotor-diameter unit="m">108</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 3 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.060</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.047</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2095">
+                     <capital-cost unit="1975USD!kW">312.47</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.24</om>
+                     <rotor-diameter unit="m">108</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 3 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.058</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.046</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+               </wind-technology>
+               <wind-technology name="Wind class 4">
+                  <period year="1975">
+                     <capital-cost unit="1975USD!kW">422.19</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">58</rotor-diameter>
+                     <lifetime>15</lifetime>
+                     <minicam-energy-input name="Class 4 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">63.5</turbine-hub-height>
+                     <turbine-rating unit="MW">1</turbine-rating>
+                     <wind-farm-loss>0.138</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="1990">
+                     <capital-cost unit="1975USD!kW">415.91</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">58</rotor-diameter>
+                     <lifetime>15</lifetime>
+                     <minicam-energy-input name="Class 4 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">63.5</turbine-hub-height>
+                     <turbine-rating unit="MW">1</turbine-rating>
+                     <wind-farm-loss>0.138</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2005">
+                     <capital-cost unit="1975USD!kW">409.72</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">77</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 4 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">80</turbine-hub-height>
+                     <turbine-rating unit="MW">1.5</turbine-rating>
+                     <wind-farm-loss>0.120</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2020">
+                     <capital-cost unit="1975USD!kW">332.13</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">7.34</om>
+                     <rotor-diameter unit="m">108</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 4 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.068</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2035">
+                     <capital-cost unit="1975USD!kW">302.64</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">5.86</om>
+                     <rotor-diameter unit="m">108</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 4 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.066</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2050">
+                     <capital-cost unit="1975USD!kW">294.56</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.63</om>
+                     <rotor-diameter unit="m">108</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 4 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.064</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2065">
+                     <capital-cost unit="1975USD!kW">290.18</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.50</om>
+                     <rotor-diameter unit="m">108</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 4 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.062</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.049</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2080">
+                     <capital-cost unit="1975USD!kW">285.85</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.36</om>
+                     <rotor-diameter unit="m">108</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 4 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.060</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.047</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2095">
+                     <capital-cost unit="1975USD!kW">281.60</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.24</om>
+                     <rotor-diameter unit="m">108</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 4 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.058</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.046</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+               </wind-technology>
+               <wind-technology name="Wind class 5">
+                  <period year="1975">
+                     <capital-cost unit="1975USD!kW">422.19</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">58</rotor-diameter>
+                     <lifetime>15</lifetime>
+                     <minicam-energy-input name="Class 5 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">63.5</turbine-hub-height>
+                     <turbine-rating unit="MW">1</turbine-rating>
+                     <wind-farm-loss>0.138</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="1990">
+                     <capital-cost unit="1975USD!kW">415.91</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">58</rotor-diameter>
+                     <lifetime>15</lifetime>
+                     <minicam-energy-input name="Class 5 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">63.5</turbine-hub-height>
+                     <turbine-rating unit="MW">1</turbine-rating>
+                     <wind-farm-loss>0.138</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2005">
+                     <capital-cost unit="1975USD!kW">409.72</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">77</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 5 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">80</turbine-hub-height>
+                     <turbine-rating unit="MW">1.5</turbine-rating>
+                     <wind-farm-loss>0.120</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2020">
+                     <capital-cost unit="1975USD!kW">287.19</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">7.34</om>
+                     <rotor-diameter unit="m">97</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 5 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.068</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2035">
+                     <capital-cost unit="1975USD!kW">272.80</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">5.86</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 5 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.066</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2050">
+                     <capital-cost unit="1975USD!kW">262.26</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.63</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 5 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.064</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2065">
+                     <capital-cost unit="1975USD!kW">258.36</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.50</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 5 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.062</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.049</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2080">
+                     <capital-cost unit="1975USD!kW">254.51</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.36</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 5 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.060</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.047</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2095">
+                     <capital-cost unit="1975USD!kW">250.72</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.24</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 5 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.058</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.046</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+               </wind-technology>
+               <wind-technology name="Wind class 6">
+                  <period year="1975">
+                     <capital-cost unit="1975USD!kW">422.19</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">58</rotor-diameter>
+                     <lifetime>15</lifetime>
+                     <minicam-energy-input name="Class 6 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">63.5</turbine-hub-height>
+                     <turbine-rating unit="MW">1</turbine-rating>
+                     <wind-farm-loss>0.138</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="1990">
+                     <capital-cost unit="1975USD!kW">415.91</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">58</rotor-diameter>
+                     <lifetime>15</lifetime>
+                     <minicam-energy-input name="Class 6 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">63.5</turbine-hub-height>
+                     <turbine-rating unit="MW">1</turbine-rating>
+                     <wind-farm-loss>0.138</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2005">
+                     <capital-cost unit="1975USD!kW">409.72</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">77</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 6 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">80</turbine-hub-height>
+                     <turbine-rating unit="MW">1.5</turbine-rating>
+                     <wind-farm-loss>0.120</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2020">
+                     <capital-cost unit="1975USD!kW">287.19</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">7.34</om>
+                     <rotor-diameter unit="m">97</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 6 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.068</turbine-derating>
+                     <turbine-hub-height unit="m">110</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2035">
+                     <capital-cost unit="1975USD!kW">272.80</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">5.86</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 6 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.066</turbine-derating>
+                     <turbine-hub-height unit="m">110</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2050">
+                     <capital-cost unit="1975USD!kW">262.26</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.63</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 6 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.064</turbine-derating>
+                     <turbine-hub-height unit="m">110</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2065">
+                     <capital-cost unit="1975USD!kW">258.36</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.50</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 6 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.062</turbine-derating>
+                     <turbine-hub-height unit="m">110</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.049</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2080">
+                     <capital-cost unit="1975USD!kW">254.51</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.36</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 6 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.060</turbine-derating>
+                     <turbine-hub-height unit="m">110</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.047</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2095">
+                     <capital-cost unit="1975USD!kW">250.72</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.24</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 6 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.058</turbine-derating>
+                     <turbine-hub-height unit="m">110</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.046</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+               </wind-technology>
+               <wind-technology name="Wind class 7">
+                  <period year="1975">
+                     <capital-cost unit="1975USD!kW">422.19</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">58</rotor-diameter>
+                     <lifetime>15</lifetime>
+                     <minicam-energy-input name="Class 7 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">63.5</turbine-hub-height>
+                     <turbine-rating unit="MW">1</turbine-rating>
+                     <wind-farm-loss>0.138</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="1990">
+                     <capital-cost unit="1975USD!kW">415.91</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">58</rotor-diameter>
+                     <lifetime>15</lifetime>
+                     <minicam-energy-input name="Class 7 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">63.5</turbine-hub-height>
+                     <turbine-rating unit="MW">1</turbine-rating>
+                     <wind-farm-loss>0.138</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2005">
+                     <capital-cost unit="1975USD!kW">409.72</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">77</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 7 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">80</turbine-hub-height>
+                     <turbine-rating unit="MW">1.5</turbine-rating>
+                     <wind-farm-loss>0.120</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2020">
+                     <capital-cost unit="1975USD!kW">287.19</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">7.34</om>
+                     <rotor-diameter unit="m">97</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 7 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.068</turbine-derating>
+                     <turbine-hub-height unit="m">110</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2035">
+                     <capital-cost unit="1975USD!kW">272.80</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">5.86</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 7 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.066</turbine-derating>
+                     <turbine-hub-height unit="m">110</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2050">
+                     <capital-cost unit="1975USD!kW">262.26</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.63</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 7 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.064</turbine-derating>
+                     <turbine-hub-height unit="m">110</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2065">
+                     <capital-cost unit="1975USD!kW">258.36</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.50</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 7 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.062</turbine-derating>
+                     <turbine-hub-height unit="m">110</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.049</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2080">
+                     <capital-cost unit="1975USD!kW">254.51</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.36</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 7 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.060</turbine-derating>
+                     <turbine-hub-height unit="m">110</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.047</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2095">
+                     <capital-cost unit="1975USD!kW">250.72</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.24</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 7 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.058</turbine-derating>
+                     <turbine-hub-height unit="m">110</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.046</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+               </wind-technology>
+            </subsector>
+         </intermittent-supplysector>
+         <intermittent-supplysector name="wind_no_backup">
+            <subsector name="wind_no_backup">
+               <wind-technology name="Wind class 3">
+                  <period year="1975">
+                     <capital-cost unit="1975USD!kW">422.19</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">58</rotor-diameter>
+                     <lifetime>15</lifetime>
+                     <minicam-energy-input name="Class 3 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">63.5</turbine-hub-height>
+                     <turbine-rating unit="MW">1</turbine-rating>
+                     <wind-farm-loss>0.138</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="1990">
+                     <capital-cost unit="1975USD!kW">415.91</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">58</rotor-diameter>
+                     <lifetime>15</lifetime>
+                     <minicam-energy-input name="Class 3 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">63.5</turbine-hub-height>
+                     <turbine-rating unit="MW">1</turbine-rating>
+                     <wind-farm-loss>0.138</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2005">
+                     <capital-cost unit="1975USD!kW">409.72</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">77</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 3 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">80</turbine-hub-height>
+                     <turbine-rating unit="MW">1.5</turbine-rating>
+                     <wind-farm-loss>0.120</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2020">
+                     <capital-cost unit="1975USD!kW">377.07</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">7.34</om>
+                     <rotor-diameter unit="m">108</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 3 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.068</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2035">
+                     <capital-cost unit="1975USD!kW">332.48</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">5.86</om>
+                     <rotor-diameter unit="m">108</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 3 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.066</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2050">
+                     <capital-cost unit="1975USD!kW">326.86</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.63</om>
+                     <rotor-diameter unit="m">108</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 3 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.064</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2065">
+                     <capital-cost unit="1975USD!kW">322.00</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.50</om>
+                     <rotor-diameter unit="m">108</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 3 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.062</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.049</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2080">
+                     <capital-cost unit="1975USD!kW">317.20</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.36</om>
+                     <rotor-diameter unit="m">108</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 3 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.060</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.047</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2095">
+                     <capital-cost unit="1975USD!kW">312.47</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.24</om>
+                     <rotor-diameter unit="m">108</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 3 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.058</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.046</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+               </wind-technology>
+               <wind-technology name="Wind class 4">
+                  <period year="1975">
+                     <capital-cost unit="1975USD!kW">422.19</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">58</rotor-diameter>
+                     <lifetime>15</lifetime>
+                     <minicam-energy-input name="Class 4 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">63.5</turbine-hub-height>
+                     <turbine-rating unit="MW">1</turbine-rating>
+                     <wind-farm-loss>0.138</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="1990">
+                     <capital-cost unit="1975USD!kW">415.91</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">58</rotor-diameter>
+                     <lifetime>15</lifetime>
+                     <minicam-energy-input name="Class 4 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">63.5</turbine-hub-height>
+                     <turbine-rating unit="MW">1</turbine-rating>
+                     <wind-farm-loss>0.138</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2005">
+                     <capital-cost unit="1975USD!kW">409.72</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">77</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 4 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">80</turbine-hub-height>
+                     <turbine-rating unit="MW">1.5</turbine-rating>
+                     <wind-farm-loss>0.120</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2020">
+                     <capital-cost unit="1975USD!kW">332.13</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">7.34</om>
+                     <rotor-diameter unit="m">108</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 4 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.068</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2035">
+                     <capital-cost unit="1975USD!kW">302.64</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">5.86</om>
+                     <rotor-diameter unit="m">108</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 4 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.066</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2050">
+                     <capital-cost unit="1975USD!kW">294.56</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.63</om>
+                     <rotor-diameter unit="m">108</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 4 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.064</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2065">
+                     <capital-cost unit="1975USD!kW">290.18</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.50</om>
+                     <rotor-diameter unit="m">108</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 4 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.062</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.049</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2080">
+                     <capital-cost unit="1975USD!kW">285.85</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.36</om>
+                     <rotor-diameter unit="m">108</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 4 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.060</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.047</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2095">
+                     <capital-cost unit="1975USD!kW">281.60</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.24</om>
+                     <rotor-diameter unit="m">108</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 4 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.058</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.046</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+               </wind-technology>
+               <wind-technology name="Wind class 5">
+                  <period year="1975">
+                     <capital-cost unit="1975USD!kW">422.19</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">58</rotor-diameter>
+                     <lifetime>15</lifetime>
+                     <minicam-energy-input name="Class 5 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">63.5</turbine-hub-height>
+                     <turbine-rating unit="MW">1</turbine-rating>
+                     <wind-farm-loss>0.138</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="1990">
+                     <capital-cost unit="1975USD!kW">415.91</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">58</rotor-diameter>
+                     <lifetime>15</lifetime>
+                     <minicam-energy-input name="Class 5 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">63.5</turbine-hub-height>
+                     <turbine-rating unit="MW">1</turbine-rating>
+                     <wind-farm-loss>0.138</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2005">
+                     <capital-cost unit="1975USD!kW">409.72</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">77</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 5 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">80</turbine-hub-height>
+                     <turbine-rating unit="MW">1.5</turbine-rating>
+                     <wind-farm-loss>0.120</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2020">
+                     <capital-cost unit="1975USD!kW">287.19</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">7.34</om>
+                     <rotor-diameter unit="m">97</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 5 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.068</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2035">
+                     <capital-cost unit="1975USD!kW">272.80</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">5.86</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 5 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.066</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2050">
+                     <capital-cost unit="1975USD!kW">262.26</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.63</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 5 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.064</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2065">
+                     <capital-cost unit="1975USD!kW">258.36</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.50</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 5 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.062</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.049</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2080">
+                     <capital-cost unit="1975USD!kW">254.51</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.36</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 5 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.060</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.047</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2095">
+                     <capital-cost unit="1975USD!kW">250.72</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.24</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 5 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.058</turbine-derating>
+                     <turbine-hub-height unit="m">120</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.046</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+               </wind-technology>
+               <wind-technology name="Wind class 6">
+                  <period year="1975">
+                     <capital-cost unit="1975USD!kW">422.19</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">58</rotor-diameter>
+                     <lifetime>15</lifetime>
+                     <minicam-energy-input name="Class 6 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">63.5</turbine-hub-height>
+                     <turbine-rating unit="MW">1</turbine-rating>
+                     <wind-farm-loss>0.138</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="1990">
+                     <capital-cost unit="1975USD!kW">415.91</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">58</rotor-diameter>
+                     <lifetime>15</lifetime>
+                     <minicam-energy-input name="Class 6 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">63.5</turbine-hub-height>
+                     <turbine-rating unit="MW">1</turbine-rating>
+                     <wind-farm-loss>0.138</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2005">
+                     <capital-cost unit="1975USD!kW">409.72</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">77</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 6 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">80</turbine-hub-height>
+                     <turbine-rating unit="MW">1.5</turbine-rating>
+                     <wind-farm-loss>0.120</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2020">
+                     <capital-cost unit="1975USD!kW">287.19</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">7.34</om>
+                     <rotor-diameter unit="m">97</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 6 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.068</turbine-derating>
+                     <turbine-hub-height unit="m">110</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2035">
+                     <capital-cost unit="1975USD!kW">272.80</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">5.86</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 6 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.066</turbine-derating>
+                     <turbine-hub-height unit="m">110</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2050">
+                     <capital-cost unit="1975USD!kW">262.26</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.63</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 6 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.064</turbine-derating>
+                     <turbine-hub-height unit="m">110</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2065">
+                     <capital-cost unit="1975USD!kW">258.36</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.50</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 6 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.062</turbine-derating>
+                     <turbine-hub-height unit="m">110</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.049</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2080">
+                     <capital-cost unit="1975USD!kW">254.51</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.36</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 6 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.060</turbine-derating>
+                     <turbine-hub-height unit="m">110</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.047</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2095">
+                     <capital-cost unit="1975USD!kW">250.72</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.24</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 6 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.058</turbine-derating>
+                     <turbine-hub-height unit="m">110</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.046</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+               </wind-technology>
+               <wind-technology name="Wind class 7">
+                  <period year="1975">
+                     <capital-cost unit="1975USD!kW">422.19</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">58</rotor-diameter>
+                     <lifetime>15</lifetime>
+                     <minicam-energy-input name="Class 7 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">63.5</turbine-hub-height>
+                     <turbine-rating unit="MW">1</turbine-rating>
+                     <wind-farm-loss>0.138</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="1990">
+                     <capital-cost unit="1975USD!kW">415.91</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">58</rotor-diameter>
+                     <lifetime>15</lifetime>
+                     <minicam-energy-input name="Class 7 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">63.5</turbine-hub-height>
+                     <turbine-rating unit="MW">1</turbine-rating>
+                     <wind-farm-loss>0.138</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2005">
+                     <capital-cost unit="1975USD!kW">409.72</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">9.69</om>
+                     <rotor-diameter unit="m">77</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 7 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.070</turbine-derating>
+                     <turbine-hub-height unit="m">80</turbine-hub-height>
+                     <turbine-rating unit="MW">1.5</turbine-rating>
+                     <wind-farm-loss>0.120</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2020">
+                     <capital-cost unit="1975USD!kW">287.19</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">7.34</om>
+                     <rotor-diameter unit="m">97</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 7 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.068</turbine-derating>
+                     <turbine-hub-height unit="m">110</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2035">
+                     <capital-cost unit="1975USD!kW">272.80</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">5.86</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 7 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.066</turbine-derating>
+                     <turbine-hub-height unit="m">110</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2050">
+                     <capital-cost unit="1975USD!kW">262.26</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.63</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 7 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.064</turbine-derating>
+                     <turbine-hub-height unit="m">110</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.050</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2065">
+                     <capital-cost unit="1975USD!kW">258.36</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.50</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 7 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.062</turbine-derating>
+                     <turbine-hub-height unit="m">110</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.049</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2080">
+                     <capital-cost unit="1975USD!kW">254.51</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.36</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 7 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.060</turbine-derating>
+                     <turbine-hub-height unit="m">110</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.047</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+                  <period year="2095">
+                     <capital-cost unit="1975USD!kW">250.72</capital-cost>
+                     <cutout-speed unit="m!s">30</cutout-speed>
+                     <fcr>0.1288</fcr>
+                     <om unit="1975USD!kW!yr">4.24</om>
+                     <rotor-diameter unit="m">99</rotor-diameter>
+                     <lifetime>30</lifetime>
+                     <minicam-energy-input name="Class 7 wind">
+                        <efficiency>1</efficiency>
+                        <price-unit-conversion>0.00001</price-unit-conversion>
+                     </minicam-energy-input>
+                     <turbine-density unit="MW!km2">5</turbine-density>
+                     <turbine-derating>0.058</turbine-derating>
+                     <turbine-hub-height unit="m">110</turbine-hub-height>
+                     <turbine-rating unit="MW">3</turbine-rating>
+                     <wind-farm-loss>0.046</wind-farm-loss>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <minicam-energy-input name="backup_electricity"/>
+                     <wind-backup-calculator/>
+                     <CO2 name="CO2"/>
+                     <grid-connection-cost unit="1975USD!km!MW">351.09</grid-connection-cost>
+                  </period>
+               </wind-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+   </world>
+</scenario>

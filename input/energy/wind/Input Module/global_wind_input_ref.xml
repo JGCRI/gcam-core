@@ -1,0 +1,3883 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="Africa">
+         <supplysector name="electricity">
+            <subsector name="wind">
+               <scaleYear>1975</scaleYear>
+               <sharewt year="2020">1</sharewt>
+               <technology name="wind">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>15</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.00</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.78</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.57</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.38</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.19</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.02</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+               </technology>
+               <technology name="wind_storage">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.24</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.90</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.63</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.37</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource delete="1" name="offshore wind"/>
+            <smooth-renewable-subresource name="large onshore wind">
+               <maxSubResource>135.6</maxSubResource>
+               <mid-price>6.613</mid-price>
+               <curve-exponent>1.317</curve-exponent>
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.3</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="WindandAuxiliary">
+            <subsector name="largeonshorewind">
+               <intermittent-technology name="largeonshorewind">
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="Australia_NZ">
+         <supplysector name="electricity">
+            <subsector name="wind">
+               <scaleYear>1975</scaleYear>
+               <sharewt year="2020">1</sharewt>
+               <technology name="wind">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>15</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.00</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.78</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.57</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.38</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.19</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.02</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+               </technology>
+               <technology name="wind_storage">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.24</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.90</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.63</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.37</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource delete="1" name="offshore wind"/>
+            <smooth-renewable-subresource name="large onshore wind">
+               <maxSubResource>12.7</maxSubResource>
+               <mid-price>6.613</mid-price>
+               <curve-exponent>1.317</curve-exponent>
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.3</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="WindandAuxiliary">
+            <subsector name="largeonshorewind">
+               <intermittent-technology name="largeonshorewind">
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="Canada">
+         <supplysector name="electricity">
+            <subsector name="wind">
+               <scaleYear>1975</scaleYear>
+               <sharewt year="2020">1</sharewt>
+               <technology name="wind">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>15</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.00</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.78</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.57</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.38</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.19</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.02</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+               </technology>
+               <technology name="wind_storage">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.24</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.90</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.63</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.37</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource delete="1" name="offshore wind"/>
+            <smooth-renewable-subresource name="large onshore wind">
+               <maxSubResource>17.0</maxSubResource>
+               <mid-price>6.613</mid-price>
+               <curve-exponent>1.317</curve-exponent>
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.3</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="WindandAuxiliary">
+            <subsector name="largeonshorewind">
+               <intermittent-technology name="largeonshorewind">
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="China">
+         <supplysector name="electricity">
+            <subsector name="wind">
+               <scaleYear>1975</scaleYear>
+               <sharewt year="2020">1</sharewt>
+               <technology name="wind">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>15</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.00</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.78</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.57</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.38</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.19</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.02</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+               </technology>
+               <technology name="wind_storage">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.24</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.90</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.63</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.37</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource delete="1" name="offshore wind"/>
+            <smooth-renewable-subresource name="large onshore wind">
+               <maxSubResource>36.3</maxSubResource>
+               <mid-price>6.613</mid-price>
+               <curve-exponent>1.317</curve-exponent>
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.3</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="WindandAuxiliary">
+            <subsector name="largeonshorewind">
+               <intermittent-technology name="largeonshorewind">
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="Eastern Europe">
+         <supplysector name="electricity">
+            <subsector name="wind">
+               <scaleYear>1975</scaleYear>
+               <sharewt year="2020">1</sharewt>
+               <technology name="wind">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>15</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.00</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.78</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.57</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.38</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.19</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.02</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+               </technology>
+               <technology name="wind_storage">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.24</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.90</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.63</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.37</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource delete="1" name="offshore wind"/>
+            <smooth-renewable-subresource name="large onshore wind">
+               <maxSubResource>3.1</maxSubResource>
+               <mid-price>6.613</mid-price>
+               <curve-exponent>1.317</curve-exponent>
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.3</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="WindandAuxiliary">
+            <subsector name="largeonshorewind">
+               <intermittent-technology name="largeonshorewind">
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="Former Soviet Union">
+         <supplysector name="electricity">
+            <subsector name="wind">
+               <scaleYear>1975</scaleYear>
+               <sharewt year="2020">1</sharewt>
+               <technology name="wind">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>15</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.00</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.78</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.57</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.38</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.19</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.02</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+               </technology>
+               <technology name="wind_storage">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.24</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.90</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.63</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.37</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource delete="1" name="offshore wind"/>
+            <smooth-renewable-subresource name="large onshore wind">
+               <maxSubResource>135.1</maxSubResource>
+               <mid-price>6.613</mid-price>
+               <curve-exponent>1.317</curve-exponent>
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.3</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="WindandAuxiliary">
+            <subsector name="largeonshorewind">
+               <intermittent-technology name="largeonshorewind">
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="India">
+         <supplysector name="electricity">
+            <subsector name="wind">
+               <scaleYear>1975</scaleYear>
+               <sharewt year="2020">1</sharewt>
+               <technology name="wind">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>15</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.00</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.78</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.57</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.38</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.19</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.02</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+               </technology>
+               <technology name="wind_storage">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.24</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.90</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.63</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.37</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource delete="1" name="offshore wind"/>
+            <smooth-renewable-subresource name="large onshore wind">
+               <maxSubResource>1.1</maxSubResource>
+               <mid-price>6.613</mid-price>
+               <curve-exponent>1.317</curve-exponent>
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.3</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="WindandAuxiliary">
+            <subsector name="largeonshorewind">
+               <intermittent-technology name="largeonshorewind">
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="Japan">
+         <supplysector name="electricity">
+            <subsector name="wind">
+               <scaleYear>1975</scaleYear>
+               <sharewt year="2020">1</sharewt>
+               <technology name="wind">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>15</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.00</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.78</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.57</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.38</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.19</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.02</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+               </technology>
+               <technology name="wind_storage">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.24</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.90</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.63</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.37</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource delete="1" name="offshore wind"/>
+            <smooth-renewable-subresource name="large onshore wind">
+               <maxSubResource>1.0</maxSubResource>
+               <mid-price>6.613</mid-price>
+               <curve-exponent>1.317</curve-exponent>
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.3</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="WindandAuxiliary">
+            <subsector name="largeonshorewind">
+               <intermittent-technology name="largeonshorewind">
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="Korea">
+         <supplysector name="electricity">
+            <subsector name="wind">
+               <scaleYear>1975</scaleYear>
+               <sharewt year="2020">1</sharewt>
+               <technology name="wind">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>15</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.00</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.78</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.57</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.38</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.19</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.02</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+               </technology>
+               <technology name="wind_storage">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.24</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.90</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.63</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.37</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource delete="1" name="offshore wind"/>
+            <smooth-renewable-subresource name="large onshore wind">
+               <maxSubResource>0.6</maxSubResource>
+               <mid-price>6.613</mid-price>
+               <curve-exponent>1.317</curve-exponent>
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.3</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="WindandAuxiliary">
+            <subsector name="largeonshorewind">
+               <intermittent-technology name="largeonshorewind">
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="Latin America">
+         <supplysector name="electricity">
+            <subsector name="wind">
+               <scaleYear>1975</scaleYear>
+               <sharewt year="2020">1</sharewt>
+               <technology name="wind">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>15</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.00</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.78</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.57</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.38</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.19</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.02</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+               </technology>
+               <technology name="wind_storage">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.24</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.90</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.63</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.37</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource delete="1" name="offshore wind"/>
+            <smooth-renewable-subresource name="large onshore wind">
+               <maxSubResource>53.3</maxSubResource>
+               <mid-price>6.613</mid-price>
+               <curve-exponent>1.317</curve-exponent>
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.3</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="WindandAuxiliary">
+            <subsector name="largeonshorewind">
+               <intermittent-technology name="largeonshorewind">
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="Middle East">
+         <supplysector name="electricity">
+            <subsector name="wind">
+               <scaleYear>1975</scaleYear>
+               <sharewt year="2020">1</sharewt>
+               <technology name="wind">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>15</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.00</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.78</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.57</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.38</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.19</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.02</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+               </technology>
+               <technology name="wind_storage">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.24</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.90</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.63</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.37</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource delete="1" name="offshore wind"/>
+            <smooth-renewable-subresource name="large onshore wind">
+               <maxSubResource>46.0</maxSubResource>
+               <mid-price>6.613</mid-price>
+               <curve-exponent>1.317</curve-exponent>
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.3</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="WindandAuxiliary">
+            <subsector name="largeonshorewind">
+               <intermittent-technology name="largeonshorewind">
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="Southeast Asia">
+         <supplysector name="electricity">
+            <subsector name="wind">
+               <scaleYear>1975</scaleYear>
+               <sharewt year="2020">1</sharewt>
+               <technology name="wind">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>15</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.00</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.78</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.57</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.38</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.19</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.02</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+               </technology>
+               <technology name="wind_storage">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.24</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.90</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.63</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.37</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource delete="1" name="offshore wind"/>
+            <smooth-renewable-subresource name="large onshore wind">
+               <maxSubResource>8.4</maxSubResource>
+               <mid-price>6.613</mid-price>
+               <curve-exponent>1.317</curve-exponent>
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.3</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="WindandAuxiliary">
+            <subsector name="largeonshorewind">
+               <intermittent-technology name="largeonshorewind">
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="USA">
+         <supplysector name="electricity">
+            <subsector name="wind">
+               <scaleYear>1975</scaleYear>
+               <sharewt year="2020">1</sharewt>
+               <technology name="wind">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>15</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.00</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.78</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.57</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.38</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.19</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.02</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+               </technology>
+               <technology name="wind_storage">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.24</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.90</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.63</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.37</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource delete="1" name="offshore wind"/>
+            <smooth-renewable-subresource name="large onshore wind">
+               <maxSubResource>29.2</maxSubResource>
+               <mid-price>6.613</mid-price>
+               <curve-exponent>1.317</curve-exponent>
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.3</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="WindandAuxiliary">
+            <subsector name="largeonshorewind">
+               <intermittent-technology name="largeonshorewind">
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="Western Europe">
+         <supplysector name="electricity">
+            <subsector name="wind">
+               <scaleYear>1975</scaleYear>
+               <sharewt year="2020">1</sharewt>
+               <technology name="wind">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>15</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.00</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.78</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.57</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.38</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.19</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.02</input-cost>
+                     </minicam-non-energy-input>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+               </technology>
+               <technology name="wind_storage">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.24</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.90</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.63</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.37</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <logitexp>-6</logitexp>
+                     <sharewt>1</sharewt>
+                  </period>
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>0.98</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource delete="1" name="offshore wind"/>
+            <smooth-renewable-subresource name="large onshore wind">
+               <maxSubResource>6.6</maxSubResource>
+               <mid-price>6.613</mid-price>
+               <curve-exponent>1.317</curve-exponent>
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.3</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="WindandAuxiliary">
+            <subsector name="largeonshorewind">
+               <intermittent-technology name="largeonshorewind">
+                  <period year="1975">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="large onshore windresource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.2</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <wind-backup-calculator delete="1"/>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+   </world>
+</scenario>

@@ -1,0 +1,324 @@
+,,,,,,,,,,,
+set CCS tech sharewts,,,,,,,,,,,
+Region: USA,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,
+Variable ID,,,,,,,,,,,
+405,,,,,,,,,,,
+,,,1975,1990,2005,2020,2035,2050,2065,2080,2095
+supplysector,subsector,technology,sharewt,sharewt,sharewt,sharewt,sharewt,sharewt,sharewt,sharewt,sharewt
+boilers pulp paper and wood,refined liquids,refined liquids cogen CCS,0,0,0,0,0,0,0,0,0
+boilers pulp paper and wood,gas,gas cogen CCS,0,0,0,0,0,0,0,0,0
+boilers pulp paper and wood,coal,coal cogen CCS,0,0,0,0,0,0,0,0,0
+boilers pulp paper and wood,biomass,biomass cogen CCS,0,0,0,0,0,0,0,0,0
+boilers general,refined liquids,refined liquids cogen CCS,0,0,0,0,0,0,0,0,0
+boilers general,gas,gas cogen CCS,0,0,0,0,0,0,0,0,0
+boilers general,coal,coal cogen CCS,0,0,0,0,0,0,0,0,0
+boilers general,biomass,biomass cogen CCS,0,0,0,0,0,0,0,0,0
+process heat primary metals,refined liquids,refined liquids cogen CCS,0,0,0,0,0,0,0,0,0
+process heat primary metals,gas,gas cogen CCS,0,0,0,0,0,0,0,0,0
+process heat primary metals,coal,coal cogen CCS,0,0,0,0,0,0,0,0,0
+process heat primary metals,biomass,biomass cogen CCS,0,0,0,0,0,0,0,0,0
+process heat general,refined liquids,refined liquids cogen CCS,0,0,0,0,0,0,0,0,0
+process heat general,gas,gas cogen CCS,0,0,0,0,0,0,0,0,0
+process heat general,coal,coal cogen CCS,0,0,0,0,0,0,0,0,0
+process heat general,biomass,biomass cogen CCS,0,0,0,0,0,0,0,0,0
+,,,,,,,,,,,
+,,,,,,,,,,,
+Region: USA,,,,,,,,,,,
+Cogen,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,
+Variable ID,,,,,,,,,,,
+403,,,,,,,,,,,
+,,,,,,minicam-non-energy-input,,,,,
+supplysector,subsector,technology,period,minicam-energy-input,efficiency,input-cost,logitexp,secondary-output,output-ratio
+boilers pulp paper and wood,refined liquids,refined liquids cogen CCS,1975,refined liquids industrial,0.60,2.5,-6,electricity,0.417
+boilers pulp paper and wood,refined liquids,refined liquids cogen CCS,1990,refined liquids industrial,0.60,2.5,-6,electricity,0.417
+boilers pulp paper and wood,refined liquids,refined liquids cogen CCS,2005,refined liquids industrial,0.60,2.5,-6,electricity,0.417
+boilers pulp paper and wood,refined liquids,refined liquids cogen CCS,2020,refined liquids industrial,0.61,2.5,-6,electricity,0.417
+boilers pulp paper and wood,refined liquids,refined liquids cogen CCS,2035,refined liquids industrial,0.62,2.5,-6,electricity,0.417
+boilers pulp paper and wood,refined liquids,refined liquids cogen CCS,2050,refined liquids industrial,0.63,2.5,-6,electricity,0.417
+boilers pulp paper and wood,refined liquids,refined liquids cogen CCS,2065,refined liquids industrial,0.64,2.5,-6,electricity,0.417
+boilers pulp paper and wood,refined liquids,refined liquids cogen CCS,2080,refined liquids industrial,0.65,2.5,-6,electricity,0.417
+boilers pulp paper and wood,refined liquids,refined liquids cogen CCS,2095,refined liquids industrial,0.66,2.5,-6,electricity,0.417
+boilers pulp paper and wood,gas,gas cogen CCS,1975,wholesale gas,0.60,2.5,-6,electricity,0.417
+boilers pulp paper and wood,gas,gas cogen CCS,1990,wholesale gas,0.60,2.5,-6,electricity,0.417
+boilers pulp paper and wood,gas,gas cogen CCS,2005,wholesale gas,0.60,2.5,-6,electricity,0.417
+boilers pulp paper and wood,gas,gas cogen CCS,2020,wholesale gas,0.61,2.5,-6,electricity,0.417
+boilers pulp paper and wood,gas,gas cogen CCS,2035,wholesale gas,0.62,2.5,-6,electricity,0.417
+boilers pulp paper and wood,gas,gas cogen CCS,2050,wholesale gas,0.63,2.5,-6,electricity,0.417
+boilers pulp paper and wood,gas,gas cogen CCS,2065,wholesale gas,0.64,2.5,-6,electricity,0.417
+boilers pulp paper and wood,gas,gas cogen CCS,2080,wholesale gas,0.65,2.5,-6,electricity,0.417
+boilers pulp paper and wood,gas,gas cogen CCS,2095,wholesale gas,0.66,2.5,-6,electricity,0.417
+boilers pulp paper and wood,coal,coal cogen CCS,1975,delivered coal,0.60,2.5,-6,electricity,0.333
+boilers pulp paper and wood,coal,coal cogen CCS,1990,delivered coal,0.60,2.5,-6,electricity,0.333
+boilers pulp paper and wood,coal,coal cogen CCS,2005,delivered coal,0.60,2.5,-6,electricity,0.333
+boilers pulp paper and wood,coal,coal cogen CCS,2020,delivered coal,0.61,2.5,-6,electricity,0.333
+boilers pulp paper and wood,coal,coal cogen CCS,2035,delivered coal,0.62,2.5,-6,electricity,0.333
+boilers pulp paper and wood,coal,coal cogen CCS,2050,delivered coal,0.63,2.5,-6,electricity,0.333
+boilers pulp paper and wood,coal,coal cogen CCS,2065,delivered coal,0.64,2.5,-6,electricity,0.333
+boilers pulp paper and wood,coal,coal cogen CCS,2080,delivered coal,0.65,2.5,-6,electricity,0.333
+boilers pulp paper and wood,coal,coal cogen CCS,2095,delivered coal,0.66,2.5,-6,electricity,0.333
+boilers pulp paper and wood,biomass,biomass cogen CCS,1975,delivered biomass,0.55,2.5,-6,electricity,0.364
+boilers pulp paper and wood,biomass,biomass cogen CCS,1990,delivered biomass,0.55,2.5,-6,electricity,0.364
+boilers pulp paper and wood,biomass,biomass cogen CCS,2005,delivered biomass,0.55,2.5,-6,electricity,0.364
+boilers pulp paper and wood,biomass,biomass cogen CCS,2020,delivered biomass,0.56,2.5,-6,electricity,0.364
+boilers pulp paper and wood,biomass,biomass cogen CCS,2035,delivered biomass,0.57,2.5,-6,electricity,0.364
+boilers pulp paper and wood,biomass,biomass cogen CCS,2050,delivered biomass,0.58,2.5,-6,electricity,0.364
+boilers pulp paper and wood,biomass,biomass cogen CCS,2065,delivered biomass,0.58,2.5,-6,electricity,0.364
+boilers pulp paper and wood,biomass,biomass cogen CCS,2080,delivered biomass,0.59,2.5,-6,electricity,0.364
+boilers pulp paper and wood,biomass,biomass cogen CCS,2095,delivered biomass,0.60,2.5,-6,electricity,0.364
+,,,,,,,,,
+,,,,,,,,,
+Region: USA,,,,,,,,,
+Cogen,,,,,,,,,
+INPUT_TABLE,,,,,,,,,
+Variable ID,,,,,,,,,
+403,,,,,,,,,
+,,,,,,minicam-non-energy-input,,,
+supplysector,subsector,technology,period,minicam-energy-input,efficiency,input-cost,logitexp,secondary-output,output-ratio
+boilers general,refined liquids,refined liquids cogen CCS,1975,refined liquids industrial,0.60,2.5,-6,electricity,0.417
+boilers general,refined liquids,refined liquids cogen CCS,1990,refined liquids industrial,0.60,2.5,-6,electricity,0.417
+boilers general,refined liquids,refined liquids cogen CCS,2005,refined liquids industrial,0.60,2.5,-6,electricity,0.417
+boilers general,refined liquids,refined liquids cogen CCS,2020,refined liquids industrial,0.61,2.5,-6,electricity,0.417
+boilers general,refined liquids,refined liquids cogen CCS,2035,refined liquids industrial,0.62,2.5,-6,electricity,0.417
+boilers general,refined liquids,refined liquids cogen CCS,2050,refined liquids industrial,0.63,2.5,-6,electricity,0.417
+boilers general,refined liquids,refined liquids cogen CCS,2065,refined liquids industrial,0.64,2.5,-6,electricity,0.417
+boilers general,refined liquids,refined liquids cogen CCS,2080,refined liquids industrial,0.65,2.5,-6,electricity,0.417
+boilers general,refined liquids,refined liquids cogen CCS,2095,refined liquids industrial,0.66,2.5,-6,electricity,0.417
+boilers general,gas,gas cogen CCS,1975,wholesale gas,0.60,2.5,-6,electricity,0.417
+boilers general,gas,gas cogen CCS,1990,wholesale gas,0.60,2.5,-6,electricity,0.417
+boilers general,gas,gas cogen CCS,2005,wholesale gas,0.60,2.5,-6,electricity,0.417
+boilers general,gas,gas cogen CCS,2020,wholesale gas,0.61,2.5,-6,electricity,0.417
+boilers general,gas,gas cogen CCS,2035,wholesale gas,0.62,2.5,-6,electricity,0.417
+boilers general,gas,gas cogen CCS,2050,wholesale gas,0.63,2.5,-6,electricity,0.417
+boilers general,gas,gas cogen CCS,2065,wholesale gas,0.64,2.5,-6,electricity,0.417
+boilers general,gas,gas cogen CCS,2080,wholesale gas,0.65,2.5,-6,electricity,0.417
+boilers general,gas,gas cogen CCS,2095,wholesale gas,0.66,2.5,-6,electricity,0.417
+boilers general,coal,coal cogen CCS,1975,delivered coal,0.60,2.5,-6,electricity,0.333
+boilers general,coal,coal cogen CCS,1990,delivered coal,0.60,2.5,-6,electricity,0.333
+boilers general,coal,coal cogen CCS,2005,delivered coal,0.60,2.5,-6,electricity,0.333
+boilers general,coal,coal cogen CCS,2020,delivered coal,0.61,2.5,-6,electricity,0.333
+boilers general,coal,coal cogen CCS,2035,delivered coal,0.62,2.5,-6,electricity,0.333
+boilers general,coal,coal cogen CCS,2050,delivered coal,0.63,2.5,-6,electricity,0.333
+boilers general,coal,coal cogen CCS,2065,delivered coal,0.64,2.5,-6,electricity,0.333
+boilers general,coal,coal cogen CCS,2080,delivered coal,0.65,2.5,-6,electricity,0.333
+boilers general,coal,coal cogen CCS,2095,delivered coal,0.66,2.5,-6,electricity,0.333
+boilers general,biomass,biomass cogen CCS,1975,delivered biomass,0.55,2.5,-6,electricity,0.364
+boilers general,biomass,biomass cogen CCS,1990,delivered biomass,0.55,2.5,-6,electricity,0.364
+boilers general,biomass,biomass cogen CCS,2005,delivered biomass,0.55,2.5,-6,electricity,0.364
+boilers general,biomass,biomass cogen CCS,2020,delivered biomass,0.56,2.5,-6,electricity,0.364
+boilers general,biomass,biomass cogen CCS,2035,delivered biomass,0.57,2.5,-6,electricity,0.364
+boilers general,biomass,biomass cogen CCS,2050,delivered biomass,0.58,2.5,-6,electricity,0.364
+boilers general,biomass,biomass cogen CCS,2065,delivered biomass,0.58,2.5,-6,electricity,0.364
+boilers general,biomass,biomass cogen CCS,2080,delivered biomass,0.59,2.5,-6,electricity,0.364
+boilers general,biomass,biomass cogen CCS,2095,delivered biomass,0.60,2.5,-6,electricity,0.364
+,,,,,,,,,
+Region: USA,,,,,,,,,
+Cogen,,,,,,,,,
+INPUT_TABLE,,,,,,,,,
+Variable ID,,,,,,,,,
+403,,,,,,,,,
+,,,,,,minicam-non-energy-input,,,
+supplysector,subsector,technology,period,minicam-energy-input,efficiency,input-cost,logitexp,secondary-output,output-ratio
+process heat primary metals,refined liquids,refined liquids cogen CCS,1975,refined liquids industrial,0.75,2.5,-6,electricity,0.133
+process heat primary metals,refined liquids,refined liquids cogen CCS,1990,refined liquids industrial,0.75,2.5,-6,electricity,0.133
+process heat primary metals,refined liquids,refined liquids cogen CCS,2005,refined liquids industrial,0.75,2.5,-6,electricity,0.133
+process heat primary metals,refined liquids,refined liquids cogen CCS,2020,refined liquids industrial,0.76,2.5,-6,electricity,0.133
+process heat primary metals,refined liquids,refined liquids cogen CCS,2035,refined liquids industrial,0.77,2.5,-6,electricity,0.133
+process heat primary metals,refined liquids,refined liquids cogen CCS,2050,refined liquids industrial,0.78,2.5,-6,electricity,0.133
+process heat primary metals,refined liquids,refined liquids cogen CCS,2065,refined liquids industrial,0.80,2.5,-6,electricity,0.133
+process heat primary metals,refined liquids,refined liquids cogen CCS,2080,refined liquids industrial,0.81,2.5,-6,electricity,0.133
+process heat primary metals,refined liquids,refined liquids cogen CCS,2095,refined liquids industrial,0.82,2.5,-6,electricity,0.133
+process heat primary metals,gas,gas cogen CCS,1975,wholesale gas,0.75,2.5,-6,electricity,0.133
+process heat primary metals,gas,gas cogen CCS,1990,wholesale gas,0.75,2.5,-6,electricity,0.133
+process heat primary metals,gas,gas cogen CCS,2005,wholesale gas,0.75,2.5,-6,electricity,0.133
+process heat primary metals,gas,gas cogen CCS,2020,wholesale gas,0.76,2.5,-6,electricity,0.133
+process heat primary metals,gas,gas cogen CCS,2035,wholesale gas,0.77,2.5,-6,electricity,0.133
+process heat primary metals,gas,gas cogen CCS,2050,wholesale gas,0.78,2.5,-6,electricity,0.133
+process heat primary metals,gas,gas cogen CCS,2065,wholesale gas,0.80,2.5,-6,electricity,0.133
+process heat primary metals,gas,gas cogen CCS,2080,wholesale gas,0.81,2.5,-6,electricity,0.133
+process heat primary metals,gas,gas cogen CCS,2095,wholesale gas,0.82,2.5,-6,electricity,0.133
+process heat primary metals,coal,coal cogen CCS,1975,delivered coal,0.75,2.5,-6,electricity,0.133
+process heat primary metals,coal,coal cogen CCS,1990,delivered coal,0.75,2.5,-6,electricity,0.133
+process heat primary metals,coal,coal cogen CCS,2005,delivered coal,0.75,2.5,-6,electricity,0.133
+process heat primary metals,coal,coal cogen CCS,2020,delivered coal,0.76,2.5,-6,electricity,0.133
+process heat primary metals,coal,coal cogen CCS,2035,delivered coal,0.77,2.5,-6,electricity,0.133
+process heat primary metals,coal,coal cogen CCS,2050,delivered coal,0.78,2.5,-6,electricity,0.133
+process heat primary metals,coal,coal cogen CCS,2065,delivered coal,0.80,2.5,-6,electricity,0.133
+process heat primary metals,coal,coal cogen CCS,2080,delivered coal,0.81,2.5,-6,electricity,0.133
+process heat primary metals,coal,coal cogen CCS,2095,delivered coal,0.82,2.5,-6,electricity,0.133
+process heat primary metals,biomass,biomass cogen CCS,1975,delivered biomass,0.75,2.5,-6,electricity,0.133
+process heat primary metals,biomass,biomass cogen CCS,1990,delivered biomass,0.75,2.5,-6,electricity,0.133
+process heat primary metals,biomass,biomass cogen CCS,2005,delivered biomass,0.75,2.5,-6,electricity,0.133
+process heat primary metals,biomass,biomass cogen CCS,2020,delivered biomass,0.76,2.5,-6,electricity,0.133
+process heat primary metals,biomass,biomass cogen CCS,2035,delivered biomass,0.77,2.5,-6,electricity,0.133
+process heat primary metals,biomass,biomass cogen CCS,2050,delivered biomass,0.78,2.5,-6,electricity,0.133
+process heat primary metals,biomass,biomass cogen CCS,2065,delivered biomass,0.80,2.5,-6,electricity,0.133
+process heat primary metals,biomass,biomass cogen CCS,2080,delivered biomass,0.81,2.5,-6,electricity,0.133
+process heat primary metals,biomass,biomass cogen CCS,2095,delivered biomass,0.82,2.5,-6,electricity,0.133
+,,,,,,,,,
+Region: USA,,,,,,,,,
+Cogen,,,,,,,,,
+INPUT_TABLE,,,,,,,,,
+Variable ID,,,,,,,,,
+403,,,,,,,,,
+,,,,,,,,,
+supplysector,subsector,technology,period,minicam-energy-input,efficiency,input-cost,logitexp,secondary-output,output-ratio
+process heat general,refined liquids,refined liquids cogen CCS,1975,refined liquids industrial,0.75,2.5,-6,electricity,0.133
+process heat general,refined liquids,refined liquids cogen CCS,1990,refined liquids industrial,0.75,2.5,-6,electricity,0.133
+process heat general,refined liquids,refined liquids cogen CCS,2005,refined liquids industrial,0.75,2.5,-6,electricity,0.133
+process heat general,refined liquids,refined liquids cogen CCS,2020,refined liquids industrial,0.76,2.5,-6,electricity,0.133
+process heat general,refined liquids,refined liquids cogen CCS,2035,refined liquids industrial,0.77,2.5,-6,electricity,0.133
+process heat general,refined liquids,refined liquids cogen CCS,2050,refined liquids industrial,0.78,2.5,-6,electricity,0.133
+process heat general,refined liquids,refined liquids cogen CCS,2065,refined liquids industrial,0.80,2.5,-6,electricity,0.133
+process heat general,refined liquids,refined liquids cogen CCS,2080,refined liquids industrial,0.81,2.5,-6,electricity,0.133
+process heat general,refined liquids,refined liquids cogen CCS,2095,refined liquids industrial,0.82,2.5,-6,electricity,0.133
+process heat general,gas,gas cogen CCS,1975,wholesale gas,0.75,2.5,-6,electricity,0.133
+process heat general,gas,gas cogen CCS,1990,wholesale gas,0.75,2.5,-6,electricity,0.133
+process heat general,gas,gas cogen CCS,2005,wholesale gas,0.75,2.5,-6,electricity,0.133
+process heat general,gas,gas cogen CCS,2020,wholesale gas,0.76,2.5,-6,electricity,0.133
+process heat general,gas,gas cogen CCS,2035,wholesale gas,0.77,2.5,-6,electricity,0.133
+process heat general,gas,gas cogen CCS,2050,wholesale gas,0.78,2.5,-6,electricity,0.133
+process heat general,gas,gas cogen CCS,2065,wholesale gas,0.80,2.5,-6,electricity,0.133
+process heat general,gas,gas cogen CCS,2080,wholesale gas,0.81,2.5,-6,electricity,0.133
+process heat general,gas,gas cogen CCS,2095,wholesale gas,0.82,2.5,-6,electricity,0.133
+process heat general,coal,coal cogen CCS,1975,delivered coal,0.75,2.5,-6,electricity,0.133
+process heat general,coal,coal cogen CCS,1990,delivered coal,0.75,2.5,-6,electricity,0.133
+process heat general,coal,coal cogen CCS,2005,delivered coal,0.75,2.5,-6,electricity,0.133
+process heat general,coal,coal cogen CCS,2020,delivered coal,0.76,2.5,-6,electricity,0.133
+process heat general,coal,coal cogen CCS,2035,delivered coal,0.77,2.5,-6,electricity,0.133
+process heat general,coal,coal cogen CCS,2050,delivered coal,0.78,2.5,-6,electricity,0.133
+process heat general,coal,coal cogen CCS,2065,delivered coal,0.80,2.5,-6,electricity,0.133
+process heat general,coal,coal cogen CCS,2080,delivered coal,0.81,2.5,-6,electricity,0.133
+process heat general,coal,coal cogen CCS,2095,delivered coal,0.82,2.5,-6,electricity,0.133
+process heat general,biomass,biomass cogen CCS,1975,delivered biomass,0.75,2.5,-6,electricity,0.133
+process heat general,biomass,biomass cogen CCS,1990,delivered biomass,0.75,2.5,-6,electricity,0.133
+process heat general,biomass,biomass cogen CCS,2005,delivered biomass,0.75,2.5,-6,electricity,0.133
+process heat general,biomass,biomass cogen CCS,2020,delivered biomass,0.76,2.5,-6,electricity,0.133
+process heat general,biomass,biomass cogen CCS,2035,delivered biomass,0.77,2.5,-6,electricity,0.133
+process heat general,biomass,biomass cogen CCS,2050,delivered biomass,0.78,2.5,-6,electricity,0.133
+process heat general,biomass,biomass cogen CCS,2065,delivered biomass,0.80,2.5,-6,electricity,0.133
+process heat general,biomass,biomass cogen CCS,2080,delivered biomass,0.81,2.5,-6,electricity,0.133
+process heat general,biomass,biomass cogen CCS,2095,delivered biomass,0.82,2.5,-6,electricity,0.133
+
+
+CCS specific parameters,,,,,,,,,
+INPUT_TABLE,,,,,,,,,
+Variable ID,,,,,,,,,
+410,,,,,,,,,
+,,,,standard-capture-component,,,
+supplysector,subsector,technology,period,storage-market,remove-fraction,storage-cost,non-energy-penalty
+boilers pulp paper and wood,refined liquids,refined liquids cogen CCS,2020,carbon-storage,1.00,0,1
+boilers pulp paper and wood,refined liquids,refined liquids cogen CCS,2035,carbon-storage,1.00,0,1
+boilers pulp paper and wood,refined liquids,refined liquids cogen CCS,2050,carbon-storage,1.00,0,1
+boilers pulp paper and wood,refined liquids,refined liquids cogen CCS,2065,carbon-storage,1.00,0,1
+boilers pulp paper and wood,refined liquids,refined liquids cogen CCS,2080,carbon-storage,1.00,0,1
+boilers pulp paper and wood,refined liquids,refined liquids cogen CCS,2095,carbon-storage,1.00,0,1
+boilers pulp paper and wood,gas,gas cogen CCS,2020,carbon-storage,1.00,0,1
+boilers pulp paper and wood,gas,gas cogen CCS,2035,carbon-storage,1.00,0,1
+boilers pulp paper and wood,gas,gas cogen CCS,2050,carbon-storage,1.00,0,1
+boilers pulp paper and wood,gas,gas cogen CCS,2065,carbon-storage,1.00,0,1
+boilers pulp paper and wood,gas,gas cogen CCS,2080,carbon-storage,1.00,0,1
+boilers pulp paper and wood,gas,gas cogen CCS,2095,carbon-storage,1.00,0,1
+boilers pulp paper and wood,coal,coal cogen CCS,2020,carbon-storage,1.00,0,1
+boilers pulp paper and wood,coal,coal cogen CCS,2035,carbon-storage,1.00,0,1
+boilers pulp paper and wood,coal,coal cogen CCS,2050,carbon-storage,1.00,0,1
+boilers pulp paper and wood,coal,coal cogen CCS,2065,carbon-storage,1.00,0,1
+boilers pulp paper and wood,coal,coal cogen CCS,2080,carbon-storage,1.00,0,1
+boilers pulp paper and wood,coal,coal cogen CCS,2095,carbon-storage,1.00,0,1
+boilers pulp paper and wood,biomass,biomass cogen CCS,2020,carbon-storage,1.00,0,1
+boilers pulp paper and wood,biomass,biomass cogen CCS,2035,carbon-storage,1.00,0,1
+boilers pulp paper and wood,biomass,biomass cogen CCS,2050,carbon-storage,1.00,0,1
+boilers pulp paper and wood,biomass,biomass cogen CCS,2065,carbon-storage,1.00,0,1
+boilers pulp paper and wood,biomass,biomass cogen CCS,2080,carbon-storage,1.00,0,1
+boilers pulp paper and wood,biomass,biomass cogen CCS,2095,carbon-storage,1.00,0,1
+
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+410,,,,,,,
+,,,,standard-capture-component,,,
+supplysector,subsector,technology,period,storage-market,remove-fraction,storage-cost,non-energy-penalty
+boilers general,refined liquids,refined liquids cogen CCS,2020,carbon-storage,1.00,0,1
+boilers general,refined liquids,refined liquids cogen CCS,2035,carbon-storage,1.00,0,1
+boilers general,refined liquids,refined liquids cogen CCS,2050,carbon-storage,1.00,0,1
+boilers general,refined liquids,refined liquids cogen CCS,2065,carbon-storage,1.00,0,1
+boilers general,refined liquids,refined liquids cogen CCS,2080,carbon-storage,1.00,0,1
+boilers general,refined liquids,refined liquids cogen CCS,2095,carbon-storage,1.00,0,1
+boilers general,gas,gas cogen CCS,2020,carbon-storage,1.00,0,1
+boilers general,gas,gas cogen CCS,2035,carbon-storage,1.00,0,1
+boilers general,gas,gas cogen CCS,2050,carbon-storage,1.00,0,1
+boilers general,gas,gas cogen CCS,2065,carbon-storage,1.00,0,1
+boilers general,gas,gas cogen CCS,2080,carbon-storage,1.00,0,1
+boilers general,gas,gas cogen CCS,2095,carbon-storage,1.00,0,1
+boilers general,coal,coal cogen CCS,2020,carbon-storage,1.00,0,1
+boilers general,coal,coal cogen CCS,2035,carbon-storage,1.00,0,1
+boilers general,coal,coal cogen CCS,2050,carbon-storage,1.00,0,1
+boilers general,coal,coal cogen CCS,2065,carbon-storage,1.00,0,1
+boilers general,coal,coal cogen CCS,2080,carbon-storage,1.00,0,1
+boilers general,coal,coal cogen CCS,2095,carbon-storage,1.00,0,1
+boilers general,biomass,biomass cogen CCS,2020,carbon-storage,1.00,0,1
+boilers general,biomass,biomass cogen CCS,2035,carbon-storage,1.00,0,1
+boilers general,biomass,biomass cogen CCS,2050,carbon-storage,1.00,0,1
+boilers general,biomass,biomass cogen CCS,2065,carbon-storage,1.00,0,1
+boilers general,biomass,biomass cogen CCS,2080,carbon-storage,1.00,0,1
+boilers general,biomass,biomass cogen CCS,2095,carbon-storage,1.00,0,1
+
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+410,,,,,,,
+,,,,standard-capture-component,,,
+supplysector,subsector,technology,period,storage-market,remove-fraction,storage-cost,non-energy-penalty
+process heat primary metals,refined liquids,refined liquids cogen CCS,2020,carbon-storage,1.00,0,1
+process heat primary metals,refined liquids,refined liquids cogen CCS,2035,carbon-storage,1.00,0,1
+process heat primary metals,refined liquids,refined liquids cogen CCS,2050,carbon-storage,1.00,0,1
+process heat primary metals,refined liquids,refined liquids cogen CCS,2065,carbon-storage,1.00,0,1
+process heat primary metals,refined liquids,refined liquids cogen CCS,2080,carbon-storage,1.00,0,1
+process heat primary metals,refined liquids,refined liquids cogen CCS,2095,carbon-storage,1.00,0,1
+process heat primary metals,gas,gas cogen CCS,2020,carbon-storage,1.00,0,1
+process heat primary metals,gas,gas cogen CCS,2035,carbon-storage,1.00,0,1
+process heat primary metals,gas,gas cogen CCS,2050,carbon-storage,1.00,0,1
+process heat primary metals,gas,gas cogen CCS,2065,carbon-storage,1.00,0,1
+process heat primary metals,gas,gas cogen CCS,2080,carbon-storage,1.00,0,1
+process heat primary metals,gas,gas cogen CCS,2095,carbon-storage,1.00,0,1
+process heat primary metals,coal,coal cogen CCS,2020,carbon-storage,1.00,0,1
+process heat primary metals,coal,coal cogen CCS,2035,carbon-storage,1.00,0,1
+process heat primary metals,coal,coal cogen CCS,2050,carbon-storage,1.00,0,1
+process heat primary metals,coal,coal cogen CCS,2065,carbon-storage,1.00,0,1
+process heat primary metals,coal,coal cogen CCS,2080,carbon-storage,1.00,0,1
+process heat primary metals,coal,coal cogen CCS,2095,carbon-storage,1.00,0,1
+process heat primary metals,biomass,biomass cogen CCS,2020,carbon-storage,1.00,0,1
+process heat primary metals,biomass,biomass cogen CCS,2035,carbon-storage,1.00,0,1
+process heat primary metals,biomass,biomass cogen CCS,2050,carbon-storage,1.00,0,1
+process heat primary metals,biomass,biomass cogen CCS,2065,carbon-storage,1.00,0,1
+process heat primary metals,biomass,biomass cogen CCS,2080,carbon-storage,1.00,0,1
+process heat primary metals,biomass,biomass cogen CCS,2095,carbon-storage,1.00,0,1
+
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+410,,,,,,,
+,,,,standard-capture-component,,,
+supplysector,subsector,technology,period,storage-market,remove-fraction,storage-cost,non-energy-penalty
+process heat general,refined liquids,refined liquids cogen CCS,2020,carbon-storage,1.00,0,1
+process heat general,refined liquids,refined liquids cogen CCS,2035,carbon-storage,1.00,0,1
+process heat general,refined liquids,refined liquids cogen CCS,2050,carbon-storage,1.00,0,1
+process heat general,refined liquids,refined liquids cogen CCS,2065,carbon-storage,1.00,0,1
+process heat general,refined liquids,refined liquids cogen CCS,2080,carbon-storage,1.00,0,1
+process heat general,refined liquids,refined liquids cogen CCS,2095,carbon-storage,1.00,0,1
+process heat general,gas,gas cogen CCS,2020,carbon-storage,1.00,0,1
+process heat general,gas,gas cogen CCS,2035,carbon-storage,1.00,0,1
+process heat general,gas,gas cogen CCS,2050,carbon-storage,1.00,0,1
+process heat general,gas,gas cogen CCS,2065,carbon-storage,1.00,0,1
+process heat general,gas,gas cogen CCS,2080,carbon-storage,1.00,0,1
+process heat general,gas,gas cogen CCS,2095,carbon-storage,1.00,0,1
+process heat general,coal,coal cogen CCS,2020,carbon-storage,1.00,0,1
+process heat general,coal,coal cogen CCS,2035,carbon-storage,1.00,0,1
+process heat general,coal,coal cogen CCS,2050,carbon-storage,1.00,0,1
+process heat general,coal,coal cogen CCS,2065,carbon-storage,1.00,0,1
+process heat general,coal,coal cogen CCS,2080,carbon-storage,1.00,0,1
+process heat general,coal,coal cogen CCS,2095,carbon-storage,1.00,0,1
+process heat general,biomass,biomass cogen CCS,2020,carbon-storage,1.00,0,1
+process heat general,biomass,biomass cogen CCS,2035,carbon-storage,1.00,0,1
+process heat general,biomass,biomass cogen CCS,2050,carbon-storage,1.00,0,1
+process heat general,biomass,biomass cogen CCS,2065,carbon-storage,1.00,0,1
+process heat general,biomass,biomass cogen CCS,2080,carbon-storage,1.00,0,1
+process heat general,biomass,biomass cogen CCS,2095,carbon-storage,1.00,0,1

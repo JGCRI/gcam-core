@@ -1,0 +1,3491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <supplysector name="building" nocreate="1">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.72</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.81</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.87</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.94</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.99</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.04</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.08</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1975">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.82</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.86</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.97</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.05</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.14</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1975">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>0.93</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.30</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.52</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.65</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.83</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.03</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.26</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Canada">
+         <supplysector name="building" nocreate="1">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.72</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.81</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.87</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.94</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.99</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.04</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.08</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1975">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.82</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.86</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.97</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.05</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.14</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1975">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>0.93</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.30</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.52</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.65</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.83</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.03</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.26</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Western Europe">
+         <supplysector name="building" nocreate="1">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.72</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.81</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.87</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.94</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.99</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.04</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.08</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1975">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.82</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.86</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.97</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.05</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.14</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1975">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>0.93</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.30</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.52</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.65</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.83</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.03</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.26</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Japan">
+         <supplysector name="building" nocreate="1">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.72</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.81</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.87</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.94</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.99</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.04</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.08</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1975">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.82</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.86</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.97</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.05</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.14</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1975">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>0.93</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.30</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.52</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.65</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.83</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.03</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.26</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Australia_NZ">
+         <supplysector name="building" nocreate="1">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.72</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.81</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.87</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.94</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.99</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.04</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.08</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1975">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.82</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.86</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.97</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.05</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.14</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1975">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>0.93</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.30</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.52</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.65</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.83</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.03</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.26</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Former Soviet Union">
+         <supplysector name="building" nocreate="1">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.72</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.81</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.87</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.94</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.99</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.04</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.08</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1975">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.82</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.86</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.97</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.05</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.14</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1975">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>0.93</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.30</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.52</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.65</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.83</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.03</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.26</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="China">
+         <supplysector name="building" nocreate="1">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.72</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.81</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.87</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.94</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.99</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.04</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.08</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1975">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.82</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.86</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.97</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.05</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.14</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1975">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>0.93</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.30</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.52</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.65</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.83</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.03</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.26</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Middle East">
+         <supplysector name="building" nocreate="1">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.72</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.81</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.87</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.94</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.99</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.04</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.08</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1975">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.82</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.86</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.97</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.05</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.14</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1975">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>0.93</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.30</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.52</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.65</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.83</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.03</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.26</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Africa">
+         <supplysector name="building" nocreate="1">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.72</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.81</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.87</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.94</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.99</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.04</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.08</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1975">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.82</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.86</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.97</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.05</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.14</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1975">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>0.93</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.30</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.52</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.65</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.83</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.03</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.26</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Latin America">
+         <supplysector name="building" nocreate="1">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.72</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.81</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.87</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.94</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.99</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.04</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.08</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1975">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.82</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.86</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.97</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.05</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.14</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1975">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>0.93</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.30</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.52</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.65</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.83</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.03</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.26</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Southeast Asia">
+         <supplysector name="building" nocreate="1">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.72</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.81</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.87</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.94</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.99</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.04</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.08</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1975">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.82</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.86</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.97</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.05</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.14</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1975">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>0.93</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.30</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.52</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.65</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.83</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.03</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.26</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Eastern Europe">
+         <supplysector name="building" nocreate="1">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.72</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.81</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.87</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.94</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.99</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.04</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.08</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1975">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.82</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.86</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.97</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.05</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.14</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1975">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>0.93</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.30</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.52</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.65</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.83</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.03</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.26</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Korea">
+         <supplysector name="building" nocreate="1">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.72</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.81</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.87</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.94</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.99</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.04</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.08</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1975">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.82</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.86</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.97</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.05</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.14</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1975">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>0.93</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.30</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.52</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.65</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.83</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.03</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.26</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="India">
+         <supplysector name="building" nocreate="1">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.72</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.81</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.87</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.94</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.99</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.04</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>1.08</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1975">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.82</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.86</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.92</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>0.97</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.05</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="refined liquids enduse">
+                        <efficiency>1.14</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1975">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>0.93</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.10</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.30</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.52</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.65</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>1.83</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.03</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="elect_td_bld">
+                        <efficiency>2.26</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.4</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.41</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.42</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.43</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.44</efficiency>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+   </world>
+</scenario>

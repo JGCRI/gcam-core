@@ -1,0 +1,625 @@
+Emissions coefficients by region,,,,,,,,,,,,
+INPUT_TABLE,,,,Indicates reference to another worksheet,,,,Generic input parameters,,,,
+Variable ID,,,,Do not adjust parameters of this color in this worksheet,,,,Affected tables have this color,,,,
+1,,,,,,,,adjust parameters here or below (and unhighlight),,,,
+,name=limestone,,,,,,,-20,cement subsector logit exponent,,,
+region,PrimaryFuelCO2Coef,,,,,,,-6,process heating tech logit exponent,,,
+USA,79.802,,,,70,2000$/t CO2,,5,cement mfg process non-energy cost,,,
+Canada,82.760,,,,0.38007,2000 to 1975$,,0,process heating non-energy cost,,,
+Western Europe,80.173,,,,0.272727273,CO2 to C,,17%,carbon capture penalty (%),,,78.5306
+Japan,79.470,,,,7.255881818,1975$/t C,,90%,fraction of CO2 removed,,,
+Australia_NZ,78.782,,,,0.119383825,t C / t cement,,,,,,
+Former Soviet Union,81.699,,,,0.866234928,1975$ / t cement,,Set names here,,,,
+China,79.919,,,,17%,non-energy penalty,,sectors,subsectors,technologies,,
+Middle East,80.199,,,,,,,cement,cement (conv),cement (conv),,
+Africa,80.555,,,,,,,,cement_CCS,cement_CCS,,
+Latin America,80.064,,,,,,,process heat cement,biomass,biomass,,
+Southeast Asia,80.024,,,,,,,,gas,gas
+Eastern Europe,80.644,,,,,,,,coal,coal
+Korea,79.562,,,,,,,,refined liquids,refined liquids
+India,80.499,,,,,,,,,
+
+
+input units and output units for all regions,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,
+Variable ID,,,,,,,,,,
+10,,,,,,,,,,
+,other tables link here,,,,,,,,,
+region,supplysector,output-unit,input-unit,price-unit,keyword,,,,,
+all,cement,Gt,EJ,1975$/t,cement,,"keep ""process"" inputs to production separate from industrial sector",,,
+all,process heat cement,EJ,EJ,1975$/GJ,industry,,,,,
+
+
+energy-final-demand attributes,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+20,,,set base service to return correct value in 1990,,,,,,,,,
+,,,year=1975,1975 fillout,,,cement (Gt),population,population,,,
+region,energy-final-demand,perCapitaBased,base-service,base-scaler,final-energy-consumer (empty node),,1990,1975,1990,,,
+USA,cement,1,0.069922577,1,,,0.0813,215079,250181,,,
+Canada,cement,1,0.010735253,1,,,0.0129,23139,27698,,,
+Western Europe,cement,1,0.256271385,1,,,0.2766,402474,434467,,,
+Japan,cement,1,0.09587183,1,,,0.1062,111469,123478,,,
+Australia_NZ,cement,1,0.007788894,1,,,0.0095,16909,20532,,,
+Former Soviet Union,cement,1,0.147465625,1,,,0.1677,254228,289091,,,
+China,cement,1,0.221324758,1,,,0.2761,980561,1.22E+06,,,
+Middle East,cement,1,0.032253146,1,,,0.0553,76657,131495,,,
+Africa,cement,1,0.03723646,1,,,0.0570,412028,630697,,,
+Latin America,cement,1,0.072270072,1,,,0.0989,319222,436676,,,
+Southeast Asia,cement,1,0.059027969,1,,,0.0829,474445,666169
+Eastern Europe,cement,1,0.044179723,1,,,0.0482,112678,122883
+Korea,cement,1,0.028963544,1,,,0.0352,35278,42869
+India,cement,1,0.039039955,1,,,0.0547,606142,849515
+
+
+energy-final-demand income-elasticity,,,,,,,,,
+INPUT_TABLE,,,,,,,,,
+Variable ID,,,,,,,,,
+21,,,,,,,,,
+,,2020,2035,2050,2065,2080,2095,,
+region,energy-final-demand,income-elasticity,income-elasticity,income-elasticity,income-elasticity,income-elasticity,income-elasticity,,
+USA,cement,-0.07,-0.12,-0.25,-0.17,-0.06,-0.02,,
+Canada,cement,0.35,-0.29,0.41,-0.14,-0.08,-0.10,,
+Western Europe,cement,-0.20,-0.14,-0.10,-0.14,-0.10,-0.02,,
+Japan,cement,-0.17,-0.26,-0.32,-0.18,-0.05,-0.19,,
+Australia_NZ,cement,-0.15,-0.06,-0.30,-0.09,0.15,0.23
+Former Soviet Union,cement,0.43,0.61,0.10,-0.03,-0.03,-0.02
+China,cement,0.60,0.35,0.03,-0.08,-0.13,-0.04
+Middle East,cement,0.44,0.69,0.21,-0.12,0.04,0.05
+Africa,cement,1.70,2.56,1.77,0.05,-0.31,-0.53
+Latin America,cement,1.22,1.82,0.36,0.02,-0.02,-0.01
+Southeast Asia,cement,0.86,0.81,0.56,0.25,0.20,0.17
+Eastern Europe,cement,0.83,0.44,-0.08,0.02,0.06,0.08
+Korea,cement,-0.41,0.09,0.09,-0.19,0.14,0.11
+India,cement,0.61,0.97,0.73,0.20,-0.13,-0.41
+
+
+energy-final-demand price elasticity,,,,,,,
+INPUT_TABLE,,"Note that in CCSP, cement was assumed to have 0 price elasticity",,,,,
+Variable ID,,,,,,,
+22,,,,,,,
+,,2020,2035,2050,2065,2080,2095
+region,energy-final-demand,price-elasticity,price-elasticity,price-elasticity,price-elasticity,price-elasticity,price-elasticity
+USA,cement,-0.4,-0.4,-0.4,-0.4,-0.4,-0.4
+Canada,cement,-0.4,-0.4,-0.4,-0.4,-0.4,-0.4
+Western Europe,cement,-0.4,-0.4,-0.4,-0.4,-0.4,-0.4
+Japan,cement,-0.4,-0.4,-0.4,-0.4,-0.4,-0.4
+Australia_NZ,cement,-0.4,-0.4,-0.4,-0.4,-0.4,-0.4
+Former Soviet Union,cement,-0.4,-0.4,-0.4,-0.4,-0.4,-0.4
+China,cement,-0.4,-0.4,-0.4,-0.4,-0.4,-0.4
+Middle East,cement,-0.4,-0.4,-0.4,-0.4,-0.4,-0.4
+Africa,cement,-0.4,-0.4,-0.4,-0.4,-0.4,-0.4
+Latin America,cement,-0.4,-0.4,-0.4,-0.4,-0.4,-0.4
+Southeast Asia,cement,-0.4,-0.4,-0.4,-0.4,-0.4,-0.4
+Eastern Europe,cement,-0.4,-0.4,-0.4,-0.4,-0.4,-0.4
+Korea,cement,-0.4,-0.4,-0.4,-0.4,-0.4,-0.4
+India,cement,-0.4,-0.4,-0.4,-0.4,-0.4,-0.4
+
+
+scale year and logit exponent,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+100,,,,,,,,,,,,,
+,,,,1975 fillout,sharewt,,,,,,,,
+region,supplysector,subsector,scaleYear,logitexp,1975,1990,2005,2020,2035,2050,2065,2080,2095
+all,cement,cement (conv),2020,-20,1,1,1,1,1,1,1,1,1
+all,cement,cement_CCS,2020,-20,0,0,0,1,1,1,1,1,1
+all,process heat cement,biomass,2095,-6,1,1,1,1,1,1,1,1,1
+all,process heat cement,gas,2095,-6,1,1,1,1,1,1,1,1,1
+all,process heat cement,coal,2095,-6,1,1,1,1,1,1,1,1,1
+all,process heat cement,refined liquids,2095,-6,1,1,1,1,1,1,1,1,1
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+set 0 subsector shareweights for region/fuel combinations with 0 calinput,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,
+Variable ID,,,,,,,,,,
+102,,,,,only value equal to scaleYear in above table will be used by minicam. All others will be over-written.,,,,,
+,,,sharewt,,,,,,,
+region,supplysector,subsector,1990,2005,2020,2035,2050,2065,2080,2095
+Japan,process heat cement,gas,0,0,1,1,1,1,1,1
+Australia_NZ,process heat cement,refined liquids,0,0,1,1,1,1,1,1
+China,process heat cement,gas,0,0,1,1,1,1,1,1
+China,process heat cement,biomass,0,0,1,1,1,1,1,1
+Middle East,process heat cement,coal,0,0,1,1,1,1,1,1
+Korea,process heat cement,gas,0,0,1,1,1,1,1,1
+
+
+Cement mfg non-energy costs,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+1001,,,,minicam-non-energy-input,,,,,,,,
+,,,,input-cost,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+all,cement,cement (conv),cement (conv),5,5,5,5,5,5,5,5,5
+all,cement,cement_CCS,cement_CCS,5,5,5,5,5,5,5,5,5
+all,process heat cement,biomass,biomass,0,0,0,0,0,0,0,0,0
+all,process heat cement,gas,gas,0,0,0,0,0,0,0,0,0
+all,process heat cement,coal,coal,0,0,0,0,0,0,0,0,0
+all,process heat cement,refined liquids,refined liquids,0,0,0,0,0,0,0,0,0
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+
+Process heat efficiencies,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+1002,,,,,,,,,,,,,
+,,,,,efficiency,,,,,,,,
+region,supplysector,subsector,technology,minicam-energy-input,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,process heat cement,biomass,biomass,delivered biomass,1,1,1,1,1,1,1,1,1
+Canada,process heat cement,biomass,biomass,delivered biomass,1,1,1,1,1,1,1,1,1
+Western Europe,process heat cement,biomass,biomass,delivered biomass,1,1,1,1,1,1,1,1,1
+Japan,process heat cement,biomass,biomass,delivered biomass,1,1,1,1,1,1,1,1,1
+Australia_NZ,process heat cement,biomass,biomass,delivered biomass,1,1,1,1,1,1,1,1,1
+Former Soviet Union,process heat cement,biomass,biomass,delivered biomass,1,1,1,1,1,1,1,1,1
+China,process heat cement,biomass,biomass,delivered biomass,1,1,1,1,1,1,1,1,1
+Middle East,process heat cement,biomass,biomass,delivered biomass,1,1,1,1,1,1,1,1,1
+Africa,process heat cement,biomass,biomass,delivered biomass,1,1,1,1,1,1,1,1,1
+Latin America,process heat cement,biomass,biomass,delivered biomass,1,1,1,1,1,1,1,1,1
+Southeast Asia,process heat cement,biomass,biomass,delivered biomass,1,1,1,1,1,1,1,1,1
+Eastern Europe,process heat cement,biomass,biomass,delivered biomass,1,1,1,1,1,1,1,1,1
+Korea,process heat cement,biomass,biomass,delivered biomass,1,1,1,1,1,1,1,1,1
+India,process heat cement,biomass,biomass,delivered biomass,1,1,1,1,1,1,1,1,1
+USA,process heat cement,gas,gas,wholesale gas,1,1,1,1,1,1,1,1,1
+Canada,process heat cement,gas,gas,wholesale gas,1,1,1,1,1,1,1,1,1
+Western Europe,process heat cement,gas,gas,wholesale gas,1,1,1,1,1,1,1,1,1
+Japan,process heat cement,gas,gas,wholesale gas,1,1,1,1,1,1,1,1,1
+Australia_NZ,process heat cement,gas,gas,wholesale gas,1,1,1,1,1,1,1,1,1
+Former Soviet Union,process heat cement,gas,gas,wholesale gas,1,1,1,1,1,1,1,1,1
+China,process heat cement,gas,gas,wholesale gas,1,1,1,1,1,1,1,1,1
+Middle East,process heat cement,gas,gas,wholesale gas,1,1,1,1,1,1,1,1,1
+Africa,process heat cement,gas,gas,wholesale gas,1,1,1,1,1,1,1,1,1
+Latin America,process heat cement,gas,gas,wholesale gas,1,1,1,1,1,1,1,1,1
+Southeast Asia,process heat cement,gas,gas,wholesale gas,1,1,1,1,1,1,1,1,1
+Eastern Europe,process heat cement,gas,gas,wholesale gas,1,1,1,1,1,1,1,1,1
+Korea,process heat cement,gas,gas,wholesale gas,1,1,1,1,1,1,1,1,1
+India,process heat cement,gas,gas,wholesale gas,1,1,1,1,1,1,1,1,1
+USA,process heat cement,coal,coal,delivered coal,1,1,1,1,1,1,1,1,1
+Canada,process heat cement,coal,coal,delivered coal,1,1,1,1,1,1,1,1,1
+Western Europe,process heat cement,coal,coal,delivered coal,1,1,1,1,1,1,1,1,1
+Japan,process heat cement,coal,coal,delivered coal,1,1,1,1,1,1,1,1,1
+Australia_NZ,process heat cement,coal,coal,delivered coal,1,1,1,1,1,1,1,1,1
+Former Soviet Union,process heat cement,coal,coal,delivered coal,1,1,1,1,1,1,1,1,1
+China,process heat cement,coal,coal,delivered coal,1,1,1,1,1,1,1,1,1
+Middle East,process heat cement,coal,coal,delivered coal,1,1,1,1,1,1,1,1,1
+Africa,process heat cement,coal,coal,delivered coal,1,1,1,1,1,1,1,1,1
+Latin America,process heat cement,coal,coal,delivered coal,1,1,1,1,1,1,1,1,1
+Southeast Asia,process heat cement,coal,coal,delivered coal,1,1,1,1,1,1,1,1,1
+Eastern Europe,process heat cement,coal,coal,delivered coal,1,1,1,1,1,1,1,1,1
+Korea,process heat cement,coal,coal,delivered coal,1,1,1,1,1,1,1,1,1
+India,process heat cement,coal,coal,delivered coal,1,1,1,1,1,1,1,1,1
+USA,process heat cement,refined liquids,refined liquids,refined liquids industrial,1,1,1,1,1,1,1,1,1
+Canada,process heat cement,refined liquids,refined liquids,refined liquids industrial,1,1,1,1,1,1,1,1,1
+Western Europe,process heat cement,refined liquids,refined liquids,refined liquids industrial,1,1,1,1,1,1,1,1,1
+Japan,process heat cement,refined liquids,refined liquids,refined liquids industrial,1,1,1,1,1,1,1,1,1
+Australia_NZ,process heat cement,refined liquids,refined liquids,refined liquids industrial,1,1,1,1,1,1,1,1,1
+Former Soviet Union,process heat cement,refined liquids,refined liquids,refined liquids industrial,1,1,1,1,1,1,1,1,1
+China,process heat cement,refined liquids,refined liquids,refined liquids industrial,1,1,1,1,1,1,1,1,1
+Middle East,process heat cement,refined liquids,refined liquids,refined liquids industrial,1,1,1,1,1,1,1,1,1
+Africa,process heat cement,refined liquids,refined liquids,refined liquids industrial,1,1,1,1,1,1,1,1,1
+Latin America,process heat cement,refined liquids,refined liquids,refined liquids industrial,1,1,1,1,1,1,1,1,1
+Southeast Asia,process heat cement,refined liquids,refined liquids,refined liquids industrial,1,1,1,1,1,1,1,1,1
+Eastern Europe,process heat cement,refined liquids,refined liquids,refined liquids industrial,1,1,1,1,1,1,1,1,1
+Korea,process heat cement,refined liquids,refined liquids,refined liquids industrial,1,1,1,1,1,1,1,1,1
+India,process heat cement,refined liquids,refined liquids,refined liquids industrial,1,1,1,1,1,1,1,1,1
+,,,,,,,,,,,,,
+fuel inputs to Process Heat Cement,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1003,,,,minicam-energy-input,,,,,,,,,
+,,,,calibrated-value,,
+region,supplysector,subsector,technology,1990,2005,minicam-energy-input
+USA,process heat cement,biomass,biomass,0.09672,0.13585,delivered biomass
+Canada,process heat cement,biomass,biomass,0.01276,0.01252,delivered biomass
+Western Europe,process heat cement,biomass,biomass,0.27277,0.27008,delivered biomass
+Japan,process heat cement,biomass,biomass,0.04954,0.03796,delivered biomass
+Australia_NZ,process heat cement,biomass,biomass,0.00120,0.00139,delivered biomass
+Former Soviet Union,process heat cement,biomass,biomass,0.00710,0.00377,delivered biomass
+China,process heat cement,biomass,biomass,0.00000,0.00000,delivered biomass
+Middle East,process heat cement,biomass,biomass,0.00958,0.01745,delivered biomass
+Africa,process heat cement,biomass,biomass,0.01061,0.01884,delivered biomass
+Latin America,process heat cement,biomass,biomass,0.03994,0.04764,delivered biomass
+Southeast Asia,process heat cement,biomass,biomass,0.00330,0.00631,delivered biomass
+Eastern Europe,process heat cement,biomass,biomass,0.00180,0.00176,delivered biomass
+Korea,process heat cement,biomass,biomass,0.01302,0.01698,delivered biomass
+India,process heat cement,biomass,biomass,0.00466,0.00778,delivered biomass
+USA,process heat cement,gas,gas,0.00967,0.01358,wholesale gas
+Canada,process heat cement,gas,gas,0.00919,0.00901,wholesale gas
+Western Europe,process heat cement,gas,gas,0.00795,0.00787,wholesale gas
+Japan,process heat cement,gas,gas,0.00000,0.00000,wholesale gas
+Australia_NZ,process heat cement,gas,gas,0.01139,0.01323,wholesale gas
+Former Soviet Union,process heat cement,gas,gas,0.48312,0.25622,wholesale gas
+China,process heat cement,gas,gas,0.00000,0.00000,wholesale gas
+Middle East,process heat cement,gas,gas,0.07184,0.13090,wholesale gas
+Africa,process heat cement,gas,gas,0.06153,0.10926,wholesale gas
+Latin America,process heat cement,gas,gas,0.07988,0.09527,wholesale gas
+Southeast Asia,process heat cement,gas,gas,0.02639,0.05049,wholesale gas
+Eastern Europe,process heat cement,gas,gas,0.12252,0.11984,wholesale gas
+Korea,process heat cement,gas,gas,0.00000,0.00000,wholesale gas
+India,process heat cement,gas,gas,0.00233,0.00389,wholesale gas
+USA,process heat cement,coal,coal,0.21278,0.29887,delivered coal
+Canada,process heat cement,coal,coal,0.02655,0.02604,delivered coal
+Western Europe,process heat cement,coal,coal,0.23048,0.22821,delivered coal
+Japan,process heat cement,coal,coal,0.21741,0.16662,delivered coal
+Australia_NZ,process heat cement,coal,coal,0.01739,0.02019,delivered coal
+Former Soviet Union,process heat cement,coal,coal,0.04973,0.02638,delivered coal
+China,process heat cement,coal,coal,1.00362,3.40467,delivered coal
+Middle East,process heat cement,coal,coal,0.00000,0.00000,delivered coal
+Africa,process heat cement,coal,coal,0.06153,0.10926,delivered coal
+Latin America,process heat cement,coal,coal,0.06657,0.07939,delivered coal
+Southeast Asia,process heat cement,coal,coal,0.27046,0.51754,delivered coal
+Eastern Europe,process heat cement,coal,coal,0.01261,0.01234,delivered coal
+Korea,process heat cement,coal,coal,0.12584,0.16419,delivered coal
+India,process heat cement,coal,coal,0.22354,0.37338,delivered coal
+USA,process heat cement,refined liquids,refined liquids,0.00322,0.00453,refined liquids industrial
+Canada,process heat cement,refined liquids,refined liquids,0.00255,0.00250,refined liquids industrial
+Western Europe,process heat cement,refined liquids,refined liquids,0.28358,0.28078,refined liquids industrial
+Japan,process heat cement,refined liquids,refined liquids,0.00550,0.00422,refined liquids industrial
+Australia_NZ,process heat cement,refined liquids,refined liquids,0.00000,0.00000,refined liquids industrial
+Former Soviet Union,process heat cement,refined liquids,refined liquids,0.17051,0.09043,refined liquids industrial
+China,process heat cement,refined liquids,refined liquids,0.06406,0.21732,refined liquids industrial
+Middle East,process heat cement,refined liquids,refined liquids,0.12452,0.22689,refined liquids industrial
+Africa,process heat cement,refined liquids,refined liquids,0.07638,0.13563,refined liquids industrial
+Latin America,process heat cement,refined liquids,refined liquids,0.11982,0.14291,refined liquids industrial
+Southeast Asia,process heat cement,refined liquids,refined liquids,0.02968,0.05680,refined liquids industrial
+Eastern Europe,process heat cement,refined liquids,refined liquids,0.04324,0.04230,refined liquids industrial
+Korea,process heat cement,refined liquids,refined liquids,0.00579,0.00755,refined liquids industrial
+India,process heat cement,refined liquids,refined liquids,0.00233,0.00389,refined liquids industrial
+
+
+set shareweights to 0 for CCS in base years,,,,,,
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+1004,,,,,,
+
+region,supplysector,subsector,technology,period,sharewt
+USA,cement,cement_CCS,cement_CCS,1990,0
+Canada,cement,cement_CCS,cement_CCS,1990,0
+Western Europe,cement,cement_CCS,cement_CCS,1990,0
+Japan,cement,cement_CCS,cement_CCS,1990,0
+Australia_NZ,cement,cement_CCS,cement_CCS,1990,0
+Former Soviet Union,cement,cement_CCS,cement_CCS,1990,0
+China,cement,cement_CCS,cement_CCS,1990,0
+Middle East,cement,cement_CCS,cement_CCS,1990,0
+Africa,cement,cement_CCS,cement_CCS,1990,0
+Latin America,cement,cement_CCS,cement_CCS,1990,0
+Southeast Asia,cement,cement_CCS,cement_CCS,1990,0
+Eastern Europe,cement,cement_CCS,cement_CCS,1990,0
+Korea,cement,cement_CCS,cement_CCS,1990,0
+India,cement,cement_CCS,cement_CCS,1990,0
+USA,cement,cement_CCS,cement_CCS,2005,0
+Canada,cement,cement_CCS,cement_CCS,2005,0
+Western Europe,cement,cement_CCS,cement_CCS,2005,0
+Japan,cement,cement_CCS,cement_CCS,2005,0
+Australia_NZ,cement,cement_CCS,cement_CCS,2005,0
+Former Soviet Union,cement,cement_CCS,cement_CCS,2005,0
+China,cement,cement_CCS,cement_CCS,2005,0
+Middle East,cement,cement_CCS,cement_CCS,2005,0
+Africa,cement,cement_CCS,cement_CCS,2005,0
+Latin America,cement,cement_CCS,cement_CCS,2005,0
+Southeast Asia,cement,cement_CCS,cement_CCS,2005,0
+Eastern Europe,cement,cement_CCS,cement_CCS,2005,0
+Korea,cement,cement_CCS,cement_CCS,2005,0
+India,cement,cement_CCS,cement_CCS,2005,0
+
+
+set shareweights for process heating fuels (techs) not used in base years,,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+1004,,,,,
+
+region,supplysector,subsector,technology,period,sharewt
+Japan,process heat cement,gas,gas,1990,0
+Australia_NZ,process heat cement,refined liquids,refined liquids,1990,0
+China,process heat cement,gas,gas,1990,0
+China,process heat cement,biomass,biomass,1990,0
+Middle East,process heat cement,coal,coal,1990,0
+Korea,process heat cement,gas,gas,1990,0
+Japan,process heat cement,gas,gas,2005,0
+Australia_NZ,process heat cement,refined liquids,refined liquids,2005,0
+China,process heat cement,gas,gas,2005,0
+China,process heat cement,biomass,biomass,2005,0
+Middle East,process heat cement,coal,coal,2005,0
+Korea,process heat cement,gas,gas,2005,0
+
+
+Calibrate output in base years,,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+1005,,,,CalDataOutput,CalDataOutput
+,,,,calOutputValue,calOutputValue
+region,supplysector,subsector,technology,1990,2005
+USA,cement,cement (conv),cement (conv),0.08133,0.11460
+Canada,cement,cement (conv),cement (conv),0.01285,0.01523
+Western Europe,cement,cement (conv),cement (conv),0.27664,0.31072
+Japan,cement,cement (conv),cement (conv),0.10620,0.08478
+Australia_NZ,cement,cement (conv),cement (conv),0.00946,0.01101
+Former Soviet Union,cement,cement (conv),cement (conv),0.16769,0.08982
+China,cement,cement (conv),cement (conv),0.27611,1.20726,,,,,,,,
+Middle East,cement,cement (conv),cement (conv),0.05533,0.10146,,,,,,,,
+Africa,cement,cement (conv),cement (conv),0.05700,0.10167,,,,,,,,
+Latin America,cement,cement (conv),cement (conv),0.09886,0.14419,,,,,,,,
+Southeast Asia,cement,cement (conv),cement (conv),0.08288,0.15885,,,,,,,,
+Eastern Europe,cement,cement (conv),cement (conv),0.04818,0.04744,,,,,,,,
+Korea,cement,cement (conv),cement (conv),0.03520,0.05691,,,,,,,,
+India,cement,cement (conv),cement (conv),0.05471,0.14516,,,,,,,,
+
+
+Set cement mfg coefficients,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1006,,,,,,,,,,,,,
+,,,,,coefficient,,,,,,,,
+region,supplysector,subsector,technology,minicam-energy-input,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,cement,cement (conv),cement (conv),limestone,1.496,1.496,1.496,1.496,1.496,1.441,1.388,1.337,1.287
+Canada,cement,cement (conv),cement (conv),limestone,1.496,1.496,1.496,1.496,1.496,1.441,1.388,1.337,1.287
+Western Europe,cement,cement (conv),cement (conv),limestone,1.371,1.371,1.371,1.371,1.371,1.321,1.272,1.225,1.180
+Japan,cement,cement (conv),cement (conv),limestone,1.360,1.360,1.360,1.360,1.360,1.310,1.262,1.215,1.170
+Australia_NZ,cement,cement (conv),cement (conv),limestone,1.428,1.428,1.428,1.428,1.428,1.375,1.325,1.276,1.229
+Former Soviet Union,cement,cement (conv),cement (conv),limestone,1.360,1.360,1.360,1.360,1.360,1.310,1.262,1.215,1.170
+China,cement,cement (conv),cement (conv),limestone,1.411,1.411,1.411,1.411,1.411,1.359,1.309,1.261,1.214
+Middle East,cement,cement (conv),cement (conv),limestone,1.547,1.547,1.547,1.547,1.547,1.490,1.435,1.383,1.332
+Africa,cement,cement (conv),cement (conv),limestone,1.484,1.484,1.484,1.484,1.484,1.429,1.376,1.326,1.277
+Latin America,cement,cement (conv),cement (conv),limestone,1.436,1.436,1.436,1.436,1.436,1.383,1.332,1.283,1.236
+Southeast Asia,cement,cement (conv),cement (conv),limestone,1.544,1.544,1.544,1.544,1.544,1.487,1.433,1.380,1.329
+Eastern Europe,cement,cement (conv),cement (conv),limestone,1.455,1.455,1.455,1.455,1.455,1.401,1.349,1.300,1.252
+Korea,cement,cement (conv),cement (conv),limestone,1.632,1.632,1.632,1.632,1.632,1.572,1.514,1.458,1.404
+India,cement,cement (conv),cement (conv),limestone,1.513,1.513,1.513,1.513,1.513,1.513,1.513,1.513,1.513
+USA,cement,cement (conv),cement (conv),process heat cement,3.964,3.964,3.951,3.806,3.666,3.531,3.400,3.275,3.154
+Canada,cement,cement (conv),cement (conv),process heat cement,3.973,3.973,3.289,3.168,3.051,2.938,2.830,2.726,2.625
+Western Europe,cement,cement (conv),cement (conv),process heat cement,2.873,2.873,2.533,2.497,2.463,2.428,2.395,2.361,2.329
+Japan,cement,cement (conv),cement (conv),process heat cement,2.565,2.565,2.463,2.463,2.463,2.463,2.463,2.463,2.463
+Australia_NZ,cement,cement (conv),cement (conv),process heat cement,3.170,3.170,3.161,3.045,2.932,2.824,2.720,2.620,2.523
+Former Soviet Union,cement,cement (conv),cement (conv),process heat cement,4.237,4.237,4.195,4.040,3.892,3.748,3.610,3.477,3.349
+China,cement,cement (conv),cement (conv),process heat cement,3.867,3.867,3.000,2.890,2.783,2.681,2.582,2.487,2.395
+Middle East,cement,cement (conv),cement (conv),process heat cement,3.722,3.722,3.699,3.562,3.431,3.305,3.183,3.065,2.953
+Africa,cement,cement (conv),cement (conv),process heat cement,3.685,3.685,3.669,3.533,3.403,3.278,3.157,3.041,2.929
+Latin America,cement,cement (conv),cement (conv),process heat cement,3.097,3.097,2.533,2.498,2.463,2.428,2.394,2.361,2.328
+Southeast Asia,cement,cement (conv),cement (conv),process heat cement,3.980,3.980,3.973,3.827,3.686,3.550,3.419,3.293,3.172
+Eastern Europe,cement,cement (conv),cement (conv),process heat cement,3.740,3.740,3.715,3.578,3.446,3.319,3.197,3.079,2.966
+Korea,cement,cement (conv),cement (conv),process heat cement,4.110,4.110,3.316,3.194,3.076,2.963,2.854,2.749,2.647
+India,cement,cement (conv),cement (conv),process heat cement,4.256,4.256,2.679,2.581,2.485,2.394,2.306,2.221,2.139
+USA,cement,cement (conv),cement (conv),elect_td_ind,0.529,0.529,0.515,0.496,0.478,0.460,0.443,0.427,0.411
+Canada,cement,cement (conv),cement (conv),elect_td_ind,0.565,0.565,0.508,0.489,0.471,0.454,0.437,0.421,0.405
+Western Europe,cement,cement (conv),cement (conv),elect_td_ind,0.389,0.389,0.362,0.349,0.336,0.324,0.312,0.300,0.289
+Japan,cement,cement (conv),cement (conv),elect_td_ind,0.342,0.342,0.364,0.350,0.337,0.325,0.313,0.301,0.290
+Australia_NZ,cement,cement (conv),cement (conv),elect_td_ind,0.425,0.425,0.407,0.392,0.377,0.363,0.350,0.337,0.325
+Former Soviet Union,cement,cement (conv),cement (conv),elect_td_ind,0.425,0.425,0.407,0.392,0.377,0.363,0.350,0.337,0.325
+China,cement,cement (conv),cement (conv),elect_td_ind,0.432,0.432,0.421,0.406,0.391,0.376,0.362,0.349,0.336
+Middle East,cement,cement (conv),cement (conv),elect_td_ind,0.425,0.425,0.407,0.392,0.377,0.363,0.350,0.337,0.325
+Africa,cement,cement (conv),cement (conv),elect_td_ind,0.425,0.425,0.407,0.392,0.377,0.363,0.350,0.337,0.325
+Latin America,cement,cement (conv),cement (conv),elect_td_ind,0.405,0.405,0.410,0.395,0.381,0.367,0.353,0.340,0.328
+Southeast Asia,cement,cement (conv),cement (conv),elect_td_ind,0.425,0.425,0.407,0.392,0.377,0.363,0.350,0.337,0.325
+Eastern Europe,cement,cement (conv),cement (conv),elect_td_ind,0.425,0.425,0.407,0.392,0.377,0.363,0.350,0.337,0.325
+Korea,cement,cement (conv),cement (conv),elect_td_ind,0.396,0.396,0.374,0.361,0.347,0.335,0.322,0.310,0.299
+India,cement,cement (conv),cement (conv),elect_td_ind,0.432,0.432,0.324,0.324,0.324,0.324,0.324,0.324,0.324
+USA,cement,cement_CCS,cement_CCS,limestone,1.496,1.496,1.496,1.496,1.496,1.441,1.388,1.337,1.287
+Canada,cement,cement_CCS,cement_CCS,limestone,1.496,1.496,1.496,1.496,1.496,1.441,1.388,1.337,1.287
+Western Europe,cement,cement_CCS,cement_CCS,limestone,1.371,1.371,1.371,1.371,1.371,1.321,1.272,1.225,1.180
+Japan,cement,cement_CCS,cement_CCS,limestone,1.360,1.360,1.360,1.360,1.360,1.310,1.262,1.215,1.170
+Australia_NZ,cement,cement_CCS,cement_CCS,limestone,1.428,1.428,1.428,1.428,1.428,1.375,1.325,1.276,1.229
+Former Soviet Union,cement,cement_CCS,cement_CCS,limestone,1.360,1.360,1.360,1.360,1.360,1.310,1.262,1.215,1.170
+China,cement,cement_CCS,cement_CCS,limestone,1.411,1.411,1.411,1.411,1.411,1.359,1.309,1.261,1.214
+Middle East,cement,cement_CCS,cement_CCS,limestone,1.547,1.547,1.547,1.547,1.547,1.490,1.435,1.383,1.332
+Africa,cement,cement_CCS,cement_CCS,limestone,1.484,1.484,1.484,1.484,1.484,1.429,1.376,1.326,1.277
+Latin America,cement,cement_CCS,cement_CCS,limestone,1.436,1.436,1.436,1.436,1.436,1.383,1.332,1.283,1.236
+Southeast Asia,cement,cement_CCS,cement_CCS,limestone,1.544,1.544,1.544,1.544,1.544,1.487,1.433,1.380,1.329
+Eastern Europe,cement,cement_CCS,cement_CCS,limestone,1.455,1.455,1.455,1.455,1.455,1.401,1.349,1.300,1.252
+Korea,cement,cement_CCS,cement_CCS,limestone,1.632,1.632,1.632,1.632,1.632,1.572,1.514,1.458,1.404
+India,cement,cement_CCS,cement_CCS,limestone,1.513,1.513,1.513,1.513,1.513,1.513,1.513,1.513,1.513
+USA,cement,cement_CCS,cement_CCS,process heat cement,3.964,3.964,3.951,3.806,3.666,3.531,3.400,3.275,3.154
+Canada,cement,cement_CCS,cement_CCS,process heat cement,3.973,3.973,3.289,3.168,3.051,2.938,2.830,2.726,2.625
+Western Europe,cement,cement_CCS,cement_CCS,process heat cement,2.873,2.873,2.533,2.497,2.463,2.428,2.395,2.361,2.329
+Japan,cement,cement_CCS,cement_CCS,process heat cement,2.565,2.565,2.463,2.463,2.463,2.463,2.463,2.463,2.463
+Australia_NZ,cement,cement_CCS,cement_CCS,process heat cement,3.170,3.170,3.161,3.045,2.932,2.824,2.720,2.620,2.523
+Former Soviet Union,cement,cement_CCS,cement_CCS,process heat cement,4.237,4.237,4.195,4.040,3.892,3.748,3.610,3.477,3.349
+China,cement,cement_CCS,cement_CCS,process heat cement,3.867,3.867,3.000,2.890,2.783,2.681,2.582,2.487,2.395
+Middle East,cement,cement_CCS,cement_CCS,process heat cement,3.722,3.722,3.699,3.562,3.431,3.305,3.183,3.065,2.953
+Africa,cement,cement_CCS,cement_CCS,process heat cement,3.685,3.685,3.669,3.533,3.403,3.278,3.157,3.041,2.929
+Latin America,cement,cement_CCS,cement_CCS,process heat cement,3.097,3.097,2.533,2.498,2.463,2.428,2.394,2.361,2.328
+Southeast Asia,cement,cement_CCS,cement_CCS,process heat cement,3.980,3.980,3.973,3.827,3.686,3.550,3.419,3.293,3.172
+Eastern Europe,cement,cement_CCS,cement_CCS,process heat cement,3.740,3.740,3.715,3.578,3.446,3.319,3.197,3.079,2.966
+Korea,cement,cement_CCS,cement_CCS,process heat cement,4.110,4.110,3.316,3.194,3.076,2.963,2.854,2.749,2.647
+India,cement,cement_CCS,cement_CCS,process heat cement,4.256,4.256,2.679,2.581,2.485,2.394,2.306,2.221,2.139
+USA,cement,cement_CCS,cement_CCS,elect_td_ind,0.529,0.529,0.515,0.496,0.478,0.460,0.443,0.427,0.411
+Canada,cement,cement_CCS,cement_CCS,elect_td_ind,0.565,0.565,0.508,0.489,0.471,0.454,0.437,0.421,0.405
+Western Europe,cement,cement_CCS,cement_CCS,elect_td_ind,0.389,0.389,0.362,0.349,0.336,0.324,0.312,0.300,0.289
+Japan,cement,cement_CCS,cement_CCS,elect_td_ind,0.342,0.342,0.364,0.350,0.337,0.325,0.313,0.301,0.290
+Australia_NZ,cement,cement_CCS,cement_CCS,elect_td_ind,0.425,0.425,0.407,0.392,0.377,0.363,0.350,0.337,0.325
+Former Soviet Union,cement,cement_CCS,cement_CCS,elect_td_ind,0.425,0.425,0.407,0.392,0.377,0.363,0.350,0.337,0.325
+China,cement,cement_CCS,cement_CCS,elect_td_ind,0.432,0.432,0.421,0.406,0.391,0.376,0.362,0.349,0.336
+Middle East,cement,cement_CCS,cement_CCS,elect_td_ind,0.425,0.425,0.407,0.392,0.377,0.363,0.350,0.337,0.325
+Africa,cement,cement_CCS,cement_CCS,elect_td_ind,0.425,0.425,0.407,0.392,0.377,0.363,0.350,0.337,0.325
+Latin America,cement,cement_CCS,cement_CCS,elect_td_ind,0.405,0.405,0.410,0.395,0.381,0.367,0.353,0.340,0.328
+Southeast Asia,cement,cement_CCS,cement_CCS,elect_td_ind,0.425,0.425,0.407,0.392,0.377,0.363,0.350,0.337,0.325
+Eastern Europe,cement,cement_CCS,cement_CCS,elect_td_ind,0.425,0.425,0.407,0.392,0.377,0.363,0.350,0.337,0.325
+Korea,cement,cement_CCS,cement_CCS,elect_td_ind,0.396,0.396,0.374,0.361,0.347,0.335,0.322,0.310,0.299
+India,cement,cement_CCS,cement_CCS,elect_td_ind,0.432,0.432,0.324,0.324,0.324,0.324,0.324,0.324,0.324
+
+
+CCS technology specifications,,,,,,,,,,,,,
+Carbon storage market,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1010,,,,standard-capture-component,,,,,,,,,
+,,,,storage-market,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,
+USA,cement,cement_CCS,cement_CCS,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,
+Canada,cement,cement_CCS,cement_CCS,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,
+Western Europe,cement,cement_CCS,cement_CCS,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,
+Japan,cement,cement_CCS,cement_CCS,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage
+Australia_NZ,cement,cement_CCS,cement_CCS,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage
+Former Soviet Union,cement,cement_CCS,cement_CCS,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage
+China,cement,cement_CCS,cement_CCS,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage
+Middle East,cement,cement_CCS,cement_CCS,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage
+Africa,cement,cement_CCS,cement_CCS,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage
+Latin America,cement,cement_CCS,cement_CCS,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage
+Southeast Asia,cement,cement_CCS,cement_CCS,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage
+Eastern Europe,cement,cement_CCS,cement_CCS,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage
+Korea,cement,cement_CCS,cement_CCS,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage
+India,cement,cement_CCS,cement_CCS,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage
+
+
+Fraction lost,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+1011,,,,standard-capture-component,,,,,,,,
+,,,,remove-fraction,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,cement,cement_CCS,cement_CCS,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9
+Canada,cement,cement_CCS,cement_CCS,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9
+Western Europe,cement,cement_CCS,cement_CCS,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9
+Japan,cement,cement_CCS,cement_CCS,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9
+Australia_NZ,cement,cement_CCS,cement_CCS,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9
+Former Soviet Union,cement,cement_CCS,cement_CCS,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9
+China,cement,cement_CCS,cement_CCS,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9
+Middle East,cement,cement_CCS,cement_CCS,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9
+Africa,cement,cement_CCS,cement_CCS,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9
+Latin America,cement,cement_CCS,cement_CCS,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9
+Southeast Asia,cement,cement_CCS,cement_CCS,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9
+Eastern Europe,cement,cement_CCS,cement_CCS,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9
+Korea,cement,cement_CCS,cement_CCS,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9
+India,cement,cement_CCS,cement_CCS,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9
+
+
+Storage cost,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+1012,,,,standard-capture-component,,,,,,,,
+,,,,storage-cost,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,cement,cement_CCS,cement_CCS,0,0,0,0,0,0,0,0,0
+Canada,cement,cement_CCS,cement_CCS,0,0,0,0,0,0,0,0,0
+Western Europe,cement,cement_CCS,cement_CCS,0,0,0,0,0,0,0,0,0
+Japan,cement,cement_CCS,cement_CCS,0,0,0,0,0,0,0,0,0
+Australia_NZ,cement,cement_CCS,cement_CCS,0,0,0,0,0,0,0,0,0
+Former Soviet Union,cement,cement_CCS,cement_CCS,0,0,0,0,0,0,0,0,0
+China,cement,cement_CCS,cement_CCS,0,0,0,0,0,0,0,0,0
+Middle East,cement,cement_CCS,cement_CCS,0,0,0,0,0,0,0,0,0
+Africa,cement,cement_CCS,cement_CCS,0,0,0,0,0,0,0,0,0
+Latin America,cement,cement_CCS,cement_CCS,0,0,0,0,0,0,0,0,0
+Southeast Asia,cement,cement_CCS,cement_CCS,0,0,0,0,0,0,0,0,0
+Eastern Europe,cement,cement_CCS,cement_CCS,0,0,0,0,0,0,0,0,0
+Korea,cement,cement_CCS,cement_CCS,0,0,0,0,0,0,0,0,0
+India,cement,cement_CCS,cement_CCS,0,0,0,0,0,0,0,0,0
+
+
+Addt'l CCS non-energy cost (penalty),,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+1013,,,,standard-capture-component,,,,,,,,
+,,,,non-energy-penalty,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
+Canada,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
+Western Europe,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
+Japan,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
+Australia_NZ,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
+Former Soviet Union,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
+China,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
+Middle East,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
+Africa,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
+Latin America,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
+Southeast Asia,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
+Eastern Europe,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
+Korea,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
+India,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
+
+
+Add CO2 tag to process heating technologies in all periods,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+1020,,,,,,,,,,,,
+,,,,CO2,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,process heat cement,biomass,biomass,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Canada,process heat cement,biomass,biomass,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Western Europe,process heat cement,biomass,biomass,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Japan,process heat cement,biomass,biomass,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Australia_NZ,process heat cement,biomass,biomass,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Former Soviet Union,process heat cement,biomass,biomass,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+China,process heat cement,biomass,biomass,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Middle East,process heat cement,biomass,biomass,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Africa,process heat cement,biomass,biomass,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Latin America,process heat cement,biomass,biomass,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Southeast Asia,process heat cement,biomass,biomass,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Eastern Europe,process heat cement,biomass,biomass,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Korea,process heat cement,biomass,biomass,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+India,process heat cement,biomass,biomass,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+USA,process heat cement,gas,gas,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Canada,process heat cement,gas,gas,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Western Europe,process heat cement,gas,gas,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Japan,process heat cement,gas,gas,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Australia_NZ,process heat cement,gas,gas,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Former Soviet Union,process heat cement,gas,gas,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+China,process heat cement,gas,gas,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Middle East,process heat cement,gas,gas,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Africa,process heat cement,gas,gas,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Latin America,process heat cement,gas,gas,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Southeast Asia,process heat cement,gas,gas,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Eastern Europe,process heat cement,gas,gas,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Korea,process heat cement,gas,gas,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+India,process heat cement,gas,gas,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+USA,process heat cement,coal,coal,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Canada,process heat cement,coal,coal,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Western Europe,process heat cement,coal,coal,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Japan,process heat cement,coal,coal,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Australia_NZ,process heat cement,coal,coal,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Former Soviet Union,process heat cement,coal,coal,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+China,process heat cement,coal,coal,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Middle East,process heat cement,coal,coal,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Africa,process heat cement,coal,coal,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Latin America,process heat cement,coal,coal,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Southeast Asia,process heat cement,coal,coal,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Eastern Europe,process heat cement,coal,coal,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Korea,process heat cement,coal,coal,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+India,process heat cement,coal,coal,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+USA,process heat cement,refined liquids,refined liquids,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Canada,process heat cement,refined liquids,refined liquids,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Western Europe,process heat cement,refined liquids,refined liquids,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Japan,process heat cement,refined liquids,refined liquids,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Australia_NZ,process heat cement,refined liquids,refined liquids,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Former Soviet Union,process heat cement,refined liquids,refined liquids,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+China,process heat cement,refined liquids,refined liquids,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Middle East,process heat cement,refined liquids,refined liquids,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Africa,process heat cement,refined liquids,refined liquids,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Latin America,process heat cement,refined liquids,refined liquids,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Southeast Asia,process heat cement,refined liquids,refined liquids,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Eastern Europe,process heat cement,refined liquids,refined liquids,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Korea,process heat cement,refined liquids,refined liquids,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+India,process heat cement,refined liquids,refined liquids,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+
+
+Add CO2 tag to cement technologies in all periods,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+1020,,,,,,,,,,,,
+,,,,CO2,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,cement,cement (conv),cement (conv),CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Canada,cement,cement (conv),cement (conv),CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Western Europe,cement,cement (conv),cement (conv),CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Japan,cement,cement (conv),cement (conv),CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Australia_NZ,cement,cement (conv),cement (conv),CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Former Soviet Union,cement,cement (conv),cement (conv),CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+China,cement,cement (conv),cement (conv),CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Middle East,cement,cement (conv),cement (conv),CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Africa,cement,cement (conv),cement (conv),CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Latin America,cement,cement (conv),cement (conv),CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Southeast Asia,cement,cement (conv),cement (conv),CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Eastern Europe,cement,cement (conv),cement (conv),CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Korea,cement,cement (conv),cement (conv),CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+India,cement,cement (conv),cement (conv),CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+USA,cement,cement_CCS,cement_CCS,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Canada,cement,cement_CCS,cement_CCS,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Western Europe,cement,cement_CCS,cement_CCS,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Japan,cement,cement_CCS,cement_CCS,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Australia_NZ,cement,cement_CCS,cement_CCS,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Former Soviet Union,cement,cement_CCS,cement_CCS,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+China,cement,cement_CCS,cement_CCS,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Middle East,cement,cement_CCS,cement_CCS,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Africa,cement,cement_CCS,cement_CCS,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Latin America,cement,cement_CCS,cement_CCS,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Southeast Asia,cement,cement_CCS,cement_CCS,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Eastern Europe,cement,cement_CCS,cement_CCS,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Korea,cement,cement_CCS,cement_CCS,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+India,cement,cement_CCS,cement_CCS,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2

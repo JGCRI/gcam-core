@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ModelInterfaceBatch>
+	<!-- You must first identify the class which will run the command.
+	     For csv conversions it will always be InputViewer.
+	     TODO: make it so the class name is not necessary.
+	  -->
+	<class name="ModelInterface.ModelGUI2.InputViewer">
+		<!-- The command you want to run.  It would be the same name as
+		     the name in the Open.. submenu.
+		  -->
+		<command name="CSV file">
+			<!-- For csv conversions you need to give it a header file,
+			     where to place the resulting xml file, and one or more
+			     csv files which you want to convert with the given 
+			     header file
+			  -->
+			<headerFile>../../Emissions/NonCO2/Energy Input Module/Header_nonco2_energy.txt</headerFile>
+			<outFile>../../Emissions/NonCO2/Energy Input Module/all_energy.xml</outFile>
+			<csvFile>../../Emissions/NonCO2/Energy Input Module/ch4_energy.csv</csvFile>
+			<csvFile>../../Emissions/NonCO2/Energy Input Module/n2o_energy.csv</csvFile>
+			<csvFile>../../Emissions/NonCO2/Energy Input Module/nox_energy.csv</csvFile>
+			<csvFile>../../Emissions/NonCO2/Energy Input Module/co_energy.csv</csvFile>
+			<csvFile>../../Emissions/NonCO2/Energy Input Module/so2_energy.csv</csvFile>
+			<csvFile>../../Emissions/NonCO2/Energy Input Module/nmvoc_energy.csv</csvFile>
+			<csvFile>../../Emissions/NonCO2/Energy Input Module/nh3_energy.csv</csvFile>
+			<csvFile>../../Emissions/NonCO2/Energy Input Module/hgwp_energy.csv</csvFile>
+			<csvFile>../../Emissions/NonCO2/Energy Input Module/bc_energy.csv</csvFile>
+			<csvFile>../../Emissions/NonCO2/Energy Input Module/oc_energy.csv</csvFile>
+			<csvFile>../../Emissions/NonCO2/Energy Input Module/ind_urb_pro.csv</csvFile>
+		</command>
+	</class>
+</ModelInterfaceBatch>

@@ -1,0 +1,746 @@
+CH4_AGR,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11001,,,,,,,,,,,,,,,,,,
+
+region,FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,output-driver,,,,,,,,,,,,
+ALL,Rice,Rice,Rice,ALL,CH4_AGR,,,,,,,,,,,,,
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11015,,,,,,,,,,,,,,,,,,
+,,,,,uncontrolled-emiss-coef,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Rice,Rice,Rice,1990,CH4_AGR,1.20733E-08,0,1.39277E-08,2.0586E-09,2.58121E-08,0,2.20271E-08,2.23867E-08,1.96396E-08,1.38719E-08,2.12358E-08,1.59241E-08,2.03077E-08,3.55655E-08
+
+N2O_AGR,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+11001,,,,,,
+
+region,FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,output-driver
+ALL,Corn,Corn,Corn,ALL,N2O_AGR,
+ALL,FiberCrop,FiberCrop,FiberCrop,ALL,N2O_AGR,
+ALL,FodderCrop,FodderCrop,FodderCrop,ALL,N2O_AGR,
+ALL,MiscCrop,MiscCrop,MiscCrop,ALL,N2O_AGR,
+ALL,OilCrop,OilCrop,OilCrop,ALL,N2O_AGR,
+ALL,OtherGrain,OtherGrain,OtherGrain,ALL,N2O_AGR,
+ALL,Rice,Rice,Rice,ALL,N2O_AGR,
+ALL,SugarCrop,SugarCrop,SugarCrop,ALL,N2O_AGR,
+ALL,Wheat,Wheat,Wheat,ALL,N2O_AGR,
+
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11015,,,,,,,,,,,,,,,,,,
+,,,,,uncontrolled-emiss-coef,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,N2O_AGR,2.36722E-10,2.5305E-10,8.37034E-12,1.46038E-09,2.64875E-09,9.83221E-11,3.35468E-11,1.65993E-09,6.33178E-11,1.29366E-10,1.41663E-10,1.19638E-10,4.31272E-11,1.66231E-10
+FiberCrop,FiberCrop,FiberCrop,1990,N2O_AGR,8.4273E-13,0,2.97984E-14,0,9.42955E-12,3.50027E-13,1.19427E-13,5.90936E-12,2.25411E-13,4.60544E-13,5.04321E-13,4.2591E-13,1.53533E-13,5.91782E-13
+FodderCrop,FodderCrop,FodderCrop,1990,N2O_AGR,7.12266E-10,1.20435E-10,1.58771E-11,9.31667E-10,1.61099E-09,2.37744E-10,1.10995E-15,1.90121E-09,3.09473E-11,3.28587E-11,0,2.16952E-10,0,0
+MiscCrop,MiscCrop,MiscCrop,1990,N2O_AGR,1.65353E-09,6.09921E-10,5.52202E-11,1.19159E-08,9.29807E-09,5.39167E-10,2.21562E-10,1.12585E-08,1.91534E-10,5.67807E-10,4.83317E-10,7.29853E-10,3.81586E-10,7.13553E-10
+OilCrop,OilCrop,OilCrop,1990,N2O_AGR,2.54501E-10,2.00496E-10,9.1128E-12,1.47574E-09,2.4965E-09,1.12639E-10,3.26252E-11,2.42247E-09,8.74698E-11,1.47255E-10,2.8638E-10,1.13105E-10,4.13229E-11,1.76858E-10
+OtherGrain,OtherGrain,OtherGrain,1990,N2O_AGR,2.44141E-10,2.63398E-10,8.83956E-12,1.55738E-09,2.76811E-09,1.03455E-10,3.50588E-11,1.77365E-09,6.6102E-11,1.33566E-10,1.48918E-10,1.2589E-10,4.61958E-11,1.73661E-10
+Rice,Rice,Rice,1990,N2O_AGR,2.00585E-10,0,5.92909E-12,1.95094E-09,2.88508E-09,5.12911E-11,8.19931E-11,3.50138E-09,3.44449E-10,7.97632E-11,4.87923E-10,1.24683E-10,6.70469E-11,2.45948E-10
+SugarCrop,SugarCrop,SugarCrop,1990,N2O_AGR,5.99956E-10,1.28694E-09,4.25001E-11,4.87048E-09,4.49026E-09,5.00038E-10,6.09078E-11,4.49069E-09,1.12181E-10,2.19985E-10,2.40348E-10,6.08443E-10,0,2.81801E-10
+Wheat,Wheat,Wheat,1990,N2O_AGR,2.52314E-10,2.69718E-10,8.92168E-12,1.55657E-09,2.82322E-09,1.04798E-10,3.57565E-11,1.76927E-09,6.74884E-11,1.37887E-10,1.50994E-10,1.27518E-10,4.59679E-11,1.7718E-10
+
+NOx_AGR,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,
+11001,,,,,,
+
+region,FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,output-driver
+ALL,Corn,Corn,Corn,ALL,NOx_AGR,
+ALL,FiberCrop,FiberCrop,FiberCrop,ALL,NOx_AGR,
+ALL,FodderCrop,FodderCrop,FodderCrop,ALL,NOx_AGR,
+ALL,MiscCrop,MiscCrop,MiscCrop,ALL,NOx_AGR,
+ALL,OilCrop,OilCrop,OilCrop,ALL,NOx_AGR,
+ALL,OtherGrain,OtherGrain,OtherGrain,ALL,NOx_AGR,
+ALL,Rice,Rice,Rice,ALL,NOx_AGR,
+ALL,SugarCrop,SugarCrop,SugarCrop,ALL,NOx_AGR,
+ALL,Wheat,Wheat,Wheat,ALL,NOx_AGR,
+
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+11015,,,,,,,,,,,,,,,,,,
+,,,,,uncontrolled-emiss-coef,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,NOx_AGR,1.90216E-11,0,3.57947E-11,0,1.68506E-09,1.76273E-13,0,0,0,0,0,0,0,0
+FiberCrop,FiberCrop,FiberCrop,1990,NOx_AGR,6.77168E-14,0,1.27429E-13,0,5.99881E-12,6.27531E-16,0,0,0,0,0,0,0,0
+FodderCrop,FodderCrop,FodderCrop,1990,NOx_AGR,0,0,5.14718E-11,0,7.65455E-10,2.94621E-13,0,0,0,0,0,0,0,0
+MiscCrop,MiscCrop,MiscCrop,1990,NOx_AGR,1.32868E-10,0,2.36142E-10,0,5.91517E-09,9.66623E-13,0,0,0,0,0,0,0,0
+OilCrop,OilCrop,OilCrop,1990,NOx_AGR,2.04501E-11,0,3.89698E-11,0,1.5882E-09,2.0194E-13,0,0,0,0,0,0,0,0
+OtherGrain,OtherGrain,OtherGrain,1990,NOx_AGR,1.96177E-11,0,3.78013E-11,0,1.76099E-09,1.85476E-13,0,0,0,0,0,0,0,0
+Rice,Rice,Rice,1990,NOx_AGR,1.14461E-11,0,8.13838E-12,0,1.73562E-09,0,0,0,0,0,0,0,0,0
+SugarCrop,SugarCrop,SugarCrop,1990,NOx_AGR,4.82088E-11,0,1.81746E-10,0,2.85658E-09,8.96473E-13,0,0,0,0,0,0,0,0
+Wheat,Wheat,Wheat,1990,NOx_AGR,2.02745E-11,0,3.81525E-11,0,1.79605E-09,1.87884E-13,0,0,0,0,0,0,0,0
+
+NMVOC_AGR,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11001,,,,,,
+
+region,FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,output-driver
+ALL,Corn,Corn,Corn,ALL,NMVOC_AGR,
+ALL,FiberCrop,FiberCrop,FiberCrop,ALL,NMVOC_AGR,
+ALL,FodderCrop,FodderCrop,FodderCrop,ALL,NMVOC_AGR,
+ALL,MiscCrop,MiscCrop,MiscCrop,ALL,NMVOC_AGR,
+ALL,OilCrop,OilCrop,OilCrop,ALL,NMVOC_AGR,
+ALL,OtherGrain,OtherGrain,OtherGrain,ALL,NMVOC_AGR,
+ALL,Rice,Rice,Rice,ALL,NMVOC_AGR,
+ALL,SugarCrop,SugarCrop,SugarCrop,ALL,NMVOC_AGR,
+ALL,Wheat,Wheat,Wheat,ALL,NMVOC_AGR,
+
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+11015,,,,,,
+,,,,,uncontrolled-emiss-coef,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,NMVOC_AGR,0,0,1.01245E-10,0,2.20964E-09,0,0,0,0,0,0,0,0,0
+FiberCrop,FiberCrop,FiberCrop,1990,NMVOC_AGR,0,0,3.60431E-13,0,7.8663E-12,0,0,0,0,0,0,0,0,0
+FodderCrop,FodderCrop,FodderCrop,1990,NMVOC_AGR,0,0,2.4643E-10,0,2.39057E-09,0,0,0,0,0,0,0,0,0
+MiscCrop,MiscCrop,MiscCrop,1990,NMVOC_AGR,0,0,6.67925E-10,0,7.75662E-09,0,0,0,0,0,0,0,0,0
+OilCrop,OilCrop,OilCrop,1990,NMVOC_AGR,0,0,1.10225E-10,0,2.08263E-09,0,0,0,0,0,0,0,0,0
+OtherGrain,OtherGrain,OtherGrain,1990,NMVOC_AGR,0,0,1.0692E-10,0,2.30921E-09,0,0,0,0,0,0,0,0,0
+Rice,Rice,Rice,1990,NMVOC_AGR,0,0,1.28726E-10,0,2.80939E-09,0,0,0,0,0,0,0,0,0
+SugarCrop,SugarCrop,SugarCrop,1990,NMVOC_AGR,0,0,5.14066E-10,0,3.74586E-09,0,0,0,0,0,0,0,0,0
+Wheat,Wheat,Wheat,1990,NMVOC_AGR,0,0,1.07914E-10,0,2.35518E-09,0,0,0,0,0,0,0,0,0
+
+NH3_AGR,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11001,,,,,,,,,,,,,,,,,,
+
+region,FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,output-driver
+ALL,Corn,Corn,Corn,ALL,NH3_AGR,
+ALL,FiberCrop,FiberCrop,FiberCrop,ALL,NH3_AGR,
+ALL,FodderCrop,FodderCrop,FodderCrop,ALL,NH3_AGR,
+ALL,MiscCrop,MiscCrop,MiscCrop,ALL,NH3_AGR,
+ALL,OilCrop,OilCrop,OilCrop,ALL,NH3_AGR,
+ALL,OtherGrain,OtherGrain,OtherGrain,ALL,NH3_AGR,
+ALL,Rice,Rice,Rice,ALL,NH3_AGR,
+ALL,SugarCrop,SugarCrop,SugarCrop,ALL,NH3_AGR,
+ALL,Wheat,Wheat,Wheat,ALL,NH3_AGR,
+
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+11015,,,,,,
+,,,,,uncontrolled-emiss-coef,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,NH3_AGR,6.69167E-10,7.38638E-10,4.46804E-10,6.8396E-10,1.19999E-09,7.39816E-11,9.05452E-10,1.57772E-09,2.34275E-10,1.04246E-10,1.86614E-10,4.06638E-10,1.26523E-09,2.50469E-09
+FiberCrop,FiberCrop,FiberCrop,1990,NH3_AGR,2.38223E-12,0,1.59062E-12,0,4.27195E-12,2.63374E-13,3.22341E-12,5.6167E-12,8.34017E-13,3.71117E-13,6.64345E-13,1.44763E-12,4.50422E-12,8.91669E-12
+FodderCrop,FodderCrop,FodderCrop,1990,NH3_AGR,3.61473E-09,2.24033E-09,1.44743E-09,2.61815E-10,1.40362E-09,2.62656E-10,3.05407E-11,9.48132E-10,1.16112E-10,3.01632E-11,4.27859E-11,1.75719E-09,9.83363E-11,3.12216E-11
+MiscCrop,MiscCrop,MiscCrop,1990,NH3_AGR,4.6742E-09,1.78032E-09,2.94762E-09,5.58073E-09,4.21239E-09,4.05691E-10,5.9801E-09,1.07009E-08,7.08672E-10,4.57552E-10,6.36675E-10,2.48071E-09,1.11947E-08,1.07515E-08
+OilCrop,OilCrop,OilCrop,1990,NH3_AGR,7.19423E-10,5.85236E-10,4.86436E-10,6.91156E-10,1.13101E-09,8.47541E-11,8.80577E-10,2.3025E-09,3.23637E-10,1.18661E-10,3.7725E-10,3.84433E-10,1.2123E-09,2.66481E-09
+OtherGrain,OtherGrain,OtherGrain,1990,NH3_AGR,6.90139E-10,7.68842E-10,4.7185E-10,7.29393E-10,1.25406E-09,7.78441E-11,9.46262E-10,1.68581E-09,2.44576E-10,1.0763E-10,1.96171E-10,4.27888E-10,1.35526E-09,2.61663E-09
+Rice,Rice,Rice,1990,NH3_AGR,4.65206E-10,0,2.19332E-10,1.35851E-09,1.15264E-09,2.09383E-12,2.53806E-09,3.56676E-09,1.37562E-09,2.14244E-11,1.16583E-09,3.4237E-10,2.04752E-09,4.17764E-09
+SugarCrop,SugarCrop,SugarCrop,1990,NH3_AGR,1.69596E-09,3.7565E-09,2.26863E-09,2.28106E-09,2.03426E-09,3.76249E-10,1.64394E-09,4.26829E-09,4.15066E-10,1.77269E-10,3.16611E-10,2.06805E-09,0,4.24604E-09
+Wheat,Wheat,Wheat,1990,NH3_AGR,7.13243E-10,7.87291E-10,4.76234E-10,7.29011E-10,1.27903E-09,7.88546E-11,9.65092E-10,1.68165E-09,2.49706E-10,1.11113E-10,1.98906E-10,4.33423E-10,1.34857E-09,2.66967E-09
+
+CH4_AWB,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11001,,,,,,,,,,,,,,,,,,
+
+region,FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,output-driver,,,,,,,,,,,,
+ALL,Corn,Corn,Corn,ALL,CH4_AWB,,,,,,,,,,,,,
+ALL,FiberCrop,FiberCrop,FiberCrop,ALL,CH4_AWB,,,,,,,,,,,,,
+ALL,FodderCrop,FodderCrop,FodderCrop,ALL,CH4_AWB,,,,,,,,,,,,,
+ALL,MiscCrop,MiscCrop,MiscCrop,ALL,CH4_AWB,,,,,,,,,,,,,
+ALL,OilCrop,OilCrop,OilCrop,ALL,CH4_AWB,,,,,,,,,,,,,
+ALL,OtherGrain,OtherGrain,OtherGrain,ALL,CH4_AWB,,,,,,,,,,,,,
+ALL,Rice,Rice,Rice,ALL,CH4_AWB,,,,,,,,,,,,,
+ALL,SugarCrop,SugarCrop,SugarCrop,ALL,CH4_AWB,,,,,,,,,,,,,
+ALL,Wheat,Wheat,Wheat,ALL,CH4_AWB,,,,,,,,,,,,,
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11015,,,,,,,,,,,,,,,,,,
+,,,,,uncontrolled-emiss-coef,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,CH4_AWB,3.87541E-11,5.08899E-11,3.23339E-11,8.41617E-11,1.51918E-10,5.43865E-11,4.3227E-12,2.94379E-10,5.10804E-11,4.47495E-11,4.47524E-11,8.04363E-11,6.01446E-12,1.25979E-11
+FiberCrop,FiberCrop,FiberCrop,1990,CH4_AWB,2.79148E-13,0,2.32903E-13,0,1.09428E-12,3.9175E-13,3.11367E-14,2.12043E-12,3.67935E-13,3.22333E-13,3.22354E-13,5.79388E-13,4.33225E-14,9.07433E-14
+FodderCrop,FodderCrop,FodderCrop,1990,CH4_AWB,1.92997E-10,3.70503E-11,4.77713E-11,4.01104E-11,9.97656E-11,1.1525E-10,3.37319E-16,5.57468E-10,5.34418E-11,1.80485E-11,0,1.57271E-10,0,0
+MiscCrop,MiscCrop,MiscCrop,1990,CH4_AWB,2.00067E-10,1.04041E-10,1.66239E-10,4.66188E-10,4.73654E-10,2.62373E-10,2.10778E-11,1.42349E-09,1.6074E-10,1.91756E-10,1.61618E-10,3.62453E-10,3.48552E-11,4.51159E-11
+OilCrop,OilCrop,OilCrop,1990,CH4_AWB,4.39277E-11,7.14065E-11,4.70782E-11,9.79764E-11,1.82519E-10,8.43272E-11,5.84032E-12,4.32195E-10,9.71207E-11,5.50935E-11,9.15259E-11,1.28221E-10,7.20723E-12,1.81421E-11
+OtherGrain,OtherGrain,OtherGrain,1990,CH4_AWB,4.64954E-11,6.4442E-11,4.19683E-11,1.09391E-10,1.88548E-10,7.31705E-11,5.6557E-12,3.77953E-10,6.51656E-11,5.32389E-11,5.78963E-11,1.12502E-10,7.79571E-12,1.59672E-11
+Rice,Rice,Rice,1990,CH4_AWB,5.94608E-11,0,4.96101E-11,1.2913E-10,2.3309E-10,8.34457E-11,6.63236E-12,4.51668E-10,7.8373E-11,6.86595E-11,6.8664E-11,1.23414E-10,9.22803E-12,1.9329E-11
+SugarCrop,SugarCrop,SugarCrop,1990,CH4_AWB,7.42073E-11,1.72826E-10,1.09696E-10,2.06459E-10,2.03284E-10,1.847E-10,6.122E-12,5.80724E-10,7.12061E-11,6.00463E-11,5.99234E-11,2.73167E-10,0,1.68574E-11
+Wheat,Wheat,Wheat,1990,CH4_AWB,6.23712E-11,8.19026E-11,5.20384E-11,1.3545E-10,2.44499E-10,8.75301E-11,6.95699E-12,4.73776E-10,8.22091E-11,7.20201E-11,7.20249E-11,1.29455E-10,9.67971E-12,2.02751E-11
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11030,,,,,,,,,,,,,,,,,,
+,,,,,gdp-mid-control,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,CH4_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+FiberCrop,FiberCrop,FiberCrop,1990,CH4_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+FodderCrop,FodderCrop,FodderCrop,1990,CH4_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+MiscCrop,MiscCrop,MiscCrop,1990,CH4_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+OilCrop,OilCrop,OilCrop,1990,CH4_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+OtherGrain,OtherGrain,OtherGrain,1990,CH4_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+Rice,Rice,Rice,1990,CH4_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+SugarCrop,SugarCrop,SugarCrop,1990,CH4_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+Wheat,Wheat,Wheat,1990,CH4_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11040,,,,,,,,,,,,,,,,,,
+,,,,,gdp-control-range,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,CH4_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+FiberCrop,FiberCrop,FiberCrop,1990,CH4_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+FodderCrop,FodderCrop,FodderCrop,1990,CH4_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+MiscCrop,MiscCrop,MiscCrop,1990,CH4_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+OilCrop,OilCrop,OilCrop,1990,CH4_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+OtherGrain,OtherGrain,OtherGrain,1990,CH4_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+Rice,Rice,Rice,1990,CH4_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+SugarCrop,SugarCrop,SugarCrop,1990,CH4_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+Wheat,Wheat,Wheat,1990,CH4_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11050,,,,,,,,,,,,,,,,,,
+,,,,,final-emiss-coef,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,CH4_AWB,1.55016E-11,2.0356E-11,1.29336E-11,3.36647E-11,6.07674E-11,2.17546E-11,1.72908E-12,1.17752E-10,2.04321E-11,1.78998E-11,1.7901E-11,3.21745E-11,2.40578E-12,5.03915E-12
+FiberCrop,FiberCrop,FiberCrop,1990,CH4_AWB,1.11659E-13,-1,9.31612E-14,-1,4.37712E-13,1.567E-13,1.24547E-14,8.48172E-13,1.47174E-13,1.28933E-13,1.28942E-13,2.31755E-13,1.7329E-14,3.62973E-14
+FodderCrop,FodderCrop,FodderCrop,1990,CH4_AWB,7.71987E-11,1.48201E-11,1.91085E-11,1.60442E-11,3.99062E-11,4.61001E-11,1.34928E-16,2.22987E-10,2.13767E-11,7.21941E-12,-1,6.29086E-11,-1,-1
+MiscCrop,MiscCrop,MiscCrop,1990,CH4_AWB,8.00268E-11,4.16165E-11,6.64957E-11,1.86475E-10,1.89462E-10,1.04949E-10,8.43112E-12,5.69398E-10,6.4296E-11,7.67023E-11,6.46474E-11,1.44981E-10,1.39421E-11,1.80464E-11
+OilCrop,OilCrop,OilCrop,1990,CH4_AWB,1.75711E-11,2.85626E-11,1.88313E-11,3.91906E-11,7.30078E-11,3.37309E-11,2.33613E-12,1.72878E-10,3.88483E-11,2.20374E-11,3.66104E-11,5.12884E-11,2.88289E-12,7.25683E-12
+OtherGrain,OtherGrain,OtherGrain,1990,CH4_AWB,1.85982E-11,2.57768E-11,1.67873E-11,4.37564E-11,7.54192E-11,2.92682E-11,2.26228E-12,1.51181E-10,2.60663E-11,2.12956E-11,2.31585E-11,4.50009E-11,3.11829E-12,6.38687E-12
+Rice,Rice,Rice,1990,CH4_AWB,2.37843E-11,-1,1.98441E-11,5.1652E-11,9.32359E-11,3.33783E-11,2.65294E-12,1.80667E-10,3.13492E-11,2.74638E-11,2.74656E-11,4.93656E-11,3.69121E-12,7.73161E-12
+SugarCrop,SugarCrop,SugarCrop,1990,CH4_AWB,2.96829E-11,6.91303E-11,4.38784E-11,8.25835E-11,8.13137E-11,7.38802E-11,2.4488E-12,2.3229E-10,2.84824E-11,2.40185E-11,2.39694E-11,1.09267E-10,-1,6.74295E-12
+Wheat,Wheat,Wheat,1990,CH4_AWB,2.49485E-11,3.2761E-11,2.08154E-11,5.41802E-11,9.77995E-11,3.5012E-11,2.7828E-12,1.8951E-10,3.28837E-11,2.88081E-11,2.88099E-11,5.17819E-11,3.87188E-12,8.11005E-12
+
+N2O_AWB,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11001,,,,,,,,,,,,,,,,,,
+
+region,FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,output-driver,,,,,,,,,,,,
+ALL,Corn,Corn,Corn,ALL,N2O_AWB,,,,,,,,,,,,,
+ALL,FiberCrop,FiberCrop,FiberCrop,ALL,N2O_AWB,,,,,,,,,,,,,
+ALL,FodderCrop,FodderCrop,FodderCrop,ALL,N2O_AWB,,,,,,,,,,,,,
+ALL,MiscCrop,MiscCrop,MiscCrop,ALL,N2O_AWB,,,,,,,,,,,,,
+ALL,OilCrop,OilCrop,OilCrop,ALL,N2O_AWB,,,,,,,,,,,,,
+ALL,OtherGrain,OtherGrain,OtherGrain,ALL,N2O_AWB,,,,,,,,,,,,,
+ALL,Rice,Rice,Rice,ALL,N2O_AWB,,,,,,,,,,,,,
+ALL,SugarCrop,SugarCrop,SugarCrop,ALL,N2O_AWB,,,,,,,,,,,,,
+ALL,Wheat,Wheat,Wheat,ALL,N2O_AWB,,,,,,,,,,,,,
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11015,,,,,,,,,,,,,,,,,,
+,,,,,uncontrolled-emiss-coef,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,N2O_AWB,9.54392E-13,1.25326E-12,8.88426E-14,4.83729E-11,2.1409E-12,1.33937E-12,6.35329E-13,9.69175E-12,3.59657E-13,3.21515E-13,2.93895E-13,1.98089E-12,8.83975E-13,1.17322E-12
+FiberCrop,FiberCrop,FiberCrop,1990,N2O_AWB,6.87455E-15,0,6.39939E-16,0,1.54211E-14,9.64757E-15,4.57632E-15,6.98103E-14,2.59063E-15,2.3159E-15,2.11695E-15,1.42685E-14,6.36733E-15,8.45076E-15
+FodderCrop,FodderCrop,FodderCrop,1990,N2O_AWB,4.7529E-12,9.12433E-13,1.31259E-13,2.30539E-11,1.40594E-12,2.83825E-12,4.95775E-17,1.83534E-11,3.76284E-13,1.29675E-13,0,3.8731E-12,0,0
+MiscCrop,MiscCrop,MiscCrop,1990,N2O_AWB,4.92702E-12,2.56221E-12,4.56769E-13,2.67947E-10,6.67494E-12,6.46144E-12,3.09791E-12,4.68653E-11,1.13177E-12,1.37772E-12,1.06137E-12,8.92607E-12,5.12284E-12,4.20157E-12
+OilCrop,OilCrop,OilCrop,1990,N2O_AWB,1.0818E-12,1.75852E-12,1.29355E-13,5.6313E-11,2.57214E-12,2.07671E-12,8.58382E-13,1.4229E-11,6.83827E-13,3.95835E-13,6.01063E-13,3.15768E-12,1.05928E-12,1.68954E-12
+OtherGrain,OtherGrain,OtherGrain,1990,N2O_AWB,1.14504E-12,1.58701E-12,1.15315E-13,6.28738E-11,2.6571E-12,1.80196E-12,8.31246E-13,1.24432E-11,4.58831E-13,3.8251E-13,3.80213E-13,2.77058E-12,1.14578E-12,1.487E-12
+Rice,Rice,Rice,1990,N2O_AWB,1.46433E-12,0,1.36312E-13,7.42189E-11,3.2848E-12,2.05501E-12,9.74791E-13,1.48701E-11,5.51824E-13,4.93304E-13,4.50926E-13,3.0393E-12,1.35629E-12,1.80008E-12
+SugarCrop,SugarCrop,SugarCrop,1990,N2O_AWB,1.82749E-12,4.25615E-12,3.01407E-13,1.18664E-10,2.86477E-12,4.54859E-12,8.99782E-13,1.9119E-11,5.01362E-13,4.3142E-13,3.93525E-13,6.72725E-12,0,1.5699E-12
+Wheat,Wheat,Wheat,1990,N2O_AWB,1.53601E-12,2.017E-12,1.42984E-13,7.78517E-11,3.44559E-12,2.15559E-12,1.0225E-12,1.5598E-11,5.78834E-13,5.1745E-13,4.72997E-13,3.18807E-12,1.42268E-12,1.88819E-12
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11030,,,,,,,,,,,,,,,,,,
+,,,,,gdp-mid-control,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,N2O_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+FiberCrop,FiberCrop,FiberCrop,1990,N2O_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+FodderCrop,FodderCrop,FodderCrop,1990,N2O_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+MiscCrop,MiscCrop,MiscCrop,1990,N2O_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+OilCrop,OilCrop,OilCrop,1990,N2O_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+OtherGrain,OtherGrain,OtherGrain,1990,N2O_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+Rice,Rice,Rice,1990,N2O_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+SugarCrop,SugarCrop,SugarCrop,1990,N2O_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+Wheat,Wheat,Wheat,1990,N2O_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11040,,,,,,,,,,,,,,,,,,
+,,,,,gdp-control-range,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,N2O_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+FiberCrop,FiberCrop,FiberCrop,1990,N2O_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+FodderCrop,FodderCrop,FodderCrop,1990,N2O_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+MiscCrop,MiscCrop,MiscCrop,1990,N2O_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+OilCrop,OilCrop,OilCrop,1990,N2O_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+OtherGrain,OtherGrain,OtherGrain,1990,N2O_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+Rice,Rice,Rice,1990,N2O_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+SugarCrop,SugarCrop,SugarCrop,1990,N2O_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+Wheat,Wheat,Wheat,1990,N2O_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11050,,,,,,,,,,,,,,,,,,
+,,,,,final-emiss-coef,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,N2O_AWB,3.81757E-13,5.01303E-13,3.5537E-14,1.93491E-11,8.56361E-13,5.35748E-13,2.54132E-13,3.8767E-12,1.43863E-13,1.28606E-13,1.17558E-13,7.92357E-13,3.5359E-13,4.69287E-13
+FiberCrop,FiberCrop,FiberCrop,1990,N2O_AWB,2.74982E-15,-1,2.55976E-16,-1,6.16842E-15,3.85903E-15,1.83053E-15,2.79241E-14,1.03625E-15,9.26359E-16,8.46778E-16,5.7074E-15,2.54693E-15,3.38031E-15
+FodderCrop,FodderCrop,FodderCrop,1990,N2O_AWB,1.90116E-12,3.64973E-13,5.25037E-14,9.22157E-12,5.62376E-13,1.1353E-12,1.9831E-17,7.34134E-12,1.50513E-13,5.187E-14,-1,1.54924E-12,-1,-1
+MiscCrop,MiscCrop,MiscCrop,1990,N2O_AWB,1.97081E-12,1.02488E-12,1.82708E-13,1.07179E-10,2.66998E-12,2.58457E-12,1.23916E-12,1.87461E-11,4.52708E-13,5.5109E-13,4.24548E-13,3.57043E-12,2.04914E-12,1.68063E-12
+OilCrop,OilCrop,OilCrop,1990,N2O_AWB,4.3272E-13,7.03407E-13,5.1742E-14,2.25252E-11,1.02886E-12,8.30685E-13,3.43353E-13,5.69161E-12,2.73531E-13,1.58334E-13,2.40425E-13,1.26307E-12,4.23713E-13,6.75816E-13
+OtherGrain,OtherGrain,OtherGrain,1990,N2O_AWB,4.58014E-13,6.34802E-13,4.61258E-14,2.51495E-11,1.06284E-12,7.20784E-13,3.32498E-13,4.9773E-12,1.83533E-13,1.53004E-13,1.52085E-13,1.10823E-12,4.5831E-13,5.94798E-13
+Rice,Rice,Rice,1990,N2O_AWB,5.85733E-13,-1,5.45248E-14,2.96876E-11,1.31392E-12,8.22002E-13,3.89917E-13,5.94805E-12,2.2073E-13,1.97322E-13,1.8037E-13,1.21572E-12,5.42516E-13,7.20031E-13
+SugarCrop,SugarCrop,SugarCrop,1990,N2O_AWB,7.30997E-13,1.70246E-12,1.20563E-13,4.74658E-11,1.14591E-12,1.81944E-12,3.59913E-13,7.64761E-12,2.00545E-13,1.72568E-13,1.5741E-13,2.6909E-12,-1,6.27959E-13
+Wheat,Wheat,Wheat,1990,N2O_AWB,6.14403E-13,8.06802E-13,5.71936E-14,3.11407E-11,1.37823E-12,8.62237E-13,4.09002E-13,6.23919E-12,2.31534E-13,2.0698E-13,1.89199E-13,1.27523E-12,5.6907E-13,7.55274E-13
+
+NOx_AWB,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11001,,,,,,,,,,,,,,,,,,
+
+region,FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,output-driver,,,,,,,,,,,,
+ALL,Corn,Corn,Corn,ALL,NOx_AWB,,,,,,,,,,,,,
+ALL,FiberCrop,FiberCrop,FiberCrop,ALL,NOx_AWB,,,,,,,,,,,,,
+ALL,FodderCrop,FodderCrop,FodderCrop,ALL,NOx_AWB,,,,,,,,,,,,,
+ALL,MiscCrop,MiscCrop,MiscCrop,ALL,NOx_AWB,,,,,,,,,,,,,
+ALL,OilCrop,OilCrop,OilCrop,ALL,NOx_AWB,,,,,,,,,,,,,
+ALL,OtherGrain,OtherGrain,OtherGrain,ALL,NOx_AWB,,,,,,,,,,,,,
+ALL,Rice,Rice,Rice,ALL,NOx_AWB,,,,,,,,,,,,,
+ALL,SugarCrop,SugarCrop,SugarCrop,ALL,NOx_AWB,,,,,,,,,,,,,
+ALL,Wheat,Wheat,Wheat,ALL,NOx_AWB,,,,,,,,,,,,,
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11015,,,,,,,,,,,,,,,,,,
+,,,,,uncontrolled-emiss-coef,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,NOx_AWB,2.6356E-11,4.5573E-11,6.33682E-12,7.53687E-11,1.35081E-10,4.87043E-11,3.87108E-12,2.63623E-10,4.57436E-11,3.18395E-11,4.00768E-11,7.20325E-11,5.38608E-12,1.12817E-11
+FiberCrop,FiberCrop,FiberCrop,1990,NOx_AWB,1.89844E-13,0,4.56446E-14,0,9.72997E-13,3.50821E-13,2.78836E-14,1.89889E-12,3.29494E-13,2.29342E-13,2.88676E-13,5.18855E-13,3.87963E-14,8.12627E-14
+FodderCrop,FodderCrop,FodderCrop,1990,NOx_AWB,1.31254E-10,3.31794E-11,9.36226E-12,3.59198E-11,8.87083E-11,1.03209E-10,3.02077E-16,4.99225E-10,4.78583E-11,1.28416E-11,0,1.4084E-10,0,0
+MiscCrop,MiscCrop,MiscCrop,1990,NOx_AWB,1.36062E-10,9.31712E-11,3.25797E-11,4.17482E-10,4.21157E-10,2.34961E-10,1.88757E-11,1.27477E-09,1.43946E-10,1.36435E-10,1.44733E-10,3.24584E-10,3.12136E-11,4.04023E-11
+OilCrop,OilCrop,OilCrop,1990,NOx_AWB,2.98745E-11,6.39461E-11,9.22642E-12,8.77401E-11,1.6229E-10,7.55169E-11,5.23014E-12,3.8704E-10,8.69737E-11,3.91993E-11,8.19635E-11,1.14825E-10,6.45423E-12,1.62466E-11
+OtherGrain,OtherGrain,OtherGrain,1990,NOx_AWB,3.16208E-11,5.77093E-11,8.22498E-12,9.79622E-11,1.67651E-10,6.55258E-11,5.0648E-12,3.38466E-10,5.83573E-11,3.78798E-11,5.18474E-11,1.00748E-10,6.98124E-12,1.4299E-11
+Rice,Rice,Rice,1990,NOx_AWB,4.04383E-11,0,9.72264E-12,1.15639E-10,2.07256E-10,7.47275E-11,5.93943E-12,4.04479E-10,7.01848E-11,4.88516E-11,6.14901E-11,1.1052E-10,8.26391E-12,1.73096E-11
+SugarCrop,SugarCrop,SugarCrop,1990,NOx_AWB,5.04672E-11,1.54769E-10,2.14983E-11,1.84888E-10,1.80754E-10,1.65403E-10,5.48239E-12,5.20052E-10,6.37667E-11,4.27233E-11,5.36628E-11,2.44627E-10,0,1.50962E-11
+Wheat,Wheat,Wheat,1990,NOx_AWB,4.24176E-11,7.33456E-11,1.01985E-11,1.21299E-10,2.174E-10,7.83852E-11,6.23014E-12,4.24277E-10,7.36201E-11,5.12427E-11,6.44999E-11,1.1593E-10,8.6684E-12,1.81568E-11
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11030,,,,,,,,,,,,,,,,,,
+,,,,,gdp-mid-control,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,NOx_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+FiberCrop,FiberCrop,FiberCrop,1990,NOx_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+FodderCrop,FodderCrop,FodderCrop,1990,NOx_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+MiscCrop,MiscCrop,MiscCrop,1990,NOx_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+OilCrop,OilCrop,OilCrop,1990,NOx_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+OtherGrain,OtherGrain,OtherGrain,1990,NOx_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+Rice,Rice,Rice,1990,NOx_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+SugarCrop,SugarCrop,SugarCrop,1990,NOx_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+Wheat,Wheat,Wheat,1990,NOx_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11040,,,,,,,,,,,,,,,,,,
+,,,,,gdp-control-range,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,NOx_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+FiberCrop,FiberCrop,FiberCrop,1990,NOx_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+FodderCrop,FodderCrop,FodderCrop,1990,NOx_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+MiscCrop,MiscCrop,MiscCrop,1990,NOx_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+OilCrop,OilCrop,OilCrop,1990,NOx_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+OtherGrain,OtherGrain,OtherGrain,1990,NOx_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+Rice,Rice,Rice,1990,NOx_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+SugarCrop,SugarCrop,SugarCrop,1990,NOx_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+Wheat,Wheat,Wheat,1990,NOx_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11050,,,,,,,,,,,,,,,,,,
+,,,,,final-emiss-coef,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,NOx_AWB,1.05424E-11,1.82292E-11,2.53473E-12,3.01475E-11,5.40324E-11,1.94817E-11,1.54843E-12,1.05449E-10,1.82974E-11,1.27358E-11,1.60307E-11,2.8813E-11,2.15443E-12,4.51267E-12
+FiberCrop,FiberCrop,FiberCrop,1990,NOx_AWB,7.59377E-14,-1,1.82578E-14,-1,3.89199E-13,1.40328E-13,1.11535E-14,7.59557E-13,1.31798E-13,9.17368E-14,1.1547E-13,2.07542E-13,1.55185E-14,3.25051E-14
+FodderCrop,FodderCrop,FodderCrop,1990,NOx_AWB,5.25015E-11,1.32718E-11,3.7449E-12,1.43679E-11,3.54833E-11,4.12837E-11,1.20831E-16,1.9969E-10,1.91433E-11,5.13665E-12,-1,5.6336E-11,-1,-1
+MiscCrop,MiscCrop,MiscCrop,1990,NOx_AWB,5.44249E-11,3.72685E-11,1.30319E-11,1.66993E-10,1.68463E-10,9.39845E-11,7.55026E-12,5.09909E-10,5.75785E-11,5.45741E-11,5.78932E-11,1.29834E-10,1.24854E-11,1.61609E-11
+OilCrop,OilCrop,OilCrop,1990,NOx_AWB,1.19498E-11,2.55784E-11,3.69057E-12,3.5096E-11,6.49161E-11,3.02067E-11,2.09206E-12,1.54816E-10,3.47895E-11,1.56797E-11,3.27854E-11,4.59299E-11,2.58169E-12,6.49865E-12
+OtherGrain,OtherGrain,OtherGrain,1990,NOx_AWB,1.26483E-11,2.30837E-11,3.28999E-12,3.91849E-11,6.70603E-11,2.62103E-11,2.02592E-12,1.35386E-10,2.33429E-11,1.51519E-11,2.0739E-11,4.02993E-11,2.79249E-12,5.71959E-12
+Rice,Rice,Rice,1990,NOx_AWB,1.61753E-11,-1,3.88906E-12,4.62555E-11,8.29023E-11,2.9891E-11,2.37577E-12,1.61791E-10,2.80739E-11,1.95406E-11,2.45961E-11,4.4208E-11,3.30556E-12,6.92383E-12
+SugarCrop,SugarCrop,SugarCrop,1990,NOx_AWB,2.01869E-11,6.19077E-11,8.59933E-12,7.39553E-11,7.23015E-11,6.61614E-11,2.19296E-12,2.08021E-10,2.55067E-11,1.70893E-11,2.14651E-11,9.7851E-11,-1,6.03847E-12
+Wheat,Wheat,Wheat,1990,NOx_AWB,1.6967E-11,2.93382E-11,4.07941E-12,4.85196E-11,8.69601E-11,3.13541E-11,2.49206E-12,1.69711E-10,2.9448E-11,2.04971E-11,2.58E-11,4.63719E-11,3.46736E-12,7.26273E-12
+
+CO_AWB,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+11001,,,,,,
+
+region,FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,output-driver
+ALL,Corn,Corn,Corn,ALL,CO_AWB,
+ALL,FiberCrop,FiberCrop,FiberCrop,ALL,CO_AWB,
+ALL,FodderCrop,FodderCrop,FodderCrop,ALL,CO_AWB,
+ALL,MiscCrop,MiscCrop,MiscCrop,ALL,CO_AWB,
+ALL,OilCrop,OilCrop,OilCrop,ALL,CO_AWB,
+ALL,OtherGrain,OtherGrain,OtherGrain,ALL,CO_AWB,
+ALL,Rice,Rice,Rice,ALL,CO_AWB,
+ALL,SugarCrop,SugarCrop,SugarCrop,ALL,CO_AWB,
+ALL,Wheat,Wheat,Wheat,ALL,CO_AWB,
+
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11015,,,,,,,,,,,,,,,,,,
+,,,,,uncontrolled-emiss-coef,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,CO_AWB,5.95604E-10,1.0102E-09,1.0803E-10,2.76377E-09,2.88049E-09,1.07961E-09,8.58089E-11,5.84364E-09,1.01398E-09,7.09718E-10,8.88234E-10,1.64437E-09,1.19391E-10,2.50077E-10
+FiberCrop,FiberCrop,FiberCrop,1990,CO_AWB,4.29018E-12,0,7.78149E-13,0,2.07483E-11,7.77652E-12,6.18087E-13,4.20921E-11,7.30379E-12,5.11214E-12,6.39801E-12,1.18445E-11,8.59984E-13,1.80132E-12
+FodderCrop,FodderCrop,FodderCrop,1990,CO_AWB,2.96613E-09,7.35477E-10,1.59608E-10,1.31718E-09,1.89163E-09,2.28781E-09,6.69604E-15,1.10661E-08,1.06086E-09,2.86246E-10,0,3.21513E-09,0,0
+MiscCrop,MiscCrop,MiscCrop,1990,CO_AWB,3.07479E-09,2.06529E-09,5.55419E-10,1.53091E-08,8.98083E-09,5.20831E-09,4.1841E-10,2.82574E-08,3.19081E-09,3.04121E-09,3.20776E-09,7.40967E-09,6.91902E-10,8.95585E-10
+OilCrop,OilCrop,OilCrop,1990,CO_AWB,6.75116E-10,1.41747E-09,1.57292E-10,3.21742E-09,3.4607E-09,1.67396E-09,1.15935E-10,8.57939E-09,1.92792E-09,8.73772E-10,1.81658E-09,2.62124E-09,1.43069E-10,3.60134E-10
+OtherGrain,OtherGrain,OtherGrain,1990,CO_AWB,7.14579E-10,1.27922E-09,1.4022E-10,3.59227E-09,3.57501E-09,1.45249E-09,1.1227E-10,7.50265E-09,1.29359E-09,8.44359E-10,1.14911E-09,2.2999E-09,1.54751E-10,3.1696E-10
+Rice,Rice,Rice,1990,CO_AWB,9.13841E-10,0,1.65752E-10,4.24047E-09,4.41955E-09,1.65646E-09,1.31657E-10,8.96594E-09,1.55576E-09,1.08893E-09,1.36283E-09,2.52297E-09,1.83183E-10,3.83695E-10
+SugarCrop,SugarCrop,SugarCrop,1990,CO_AWB,1.14048E-09,3.43072E-09,3.66504E-10,6.77985E-09,3.85442E-09,3.66644E-09,1.21526E-10,1.15278E-08,1.41349E-09,9.52322E-10,1.18934E-09,5.5844E-09,0,3.34632E-10
+Wheat,Wheat,Wheat,1990,CO_AWB,9.5857E-10,1.62583E-09,1.73865E-10,4.44803E-09,4.63588E-09,1.73754E-09,1.38102E-10,9.4048E-09,1.63191E-09,1.14223E-09,1.42953E-09,2.64646E-09,1.9215E-10,4.02476E-10
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11030,,,,,,,,,,,,,,,,,,
+,,,,,gdp-mid-control,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,CO_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+FiberCrop,FiberCrop,FiberCrop,1990,CO_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+FodderCrop,FodderCrop,FodderCrop,1990,CO_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+MiscCrop,MiscCrop,MiscCrop,1990,CO_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+OilCrop,OilCrop,OilCrop,1990,CO_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+OtherGrain,OtherGrain,OtherGrain,1990,CO_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+Rice,Rice,Rice,1990,CO_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+SugarCrop,SugarCrop,SugarCrop,1990,CO_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+Wheat,Wheat,Wheat,1990,CO_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11040,,,,,,,,,,,,,,,,,,
+,,,,,gdp-control-range,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,CO_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+FiberCrop,FiberCrop,FiberCrop,1990,CO_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+FodderCrop,FodderCrop,FodderCrop,1990,CO_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+MiscCrop,MiscCrop,MiscCrop,1990,CO_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+OilCrop,OilCrop,OilCrop,1990,CO_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+OtherGrain,OtherGrain,OtherGrain,1990,CO_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+Rice,Rice,Rice,1990,CO_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+SugarCrop,SugarCrop,SugarCrop,1990,CO_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+Wheat,Wheat,Wheat,1990,CO_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11050,,,,,,,,,,,,,,,,,,
+,,,,,final-emiss-coef,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,CO_AWB,2.38242E-10,4.04081E-10,4.32121E-11,1.10551E-09,1.15219E-09,4.31845E-10,3.43236E-11,2.33746E-09,4.05593E-10,2.83887E-10,3.55294E-10,6.57748E-10,4.77566E-11,1.00031E-10
+FiberCrop,FiberCrop,FiberCrop,1990,CO_AWB,1.71607E-12,-1,3.1126E-13,-1,8.29933E-12,3.11061E-12,2.47235E-13,1.68368E-11,2.92152E-12,2.04486E-12,2.5592E-12,4.73781E-12,3.43994E-13,7.20529E-13
+FodderCrop,FodderCrop,FodderCrop,1990,CO_AWB,1.18645E-09,2.94191E-10,6.38432E-11,5.26871E-10,7.56651E-10,9.15122E-10,2.67842E-15,4.42646E-09,4.24344E-10,1.14498E-10,-1,1.28605E-09,-1,-1
+MiscCrop,MiscCrop,MiscCrop,1990,CO_AWB,1.22992E-09,8.26118E-10,2.22168E-10,6.12362E-09,3.59233E-09,2.08332E-09,1.67364E-10,1.1303E-08,1.27632E-09,1.21648E-09,1.2831E-09,2.96387E-09,2.76761E-10,3.58234E-10
+OilCrop,OilCrop,OilCrop,1990,CO_AWB,2.70046E-10,5.66989E-10,6.29169E-11,1.28697E-09,1.38428E-09,6.69583E-10,4.63739E-11,3.43176E-09,7.71167E-10,3.49509E-10,7.26633E-10,1.0485E-09,5.72275E-11,1.44054E-10
+OtherGrain,OtherGrain,OtherGrain,1990,CO_AWB,2.85831E-10,5.11689E-10,5.60878E-11,1.43691E-09,1.43E-09,5.80996E-10,4.49079E-11,3.00106E-09,5.17435E-10,3.37743E-10,4.59644E-10,9.1996E-10,6.19003E-11,1.26784E-10
+Rice,Rice,Rice,1990,CO_AWB,3.65536E-10,-1,6.63007E-11,1.69619E-09,1.76782E-09,6.62584E-10,5.26629E-11,3.58638E-09,6.22305E-10,4.3557E-10,5.4513E-10,1.00919E-09,7.32733E-11,1.53478E-10
+SugarCrop,SugarCrop,SugarCrop,1990,CO_AWB,4.56191E-10,1.37229E-09,1.46601E-10,2.71194E-09,1.54177E-09,1.46658E-09,4.86105E-11,4.61112E-09,5.65398E-10,3.80929E-10,4.75738E-10,2.23376E-09,-1,1.33853E-10
+Wheat,Wheat,Wheat,1990,CO_AWB,3.83428E-10,6.50331E-10,6.95459E-11,1.77921E-09,1.85435E-09,6.95015E-10,5.52406E-11,3.76192E-09,6.52765E-10,4.5689E-10,5.71812E-10,1.05859E-09,7.68598E-11,1.6099E-10
+
+NMVOC_AWB,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11001,,,,,,,,,,,,,,,,,,
+
+region,FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,output-driver,,,,,,,,,,,,
+ALL,Corn,Corn,Corn,ALL,NMVOC_AWB,,,,,,,,,,,,,
+ALL,FiberCrop,FiberCrop,FiberCrop,ALL,NMVOC_AWB,,,,,,,,,,,,,
+ALL,FodderCrop,FodderCrop,FodderCrop,ALL,NMVOC_AWB,,,,,,,,,,,,,
+ALL,MiscCrop,MiscCrop,MiscCrop,ALL,NMVOC_AWB,,,,,,,,,,,,,
+ALL,OilCrop,OilCrop,OilCrop,ALL,NMVOC_AWB,,,,,,,,,,,,,
+ALL,OtherGrain,OtherGrain,OtherGrain,ALL,NMVOC_AWB,,,,,,,,,,,,,
+ALL,Rice,Rice,Rice,ALL,NMVOC_AWB,,,,,,,,,,,,,
+ALL,SugarCrop,SugarCrop,SugarCrop,ALL,NMVOC_AWB,,,,,,,,,,,,,
+ALL,Wheat,Wheat,Wheat,ALL,NMVOC_AWB,,,,,,,,,,,,,
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11015,,,,,,,,,,,,,,,,,,
+,,,,,uncontrolled-emiss-coef,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,NMVOC_AWB,9.25471E-11,1.21528E-10,1.0749E-11,2.00983E-10,1.81828E-10,1.29878E-10,2.30845E-10,7.02994E-10,1.21983E-10,8.40944E-11,1.06871E-10,1.92087E-10,1.43629E-11,3.00845E-11
+FiberCrop,FiberCrop,FiberCrop,1990,NMVOC_AWB,6.66623E-13,0,7.74259E-14,0,1.30972E-12,9.35522E-13,1.66279E-12,5.06371E-12,8.78651E-13,6.05738E-13,7.69802E-13,1.38361E-12,1.03457E-13,2.167E-13
+FodderCrop,FodderCrop,FodderCrop,1990,NMVOC_AWB,4.60888E-10,8.84784E-11,1.5881E-11,9.57861E-11,1.19407E-10,2.75225E-10,1.80139E-14,1.33127E-09,1.27622E-10,3.39173E-11,0,3.75574E-10,0,0
+MiscCrop,MiscCrop,MiscCrop,1990,NMVOC_AWB,4.77772E-10,2.48456E-10,5.52643E-11,1.11329E-09,5.66905E-10,6.26563E-10,1.12562E-09,3.39939E-09,3.83857E-10,3.60352E-10,3.85954E-10,8.65558E-10,8.32363E-11,1.0774E-10
+OilCrop,OilCrop,OilCrop,1990,NMVOC_AWB,1.04902E-10,1.70523E-10,1.56506E-11,2.33974E-10,2.18453E-10,2.01378E-10,3.11891E-10,1.03211E-09,2.3193E-10,1.03533E-10,2.18569E-10,3.06199E-10,1.72113E-11,4.33244E-11
+OtherGrain,OtherGrain,OtherGrain,1990,NMVOC_AWB,1.11034E-10,1.53891E-10,1.39519E-11,2.61232E-10,2.25668E-10,1.74736E-10,3.02031E-10,9.02575E-10,1.55619E-10,1.00048E-10,1.3826E-10,2.68662E-10,1.86166E-11,3.81306E-11
+Rice,Rice,Rice,1990,NMVOC_AWB,1.41996E-10,0,1.64923E-11,3.0837E-10,2.78979E-10,1.99273E-10,3.54188E-10,1.07861E-09,1.87159E-10,1.29027E-10,1.63974E-10,2.9472E-10,2.20371E-11,4.61589E-11
+SugarCrop,SugarCrop,SugarCrop,1990,NMVOC_AWB,1.77211E-10,4.12718E-10,3.64671E-11,4.93036E-10,2.43306E-10,4.41076E-10,3.26933E-10,1.3868E-09,1.70044E-10,1.12841E-10,1.43101E-10,6.5234E-10,0,4.02564E-11
+Wheat,Wheat,Wheat,1990,NMVOC_AWB,1.48946E-10,1.95588E-10,1.72996E-11,3.23464E-10,2.92635E-10,2.09027E-10,3.71524E-10,1.1314E-09,1.9632E-10,1.35342E-10,1.72E-10,3.09146E-10,2.31157E-11,4.84182E-11
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11030,,,,,,,,,,,,,,,,,,
+,,,,,gdp-mid-control,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,NMVOC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+FiberCrop,FiberCrop,FiberCrop,1990,NMVOC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+FodderCrop,FodderCrop,FodderCrop,1990,NMVOC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+MiscCrop,MiscCrop,MiscCrop,1990,NMVOC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+OilCrop,OilCrop,OilCrop,1990,NMVOC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+OtherGrain,OtherGrain,OtherGrain,1990,NMVOC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+Rice,Rice,Rice,1990,NMVOC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+SugarCrop,SugarCrop,SugarCrop,1990,NMVOC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+Wheat,Wheat,Wheat,1990,NMVOC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11040,,,,,,,,,,,,,,,,,,
+,,,,,gdp-control-range,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,NMVOC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+FiberCrop,FiberCrop,FiberCrop,1990,NMVOC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+FodderCrop,FodderCrop,FodderCrop,1990,NMVOC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+MiscCrop,MiscCrop,MiscCrop,1990,NMVOC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+OilCrop,OilCrop,OilCrop,1990,NMVOC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+OtherGrain,OtherGrain,OtherGrain,1990,NMVOC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+Rice,Rice,Rice,1990,NMVOC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+SugarCrop,SugarCrop,SugarCrop,1990,NMVOC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+Wheat,Wheat,Wheat,1990,NMVOC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11050,,,,,,,,,,,,,,,,,,
+,,,,,final-emiss-coef,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,NMVOC_AWB,3.70188E-11,4.86112E-11,4.29961E-12,8.03932E-11,7.2731E-11,5.19513E-11,9.23381E-11,2.81198E-10,4.87932E-11,3.36378E-11,4.27486E-11,7.68346E-11,5.74515E-12,1.20338E-11
+FiberCrop,FiberCrop,FiberCrop,1990,NMVOC_AWB,2.66649E-13,-1,3.09704E-14,-1,5.23886E-13,3.74209E-13,6.65118E-13,2.02549E-12,3.5146E-13,2.42295E-13,3.07921E-13,5.53445E-13,4.13827E-14,8.66802E-14
+FodderCrop,FodderCrop,FodderCrop,1990,NMVOC_AWB,1.84355E-10,3.53914E-11,6.3524E-12,3.83145E-11,4.77628E-11,1.1009E-10,7.20555E-15,5.32506E-10,5.10489E-11,1.35669E-11,-1,1.50229E-10,-1,-1
+MiscCrop,MiscCrop,MiscCrop,1990,NMVOC_AWB,1.91109E-10,9.93826E-11,2.21057E-11,4.45314E-10,2.26762E-10,2.50625E-10,4.50247E-10,1.35976E-09,1.53543E-10,1.44141E-10,1.54382E-10,3.46223E-10,3.32945E-11,4.30958E-11
+OilCrop,OilCrop,OilCrop,1990,NMVOC_AWB,4.19608E-11,6.82092E-11,6.26023E-12,9.35894E-11,8.73812E-11,8.05513E-11,1.24756E-10,4.12843E-10,9.2772E-11,4.14133E-11,8.74277E-11,1.2248E-10,6.88452E-12,1.73297E-11
+OtherGrain,OtherGrain,OtherGrain,1990,NMVOC_AWB,4.44135E-11,6.15566E-11,5.58074E-12,1.04493E-10,9.02674E-11,6.98942E-11,1.20812E-10,3.6103E-10,6.22478E-11,4.00192E-11,5.53039E-11,1.07465E-10,7.44665E-12,1.52522E-11
+Rice,Rice,Rice,1990,NMVOC_AWB,5.67983E-11,-1,6.59692E-12,1.23348E-10,1.11592E-10,7.97093E-11,1.41675E-10,4.31444E-10,7.48638E-11,5.16107E-11,6.55895E-11,1.17888E-10,8.81483E-12,1.84635E-11
+SugarCrop,SugarCrop,SugarCrop,1990,NMVOC_AWB,7.08846E-11,1.65087E-10,1.45869E-11,1.97214E-10,9.73224E-11,1.7643E-10,1.30773E-10,5.54722E-10,6.80178E-11,4.51363E-11,5.72403E-11,2.60936E-10,-1,1.61026E-11
+Wheat,Wheat,Wheat,1990,NMVOC_AWB,5.95784E-11,7.82353E-11,6.91982E-12,1.29386E-10,1.17054E-10,8.36108E-11,1.4861E-10,4.52562E-10,7.85281E-11,5.41369E-11,6.87999E-11,1.23658E-10,9.24629E-12,1.93673E-11
+
+NH3_AWB,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11001,,,,,,,,,,,,,,,,,,
+
+region,FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,output-driver,,,,,,,,,,,,
+ALL,Corn,Corn,Corn,ALL,NH3_AWB,,,,,,,,,,,,,
+ALL,FiberCrop,FiberCrop,FiberCrop,ALL,NH3_AWB,,,,,,,,,,,,,
+ALL,FodderCrop,FodderCrop,FodderCrop,ALL,NH3_AWB,,,,,,,,,,,,,
+ALL,MiscCrop,MiscCrop,MiscCrop,ALL,NH3_AWB,,,,,,,,,,,,,
+ALL,OilCrop,OilCrop,OilCrop,ALL,NH3_AWB,,,,,,,,,,,,,
+ALL,OtherGrain,OtherGrain,OtherGrain,ALL,NH3_AWB,,,,,,,,,,,,,
+ALL,Rice,Rice,Rice,ALL,NH3_AWB,,,,,,,,,,,,,
+ALL,SugarCrop,SugarCrop,SugarCrop,ALL,NH3_AWB,,,,,,,,,,,,,
+ALL,Wheat,Wheat,Wheat,ALL,NH3_AWB,,,,,,,,,,,,,
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11015,,,,,,,,,,,,,,,,,,
+,,,,,uncontrolled-emiss-coef,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,NH3_AWB,6.45451E-11,1.6718E-10,4.19056E-11,2.42284E-11,5.51754E-11,3.51126E-11,8.49032E-12,8.54152E-11,3.38129E-12,3.69779E-11,2.92524E-11,4.58647E-11,5.262E-12,3.43274E-11
+FiberCrop,FiberCrop,FiberCrop,1990,NH3_AWB,4.99217E-13,0,2.23405E-13,0,5.11778E-13,1.60865E-13,5.33601E-14,1.2204E-13,2.47277E-14,1.03515E-13,1.70909E-13,1.1104E-13,1.70285E-14,2.45345E-13
+FodderCrop,FodderCrop,FodderCrop,1990,NH3_AWB,2.66735E-10,1.11469E-10,4.19394E-11,3.29798E-11,1.75745E-11,4.03815E-11,9.13203E-16,7.04004E-11,3.66778E-12,1.54333E-11,0,4.47451E-11,0,0
+MiscCrop,MiscCrop,MiscCrop,1990,NH3_AWB,2.88637E-10,8.53992E-10,1.43375E-10,3.36471E-10,1.68704E-10,1.2224E-10,4.69921E-11,1.84684E-10,1.27231E-11,1.22986E-10,9.05096E-11,9.42282E-11,4.45108E-11,1.11444E-10
+OilCrop,OilCrop,OilCrop,1990,NH3_AWB,8.16925E-11,3.77524E-10,5.34596E-11,8.59075E-11,1.52679E-10,5.68766E-11,1.29089E-11,4.65192E-11,7.23563E-12,5.98649E-11,7.88273E-11,7.33548E-11,6.81996E-12,4.64921E-11
+OtherGrain,OtherGrain,OtherGrain,1990,NH3_AWB,4.34783E-11,1.68379E-10,3.50754E-11,6.65272E-11,8.15075E-11,2.44581E-11,6.27736E-12,2.74265E-11,5.13363E-12,3.33393E-11,2.8882E-11,3.69452E-11,6.17324E-12,2.72273E-11
+Rice,Rice,Rice,1990,NH3_AWB,1.00557E-10,0,5.5345E-11,9.89525E-11,3.61608E-11,2.99729E-11,1.04898E-11,5.15676E-11,5.89964E-12,5.50907E-11,4.33253E-11,2.60896E-11,9.67256E-12,4.38798E-11
+SugarCrop,SugarCrop,SugarCrop,1990,NH3_AWB,9.71973E-11,3.53644E-10,9.89922E-11,1.49467E-10,7.46612E-11,6.44929E-11,1.19914E-11,1.02577E-10,4.49387E-12,3.8867E-11,3.351E-11,8.286E-11,0,3.42302E-11
+Wheat,Wheat,Wheat,1990,NH3_AWB,7.05332E-11,1.95208E-10,5.24744E-11,1.07986E-10,9.45937E-11,4.23355E-11,1.05447E-11,5.98322E-11,5.98176E-12,4.31969E-11,4.89721E-11,4.29796E-11,6.94686E-11,4.98183E-11
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11030,,,,,,,,,,,,,,,,,,
+,,,,,gdp-mid-control,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,NH3_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+FiberCrop,FiberCrop,FiberCrop,1990,NH3_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+FodderCrop,FodderCrop,FodderCrop,1990,NH3_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+MiscCrop,MiscCrop,MiscCrop,1990,NH3_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+OilCrop,OilCrop,OilCrop,1990,NH3_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+OtherGrain,OtherGrain,OtherGrain,1990,NH3_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+Rice,Rice,Rice,1990,NH3_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+SugarCrop,SugarCrop,SugarCrop,1990,NH3_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+Wheat,Wheat,Wheat,1990,NH3_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11040,,,,,,,,,,,,,,,,,,
+,,,,,gdp-control-range,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,NH3_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+FiberCrop,FiberCrop,FiberCrop,1990,NH3_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+FodderCrop,FodderCrop,FodderCrop,1990,NH3_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+MiscCrop,MiscCrop,MiscCrop,1990,NH3_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+OilCrop,OilCrop,OilCrop,1990,NH3_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+OtherGrain,OtherGrain,OtherGrain,1990,NH3_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+Rice,Rice,Rice,1990,NH3_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+SugarCrop,SugarCrop,SugarCrop,1990,NH3_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+Wheat,Wheat,Wheat,1990,NH3_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11050,,,,,,,,,,,,,,,,,,
+,,,,,final-emiss-coef,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,NH3_AWB,2.5818E-11,6.68719E-11,1.67622E-11,9.69135E-12,2.20701E-11,1.4045E-11,3.39613E-12,3.41661E-11,1.35252E-12,1.47912E-11,1.1701E-11,1.83459E-11,2.1048E-12,1.37309E-11
+FiberCrop,FiberCrop,FiberCrop,1990,NH3_AWB,1.99687E-13,-1,8.9362E-14,-1,2.04711E-13,6.43459E-14,2.13441E-14,4.88162E-14,9.89109E-15,4.14062E-14,6.83638E-14,4.4416E-14,6.8114E-15,9.81378E-14
+FodderCrop,FodderCrop,FodderCrop,1990,NH3_AWB,1.06694E-10,4.45874E-11,1.67757E-11,1.31919E-11,7.0298E-12,1.61526E-11,3.65281E-16,2.81602E-11,1.46711E-12,6.17331E-12,-1,1.7898E-11,-1,-1
+MiscCrop,MiscCrop,MiscCrop,1990,NH3_AWB,1.15455E-10,3.41597E-10,5.73498E-11,1.34588E-10,6.74815E-11,4.8896E-11,1.87968E-11,7.38737E-11,5.08922E-12,4.91943E-11,3.62038E-11,3.76913E-11,1.78043E-11,4.45776E-11
+OilCrop,OilCrop,OilCrop,1990,NH3_AWB,3.2677E-11,1.5101E-10,2.13838E-11,3.4363E-11,6.10714E-11,2.27506E-11,5.16354E-12,1.86077E-11,2.89425E-12,2.3946E-11,3.15309E-11,2.93419E-11,2.72798E-12,1.85968E-11
+OtherGrain,OtherGrain,OtherGrain,1990,NH3_AWB,1.73913E-11,6.73517E-11,1.40302E-11,2.66109E-11,3.2603E-11,9.78326E-12,2.51094E-12,1.09706E-11,2.05345E-12,1.33357E-11,1.15528E-11,1.47781E-11,2.4693E-12,1.08909E-11
+Rice,Rice,Rice,1990,NH3_AWB,4.02226E-11,-1,2.2138E-11,3.9581E-11,1.44643E-11,1.19892E-11,4.19592E-12,2.0627E-11,2.35986E-12,2.20363E-11,1.73301E-11,1.04359E-11,3.86902E-12,1.75519E-11
+SugarCrop,SugarCrop,SugarCrop,1990,NH3_AWB,3.88789E-11,1.41457E-10,3.95969E-11,5.97867E-11,2.98645E-11,2.57972E-11,4.79654E-12,4.1031E-11,1.79755E-12,1.55468E-11,1.3404E-11,3.3144E-11,-1,1.36921E-11
+Wheat,Wheat,Wheat,1990,NH3_AWB,2.82133E-11,7.8083E-11,2.09897E-11,4.31943E-11,3.78375E-11,1.69342E-11,4.21789E-12,2.39329E-11,2.3927E-12,1.72788E-11,1.95888E-11,1.71919E-11,2.77874E-11,1.99273E-11
+
+BC_AWB,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11001,,,,,,,,,,,,,,,,,,
+
+region,FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,output-driver,,,,,,,,,,,,
+ALL,Corn,Corn,Corn,ALL,BC_AWB,,,,,,,,,,,,,
+ALL,FiberCrop,FiberCrop,FiberCrop,ALL,BC_AWB,,,,,,,,,,,,,
+ALL,FodderCrop,FodderCrop,FodderCrop,ALL,BC_AWB,,,,,,,,,,,,,
+ALL,MiscCrop,MiscCrop,MiscCrop,ALL,BC_AWB,,,,,,,,,,,,,
+ALL,OilCrop,OilCrop,OilCrop,ALL,BC_AWB,,,,,,,,,,,,,
+ALL,OtherGrain,OtherGrain,OtherGrain,ALL,BC_AWB,,,,,,,,,,,,,
+ALL,Rice,Rice,Rice,ALL,BC_AWB,,,,,,,,,,,,,
+ALL,SugarCrop,SugarCrop,SugarCrop,ALL,BC_AWB,,,,,,,,,,,,,
+ALL,Wheat,Wheat,Wheat,ALL,BC_AWB,,,,,,,,,,,,,
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11015,,,,,,,,,,,,,,,,,,
+,,,,,uncontrolled-emiss-coef,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,BC_AWB,2.26658E-12,9.75215E-11,9.35891E-12,7.75308E-12,1.0383E-10,1.14608E-11,2.41757E-11,2.50267E-11,2.85268E-11,1.55125E-11,1.84345E-11,7.92543E-12,1.43958E-11,3.41616E-11
+FiberCrop,FiberCrop,FiberCrop,1990,BC_AWB,1.75306E-14,0,4.98938E-14,0,9.63074E-13,5.25062E-14,1.5194E-13,3.57579E-14,2.08619E-13,4.34254E-14,1.07705E-13,1.91877E-14,4.65868E-14,2.4416E-13
+FodderCrop,FodderCrop,FodderCrop,1990,BC_AWB,9.36675E-12,6.50233E-11,9.36646E-12,1.05536E-11,3.3072E-11,1.31805E-11,2.6003E-15,2.06273E-11,3.09439E-11,6.47436E-12,0,7.73195E-12,0,0
+MiscCrop,MiscCrop,MiscCrop,1990,BC_AWB,1.01359E-11,4.98162E-10,3.20203E-11,1.07671E-10,3.1747E-10,3.98992E-11,1.33807E-10,5.41125E-11,1.0734E-10,5.15933E-11,5.70378E-11,1.62826E-11,1.21773E-10,1.10906E-10
+OilCrop,OilCrop,OilCrop,1990,BC_AWB,2.86874E-12,2.20223E-10,1.19393E-11,2.74904E-11,2.87313E-10,1.85645E-11,3.67573E-11,1.36301E-11,6.10446E-11,2.51137E-11,4.96758E-11,1.26757E-11,1.86581E-11,4.62677E-11
+OtherGrain,OtherGrain,OtherGrain,1990,BC_AWB,1.5268E-12,9.82212E-11,7.83352E-12,2.12887E-11,1.53382E-10,7.98314E-12,1.78745E-11,8.03596E-12,4.33107E-11,1.3986E-11,1.8201E-11,6.38412E-12,1.68888E-11,2.70958E-11
+Rice,Rice,Rice,1990,BC_AWB,3.53117E-12,0,1.23604E-11,3.16648E-11,6.8048E-11,9.78315E-12,2.98692E-11,1.51093E-11,4.97733E-11,2.31109E-11,2.7303E-11,4.50829E-12,2.64623E-11,4.36679E-11
+SugarCrop,SugarCrop,SugarCrop,1990,BC_AWB,3.41321E-12,2.06292E-10,2.21083E-11,4.78294E-11,1.40499E-10,2.10505E-11,3.41448E-11,3.00552E-11,3.79133E-11,1.63049E-11,2.11175E-11,1.43182E-11,0,3.40649E-11
+Wheat,Wheat,Wheat,1990,BC_AWB,2.47686E-12,1.13871E-10,1.17193E-11,3.45554E-11,1.78008E-10,1.38183E-11,3.00256E-11,1.75308E-11,5.04661E-11,1.81214E-11,3.08615E-11,7.42688E-12,1.90053E-10,4.95778E-11
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11030,,,,,,,,,,,,,,,,,,
+,,,,,gdp-mid-control,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,BC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+FiberCrop,FiberCrop,FiberCrop,1990,BC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+FodderCrop,FodderCrop,FodderCrop,1990,BC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+MiscCrop,MiscCrop,MiscCrop,1990,BC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+OilCrop,OilCrop,OilCrop,1990,BC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+OtherGrain,OtherGrain,OtherGrain,1990,BC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+Rice,Rice,Rice,1990,BC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+SugarCrop,SugarCrop,SugarCrop,1990,BC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+Wheat,Wheat,Wheat,1990,BC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11040,,,,,,,,,,,,,,,,,,
+,,,,,gdp-control-range,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,BC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+FiberCrop,FiberCrop,FiberCrop,1990,BC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+FodderCrop,FodderCrop,FodderCrop,1990,BC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+MiscCrop,MiscCrop,MiscCrop,1990,BC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+OilCrop,OilCrop,OilCrop,1990,BC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+OtherGrain,OtherGrain,OtherGrain,1990,BC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+Rice,Rice,Rice,1990,BC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+SugarCrop,SugarCrop,SugarCrop,1990,BC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+Wheat,Wheat,Wheat,1990,BC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11050,,,,,,,,,,,,,,,,,,
+,,,,,final-emiss-coef,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,BC_AWB,9.06633E-13,3.90086E-11,3.74356E-12,3.10123E-12,4.1532E-11,4.5843E-12,9.6703E-12,1.00107E-11,1.14107E-11,6.20498E-12,7.37378E-12,3.17017E-12,5.75834E-12,1.36647E-11
+FiberCrop,FiberCrop,FiberCrop,1990,BC_AWB,7.01226E-15,-1,1.99575E-14,-1,3.85229E-13,2.10025E-14,6.07761E-14,1.43031E-14,8.34478E-14,1.73701E-14,4.30818E-14,7.67509E-15,1.86347E-14,9.7664E-14
+FodderCrop,FodderCrop,FodderCrop,1990,BC_AWB,3.7467E-12,2.60093E-11,3.74658E-12,4.22142E-12,1.32288E-11,5.2722E-12,1.04012E-15,8.25092E-12,1.23775E-11,2.58974E-12,-1,3.09278E-12,-1,-1
+MiscCrop,MiscCrop,MiscCrop,1990,BC_AWB,4.05435E-12,1.99265E-10,1.28081E-11,4.30683E-11,1.26988E-10,1.59597E-11,5.3523E-11,2.1645E-11,4.29361E-11,2.06373E-11,2.28151E-11,6.51305E-12,4.87094E-11,4.43624E-11
+OilCrop,OilCrop,OilCrop,1990,BC_AWB,1.1475E-12,8.8089E-11,4.77572E-12,1.09962E-11,1.14925E-10,7.4258E-12,1.47029E-11,5.45204E-12,2.44178E-11,1.00455E-11,1.98703E-11,5.07028E-12,7.46325E-12,1.85071E-11
+OtherGrain,OtherGrain,OtherGrain,1990,BC_AWB,6.10718E-13,3.92885E-11,3.13341E-12,8.51548E-12,6.13529E-11,3.19326E-12,7.14978E-12,3.21438E-12,1.73243E-11,5.59441E-12,7.28041E-12,2.55365E-12,6.75553E-12,1.08383E-11
+Rice,Rice,Rice,1990,BC_AWB,1.41247E-12,-1,4.94415E-12,1.26659E-11,2.72192E-11,3.91326E-12,1.19477E-11,6.04372E-12,1.99093E-11,9.24436E-12,1.09212E-11,1.80332E-12,1.05849E-11,1.74672E-11
+SugarCrop,SugarCrop,SugarCrop,1990,BC_AWB,1.36528E-12,8.25168E-11,8.8433E-12,1.91318E-11,5.61995E-11,8.42019E-12,1.36579E-11,1.20221E-11,1.51653E-11,6.52198E-12,8.44699E-12,5.72728E-12,-1,1.3626E-11
+Wheat,Wheat,Wheat,1990,BC_AWB,9.90745E-13,4.55484E-11,4.68771E-12,1.38222E-11,7.12033E-11,5.52732E-12,1.20102E-11,7.01233E-12,2.01864E-11,7.24855E-12,1.23446E-11,2.97075E-12,7.60213E-11,1.98311E-11
+
+OC_AWB,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+11001,,,,,,
+
+region,FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,output-driver
+ALL,Corn,Corn,Corn,ALL,OC_AWB,
+ALL,FiberCrop,FiberCrop,FiberCrop,ALL,OC_AWB,
+ALL,FodderCrop,FodderCrop,FodderCrop,ALL,OC_AWB,
+ALL,MiscCrop,MiscCrop,MiscCrop,ALL,OC_AWB,
+ALL,OilCrop,OilCrop,OilCrop,ALL,OC_AWB,
+ALL,OtherGrain,OtherGrain,OtherGrain,ALL,OC_AWB,
+ALL,Rice,Rice,Rice,ALL,OC_AWB,
+ALL,SugarCrop,SugarCrop,SugarCrop,ALL,OC_AWB,
+ALL,Wheat,Wheat,Wheat,ALL,OC_AWB,
+
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11015,,,,,,,,,,,,,,,,,,
+,,,,,uncontrolled-emiss-coef,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,OC_AWB,1.08451E-11,4.66352E-10,4.47691E-11,3.70088E-11,4.96578E-10,5.48108E-11,1.1563E-10,1.19496E-10,1.36429E-10,7.41886E-11,8.8169E-11,3.79026E-11,6.90759E-11,1.6338E-10
+FiberCrop,FiberCrop,FiberCrop,1990,OC_AWB,8.38801E-14,0,2.38671E-13,0,4.606E-12,2.5111E-13,7.26715E-13,1.70735E-13,9.97722E-13,2.07683E-13,5.15134E-13,9.17635E-14,2.23538E-13,1.16771E-12
+FodderCrop,FodderCrop,FodderCrop,1990,OC_AWB,4.48177E-11,3.10944E-10,4.48052E-11,5.03767E-11,1.5817E-10,6.30354E-11,1.2437E-14,9.84901E-11,1.47989E-10,3.09637E-11,0,3.69773E-11,0,0
+MiscCrop,MiscCrop,MiscCrop,1990,OC_AWB,4.84978E-11,2.38223E-09,1.53172E-10,5.13959E-10,1.51833E-09,1.90817E-10,6.39988E-10,2.58373E-10,5.13354E-10,2.46746E-10,2.72803E-10,7.78701E-11,5.84308E-10,5.30416E-10
+OilCrop,OilCrop,OilCrop,1990,OC_AWB,1.37262E-11,1.05311E-09,5.71127E-11,1.31224E-10,1.37411E-09,8.87843E-11,1.75807E-10,6.50803E-11,2.91945E-10,1.20107E-10,2.37591E-10,6.06204E-11,8.95277E-11,2.21278E-10
+OtherGrain,OtherGrain,OtherGrain,1990,OC_AWB,7.30536E-12,4.69698E-10,3.74723E-11,1.0162E-10,7.33568E-10,3.81792E-11,8.54918E-11,3.83696E-11,2.07133E-10,6.68885E-11,8.70526E-11,3.05315E-11,8.1038E-11,1.29588E-10
+Rice,Rice,Rice,1990,OC_AWB,1.68958E-11,0,5.91269E-11,1.5115E-10,3.25447E-10,4.67877E-11,1.42861E-10,7.2143E-11,2.38041E-10,1.10528E-10,1.30586E-10,2.15605E-11,1.26975E-10,2.08845E-10
+SugarCrop,SugarCrop,SugarCrop,1990,OC_AWB,1.63314E-11,9.86497E-10,1.05757E-10,2.28311E-10,6.71951E-10,1.00673E-10,1.63311E-10,1.43506E-10,1.8132E-10,7.79787E-11,1.01001E-10,6.84755E-11,0,1.62918E-10
+Wheat,Wheat,Wheat,1990,OC_AWB,1.18512E-11,5.44536E-10,5.60601E-11,1.64948E-10,8.51343E-10,6.60857E-11,1.43609E-10,8.37053E-11,2.41354E-10,8.66658E-11,1.47605E-10,3.55184E-11,9.11936E-10,2.37109E-10
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11030,,,,,,,,,,,,,,,,,,
+,,,,,gdp-mid-control,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,OC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+FiberCrop,FiberCrop,FiberCrop,1990,OC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+FodderCrop,FodderCrop,FodderCrop,1990,OC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+MiscCrop,MiscCrop,MiscCrop,1990,OC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+OilCrop,OilCrop,OilCrop,1990,OC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+OtherGrain,OtherGrain,OtherGrain,1990,OC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+Rice,Rice,Rice,1990,OC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+SugarCrop,SugarCrop,SugarCrop,1990,OC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+Wheat,Wheat,Wheat,1990,OC_AWB,20,10,10,10,15,10,10,10,10,10,10,10,10,10
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11040,,,,,,,,,,,,,,,,,,
+,,,,,gdp-control-range,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,OC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+FiberCrop,FiberCrop,FiberCrop,1990,OC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+FodderCrop,FodderCrop,FodderCrop,1990,OC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+MiscCrop,MiscCrop,MiscCrop,1990,OC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+OilCrop,OilCrop,OilCrop,1990,OC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+OtherGrain,OtherGrain,OtherGrain,1990,OC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+Rice,Rice,Rice,1990,OC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+SugarCrop,SugarCrop,SugarCrop,1990,OC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+Wheat,Wheat,Wheat,1990,OC_AWB,15,7.5,7.5,7.5,11.25,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+11050,,,,,,,,,,,,,,,,,,
+,,,,,final-emiss-coef,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+Corn,Corn,Corn,1990,OC_AWB,3.62653E-13,1.56034E-11,1.49743E-12,1.24049E-12,1.66128E-11,1.83372E-12,3.86812E-12,4.00427E-12,4.56429E-12,2.48199E-12,2.94951E-12,1.26807E-12,2.30334E-12,5.46586E-12
+FiberCrop,FiberCrop,FiberCrop,1990,OC_AWB,2.8049E-15,-0.4,7.98301E-15,-0.4,1.54092E-13,8.401E-15,2.43104E-14,5.72126E-15,3.33791E-14,6.94806E-15,1.72327E-14,3.07003E-15,7.45389E-15,3.90656E-14
+FodderCrop,FodderCrop,FodderCrop,1990,OC_AWB,1.49868E-12,1.04037E-11,1.49863E-12,1.68857E-12,5.29152E-12,2.10888E-12,4.16048E-16,3.30037E-12,4.95102E-12,1.0359E-12,-0.4,1.23711E-12,-0.4,-0.4
+MiscCrop,MiscCrop,MiscCrop,1990,OC_AWB,1.62174E-12,7.97059E-11,5.12325E-12,1.72273E-11,5.07952E-11,6.38386E-12,2.14092E-11,8.658E-12,1.71744E-11,8.25492E-12,9.12605E-12,2.60522E-12,1.94837E-11,1.7745E-11
+OilCrop,OilCrop,OilCrop,1990,OC_AWB,4.58998E-13,3.52356E-11,1.91029E-12,4.39846E-12,4.59701E-11,2.97032E-12,5.88117E-12,2.18082E-12,9.76713E-12,4.01819E-12,7.94813E-12,2.02811E-12,2.9853E-12,7.40282E-12
+OtherGrain,OtherGrain,OtherGrain,1990,OC_AWB,2.44287E-13,1.57154E-11,1.25336E-12,3.40619E-12,2.45412E-11,1.2773E-12,2.85991E-12,1.28575E-12,6.92972E-12,2.23776E-12,2.91217E-12,1.02146E-12,2.70221E-12,4.33534E-12
+Rice,Rice,Rice,1990,OC_AWB,5.64987E-13,-0.4,1.97766E-12,5.06637E-12,1.08877E-11,1.5653E-12,4.77907E-12,2.41749E-12,7.96373E-12,3.69774E-12,4.36848E-12,7.21326E-13,4.23397E-12,6.98687E-12
+SugarCrop,SugarCrop,SugarCrop,1990,OC_AWB,5.46113E-13,3.30067E-11,3.53732E-12,7.6527E-12,2.24798E-11,3.36808E-12,5.46316E-12,4.80883E-12,6.06613E-12,2.60879E-12,3.3788E-12,2.29091E-12,-0.4,5.45039E-12
+Wheat,Wheat,Wheat,1990,OC_AWB,3.96298E-13,1.82194E-11,1.87508E-12,5.52887E-12,2.84813E-11,2.21093E-12,4.80409E-12,2.80493E-12,8.07458E-12,2.89942E-12,4.93784E-12,1.1883E-12,3.04085E-11,7.93245E-12

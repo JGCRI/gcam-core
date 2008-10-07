@@ -1,0 +1,336 @@
+delete aggregate transportation,,,Only change values in colored cells,
+INPUT_TABLE,,,,
+Variable ID,,,,
+1,,,,
+
+region,supplysector,,,
+ALL,transportation,,,
+
+unit tags,,,,
+INPUT_TABLE,,,,
+Variable ID,,,,
+10,,,,
+
+region,supplysector,output-unit,input-unit,price-unit
+ALL,transportation,EJ,EJ,1975$/GJ
+
+
+subsector info,,,,,,
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+100,,,,,,
+,,,1975 fillout,1975 fillout,,
+region,supplysector,subsector,sharewt,logitexp,scaleYear,techScaleYear
+ALL,transportation,air,1,-2,2005,2095
+ALL,transportation,pipeline,1,-2,2005,2095
+ALL,transportation,rail,1,-2,2005,2095
+ALL,transportation,road,1,-2,2005,2095
+ALL,transportation,domestic ship,1,-2,2005,2095
+ALL,transportation,international ship,1,-2,2005,2095
+
+reset non-existent subsector sharewts to 0. Fill out future sharewts to avoid subsectors entering at 1 in 2020,,,,,,
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,,,,,
+101,,,,,,,,,,
+,,,sharewt,,,,,,,
+region,supplysector,subsector,1990,2005,2020,2035,2050,2065,2080,2095
+Australia_NZ,transportation,pipeline,0,1,1,1,1,1,1,1
+India,transportation,pipeline,0,0,0.00017,0.00033,0.00050,0.00067,0.00083,0.00100
+Japan,transportation,pipeline,0,0,0.00017,0.00033,0.00050,0.00067,0.00083,0.00100
+Korea,transportation,pipeline,0,1,1,1,1,1,1,1
+Latin America,transportation,pipeline,0,1,1,1,1,1,1,1
+Middle East,transportation,domestic ship,0,0,0.00017,0.00033,0.00050,0.00067,0.00083,0.00100
+Middle East,transportation,pipeline,0,0,0.00017,0.00033,0.00050,0.00067,0.00083,0.00100
+Middle East,transportation,rail,1,0,0.00833,0.01667,0.02500,0.03333,0.04167,0.05000
+Southeast Asia,transportation,pipeline,0,1,1,1,1,1,1,1
+
+
+technology logitexp,,,,,,,,,,
+INPUT_TABLE,,,,
+Variable ID,,,,
+1000,,,,
+,,,,1975 fillout
+region,supplysector,subsector,technology,logitexp
+ALL,transportation,air,refined liquids,-6
+ALL,transportation,pipeline,electricity,-12
+ALL,transportation,pipeline,gas,-12
+ALL,transportation,pipeline,refined liquids,-12
+ALL,transportation,rail,coal,-6
+ALL,transportation,rail,electricity,-6
+ALL,transportation,rail,hydrogen,-6
+ALL,transportation,rail,refined liquids,-6
+ALL,transportation,road,electricity,-21
+ALL,transportation,road,gas,-21
+ALL,transportation,road,hydrogen,-21
+ALL,transportation,road,refined liquids,-21,,,,,,,,,
+ALL,transportation,domestic ship,coal,-6,,,,,,,,,
+ALL,transportation,domestic ship,hydrogen,-6,,,,,,,,,
+ALL,transportation,domestic ship,refined liquids,-6,,,,,,,,,
+ALL,transportation,international ship,hydrogen,-6,,,,,,,,,
+ALL,transportation,international ship,refined liquids,-6,,,,,,,,,
+
+technology efficiency,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1005,,,,,,,,,,,,,
+,,,,,efficiency,,,,,,,,
+region,supplysector,subsector,technology,minicam-energy-input,1975,1990,2005,2020,2035,2050,2065,2080,2095
+ALL,transportation,air,refined liquids,refined liquids enduse,1,0.84,1.22,1.28,1.34,1.40,1.46,1.51,1.56
+ALL,transportation,pipeline,electricity,elect_td_trn,1,4.00,4.00,4.00,4.00,4.00,4.00,4.00,4.00
+ALL,transportation,pipeline,gas,delivered gas,1,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+ALL,transportation,pipeline,refined liquids,refined liquids enduse,1,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+ALL,transportation,rail,coal,delivered coal,1,0.20,0.26,0.26,0.26,0.27,0.27,0.28,0.28
+ALL,transportation,rail,electricity,elect_td_trn,1,3.57,3.84,3.90,3.96,4.02,4.08,4.14,4.21
+ALL,transportation,rail,hydrogen,H2 Enduse,1,1.48,1.92,1.95,2.03,2.12,2.15,2.18,2.21
+ALL,transportation,rail,refined liquids,refined liquids enduse,1,0.99,1.29,1.30,1.32,1.34,1.36,1.39,1.41
+ALL,transportation,road,electricity,elect_td_trn,1,2.31,2.53,3.06,3.17,3.29,3.42,3.56,3.70
+ALL,transportation,road,gas,delivered gas,1,0.78,0.85,1.03,1.12,1.23,1.39,1.56,1.76
+ALL,transportation,road,hydrogen,H2 Enduse,1,1.36,1.49,1.80,2.02,2.28,2.57,2.89,3.26
+ALL,transportation,road,refined liquids,refined liquids enduse,1,0.91,1.00,1.21,1.32,1.45,1.63,1.84,2.07
+ALL,transportation,domestic ship,coal,delivered coal,1,1.98,1.50,1.53,1.55,1.57,1.60,1.62,1.65
+ALL,transportation,domestic ship,hydrogen,H2 Enduse,1,15.62,11.87,12.05,12.23,12.42,12.60,12.79,12.99
+ALL,transportation,domestic ship,refined liquids,refined liquids enduse,1,9.89,7.52,7.63,7.75,7.86,7.98,8.10,8.23
+ALL,transportation,international ship,hydrogen,H2 Enduse,1,22.44,25.18,25.56,25.94,26.34,26.73,27.14,27.55
+ALL,transportation,international ship,refined liquids,refined liquids enduse,1,14.21,15.95,16.19,16.43,16.68,16.93,17.19,17.45
+
+technology non-energy cost,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+1010,,,,minicam-non-energy-input,,,,,,,,
+,,,,input-cost,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+ALL,transportation,air,refined liquids,1,11.15,9.79,9.79,9.79,9.79,9.79,9.79,9.79
+ALL,transportation,pipeline,electricity,1,2.00,2.00,2.00,2.00,2.00,2.00,2.00,2.00
+ALL,transportation,pipeline,gas,1,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+ALL,transportation,pipeline,refined liquids,1,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+ALL,transportation,rail,coal,1,10.59,13.26,13.26,13.26,13.26,13.26,13.26,13.26
+ALL,transportation,rail,electricity,1,13.00,12.85,12.85,12.85,12.85,12.85,12.85,12.85
+ALL,transportation,rail,hydrogen,1,13.00,12.85,12.85,12.85,12.85,12.85,12.85,12.85
+ALL,transportation,rail,refined liquids,1,10.59,13.26,13.26,13.26,13.26,13.26,13.26,13.26
+ALL,transportation,road,electricity,1,36.78,40.96,40.96,40.96,40.96,40.96,40.96,40.96
+ALL,transportation,road,gas,1,36.78,40.96,40.96,40.96,40.96,40.96,40.96,40.96
+ALL,transportation,road,hydrogen,1,36.78,40.96,40.96,40.96,40.96,40.96,40.96,40.96
+ALL,transportation,road,refined liquids,1,31.98,35.62,35.62,35.62,35.62,35.62,35.62,35.62,,
+ALL,transportation,domestic ship,coal,1,0.50,0.32,0.32,0.32,0.32,0.32,0.32,0.32,,
+ALL,transportation,domestic ship,hydrogen,1,0.60,0.38,0.38,0.38,0.38,0.38,0.38,0.38,,
+ALL,transportation,domestic ship,refined liquids,1,0.50,0.32,0.32,0.32,0.32,0.32,0.32,0.32,,
+ALL,transportation,international ship,hydrogen,1,0.94,1.04,1.04,1.04,1.04,1.04,1.04,1.04,,
+ALL,transportation,international ship,refined liquids,1,0.79,0.87,0.87,0.87,0.87,0.87,0.87,0.87,,
+
+calibration and technology shareweights,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+1015,,,,,,,,,,,,,,
+,,,,,calibrated-value,,sharewt,,,,,,,
+region,supplysector,subsector,technology,minicam-energy-input,1990,2005,1990,2005,2020,2035,2050,2065,2080,2095
+Africa,transportation,air,refined liquids,refined liquids enduse,0.206367372,0.327998504,1,1,1,1,1,1,1,1
+Africa,transportation,pipeline,electricity,elect_td_trn,0.000257142,0.001081645,1,1,1,1,1,1,1,1
+Africa,transportation,pipeline,gas,delivered gas,0.013690836,0.055098288,1,1,1,1,1,1,1,1
+Africa,transportation,pipeline,refined liquids,refined liquids enduse,0,0,0,0,0,0,0,0,0,1
+Africa,transportation,rail,coal,delivered coal,0.007871184,0.00020934,1,1,1,1,1,1,1,0
+Africa,transportation,rail,electricity,elect_td_trn,0.016071378,0.023032675,1,1,1,1,1,1,1,1
+Africa,transportation,rail,refined liquids,refined liquids enduse,0.009378432,0.013523553,1,1,1,1,1,1,1,1
+Africa,transportation,road,electricity,elect_td_trn,0,0.000127252,0,1,1,1,1,1,1,0.8
+Africa,transportation,road,gas,delivered gas,0,0.010383264,0,1,1,1,1,1,1,0.5
+Africa,transportation,road,refined liquids,refined liquids enduse,1.408188312,2.344347741,1,1,1,1,1,1,1,1
+Africa,transportation,domestic ship,coal,delivered coal,0,0,0,0,0,0,0,0,0,0
+Africa,transportation,domestic ship,refined liquids,refined liquids enduse,0.005484708,0.036174458,1,1,1,1,1,1,1,1
+Africa,transportation,international ship,refined liquids,refined liquids enduse,0.220895568,0.268838191,1,1,1,1,1,1,1,1
+Australia_NZ,transportation,air,refined liquids,refined liquids enduse,0.135635081,0.242485579,1,1,1,1,1,1,1,1
+Australia_NZ,transportation,pipeline,electricity,elect_td_trn,0,0,0,0,0,0,0,0,0,0
+Australia_NZ,transportation,pipeline,gas,delivered gas,0,0.013598484,0,1,1,1,1,1,1,1
+Australia_NZ,transportation,pipeline,refined liquids,refined liquids enduse,0,0,0,0,0,0,0,0,0,0
+Australia_NZ,transportation,rail,coal,delivered coal,0.000041868,0,1,0,0,0,0,0,0,0
+Australia_NZ,transportation,rail,electricity,elect_td_trn,0.00669888,0.010592604,1,1,1,1,1,1,1,1
+Australia_NZ,transportation,rail,refined liquids,refined liquids enduse,0.023802257,0.029113393,1,1,1,1,1,1,1,1
+Australia_NZ,transportation,road,electricity,elect_td_trn,0,0,0,0,0.133,0.267,0.4,0.533,0.667,0.8
+Australia_NZ,transportation,road,gas,delivered gas,0.002805156,0.00139026,1,1,1,1,1,1,1,0.5
+Australia_NZ,transportation,road,refined liquids,refined liquids enduse,0.898818547,1.189742133,1,1,1,1,1,1,1,1
+Australia_NZ,transportation,domestic ship,coal,delivered coal,0.003014496,0.003851856,1,1,1,1,1,1,1,0
+Australia_NZ,transportation,domestic ship,refined liquids,refined liquids enduse,0.022500899,0.010502667,1,1,1,1,1,1,1,1
+Australia_NZ,transportation,international ship,refined liquids,refined liquids enduse,0.040551993,0.044573319,1,1,1,1,1,1,1,1
+Canada,transportation,air,refined liquids,refined liquids enduse,0.183842388,0.247984164,1,1,1,1,1,1,1,1
+Canada,transportation,pipeline,electricity,elect_td_trn,0.011764908,0.015323688,1,1,1,1,1,1,1,1
+Canada,transportation,pipeline,gas,delivered gas,0.11974248,0.178273944,1,1,1,1,1,1,1,1
+Canada,transportation,pipeline,refined liquids,refined liquids enduse,0.000544284,0.000753624,1,1,1,1,1,1,1,1
+Canada,transportation,rail,coal,delivered coal,0,0,0,0,0,0,0,0,0,0
+Canada,transportation,rail,electricity,elect_td_trn,0,0,0,0,0.133,0.267,0.4,0.533,0.667,0.8
+Canada,transportation,rail,refined liquids,refined liquids enduse,0.086206212,0.07599042,1,1,1,1,1,1,1,1
+Canada,transportation,road,electricity,elect_td_trn,0,0,0,0,0.133,0.267,0.4,0.533,0.667,0.8
+Canada,transportation,road,gas,delivered gas,0.001507248,0.00167472,1,1,1,1,1,1,1,0.5
+Canada,transportation,road,refined liquids,refined liquids enduse,1.384114212,1.776124296,1,1,1,1,1,1,1,1
+Canada,transportation,domestic ship,coal,delivered coal,0,0,0,0,0,0,0,0,0,0
+Canada,transportation,domestic ship,refined liquids,refined liquids enduse,0.061880904,0.07933986,1,1,1,1,1,1,1,1
+Canada,transportation,international ship,refined liquids,refined liquids enduse,0.038016144,0.024660252,1,1,1,1,1,1,1,1
+China,transportation,air,refined liquids,refined liquids enduse,0.040529979,0.425551216,1,1,1,1,1,1,1,1
+China,transportation,pipeline,electricity,elect_td_trn,0,0,0,0,0,0,0,0,0,0
+China,transportation,pipeline,gas,delivered gas,0.001758456,0.000376812,1,1,1,1,1,1,1,1
+China,transportation,pipeline,refined liquids,refined liquids enduse,0,0.194203124,0,1,1,1,1,1,1,1
+China,transportation,rail,coal,delivered coal,0.41616792,0.17228681,1,1,1,1,1,1,1,0.01
+China,transportation,rail,electricity,elect_td_trn,0.02219004,0.074566908,1,1,1,1,1,1,1,1
+China,transportation,rail,refined liquids,refined liquids enduse,0.092376499,0.385762031,1,1,1,1,1,1,1,1
+China,transportation,road,electricity,elect_td_trn,0,0,0,0,0.133,0.267,0.4,0.533,0.667,0.8
+China,transportation,road,gas,delivered gas,0,0.00293076,0,1,1,1,1,1,1,0.5
+China,transportation,road,refined liquids,refined liquids enduse,1.014758357,3.487094007,1,1,1,1,1,1,1,1
+China,transportation,domestic ship,coal,delivered coal,0,4.18782E-05,0,1,1,1,1,1,1,0
+China,transportation,domestic ship,refined liquids,refined liquids enduse,0.114716188,0.388238362,1,1,1,1,1,1,1,1
+China,transportation,international ship,refined liquids,refined liquids enduse,0.060187229,0.320747844,1,1,1,1,1,1,1,1
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+1015,,,,,,,,,,,,,,
+,,,,,calibrated-value,,sharewt,,,,,,,
+region,supplysector,subsector,technology,minicam-energy-input,1990,2005,1990,2005,2020,2035,2050,2065,2080,2095
+Eastern Europe,transportation,air,refined liquids,refined liquids enduse,0.065149207,0.069795727,1,1,1,1,1,1,1,1
+Eastern Europe,transportation,pipeline,electricity,elect_td_trn,0.000782036,0.002425231,1,1,1,1,1,1,1,1
+Eastern Europe,transportation,pipeline,gas,delivered gas,0,0.046673696,0,1,1,1,1,1,1,1
+Eastern Europe,transportation,pipeline,refined liquids,refined liquids enduse,0,0.000125607,0,1,1,1,1,1,1,1
+Eastern Europe,transportation,rail,coal,delivered coal,0.007619976,0.000376812,1,1,1,1,1,1,1,0
+Eastern Europe,transportation,rail,electricity,elect_td_trn,0.057414484,0.037516841,1,1,1,1,1,1,1,1
+Eastern Europe,transportation,rail,refined liquids,refined liquids enduse,0.038098215,0.020767055,1,1,1,1,1,1,1,1
+Eastern Europe,transportation,road,electricity,elect_td_trn,0,0,0,0,0.133,0.267,0.4,0.533,0.667,0.8
+Eastern Europe,transportation,road,gas,delivered gas,0,0.001307032,0,1,1,1,1,1,1,0.5
+Eastern Europe,transportation,road,refined liquids,refined liquids enduse,0.957789961,1.534584877,1,1,1,1,1,1,1,1
+Eastern Europe,transportation,domestic ship,coal,delivered coal,0.00020934,0,1,0,0,0,0,0,0,0
+Eastern Europe,transportation,domestic ship,refined liquids,refined liquids enduse,0.023480598,0.005275502,1,1,1,1,1,1,1,1
+Eastern Europe,transportation,international ship,refined liquids,refined liquids enduse,0.022304468,0.019385376,1,1,1,1,1,1,1,1
+Former Soviet Union,transportation,air,refined liquids,refined liquids enduse,0.998330961,0.522278604,1,1,1,1,1,1,1,1
+Former Soviet Union,transportation,pipeline,electricity,elect_td_trn,0.381325187,0.126482016,1,1,1,1,1,1,1,1
+Former Soviet Union,transportation,pipeline,gas,delivered gas,1.3884879,1.617311086,1,1,1,1,1,1,1,1
+Former Soviet Union,transportation,pipeline,refined liquids,refined liquids enduse,0.00094796,0.004212264,1,1,1,1,1,1,1,1
+Former Soviet Union,transportation,rail,coal,delivered coal,0.003475044,0.002553948,1,1,1,1,1,1,1,0
+Former Soviet Union,transportation,rail,electricity,elect_td_trn,0.092997385,0.2309451,1,1,1,1,1,1,1,1
+Former Soviet Union,transportation,rail,refined liquids,refined liquids enduse,0.359147506,0.139636549,1,1,1,1,1,1,1,1
+Former Soviet Union,transportation,road,electricity,elect_td_trn,0,0,0,0,0.133,0.267,0.4,0.533,0.667,0.8
+Former Soviet Union,transportation,road,gas,delivered gas,0.050012844,0.009009506,1,1,1,1,1,1,1,0.5
+Former Soviet Union,transportation,road,refined liquids,refined liquids enduse,3.693294559,2.445724682,1,1,1,1,1,1,1,1
+Former Soviet Union,transportation,domestic ship,coal,delivered coal,0,0,0,0,0,0,0,0,0,0
+Former Soviet Union,transportation,domestic ship,refined liquids,refined liquids enduse,0.205836549,0.058971695,1,1,1,1,1,1,1,1
+Former Soviet Union,transportation,international ship,refined liquids,refined liquids enduse,0.115823455,0.021988018,1,1,1,1,1,1,1,1
+India,transportation,air,refined liquids,refined liquids enduse,0.074860626,0.146914812,1,1,1,1,1,1,1,1
+India,transportation,pipeline,electricity,elect_td_trn,0,0,0,0,1,1,1,1,1,1
+India,transportation,pipeline,gas,delivered gas,0,0,0,0,1,1,1,1,1,1
+India,transportation,pipeline,refined liquids,refined liquids enduse,0,0,0,0,0,0,0,0,0,0
+India,transportation,rail,coal,delivered coal,0.101571768,0,1,0,0,0,0,0,0,0
+India,transportation,rail,electricity,elect_td_trn,0.014821272,0.037513728,1,1,1,1,1,1,1,1
+India,transportation,rail,refined liquids,refined liquids enduse,0.064088408,0.067156272,1,1,1,1,1,1,1,1
+India,transportation,road,electricity,elect_td_trn,0,0,0,0,0.133,0.267,0.4,0.533,0.667,0.8
+India,transportation,road,gas,delivered gas,0,0.02763288,0,1,1,1,1,1,1,0.5
+India,transportation,road,refined liquids,refined liquids enduse,0.908722491,1.249676064,1,1,1,1,1,1,1,1
+India,transportation,domestic ship,coal,delivered coal,0,0,0,0,0,0,0,0,0,0
+India,transportation,domestic ship,refined liquids,refined liquids enduse,0.023346791,0.020180376,1,1,1,1,1,1,1,1
+India,transportation,international ship,refined liquids,refined liquids enduse,0.006203456,0.001214172,1,1,1,1,1,1,1,1
+Japan,transportation,air,refined liquids,refined liquids enduse,0.29077326,0.457449768,1,1,1,1,1,1,1,1
+Japan,transportation,pipeline,electricity,elect_td_trn,0,0,0,0,1,1,1,1,1,1
+Japan,transportation,pipeline,gas,delivered gas,0,0,0,0,1,1,1,1,1,1
+Japan,transportation,pipeline,refined liquids,refined liquids enduse,0,0,0,0,0,0,0,0,0,0
+Japan,transportation,rail,coal,delivered coal,0,0,0,0,0,0,0,0,0,0
+Japan,transportation,rail,electricity,elect_td_trn,0.060541128,0.068621652,1,1,1,1,1,1,1,1
+Japan,transportation,rail,refined liquids,refined liquids enduse,0.013020948,0.009127224,1,1,1,1,1,1,1,1
+Japan,transportation,road,electricity,elect_td_trn,0,0,0,0,0.133,0.267,0.4,0.533,0.667,0.8
+Japan,transportation,road,gas,delivered gas,0,0,0,0,0.083,0.167,0.25,0.333,0.417,0.5
+Japan,transportation,road,refined liquids,refined liquids enduse,2.678756508,3.195323892,1,1,1,1,1,1,1,1
+Japan,transportation,domestic ship,coal,delivered coal,0,0,0,0,0,0,0,0,0,0
+Japan,transportation,domestic ship,refined liquids,refined liquids enduse,0.16977474,0.16370388,1,1,1,1,1,1,1,1
+Japan,transportation,international ship,refined liquids,refined liquids enduse,0.220309416,0.245304612,1,1,1,1,1,1,1,1
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+1015,,,,,,,,,,,,,,
+,,,,,calibrated-value,,sharewt,,,,,,,
+region,supplysector,subsector,technology,minicam-energy-input,1990,2005,1990,2005,2020,2035,2050,2065,2080,2095
+Korea,transportation,air,refined liquids,refined liquids enduse,0.092779488,0.155396821,1,1,1,1,1,1,1,1
+Korea,transportation,pipeline,electricity,elect_td_trn,0,0,0,0,1,1,1,1,1,1
+Korea,transportation,pipeline,gas,delivered gas,0,0,0,0,1,1,1,1,1,1
+Korea,transportation,pipeline,refined liquids,refined liquids enduse,0,4.20219E-05,0,1,1,1,1,1,1,1
+Korea,transportation,rail,coal,delivered coal,0,0,0,0,0,0,0,0,0,0
+Korea,transportation,rail,electricity,elect_td_trn,0.003642516,0.007410636,1,1,1,1,1,1,1,1
+Korea,transportation,rail,refined liquids,refined liquids enduse,0.012099852,0.011177814,1,1,1,1,1,1,1,1
+Korea,transportation,road,electricity,elect_td_trn,0,0,0,0,0.133,0.267,0.4,0.533,0.667,0.8
+Korea,transportation,road,gas,delivered gas,0,0.013565232,0,1,1,1,1,1,1,0.5
+Korea,transportation,road,refined liquids,refined liquids enduse,0.450081,1.108746652,1,1,1,1,1,1,1,1
+Korea,transportation,domestic ship,coal,delivered coal,0,0,0,0,0,0,0,0,0,0
+Korea,transportation,domestic ship,refined liquids,refined liquids enduse,0.066402648,0.035130271,1,1,1,1,1,1,1,1
+Korea,transportation,international ship,refined liquids,refined liquids enduse,0.066193308,0.416226477,1,1,1,1,1,1,1,1
+Latin America,transportation,air,refined liquids,refined liquids enduse,0.334218161,0.507592985,1,1,1,1,1,1,1,1
+Latin America,transportation,pipeline,electricity,elect_td_trn,0,0,0,0,1,1,1,1,1,1
+Latin America,transportation,pipeline,gas,delivered gas,0,0.077062847,0,1,1,1,1,1,1,1
+Latin America,transportation,pipeline,refined liquids,refined liquids enduse,0,0,0,0,0,0,0,0,0,0
+Latin America,transportation,rail,coal,delivered coal,0.000251208,0.000041868,1,1,1,1,1,1,1,0
+Latin America,transportation,rail,electricity,elect_td_trn,0.010173924,0.012476664,1,1,1,1,1,1,1,1
+Latin America,transportation,rail,refined liquids,refined liquids enduse,0.053771576,0.052647703,1,1,1,1,1,1,1,1
+Latin America,transportation,road,electricity,elect_td_trn,0.000293076,0.00062802,1,1,1,1,1,1,1,0.8
+Latin America,transportation,road,gas,delivered gas,0.008457336,0.225349717,1,1,1,1,1,1,1,0.5
+Latin America,transportation,road,refined liquids,refined liquids enduse,4.050061655,6.122055308,1,1,1,1,1,1,1,1
+Latin America,transportation,domestic ship,coal,delivered coal,0,0,0,0,0,0,0,0,0,0
+Latin America,transportation,domestic ship,refined liquids,refined liquids enduse,0.079393143,0.125781221,1,1,1,1,1,1,1,1
+Latin America,transportation,international ship,refined liquids,refined liquids enduse,0.230889081,0.44057149,1,1,1,1,1,1,1,1
+Middle East,transportation,air,refined liquids,refined liquids enduse,0.41072508,0.498149381,1,1,1,1,1,1,1,1
+Middle East,transportation,pipeline,electricity,elect_td_trn,0,0,0,0,1,1,1,1,1,1
+Middle East,transportation,pipeline,gas,delivered gas,0,0,0,0,1,1,1,1,1,1
+Middle East,transportation,pipeline,refined liquids,refined liquids enduse,0,0,0,0,0,0,0,0,0,0
+Middle East,transportation,rail,coal,delivered coal,0,0,0,0,0,0,0,0,0,0
+Middle East,transportation,rail,electricity,elect_td_trn,0,0,0,0,1,1,1,1,1,1
+Middle East,transportation,rail,refined liquids,refined liquids enduse,0.000753624,0,1,0,1,1,1,1,1,1
+Middle East,transportation,road,electricity,elect_td_trn,0,0,0,0,0.133,0.267,0.4,0.533,0.667,0.8
+Middle East,transportation,road,gas,delivered gas,0,0.010760076,0,1,1,1,1,1,1,0.5
+Middle East,transportation,road,refined liquids,refined liquids enduse,2.080504656,3.951111361,1,1,1,1,1,1,1,1
+Middle East,transportation,domestic ship,coal,delivered coal,0,0,0,0,0,0,0,0,0,0
+Middle East,transportation,domestic ship,refined liquids,refined liquids enduse,0,0,0,0,0,0,0,0,0,0
+Middle East,transportation,international ship,refined liquids,refined liquids enduse,0.378151776,0.561627103,1,1,1,1,1,1,1,1
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+1015,,,,,,,,,,,,,,
+,,,,,calibrated-value,,,,,,,,,
+region,supplysector,subsector,technology,minicam-energy-input,1990,2005,sharewt,,,,,,,
+Southeast Asia,transportation,air,refined liquids,refined liquids enduse,0.40046742,0.875214207,1990,2005,2020,2035,2050,2065,2080,2095
+Southeast Asia,transportation,pipeline,electricity,elect_td_trn,0,0,0,0,1,1,1,1,1,1
+Southeast Asia,transportation,pipeline,gas,delivered gas,0,0.039705032,0,1,1,1,1,1,1,1
+Southeast Asia,transportation,pipeline,refined liquids,refined liquids enduse,0,0,0,0,0,0,0,0,0,0
+Southeast Asia,transportation,rail,coal,delivered coal,0,0,0,0,0,0,0,0,0,0
+Southeast Asia,transportation,rail,electricity,elect_td_trn,0.00188406,0.0052335,1,1,1,1,1,1,1,1
+Southeast Asia,transportation,rail,refined liquids,refined liquids enduse,0.020808396,0.04275568,1,1,1,1,1,1,1,1
+Southeast Asia,transportation,road,electricity,elect_td_trn,0,0,0,0,0.133,0.267,0.4,0.533,0.667,0.8
+Southeast Asia,transportation,road,gas,delivered gas,0,0.002665384,0,1,1,1,1,1,1,0.5
+Southeast Asia,transportation,road,refined liquids,refined liquids enduse,1.717592832,3.830548764,1,1,1,1,1,1,1,1
+Southeast Asia,transportation,domestic ship,coal,delivered coal,0,0,0,0,0,0,0,0,0,0
+Southeast Asia,transportation,domestic ship,refined liquids,refined liquids enduse,0.076157892,0.133627203,1,1,1,1,1,1,1,1
+Southeast Asia,transportation,international ship,refined liquids,refined liquids enduse,0.640622268,1.471951167,1,1,1,1,1,1,1,1
+USA,transportation,air,refined liquids,refined liquids enduse,3.225051587,3.550605615,1,1,1,1,1,1,1,1
+USA,transportation,pipeline,electricity,elect_td_trn,0,0,0,0,1,1,1,1,1,1
+USA,transportation,pipeline,gas,delivered gas,0.64518588,0.571246992,1,1,1,1,1,1,1,1
+USA,transportation,pipeline,refined liquids,refined liquids enduse,0,0,0,0,0,0,0,0,0,0
+USA,transportation,rail,coal,delivered coal,0,0,0,0,0,0,0,0,0,0
+USA,transportation,rail,electricity,elect_td_trn,0.01486314,0.027046728,1,1,1,1,1,1,1,1
+USA,transportation,rail,refined liquids,refined liquids enduse,0.447207266,0.514596322,1,1,1,1,1,1,1,1
+USA,transportation,road,electricity,elect_td_trn,0,0,0,0,0.133,0.267,0.4,0.533,0.667,0.8
+USA,transportation,road,gas,delivered gas,0,0.021729492,0,1,1,1,1,1,1,0.5
+USA,transportation,road,refined liquids,refined liquids enduse,16.51952583,22.29249379,1,1,1,1,1,1,1,1
+USA,transportation,domestic ship,coal,delivered coal,0,0,0,0,0,0,0,0,0,0
+USA,transportation,domestic ship,refined liquids,refined liquids enduse,0.161974289,0.168541406,1,1,1,1,1,1,1,1
+USA,transportation,international ship,refined liquids,refined liquids enduse,1.207800483,1.085960073,1,1,1,1,1,1,1,1
+Western Europe,transportation,air,refined liquids,refined liquids enduse,1.332390959,2.298016744,1,1,1,1,1,1,1,1
+Western Europe,transportation,pipeline,electricity,elect_td_trn,0.002501621,0.003793701,1,1,1,1,1,1,1,1
+Western Europe,transportation,pipeline,gas,delivered gas,0.004019328,0.015024696,1,1,1,1,1,1,1,1
+Western Europe,transportation,pipeline,refined liquids,refined liquids enduse,0,0,0,0,0,0,0,0,0,0
+Western Europe,transportation,rail,coal,delivered coal,0.001423512,0,1,0,0,0,0,0,0,0
+Western Europe,transportation,rail,electricity,elect_td_trn,0.180838351,0.244232331,1,1,1,1,1,1,1,1
+Western Europe,transportation,rail,refined liquids,refined liquids enduse,0.133859358,0.123018285,1,1,1,1,1,1,1,1
+Western Europe,transportation,road,electricity,elect_td_trn,0,0,0,0,0.133,0.267,0.4,0.533,0.667,0.8
+Western Europe,transportation,road,gas,delivered gas,0.008708544,0.02001882,1,1,1,1,1,1,1,0.5
+Western Europe,transportation,road,refined liquids,refined liquids enduse,9.78279731,12.112924,1,1,1,1,1,1,1,1
+Western Europe,transportation,domestic ship,coal,delivered coal,0.000041868,0,1,0,0,0,0,0,0,0
+Western Europe,transportation,domestic ship,refined liquids,refined liquids enduse,0.290559465,0.278162897,1,1,1,1,1,1,1,1
+Western Europe,transportation,international ship,refined liquids,refined liquids enduse,1.484481007,2.234476145,1,1,1,1,1,1,1,1
+
+Hydrogen technology shareweights in all regions,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+1016,,,,,,,,,,,,,,
+,,,,sharewt,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,
+ALL,transportation,rail,hydrogen,0,0,0,0.167,0.333,0.500,0.667,0.833,1,,
+ALL,transportation,road,hydrogen,0,0,0,0.167,0.333,0.500,0.667,0.833,1,,
+ALL,transportation,domestic ship,hydrogen,0,0,0,0.167,0.333,0.500,0.667,0.833,1,,
+ALL,transportation,international ship,hydrogen,0,0,0,0.167,0.333,0.500,0.667,0.833,1,,

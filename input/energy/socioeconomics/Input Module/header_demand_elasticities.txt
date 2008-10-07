@@ -1,0 +1,3 @@
+The first row of a header file is not read.
+
+10,world/+{name}region,region/+{name}energy-final-demand,energy-final-demand/+{year=1975}income-elasticity,energy-final-demand/+{year=1990}income-elasticity,energy-final-demand/+{year=2005}income-elasticity,energy-final-demand/+{year=2020}income-elasticity,energy-final-demand/+{year=2035}income-elasticity,energy-final-demand/+{year=2050}income-elasticity,energy-final-demand/+{year=2065}income-elasticity,energy-final-demand/+{year=2080}income-elasticity,energy-final-demand/+{year=2095}income-elasticity,scenario/world,scenario

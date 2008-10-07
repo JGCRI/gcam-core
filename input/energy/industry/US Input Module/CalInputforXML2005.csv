@@ -1,0 +1,78 @@
+Region: USA,2005 values (from mecs 1998) ,,,,,,,match totals from IEA or EIA,,IEA,EIA,IEA net cement,EIA net cement,scaler/check,
+EndUseTechsforXML,,,,,,,,electricity,3.525,3.586,3.708,3.525,3.647,1,do not link fuel scalers to these cells (will create a circular ref)
+INPUT_TABLE,,,,,,,,refined liquids,9.622,9.747,9.626,9.742,9.622,1,"to change, set all scalers to 1 in MECS input sheet"
+Variable ID,,,,,,,,gas,7.686,6.931,7.700,6.917,7.686,1,cut and paste (transpose) these values as scalers
+501,,,,,,,,coal,1.730,1.542,2.034,1.238,1.730,1,
+,,,,,,,,biomass,1.744,1.347,1.883,1.209,1.744,1,
+supplysector,subsector,technology,period,minicam-energy-input,calibrated-value,,CalInputValue,,lookuptag,flow,,,use EIA; IEA electricity numbers are bumped down so (hopefully) no double counting,,
+boilers pulp paper and wood,electricity,electricity,2005,elect_td_ind,0.010799803,,10.23581023,,boilers pulp paper and woodelectricity,0.010799803,,,oil,ccsp minus cement,
+boilers pulp paper and wood,refined liquids,refined liquids,2005,refined liquids industrial,0.131392996,,124.5313201,,boilers pulp paper and woodrefined liquids,0.131392996,,,energy use,3.7011,
+boilers pulp paper and wood,gas,gas,2005,wholesale gas,0.350404346,,332.1053417,,boilers pulp paper and woodgas,0.350404346,,,feedstock,6.0459,
+boilers pulp paper and wood,coal,coal,2005,delivered coal,0.293501124,,278.1737503,,boilers pulp paper and woodcoal,0.293501124,,,,,
+boilers pulp paper and wood,biomass,biomass,2005,delivered biomass,1.406472905,,1333.02332,,boilers pulp paper and woodbiomass,1.406472905,,,,cement,
+boilers general,electricity,electricity,2005,elect_td_ind,0.017099689,,16.20669954,,boilers generalelectricity,0.017099689,,,electricity,0.061,
+boilers general,refined liquids,refined liquids,2005,refined liquids industrial,0.174521994,,165.408013,,boilers generalrefined liquids,0.174521994,,,oil,0.005,
+boilers general,gas,gas,2005,wholesale gas,1.71299758,,1623.540499,,boilers generalgas,1.71299758,,,gas,0.014,
+boilers general,coal,coal,2005,delivered coal,0.510909364,,484.2283802,,boilers generalcoal,0.510909364,,,coal,0.305,
+boilers general,biomass,biomass,2005,delivered biomass,0.035441625,,33.59077331,,boilers generalbiomass,0.035441625,,,biomass,0.138
+process heat primary metals,electricity,electricity,2005,elect_td_ind,0.152097231,,144.1543275,,process heat primary metalselectricity,0.152097231,,,,
+process heat primary metals,refined liquids,refined liquids,2005,refined liquids industrial,0.020059999,,19.01241528,,process heat primary metalsrefined liquids,0.020059999,,,subtract electricity currently allocated to pipeline transport,
+process heat primary metals,gas,gas,2005,wholesale gas,0.543899089,,515.4952984,,process heat primary metalsgas,0.543899089,,,0.083393151,from TEDB
+process heat primary metals,coal,coal,2005,delivered coal,0.04565573,,43.27147228,,process heat primary metalscoal,0.04565573,,,3.669604596,
+process heat primary metals,biomass,biomass,2005,delivered biomass,0,,0,,process heat primary metalsbiomass,0,,,,
+process heat general,electricity,electricity,2005,elect_td_ind,0.170996887,,162.0669954,,process heat generalelectricity,0.170996887,,,,
+process heat general,refined liquids,refined liquids,2005,refined liquids industrial,0.162485995,,154.0005638,,process heat generalrefined liquids,0.162485995,,,,
+process heat general,gas,gas,2005,wholesale gas,2.027629789,,1921.741815,,process heat generalgas,2.027629789,,,,
+process heat general,coal,coal,2005,delivered coal,0.077179925,,73.14939361,,process heat generalcoal,0.077179925,,,,
+process heat general,biomass,biomass,2005,delivered biomass,0,,0,,process heat generalbiomass,0,,,,
+machine drive,electricity,electricity,2005,elect_td_ind,1.66316972,,1576.314776,,machine driveelectricity,1.66316972,,,,
+machine drive,refined liquids,refined liquids,2005,refined liquids industrial,0.015045,,14.25931146,,machine driverefined liquids,0.015045,,,,
+machine drive,gas,gas,2005,wholesale gas,0.076422294,,72.43132743,,machine drivegas,0.076422294,,,,
+machine drive,coal,coal,2005,delivered coal,0.002174082,,2.060546299,,machine drivecoal,0.002174082,,,,
+hvac,electricity,electricity,2005,elect_td_ind,0.260095265,,246.5124298,,hvacelectricity,0.260095265,,,,
+hvac,refined liquids,refined liquids,2005,refined liquids industrial,0.009027,,8.555586877,,hvacrefined liquids,0.009027
+hvac,gas,gas,2005,wholesale gas,0.327640259,,310.5300527,,hvacgas,0.327640259
+hvac,coal,coal,2005,delivered coal,0.003261124,,3.090819448,,hvaccoal,0.003261124
+hvac,biomass,biomass,2005,delivered biomass,0,,0,,hvacbiomass,0
+other end uses petroleum,electricity,electricity,2005,elect_td_ind,0.013499754,,12.79476279,,other end uses petroleumelectricity,0.013499754
+other end uses petroleum,refined liquids,refined liquids,2005,refined liquids industrial,1.988547737,,1884.700727,,other end uses petroleumrefined liquids,1.988547737
+other end uses petroleum,gas,gas,2005,wholesale gas,0.057723222,,54.70876859,,other end uses petroleumgas,0.057723222
+other end uses petroleum,coal,coal,2005,delivered coal,0,,0,,other end uses petroleumcoal,0
+other end uses petroleum,biomass,biomass,2005,delivered biomass,0.280734976,,266.0742833,,other end uses petroleumbiomass,0.280734976
+other end uses general,electricity,electricity,2005,elect_td_ind,0.496790955,,470.8472707,,other end uses generalelectricity,0.496790955
+other end uses general,refined liquids,refined liquids,2005,refined liquids industrial,0.071212998,,67.49407425,,other end uses generalrefined liquids,0.071212998
+other end uses general,gas,gas,2005,wholesale gas,0.248778956,,235.7870872,,other end uses generalgas,0.248778956
+other end uses general,coal,coal,2005,delivered coal,0.023914906,,22.66600929,,other end uses generalcoal,0.023914906
+other end uses general,biomass,biomass,2005,delivered biomass,0,,0,,other end uses generalbiomass,0
+electrochemical,electricity,electricity,2005,elect_td_ind,0.317694216,,301.1034177,,electrochemicalelectricity,0.317694216
+feedstocks petroleum,refined liquids,refined liquids,2005,refined liquids industrial,2.122347933,,2012,,feedstocks petroleumrefined liquids,2.122347933
+feedstocks petroleum,gas,gas,2005,wholesale gas,0,,0,,feedstocks petroleumgas,0
+feedstocks petroleum,coal,coal,2005,delivered coal,0.013044494,,12,,feedstocks petroleumcoal,0.013044494
+feedstocks chemicals,refined liquids,refined liquids,2005,refined liquids industrial,2.031074936,,1925,,feedstocks chemicalsrefined liquids,2.031074936
+feedstocks chemicals,gas,gas,2005,wholesale gas,0.590240267,,559,,feedstocks chemicalsgas,0.590240267
+feedstocks chemicals,coal,coal,2005,delivered coal,0.022827865,,22,,feedstocks chemicalscoal,0.022827865
+feedstocks primary metals,refined liquids,refined liquids,2005,refined liquids industrial,0.054161998,,51,,feedstocks primary metalsrefined liquids,0.054161998
+feedstocks primary metals,gas,gas,2005,wholesale gas,0.035772137,,34,,feedstocks primary metalsgas,0.035772137
+feedstocks primary metals,coal,coal,2005,delivered coal,0.71527311,,678,,feedstocks primary metalscoal,0.71527311
+all end uses agriculture,electricity,electricity,2005,elect_td_ind,0.106565464,,101,,all end uses agricultureelectricity,0.106565464
+all end uses agriculture,refined liquids,refined liquids,2005,refined liquids industrial,0.710453677,,673,,all end uses agriculturerefined liquids,0.710453677
+all end uses agriculture,gas,gas,2005,wholesale gas,0.064194807,,61,,all end uses agriculturegas,0.064194807
+all end uses agriculture,biomass,biomass,2005,delivered biomass,0.019390326,,18,,all end uses agriculturebiomass,0.019390326
+all end uses mining,electricity,electricity,2005,elect_td_ind,0.210425614,,199,,all end uses miningelectricity,0.210425614
+all end uses mining,refined liquids,refined liquids,2005,refined liquids industrial,0.140664816,,133,,all end uses miningrefined liquids,0.140664816
+all end uses mining,gas,gas,2005,wholesale gas,1.411181913,,1337,,all end uses mininggas,1.411181913
+all end uses mining,coal,coal,2005,delivered coal,0.021904932,,21,,all end uses miningcoal,0.021904932
+all end uses mining,biomass,biomass,2005,delivered biomass,0.002079272,,2,,all end uses miningbiomass,0.002079272
+construction energy uses,electricity,electricity,2005,elect_td_ind,0.106017847,,100,,construction energy useselectricity,0.106017847
+construction energy uses,refined liquids,refined liquids,2005,refined liquids industrial,0.667549472,,633,,construction energy usesrefined liquids,0.667549472
+construction energy uses,gas,gas,2005,wholesale gas,0.239300733,,227,,construction energy usesgas,0.239300733
+construction feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,1.323186015,,1254,,construction feedstocksrefined liquids,1.323186015
+,,,,,,,,,,
+Region: USA,,,,,,,,,,
+Limestone Feedstocks input for Other Nonmetallic Mineral and Other Primary Metals,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,
+Variable ID,,,,,,,,,,
+501,,,,,,,,,,
+
+supplysector,subsector,technology,period,minicam-energy-input,calibrated-value,,,,,
+limestone feedstocks,limestone feedstocks,limestone feedstocks,2005,limestone,0.072793781,,,,,

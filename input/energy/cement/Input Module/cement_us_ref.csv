@@ -1,0 +1,11 @@
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1006,,,,,,,,,,,,,
+,,,,,coefficient,,,,,,,,
+region,supplysector,subsector,technology,minicam-energy-input,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,cement,cement (conv),cement (conv),limestone,1.496,1.496,1.496,1.496,1.496,1.441,1.388,1.337,1.287
+USA,cement,cement (conv),cement (conv),process heat cement,3.964,3.964,3.951,3.806,3.666,3.531,3.400,3.275,3.154
+USA,cement,cement (conv),cement (conv),elect_td_ind,0.529,0.529,0.515,0.496,0.478,0.460,0.443,0.427,0.411
+USA,cement,cement_CCS,cement_CCS,limestone,1.496,1.496,1.496,1.496,1.496,1.441,1.388,1.337,1.287
+USA,cement,cement_CCS,cement_CCS,process heat cement,3.964,3.964,3.951,3.806,3.666,3.531,3.400,3.275,3.154
+USA,cement,cement_CCS,cement_CCS,elect_td_ind,0.529,0.529,0.515,0.496,0.478,0.460,0.443,0.427,0.411

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario date="2007-17-8T18:25:51-00:00" name="ccsp_sd_cal">
+   <world>
+      <region name="Africa">
+         <supplysector name="regional biomass">
+            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <biomass-price-adder year="2005">0</biomass-price-adder>
+            <biomass-price-adder year="2020">0</biomass-price-adder>
+            <biomass-price-adder year="2035">0</biomass-price-adder>
+            <biomass-price-adder year="2050">0</biomass-price-adder>
+            <biomass-price-adder year="2065">0</biomass-price-adder>
+            <biomass-price-adder year="2080">0</biomass-price-adder>
+            <biomass-price-adder year="2095">0</biomass-price-adder>
+         </supplysector>
+      </region>
+      <region name="Australia_NZ">
+         <supplysector name="regional biomass">
+            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <biomass-price-adder year="2005">0</biomass-price-adder>
+            <biomass-price-adder year="2020">0</biomass-price-adder>
+            <biomass-price-adder year="2035">0</biomass-price-adder>
+            <biomass-price-adder year="2050">0</biomass-price-adder>
+            <biomass-price-adder year="2065">0</biomass-price-adder>
+            <biomass-price-adder year="2080">0</biomass-price-adder>
+            <biomass-price-adder year="2095">0</biomass-price-adder>
+         </supplysector>
+      </region>
+      <region name="Canada">
+         <supplysector name="regional biomass">
+            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <biomass-price-adder year="2005">0</biomass-price-adder>
+            <biomass-price-adder year="2020">0</biomass-price-adder>
+            <biomass-price-adder year="2035">0</biomass-price-adder>
+            <biomass-price-adder year="2050">0</biomass-price-adder>
+            <biomass-price-adder year="2065">0</biomass-price-adder>
+            <biomass-price-adder year="2080">0</biomass-price-adder>
+            <biomass-price-adder year="2095">0</biomass-price-adder>
+         </supplysector>
+      </region>
+      <region name="China">
+         <supplysector name="regional biomass">
+            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <biomass-price-adder year="2005">0</biomass-price-adder>
+            <biomass-price-adder year="2020">0</biomass-price-adder>
+            <biomass-price-adder year="2035">0</biomass-price-adder>
+            <biomass-price-adder year="2050">0</biomass-price-adder>
+            <biomass-price-adder year="2065">0</biomass-price-adder>
+            <biomass-price-adder year="2080">0</biomass-price-adder>
+            <biomass-price-adder year="2095">0</biomass-price-adder>
+         </supplysector>
+      </region>
+      <region name="Eastern Europe">
+         <supplysector name="regional biomass">
+            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <biomass-price-adder year="2005">0</biomass-price-adder>
+            <biomass-price-adder year="2020">0</biomass-price-adder>
+            <biomass-price-adder year="2035">0</biomass-price-adder>
+            <biomass-price-adder year="2050">0</biomass-price-adder>
+            <biomass-price-adder year="2065">0</biomass-price-adder>
+            <biomass-price-adder year="2080">0</biomass-price-adder>
+            <biomass-price-adder year="2095">0</biomass-price-adder>
+         </supplysector>
+      </region>
+      <region name="Former Soviet Union">
+         <supplysector name="regional biomass">
+            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <biomass-price-adder year="2005">0</biomass-price-adder>
+            <biomass-price-adder year="2020">0</biomass-price-adder>
+            <biomass-price-adder year="2035">0</biomass-price-adder>
+            <biomass-price-adder year="2050">0</biomass-price-adder>
+            <biomass-price-adder year="2065">0</biomass-price-adder>
+            <biomass-price-adder year="2080">0</biomass-price-adder>
+            <biomass-price-adder year="2095">0</biomass-price-adder>
+         </supplysector>
+      </region>
+      <region name="India">
+         <supplysector name="regional biomass">
+            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <biomass-price-adder year="2005">0</biomass-price-adder>
+            <biomass-price-adder year="2020">0</biomass-price-adder>
+            <biomass-price-adder year="2035">0</biomass-price-adder>
+            <biomass-price-adder year="2050">0</biomass-price-adder>
+            <biomass-price-adder year="2065">0</biomass-price-adder>
+            <biomass-price-adder year="2080">0</biomass-price-adder>
+            <biomass-price-adder year="2095">0</biomass-price-adder>
+         </supplysector>
+      </region>
+      <region name="Japan">
+         <supplysector name="regional biomass">
+            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <biomass-price-adder year="2005">0</biomass-price-adder>
+            <biomass-price-adder year="2020">0</biomass-price-adder>
+            <biomass-price-adder year="2035">0</biomass-price-adder>
+            <biomass-price-adder year="2050">0</biomass-price-adder>
+            <biomass-price-adder year="2065">0</biomass-price-adder>
+            <biomass-price-adder year="2080">0</biomass-price-adder>
+            <biomass-price-adder year="2095">0</biomass-price-adder>
+         </supplysector>
+      </region>
+      <region name="Korea">
+         <supplysector name="regional biomass">
+            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <biomass-price-adder year="2005">0</biomass-price-adder>
+            <biomass-price-adder year="2020">0</biomass-price-adder>
+            <biomass-price-adder year="2035">0</biomass-price-adder>
+            <biomass-price-adder year="2050">0</biomass-price-adder>
+            <biomass-price-adder year="2065">0</biomass-price-adder>
+            <biomass-price-adder year="2080">0</biomass-price-adder>
+            <biomass-price-adder year="2095">0</biomass-price-adder>
+         </supplysector>
+      </region>
+      <region name="Latin America">
+         <supplysector name="regional biomass">
+            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <biomass-price-adder year="2005">0</biomass-price-adder>
+            <biomass-price-adder year="2020">0</biomass-price-adder>
+            <biomass-price-adder year="2035">0</biomass-price-adder>
+            <biomass-price-adder year="2050">0</biomass-price-adder>
+            <biomass-price-adder year="2065">0</biomass-price-adder>
+            <biomass-price-adder year="2080">0</biomass-price-adder>
+            <biomass-price-adder year="2095">0</biomass-price-adder>
+         </supplysector>
+      </region>
+      <region name="Middle East">
+         <supplysector name="regional biomass">
+            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <biomass-price-adder year="2005">0</biomass-price-adder>
+            <biomass-price-adder year="2020">0</biomass-price-adder>
+            <biomass-price-adder year="2035">0</biomass-price-adder>
+            <biomass-price-adder year="2050">0</biomass-price-adder>
+            <biomass-price-adder year="2065">0</biomass-price-adder>
+            <biomass-price-adder year="2080">0</biomass-price-adder>
+            <biomass-price-adder year="2095">0</biomass-price-adder>
+         </supplysector>
+      </region>
+      <region name="Southeast Asia">
+         <supplysector name="regional biomass">
+            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <biomass-price-adder year="2005">0</biomass-price-adder>
+            <biomass-price-adder year="2020">0</biomass-price-adder>
+            <biomass-price-adder year="2035">0</biomass-price-adder>
+            <biomass-price-adder year="2050">0</biomass-price-adder>
+            <biomass-price-adder year="2065">0</biomass-price-adder>
+            <biomass-price-adder year="2080">0</biomass-price-adder>
+            <biomass-price-adder year="2095">0</biomass-price-adder>
+         </supplysector>
+      </region>
+      <region name="USA">
+         <supplysector name="regional biomass">
+            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <biomass-price-adder year="2005">0</biomass-price-adder>
+            <biomass-price-adder year="2020">0</biomass-price-adder>
+            <biomass-price-adder year="2035">0</biomass-price-adder>
+            <biomass-price-adder year="2050">0</biomass-price-adder>
+            <biomass-price-adder year="2065">0</biomass-price-adder>
+            <biomass-price-adder year="2080">0</biomass-price-adder>
+            <biomass-price-adder year="2095">0</biomass-price-adder>
+         </supplysector>
+      </region>
+      <region name="Western Europe">
+         <supplysector name="regional biomass">
+            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <biomass-price-adder year="2005">0</biomass-price-adder>
+            <biomass-price-adder year="2020">0</biomass-price-adder>
+            <biomass-price-adder year="2035">0</biomass-price-adder>
+            <biomass-price-adder year="2050">0</biomass-price-adder>
+            <biomass-price-adder year="2065">0</biomass-price-adder>
+            <biomass-price-adder year="2080">0</biomass-price-adder>
+            <biomass-price-adder year="2095">0</biomass-price-adder>
+         </supplysector>
+      </region>
+   </world>
+</scenario>

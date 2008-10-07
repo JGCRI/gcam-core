@@ -1,0 +1,4653 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <FoodSupplySector name="Corn">
+            <FoodSupplySubsector name="Corn">
+               <FoodProductionTechnology name="Corn">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="MiscCrop">
+            <FoodSupplySubsector name="MiscCrop">
+               <FoodProductionTechnology name="MiscCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OilCrop">
+            <FoodSupplySubsector name="OilCrop">
+               <FoodProductionTechnology name="OilCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0053</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OtherGrain">
+            <FoodSupplySubsector name="OtherGrain">
+               <FoodProductionTechnology name="OtherGrain">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0056</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Rice">
+            <FoodSupplySubsector name="Rice">
+               <FoodProductionTechnology name="Rice">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0045</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="SugarCrop">
+            <FoodSupplySubsector name="SugarCrop">
+               <FoodProductionTechnology name="SugarCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Wheat">
+            <FoodSupplySubsector name="Wheat">
+               <FoodProductionTechnology name="Wheat">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0056</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FiberCrop">
+            <FoodSupplySubsector name="FiberCrop">
+               <FoodProductionTechnology name="FiberCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FodderCrop">
+            <FoodSupplySubsector name="FodderCrop">
+               <FoodProductionTechnology name="FodderCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Canada">
+         <FoodSupplySector name="Corn">
+            <FoodSupplySubsector name="Corn">
+               <FoodProductionTechnology name="Corn">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="MiscCrop">
+            <FoodSupplySubsector name="MiscCrop">
+               <FoodProductionTechnology name="MiscCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OilCrop">
+            <FoodSupplySubsector name="OilCrop">
+               <FoodProductionTechnology name="OilCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0053</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OtherGrain">
+            <FoodSupplySubsector name="OtherGrain">
+               <FoodProductionTechnology name="OtherGrain">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0056</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Rice">
+            <FoodSupplySubsector name="Rice">
+               <FoodProductionTechnology name="Rice">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0045</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="SugarCrop">
+            <FoodSupplySubsector name="SugarCrop">
+               <FoodProductionTechnology name="SugarCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Wheat">
+            <FoodSupplySubsector name="Wheat">
+               <FoodProductionTechnology name="Wheat">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0056</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FiberCrop">
+            <FoodSupplySubsector name="FiberCrop">
+               <FoodProductionTechnology name="FiberCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FodderCrop">
+            <FoodSupplySubsector name="FodderCrop">
+               <FoodProductionTechnology name="FodderCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Western Europe">
+         <FoodSupplySector name="Corn">
+            <FoodSupplySubsector name="Corn">
+               <FoodProductionTechnology name="Corn">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="MiscCrop">
+            <FoodSupplySubsector name="MiscCrop">
+               <FoodProductionTechnology name="MiscCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OilCrop">
+            <FoodSupplySubsector name="OilCrop">
+               <FoodProductionTechnology name="OilCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0053</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OtherGrain">
+            <FoodSupplySubsector name="OtherGrain">
+               <FoodProductionTechnology name="OtherGrain">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0056</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Rice">
+            <FoodSupplySubsector name="Rice">
+               <FoodProductionTechnology name="Rice">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0045</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="SugarCrop">
+            <FoodSupplySubsector name="SugarCrop">
+               <FoodProductionTechnology name="SugarCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Wheat">
+            <FoodSupplySubsector name="Wheat">
+               <FoodProductionTechnology name="Wheat">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0056</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FiberCrop">
+            <FoodSupplySubsector name="FiberCrop">
+               <FoodProductionTechnology name="FiberCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FodderCrop">
+            <FoodSupplySubsector name="FodderCrop">
+               <FoodProductionTechnology name="FodderCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Japan">
+         <FoodSupplySector name="Corn">
+            <FoodSupplySubsector name="Corn">
+               <FoodProductionTechnology name="Corn">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="MiscCrop">
+            <FoodSupplySubsector name="MiscCrop">
+               <FoodProductionTechnology name="MiscCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OilCrop">
+            <FoodSupplySubsector name="OilCrop">
+               <FoodProductionTechnology name="OilCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0053</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OtherGrain">
+            <FoodSupplySubsector name="OtherGrain">
+               <FoodProductionTechnology name="OtherGrain">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0056</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Rice">
+            <FoodSupplySubsector name="Rice">
+               <FoodProductionTechnology name="Rice">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0045</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="SugarCrop">
+            <FoodSupplySubsector name="SugarCrop">
+               <FoodProductionTechnology name="SugarCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Wheat">
+            <FoodSupplySubsector name="Wheat">
+               <FoodProductionTechnology name="Wheat">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0056</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FiberCrop">
+            <FoodSupplySubsector name="FiberCrop">
+               <FoodProductionTechnology name="FiberCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FodderCrop">
+            <FoodSupplySubsector name="FodderCrop">
+               <FoodProductionTechnology name="FodderCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Australia_NZ">
+         <FoodSupplySector name="Corn">
+            <FoodSupplySubsector name="Corn">
+               <FoodProductionTechnology name="Corn">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="MiscCrop">
+            <FoodSupplySubsector name="MiscCrop">
+               <FoodProductionTechnology name="MiscCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OilCrop">
+            <FoodSupplySubsector name="OilCrop">
+               <FoodProductionTechnology name="OilCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0053</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OtherGrain">
+            <FoodSupplySubsector name="OtherGrain">
+               <FoodProductionTechnology name="OtherGrain">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0056</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Rice">
+            <FoodSupplySubsector name="Rice">
+               <FoodProductionTechnology name="Rice">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0045</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="SugarCrop">
+            <FoodSupplySubsector name="SugarCrop">
+               <FoodProductionTechnology name="SugarCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Wheat">
+            <FoodSupplySubsector name="Wheat">
+               <FoodProductionTechnology name="Wheat">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0056</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FiberCrop">
+            <FoodSupplySubsector name="FiberCrop">
+               <FoodProductionTechnology name="FiberCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FodderCrop">
+            <FoodSupplySubsector name="FodderCrop">
+               <FoodProductionTechnology name="FodderCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Former Soviet Union">
+         <FoodSupplySector name="Corn">
+            <FoodSupplySubsector name="Corn">
+               <FoodProductionTechnology name="Corn">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="MiscCrop">
+            <FoodSupplySubsector name="MiscCrop">
+               <FoodProductionTechnology name="MiscCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OilCrop">
+            <FoodSupplySubsector name="OilCrop">
+               <FoodProductionTechnology name="OilCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0053</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OtherGrain">
+            <FoodSupplySubsector name="OtherGrain">
+               <FoodProductionTechnology name="OtherGrain">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0056</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Rice">
+            <FoodSupplySubsector name="Rice">
+               <FoodProductionTechnology name="Rice">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0045</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="SugarCrop">
+            <FoodSupplySubsector name="SugarCrop">
+               <FoodProductionTechnology name="SugarCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Wheat">
+            <FoodSupplySubsector name="Wheat">
+               <FoodProductionTechnology name="Wheat">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0056</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FiberCrop">
+            <FoodSupplySubsector name="FiberCrop">
+               <FoodProductionTechnology name="FiberCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FodderCrop">
+            <FoodSupplySubsector name="FodderCrop">
+               <FoodProductionTechnology name="FodderCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="China">
+         <FoodSupplySector name="Corn">
+            <FoodSupplySubsector name="Corn">
+               <FoodProductionTechnology name="Corn">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0108</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0085</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0056</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="MiscCrop">
+            <FoodSupplySubsector name="MiscCrop">
+               <FoodProductionTechnology name="MiscCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0053</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0075</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0150</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0075</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OilCrop">
+            <FoodSupplySubsector name="OilCrop">
+               <FoodProductionTechnology name="OilCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0142</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0106</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0095</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0065</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OtherGrain">
+            <FoodSupplySubsector name="OtherGrain">
+               <FoodProductionTechnology name="OtherGrain">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0109</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0107</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0104</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0084</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Rice">
+            <FoodSupplySubsector name="Rice">
+               <FoodProductionTechnology name="Rice">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0046</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="SugarCrop">
+            <FoodSupplySubsector name="SugarCrop">
+               <FoodProductionTechnology name="SugarCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0150</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0135</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0062</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0030</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Wheat">
+            <FoodSupplySubsector name="Wheat">
+               <FoodProductionTechnology name="Wheat">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0133</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0102</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FiberCrop">
+            <FoodSupplySubsector name="FiberCrop">
+               <FoodProductionTechnology name="FiberCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FodderCrop">
+            <FoodSupplySubsector name="FodderCrop">
+               <FoodProductionTechnology name="FodderCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Middle East">
+         <FoodSupplySector name="Corn">
+            <FoodSupplySubsector name="Corn">
+               <FoodProductionTechnology name="Corn">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0068</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="MiscCrop">
+            <FoodSupplySubsector name="MiscCrop">
+               <FoodProductionTechnology name="MiscCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0129</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0113</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0040</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OilCrop">
+            <FoodSupplySubsector name="OilCrop">
+               <FoodProductionTechnology name="OilCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0150</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0150</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0059</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OtherGrain">
+            <FoodSupplySubsector name="OtherGrain">
+               <FoodProductionTechnology name="OtherGrain">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0115</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0098</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0065</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0023</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Rice">
+            <FoodSupplySubsector name="Rice">
+               <FoodProductionTechnology name="Rice">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0048</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="SugarCrop">
+            <FoodSupplySubsector name="SugarCrop">
+               <FoodProductionTechnology name="SugarCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0006</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0008</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0019</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0030</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Wheat">
+            <FoodSupplySubsector name="Wheat">
+               <FoodProductionTechnology name="Wheat">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0104</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0089</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0071</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0048</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FiberCrop">
+            <FoodSupplySubsector name="FiberCrop">
+               <FoodProductionTechnology name="FiberCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FodderCrop">
+            <FoodSupplySubsector name="FodderCrop">
+               <FoodProductionTechnology name="FodderCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Africa">
+         <FoodSupplySector name="Corn">
+            <FoodSupplySubsector name="Corn">
+               <FoodProductionTechnology name="Corn">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0144</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0135</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0101</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="MiscCrop">
+            <FoodSupplySubsector name="MiscCrop">
+               <FoodProductionTechnology name="MiscCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0150</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0150</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0150</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0113</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OilCrop">
+            <FoodSupplySubsector name="OilCrop">
+               <FoodProductionTechnology name="OilCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0150</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0132</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0123</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0104</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OtherGrain">
+            <FoodSupplySubsector name="OtherGrain">
+               <FoodProductionTechnology name="OtherGrain">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0132</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0128</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0110</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0080</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Rice">
+            <FoodSupplySubsector name="Rice">
+               <FoodProductionTechnology name="Rice">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0150</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0143</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0125</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0082</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="SugarCrop">
+            <FoodSupplySubsector name="SugarCrop">
+               <FoodProductionTechnology name="SugarCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0134</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0120</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0085</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0033</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Wheat">
+            <FoodSupplySubsector name="Wheat">
+               <FoodProductionTechnology name="Wheat">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0127</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0113</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0092</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0064</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FiberCrop">
+            <FoodSupplySubsector name="FiberCrop">
+               <FoodProductionTechnology name="FiberCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FodderCrop">
+            <FoodSupplySubsector name="FodderCrop">
+               <FoodProductionTechnology name="FodderCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Latin America">
+         <FoodSupplySector name="Corn">
+            <FoodSupplySubsector name="Corn">
+               <FoodProductionTechnology name="Corn">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0143</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0119</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0062</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="MiscCrop">
+            <FoodSupplySubsector name="MiscCrop">
+               <FoodProductionTechnology name="MiscCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0083</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0049</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0027</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0030</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OilCrop">
+            <FoodSupplySubsector name="OilCrop">
+               <FoodProductionTechnology name="OilCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0088</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0075</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0070</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0062</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OtherGrain">
+            <FoodSupplySubsector name="OtherGrain">
+               <FoodProductionTechnology name="OtherGrain">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0171</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0150</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0084</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0015</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Rice">
+            <FoodSupplySubsector name="Rice">
+               <FoodProductionTechnology name="Rice">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0127</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0044</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="SugarCrop">
+            <FoodSupplySubsector name="SugarCrop">
+               <FoodProductionTechnology name="SugarCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0087</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0075</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0031</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0030</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Wheat">
+            <FoodSupplySubsector name="Wheat">
+               <FoodProductionTechnology name="Wheat">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0061</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0057</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FiberCrop">
+            <FoodSupplySubsector name="FiberCrop">
+               <FoodProductionTechnology name="FiberCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FodderCrop">
+            <FoodSupplySubsector name="FodderCrop">
+               <FoodProductionTechnology name="FodderCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Southeast Asia">
+         <FoodSupplySector name="Corn">
+            <FoodSupplySubsector name="Corn">
+               <FoodProductionTechnology name="Corn">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0170</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0160</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0083</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="MiscCrop">
+            <FoodSupplySubsector name="MiscCrop">
+               <FoodProductionTechnology name="MiscCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0150</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0150</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0113</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0075</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OilCrop">
+            <FoodSupplySubsector name="OilCrop">
+               <FoodProductionTechnology name="OilCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0142</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0106</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0095</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0065</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OtherGrain">
+            <FoodSupplySubsector name="OtherGrain">
+               <FoodProductionTechnology name="OtherGrain">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0057</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0045</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0025</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0015</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Rice">
+            <FoodSupplySubsector name="Rice">
+               <FoodProductionTechnology name="Rice">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0151</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0127</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0041</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="SugarCrop">
+            <FoodSupplySubsector name="SugarCrop">
+               <FoodProductionTechnology name="SugarCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0150</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0150</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0063</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0030</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Wheat">
+            <FoodSupplySubsector name="Wheat">
+               <FoodProductionTechnology name="Wheat">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0134</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0097</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0094</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0070</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FiberCrop">
+            <FoodSupplySubsector name="FiberCrop">
+               <FoodProductionTechnology name="FiberCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FodderCrop">
+            <FoodSupplySubsector name="FodderCrop">
+               <FoodProductionTechnology name="FodderCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Eastern Europe">
+         <FoodSupplySector name="Corn">
+            <FoodSupplySubsector name="Corn">
+               <FoodProductionTechnology name="Corn">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="MiscCrop">
+            <FoodSupplySubsector name="MiscCrop">
+               <FoodProductionTechnology name="MiscCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OilCrop">
+            <FoodSupplySubsector name="OilCrop">
+               <FoodProductionTechnology name="OilCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0053</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OtherGrain">
+            <FoodSupplySubsector name="OtherGrain">
+               <FoodProductionTechnology name="OtherGrain">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0056</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Rice">
+            <FoodSupplySubsector name="Rice">
+               <FoodProductionTechnology name="Rice">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0045</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="SugarCrop">
+            <FoodSupplySubsector name="SugarCrop">
+               <FoodProductionTechnology name="SugarCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Wheat">
+            <FoodSupplySubsector name="Wheat">
+               <FoodProductionTechnology name="Wheat">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0056</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FiberCrop">
+            <FoodSupplySubsector name="FiberCrop">
+               <FoodProductionTechnology name="FiberCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FodderCrop">
+            <FoodSupplySubsector name="FodderCrop">
+               <FoodProductionTechnology name="FodderCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Korea">
+         <FoodSupplySector name="Corn">
+            <FoodSupplySubsector name="Corn">
+               <FoodProductionTechnology name="Corn">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0108</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0085</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0056</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="MiscCrop">
+            <FoodSupplySubsector name="MiscCrop">
+               <FoodProductionTechnology name="MiscCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0053</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0075</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0150</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0075</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OilCrop">
+            <FoodSupplySubsector name="OilCrop">
+               <FoodProductionTechnology name="OilCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0149</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0135</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0089</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0039</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OtherGrain">
+            <FoodSupplySubsector name="OtherGrain">
+               <FoodProductionTechnology name="OtherGrain">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0109</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0107</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0104</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0084</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Rice">
+            <FoodSupplySubsector name="Rice">
+               <FoodProductionTechnology name="Rice">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0060</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0046</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="SugarCrop">
+            <FoodSupplySubsector name="SugarCrop">
+               <FoodProductionTechnology name="SugarCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0150</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0135</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0062</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0030</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Wheat">
+            <FoodSupplySubsector name="Wheat">
+               <FoodProductionTechnology name="Wheat">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0133</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0102</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FiberCrop">
+            <FoodSupplySubsector name="FiberCrop">
+               <FoodProductionTechnology name="FiberCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FodderCrop">
+            <FoodSupplySubsector name="FodderCrop">
+               <FoodProductionTechnology name="FodderCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="India">
+         <FoodSupplySector name="Corn">
+            <FoodSupplySubsector name="Corn">
+               <FoodProductionTechnology name="Corn">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0170</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0160</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0083</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="MiscCrop">
+            <FoodSupplySubsector name="MiscCrop">
+               <FoodProductionTechnology name="MiscCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0150</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0150</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0113</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0075</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OilCrop">
+            <FoodSupplySubsector name="OilCrop">
+               <FoodProductionTechnology name="OilCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0142</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0106</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0095</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0065</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="OtherGrain">
+            <FoodSupplySubsector name="OtherGrain">
+               <FoodProductionTechnology name="OtherGrain">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0057</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0045</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0025</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0015</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Rice">
+            <FoodSupplySubsector name="Rice">
+               <FoodProductionTechnology name="Rice">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0151</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0127</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0041</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="SugarCrop">
+            <FoodSupplySubsector name="SugarCrop">
+               <FoodProductionTechnology name="SugarCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0150</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0150</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0063</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0030</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Wheat">
+            <FoodSupplySubsector name="Wheat">
+               <FoodProductionTechnology name="Wheat">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.0134</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.0097</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.0094</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0070</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0038</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FiberCrop">
+            <FoodSupplySubsector name="FiberCrop">
+               <FoodProductionTechnology name="FiberCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FodderCrop">
+            <FoodSupplySubsector name="FodderCrop">
+               <FoodProductionTechnology name="FodderCrop">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.00375</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+   </world>
+</scenario>

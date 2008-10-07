@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+		<renewresource name="biomass">
+			<sub-renewable-resource name="generic waste bio" delete="1"/>
+			<smooth-renewable-subresource name="generic waste bio">
+                <maxSubResource>0.49062</maxSubResource>
+                <mid-price>0.90</mid-price>
+                <curve-exponent>15.00</curve-exponent>
+				<gdpSupplyElast>0.784</gdpSupplyElast>
+ 				<gdpExpans year="1990" fillout="1">1</gdpExpans>
+            </smooth-renewable-subresource>    
+         </renewresource>
+      </region>
+      <region name="Canada">
+		<renewresource name="biomass">
+			<sub-renewable-resource name="generic waste bio" delete="1"/>
+			<smooth-renewable-subresource name="generic waste bio">
+                <maxSubResource>0.02436</maxSubResource>
+                <mid-price>0.90</mid-price>
+                <curve-exponent>15.00</curve-exponent>
+				<gdpSupplyElast>0.784</gdpSupplyElast>
+ 				<gdpExpans year="1990" fillout="1">1</gdpExpans>
+            </smooth-renewable-subresource>    
+         </renewresource>
+      </region>
+      <region name="Western Europe">
+		<renewresource name="biomass">
+			<sub-renewable-resource name="generic waste bio" delete="1"/>
+			<smooth-renewable-subresource name="generic waste bio">
+                <maxSubResource>0.34536</maxSubResource>
+                <mid-price>0.90</mid-price>
+                <curve-exponent>15.00</curve-exponent>
+				<gdpSupplyElast>0.784</gdpSupplyElast>
+ 				<gdpExpans year="1990" fillout="1">1</gdpExpans>
+            </smooth-renewable-subresource>    
+         </renewresource>
+      </region>
+      <region name="Japan">
+		<renewresource name="biomass">
+			<sub-renewable-resource name="generic waste bio" delete="1"/>
+			<smooth-renewable-subresource name="generic waste bio">
+                <maxSubResource>0.10450</maxSubResource>
+                <mid-price>0.90</mid-price>
+                <curve-exponent>15.00</curve-exponent>
+				<gdpSupplyElast>0.784</gdpSupplyElast>
+ 				<gdpExpans year="1990" fillout="1">1</gdpExpans>
+            </smooth-renewable-subresource>    
+         </renewresource>
+      </region>
+      <region name="Australia_NZ">
+		<renewresource name="biomass">
+			<sub-renewable-resource name="generic waste bio" delete="1"/>
+			<smooth-renewable-subresource name="generic waste bio">
+                <maxSubResource>0.03307</maxSubResource>
+                <mid-price>0.90</mid-price>
+                <curve-exponent>15.00</curve-exponent>
+				<gdpSupplyElast>0.784</gdpSupplyElast>
+ 				<gdpExpans year="1990" fillout="1">1</gdpExpans>
+            </smooth-renewable-subresource>    
+         </renewresource>
+      </region>
+      <region name="Former Soviet Union">
+		<renewresource name="biomass">
+			<sub-renewable-resource name="generic waste bio" delete="1"/>
+			<smooth-renewable-subresource name="generic waste bio">
+                <maxSubResource>0.30317</maxSubResource>
+                <mid-price>0.90</mid-price>
+                <curve-exponent>15.00</curve-exponent>
+				<gdpSupplyElast>0.784</gdpSupplyElast>
+ 				<gdpExpans year="1990" fillout="1">1</gdpExpans>
+            </smooth-renewable-subresource>    
+         </renewresource>
+      </region>      
+      <region name="China">
+		<renewresource name="biomass">
+			<sub-renewable-resource name="generic waste bio" delete="1"/>
+			<smooth-renewable-subresource name="generic waste bio">
+                <maxSubResource>0.13543</maxSubResource>
+                <mid-price>0.90</mid-price>
+                <curve-exponent>15.00</curve-exponent>
+				<gdpSupplyElast>0.784</gdpSupplyElast>
+ 				<gdpExpans year="1990" fillout="1">1</gdpExpans>
+            </smooth-renewable-subresource>    
+         </renewresource>
+      </region>
+      <region name="Middle East">
+		<renewresource name="biomass">
+			<sub-renewable-resource name="generic waste bio" delete="1"/>
+			<smooth-renewable-subresource name="generic waste bio">
+                <maxSubResource>0.07059</maxSubResource>
+                <mid-price>0.90</mid-price>
+                <curve-exponent>15.00</curve-exponent>
+				<gdpSupplyElast>0.784</gdpSupplyElast>
+ 				<gdpExpans year="1990" fillout="1">1</gdpExpans>
+            </smooth-renewable-subresource>    
+         </renewresource>
+      </region>
+      <region name="Africa">
+		<renewresource name="biomass">
+			<sub-renewable-resource name="generic waste bio" delete="1"/>
+			<smooth-renewable-subresource name="generic waste bio">
+                <maxSubResource>0.16384</maxSubResource>
+                <mid-price>0.90</mid-price>
+                <curve-exponent>15.00</curve-exponent>
+				<gdpSupplyElast>0.784</gdpSupplyElast>
+ 				<gdpExpans year="1990" fillout="1">1</gdpExpans>
+            </smooth-renewable-subresource>    
+         </renewresource>
+      </region>
+      <region name="Latin America">
+		<renewresource name="biomass">
+			<sub-renewable-resource name="generic waste bio" delete="1"/>
+			<smooth-renewable-subresource name="generic waste bio">
+                <maxSubResource>0.19990</maxSubResource>
+                <mid-price>0.90</mid-price>
+                <curve-exponent>15.00</curve-exponent>
+				<gdpSupplyElast>0.784</gdpSupplyElast>
+ 				<gdpExpans year="1990" fillout="1">1</gdpExpans>
+            </smooth-renewable-subresource>    
+         </renewresource>
+      </region>
+      <region name="Southeast Asia">
+		<renewresource name="biomass">
+			<sub-renewable-resource name="generic waste bio" delete="1"/>
+			<smooth-renewable-subresource name="generic waste bio">
+               <maxSubResource>0.10451</maxSubResource>
+                <mid-price>0.90</mid-price>
+                <curve-exponent>15.00</curve-exponent>
+				<gdpSupplyElast>0.784</gdpSupplyElast>
+ 				<gdpExpans year="1990" fillout="1">1</gdpExpans>
+            </smooth-renewable-subresource>    
+         </renewresource>
+      </region>
+      <region name="Eastern Europe">
+		<renewresource name="biomass">
+			<sub-renewable-resource name="generic waste bio" delete="1"/>
+			<smooth-renewable-subresource name="generic waste bio">
+                <maxSubResource>0.08672</maxSubResource>
+                <mid-price>0.90</mid-price>
+                <curve-exponent>15.00</curve-exponent>
+				<gdpSupplyElast>0.784</gdpSupplyElast>
+ 				<gdpExpans year="1990" fillout="1">1</gdpExpans>
+            </smooth-renewable-subresource>    
+         </renewresource>
+      </region>
+      <region name="Korea">
+		<renewresource name="biomass">
+			<sub-renewable-resource name="generic waste bio" delete="1"/>
+			<smooth-renewable-subresource name="generic waste bio">
+                <maxSubResource>0.02022</maxSubResource>
+                <mid-price>0.90</mid-price>
+                <curve-exponent>15.00</curve-exponent>
+				<gdpSupplyElast>0.784</gdpSupplyElast>
+ 				<gdpExpans year="1990" fillout="1">1</gdpExpans>
+            </smooth-renewable-subresource>    
+         </renewresource>
+      </region>
+      <region name="India">
+		<renewresource name="biomass">
+			<sub-renewable-resource name="generic waste bio" delete="1"/>
+			<smooth-renewable-subresource name="generic waste bio">
+                <maxSubResource>0.05243</maxSubResource>
+                <mid-price>0.90</mid-price>
+                <curve-exponent>15.00</curve-exponent>
+				<gdpSupplyElast>0.784</gdpSupplyElast>
+ 				<gdpExpans year="1990" fillout="1">1</gdpExpans>
+            </smooth-renewable-subresource>    
+         </renewresource>
+      </region>
+   </world>
+</scenario>

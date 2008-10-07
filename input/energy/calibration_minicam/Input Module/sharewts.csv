@@ -1,0 +1,164 @@
+Sheet created 10-30-07,,,,,
+gpk,,,,,
+Reassigns 0 sharewts for techs with cal values,,,,,
+
+1990 supplysector subsectors,,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+11000,,,,,
+,,,1990,,
+Region,supplysector,subsector,sharewt,,
+Africa,refined liquids enduse,biomass liquids,0,,
+Australia_NZ,refined liquids enduse,biomass liquids,0,,
+Canada,refined liquids enduse,biomass liquids,0,,
+China,refined liquids enduse,biomass liquids,0,,
+Eastern Europe,refined liquids enduse,biomass liquids,1,,
+Former Soviet Union,refined liquids enduse,biomass liquids,0,,
+India,refined liquids enduse,biomass liquids,0
+Japan,refined liquids enduse,biomass liquids,0
+Korea,refined liquids enduse,biomass liquids,0
+Latin America,refined liquids enduse,biomass liquids,1
+Middle East,refined liquids enduse,biomass liquids,0
+Southeast Asia,refined liquids enduse,biomass liquids,0
+USA,refined liquids enduse,biomass liquids,0
+Western Europe,refined liquids enduse,biomass liquids,1
+Former Soviet Union,electricity,biomass,1
+USA,building,biomass,1
+Southeast Asia,transportation,gas,1
+Korea,building,biomass,1
+India,building,biomass,1
+
+
+2005 shareweight changes: supply subsectors,,,
+INPUT_TABLE,,,
+Variable ID,,,
+11001,,,
+,,,2005
+Region,supplysector,subsector,sharewt
+Africa,refined liquids enduse,biomass liquids,0
+Australia_NZ,refined liquids enduse,biomass liquids,1
+Canada,refined liquids enduse,biomass liquids,1
+China,refined liquids enduse,biomass liquids,0
+Eastern Europe,refined liquids enduse,biomass liquids,1
+Former Soviet Union,refined liquids enduse,biomass liquids,1
+India,refined liquids enduse,biomass liquids,1
+Japan,refined liquids enduse,biomass liquids,0
+Korea,refined liquids enduse,biomass liquids,1
+Latin America,refined liquids enduse,biomass liquids,1
+Middle East,refined liquids enduse,biomass liquids,0
+Southeast Asia,refined liquids enduse,biomass liquids,0,,
+USA,refined liquids enduse,biomass liquids,1,,
+Western Europe,refined liquids enduse,biomass liquids,1,,
+India,transportation,gas,1,,
+
+
+technologies (1990 and 2005),,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+11002,,,,,
+
+Region,supplysector,subsector,technology,period,sharewt
+Former Soviet Union,electricity,biomass,Biomass (existing),1990,1
+USA,building,biomass,biomass,1990,1
+Former Soviet Union,industry,energy-use,biomass,1990,1
+Middle East,industry,energy-use,biomass,1990,1
+Southeast Asia,transportation,gas,gas,1990,1
+Korea,building,biomass,biomass,1990,1
+Korea,industry,energy-use,biomass,1990,1
+India,industry,energy-use,biomass,1990,1
+India,building,biomass,biomass,1990,1
+India,transportation,gas,gas,2005,1
+
+
+"wind and solar for all regions, 1990 and 2005: set subsector sharewt to 1",,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+11005,,,,,
+,,,1990,2005,
+region,supplysector,subsector,sharewt,sharewt,
+Africa,electricity,solar,0,1,
+Australia_NZ,electricity,solar,0,1,
+Canada,electricity,solar,0,1
+China,electricity,solar,0,0
+Eastern Europe,electricity,solar,0,0
+Former Soviet Union,electricity,solar,0,1
+India,electricity,solar,0,0
+Japan,electricity,solar,0,0
+Korea,electricity,solar,0,1
+Latin America,electricity,solar,0,1
+Middle East,electricity,solar,0,0
+Southeast Asia,electricity,solar,0,0
+USA,electricity,solar,1,1
+Western Europe,electricity,solar,1,1
+Africa,electricity,wind,0,1
+Australia_NZ,electricity,wind,0,1
+Canada,electricity,wind,0,1
+China,electricity,wind,0,0
+Eastern Europe,electricity,wind,0,1
+Former Soviet Union,electricity,wind,0,1
+India,electricity,wind,1,1
+Japan,electricity,wind,0,1
+Korea,electricity,wind,0,1
+Latin America,electricity,wind,0,1
+Middle East,electricity,wind,0,0
+Southeast Asia,electricity,wind,0,0
+USA,electricity,wind,1,1
+Western Europe,electricity,wind,1,1
+
+
+"wind and solar for all regions, 1990 and 2005: set tech sharewts to 1",,,,
+INPUT_TABLE,,,,
+Variable ID,,,,
+11006,,,,
+,,,,1990,2005
+region,supplysector,subsector,technology,sharewt,sharewt
+Africa,electricity,solar,PV,0,1
+Australia_NZ,electricity,solar,PV,0,1
+Canada,electricity,solar,PV,0,1
+China,electricity,solar,PV,0,0
+Eastern Europe,electricity,solar,PV,0,0
+Former Soviet Union,electricity,solar,PV,0,1
+India,electricity,solar,PV,0,0
+Japan,electricity,solar,PV,0,0
+Korea,electricity,solar,PV,0,1
+Latin America,electricity,solar,PV,0,1
+Middle East,electricity,solar,PV,0,0
+Southeast Asia,electricity,solar,PV,0,0
+USA,electricity,solar,PV,1,1
+Western Europe,electricity,solar,PV,1,1
+Africa,electricity,wind,wind,0,1
+Australia_NZ,electricity,wind,wind,0,1
+Canada,electricity,wind,wind,0,1
+China,electricity,wind,wind,0,0
+Eastern Europe,electricity,wind,wind,0,1
+Former Soviet Union,electricity,wind,wind,0,1
+India,electricity,wind,wind,1,1
+Japan,electricity,wind,wind,0,1
+Korea,electricity,wind,wind,0,1
+Latin America,electricity,wind,wind,0,1
+Middle East,electricity,wind,wind,0,0
+Southeast Asia,electricity,wind,wind,0,0
+USA,electricity,wind,wind,1,1
+Western Europe,electricity,wind,wind,1,1
+
+
+add back shareweights to techs no longer fixed,,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+11006,,,,,
+,,,,sharewt,
+region,supplysector,subsector,technology,1990,2005
+Africa,electricity,nuclear,Gen_II_LWR,1,1
+Australia_NZ,electricity,nuclear,Gen_II_LWR,1,1
+Canada,electricity,nuclear,Gen_II_LWR,1,1
+China,electricity,nuclear,Gen_II_LWR,1,1
+Eastern Europe,electricity,nuclear,Gen_II_LWR,1,1
+Former Soviet Union,electricity,nuclear,Gen_II_LWR,1,1
+India,electricity,nuclear,Gen_II_LWR,1,1
+Japan,electricity,nuclear,Gen_II_LWR,1,1
+Korea,electricity,nuclear,Gen_II_LWR,1,1
+Latin America,electricity,nuclear,Gen_II_LWR,1,1
+Middle East,electricity,nuclear,Gen_II_LWR,1,1
+Southeast Asia,electricity,nuclear,Gen_II_LWR,1,1
+USA,electricity,nuclear,Gen_II_LWR,1,1
+Western Europe,electricity,nuclear,Gen_II_LWR,1,1

@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="Distributed_Solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>USA</market>
+            <price year="1975">0</price>
+            <smooth-renewable-subresource name="Distributed_solar">
+               <environCost fillout="1" year="1975">0</environCost>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+               <subResourceCapacityFactor>0.135</subResourceCapacityFactor>
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0255</techChange>
+               <techChange year="2035">0.0191</techChange>
+               <techChange year="2050">0.0134</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0026</techChange>
+               <techChange year="2095">0.0013</techChange>
+               <maxSubResource>2.71</maxSubResource>
+               <mid-price>26.72</mid-price>
+               <curve-exponent>12.81</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Canada">
+         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="Distributed_Solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Canada</market>
+            <price year="1975">0</price>
+            <smooth-renewable-subresource name="Distributed_solar">
+               <environCost fillout="1" year="1975">0</environCost>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+               <subResourceCapacityFactor>0.135</subResourceCapacityFactor>
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0255</techChange>
+               <techChange year="2035">0.0191</techChange>
+               <techChange year="2050">0.0134</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0026</techChange>
+               <techChange year="2095">0.0013</techChange>
+               <maxSubResource>0.21</maxSubResource>
+               <mid-price>33.29</mid-price>
+               <curve-exponent>12.81</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Western Europe">
+         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="Distributed_Solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Western Europe</market>
+            <price year="1975">0</price>
+            <smooth-renewable-subresource name="Distributed_solar">
+               <environCost fillout="1" year="1975">0</environCost>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+               <subResourceCapacityFactor>0.135</subResourceCapacityFactor>
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0255</techChange>
+               <techChange year="2035">0.0191</techChange>
+               <techChange year="2050">0.0134</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0026</techChange>
+               <techChange year="2095">0.0013</techChange>
+               <maxSubResource>3.04</maxSubResource>
+               <mid-price>32.46</mid-price>
+               <curve-exponent>12.81</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Japan">
+         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="Distributed_Solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Japan</market>
+            <price year="1975">0</price>
+            <smooth-renewable-subresource name="Distributed_solar">
+               <environCost fillout="1" year="1975">0</environCost>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+               <subResourceCapacityFactor>0.135</subResourceCapacityFactor>
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0255</techChange>
+               <techChange year="2035">0.0191</techChange>
+               <techChange year="2050">0.0134</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0026</techChange>
+               <techChange year="2095">0.0013</techChange>
+               <maxSubResource>0.65</maxSubResource>
+               <mid-price>28.75</mid-price>
+               <curve-exponent>12.81</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Australia_NZ">
+         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="Distributed_Solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Australia_NZ</market>
+            <price year="1975">0</price>
+            <smooth-renewable-subresource name="Distributed_solar">
+               <environCost fillout="1" year="1975">0</environCost>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+               <subResourceCapacityFactor>0.135</subResourceCapacityFactor>
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0255</techChange>
+               <techChange year="2035">0.0191</techChange>
+               <techChange year="2050">0.0134</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0026</techChange>
+               <techChange year="2095">0.0013</techChange>
+               <maxSubResource>0.22</maxSubResource>
+               <mid-price>21.60</mid-price>
+               <curve-exponent>12.81</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Former Soviet Union">
+         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="Distributed_Solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Former Soviet Union</market>
+            <price year="1975">0</price>
+            <smooth-renewable-subresource name="Distributed_solar">
+               <environCost fillout="1" year="1975">0</environCost>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+               <subResourceCapacityFactor>0.135</subResourceCapacityFactor>
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0255</techChange>
+               <techChange year="2035">0.0191</techChange>
+               <techChange year="2050">0.0134</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0026</techChange>
+               <techChange year="2095">0.0013</techChange>
+               <maxSubResource>1.66</maxSubResource>
+               <mid-price>35.32</mid-price>
+               <curve-exponent>12.81</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="China">
+         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="Distributed_Solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>China</market>
+            <price year="1975">0</price>
+            <smooth-renewable-subresource name="Distributed_solar">
+               <environCost fillout="1" year="1975">0</environCost>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+               <subResourceCapacityFactor>0.135</subResourceCapacityFactor>
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0255</techChange>
+               <techChange year="2035">0.0191</techChange>
+               <techChange year="2050">0.0134</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0026</techChange>
+               <techChange year="2095">0.0013</techChange>
+               <maxSubResource>9.23</maxSubResource>
+               <mid-price>26.33</mid-price>
+               <curve-exponent>12.81</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Middle East">
+         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="Distributed_Solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Middle East</market>
+            <price year="1975">0</price>
+            <smooth-renewable-subresource name="Distributed_solar">
+               <environCost fillout="1" year="1975">0</environCost>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+               <subResourceCapacityFactor>0.135</subResourceCapacityFactor>
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0255</techChange>
+               <techChange year="2035">0.0191</techChange>
+               <techChange year="2050">0.0134</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0026</techChange>
+               <techChange year="2095">0.0013</techChange>
+               <maxSubResource>1.10</maxSubResource>
+               <mid-price>20.04</mid-price>
+               <curve-exponent>12.81</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Africa">
+         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="Distributed_Solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Africa</market>
+            <price year="1975">0</price>
+            <smooth-renewable-subresource name="Distributed_solar">
+               <environCost fillout="1" year="1975">0</environCost>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+               <subResourceCapacityFactor>0.135</subResourceCapacityFactor>
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0255</techChange>
+               <techChange year="2035">0.0191</techChange>
+               <techChange year="2050">0.0134</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0026</techChange>
+               <techChange year="2095">0.0013</techChange>
+               <maxSubResource>5.23</maxSubResource>
+               <mid-price>19.60</mid-price>
+               <curve-exponent>12.81</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Latin America">
+         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="Distributed_Solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Latin America</market>
+            <price year="1975">0</price>
+            <smooth-renewable-subresource name="Distributed_solar">
+               <environCost fillout="1" year="1975">0</environCost>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+               <subResourceCapacityFactor>0.135</subResourceCapacityFactor>
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0255</techChange>
+               <techChange year="2035">0.0191</techChange>
+               <techChange year="2050">0.0134</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0026</techChange>
+               <techChange year="2095">0.0013</techChange>
+               <maxSubResource>3.37</maxSubResource>
+               <mid-price>22.14</mid-price>
+               <curve-exponent>12.81</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Southeast Asia">
+         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="Distributed_Solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Southeast Asia</market>
+            <price year="1975">0</price>
+            <smooth-renewable-subresource name="Distributed_solar">
+               <environCost fillout="1" year="1975">0</environCost>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+               <subResourceCapacityFactor>0.135</subResourceCapacityFactor>
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0255</techChange>
+               <techChange year="2035">0.0191</techChange>
+               <techChange year="2050">0.0134</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0026</techChange>
+               <techChange year="2095">0.0013</techChange>
+               <maxSubResource>4.57</maxSubResource>
+               <mid-price>21.95</mid-price>
+               <curve-exponent>12.81</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Eastern Europe">
+         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="Distributed_Solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Eastern Europe</market>
+            <price year="1975">0</price>
+            <smooth-renewable-subresource name="Distributed_solar">
+               <environCost fillout="1" year="1975">0</environCost>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+               <subResourceCapacityFactor>0.135</subResourceCapacityFactor>
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0255</techChange>
+               <techChange year="2035">0.0191</techChange>
+               <techChange year="2050">0.0134</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0026</techChange>
+               <techChange year="2095">0.0013</techChange>
+               <maxSubResource>0.93</maxSubResource>
+               <mid-price>33.04</mid-price>
+               <curve-exponent>12.81</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Korea">
+         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="Distributed_Solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Korea</market>
+            <price year="1975">0</price>
+            <smooth-renewable-subresource name="Distributed_solar">
+               <environCost fillout="1" year="1975">0</environCost>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+               <subResourceCapacityFactor>0.135</subResourceCapacityFactor>
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0255</techChange>
+               <techChange year="2035">0.0191</techChange>
+               <techChange year="2050">0.0134</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0026</techChange>
+               <techChange year="2095">0.0013</techChange>
+               <maxSubResource>0.33</maxSubResource>
+               <mid-price>26.86</mid-price>
+               <curve-exponent>12.81</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="India">
+         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="Distributed_Solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>India</market>
+            <price year="1975">0</price>
+            <smooth-renewable-subresource name="Distributed_solar">
+               <environCost fillout="1" year="1975">0</environCost>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+               <subResourceCapacityFactor>0.135</subResourceCapacityFactor>
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0255</techChange>
+               <techChange year="2035">0.0191</techChange>
+               <techChange year="2050">0.0134</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0026</techChange>
+               <techChange year="2095">0.0013</techChange>
+               <maxSubResource>6.03</maxSubResource>
+               <mid-price>22.24</mid-price>
+               <curve-exponent>12.81</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+   </world>
+</scenario>

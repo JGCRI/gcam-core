@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ModelInterfaceBatch>
+	<!-- You must first identify the class which will run the command.
+	     For csv conversions it will always be InputViewer.
+	     TODO: make it so the class name is not necessary.
+	  -->
+	<class name="ModelInterface.ModelGUI2.InputViewer">
+		<!-- The command you want to run.  It would be the same name as
+		     the name in the Open.. submenu.
+		  -->
+		<command name="CSV file">
+			<!-- For csv conversions you need to give it a header file,
+			     where to place the resulting xml file, and one or more
+			     csv files which you want to convert with the given 
+			     header file
+			  -->
+			<headerFile>..\..\Energy\IEA Calibration\MiniCAM regions\Input Module\header_cal_2005.txt</headerFile>
+			<outFile>..\..\Energy\IEA Calibration\MiniCAM regions\Input Module\cal_1990_2005.xml</outFile>
+			<csvFile>..\..\Energy\IEA Calibration\MiniCAM regions\Input Module\sharewts.csv</csvFile>
+			<csvFile>..\..\Energy\IEA Calibration\MiniCAM regions\Input Module\elec_supply_cal.csv</csvFile>
+			<csvFile>..\..\Energy\IEA Calibration\MiniCAM regions\Input Module\elec_td_ownuse.csv</csvFile>
+			<csvFile>..\..\Energy\IEA Calibration\MiniCAM regions\Input Module\elec_tech_update.csv</csvFile>
+			<csvFile>..\..\Energy\IEA Calibration\MiniCAM regions\Input Module\ref_liquids_cal.csv</csvFile>
+			<csvFile>..\..\Energy\IEA Calibration\MiniCAM regions\Input Module\final_enduse_cal.csv</csvFile>
+		</command>
+	</class>
+</ModelInterfaceBatch>

@@ -1,0 +1,1153 @@
+,"Careful that boilers and process heat need to be linked to table of steam and heat-only efficiencies, not average efficiencies that include cogen",,,,,,
+Region: USA,,tech change,0,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+boilers pulp paper and wood,electricity,electricity,1975,elect_td_ind,1.00,1,-6
+boilers pulp paper and wood,electricity,electricity,1990,elect_td_ind,1.00,1,-6
+boilers pulp paper and wood,electricity,electricity,2005,elect_td_ind,1.00,1,-6
+boilers pulp paper and wood,electricity,electricity,2020,elect_td_ind,1.00,1,-6
+boilers pulp paper and wood,electricity,electricity,2035,elect_td_ind,1.00,1,-6
+boilers pulp paper and wood,electricity,electricity,2050,elect_td_ind,1.00,1,-6
+boilers pulp paper and wood,electricity,electricity,2065,elect_td_ind,1.00,1,-6
+boilers pulp paper and wood,electricity,electricity,2080,elect_td_ind,1.00,1,-6
+boilers pulp paper and wood,electricity,electricity,2095,elect_td_ind,1.00,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+boilers pulp paper and wood,refined liquids,refined liquids,1975,refined liquids industrial,1.00,1,-6
+boilers pulp paper and wood,refined liquids,refined liquids,1990,refined liquids industrial,0.80,1,-6
+boilers pulp paper and wood,refined liquids,refined liquids,2005,refined liquids industrial,0.80,1,-6
+boilers pulp paper and wood,refined liquids,refined liquids,2020,refined liquids industrial,0.81,1,-6
+boilers pulp paper and wood,refined liquids,refined liquids,2035,refined liquids industrial,0.82,1,-6
+boilers pulp paper and wood,refined liquids,refined liquids,2050,refined liquids industrial,0.84,1,-6
+boilers pulp paper and wood,refined liquids,refined liquids,2065,refined liquids industrial,0.85,1,-6
+boilers pulp paper and wood,refined liquids,refined liquids,2080,refined liquids industrial,0.86,1,-6
+boilers pulp paper and wood,refined liquids,refined liquids,2095,refined liquids industrial,0.88,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+boilers pulp paper and wood,coal,coal,1975,delivered coal,1.00,1,-6
+boilers pulp paper and wood,coal,coal,1990,delivered coal,0.80,1,-6
+boilers pulp paper and wood,coal,coal,2005,delivered coal,0.80,1,-6
+boilers pulp paper and wood,coal,coal,2020,delivered coal,0.81,1,-6
+boilers pulp paper and wood,coal,coal,2035,delivered coal,0.82,1,-6
+boilers pulp paper and wood,coal,coal,2050,delivered coal,0.84,1,-6
+boilers pulp paper and wood,coal,coal,2065,delivered coal,0.85,1,-6
+boilers pulp paper and wood,coal,coal,2080,delivered coal,0.86,1,-6
+boilers pulp paper and wood,coal,coal,2095,delivered coal,0.88,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+boilers pulp paper and wood,gas,gas,1975,wholesale gas,1.00,1,-6
+boilers pulp paper and wood,gas,gas,1990,wholesale gas,0.80,1,-6
+boilers pulp paper and wood,gas,gas,2005,wholesale gas,0.80,1,-6
+boilers pulp paper and wood,gas,gas,2020,wholesale gas,0.81,1,-6
+boilers pulp paper and wood,gas,gas,2035,wholesale gas,0.82,1,-6
+boilers pulp paper and wood,gas,gas,2050,wholesale gas,0.84,1,-6
+boilers pulp paper and wood,gas,gas,2065,wholesale gas,0.85,1,-6
+boilers pulp paper and wood,gas,gas,2080,wholesale gas,0.86,1,-6
+boilers pulp paper and wood,gas,gas,2095,wholesale gas,0.88,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+boilers pulp paper and wood,biomass,biomass,1975,delivered biomass,1.00,1,-6
+boilers pulp paper and wood,biomass,biomass,1990,delivered biomass,0.74,1,-6
+boilers pulp paper and wood,biomass,biomass,2005,delivered biomass,0.74,1,-6
+boilers pulp paper and wood,biomass,biomass,2020,delivered biomass,0.75,1,-6
+boilers pulp paper and wood,biomass,biomass,2035,delivered biomass,0.76,1,-6
+boilers pulp paper and wood,biomass,biomass,2050,delivered biomass,0.77,1,-6
+boilers pulp paper and wood,biomass,biomass,2065,delivered biomass,0.79,1,-6
+boilers pulp paper and wood,biomass,biomass,2080,delivered biomass,0.80,1,-6
+boilers pulp paper and wood,biomass,biomass,2095,delivered biomass,0.81,1,-6
+
+
+Region: USA,,tech change,0,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+boilers general,electricity,electricity,1975,elect_td_ind,1.00,1,-6
+boilers general,electricity,electricity,1990,elect_td_ind,1.00,1,-6
+boilers general,electricity,electricity,2005,elect_td_ind,1.00,1,-6
+boilers general,electricity,electricity,2020,elect_td_ind,1.00,1,-6
+boilers general,electricity,electricity,2035,elect_td_ind,1.00,1,-6
+boilers general,electricity,electricity,2050,elect_td_ind,1.00,1,-6
+boilers general,electricity,electricity,2065,elect_td_ind,1.00,1,-6
+boilers general,electricity,electricity,2080,elect_td_ind,1.00,1,-6
+boilers general,electricity,electricity,2095,elect_td_ind,1.00,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+boilers general,refined liquids,refined liquids,1975,refined liquids industrial,1.00,1,-6
+boilers general,refined liquids,refined liquids,1990,refined liquids industrial,0.80,1,-6
+boilers general,refined liquids,refined liquids,2005,refined liquids industrial,0.80,1,-6
+boilers general,refined liquids,refined liquids,2020,refined liquids industrial,0.81,1,-6
+boilers general,refined liquids,refined liquids,2035,refined liquids industrial,0.82,1,-6
+boilers general,refined liquids,refined liquids,2050,refined liquids industrial,0.84,1,-6
+boilers general,refined liquids,refined liquids,2065,refined liquids industrial,0.85,1,-6
+boilers general,refined liquids,refined liquids,2080,refined liquids industrial,0.86,1,-6
+boilers general,refined liquids,refined liquids,2095,refined liquids industrial,0.88,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+boilers general,coal,coal,1975,delivered coal,1.00,1,-6
+boilers general,coal,coal,1990,delivered coal,0.80,1,-6
+boilers general,coal,coal,2005,delivered coal,0.80,1,-6
+boilers general,coal,coal,2020,delivered coal,0.81,1,-6
+boilers general,coal,coal,2035,delivered coal,0.82,1,-6
+boilers general,coal,coal,2050,delivered coal,0.84,1,-6
+boilers general,coal,coal,2065,delivered coal,0.85,1,-6
+boilers general,coal,coal,2080,delivered coal,0.86,1,-6
+boilers general,coal,coal,2095,delivered coal,0.88,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+boilers general,gas,gas,1975,wholesale gas,1.00,1,-6
+boilers general,gas,gas,1990,wholesale gas,0.80,1,-6
+boilers general,gas,gas,2005,wholesale gas,0.80,1,-6
+boilers general,gas,gas,2020,wholesale gas,0.81,1,-6
+boilers general,gas,gas,2035,wholesale gas,0.82,1,-6
+boilers general,gas,gas,2050,wholesale gas,0.84,1,-6
+boilers general,gas,gas,2065,wholesale gas,0.85,1,-6
+boilers general,gas,gas,2080,wholesale gas,0.86,1,-6
+boilers general,gas,gas,2095,wholesale gas,0.88,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+boilers general,biomass,biomass,1975,delivered biomass,1.00,1,-6
+boilers general,biomass,biomass,1990,delivered biomass,0.74,1,-6
+boilers general,biomass,biomass,2005,delivered biomass,0.74,1,-6
+boilers general,biomass,biomass,2020,delivered biomass,0.75,1,-6
+boilers general,biomass,biomass,2035,delivered biomass,0.76,1,-6
+boilers general,biomass,biomass,2050,delivered biomass,0.77,1,-6
+boilers general,biomass,biomass,2065,delivered biomass,0.79,1,-6
+boilers general,biomass,biomass,2080,delivered biomass,0.80,1,-6
+boilers general,biomass,biomass,2095,delivered biomass,0.81,1,-6
+
+
+Region: USA,,tech change,0,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+process heat primary metals,electricity,electricity,1975,elect_td_ind,1.00,1,-6
+process heat primary metals,electricity,electricity,1990,elect_td_ind,1.00,1,-6
+process heat primary metals,electricity,electricity,2005,elect_td_ind,1.00,1,-6
+process heat primary metals,electricity,electricity,2020,elect_td_ind,1.00,1,-6
+process heat primary metals,electricity,electricity,2035,elect_td_ind,1.00,1,-6
+process heat primary metals,electricity,electricity,2050,elect_td_ind,1.00,1,-6
+process heat primary metals,electricity,electricity,2065,elect_td_ind,1.00,1,-6
+process heat primary metals,electricity,electricity,2080,elect_td_ind,1.00,1,-6
+process heat primary metals,electricity,electricity,2095,elect_td_ind,1.00,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+process heat primary metals,refined liquids,refined liquids,1975,refined liquids industrial,1.00,1,-6
+process heat primary metals,refined liquids,refined liquids,1990,refined liquids industrial,0.85,1,-6
+process heat primary metals,refined liquids,refined liquids,2005,refined liquids industrial,0.85,1,-6
+process heat primary metals,refined liquids,refined liquids,2020,refined liquids industrial,0.86,1,-6
+process heat primary metals,refined liquids,refined liquids,2035,refined liquids industrial,0.88,1,-6
+process heat primary metals,refined liquids,refined liquids,2050,refined liquids industrial,0.89,1,-6
+process heat primary metals,refined liquids,refined liquids,2065,refined liquids industrial,0.90,1,-6
+process heat primary metals,refined liquids,refined liquids,2080,refined liquids industrial,0.92,1,-6
+process heat primary metals,refined liquids,refined liquids,2095,refined liquids industrial,0.93,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+process heat primary metals,coal,coal,1975,delivered coal,1.00,1,-6
+process heat primary metals,coal,coal,1990,delivered coal,0.85,1,-6
+process heat primary metals,coal,coal,2005,delivered coal,0.85,1,-6
+process heat primary metals,coal,coal,2020,delivered coal,0.86,1,-6
+process heat primary metals,coal,coal,2035,delivered coal,0.88,1,-6
+process heat primary metals,coal,coal,2050,delivered coal,0.89,1,-6
+process heat primary metals,coal,coal,2065,delivered coal,0.90,1,-6
+process heat primary metals,coal,coal,2080,delivered coal,0.92,1,-6
+process heat primary metals,coal,coal,2095,delivered coal,0.93,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+process heat primary metals,gas,gas,1975,wholesale gas,1.00,1,-6
+process heat primary metals,gas,gas,1990,wholesale gas,0.85,1,-6
+process heat primary metals,gas,gas,2005,wholesale gas,0.85,1,-6
+process heat primary metals,gas,gas,2020,wholesale gas,0.86,1,-6
+process heat primary metals,gas,gas,2035,wholesale gas,0.88,1,-6
+process heat primary metals,gas,gas,2050,wholesale gas,0.89,1,-6
+process heat primary metals,gas,gas,2065,wholesale gas,0.90,1,-6
+process heat primary metals,gas,gas,2080,wholesale gas,0.92,1,-6
+process heat primary metals,gas,gas,2095,wholesale gas,0.93,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+process heat primary metals,biomass,biomass,1975,delivered biomass,1.00,1,-6
+process heat primary metals,biomass,biomass,1990,delivered biomass,0.85,1,-6
+process heat primary metals,biomass,biomass,2005,delivered biomass,0.85,1,-6
+process heat primary metals,biomass,biomass,2020,delivered biomass,0.86,1,-6
+process heat primary metals,biomass,biomass,2035,delivered biomass,0.88,1,-6
+process heat primary metals,biomass,biomass,2050,delivered biomass,0.89,1,-6
+process heat primary metals,biomass,biomass,2065,delivered biomass,0.90,1,-6
+process heat primary metals,biomass,biomass,2080,delivered biomass,0.92,1,-6
+process heat primary metals,biomass,biomass,2095,delivered biomass,0.93,1,-6
+
+
+
+
+
+Region: USA,,tech change,0,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+process heat general,electricity,electricity,1975,elect_td_ind,1.00,1,-6
+process heat general,electricity,electricity,1990,elect_td_ind,1.00,1,-6
+process heat general,electricity,electricity,2005,elect_td_ind,1.00,1,-6
+process heat general,electricity,electricity,2020,elect_td_ind,1.00,1,-6
+process heat general,electricity,electricity,2035,elect_td_ind,1.00,1,-6
+process heat general,electricity,electricity,2050,elect_td_ind,1.00,1,-6
+process heat general,electricity,electricity,2065,elect_td_ind,1.00,1,-6
+process heat general,electricity,electricity,2080,elect_td_ind,1.00,1,-6
+process heat general,electricity,electricity,2095,elect_td_ind,1.00,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+process heat general,refined liquids,refined liquids,1975,refined liquids industrial,1.00,1,-6
+process heat general,refined liquids,refined liquids,1990,refined liquids industrial,0.85,1,-6
+process heat general,refined liquids,refined liquids,2005,refined liquids industrial,0.85,1,-6
+process heat general,refined liquids,refined liquids,2020,refined liquids industrial,0.86,1,-6
+process heat general,refined liquids,refined liquids,2035,refined liquids industrial,0.88,1,-6
+process heat general,refined liquids,refined liquids,2050,refined liquids industrial,0.89,1,-6
+process heat general,refined liquids,refined liquids,2065,refined liquids industrial,0.90,1,-6
+process heat general,refined liquids,refined liquids,2080,refined liquids industrial,0.92,1,-6
+process heat general,refined liquids,refined liquids,2095,refined liquids industrial,0.93,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+process heat general,coal,coal,1975,delivered coal,1.00,1,-6
+process heat general,coal,coal,1990,delivered coal,0.85,1,-6
+process heat general,coal,coal,2005,delivered coal,0.85,1,-6
+process heat general,coal,coal,2020,delivered coal,0.86,1,-6
+process heat general,coal,coal,2035,delivered coal,0.88,1,-6
+process heat general,coal,coal,2050,delivered coal,0.89,1,-6
+process heat general,coal,coal,2065,delivered coal,0.90,1,-6
+process heat general,coal,coal,2080,delivered coal,0.92,1,-6
+process heat general,coal,coal,2095,delivered coal,0.93,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+process heat general,gas,gas,1975,wholesale gas,1.00,1,-6
+process heat general,gas,gas,1990,wholesale gas,0.85,1,-6
+process heat general,gas,gas,2005,wholesale gas,0.85,1,-6
+process heat general,gas,gas,2020,wholesale gas,0.86,1,-6
+process heat general,gas,gas,2035,wholesale gas,0.88,1,-6
+process heat general,gas,gas,2050,wholesale gas,0.89,1,-6
+process heat general,gas,gas,2065,wholesale gas,0.90,1,-6
+process heat general,gas,gas,2080,wholesale gas,0.92,1,-6
+process heat general,gas,gas,2095,wholesale gas,0.93,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+process heat general,biomass,biomass,1975,delivered biomass,1.00,1,-6
+process heat general,biomass,biomass,1990,delivered biomass,0.85,1,-6
+process heat general,biomass,biomass,2005,delivered biomass,0.85,1,-6
+process heat general,biomass,biomass,2020,delivered biomass,0.86,1,-6
+process heat general,biomass,biomass,2035,delivered biomass,0.88,1,-6
+process heat general,biomass,biomass,2050,delivered biomass,0.89,1,-6
+process heat general,biomass,biomass,2065,delivered biomass,0.90,1,-6
+process heat general,biomass,biomass,2080,delivered biomass,0.92,1,-6
+process heat general,biomass,biomass,2095,delivered biomass,0.93,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,efficiency,Non Energy Costs,logit exp
+machine drive,electricity,electricity,1975,elect_td_ind,1.00,1,-6
+machine drive,electricity,electricity,1990,elect_td_ind,1.00,1,-6
+machine drive,electricity,electricity,2005,elect_td_ind,1.00,1,-6
+machine drive,electricity,electricity,2020,elect_td_ind,1.02,1,-6
+machine drive,electricity,electricity,2035,elect_td_ind,1.03,1,-6
+machine drive,electricity,electricity,2050,elect_td_ind,1.05,1,-6
+machine drive,electricity,electricity,2065,elect_td_ind,1.06,1,-6
+machine drive,electricity,electricity,2080,elect_td_ind,1.08,1,-6
+machine drive,electricity,electricity,2095,elect_td_ind,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,efficiency,Non Energy Costs,logit exp
+machine drive,refined liquids,refined liquids,1975,refined liquids industrial,1.00,1,-6
+machine drive,refined liquids,refined liquids,1990,refined liquids industrial,0.40,1,-6
+machine drive,refined liquids,refined liquids,2005,refined liquids industrial,0.40,1,-6
+machine drive,refined liquids,refined liquids,2020,refined liquids industrial,0.41,1,-6
+machine drive,refined liquids,refined liquids,2035,refined liquids industrial,0.41,1,-6
+machine drive,refined liquids,refined liquids,2050,refined liquids industrial,0.42,1,-6
+machine drive,refined liquids,refined liquids,2065,refined liquids industrial,0.42,1,-6
+machine drive,refined liquids,refined liquids,2080,refined liquids industrial,0.43,1,-6
+machine drive,refined liquids,refined liquids,2095,refined liquids industrial,0.44,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,efficiency,Non Energy Costs,logit exp
+machine drive,coal,coal,1975,delivered coal,1.00,1,-6
+machine drive,coal,coal,1990,delivered coal,0.30,1,-6
+machine drive,coal,coal,2005,delivered coal,0.30,1,-6
+machine drive,coal,coal,2020,delivered coal,0.30,1,-6
+machine drive,coal,coal,2035,delivered coal,0.31,1,-6
+machine drive,coal,coal,2050,delivered coal,0.31,1,-6
+machine drive,coal,coal,2065,delivered coal,0.32,1,-6
+machine drive,coal,coal,2080,delivered coal,0.32,1,-6
+machine drive,coal,coal,2095,delivered coal,0.33,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,efficiency,Non Energy Costs,logit exp
+machine drive,gas,gas,1975,wholesale gas,1.00,1,-6
+machine drive,gas,gas,1990,wholesale gas,0.35,1,-6
+machine drive,gas,gas,2005,wholesale gas,0.35,1,-6
+machine drive,gas,gas,2020,wholesale gas,0.36,1,-6
+machine drive,gas,gas,2035,wholesale gas,0.36,1,-6
+machine drive,gas,gas,2050,wholesale gas,0.37,1,-6
+machine drive,gas,gas,2065,wholesale gas,0.37,1,-6
+machine drive,gas,gas,2080,wholesale gas,0.38,1,-6
+machine drive,gas,gas,2095,wholesale gas,0.38,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+hvac,electricity,electricity,1975,elect_td_ind,1.00,1,-6
+hvac,electricity,electricity,1990,elect_td_ind,2.00,1,-6
+hvac,electricity,electricity,2005,elect_td_ind,2.00,1,-6
+hvac,electricity,electricity,2020,elect_td_ind,2.03,1,-6
+hvac,electricity,electricity,2035,elect_td_ind,2.06,1,-6
+hvac,electricity,electricity,2050,elect_td_ind,2.09,1,-6
+hvac,electricity,electricity,2065,elect_td_ind,2.12,1,-6
+hvac,electricity,electricity,2080,elect_td_ind,2.16,1,-6
+hvac,electricity,electricity,2095,elect_td_ind,2.19,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+hvac,refined liquids,refined liquids,1975,refined liquids industrial,1.00,1,-6
+hvac,refined liquids,refined liquids,1990,refined liquids industrial,0.75,1,-6
+hvac,refined liquids,refined liquids,2005,refined liquids industrial,0.75,1,-6
+hvac,refined liquids,refined liquids,2020,refined liquids industrial,0.76,1,-6
+hvac,refined liquids,refined liquids,2035,refined liquids industrial,0.77,1,-6
+hvac,refined liquids,refined liquids,2050,refined liquids industrial,0.78,1,-6
+hvac,refined liquids,refined liquids,2065,refined liquids industrial,0.80,1,-6
+hvac,refined liquids,refined liquids,2080,refined liquids industrial,0.81,1,-6
+hvac,refined liquids,refined liquids,2095,refined liquids industrial,0.82,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+hvac,coal,coal,1975,delivered coal,1.00,1,-6
+hvac,coal,coal,1990,delivered coal,0.50,1,-6
+hvac,coal,coal,2005,delivered coal,0.50,1,-6
+hvac,coal,coal,2020,delivered coal,0.51,1,-6
+hvac,coal,coal,2035,delivered coal,0.52,1,-6
+hvac,coal,coal,2050,delivered coal,0.52,1,-6
+hvac,coal,coal,2065,delivered coal,0.53,1,-6
+hvac,coal,coal,2080,delivered coal,0.54,1,-6
+hvac,coal,coal,2095,delivered coal,0.55,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+hvac,gas,gas,1975,wholesale gas,1.00,1,-6
+hvac,gas,gas,1990,wholesale gas,0.75,1,-6
+hvac,gas,gas,2005,wholesale gas,0.75,1,-6
+hvac,gas,gas,2020,wholesale gas,0.76,1,-6
+hvac,gas,gas,2035,wholesale gas,0.77,1,-6
+hvac,gas,gas,2050,wholesale gas,0.78,1,-6
+hvac,gas,gas,2065,wholesale gas,0.80,1,-6
+hvac,gas,gas,2080,wholesale gas,0.81,1,-6
+hvac,gas,gas,2095,wholesale gas,0.82,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+hvac,biomass,biomass,1975,delivered biomass,1.00,1,-6
+hvac,biomass,biomass,1990,delivered biomass,0.50,1,-6
+hvac,biomass,biomass,2005,delivered biomass,0.50,1,-6
+hvac,biomass,biomass,2020,delivered biomass,0.51,1,-6
+hvac,biomass,biomass,2035,delivered biomass,0.52,1,-6
+hvac,biomass,biomass,2050,delivered biomass,0.52,1,-6
+hvac,biomass,biomass,2065,delivered biomass,0.53,1,-6
+hvac,biomass,biomass,2080,delivered biomass,0.54,1,-6
+hvac,biomass,biomass,2095,delivered biomass,0.55,1,-6
+
+
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+other end uses petroleum,electricity,electricity,1975,elect_td_ind,1.00,1,-6
+other end uses petroleum,electricity,electricity,1990,elect_td_ind,1.00,1,-6
+other end uses petroleum,electricity,electricity,2005,elect_td_ind,1.00,1,-6
+other end uses petroleum,electricity,electricity,2020,elect_td_ind,1.02,1,-6
+other end uses petroleum,electricity,electricity,2035,elect_td_ind,1.03,1,-6
+other end uses petroleum,electricity,electricity,2050,elect_td_ind,1.05,1,-6
+other end uses petroleum,electricity,electricity,2065,elect_td_ind,1.06,1,-6
+other end uses petroleum,electricity,electricity,2080,elect_td_ind,1.08,1,-6
+other end uses petroleum,electricity,electricity,2095,elect_td_ind,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+other end uses petroleum,electricity,electricity,1975,elect_td_ind,1.00,1,-6
+other end uses petroleum,electricity,electricity,1990,elect_td_ind,1.00,1,-6
+other end uses petroleum,electricity,electricity,2005,elect_td_ind,1.00,1,-6
+other end uses petroleum,electricity,electricity,2020,elect_td_ind,1.02,1,-6
+other end uses petroleum,electricity,electricity,2035,elect_td_ind,1.03,1,-6
+other end uses petroleum,electricity,electricity,2050,elect_td_ind,1.05,1,-6
+other end uses petroleum,electricity,electricity,2065,elect_td_ind,1.06,1,-6
+other end uses petroleum,electricity,electricity,2080,elect_td_ind,1.08,1,-6
+other end uses petroleum,electricity,electricity,2095,elect_td_ind,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+other end uses petroleum,refined liquids,refined liquids,1975,refined liquids industrial,1.00,1,-6
+other end uses petroleum,refined liquids,refined liquids,1990,refined liquids industrial,1.00,1,-6
+other end uses petroleum,refined liquids,refined liquids,2005,refined liquids industrial,1.00,1,-6
+other end uses petroleum,refined liquids,refined liquids,2020,refined liquids industrial,1.02,1,-6
+other end uses petroleum,refined liquids,refined liquids,2035,refined liquids industrial,1.03,1,-6
+other end uses petroleum,refined liquids,refined liquids,2050,refined liquids industrial,1.05,1,-6
+other end uses petroleum,refined liquids,refined liquids,2065,refined liquids industrial,1.06,1,-6
+other end uses petroleum,refined liquids,refined liquids,2080,refined liquids industrial,1.08,1,-6
+other end uses petroleum,refined liquids,refined liquids,2095,refined liquids industrial,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+other end uses petroleum,coal,coal,1975,delivered coal,1.00,1,-6
+other end uses petroleum,coal,coal,1990,delivered coal,1.00,1,-6
+other end uses petroleum,coal,coal,2005,delivered coal,1.00,1,-6
+other end uses petroleum,coal,coal,2020,delivered coal,1.02,1,-6
+other end uses petroleum,coal,coal,2035,delivered coal,1.03,1,-6
+other end uses petroleum,coal,coal,2050,delivered coal,1.05,1,-6
+other end uses petroleum,coal,coal,2065,delivered coal,1.06,1,-6
+other end uses petroleum,coal,coal,2080,delivered coal,1.08,1,-6
+other end uses petroleum,coal,coal,2095,delivered coal,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+other end uses petroleum,gas,gas,1975,wholesale gas,1.00,1,-6
+other end uses petroleum,gas,gas,1990,wholesale gas,1.00,1,-6
+other end uses petroleum,gas,gas,2005,wholesale gas,1.00,1,-6
+other end uses petroleum,gas,gas,2020,wholesale gas,1.02,1,-6
+other end uses petroleum,gas,gas,2035,wholesale gas,1.03,1,-6
+other end uses petroleum,gas,gas,2050,wholesale gas,1.05,1,-6
+other end uses petroleum,gas,gas,2065,wholesale gas,1.06,1,-6
+other end uses petroleum,gas,gas,2080,wholesale gas,1.08,1,-6
+other end uses petroleum,gas,gas,2095,wholesale gas,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+other end uses petroleum,biomass,biomass,1975,delivered biomass,1.00,1,-6
+other end uses petroleum,biomass,biomass,1990,delivered biomass,1.00,1,-6
+other end uses petroleum,biomass,biomass,2005,delivered biomass,1.00,1,-6
+other end uses petroleum,biomass,biomass,2020,delivered biomass,1.02,1,-6
+other end uses petroleum,biomass,biomass,2035,delivered biomass,1.03,1,-6
+other end uses petroleum,biomass,biomass,2050,delivered biomass,1.05,1,-6
+other end uses petroleum,biomass,biomass,2065,delivered biomass,1.06,1,-6
+other end uses petroleum,biomass,biomass,2080,delivered biomass,1.08,1,-6
+other end uses petroleum,biomass,biomass,2095,delivered biomass,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+other end uses general,electricity,electricity,1975,elect_td_ind,1.00,1,-6
+other end uses general,electricity,electricity,1990,elect_td_ind,1.00,1,-6
+other end uses general,electricity,electricity,2005,elect_td_ind,1.00,1,-6
+other end uses general,electricity,electricity,2020,elect_td_ind,1.02,1,-6
+other end uses general,electricity,electricity,2035,elect_td_ind,1.03,1,-6
+other end uses general,electricity,electricity,2050,elect_td_ind,1.05,1,-6
+other end uses general,electricity,electricity,2065,elect_td_ind,1.06,1,-6
+other end uses general,electricity,electricity,2080,elect_td_ind,1.08,1,-6
+other end uses general,electricity,electricity,2095,elect_td_ind,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+other end uses general,refined liquids,refined liquids,1975,refined liquids industrial,1.00,1,-6
+other end uses general,refined liquids,refined liquids,1990,refined liquids industrial,1.00,1,-6
+other end uses general,refined liquids,refined liquids,2005,refined liquids industrial,1.00,1,-6
+other end uses general,refined liquids,refined liquids,2020,refined liquids industrial,1.02,1,-6
+other end uses general,refined liquids,refined liquids,2035,refined liquids industrial,1.03,1,-6
+other end uses general,refined liquids,refined liquids,2050,refined liquids industrial,1.05,1,-6
+other end uses general,refined liquids,refined liquids,2065,refined liquids industrial,1.06,1,-6
+other end uses general,refined liquids,refined liquids,2080,refined liquids industrial,1.08,1,-6
+other end uses general,refined liquids,refined liquids,2095,refined liquids industrial,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+other end uses general,coal,coal,1975,delivered coal,1.00,1,-6
+other end uses general,coal,coal,1990,delivered coal,1.00,1,-6
+other end uses general,coal,coal,2005,delivered coal,1.00,1,-6
+other end uses general,coal,coal,2020,delivered coal,1.02,1,-6
+other end uses general,coal,coal,2035,delivered coal,1.03,1,-6
+other end uses general,coal,coal,2050,delivered coal,1.05,1,-6
+other end uses general,coal,coal,2065,delivered coal,1.06,1,-6
+other end uses general,coal,coal,2080,delivered coal,1.08,1,-6
+other end uses general,coal,coal,2095,delivered coal,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+other end uses general,gas,gas,1975,wholesale gas,1.00,1,-6
+other end uses general,gas,gas,1990,wholesale gas,1.00,1,-6
+other end uses general,gas,gas,2005,wholesale gas,1.00,1,-6
+other end uses general,gas,gas,2020,wholesale gas,1.02,1,-6
+other end uses general,gas,gas,2035,wholesale gas,1.03,1,-6
+other end uses general,gas,gas,2050,wholesale gas,1.05,1,-6
+other end uses general,gas,gas,2065,wholesale gas,1.06,1,-6
+other end uses general,gas,gas,2080,wholesale gas,1.08,1,-6
+other end uses general,gas,gas,2095,wholesale gas,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+other end uses general,biomass,biomass,1975,delivered biomass,1.00,1,-6
+other end uses general,biomass,biomass,1990,delivered biomass,1.00,1,-6
+other end uses general,biomass,biomass,2005,delivered biomass,1.00,1,-6
+other end uses general,biomass,biomass,2020,delivered biomass,1.02,1,-6
+other end uses general,biomass,biomass,2035,delivered biomass,1.03,1,-6
+other end uses general,biomass,biomass,2050,delivered biomass,1.05,1,-6
+other end uses general,biomass,biomass,2065,delivered biomass,1.06,1,-6
+other end uses general,biomass,biomass,2080,delivered biomass,1.08,1,-6
+other end uses general,biomass,biomass,2095,delivered biomass,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,period,minicam-energy-input,efficiency,input-cost,logitexp
+electrochemical,electricity,electricity,1975,elect_td_ind,1.00,1,-6
+electrochemical,electricity,electricity,1990,elect_td_ind,1.00,1,-6
+electrochemical,electricity,electricity,2005,elect_td_ind,1.00,1,-6
+electrochemical,electricity,electricity,2020,elect_td_ind,1.02,1,-6
+electrochemical,electricity,electricity,2035,elect_td_ind,1.03,1,-6
+electrochemical,electricity,electricity,2050,elect_td_ind,1.05,1,-6
+electrochemical,electricity,electricity,2065,elect_td_ind,1.06,1,-6
+electrochemical,electricity,electricity,2080,elect_td_ind,1.08,1,-6
+electrochemical,electricity,electricity,2095,elect_td_ind,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+feedstocks petroleum,refined liquids,refined liquids,1975,refined liquids industrial,1.00,1,-6
+feedstocks petroleum,refined liquids,refined liquids,1990,refined liquids industrial,1.00,1,-6
+feedstocks petroleum,refined liquids,refined liquids,2005,refined liquids industrial,1.00,1,-6
+feedstocks petroleum,refined liquids,refined liquids,2020,refined liquids industrial,1.02,1,-6
+feedstocks petroleum,refined liquids,refined liquids,2035,refined liquids industrial,1.03,1,-6
+feedstocks petroleum,refined liquids,refined liquids,2050,refined liquids industrial,1.05,1,-6
+feedstocks petroleum,refined liquids,refined liquids,2065,refined liquids industrial,1.06,1,-6
+feedstocks petroleum,refined liquids,refined liquids,2080,refined liquids industrial,1.08,1,-6
+feedstocks petroleum,refined liquids,refined liquids,2095,refined liquids industrial,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+feedstocks petroleum,coal,coal,1975,delivered coal,1.00,1,-6
+feedstocks petroleum,coal,coal,1990,delivered coal,1.00,1,-6
+feedstocks petroleum,coal,coal,2005,delivered coal,1.00,1,-6
+feedstocks petroleum,coal,coal,2020,delivered coal,1.02,1,-6
+feedstocks petroleum,coal,coal,2035,delivered coal,1.03,1,-6
+feedstocks petroleum,coal,coal,2050,delivered coal,1.05,1,-6
+feedstocks petroleum,coal,coal,2065,delivered coal,1.06,1,-6
+feedstocks petroleum,coal,coal,2080,delivered coal,1.08,1,-6
+feedstocks petroleum,coal,coal,2095,delivered coal,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+feedstocks petroleum,gas,gas,1975,wholesale gas,1.00,1,-6
+feedstocks petroleum,gas,gas,1990,wholesale gas,1.00,1,-6
+feedstocks petroleum,gas,gas,2005,wholesale gas,1.00,1,-6
+feedstocks petroleum,gas,gas,2020,wholesale gas,1.02,1,-6
+feedstocks petroleum,gas,gas,2035,wholesale gas,1.03,1,-6
+feedstocks petroleum,gas,gas,2050,wholesale gas,1.05,1,-6
+feedstocks petroleum,gas,gas,2065,wholesale gas,1.06,1,-6
+feedstocks petroleum,gas,gas,2080,wholesale gas,1.08,1,-6
+feedstocks petroleum,gas,gas,2095,wholesale gas,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+feedstocks chemicals,refined liquids,refined liquids,1975,refined liquids industrial,1.00,1,-6
+feedstocks chemicals,refined liquids,refined liquids,1990,refined liquids industrial,1.00,1,-6
+feedstocks chemicals,refined liquids,refined liquids,2005,refined liquids industrial,1.00,1,-6
+feedstocks chemicals,refined liquids,refined liquids,2020,refined liquids industrial,1.02,1,-6
+feedstocks chemicals,refined liquids,refined liquids,2035,refined liquids industrial,1.03,1,-6
+feedstocks chemicals,refined liquids,refined liquids,2050,refined liquids industrial,1.05,1,-6
+feedstocks chemicals,refined liquids,refined liquids,2065,refined liquids industrial,1.06,1,-6
+feedstocks chemicals,refined liquids,refined liquids,2080,refined liquids industrial,1.08,1,-6
+feedstocks chemicals,refined liquids,refined liquids,2095,refined liquids industrial,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+feedstocks chemicals,coal,coal,1975,delivered coal,1.00,1,-6
+feedstocks chemicals,coal,coal,1990,delivered coal,1.00,1,-6
+feedstocks chemicals,coal,coal,2005,delivered coal,1.00,1,-6
+feedstocks chemicals,coal,coal,2020,delivered coal,1.02,1,-6
+feedstocks chemicals,coal,coal,2035,delivered coal,1.03,1,-6
+feedstocks chemicals,coal,coal,2050,delivered coal,1.05,1,-6
+feedstocks chemicals,coal,coal,2065,delivered coal,1.06,1,-6
+feedstocks chemicals,coal,coal,2080,delivered coal,1.08,1,-6
+feedstocks chemicals,coal,coal,2095,delivered coal,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+feedstocks chemicals,gas,gas,1975,wholesale gas,1.00,1,-6
+feedstocks chemicals,gas,gas,1990,wholesale gas,1.00,1,-6
+feedstocks chemicals,gas,gas,2005,wholesale gas,1.00,1,-6
+feedstocks chemicals,gas,gas,2020,wholesale gas,1.02,1,-6
+feedstocks chemicals,gas,gas,2035,wholesale gas,1.03,1,-6
+feedstocks chemicals,gas,gas,2050,wholesale gas,1.05,1,-6
+feedstocks chemicals,gas,gas,2065,wholesale gas,1.06,1,-6
+feedstocks chemicals,gas,gas,2080,wholesale gas,1.08,1,-6
+feedstocks chemicals,gas,gas,2095,wholesale gas,1.09,1,-6
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+feedstocks primary metals,refined liquids,refined liquids,1975,refined liquids industrial,1.00,1,-6
+feedstocks primary metals,refined liquids,refined liquids,1990,refined liquids industrial,1.00,1,-6
+feedstocks primary metals,refined liquids,refined liquids,2005,refined liquids industrial,1.00,1,-6
+feedstocks primary metals,refined liquids,refined liquids,2020,refined liquids industrial,1.02,1,-6
+feedstocks primary metals,refined liquids,refined liquids,2035,refined liquids industrial,1.03,1,-6
+feedstocks primary metals,refined liquids,refined liquids,2050,refined liquids industrial,1.05,1,-6
+feedstocks primary metals,refined liquids,refined liquids,2065,refined liquids industrial,1.06,1,-6
+feedstocks primary metals,refined liquids,refined liquids,2080,refined liquids industrial,1.08,1,-6
+feedstocks primary metals,refined liquids,refined liquids,2095,refined liquids industrial,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+feedstocks primary metals,coal,coal,1975,delivered coal,1.00,1,-6
+feedstocks primary metals,coal,coal,1990,delivered coal,1.00,1,-6
+feedstocks primary metals,coal,coal,2005,delivered coal,1.00,1,-6
+feedstocks primary metals,coal,coal,2020,delivered coal,1.02,1,-6
+feedstocks primary metals,coal,coal,2035,delivered coal,1.03,1,-6
+feedstocks primary metals,coal,coal,2050,delivered coal,1.05,1,-6
+feedstocks primary metals,coal,coal,2065,delivered coal,1.06,1,-6
+feedstocks primary metals,coal,coal,2080,delivered coal,1.08,1,-6
+feedstocks primary metals,coal,coal,2095,delivered coal,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+feedstocks primary metals,gas,gas,1975,wholesale gas,1.00,1,-6
+feedstocks primary metals,gas,gas,1990,wholesale gas,1.00,1,-6
+feedstocks primary metals,gas,gas,2005,wholesale gas,1.00,1,-6
+feedstocks primary metals,gas,gas,2020,wholesale gas,1.02,1,-6
+feedstocks primary metals,gas,gas,2035,wholesale gas,1.03,1,-6
+feedstocks primary metals,gas,gas,2050,wholesale gas,1.05,1,-6
+feedstocks primary metals,gas,gas,2065,wholesale gas,1.06,1,-6
+feedstocks primary metals,gas,gas,2080,wholesale gas,1.08,1,-6
+feedstocks primary metals,gas,gas,2095,wholesale gas,1.09,1,-6
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+all end uses agriculture,electricity,electricity,1975,elect_td_ind,1.00,1,-6
+all end uses agriculture,electricity,electricity,1990,elect_td_ind,1.00,1,-6
+all end uses agriculture,electricity,electricity,2005,elect_td_ind,1.00,1,-6
+all end uses agriculture,electricity,electricity,2020,elect_td_ind,1.02,1,-6
+all end uses agriculture,electricity,electricity,2035,elect_td_ind,1.03,1,-6
+all end uses agriculture,electricity,electricity,2050,elect_td_ind,1.05,1,-6
+all end uses agriculture,electricity,electricity,2065,elect_td_ind,1.06,1,-6
+all end uses agriculture,electricity,electricity,2080,elect_td_ind,1.08,1,-6
+all end uses agriculture,electricity,electricity,2095,elect_td_ind,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+all end uses agriculture,refined liquids,refined liquids,1975,refined liquids industrial,1.00,1,-6
+all end uses agriculture,refined liquids,refined liquids,1990,refined liquids industrial,1.00,1,-6
+all end uses agriculture,refined liquids,refined liquids,2005,refined liquids industrial,1.00,1,-6
+all end uses agriculture,refined liquids,refined liquids,2020,refined liquids industrial,1.02,1,-6
+all end uses agriculture,refined liquids,refined liquids,2035,refined liquids industrial,1.03,1,-6
+all end uses agriculture,refined liquids,refined liquids,2050,refined liquids industrial,1.05,1,-6
+all end uses agriculture,refined liquids,refined liquids,2065,refined liquids industrial,1.06,1,-6
+all end uses agriculture,refined liquids,refined liquids,2080,refined liquids industrial,1.08,1,-6
+all end uses agriculture,refined liquids,refined liquids,2095,refined liquids industrial,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+all end uses agriculture,gas,gas,1975,wholesale gas,1.00,1,-6
+all end uses agriculture,gas,gas,1990,wholesale gas,1.00,1,-6
+all end uses agriculture,gas,gas,2005,wholesale gas,1.00,1,-6
+all end uses agriculture,gas,gas,2020,wholesale gas,1.02,1,-6
+all end uses agriculture,gas,gas,2035,wholesale gas,1.03,1,-6
+all end uses agriculture,gas,gas,2050,wholesale gas,1.05,1,-6
+all end uses agriculture,gas,gas,2065,wholesale gas,1.06,1,-6
+all end uses agriculture,gas,gas,2080,wholesale gas,1.08,1,-6
+all end uses agriculture,gas,gas,2095,wholesale gas,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+all end uses agriculture,biomass,biomass,1975,delivered biomass,1.00,1,-6
+all end uses agriculture,biomass,biomass,1990,delivered biomass,1.00,1,-6
+all end uses agriculture,biomass,biomass,2005,delivered biomass,1.00,1,-6
+all end uses agriculture,biomass,biomass,2020,delivered biomass,1.02,1,-6
+all end uses agriculture,biomass,biomass,2035,delivered biomass,1.03,1,-6
+all end uses agriculture,biomass,biomass,2050,delivered biomass,1.05,1,-6
+all end uses agriculture,biomass,biomass,2065,delivered biomass,1.06,1,-6
+all end uses agriculture,biomass,biomass,2080,delivered biomass,1.08,1,-6
+all end uses agriculture,biomass,biomass,2095,delivered biomass,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+all end uses mining,electricity,electricity,1975,elect_td_ind,1.00,1,-6
+all end uses mining,electricity,electricity,1990,elect_td_ind,1.00,1,-6
+all end uses mining,electricity,electricity,2005,elect_td_ind,1.00,1,-6
+all end uses mining,electricity,electricity,2020,elect_td_ind,1.02,1,-6
+all end uses mining,electricity,electricity,2035,elect_td_ind,1.03,1,-6
+all end uses mining,electricity,electricity,2050,elect_td_ind,1.05,1,-6
+all end uses mining,electricity,electricity,2065,elect_td_ind,1.06,1,-6
+all end uses mining,electricity,electricity,2080,elect_td_ind,1.08,1,-6
+all end uses mining,electricity,electricity,2095,elect_td_ind,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+all end uses mining,refined liquids,refined liquids,1975,refined liquids industrial,1.00,1,-6
+all end uses mining,refined liquids,refined liquids,1990,refined liquids industrial,1.00,1,-6
+all end uses mining,refined liquids,refined liquids,2005,refined liquids industrial,1.00,1,-6
+all end uses mining,refined liquids,refined liquids,2020,refined liquids industrial,1.02,1,-6
+all end uses mining,refined liquids,refined liquids,2035,refined liquids industrial,1.03,1,-6
+all end uses mining,refined liquids,refined liquids,2050,refined liquids industrial,1.05,1,-6
+all end uses mining,refined liquids,refined liquids,2065,refined liquids industrial,1.06,1,-6
+all end uses mining,refined liquids,refined liquids,2080,refined liquids industrial,1.08,1,-6
+all end uses mining,refined liquids,refined liquids,2095,refined liquids industrial,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+all end uses mining,gas,gas,1975,wholesale gas,1.00,1,-6
+all end uses mining,gas,gas,1990,wholesale gas,1.00,1,-6
+all end uses mining,gas,gas,2005,wholesale gas,1.00,1,-6
+all end uses mining,gas,gas,2020,wholesale gas,1.02,1,-6
+all end uses mining,gas,gas,2035,wholesale gas,1.03,1,-6
+all end uses mining,gas,gas,2050,wholesale gas,1.05,1,-6
+all end uses mining,gas,gas,2065,wholesale gas,1.06,1,-6
+all end uses mining,gas,gas,2080,wholesale gas,1.08,1,-6
+all end uses mining,gas,gas,2095,wholesale gas,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+all end uses mining,coal,coal,1975,delivered coal,1.00,1,-6
+all end uses mining,coal,coal,1990,delivered coal,1.00,1,-6
+all end uses mining,coal,coal,2005,delivered coal,1.00,1,-6
+all end uses mining,coal,coal,2020,delivered coal,1.02,1,-6
+all end uses mining,coal,coal,2035,delivered coal,1.03,1,-6
+all end uses mining,coal,coal,2050,delivered coal,1.05,1,-6
+all end uses mining,coal,coal,2065,delivered coal,1.06,1,-6
+all end uses mining,coal,coal,2080,delivered coal,1.08,1,-6
+all end uses mining,coal,coal,2095,delivered coal,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+all end uses mining,biomass,biomass,1975,delivered biomass,1.00,1,-6
+all end uses mining,biomass,biomass,1990,delivered biomass,1.00,1,-6
+all end uses mining,biomass,biomass,2005,delivered biomass,1.00,1,-6
+all end uses mining,biomass,biomass,2020,delivered biomass,1.02,1,-6
+all end uses mining,biomass,biomass,2035,delivered biomass,1.03,1,-6
+all end uses mining,biomass,biomass,2050,delivered biomass,1.05,1,-6
+all end uses mining,biomass,biomass,2065,delivered biomass,1.06,1,-6
+all end uses mining,biomass,biomass,2080,delivered biomass,1.08,1,-6
+all end uses mining,biomass,biomass,2095,delivered biomass,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+construction energy uses,electricity,electricity,1975,elect_td_ind,1.00,1,-6
+construction energy uses,electricity,electricity,1990,elect_td_ind,1.00,1,-6
+construction energy uses,electricity,electricity,2005,elect_td_ind,1.00,1,-6
+construction energy uses,electricity,electricity,2020,elect_td_ind,1.02,1,-6
+construction energy uses,electricity,electricity,2035,elect_td_ind,1.03,1,-6
+construction energy uses,electricity,electricity,2050,elect_td_ind,1.05,1,-6
+construction energy uses,electricity,electricity,2065,elect_td_ind,1.06,1,-6
+construction energy uses,electricity,electricity,2080,elect_td_ind,1.08,1,-6
+construction energy uses,electricity,electricity,2095,elect_td_ind,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+construction energy uses,refined liquids,refined liquids,1975,refined liquids industrial,1.00,1,-6
+construction energy uses,refined liquids,refined liquids,1990,refined liquids industrial,1.00,1,-6
+construction energy uses,refined liquids,refined liquids,2005,refined liquids industrial,1.00,1,-6
+construction energy uses,refined liquids,refined liquids,2020,refined liquids industrial,1.02,1,-6
+construction energy uses,refined liquids,refined liquids,2035,refined liquids industrial,1.03,1,-6
+construction energy uses,refined liquids,refined liquids,2050,refined liquids industrial,1.05,1,-6
+construction energy uses,refined liquids,refined liquids,2065,refined liquids industrial,1.06,1,-6
+construction energy uses,refined liquids,refined liquids,2080,refined liquids industrial,1.08,1,-6
+construction energy uses,refined liquids,refined liquids,2095,refined liquids industrial,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+construction energy uses,gas,gas,1975,wholesale gas,1.00,1,-6
+construction energy uses,gas,gas,1990,wholesale gas,1.00,1,-6
+construction energy uses,gas,gas,2005,wholesale gas,1.00,1,-6
+construction energy uses,gas,gas,2020,wholesale gas,1.02,1,-6
+construction energy uses,gas,gas,2035,wholesale gas,1.03,1,-6
+construction energy uses,gas,gas,2050,wholesale gas,1.05,1,-6
+construction energy uses,gas,gas,2065,wholesale gas,1.06,1,-6
+construction energy uses,gas,gas,2080,wholesale gas,1.08,1,-6
+construction energy uses,gas,gas,2095,wholesale gas,1.09,1,-6
+
+
+Region: USA,,tech change,0.001,,,,
+EndUseTechsforXML,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+Sector,Subsector,Technology,Year,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+construction feedstocks,refined liquids,refined liquids,1975,refined liquids industrial,1.00,1,-6
+construction feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,1.00,1,-6
+construction feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,1.00,1,-6
+construction feedstocks,refined liquids,refined liquids,2020,refined liquids industrial,1.02,1,-6
+construction feedstocks,refined liquids,refined liquids,2035,refined liquids industrial,1.03,1,-6
+construction feedstocks,refined liquids,refined liquids,2050,refined liquids industrial,1.05,1,-6
+construction feedstocks,refined liquids,refined liquids,2065,refined liquids industrial,1.06,1,-6
+construction feedstocks,refined liquids,refined liquids,2080,refined liquids industrial,1.08,1,-6
+construction feedstocks,refined liquids,refined liquids,2095,refined liquids industrial,1.09,1,-6
+
+
+USA Limestone Feedstocks end-use supply tech,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+400,,,,,,,
+
+supplysector,subsector,technology,period,minicam-energy-input,Efficiency ,Non Energy Costs,logit exp
+limestone feedstocks,limestone feedstocks,limestone feedstocks,1975,limestone,1.00,1,-6
+limestone feedstocks,limestone feedstocks,limestone feedstocks,1990,limestone,1.00,1,-6
+limestone feedstocks,limestone feedstocks,limestone feedstocks,2005,limestone,1.00,1,-6
+limestone feedstocks,limestone feedstocks,limestone feedstocks,2020,limestone,1.02,1,-6
+limestone feedstocks,limestone feedstocks,limestone feedstocks,2035,limestone,1.03,1,-6
+limestone feedstocks,limestone feedstocks,limestone feedstocks,2050,limestone,1.05,1,-6
+limestone feedstocks,limestone feedstocks,limestone feedstocks,2065,limestone,1.06,1,-6
+limestone feedstocks,limestone feedstocks,limestone feedstocks,2080,limestone,1.08,1,-6
+limestone feedstocks,limestone feedstocks,limestone feedstocks,2095,limestone,1.09,1,-6

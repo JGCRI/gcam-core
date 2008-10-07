@@ -1,0 +1,1377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+	<world>
+		<region name="USA">
+			<ForestSupplySector name="Forest" nocreate="1">
+				<ForestSupplySubsector name="Forest" nocreate="1">
+					<ForestProductionTechnology name="Forest" nocreate="1">
+						<period year="1975">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.6325</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="1990">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2005">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2020">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2035">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2050">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2065">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2080">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2095">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+					</ForestProductionTechnology>
+				</ForestSupplySubsector>
+			</ForestSupplySector>
+		</region>
+		<region name="Canada">
+			<ForestSupplySector name="Forest" nocreate="1">
+				<ForestSupplySubsector name="Forest" nocreate="1">
+					<ForestProductionTechnology name="Forest" nocreate="1">
+						<period year="1975">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="1990">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2005">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2020">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2035">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2050">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2065">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2080">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2095">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+					</ForestProductionTechnology>
+				</ForestSupplySubsector>
+			</ForestSupplySector>
+		</region>
+		<region name="Western Europe">
+			<ForestSupplySector name="Forest" nocreate="1">
+				<ForestSupplySubsector name="Forest" nocreate="1">
+					<ForestProductionTechnology name="Forest" nocreate="1">
+						<period year="1975">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="1990">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2005">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2020">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2035">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2050">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2065">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2080">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2095">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+					</ForestProductionTechnology>
+				</ForestSupplySubsector>
+			</ForestSupplySector>
+		</region>
+		<region name="Japan">
+			<ForestSupplySector name="Forest" nocreate="1">
+				<ForestSupplySubsector name="Forest" nocreate="1">
+					<ForestProductionTechnology name="Forest" nocreate="1">
+						<period year="1975">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="1990">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2005">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2020">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2035">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2050">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2065">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2080">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2095">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+					</ForestProductionTechnology>
+				</ForestSupplySubsector>
+			</ForestSupplySector>
+		</region>
+		<region name="Australia_NZ">
+			<ForestSupplySector name="Forest" nocreate="1">
+				<ForestSupplySubsector name="Forest" nocreate="1">
+					<ForestProductionTechnology name="Forest" nocreate="1">
+						<period year="1975">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="1990">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2005">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2020">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2035">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2050">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2065">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2080">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2095">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+					</ForestProductionTechnology>
+				</ForestSupplySubsector>
+			</ForestSupplySector>
+		</region>
+		<region name="Former Soviet Union">
+			<ForestSupplySector name="Forest" nocreate="1">
+				<ForestSupplySubsector name="Forest" nocreate="1">
+					<ForestProductionTechnology name="Forest" nocreate="1">
+						<period year="1975">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="1990">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2005">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2020">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2035">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2050">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2065">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2080">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2095">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+					</ForestProductionTechnology>
+				</ForestSupplySubsector>
+			</ForestSupplySector>
+		</region>
+		<region name="China">
+			<ForestSupplySector name="Forest" nocreate="1">
+				<ForestSupplySubsector name="Forest" nocreate="1">
+					<ForestProductionTechnology name="Forest" nocreate="1">
+						<period year="1975">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="1990">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2005">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2020">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2035">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2050">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2065">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2080">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2095">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+					</ForestProductionTechnology>
+				</ForestSupplySubsector>
+			</ForestSupplySector>
+		</region>
+		<region name="Middle East">
+			<ForestSupplySector name="Forest" nocreate="1">
+				<ForestSupplySubsector name="Forest" nocreate="1">
+					<ForestProductionTechnology name="Forest" nocreate="1">
+						<period year="1975">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="1990">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2005">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2020">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2035">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2050">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2065">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2080">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2095">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+					</ForestProductionTechnology>
+				</ForestSupplySubsector>
+			</ForestSupplySector>
+		</region>
+		<region name="Africa">
+			<ForestSupplySector name="Forest" nocreate="1">
+				<ForestSupplySubsector name="Forest" nocreate="1">
+					<ForestProductionTechnology name="Forest" nocreate="1">
+						<period year="1975">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="1990">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2005">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2020">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2035">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2050">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2065">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2080">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2095">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+					</ForestProductionTechnology>
+				</ForestSupplySubsector>
+			</ForestSupplySector>
+		</region>
+		<region name="Latin America">
+			<ForestSupplySector name="Forest" nocreate="1">
+				<ForestSupplySubsector name="Forest" nocreate="1">
+					<ForestProductionTechnology name="Forest" nocreate="1">
+						<period year="1975">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="1990">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2005">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2020">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2035">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2050">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2065">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2080">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2095">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+					</ForestProductionTechnology>
+				</ForestSupplySubsector>
+			</ForestSupplySector>
+		</region>
+		<region name="Southeast Asia">
+			<ForestSupplySector name="Forest" nocreate="1">
+				<ForestSupplySubsector name="Forest" nocreate="1">
+					<ForestProductionTechnology name="Forest" nocreate="1">
+						<period year="1975">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="1990">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2005">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2020">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2035">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2050">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2065">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2080">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2095">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+					</ForestProductionTechnology>
+				</ForestSupplySubsector>
+			</ForestSupplySector>
+		</region>
+		<region name="Eastern Europe">
+			<ForestSupplySector name="Forest" nocreate="1">
+				<ForestSupplySubsector name="Forest" nocreate="1">
+					<ForestProductionTechnology name="Forest" nocreate="1">
+						<period year="1975">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="1990">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2005">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2020">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2035">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2050">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2065">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2080">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2095">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+					</ForestProductionTechnology>
+				</ForestSupplySubsector>
+			</ForestSupplySector>
+		</region>
+		<region name="Korea">
+			<ForestSupplySector name="Forest" nocreate="1">
+				<ForestSupplySubsector name="Forest" nocreate="1">
+					<ForestProductionTechnology name="Forest" nocreate="1">
+						<period year="1975">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="1990">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2005">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2020">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2035">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2050">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2065">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2080">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2095">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+					</ForestProductionTechnology>
+				</ForestSupplySubsector>
+			</ForestSupplySector>
+		</region>
+		<region name="India">
+			<ForestSupplySector name="Forest" nocreate="1">
+				<ForestSupplySubsector name="Forest" nocreate="1">
+					<ForestProductionTechnology name="Forest" nocreate="1">
+						<period year="1975">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="1990">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2005">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2020">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2035">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2050">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2065">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2080">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+						<period year="2095">
+							<residue-biomass-production name="biomass">
+								<curve-exponent>4.323</curve-exponent>
+								<mass-conversion>0.5</mass-conversion>
+								<eros-ctrl>2</eros-ctrl>
+								<mass-to-energy>1.89E-08</mass-to-energy>
+								<mid-price>0.771666667</mid-price>
+								<harvest-index>0.874333</harvest-index>
+							</residue-biomass-production>
+						</period>
+					</ForestProductionTechnology>
+				</ForestSupplySubsector>
+			</ForestSupplySector>
+		</region>
+	</world>
+</scenario>

@@ -1,0 +1,38 @@
+set unit tags,,,
+Region: USA,,,
+INPUT_TABLE,,,
+Variable ID,,,
+100,,,
+
+supplysector,output-unit,input-unit,price-unit
+food processing,FinalService,EJ,1975$/GJ
+pulp paper and wood,FinalService,EJ,1975$/GJ
+chemicals,FinalService,EJ,1975$/GJ
+petroleum,FinalService,EJ,1975$/GJ
+aluminum,FinalService,EJ,1975$/GJ
+other primary metals,FinalService,EJ,1975$/GJ
+other nonmetallic minerals,FinalService,EJ,1975$/GJ
+other manufacturing,FinalService,EJ,1975$/GJ
+agriculture,FinalService,EJ,1975$/GJ
+mining,FinalService,EJ,1975$/GJ,
+construction,FinalService,EJ,1975$/GJ,
+
+
+Region: USA,,,,
+IndustrySupplySector ,,,,2005 in EJ
+INPUT_TABLE,,,,
+Variable ID,,,,
+105,,,,
+,,,,CalDataOutput
+supplysector,subsector,technology,period,calOutputValue
+food processing,food processing,food processing,2005,0.815283402
+pulp paper and wood,pulp paper and wood,pulp paper and wood,2005,2.164722205
+chemicals,chemicals,chemicals,2005,4.915587743
+petroleum,petroleum,petroleum,2005,5.335124661
+aluminum,aluminum,aluminum,2005,0.404331586
+other primary metals,other primary metals,other primary metals,2005,1.610364883,,,,
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,2005,0.507190862,,,,
+other manufacturing,other manufacturing,other manufacturing,2005,1.895743231,,,,
+agriculture,agriculture,agriculture,2005,0.900604274,,,,
+mining,mining,mining,2005,1.786256546,,,check output,
+construction,construction,construction,2005,2.336054066,,,22.67126346,22.67126346

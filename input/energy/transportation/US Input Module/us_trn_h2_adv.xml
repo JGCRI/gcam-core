@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <supplysector name="passenger">
+            <tranSubsector name="auto">
+               <tranTechnology name="fuel cell auto">
+                  <period year="1975">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>3607</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4467</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>3607</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4467</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>3163</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4773</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <sharewt>0.0067</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>2619</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4428</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.0474</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>2168</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4264</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.2689</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>1796</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4151</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.731</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>1487</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4151</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.953</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>1231</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4151</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>1019</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4151</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </tranTechnology>
+            </tranSubsector>
+            <tranSubsector name="light truck">
+               <tranTechnology name="fuel cell light truck">
+                  <period year="1975">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>4529</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.5077</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>4529</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.5077</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>4474</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.5388</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <sharewt>0.0067</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>3705</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4998</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.0474</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>3068</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4814</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.2689</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>2540</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4685</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.731</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>2103</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4685</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.953</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>1742</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4685</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>1442</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4685</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </tranTechnology>
+            </tranSubsector>
+         </supplysector>
+         <supplysector name="freight">
+            <tranSubsector name="truck">
+               <tranTechnology name="fuel cell freight truck">
+                  <period year="1975">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>13650</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.148</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>13650</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.148</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>12237</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.067</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>10685</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.990</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.0067</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>9330</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.939</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.0474</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>8147</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.907</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.2689</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>7113</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.900</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.731</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>6211</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.893</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.953</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>5424</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.887</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </tranTechnology>
+            </tranSubsector>
+            <tranSubsector name="rail">
+               <tranTechnology name="fuel cell freight rail">
+                  <period year="1975">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>9766</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.8057</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>9766</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.8057</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>8904</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.8516</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>8576</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.7781</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.0067</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>8260</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.7218</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.0474</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>7956</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.6920</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.2689</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>7662</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.6817</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.731</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>7380</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.6716</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.953</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>7108</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.6616</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </tranTechnology>
+            </tranSubsector>
+            <tranSubsector name="domestic ship">
+               <tranTechnology name="fuel cell domestic ship">
+                  <period year="1975">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>227740</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.740</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>227740</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.740</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>299703</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.017</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>288659</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.798</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.0067</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>278021</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.695</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.0474</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>267776</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.623</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.2689</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>257908</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.623</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.731</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>248404</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.623</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.953</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>239250</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.623</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </tranTechnology>
+            </tranSubsector>
+            <tranSubsector name="international ship">
+               <tranTechnology name="fuel cell international ship">
+                  <period year="1975">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>3082812</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>101.47</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>3082812</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>101.47</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>2748098</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>76.18</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>2646829</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>70.67</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.0067</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>2549291</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>68.06</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.0474</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>2455347</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>66.25</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.2689</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>2364866</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>66.25</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.731</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>2277719</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>66.25</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.953</sharewt>
+                     <minicam-energy-input name="H2 Enduse">
+                        <coefficient>2193783</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>66.25</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </tranTechnology>
+            </tranSubsector>
+         </supplysector>
+         <supplysector name="military">
+            <subsector name="military">
+               <technology name="fuel cell">
+                  <period year="1975">
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="1990">
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2005">
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2020">
+                     <sharewt>0</sharewt>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.0067</sharewt>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.0474</sharewt>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.2689</sharewt>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.731</sharewt>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.953</sharewt>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+   </world>
+</scenario>

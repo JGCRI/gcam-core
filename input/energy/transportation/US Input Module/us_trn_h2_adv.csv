@@ -1,0 +1,48 @@
+This is for a hydrogen-only scenario,,,,,,,,,,,
+Transportation technology shareweights,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,
+Variable ID,,,,,,,,,,,
+3000,,,,,,,,,,,
+,,,sharewt,sharewt,sharewt,sharewt,sharewt,sharewt,sharewt,sharewt,sharewt
+supplysector,tranSubsector,tranTechnology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+passenger,auto,fuel cell auto,0,0,0,0.0067,0.0474,0.2689,0.731,0.953,1
+passenger,light truck,fuel cell light truck,0,0,0,0.0067,0.0474,0.2689,0.731,0.953,1
+freight,truck,fuel cell freight truck,0,0,0,0,0.0067,0.0474,0.2689,0.731,0.953
+freight,rail,fuel cell freight rail,0,0,0,0,0.0067,0.0474,0.2689,0.731,0.953
+freight,domestic ship,fuel cell domestic ship,0,0,0,0,0.0067,0.0474,0.2689,0.731,0.953
+freight,international ship,fuel cell international ship,0,0,0,0,0.0067,0.0474,0.2689,0.731,0.953
+
+
+Transportation technology intensity,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,,,,,
+3002,,,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,,,,,,,,,,,
+,,,coefficient,coefficient,coefficient,coefficient,coefficient,coefficient,coefficient,coefficient,coefficient,,,,,,,,,,,
+supplysector,tranSubsector,tranTechnology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input,,,,,,,,,,
+passenger,auto,fuel cell auto,3607,3607,3163,2619,2168,1796,1487,1231,1019,H2 Enduse,,,,,,,,,,
+passenger,light truck,fuel cell light truck,4529,4529,4474,3705,3068,2540,2103,1742,1442,H2 Enduse,,,,,,,,,,
+freight,truck,fuel cell freight truck,13650,13650,12237,10685,9330,8147,7113,6211,5424,H2 Enduse,,,,,,,,,,
+freight,rail,fuel cell freight rail,9766,9766,8904,8576,8260,7956,7662,7380,7108,H2 Enduse,,,,,,,,,,
+freight,domestic ship,fuel cell domestic ship,227740,227740,299703,288659,278021,267776,257908,248404,239250,H2 Enduse,,,,,,,,,,
+freight,international ship,fuel cell international ship,3082812,3082812,2748098,2646829,2549291,2455347,2364866,2277719,2193783,H2 Enduse,,,,,,,,,,
+
+
+Transportation technology non-energy costs,,,,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,,,,,
+3004,,,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input
+,,,input-cost,input-cost,input-cost,input-cost,input-cost,input-cost,input-cost,input-cost,input-cost
+supplysector,tranSubsector,tranTechnology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+passenger,auto,fuel cell auto,0.4467,0.4467,0.4773,0.4428,0.4264,0.4151,0.4151,0.4151,0.4151
+passenger,light truck,fuel cell light truck,0.5077,0.5077,0.5388,0.4998,0.4814,0.4685,0.4685,0.4685,0.4685
+freight,truck,fuel cell freight truck,1.148,1.148,1.067,0.990,0.939,0.907,0.900,0.893,0.887
+freight,rail,fuel cell freight rail,0.8057,0.8057,0.8516,0.7781,0.7218,0.6920,0.6817,0.6716,0.6616
+freight,domestic ship,fuel cell domestic ship,4.740,4.740,3.017,2.798,2.695,2.623,2.623,2.623,2.623
+freight,international ship,fuel cell international ship,101.47,101.47,76.18,70.67,68.06,66.25,66.25,66.25,66.25
+
+INPUT_TABLE,,,,,,,,,,,
+Variable ID,,,,,,,,,,,
+4000,,,,,,,,,,,
+,,,sharewt,sharewt,sharewt,sharewt,sharewt,sharewt,sharewt,sharewt,sharewt
+supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+military,military,fuel cell,0,0,0,0,0.0067,0.0474,0.2689,0.731,0.953

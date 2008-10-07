@@ -1,0 +1,1377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="Africa">
+         <supplysector name="electricity">
+            <subsector name="geothermal">
+               <scaleYear>2020</scaleYear>
+               <sharewt year="1975">0</sharewt>
+               <sharewt year="1990">1</sharewt>
+               <sharewt year="2005">1</sharewt>
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
+               <technology name="geothermal">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.92</input-cost>
+                     </minicam-non-energy-input>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.92</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.00239233</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.03</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0031932</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.03</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.1598342</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.03</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.315497</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.03</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.362938</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.03</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.40272</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.03</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.404759</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.03</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.405597</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Australia_NZ">
+         <supplysector name="electricity">
+            <subsector name="geothermal">
+               <scaleYear>2020</scaleYear>
+               <sharewt year="1975">0</sharewt>
+               <sharewt year="1990">1</sharewt>
+               <sharewt year="2005">1</sharewt>
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
+               <technology name="geothermal">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.83</input-cost>
+                     </minicam-non-energy-input>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.83</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0124242</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.73</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0102672</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.09</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0332077</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.09</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0593581</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.09</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.1066779</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.09</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.1404541</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.09</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.1583562</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.09</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.2027704</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Canada">
+         <supplysector name="electricity">
+            <subsector name="geothermal">
+               <scaleYear>2020</scaleYear>
+               <sharewt year="1975">0</sharewt>
+               <sharewt year="1990">0</sharewt>
+               <sharewt year="2005">0</sharewt>
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
+               <technology name="geothermal">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.54</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.00172924</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.54</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.00610394</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.54</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0242352</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.54</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0395355</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.54</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0470179</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.54</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0536737</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="China">
+         <supplysector name="electricity">
+            <subsector name="geothermal">
+               <scaleYear>2020</scaleYear>
+               <sharewt year="1975">0</sharewt>
+               <sharewt year="1990">0</sharewt>
+               <sharewt year="2005">0</sharewt>
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
+               <technology name="geothermal">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.87</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0337301</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.87</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.15161</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.87</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.45479</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.87</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.652167</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.87</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.687863</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.87</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.692865</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Eastern Europe">
+         <supplysector name="electricity">
+            <subsector name="geothermal">
+               <scaleYear>2020</scaleYear>
+               <sharewt year="1975">0</sharewt>
+               <sharewt year="1990">0</sharewt>
+               <sharewt year="2005">0</sharewt>
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
+               <technology name="geothermal">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.24</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.00526046</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.24</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0233477</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.24</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.102428</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.24</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.191771</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.24</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.253491</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.24</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.300073</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Former Soviet Union">
+         <supplysector name="electricity">
+            <subsector name="geothermal">
+               <scaleYear>2020</scaleYear>
+               <sharewt year="1975">0</sharewt>
+               <sharewt year="1990">1</sharewt>
+               <sharewt year="2005">1</sharewt>
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
+               <technology name="geothermal">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.01</input-cost>
+                     </minicam-non-energy-input>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.01</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.000187973</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.94</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.001476</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>8.51</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0245343</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>8.51</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.02512549</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>8.51</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.02501459</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>8.51</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.02520796</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>8.51</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.02511786</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>8.51</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.02524416</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="India">
+         <supplysector name="electricity">
+            <subsector name="geothermal">
+               <scaleYear>2020</scaleYear>
+               <sharewt year="1975">0</sharewt>
+               <sharewt year="1990">0</sharewt>
+               <sharewt year="2005">0</sharewt>
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
+               <technology name="geothermal">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.49</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0154264</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.49</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0958533</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.49</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.373281</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.49</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.64678</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.49</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.683936</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.49</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.693486</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Japan">
+         <supplysector name="electricity">
+            <subsector name="geothermal">
+               <scaleYear>2020</scaleYear>
+               <sharewt year="1975">0</sharewt>
+               <sharewt year="1990">1</sharewt>
+               <sharewt year="2005">1</sharewt>
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
+               <technology name="geothermal">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.85</input-cost>
+                     </minicam-non-energy-input>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.85</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.00964129</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.95</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0116136</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.94</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0765662</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.94</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.1267393</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.94</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.1682357</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.94</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.1703476</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.94</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.1819756</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.94</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.1929843</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Korea">
+         <supplysector name="electricity">
+            <subsector name="geothermal">
+               <scaleYear>2020</scaleYear>
+               <sharewt year="1975">0</sharewt>
+               <sharewt year="1990">0</sharewt>
+               <sharewt year="2005">0</sharewt>
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
+               <technology name="geothermal">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.13</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0010817</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.13</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.00432863</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.13</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0126722</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.13</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0136491</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.13</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0138616</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.13</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0139221</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Latin America">
+         <supplysector name="electricity">
+            <subsector name="geothermal">
+               <scaleYear>2020</scaleYear>
+               <sharewt year="1975">0</sharewt>
+               <sharewt year="1990">1</sharewt>
+               <sharewt year="2005">1</sharewt>
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
+               <technology name="geothermal">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.47</input-cost>
+                     </minicam-non-energy-input>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.47</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0247243</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.60</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0332045</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.51</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.2650025</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.51</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.481006</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.51</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.734144</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.51</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>1.008843</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.51</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>1.076906</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.51</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>1.094948</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Middle East">
+         <supplysector name="electricity">
+            <subsector name="geothermal">
+               <scaleYear>2020</scaleYear>
+               <sharewt year="1975">0</sharewt>
+               <sharewt year="1990">0</sharewt>
+               <sharewt year="2005">0</sharewt>
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
+               <technology name="geothermal">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.12</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0106698</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.12</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0430513</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.12</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.105896</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.12</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.138124</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.12</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.13904</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.12</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.139219</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Southeast Asia">
+         <supplysector name="electricity">
+            <subsector name="geothermal">
+               <scaleYear>2020</scaleYear>
+               <sharewt year="1975">0</sharewt>
+               <sharewt year="1990">1</sharewt>
+               <sharewt year="2005">1</sharewt>
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
+               <technology name="geothermal">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.74</input-cost>
+                     </minicam-non-energy-input>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.74</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0396996</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.95</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0594288</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.3443708</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.740098</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.942699</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.983786</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.994435</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.81</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.997153</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="USA">
+         <supplysector name="electricity">
+            <subsector name="geothermal">
+               <scaleYear>2020</scaleYear>
+               <sharewt year="1975">0</sharewt>
+               <sharewt year="1990">1</sharewt>
+               <sharewt year="2005">1</sharewt>
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
+               <technology name="geothermal">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.13</input-cost>
+                     </minicam-non-energy-input>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.13</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.071844</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.03</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0604008</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.82</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.3021428</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.82</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.545432</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.82</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.773683</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.82</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.834078</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.82</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.856462</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.82</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.867869</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Western Europe">
+         <supplysector name="electricity">
+            <subsector name="geothermal">
+               <scaleYear>2020</scaleYear>
+               <sharewt year="1975">0</sharewt>
+               <sharewt year="1990">1</sharewt>
+               <sharewt year="2005">1</sharewt>
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1</sharewt>
+               <sharewt year="2050">1</sharewt>
+               <sharewt year="2065">1</sharewt>
+               <sharewt year="2080">1</sharewt>
+               <sharewt year="2095">1</sharewt>
+               <technology name="geothermal">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.80</input-cost>
+                     </minicam-non-energy-input>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.80</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0207038</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.92</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.0257364</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.44</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.2638654</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.44</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.419636</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.44</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.444768</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.44</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.447397</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.44</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.45279</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.44</input-cost>
+                     </minicam-non-energy-input>
+                     <fixedOutput>0.456938</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <renewable-input name="renewable"/>
+                     <CO2 name="CO2"/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+   </world>
+</scenario>

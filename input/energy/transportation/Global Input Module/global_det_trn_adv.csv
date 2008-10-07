@@ -1,0 +1,61 @@
+,,,Only change values in colored cells,,,,,,,,,,
+
+technology efficiency,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1005,,,,,,,,,,,,,
+,,,,,efficiency,,,,,,,,
+region,supplysector,subsector,technology,minicam-energy-input,1975,1990,2005,2020,2035,2050,2065,2080,2095
+ALL,transportation,air,refined liquids,refined liquids enduse,1,0.84,1.22,1.37,1.54,1.73,1.94,2.16,2.40
+ALL,transportation,pipeline,electricity,elect_td_trn,1,4.00,4.00,4.00,4.00,4.00,4.00,4.00,4.00
+ALL,transportation,pipeline,gas,delivered gas,1,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+ALL,transportation,pipeline,refined liquids,refined liquids enduse,1,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+ALL,transportation,rail,coal,delivered coal,1,0.20,0.26,0.27,0.28,0.29,0.30,0.31,0.32
+ALL,transportation,rail,electricity,elect_td_trn,1,3.57,3.84,4.19,4.61,5.06,5.25,5.46,5.67
+ALL,transportation,rail,hydrogen,H2 Enduse,1,1.59,2.05,2.13,2.20,2.28,2.36,2.45,2.55
+ALL,transportation,rail,refined liquids,refined liquids enduse,1,0.99,1.29,1.33,1.39,1.44,1.49,1.55,1.61
+ALL,transportation,road,electricity,elect_td_trn,1,2.36,2.59,3.12,3.32,3.53,3.76,3.99,4.24
+ALL,transportation,road,gas,delivered gas,1,0.78,0.85,1.03,1.24,1.50,1.80,2.18,2.63
+ALL,transportation,road,hydrogen,H2 Enduse,1,1.46,1.60,1.93,2.31,2.79,3.36,4.05,4.89
+ALL,transportation,road,refined liquids,refined liquids enduse,1,0.91,1.00,1.21,1.46,1.76,2.12,2.56,3.09
+ALL,transportation,domestic ship,coal,delivered coal,1,1.98,1.50,1.56,1.62,1.68,1.75,1.81,1.88
+ALL,transportation,domestic ship,hydrogen,H2 Enduse,1,15.62,11.87,12.32,12.80,13.28,13.79,14.32,14.87
+ALL,transportation,domestic ship,refined liquids,refined liquids enduse,1,9.89,7.52,7.81,8.10,8.41,8.74,9.07,9.42
+ALL,transportation,international ship,hydrogen,H2 Enduse,1,22.44,25.18,26.14,27.14,28.18,29.26,30.38,31.54
+ALL,transportation,international ship,refined liquids,refined liquids enduse,1,14.21,15.95,16.56,17.19,17.85,18.53,19.24,19.97
+
+technology non-energy cost,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1010,,,,minicam-non-energy-input,,,,,,,,,
+,,,,input-cost,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,
+ALL,transportation,air,refined liquids,1,11.15,9.79,9.79,9.79,9.79,9.79,9.79,9.79
+ALL,transportation,pipeline,electricity,1,2.00,2.00,2.00,2.00,2.00,2.00,2.00,2.00
+ALL,transportation,pipeline,gas,1,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+ALL,transportation,pipeline,refined liquids,1,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
+ALL,transportation,rail,coal,1,10.59,13.26,13.26,13.26,13.26,13.26,13.26,13.26
+ALL,transportation,rail,electricity,1,13.00,12.85,12.47,12.10,11.74,11.39,11.06,10.73
+ALL,transportation,rail,hydrogen,1,13.00,12.85,12.47,12.10,11.74,11.39,11.06,10.73
+ALL,transportation,rail,refined liquids,1,10.59,13.26,13.26,13.26,13.26,13.26,13.26,13.26
+ALL,transportation,road,electricity,1,36.78,40.96,38.29,35.62,35.62,35.62,35.62,35.62
+ALL,transportation,road,gas,1,36.78,40.96,40.96,40.96,40.96,40.96,40.96,40.96
+ALL,transportation,road,hydrogen,1,36.78,40.96,38.29,35.62,35.62,35.62,35.62,35.62
+ALL,transportation,road,refined liquids,1,31.98,35.62,35.62,35.62,35.62,35.62,35.62,35.62
+ALL,transportation,domestic ship,coal,1,0.50,0.32,0.32,0.32,0.32,0.32,0.32,0.32
+ALL,transportation,domestic ship,hydrogen,1,0.60,0.38,0.35,0.32,0.32,0.32,0.32,0.32
+ALL,transportation,domestic ship,refined liquids,1,0.50,0.32,0.32,0.32,0.32,0.32,0.32,0.32
+ALL,transportation,international ship,hydrogen,1,0.94,1.04,0.96,0.87,0.87,0.87,0.87,0.87
+ALL,transportation,international ship,refined liquids,1,0.79,0.87,0.87,0.87,0.87,0.87,0.87,0.87
+
+
+Technology availability,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+1016,,,,,,,,,,,,
+,,,,sharewt,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+ALL,transportation,rail,hydrogen,0,0,0,0.167,0.333,0.500,0.667,0.833,1
+ALL,transportation,road,hydrogen,0,0,0,0.167,0.333,0.500,0.667,0.833,1
+ALL,transportation,domestic ship,hydrogen,0,0,0,0.167,0.333,0.500,0.667,0.833,1
+ALL,transportation,international ship,hydrogen,0,0,0,0.167,0.333,0.500,0.667,0.833,1

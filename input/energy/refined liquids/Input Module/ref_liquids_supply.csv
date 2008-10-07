@@ -1,0 +1,180 @@
+INPUT_TABLE,,,,
+Variable ID,,,,
+1,,,,
+,PrimaryFuelCO2Coef,,,
+region,regional biomass,delivered biomass,refined liquids industrial,refined liquids enduse
+USA,23,23,19.6,19.6
+
+INPUT_TABLE,,,,
+Variable ID,,,,
+2,,,,
+,PrimaryFuelCO2Coef,,,
+region,shale oil,regional shale oil,,
+USA,21.1,19.6,,
+
+Delete refined oil and delivered pet prods,,,,
+INPUT_TABLE,,,,
+Variable ID,,,,
+11,,,,
+,,minicam can't actually delete the primaryfuel CO2 coef as it isn't a node; this sets it to 0 and there will be a warning message,,
+region,supplysector,primaryfuelCO2coef,,
+ALL,delivered pet prods,delivered pet prods,,
+ALL,refined oil,refined oil,,
+ALL,shale oil regional,shale oil regional,,
+
+
+Refined liquids supplysectors: unit tags,,,,
+INPUT_TABLE,,,,
+Variable ID,,,,
+20,,,,
+
+region,supplysector,output-unit,input-unit,price-unit
+ALL,regional shale oil,EJ,EJ,1975$/GJ
+ALL,refined liquids enduse,EJ,EJ,1975$/GJ
+ALL,refined liquids industrial,EJ,EJ,1975$/GJ
+ALL,refined liquids electricity,EJ,EJ,1975$/GJ
+
+
+Scale years,,,,
+INPUT_TABLE,,,,
+Variable ID,,,,
+200,,,,
+
+region,supplysector,subsector,scaleYear,
+ALL,refined liquids enduse,crude oil refining,1975,
+ALL,refined liquids enduse,biomass liquids,1975,
+ALL,refined liquids enduse,shale oil refining,1975,
+ALL,refined liquids enduse,coal to liquids,1975,
+ALL,refined liquids enduse,gas to liquids,1975,
+ALL,refined liquids industrial,crude oil refining,1975,,,,,,,,
+ALL,refined liquids industrial,biomass liquids,1975,,,,,,,,
+ALL,refined liquids industrial,shale oil refining,1975,,,,,,,,
+ALL,refined liquids industrial,coal to liquids,1975,,,,,,,,
+ALL,refined liquids industrial,gas to liquids,1975,,,,,,,,
+
+
+"subsector shareweights for enduse biomass liquids are defaulted to 1 in base years here, and re-set to 0 (in regions where applicable) in cal workbook",,,,,,,,,,,
+"set non-crude subsector shareweights to 0 in base years, increase in future years",,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,
+Variable ID,,,,,,,,,,,
+201,,,,,,values in years other than scaleyear will be over-written by minicam,,,,,
+,,,sharewt,,,,,,,,
+region,supplysector,subsector,1975,1990,2005,2020,2035,2050,2065,2080,2095
+ALL,refined liquids enduse,crude oil refining,1,1,1,1,1,1,1,1,1
+ALL,refined liquids enduse,biomass liquids,0,0,0,1,1,1,1,1,1
+ALL,refined liquids enduse,shale oil refining,0,0,0,0.1,1,1,1,1,1
+ALL,refined liquids enduse,coal to liquids,0,0,0,0.1,1,1,1,1,1
+ALL,refined liquids enduse,gas to liquids,0,0,0,0.1,1,1,1,1,1
+ALL,refined liquids industrial,crude oil refining,1,1,1,1,1,1,1,1,1
+ALL,refined liquids industrial,biomass liquids,0,0,0,1,1,1,1,1,1
+ALL,refined liquids industrial,shale oil refining,0,0,0,0.1,1,1,1,1,1
+ALL,refined liquids industrial,coal to liquids,0,0,0,0.1,1,1,1,1,1
+ALL,refined liquids industrial,gas to liquids,0,0,0,0.1,1,1,1,1,1
+,,,,,,,,,,,
+,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,
+Variable ID,,,,,,,,,,,
+202,,,,,,,,,,,
+,,,logitexp,,,,,,,,
+region,supplysector,subsector,1975,1990,2005,2020,2035,2050,2065,2080,2095
+ALL,refined liquids enduse,crude oil refining,-12,-12,-12,-12,-12,-12,-12,-12,-12
+ALL,refined liquids enduse,biomass liquids,-12,-12,-12,-12,-12,-12,-12,-12,-12
+ALL,refined liquids enduse,shale oil refining,-12,-12,-12,-12,-12,-12,-12,-12,-12
+ALL,refined liquids enduse,coal to liquids,-12,-12,-12,-12,-12,-12,-12,-12,-12
+ALL,refined liquids enduse,gas to liquids,-12,-12,-12,-12,-12,-12,-12,-12,-12
+ALL,refined liquids industrial,crude oil refining,-12,-12,-12,-12,-12,-12,-12,-12,-12
+ALL,refined liquids industrial,biomass liquids,-12,-12,-12,-12,-12,-12,-12,-12,-12
+ALL,refined liquids industrial,shale oil refining,-12,-12,-12,-12,-12,-12,-12,-12,-12
+ALL,refined liquids industrial,coal to liquids,-12,-12,-12,-12,-12,-12,-12,-12,-12
+ALL,refined liquids industrial,gas to liquids,-12,-12,-12,-12,-12,-12,-12,-12,-12
+,,,,,,,,,,,
+
+IO coefficients,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,
+Variable ID,,,,,,,,,,,
+2010,,,,,,,,,,,
+,,,,,coefficient,,,,,,
+region,supplysector,subsector,technology,minicam-energy-input,1975,1990,2005,2020,2035,2050,2065,2080,2095
+ALL,regional shale oil,regional shale oil,regional shale oil,shale oil,1.000,1.000,1.000,1.000,1.000,1.000,1.000,1.000,1.000
+ALL,regional shale oil,regional shale oil,regional shale oil,elect_td_ind,0.160,0.160,0.160,0.160,0.154,0.148,0.143,0.137,0.132
+ALL,refined liquids enduse,crude oil refining,crude oil refining,regional crude oil,1.055,1.055,1.055,1.055,1.047,1.039,1.031,1.024,1.016
+ALL,refined liquids enduse,crude oil refining,crude oil refining,wholesale gas,0.018,0.018,0.018,0.018,0.018,0.018,0.018,0.018,0.018
+ALL,refined liquids enduse,crude oil refining,crude oil refining,elect_td_ind,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005
+ALL,refined liquids enduse,biomass liquids,biomass liquids,regional biomass,2.057,2.057,2.057,2.057,1.997,1.938,1.880,1.825,1.771
+ALL,refined liquids enduse,shale oil refining,shale oil refining,regional shale oil,1.055,1.055,1.055,1.055,1.039,1.024,1.008,0.993,0.979
+ALL,refined liquids enduse,shale oil refining,shale oil refining,elect_td_ind,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005
+ALL,refined liquids enduse,coal to liquids,coal to liquids,regional coal,2.112,2.112,2.112,2.112,2.080,2.049,2.019,1.989,1.959
+ALL,refined liquids enduse,gas to liquids,gas to liquids,regional natural gas,1.654,1.654,1.654,1.654,1.629,1.605,1.581,1.558,1.534
+ALL,refined liquids industrial,crude oil refining,crude oil refining,regional crude oil,1.055,1.055,1.055,1.055,1.047,1.039,1.031,1.024,1.016
+ALL,refined liquids industrial,crude oil refining,crude oil refining,wholesale gas,0.018,0.018,0.018,0.018,0.018,0.018,0.018,0.018,0.018
+ALL,refined liquids industrial,crude oil refining,crude oil refining,elect_td_ind,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005
+ALL,refined liquids industrial,biomass liquids,biomass liquids,regional biomass,2.057,2.057,2.057,2.057,1.997,1.938,1.880,1.825,1.771
+ALL,refined liquids industrial,shale oil refining,shale oil refining,regional shale oil,1.055,1.055,1.055,1.055,1.039,1.024,1.008,0.993,0.979
+ALL,refined liquids industrial,shale oil refining,shale oil refining,elect_td_ind,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,,,
+ALL,refined liquids industrial,coal to liquids,coal to liquids,regional coal,2.112,2.112,2.112,2.112,2.080,2.049,2.019,1.989,1.959,,,
+ALL,refined liquids industrial,gas to liquids,gas to liquids,regional natural gas,1.654,1.654,1.654,1.654,1.629,1.605,1.581,1.558,1.534,,1.38028169,coef where GTL becomes carbon-negative
+ALL,refined liquids electricity,crude oil refining,crude oil refining,regional crude oil,1.055,1.055,1.055,1.055,1.047,1.039,1.031,1.024,1.016,,,
+ALL,refined liquids electricity,crude oil refining,crude oil refining,regional natural gas,0.018,0.018,0.018,0.018,0.018,0.018,0.018,0.018,0.018,,,
+,,,,,,,,,,,,,,,,
+
+Secondary outputs,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,
+2015,,,,,,,,,,,,,,,,
+,,,,,output-ratio,,,,,,,,,,,
+region,supplysector,subsector,technology,secondary-output,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,
+ALL,regional shale oil,regional shale oil,regional shale oil,regional natural gas,0,0.000,0.000,0.000,0.000,0.000,0.000,0.000,0.000,,,
+ALL,refined liquids enduse,biomass liquids,biomass liquids,electricity,0.000,0.000,0.000,0.000,0.000,0.000,0.000,0.000,0.000,,,
+ALL,refined liquids industrial,biomass liquids,biomass liquids,electricity,0.000,0.000,0.000,0.000,0.000,0.000,0.000,0.000,0.000,,,
+
+Non-energy costs,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+2020,,,,,,,,,,,,,
+,,,,,input-cost,,,,,,,,
+region,supplysector,subsector,technology,minicam-non-energy-input,1975,1990,2005,2020,2035,2050,2065,2080,2095
+ALL,regional shale oil,regional shale oil,regional shale oil,non-energy,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15
+ALL,refined liquids enduse,crude oil refining,crude oil refining,non-energy,1.94,1.94,1.94,1.94,1.94,1.94,1.94,1.94,1.94
+ALL,refined liquids enduse,biomass liquids,biomass liquids,non-energy,3.05,3.05,3.05,3.05,3.00,2.96,2.91,2.87,2.83
+ALL,refined liquids enduse,shale oil refining,shale oil refining,non-energy,1.86,1.86,1.86,1.86,1.83,1.80,1.78,1.75,1.72
+ALL,refined liquids enduse,coal to liquids,coal to liquids,non-energy,3.50,3.50,3.50,3.50,3.45,3.40,3.35,3.30,3.25
+ALL,refined liquids enduse,gas to liquids,gas to liquids,non-energy,2.60,2.60,2.60,2.60,2.56,2.52,2.49,2.45,2.41
+ALL,refined liquids industrial,crude oil refining,crude oil refining,non-energy,0.84,0.84,0.84,0.84,0.84,0.84,0.84,0.84,0.84
+ALL,refined liquids industrial,biomass liquids,biomass liquids,non-energy,1.95,1.95,1.95,1.95,1.92,1.89,1.86,1.83,1.81
+ALL,refined liquids industrial,shale oil refining,shale oil refining,non-energy,0.76,0.76,0.76,0.76,0.75,0.74,0.73,0.71,0.70
+ALL,refined liquids industrial,coal to liquids,coal to liquids,non-energy,2.40,2.40,2.40,2.40,2.36,2.33,2.29,2.26,2.23
+ALL,refined liquids industrial,gas to liquids,gas to liquids,non-energy,1.50,1.50,1.50,1.50,1.48,1.46,1.43,1.41,1.39
+ALL,refined liquids electricity,crude oil refining,crude oil refining,non-energy,0.84,0.84,0.84,0.84,0.84,0.84,0.84,0.84,0.84
+
+Logit exponent (only relevant for CCS technology competition),,,Table also adds CO2 tag,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+2030,,,,,,,,,,,,,
+,,,,logitexp,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,
+ALL,regional shale oil,regional shale oil,regional shale oil,-6,-6,-6,-6,-6,-6,-6,-6,-6,
+ALL,refined liquids enduse,crude oil refining,crude oil refining,-24,-24,-24,-24,-24,-24,-24,-24,-24,
+ALL,refined liquids enduse,biomass liquids,biomass liquids,-24,-24,-24,-24,-24,-24,-24,-24,-24,
+ALL,refined liquids enduse,shale oil refining,shale oil refining,-24,-24,-24,-24,-24,-24,-24,-24,-24,
+ALL,refined liquids enduse,coal to liquids,coal to liquids,-24,-24,-24,-24,-24,-24,-24,-24,-24,
+ALL,refined liquids enduse,gas to liquids,gas to liquids,-24,-24,-24,-24,-24,-24,-24,-24,-24,
+ALL,refined liquids industrial,crude oil refining,crude oil refining,-24,-24,-24,-24,-24,-24,-24,-24,-24
+ALL,refined liquids industrial,biomass liquids,biomass liquids,-24,-24,-24,-24,-24,-24,-24,-24,-24
+ALL,refined liquids industrial,shale oil refining,shale oil refining,-24,-24,-24,-24,-24,-24,-24,-24,-24
+ALL,refined liquids industrial,coal to liquids,coal to liquids,-24,-24,-24,-24,-24,-24,-24,-24,-24
+ALL,refined liquids industrial,gas to liquids,gas to liquids,-24,-24,-24,-24,-24,-24,-24,-24,-24
+ALL,refined liquids electricity,crude oil refining,crude oil refining,-6,-6,-6,-6,-6,-6,-6,-6,-6
+
+Shale oil resource,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+50,,,,,,,,,,,,
+,,,1975 fillout,,,,,,,,,
+region,depresource,subresource,techChange,grade,extractioncost,,,,,,,
+ALL,shale oil,shale oil,0.005,grade 1,1.8,,,,,,,
+ALL,shale oil,shale oil,0.005,grade 2,2.1,,,,,,,
+ALL,shale oil,shale oil,0.005,grade 3,3.6,,,,,,,
+ALL,shale oil,shale oil,0.005,grade 4,4.7
+ALL,shale oil,shale oil,0.005,grade 5,6.0
+ALL,shale oil,shale oil,0.005,grade 6,7.0
+ALL,shale oil,shale oil,0.005,grade 7,8.0

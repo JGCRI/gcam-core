@@ -1,0 +1,69 @@
+Carbon emissions coefficient,,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+1,,,,,
+,Distributed_Solar,,,,
+region,PrimaryFuelCO2Coeff,,,,
+all,0,,,,
+
+"Renewresource attributes: units, market, base year price",,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+2,,,,,
+,,,,,price
+region,renewresource,output-unit,price-unit,market,1975
+USA,Distributed_Solar,EJ,1975$/GJ,USA,0
+Canada,Distributed_Solar,EJ,1975$/GJ,Canada,0
+Western Europe,Distributed_Solar,EJ,1975$/GJ,Western Europe,0,,,
+Japan,Distributed_Solar,EJ,1975$/GJ,Japan,0,,,
+Australia_NZ,Distributed_Solar,EJ,1975$/GJ,Australia_NZ,0,,,
+Former Soviet Union,Distributed_Solar,EJ,1975$/GJ,Former Soviet Union,0,,,
+China,Distributed_Solar,EJ,1975$/GJ,China,0,,,
+Middle East,Distributed_Solar,EJ,1975$/GJ,Middle East,0,,,
+Africa,Distributed_Solar,EJ,1975$/GJ,Africa,0,,,
+Latin America,Distributed_Solar,EJ,1975$/GJ,Latin America,0,,,
+Southeast Asia,Distributed_Solar,EJ,1975$/GJ,Southeast Asia,0,,,
+Eastern Europe,Distributed_Solar,EJ,1975$/GJ,Eastern Europe,0,,,
+Korea,Distributed_Solar,EJ,1975$/GJ,Korea,0,,,
+India,Distributed_Solar,EJ,1975$/GJ,India,0,,,
+
+
+Smooth renewable resource parameters equal for all regions,,,,,,,,
+INPUT_TABLE,,,Use gdpSupplyElast to scale floorspace up in the future.  This is how we expand the maxSubResource in the future,,,,,
+Variable ID,,,,,,,,,,,
+3,,,,,,,,,,,
+,,,environCost,severanceTax,,,,,,,
+region,renewresource,smooth-renewable-subresource,1975 fillout,1975 fillout,gdpSupplyElast,subResourceCapacityFactor,,,,,
+all,Distributed_Solar,Distributed_solar,0,0,0.1,0.135,,,,,
+
+
+Tech change (assumed equal by region),,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,
+Variable ID,,,,,,,,,,,
+4,,,,,,,,,,,
+,,,techChange,,,,,,,,
+region,renewresource,smooth-renewable-subresource,1975,1990,2005,2020,2035,2050,2065,2080,2095
+all,Distributed_Solar,Distributed_solar,0,0,0,0.0255,0.0191,0.0134,0.0096,0.0026,0.0013
+
+
+"Maxsubresource, mid-price and curve exponent",,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+5,,,,,
+
+region,renewresource,smooth-renewable-subresource,maxSubResource,mid-price,curve-exponent
+USA,Distributed_Solar,Distributed_solar,2.71,26.72,12.81
+Canada,Distributed_Solar,Distributed_solar,0.21,33.29,12.81
+Western Europe,Distributed_Solar,Distributed_solar,3.04,32.46,12.81
+Japan,Distributed_Solar,Distributed_solar,0.65,28.75,12.81
+Australia_NZ,Distributed_Solar,Distributed_solar,0.22,21.60,12.81
+Former Soviet Union,Distributed_Solar,Distributed_solar,1.66,35.32,12.81
+China,Distributed_Solar,Distributed_solar,9.23,26.33,12.81
+Middle East,Distributed_Solar,Distributed_solar,1.10,20.04,12.81
+Africa,Distributed_Solar,Distributed_solar,5.23,19.60,12.81
+Latin America,Distributed_Solar,Distributed_solar,3.37,22.14,12.81
+Southeast Asia,Distributed_Solar,Distributed_solar,4.57,21.95,12.81
+Eastern Europe,Distributed_Solar,Distributed_solar,0.93,33.04,12.81
+Korea,Distributed_Solar,Distributed_solar,0.33,26.86,12.81
+India,Distributed_Solar,Distributed_solar,6.03,22.24,12.81
+,,,,,

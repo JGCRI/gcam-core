@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <supplysector name="electricity">
+            <subsector name="hydro">
+               <sharewt fillout="1" year="2020">0</sharewt>
+               <scaleYear>2020</scaleYear>
+               <techScaleYear>1975</techScaleYear>
+               <technology name="hydro">
+                  <period year="2020">
+                     <fixedOutput>0.9808092</fixedOutput>
+                  </period>
+                  <period year="2035">
+                     <fixedOutput>1.007019936</fixedOutput>
+                  </period>
+                  <period year="2050">
+                     <fixedOutput>1.033230672</fixedOutput>
+                  </period>
+                  <period year="2065">
+                     <fixedOutput>1.059441408</fixedOutput>
+                  </period>
+                  <period year="2080">
+                     <fixedOutput>1.085652144</fixedOutput>
+                  </period>
+                  <period year="2095">
+                     <fixedOutput>1.11186288</fixedOutput>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Canada">
+         <supplysector name="electricity">
+            <subsector name="hydro">
+               <sharewt fillout="1" year="2020">0</sharewt>
+               <scaleYear>2020</scaleYear>
+               <techScaleYear>1975</techScaleYear>
+               <technology name="hydro">
+                  <period year="2020">
+                     <fixedOutput>1.394725886</fixedOutput>
+                  </period>
+                  <period year="2035">
+                     <fixedOutput>1.551990302</fixedOutput>
+                  </period>
+                  <period year="2050">
+                     <fixedOutput>1.709254718</fixedOutput>
+                  </period>
+                  <period year="2065">
+                     <fixedOutput>1.866519134</fixedOutput>
+                  </period>
+                  <period year="2080">
+                     <fixedOutput>2.02378355</fixedOutput>
+                  </period>
+                  <period year="2095">
+                     <fixedOutput>2.181047966</fixedOutput>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Western Europe">
+         <supplysector name="electricity">
+            <subsector name="hydro">
+               <sharewt fillout="1" year="2020">0</sharewt>
+               <scaleYear>2020</scaleYear>
+               <techScaleYear>1975</techScaleYear>
+               <technology name="hydro">
+                  <period year="2020">
+                     <fixedOutput>1.7148312</fixedOutput>
+                  </period>
+                  <period year="2035">
+                     <fixedOutput>1.800767808</fixedOutput>
+                  </period>
+                  <period year="2050">
+                     <fixedOutput>1.886704416</fixedOutput>
+                  </period>
+                  <period year="2065">
+                     <fixedOutput>1.972641024</fixedOutput>
+                  </period>
+                  <period year="2080">
+                     <fixedOutput>2.058577632</fixedOutput>
+                  </period>
+                  <period year="2095">
+                     <fixedOutput>2.14451424</fixedOutput>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Japan">
+         <supplysector name="electricity">
+            <subsector name="hydro">
+               <sharewt fillout="1" year="2020">0</sharewt>
+               <scaleYear>2020</scaleYear>
+               <techScaleYear>1975</techScaleYear>
+               <technology name="hydro">
+                  <period year="2020">
+                     <fixedOutput>0.2815596</fixedOutput>
+                  </period>
+                  <period year="2035">
+                     <fixedOutput>0.300544157</fixedOutput>
+                  </period>
+                  <period year="2050">
+                     <fixedOutput>0.319528714</fixedOutput>
+                  </period>
+                  <period year="2065">
+                     <fixedOutput>0.33851327</fixedOutput>
+                  </period>
+                  <period year="2080">
+                     <fixedOutput>0.357497827</fixedOutput>
+                  </period>
+                  <period year="2095">
+                     <fixedOutput>0.376482384</fixedOutput>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Australia_NZ">
+         <supplysector name="electricity">
+            <subsector name="hydro">
+               <sharewt fillout="1" year="2020">0</sharewt>
+               <scaleYear>2020</scaleYear>
+               <techScaleYear>1975</techScaleYear>
+               <technology name="hydro">
+                  <period year="2020">
+                     <fixedOutput>0.1409616</fixedOutput>
+                  </period>
+                  <period year="2035">
+                     <fixedOutput>0.183929904</fixedOutput>
+                  </period>
+                  <period year="2050">
+                     <fixedOutput>0.226898208</fixedOutput>
+                  </period>
+                  <period year="2065">
+                     <fixedOutput>0.269866512</fixedOutput>
+                  </period>
+                  <period year="2080">
+                     <fixedOutput>0.312834816</fixedOutput>
+                  </period>
+                  <period year="2095">
+                     <fixedOutput>0.35580312</fixedOutput>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Former Soviet Union">
+         <supplysector name="electricity">
+            <subsector name="hydro">
+               <sharewt fillout="1" year="2020">0</sharewt>
+               <scaleYear>2020</scaleYear>
+               <techScaleYear>1975</techScaleYear>
+               <technology name="hydro">
+                  <period year="2020">
+                     <fixedOutput>0.974310686</fixedOutput>
+                  </period>
+                  <period year="2035">
+                     <fixedOutput>1.354001822</fixedOutput>
+                  </period>
+                  <period year="2050">
+                     <fixedOutput>1.733692958</fixedOutput>
+                  </period>
+                  <period year="2065">
+                     <fixedOutput>2.113384094</fixedOutput>
+                  </period>
+                  <period year="2080">
+                     <fixedOutput>2.49307523</fixedOutput>
+                  </period>
+                  <period year="2095">
+                     <fixedOutput>2.872766366</fixedOutput>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="China">
+         <supplysector name="electricity">
+            <subsector name="hydro">
+               <sharewt fillout="1" year="2020">0</sharewt>
+               <scaleYear>2020</scaleYear>
+               <techScaleYear>1975</techScaleYear>
+               <technology name="hydro">
+                  <period year="2020">
+                     <fixedOutput>2.661752057</fixedOutput>
+                  </period>
+                  <period year="2035">
+                     <fixedOutput>3.288242432</fixedOutput>
+                  </period>
+                  <period year="2050">
+                     <fixedOutput>3.914732806</fixedOutput>
+                  </period>
+                  <period year="2065">
+                     <fixedOutput>4.54122318</fixedOutput>
+                  </period>
+                  <period year="2080">
+                     <fixedOutput>5.167713555</fixedOutput>
+                  </period>
+                  <period year="2095">
+                     <fixedOutput>5.794203929</fixedOutput>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Middle East">
+         <supplysector name="electricity">
+            <subsector name="hydro">
+               <sharewt fillout="1" year="2020">0</sharewt>
+               <scaleYear>2020</scaleYear>
+               <techScaleYear>1975</techScaleYear>
+               <technology name="hydro">
+                  <period year="2020">
+                     <fixedOutput>0.076302</fixedOutput>
+                  </period>
+                  <period year="2035">
+                     <fixedOutput>0.266147568</fixedOutput>
+                  </period>
+                  <period year="2050">
+                     <fixedOutput>0.455993136</fixedOutput>
+                  </period>
+                  <period year="2065">
+                     <fixedOutput>0.645838704</fixedOutput>
+                  </period>
+                  <period year="2080">
+                     <fixedOutput>0.835684272</fixedOutput>
+                  </period>
+                  <period year="2095">
+                     <fixedOutput>1.02552984</fixedOutput>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Africa">
+         <supplysector name="electricity">
+            <subsector name="hydro">
+               <sharewt fillout="1" year="2020">0</sharewt>
+               <scaleYear>2020</scaleYear>
+               <techScaleYear>1975</techScaleYear>
+               <technology name="hydro">
+                  <period year="2020">
+                     <fixedOutput>0.3267648</fixedOutput>
+                  </period>
+                  <period year="2035">
+                     <fixedOutput>0.98141184</fixedOutput>
+                  </period>
+                  <period year="2050">
+                     <fixedOutput>1.63605888</fixedOutput>
+                  </period>
+                  <period year="2065">
+                     <fixedOutput>2.29070592</fixedOutput>
+                  </period>
+                  <period year="2080">
+                     <fixedOutput>2.94535296</fixedOutput>
+                  </period>
+                  <period year="2095">
+                     <fixedOutput>3.6</fixedOutput>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Latin America">
+         <supplysector name="electricity">
+            <subsector name="hydro">
+               <sharewt fillout="1" year="2020">0</sharewt>
+               <scaleYear>2020</scaleYear>
+               <techScaleYear>1975</techScaleYear>
+               <technology name="hydro">
+                  <period year="2020">
+                     <fixedOutput>2.610419143</fixedOutput>
+                  </period>
+                  <period year="2035">
+                     <fixedOutput>3.375282631</fixedOutput>
+                  </period>
+                  <period year="2050">
+                     <fixedOutput>4.140146119</fixedOutput>
+                  </period>
+                  <period year="2065">
+                     <fixedOutput>4.905009607</fixedOutput>
+                  </period>
+                  <period year="2080">
+                     <fixedOutput>5.669873095</fixedOutput>
+                  </period>
+                  <period year="2095">
+                     <fixedOutput>6.434736583</fixedOutput>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Southeast Asia">
+         <supplysector name="electricity">
+            <subsector name="hydro">
+               <sharewt fillout="1" year="2020">0</sharewt>
+               <scaleYear>2020</scaleYear>
+               <techScaleYear>1975</techScaleYear>
+               <technology name="hydro">
+                  <period year="2020">
+                     <fixedOutput>0.3074832</fixedOutput>
+                  </period>
+                  <period year="2035">
+                     <fixedOutput>0.592251552</fixedOutput>
+                  </period>
+                  <period year="2050">
+                     <fixedOutput>0.877019904</fixedOutput>
+                  </period>
+                  <period year="2065">
+                     <fixedOutput>1.161788256</fixedOutput>
+                  </period>
+                  <period year="2080">
+                     <fixedOutput>1.446556608</fixedOutput>
+                  </period>
+                  <period year="2095">
+                     <fixedOutput>1.73132496</fixedOutput>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Eastern Europe">
+         <supplysector name="electricity">
+            <subsector name="hydro">
+               <sharewt fillout="1" year="2020">0</sharewt>
+               <scaleYear>2020</scaleYear>
+               <techScaleYear>1975</techScaleYear>
+               <technology name="hydro">
+                  <period year="2020">
+                     <fixedOutput>0.2451996</fixedOutput>
+                  </period>
+                  <period year="2035">
+                     <fixedOutput>0.331136208</fixedOutput>
+                  </period>
+                  <period year="2050">
+                     <fixedOutput>0.417072816</fixedOutput>
+                  </period>
+                  <period year="2065">
+                     <fixedOutput>0.503009424</fixedOutput>
+                  </period>
+                  <period year="2080">
+                     <fixedOutput>0.588946032</fixedOutput>
+                  </period>
+                  <period year="2095">
+                     <fixedOutput>0.67488264</fixedOutput>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Korea">
+         <supplysector name="electricity">
+            <subsector name="hydro">
+               <sharewt fillout="1" year="2020">0</sharewt>
+               <scaleYear>2020</scaleYear>
+               <techScaleYear>1975</techScaleYear>
+               <technology name="hydro">
+                  <period year="2020">
+                     <fixedOutput>0.0132228</fixedOutput>
+                  </period>
+                  <period year="2035">
+                     <fixedOutput>0.032207357</fixedOutput>
+                  </period>
+                  <period year="2050">
+                     <fixedOutput>0.051191914</fixedOutput>
+                  </period>
+                  <period year="2065">
+                     <fixedOutput>0.07017647</fixedOutput>
+                  </period>
+                  <period year="2080">
+                     <fixedOutput>0.089161027</fixedOutput>
+                  </period>
+                  <period year="2095">
+                     <fixedOutput>0.108145584</fixedOutput>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="India">
+         <supplysector name="electricity">
+            <subsector name="hydro">
+               <sharewt fillout="1" year="2020">0</sharewt>
+               <scaleYear>2020</scaleYear>
+               <techScaleYear>1975</techScaleYear>
+               <technology name="hydro">
+                  <period year="2020">
+                     <fixedOutput>0.401715257</fixedOutput>
+                  </period>
+                  <period year="2035">
+                     <fixedOutput>0.781406393</fixedOutput>
+                  </period>
+                  <period year="2050">
+                     <fixedOutput>1.161097529</fixedOutput>
+                  </period>
+                  <period year="2065">
+                     <fixedOutput>1.540788665</fixedOutput>
+                  </period>
+                  <period year="2080">
+                     <fixedOutput>1.920479801</fixedOutput>
+                  </period>
+                  <period year="2095">
+                     <fixedOutput>2.300170937</fixedOutput>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+   </world>
+</scenario>

@@ -1,0 +1,298 @@
+This worksheet calibrates the biomass and crude inputs to refined liquids enduse,,,,
+It is assumed that industry does not use any biomass liquids in the base years (black liquor inputs are accounted as biomass),,,,
+METHOD,,,,
+,IO coefficients from the refined liquids workbook are used to calculate the total inputs to the refining sector in all regions,,,
+,The original energy consumption of refined liquids by the industrial sector includes the consumption of crude oil by the refining sector.,,,
+,Industry energy-use consumption of refined liquids is calculated from Enduse_no_heat and heat worksheets (i.e. not final_enduse_cal),,,
+,Refined liquids enduse output equal to the consumption by the end use sectors,,,
+,,Inputs are calculated by the coefficients,,
+,"Refined liquids industrial output is more complicated (see calculations below) as it depends on the consumption by the industrial sector, which is getting adjusted in this method.",,,
+
+Energy intensity of crude oil refining and biomass liquids production,,,,
+,,,,IO
+supplysector,subsector,technology,minicam-energy-input,coefficient
+refined liquids enduse,crude oil refining,crude oil refining,regional crude oil,1.054886942
+refined liquids enduse,crude oil refining,crude oil refining,wholesale gas,0.018458601
+refined liquids enduse,crude oil refining,crude oil refining,elect_td_ind,0.004871245
+refined liquids enduse,biomass liquids,biomass liquids,regional biomass,2.057471264,,,,,,,,
+refined liquids industrial,crude oil refining,crude oil refining,regional crude oil,1.054886942,,,,,,,,
+refined liquids industrial,crude oil refining,crude oil refining,wholesale gas,0.018458601,,,,,,,,
+refined liquids industrial,crude oil refining,crude oil refining,elect_td_ind,0.004871245,,,,,,,,
+refined liquids industrial,biomass liquids,biomass liquids,regional biomass,2.057471264,,,,,,,,
+refined liquids electricity,crude oil refining,crude oil refining,regional crude oil,1.054886942,,,,,,,,
+refined liquids electricity,crude oil refining,crude oil refining,regional natural gas,0.018458601,,,,,,,,
+
+supplysector,electricity,,,supplysector,industry,,,formula to use,,,,
+technology,Oil (existing),,,technology,refined liquids,,,"SUMIF(final_enduse_cal!$J$22:$J$231,ref_liquids_cal!$E23&ref_liquids_cal!$F$18&ref_liquids_cal!$F$20,final_enduse_cal!F$22:F$231)",,,,
+minicam-energy-input,refined liquids electricity,,,minicam-energy-input,refined liquids industrial,,,,,,,
+,,,,unadjusted industrial energy consumption,,,,adjusted industrial energy consumption,,,,
+,1990,2005,,,1990,2005,,1990,2005,,,
+Africa,0.466744464,0.708908976,,Africa,1.115656596,1.504819656,,0.905496084,1.185166461,,,
+Australia_NZ,0.036592632,0.023906628,,Australia_NZ,0.400969836,0.502541604,,0.318099851,0.393817909,,,
+Canada,0.158972796,0.17500824,,Canada,1.071443988,1.419283332,,0.896833417,1.197415891,,,
+China,0.556467588,0.698651316,,China,2.731971426,6.583911641,,2.47417064,5.840948604,,,
+Eastern Europe,0.479053656,0.109317348,,Eastern Europe,1.465887156,1.074336486,,1.290812578,0.914310562,,,
+Former Soviet Union,3.534998976,0.534779964,,Former Soviet Union,7.273586051,2.857635352,,6.313132057,2.457464886,,,
+India,0.150431724,0.343778148,,India,0.854567748,2.55352932,,0.722308202,2.27893495,,,
+Japan,2.041441812,1.097402148,,Japan,3.868017048,3.917881836,,3.306483096,3.360669906,,,
+Korea,0.178943832,0.19343016,,Korea,0.838909116,2.032268911,,0.72837296,1.803626526,,,
+Latin America,1.273164012,1.692178956,,Latin America,3.52968174,4.556871252,,2.975863818,3.793276223,,,
+Middle East,1.195247664,2.45848896,,Middle East,1.886488344,3.647665764,,1.535169365,3.008622965,,,
+Southeast Asia,1.053273276,1.075086504,,Southeast Asia,2.01447882,4.330993392,,1.672154614,3.670647641,,,
+USA,1.141196076,1.413212472,,USA,9.104322204,9.74707974,,7.34434637,7.62957202,,,
+Western Europe,1.870411032,1.342036872,,Western Europe,7.491022565,8.204699158,,6.119425309,6.642192252,,,
+,,,,,,,,,,,,
+supplysector,transportation,,,supplysector,building,,,,,,,
+technology,refined liquids,,,technology,refined liquids,,,,,,,
+minicam-energy-input,refined liquids enduse,,,minicam-energy-input,refined liquids enduse,,,,,,,
+,,,,,,,,,,,,
+,1990,2005,,,1990,2005
+Africa,1.850314392,2.990882448,,Africa,0.606416112,0.9388899
+Australia_NZ,1.121308776,1.516417092,,Australia_NZ,0.033829344,0.046724688
+Canada,1.754604144,2.204852616,,Canada,0.370866744,0.464986008
+China,1.322568252,5.201596584,,China,0.343735587,1.795047463
+Eastern Europe,1.106822448,1.649934144,,Eastern Europe,0.313042295,0.241993433
+Former Soviet Union,5.373380988,3.192811812,,Former Soviet Union,2.277258372,1.105756999
+India,1.077221772,1.485141696,,India,0.45971064,0.895054104
+Japan,3.372634872,4.070909376,,Japan,1.510178757,1.62301302
+Korea,0.687556296,1.726720056,,Korea,0.419014944,0.441920547
+Latin America,4.748333616,7.248648708,,Latin America,1.092796668,1.178039916
+Middle East,2.870135136,5.010887844,,Middle East,0.800223084,1.164893364
+Southeast Asia,2.855648808,6.35409702,,Southeast Asia,0.655820352,0.931186188
+USA,21.56155945,27.61219721,,USA,2.018372544,1.92446262
+Western Europe,13.0240881,17.04659807,,Western Europe,3.975575935,3.436907582
+
+Refining energy use,,,,,
+refined liquids enduse,,,,,
+1990 refining energy input and output,,,,,
+,output,input,input,input,to be subtracted from industrial energy use
+,refined liquids enduse,regional crude oil,wholesale gas,elect_td_ind,refined liquids industrial
+Africa,2.456730504,2.591572929,0.045347809,0.011967336,0.134842425
+Australia_NZ,1.15513812,1.218540119,0.021322234,0.005626961,0.063401999
+Canada,2.125470888,2.242131485,0.03923322,0.01035369,0.116660597
+China,1.666303839,1.757762161,0.030757638,0.008116974,0.091458322
+Eastern Europe,1.419864743,1.497796776,0.026208717,0.006916509,0.077932034
+Former Soviet Union,7.65063936,8.070559558,0.141220102,0.037268139,0.419920198
+India,1.536932412,1.621289932,0.028369623,0.007486774,0.08435752
+Japan,4.882813629,5.150816337,0.09012991,0.023785382,0.268002708
+Korea,1.10657124,1.167307551,0.020425757,0.00539038,0.060736311
+Latin America,5.841130284,6.161732063,0.107819095,0.028453577,0.320601779
+Middle East,3.67035822,3.871812959,0.067749679,0.017879214,0.201454739
+Southeast Asia,3.51146916,3.704202964,0.064816809,0.017105227,0.192733804
+USA,23.579932,24.87416235,0.435252565,0.114863627,1.294230358
+Western Europe,16.99966403,17.93272361,0.313790022,0.082809529,0.933059573
+
+2005 refining energy input and output,,,,,
+,output,input,input,input,to be subtracted from industrial energy use
+,refined liquids enduse,regional crude oil,wholesale gas,elect_td_ind,refined liquids industrial
+Africa,3.929772348,4.145465535,0.072538101,0.019142884,0.215693187
+Australia_NZ,1.56314178,1.648937852,0.028853411,0.007614447,0.085796072
+Canada,2.669838624,2.816377902,0.049281487,0.013005438,0.146539278
+China,6.996644047,7.380668442,0.129148263,0.034082368,0.384024396
+Eastern Europe,1.891927577,1.995769696,0.034922337,0.009216043,0.103842119
+Former Soviet Union,4.298568811,4.534504108,0.079345568,0.020939382,0.235935297
+India,2.3801958,2.510837469,0.043935085,0.011594517,0.130641669
+Japan,5.693922396,6.006444383,0.105101844,0.027736491,0.312521988
+Korea,2.168640603,2.287670654,0.040030072,0.01056398,0.119030051
+Latin America,8.426688624,8.889203793,0.155544886,0.041048465,0.462515169
+Middle East,6.175781208,6.514750953,0.113996283,0.030083744,0.338969745
+Southeast Asia,7.285283208,7.685150124,0.134476139,0.0354884,0.399866916
+USA,29.53665983,31.15783676,0.545205429,0.143880308,1.621176933
+Western Europe,20.48350565,21.60778264,0.378096865,0.099780176,1.124276985
+
+refined liquids industrial,,,,,
+THIS IS WHERE IT GETS COMPLICATED,,,,,
+output of ref liq industrial = adjusted industrial sector consumption,,,,,
+adjusted ind consumption = original industry sector consumption - crude oil consumed by ref liq enduse - crude oil consumed by ref liq industrial - crude oil consumed by ref liq electricity,,,,,
+crude oil consumed by ref liq enduse = crude oil input to ref liq enduse - output of ref liq enduse,,,,,
+crude oil consumed by ref liq industry = (crude IO coef - 1) * output of ref liq industrial,,,,,
+crude oil consumed by ref liq electricity = crude oil input to ref liq electricity - output of ref liq electricity,,,,,
+output of ref liq industrial = (original industry sector consumption - (crude oil input to ref liq enduse - output of ref liq enduse) - (crude oil input to ref liq electricity - output of ref liq electricity)) / crude IO coef,,,,,
+1990 refining energy input and output,,,,,
+,output,input,input,input,to be subtracted from industrial energy use
+,refined liquids industrial,regional crude oil,wholesale gas,elect_td_ind,refined liquids industrial,,,,check
+Africa,0.905496084,0.955195995,0.016714191,0.004410893,0.049699911,,,0.905496084,1
+Australia_NZ,0.318099851,0.335559379,0.005871678,0.001549542,0.017459528,,,0.318099851,1
+Canada,0.896833417,0.94605786,0.016554291,0.004368695,0.049224444,,,0.896833417,1
+China,2.47417064,2.6099703,0.04566973,0.012052292,0.13579966,,,2.47417064,1
+Eastern Europe,1.290812578,1.361661333,0.023826595,0.006287864,0.070848755,,,1.290812578,1
+Former Soviet Union,6.313132057,6.659640569,0.116531588,0.030752813,0.346508513,,,6.313132057,1
+India,0.722308202,0.761953491,0.013332799,0.00351854,0.039645288,,,0.722308202,1
+Japan,3.306483096,3.487965842,0.061033053,0.016106689,0.181482746,,,3.306483096,1
+Korea,0.72837296,0.768351125,0.013444746,0.003548083,0.039978164,,,0.72837296,1
+Latin America,2.975863818,3.139199882,0.054930284,0.014496162,0.163336065,,,2.975863818,1
+Middle East,1.535169365,1.619430116,0.028337079,0.007478186,0.084260752,,,1.535169365,1
+Southeast Asia,1.672154614,1.763934067,0.030865635,0.008145475,0.091779453,,,1.672154614,1
+USA,7.34434637,7.747455083,0.135566362,0.035776111,0.403108713,,,7.34434637,1
+Western Europe,6.119425309,6.45530185,0.112956032,0.02980922,0.335876542,,,6.119425309,1
+
+2005 refining energy input and output,,,,,,,,,
+,output,input,input,input,to be subtracted from industrial energy use,,,,
+,refined liquids industrial,regional crude oil,wholesale gas,elect_td_ind,refined liquids industrial,,,,
+Africa,1.185166461,1.250216624,0.021876515,0.005773236,0.065050163,,,1.185166461,1
+Australia_NZ,0.393817909,0.41543337,0.007269328,0.001918384,0.021615461,,,0.393817909,1
+Canada,1.197415891,1.263138387,0.022102623,0.005832906,0.065722496,,,1.197415891,1
+China,5.840948604,6.161540411,0.107815742,0.028452692,0.320591807,,,5.840948604,1
+Eastern Europe,0.914310562,0.964494272,0.016876894,0.004453831,0.050183711,,,0.914310562,1
+Former Soviet Union,2.457464886,2.592347619,0.045361365,0.011970914,0.134882733,,,2.457464886,1
+India,2.27893495,2.40401872,0.042065952,0.011101251,0.12508377,,,2.27893495,1
+Japan,3.360669906,3.5451268,0.062033266,0.016370647,0.184456894,,,3.360669906,1
+Korea,1.803626526,1.90262207,0.033292423,0.008785907,0.098995544,,,1.803626526,1
+Latin America,3.793276223,4.001477555,0.070018574,0.018477978,0.208201332,,,3.793276223,1
+Middle East,3.008622965,3.173757079,0.055534972,0.01465574,0.165134114,,,3.008622965,1
+Southeast Asia,3.670647641,3.872118265,0.067755022,0.017880624,0.201470624,,,3.670647641,1
+USA,7.62957202,8.048335896,0.140831229,0.037165515,0.418763876,,,7.62957202,1
+Western Europe,6.642192252,7.006761873,0.122605579,0.032355746,0.36456962,,,6.642192252,1
+
+refined liquids electricity,,,,,,,,,
+1990 refining energy input and output,,,,,,,,,
+,output,input,input,input,to be subtracted from industrial energy use,,,,
+,refined liquids enduse,regional crude oil,wholesale gas,elect_td_ind,refined liquids industrial,,,,
+Africa,0.466744464,0.49236264,0.00861545,0,0.025618176,,,,
+Australia_NZ,0.036592632,0.03860109,0.000675449,0,0.002008458,,,,
+Canada,0.158972796,0.167698327,0.002934415,0,0.008725531,,,,
+China,0.556467588,0.587010392,0.010271613,0,0.030542804,,,,
+Eastern Europe,0.479053656,0.505347446,0.00884266,0,0.02629379,,,,
+Former Soviet Union,3.534998976,3.72902426,0.065251137,0,0.194025284,,,,
+India,0.150431724,0.158688461,0.002776759,0,0.008256737,,,,
+Japan,2.041441812,2.15349031,0.037682161,0,0.112048498,,,,
+Korea,0.178943832,0.188765512,0.003303053,0,0.00982168,,,,
+Latin America,1.273164012,1.343044091,0.023500827,0,0.069880079,,,,
+Middle East,1.195247664,1.260851153,0.0220626,0,0.065603489
+Southeast Asia,1.053273276,1.111084225,0.019441952,0,0.057810949
+USA,1.141196076,1.203832839,0.021064883,0,0.062636763
+Western Europe,1.870411032,1.973072174,0.034525172,0,0.102661142
+
+2005 refining energy input and output,,,,,
+,output,input,input,input,to be subtracted from industrial energy use
+,refined liquids enduse,regional crude oil,wholesale gas,elect_td_ind,refined liquids industrial
+Africa,0.708908976,0.747818822,0.013085468,0,0.038909846
+Australia_NZ,0.023906628,0.02521879,0.000441283,0,0.001312162
+Canada,0.17500824,0.184613907,0.003230407,0,0.009605667
+China,0.698651316,0.73699815,0.012896126,0,0.038346834
+Eastern Europe,0.109317348,0.115317443,0.002017845,0,0.006000095
+Former Soviet Union,0.534779964,0.564132401,0.00987129,0,0.029352437
+India,0.343778148,0.362647079,0.006345664,0,0.018868931
+Japan,1.097402148,1.157635196,0.020256509,0,0.060233048
+Korea,0.19343016,0.20404695,0.00357045,0,0.01061679,
+Latin America,1.692178956,1.785057484,0.031235257,0,0.092878528,
+Middle East,2.45848896,2.593427901,0.045380268,0,0.134938941,
+Southeast Asia,1.075086504,1.134094715,0.019844593,0,0.059008211,
+USA,1.413212472,1.490779383,0.026085926,0,0.077566911,
+Western Europe,1.342036872,1.415697172,0.024772124,0,0.0736603,
+
+Table of values to subtract from industrial energy consumption,,,,,,
+region,supplysector,subsector,minicam-energy-input,lookup,1990,2005
+Africa,industry,energy-use,refined liquids industrial,Africaindustryenergy-userefined liquids industrial,0.210160512,0.319653195
+Australia_NZ,industry,energy-use,refined liquids industrial,Australia_NZindustryenergy-userefined liquids industrial,0.082869985,0.108723695
+Canada,industry,energy-use,refined liquids industrial,Canadaindustryenergy-userefined liquids industrial,0.174610571,0.221867441
+China,industry,energy-use,refined liquids industrial,Chinaindustryenergy-userefined liquids industrial,0.257800787,0.742963037
+Eastern Europe,industry,energy-use,refined liquids industrial,Eastern Europeindustryenergy-userefined liquids industrial,0.175074579,0.160025925
+Former Soviet Union,industry,energy-use,refined liquids industrial,Former Soviet Unionindustryenergy-userefined liquids industrial,0.960453994,0.400170466
+India,industry,energy-use,refined liquids industrial,Indiaindustryenergy-userefined liquids industrial,0.132259546,0.27459437
+Japan,industry,energy-use,refined liquids industrial,Japanindustryenergy-userefined liquids industrial,0.561533952,0.55721193
+Korea,industry,energy-use,refined liquids industrial,Koreaindustryenergy-userefined liquids industrial,0.110536156,0.228642385
+Latin America,industry,energy-use,refined liquids industrial,Latin Americaindustryenergy-userefined liquids industrial,0.553817922,0.763595029
+Middle East,industry,energy-use,refined liquids industrial,Middle Eastindustryenergy-userefined liquids industrial,0.351318979,0.639042799
+Southeast Asia,industry,energy-use,refined liquids industrial,Southeast Asiaindustryenergy-userefined liquids industrial,0.342324206,0.660345751
+USA,industry,energy-use,refined liquids industrial,USAindustryenergy-userefined liquids industrial,1.759975834,2.11750772
+Western Europe,industry,energy-use,refined liquids industrial,Western Europeindustryenergy-userefined liquids industrial,1.371597256,1.562506906
+Africa,industry,energy-use,wholesale gas,Africaindustryenergy-usewholesale gas,0.07067745,0.107500085
+Australia_NZ,industry,energy-use,wholesale gas,Australia_NZindustryenergy-usewholesale gas,0.027869361,0.036564022
+Canada,industry,energy-use,wholesale gas,Canadaindustryenergy-usewholesale gas,0.058721926,0.074614517
+China,industry,energy-use,wholesale gas,Chinaindustryenergy-usewholesale gas,0.086698981,0.249860131
+Eastern Europe,industry,energy-use,wholesale gas,Eastern Europeindustryenergy-usewholesale gas,0.058877973,0.053817076
+Former Soviet Union,industry,energy-use,wholesale gas,Former Soviet Unionindustryenergy-usewholesale gas,0.323002827,0.134578223
+India,industry,energy-use,wholesale gas,Indiaindustryenergy-usewholesale gas,0.044479181,0.092346701
+Japan,industry,energy-use,wholesale gas,Japanindustryenergy-usewholesale gas,0.188845124,0.187391619
+Korea,industry,energy-use,wholesale gas,Koreaindustryenergy-usewholesale gas,0.037173556,0.076892946
+Latin America,industry,energy-use,wholesale gas,Latin Americaindustryenergy-usewholesale gas,0.186250206,0.256798717
+Middle East,industry,energy-use,wholesale gas,Middle Eastindustryenergy-usewholesale gas,0.118149359,0.214911523
+Southeast Asia,industry,energy-use,wholesale gas,Southeast Asiaindustryenergy-usewholesale gas,0.115124396,0.222075753
+USA,industry,energy-use,wholesale gas,USAindustryenergy-usewholesale gas,0.59188381,0.712122584
+Western Europe,industry,energy-use,wholesale gas,Western Europeindustryenergy-usewholesale gas,0.461271226,0.525474568
+Africa,industry,energy-use,elect_td_ind,Africaindustryenergy-useelect_td_ind,0.01637823,0.02491612
+Australia_NZ,industry,energy-use,elect_td_ind,Australia_NZindustryenergy-useelect_td_ind,0.007176503,0.00953283
+Canada,industry,energy-use,elect_td_ind,Canadaindustryenergy-useelect_td_ind,0.014722385,0.018838344
+China,industry,energy-use,elect_td_ind,Chinaindustryenergy-useelect_td_ind,0.020169266,0.06253506
+Eastern Europe,industry,energy-use,elect_td_ind,Eastern Europeindustryenergy-useelect_td_ind,0.013204373,0.013669874
+Former Soviet Union,industry,energy-use,elect_td_ind,Former Soviet Unionindustryenergy-useelect_td_ind,0.068020953,0.032910296
+India,industry,energy-use,elect_td_ind,Indiaindustryenergy-useelect_td_ind,0.011005315,0.022695768
+Japan,industry,energy-use,elect_td_ind,Japanindustryenergy-useelect_td_ind,0.039892071,0.044107138
+Korea,industry,energy-use,elect_td_ind,Koreaindustryenergy-useelect_td_ind,0.008938463,0.019349887
+Latin America,industry,energy-use,elect_td_ind,Latin Americaindustryenergy-useelect_td_ind,0.042949739,0.059526443
+Middle East,industry,energy-use,elect_td_ind,Middle Eastindustryenergy-useelect_td_ind,0.025357401,0.044739483
+Southeast Asia,industry,energy-use,elect_td_ind,Southeast Asiaindustryenergy-useelect_td_ind,0.025250702,0.053369024
+USA,industry,energy-use,elect_td_ind,USAindustryenergy-useelect_td_ind,0.150639738,0.181045823
+Western Europe,industry,energy-use,elect_td_ind,Western Europeindustryenergy-useelect_td_ind,0.11261875,0.132135922
+
+Calibrate output from crude oil refining,,,,,,
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+23,,,,CalDataOutput,,
+,,,,calOutputValue,,
+region,supplysector,subsector,technology,1990,2005,
+Africa,refined liquids enduse,crude oil refining,crude oil refining,2.456730504,3.929772348,
+Australia_NZ,refined liquids enduse,crude oil refining,crude oil refining,1.15513812,1.56314178,
+Canada,refined liquids enduse,crude oil refining,crude oil refining,2.125470888,2.669838624,
+China,refined liquids enduse,crude oil refining,crude oil refining,1.666303839,6.996644047,
+Eastern Europe,refined liquids enduse,crude oil refining,crude oil refining,1.419864743,1.891927577,
+Former Soviet Union,refined liquids enduse,crude oil refining,crude oil refining,7.65063936,4.298568811,
+India,refined liquids enduse,crude oil refining,crude oil refining,1.536932412,2.3801958
+Japan,refined liquids enduse,crude oil refining,crude oil refining,4.882813629,5.693922396
+Korea,refined liquids enduse,crude oil refining,crude oil refining,1.10657124,2.168640603
+Latin America,refined liquids enduse,crude oil refining,crude oil refining,5.841130284,8.426688624
+Middle East,refined liquids enduse,crude oil refining,crude oil refining,3.67035822,6.175781208
+Southeast Asia,refined liquids enduse,crude oil refining,crude oil refining,3.51146916,7.285283208
+USA,refined liquids enduse,crude oil refining,crude oil refining,23.579932,29.53665983
+Western Europe,refined liquids enduse,crude oil refining,crude oil refining,16.99966403,20.48350565
+Africa,refined liquids industrial,crude oil refining,crude oil refining,0.905496084,1.185166461
+Australia_NZ,refined liquids industrial,crude oil refining,crude oil refining,0.318099851,0.393817909
+Canada,refined liquids industrial,crude oil refining,crude oil refining,0.896833417,1.197415891
+China,refined liquids industrial,crude oil refining,crude oil refining,2.47417064,5.840948604
+Eastern Europe,refined liquids industrial,crude oil refining,crude oil refining,1.290812578,0.914310562
+Former Soviet Union,refined liquids industrial,crude oil refining,crude oil refining,6.313132057,2.457464886
+India,refined liquids industrial,crude oil refining,crude oil refining,0.722308202,2.27893495
+Japan,refined liquids industrial,crude oil refining,crude oil refining,3.306483096,3.360669906
+Korea,refined liquids industrial,crude oil refining,crude oil refining,0.72837296,1.803626526,,,
+Latin America,refined liquids industrial,crude oil refining,crude oil refining,2.975863818,3.793276223,,,
+Middle East,refined liquids industrial,crude oil refining,crude oil refining,1.535169365,3.008622965,,,
+Southeast Asia,refined liquids industrial,crude oil refining,crude oil refining,1.672154614,3.670647641,,,
+USA,refined liquids industrial,crude oil refining,crude oil refining,7.34434637,7.62957202,,7.756489743,7.9895612
+Western Europe,refined liquids industrial,crude oil refining,crude oil refining,6.119425309,6.642192252,,,
+Africa,refined liquids electricity,crude oil refining,crude oil refining,0.466744464,0.708908976,,,
+Australia_NZ,refined liquids electricity,crude oil refining,crude oil refining,0.036592632,0.023906628,,,
+Canada,refined liquids electricity,crude oil refining,crude oil refining,0.158972796,0.17500824,,,
+China,refined liquids electricity,crude oil refining,crude oil refining,0.556467588,0.698651316,,,
+Eastern Europe,refined liquids electricity,crude oil refining,crude oil refining,0.479053656,0.109317348,,,
+Former Soviet Union,refined liquids electricity,crude oil refining,crude oil refining,3.534998976,0.534779964,,,
+India,refined liquids electricity,crude oil refining,crude oil refining,0.150431724,0.343778148,,,
+Japan,refined liquids electricity,crude oil refining,crude oil refining,2.041441812,1.097402148,,,
+Korea,refined liquids electricity,crude oil refining,crude oil refining,0.178943832,0.19343016,,,
+Latin America,refined liquids electricity,crude oil refining,crude oil refining,1.273164012,1.692178956,,,
+Middle East,refined liquids electricity,crude oil refining,crude oil refining,1.195247664,2.45848896
+Southeast Asia,refined liquids electricity,crude oil refining,crude oil refining,1.053273276,1.075086504
+USA,refined liquids electricity,crude oil refining,crude oil refining,1.141196076,1.413212472
+Western Europe,refined liquids electricity,crude oil refining,crude oil refining,1.870411032,1.342036872
+
+
+Calibrate output of biomass liquids (in refined liquids enduse),,,,lookup,
+INPUT_TABLE,,,,transportationbiomass,
+Variable ID,,,,,
+23,,,,CalDataOutput,
+,,,,calOutputValue,
+region,supplysector,subsector,technology,1990,2005
+Africa,refined liquids enduse,biomass liquids,biomass liquids,0,0
+Australia_NZ,refined liquids enduse,biomass liquids,biomass liquids,0,0.000460548
+Canada,refined liquids enduse,biomass liquids,biomass liquids,0,0.00711756
+China,refined liquids enduse,biomass liquids,biomass liquids,0,0
+Eastern Europe,refined liquids enduse,biomass liquids,biomass liquids,0.000544284,0.002847024
+Former Soviet Union,refined liquids enduse,biomass liquids,biomass liquids,0,0.000251208
+India,refined liquids enduse,biomass liquids,biomass liquids,0,0.004312404
+Japan,refined liquids enduse,biomass liquids,biomass liquids,0,0
+Korea,refined liquids enduse,biomass liquids,biomass liquids,0,0.000460548
+Latin America,refined liquids enduse,biomass liquids,biomass liquids,0.251752284,0.291861828
+Middle East,refined liquids enduse,biomass liquids,biomass liquids,0,0
+Southeast Asia,refined liquids enduse,biomass liquids,biomass liquids,0,0
+USA,refined liquids enduse,biomass liquids,biomass liquids,0,0.340219368
+Western Europe,refined liquids enduse,biomass liquids,biomass liquids,0.000083736,0.129037176

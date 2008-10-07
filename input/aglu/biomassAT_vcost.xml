@@ -1,0 +1,1349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <FoodSupplySector name="biomass">
+            <output-unit>EJ</output-unit>
+            <input-unit>000Ha</input-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <sectorType>Agriculture</sectorType>
+            <market>global</market>
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <landType>CropLand</landType>
+                     <calYield>140000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <landType>CropLand</landType>
+                     <calYield>140000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <landType>CropLand</landType>
+                     <variableCost>1.55</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <landType>CropLand</landType>
+                     <variableCost>1.44</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <landType>CropLand</landType>
+                     <variableCost>1.33</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <landType>CropLand</landType>
+                     <variableCost>1.24</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <landType>CropLand</landType>
+                     <variableCost>1.15</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Canada">
+         <FoodSupplySector name="biomass">
+            <output-unit>EJ</output-unit>
+            <input-unit>000Ha</input-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <sectorType>Agriculture</sectorType>
+            <market>global</market>
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <landType>CropLand</landType>
+                     <calYield>112000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <landType>CropLand</landType>
+                     <calYield>112000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <landType>CropLand</landType>
+                     <variableCost>1.55</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <landType>CropLand</landType>
+                     <variableCost>1.44</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <landType>CropLand</landType>
+                     <variableCost>1.33</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <landType>CropLand</landType>
+                     <variableCost>1.24</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <landType>CropLand</landType>
+                     <variableCost>1.15</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Western Europe">
+         <FoodSupplySector name="biomass">
+            <output-unit>EJ</output-unit>
+            <input-unit>000Ha</input-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <sectorType>Agriculture</sectorType>
+            <market>global</market>
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <landType>CropLand</landType>
+                     <calYield>140000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <landType>CropLand</landType>
+                     <calYield>140000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <landType>CropLand</landType>
+                     <variableCost>1.55</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <landType>CropLand</landType>
+                     <variableCost>1.44</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <landType>CropLand</landType>
+                     <variableCost>1.33</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <landType>CropLand</landType>
+                     <variableCost>1.24</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <landType>CropLand</landType>
+                     <variableCost>1.15</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Japan">
+         <FoodSupplySector name="biomass">
+            <output-unit>EJ</output-unit>
+            <input-unit>000Ha</input-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <sectorType>Agriculture</sectorType>
+            <market>global</market>
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <landType>CropLand</landType>
+                     <calYield>140000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <landType>CropLand</landType>
+                     <calYield>140000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <landType>CropLand</landType>
+                     <variableCost>1.55</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <landType>CropLand</landType>
+                     <variableCost>1.44</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <landType>CropLand</landType>
+                     <variableCost>1.33</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <landType>CropLand</landType>
+                     <variableCost>1.24</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <landType>CropLand</landType>
+                     <variableCost>1.15</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Former Soviet Union">
+         <FoodSupplySector name="biomass">
+            <output-unit>EJ</output-unit>
+            <input-unit>000Ha</input-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <sectorType>Agriculture</sectorType>
+            <market>global</market>
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <landType>CropLand</landType>
+                     <calYield>140000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <landType>CropLand</landType>
+                     <calYield>140000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <landType>CropLand</landType>
+                     <variableCost>1.55</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <landType>CropLand</landType>
+                     <variableCost>1.44</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <landType>CropLand</landType>
+                     <variableCost>1.33</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <landType>CropLand</landType>
+                     <variableCost>1.24</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <landType>CropLand</landType>
+                     <variableCost>1.15</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Australia_NZ">
+         <FoodSupplySector name="biomass">
+            <output-unit>EJ</output-unit>
+            <input-unit>000Ha</input-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <sectorType>Agriculture</sectorType>
+            <market>global</market>
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <landType>CropLand</landType>
+                     <calYield>70000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <landType>CropLand</landType>
+                     <calYield>70000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <landType>CropLand</landType>
+                     <variableCost>1.55</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <landType>CropLand</landType>
+                     <variableCost>1.44</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <landType>CropLand</landType>
+                     <variableCost>1.33</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <landType>CropLand</landType>
+                     <variableCost>1.24</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <landType>CropLand</landType>
+                     <variableCost>1.15</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="China">
+         <FoodSupplySector name="biomass">
+            <output-unit>EJ</output-unit>
+            <input-unit>000Ha</input-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <sectorType>Agriculture</sectorType>
+            <market>global</market>
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <landType>CropLand</landType>
+                     <calYield>140000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <landType>CropLand</landType>
+                     <calYield>140000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <landType>CropLand</landType>
+                     <variableCost>1.55</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <landType>CropLand</landType>
+                     <variableCost>1.44</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <landType>CropLand</landType>
+                     <variableCost>1.33</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <landType>CropLand</landType>
+                     <variableCost>1.24</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <landType>CropLand</landType>
+                     <variableCost>1.15</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Middle East">
+         <FoodSupplySector name="biomass">
+            <output-unit>EJ</output-unit>
+            <input-unit>000Ha</input-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <sectorType>Agriculture</sectorType>
+            <market>global</market>
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <landType>CropLand</landType>
+                     <calYield>70000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <landType>CropLand</landType>
+                     <calYield>70000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <landType>CropLand</landType>
+                     <variableCost>1.55</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <landType>CropLand</landType>
+                     <variableCost>1.44</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <landType>CropLand</landType>
+                     <variableCost>1.33</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <landType>CropLand</landType>
+                     <variableCost>1.24</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <landType>CropLand</landType>
+                     <variableCost>1.15</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Africa">
+         <FoodSupplySector name="biomass">
+            <output-unit>EJ</output-unit>
+            <input-unit>000Ha</input-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <sectorType>Agriculture</sectorType>
+            <market>global</market>
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <landType>CropLand</landType>
+                     <calYield>140000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <landType>CropLand</landType>
+                     <calYield>140000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <landType>CropLand</landType>
+                     <variableCost>1.55</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <landType>CropLand</landType>
+                     <variableCost>1.44</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <landType>CropLand</landType>
+                     <variableCost>1.33</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <landType>CropLand</landType>
+                     <variableCost>1.24</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <landType>CropLand</landType>
+                     <variableCost>1.15</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Latin America">
+         <FoodSupplySector name="biomass">
+            <output-unit>EJ</output-unit>
+            <input-unit>000Ha</input-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <sectorType>Agriculture</sectorType>
+            <market>global</market>
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <landType>CropLand</landType>
+                     <calYield>140000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <landType>CropLand</landType>
+                     <calYield>140000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <landType>CropLand</landType>
+                     <variableCost>1.55</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <landType>CropLand</landType>
+                     <variableCost>1.44</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <landType>CropLand</landType>
+                     <variableCost>1.33</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <landType>CropLand</landType>
+                     <variableCost>1.24</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <landType>CropLand</landType>
+                     <variableCost>1.15</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Southeast Asia">
+         <FoodSupplySector name="biomass">
+            <output-unit>EJ</output-unit>
+            <input-unit>000Ha</input-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <sectorType>Agriculture</sectorType>
+            <market>global</market>
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <landType>CropLand</landType>
+                     <calYield>196000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <landType>CropLand</landType>
+                     <calYield>196000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <landType>CropLand</landType>
+                     <variableCost>1.55</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <landType>CropLand</landType>
+                     <variableCost>1.44</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <landType>CropLand</landType>
+                     <variableCost>1.33</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <landType>CropLand</landType>
+                     <variableCost>1.24</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <landType>CropLand</landType>
+                     <variableCost>1.15</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Eastern Europe">
+         <FoodSupplySector name="biomass">
+            <output-unit>EJ</output-unit>
+            <input-unit>000Ha</input-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <sectorType>Agriculture</sectorType>
+            <market>global</market>
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <landType>CropLand</landType>
+                     <calYield>140000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <landType>CropLand</landType>
+                     <calYield>140000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <landType>CropLand</landType>
+                     <variableCost>1.55</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <landType>CropLand</landType>
+                     <variableCost>1.44</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <landType>CropLand</landType>
+                     <variableCost>1.33</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <landType>CropLand</landType>
+                     <variableCost>1.24</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <landType>CropLand</landType>
+                     <variableCost>1.15</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Korea">
+         <FoodSupplySector name="biomass">
+            <output-unit>EJ</output-unit>
+            <input-unit>000Ha</input-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <sectorType>Agriculture</sectorType>
+            <market>global</market>
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <landType>CropLand</landType>
+                     <calYield>140000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <landType>CropLand</landType>
+                     <calYield>140000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <landType>CropLand</landType>
+                     <variableCost>1.55</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <landType>CropLand</landType>
+                     <variableCost>1.44</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <landType>CropLand</landType>
+                     <variableCost>1.33</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <landType>CropLand</landType>
+                     <variableCost>1.24</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <landType>CropLand</landType>
+                     <variableCost>1.15</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="India">
+         <FoodSupplySector name="biomass">
+            <output-unit>EJ</output-unit>
+            <input-unit>000Ha</input-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <sectorType>Agriculture</sectorType>
+            <market>global</market>
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <landType>CropLand</landType>
+                     <calYield>196000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="1990">
+                     <landType>CropLand</landType>
+                     <calYield>196000</calYield>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2005">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0</agProdChange>
+                  </period>
+                  <period year="2020">
+                     <landType>CropLand</landType>
+                     <variableCost>1.67</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2035">
+                     <landType>CropLand</landType>
+                     <variableCost>1.55</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2050">
+                     <landType>CropLand</landType>
+                     <variableCost>1.44</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2065">
+                     <landType>CropLand</landType>
+                     <variableCost>1.33</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2080">
+                     <landType>CropLand</landType>
+                     <variableCost>1.24</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+                  <period year="2095">
+                     <landType>CropLand</landType>
+                     <variableCost>1.15</variableCost>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <agProdChange>0.005</agProdChange>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+   </world>
+</scenario>

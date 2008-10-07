@@ -1,0 +1,92 @@
+Notes,Other stuff needed to make 2005 calibration work,,,,,,,,,,
+"Make lifetime of 1990 exisiting 15 years, and make 2005 vintage lifetime 45 years",,,,,,,,,,,
+Turn off other options until 2020,,,,10/15/2007,,,,,,,
+,,,,gpk,,,,,,,
+,,,,no changes necessary,,,,,,,
+,,,,sheet will be over-written for nexus (in US),,,,,,,
+,,,,,,,,,,,
+"Make lifetime of 1990 exisiting 15 years, and make 2005 vintage lifetime 45 years",,,,,,,,,,,
+
+
+INPUT_TABLE,,,,,,,,,,,
+Variable ID,,,,,,,,,,,
+10009,,,,,,,,,,,
+Fossil - Reference - lifetime,,,,,,,,,,,
+Supply Sector,Subsector,Technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+electricity,coal,Coal (existing),-1,-1,45,-1,-1,-1,-1,-1,-1
+electricity,coal,Coal (conv pul),-1,-1,-1,45,45,45,45,45,45
+electricity,coal,Coal (IGCC),-1,-1,-1,45,45,45,45,45,45
+electricity,gas,Gas (existing),-1,-1,45,-1,-1,-1,-1,-1,-1
+electricity,gas,Gas (peak load conv),-1,-1,-1,45,45,45,45,45,45
+electricity,gas,Gas (base load conv),-1,-1,-1,45,45,45,45,45,45
+electricity,gas,Gas (CC),-1,-1,-1,45,45,45,45,45,45
+electricity,oil,Oil (existing),-1,-1,45,-1,-1,-1,-1,-1,-1
+electricity,oil,Oil (peak load conv),-1,-1,-1,45,45,45,45,45,45
+electricity,oil,Oil (base load conv),-1,-1,-1,45,45,45,45,45,45
+electricity,oil,Oil (IGCC),-1,-1,-1,45,45,45,45,45,45
+electricity,biomass ,Biomass (existing),-1,-1,45,-1,-1,-1,-1,-1,-1
+electricity,biomass ,Biomass (conv),-1,-1,-1,45,45,45,45,45,45
+electricity,biomass ,Biomass (IGCC),-1,-1,-1,45,45,45,45,45,45
+electricity,nuclear ,Gen_II_LWR,-1,-1,45,-1,-1,-1,-1,-1,-1
+
+Turn off other options until 2020,,,,,,,,,,,
+
+INPUT_TABLE,,,,,,,,,,,
+Variable ID,,,,,,,,,,,
+10007,,,,,,,,,,,
+Fossil - Reference - sharewt (tech level),,,,,,,,,,,
+Supply Sector,Subsector,Technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+electricity,coal,Coal (existing),1,1,1,0,0,0,0,0,0
+electricity,coal,Coal (conv pul),0,0,0,1,1,1,1,1,1
+electricity,coal,Coal (IGCC),0,0,0,1,1,1,1,1,1
+electricity,gas,Gas (existing),1,1,1,0,0,0,0,0,0
+electricity,gas,Gas (peak load conv),0,0,0,1,1,1,1,1,1
+electricity,gas,Gas (base load conv),0,0,0,0,0,0,0,0,0
+electricity,gas,Gas (CC),0,0,0,1,1,1,1,1,1
+electricity,oil,Oil (existing),1,1,1,0,0,0,0,0,0
+electricity,oil,Oil (peak load conv),0,0,0,1,1,1,1,1,1
+electricity,oil,Oil (base load conv),0,0,0,0,0,0,0,0,0
+electricity,oil,Oil (IGCC),0,0,0,1,1,1,1,1,1
+electricity,biomass ,Biomass (existing),1,1,1,0,0,0,0,0,0
+electricity,biomass ,Biomass (conv),0,0,0,1,1,1,1,1,1
+electricity,biomass ,Biomass (IGCC),0,0,0,1,1,1,1,1,1
+electricity,exotics,exotic,0,0,0,0,0,0,0,0,0
+
+
+
+Nudge down cost of exisiting coal and gas to prevent price drop after calibration period (and to reflect sunk costs),,,,,,,,,maw 9/26/06,,
+INPUT_TABLE,,,,,,,,,,,
+Variable ID,,,,,,,,,,,
+10013,,,,,,,,,,,
+Fossil - Reference - Nonenergy Cost -Existing Technologies,,,,,,,,,,,
+Supply Sector,Subsector,Technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+electricity,coal,Coal (existing),3.9924,3.9924,3.4,3.4,3.4,3.4,3.4,3.4,3.4
+electricity,gas,Gas (existing),2.0528,2.0528,1.6,1.6,1.6,1.6,1.6,1.6,1.6
+electricity,oil,Oil (existing),2.0528,2.0528,2,1.96,1.93,1.89,1.86,1.82,1.79
+electricity,biomass ,Biomass (existing),3.9924,3.9924,3.9,3.83,3.76,3.69,3.62,3.55,3.49
+
+
+do not read table,,,,,,,,,,,
+would add extra shutdown decider,,,,,,,,,,,
+10025,,,,,,,,,,,
+Fossil - Reference - shutdown-rate - using technology as grandparent,,,,,,,,,,,
+Supply Sector,Subsector,Technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+electricity,coal,Coal (existing),0.025,0.025,0.025,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+electricity,gas,Gas (existing),0.025,0.025,0.025,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+electricity,oil,Oil (existing),0.025,0.025,0.025,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+electricity,biomass ,Biomass (existing),0.025,0.025,0.025,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+electricity,nuclear,Gen_II_LWR,0.025,0.025,0.025,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+
+
+INPUT_TABLE,,,,,,,,,,,
+Variable ID,,,,,,,,,,,
+10009,,,,,,,,,,,
+Non-fossil techs: set lifetime to 15 in base year,,,,,,,,,,,
+Supply Sector,Subsector,Technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+electricity,wind,wind,-1,-1,30,30,30,30,30,30,30
+electricity,solar,PV,-1,-1,30,30,30,30,30,30,30
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,

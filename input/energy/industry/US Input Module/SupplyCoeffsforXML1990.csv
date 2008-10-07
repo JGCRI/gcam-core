@@ -1,0 +1,155 @@
+Delete aggregate US industry here,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,
+Variable ID,,,,,,,,,,
+99,,,,,,,,,,
+
+supplysector,energy-final-demand,,,,,,,,,
+industry,industry,,,,,,,,,
+
+
+add CO2 tag in 1975,,,,,,,column not for xml,,,
+INPUT_TABLE,,,,,,,,,,
+Variable ID,,,,,,,,,,enduse supplysectors
+112,,,,,,,,,,boilers pulp paper and wood
+,,,,,,,,,,boilers general
+supplysector,subsector,technology,period,{name}CO2,,,,,,process heat primary metals
+food processing,food processing,food processing,1975,CO2,,,,,,process heat general
+pulp paper and wood,pulp paper and wood,pulp paper and wood,1975,CO2,,,,,,machine drive
+chemicals,chemicals,chemicals,1975,CO2,,,,,,hvac
+petroleum,petroleum,petroleum,1975,CO2,,,,,,other end uses petroleum
+aluminum,aluminum,aluminum,1975,CO2,,,,,,other end uses general
+other primary metals ,other primary metals ,other primary metals ,1975,CO2,,,,,,electrochemical
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,1975,CO2,,,,,,feedstocks petroleum
+other manufacturing,other manufacturing,other manufacturing,1975,CO2,,,,,,feedstocks chemicals
+agriculture,agriculture,agriculture,1975,CO2,,,,,,feedstocks primary metals
+mining,mining,mining,1975,CO2,,,,,,all end uses agriculture
+construction,construction,construction,1975,CO2,,,,,,all end uses mining
+,,,,,,,,,,construction energy uses
+,,,,,,,,,,construction feedstocks
+Region: USA,,,,,,,,,,limestone feedstocks
+IndustrySupplySector ,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,
+Variable ID,,,,,,,,,,
+111,,,,,,,
+
+supplysector,subsector,technology,period,minicam-energy-input,coefficient,,
+food processing,food processing,food processing,1990,boilers general,0.5582088,,
+food processing,food processing,food processing,1990,process heat general,0.169892052,,
+food processing,food processing,food processing,1990,machine drive,0.131246993,,
+food processing,food processing,food processing,1990,hvac,0.061750418,,
+food processing,food processing,food processing,1990,other end uses general,0.152570472,,1.073668736
+
+Region: USA,,,,,,,
+IndustrySupplySector ,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+111,,,,,,,
+
+Supplysector,Subsector,technology,Year,InputName,Coefficient,,
+pulp paper and wood,pulp paper and wood,pulp paper and wood,1990,boilers pulp paper and wood,0.656933481,,
+pulp paper and wood,pulp paper and wood,pulp paper and wood,1990,process heat general,0.092656018,,
+pulp paper and wood,pulp paper and wood,pulp paper and wood,1990,machine drive,0.242290826,,
+pulp paper and wood,pulp paper and wood,pulp paper and wood,1990,hvac,0.015392092,,
+pulp paper and wood,pulp paper and wood,pulp paper and wood,1990,other end uses general,0.063210056,,
+pulp paper and wood,pulp paper and wood,pulp paper and wood,1990,electrochemical,0.003186263,,1.073668736
+
+Region: USA,,,,,,,
+IndustrySupplySector ,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+111,,,,,,,
+
+Supplysector,Subsector,technology,Year,InputName,Coefficient,,
+chemicals,chemicals,chemicals,1990,boilers general,0.181851991,,
+chemicals,chemicals,chemicals,1990,process heat general,0.124536709,,
+chemicals,chemicals,chemicals,1990,machine drive,0.093903703,,
+chemicals,chemicals,chemicals,1990,hvac,0.008426123,,
+chemicals,chemicals,chemicals,1990,other end uses general,0.068012135,,
+chemicals,chemicals,chemicals,1990,electrochemical,0.027919673,,
+chemicals,chemicals,chemicals,1990,feedstocks chemicals,0.5690184,,1.073668736
+
+Region: USA,,,,,,,
+IndustrySupplySector ,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+111,,,,,,,
+
+Supplysector,Subsector,technology,Year,InputName,Coefficient,,
+petroleum,petroleum,petroleum,1990,boilers general,0.049835513,,
+petroleum,petroleum,petroleum,1990,process heat general,0.102251735,,
+petroleum,petroleum,petroleum,1990,machine drive,0.028617909,,
+petroleum,petroleum,petroleum,1990,hvac,0.004487513,,
+petroleum,petroleum,petroleum,1990,other end uses petroleum,0.474199901,,
+petroleum,petroleum,petroleum,1990,feedstocks petroleum,0.414276165,,1.073668736
+
+Region: USA,,,,,,,
+IndustrySupplySector ,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+111,,,,,,,
+
+Supplysector,Subsector,technology,Year,InputName,Coefficient,,
+aluminum,aluminum,aluminum,1990,boilers general,0.004525809,,
+aluminum,aluminum,aluminum,1990,process heat primary metals,0.048062258,,
+aluminum,aluminum,aluminum,1990,machine drive,0.013692145,,
+aluminum,aluminum,aluminum,1990,hvac,0.023441661,,
+aluminum,aluminum,aluminum,1990,other end uses general,0.017178707,,
+aluminum,aluminum,aluminum,1990,electrochemical,0.767145224,,
+aluminum,aluminum,aluminum,1990,feedstocks primary metals,0.199622931,,1.073668736
+
+Region: USA,,,,,,,
+IndustrySupplySector ,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+111,,,,,,,
+
+Supplysector,Subsector,technology,Year,InputName,Coefficient,,
+other primary metals ,other primary metals ,other primary metals ,1990,boilers general,0.064416331,,
+other primary metals ,other primary metals ,other primary metals ,1990,process heat primary metals,0.27566099,,
+other primary metals ,other primary metals ,other primary metals ,1990,machine drive,0.069695736,,
+other primary metals ,other primary metals ,other primary metals ,1990,hvac,0.035017111,,
+other primary metals ,other primary metals ,other primary metals ,1990,other end uses general,0.036856711,,
+other primary metals ,other primary metals ,other primary metals ,1990,electrochemical,0.007003716,,
+other primary metals ,other primary metals ,other primary metals ,1990,feedstocks primary metals,0.581172144,,
+other primary metals ,other primary metals ,other primary metals ,1990,limestone feedstocks,0.003845996,,1.073668736
+
+Region: USA,,,,,,,
+IndustrySupplySector ,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+111,,,,,,,
+
+Supplysector,Subsector,technology,Year,InputName,Coefficient,,
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,1990,boilers general,0.025166546,,
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,1990,process heat general,0.740987636,,
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,1990,machine drive,0.07939778,,
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,1990,hvac,0.048393238,,
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,1990,other end uses general,0.069193126,,
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,1990,electrochemical,0,,
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,1990,limestone feedstocks,0.11053041,,1.073668736
+
+Region: USA,,,,,,,
+IndustrySupplySector ,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+111,,,,,,,
+
+Supplysector,Subsector,technology,Year,InputName,Coefficient,,
+other manufacturing,other manufacturing,other manufacturing,1990,boilers general,0.220242078,,
+other manufacturing,other manufacturing,other manufacturing,1990,process heat general,0.19712453,,
+other manufacturing,other manufacturing,other manufacturing,1990,machine drive,0.252325877,,
+other manufacturing,other manufacturing,other manufacturing,1990,hvac,0.214259437,,
+other manufacturing,other manufacturing,other manufacturing,1990,other end uses general,0.181763763,,
+other manufacturing,other manufacturing,other manufacturing,1990,electrochemical,0.007953051,,1.073668736
+
+Region: USA,,,,,
+IndustrySupplySector ,,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+111,,,,,
+
+Supplysector,Subsector,technology,Year,InputName,Coefficient
+agriculture,agriculture,agriculture,1990,all end uses agriculture,1.073668736
+mining,mining,mining,1990,all end uses mining,1.073668736
+construction,construction,construction,1990,construction energy uses,0.457878557
+construction,construction,construction,1990,construction feedstocks,0.615790178

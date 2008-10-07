@@ -1,0 +1,249 @@
+This sheet changes the efficiencies of the aggregate industrial sectors of all regions.,,,,,,,,
+It is based on the assumed efficiencies and calinputs to the US industrial module.,,,,,,,,
+It uses model output from a scenario run,,,,,,,,
+No inter-regional variation is assumed here; inter-regional variation (as computed throughout this workbook) is in the AEII,,,,,,,,
+
+
+"Fuel consumption by all enduse supplysectors, by fuel",,,,,,,,
+,1990,2005,2020,2035,2050,2065,2080,2095
+electricity,3.38040038,3.583969502,3.463310581,3.761135899,4.292454754,4.820648887,5.337307191,6.095155126
+refined liquids,4.38872384,4.097332497,4.66674876,4.386036352,4.098308855,4.116198945,3.893448924,1.852541933
+gas,7.333196967,7.708255726,7.433386538,8.410689976,8.097200028,6.259874867,5.899630554,5.794713003
+coal,2.33248815,1.730666031,2.266035349,2.303773661,2.424884869,3.326038136,3.351415828,3.52737358
+biomass,0.283714565,1.744461587,2.335964586,2.795545332,3.10360366,3.532132441,3.7165308,4.753377046
+hydrogen,0,0,0.019708099,0.025218782,0.028892801,0.040339081,0.04975377,0.063630564
+non-energy use oil,4.745482472,5.530770881,6.136644222,6.600708674,6.678467949,6.751570508,6.691937923,5.988478
+
+
+"Service output by all enduse supplysectors, by fuel",,,,,,,,
+,1990,2005,2020,2035,2050,2065,2080,2095
+electricity,3.54386248,3.799557513,3.743501319,4.11544745,4.754100894,5.394419986,6.043632633,6.981650388
+refined liquids,4.27741133,3.996116943,4.629782059,4.470957967,4.251127974,4.330937631,4.159608476,2.020246178
+gas,6.566941804,6.689354644,6.459410859,7.343962476,7.194847875,5.718707332,5.457116293,5.486589814
+coal,2.103306659,1.535012258,1.864990005,1.880785103,1.99229613,2.587734757,2.607110658,2.733468436
+biomass,0.211296934,1.29592131,1.660593345,2.165897264,2.528489506,2.910327651,3.101571914,4.223115371
+hydrogen,0,0,0.018251663,0.023516401,0.026869711,0.036403364,0.044568208,0.056499999
+non-energy use oil,4.745482472,5.530770881,6.229341032,6.801628226,6.985706459,7.168849386,7.212863519,6.552143971
+
+Model-calculated shareweights for 2005 industry energy-use,,,,,,,,
+,biomass,coal,electricity,fuelcell,gas,refined liquids,,
+Africa,0.826887,0.0981551,3.53924,0,0.218539,0.317181,,
+Australia_NZ,0.112925,0.0811738,4.24689,0,0.273775,0.285235,,
+Canada,0.14121,0.0307107,4.1923,0,0.412338,0.223439,,
+China,0.00324353,0.524259,4.20219,0,0.0409384,0.229371
+Eastern Europe,0.0634455,0.190803,4.22833,0,0.26317,0.254247
+Former Soviet Union,0.0137871,0.110272,4.33282,0,0.359039,0.184086
+India,0.243327,0.134356,4.24326,0,0.0827356,0.296325
+Japan,0.0204965,0.266615,4.01109,0,0.0518376,0.649963
+Korea,0.0346458,0.143863,4.34018,0,0.0833471,0.397964
+Latin America,0.303754,0.0386011,3.90943,0,0.30052,0.44769
+Middle East,0.000388848,0.00871635,3.35933,0,0.821353,0.810208
+Southeast Asia,0.351464,0.102693,3.45523,0,0.385017,0.705591
+USA,0.128252,0.0574033,3.99897,0,0.460488,0.354889
+Western Europe,0.0443199,0.0817794,4.24057,0,0.30031,0.333021
+
+
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+201,,,gpk: setting this to 2005 because our model can not handle a new tech getting phased into a subsector with multiple existing techs,,,
+,,,,our calibration parameter is the same as the availability parameter,,,,,,,,,,,,,,,,,,
+region,supplysector,subsector,techScaleYear,,,,,,,,,,,,,,,,,,,
+ALL,industry,energy-use,2005,,,,,,,,,,,,,,,,,,,
+
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,don't use actual computed tech efficiencies b/c distorted by cogen,,,,,,,,,,,,,,,
+2000,,,,,,,0.001,improvement rate,,,,,,,output / input,,,,,,,
+,,,,,efficiency,,,,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,minicam-energy-input,1975,1990,2005,2020,2035,2050,2065,2080,2095,,2020,2035,2050,2065,2080,2095,,
+ALL,industry,energy-use,biomass,delivered biomass,1,0.745,0.743,0.754,0.765,0.777,0.789,0.801,0.813,,0.711,0.775,0.815,0.824,0.835,0.888,,
+ALL,industry,energy-use,coal,delivered coal,1,0.902,0.887,0.900,0.914,0.928,0.942,0.956,0.970,,0.823,0.816,0.822,0.778,0.778,0.775,,
+ALL,industry,energy-use,electricity,elect_td_ind,1,1.048,1.060,1.076,1.092,1.109,1.126,1.143,1.160,,1.081,1.094,1.108,1.119,1.132,1.145,,
+ALL,industry,energy-use,fuelcell,H2 Enduse,1,1.000,1.000,1.015,1.030,1.046,1.062,1.078,1.094,,0.926,0.932,0.930,0.902,0.896,0.888,,
+ALL,industry,energy-use,refined liquids,refined liquids industrial,1,0.975,0.975,0.990,1.005,1.020,1.036,1.051,1.067,,0.992,1.019,1.037,1.052,1.068,1.091,,
+ALL,industry,energy-use,gas,wholesale gas,1,0.896,0.868,0.881,0.894,0.908,0.921,0.935,0.950,,0.869,0.873,0.889,0.914,0.925,0.947,,
+ALL,industry,non-energy use oil,feedstocks,refined liquids industrial,1,1.000,1.000,1.015,1.030,1.046,1.062,1.078,1.094,,1.015,1.030,1.046,1.062,1.078,1.094,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+"Industry shareweights should be scaled to 2005, with the exception of biomass",,,,,,,,,,,,,,,,,,,,,,
+"Developing nations have high sharewts in 2005, which should decrease over time",,,,,,,,,,,,,,,,,,,,,,
+"Because techScaleYear doesn't selectively scale shareweights (applies to all techs within a subsector), shareweights are set manually here",,,,,,,,,,,,,,,,,,,,,,
+don't read this table,,,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,,,,,
+2002,,,,,,,,,,,,,,,,,,,,,,
+,,,,sharewt,,,,,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,2020,2035,2050,2065,2080,2095,,,,,,,,,,,,,
+Africa,industry,energy-use,biomass,0.150,0.150,0.150,0.150,0.150,0.150,,,,,,,,,,,,,
+Australia_NZ,industry,energy-use,biomass,0.113,0.113,0.113,0.113,0.113,0.113,,,,,,,,,,,,,
+Canada,industry,energy-use,biomass,0.141,0.141,0.141,0.141,0.141,0.141,,,,,,,,,,,,,
+China,industry,energy-use,biomass,0.003,0.003,0.003,0.003,0.003,0.003,,,,,,,,,,,,,
+Eastern Europe,industry,energy-use,biomass,0.063,0.063,0.063,0.063,0.063,0.063
+Former Soviet Union,industry,energy-use,biomass,0.014,0.014,0.014,0.014,0.014,0.014
+India,industry,energy-use,biomass,0.150,0.150,0.150,0.150,0.150,0.150
+Japan,industry,energy-use,biomass,0.020,0.020,0.020,0.020,0.020,0.020
+Korea,industry,energy-use,biomass,0.035,0.035,0.035,0.035,0.035,0.035
+Latin America,industry,energy-use,biomass,0.150,0.150,0.150,0.150,0.150,0.150
+Middle East,industry,energy-use,biomass,0.000,0.000,0.000,0.000,0.000,0.000
+Southeast Asia,industry,energy-use,biomass,0.150,0.150,0.150,0.150,0.150,0.150
+USA,industry,energy-use,biomass,0.128,0.128,0.128,0.128,0.128,0.128
+Western Europe,industry,energy-use,biomass,0.044,0.044,0.044,0.044,0.044,0.044
+Africa,industry,energy-use,coal,0.098,0.098,0.098,0.098,0.098,0.098
+Australia_NZ,industry,energy-use,coal,0.081,0.081,0.081,0.081,0.081,0.081
+Canada,industry,energy-use,coal,0.031,0.031,0.031,0.031,0.031,0.031
+China,industry,energy-use,coal,0.524,0.524,0.524,0.524,0.524,0.524
+Eastern Europe,industry,energy-use,coal,0.191,0.191,0.191,0.191,0.191,0.191
+Former Soviet Union,industry,energy-use,coal,0.110,0.110,0.110,0.110,0.110,0.110
+India,industry,energy-use,coal,0.134,0.134,0.134,0.134,0.134,0.134
+Japan,industry,energy-use,coal,0.267,0.267,0.267,0.267,0.267,0.267
+Korea,industry,energy-use,coal,0.144,0.144,0.144,0.144,0.144,0.144
+Latin America,industry,energy-use,coal,0.039,0.039,0.039,0.039,0.039,0.039
+Middle East,industry,energy-use,coal,0.009,0.009,0.009,0.009,0.009,0.009
+Southeast Asia,industry,energy-use,coal,0.103,0.103,0.103,0.103,0.103,0.103
+USA,industry,energy-use,coal,0.057,0.057,0.057,0.057,0.057,0.057
+Western Europe,industry,energy-use,coal,0.082,0.082,0.082,0.082,0.082,0.082
+Africa,industry,energy-use,electricity,3.539,3.539,3.539,3.539,3.539,3.539
+Australia_NZ,industry,energy-use,electricity,4.247,4.247,4.247,4.247,4.247,4.247
+Canada,industry,energy-use,electricity,4.192,4.192,4.192,4.192,4.192,4.192
+China,industry,energy-use,electricity,4.202,4.202,4.202,4.202,4.202,4.202
+Eastern Europe,industry,energy-use,electricity,4.228,4.228,4.228,4.228,4.228,4.228
+Former Soviet Union,industry,energy-use,electricity,4.333,4.333,4.333,4.333,4.333,4.333
+India,industry,energy-use,electricity,4.243,4.243,4.243,4.243,4.243,4.243
+Japan,industry,energy-use,electricity,4.011,4.011,4.011,4.011,4.011,4.011
+Korea,industry,energy-use,electricity,4.340,4.340,4.340,4.340,4.340,4.340
+Latin America,industry,energy-use,electricity,3.909,3.909,3.909,3.909,3.909,3.909
+Middle East,industry,energy-use,electricity,3.359,3.359,3.359,3.359,3.359,3.359
+Southeast Asia,industry,energy-use,electricity,3.455,3.455,3.455,3.455,3.455,3.455
+USA,industry,energy-use,electricity,3.999,3.999,3.999,3.999,3.999,3.999
+Western Europe,industry,energy-use,electricity,4.241,4.241,4.241,4.241,4.241,4.241
+,,,,,,,,,
+,,,,,,,,,
+don't read this table,,,,,,,,,
+Variable ID,,,,,,,,,
+2002,,,,,,,,,
+,,,,sharewt,,,,,
+region,supplysector,subsector,technology,2020,2035,2050,2065,2080,2095
+Africa,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
+Australia_NZ,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
+Canada,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
+China,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
+Eastern Europe,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
+Former Soviet Union,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
+India,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
+Japan,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
+Korea,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
+Latin America,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
+Middle East,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
+Southeast Asia,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
+USA,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
+Western Europe,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
+Africa,industry,energy-use,gas,0.219,0.219,0.219,0.219,0.219,0.219
+Australia_NZ,industry,energy-use,gas,0.274,0.274,0.274,0.274,0.274,0.274
+Canada,industry,energy-use,gas,0.412,0.412,0.412,0.412,0.412,0.412
+China,industry,energy-use,gas,0.041,0.041,0.041,0.041,0.041,0.041
+Eastern Europe,industry,energy-use,gas,0.263,0.263,0.263,0.263,0.263,0.263
+Former Soviet Union,industry,energy-use,gas,0.359,0.359,0.359,0.359,0.359,0.359
+India,industry,energy-use,gas,0.083,0.083,0.083,0.083,0.083,0.083
+Japan,industry,energy-use,gas,0.052,0.052,0.052,0.052,0.052,0.052
+Korea,industry,energy-use,gas,0.083,0.083,0.083,0.083,0.083,0.083
+Latin America,industry,energy-use,gas,0.301,0.301,0.301,0.301,0.301,0.301
+Middle East,industry,energy-use,gas,0.821,0.821,0.821,0.821,0.821,0.821
+Southeast Asia,industry,energy-use,gas,0.385,0.385,0.385,0.385,0.385,0.385
+USA,industry,energy-use,gas,0.460,0.460,0.460,0.460,0.460,0.460
+Western Europe,industry,energy-use,gas,0.300,0.300,0.300,0.300,0.300,0.300
+Africa,industry,energy-use,refined liquids,0.317,0.317,0.317,0.317,0.317,0.317
+Australia_NZ,industry,energy-use,refined liquids,0.285,0.285,0.285,0.285,0.285,0.285
+Canada,industry,energy-use,refined liquids,0.223,0.223,0.223,0.223,0.223,0.223
+China,industry,energy-use,refined liquids,0.229,0.229,0.229,0.229,0.229,0.229
+Eastern Europe,industry,energy-use,refined liquids,0.254,0.254,0.254,0.254,0.254,0.254
+Former Soviet Union,industry,energy-use,refined liquids,0.184,0.184,0.184,0.184,0.184,0.184
+India,industry,energy-use,refined liquids,0.296,0.296,0.296,0.296,0.296,0.296
+Japan,industry,energy-use,refined liquids,0.650,0.650,0.650,0.650,0.650,0.650,,,
+Korea,industry,energy-use,refined liquids,0.398,0.398,0.398,0.398,0.398,0.398,,,
+Latin America,industry,energy-use,refined liquids,0.448,0.448,0.448,0.448,0.448,0.448,,,
+Middle East,industry,energy-use,refined liquids,0.810,0.810,0.810,0.810,0.810,0.810,,,
+Southeast Asia,industry,energy-use,refined liquids,0.706,0.706,0.706,0.706,0.706,0.706,,,
+USA,industry,energy-use,refined liquids,0.355,0.355,0.355,0.355,0.355,0.355,,,
+Western Europe,industry,energy-use,refined liquids,0.333,0.333,0.333,0.333,0.333,0.333,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+reset logit exponents to -3 for all techs,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+2003,,,,,,,,,,,,
+,,,,logitexp,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+ALL,industry,energy-use,biomass,-3,-3,-3,-3,-3,-3,-3,-3,-3
+ALL,industry,energy-use,coal,-3,-3,-3,-3,-3,-3,-3,-3,-3
+ALL,industry,energy-use,electricity,-3,-3,-3,-3,-3,-3,-3,-3,-3
+ALL,industry,energy-use,fuelcell,-3,-3,-3,-3,-3,-3,-3,-3,-3
+ALL,industry,energy-use,refined liquids,-3,-3,-3,-3,-3,-3,-3,-3,-3
+ALL,industry,energy-use,gas,-3,-3,-3,-3,-3,-3,-3,-3,-3
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+Final demand elasticities,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+30,,,,,,,,,,,,
+,,2020 fillout,,,,,,,,,,
+region,energy-final-demand,price-elasticity,,,,,,,,,,
+ALL,industry,-0.65,,,,,,,,,,
+,,,,,,,,,,,,
+
+
+
+
+
+
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+
+
+
+
+
+
+
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,

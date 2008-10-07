@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="Japan">
+         <FoodSupplySector name="Corn">
+            <FoodSupplySubsector name="Corn">
+               <FoodProductionTechnology name="Corn">
+                  <period year="1975">
+                     <calYield>1</calYield>
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="1990">
+                     <calYield>1</calYield>
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2005">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2020">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2035">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2050">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2065">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2080">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2095">
+                     <variableCost>1000</variableCost>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FiberCrop">
+            <FoodSupplySubsector name="FiberCrop">
+               <FoodProductionTechnology name="FiberCrop">
+                  <period year="1975">
+                     <calYield>1</calYield>
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="1990">
+                     <calYield>1</calYield>
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2005">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2020">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2035">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2050">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2065">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2080">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2095">
+                     <variableCost>1000</variableCost>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Canada">
+         <FoodSupplySector name="Rice">
+            <FoodSupplySubsector name="Rice">
+               <FoodProductionTechnology name="Rice">
+                  <period year="1975">
+                     <calYield>1</calYield>
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="1990">
+                     <calYield>1</calYield>
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2005">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2020">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2035">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2050">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2065">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2080">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2095">
+                     <variableCost>1000</variableCost>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FiberCrop">
+            <FoodSupplySubsector name="FiberCrop">
+               <FoodProductionTechnology name="FiberCrop">
+                  <period year="1975">
+                     <calYield>1</calYield>
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="1990">
+                     <calYield>1</calYield>
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2005">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2020">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2035">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2050">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2065">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2080">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2095">
+                     <variableCost>1000</variableCost>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Korea">
+         <FoodSupplySector name="SugarCrop">
+            <FoodSupplySubsector name="SugarCrop">
+               <FoodProductionTechnology name="SugarCrop">
+                  <period year="1975">
+                     <calYield>1</calYield>
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="1990">
+                     <calYield>1</calYield>
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2005">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2020">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2035">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2050">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2065">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2080">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2095">
+                     <variableCost>1000</variableCost>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="Wheat">
+            <FoodSupplySubsector name="Wheat">
+               <FoodProductionTechnology name="Wheat">
+                  <period year="1975">
+                     <calYield>1</calYield>
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="1990">
+                     <calYield>1</calYield>
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2005">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2020">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2035">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2050">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2065">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2080">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2095">
+                     <variableCost>1000</variableCost>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+         <FoodSupplySector name="FiberCrop">
+            <FoodSupplySubsector name="FiberCrop">
+               <FoodProductionTechnology name="FiberCrop">
+                  <period year="1975">
+                     <calYield>1</calYield>
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="1990">
+                     <calYield>1</calYield>
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2005">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2020">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2035">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2050">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2065">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2080">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2095">
+                     <variableCost>1000</variableCost>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+   </world>
+</scenario>

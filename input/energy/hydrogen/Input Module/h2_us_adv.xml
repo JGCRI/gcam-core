@@ -1,0 +1,1073 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <supplysector name="H2 Central Production">
+            <subsector name="gas chemical">
+               <technology name="natural gas steam reforming">
+                  <period year="1975">
+                     <minicam-energy-input name="regional natural gas">
+                        <efficiency>0.73</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.03</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="regional natural gas">
+                        <efficiency>0.73</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.03</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="regional natural gas">
+                        <efficiency>0.73</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.03</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="regional natural gas">
+                        <efficiency>0.73</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.03</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="regional natural gas">
+                        <efficiency>0.77</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.82</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="regional natural gas">
+                        <efficiency>0.78</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.76</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="regional natural gas">
+                        <efficiency>0.79</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.71</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="regional natural gas">
+                        <efficiency>0.80</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.66</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="regional natural gas">
+                        <efficiency>0.82</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.61</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="natural gas steam reforming CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="regional natural gas">
+                        <efficiency>0.73</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.58</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="regional natural gas">
+                        <efficiency>0.73</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.58</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="regional natural gas">
+                        <efficiency>0.73</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.58</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="regional natural gas">
+                        <efficiency>0.73</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.58</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="regional natural gas">
+                        <efficiency>0.79</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.19</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="regional natural gas">
+                        <efficiency>0.80</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.11</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="regional natural gas">
+                        <efficiency>0.81</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.03</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="regional natural gas">
+                        <efficiency>0.82</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.95</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="regional natural gas">
+                        <efficiency>0.84</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal chemical">
+               <technology name="coal chemical">
+                  <period year="1975">
+                     <minicam-energy-input name="regional coal">
+                        <efficiency>0.54</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="regional coal">
+                        <efficiency>0.54</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="regional coal">
+                        <efficiency>0.54</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="regional coal">
+                        <efficiency>0.54</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="regional coal">
+                        <efficiency>0.59</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.29</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="regional coal">
+                        <efficiency>0.60</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.13</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="regional coal">
+                        <efficiency>0.61</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.98</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="regional coal">
+                        <efficiency>0.62</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.83</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="regional coal">
+                        <efficiency>0.63</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.70</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="coal chemical CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="regional coal">
+                        <efficiency>0.59</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="regional coal">
+                        <efficiency>0.59</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="regional coal">
+                        <efficiency>0.59</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="regional coal">
+                        <efficiency>0.59</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="regional coal">
+                        <efficiency>0.64</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="regional coal">
+                        <efficiency>0.65</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.78</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="regional coal">
+                        <efficiency>0.66</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.58</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="regional coal">
+                        <efficiency>0.67</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="regional coal">
+                        <efficiency>0.68</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.22</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="biomass to H2">
+               <technology name="biomass to H2">
+                  <period year="1975">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.98</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.98</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.98</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.98</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.49</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.28</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.50</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.12</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.51</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.96</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.82</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.69</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electrolysis">
+               <technology name="electrolysis">
+                  <period year="1975">
+                     <minicam-energy-input name="elect_td_ind">
+                        <efficiency>0.63</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_ind">
+                        <efficiency>0.63</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_ind">
+                        <efficiency>0.63</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="elect_td_ind">
+                        <efficiency>0.63</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="elect_td_ind">
+                        <efficiency>0.71</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.17</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="elect_td_ind">
+                        <efficiency>0.72</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.87</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="elect_td_ind">
+                        <efficiency>0.73</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.59</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="elect_td_ind">
+                        <efficiency>0.75</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.33</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="elect_td_ind">
+                        <efficiency>0.76</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.09</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="nuclear">
+               <technology name="thermal splitting">
+                  <period year="1975">
+                     <minicam-energy-input name="nuclearFuelGenIII">
+                        <efficiency>0.85</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="nuclearFuelGenIII">
+                        <efficiency>0.85</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="nuclearFuelGenIII">
+                        <efficiency>0.85</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="nuclearFuelGenIII">
+                        <efficiency>0.85</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="nuclearFuelGenIII">
+                        <efficiency>0.85</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.44</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="nuclearFuelGenIII">
+                        <efficiency>0.86</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.12</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="nuclearFuelGenIII">
+                        <efficiency>0.88</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.82</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="nuclearFuelGenIII">
+                        <efficiency>0.89</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.55</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="nuclearFuelGenIII">
+                        <efficiency>0.90</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.29</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="wind">
+               <technology name="electrolysis">
+                  <period year="1975">
+                     <minicam-energy-input name="wind_no_backup">
+                        <efficiency>0.63</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="wind_no_backup">
+                        <efficiency>0.63</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="wind_no_backup">
+                        <efficiency>0.63</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="wind_no_backup">
+                        <efficiency>0.63</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="wind_no_backup">
+                        <efficiency>0.71</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="wind_no_backup">
+                        <efficiency>0.72</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>6.86</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="wind_no_backup">
+                        <efficiency>0.73</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>6.37</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="wind_no_backup">
+                        <efficiency>0.75</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.91</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="wind_no_backup">
+                        <efficiency>0.76</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.48</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="solar">
+               <technology name="electrolysis">
+                  <period year="1975">
+                     <minicam-energy-input name="solar_no_backup">
+                        <efficiency>0.63</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="solar_no_backup">
+                        <efficiency>0.63</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="solar_no_backup">
+                        <efficiency>0.63</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="solar_no_backup">
+                        <efficiency>0.63</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="solar_no_backup">
+                        <efficiency>0.71</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="solar_no_backup">
+                        <efficiency>0.72</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>6.86</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="solar_no_backup">
+                        <efficiency>0.73</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>6.37</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="solar_no_backup">
+                        <efficiency>0.75</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.91</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="solar_no_backup">
+                        <efficiency>0.76</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.48</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="H2 Forecourt Production">
+            <subsector name="gas chemical">
+               <technology name="natural gas steam reforming">
+                  <period year="1975">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.72</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>6.46</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.72</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>6.46</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.72</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>6.46</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.72</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>6.46</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.82</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.43</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.84</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.11</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.85</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.82</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.86</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.54</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="delivered gas">
+                        <efficiency>0.87</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.29</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electrolysis">
+               <technology name="electrolysis">
+                  <period year="1975">
+                     <minicam-energy-input name="elect_td_trn">
+                        <efficiency>0.60</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_trn">
+                        <efficiency>0.60</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_trn">
+                        <efficiency>0.60</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="elect_td_trn">
+                        <efficiency>0.60</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="elect_td_trn">
+                        <efficiency>0.68</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>7.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="elect_td_trn">
+                        <efficiency>0.69</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>6.86</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="elect_td_trn">
+                        <efficiency>0.70</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>6.37</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="elect_td_trn">
+                        <efficiency>0.72</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.91</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="elect_td_trn">
+                        <efficiency>0.73</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.48</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="H2_td">
+            <subsector name="H2_td">
+               <technology name="H2_td">
+                  <period year="1975">
+                     <minicam-energy-input name="H2 Central Production">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>6.07</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="H2 Central Production">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>6.07</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="H2 Central Production">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>6.07</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="H2 Central Production">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>6.07</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="H2 Central Production">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.06</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="H2 Central Production">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.69</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="H2 Central Production">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.36</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="H2 Central Production">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>4.04</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="H2 Central Production">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.75</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="H2 Enduse">
+            <subsector name="H2 Enduse">
+               <technology name="H2_td">
+                  <period year="1975">
+                     <minicam-energy-input name="H2_td">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="H2_td">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="H2_td">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="H2_td">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="H2_td">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="H2_td">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="H2_td">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="H2_td">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="H2_td">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="H2 Forecourt Production">
+                  <period year="1975">
+                     <minicam-energy-input name="H2 Forecourt Production">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="H2 Forecourt Production">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="H2 Forecourt Production">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="H2 Forecourt Production">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="H2 Forecourt Production">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="H2 Forecourt Production">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="H2 Forecourt Production">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="H2 Forecourt Production">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="H2 Forecourt Production">
+                        <efficiency>1.00</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+   </world>
+</scenario>

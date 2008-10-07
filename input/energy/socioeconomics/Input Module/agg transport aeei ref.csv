@@ -1,0 +1,20 @@
+Input: Aggregate AEEIs,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,
+Variable ID,,,,,,,,,,
+10,,final-energy-consumer,final-energy-consumer,final-energy-consumer,final-energy-consumer,final-energy-consumer,final-energy-consumer,final-energy-consumer,final-energy-consumer,final-energy-consumer
+,,AEEI,AEEI,AEEI,AEEI,AEEI,AEEI,AEEI,AEEI,AEEI
+region,energy-final-demand,1975,1990,2005,2020,2035,2050,2065,2080,2095
+Africa,transportation,0,0,0,-3.89E-04,-3.89E-04,-3.94E-04,1.25E-04,3.39E-04,0.001037426
+Australia_NZ,transportation,0,0,0,-4.45E-04,-3.49E-04,-3.76E-04,5.11E-05,0.000133166,0.000831467
+Canada,transportation,0,0,0,-2.19E-04,-3.11E-04,-3.78E-04,5.61E-05,2.25E-04,0.000907476
+China,transportation,0,0,0,-5.30E-05,3.55612E-05,4.7098E-05,0.000493044,0.000761192,0.001327528
+Eastern Europe,transportation,0,0,0,-7.67E-05,-0.000116821,2.71955E-05,0.000515453,0.000798223,1.48E-03
+Former Soviet Union,transportation,0,0,0,-2.54E-04,-2.45E-04,-2.19E-04,0.000270087,0.00047784,0.001183832
+India,transportation,0,0,0,-3.09E-04,-2.52E-04,-2.08E-04,0.000304013,0.000520376,0.001255834
+Japan,transportation,0,0,0,-7.73E-04,-3.63E-04,-3.82E-04,0.00014408,2.20E-04,0.000781864
+Korea,transportation,0,0,0,-4.05E-04,-2.40E-04,-1.87E-04,0.000276537,0.00042678,0.001087277
+Latin America,transportation,0,0,0,-3.99E-04,-4.00E-04,-3.12E-04,0.000269825,0.000527704,0.00121984
+Middle East,transportation,0,0,0,-3.31E-04,-3.07E-04,-3.63E-04,0.000144922,3.33E-04,0.001005138
+Southeast Asia,transportation,0,0,0,-2.20E-04,-1.48E-04,-0.000115241,0.000449667,0.000656839,0.001364149
+USA,transportation,0,0,0,0.001340388,-2.31E-03,-0.000218994,6.06E-05,2.58E-04,0.000940902
+Western Europe,transportation,0,0,0,-5.25E-04,-3.45E-04,-0.000449494,9.81E-05,2.45E-04,0.00087515

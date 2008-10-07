@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <supplysector name="passenger">
+            <tranSubsector name="high speed rail">
+               <scaleYear>2050</scaleYear>
+               <addTimeValue>1</addTimeValue>
+               <logitexp fillout="1" year="1975">-2</logitexp>
+               <sharewt year="1975">0</sharewt>
+               <sharewt year="1990">0</sharewt>
+               <sharewt year="2005">0</sharewt>
+               <sharewt year="2020">0.001</sharewt>
+               <sharewt year="2035">0.0025</sharewt>
+               <sharewt year="2050">0.005</sharewt>
+               <sharewt year="2065">0.005</sharewt>
+               <sharewt year="2080">0.005</sharewt>
+               <sharewt year="2095">0.005</sharewt>
+               <tranTechnology name="electric high speed rail">
+                  <period year="1975">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>214408</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>49.79</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>214408</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>49.79</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>214408</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>49.79</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>206507</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>46.18</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>198897</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>44.48</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>191568</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>43.82</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>184508</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>43.82</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>177709</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>43.82</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>171160</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>43.82</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </tranTechnology>
+            </tranSubsector>
+            <tranSubsector name="auto">
+               <tranTechnology name="electric auto">
+                  <period year="1975">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>1923</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4272</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>1923</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4272</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>1686</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4566</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <sharewt>0.0067</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>1588</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4332</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.0474</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>1495</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4204</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.2689</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>1408</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4150</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.731</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>1326</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4150</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.953</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>1248</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4150</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>1176</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4150</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </tranTechnology>
+            </tranSubsector>
+            <tranSubsector name="light truck">
+               <tranTechnology name="electric light truck">
+                  <period year="1975">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>2415</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4856</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>2415</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4856</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>2385</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.5154</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <sharewt>0.0067</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>2246</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4890</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.0474</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>2115</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4745</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.2689</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>1992</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4685</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.731</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>1875</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4685</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.953</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>1766</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4685</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>1663</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.4685</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </tranTechnology>
+            </tranSubsector>
+            <tranSubsector name="bus">
+               <tranTechnology name="electric bus">
+                  <period year="1975">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>10792</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.679</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>10792</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.679</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>10828</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.828</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>10666</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.696</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>10508</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.633</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>10351</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.580</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>10197</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.580</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>10045</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.580</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>9895</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.580</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </tranTechnology>
+            </tranSubsector>
+            <tranSubsector name="rail">
+               <tranTechnology name="electric rail">
+                  <period year="1975">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>24729</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.676</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>24729</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.676</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>23226</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.677</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>22880</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.618</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>22539</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.559</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>22203</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.503</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>21873</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.447</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>21547</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.392</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <sharewt>1</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>21226</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.339</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </tranTechnology>
+            </tranSubsector>
+         </supplysector>
+         <supplysector name="freight">
+            <tranSubsector name="truck">
+               <tranTechnology name="electric freight truck">
+                  <period year="1975">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>7277</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.0978</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>7277</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.0978</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>6524</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.0204</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>5697</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.9609</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.0067</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>4974</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.9255</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.0474</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>4343</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.9069</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.2689</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>3793</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.9001</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.731</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>3312</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.8934</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.953</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>2892</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.8867</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </tranTechnology>
+            </tranSubsector>
+            <tranSubsector name="rail">
+               <tranTechnology name="electric freight rail">
+                  <period year="1975">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>5207</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.7706</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>5207</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.7706</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>4747</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.8146</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <sharewt>0</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>4572</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.7556</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0.0067</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>4404</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.7115</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0.0474</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>4242</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.6924</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0.2689</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>4085</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.6821</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0.731</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>3935</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.6720</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0.953</sharewt>
+                     <minicam-energy-input name="elect_td_trn">
+                        <coefficient>3790</coefficient>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.6619</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </tranTechnology>
+            </tranSubsector>
+         </supplysector>
+      </region>
+   </world>
+</scenario>

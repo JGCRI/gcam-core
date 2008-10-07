@@ -1,0 +1,136 @@
+From Allison,,,,,,,,,,,,
+http://www.fao.org/docrep/004/y3557e/y3557e20.htm#TopOfPage,,,,,,,,,,,,
+
+Detailed LC higher tech.,,,,,,,,,,,,
+agProdChange,,change 0.05 to 0.0075,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+2002,,,,,,,,,,,,
+,,,,agProdChange,agProdChange,agProdChange,agProdChange,agProdChange,agProdChange,agProdChange,agProdChange,agProdChange
+region,FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,Corn,Corn,Corn,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Canada,Corn,Corn,Corn,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Western Europe,Corn,Corn,Corn,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Japan,Corn,Corn,Corn,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Australia_NZ,Corn,Corn,Corn,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Former Soviet Union,Corn,Corn,Corn,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+China,Corn,Corn,Corn,0,0,0,0.0113,0.0074,0.0075,0.0075,0.0075,0.0075
+Middle East,Corn,Corn,Corn,0,0,0,0.008,0.008,0.008,0.0075,0.0075,0.0075
+Africa,Corn,Corn,Corn,0,0,0,0.018,0.0135,0.008,0.0075,0.0075,0.0075
+Latin America,Corn,Corn,Corn,0,0,0,0.0159,0.0082,0.0075,0.0075,0.0075,0.0075
+Southeast Asia,Corn,Corn,Corn,0,0,0,0.0214,0.011,0.0075,0.0075,0.0075,0.0075
+Eastern Europe,Corn,Corn,Corn,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Korea,Corn,Corn,Corn,0,0,0,0.0113,0.0074,0.0075,0.0075,0.0075,0.0075
+India,Corn,Corn,Corn,0,0,0,0.0214,0.011,0.0075,0.0075,0.0075,0.0075
+USA,FiberCrop,FiberCrop,FiberCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Canada,FiberCrop,FiberCrop,FiberCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Western Europe,FiberCrop,FiberCrop,FiberCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Japan,FiberCrop,FiberCrop,FiberCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Australia_NZ,FiberCrop,FiberCrop,FiberCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Former Soviet Union,FiberCrop,FiberCrop,FiberCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+China,FiberCrop,FiberCrop,FiberCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Middle East,FiberCrop,FiberCrop,FiberCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Africa,FiberCrop,FiberCrop,FiberCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Latin America,FiberCrop,FiberCrop,FiberCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Southeast Asia,FiberCrop,FiberCrop,FiberCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Eastern Europe,FiberCrop,FiberCrop,FiberCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Korea,FiberCrop,FiberCrop,FiberCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+India,FiberCrop,FiberCrop,FiberCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+USA,FodderCrop,FodderCrop,FodderCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Canada,FodderCrop,FodderCrop,FodderCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Western Europe,FodderCrop,FodderCrop,FodderCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Japan,FodderCrop,FodderCrop,FodderCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Australia_NZ,FodderCrop,FodderCrop,FodderCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Former Soviet Union,FodderCrop,FodderCrop,FodderCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+China,FodderCrop,FodderCrop,FodderCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Middle East,FodderCrop,FodderCrop,FodderCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Africa,FodderCrop,FodderCrop,FodderCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Latin America,FodderCrop,FodderCrop,FodderCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Southeast Asia,FodderCrop,FodderCrop,FodderCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Eastern Europe,FodderCrop,FodderCrop,FodderCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Korea,FodderCrop,FodderCrop,FodderCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+India,FodderCrop,FodderCrop,FodderCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+USA,MiscCrop,MiscCrop,MiscCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Canada,MiscCrop,MiscCrop,MiscCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Western Europe,MiscCrop,MiscCrop,MiscCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Japan,MiscCrop,MiscCrop,MiscCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Australia_NZ,MiscCrop,MiscCrop,MiscCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Former Soviet Union,MiscCrop,MiscCrop,MiscCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+China,MiscCrop,MiscCrop,MiscCrop,0,0,0,0.01,0.02,0.01,0.0075,0.0075,0.0075
+Middle East,MiscCrop,MiscCrop,MiscCrop,0,0,0,0.015,0.00754,0.0075,0.0075,0.0075,0.0075
+Africa,MiscCrop,MiscCrop,MiscCrop,0,0,0,0.02,0.02,0.015,0.0075,0.0075,0.0075
+Latin America,MiscCrop,MiscCrop,MiscCrop,0,0,0,0.0065,0.0036,0.004,0.0075,0.0075,0.0075
+Southeast Asia,MiscCrop,MiscCrop,MiscCrop,0,0,0,0.02,0.015,0.01,0.0075,0.0075,0.0075
+Eastern Europe,MiscCrop,MiscCrop,MiscCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Korea,MiscCrop,MiscCrop,MiscCrop,0,0,0,0.01,0.02,0.01,0.0075,0.0075,0.0075
+India,MiscCrop,MiscCrop,MiscCrop,0,0,0,0.02,0.015,0.01,0.0075,0.0075,0.0075
+USA,OilCrop,OilCrop,OilCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Canada,OilCrop,OilCrop,OilCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Western Europe,OilCrop,OilCrop,OilCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Japan,OilCrop,OilCrop,OilCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Australia_NZ,OilCrop,OilCrop,OilCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Former Soviet Union,OilCrop,OilCrop,OilCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+China,OilCrop,OilCrop,OilCrop,0,0,0,0.0141,0.0127,0.0087,0.0075,0.0075,0.0075
+Middle East,OilCrop,OilCrop,OilCrop,0,0,0,0.02,0.0078,0.0075,0.0075,0.0075,0.0075
+Africa,OilCrop,OilCrop,OilCrop,0,0,0,0.0176,0.0164,0.0138,0.0075,0.0075,0.0075
+Latin America,OilCrop,OilCrop,OilCrop,0,0,0,0.01,0.0094,0.0082,0.0075,0.0075,0.0075
+Southeast Asia,OilCrop,OilCrop,OilCrop,0,0,0,0.0141,0.0127,0.0087,0.0075,0.0075,0.0075
+Eastern Europe,OilCrop,OilCrop,OilCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Korea,OilCrop,OilCrop,OilCrop,0,0,0,0.018,0.0118,0.00752,0.0075,0.0075,0.0075
+India,OilCrop,OilCrop,OilCrop,0,0,0,0.0141,0.0127,0.0087,0.0075,0.0075,0.0075
+USA,OtherGrain,OtherGrain,OtherGrain,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Canada,OtherGrain,OtherGrain,OtherGrain,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Western Europe,OtherGrain,OtherGrain,OtherGrain,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Japan,OtherGrain,OtherGrain,OtherGrain,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Australia_NZ,OtherGrain,OtherGrain,OtherGrain,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Former Soviet Union,OtherGrain,OtherGrain,OtherGrain,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+China,OtherGrain,OtherGrain,OtherGrain,0,0,0,0.0143,0.0139,0.0112,0.0075,0.0075,0.0075
+Middle East,OtherGrain,OtherGrain,OtherGrain,0,0,0,0.013,0.0087,0.003,0.0075,0.0075,0.0075
+Africa,OtherGrain,OtherGrain,OtherGrain,0,0,0,0.017,0.0147,0.0107,0.0075,0.0075,0.0075
+Latin America,OtherGrain,OtherGrain,OtherGrain,0,0,0,0.02,0.0112,0.002,0.0075,0.0075,0.0075
+Southeast Asia,OtherGrain,OtherGrain,OtherGrain,0,0,0,0.006,0.0034,0.002,0.0075,0.0075,0.0075
+Eastern Europe,OtherGrain,OtherGrain,OtherGrain,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Korea,OtherGrain,OtherGrain,OtherGrain,0,0,0,0.0143,0.0139,0.0112,0.0075,0.0075,0.0075
+India,OtherGrain,OtherGrain,OtherGrain,0,0,0,0.006,0.0034,0.002,0.0075,0.0075,0.0075
+USA,Rice,Rice,Rice,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Canada,Rice,Rice,Rice,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Western Europe,Rice,Rice,Rice,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Japan,Rice,Rice,Rice,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Australia_NZ,Rice,Rice,Rice,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Former Soviet Union,Rice,Rice,Rice,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+China,Rice,Rice,Rice,0,0,0,0.0062,0.0075,0.0075,0.0075,0.0075,0.0075
+Middle East,Rice,Rice,Rice,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Africa,Rice,Rice,Rice,0,0,0,0.019,0.0167,0.011,0.0075,0.0075,0.0075
+Latin America,Rice,Rice,Rice,0,0,0,0.0079,0.00758,0.0075,0.0075,0.0075,0.0075
+Southeast Asia,Rice,Rice,Rice,0,0,0,0.017,0.00755,0.0075,0.0075,0.0075,0.0075
+Eastern Europe,Rice,Rice,Rice,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Korea,Rice,Rice,Rice,0,0,0,0.0062,0.0075,0.0075,0.0075,0.0075,0.0075
+India,Rice,Rice,Rice,0,0,0,0.017,0.00755,0.0075,0.0075,0.0075,0.0075
+USA,SugarCrop,SugarCrop,SugarCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Canada,SugarCrop,SugarCrop,SugarCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Western Europe,SugarCrop,SugarCrop,SugarCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Japan,SugarCrop,SugarCrop,SugarCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Australia_NZ,SugarCrop,SugarCrop,SugarCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Former Soviet Union,SugarCrop,SugarCrop,SugarCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+China,SugarCrop,SugarCrop,SugarCrop,0,0,0,0.018,0.0082,0.004,0.0075,0.0075,0.0075
+Middle East,SugarCrop,SugarCrop,SugarCrop,0,0,0,0.001,0.0025,0.004,0.0075,0.0075,0.0075
+Africa,SugarCrop,SugarCrop,SugarCrop,0,0,0,0.016,0.0113,0.0043,0.0075,0.0075,0.0075
+Latin America,SugarCrop,SugarCrop,SugarCrop,0,0,0,0.01,0.0041,0.004,0.0075,0.0075,0.0075
+Southeast Asia,SugarCrop,SugarCrop,SugarCrop,0,0,0,0.02,0.0085,0.004,0.0075,0.0075,0.0075
+Eastern Europe,SugarCrop,SugarCrop,SugarCrop,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Korea,SugarCrop,SugarCrop,SugarCrop,0,0,0,0.018,0.0082,0.004,0.0075,0.0075,0.0075
+India,SugarCrop,SugarCrop,SugarCrop,0,0,0,0.02,0.0085,0.004,0.0075,0.0075,0.0075
+USA,Wheat,Wheat,Wheat,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Canada,Wheat,Wheat,Wheat,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Western Europe,Wheat,Wheat,Wheat,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Japan,Wheat,Wheat,Wheat,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Australia_NZ,Wheat,Wheat,Wheat,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Former Soviet Union,Wheat,Wheat,Wheat,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+China,Wheat,Wheat,Wheat,0,0,0,0.0136,0.0075,0.0075,0.0075,0.0075,0.0075
+Middle East,Wheat,Wheat,Wheat,0,0,0,0.0119,0.0095,0.0064,0.0075,0.0075,0.0075
+Africa,Wheat,Wheat,Wheat,0,0,0,0.015,0.0123,0.0085,0.0075,0.0075,0.0075
+Latin America,Wheat,Wheat,Wheat,0,0,0,0.008,0.0076,0.0075,0.0075,0.0075,0.0075
+Southeast Asia,Wheat,Wheat,Wheat,0,0,0,0.013,0.0126,0.0093,0.0075,0.0075,0.0075
+Eastern Europe,Wheat,Wheat,Wheat,0,0,0,0.0075,0.0075,0.0075,0.0075,0.0075,0.0075
+Korea,Wheat,Wheat,Wheat,0,0,0,0.0136,0.0075,0.0075,0.0075,0.0075,0.0075
+India,Wheat,Wheat,Wheat,0,0,0,0.013,0.0126,0.0093,0.0075,0.0075,0.0075

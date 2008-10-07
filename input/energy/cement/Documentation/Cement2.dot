@@ -1,0 +1,26 @@
+digraph region{
+	Cement[style=filled,color=steelblue1];
+	Cement_conv[label="Cement \nconventional"];
+	Cement_CCS[label="Cement \nCCS"];
+	Cement->Cement_conv[dir=back];
+	Cement->Cement_CCS[dir=back];
+	process_heat[label="Process Heat"];
+	electricity[label="Electricity",style=filled,color=indianred1];
+	limestone[label="Raw Limestone",style=filled,color=indianred1];
+	coal[style=filled,color=indianred1];
+	gas[style=filled,color=indianred1];
+	oil[style=filled,color=indianred1];
+	biomass[style=filled,color=indianred1];
+	Cement_conv->electricity[dir=back];
+	Cement_conv->limestone[dir=back];
+	Cement_conv->process_heat[dir=back];
+	gas[label="Natural\nGas",color=indianred1,style=filled];
+	oil[label="Refined\nLiquid Fuels",color=indianred1,style=filled];
+	coal[label="Coal",color=indianred1,style=filled];
+	biomass[label="Biomass",color=indianred1,style=filled];
+	process_heat->gas[dir=back];
+	process_heat->oil[dir=back];
+	process_heat->coal[dir=back];
+	process_heat->biomass[dir=back];
+
+}

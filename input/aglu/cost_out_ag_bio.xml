@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="1990">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2005">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2020">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2035">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2050">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2065">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2080">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2095">
+                     <variableCost>1000</variableCost>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Canada">
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="1990">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2005">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2020">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2035">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2050">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2065">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2080">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2095">
+                     <variableCost>1000</variableCost>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Western Europe">
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="1990">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2005">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2020">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2035">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2050">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2065">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2080">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2095">
+                     <variableCost>1000</variableCost>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Japan">
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="1990">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2005">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2020">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2035">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2050">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2065">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2080">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2095">
+                     <variableCost>1000</variableCost>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Australia_NZ">
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="1990">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2005">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2020">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2035">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2050">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2065">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2080">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2095">
+                     <variableCost>1000</variableCost>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Former Soviet Union">
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="1990">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2005">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2020">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2035">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2050">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2065">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2080">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2095">
+                     <variableCost>1000</variableCost>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="China">
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="1990">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2005">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2020">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2035">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2050">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2065">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2080">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2095">
+                     <variableCost>1000</variableCost>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Middle East">
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="1990">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2005">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2020">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2035">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2050">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2065">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2080">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2095">
+                     <variableCost>1000</variableCost>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Africa">
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="1990">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2005">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2020">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2035">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2050">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2065">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2080">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2095">
+                     <variableCost>1000</variableCost>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Latin America">
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="1990">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2005">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2020">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2035">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2050">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2065">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2080">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2095">
+                     <variableCost>1000</variableCost>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Southeast Asia">
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="1990">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2005">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2020">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2035">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2050">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2065">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2080">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2095">
+                     <variableCost>1000</variableCost>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Eastern Europe">
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="1990">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2005">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2020">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2035">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2050">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2065">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2080">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2095">
+                     <variableCost>1000</variableCost>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Korea">
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="1990">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2005">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2020">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2035">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2050">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2065">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2080">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2095">
+                     <variableCost>1000</variableCost>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="India">
+         <FoodSupplySector name="biomass">
+            <FoodSupplySubsector name="biomass">
+               <FoodProductionTechnology name="biomass">
+                  <period year="1975">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="1990">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2005">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2020">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2035">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2050">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2065">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2080">
+                     <variableCost>1000</variableCost>
+                  </period>
+                  <period year="2095">
+                     <variableCost>1000</variableCost>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+   </world>
+</scenario>

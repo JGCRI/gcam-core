@@ -1,0 +1,17 @@
+Region: USA,,,,,,,,,,,
+Sequestration Fraction,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,
+Variable ID,,,,,,,,,,,
+600,,,,,,,,,,,
+
+Sector,Subsector,Technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+feedstocks petroleum,refined liquids,refined liquids,1,1,1,1,1,1,1,1,1
+feedstocks petroleum,gas,gas,1,1,1,1,1,1,1,1,1
+feedstocks petroleum,coal,coal,1,1,1,1,1,1,1,1,1
+feedstocks chemicals,refined liquids,refined liquids,1,1,1,1,1,1,1,1,1
+feedstocks chemicals,gas,gas,1,1,1,1,1,1,1,1,1
+feedstocks chemicals,coal,coal,1,1,1,1,1,1,1,1,1
+feedstocks primary metals,refined liquids,refined liquids,1,1,1,1,1,1,1,1,1
+feedstocks primary metals,gas,gas,1,1,1,1,1,1,1,1,1
+feedstocks primary metals,coal,coal,1,1,1,1,1,1,1,1,1
+construction feedstocks,refined liquids,refined liquids,1,1,1,1,1,1,1,1,1

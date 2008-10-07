@@ -1,0 +1,66 @@
+This xml file should always be read AFTER the CalInput--it over-writes some of the data,,,,,,
+
+EndUse Techs data  ,,,,,,
+Sector,subsector,technology,flow,,Cogen shares (for Efficiencies),
+boilers pulp paper and wood,refined liquids,refined liquids cogen,0.131392996,,boilers pulp paper and woodrefined liquids cogen,37%
+boilers pulp paper and wood,gas,gas cogen,0.350404346,,boilers pulp paper and woodgas cogen,26%
+boilers pulp paper and wood,coal,coal cogen,0.293501124,,boilers pulp paper and woodcoal cogen,43%
+boilers pulp paper and wood,biomass,biomass cogen,1.406472905,,boilers pulp paper and woodbiomass cogen,36%
+boilers general,refined liquids,refined liquids cogen,0.174521994,,boilers generalrefined liquids cogen,11%
+boilers general,gas,gas cogen,1.71299758,,boilers generalgas cogen,34%
+boilers general,coal,coal cogen,0.510909364,,boilers generalcoal cogen,29%
+boilers general,biomass,biomass cogen,0.035441625,,boilers generalbiomass cogen,8%
+process heat primary metals,refined liquids,refined liquids cogen,0.020059999,,process heat primary metalsrefined liquids cogen,5%
+process heat primary metals,gas,gas cogen,0.543899089,,process heat primary metalsgas cogen,2%
+process heat primary metals,coal,coal cogen,0.04565573,,process heat primary metalscoal cogen,118%
+process heat primary metals,biomass,biomass cogen,0,,process heat primary metalsbiomass cogen,0%
+process heat general,refined liquids,refined liquids cogen,0.162485995,,process heat generalrefined liquids cogen,18%
+process heat general,gas,gas cogen,2.027629789,,process heat generalgas cogen,34%
+process heat general,coal,coal cogen,0.077179925,,process heat generalcoal cogen,19%
+process heat general,biomass,biomass cogen,0,,process heat generalbiomass cogen,0%
+,,,,,,
+,,,,,,
+Region: USA,,,,,,
+EndUseTechsforXML,,,,,,
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+501,,,,,,
+,,,,,,
+supplysector,subsector,technology,period,minicam-energy-input,calibrated-value,
+boilers pulp paper and wood,refined liquids,refined liquids cogen,2005,refined liquids industrial,0.04812,
+boilers pulp paper and wood,gas,gas cogen,2005,wholesale gas,0.09264,
+boilers pulp paper and wood,coal,coal cogen,2005,delivered coal,0.12669,
+boilers pulp paper and wood,biomass,biomass cogen,2005,delivered biomass,0.50584
+boilers general,refined liquids,refined liquids cogen,2005,refined liquids industrial,0.01887
+boilers general,gas,gas cogen,2005,wholesale gas,0.58578
+boilers general,coal,coal cogen,2005,delivered coal,0.14779
+boilers general,biomass,biomass cogen,2005,delivered biomass,0.00288
+process heat primary metals,refined liquids,refined liquids cogen,2005,refined liquids industrial,0.00092
+process heat primary metals,gas,gas cogen,2005,wholesale gas,0.01083
+process heat primary metals,coal,coal cogen,2005,delivered coal,0.05390
+process heat general,refined liquids,refined liquids cogen,2005,refined liquids industrial,0.02893
+process heat general,gas,gas cogen,2005,wholesale gas,0.69818
+process heat general,coal,coal cogen,2005,delivered coal,0.01448
+,,,,,
+,,,,,
+Region: USA,,,,,
+EndUseTechsforXML,,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+501,,,,,
+,,,,,
+supplysector,subsector,technology,period,minicam-energy-input,calibrated-value
+boilers pulp paper and wood,refined liquids,refined liquids,2005,refined liquids industrial,0.08327
+boilers pulp paper and wood,gas,gas,2005,wholesale gas,0.25777
+boilers pulp paper and wood,coal,coal,2005,delivered coal,0.16681
+boilers pulp paper and wood,biomass,biomass,2005,delivered biomass,0.90064
+boilers general,refined liquids,refined liquids,2005,refined liquids industrial,0.15565
+boilers general,gas,gas,2005,wholesale gas,1.12722
+boilers general,coal,coal,2005,delivered coal,0.36311
+boilers general,biomass,biomass,2005,delivered biomass,0.03256
+process heat primary metals,refined liquids,refined liquids,2005,refined liquids industrial,0.01914
+process heat primary metals,gas,gas,2005,wholesale gas,0.53307
+process heat primary metals,coal,coal,2005,delivered coal,-0.00825
+process heat general,refined liquids,refined liquids,2005,refined liquids industrial,0.13355
+process heat general,gas,gas,2005,wholesale gas,1.32945
+process heat general,coal,coal,2005,delivered coal,0.06270

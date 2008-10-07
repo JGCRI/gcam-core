@@ -1,0 +1,2945 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <supplysector name="cement">
+            <subsector name="cement (conv)">
+               <technology name="cement (conv)">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.496</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.964</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.529</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.496</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.964</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.529</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.496</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.951</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.515</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.426</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.108</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.407</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.444</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.322</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.339</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.354</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.317</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.319</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.267</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.312</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.300</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.184</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.307</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.280</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.103</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.303</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="cement_CCS">
+               <technology name="cement_CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.496</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.964</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.529</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.496</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.964</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.529</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.496</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.951</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.515</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.426</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.108</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.407</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.444</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.322</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.339</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.354</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.317</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.319</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.267</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.312</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.300</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.184</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.307</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.280</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.103</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.303</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Canada">
+         <supplysector name="cement">
+            <subsector name="cement (conv)">
+               <technology name="cement (conv)">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.496</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.973</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.565</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.496</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.973</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.565</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.496</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.289</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.508</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.426</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.842</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.404</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.456</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.322</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.339</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.365</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.317</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.319</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.278</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.312</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.300</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.194</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.308</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.280</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.113</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.303</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="cement_CCS">
+               <technology name="cement_CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.496</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.973</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.565</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.496</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.973</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.565</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.496</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.289</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.508</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.426</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.842</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.404</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.456</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.322</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.339</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.365</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.317</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.319</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.278</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.312</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.300</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.194</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.308</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.280</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.113</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.303</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Western Europe">
+         <supplysector name="cement">
+            <subsector name="cement (conv)">
+               <technology name="cement (conv)">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.371</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.873</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.389</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.371</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.873</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.389</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.371</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.533</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.362</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.366</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.497</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.343</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.463</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.324</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.340</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.372</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.319</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.320</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.285</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.314</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.300</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.200</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.310</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.281</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.119</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.305</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="cement_CCS">
+               <technology name="cement_CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.371</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.873</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.389</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.371</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.873</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.389</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.371</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.533</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.362</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.366</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.497</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.343</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.463</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.324</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.340</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.372</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.319</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.320</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.285</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.314</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.300</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.200</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.310</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.281</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.119</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.305</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Japan">
+         <supplysector name="cement">
+            <subsector name="cement (conv)">
+               <technology name="cement (conv)">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.565</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.342</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.565</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.342</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.463</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.364</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.463</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.343</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.463</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.324</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.340</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.372</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.319</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.320</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.285</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.314</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.300</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.200</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.310</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.281</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.119</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.305</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="cement_CCS">
+               <technology name="cement_CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.565</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.342</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.565</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.342</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.463</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.364</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.463</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.343</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.463</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.324</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.340</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.372</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.319</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.320</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.285</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.314</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.300</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.200</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.310</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.281</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.119</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.305</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Australia_NZ">
+         <supplysector name="cement">
+            <subsector name="cement (conv)">
+               <technology name="cement (conv)">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.428</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.170</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.425</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.428</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.170</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.425</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.428</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.161</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.407</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.394</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.787</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.363</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.458</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.323</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.340</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.367</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.319</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.320</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.280</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.314</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.300</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.196</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.309</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.281</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.115</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.305</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="cement_CCS">
+               <technology name="cement_CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.428</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.170</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.425</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.428</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.170</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.425</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.428</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.161</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.407</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.394</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.787</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.363</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.458</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.323</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.340</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.367</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.319</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.320</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.280</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.314</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.300</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.196</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.309</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.281</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.115</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.305</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Former Soviet Union">
+         <supplysector name="cement">
+            <subsector name="cement (conv)">
+               <technology name="cement (conv)">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>4.237</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.425</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>4.237</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.425</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>4.195</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.407</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.199</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.363</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.439</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.323</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.340</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.349</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.319</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.320</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.263</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.314</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.300</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.179</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.309</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.281</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.099</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.305</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="cement_CCS">
+               <technology name="cement_CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>4.237</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.425</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>4.237</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.425</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>4.195</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.407</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.199</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.363</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.439</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.323</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.340</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.349</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.319</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.320</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.263</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.314</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.300</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.179</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.309</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.281</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.099</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.305</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="China">
+         <supplysector name="cement">
+            <subsector name="cement (conv)">
+               <technology name="cement (conv)">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.411</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.867</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.432</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.411</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.867</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.432</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.411</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.000</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.421</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.385</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.716</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.369</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.460</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.323</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.340</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.369</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.318</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.320</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.282</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.314</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.300</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.198</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.309</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.281</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.117</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.304</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="cement_CCS">
+               <technology name="cement_CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.411</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.867</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.432</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.411</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.867</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.432</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.411</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.000</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.421</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.385</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.716</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.369</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.460</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.323</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.340</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.369</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.318</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.320</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.282</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.314</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.300</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.198</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.309</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.281</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.117</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.304</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Middle East">
+         <supplysector name="cement">
+            <subsector name="cement (conv)">
+               <technology name="cement (conv)">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.547</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.722</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.425</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.547</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.722</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.425</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.547</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.699</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.407</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.450</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.010</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.363</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.359</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.449</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.323</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.339</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.359</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.319</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.319</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.272</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.314</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.299</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.188</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.309</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.280</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.108</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.305</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="cement_CCS">
+               <technology name="cement_CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.547</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.722</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.425</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.547</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.722</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.425</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.547</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.699</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.407</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.450</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.010</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.363</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.359</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.449</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.323</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.339</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.359</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.319</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.319</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.272</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.314</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.299</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.188</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.309</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.280</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.108</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.305</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Africa">
+         <supplysector name="cement">
+            <subsector name="cement (conv)">
+               <technology name="cement (conv)">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.484</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.685</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.425</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.484</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.685</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.425</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.484</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.669</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.407</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.420</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.998</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.363</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.450</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.323</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.339</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.359</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.319</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.319</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.272</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.314</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.300</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.189</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.309</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.280</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.108</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.305</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="cement_CCS">
+               <technology name="cement_CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.484</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.685</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.425</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.484</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.685</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.425</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.484</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.669</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.407</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.420</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.998</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.363</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.450</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.323</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.339</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.359</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.319</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.319</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.272</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.314</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.300</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.189</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.309</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.280</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.108</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.305</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Latin America">
+         <supplysector name="cement">
+            <subsector name="cement (conv)">
+               <technology name="cement (conv)">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.436</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.097</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.405</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.436</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.097</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.405</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.436</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.533</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.410</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.398</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.498</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.364</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.463</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.323</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.340</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.372</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.319</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.320</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.285</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.314</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.300</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.200</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.309</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.281</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.119</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.305</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="cement_CCS">
+               <technology name="cement_CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.436</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.097</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.405</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.436</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.097</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.405</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.436</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.533</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.410</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.398</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.498</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.364</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.463</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.323</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.340</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.372</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.319</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.320</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.285</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.314</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.300</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.200</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.309</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.281</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.119</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.305</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Southeast Asia">
+         <supplysector name="cement">
+            <subsector name="cement (conv)">
+               <technology name="cement (conv)">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.544</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.980</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.425</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.544</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.980</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.425</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.544</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.973</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.407</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.449</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.116</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.363</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.359</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.444</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.323</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.339</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.354</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.319</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.319</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.267</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.314</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.299</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.183</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.309</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.280</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.103</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.305</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="cement_CCS">
+               <technology name="cement_CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.544</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.980</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.425</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.544</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.980</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.425</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.544</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.973</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.407</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.449</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.116</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.363</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.359</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.444</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.323</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.339</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.354</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.319</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.319</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.267</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.314</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.299</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.183</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.309</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.280</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.103</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.305</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Eastern Europe">
+         <supplysector name="cement">
+            <subsector name="cement (conv)">
+               <technology name="cement (conv)">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.455</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.740</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.425</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.455</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.740</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.425</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.455</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.715</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.407</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.406</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.016</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.363</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.449</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.323</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.340</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.359</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.319</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.320</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.272</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.314</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.300</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.188</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.309</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.281</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.107</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.305</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="cement_CCS">
+               <technology name="cement_CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.455</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.740</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.425</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.455</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.740</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.425</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.455</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.715</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.407</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.406</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.016</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.363</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.360</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.449</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.323</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.340</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.359</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.319</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.320</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.272</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.314</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.300</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.188</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.309</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.281</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.107</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.305</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Korea">
+         <supplysector name="cement">
+            <subsector name="cement (conv)">
+               <technology name="cement (conv)">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.632</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>4.110</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.396</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.632</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>4.110</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.396</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.632</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.316</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.374</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.489</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.854</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.348</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.358</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.455</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.324</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.338</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.365</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.319</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.318</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.278</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.314</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.299</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.194</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.310</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.279</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.113</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.305</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="cement_CCS">
+               <technology name="cement_CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.632</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>4.110</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.396</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.632</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>4.110</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.396</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.632</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>3.316</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.374</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.489</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.854</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.348</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.358</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.455</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.324</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.338</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.365</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.319</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.318</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.278</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.314</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.299</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.194</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.310</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.279</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.113</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.305</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="India">
+         <supplysector name="cement">
+            <subsector name="cement (conv)">
+               <technology name="cement (conv)">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.513</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>4.256</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.432</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.513</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>4.256</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.432</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.513</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.679</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.324</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.434</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.568</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.324</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.359</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.462</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.324</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.339</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.371</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.319</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.319</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.284</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.314</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.300</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.200</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.310</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.280</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.119</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.305</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="cement_CCS">
+               <technology name="cement_CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.513</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>4.256</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.432</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.513</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>4.256</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.432</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.513</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.679</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.324</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.434</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.568</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.324</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.359</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.462</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.324</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.339</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.371</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.319</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.319</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.284</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.314</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.300</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.200</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.310</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="limestone">
+                        <coefficient>1.280</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="process heat cement">
+                        <coefficient>2.119</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.305</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+   </world>
+</scenario>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <supplysector name="residential">
+            <subsector name="aggregatebuilding">
+               <building-demand-technology name="aggregatebuilding">
+                  <period year="1975">
+                     <aveInsulation>0.250</aveInsulation>
+                  </period>
+                  <period year="1990">
+                     <aveInsulation>0.235</aveInsulation>
+                  </period>
+                  <period year="2005">
+                     <aveInsulation>0.232</aveInsulation>
+                  </period>
+                  <period year="2020">
+                     <aveInsulation>0.205</aveInsulation>
+                  </period>
+                  <period year="2035">
+                     <aveInsulation>0.184</aveInsulation>
+                  </period>
+                  <period year="2050">
+                     <aveInsulation>0.163</aveInsulation>
+                  </period>
+                  <period year="2065">
+                     <aveInsulation>0.148</aveInsulation>
+                  </period>
+                  <period year="2080">
+                     <aveInsulation>0.135</aveInsulation>
+                  </period>
+                  <period year="2095">
+                     <aveInsulation>0.125</aveInsulation>
+                  </period>
+               </building-demand-technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="commercial">
+            <subsector name="aggregatebuilding">
+               <building-demand-technology name="aggregatebuilding">
+                  <period year="1975">
+                     <aveInsulation>0.300</aveInsulation>
+                  </period>
+                  <period year="1990">
+                     <aveInsulation>0.274</aveInsulation>
+                  </period>
+                  <period year="2005">
+                     <aveInsulation>0.281</aveInsulation>
+                  </period>
+                  <period year="2020">
+                     <aveInsulation>0.256</aveInsulation>
+                  </period>
+                  <period year="2035">
+                     <aveInsulation>0.234</aveInsulation>
+                  </period>
+                  <period year="2050">
+                     <aveInsulation>0.214</aveInsulation>
+                  </period>
+                  <period year="2065">
+                     <aveInsulation>0.196</aveInsulation>
+                  </period>
+                  <period year="2080">
+                     <aveInsulation>0.179</aveInsulation>
+                  </period>
+                  <period year="2095">
+                     <aveInsulation>0.164</aveInsulation>
+                  </period>
+               </building-demand-technology>
+            </subsector>
+         </supplysector>
+      </region>
+   </world>
+</scenario>

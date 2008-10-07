@@ -1,0 +1,322 @@
+Solar roofs intermittent supplysector information,,,,,,,,,,,,,
+"Unit tags, market, 1975 price",,,,,,,,,,,,,
+INPUT_TABLE,,,,,We don't need electricity-reserve-margin or resource variance. We do need average-grid-capacity-factor.,,,,,,,,
+Variable ID,,,,,Check if we need backup-capacity factor. ,,,,,,,,
+100,,,,,gpk: these should be equal to the values used in other int supplysectors (i.e. don't change). trying with elec reserve margin,,,,,,,,
+,,,,,,,,,,this last column isn't being read in; these are default values anyway,,,
+region,intermittent-supplysector,output-unit,input-unit,price-unit,average-grid-capacity-factor,backup-capacity-factor,backup-cost,electricity-reserve-margin,electric-sector-name,market,,,
+USA,Solar_roofs,EJ,EJ,1975$/GJ,0.6,0.05,30,0,electricity,USA,,,
+Canada,Solar_roofs,EJ,EJ,1975$/GJ,0.6,0.05,30,0,electricity,Canada,,,
+Western Europe,Solar_roofs,EJ,EJ,1975$/GJ,0.6,0.05,30,0,electricity,Western Europe,,,
+Japan,Solar_roofs,EJ,EJ,1975$/GJ,0.6,0.05,30,0,electricity,Japan,,,
+Australia_NZ,Solar_roofs,EJ,EJ,1975$/GJ,0.6,0.05,30,0,electricity,Australia_NZ,,,
+Former Soviet Union,Solar_roofs,EJ,EJ,1975$/GJ,0.6,0.05,30,0,electricity,Former Soviet Union,,,
+China,Solar_roofs,EJ,EJ,1975$/GJ,0.6,0.05,30,0,electricity,China,,,
+Middle East,Solar_roofs,EJ,EJ,1975$/GJ,0.6,0.05,30,0,electricity,Middle East,,,
+Africa,Solar_roofs,EJ,EJ,1975$/GJ,0.6,0.05,30,0,electricity,Africa,,,
+Latin America,Solar_roofs,EJ,EJ,1975$/GJ,0.6,0.05,30,0,electricity,Latin America,,,
+Southeast Asia,Solar_roofs,EJ,EJ,1975$/GJ,0.6,0.05,30,0,electricity,Southeast Asia,,,
+Eastern Europe,Solar_roofs,EJ,EJ,1975$/GJ,0.6,0.05,30,0,electricity,Eastern Europe,,,
+Korea,Solar_roofs,EJ,EJ,1975$/GJ,0.6,0.05,30,0,electricity,Korea,,,
+India,Solar_roofs,EJ,EJ,1975$/GJ,0.6,0.05,30,0,electricity,India,,,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+sharewt,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+102,,,,,,,,,,,,,
+,,,,sharewt,,,,,,,,,
+region,intermittent-supplysector,subsector,scaleYear,1975,1990,2005,2020,2035,2050,2065,2080,2095,
+USA,Solar_roofs,Solar_roofs,1975,0,0,0,1,1,1,1,1,1,
+Canada,Solar_roofs,Solar_roofs,1975,0,0,0,1,1,1,1,1,1,
+Western Europe,Solar_roofs,Solar_roofs,1975,0,0,0,1,1,1,1,1,1,
+Japan,Solar_roofs,Solar_roofs,1975,0,0,0,1,1,1,1,1,1
+Australia_NZ,Solar_roofs,Solar_roofs,1975,0,0,0,1,1,1,1,1,1
+Former Soviet Union,Solar_roofs,Solar_roofs,1975,0,0,0,1,1,1,1,1,1
+China,Solar_roofs,Solar_roofs,1975,0,0,0,1,1,1,1,1,1
+Middle East,Solar_roofs,Solar_roofs,1975,0,0,0,1,1,1,1,1,1
+Africa,Solar_roofs,Solar_roofs,1975,0,0,0,1,1,1,1,1,1
+Latin America,Solar_roofs,Solar_roofs,1975,0,0,0,1,1,1,1,1,1
+Southeast Asia,Solar_roofs,Solar_roofs,1975,0,0,0,1,1,1,1,1,1
+Eastern Europe,Solar_roofs,Solar_roofs,1975,0,0,0,1,1,1,1,1,1
+Korea,Solar_roofs,Solar_roofs,1975,0,0,0,1,1,1,1,1,1
+India,Solar_roofs,Solar_roofs,1975,0,0,0,1,1,1,1,1,1
+
+
+tech lifetime,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+103,,,,,,,,,,,,
+,,,,lifetime,,,,,,,,
+region,intermittent-supplysector,subsector,intermittent-technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,Solar_roofs,Solar_roofs,Rooftop_PV,-1,-1,-1,30,30,30,30,30,30
+Canada,Solar_roofs,Solar_roofs,Rooftop_PV,-1,-1,-1,30,30,30,30,30,30
+Western Europe,Solar_roofs,Solar_roofs,Rooftop_PV,-1,-1,-1,30,30,30,30,30,30
+Japan,Solar_roofs,Solar_roofs,Rooftop_PV,-1,-1,-1,30,30,30,30,30,30
+Australia_NZ,Solar_roofs,Solar_roofs,Rooftop_PV,-1,-1,-1,30,30,30,30,30,30
+Former Soviet Union,Solar_roofs,Solar_roofs,Rooftop_PV,-1,-1,-1,30,30,30,30,30,30
+China,Solar_roofs,Solar_roofs,Rooftop_PV,-1,-1,-1,30,30,30,30,30,30
+Middle East,Solar_roofs,Solar_roofs,Rooftop_PV,-1,-1,-1,30,30,30,30,30,30
+Africa,Solar_roofs,Solar_roofs,Rooftop_PV,-1,-1,-1,30,30,30,30,30,30
+Latin America,Solar_roofs,Solar_roofs,Rooftop_PV,-1,-1,-1,30,30,30,30,30,30
+Southeast Asia,Solar_roofs,Solar_roofs,Rooftop_PV,-1,-1,-1,30,30,30,30,30,30
+Eastern Europe,Solar_roofs,Solar_roofs,Rooftop_PV,-1,-1,-1,30,30,30,30,30,30
+Korea,Solar_roofs,Solar_roofs,Rooftop_PV,-1,-1,-1,30,30,30,30,30,30
+India,Solar_roofs,Solar_roofs,Rooftop_PV,-1,-1,-1,30,30,30,30,30,30
+
+
+electric-sector,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+104,,,,,,,,,,,,
+,,,,electric-sector-name,,,,,,,,
+region,intermittent-supplysector,subsector,intermittent-technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,Solar_roofs,Solar_roofs,Rooftop_PV,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity
+Canada,Solar_roofs,Solar_roofs,Rooftop_PV,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity
+Western Europe,Solar_roofs,Solar_roofs,Rooftop_PV,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity
+Japan,Solar_roofs,Solar_roofs,Rooftop_PV,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity
+Australia_NZ,Solar_roofs,Solar_roofs,Rooftop_PV,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity
+Former Soviet Union,Solar_roofs,Solar_roofs,Rooftop_PV,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity
+China,Solar_roofs,Solar_roofs,Rooftop_PV,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity
+Middle East,Solar_roofs,Solar_roofs,Rooftop_PV,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity
+Africa,Solar_roofs,Solar_roofs,Rooftop_PV,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity
+Latin America,Solar_roofs,Solar_roofs,Rooftop_PV,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity
+Southeast Asia,Solar_roofs,Solar_roofs,Rooftop_PV,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity
+Eastern Europe,Solar_roofs,Solar_roofs,Rooftop_PV,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity
+Korea,Solar_roofs,Solar_roofs,Rooftop_PV,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity
+India,Solar_roofs,Solar_roofs,Rooftop_PV,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity,electricity
+
+
+backup-electricity,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+105,,,,,,,,,,,,
+,,,,minicam-energy-input,,,,,,,,
+region,intermittent-supplysector,subsector,intermittent-technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,Solar_roofs,Solar_roofs,Rooftop_PV,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity
+Canada,Solar_roofs,Solar_roofs,Rooftop_PV,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity
+Western Europe,Solar_roofs,Solar_roofs,Rooftop_PV,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity
+Japan,Solar_roofs,Solar_roofs,Rooftop_PV,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity
+Australia_NZ,Solar_roofs,Solar_roofs,Rooftop_PV,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity
+Former Soviet Union,Solar_roofs,Solar_roofs,Rooftop_PV,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity
+China,Solar_roofs,Solar_roofs,Rooftop_PV,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity
+Middle East,Solar_roofs,Solar_roofs,Rooftop_PV,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity
+Africa,Solar_roofs,Solar_roofs,Rooftop_PV,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity
+Latin America,Solar_roofs,Solar_roofs,Rooftop_PV,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity
+Southeast Asia,Solar_roofs,Solar_roofs,Rooftop_PV,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity
+Eastern Europe,Solar_roofs,Solar_roofs,Rooftop_PV,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity
+Korea,Solar_roofs,Solar_roofs,Rooftop_PV,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity
+India,Solar_roofs,Solar_roofs,Rooftop_PV,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity,backup_electricity
+
+
+non-energy input cost,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+106,,,,minicam-non-energy-input,,,,,,,,
+,,,,input-cost,,,,,,,,
+region,intermittent-supplysector,subsector,intermittent-technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,Solar_roofs,Solar_roofs,Rooftop_PV,60.92,60.92,60.92,41.38,30.99,25.31,21.92,21.07,20.67
+Canada,Solar_roofs,Solar_roofs,Rooftop_PV,75.09,75.09,75.09,51.00,38.19,31.20,27.02,25.97,25.48
+Western Europe,Solar_roofs,Solar_roofs,Rooftop_PV,73.01,73.01,73.01,49.59,37.13,30.34,26.27,25.25,24.77
+Japan,Solar_roofs,Solar_roofs,Rooftop_PV,65.57,65.57,65.57,44.53,33.35,27.24,23.59,22.68,22.25
+Australia_NZ,Solar_roofs,Solar_roofs,Rooftop_PV,52.35,52.35,52.35,35.56,26.63,21.75,18.84,18.11,17.76
+Former Soviet Union,Solar_roofs,Solar_roofs,Rooftop_PV,76.13,76.13,76.13,51.70,38.72,31.63,27.39,26.33,25.83
+China,Solar_roofs,Solar_roofs,Rooftop_PV,61.89,61.89,61.89,42.03,31.48,25.71,22.27,21.40,21.00
+Middle East,Solar_roofs,Solar_roofs,Rooftop_PV,45.96,45.96,45.96,31.22,23.38,19.10,16.54,15.90,15.59
+Africa,Solar_roofs,Solar_roofs,Rooftop_PV,45.55,45.55,45.55,30.94,23.17,18.93,16.39,15.75,15.45
+Latin America,Solar_roofs,Solar_roofs,Rooftop_PV,49.94,49.94,49.94,33.92,25.40,20.75,17.97,17.27,16.94
+Southeast Asia,Solar_roofs,Solar_roofs,Rooftop_PV,50.04,50.04,50.04,33.99,25.45,20.79,18.00,17.31,16.98
+Eastern Europe,Solar_roofs,Solar_roofs,Rooftop_PV,75.35,75.35,75.35,51.17,38.32,31.31,27.11,26.06,25.56,,,
+Korea,Solar_roofs,Solar_roofs,Rooftop_PV,61.24,61.24,61.24,41.59,31.15,25.45,22.03,21.18,20.78,,,
+India,Solar_roofs,Solar_roofs,Rooftop_PV,50.71,50.71,50.71,34.44,25.79,21.07,18.25,17.54,17.21,,,
+
+
+tech efficiency,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,
+107,,,,minicam-energy-input,,,,,,,,,,,
+,,,,efficiency,,,,,,,,,,,
+Region,intermittent-supplysector,subsector,intermittent-technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input,,
+USA,Solar_roofs,Solar_roofs,Rooftop_PV,1,1,1,1,1,1,1,1,1,Distributed_Solar,,
+Canada,Solar_roofs,Solar_roofs,Rooftop_PV,1,1,1,1,1,1,1,1,1,Distributed_Solar,,
+Western Europe,Solar_roofs,Solar_roofs,Rooftop_PV,1,1,1,1,1,1,1,1,1,Distributed_Solar,,
+Japan,Solar_roofs,Solar_roofs,Rooftop_PV,1,1,1,1,1,1,1,1,1,Distributed_Solar,,
+Australia_NZ,Solar_roofs,Solar_roofs,Rooftop_PV,1,1,1,1,1,1,1,1,1,Distributed_Solar,,
+Former Soviet Union,Solar_roofs,Solar_roofs,Rooftop_PV,1,1,1,1,1,1,1,1,1,Distributed_Solar,
+China,Solar_roofs,Solar_roofs,Rooftop_PV,1,1,1,1,1,1,1,1,1,Distributed_Solar,
+Middle East,Solar_roofs,Solar_roofs,Rooftop_PV,1,1,1,1,1,1,1,1,1,Distributed_Solar,
+Africa,Solar_roofs,Solar_roofs,Rooftop_PV,1,1,1,1,1,1,1,1,1,Distributed_Solar,
+Latin America,Solar_roofs,Solar_roofs,Rooftop_PV,1,1,1,1,1,1,1,1,1,Distributed_Solar,
+Southeast Asia,Solar_roofs,Solar_roofs,Rooftop_PV,1,1,1,1,1,1,1,1,1,Distributed_Solar,
+Eastern Europe,Solar_roofs,Solar_roofs,Rooftop_PV,1,1,1,1,1,1,1,1,1,Distributed_Solar,
+Korea,Solar_roofs,Solar_roofs,Rooftop_PV,1,1,1,1,1,1,1,1,1,Distributed_Solar,
+India,Solar_roofs,Solar_roofs,Rooftop_PV,1,1,1,1,1,1,1,1,1,Distributed_Solar,
+
+
+backup calculator,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,Marshall changed this parameter when he smoothed the S-curve.  Not sure what you need or what its value should be. ,,,,,,,,
+Variable ID,,,,,,If we used the old capacity-limit the value should be between 0.15 and 0.2,,,,,,,,
+108,,,,capacity-limit-backup-calculator,,gpk: old value was 0.2. anything in that range is OK,,,,,,,,
+,,,,capacity-limit,,,,,,,,,,
+Region,intermittent-supplysector,subsector,intermittent-technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,Solar_roofs,Solar_roofs,Rooftop_PV,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2
+Canada,Solar_roofs,Solar_roofs,Rooftop_PV,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2
+Western Europe,Solar_roofs,Solar_roofs,Rooftop_PV,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2
+Japan,Solar_roofs,Solar_roofs,Rooftop_PV,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2
+Australia_NZ,Solar_roofs,Solar_roofs,Rooftop_PV,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2
+Former Soviet Union,Solar_roofs,Solar_roofs,Rooftop_PV,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2
+China,Solar_roofs,Solar_roofs,Rooftop_PV,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2
+Middle East,Solar_roofs,Solar_roofs,Rooftop_PV,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2
+Africa,Solar_roofs,Solar_roofs,Rooftop_PV,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2
+Latin America,Solar_roofs,Solar_roofs,Rooftop_PV,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2
+Southeast Asia,Solar_roofs,Solar_roofs,Rooftop_PV,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2
+Eastern Europe,Solar_roofs,Solar_roofs,Rooftop_PV,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2
+Korea,Solar_roofs,Solar_roofs,Rooftop_PV,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2
+India,Solar_roofs,Solar_roofs,Rooftop_PV,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2
+
+
+add backup cap cost,,,,,,,,,,,,,
+don't read,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+109,,,,minicam-non-energy-input,,,,,,,,,
+,,,,input-cost,,,,,,,,,
+Region,intermittent-supplysector,subsector,intermittent-technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-non-energy-input
+USA,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,0,0,0,0,0,0,backup-cap-cost
+Canada,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,0,0,0,0,0,0,backup-cap-cost
+Western Europe,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,0,0,0,0,0,0,backup-cap-cost
+Japan,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,0,0,0,0,0,0,backup-cap-cost
+Australia_NZ,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,0,0,0,0,0,0,backup-cap-cost
+Former Soviet Union,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,0,0,0,0,0,0,backup-cap-cost
+China,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,0,0,0,0,0,0,backup-cap-cost
+Middle East,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,0,0,0,0,0,0,backup-cap-cost
+Africa,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,0,0,0,0,0,0,backup-cap-cost
+Latin America,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,0,0,0,0,0,0,backup-cap-cost
+Southeast Asia,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,0,0,0,0,0,0,backup-cap-cost
+Eastern Europe,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,0,0,0,0,0,0,backup-cap-cost
+Korea,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,0,0,0,0,0,0,backup-cap-cost
+India,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,0,0,0,0,0,0,backup-cap-cost
+
+
+set tech sharewts,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+110,,,,,,,,,,,,,
+,,,,sharewt,,,,,,,,,
+Region,intermittent-supplysector,subsector,intermittent-technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,
+USA,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,1,1,1,1,1,1,
+Canada,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,1,1,1,1,1,1,
+Western Europe,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,1,1,1,1,1,1,
+Japan,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,1,1,1,1,1,1
+Australia_NZ,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,1,1,1,1,1,1
+Former Soviet Union,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,1,1,1,1,1,1
+China,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,1,1,1,1,1,1
+Middle East,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,1,1,1,1,1,1
+Africa,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,1,1,1,1,1,1
+Latin America,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,1,1,1,1,1,1
+Southeast Asia,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,1,1,1,1,1,1
+Eastern Europe,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,1,1,1,1,1,1
+Korea,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,1,1,1,1,1,1
+India,Solar_roofs,Solar_roofs,Rooftop_PV,0,0,0,1,1,1,1,1,1
+
+
+Elect_td_bld sector information,,,,,,,,,,,,
+non-energy input cost,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+1001,,,,minicam-non-energy-input,,,,,,,,
+,,,,input-cost,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,0,0,0,0,0,0
+Canada,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,0,0,0,0,0,0
+Western Europe,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,0,0,0,0,0,0
+Japan,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,0,0,0,0,0,0
+Australia_NZ,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,0,0,0,0,0,0
+Former Soviet Union,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,0,0,0,0,0,0
+China,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,0,0,0,0,0,0
+Middle East,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,0,0,0,0,0,0
+Africa,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,0,0,0,0,0,0
+Latin America,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,0,0,0,0,0,0
+Southeast Asia,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,0,0,0,0,0,0
+Eastern Europe,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,0,0,0,0,0,0
+Korea,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,0,0,0,0,0,0,
+India,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,0,0,0,0,0,0,
+
+
+tech efficiency,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1002,,,,minicam-energy-input,,,,,,,,,
+,,,,efficiency,,,,,,,,,
+Region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input
+USA,elect_td_bld,electricity_td_bld,solar_roofs,1,1,1,1,1,1,1,1,1,Solar_roofs
+Canada,elect_td_bld,electricity_td_bld,solar_roofs,1,1,1,1,1,1,1,1,1,Solar_roofs
+Western Europe,elect_td_bld,electricity_td_bld,solar_roofs,1,1,1,1,1,1,1,1,1,Solar_roofs
+Japan,elect_td_bld,electricity_td_bld,solar_roofs,1,1,1,1,1,1,1,1,1,Solar_roofs
+Australia_NZ,elect_td_bld,electricity_td_bld,solar_roofs,1,1,1,1,1,1,1,1,1,Solar_roofs
+Former Soviet Union,elect_td_bld,electricity_td_bld,solar_roofs,1,1,1,1,1,1,1,1,1,Solar_roofs
+China,elect_td_bld,electricity_td_bld,solar_roofs,1,1,1,1,1,1,1,1,1,Solar_roofs
+Middle East,elect_td_bld,electricity_td_bld,solar_roofs,1,1,1,1,1,1,1,1,1,Solar_roofs
+Africa,elect_td_bld,electricity_td_bld,solar_roofs,1,1,1,1,1,1,1,1,1,Solar_roofs
+Latin America,elect_td_bld,electricity_td_bld,solar_roofs,1,1,1,1,1,1,1,1,1,Solar_roofs
+Southeast Asia,elect_td_bld,electricity_td_bld,solar_roofs,1,1,1,1,1,1,1,1,1,Solar_roofs
+Eastern Europe,elect_td_bld,electricity_td_bld,solar_roofs,1,1,1,1,1,1,1,1,1,Solar_roofs
+Korea,elect_td_bld,electricity_td_bld,solar_roofs,1,1,1,1,1,1,1,1,1,Solar_roofs
+India,elect_td_bld,electricity_td_bld,solar_roofs,1,1,1,1,1,1,1,1,1,Solar_roofs
+
+
+sharewt,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,Make sure solar doesn't jump in in 2020,,,,,,,,
+1003,,,,,,,,,,,,,
+,,,,sharewt,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,
+USA,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,1,1,1,1,1,1
+Canada,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,1,1,1,1,1,1
+Western Europe,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,1,1,1,1,1,1
+Japan,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,1,1,1,1,1,1
+Australia_NZ,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,1,1,1,1,1,1
+Former Soviet Union,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,1,1,1,1,1,1
+China,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,1,1,1,1,1,1
+Middle East,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,1,1,1,1,1,1
+Africa,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,1,1,1,1,1,1
+Latin America,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,1,1,1,1,1,1
+Southeast Asia,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,1,1,1,1,1,1
+Eastern Europe,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,1,1,1,1,1,1
+Korea,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,1,1,1,1,1,1
+India,elect_td_bld,electricity_td_bld,solar_roofs,0,0,0,1,1,1,1,1,1
+
+
+Logit exponent,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,this variable will determine market share of rooftop PV,,,,,,,
+1004,,,,,,,,,,,,
+,,,,logitexp,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,elect_td_bld,electricity_td_bld,solar_roofs,-3,-3,-3,-3,-3,-3,-3,-3,-3
+Canada,elect_td_bld,electricity_td_bld,solar_roofs,-3,-3,-3,-3,-3,-3,-3,-3,-3
+Western Europe,elect_td_bld,electricity_td_bld,solar_roofs,-3,-3,-3,-3,-3,-3,-3,-3,-3
+Japan,elect_td_bld,electricity_td_bld,solar_roofs,-3,-3,-3,-3,-3,-3,-3,-3,-3
+Australia_NZ,elect_td_bld,electricity_td_bld,solar_roofs,-3,-3,-3,-3,-3,-3,-3,-3,-3
+Former Soviet Union,elect_td_bld,electricity_td_bld,solar_roofs,-3,-3,-3,-3,-3,-3,-3,-3,-3
+China,elect_td_bld,electricity_td_bld,solar_roofs,-3,-3,-3,-3,-3,-3,-3,-3,-3
+Middle East,elect_td_bld,electricity_td_bld,solar_roofs,-3,-3,-3,-3,-3,-3,-3,-3,-3
+Africa,elect_td_bld,electricity_td_bld,solar_roofs,-3,-3,-3,-3,-3,-3,-3,-3,-3
+Latin America,elect_td_bld,electricity_td_bld,solar_roofs,-3,-3,-3,-3,-3,-3,-3,-3,-3
+Southeast Asia,elect_td_bld,electricity_td_bld,solar_roofs,-3,-3,-3,-3,-3,-3,-3,-3,-3
+Eastern Europe,elect_td_bld,electricity_td_bld,solar_roofs,-3,-3,-3,-3,-3,-3,-3,-3,-3
+Korea,elect_td_bld,electricity_td_bld,solar_roofs,-3,-3,-3,-3,-3,-3,-3,-3,-3
+India,elect_td_bld,electricity_td_bld,solar_roofs,-3,-3,-3,-3,-3,-3,-3,-3,-3
+USA,elect_td_bld,electricity_td_bld,electricity_td_bld,-3,-3,-3,-3,-3,-3,-3,-3,-3
+Canada,elect_td_bld,electricity_td_bld,electricity_td_bld,-3,-3,-3,-3,-3,-3,-3,-3,-3
+Western Europe,elect_td_bld,electricity_td_bld,electricity_td_bld,-3,-3,-3,-3,-3,-3,-3,-3,-3
+Japan,elect_td_bld,electricity_td_bld,electricity_td_bld,-3,-3,-3,-3,-3,-3,-3,-3,-3
+Australia_NZ,elect_td_bld,electricity_td_bld,electricity_td_bld,-3,-3,-3,-3,-3,-3,-3,-3,-3
+Former Soviet Union,elect_td_bld,electricity_td_bld,electricity_td_bld,-3,-3,-3,-3,-3,-3,-3,-3,-3
+China,elect_td_bld,electricity_td_bld,electricity_td_bld,-3,-3,-3,-3,-3,-3,-3,-3,-3
+Middle East,elect_td_bld,electricity_td_bld,electricity_td_bld,-3,-3,-3,-3,-3,-3,-3,-3,-3
+Africa,elect_td_bld,electricity_td_bld,electricity_td_bld,-3,-3,-3,-3,-3,-3,-3,-3,-3
+Latin America,elect_td_bld,electricity_td_bld,electricity_td_bld,-3,-3,-3,-3,-3,-3,-3,-3,-3
+Southeast Asia,elect_td_bld,electricity_td_bld,electricity_td_bld,-3,-3,-3,-3,-3,-3,-3,-3,-3
+Eastern Europe,elect_td_bld,electricity_td_bld,electricity_td_bld,-3,-3,-3,-3,-3,-3,-3,-3,-3
+Korea,elect_td_bld,electricity_td_bld,electricity_td_bld,-3,-3,-3,-3,-3,-3,-3,-3,-3
+India,elect_td_bld,electricity_td_bld,electricity_td_bld,-3,-3,-3,-3,-3,-3,-3,-3,-3

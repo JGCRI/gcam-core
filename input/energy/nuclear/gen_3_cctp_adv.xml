@@ -1,0 +1,1659 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Son H.Kim (PNNL) -->
+<scenario date="2005-27-10T18:43:6-00:00" name="Gen_III_Nuclear">
+	<!--Gen III nuclear power plants.-->
+	<world>
+		<region name="USA">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III">
+						<period year="1975">
+							<sharewt>0</sharewt>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="1990">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2005">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2020">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.81</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2035">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.60</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2050">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.41</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2065">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.22</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2080">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.04</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2095">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>3.87</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+					</technology>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="Canada">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III">
+						<period year="1975">
+							<sharewt>0</sharewt>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="1990">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2005">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2020">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.81</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2035">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.60</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2050">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.41</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2065">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.22</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2080">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.04</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2095">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>3.87</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+					</technology>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="Western Europe">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III">
+						<period year="1975">
+							<sharewt>0</sharewt>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="1990">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2005">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2020">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.81</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2035">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.60</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2050">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.41</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2065">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.22</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2080">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.04</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2095">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>3.87</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+					</technology>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="Japan">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III">
+						<period year="1975">
+							<sharewt>0</sharewt>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="1990">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2005">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2020">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.81</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2035">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.60</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2050">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.41</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2065">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.22</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2080">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.04</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2095">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>3.87</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+					</technology>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="Australia_NZ">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III">
+						<period year="1975">
+							<sharewt>0</sharewt>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="1990">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2005">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2020">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.81</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2035">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.60</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2050">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.41</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2065">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.22</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2080">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.04</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2095">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>3.87</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+					</technology>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="Former Soviet Union">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III">
+						<period year="1975">
+							<sharewt>0</sharewt>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="1990">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2005">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2020">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.81</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2035">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.60</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2050">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.41</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2065">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.22</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2080">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.04</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2095">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>3.87</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+					</technology>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="China">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III">
+						<period year="1975">
+							<sharewt>0</sharewt>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="1990">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2005">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2020">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.81</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2035">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.60</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2050">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.41</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2065">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.22</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2080">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.04</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2095">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>3.87</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+					</technology>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="Middle East">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III">
+						<period year="1975">
+							<sharewt>0</sharewt>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="1990">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2005">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2020">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.81</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2035">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.60</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2050">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.41</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2065">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.22</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2080">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.04</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2095">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>3.87</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+					</technology>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="Africa">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III">
+						<period year="1975">
+							<sharewt>0</sharewt>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="1990">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2005">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2020">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.81</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2035">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.60</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2050">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.41</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2065">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.22</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2080">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.04</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2095">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>3.87</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+					</technology>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="Latin America">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III">
+						<period year="1975">
+							<sharewt>0</sharewt>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="1990">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2005">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2020">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.81</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2035">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.60</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2050">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.41</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2065">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.22</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2080">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.04</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2095">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>3.87</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+					</technology>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="Southeast Asia">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III">
+						<period year="1975">
+							<sharewt>0</sharewt>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="1990">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2005">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2020">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.81</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2035">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.60</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2050">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.41</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2065">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.22</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2080">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.04</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2095">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>3.87</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+					</technology>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="Eastern Europe">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III">
+						<period year="1975">
+							<sharewt>0</sharewt>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="1990">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2005">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2020">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.81</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2035">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.60</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2050">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.41</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2065">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.22</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2080">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.04</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2095">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>3.87</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+					</technology>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="Korea">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III">
+						<period year="1975">
+							<sharewt>0</sharewt>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="1990">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2005">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2020">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.81</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2035">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.60</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2050">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.41</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2065">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.22</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2080">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.04</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2095">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>3.87</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+					</technology>
+				</subsector>
+			</supplysector>
+		</region>
+		<region name="India">
+			<supplysector name="electricity">
+				<subsector name="nuclear">
+					<technology name="Gen_III">
+						<period year="1975">
+							<sharewt>0</sharewt>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="1990">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2005">
+							<sharewt>0</sharewt>
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>5.8</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2020">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.81</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2035">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.60</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2050">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.41</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2065">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.22</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2080">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>4.04</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+						<period year="2095">
+							<lifetime>60</lifetime>
+							<profit-shutdown-decider/>
+							<keyword primary-renewable="nuclear-elect"/>
+							<CO2 name="CO2"/>
+							<minicam-non-energy-input name="non-energy">
+								<input-cost>3.87</input-cost>
+							</minicam-non-energy-input>
+							<minicam-energy-input name="nuclearFuelGenIII">
+								<efficiency>0.34</efficiency>
+							</minicam-energy-input>
+						</period>
+					</technology>
+				</subsector>
+			</supplysector>
+		</region>
+	</world>
+</scenario>

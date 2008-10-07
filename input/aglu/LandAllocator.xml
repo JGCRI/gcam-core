@@ -1,0 +1,1069 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <LandAllocatorRoot name="root">
+            <sigma>0</sigma>
+            <landAllocation fillout="1" year="1975">916783</landAllocation>
+            <avgProfitRate>159763</avgProfitRate>
+            <LandAllocatorNode name="PermanentPasture">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="PastureLand">
+                  <landAllocation year="1975">237710</landAllocation>
+                  <landAllocation year="1990">237710</landAllocation>
+                  <landAllocation fillout="1" year="2005">237710</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">159763</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">265312</allocation>
+                     <allocation year="1975">242274</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="AgroForestLand">
+               <sigma>0.8</sigma>
+               <LandAllocatorNode name="AgroLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedLand">
+                     <landAllocation year="1975">141145</landAllocation>
+                     <landAllocation year="1990">141145</landAllocation>
+                     <landAllocation fillout="1" year="2005">150181</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">159763</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">134237</allocation>
+                        <allocation year="1975">147802</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="CropLand">
+                     <sigma>0.357770876</sigma>
+                     <land-use-history>
+                        <allocation year="1961">110678</allocation>
+                        <allocation year="1975">110678</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+               <LandAllocatorNode name="AllForestLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedForest">
+                     <landAllocation year="1975">98571</landAllocation>
+                     <landAllocation year="1990">98571</landAllocation>
+                     <landAllocation fillout="1" year="2005">104882</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">159763</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">93747</allocation>
+                        <allocation year="1975">103220</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="ForestLand">
+                     <sigma>0.8</sigma>
+                     <land-use-history>
+                        <allocation year="1961">122460.8554</allocation>
+                        <allocation year="1975">122460.8554</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="NonArableLand">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="NonArableLand">
+                  <landAllocation year="1975">198581</landAllocation>
+                  <landAllocation year="1990">198581</landAllocation>
+                  <landAllocation fillout="1" year="2005">198581</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">159763</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">190348</allocation>
+                     <allocation year="1975">190348</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+         </LandAllocatorRoot>
+      </region>
+      <region name="Canada">
+         <LandAllocatorRoot name="root">
+            <sigma>0</sigma>
+            <landAllocation fillout="1" year="1975">909374</landAllocation>
+            <avgProfitRate>55163</avgProfitRate>
+            <LandAllocatorNode name="PermanentPasture">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="PastureLand">
+                  <landAllocation year="1975">15390</landAllocation>
+                  <landAllocation year="1990">15390</landAllocation>
+                  <landAllocation fillout="1" year="2005">15390</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">55163</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">17036</allocation>
+                     <allocation year="1975">18165</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="AgroForestLand">
+               <sigma>0.8</sigma>
+               <LandAllocatorNode name="AgroLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedLand">
+                     <landAllocation year="1975">10846</landAllocation>
+                     <landAllocation year="1990">10846</landAllocation>
+                     <landAllocation fillout="1" year="2005">10987</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">55163</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">10877</allocation>
+                        <allocation year="1975">10831</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="CropLand">
+                     <sigma>0.357770876</sigma>
+                     <land-use-history>
+                        <allocation year="1961">26787</allocation>
+                        <allocation year="1975">26787</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+               <LandAllocatorNode name="AllForestLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedForest">
+                     <landAllocation year="1975">259550</landAllocation>
+                     <landAllocation year="1990">259550</landAllocation>
+                     <landAllocation fillout="1" year="2005">262934</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">55163</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">260294</allocation>
+                        <allocation year="1975">259210</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="ForestLand">
+                     <sigma>0.8</sigma>
+                     <land-use-history>
+                        <allocation year="1961">62914.63777</allocation>
+                        <allocation year="1975">62914.63777</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="NonArableLand">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="NonArableLand">
+                  <landAllocation year="1975">531734</landAllocation>
+                  <landAllocation year="1990">531734</landAllocation>
+                  <landAllocation fillout="1" year="2005">531734</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">55163</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">531466</allocation>
+                     <allocation year="1975">531466</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+         </LandAllocatorRoot>
+      </region>
+      <region name="Western Europe">
+         <LandAllocatorRoot name="root">
+            <sigma>0</sigma>
+            <landAllocation fillout="1" year="1975">469858</landAllocation>
+            <avgProfitRate>168839</avgProfitRate>
+            <LandAllocatorNode name="PermanentPasture">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="PastureLand">
+                  <landAllocation year="1975">72938</landAllocation>
+                  <landAllocation year="1990">72938</landAllocation>
+                  <landAllocation fillout="1" year="2005">72938</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">168839</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">81272.5</allocation>
+                     <allocation year="1975">78190.3</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="AgroForestLand">
+               <sigma>0.8</sigma>
+               <LandAllocatorNode name="AgroLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedLand">
+                     <landAllocation year="1975">5375</landAllocation>
+                     <landAllocation year="1990">5375</landAllocation>
+                     <landAllocation fillout="1" year="2005">12482</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">168839</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">8447</allocation>
+                        <allocation year="1975">9609</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="CropLand">
+                     <sigma>0.357770876</sigma>
+                     <land-use-history>
+                        <allocation year="1961">102518</allocation>
+                        <allocation year="1975">102518</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+               <LandAllocatorNode name="AllForestLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedForest">
+                     <landAllocation year="1975">8881</landAllocation>
+                     <landAllocation year="1990">8881</landAllocation>
+                     <landAllocation fillout="1" year="2005">20624</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">168839</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">13957</allocation>
+                        <allocation year="1975">15877</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="ForestLand">
+                     <sigma>0.8</sigma>
+                     <land-use-history>
+                        <allocation year="1961">119408.8357</allocation>
+                        <allocation year="1975">119408.8357</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="NonArableLand">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="NonArableLand">
+                  <landAllocation year="1975">149729.3</landAllocation>
+                  <landAllocation year="1990">149729.3</landAllocation>
+                  <landAllocation fillout="1" year="2005">149729.3</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">168839</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">144254.9</allocation>
+                     <allocation year="1975">144254.9</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+         </LandAllocatorRoot>
+      </region>
+      <region name="Japan">
+         <LandAllocatorRoot name="root">
+            <sigma>0</sigma>
+            <landAllocation fillout="1" year="1975">36460</landAllocation>
+            <avgProfitRate>705114</avgProfitRate>
+            <LandAllocatorNode name="PermanentPasture">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="PastureLand">
+                  <landAllocation year="1975">631</landAllocation>
+                  <landAllocation year="1990">631</landAllocation>
+                  <landAllocation fillout="1" year="2005">631</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">705114</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">1100</allocation>
+                     <allocation year="1975">700</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="AgroForestLand">
+               <sigma>0.8</sigma>
+               <LandAllocatorNode name="AgroLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedLand">
+                     <landAllocation year="1975">4011</landAllocation>
+                     <landAllocation year="1990">4011</landAllocation>
+                     <landAllocation fillout="1" year="2005">4989</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">705114</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">2536</allocation>
+                        <allocation year="1975">2632</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="CropLand">
+                     <sigma>0.357770876</sigma>
+                     <land-use-history>
+                        <allocation year="1961">3615</allocation>
+                        <allocation year="1975">3615</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+               <LandAllocatorNode name="AllForestLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedForest">
+                     <landAllocation year="1975">12630</landAllocation>
+                     <landAllocation year="1990">12630</landAllocation>
+                     <landAllocation fillout="1" year="2005">15710</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">705114</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">7985</allocation>
+                        <allocation year="1975">8289</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="ForestLand">
+                     <sigma>0.8</sigma>
+                     <land-use-history>
+                        <allocation year="1961">15407.4042</allocation>
+                        <allocation year="1975">15407.4042</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="NonArableLand">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="NonArableLand">
+                  <landAllocation year="1975">6890</landAllocation>
+                  <landAllocation year="1990">6890</landAllocation>
+                  <landAllocation fillout="1" year="2005">6890</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">705114</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">5817</allocation>
+                     <allocation year="1975">5817</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+         </LandAllocatorRoot>
+      </region>
+      <region name="Australia_NZ">
+         <LandAllocatorRoot name="root">
+            <sigma>0</sigma>
+            <landAllocation fillout="1" year="1975">795001</landAllocation>
+            <avgProfitRate>139404</avgProfitRate>
+            <LandAllocatorNode name="PermanentPasture">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="PastureLand">
+                  <landAllocation year="1975">409270</landAllocation>
+                  <landAllocation year="1990">409270</landAllocation>
+                  <landAllocation fillout="1" year="2005">409270</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">139404</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">443997</allocation>
+                     <allocation year="1975">457980</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="AgroForestLand">
+               <sigma>0.8</sigma>
+               <LandAllocatorNode name="AgroLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedLand">
+                     <landAllocation year="1975">191803</landAllocation>
+                     <landAllocation year="1990">191803</landAllocation>
+                     <landAllocation fillout="1" year="2005">185772</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">139404</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">182631</allocation>
+                        <allocation year="1975">169367</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="CropLand">
+                     <sigma>0.357770876</sigma>
+                     <land-use-history>
+                        <allocation year="1961">16356</allocation>
+                        <allocation year="1975">16356</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+               <LandAllocatorNode name="AllForestLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedForest">
+                     <landAllocation year="1975">10399</landAllocation>
+                     <landAllocation year="1990">10399</landAllocation>
+                     <landAllocation fillout="1" year="2005">10072</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">139404</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">9902</allocation>
+                        <allocation year="1975">9182</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="ForestLand">
+                     <sigma>0.8</sigma>
+                     <land-use-history>
+                        <allocation year="1961">4708.267001</allocation>
+                        <allocation year="1975">4708.267001</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="NonArableLand">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="NonArableLand">
+                  <landAllocation year="1975">160596</landAllocation>
+                  <landAllocation year="1990">160596</landAllocation>
+                  <landAllocation fillout="1" year="2005">160596</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">139404</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">137407</allocation>
+                     <allocation year="1975">137407</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+         </LandAllocatorRoot>
+      </region>
+      <region name="Former Soviet Union">
+         <LandAllocatorRoot name="root">
+            <sigma>0</sigma>
+            <landAllocation fillout="1" year="1975">2192334</landAllocation>
+            <avgProfitRate>28477</avgProfitRate>
+            <LandAllocatorNode name="PermanentPasture">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="PastureLand">
+                  <landAllocation year="1975">362165.9</landAllocation>
+                  <landAllocation year="1990">362165.9</landAllocation>
+                  <landAllocation fillout="1" year="2005">362165.9</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">28477</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">302000</allocation>
+                     <allocation year="1975">317840</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="AgroForestLand">
+               <sigma>0.8</sigma>
+               <LandAllocatorNode name="AgroLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedLand">
+                     <landAllocation year="1975">266460</landAllocation>
+                     <landAllocation year="1990">266460</landAllocation>
+                     <landAllocation fillout="1" year="2005">296159</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">28477</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">273925</allocation>
+                        <allocation year="1975">268393</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="CropLand">
+                     <sigma>0.357770876</sigma>
+                     <land-use-history>
+                        <allocation year="1961">149607</allocation>
+                        <allocation year="1975">149607</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+               <LandAllocatorNode name="AllForestLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedForest">
+                     <landAllocation year="1975">496606</landAllocation>
+                     <landAllocation year="1990">496606</landAllocation>
+                     <landAllocation fillout="1" year="2005">551956</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">28477</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">510518</allocation>
+                        <allocation year="1975">500209</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="ForestLand">
+                     <sigma>0.8</sigma>
+                     <land-use-history>
+                        <allocation year="1961">168851.971</allocation>
+                        <allocation year="1975">168851.971</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="NonArableLand">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="NonArableLand">
+                  <landAllocation year="1975">725110</landAllocation>
+                  <landAllocation year="1990">725110</landAllocation>
+                  <landAllocation fillout="1" year="2005">725110</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">28477</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">787431.9</allocation>
+                     <allocation year="1975">787431.9</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+         </LandAllocatorRoot>
+      </region>
+      <region name="China">
+         <LandAllocatorRoot name="root">
+            <sigma>0</sigma>
+            <landAllocation fillout="1" year="1975">1151634</landAllocation>
+            <avgProfitRate>196005</avgProfitRate>
+            <LandAllocatorNode name="PermanentPasture">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="PastureLand">
+                  <landAllocation year="1975">531493</landAllocation>
+                  <landAllocation year="1990">531493</landAllocation>
+                  <landAllocation fillout="1" year="2005">531493</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">196005</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">378961</allocation>
+                     <allocation year="1975">441758</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="AgroForestLand">
+               <sigma>0.8</sigma>
+               <LandAllocatorNode name="AgroLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedLand">
+                     <landAllocation year="1975">146192</landAllocation>
+                     <landAllocation year="1990">146192</landAllocation>
+                     <landAllocation fillout="1" year="2005">144083</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">196005</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">220498</allocation>
+                        <allocation year="1975">171922</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="CropLand">
+                     <sigma>0.357770876</sigma>
+                     <land-use-history>
+                        <allocation year="1961">102397</allocation>
+                        <allocation year="1975">102397</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+               <LandAllocatorNode name="AllForestLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedForest">
+                     <landAllocation year="1975">42801</landAllocation>
+                     <landAllocation year="1990">42801</landAllocation>
+                     <landAllocation fillout="1" year="2005">42184</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">196005</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">64556</allocation>
+                        <allocation year="1975">50334</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="ForestLand">
+                     <sigma>0.8</sigma>
+                     <land-use-history>
+                        <allocation year="1961">103484.0914</allocation>
+                        <allocation year="1975">103484.0914</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="NonArableLand">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="NonArableLand">
+                  <landAllocation year="1975">208205.8</landAllocation>
+                  <landAllocation year="1990">208205.8</landAllocation>
+                  <landAllocation fillout="1" year="2005">208205.8</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">196005</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">281738</allocation>
+                     <allocation year="1975">281738</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+         </LandAllocatorRoot>
+      </region>
+      <region name="Middle East">
+         <LandAllocatorRoot name="root">
+            <sigma>0</sigma>
+            <landAllocation fillout="1" year="1975">547610</landAllocation>
+            <avgProfitRate>141985</avgProfitRate>
+            <LandAllocatorNode name="PermanentPasture">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="PastureLand">
+                  <landAllocation year="1975">231127</landAllocation>
+                  <landAllocation year="1990">231127</landAllocation>
+                  <landAllocation fillout="1" year="2005">231127</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">141985</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">160188</allocation>
+                     <allocation year="1975">160162</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="AgroForestLand">
+               <sigma>0.8</sigma>
+               <LandAllocatorNode name="AgroLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedLand">
+                     <landAllocation year="1975">24127</landAllocation>
+                     <landAllocation year="1990">24127</landAllocation>
+                     <landAllocation fillout="1" year="2005">22850</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">141985</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">50597</allocation>
+                        <allocation year="1975">50623</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="CropLand">
+                     <sigma>0.357770876</sigma>
+                     <land-use-history>
+                        <allocation year="1961">27426</allocation>
+                        <allocation year="1975">27426</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+               <LandAllocatorNode name="AllForestLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedForest">
+                     <landAllocation year="1975">329</landAllocation>
+                     <landAllocation year="1990">329</landAllocation>
+                     <landAllocation fillout="1" year="2005">311</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">141985</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">689</allocation>
+                        <allocation year="1975">690</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="ForestLand">
+                     <sigma>0.8</sigma>
+                     <land-use-history>
+                        <allocation year="1961">6890.117749</allocation>
+                        <allocation year="1975">6890.117749</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="NonArableLand">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="NonArableLand">
+                  <landAllocation year="1975">263294.6</landAllocation>
+                  <landAllocation year="1990">263294.6</landAllocation>
+                  <landAllocation fillout="1" year="2005">263294.6</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">141985</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">301819.2</allocation>
+                     <allocation year="1975">301819.2</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+         </LandAllocatorRoot>
+      </region>
+      <region name="Africa">
+         <LandAllocatorRoot name="root">
+            <sigma>0</sigma>
+            <landAllocation fillout="1" year="1975">2963535</landAllocation>
+            <avgProfitRate>65752</avgProfitRate>
+            <LandAllocatorNode name="PermanentPasture">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="PastureLand">
+                  <landAllocation year="1975">906636</landAllocation>
+                  <landAllocation year="1990">906636</landAllocation>
+                  <landAllocation fillout="1" year="2005">906636</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">65752</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">885209</allocation>
+                     <allocation year="1975">884591</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="AgroForestLand">
+               <sigma>0.8</sigma>
+               <LandAllocatorNode name="AgroLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedLand">
+                     <landAllocation year="1975">489576</landAllocation>
+                     <landAllocation year="1990">489576</landAllocation>
+                     <landAllocation fillout="1" year="2005">454338</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">65752</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">520266</allocation>
+                        <allocation year="1975">520701</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="CropLand">
+                     <sigma>0.357770876</sigma>
+                     <land-use-history>
+                        <allocation year="1961">154770</allocation>
+                        <allocation year="1975">154770</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+               <LandAllocatorNode name="AllForestLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedForest">
+                     <landAllocation year="1975">206916</landAllocation>
+                     <landAllocation year="1990">206916</landAllocation>
+                     <landAllocation fillout="1" year="2005">192023</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">65752</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">219888</allocation>
+                        <allocation year="1975">220071</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="ForestLand">
+                     <sigma>0.8</sigma>
+                     <land-use-history>
+                        <allocation year="1961">18157.08734</allocation>
+                        <allocation year="1975">18157.08734</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="NonArableLand">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="NonArableLand">
+                  <landAllocation year="1975">1184848.4</landAllocation>
+                  <landAllocation year="1990">1184848.4</landAllocation>
+                  <landAllocation fillout="1" year="2005">1184848.4</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">65752</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">1165245.3</allocation>
+                     <allocation year="1975">1165245.3</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+         </LandAllocatorRoot>
+      </region>
+      <region name="Latin America">
+         <LandAllocatorRoot name="root">
+            <sigma>0</sigma>
+            <landAllocation fillout="1" year="1975">2027788</landAllocation>
+            <avgProfitRate>117580</avgProfitRate>
+            <LandAllocatorNode name="PermanentPasture">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="PastureLand">
+                  <landAllocation year="1975">556400</landAllocation>
+                  <landAllocation year="1990">556400</landAllocation>
+                  <landAllocation fillout="1" year="2005">556400</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">117580</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">463035</allocation>
+                     <allocation year="1975">503795</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="AgroForestLand">
+               <sigma>0.8</sigma>
+               <LandAllocatorNode name="AgroLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedLand">
+                     <landAllocation year="1975">367538</landAllocation>
+                     <landAllocation year="1990">367538</landAllocation>
+                     <landAllocation fillout="1" year="2005">358521</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">117580</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">429604</allocation>
+                        <allocation year="1975">412232</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="CropLand">
+                     <sigma>0.357770876</sigma>
+                     <land-use-history>
+                        <allocation year="1961">125472</allocation>
+                        <allocation year="1975">125472</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+               <LandAllocatorNode name="AllForestLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedForest">
+                     <landAllocation year="1975">494814</landAllocation>
+                     <landAllocation year="1990">494814</landAllocation>
+                     <landAllocation fillout="1" year="2005">482675</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">117580</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">578374</allocation>
+                        <allocation year="1975">554986</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="ForestLand">
+                     <sigma>0.8</sigma>
+                     <land-use-history>
+                        <allocation year="1961">83659.65278</allocation>
+                        <allocation year="1975">83659.65278</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="NonArableLand">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="NonArableLand">
+                  <landAllocation year="1975">385991</landAllocation>
+                  <landAllocation year="1990">385991</landAllocation>
+                  <landAllocation fillout="1" year="2005">385991</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">117580</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">347643</allocation>
+                     <allocation year="1975">347643</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+         </LandAllocatorRoot>
+      </region>
+      <region name="Southeast Asia">
+         <LandAllocatorRoot name="root">
+            <sigma>0</sigma>
+            <landAllocation fillout="1" year="1975">620860</landAllocation>
+            <avgProfitRate>224827</avgProfitRate>
+            <LandAllocatorNode name="PermanentPasture">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="PastureLand">
+                  <landAllocation year="1975">54016.8</landAllocation>
+                  <landAllocation year="1990">54016.8</landAllocation>
+                  <landAllocation fillout="1" year="2005">54016.8</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">224827</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">53471</allocation>
+                     <allocation year="1975">53840.8</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="AgroForestLand">
+               <sigma>0.8</sigma>
+               <LandAllocatorNode name="AgroLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedLand">
+                     <landAllocation year="1975">68135</landAllocation>
+                     <landAllocation year="1990">68135</landAllocation>
+                     <landAllocation fillout="1" year="2005">64644</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">224827</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">86075</allocation>
+                        <allocation year="1975">85952</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="CropLand">
+                     <sigma>0.357770876</sigma>
+                     <land-use-history>
+                        <allocation year="1961">104653</allocation>
+                        <allocation year="1975">104653</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+               <LandAllocatorNode name="AllForestLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedForest">
+                     <landAllocation year="1975">135937</landAllocation>
+                     <landAllocation year="1990">135937</landAllocation>
+                     <landAllocation fillout="1" year="2005">128972</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">224827</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">171731</allocation>
+                        <allocation year="1975">171485</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="ForestLand">
+                     <sigma>0.8</sigma>
+                     <land-use-history>
+                        <allocation year="1961">39479.38751</allocation>
+                        <allocation year="1975">39479.38751</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="NonArableLand">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="NonArableLand">
+                  <landAllocation year="1975">209384.5</landAllocation>
+                  <landAllocation year="1990">209384.5</landAllocation>
+                  <landAllocation fillout="1" year="2005">209384.5</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">224827</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">165450</allocation>
+                     <allocation year="1975">165450</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+         </LandAllocatorRoot>
+      </region>
+      <region name="Eastern Europe">
+         <LandAllocatorRoot name="root">
+            <sigma>0</sigma>
+            <landAllocation fillout="1" year="1975">114172</landAllocation>
+            <avgProfitRate>108237</avgProfitRate>
+            <LandAllocatorNode name="PermanentPasture">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="PastureLand">
+                  <landAllocation year="1975">17113</landAllocation>
+                  <landAllocation year="1990">17113</landAllocation>
+                  <landAllocation fillout="1" year="2005">17113</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">108237</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">20049</allocation>
+                     <allocation year="1975">19978</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="AgroForestLand">
+               <sigma>0.8</sigma>
+               <LandAllocatorNode name="AgroLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedLand">
+                     <landAllocation year="1975">4837</landAllocation>
+                     <landAllocation year="1990">4837</landAllocation>
+                     <landAllocation fillout="1" year="2005">7855</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">108237</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">3932</allocation>
+                        <allocation year="1975">3964</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="CropLand">
+                     <sigma>0.357770876</sigma>
+                     <land-use-history>
+                        <allocation year="1961">41859</allocation>
+                        <allocation year="1975">41859</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+               <LandAllocatorNode name="AllForestLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedForest">
+                     <landAllocation year="1975">6092</landAllocation>
+                     <landAllocation year="1990">6092</landAllocation>
+                     <landAllocation fillout="1" year="2005">9895</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">108237</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">4953</allocation>
+                        <allocation year="1975">4993</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="ForestLand">
+                     <sigma>0.8</sigma>
+                     <land-use-history>
+                        <allocation year="1961">32042.80081</allocation>
+                        <allocation year="1975">32042.80081</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="NonArableLand">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="NonArableLand">
+                  <landAllocation year="1975">16641.6</landAllocation>
+                  <landAllocation year="1990">16641.6</landAllocation>
+                  <landAllocation fillout="1" year="2005">16641.6</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">108237</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">11335.6</allocation>
+                     <allocation year="1975">11335.6</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+         </LandAllocatorRoot>
+      </region>
+      <region name="Korea">
+         <LandAllocatorRoot name="root">
+            <sigma>0</sigma>
+            <landAllocation fillout="1" year="1975">9873</landAllocation>
+            <avgProfitRate>993614</avgProfitRate>
+            <LandAllocatorNode name="PermanentPasture">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="PastureLand">
+                  <landAllocation year="1975">57</landAllocation>
+                  <landAllocation year="1990">57</landAllocation>
+                  <landAllocation fillout="1" year="2005">57</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">993614</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">18</allocation>
+                     <allocation year="1975">32</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="AgroForestLand">
+               <sigma>0.8</sigma>
+               <LandAllocatorNode name="AgroLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedLand">
+                     <landAllocation year="1975">127</landAllocation>
+                     <landAllocation year="1990">127</landAllocation>
+                     <landAllocation fillout="1" year="2005">143</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">993614</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">67</allocation>
+                        <allocation year="1975">65</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="CropLand">
+                     <sigma>0.357770876</sigma>
+                     <land-use-history>
+                        <allocation year="1961">2507</allocation>
+                        <allocation year="1975">2507</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+               <LandAllocatorNode name="AllForestLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedForest">
+                     <landAllocation year="1975">791</landAllocation>
+                     <landAllocation year="1990">791</landAllocation>
+                     <landAllocation fillout="1" year="2005">891</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">993614</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">418</allocation>
+                        <allocation year="1975">406</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="ForestLand">
+                     <sigma>0.8</sigma>
+                     <land-use-history>
+                        <allocation year="1961">5539.58697</allocation>
+                        <allocation year="1975">5539.58697</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="NonArableLand">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="NonArableLand">
+                  <landAllocation year="1975">1727</landAllocation>
+                  <landAllocation year="1990">1727</landAllocation>
+                  <landAllocation fillout="1" year="2005">1727</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">993614</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">1323</allocation>
+                     <allocation year="1975">1323</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+         </LandAllocatorRoot>
+      </region>
+      <region name="India">
+         <LandAllocatorRoot name="root">
+            <sigma>0</sigma>
+            <landAllocation fillout="1" year="1975">297319</landAllocation>
+            <avgProfitRate>246071</avgProfitRate>
+            <LandAllocatorNode name="PermanentPasture">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="PastureLand">
+                  <landAllocation year="1975">10530</landAllocation>
+                  <landAllocation year="1990">10530</landAllocation>
+                  <landAllocation fillout="1" year="2005">10530</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">246071</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">13921</allocation>
+                     <allocation year="1975">12848</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="AgroForestLand">
+               <sigma>0.8</sigma>
+               <LandAllocatorNode name="AgroLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedLand">
+                     <landAllocation year="1975">53109</landAllocation>
+                     <landAllocation year="1990">53109</landAllocation>
+                     <landAllocation fillout="1" year="2005">51518</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">246071</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">49251</allocation>
+                        <allocation year="1975">49956</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="CropLand">
+                     <sigma>0.357770876</sigma>
+                     <land-use-history>
+                        <allocation year="1961">142012</allocation>
+                        <allocation year="1975">142012</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+               <LandAllocatorNode name="AllForestLand">
+                  <sigma>0.8</sigma>
+                  <UnmanagedLandLeaf name="UnmanagedForest">
+                     <landAllocation year="1975">27689</landAllocation>
+                     <landAllocation year="1990">27689</landAllocation>
+                     <landAllocation fillout="1" year="2005">26860</landAllocation>
+                     <intrinsicRate fillout="1" year="1975">246071</intrinsicRate>
+                     <land-use-history>
+                        <allocation year="1961">25678</allocation>
+                        <allocation year="1975">26046</allocation>
+                     </land-use-history>
+                  </UnmanagedLandLeaf>
+                  <LandAllocatorNode name="ForestLand">
+                     <sigma>0.8</sigma>
+                     <land-use-history>
+                        <allocation year="1961">14116.66588</allocation>
+                        <allocation year="1975">14116.66588</allocation>
+                     </land-use-history>
+                  </LandAllocatorNode>
+               </LandAllocatorNode>
+            </LandAllocatorNode>
+            <LandAllocatorNode name="NonArableLand">
+               <sigma>0.8</sigma>
+               <UnmanagedLandLeaf name="NonArableLand">
+                  <landAllocation year="1975">49438</landAllocation>
+                  <landAllocation year="1990">49438</landAllocation>
+                  <landAllocation fillout="1" year="2005">49438</landAllocation>
+                  <intrinsicRate fillout="1" year="1975">246071</intrinsicRate>
+                  <land-use-history>
+                     <allocation year="1961">52340</allocation>
+                     <allocation year="1975">52340</allocation>
+                  </land-use-history>
+               </UnmanagedLandLeaf>
+            </LandAllocatorNode>
+         </LandAllocatorRoot>
+      </region>
+   </world>
+</scenario>

@@ -1,0 +1,117 @@
+The model gui starts reading 3 rows below the table number. The two rows in between are for notation purposes only.,,,,,,,,,,,,
+These tables have the actual tag names as the column headers but this is not necessary,,,,,,,,,,,,
+"When finished with input data, save this sheet as a csv. Re-save the sheet as an excel workbook as csv's are expendible and you don't want to be working directly on one.",,,,,,,,,,,,
+"Open the model interface. Open csv file, header file, and save the resulting file.",,,,,,,,,,,,
+
+Primary Consumption,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+10,,,,,,,,,,,,
+,,,,keyword primary-consumption,keyword primary-consumption,keyword primary-consumption,keyword primary-consumption,keyword primary-consumption,keyword primary-consumption,keyword primary-consumption,keyword primary-consumption,keyword primary-consumption
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+ALL,regional coal,regional coal,regional coal,coal,coal,coal,coal,coal,coal,coal,coal,coal
+ALL,regional natural gas,regional natural gas,regional natural gas,natural gas,natural gas,natural gas,natural gas,natural gas,natural gas,natural gas,natural gas,natural gas
+ALL,regional crude oil,regional crude oil,regional crude oil,oil,oil,oil,oil,oil,oil,oil,oil,oil
+ALL,regional biomass,regional biomass,regional biomass,biomass,biomass,biomass,biomass,biomass,biomass,biomass,biomass,biomass
+ALL,regional shale oil,regional shale oil,regional shale oil,oil,oil,oil,oil,oil,oil,oil,oil,oil
+
+Renewable Tags,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+20,,,,,,,,,,,,
+,,,,keyword primary-renewable,keyword primary-renewable,keyword primary-renewable,keyword primary-renewable,keyword primary-renewable,keyword primary-renewable,keyword primary-renewable,keyword primary-renewable,keyword primary-renewable
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+ALL,electricity,exotics,exotic,exotic-elect,exotic-elect,exotic-elect,exotic-elect,exotic-elect,exotic-elect,exotic-elect,exotic-elect,exotic-elect
+ALL,electricity,hydro,hydro,hydro-elect,hydro-elect,hydro-elect,hydro-elect,hydro-elect,hydro-elect,hydro-elect,hydro-elect,hydro-elect
+ALL,electricity,nuclear,Gen_II_LWR,nuclear-elect,nuclear-elect,nuclear-elect,nuclear-elect,nuclear-elect,nuclear-elect,nuclear-elect,nuclear-elect,nuclear-elect
+ALL,electricity,nuclear,Gen_III,nuclear-elect,nuclear-elect,nuclear-elect,nuclear-elect,nuclear-elect,nuclear-elect,nuclear-elect,nuclear-elect,nuclear-elect
+ALL,electricity,solar,PV,solar-elect,solar-elect,solar-elect,solar-elect,solar-elect,solar-elect,solar-elect,solar-elect,solar-elect
+ALL,electricity,solar,PV_storage,solar-elect,solar-elect,solar-elect,solar-elect,solar-elect,solar-elect,solar-elect,solar-elect,solar-elect
+ALL,electricity,solar,CSP,solar-elect,solar-elect,solar-elect,solar-elect,solar-elect,solar-elect,solar-elect,solar-elect,solar-elect
+ALL,electricity,solar,CSP_storage,solar-elect,solar-elect,solar-elect,solar-elect,solar-elect,solar-elect,solar-elect,solar-elect,solar-elect
+ALL,electricity,wind,wind,wind-elect,wind-elect,wind-elect,wind-elect,wind-elect,wind-elect,wind-elect,wind-elect,wind-elect
+ALL,electricity,wind,wind_storage,wind-elect,wind-elect,wind-elect,wind-elect,wind-elect,wind-elect,wind-elect,wind-elect,wind-elect
+ALL,electricity,geothermal,geothermal,geothermal-elect,geothermal-elect,geothermal-elect,geothermal-elect,geothermal-elect,geothermal-elect,geothermal-elect,geothermal-elect,geothermal-elect
+ALL,elect_td_bld,electricity_td_bld,solar_roofs,solar-elect,solar-elect,solar-elect,solar-elect,solar-elect,solar-elect,solar-elect,solar-elect,solar-elect
+ALL,H2 Central Production,solar,electrolysis,solar-H2,solar-H2,solar-H2,solar-H2,solar-H2,solar-H2,solar-H2,solar-H2,solar-H2
+ALL,H2 Central Production,wind,electrolysis,wind-H2,wind-H2,wind-H2,wind-H2,wind-H2,wind-H2,wind-H2,wind-H2,wind-H2
+ALL,H2 Central Production,nuclear,thermal splitting,nuclear-H2,nuclear-H2,nuclear-H2,nuclear-H2,nuclear-H2,nuclear-H2,nuclear-H2,nuclear-H2,nuclear-H2
+
+"Fossil Efficiency Tags: Note that these do not include CCS, so primary energy is based on the average efficiency of non-CCS fossil",,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+30,,,,,,,,,,,,
+
+region,supplysector,subsector,technology,,,,,,,,,
+ALL,electricity,coal,Coal (conv pul),,,,,,,,,
+ALL,electricity,coal,Coal (existing),,,,,,,,,
+ALL,electricity,coal,Coal (IGCC),,,,,,,,,
+ALL,electricity,gas,Gas (base load conv)
+ALL,electricity,gas,Gas (CC)
+ALL,electricity,gas,Gas (existing)
+ALL,electricity,gas,Gas (peak load conv)
+ALL,electricity,oil,Oil (base load conv)
+ALL,electricity,oil,Oil (existing)
+ALL,electricity,oil,Oil (IGCC)
+ALL,electricity,oil,Oil (peak load conv)
+ALL,H2 Central Production,gas chemical,natural gas steam reforming
+ALL,H2 Central Production,coal chemical,coal chemical
+ALL,H2 Central Production,biomass to H2,biomass to H2
+ALL,H2 Forecourt Production,gas chemical,natural gas steam reforming
+ALL,H2 Forecourt Production,electrolysis,electrolysis
+
+
+buildings,,,
+INPUT_TABLE,
+Variable ID,
+100,
+,keyword
+supplysector,final-energy
+residential heating service,building
+residential cooling service,building
+residential water heating service,building
+residential lighting service,building
+residential appliances service,building
+residential others service,building
+commercial heating service,building
+commercial cooling service,building
+commercial water heating service,building
+commercial lighting service,building
+commercial office equipment service,building
+commercial others service,building
+
+industry,
+INPUT_TABLE,
+Variable ID,
+100,
+,keyword
+supplysector,final-energy
+boilers pulp paper and wood,industry
+boilers general,industry
+process heat primary metals,industry
+process heat general,industry
+machine drive,industry
+hvac,industry
+other end uses petroleum,industry
+other end uses general,industry
+electrochemical,industry
+feedstocks petroleum,industry
+feedstocks chemicals,industry
+feedstocks primary metals,industry
+all end uses agriculture,industry
+all end uses mining,industry
+construction energy uses,industry
+construction feedstocks,industry
+process heat cement,industry
+
+transportation,
+INPUT_TABLE,
+Variable ID,
+100,
+,keyword
+supplysector,final-energy
+passenger,transportation
+freight,transportation
+military,transportation
+pipeline,transportation
+recreational offroad,transportation

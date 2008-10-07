@@ -1,0 +1,9 @@
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+501,,,,,,,
+
+supplysector,subsector,technology,period,minicam-energy-input,calibrated-value,efficiency,output
+electricity,biomass,Biomass (existing),2005,regional biomass,0.459423164,0.281211839,0.129195233
+electricity,coal,Coal (existing),2005,regional coal,20.94472064,0.366126894,7.668425516
+electricity,gas,Gas (existing),2005,wholesale gas,5.676575077,0.435355457,2.471327939
+electricity,oil,Oil (existing),2005,refined liquids industrial,1.34595286,0.359989181,0.484528468

@@ -1,0 +1,81 @@
+"Scale year, sharewt, and logitexp",,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,,,
+1000,,,,,,,,,,,,,,,,,,,,
+,,,sharewt,,,,,,,,,logitexp,,,,,,,,
+supplysector,subsector,scaleYear,1975,1990,2005,2020,2035,2050,2065,2080,2095,1975,1990,2005,2020,2035,2050,2065,2080,2095
+residential water heating service,solar,2020,0,0,0,1,1,1,1,1,1,-6,-6,-6,-6,-6,-6,-6,-6,-6
+
+Energy inputs and efficiencies (intensities),,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,,,
+1300,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+supplysector,subsector,technology,Year,minicam-energy-input,coefficient,,,,,,,,,,,,,,,
+residential water heating service,solar,solar wh (gas backup),1975,global solar resource,1.0714,,,,,,,,,,,,,,,
+residential water heating service,solar,solar wh (gas backup),1990,global solar resource,1.0714,,,,,,,,,,,,,,,
+residential water heating service,solar,solar wh (gas backup),2005,global solar resource,1.0714
+residential water heating service,solar,solar wh (gas backup),2020,global solar resource,1.0714
+residential water heating service,solar,solar wh (gas backup),2035,global solar resource,1.0714
+residential water heating service,solar,solar wh (gas backup),2050,global solar resource,1.0714
+residential water heating service,solar,solar wh (gas backup),2065,global solar resource,1.0714
+residential water heating service,solar,solar wh (gas backup),2080,global solar resource,1.0714
+residential water heating service,solar,solar wh (gas backup),2095,global solar resource,1.0714
+residential water heating service,solar,solar wh (gas backup),1975,delivered gas,0.4630
+residential water heating service,solar,solar wh (gas backup),1990,delivered gas,0.4630
+residential water heating service,solar,solar wh (gas backup),2005,delivered gas,0.4630
+residential water heating service,solar,solar wh (gas backup),2020,delivered gas,0.4630
+residential water heating service,solar,solar wh (gas backup),2035,delivered gas,0.4630
+residential water heating service,solar,solar wh (gas backup),2050,delivered gas,0.4630
+residential water heating service,solar,solar wh (gas backup),2065,delivered gas,0.4630
+residential water heating service,solar,solar wh (gas backup),2080,delivered gas,0.4630
+residential water heating service,solar,solar wh (gas backup),2095,delivered gas,0.4630
+
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+1300,,,,,
+
+supplysector,subsector,technology,Year,minicam-energy-input,coefficient
+residential water heating service,solar,solar wh (elec backup),1975,global solar resource,1.0714
+residential water heating service,solar,solar wh (elec backup),1990,global solar resource,1.0714
+residential water heating service,solar,solar wh (elec backup),2005,global solar resource,1.0714
+residential water heating service,solar,solar wh (elec backup),2020,global solar resource,1.0714
+residential water heating service,solar,solar wh (elec backup),2035,global solar resource,1.0714
+residential water heating service,solar,solar wh (elec backup),2050,global solar resource,1.0714
+residential water heating service,solar,solar wh (elec backup),2065,global solar resource,1.0714
+residential water heating service,solar,solar wh (elec backup),2080,global solar resource,1.0714
+residential water heating service,solar,solar wh (elec backup),2095,global solar resource,1.0714
+residential water heating service,solar,solar wh (elec backup),1975,elect_td_bld,0.2976
+residential water heating service,solar,solar wh (elec backup),1990,elect_td_bld,0.2976
+residential water heating service,solar,solar wh (elec backup),2005,elect_td_bld,0.2976
+residential water heating service,solar,solar wh (elec backup),2020,elect_td_bld,0.2976
+residential water heating service,solar,solar wh (elec backup),2035,elect_td_bld,0.2976
+residential water heating service,solar,solar wh (elec backup),2050,elect_td_bld,0.2976
+residential water heating service,solar,solar wh (elec backup),2065,elect_td_bld,0.2976
+residential water heating service,solar,solar wh (elec backup),2080,elect_td_bld,0.2976
+residential water heating service,solar,solar wh (elec backup),2095,elect_td_bld,0.2976
+
+costs and availability,,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+1350,,,,,
+,,,,,minicam-non-energy-input
+supplysector,subsector,technology,Year,sharewt,input-cost
+residential water heating service,solar,solar wh (gas backup),1975,0,18.74 
+residential water heating service,solar,solar wh (gas backup),1990,0,18.74 
+residential water heating service,solar,solar wh (gas backup),2005,0,18.74 
+residential water heating service,solar,solar wh (gas backup),2020,1,18.74 
+residential water heating service,solar,solar wh (gas backup),2035,1,18.74 
+residential water heating service,solar,solar wh (gas backup),2050,1,18.74 
+residential water heating service,solar,solar wh (gas backup),2065,1,18.74 
+residential water heating service,solar,solar wh (gas backup),2080,1,18.74 
+residential water heating service,solar,solar wh (gas backup),2095,1,18.74 
+residential water heating service,solar,solar wh (elec backup),1975,0,18.74 
+residential water heating service,solar,solar wh (elec backup),1990,0,18.74 
+residential water heating service,solar,solar wh (elec backup),2005,0,18.74 
+residential water heating service,solar,solar wh (elec backup),2020,1,18.74 
+residential water heating service,solar,solar wh (elec backup),2035,1,18.74 
+residential water heating service,solar,solar wh (elec backup),2050,1,18.74 
+residential water heating service,solar,solar wh (elec backup),2065,1,18.74 
+residential water heating service,solar,solar wh (elec backup),2080,1,18.74 
+residential water heating service,solar,solar wh (elec backup),2095,1,18.74 

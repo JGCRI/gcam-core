@@ -1,0 +1,72 @@
+RETRO Fires V2 Access Database
+(REanalysis of the TROpospheric chemical composition over the past 40 years)
+
+Data source
+Dr. Martin G. Schultz
+m.schultz@fz-juelich.de
+
+Data Reference
+Schultz, M. G., & Heil, A., & Hoelzemann, J. J., & Spessa, A., & Thonicke, K., & Goldammer, J. 
+G., et al. (2008). Global wildland fire emissions from 1960 to 2000, Global 
+Biogeochemical Cycles, 22, GB2002, doi:10.1029/2007GB003031
+
+Input Files: All_Fires_Countries.xls, All_Fires_Regions.xls
+These workbooks contain 1960 to 2000 global vegetation fire emissions data (Tg/year) for 
+regions and selected countries of the RETRO project. The original CSV data files per 
+chemical/species (e.g. ACETONE, BC, etc) were stored per worksheet by corresponding input 
+file. Note that the field “chemical” was added to each worksheet as the first column.
+
+Modules: importCountries_RETRO, importRegions_RETRO
+These modules import the input files into the tblCountries_RETRO_Fires_V2 and 
+tblRegions_RETRO_Fires_V2 tables, respectively. Note that only columns A1:Z124, in 
+All_Fires_Countries.xls, and A1:U124, in All_Fires_Regions.xls, are imported.
+
+After the first worksheet is added to the table, the rest of the worksheets are appended 
+consecutively to the end of the table. Note that the user must update the variable srtFileName to 
+the corresponding path of each input file.
+
+Tables
+The tables, tblCountries_RETRO_Fires_V2 and tblRegions_RETRO_Fires_V2, show the data 
+imported from the input files. tblMinicamRegions displays the 14 Minicam regions and their 
+respective region id.
+
+The tblMinicamRETRO table was created in order to aggregate the fire emissions data into the 
+Minicam regions. This table maps to each Minicam region a country or one or more RETRO 
+regions, according to the Minicam and RETRO region definitions. Note that this table can be 
+altered to produce data for other regional desegregations.
+
+To prevent double counting, if both a country and a region including that country are assigned to 
+a Minicam region, the emissions of the country is subtracted from the region and the remaining 
+data is stored in the “rest_of” the region. For this purpose, tblMapRegions, maps each RETRO 
+region with the available RETRO countries. 
+
+The table, tblFinal_RETRO_Fires_V2, compiles the RETRO fire emissions data for both the 
+RETRO countries and regions, as well as for the “rest_of” regions.
+
+Queries
+The normalizing union queries, qryNormalizingUnionQuery_Countries and 
+qryNormalizingUnionQuery_Regions, restructure the imported data so that the countries and 
+regions are no longer fields but records within each table.
+ 
+As the normalizing union queries are written in SQL, these are converted to Design View Select 
+queries, namely, appndTBLEmissions_Countries and mkeTBLEmissions_Regions, for easier 
+manipulation of the data.
+
+The query, qrySubtract_Regions, aggregates the fire emissions data of those countries assigned to 
+a Minicam region and which are included in RETRO regions also assigned to a Minicam region. 
+To prevent double counting, these fire emissions data are subtracted from the emissions of the 
+corresponding region in appndRest_of_Regions; simultaneously, the resulting emissions data for 
+each region is stored in “rest_of” region records.
+
+The final query, qryRETRO_Fires_ByMinicam, aggregates the data into Minicam regions 
+according to the definitions in the tblMinicamRETRO table. This query extracts the emissions 
+data from the table, tblFinal_RETRO_Fires_V2. 
+
+Note that the query descriptions within the database assign a number to each of the queries. The 
+tblFinal_RETRO_Fires_V2 table was created using queries [3], [4], and [6], and should be 
+updated using these queries.
+
+DB Construction
+The RETRO.mdb MS Access database was created by Sabrina Delgado Arias at the Joint Global 
+Change Research Institute, globalchange.umd.edu. 
+Written by Sabrina Delgado Arias		04/22/2008

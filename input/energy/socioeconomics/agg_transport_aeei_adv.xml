@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="Africa">
+         <energy-final-demand name="transportation" nocreate="1">
+            <final-energy-consumer>
+               <aeei year="1975">0</aeei>
+               <aeei year="1990">0</aeei>
+               <aeei year="2005">0</aeei>
+               <aeei year="2020">0.003399119</aeei>
+               <aeei year="2035">0.003236886</aeei>
+               <aeei year="2050">0.003085119</aeei>
+               <aeei year="2065">0.002957206</aeei>
+               <aeei year="2080">0.00347589</aeei>
+               <aeei year="2095">0.003574051</aeei>
+            </final-energy-consumer>
+         </energy-final-demand>
+      </region>
+      <region name="Australia_NZ">
+         <energy-final-demand name="transportation" nocreate="1">
+            <final-energy-consumer>
+               <aeei year="1975">0</aeei>
+               <aeei year="1990">0</aeei>
+               <aeei year="2005">0</aeei>
+               <aeei year="2020">0.003342318</aeei>
+               <aeei year="2035">0.003277464</aeei>
+               <aeei year="2050">0.003102978</aeei>
+               <aeei year="2065">0.0028828</aeei>
+               <aeei year="2080">0.003269828</aeei>
+               <aeei year="2095">0.00336757</aeei>
+            </final-energy-consumer>
+         </energy-final-demand>
+      </region>
+      <region name="Canada">
+         <energy-final-demand name="transportation" nocreate="1">
+            <final-energy-consumer>
+               <aeei year="1975">0</aeei>
+               <aeei year="1990">0</aeei>
+               <aeei year="2005">0</aeei>
+               <aeei year="2020">0.003569237</aeei>
+               <aeei year="2035">0.003315003</aeei>
+               <aeei year="2050">0.003100847</aeei>
+               <aeei year="2065">0.002887847</aeei>
+               <aeei year="2080">0.003361715</aeei>
+               <aeei year="2095">0.003443772</aeei>
+            </final-energy-consumer>
+         </energy-final-demand>
+      </region>
+      <region name="China">
+         <energy-final-demand name="transportation" nocreate="1">
+            <final-energy-consumer>
+               <aeei year="1975">0</aeei>
+               <aeei year="1990">0</aeei>
+               <aeei year="2005">0</aeei>
+               <aeei year="2020">0.003736046</aeei>
+               <aeei year="2035">0.003663016</aeei>
+               <aeei year="2050">0.003527862</aeei>
+               <aeei year="2065">0.003326008</aeei>
+               <aeei year="2080">0.003899823</aeei>
+               <aeei year="2095">0.003864888</aeei>
+            </final-energy-consumer>
+         </energy-final-demand>
+      </region>
+      <region name="Eastern Europe">
+         <energy-final-demand name="transportation" nocreate="1">
+            <final-energy-consumer>
+               <aeei year="1975">0</aeei>
+               <aeei year="1990">0</aeei>
+               <aeei year="2005">0</aeei>
+               <aeei year="2020">0.003712266</aeei>
+               <aeei year="2035">0.003510081</aeei>
+               <aeei year="2050">0.00350789</aeei>
+               <aeei year="2065">0.003348481</aeei>
+               <aeei year="2080">0.003936971</aeei>
+               <aeei year="2095">0.004014739</aeei>
+            </final-energy-consumer>
+         </energy-final-demand>
+      </region>
+      <region name="Former Soviet Union">
+         <energy-final-demand name="transportation" nocreate="1">
+            <final-energy-consumer>
+               <aeei year="1975">0</aeei>
+               <aeei year="1990">0</aeei>
+               <aeei year="2005">0</aeei>
+               <aeei year="2020">0.003534505</aeei>
+               <aeei year="2035">0.003381865</aeei>
+               <aeei year="2050">0.003261286</aeei>
+               <aeei year="2065">0.00310242</aeei>
+               <aeei year="2080">0.003615583</aeei>
+               <aeei year="2095">0.003720827</aeei>
+            </final-energy-consumer>
+         </energy-final-demand>
+      </region>
+      <region name="India">
+         <energy-final-demand name="transportation" nocreate="1">
+            <final-energy-consumer>
+               <aeei year="1975">0</aeei>
+               <aeei year="1990">0</aeei>
+               <aeei year="2005">0</aeei>
+               <aeei year="2020">0.003478962</aeei>
+               <aeei year="2035">0.003373921</aeei>
+               <aeei year="2050">0.003271632</aeei>
+               <aeei year="2065">0.003136442</aeei>
+               <aeei year="2080">0.003658252</aeei>
+               <aeei year="2095">0.003793012</aeei>
+            </final-energy-consumer>
+         </energy-final-demand>
+      </region>
+      <region name="Japan">
+         <energy-final-demand name="transportation" nocreate="1">
+            <final-energy-consumer>
+               <aeei year="1975">0</aeei>
+               <aeei year="1990">0</aeei>
+               <aeei year="2005">0</aeei>
+               <aeei year="2020">3.01E-03</aeei>
+               <aeei year="2035">0.003263109</aeei>
+               <aeei year="2050">0.003097661</aeei>
+               <aeei year="2065">0.002976056</aeei>
+               <aeei year="2080">0.003356444</aeei>
+               <aeei year="2095">0.003317841</aeei>
+            </final-energy-consumer>
+         </energy-final-demand>
+      </region>
+      <region name="Korea">
+         <energy-final-demand name="transportation" nocreate="1">
+            <final-energy-consumer>
+               <aeei year="1975">0</aeei>
+               <aeei year="1990">0</aeei>
+               <aeei year="2005">0</aeei>
+               <aeei year="2020">0.003382716</aeei>
+               <aeei year="2035">0.003386304</aeei>
+               <aeei year="2050">0.003293365</aeei>
+               <aeei year="2065">0.003108889</aeei>
+               <aeei year="2080">0.003564362</aeei>
+               <aeei year="2095">0.003624029</aeei>
+            </final-energy-consumer>
+         </energy-final-demand>
+      </region>
+      <region name="Latin America">
+         <energy-final-demand name="transportation" nocreate="1">
+            <final-energy-consumer>
+               <aeei year="1975">0</aeei>
+               <aeei year="1990">0</aeei>
+               <aeei year="2005">0</aeei>
+               <aeei year="2020">0.003389102</aeei>
+               <aeei year="2035">0.003225914</aeei>
+               <aeei year="2050">0.003167996</aeei>
+               <aeei year="2065">0.003102157</aeei>
+               <aeei year="2080">0.003665603</aeei>
+               <aeei year="2095">0.003756927</aeei>
+            </final-energy-consumer>
+         </energy-final-demand>
+      </region>
+      <region name="Middle East">
+         <energy-final-demand name="transportation" nocreate="1">
+            <final-energy-consumer>
+               <aeei year="1975">0</aeei>
+               <aeei year="1990">0</aeei>
+               <aeei year="2005">0</aeei>
+               <aeei year="2020">0.003457487</aeei>
+               <aeei year="2035">0.003319698</aeei>
+               <aeei year="2050">0.003116359</aeei>
+               <aeei year="2065">0.0029769</aeei>
+               <aeei year="2080">0.003470029</aeei>
+               <aeei year="2095">0.003541681</aeei>
+            </final-energy-consumer>
+         </energy-final-demand>
+      </region>
+      <region name="Southeast Asia">
+         <energy-final-demand name="transportation" nocreate="1">
+            <final-energy-consumer>
+               <aeei year="1975">0</aeei>
+               <aeei year="1990">0</aeei>
+               <aeei year="2005">0</aeei>
+               <aeei year="2020">0.003568577</aeei>
+               <aeei year="2035">0.003478412</aeei>
+               <aeei year="2050">0.003364958</aeei>
+               <aeei year="2065">0.003282509</aeei>
+               <aeei year="2080">0.003795143</aeei>
+               <aeei year="2095">0.003901602</aeei>
+            </final-energy-consumer>
+         </energy-final-demand>
+      </region>
+      <region name="USA">
+         <energy-final-demand name="transportation" nocreate="1">
+            <final-energy-consumer>
+               <aeei year="1975">0</aeei>
+               <aeei year="1990">0</aeei>
+               <aeei year="2005">0</aeei>
+               <aeei year="2020">0.002678715</aeei>
+               <aeei year="2035">0.002915411</aeei>
+               <aeei year="2050">0.004104348</aeei>
+               <aeei year="2065">0.002892334</aeei>
+               <aeei year="2080">0.003394911</aeei>
+               <aeei year="2095">0.003477282</aeei>
+            </final-energy-consumer>
+         </energy-final-demand>
+      </region>
+      <region name="Western Europe">
+         <energy-final-demand name="transportation" nocreate="1">
+            <final-energy-consumer>
+               <aeei year="1975">0</aeei>
+               <aeei year="1990">0</aeei>
+               <aeei year="2005">0</aeei>
+               <aeei year="2020">3.26E-03</aeei>
+               <aeei year="2035">0.00328144</aeei>
+               <aeei year="2050">0.003029542</aeei>
+               <aeei year="2065">0.002929972</aeei>
+               <aeei year="2080">0.00338243</aeei>
+               <aeei year="2095">0.003411363</aeei>
+            </final-energy-consumer>
+         </energy-final-demand>
+      </region>
+   </world>
+</scenario>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ModelInterfaceBatch>
+	<!-- You must first identify the class which will run the command.
+	     For csv conversions it will always be InputViewer.
+	     TODO: make it so the class name is not necessary.
+	  -->
+	<class name="ModelInterface.ModelGUI2.InputViewer">
+		<!-- The command you want to run.  It would be the same name as
+		     the name in the Open.. submenu.
+		  -->
+		<command name="CSV file">
+			<!-- For csv conversions you need to give it a header file,
+			     where to place the resulting xml file, and one or more
+			     csv files which you want to convert with the given 
+			     header file
+			  -->
+			<headerFile>../../Energy/Industry/Input Module/headers_us_industry.txt</headerFile>
+			<outFile>../../Energy/Industry/Input Module/us_ind_input_ref.xml</outFile>
+			<csvFile>../../Energy/Industry/Input Module/SupplyCoeffsforXML1990.csv</csvFile>
+			<csvFile>../../Energy/Industry/Input Module/SupplyCoeffsforXML2005.csv</csvFile>
+			<csvFile>../../Energy/Industry/Input Module/CalOutputforXML1990.csv</csvFile>
+			<csvFile>../../Energy/Industry/Input Module/CalOutputforXML2005.csv</csvFile>
+			<csvFile>../../Energy/Industry/Input Module/NECostforXML.csv</csvFile>
+			<csvFile>../../Energy/Industry/Input Module/SupplyCoeffsforXMLRefCase.csv</csvFile>
+			<csvFile>../../Energy/Industry/Input Module/SubsectorsforXML.csv</csvFile>
+			<csvFile>../../Energy/Industry/Input Module/TechsforXMLRefCase.csv</csvFile>
+			<csvFile>../../Energy/Industry/Input Module/TechsCogenforXML.csv</csvFile>
+			<csvFile>../../Energy/Industry/Input Module/TechsCogenCCSforXML.csv</csvFile>
+			<csvFile>../../Energy/Industry/Input Module/TechsH2forXML.csv</csvFile>
+			<csvFile>../../Energy/Industry/Input Module/CalInputforXML1990.csv</csvFile>
+			<csvFile>../../Energy/Industry/Input Module/CalInputforXML2005.csv</csvFile>
+			<csvFile>../../Energy/Industry/Input Module/CalInputCogenforXML2005.csv</csvFile>
+			<csvFile>../../Energy/Industry/Input Module/SeqFracforXML.csv</csvFile>
+			<csvFile>../../Energy/Industry/Input Module/FinalDemandforXML.csv</csvFile>
+            <csvFile>../../Energy/Industry/Input Module/US_elec_adj.csv</csvFile>
+		</command>
+	</class>
+</ModelInterfaceBatch>

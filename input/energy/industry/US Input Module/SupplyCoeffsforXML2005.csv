@@ -1,0 +1,128 @@
+Region: USA,Input coefficients calculated from 1998 enduse proportions,,,,,,,,,,,,,
+IndustrySupplySector ,,,,,,,,enduse supplysector list,,,,,,
+INPUT_TABLE,,,,,,,,boilers pulp paper and wood,,,,,,
+Variable ID,,,,,,,,boilers general,,,,,,
+111,,,,,,,,process heat primary metals,,,,,,
+,,,,,,,,process heat general,,,,,,
+supplysector,subsector,technology,period,minicam-energy-input,coefficient,,,machine drive,,,,,,
+food processing,food processing,food processing,2005,boilers general,0.475652663,,,hvac,,,,,,
+food processing,food processing,food processing,2005,process heat general,0.161536056,,,other end uses petroleum,,,,,,
+food processing,food processing,food processing,2005,machine drive,0.148422651,,,other end uses general,,,,,,
+food processing,food processing,food processing,2005,hvac,0.071834817,,,electrochemical,,,,,,
+food processing,food processing,food processing,2005,other end uses general,0.142553813,,1,feedstocks petroleum,,,,,,
+,,,,,,,,feedstocks chemicals,,,,,,
+Region: USA,,,,,,,,feedstocks primary metals,,,,,,
+IndustrySupplySector ,,,,,,,,all end uses agriculture,,,,,,
+INPUT_TABLE,,,,,,,,all end uses mining,,,,,,
+Variable ID,,,,,,,,construction energy uses
+111,,,,,,,,construction feedstocks
+,,,,,,,,limestone feedstocks
+supplysector,subsector,technology,period,minicam-energy-input,coefficient,,,
+pulp paper and wood,pulp paper and wood,pulp paper and wood,2005,boilers pulp paper and wood,0.703198077,,,
+pulp paper and wood,pulp paper and wood,pulp paper and wood,2005,process heat general,0.057612606,,,
+pulp paper and wood,pulp paper and wood,pulp paper and wood,2005,machine drive,0.170243923,,,
+pulp paper and wood,pulp paper and wood,pulp paper and wood,2005,hvac,0.023650641,,,
+pulp paper and wood,pulp paper and wood,pulp paper and wood,2005,other end uses general,0.044463253,,,
+pulp paper and wood,pulp paper and wood,pulp paper and wood,2005,electrochemical,0.0008315,,1,
+
+Region: USA,,,,,,,,
+IndustrySupplySector ,,,,,,,,
+INPUT_TABLE,,,,,,,,
+Variable ID,,,,,,,,
+111,,,,,,,,
+
+supplysector,subsector,technology,period,minicam-energy-input,coefficient,,
+chemicals,chemicals,chemicals,2005,boilers general,0.172367313,,
+chemicals,chemicals,chemicals,2005,process heat general,0.120742669,,
+chemicals,chemicals,chemicals,2005,machine drive,0.082717436,,
+chemicals,chemicals,chemicals,2005,hvac,0.016280861,,
+chemicals,chemicals,chemicals,2005,other end uses general,0.044166506,,
+chemicals,chemicals,chemicals,2005,electrochemical,0.025815365,,
+chemicals,chemicals,chemicals,2005,feedstocks chemicals,0.537909851,,1
+
+Region: USA,,,,,,,
+IndustrySupplySector ,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+111,,,,,,,
+
+supplysector,subsector,technology,period,minicam-energy-input,coefficient,,
+petroleum,petroleum,petroleum,2005,boilers general,0.036710286,,
+petroleum,petroleum,petroleum,2005,process heat general,0.093212156,,
+petroleum,petroleum,petroleum,2005,machine drive,0.028031372,,
+petroleum,petroleum,petroleum,2005,hvac,0.00309707,,
+petroleum,petroleum,petroleum,2005,other end uses petroleum,0.43869747,,
+petroleum,petroleum,petroleum,2005,feedstocks petroleum,0.400251646,,1
+
+Region: USA,,,,,,,
+IndustrySupplySector ,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+111,,,,,,,
+
+supplysector,subsector,technology,period,minicam-energy-input,coefficient,,
+aluminum,aluminum,aluminum,2005,boilers general,0.062401109,,
+aluminum,aluminum,aluminum,2005,process heat primary metals,0.287510484,,
+aluminum,aluminum,aluminum,2005,machine drive,0.070727508,,
+aluminum,aluminum,aluminum,2005,hvac,0.027336273,,
+aluminum,aluminum,aluminum,2005,other end uses general,0.02186797,,
+aluminum,aluminum,aluminum,2005,electrochemical,0.396202248,,
+aluminum,aluminum,aluminum,2005,feedstocks primary metals,0.133954408,,1
+
+Region: USA,,,,,,,
+IndustrySupplySector ,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+111,,,,,,,
+
+supplysector,subsector,technology,period,minicam-energy-input,coefficient,,
+other primary metals,other primary metals,other primary metals,2005,boilers general,0.039747857,,
+other primary metals,other primary metals,other primary metals,2005,process heat primary metals,0.339956795,,
+other primary metals,other primary metals,other primary metals,2005,machine drive,0.072112679,,
+other primary metals,other primary metals,other primary metals,2005,hvac,0.03934521,,
+other primary metals,other primary metals,other primary metals,2005,other end uses general,0.030889057,,
+other primary metals,other primary metals,other primary metals,2005,electrochemical,0.008383041,,
+other primary metals,other primary metals,other primary metals,2005,feedstocks primary metals,0.466382032,,
+other primary metals,other primary metals,other primary metals,2005,limestone feedstocks,0.00318333,,1
+
+
+Region: USA,,,,,,,
+IndustrySupplySector ,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+111,,,,,,,
+
+supplysector,subsector,technology,period,minicam-energy-input,coefficient,,
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,2005,boilers general,0.035205402,,
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,2005,process heat general,0.621625824,,
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,2005,machine drive,0.088476294,,
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,2005,hvac,0.048905365,,
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,2005,other end uses general,0.070596506,,
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,2005,electrochemical,0.001774448,,
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,2005,limestone feedstocks,0.133416162,,1
+
+Region: USA,,,,,,,
+IndustrySupplySector ,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+111,,,,,,,
+
+supplysector,subsector,technology,period,minicam-energy-input,coefficient,,
+other manufacturing,other manufacturing,other manufacturing,2005,boilers general,0.144010091,,
+other manufacturing,other manufacturing,other manufacturing,2005,process heat general,0.190702687,,
+other manufacturing,other manufacturing,other manufacturing,2005,machine drive,0.243332157,,
+other manufacturing,other manufacturing,other manufacturing,2005,hvac,0.247284574,,
+other manufacturing,other manufacturing,other manufacturing,2005,other end uses general,0.167074664,,
+other manufacturing,other manufacturing,other manufacturing,2005,electrochemical,0.007595827,,1
+
+Region: USA,,,,,,,
+IndustrySupplySector ,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+111,,,,,,,
+
+supplysector,subsector,technology,period,minicam-energy-input,coefficient,,
+agriculture,agriculture,agriculture,2005,all end uses agriculture,1,,
+mining,mining,mining,2005,all end uses mining,1,,
+construction,construction,construction,2005,construction energy uses,0.43358074,,
+construction,construction,construction,2005,construction feedstocks,0.56641926,,

@@ -1,0 +1,42 @@
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+200,,,,,
+,,,,1975 fillout,
+region,supplysector,subsector,scaleYear,fuelprefElasticity,
+ALL,building,biomass,2005,-0.3,
+ALL,building,coal,2005,-0.3,
+ALL,building,electricity,2005,0.4,
+ALL,building,gas,2005,0,
+ALL,building,refined liquids,2005,0,
+
+
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+2000,,,,,
+,,,,,efficiency
+region,supplysector,subsector,technology,minicam-energy-input,1975,1990,2005,2020,2035,2050,2065,2080,2095
+ALL,building,biomass,biomass,delivered biomass,1,0.4,0.4,0.41,0.41,0.42,0.42,0.43,0.44
+ALL,building,gas,gas,delivered gas,1,0.72,0.81,0.86,0.88,0.88,0.92,0.95,0.97
+ALL,building,refined liquids,refined liquids,refined liquids enduse,1,0.82,0.86,0.90,0.95,0.97,1.01,1.05,1.13
+ALL,building,electricity,electricity,elect_td_bld,1,0.93,1.10,1.26,1.30,1.32,1.37,1.42,1.47
+ALL,building,coal,coal,delivered coal,1,0.4,0.4,0.41,0.41,0.42,0.42,0.43,0.44
+
+
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+2001,,,,minicam-non-energy-input,,,,,,,,,
+,,,,input-cost,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,
+ALL,building,biomass,biomass,1,5,5,5,5,5,5,5,5,
+ALL,building,coal,coal,1,5,5,5,5,5,5,5,5,
+ALL,building,electricity,electricity,1,11.25,11.25,11.25,11.25,11.25,11.25,11.25,11.25,
+ALL,building,gas,gas,1,5.75,5.75,5.75,5.75,5.75,5.75,5.75,5.75
+ALL,building,refined liquids,refined liquids,1,6.5,6.5,6.5,6.5,6.5,6.5,6.5,6.5
+
+
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+30,,,,,,,,,,,,
+,,2020 fillout,,,,,,,,,,
+region,energy-final-demand,price-elasticity,,,,,,,,,,
+ALL,building,-1.25,,,,,,,,,,

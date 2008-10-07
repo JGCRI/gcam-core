@@ -1,0 +1,212 @@
+INPUT_TABLE,,
+Variable ID,,
+502,,
+Source Inputs:,,
+region,renewresource,market
+Africa,traditional biomass,Africa
+China,traditional biomass,China
+India,traditional biomass,India
+Latin America,traditional biomass,Latin America
+Southeast Asia,traditional biomass,Southeast Asia
+
+
+INPUT_TABLE,,
+Variable ID,,
+503,,
+Source Inputs:,,
+region,renewresource,sub-renewable-resource,grade,extractioncost,
+Africa,traditional biomass,traditional biomass,grade 1,1.25,
+China,traditional biomass,traditional biomass,grade 1,1.25,
+India,traditional biomass,traditional biomass,grade 1,1.25,
+Latin America,traditional biomass,traditional biomass,grade 1,1.25,
+Southeast Asia,traditional biomass,traditional biomass,grade 1,1.25,
+
+
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+504,,,,,
+Source Inputs:,,,,,
+region,renewresource,sub-renewable-resource,grade,available,extractioncost
+Africa,traditional biomass,traditional biomass,grade 2,1,1.5
+China,traditional biomass,traditional biomass,grade 2,1,1.5
+India,traditional biomass,traditional biomass,grade 2,1,1.5
+Latin America,traditional biomass,traditional biomass,grade 2,1,1.5
+Southeast Asia,traditional biomass,traditional biomass,grade 2,1,1.5
+
+
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+504,,,,,
+Source Inputs:,,,,,
+region,renewresource,sub-renewable-resource,grade,available,extractioncost
+Africa,traditional biomass,traditional biomass,grade 3,5,5
+China,traditional biomass,traditional biomass,grade 3,5,5
+India,traditional biomass,traditional biomass,grade 3,5,5
+Latin America,traditional biomass,traditional biomass,grade 3,5,5
+Southeast Asia,traditional biomass,traditional biomass,grade 3,5,5
+
+
+INPUT_TABLE,,,,,,,,
+Variable ID,,,,,,,,
+505,,,,,,,,
+Source Inputs:,,,From: Final Energy Consumption by Fuel (date=2007-19-11T20:54:6-00:00),,,,,
+region,renewresource,sub-renewable-resource,maxSubResource,,,,,
+Africa,traditional biomass,traditional biomass,8.1,,,,,
+China,traditional biomass,traditional biomass,10.3,,,,,
+India,traditional biomass,traditional biomass,5.2,,,,,
+Latin America,traditional biomass,traditional biomass,1.1,,,,,
+Southeast Asia,traditional biomass,traditional biomass,4.5,,,,,
+
+INPUT_TABLE,,,,,,,,
+Variable ID,,,,,,,,
+600,,,,,,,,
+Source Inputs: BC bldg_biomass,,,1990 fillout,,,,,
+region,supplysector,subsector,fuelprefElasticity,,,,,
+Africa,building,trad biomass,-1.5
+China,building,trad biomass,-1
+India,building,trad biomass,-1.25
+Latin America,building,trad biomass,-1.5
+Southeast Asia,building,trad biomass,-1
+
+INPUT_TABLE,,,
+Variable ID,,,
+602,,,
+Source Inputs: BC bldg_biomass,,,
+region,supplysector,subsector,scaleYear
+Africa,building,trad biomass,2005
+China,building,trad biomass,2005
+India,building,trad biomass,2005
+Latin America,building,trad biomass,2005
+Southeast Asia,building,trad biomass,2005
+
+
+
+
+Add tradbio to all regions of the world,,
+INPUT_TABLE,,
+Variable ID,,
+501,,
+Source Inputs:,,price
+region,renewresource,1975
+Australia_NZ,traditional biomass,1
+Canada,traditional biomass,1
+Eastern Europe,traditional biomass,1
+Former Soviet Union,traditional biomass,1
+Japan,traditional biomass,1
+Korea,traditional biomass,1
+Middle East,traditional biomass,1
+USA,traditional biomass,1
+Western Europe,traditional biomass,1
+,,
+,,
+INPUT_TABLE,,
+Variable ID,,
+502,,
+Source Inputs:,,
+region,renewresource,market
+Australia_NZ,traditional biomass,Australia_NZ
+Canada,traditional biomass,Canada
+Eastern Europe,traditional biomass,Eastern Europe
+Former Soviet Union,traditional biomass,Former Soviet Union
+Japan,traditional biomass,Japan
+Korea,traditional biomass,Korea
+Middle East,traditional biomass,Middle East,,
+USA,traditional biomass,USA,,
+Western Europe,traditional biomass,Western Europe,,
+,,,,
+,,,,
+INPUT_TABLE,,,,
+Variable ID,,,,
+503,,,,
+Source Inputs:,,,,
+region,renewresource,sub-renewable-resource,grade,extractioncost
+Australia_NZ,traditional biomass,traditional biomass,grade 1,1.25
+Canada,traditional biomass,traditional biomass,grade 1,1.25
+Eastern Europe,traditional biomass,traditional biomass,grade 1,1.25
+Former Soviet Union,traditional biomass,traditional biomass,grade 1,1.25
+Japan,traditional biomass,traditional biomass,grade 1,1.25
+Korea,traditional biomass,traditional biomass,grade 1,1.25
+Middle East,traditional biomass,traditional biomass,grade 1,1.25,
+USA,traditional biomass,traditional biomass,grade 1,1.25,
+Western Europe,traditional biomass,traditional biomass,grade 1,1.25,
+
+
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+504,,,,,
+Source Inputs:,,,,,
+region,renewresource,sub-renewable-resource,grade,available,extractioncost
+Australia_NZ,traditional biomass,traditional biomass,grade 2,1,1.5
+Canada,traditional biomass,traditional biomass,grade 2,1,1.5
+Eastern Europe,traditional biomass,traditional biomass,grade 2,1,1.5
+Former Soviet Union,traditional biomass,traditional biomass,grade 2,1,1.5
+Japan,traditional biomass,traditional biomass,grade 2,1,1.5
+Korea,traditional biomass,traditional biomass,grade 2,1,1.5
+Middle East,traditional biomass,traditional biomass,grade 2,1,1.5
+USA,traditional biomass,traditional biomass,grade 2,1,1.5
+Western Europe,traditional biomass,traditional biomass,grade 2,1,1.5
+
+
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+504,,,,,
+Source Inputs:,,,,,
+region,renewresource,sub-renewable-resource,grade,available,extractioncost
+Australia_NZ,traditional biomass,traditional biomass,grade 3,5,5
+Canada,traditional biomass,traditional biomass,grade 3,5,5
+Eastern Europe,traditional biomass,traditional biomass,grade 3,5,5
+Former Soviet Union,traditional biomass,traditional biomass,grade 3,5,5
+Japan,traditional biomass,traditional biomass,grade 3,5,5
+Korea,traditional biomass,traditional biomass,grade 3,5,5
+Middle East,traditional biomass,traditional biomass,grade 3,5,5
+USA,traditional biomass,traditional biomass,grade 3,5,5
+Western Europe,traditional biomass,traditional biomass,grade 3,5,5
+
+
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+505,,,,,
+Source Inputs:,,,,,
+region,renewresource,sub-renewable-resource,maxSubResource,,
+Australia_NZ,traditional biomass,traditional biomass,0.1,,
+Canada,traditional biomass,traditional biomass,0.1,,
+Eastern Europe,traditional biomass,traditional biomass,0.1,,
+Former Soviet Union,traditional biomass,traditional biomass,0.1,,
+Japan,traditional biomass,traditional biomass,0.1,,
+Korea,traditional biomass,traditional biomass,0.1,,
+Middle East,traditional biomass,traditional biomass,0.1
+USA,traditional biomass,traditional biomass,0.1
+Western Europe,traditional biomass,traditional biomass,0.1
+
+
+Add trad bio sector to all regions of the world (set share to 0),,,
+INPUT_TABLE,don’t read this in as ObjECTS can't handle this BS,,
+Variable ID,,,
+601,,,
+,,,1975 fillout
+region,supplysector,subsector,sharewt
+Australia_NZ,building,trad biomass,0
+Canada,building,trad biomass,0
+Eastern Europe,building,trad biomass,0
+Former Soviet Union,building,trad biomass,0
+Japan,building,trad biomass,0
+Korea,building,trad biomass,0,,,,,,,,,,
+Middle East,building,trad biomass,0,,,,,,,,,,
+USA,building,trad biomass,0,,,,,,,,,,
+Western Europe,building,trad biomass,0,,,,,,,,,,
+
+
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+6000,,,,,,,,,,,,,
+,,,,efficiency,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input
+Australia_NZ,building,trad biomass,trad biomass,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,traditional biomass
+Canada,building,trad biomass,trad biomass,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,traditional biomass
+Eastern Europe,building,trad biomass,trad biomass,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,traditional biomass
+Former Soviet Union,building,trad biomass,trad biomass,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,traditional biomass
+Japan,building,trad biomass,trad biomass,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,traditional biomass
+Korea,building,trad biomass,trad biomass,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,traditional biomass
+Middle East,building,trad biomass,trad biomass,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,traditional biomass
+USA,building,trad biomass,trad biomass,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,traditional biomass
+Western Europe,building,trad biomass,trad biomass,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,traditional biomass

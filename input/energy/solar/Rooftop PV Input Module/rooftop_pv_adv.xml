@@ -1,0 +1,929 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <renewresource name="Distributed_Solar">
+            <smooth-renewable-subresource name="Distributed_solar">
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0489</techChange>
+               <techChange year="2035">0.0217</techChange>
+               <techChange year="2050">0.0128</techChange>
+               <techChange year="2065">0.0072</techChange>
+               <techChange year="2080">0.0044</techChange>
+               <techChange year="2095">0.0031</techChange>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="Solar_roofs">
+            <subsector name="Solar_roofs">
+               <intermittent-technology name="Rooftop_PV">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>60.92</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>60.92</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>60.92</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>28.73</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>20.68</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>17.03</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>15.27</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>14.30</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>13.66</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="Canada">
+         <renewresource name="Distributed_Solar">
+            <smooth-renewable-subresource name="Distributed_solar">
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0489</techChange>
+               <techChange year="2035">0.0217</techChange>
+               <techChange year="2050">0.0128</techChange>
+               <techChange year="2065">0.0072</techChange>
+               <techChange year="2080">0.0044</techChange>
+               <techChange year="2095">0.0031</techChange>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="Solar_roofs">
+            <subsector name="Solar_roofs">
+               <intermittent-technology name="Rooftop_PV">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>75.09</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>75.09</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>75.09</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>35.41</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>25.49</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>21.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>18.83</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>17.63</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>16.83</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="Western Europe">
+         <renewresource name="Distributed_Solar">
+            <smooth-renewable-subresource name="Distributed_solar">
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0489</techChange>
+               <techChange year="2035">0.0217</techChange>
+               <techChange year="2050">0.0128</techChange>
+               <techChange year="2065">0.0072</techChange>
+               <techChange year="2080">0.0044</techChange>
+               <techChange year="2095">0.0031</techChange>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="Solar_roofs">
+            <subsector name="Solar_roofs">
+               <intermittent-technology name="Rooftop_PV">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>73.01</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>73.01</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>73.01</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>34.43</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>24.78</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>20.41</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>18.30</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>17.14</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>16.37</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="Japan">
+         <renewresource name="Distributed_Solar">
+            <smooth-renewable-subresource name="Distributed_solar">
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0489</techChange>
+               <techChange year="2035">0.0217</techChange>
+               <techChange year="2050">0.0128</techChange>
+               <techChange year="2065">0.0072</techChange>
+               <techChange year="2080">0.0044</techChange>
+               <techChange year="2095">0.0031</techChange>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="Solar_roofs">
+            <subsector name="Solar_roofs">
+               <intermittent-technology name="Rooftop_PV">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>65.57</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>65.57</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>65.57</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>30.92</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>22.25</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>18.33</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>16.44</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>15.39</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>14.70</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="Australia_NZ">
+         <renewresource name="Distributed_Solar">
+            <smooth-renewable-subresource name="Distributed_solar">
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0489</techChange>
+               <techChange year="2035">0.0217</techChange>
+               <techChange year="2050">0.0128</techChange>
+               <techChange year="2065">0.0072</techChange>
+               <techChange year="2080">0.0044</techChange>
+               <techChange year="2095">0.0031</techChange>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="Solar_roofs">
+            <subsector name="Solar_roofs">
+               <intermittent-technology name="Rooftop_PV">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>52.35</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>52.35</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>52.35</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>24.69</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>17.77</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>14.64</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>13.12</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>12.29</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>11.74</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="Former Soviet Union">
+         <renewresource name="Distributed_Solar">
+            <smooth-renewable-subresource name="Distributed_solar">
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0489</techChange>
+               <techChange year="2035">0.0217</techChange>
+               <techChange year="2050">0.0128</techChange>
+               <techChange year="2065">0.0072</techChange>
+               <techChange year="2080">0.0044</techChange>
+               <techChange year="2095">0.0031</techChange>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="Solar_roofs">
+            <subsector name="Solar_roofs">
+               <intermittent-technology name="Rooftop_PV">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>76.13</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>76.13</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>76.13</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>35.90</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>25.84</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>21.28</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>19.08</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>17.87</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>17.07</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="China">
+         <renewresource name="Distributed_Solar">
+            <smooth-renewable-subresource name="Distributed_solar">
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0489</techChange>
+               <techChange year="2035">0.0217</techChange>
+               <techChange year="2050">0.0128</techChange>
+               <techChange year="2065">0.0072</techChange>
+               <techChange year="2080">0.0044</techChange>
+               <techChange year="2095">0.0031</techChange>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="Solar_roofs">
+            <subsector name="Solar_roofs">
+               <intermittent-technology name="Rooftop_PV">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>61.89</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>61.89</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>61.89</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>29.18</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>21.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>17.30</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>15.51</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>14.53</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>13.87</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="Middle East">
+         <renewresource name="Distributed_Solar">
+            <smooth-renewable-subresource name="Distributed_solar">
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0489</techChange>
+               <techChange year="2035">0.0217</techChange>
+               <techChange year="2050">0.0128</techChange>
+               <techChange year="2065">0.0072</techChange>
+               <techChange year="2080">0.0044</techChange>
+               <techChange year="2095">0.0031</techChange>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="Solar_roofs">
+            <subsector name="Solar_roofs">
+               <intermittent-technology name="Rooftop_PV">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>45.96</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>45.96</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>45.96</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>21.67</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>15.60</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>12.85</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>11.52</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>10.79</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>10.30</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="Africa">
+         <renewresource name="Distributed_Solar">
+            <smooth-renewable-subresource name="Distributed_solar">
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0489</techChange>
+               <techChange year="2035">0.0217</techChange>
+               <techChange year="2050">0.0128</techChange>
+               <techChange year="2065">0.0072</techChange>
+               <techChange year="2080">0.0044</techChange>
+               <techChange year="2095">0.0031</techChange>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="Solar_roofs">
+            <subsector name="Solar_roofs">
+               <intermittent-technology name="Rooftop_PV">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>45.55</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>45.55</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>45.55</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>21.48</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>15.46</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>12.74</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>11.42</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>10.69</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>10.21</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="Latin America">
+         <renewresource name="Distributed_Solar">
+            <smooth-renewable-subresource name="Distributed_solar">
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0489</techChange>
+               <techChange year="2035">0.0217</techChange>
+               <techChange year="2050">0.0128</techChange>
+               <techChange year="2065">0.0072</techChange>
+               <techChange year="2080">0.0044</techChange>
+               <techChange year="2095">0.0031</techChange>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="Solar_roofs">
+            <subsector name="Solar_roofs">
+               <intermittent-technology name="Rooftop_PV">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>49.94</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>49.94</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>49.94</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>23.55</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>16.95</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>13.96</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>12.52</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>11.72</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>11.19</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="Southeast Asia">
+         <renewresource name="Distributed_Solar">
+            <smooth-renewable-subresource name="Distributed_solar">
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0489</techChange>
+               <techChange year="2035">0.0217</techChange>
+               <techChange year="2050">0.0128</techChange>
+               <techChange year="2065">0.0072</techChange>
+               <techChange year="2080">0.0044</techChange>
+               <techChange year="2095">0.0031</techChange>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="Solar_roofs">
+            <subsector name="Solar_roofs">
+               <intermittent-technology name="Rooftop_PV">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>50.04</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>50.04</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>50.04</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>23.60</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>16.98</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>13.99</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>12.55</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>11.75</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>11.22</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="Eastern Europe">
+         <renewresource name="Distributed_Solar">
+            <smooth-renewable-subresource name="Distributed_solar">
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0489</techChange>
+               <techChange year="2035">0.0217</techChange>
+               <techChange year="2050">0.0128</techChange>
+               <techChange year="2065">0.0072</techChange>
+               <techChange year="2080">0.0044</techChange>
+               <techChange year="2095">0.0031</techChange>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="Solar_roofs">
+            <subsector name="Solar_roofs">
+               <intermittent-technology name="Rooftop_PV">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>75.35</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>75.35</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>75.35</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>35.53</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>25.57</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>21.07</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>18.89</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>17.69</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>16.89</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="Korea">
+         <renewresource name="Distributed_Solar">
+            <smooth-renewable-subresource name="Distributed_solar">
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0489</techChange>
+               <techChange year="2035">0.0217</techChange>
+               <techChange year="2050">0.0128</techChange>
+               <techChange year="2065">0.0072</techChange>
+               <techChange year="2080">0.0044</techChange>
+               <techChange year="2095">0.0031</techChange>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="Solar_roofs">
+            <subsector name="Solar_roofs">
+               <intermittent-technology name="Rooftop_PV">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>61.24</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>61.24</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>61.24</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>28.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>20.78</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>17.12</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>15.35</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>14.38</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>13.73</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+      <region name="India">
+         <renewresource name="Distributed_Solar">
+            <smooth-renewable-subresource name="Distributed_solar">
+               <techChange year="1975">0</techChange>
+               <techChange year="1990">0</techChange>
+               <techChange year="2005">0</techChange>
+               <techChange year="2020">0.0489</techChange>
+               <techChange year="2035">0.0217</techChange>
+               <techChange year="2050">0.0128</techChange>
+               <techChange year="2065">0.0072</techChange>
+               <techChange year="2080">0.0044</techChange>
+               <techChange year="2095">0.0031</techChange>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <intermittent-supplysector name="Solar_roofs">
+            <subsector name="Solar_roofs">
+               <intermittent-technology name="Rooftop_PV">
+                  <period year="1975">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>50.71</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>50.71</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>50.71</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>23.91</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>17.21</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>14.18</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>12.71</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>11.90</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>11.37</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </intermittent-technology>
+            </subsector>
+         </intermittent-supplysector>
+      </region>
+   </world>
+</scenario>

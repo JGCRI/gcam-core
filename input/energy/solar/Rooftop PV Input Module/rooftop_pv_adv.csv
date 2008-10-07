@@ -1,0 +1,28 @@
+Tech change (assumed equal by region),,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+4,,,,,,,,,,,,
+,,,techChange,,,,,,,,,
+region,renewresource,smooth-renewable-subresource,1975,1990,2005,2020,2035,2050,2065,2080,2095,
+all,Distributed_Solar,Distributed_solar,0,0,0,0.0489,0.0217,0.0128,0.0072,0.0044,0.0031,
+
+non-energy input cost,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+106,,,,minicam-non-energy-input,,,,,,,,
+,,,,input-cost,,,,,,,,
+region,intermittent-supplysector,subsector,intermittent-technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,Solar_roofs,Solar_roofs,Rooftop_PV,60.92,60.92,60.92,28.73,20.68,17.03,15.27,14.30,13.66
+Canada,Solar_roofs,Solar_roofs,Rooftop_PV,75.09,75.09,75.09,35.41,25.49,21.00,18.83,17.63,16.83
+Western Europe,Solar_roofs,Solar_roofs,Rooftop_PV,73.01,73.01,73.01,34.43,24.78,20.41,18.30,17.14,16.37
+Japan,Solar_roofs,Solar_roofs,Rooftop_PV,65.57,65.57,65.57,30.92,22.25,18.33,16.44,15.39,14.70
+Australia_NZ,Solar_roofs,Solar_roofs,Rooftop_PV,52.35,52.35,52.35,24.69,17.77,14.64,13.12,12.29,11.74
+Former Soviet Union,Solar_roofs,Solar_roofs,Rooftop_PV,76.13,76.13,76.13,35.90,25.84,21.28,19.08,17.87,17.07
+China,Solar_roofs,Solar_roofs,Rooftop_PV,61.89,61.89,61.89,29.18,21.00,17.30,15.51,14.53,13.87
+Middle East,Solar_roofs,Solar_roofs,Rooftop_PV,45.96,45.96,45.96,21.67,15.60,12.85,11.52,10.79,10.30
+Africa,Solar_roofs,Solar_roofs,Rooftop_PV,45.55,45.55,45.55,21.48,15.46,12.74,11.42,10.69,10.21
+Latin America,Solar_roofs,Solar_roofs,Rooftop_PV,49.94,49.94,49.94,23.55,16.95,13.96,12.52,11.72,11.19
+Southeast Asia,Solar_roofs,Solar_roofs,Rooftop_PV,50.04,50.04,50.04,23.60,16.98,13.99,12.55,11.75,11.22
+Eastern Europe,Solar_roofs,Solar_roofs,Rooftop_PV,75.35,75.35,75.35,35.53,25.57,21.07,18.89,17.69,16.89
+Korea,Solar_roofs,Solar_roofs,Rooftop_PV,61.24,61.24,61.24,28.88,20.78,17.12,15.35,14.38,13.73
+India,Solar_roofs,Solar_roofs,Rooftop_PV,50.71,50.71,50.71,23.91,17.21,14.18,12.71,11.90,11.37

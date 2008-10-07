@@ -1,0 +1,37 @@
+All residential techs,,,,,,,,
+INPUT_TABLE,,,,,,,,
+Variable ID,,,,,,,,
+1110,,,,,,,,
+
+supplysector,subsector,technology,Year,minicam-energy-input,efficiency,input-cost,logitexp,sharewt
+residential appliances service,electricity,elecappliances,2020,elect_td_bld,1.15,10.85,-6,1
+residential appliances service,electricity,elecappliances,2035,elect_td_bld,1.29,10.68,-6,1
+residential appliances service,electricity,elecappliances,2050,elect_td_bld,1.44,10.53,-6,1
+residential appliances service,electricity,elecappliances,2065,elect_td_bld,1.61,10.37,-6,1
+residential appliances service,electricity,elecappliances,2080,elect_td_bld,1.80,10.21,-6,1
+residential appliances service,electricity,elecappliances,2095,elect_td_bld,2.01,10.06,-6,1
+residential others service,electricity,elecother,2020,elect_td_bld,1.12,44.85,-6,1
+residential others service,electricity,elecother,2035,elect_td_bld,1.25,44.85,-6,1
+residential others service,electricity,elecother,2050,elect_td_bld,1.40,44.85,-6,1
+residential others service,electricity,elecother,2065,elect_td_bld,1.57,44.85,-6,1
+residential others service,electricity,elecother,2080,elect_td_bld,1.75,44.85,-6,1
+residential others service,electricity,elecother,2095,elect_td_bld,1.96,44.85,-6,1
+
+All commercial techs,,,,,,,,
+INPUT_TABLE,,,,,,,,
+Variable ID,,,,,,,,
+1110,,,,,,,,
+
+supplysector,subsector,technology,Year,minicam-energy-input,efficiency,input-cost,logitexp,sharewt
+commercial office equipment service,electricity,office,2020,elect_td_bld,1.24,44.02,-6,1
+commercial office equipment service,electricity,office,2035,elect_td_bld,1.54,43.37,-6,1
+commercial office equipment service,electricity,office,2050,elect_td_bld,1.72,42.72,-6,1
+commercial office equipment service,electricity,office,2065,elect_td_bld,1.93,42.08,-6,1
+commercial office equipment service,electricity,office,2080,elect_td_bld,2.16,41.46,-6,1
+commercial office equipment service,electricity,office,2095,elect_td_bld,2.41,40.84,-6,1
+commercial others service,electricity,elecother,2020,elect_td_bld,1.09,26.91,-6,1
+commercial others service,electricity,elecother,2035,elect_td_bld,1.22,26.91,-6,1
+commercial others service,electricity,elecother,2050,elect_td_bld,1.36,26.91,-6,1
+commercial others service,electricity,elecother,2065,elect_td_bld,1.52,26.91,-6,1
+commercial others service,electricity,elecother,2080,elect_td_bld,1.70,26.91,-6,1
+commercial others service,electricity,elecother,2095,elect_td_bld,1.90,26.91,-6,1

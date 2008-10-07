@@ -1,0 +1,60 @@
+<scenario>
+     <world>
+         <region name="USA">
+               <supplysector name="Cement" delete="1"/>
+               <energy-final-demand name="Cement" delete="1"/>
+         </region>
+         <region name="Canada">
+               <supplysector name="Cement" delete="1"/>
+               <energy-final-demand name="Cement" delete="1"/>
+         </region>
+         <region name="Western Europe">
+               <supplysector name="Cement" delete="1"/>
+               <energy-final-demand name="Cement" delete="1"/>
+         </region>
+         <region name="Japan">
+               <supplysector name="Cement" delete="1"/>
+               <energy-final-demand name="Cement" delete="1"/>
+         </region>
+         <region name="Australia_NZ">
+               <supplysector name="Cement" delete="1"/>
+               <energy-final-demand name="Cement" delete="1"/>
+         </region>
+         <region name="Former Soviet Union">
+               <supplysector name="Cement" delete="1"/>
+               <energy-final-demand name="Cement" delete="1"/>
+         </region>
+         <region name="China">
+               <supplysector name="Cement" delete="1"/>
+               <energy-final-demand name="Cement" delete="1"/>
+         </region>
+         <region name="Middle East">
+               <supplysector name="Cement" delete="1"/>
+               <energy-final-demand name="Cement" delete="1"/>
+         </region>
+         <region name="Africa">
+               <supplysector name="Cement" delete="1"/>
+               <energy-final-demand name="Cement" delete="1"/>
+         </region>
+         <region name="Latin America">
+               <supplysector name="Cement" delete="1"/>
+               <energy-final-demand name="Cement" delete="1"/>
+         </region>
+         <region name="Southeast Asia">
+               <supplysector name="Cement" delete="1"/>
+               <energy-final-demand name="Cement" delete="1"/>
+         </region>
+         <region name="Eastern Europe">
+               <supplysector name="Cement" delete="1"/>
+               <energy-final-demand name="Cement" delete="1"/>
+         </region>
+         <region name="Korea">
+               <supplysector name="Cement" delete="1"/>
+               <energy-final-demand name="Cement" delete="1"/>
+         </region>
+         <region name="India">
+               <supplysector name="Cement" delete="1"/>
+               <energy-final-demand name="Cement" delete="1"/>
+         </region>
+     </world>
+</scenario>
