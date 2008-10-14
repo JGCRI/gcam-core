@@ -735,6 +735,9 @@
 				Name="reporting"
 				Filter="">
 				<File
+					RelativePath="..\..\reporting\source\batch_csv_outputter.cpp">
+				</File>
+				<File
 					RelativePath="..\..\reporting\source\complex_carbon_dot_printer.cpp">
 				</File>
 				<File
@@ -1664,6 +1667,9 @@
 			<Filter
 				Name="reporting"
 				Filter="">
+				<File
+					RelativePath="..\..\reporting\include\batch_csv_outputter.h">
+				</File>
 				<File
 					RelativePath="..\..\reporting\include\complex_carbon_dot_printer.h">
 				</File>
