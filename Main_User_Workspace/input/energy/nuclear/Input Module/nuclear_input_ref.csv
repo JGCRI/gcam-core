@@ -1,0 +1,66 @@
+Nuclear reference scenario,,,,,,,,,
+
+Scale Years and subsector shareweights,,,,,,,,,
+INPUT_TABLE,,,,,,,,,
+Variable ID,,,,,,,,,
+10,,,,,,,,,
+,,,,sharewt,,,,,
+region,supplysector,subsector,scaleYear,2020,2035,2050,2065,2080,2095
+USA,electricity,nuclear,2050,1,1,1,1,1,1
+Canada,electricity,nuclear,2050,1,1,1,1,1,1
+Western Europe,electricity,nuclear,2050,1,1,1,1,1,1
+Japan,electricity,nuclear,2050,1,1,1,1,1,1
+Australia_NZ,electricity,nuclear,2050,1,1,1,1,1,1
+Former Soviet Union,electricity,nuclear,2050,1,1,1,1,1,1
+China,electricity,nuclear,2050,1,1,1,1,1,1
+Middle East,electricity,nuclear,2050,1,1,1,1,1,1
+Africa,electricity,nuclear,2050,1,1,1,1,1,1,,
+Latin America,electricity,nuclear,2050,1,1,1,1,1,1,,
+Southeast Asia,electricity,nuclear,2050,1,1,1,1,1,1,,
+Eastern Europe,electricity,nuclear,2050,1,1,1,1,1,1,,
+Korea,electricity,nuclear,2050,1,1,1,1,1,1,,
+India,electricity,nuclear,2050,1,1,1,1,1,1,,
+
+
+Costs,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,
+Variable ID,,,,,,,,,,,
+100,,,,minicam-non-energy-input{non-energy},,,,,,,
+,,,,input-cost,,,,,,,
+region,supplysector,subsector,technology,1990,2005,2020,2035,2050,2065,2080,2095
+USA,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+Canada,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+Western Europe,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+Japan,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+Australia_NZ,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+Former Soviet Union,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+China,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+Middle East,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+Africa,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+Latin America,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+Southeast Asia,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+Eastern Europe,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+Korea,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+India,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+
+
+Efficiencies,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+101,,,,,,,,,,,,
+,,,,,efficiency,,,,,,,
+region,supplysector,subsector,technology,minicam-energy-input,1990,2005,2020,2035,2050,2065,2080,2095
+USA,electricity,nuclear,Gen_III,nuclearFuelGenIII,0.34,0.34,0.34,0.34,0.34,0.34,0.34,0.34
+Canada,electricity,nuclear,Gen_III,nuclearFuelGenIII,0.34,0.34,0.34,0.34,0.34,0.34,0.34,0.34
+Western Europe,electricity,nuclear,Gen_III,nuclearFuelGenIII,0.34,0.34,0.34,0.34,0.34,0.34,0.34,0.34
+Japan,electricity,nuclear,Gen_III,nuclearFuelGenIII,0.34,0.34,0.34,0.34,0.34,0.34,0.34,0.34
+Australia_NZ,electricity,nuclear,Gen_III,nuclearFuelGenIII,0.34,0.34,0.34,0.34,0.34,0.34,0.34,0.34
+Former Soviet Union,electricity,nuclear,Gen_III,nuclearFuelGenIII,0.34,0.34,0.34,0.34,0.34,0.34,0.34,0.34
+China,electricity,nuclear,Gen_III,nuclearFuelGenIII,0.34,0.34,0.34,0.34,0.34,0.34,0.34,0.34
+Middle East,electricity,nuclear,Gen_III,nuclearFuelGenIII,0.34,0.34,0.34,0.34,0.34,0.34,0.34,0.34
+Africa,electricity,nuclear,Gen_III,nuclearFuelGenIII,0.34,0.34,0.34,0.34,0.34,0.34,0.34,0.34
+Latin America,electricity,nuclear,Gen_III,nuclearFuelGenIII,0.34,0.34,0.34,0.34,0.34,0.34,0.34,0.34
+Southeast Asia,electricity,nuclear,Gen_III,nuclearFuelGenIII,0.34,0.34,0.34,0.34,0.34,0.34,0.34,0.34
+Eastern Europe,electricity,nuclear,Gen_III,nuclearFuelGenIII,0.34,0.34,0.34,0.34,0.34,0.34,0.34,0.34
+Korea,electricity,nuclear,Gen_III,nuclearFuelGenIII,0.34,0.34,0.34,0.34,0.34,0.34,0.34,0.34
+India,electricity,nuclear,Gen_III,nuclearFuelGenIII,0.34,0.34,0.34,0.34,0.34,0.34,0.34,0.34
