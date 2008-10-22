@@ -28,20 +28,20 @@ Variable ID,,,,,,,,,
 1100,,,,,,,,,
 ,,,,sharewt,,,,,
 region,supplysector,subsector,scaleYear,2020,2035,2050,2065,2080,2095
-USA,electricity,solar,2005,1,1,1,1,1,1
-Canada,electricity,solar,2005,1,1,1,1,1,1
-Western Europe,electricity,solar,2005,1,1,1,1,1,1
-Japan,electricity,solar,2005,1,1,1,1,1,1
-Australia_NZ,electricity,solar,2005,1,1,1,1,1,1
-Former Soviet Union,electricity,solar,2005,1,1,1,1,1,1
-China,electricity,solar,2005,1,1,1,1,1,1
-Middle East,electricity,solar,2005,1,1,1,1,1,1
-Africa,electricity,solar,2005,1,1,1,1,1,1
-Latin America,electricity,solar,2005,1,1,1,1,1,1
-Southeast Asia,electricity,solar,2005,1,1,1,1,1,1
-Eastern Europe,electricity,solar,2005,1,1,1,1,1,1
-Korea,electricity,solar,2005,1,1,1,1,1,1
-India,electricity,solar,2005,1,1,1,1,1,1
+USA,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
+Canada,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
+Western Europe,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
+Japan,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
+Australia_NZ,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
+Former Soviet Union,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
+China,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
+Middle East,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
+Africa,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
+Latin America,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
+Southeast Asia,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
+Eastern Europe,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
+Korea,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
+India,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
 ,,,,,,,,,
 PV technology definition,,,,,,,,,
 INPUT_TABLE,,,,,,,,,

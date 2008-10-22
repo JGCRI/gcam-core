@@ -67,13 +67,13 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2005</scaleYear>
-               <sharewt year="2020">1</sharewt>
-               <sharewt year="2035">1</sharewt>
-               <sharewt year="2050">1</sharewt>
-               <sharewt year="2065">1</sharewt>
-               <sharewt year="2080">1</sharewt>
-               <sharewt year="2095">1</sharewt>
+               <scaleYear>2035</scaleYear>
+               <sharewt year="2020">0.25</sharewt>
+               <sharewt year="2035">0.5</sharewt>
+               <sharewt year="2050">0.5</sharewt>
+               <sharewt year="2065">0.5</sharewt>
+               <sharewt year="2080">0.5</sharewt>
+               <sharewt year="2095">0.5</sharewt>
                <technology name="PV">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -324,13 +324,13 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2005</scaleYear>
-               <sharewt year="2020">1</sharewt>
-               <sharewt year="2035">1</sharewt>
-               <sharewt year="2050">1</sharewt>
-               <sharewt year="2065">1</sharewt>
-               <sharewt year="2080">1</sharewt>
-               <sharewt year="2095">1</sharewt>
+               <scaleYear>2035</scaleYear>
+               <sharewt year="2020">0.25</sharewt>
+               <sharewt year="2035">0.5</sharewt>
+               <sharewt year="2050">0.5</sharewt>
+               <sharewt year="2065">0.5</sharewt>
+               <sharewt year="2080">0.5</sharewt>
+               <sharewt year="2095">0.5</sharewt>
                <technology name="PV">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -581,13 +581,13 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2005</scaleYear>
-               <sharewt year="2020">1</sharewt>
-               <sharewt year="2035">1</sharewt>
-               <sharewt year="2050">1</sharewt>
-               <sharewt year="2065">1</sharewt>
-               <sharewt year="2080">1</sharewt>
-               <sharewt year="2095">1</sharewt>
+               <scaleYear>2035</scaleYear>
+               <sharewt year="2020">0.25</sharewt>
+               <sharewt year="2035">0.5</sharewt>
+               <sharewt year="2050">0.5</sharewt>
+               <sharewt year="2065">0.5</sharewt>
+               <sharewt year="2080">0.5</sharewt>
+               <sharewt year="2095">0.5</sharewt>
                <technology name="PV">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -838,13 +838,13 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2005</scaleYear>
-               <sharewt year="2020">1</sharewt>
-               <sharewt year="2035">1</sharewt>
-               <sharewt year="2050">1</sharewt>
-               <sharewt year="2065">1</sharewt>
-               <sharewt year="2080">1</sharewt>
-               <sharewt year="2095">1</sharewt>
+               <scaleYear>2035</scaleYear>
+               <sharewt year="2020">0.25</sharewt>
+               <sharewt year="2035">0.5</sharewt>
+               <sharewt year="2050">0.5</sharewt>
+               <sharewt year="2065">0.5</sharewt>
+               <sharewt year="2080">0.5</sharewt>
+               <sharewt year="2095">0.5</sharewt>
                <technology name="PV">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -1095,13 +1095,13 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2005</scaleYear>
-               <sharewt year="2020">1</sharewt>
-               <sharewt year="2035">1</sharewt>
-               <sharewt year="2050">1</sharewt>
-               <sharewt year="2065">1</sharewt>
-               <sharewt year="2080">1</sharewt>
-               <sharewt year="2095">1</sharewt>
+               <scaleYear>2035</scaleYear>
+               <sharewt year="2020">0.25</sharewt>
+               <sharewt year="2035">0.5</sharewt>
+               <sharewt year="2050">0.5</sharewt>
+               <sharewt year="2065">0.5</sharewt>
+               <sharewt year="2080">0.5</sharewt>
+               <sharewt year="2095">0.5</sharewt>
                <technology name="PV">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -1352,13 +1352,13 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2005</scaleYear>
-               <sharewt year="2020">1</sharewt>
-               <sharewt year="2035">1</sharewt>
-               <sharewt year="2050">1</sharewt>
-               <sharewt year="2065">1</sharewt>
-               <sharewt year="2080">1</sharewt>
-               <sharewt year="2095">1</sharewt>
+               <scaleYear>2035</scaleYear>
+               <sharewt year="2020">0.25</sharewt>
+               <sharewt year="2035">0.5</sharewt>
+               <sharewt year="2050">0.5</sharewt>
+               <sharewt year="2065">0.5</sharewt>
+               <sharewt year="2080">0.5</sharewt>
+               <sharewt year="2095">0.5</sharewt>
                <technology name="PV">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -1609,13 +1609,13 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2005</scaleYear>
-               <sharewt year="2020">1</sharewt>
-               <sharewt year="2035">1</sharewt>
-               <sharewt year="2050">1</sharewt>
-               <sharewt year="2065">1</sharewt>
-               <sharewt year="2080">1</sharewt>
-               <sharewt year="2095">1</sharewt>
+               <scaleYear>2035</scaleYear>
+               <sharewt year="2020">0.25</sharewt>
+               <sharewt year="2035">0.5</sharewt>
+               <sharewt year="2050">0.5</sharewt>
+               <sharewt year="2065">0.5</sharewt>
+               <sharewt year="2080">0.5</sharewt>
+               <sharewt year="2095">0.5</sharewt>
                <technology name="PV">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -1866,13 +1866,13 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2005</scaleYear>
-               <sharewt year="2020">1</sharewt>
-               <sharewt year="2035">1</sharewt>
-               <sharewt year="2050">1</sharewt>
-               <sharewt year="2065">1</sharewt>
-               <sharewt year="2080">1</sharewt>
-               <sharewt year="2095">1</sharewt>
+               <scaleYear>2035</scaleYear>
+               <sharewt year="2020">0.25</sharewt>
+               <sharewt year="2035">0.5</sharewt>
+               <sharewt year="2050">0.5</sharewt>
+               <sharewt year="2065">0.5</sharewt>
+               <sharewt year="2080">0.5</sharewt>
+               <sharewt year="2095">0.5</sharewt>
                <technology name="PV">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -2123,13 +2123,13 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2005</scaleYear>
-               <sharewt year="2020">1</sharewt>
-               <sharewt year="2035">1</sharewt>
-               <sharewt year="2050">1</sharewt>
-               <sharewt year="2065">1</sharewt>
-               <sharewt year="2080">1</sharewt>
-               <sharewt year="2095">1</sharewt>
+               <scaleYear>2035</scaleYear>
+               <sharewt year="2020">0.25</sharewt>
+               <sharewt year="2035">0.5</sharewt>
+               <sharewt year="2050">0.5</sharewt>
+               <sharewt year="2065">0.5</sharewt>
+               <sharewt year="2080">0.5</sharewt>
+               <sharewt year="2095">0.5</sharewt>
                <technology name="PV">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -2380,13 +2380,13 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2005</scaleYear>
-               <sharewt year="2020">1</sharewt>
-               <sharewt year="2035">1</sharewt>
-               <sharewt year="2050">1</sharewt>
-               <sharewt year="2065">1</sharewt>
-               <sharewt year="2080">1</sharewt>
-               <sharewt year="2095">1</sharewt>
+               <scaleYear>2035</scaleYear>
+               <sharewt year="2020">0.25</sharewt>
+               <sharewt year="2035">0.5</sharewt>
+               <sharewt year="2050">0.5</sharewt>
+               <sharewt year="2065">0.5</sharewt>
+               <sharewt year="2080">0.5</sharewt>
+               <sharewt year="2095">0.5</sharewt>
                <technology name="PV">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -2637,13 +2637,13 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2005</scaleYear>
-               <sharewt year="2020">1</sharewt>
-               <sharewt year="2035">1</sharewt>
-               <sharewt year="2050">1</sharewt>
-               <sharewt year="2065">1</sharewt>
-               <sharewt year="2080">1</sharewt>
-               <sharewt year="2095">1</sharewt>
+               <scaleYear>2035</scaleYear>
+               <sharewt year="2020">0.25</sharewt>
+               <sharewt year="2035">0.5</sharewt>
+               <sharewt year="2050">0.5</sharewt>
+               <sharewt year="2065">0.5</sharewt>
+               <sharewt year="2080">0.5</sharewt>
+               <sharewt year="2095">0.5</sharewt>
                <technology name="PV">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -2894,13 +2894,13 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2005</scaleYear>
-               <sharewt year="2020">1</sharewt>
-               <sharewt year="2035">1</sharewt>
-               <sharewt year="2050">1</sharewt>
-               <sharewt year="2065">1</sharewt>
-               <sharewt year="2080">1</sharewt>
-               <sharewt year="2095">1</sharewt>
+               <scaleYear>2035</scaleYear>
+               <sharewt year="2020">0.25</sharewt>
+               <sharewt year="2035">0.5</sharewt>
+               <sharewt year="2050">0.5</sharewt>
+               <sharewt year="2065">0.5</sharewt>
+               <sharewt year="2080">0.5</sharewt>
+               <sharewt year="2095">0.5</sharewt>
                <technology name="PV">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -3151,13 +3151,13 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2005</scaleYear>
-               <sharewt year="2020">1</sharewt>
-               <sharewt year="2035">1</sharewt>
-               <sharewt year="2050">1</sharewt>
-               <sharewt year="2065">1</sharewt>
-               <sharewt year="2080">1</sharewt>
-               <sharewt year="2095">1</sharewt>
+               <scaleYear>2035</scaleYear>
+               <sharewt year="2020">0.25</sharewt>
+               <sharewt year="2035">0.5</sharewt>
+               <sharewt year="2050">0.5</sharewt>
+               <sharewt year="2065">0.5</sharewt>
+               <sharewt year="2080">0.5</sharewt>
+               <sharewt year="2095">0.5</sharewt>
                <technology name="PV">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -3408,13 +3408,13 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2005</scaleYear>
-               <sharewt year="2020">1</sharewt>
-               <sharewt year="2035">1</sharewt>
-               <sharewt year="2050">1</sharewt>
-               <sharewt year="2065">1</sharewt>
-               <sharewt year="2080">1</sharewt>
-               <sharewt year="2095">1</sharewt>
+               <scaleYear>2035</scaleYear>
+               <sharewt year="2020">0.25</sharewt>
+               <sharewt year="2035">0.5</sharewt>
+               <sharewt year="2050">0.5</sharewt>
+               <sharewt year="2065">0.5</sharewt>
+               <sharewt year="2080">0.5</sharewt>
+               <sharewt year="2095">0.5</sharewt>
                <technology name="PV">
                   <period year="1975">
                      <lifetime>-1</lifetime>

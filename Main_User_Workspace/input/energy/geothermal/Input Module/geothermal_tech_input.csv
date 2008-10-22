@@ -13,20 +13,20 @@ Variable ID,,,,,,,,,,,,
 101,,,,,,,,,,,,
 ,,,,sharewt,,,,,,,,
 region,supplysector,subsector,scaleYear,1975,1990,2005,2020,2035,2050,2065,2080,2095
-USA,electricity,geothermal,2095,1,1,1,0.007,0.047,0.269,0.731,0.953,1
+USA,electricity,geothermal,2035,1,1,1,0.25,0.5,0.5,0.5,0.5,0.5
 Canada,electricity,geothermal,1975,0,0,0,0,0,0,0,0,0
-Western Europe,electricity,geothermal,2095,1,1,1,0.007,0.047,0.269,0.731,0.953,1
-Japan,electricity,geothermal,2095,1,1,1,0.007,0.047,0.269,0.731,0.953,1
-Australia_NZ,electricity,geothermal,2095,1,1,1,0.007,0.047,0.269,0.731,0.953,1
-Former Soviet Union,electricity,geothermal,2095,1,1,1,0.007,0.047,0.269,0.731,0.953,1
-China,electricity,geothermal,1975,0,0,0,0,0,0,0,0,0
+Western Europe,electricity,geothermal,2035,1,1,1,0.25,0.5,0.5,0.5,0.5,0.5
+Japan,electricity,geothermal,2035,1,1,1,0.25,0.5,0.5,0.5,0.5,0.5
+Australia_NZ,electricity,geothermal,2035,1,1,1,0.25,0.5,0.5,0.5,0.5,0.5
+Former Soviet Union,electricity,geothermal,2035,1,1,1,0.25,0.5,0.5,0.5,0.5,0.5
+China,electricity,geothermal,1975,0,0,0,0.05,0.25,0.5,0.5,0.5,0.5
 Middle East,electricity,geothermal,1975,0,0,0,0,0,0,0,0,0
-Africa,electricity,geothermal,2095,1,1,1,0.007,0.047,0.269,0.731,0.953,1
-Latin America,electricity,geothermal,2095,1,1,1,0.007,0.047,0.269,0.731,0.953,1
-Southeast Asia,electricity,geothermal,2095,1,1,1,0.007,0.047,0.269,0.731,0.953,1
-Eastern Europe,electricity,geothermal,1975,0,0,0,0,0,0,0,0,0
+Africa,electricity,geothermal,2035,1,1,1,0.25,0.5,0.5,0.5,0.5,0.5
+Latin America,electricity,geothermal,2035,1,1,1,0.25,0.5,0.5,0.5,0.5,0.5
+Southeast Asia,electricity,geothermal,2035,1,1,1,0.25,0.5,0.5,0.5,0.5,0.5
+Eastern Europe,electricity,geothermal,1975,1,1,1,0,0,0,0,0,0
 Korea,electricity,geothermal,1975,0,0,0,0,0,0,0,0,0
-India,electricity,geothermal,1975,0,0,0,0,0,0,0,0,0
+India,electricity,geothermal,1975,0,0,0,0.05,0.25,0.5,0.5,0.5,0.5
 
 
 tech lifetime,,,,,,,,,,,,
@@ -97,13 +97,13 @@ India,electricity,geothermal,geothermal,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,geot
 ,,,,,,,,,,,,AEO growth,,
 Calibrated input value,,,,,,,,,,,,0.022594008,0.019648993,
 INPUT_TABLE,,,,,,,,,,,,2020,2035,2050
-Variable ID,,,,,,,,,,,,0.084448384,0.113071138,0.151395228
+Variable ID,,,,from caldata workbook; not linked,,,,,,,,0.084448384,0.113071138,0.151395228
 1003,,,,minicam-energy-input,,,,,,,,,,
 ,,,,calibrated-value,,,,Geothermal output,,,,Fraction of generation,,
 Region,supplysector,subsector,technology,1990,2005,minicam-energy-input,,,1990,2005,,1990,2005,
 USA,electricity,geothermal,geothermal,0.576432,0.604008,geothermal,,USA,0.0576432,0.0604008,,0.50%,0.39%,
 Canada,electricity,geothermal,geothermal,0,0,geothermal,,Canada,0,0,,0.00%,0.00%,
-Western Europe,electricity,geothermal,geothermal,0.129816,0.257364,geothermal,,Western Europe,0.0129816,0.0257364,,0.15%,0.22%,
+Western Europe,electricity,geothermal,geothermal,0.126936,0.25398,geothermal,,Western Europe,0.0126936,0.025398,,0.15%,0.22%,
 Japan,electricity,geothermal,geothermal,0.062676,0.116136,geothermal,,Japan,0.0062676,0.0116136,,0.21%,0.29%,
 Australia_NZ,electricity,geothermal,geothermal,0.079776,0.102672,geothermal,,Australia_NZ,0.0079776,0.0102672,,1.19%,0.97%,
 Former Soviet Union,electricity,geothermal,geothermal,0.001008,0.01476,geothermal,,Former Soviet Union,0.0001008,0.001476,,0.00%,0.03%,
@@ -112,7 +112,7 @@ Middle East,electricity,geothermal,geothermal,0,0,geothermal,,Middle East,0,0,,0
 Africa,electricity,geothermal,geothermal,0.011736,0.031932,geothermal,,Africa,0.0011736,0.0031932,,0.10%,0.16%,
 Latin America,electricity,geothermal,geothermal,0.213444,0.351684,geothermal,,Latin America,0.0213444,0.0351684,,0.96%,0.86%
 Southeast Asia,electricity,geothermal,geothermal,0.236268,0.594288,geothermal,,Southeast Asia,0.0236268,0.0594288,,2.02%,1.92%
-Eastern Europe,electricity,geothermal,geothermal,0,0,geothermal,,Eastern Europe,0,0,,0.00%,0.00%
+Eastern Europe,electricity,geothermal,geothermal,0.00288,0.003384,geothermal,,Eastern Europe,0.000288,0.0003384,,0.00%,0.00%
 Korea,electricity,geothermal,geothermal,0,0,geothermal,,Korea,0,0,,0.00%,0.00%
 India,electricity,geothermal,geothermal,0,0,geothermal,,India,0,0,,0.00%,0.00%
 
@@ -136,50 +136,38 @@ Eastern Europe,electricity,geothermal,geothermal,2005,0
 Korea,electricity,geothermal,geothermal,2005,0
 India,electricity,geothermal,geothermal,2005,0
 Canada,electricity,geothermal,geothermal,2020,0
-China,electricity,geothermal,geothermal,2020,0
 Middle East,electricity,geothermal,geothermal,2020,0
 Eastern Europe,electricity,geothermal,geothermal,2020,0
 Korea,electricity,geothermal,geothermal,2020,0
-India,electricity,geothermal,geothermal,2020,0
 Canada,electricity,geothermal,geothermal,2035,0
-China,electricity,geothermal,geothermal,2035,0
 Middle East,electricity,geothermal,geothermal,2035,0
 Eastern Europe,electricity,geothermal,geothermal,2035,0
 Korea,electricity,geothermal,geothermal,2035,0
-India,electricity,geothermal,geothermal,2035,0
 Canada,electricity,geothermal,geothermal,2050,0
-China,electricity,geothermal,geothermal,2050,0
 Middle East,electricity,geothermal,geothermal,2050,0
 Eastern Europe,electricity,geothermal,geothermal,2050,0
 Korea,electricity,geothermal,geothermal,2050,0
-India,electricity,geothermal,geothermal,2050,0
 Canada,electricity,geothermal,geothermal,2065,0
-China,electricity,geothermal,geothermal,2065,0
 Middle East,electricity,geothermal,geothermal,2065,0
 Eastern Europe,electricity,geothermal,geothermal,2065,0
 Korea,electricity,geothermal,geothermal,2065,0
-India,electricity,geothermal,geothermal,2065,0
 Canada,electricity,geothermal,geothermal,2080,0
-China,electricity,geothermal,geothermal,2080,0
 Middle East,electricity,geothermal,geothermal,2080,0
 Eastern Europe,electricity,geothermal,geothermal,2080,0
 Korea,electricity,geothermal,geothermal,2080,0
-India,electricity,geothermal,geothermal,2080,0
 Canada,electricity,geothermal,geothermal,2095,0
-China,electricity,geothermal,geothermal,2095,0
 Middle East,electricity,geothermal,geothermal,2095,0
 Eastern Europe,electricity,geothermal,geothermal,2095,0
 Korea,electricity,geothermal,geothermal,2095,0
-India,electricity,geothermal,geothermal,2095,0
 
 
 Delete small regions,,,,,
-INPUT_TABLE,,
-Variable ID,,
-1100,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+1100,,,,,
 
-region,supplysector,subsector
-Canada,electricity,geothermal
-Middle East,electricity,geothermal
-Eastern Europe,electricity,geothermal
-Korea,electricity,geothermal
+region,supplysector,subsector,,,
+Canada,electricity,geothermal,,,
+Middle East,electricity,geothermal,,,
+Eastern Europe,electricity,geothermal,,,
+Korea,electricity,geothermal,,,
