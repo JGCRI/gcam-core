@@ -5,8 +5,8 @@ Remove duplicate calinput values for oil and gas.  Also efficiencies (though the
 "Hydro and Nuclear are in new table, fixedoutput, rather than calibrated. Since IEA hydro efficiencies were about 1, fixedoutput = what was in for calinput.",,,,,,,,,,,,,,,,,,,,,,,,,
 ,"for nuclear, computed fixedoutput based on input and read in efficiencies",,,,,,,,,,,,,,,,,,,,,,,,
 Removed Geo for now,,,,,,,,,,,,,,,,,,,,,,,,,
-"FSU was still zero, I typed in 1990 values from GTSP input file",,,,,,,,Nuclear_switch,,,,,,,,electricity supplied,,,,,deltas,,,IEA losses,
-China efficiencies were way off.  I typed in old values,,,,,,,,1,"1=caloutput, 0 = fixedoutput",,,,,,,,0,0,,,,,,,
+"FSU was still zero, I typed in 1990 values from GTSP input file",,,,,,,,,,,,,,,,electricity supplied,,,,,deltas,,,IEA losses,
+China efficiencies were way off.  I typed in old values,,,,,,,,,,,,,,,,,0,0,,,,,,,
 9/20/2006,,,,,,,,,,,,,,Region,,Africa,1.15,2.06,,Africa,0.26,0.38,,0.19,0.33
 replaced 0 efficiencies with a very low number,,,,10/19/2007,,,,,,,,,,dum,,Australia_NZ,0.74,1.15,,Australia_NZ,0.17,0.25,,0.09,0.14
 put in calinputtables for solar and wind,,,,gpk,,,,,,,,,,,,Canada,1.73,2.26,,Canada,0.19,0.34,,0.18,0.24
@@ -148,11 +148,11 @@ Western Europe,electricity,oil,Oil (existing),refined liquids electricity,0.3862
 ,,,,,,,,,,Western Europe,geothermal,0.129816,0.257364
 ,,,,,,,,,,Global,Nonfossil,2006.302643,2027.943102
 
-fix output,,,,,,,,,,,,,
+Hydro,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,
-44,,,,,,,,,,,,,
-,,,,fixedOutput,,,,,,,,,
+23,,,,,,,,,,,,,
+,,,,calOutputValue,,,,,,,,,
 Region,supplysector,subsector,technology,1990,2005,,,,,,,,
 Africa,electricity,hydro,hydro,0.2027592,0.3267648,,,Africahydro,,,,,
 Australia_NZ,electricity,hydro,hydro,0.1349568,0.1409616,,,Australia_NZhydro,,,,,
@@ -263,13 +263,27 @@ USA,electricity,geothermal,geothermal,geothermal,0.1,0.1,,
 Western Europe,electricity,geothermal,geothermal,geothermal,0.1,0.1,,
 ,,,,,,,,
 
-
+reset fixed output from CCSP,,,,,,,,
 INPUT_TABLE,,,,,,,,
 Variable ID,,,,,,,,
 44,,,,,,,,
 ,,,,fixedOutput,fixedOutput,,,
 region,supplysector,subsector,technology,1990,2005,,,
-Africa,electricity,nuclear,Gen_II_LWR,-1,-1,,,
+Africa,electricity,hydro,hydro,-1,-1,,,
+Australia_NZ,electricity,hydro,hydro,-1,-1
+Canada,electricity,hydro,hydro,-1,-1
+China,electricity,hydro,hydro,-1,-1
+Eastern Europe,electricity,hydro,hydro,-1,-1
+Former Soviet Union,electricity,hydro,hydro,-1,-1
+India,electricity,hydro,hydro,-1,-1
+Japan,electricity,hydro,hydro,-1,-1
+Korea,electricity,hydro,hydro,-1,-1
+Latin America,electricity,hydro,hydro,-1,-1
+Middle East,electricity,hydro,hydro,-1,-1
+Southeast Asia,electricity,hydro,hydro,-1,-1
+USA,electricity,hydro,hydro,-1,-1
+Western Europe,electricity,hydro,hydro,-1,-1
+Africa,electricity,nuclear,Gen_II_LWR,-1,-1
 Australia_NZ,electricity,nuclear,Gen_II_LWR,-1,-1
 Canada,electricity,nuclear,Gen_II_LWR,-1,-1
 China,electricity,nuclear,Gen_II_LWR,-1,-1

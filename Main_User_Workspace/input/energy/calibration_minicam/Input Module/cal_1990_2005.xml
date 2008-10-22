@@ -156,10 +156,16 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <fixedOutput>0.2027592</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>0.2027592</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                   <period year="2005">
-                     <fixedOutput>0.3267648</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>0.3267648</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -925,10 +931,16 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <fixedOutput>0.1349568</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>0.1349568</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                   <period year="2005">
-                     <fixedOutput>0.1409616</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>0.1409616</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -1680,10 +1692,16 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <fixedOutput>1.0682532</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>1.0682532</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                   <period year="2005">
-                     <fixedOutput>1.308654</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>1.308654</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -2435,10 +2453,16 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <fixedOutput>0.5316804</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>0.5316804</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                   <period year="2005">
-                     <fixedOutput>1.5539292</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>1.5539292</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -3204,10 +3228,16 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <fixedOutput>0.1459728</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>0.1459728</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                   <period year="2005">
-                     <fixedOutput>0.2451996</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>0.2451996</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -3961,10 +3991,16 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <fixedOutput>0.8317908</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>0.8317908</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                   <period year="2005">
-                     <fixedOutput>0.8752284</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>0.8752284</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -4944,10 +4980,16 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <fixedOutput>0.2579616</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>0.2579616</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                   <period year="2005">
-                     <fixedOutput>0.3599964</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>0.3599964</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -5491,10 +5533,16 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <fixedOutput>0.321498</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>0.321498</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                   <period year="2005">
-                     <fixedOutput>0.2815596</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>0.2815596</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -6399,10 +6447,16 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <fixedOutput>0.0228996</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>0.0228996</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                   <period year="2005">
-                     <fixedOutput>0.0132228</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>0.0132228</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -7004,10 +7058,16 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <fixedOutput>1.3955832</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>1.3955832</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                   <period year="2005">
-                     <fixedOutput>2.3288436</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>2.3288436</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -7852,10 +7912,16 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <fixedOutput>0.04293</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>0.04293</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                   <period year="2005">
-                     <fixedOutput>0.076302</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>0.076302</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -8589,10 +8655,16 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <fixedOutput>0.207252</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>0.207252</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                   <period year="2005">
-                     <fixedOutput>0.3074832</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>0.3074832</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -9374,10 +9446,16 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <fixedOutput>0.9833472</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>0.9833472</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                   <period year="2005">
-                     <fixedOutput>0.9808092</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>0.9808092</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -10057,10 +10135,16 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <fixedOutput>1.5793632</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>1.5793632</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                   <period year="2005">
-                     <fixedOutput>1.7148312</fixedOutput>
+                     <CalDataOutput>
+                        <calOutputValue>1.7148312</calOutputValue>
+                     </CalDataOutput>
+                     <fixedOutput>-1</fixedOutput>
                   </period>
                </technology>
             </subsector>
