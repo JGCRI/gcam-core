@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Staff (PNNL) -->
+<scenario>
+	<world>
+		<region name="USA">
+			<FoodSupplySector name="FodderCrop">
+				<market>USA</market>
+			</FoodSupplySector>
+		</region>
+		<region name="Canada">
+			<FoodSupplySector name="FodderCrop">
+				<market>Canada</market>
+			</FoodSupplySector>
+		</region>
+		<region name="Western Europe">
+			<FoodSupplySector name="FodderCrop">
+				<market>Western Europe</market>
+			</FoodSupplySector>
+		</region>
+		<region name="Japan">
+			<FoodSupplySector name="FodderCrop">
+				<market>Asia</market>
+			</FoodSupplySector>
+		</region>
+		<region name="Australia_NZ">
+			<FoodSupplySector name="FodderCrop">
+				<market>Australia_NZ</market>
+			</FoodSupplySector>
+		</region>
+		<region name="Former Soviet Union">
+			<FoodSupplySector name="FodderCrop">
+				<market>Former Soviet Union</market>
+			</FoodSupplySector>
+		</region>
+		<region name="China">
+			<FoodSupplySector name="FodderCrop">
+				<market>Asia</market>
+			</FoodSupplySector>
+		</region>
+		<region name="Middle East">
+			<FoodSupplySector name="FodderCrop">
+				<market>Middle East</market>
+			</FoodSupplySector>
+		</region>
+		<region name="Africa">
+			<FoodSupplySector name="FodderCrop">
+				<market>Africa</market>
+			</FoodSupplySector>
+		</region>
+		<region name="Latin America">
+			<FoodSupplySector name="FodderCrop">
+				<market>Latin America</market>
+			</FoodSupplySector>
+		</region>
+		<region name="Southeast Asia">
+			<FoodSupplySector name="FodderCrop">
+				<market>Southeast Asia</market>
+			</FoodSupplySector>
+		</region>
+		<region name="Eastern Europe">
+			<FoodSupplySector name="FodderCrop">
+				<market>Eastern Europe</market>
+			</FoodSupplySector>
+		</region>
+		<region name="Korea">
+			<FoodSupplySector name="FodderCrop">
+				<market>Asia</market>
+			</FoodSupplySector>
+		</region>
+		<region name="India">
+			<FoodSupplySector name="FodderCrop">
+				<market>India</market>
+			</FoodSupplySector>
+		</region>
+	</world>
+</scenario>

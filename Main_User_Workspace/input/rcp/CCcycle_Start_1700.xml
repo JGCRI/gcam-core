@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Staff (PNNL) -->
+<scenario>
+	<world>
+  	<MagiccModel>
+			<carbon-model-start-year>1705</carbon-model-start-year>
+			<!-- THIS DOES NOT WORK IF IT COMES AFTER THE CC model items. CHANGE THIS! -->
+ 	 </MagiccModel>
+	</world>
+</scenario>
