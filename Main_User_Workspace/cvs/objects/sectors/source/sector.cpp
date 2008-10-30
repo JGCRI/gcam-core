@@ -506,24 +506,26 @@ void Sector::normalizeShareWeights( const int period ) {
     if ( period > 0 && calActive ) {
         if ( inputsAllFixed( period - 1, "allInputs" ) && ( getCalOutput ( period - 1) > 0 ) ) {
 
-            double shareWeightTotal = 0;
-            int numberNonzeroSubSectors = 0;
+            // Dominant subsector should get a share weight of one
+            // TODO: We do not want fixed output subsectors included in this
+            double maxShareWeight = 0.0;
+            double maxOutput = 0.0;
             for ( unsigned int i = 0; i < subsec.size(); ++i ){
                 double subsectShareWeight = subsec[ i ]->getShareWeight( period - 1 );
-                shareWeightTotal += subsectShareWeight;
-                if ( subsectShareWeight > 0 ) {
-                    numberNonzeroSubSectors += 1;
+                if ( subsec[ i ]->getOutput( period - 1 ) > maxOutput ) {
+                    maxShareWeight = subsectShareWeight;
+                    maxOutput = subsec[ i ]->getOutput( period - 1);
                 }
             }
 
-            if ( shareWeightTotal < util::getTinyNumber() ) {
+            if ( maxShareWeight < util::getTinyNumber() ) {
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::ERROR );
-                mainLog << "Shareweights sum to zero for sector " << name << "." << endl;
+                mainLog << "Max shareweight is zero for sector " << name << "." << endl;
             }
             else {
                 for ( int unsigned i= 0; i< subsec.size(); i++ ) {
-                    subsec[ i ]->scaleShareWeight( numberNonzeroSubSectors / shareWeightTotal, period - 1 );
+                    subsec[ i ]->scaleShareWeight( 1 / maxShareWeight, period - 1 );
                 }
                 ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
                 calibrationLog.setLevel( ILogger::DEBUG );

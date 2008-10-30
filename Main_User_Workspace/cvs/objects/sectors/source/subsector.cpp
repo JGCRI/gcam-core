@@ -1144,24 +1144,27 @@ void Subsector::techShareWeightLinearInterpFn( const int beginPeriod,  const int
 */
 void Subsector::normalizeTechShareWeights( const int period ) {
     
-    double shareWeightTotal = 0;
-    int numberNonzeroTechs = 0;
+    
+    // Dominant technology should get a share weight of one
+    // TODO: We do not want fixed output techs included in this
+    double maxShareWeight = 0.0;
+    double maxOutput = 0.0;
     for( unsigned int i = 0; i < techs.size(); ++i ){
         double techShareWeight = techs[ i ][ period ]->getShareWeight();
-        shareWeightTotal += techShareWeight;
-        if ( techShareWeight > 0 ) {
-            numberNonzeroTechs++;
+        if ( techs[ i ][ period ]->getOutput( period ) > maxOutput ) {
+            maxShareWeight = techShareWeight;
+            maxOutput = techs[ i ][ period ]->getOutput( period );
         }
     }
 
-    if ( shareWeightTotal < util::getTinyNumber() ) {
+    if ( maxShareWeight < util::getTinyNumber() ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::DEBUG );
-        mainLog << "Shareweights sum to zero in subsector " << name << " in region " << regionName << "." << endl;
+        mainLog << "Max shareweight is zero in subsector " << name << " in region " << regionName << "." << endl;
     } 
     else {
         for( unsigned int i = 0; i < techs.size(); ++i ){
-             techs[ i ][ period ]->scaleShareWeight( numberNonzeroTechs / shareWeightTotal );
+             techs[ i ][ period ]->scaleShareWeight( 1 / maxShareWeight );
         }
         ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
         calibrationLog.setLevel( ILogger::DEBUG );
