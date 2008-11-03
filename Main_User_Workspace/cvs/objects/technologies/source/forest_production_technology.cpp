@@ -65,7 +65,7 @@ extern Scenario* scenario;
 ForestProductionTechnology::ForestProductionTechnology( const string& aName, const int aYear )
 :FoodProductionTechnology( aName, aYear ){
     // TODO: 0.02 should not be a default value.
-    interestRate = 0.02;
+    interestRate = 0.05;
     mRotationPeriod = 0;
 }
 
@@ -303,7 +303,12 @@ void ForestProductionTechnology::setCalLandValues() {
             // Calculate land harvested in the harvest period
             calLandUsed = calProductionTemp / calYieldTemp;
             mLandAllocator->setCalLandAllocation( landType, mName, calLandUsed, aHarvestPeriod, thisPeriod );
-            mLandAllocator->setCalObservedYield( landType, mName, calYieldTemp, aHarvestPeriod );
+            if ( thisPeriod == aHarvestPeriod ){
+                mLandAllocator->setCalObservedYield( landType, mName, calYieldTemp, aHarvestPeriod );   
+            }
+            else if ( aHarvestPeriod > modeltime->getFinalCalibrationPeriod() ) {
+                mLandAllocator->setCalObservedYield( landType, mName, calYieldTemp, aHarvestPeriod );   
+            }
         }  
     }
 }

@@ -471,8 +471,10 @@ void TreeLandAllocator::calcCarbonBoxModel( const string& aRegionName,
     // First set the actual multipliers for carbon in the unmanaged land
     // These multipliers are used to convert read in carbon contents
     // to actual carbon contents which vary with land allocation
-    const int period = scenario->getModeltime()->getyr_to_per( aYear);
-    setActualCarbonMult( 1, mSigma , period );
+    if ( aYear > scenario->getModeltime()->getStartYear() ) {
+        const int period = scenario->getModeltime()->getyr_to_per( aYear);
+        setActualCarbonMult( 1, mSigma , period );
+    }
 
     for ( unsigned int i = 0; i < mChildren.size(); ++i ){
         mChildren[ i ]->calcCarbonBoxModel( aRegionName, aYear );

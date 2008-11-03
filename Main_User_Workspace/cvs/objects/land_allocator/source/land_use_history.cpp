@@ -59,7 +59,9 @@ const string& LandUseHistory::getXMLNameStatic(){
 /*!
  * \brief Constructor.
  */
-LandUseHistory::LandUseHistory()
+LandUseHistory::LandUseHistory():
+mHistoricAboveGroundCarbonDensity( 0.0 ),
+mHistoricBelowGroundCarbonDensity( 0.0 )
 {
 }
 
@@ -99,6 +101,12 @@ bool LandUseHistory::XMLParse( const xercesc::DOMNode* aNode ){
                     mHistoricalLand[ year ] = 0;
                 }
             }
+        }
+        else if( nodeName == "above-ground-carbon-density" ) {
+            mHistoricAboveGroundCarbonDensity = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "below-ground-carbon-density" ) {
+            mHistoricBelowGroundCarbonDensity = XMLHelper<double>::getValue( curr );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -221,6 +229,24 @@ double LandUseHistory::getAllocation( const unsigned int aYear ) const {
     return util::linearInterpolateY( aYear, lowerBound->first, upperBound->first,
                                      lowerBound->second, upperBound->second );
 
+}
+
+/*! 
+ * \brief Get the above ground carbon density.
+ * \details Gets the historical carbon density
+ * \return Historical above ground carbon density
+ */
+double LandUseHistory::getHistoricAboveGroundCarbonDensity( ) const {
+    return mHistoricAboveGroundCarbonDensity;
+}
+
+/*! 
+ * \brief Get the above ground carbon density.
+ * \details Gets the historical carbon density
+ * \return Historical above ground carbon density
+ */
+double LandUseHistory::getHistoricBelowGroundCarbonDensity( ) const {
+    return mHistoricBelowGroundCarbonDensity;
 }
 
 const LandMapType LandUseHistory::getHistoricalLand() const {

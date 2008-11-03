@@ -63,7 +63,8 @@ extern Scenario* scenario;
  * \param aYear Technology year.
  */
 UnmanagedLandTechnology::UnmanagedLandTechnology( const string& aName, const int aYear )
-:FoodProductionTechnology( aName, aYear ){
+:FoodProductionTechnology( aName, aYear ),
+mCarbonToEnergy( 1 ) {
 }
 
 // ! Destructor
@@ -394,4 +395,6 @@ void UnmanagedLandTechnology::initializeInputLocations( const string& aRegionNam
         }
     }
 }
+
+
 

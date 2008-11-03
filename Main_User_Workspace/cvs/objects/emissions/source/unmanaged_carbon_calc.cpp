@@ -58,8 +58,8 @@ extern Scenario* scenario;
 UnmanagedCarbonCalc::UnmanagedCarbonCalc():
 mAboveGroundCarbon( -1.0 ),
 mBelowGroundCarbon( -1.0 ),
-mAvgAboveGroundCarbon( CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear(), -1.0 ),
-mAvgBelowGroundCarbon( CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear(), -1.0 )
+mAvgAboveGroundCarbon( -1.0 ),
+mAvgBelowGroundCarbon( -1.0 )
 {
 }
 
@@ -90,10 +90,10 @@ bool UnmanagedCarbonCalc::XMLParse( const DOMNode* aCurr ) {
             continue;
         }
         else if( nodeName == "above-ground-carbon" ) {
-            XMLHelper<double>::insertValueIntoVector( curr, mAvgAboveGroundCarbon );
+            mAvgAboveGroundCarbon = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "below-ground-carbon" ) {
-            XMLHelper<double>::insertValueIntoVector( curr, mAvgBelowGroundCarbon);
+            mAvgBelowGroundCarbon = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "mature-age" ) {        
             mMatureAge = XMLHelper<int>::getValue( curr );
@@ -114,8 +114,8 @@ void UnmanagedCarbonCalc::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aT
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
     const Modeltime* modeltime = scenario->getModeltime();
     const int year = modeltime->getper_to_yr( aPeriod );
-    XMLWriteElement( mAvgAboveGroundCarbon[ year ], "potential-above-ground-carbon", aOut, aTabs );
-    XMLWriteElement( mAvgBelowGroundCarbon[ year ], "potential-below-ground-carbon", aOut, aTabs );
+    XMLWriteElement( mAvgAboveGroundCarbon, "potential-above-ground-carbon", aOut, aTabs );
+    XMLWriteElement( mAvgBelowGroundCarbon, "potential-below-ground-carbon", aOut, aTabs );
     XMLWriteElement( mLandUse[ aPeriod ], "land-use", aOut, aTabs );
     XMLWriteElement( mTotalEmissions[ year ], "total-emissions", aOut, aTabs );
     XMLWriteElement( mMatureAge, "mature-age", aOut, aTabs );
@@ -124,8 +124,8 @@ void UnmanagedCarbonCalc::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aT
 
 void UnmanagedCarbonCalc::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-    XMLWriteVector( mAvgAboveGroundCarbon, "above-ground-carbon", aOut, aTabs, CarbonModelUtils::getStartYear(), 0.0 );
-    XMLWriteVector( mAvgBelowGroundCarbon, "below-ground-carbon", aOut, aTabs, CarbonModelUtils::getStartYear(), 0.0 );
+    XMLWriteElement( mAvgAboveGroundCarbon, "above-ground-carbon", aOut, aTabs, 0.0 );
+    XMLWriteElement( mAvgBelowGroundCarbon, "below-ground-carbon", aOut, aTabs, 0.0 );
     XMLWriteElement( mMatureAge, "mature-age", aOut, aTabs );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
@@ -150,8 +150,8 @@ const string& UnmanagedCarbonCalc::getXMLNameStatic() {
 */
 void UnmanagedCarbonCalc::completeInit( int aKey ) {
     for ( int i = 0; i < scenario->getModeltime()->getmaxper(); ++i ){
-        mAboveGroundCarbon[ i ] = mAvgAboveGroundCarbon[ scenario->getModeltime()->getper_to_yr( i ) ];
-        mBelowGroundCarbon[ i ] = mAvgBelowGroundCarbon[ scenario->getModeltime()->getper_to_yr( i ) ];
+        mAboveGroundCarbon[ i ] = mAvgAboveGroundCarbon;
+        mBelowGroundCarbon[ i ] = mAvgBelowGroundCarbon;
     }
 }
 
@@ -169,16 +169,16 @@ void UnmanagedCarbonCalc::setUnitBelowGroundCarbon( const double aBelowGroundCar
     //assert( false );
 }
 
-void UnmanagedCarbonCalc::setActualAboveGroundCarbon( const double aAboveGroundCarbon,
+void UnmanagedCarbonCalc::setActualAboveGroundCarbonDensity( const double aAboveGroundCarbonDensity,
                                                      const int aPeriod )
 {
-    mAboveGroundCarbon[ aPeriod ] = aAboveGroundCarbon;
+    mAboveGroundCarbon[ aPeriod ] = aAboveGroundCarbonDensity;
 }
 
-void UnmanagedCarbonCalc::setActualBelowGroundCarbon( const double aBelowGroundCarbon,
+void UnmanagedCarbonCalc::setActualBelowGroundCarbonDensity( const double aBelowGroundCarbonDensity,
                                                      const int aPeriod )
 {
-    mBelowGroundCarbon[ aPeriod ] = aBelowGroundCarbon;
+    mBelowGroundCarbon[ aPeriod ] = aBelowGroundCarbonDensity;
 }
 
 void UnmanagedCarbonCalc::setMatureAge( const int aMatureAge )    
@@ -187,19 +187,17 @@ void UnmanagedCarbonCalc::setMatureAge( const int aMatureAge )
 }
 
 double UnmanagedCarbonCalc::getPotentialAboveGroundCarbon( const int aYear ) const {
-    return CarbonModelUtils::interpYearHelper( mAvgAboveGroundCarbon, CarbonModelUtils::getStartYear(),
-        CarbonModelUtils::getEndYear(), aYear );
+    return mAvgAboveGroundCarbon;
 }
 
 double UnmanagedCarbonCalc::getPotentialBelowGroundCarbon( const int aYear ) const {
-    return CarbonModelUtils::interpYearHelper( mAvgBelowGroundCarbon, CarbonModelUtils::getStartYear(),
-        CarbonModelUtils::getEndYear(), aYear );
+    return mAvgBelowGroundCarbon;
 }
 
-double UnmanagedCarbonCalc::getActualAboveGroundCarbon( const int aYear ) const {
+double UnmanagedCarbonCalc::getActualAboveGroundCarbonDensity( const int aYear ) const {
     return CarbonModelUtils::interpYearHelper( mAboveGroundCarbon, aYear );
 }
 
-double UnmanagedCarbonCalc::getActualBelowGroundCarbon( const int aYear ) const {
+double UnmanagedCarbonCalc::getActualBelowGroundCarbonDensity( const int aYear ) const {
     return CarbonModelUtils::interpYearHelper( mBelowGroundCarbon, aYear );
 }

@@ -89,14 +89,14 @@ public:
     virtual void setUnitBelowGroundCarbon( const double aBelowGroundCarbon,
                                            const int aPeriod );
         
-    virtual double getActualAboveGroundCarbon( const int aYear ) const;
+    virtual double getActualAboveGroundCarbonDensity( const int aYear ) const;
     
-    virtual void setActualAboveGroundCarbon( const double aAboveGroundCarbon,
+    virtual void setActualAboveGroundCarbonDensity( const double aAboveGroundCarbonDensity,
                                            const int aPeriod );
 
-    virtual double getActualBelowGroundCarbon( const int aYear ) const;
+    virtual double getActualBelowGroundCarbonDensity( const int aYear ) const;
 
-    virtual void setActualBelowGroundCarbon( const double aBelowGroundCarbon,
+    virtual void setActualBelowGroundCarbonDensity( const double aBelowGroundCarbonDensity,
                                            const int aPeriod );
     
     virtual void setMatureAge(const int aMatureAge );    

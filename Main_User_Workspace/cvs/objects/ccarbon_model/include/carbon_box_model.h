@@ -120,11 +120,11 @@ public:
                                            const int aPeriod );
 
     // These methods are used in the simple carbon calculator
-    virtual double getActualAboveGroundCarbon( const int aYear ) const { return 0;};
-    virtual void setActualAboveGroundCarbon( const double aAboveGroundCarbon,
+    virtual double getActualAboveGroundCarbonDensity( const int aYear ) const { return 0;};
+    virtual void setActualAboveGroundCarbonDensity( const double aAboveGroundCarbonDensity,
         const int aPeriod ){};
-    virtual double getActualBelowGroundCarbon( const int aYear ) const{ return 0;};
-    virtual void setActualBelowGroundCarbon( const double aBelowGroundCarbon,
+    virtual double getActualBelowGroundCarbonDensity( const int aYear ) const{ return 0;};
+    virtual void setActualBelowGroundCarbonDensity( const double aBelowGroundCarbonDensity,
         const int aPeriod ){};
     virtual void setMatureAge( const int aMatureAge ) {};    
 

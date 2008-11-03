@@ -139,16 +139,16 @@ void ProductionCarbonCalc::setUnitBelowGroundCarbon( const double aBelowGroundCa
     mPotentialBelowGroundCarbon[ aPeriod ] = aBelowGroundCarbon;
 }
 
-void ProductionCarbonCalc::setActualAboveGroundCarbon( const double aAboveGroundCarbon,
+void ProductionCarbonCalc::setActualAboveGroundCarbonDensity( const double aAboveGroundCarbonDensity,
                                                      const int aPeriod )
 {
-    mActualAboveGroundCarbon[ aPeriod ] = aAboveGroundCarbon;
+    mActualAboveGroundCarbon[ aPeriod ] = aAboveGroundCarbonDensity;
 }
 
-void ProductionCarbonCalc::setActualBelowGroundCarbon( const double aBelowGroundCarbon,
+void ProductionCarbonCalc::setActualBelowGroundCarbonDensity( const double aBelowGroundCarbonDensity,
                                                      const int aPeriod )
 {
-    mActualBelowGroundCarbon[ aPeriod ] = aBelowGroundCarbon;
+    mActualBelowGroundCarbon[ aPeriod ] = aBelowGroundCarbonDensity;
 }
 
 void ProductionCarbonCalc::setMatureAge( const int aMatureAge )
@@ -165,11 +165,11 @@ double ProductionCarbonCalc::getPotentialBelowGroundCarbon( const int aYear ) co
     return CarbonModelUtils::interpYearHelper( mPotentialBelowGroundCarbon, aYear );
 }
 
-double ProductionCarbonCalc::getActualAboveGroundCarbon( const int aYear ) const {
+double ProductionCarbonCalc::getActualAboveGroundCarbonDensity( const int aYear ) const {
     return CarbonModelUtils::interpYearHelper( mActualAboveGroundCarbon, aYear );
 }
 
-double ProductionCarbonCalc::getActualBelowGroundCarbon( const int aYear ) const {
+double ProductionCarbonCalc::getActualBelowGroundCarbonDensity( const int aYear ) const {
     // Use an exponential decay function to determine emissions.
     return CarbonModelUtils::interpYearHelper( mActualBelowGroundCarbon, aYear );
     

@@ -49,6 +49,7 @@
 #include "util/base/include/ivisitor.h"
 #include "util/base/include/util.h"
 #include "land_allocator/include/land_use_history.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 using namespace xercesc;
@@ -108,7 +109,7 @@ void ASimpleCarbonCalc::calc( const int aYear ) {
     const int endYear = CarbonModelUtils::getEndYear();
     
     // If this is a land-use history year...
-    if( aYear < startYear ) {
+    if( aYear < modeltime->getStartYear() ) {
         // This code requires our land use history to be accurate.
         // AboveGroundCarbon is overwritten in these years
         // BelowGroundCarbon affects future model periods that are not overwritten
@@ -231,20 +232,33 @@ void ASimpleCarbonCalc::calcAboveGroundCarbonEmission( const unsigned int aYear,
     // (e.g., positive emissions when land mass grows ). To get around this problem,
     // we calculate the change in carbon over a full period and assume that the carbon
     // is released/sequestered evenly throughout that period.
+    int currYear = aYear;
+    int prevYear = aYear - 1;
+    double prevCarbonDensity = mLandUseHistory->getHistoricAboveGroundCarbonDensity();
+    double currCarbonDensity = mLandUseHistory->getHistoricAboveGroundCarbonDensity();
     const Modeltime* modeltime = scenario->getModeltime();
-    const int currPeriod = modeltime->getyr_to_per( aYear );
-    const int currYear = modeltime->getper_to_yr( currPeriod );
-    const int prevYear = currYear - modeltime->gettimestep( currPeriod );
+    if ( aYear >= modeltime->getStartYear() ) {
+        const int currPeriod = modeltime->getyr_to_per( aYear );
+        currYear = modeltime->getper_to_yr( currPeriod );
+        currCarbonDensity = getActualAboveGroundCarbonDensity( currYear );
     
+        if ( aYear >= modeltime->getStartYear() + modeltime->gettimestep( currPeriod ) ) {
+            prevYear = currYear - modeltime->gettimestep( currPeriod );
+            prevCarbonDensity = getActualAboveGroundCarbonDensity( prevYear );
+        }
+    }
+
     double prevCarbon = CarbonModelUtils::getLandUse( prevYear, mLandUseHistory,
                                                         mHistoricalShare, mLandUse )
-                        * getActualAboveGroundCarbon( prevYear );
+                        * prevCarbonDensity;
+
     
     double currCarbon = CarbonModelUtils::getLandUse( currYear, mLandUseHistory,   
                                                         mHistoricalShare, mLandUse )
-                        * getActualAboveGroundCarbon( currYear );
+                        * currCarbonDensity;
     
-    double carbonDifference = ( prevCarbon - currCarbon ) / modeltime->gettimestep( currPeriod );
+    // double carbonDifference = ( prevCarbon - currCarbon ) / modeltime->gettimestep( currPeriod );
+    double carbonDifference = ( prevCarbon - currCarbon ) / ( currYear - prevYear );
 
     // If the carbon content is equivalent than there are no emissions to
     // distribute.
@@ -288,23 +302,34 @@ void ASimpleCarbonCalc::calcBelowGroundCarbonEmission( const unsigned int aYear,
     // (e.g., positive emissions when land mass grows ). To get around this problem,
     // we calculate the change in carbon over a full period and assume that the carbon
     // is released/sequestered evenly throughout that period.
+    int currYear = aYear;
+    int prevYear = aYear - 1;
+    double prevCarbonDensity = mLandUseHistory->getHistoricBelowGroundCarbonDensity();
+    double currCarbonDensity = mLandUseHistory->getHistoricBelowGroundCarbonDensity();
     const Modeltime* modeltime = scenario->getModeltime();
-    const int currPeriod = modeltime->getyr_to_per( aYear );
-    const int currYear = modeltime->getper_to_yr( currPeriod );
-    const int prevYear = currYear - modeltime->gettimestep( currPeriod );
+    if ( aYear >= modeltime->getStartYear() ) {
+        const int currPeriod = modeltime->getyr_to_per( aYear );
+        currYear = modeltime->getper_to_yr( currPeriod );
+        currCarbonDensity = getActualBelowGroundCarbonDensity( currYear );
+        if ( aYear >= modeltime->getStartYear() + modeltime->gettimestep( currPeriod ) ) {
+            prevYear = currYear - modeltime->gettimestep( currPeriod );
+            prevCarbonDensity = getActualBelowGroundCarbonDensity( prevYear );
+        }
+    }
 
     double soilCarbonPrev = CarbonModelUtils::getLandUse( prevYear, mLandUseHistory,
                                                         mHistoricalShare, mLandUse )
-                        * getActualBelowGroundCarbon( prevYear );
+                        * prevCarbonDensity;
     
     double soilCarbonCurr = CarbonModelUtils::getLandUse( currYear, mLandUseHistory,   
                                                         mHistoricalShare, mLandUse )
-                        * getActualBelowGroundCarbon( currYear );
+                        * currCarbonDensity;
 
     // Calculate the difference in carbon between the previous period and the
     // current period. If this is negative, an uptake has occurred. If this is
     // positive an emissions has occurred.
-    double carbonDifference = ( soilCarbonPrev - soilCarbonCurr ) / modeltime->gettimestep( currPeriod );
+    // double carbonDifference = ( soilCarbonPrev - soilCarbonCurr ) / modeltime->gettimestep( currPeriod );
+    double carbonDifference = ( soilCarbonPrev - soilCarbonCurr ) / ( currYear - prevYear );
 
     // If the carbon content is equivalent than there are no emissions to
     // distribute.
@@ -337,5 +362,7 @@ void ASimpleCarbonCalc::calcBelowGroundCarbonEmission( const unsigned int aYear,
         } // for
     } // else
 }
+
+
 
 

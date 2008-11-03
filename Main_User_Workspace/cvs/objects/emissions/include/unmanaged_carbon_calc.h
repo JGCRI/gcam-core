@@ -89,14 +89,14 @@ public:
     virtual void setUnitBelowGroundCarbon( const double aBelowGroundCarbon,
                                            const int aPeriod );
 
-    virtual double getActualAboveGroundCarbon( const int aYear ) const;
+    virtual double getActualAboveGroundCarbonDensity( const int aYear ) const;
     
-    virtual void setActualAboveGroundCarbon( const double aAboveGroundCarbon,
+    virtual void setActualAboveGroundCarbonDensity( const double aAboveGroundCarbonDensity,
                                            const int aPeriod );
 
-    virtual double getActualBelowGroundCarbon( const int aYear ) const;
+    virtual double getActualBelowGroundCarbonDensity( const int aYear ) const;
 
-    virtual void setActualBelowGroundCarbon( const double aBelowGroundCarbon,
+    virtual void setActualBelowGroundCarbonDensity( const double aBelowGroundCarbonDensity,
                                            const int aPeriod );
 
     virtual void setMatureAge( const int aMatureAge );    
@@ -108,11 +108,12 @@ protected:
     //! Actual below ground carbon content by period. Varies with the amount of land
     objects::PeriodVector<double> mBelowGroundCarbon;
 
-    //! Average above ground carbon content by year (read in).
-    objects::YearVector<double> mAvgAboveGroundCarbon;
+    //! Average above ground carbon content (read in).
+    double mAvgAboveGroundCarbon;
 
-    //! Average below ground carbon content by year (read in).
-    objects::YearVector<double> mAvgBelowGroundCarbon;
+    //! Average below ground carbon content (read in).
+    double mAvgBelowGroundCarbon;
+    
     
 };
 

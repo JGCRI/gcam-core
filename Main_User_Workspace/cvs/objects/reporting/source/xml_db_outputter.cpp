@@ -1473,6 +1473,10 @@ void XMLDBOutputter::startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const
         // TODO -- need ability to write out units for non-period based items.
         XMLWriteElement( aCarbonCalc->getNetLandUseChangeEmission( aYear ),
                          "land-use-change-emission", mBuffer, mTabs.get(), aYear );
+        XMLWriteElement( aCarbonCalc->getActualAboveGroundCarbonDensity( aYear ),
+                         "above-ground-carbon", mBuffer, mTabs.get(), aYear );
+        XMLWriteElement( aCarbonCalc->getActualBelowGroundCarbonDensity( aYear ),
+                         "below-ground-carbon", mBuffer, mTabs.get(), aYear );
      }
 }
 

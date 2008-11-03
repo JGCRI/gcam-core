@@ -662,67 +662,70 @@ void LandLeaf::calcLUCCarbonFlowsIn( const string& aRegionName,
 */
 void LandLeaf::calcCarbonBoxModel( const string& aRegionName,
                                            const int aYear ){
-    // We need to change the carbon content in the carbon calculator to
-    // actual carbon. Actual carbon varies with yield/land size.
-    // We use intrinsic carbon to calculate the subsidy 
-    // and actual carbon to calculate emissions
-    const int period = scenario->getModeltime()->getyr_to_per( aYear );
-    double carbonContentAbove = mCarbonContentCalc->getPotentialAboveGroundCarbon( aYear );
-    double carbonContentBelow = mCarbonContentCalc->getPotentialBelowGroundCarbon( aYear );
-    double yieldMult = 1.0;
-    // Only managed land will have a mCalObservedYield > 0
-    // To convert potential carbon ( which is read in ) to actual carbon we multiply
-    // the read in carbon intensity by the current yield divided by the read in yield
-    // if it exists. Yield is only read in for calibration periods.
-    if ( period <= scenario->getModeltime()->getFinalCalibrationPeriod() ) {
-        if ( mCalObservedYield[ period ] > 0 ) {
-            if ( mYield[ period ] > 0 ){
-                yieldMult = mYield[ period ] / mCalObservedYield[ period ];
-            }
-            // For years intermediate years ( e.g., 2006 to 2019 ) yield is not 
-            // calculated before carbon box model. These years are part of the next
-            // period but the yield for that period isn't computed until the final year
-            else if ( period > 0 ) {
-                if ( mYield[ period - 1 ] > 0 ){
-                    yieldMult = mYield[ period - 1 ] / mCalObservedYield[ period ];
-                }
-            }
-        }
-    }
-    else { 
-        if ( mCalObservedYield[ scenario->getModeltime()->getFinalCalibrationPeriod() ] > 0 ) {
-            if ( mYield[ period ] > 0 ){
-                yieldMult = mYield[ period ] / mCalObservedYield[ scenario->getModeltime()->getFinalCalibrationPeriod() ];
-            }
-            // For years intermediate years ( e.g., 2006 to 2019 ) yield is not 
-            // calculated before carbon box model. These years are part of the next
-            // period but the yield for that period isn't computed until the final year
-            else if ( period > 0 ) {
-                if ( mYield[ period - 1 ] > 0 ){
-                    yieldMult = mYield[ period - 1 ] / mCalObservedYield[ scenario->getModeltime()->getFinalCalibrationPeriod() ];
-                }
-            }
-        }
-        // Unmanaged land leafs do not have yield. To convert potential carbon to actual carbon
-        // in these leafs, we use the carbon multiplier previously computed. This multiplier assumes
-        // that carbon intensity decreases as land expands and increases as land contracts.
-        else {
-            yieldMult = mActCarbonMult[ scenario->getModeltime()->getFinalCalibrationPeriod() ] / mActCarbonMult[ period ];
-        }
-        
-        // We are computing the yield in forests exogenously and thus the yield is constant.
-        // We still want carbon intensity to change with the amount of land forests occupy
-        // If we calculate forest yield endogenously, we do not need this if statement.
-        if ( getXMLName() == "ForestLandAllocatorLeaf" ){
-            yieldMult = mActCarbonMult[ scenario->getModeltime()->getFinalCalibrationPeriod() ] / mActCarbonMult[ period ];
-        }
-    }
+    // KVC: CARBONCYCLE remove this if statement if not using sjs carbon model
+    // Change the carbon contents only if operating within the IA model period
+   if ( aYear >= scenario->getModeltime()->getStartYear() ) {
+       // We need to change the carbon content in the carbon calculator to
+       // actual carbon. Actual carbon varies with yield/land size.
+       // We use intrinsic carbon to calculate the subsidy 
+       // and actual carbon to calculate emissions
+       const int period = scenario->getModeltime()->getyr_to_per( aYear );
+       double carbonContentAbove = mCarbonContentCalc->getPotentialAboveGroundCarbon( aYear );
+       double carbonContentBelow = mCarbonContentCalc->getPotentialBelowGroundCarbon( aYear );
+       double yieldMult = 1.0;
+       // Only managed land will have a mCalObservedYield > 0
+       // To convert potential carbon ( which is read in ) to actual carbon we multiply
+       // the read in carbon intensity by the current yield divided by the read in yield
+       // if it exists. Yield is only read in for calibration periods.
+       if ( period <= scenario->getModeltime()->getFinalCalibrationPeriod() ) {
+/*           if ( mCalObservedYield[ period ] > 0 ) {
+               if ( mYield[ period ] > 0 ){
+                   yieldMult = mYield[ period ] / mCalObservedYield[ period ];
+               }
+               // For years intermediate years ( e.g., 2006 to 2019 ) yield is not 
+               // calculated before carbon box model. These years are part of the next
+               // period but the yield for that period isn't computed until the final year
+               else if ( period > 0 ) {
+                   if ( mYield[ period - 1 ] > 0 ){
+                       yieldMult = mYield[ period - 1 ] / mCalObservedYield[ period ];
+                   }
+               }
+           }*/
+       }
+       else { 
+           if ( mCalObservedYield[ scenario->getModeltime()->getFinalCalibrationPeriod() ] > 0 ) {
+               if ( mYield[ period ] > 0 ){
+                   yieldMult = mYield[ period ] / mCalObservedYield[ scenario->getModeltime()->getFinalCalibrationPeriod() ];
+               }
+               // For years intermediate years ( e.g., 2006 to 2019 ) yield is not 
+               // calculated before carbon box model. These years are part of the next
+               // period but the yield for that period isn't computed until the final year
+               else if ( period > 0 ) {
+                   if ( mYield[ period - 1 ] > 0 ){
+                       yieldMult = mYield[ period - 1 ] / mCalObservedYield[ scenario->getModeltime()->getFinalCalibrationPeriod() ];
+                   }
+               }
+           }
+           // Unmanaged land leafs do not have yield. To convert potential carbon to actual carbon
+           // in these leafs, we use the carbon multiplier previously computed. This multiplier assumes
+           // that carbon intensity decreases as land expands and increases as land contracts.
+           else {
+               yieldMult = mActCarbonMult[ scenario->getModeltime()->getFinalCalibrationPeriod() ] / mActCarbonMult[ period ];
+           }
 
-    // Set the actual carbon contents in the carbon calculator prior to computing
-    // land use change emissions
-    mCarbonContentCalc->setActualAboveGroundCarbon( carbonContentAbove*yieldMult, period );
-    mCarbonContentCalc->setActualBelowGroundCarbon( carbonContentBelow*yieldMult, period );
+           // We are computing the yield in forests exogenously and thus the yield is constant.
+           // We still want carbon intensity to change with the amount of land forests occupy
+           // If we calculate forest yield endogenously, we do not need this if statement.
+           if ( getXMLName() == "ForestLandAllocatorLeaf" ){
+               yieldMult = mActCarbonMult[ scenario->getModeltime()->getFinalCalibrationPeriod() ] / mActCarbonMult[ period ];
+           }
+       }
 
+       // Set the actual carbon contents in the carbon calculator prior to computing
+       // land use change emissions
+       mCarbonContentCalc->setActualAboveGroundCarbonDensity( carbonContentAbove*yieldMult, period );
+       mCarbonContentCalc->setActualBelowGroundCarbonDensity( carbonContentBelow*yieldMult, period );
+    }
     // Calculate the amount of emissions attributed to land use change in the current year
     mCarbonContentCalc->calc( aYear );
 }

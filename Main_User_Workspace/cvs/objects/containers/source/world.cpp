@@ -456,9 +456,17 @@ void World::runClimateModel() {
     EmissionsSummer co2LandUseSummer( "CO2NetLandUse" );
     EmissionsSummer netDef80sSummer( MagiccModel::getnetDefor80sName() );
     EmissionsSummer ch4Summer( "CH4" );
+    EmissionsSummer ch4agrSummer( "CH4_AGR" );
+    EmissionsSummer ch4awbSummer( "CH4_AWB" );
     EmissionsSummer coSummer( "CO" );
+    EmissionsSummer coagrSummer( "CO_AGR" );
+    EmissionsSummer coawbSummer( "CO_AWB" );
     EmissionsSummer n2oSummer( "N2O" );
+    EmissionsSummer n2oagrSummer( "N2O_AGR" );
+    EmissionsSummer n2oawbSummer( "N2O_AWB" );
     EmissionsSummer noxSummer( "NOx" );
+    EmissionsSummer noxagrSummer( "NOx_AGR" );
+    EmissionsSummer noxawbSummer( "NOx_AWB" );
     EmissionsSummer so21Summer( "SO2_1" );
     EmissionsSummer so22Summer( "SO2_2" );
     EmissionsSummer so23Summer( "SO2_3" );
@@ -469,7 +477,9 @@ void World::runClimateModel() {
     EmissionsSummer hfc125Summer( "HFC125" );
     EmissionsSummer hfc134aSummer( "HFC134a" );
     EmissionsSummer hfc245faSummer( "HFC245fa" );
-    EmissionsSummer vocSummer( "VOC" );
+    EmissionsSummer vocSummer( "NMVOC" );
+    EmissionsSummer vocagrSummer( "NMVOC_AGR" );
+    EmissionsSummer vocawbSummer( "NMVOC_AWB" );
 
    const double MMT_TO_TG = 1000;
    const double N_TO_N2O = 1.571132; 
@@ -494,9 +504,17 @@ void World::runClimateModel() {
         accept( &co2Summer, period );
         accept( &co2LandUseSummer, period );
         accept( &ch4Summer, period );
+        accept( &ch4agrSummer, period );
+        accept( &ch4awbSummer, period );
         accept( &coSummer, period );
+        accept( &coagrSummer, period );
+        accept( &coawbSummer, period );
         accept( &n2oSummer, period );
+        accept( &n2oagrSummer, period );
+        accept( &n2oawbSummer, period );
         accept( &noxSummer, period );
+        accept( &noxagrSummer, period );
+        accept( &noxawbSummer, period );
         accept( &so21Summer, period );
         accept( &so22Summer, period );
         accept( &so23Summer, period );
@@ -508,6 +526,8 @@ void World::runClimateModel() {
         accept( &hfc134aSummer, period );
         accept( &hfc245faSummer, period );
         accept( &vocSummer, period );
+        accept( &vocagrSummer, period );
+        accept( &vocawbSummer, period );
 
         // Only set emissions if they are valid. If these are not set
         // MAGICC will use the default values.
@@ -525,18 +545,24 @@ void World::runClimateModel() {
 
         if( ch4Summer.areEmissionsSet( period ) ){
             mClimateModel->setEmissions( "CH4", period,
-                                          ch4Summer.getEmissions( period ) );
+                                          ch4Summer.getEmissions( period ) +
+                                          ch4agrSummer.getEmissions( period ) + 
+                                          ch4awbSummer.getEmissions( period ));
         }
 
         if( coSummer.areEmissionsSet( period ) ){
             mClimateModel->setEmissions( "CO", period,
-                                          coSummer.getEmissions( period ) );
+                                          coSummer.getEmissions( period ) +
+                                          coagrSummer.getEmissions( period ) +
+                                          coawbSummer.getEmissions( period ));
         }
 
         // MAGICC wants N2O emissions in Tg N, but miniCAM calculates Tg N2O
         if( n2oSummer.areEmissionsSet( period ) ){
             mClimateModel->setEmissions( "N2O", period,
-                                          n2oSummer.getEmissions( period ) 
+                                          ( n2oSummer.getEmissions( period ) +
+                                          n2oawbSummer.getEmissions( period ) +
+                                          n2oagrSummer.getEmissions( period ) )
                                           / N_TO_N2O );
         }
 
@@ -544,7 +570,9 @@ void World::runClimateModel() {
         // FORTRAN code uses the conversion for NO2
         if( noxSummer.areEmissionsSet( period ) ){
             mClimateModel->setEmissions( "NOx", period,
-                                          noxSummer.getEmissions( period ) 
+                                          ( noxSummer.getEmissions( period ) +
+                                            noxagrSummer.getEmissions( period ) +
+                                            noxawbSummer.getEmissions( period ))
                                           / N_TO_NO2 );
         }
 
@@ -608,7 +636,9 @@ void World::runClimateModel() {
         // MAGICC needs this in tons of VOC. Input is in TgC
         if( vocSummer.areEmissionsSet( period ) ){
             mClimateModel->setEmissions( "NMVOCs", period,
-                                          vocSummer.getEmissions( period )
+                                          ( vocSummer.getEmissions( period ) +
+                                          vocagrSummer.getEmissions( period ) +
+                                          vocawbSummer.getEmissions( period ) )
                                           / MMT_TO_TG );
         }
 
@@ -923,5 +953,7 @@ void World::accept( IVisitor* aVisitor, const int aPeriod ) const {
 
     aVisitor->endVisitWorld( this, aPeriod );
 }
+
+
 
 

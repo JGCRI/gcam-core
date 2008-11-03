@@ -105,6 +105,10 @@ public:
 
     double getAllocation( const unsigned int aYear ) const;
 
+    double getHistoricAboveGroundCarbonDensity( ) const;
+
+    double getHistoricBelowGroundCarbonDensity( ) const;
+
 	const  LandMapType getHistoricalLand() const;
 
 	void printHistory() const;
@@ -116,7 +120,15 @@ protected:
     //! Sparse mapping of year to land allocation.
     LandMapType mHistoricalLand;
 
+    //! Average above ground carbon content historically.
+    double mHistoricAboveGroundCarbonDensity;
+
+    //! Average below ground carbon content historically.
+    double mHistoricBelowGroundCarbonDensity;
+
 };
 
 #endif // _HISTORICAL_LAND_USE_H_
+
+
 

@@ -108,6 +108,11 @@ double AEmissionsCoef::calcMaxCntrl( const double aFinalEmissCoef, const double 
     if( mEmissionsCoef > util::getSmallNumber() ){
         maxCntrl = 100 * ( 1 - ( aFinalEmissCoef / ( mEmissionsCoef ) ) );
     }
+    else{
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+//        mainLog << " emissCoef = 0, control function set to 0"<< endl;
+    }
     return maxCntrl;
 
 }
@@ -138,5 +143,6 @@ void AEmissionsCoef::toDebugXML( ostream& out, Tabs* tabs ) const{
 double AEmissionsCoef::getXMLValue() const{
     return mEmissionsCoef;
 }
+
 
 

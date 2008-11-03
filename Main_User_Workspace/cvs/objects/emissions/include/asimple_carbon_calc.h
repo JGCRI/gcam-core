@@ -94,14 +94,14 @@ public:
     virtual void setUnitBelowGroundCarbon( const double aBelowGroundCarbon,
                                            const int aPeriod ) = 0;
 
-    virtual double getActualAboveGroundCarbon( const int aYear ) const = 0;
+    virtual double getActualAboveGroundCarbonDensity( const int aYear ) const = 0;
     
-    virtual void setActualAboveGroundCarbon( const double aAboveGroundCarbon,
+    virtual void setActualAboveGroundCarbonDensity( const double aAboveGroundCarbonDensity,
                                            const int aPeriod ) = 0;
 
-    virtual double getActualBelowGroundCarbon( const int aYear ) const = 0;
+    virtual double getActualBelowGroundCarbonDensity( const int aYear ) const = 0;
 
-    virtual void setActualBelowGroundCarbon( const double aBelowGroundCarbon,
+    virtual void setActualBelowGroundCarbonDensity( const double aBelowGroundCarbonDensity,
                                            const int aPeriod ) = 0;
     
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
