@@ -1,0 +1,1377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <FoodSupplySector name="Pasture">
+            <output-unit>Gcal</output-unit>
+            <input-unit>Gcal</input-unit>
+            <price-unit>$/Gcal</price-unit>
+            <sectorType>pastureSupply</sectorType>
+            <market>USA</market>
+            <calPrice>51</calPrice>
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <calLandUsed>59752.2378</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>460092231</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <calLandUsed>59752</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>460092231</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <calLandUsed>58338</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>446874347</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Canada">
+         <FoodSupplySector name="Pasture">
+            <output-unit>Gcal</output-unit>
+            <input-unit>Gcal</input-unit>
+            <price-unit>$/Gcal</price-unit>
+            <sectorType>pastureSupply</sectorType>
+            <market>Canada</market>
+            <calPrice>34</calPrice>
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <calLandUsed>8511.541535</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>64687716</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <calLandUsed>8512</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>64687716</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <calLandUsed>9274</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>80031076</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Western Europe">
+         <FoodSupplySector name="Pasture">
+            <output-unit>Gcal</output-unit>
+            <input-unit>Gcal</input-unit>
+            <price-unit>$/Gcal</price-unit>
+            <sectorType>pastureSupply</sectorType>
+            <market>Western Europe</market>
+            <calPrice>30</calPrice>
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <calLandUsed>62907.11858</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>496289139</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <calLandUsed>62907</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>496289139</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <calLandUsed>60499</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>445816057</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Japan">
+         <FoodSupplySector name="Pasture">
+            <output-unit>Gcal</output-unit>
+            <input-unit>Gcal</input-unit>
+            <price-unit>$/Gcal</price-unit>
+            <sectorType>pastureSupply</sectorType>
+            <market>Japan</market>
+            <calPrice>40</calPrice>
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <calLandUsed>309.8490771</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>11703656</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <calLandUsed>310</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>11703656</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <calLandUsed>193</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>8066039</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Former Soviet Union">
+         <FoodSupplySector name="Pasture">
+            <output-unit>Gcal</output-unit>
+            <input-unit>Gcal</input-unit>
+            <price-unit>$/Gcal</price-unit>
+            <sectorType>pastureSupply</sectorType>
+            <market>Former Soviet Union</market>
+            <calPrice>55</calPrice>
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <calLandUsed>43254.36266</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>519052352</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <calLandUsed>43254</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>519052352</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <calLandUsed>43807</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>220000529</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Australia_NZ">
+         <FoodSupplySector name="Pasture">
+            <output-unit>Gcal</output-unit>
+            <input-unit>Gcal</input-unit>
+            <price-unit>$/Gcal</price-unit>
+            <sectorType>pastureSupply</sectorType>
+            <market>Australia_NZ</market>
+            <calPrice>51</calPrice>
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <calLandUsed>67173.03675</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>268692147</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <calLandUsed>67173</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>268692147</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <calLandUsed>67658</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>364380871</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="China">
+         <FoodSupplySector name="Pasture">
+            <output-unit>Gcal</output-unit>
+            <input-unit>Gcal</input-unit>
+            <price-unit>$/Gcal</price-unit>
+            <sectorType>pastureSupply</sectorType>
+            <market>China</market>
+            <calPrice>27</calPrice>
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <calLandUsed>74078.72987</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>362985776</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <calLandUsed>74079</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>362985776</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <calLandUsed>87775</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>770477017</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Middle East">
+         <FoodSupplySector name="Pasture">
+            <output-unit>Gcal</output-unit>
+            <input-unit>Gcal</input-unit>
+            <price-unit>$/Gcal</price-unit>
+            <sectorType>pastureSupply</sectorType>
+            <market>Middle East</market>
+            <calPrice>30</calPrice>
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <calLandUsed>9240.969626</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>51753588</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <calLandUsed>9241</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>51753588</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <calLandUsed>8061</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>44995776</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Africa">
+         <FoodSupplySector name="Pasture">
+            <output-unit>Gcal</output-unit>
+            <input-unit>Gcal</input-unit>
+            <price-unit>$/Gcal</price-unit>
+            <sectorType>pastureSupply</sectorType>
+            <market>Africa</market>
+            <calPrice>21</calPrice>
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <calLandUsed>72748.17025</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>709682044</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <calLandUsed>72748</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>709682044</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <calLandUsed>90682</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>841274420</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Latin America">
+         <FoodSupplySector name="Pasture">
+            <output-unit>Gcal</output-unit>
+            <input-unit>Gcal</input-unit>
+            <price-unit>$/Gcal</price-unit>
+            <sectorType>pastureSupply</sectorType>
+            <market>Latin America</market>
+            <calPrice>41</calPrice>
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <calLandUsed>225196.5794</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>1463777766</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <calLandUsed>225197</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>1463777766</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <calLandUsed>236141</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>1774957525</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Southeast Asia">
+         <FoodSupplySector name="Pasture">
+            <output-unit>Gcal</output-unit>
+            <input-unit>Gcal</input-unit>
+            <price-unit>$/Gcal</price-unit>
+            <sectorType>pastureSupply</sectorType>
+            <market>Southeast Asia</market>
+            <calPrice>50</calPrice>
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <calLandUsed>39839.85164</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>278878962</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <calLandUsed>39840</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>278878962</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <calLandUsed>40784</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>308978150</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Eastern Europe">
+         <FoodSupplySector name="Pasture">
+            <output-unit>Gcal</output-unit>
+            <input-unit>Gcal</input-unit>
+            <price-unit>$/Gcal</price-unit>
+            <sectorType>pastureSupply</sectorType>
+            <market>Eastern Europe</market>
+            <calPrice>20</calPrice>
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <calLandUsed>1817.740912</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>127241864</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <calLandUsed>1818</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>127241864</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <calLandUsed>1734</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>10842097</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Korea">
+         <FoodSupplySector name="Pasture">
+            <output-unit>Gcal</output-unit>
+            <input-unit>Gcal</input-unit>
+            <price-unit>$/Gcal</price-unit>
+            <sectorType>pastureSupply</sectorType>
+            <market>Korea</market>
+            <calPrice>40</calPrice>
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <calLandUsed>23.36095535</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>15472025</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <calLandUsed>23</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>15472025</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <calLandUsed>26</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>12377157</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="India">
+         <FoodSupplySector name="Pasture">
+            <output-unit>Gcal</output-unit>
+            <input-unit>Gcal</input-unit>
+            <price-unit>$/Gcal</price-unit>
+            <sectorType>pastureSupply</sectorType>
+            <market>India</market>
+            <calPrice>40</calPrice>
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <calLandUsed>8331.789665</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>301118017</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <calLandUsed>8332</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>301118017</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <calLandUsed>7555</calLandUsed>
+                     <CalDataOutput>
+                        <calOutputValue>317338716</calOutputValue>
+                     </CalDataOutput>
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0</agProdChange>
+                     <landType>PastureLand</landType>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+   </world>
+</scenario>

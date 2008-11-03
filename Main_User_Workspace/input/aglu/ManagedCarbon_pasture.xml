@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="Africa">
+         <FoodSupplySector name="Pasture">
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <above-ground-carbon>0.031</above-ground-carbon>
+                     <below-ground-carbon>0.0709</below-ground-carbon>
+                  </period>
+                  <period year="1990">
+                     <above-ground-carbon>0.031</above-ground-carbon>
+                     <below-ground-carbon>0.0709</below-ground-carbon>
+                  </period>
+                  <period year="2005">
+                     <above-ground-carbon>0.031</above-ground-carbon>
+                     <below-ground-carbon>0.0709</below-ground-carbon>
+                  </period>
+                  <period year="2020">
+                     <above-ground-carbon>0.031</above-ground-carbon>
+                     <below-ground-carbon>0.0709</below-ground-carbon>
+                  </period>
+                  <period year="2035">
+                     <above-ground-carbon>0.031</above-ground-carbon>
+                     <below-ground-carbon>0.0709</below-ground-carbon>
+                  </period>
+                  <period year="2050">
+                     <above-ground-carbon>0.031</above-ground-carbon>
+                     <below-ground-carbon>0.0709</below-ground-carbon>
+                  </period>
+                  <period year="2065">
+                     <above-ground-carbon>0.031</above-ground-carbon>
+                     <below-ground-carbon>0.0709</below-ground-carbon>
+                  </period>
+                  <period year="2080">
+                     <above-ground-carbon>0.031</above-ground-carbon>
+                     <below-ground-carbon>0.0709</below-ground-carbon>
+                  </period>
+                  <period year="2095">
+                     <above-ground-carbon>0.031</above-ground-carbon>
+                     <below-ground-carbon>0.0709</below-ground-carbon>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Australia_NZ">
+         <FoodSupplySector name="Pasture">
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <above-ground-carbon>0.0498</above-ground-carbon>
+                     <below-ground-carbon>0.1201</below-ground-carbon>
+                  </period>
+                  <period year="1990">
+                     <above-ground-carbon>0.0498</above-ground-carbon>
+                     <below-ground-carbon>0.1201</below-ground-carbon>
+                  </period>
+                  <period year="2005">
+                     <above-ground-carbon>0.0498</above-ground-carbon>
+                     <below-ground-carbon>0.1201</below-ground-carbon>
+                  </period>
+                  <period year="2020">
+                     <above-ground-carbon>0.0498</above-ground-carbon>
+                     <below-ground-carbon>0.1201</below-ground-carbon>
+                  </period>
+                  <period year="2035">
+                     <above-ground-carbon>0.0498</above-ground-carbon>
+                     <below-ground-carbon>0.1201</below-ground-carbon>
+                  </period>
+                  <period year="2050">
+                     <above-ground-carbon>0.0498</above-ground-carbon>
+                     <below-ground-carbon>0.1201</below-ground-carbon>
+                  </period>
+                  <period year="2065">
+                     <above-ground-carbon>0.0498</above-ground-carbon>
+                     <below-ground-carbon>0.1201</below-ground-carbon>
+                  </period>
+                  <period year="2080">
+                     <above-ground-carbon>0.0498</above-ground-carbon>
+                     <below-ground-carbon>0.1201</below-ground-carbon>
+                  </period>
+                  <period year="2095">
+                     <above-ground-carbon>0.0498</above-ground-carbon>
+                     <below-ground-carbon>0.1201</below-ground-carbon>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Canada">
+         <FoodSupplySector name="Pasture">
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <above-ground-carbon>0.0832</above-ground-carbon>
+                     <below-ground-carbon>0.221</below-ground-carbon>
+                  </period>
+                  <period year="1990">
+                     <above-ground-carbon>0.0832</above-ground-carbon>
+                     <below-ground-carbon>0.221</below-ground-carbon>
+                  </period>
+                  <period year="2005">
+                     <above-ground-carbon>0.0832</above-ground-carbon>
+                     <below-ground-carbon>0.221</below-ground-carbon>
+                  </period>
+                  <period year="2020">
+                     <above-ground-carbon>0.0832</above-ground-carbon>
+                     <below-ground-carbon>0.221</below-ground-carbon>
+                  </period>
+                  <period year="2035">
+                     <above-ground-carbon>0.0832</above-ground-carbon>
+                     <below-ground-carbon>0.221</below-ground-carbon>
+                  </period>
+                  <period year="2050">
+                     <above-ground-carbon>0.0832</above-ground-carbon>
+                     <below-ground-carbon>0.221</below-ground-carbon>
+                  </period>
+                  <period year="2065">
+                     <above-ground-carbon>0.0832</above-ground-carbon>
+                     <below-ground-carbon>0.221</below-ground-carbon>
+                  </period>
+                  <period year="2080">
+                     <above-ground-carbon>0.0832</above-ground-carbon>
+                     <below-ground-carbon>0.221</below-ground-carbon>
+                  </period>
+                  <period year="2095">
+                     <above-ground-carbon>0.0832</above-ground-carbon>
+                     <below-ground-carbon>0.221</below-ground-carbon>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="China">
+         <FoodSupplySector name="Pasture">
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <above-ground-carbon>0.0382</above-ground-carbon>
+                     <below-ground-carbon>0.108</below-ground-carbon>
+                  </period>
+                  <period year="1990">
+                     <above-ground-carbon>0.0382</above-ground-carbon>
+                     <below-ground-carbon>0.108</below-ground-carbon>
+                  </period>
+                  <period year="2005">
+                     <above-ground-carbon>0.0382</above-ground-carbon>
+                     <below-ground-carbon>0.108</below-ground-carbon>
+                  </period>
+                  <period year="2020">
+                     <above-ground-carbon>0.0382</above-ground-carbon>
+                     <below-ground-carbon>0.108</below-ground-carbon>
+                  </period>
+                  <period year="2035">
+                     <above-ground-carbon>0.0382</above-ground-carbon>
+                     <below-ground-carbon>0.108</below-ground-carbon>
+                  </period>
+                  <period year="2050">
+                     <above-ground-carbon>0.0382</above-ground-carbon>
+                     <below-ground-carbon>0.108</below-ground-carbon>
+                  </period>
+                  <period year="2065">
+                     <above-ground-carbon>0.0382</above-ground-carbon>
+                     <below-ground-carbon>0.108</below-ground-carbon>
+                  </period>
+                  <period year="2080">
+                     <above-ground-carbon>0.0382</above-ground-carbon>
+                     <below-ground-carbon>0.108</below-ground-carbon>
+                  </period>
+                  <period year="2095">
+                     <above-ground-carbon>0.0382</above-ground-carbon>
+                     <below-ground-carbon>0.108</below-ground-carbon>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Eastern Europe">
+         <FoodSupplySector name="Pasture">
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <above-ground-carbon>0.0496</above-ground-carbon>
+                     <below-ground-carbon>0.149</below-ground-carbon>
+                  </period>
+                  <period year="1990">
+                     <above-ground-carbon>0.0496</above-ground-carbon>
+                     <below-ground-carbon>0.149</below-ground-carbon>
+                  </period>
+                  <period year="2005">
+                     <above-ground-carbon>0.0496</above-ground-carbon>
+                     <below-ground-carbon>0.149</below-ground-carbon>
+                  </period>
+                  <period year="2020">
+                     <above-ground-carbon>0.0496</above-ground-carbon>
+                     <below-ground-carbon>0.149</below-ground-carbon>
+                  </period>
+                  <period year="2035">
+                     <above-ground-carbon>0.0496</above-ground-carbon>
+                     <below-ground-carbon>0.149</below-ground-carbon>
+                  </period>
+                  <period year="2050">
+                     <above-ground-carbon>0.0496</above-ground-carbon>
+                     <below-ground-carbon>0.149</below-ground-carbon>
+                  </period>
+                  <period year="2065">
+                     <above-ground-carbon>0.0496</above-ground-carbon>
+                     <below-ground-carbon>0.149</below-ground-carbon>
+                  </period>
+                  <period year="2080">
+                     <above-ground-carbon>0.0496</above-ground-carbon>
+                     <below-ground-carbon>0.149</below-ground-carbon>
+                  </period>
+                  <period year="2095">
+                     <above-ground-carbon>0.0496</above-ground-carbon>
+                     <below-ground-carbon>0.149</below-ground-carbon>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Former Soviet Union">
+         <FoodSupplySector name="Pasture">
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <above-ground-carbon>0.0566</above-ground-carbon>
+                     <below-ground-carbon>0.1633</below-ground-carbon>
+                  </period>
+                  <period year="1990">
+                     <above-ground-carbon>0.0566</above-ground-carbon>
+                     <below-ground-carbon>0.1633</below-ground-carbon>
+                  </period>
+                  <period year="2005">
+                     <above-ground-carbon>0.0566</above-ground-carbon>
+                     <below-ground-carbon>0.1633</below-ground-carbon>
+                  </period>
+                  <period year="2020">
+                     <above-ground-carbon>0.0566</above-ground-carbon>
+                     <below-ground-carbon>0.1633</below-ground-carbon>
+                  </period>
+                  <period year="2035">
+                     <above-ground-carbon>0.0566</above-ground-carbon>
+                     <below-ground-carbon>0.1633</below-ground-carbon>
+                  </period>
+                  <period year="2050">
+                     <above-ground-carbon>0.0566</above-ground-carbon>
+                     <below-ground-carbon>0.1633</below-ground-carbon>
+                  </period>
+                  <period year="2065">
+                     <above-ground-carbon>0.0566</above-ground-carbon>
+                     <below-ground-carbon>0.1633</below-ground-carbon>
+                  </period>
+                  <period year="2080">
+                     <above-ground-carbon>0.0566</above-ground-carbon>
+                     <below-ground-carbon>0.1633</below-ground-carbon>
+                  </period>
+                  <period year="2095">
+                     <above-ground-carbon>0.0566</above-ground-carbon>
+                     <below-ground-carbon>0.1633</below-ground-carbon>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="India">
+         <FoodSupplySector name="Pasture">
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <above-ground-carbon>0.0257</above-ground-carbon>
+                     <below-ground-carbon>0.062</below-ground-carbon>
+                  </period>
+                  <period year="1990">
+                     <above-ground-carbon>0.0257</above-ground-carbon>
+                     <below-ground-carbon>0.062</below-ground-carbon>
+                  </period>
+                  <period year="2005">
+                     <above-ground-carbon>0.0257</above-ground-carbon>
+                     <below-ground-carbon>0.062</below-ground-carbon>
+                  </period>
+                  <period year="2020">
+                     <above-ground-carbon>0.0257</above-ground-carbon>
+                     <below-ground-carbon>0.062</below-ground-carbon>
+                  </period>
+                  <period year="2035">
+                     <above-ground-carbon>0.0257</above-ground-carbon>
+                     <below-ground-carbon>0.062</below-ground-carbon>
+                  </period>
+                  <period year="2050">
+                     <above-ground-carbon>0.0257</above-ground-carbon>
+                     <below-ground-carbon>0.062</below-ground-carbon>
+                  </period>
+                  <period year="2065">
+                     <above-ground-carbon>0.0257</above-ground-carbon>
+                     <below-ground-carbon>0.062</below-ground-carbon>
+                  </period>
+                  <period year="2080">
+                     <above-ground-carbon>0.0257</above-ground-carbon>
+                     <below-ground-carbon>0.062</below-ground-carbon>
+                  </period>
+                  <period year="2095">
+                     <above-ground-carbon>0.0257</above-ground-carbon>
+                     <below-ground-carbon>0.062</below-ground-carbon>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Japan">
+         <FoodSupplySector name="Pasture">
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <above-ground-carbon>0.0359</above-ground-carbon>
+                     <below-ground-carbon>0.0885</below-ground-carbon>
+                  </period>
+                  <period year="1990">
+                     <above-ground-carbon>0.0359</above-ground-carbon>
+                     <below-ground-carbon>0.0885</below-ground-carbon>
+                  </period>
+                  <period year="2005">
+                     <above-ground-carbon>0.0359</above-ground-carbon>
+                     <below-ground-carbon>0.0885</below-ground-carbon>
+                  </period>
+                  <period year="2020">
+                     <above-ground-carbon>0.0359</above-ground-carbon>
+                     <below-ground-carbon>0.0885</below-ground-carbon>
+                  </period>
+                  <period year="2035">
+                     <above-ground-carbon>0.0359</above-ground-carbon>
+                     <below-ground-carbon>0.0885</below-ground-carbon>
+                  </period>
+                  <period year="2050">
+                     <above-ground-carbon>0.0359</above-ground-carbon>
+                     <below-ground-carbon>0.0885</below-ground-carbon>
+                  </period>
+                  <period year="2065">
+                     <above-ground-carbon>0.0359</above-ground-carbon>
+                     <below-ground-carbon>0.0885</below-ground-carbon>
+                  </period>
+                  <period year="2080">
+                     <above-ground-carbon>0.0359</above-ground-carbon>
+                     <below-ground-carbon>0.0885</below-ground-carbon>
+                  </period>
+                  <period year="2095">
+                     <above-ground-carbon>0.0359</above-ground-carbon>
+                     <below-ground-carbon>0.0885</below-ground-carbon>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Korea">
+         <FoodSupplySector name="Pasture">
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <above-ground-carbon>0.0351</above-ground-carbon>
+                     <below-ground-carbon>0.0885</below-ground-carbon>
+                  </period>
+                  <period year="1990">
+                     <above-ground-carbon>0.0351</above-ground-carbon>
+                     <below-ground-carbon>0.0885</below-ground-carbon>
+                  </period>
+                  <period year="2005">
+                     <above-ground-carbon>0.0351</above-ground-carbon>
+                     <below-ground-carbon>0.0885</below-ground-carbon>
+                  </period>
+                  <period year="2020">
+                     <above-ground-carbon>0.0351</above-ground-carbon>
+                     <below-ground-carbon>0.0885</below-ground-carbon>
+                  </period>
+                  <period year="2035">
+                     <above-ground-carbon>0.0351</above-ground-carbon>
+                     <below-ground-carbon>0.0885</below-ground-carbon>
+                  </period>
+                  <period year="2050">
+                     <above-ground-carbon>0.0351</above-ground-carbon>
+                     <below-ground-carbon>0.0885</below-ground-carbon>
+                  </period>
+                  <period year="2065">
+                     <above-ground-carbon>0.0351</above-ground-carbon>
+                     <below-ground-carbon>0.0885</below-ground-carbon>
+                  </period>
+                  <period year="2080">
+                     <above-ground-carbon>0.0351</above-ground-carbon>
+                     <below-ground-carbon>0.0885</below-ground-carbon>
+                  </period>
+                  <period year="2095">
+                     <above-ground-carbon>0.0351</above-ground-carbon>
+                     <below-ground-carbon>0.0885</below-ground-carbon>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Latin America">
+         <FoodSupplySector name="Pasture">
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <above-ground-carbon>0.0203</above-ground-carbon>
+                     <below-ground-carbon>0.0514</below-ground-carbon>
+                  </period>
+                  <period year="1990">
+                     <above-ground-carbon>0.0203</above-ground-carbon>
+                     <below-ground-carbon>0.0514</below-ground-carbon>
+                  </period>
+                  <period year="2005">
+                     <above-ground-carbon>0.0203</above-ground-carbon>
+                     <below-ground-carbon>0.0514</below-ground-carbon>
+                  </period>
+                  <period year="2020">
+                     <above-ground-carbon>0.0203</above-ground-carbon>
+                     <below-ground-carbon>0.0514</below-ground-carbon>
+                  </period>
+                  <period year="2035">
+                     <above-ground-carbon>0.0203</above-ground-carbon>
+                     <below-ground-carbon>0.0514</below-ground-carbon>
+                  </period>
+                  <period year="2050">
+                     <above-ground-carbon>0.0203</above-ground-carbon>
+                     <below-ground-carbon>0.0514</below-ground-carbon>
+                  </period>
+                  <period year="2065">
+                     <above-ground-carbon>0.0203</above-ground-carbon>
+                     <below-ground-carbon>0.0514</below-ground-carbon>
+                  </period>
+                  <period year="2080">
+                     <above-ground-carbon>0.0203</above-ground-carbon>
+                     <below-ground-carbon>0.0514</below-ground-carbon>
+                  </period>
+                  <period year="2095">
+                     <above-ground-carbon>0.0203</above-ground-carbon>
+                     <below-ground-carbon>0.0514</below-ground-carbon>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Middle East">
+         <FoodSupplySector name="Pasture">
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <above-ground-carbon>0.0253</above-ground-carbon>
+                     <below-ground-carbon>0.0582</below-ground-carbon>
+                  </period>
+                  <period year="1990">
+                     <above-ground-carbon>0.0253</above-ground-carbon>
+                     <below-ground-carbon>0.0582</below-ground-carbon>
+                  </period>
+                  <period year="2005">
+                     <above-ground-carbon>0.0253</above-ground-carbon>
+                     <below-ground-carbon>0.0582</below-ground-carbon>
+                  </period>
+                  <period year="2020">
+                     <above-ground-carbon>0.0253</above-ground-carbon>
+                     <below-ground-carbon>0.0582</below-ground-carbon>
+                  </period>
+                  <period year="2035">
+                     <above-ground-carbon>0.0253</above-ground-carbon>
+                     <below-ground-carbon>0.0582</below-ground-carbon>
+                  </period>
+                  <period year="2050">
+                     <above-ground-carbon>0.0253</above-ground-carbon>
+                     <below-ground-carbon>0.0582</below-ground-carbon>
+                  </period>
+                  <period year="2065">
+                     <above-ground-carbon>0.0253</above-ground-carbon>
+                     <below-ground-carbon>0.0582</below-ground-carbon>
+                  </period>
+                  <period year="2080">
+                     <above-ground-carbon>0.0253</above-ground-carbon>
+                     <below-ground-carbon>0.0582</below-ground-carbon>
+                  </period>
+                  <period year="2095">
+                     <above-ground-carbon>0.0253</above-ground-carbon>
+                     <below-ground-carbon>0.0582</below-ground-carbon>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Southeast Asia">
+         <FoodSupplySector name="Pasture">
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <above-ground-carbon>0.0225</above-ground-carbon>
+                     <below-ground-carbon>0.0531</below-ground-carbon>
+                  </period>
+                  <period year="1990">
+                     <above-ground-carbon>0.0225</above-ground-carbon>
+                     <below-ground-carbon>0.0531</below-ground-carbon>
+                  </period>
+                  <period year="2005">
+                     <above-ground-carbon>0.0225</above-ground-carbon>
+                     <below-ground-carbon>0.0531</below-ground-carbon>
+                  </period>
+                  <period year="2020">
+                     <above-ground-carbon>0.0225</above-ground-carbon>
+                     <below-ground-carbon>0.0531</below-ground-carbon>
+                  </period>
+                  <period year="2035">
+                     <above-ground-carbon>0.0225</above-ground-carbon>
+                     <below-ground-carbon>0.0531</below-ground-carbon>
+                  </period>
+                  <period year="2050">
+                     <above-ground-carbon>0.0225</above-ground-carbon>
+                     <below-ground-carbon>0.0531</below-ground-carbon>
+                  </period>
+                  <period year="2065">
+                     <above-ground-carbon>0.0225</above-ground-carbon>
+                     <below-ground-carbon>0.0531</below-ground-carbon>
+                  </period>
+                  <period year="2080">
+                     <above-ground-carbon>0.0225</above-ground-carbon>
+                     <below-ground-carbon>0.0531</below-ground-carbon>
+                  </period>
+                  <period year="2095">
+                     <above-ground-carbon>0.0225</above-ground-carbon>
+                     <below-ground-carbon>0.0531</below-ground-carbon>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="USA">
+         <FoodSupplySector name="Pasture">
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <above-ground-carbon>0.0206</above-ground-carbon>
+                     <below-ground-carbon>0.0572</below-ground-carbon>
+                  </period>
+                  <period year="1990">
+                     <above-ground-carbon>0.0206</above-ground-carbon>
+                     <below-ground-carbon>0.0572</below-ground-carbon>
+                  </period>
+                  <period year="2005">
+                     <above-ground-carbon>0.0206</above-ground-carbon>
+                     <below-ground-carbon>0.0572</below-ground-carbon>
+                  </period>
+                  <period year="2020">
+                     <above-ground-carbon>0.0206</above-ground-carbon>
+                     <below-ground-carbon>0.0572</below-ground-carbon>
+                  </period>
+                  <period year="2035">
+                     <above-ground-carbon>0.0206</above-ground-carbon>
+                     <below-ground-carbon>0.0572</below-ground-carbon>
+                  </period>
+                  <period year="2050">
+                     <above-ground-carbon>0.0206</above-ground-carbon>
+                     <below-ground-carbon>0.0572</below-ground-carbon>
+                  </period>
+                  <period year="2065">
+                     <above-ground-carbon>0.0206</above-ground-carbon>
+                     <below-ground-carbon>0.0572</below-ground-carbon>
+                  </period>
+                  <period year="2080">
+                     <above-ground-carbon>0.0206</above-ground-carbon>
+                     <below-ground-carbon>0.0572</below-ground-carbon>
+                  </period>
+                  <period year="2095">
+                     <above-ground-carbon>0.0206</above-ground-carbon>
+                     <below-ground-carbon>0.0572</below-ground-carbon>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+      <region name="Western Europe">
+         <FoodSupplySector name="Pasture">
+            <FoodSupplySubsector name="Pasture">
+               <FoodProductionTechnology name="Pasture">
+                  <period year="1975">
+                     <above-ground-carbon>0.043</above-ground-carbon>
+                     <below-ground-carbon>0.106</below-ground-carbon>
+                  </period>
+                  <period year="1990">
+                     <above-ground-carbon>0.043</above-ground-carbon>
+                     <below-ground-carbon>0.106</below-ground-carbon>
+                  </period>
+                  <period year="2005">
+                     <above-ground-carbon>0.043</above-ground-carbon>
+                     <below-ground-carbon>0.106</below-ground-carbon>
+                  </period>
+                  <period year="2020">
+                     <above-ground-carbon>0.043</above-ground-carbon>
+                     <below-ground-carbon>0.106</below-ground-carbon>
+                  </period>
+                  <period year="2035">
+                     <above-ground-carbon>0.043</above-ground-carbon>
+                     <below-ground-carbon>0.106</below-ground-carbon>
+                  </period>
+                  <period year="2050">
+                     <above-ground-carbon>0.043</above-ground-carbon>
+                     <below-ground-carbon>0.106</below-ground-carbon>
+                  </period>
+                  <period year="2065">
+                     <above-ground-carbon>0.043</above-ground-carbon>
+                     <below-ground-carbon>0.106</below-ground-carbon>
+                  </period>
+                  <period year="2080">
+                     <above-ground-carbon>0.043</above-ground-carbon>
+                     <below-ground-carbon>0.106</below-ground-carbon>
+                  </period>
+                  <period year="2095">
+                     <above-ground-carbon>0.043</above-ground-carbon>
+                     <below-ground-carbon>0.106</below-ground-carbon>
+                  </period>
+               </FoodProductionTechnology>
+            </FoodSupplySubsector>
+         </FoodSupplySector>
+      </region>
+   </world>
+</scenario>

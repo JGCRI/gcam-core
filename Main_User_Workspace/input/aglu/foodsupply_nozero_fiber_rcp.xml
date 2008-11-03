@@ -10907,7 +10907,7 @@
 				<FoodSupplySubsector name="MiscCrop">
 					<FoodProductionTechnology name="MiscCrop">
 						<period year="1975">
-							<calLandUsed>7123</calLandUsed>
+							<calLandUsed>4600</calLandUsed>
 							<CalDataOutput>
 								<calOutputValue>47234283</calOutputValue>
 							</CalDataOutput>
@@ -10920,7 +10920,7 @@
 							<CO2 name="CO2"/>
 						</period>
 						<period year="1990">
-							<calLandUsed>7123</calLandUsed>
+							<calLandUsed>4600</calLandUsed>
 							<CalDataOutput>
 								<calOutputValue>47234283</calOutputValue>
 							</CalDataOutput>
@@ -11012,7 +11012,7 @@
 				<FoodSupplySubsector name="SugarCrop">
 					<FoodProductionTechnology name="SugarCrop">
 						<period year="1975">
-							<calLandUsed>1106</calLandUsed>
+							<calLandUsed>600</calLandUsed>
 							<CalDataOutput>
 								<calOutputValue>25959439</calOutputValue>
 							</CalDataOutput>
@@ -11025,7 +11025,7 @@
 							<CO2 name="CO2"/>
 						</period>
 						<period year="1990">
-							<calLandUsed>1106</calLandUsed>
+							<calLandUsed>600</calLandUsed>
 							<CalDataOutput>
 								<calOutputValue>25959439</calOutputValue>
 							</CalDataOutput>
@@ -11117,7 +11117,7 @@
 				<FoodSupplySubsector name="FodderCrop">
 					<FoodProductionTechnology name="FodderCrop">
 						<period year="1975">
-							<calLandUsed>4831</calLandUsed>
+							<calLandUsed>2800</calLandUsed>
 							<CalDataOutput>
 								<calOutputValue>101441731</calOutputValue>
 							</CalDataOutput>
@@ -11130,7 +11130,7 @@
 							<CO2 name="CO2"/>
 						</period>
 						<period year="1990">
-							<calLandUsed>4831</calLandUsed>
+							<calLandUsed>2800</calLandUsed>
 							<CalDataOutput>
 								<calOutputValue>101441731</calOutputValue>
 							</CalDataOutput>
@@ -11222,7 +11222,7 @@
 				<FoodSupplySubsector name="FiberCrop">
 					<FoodProductionTechnology name="FiberCrop">
 						<period year="1975">
-							<calLandUsed>102</calLandUsed>
+							<calLandUsed>30</calLandUsed>
 							<CalDataOutput>
 								<calOutputValue>62000000</calOutputValue>
 							</CalDataOutput>
@@ -11235,7 +11235,7 @@
 							<CO2 name="CO2"/>
 						</period>
 						<period year="1990">
-							<calLandUsed>102</calLandUsed>
+							<calLandUsed>30</calLandUsed>
 							<CalDataOutput>
 								<calOutputValue>62000000</calOutputValue>
 							</CalDataOutput>

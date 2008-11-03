@@ -1,565 +1,300 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Staff (PNNL) -->
 <scenario>
-   <world>
-      <region name="USA">
-         <renewresource name="Scavenging">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>USA</market>
-            <sub-renewable-resource name="Scavenging">
-               <maxSubResource>10000</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>5</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>7</extractioncost>
-                  <available>1.0</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>15</extractioncost>
-                  <available>1.5</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-         <renewresource name="Pasture">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>USA</market>
-            <sub-renewable-resource name="Pasture">
-               <maxSubResource>460092231</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>20</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>30</extractioncost>
-                  <available>1</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>120</extractioncost>
-                  <available>1.4</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-      </region>
-      <region name="Canada">
-         <renewresource name="Scavenging">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>Canada</market>
-            <sub-renewable-resource name="Scavenging">
-               <maxSubResource>10000</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>5</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>7</extractioncost>
-                  <available>1.0</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>15</extractioncost>
-                  <available>1.5</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-         <renewresource name="Pasture">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>Canada</market>
-            <sub-renewable-resource name="Pasture">
-               <maxSubResource>80031076</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>20</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>30</extractioncost>
-                  <available>1</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>120</extractioncost>
-                  <available>1.4</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-      </region>
-      <region name="Western Europe">
-         <renewresource name="Scavenging">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>Western Europe</market>
-            <sub-renewable-resource name="Scavenging">
-               <maxSubResource>4428577</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>5</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>7</extractioncost>
-                  <available>1.0</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>15</extractioncost>
-                  <available>1.5</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-         <renewresource name="Pasture">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>Western Europe</market>
-            <sub-renewable-resource name="Pasture">
-               <maxSubResource>496289139</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>20</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>30</extractioncost>
-                  <available>1</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>120</extractioncost>
-                  <available>1.4</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-      </region>
-      <region name="Japan">
-         <renewresource name="Scavenging">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>Japan</market>
-            <sub-renewable-resource name="Scavenging">
-               <maxSubResource>10000</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>5</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>7</extractioncost>
-                  <available>1.0</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>15</extractioncost>
-                  <available>1.5</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-         <renewresource name="Pasture">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>Japan</market>
-            <sub-renewable-resource name="Pasture">
-               <maxSubResource>11703656</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>20</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>30</extractioncost>
-                  <available>1</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>120</extractioncost>
-                  <available>1.4</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-      </region>
-      <region name="Australia_NZ">
-         <renewresource name="Scavenging">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>Australia_NZ</market>
-            <sub-renewable-resource name="Scavenging">
-               <maxSubResource>8877916</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>5</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>7</extractioncost>
-                  <available>1.0</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>15</extractioncost>
-                  <available>1.5</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-         <renewresource name="Pasture">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>Australia_NZ</market>
-            <sub-renewable-resource name="Pasture">
-               <maxSubResource>364380871</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>20</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>30</extractioncost>
-                  <available>1</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>120</extractioncost>
-                  <available>1.4</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-      </region>
-      <region name="Former Soviet Union">
-         <renewresource name="Scavenging">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>Former Soviet Union</market>
-            <sub-renewable-resource name="Scavenging">
-               <maxSubResource>8925997</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>5</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>7</extractioncost>
-                  <available>1.0</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>15</extractioncost>
-                  <available>1.5</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-         <renewresource name="Pasture">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>Former Soviet Union</market>
-            <sub-renewable-resource name="Pasture">
-               <maxSubResource>519789589</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>20</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>30</extractioncost>
-                  <available>1</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>120</extractioncost>
-                  <available>1.4</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-      </region>
-      <region name="China">
-         <renewresource name="Scavenging">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>China</market>
-            <sub-renewable-resource name="Scavenging">
-               <maxSubResource>50976012</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>5</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>7</extractioncost>
-                  <available>1.0</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>15</extractioncost>
-                  <available>1.5</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-         <renewresource name="Pasture">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>China</market>
-            <sub-renewable-resource name="Pasture">
-               <maxSubResource>770477017</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>20</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>30</extractioncost>
-                  <available>1</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>120</extractioncost>
-                  <available>1.4</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-      </region>
-      <region name="Middle East">
-         <renewresource name="Scavenging">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>Middle East</market>
-            <sub-renewable-resource name="Scavenging">
-               <maxSubResource>6011080</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>5</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>7</extractioncost>
-                  <available>1.0</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>15</extractioncost>
-                  <available>1.5</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-         <renewresource name="Pasture">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>Middle East</market>
-            <sub-renewable-resource name="Pasture">
-               <maxSubResource>51940283</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>20</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>30</extractioncost>
-                  <available>1</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>120</extractioncost>
-                  <available>1.4</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-      </region>
-      <region name="Africa">
-         <renewresource name="Scavenging">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>Africa</market>
-            <sub-renewable-resource name="Scavenging">
-               <maxSubResource>58450941</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>5</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>7</extractioncost>
-                  <available>1.0</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>15</extractioncost>
-                  <available>1.5</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-         <renewresource name="Pasture">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>Africa</market>
-            <sub-renewable-resource name="Pasture">
-               <maxSubResource>858620922</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>20</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>30</extractioncost>
-                  <available>1</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>120</extractioncost>
-                  <available>1.4</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-      </region>
-      <region name="Latin America">
-         <renewresource name="Scavenging">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>Latin America</market>
-            <sub-renewable-resource name="Scavenging">
-               <maxSubResource>112719570</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>5</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>7</extractioncost>
-                  <available>1.0</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>15</extractioncost>
-                  <available>1.5</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-         <renewresource name="Pasture">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>Latin America</market>
-            <sub-renewable-resource name="Pasture">
-               <maxSubResource>1774957742</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>20</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>30</extractioncost>
-                  <available>1</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>120</extractioncost>
-                  <available>1.4</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-      </region>
-      <region name="Southeast Asia">
-         <renewresource name="Scavenging">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>Southeast Asia</market>
-            <sub-renewable-resource name="Scavenging">
-               <maxSubResource>314929927</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>5</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>7</extractioncost>
-                  <available>1.0</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>15</extractioncost>
-                  <available>1.5</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-         <renewresource name="Pasture">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>Southeast Asia</market>
-            <sub-renewable-resource name="Pasture">
-               <maxSubResource>309044592</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>20</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>30</extractioncost>
-                  <available>1</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>120</extractioncost>
-                  <available>1.4</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-      </region>
-      <region name="Eastern Europe">
-         <renewresource name="Scavenging">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>Eastern Europe</market>
-            <sub-renewable-resource name="Scavenging">
-               <maxSubResource>10868176</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>5</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>7</extractioncost>
-                  <available>1.0</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>15</extractioncost>
-                  <available>1.5</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-         <renewresource name="Pasture">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>Eastern Europe</market>
-            <sub-renewable-resource name="Pasture">
-               <maxSubResource>127420375</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>20</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>30</extractioncost>
-                  <available>1</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>120</extractioncost>
-                  <available>1.4</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-      </region>
-      <region name="Korea">
-         <renewresource name="Scavenging">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>Korea</market>
-            <sub-renewable-resource name="Scavenging">
-               <maxSubResource>1103141</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>5</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>7</extractioncost>
-                  <available>1.0</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>15</extractioncost>
-                  <available>1.5</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-         <renewresource name="Pasture">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>Korea</market>
-            <sub-renewable-resource name="Pasture">
-               <maxSubResource>15472025</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>20</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>30</extractioncost>
-                  <available>1</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>120</extractioncost>
-                  <available>1.4</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-      </region>
-      <region name="India">
-         <renewresource name="Scavenging">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>India</market>
-            <sub-renewable-resource name="Scavenging">
-               <maxSubResource>555008709</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>5</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>7</extractioncost>
-                  <available>1.0</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>15</extractioncost>
-                  <available>1.5</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-         <renewresource name="Pasture">
-            <output-unit>Gcal</output-unit>
-            <price-unit>1975$/Gcal</price-unit>
-            <market>India</market>
-            <sub-renewable-resource name="Pasture">
-               <maxSubResource>317338716</maxSubResource>
-               <grade name="grade 1">
-                  <extractioncost>20</extractioncost>
-               </grade>
-               <grade name="grade 2">
-                  <extractioncost>30</extractioncost>
-                  <available>1</available>
-               </grade>
-               <grade name="grade 3">
-                  <extractioncost>120</extractioncost>
-                  <available>1.4</available>
-               </grade>
-            </sub-renewable-resource>
-         </renewresource>
-      </region>
-   </world>
+	<world>
+		<region name="USA">
+			<renewresource name="Scavenging">
+				<output-unit>Gcal</output-unit>
+				<price-unit>1975$/Gcal</price-unit>
+				<market>USA</market>
+				<sub-renewable-resource name="Scavenging">
+					<maxSubResource>10000</maxSubResource>
+					<grade name="grade 1">
+						<extractioncost>5</extractioncost>
+					</grade>
+					<grade name="grade 2">
+						<extractioncost>7</extractioncost>
+						<available>1.0</available>
+					</grade>
+					<grade name="grade 3">
+						<extractioncost>15</extractioncost>
+						<available>1.5</available>
+					</grade>
+				</sub-renewable-resource>
+			</renewresource>
+		</region>
+		<region name="Canada">
+			<renewresource name="Scavenging">
+				<output-unit>Gcal</output-unit>
+				<price-unit>1975$/Gcal</price-unit>
+				<market>Canada</market>
+				<sub-renewable-resource name="Scavenging">
+					<maxSubResource>10000</maxSubResource>
+					<grade name="grade 1">
+						<extractioncost>5</extractioncost>
+					</grade>
+					<grade name="grade 2">
+						<extractioncost>7</extractioncost>
+						<available>1.0</available>
+					</grade>
+					<grade name="grade 3">
+						<extractioncost>15</extractioncost>
+						<available>1.5</available>
+					</grade>
+				</sub-renewable-resource>
+			</renewresource>
+		</region>
+		<region name="Western Europe">
+			<renewresource name="Scavenging">
+				<output-unit>Gcal</output-unit>
+				<price-unit>1975$/Gcal</price-unit>
+				<market>Western Europe</market>
+				<sub-renewable-resource name="Scavenging">
+					<maxSubResource>4428577</maxSubResource>
+					<grade name="grade 1">
+						<extractioncost>5</extractioncost>
+					</grade>
+					<grade name="grade 2">
+						<extractioncost>7</extractioncost>
+						<available>1.0</available>
+					</grade>
+					<grade name="grade 3">
+						<extractioncost>15</extractioncost>
+						<available>1.5</available>
+					</grade>
+				</sub-renewable-resource>
+			</renewresource>
+		</region>
+		<region name="Japan">
+			<renewresource name="Scavenging">
+				<output-unit>Gcal</output-unit>
+				<price-unit>1975$/Gcal</price-unit>
+				<market>Japan</market>
+				<sub-renewable-resource name="Scavenging">
+					<maxSubResource>10000</maxSubResource>
+					<grade name="grade 1">
+						<extractioncost>5</extractioncost>
+					</grade>
+					<grade name="grade 2">
+						<extractioncost>7</extractioncost>
+						<available>1.0</available>
+					</grade>
+					<grade name="grade 3">
+						<extractioncost>15</extractioncost>
+						<available>1.5</available>
+					</grade>
+				</sub-renewable-resource>
+			</renewresource>
+		</region>
+		<region name="Australia_NZ">
+			<renewresource name="Scavenging">
+				<output-unit>Gcal</output-unit>
+				<price-unit>1975$/Gcal</price-unit>
+				<market>Australia_NZ</market>
+				<sub-renewable-resource name="Scavenging">
+					<maxSubResource>8877916</maxSubResource>
+					<grade name="grade 1">
+						<extractioncost>5</extractioncost>
+					</grade>
+					<grade name="grade 2">
+						<extractioncost>7</extractioncost>
+						<available>1.0</available>
+					</grade>
+					<grade name="grade 3">
+						<extractioncost>15</extractioncost>
+						<available>1.5</available>
+					</grade>
+				</sub-renewable-resource>
+			</renewresource>
+		</region>
+		<region name="Former Soviet Union">
+			<renewresource name="Scavenging">
+				<output-unit>Gcal</output-unit>
+				<price-unit>1975$/Gcal</price-unit>
+				<market>Former Soviet Union</market>
+				<sub-renewable-resource name="Scavenging">
+					<maxSubResource>8925997</maxSubResource>
+					<grade name="grade 1">
+						<extractioncost>5</extractioncost>
+					</grade>
+					<grade name="grade 2">
+						<extractioncost>7</extractioncost>
+						<available>1.0</available>
+					</grade>
+					<grade name="grade 3">
+						<extractioncost>15</extractioncost>
+						<available>1.5</available>
+					</grade>
+				</sub-renewable-resource>
+			</renewresource>
+		</region>
+		<region name="China">
+			<renewresource name="Scavenging">
+				<output-unit>Gcal</output-unit>
+				<price-unit>1975$/Gcal</price-unit>
+				<market>China</market>
+				<sub-renewable-resource name="Scavenging">
+					<maxSubResource>50976012</maxSubResource>
+					<grade name="grade 1">
+						<extractioncost>5</extractioncost>
+					</grade>
+					<grade name="grade 2">
+						<extractioncost>7</extractioncost>
+						<available>1.0</available>
+					</grade>
+					<grade name="grade 3">
+						<extractioncost>15</extractioncost>
+						<available>1.5</available>
+					</grade>
+				</sub-renewable-resource>
+			</renewresource>
+		</region>
+		<region name="Middle East">
+			<renewresource name="Scavenging">
+				<output-unit>Gcal</output-unit>
+				<price-unit>1975$/Gcal</price-unit>
+				<market>Middle East</market>
+				<sub-renewable-resource name="Scavenging">
+					<maxSubResource>6011080</maxSubResource>
+					<grade name="grade 1">
+						<extractioncost>5</extractioncost>
+					</grade>
+					<grade name="grade 2">
+						<extractioncost>7</extractioncost>
+						<available>1.0</available>
+					</grade>
+					<grade name="grade 3">
+						<extractioncost>15</extractioncost>
+						<available>1.5</available>
+					</grade>
+				</sub-renewable-resource>
+			</renewresource>
+		</region>
+		<region name="Africa">
+			<renewresource name="Scavenging">
+				<output-unit>Gcal</output-unit>
+				<price-unit>1975$/Gcal</price-unit>
+				<market>Africa</market>
+				<sub-renewable-resource name="Scavenging">
+					<maxSubResource>58450941</maxSubResource>
+					<grade name="grade 1">
+						<extractioncost>5</extractioncost>
+					</grade>
+					<grade name="grade 2">
+						<extractioncost>7</extractioncost>
+						<available>1.0</available>
+					</grade>
+					<grade name="grade 3">
+						<extractioncost>15</extractioncost>
+						<available>1.5</available>
+					</grade>
+				</sub-renewable-resource>
+			</renewresource>
+		</region>
+		<region name="Latin America">
+			<renewresource name="Scavenging">
+				<output-unit>Gcal</output-unit>
+				<price-unit>1975$/Gcal</price-unit>
+				<market>Latin America</market>
+				<sub-renewable-resource name="Scavenging">
+					<maxSubResource>112719570</maxSubResource>
+					<grade name="grade 1">
+						<extractioncost>5</extractioncost>
+					</grade>
+					<grade name="grade 2">
+						<extractioncost>7</extractioncost>
+						<available>1.0</available>
+					</grade>
+					<grade name="grade 3">
+						<extractioncost>15</extractioncost>
+						<available>1.5</available>
+					</grade>
+				</sub-renewable-resource>
+			</renewresource>
+		</region>
+		<region name="Southeast Asia">
+			<renewresource name="Scavenging">
+				<output-unit>Gcal</output-unit>
+				<price-unit>1975$/Gcal</price-unit>
+				<market>Southeast Asia</market>
+				<sub-renewable-resource name="Scavenging">
+					<maxSubResource>314929927</maxSubResource>
+					<grade name="grade 1">
+						<extractioncost>5</extractioncost>
+					</grade>
+					<grade name="grade 2">
+						<extractioncost>7</extractioncost>
+						<available>1.0</available>
+					</grade>
+					<grade name="grade 3">
+						<extractioncost>15</extractioncost>
+						<available>1.5</available>
+					</grade>
+				</sub-renewable-resource>
+			</renewresource>
+		</region>
+		<region name="Eastern Europe">
+			<renewresource name="Scavenging">
+				<output-unit>Gcal</output-unit>
+				<price-unit>1975$/Gcal</price-unit>
+				<market>Eastern Europe</market>
+				<sub-renewable-resource name="Scavenging">
+					<maxSubResource>10868176</maxSubResource>
+					<grade name="grade 1">
+						<extractioncost>5</extractioncost>
+					</grade>
+					<grade name="grade 2">
+						<extractioncost>7</extractioncost>
+						<available>1.0</available>
+					</grade>
+					<grade name="grade 3">
+						<extractioncost>15</extractioncost>
+						<available>1.5</available>
+					</grade>
+				</sub-renewable-resource>
+			</renewresource>
+		</region>
+		<region name="Korea">
+			<renewresource name="Scavenging">
+				<output-unit>Gcal</output-unit>
+				<price-unit>1975$/Gcal</price-unit>
+				<market>Korea</market>
+				<sub-renewable-resource name="Scavenging">
+					<maxSubResource>1103141</maxSubResource>
+					<grade name="grade 1">
+						<extractioncost>5</extractioncost>
+					</grade>
+					<grade name="grade 2">
+						<extractioncost>7</extractioncost>
+						<available>1.0</available>
+					</grade>
+					<grade name="grade 3">
+						<extractioncost>15</extractioncost>
+						<available>1.5</available>
+					</grade>
+				</sub-renewable-resource>
+			</renewresource>
+		</region>
+		<region name="India">
+			<renewresource name="Scavenging">
+				<output-unit>Gcal</output-unit>
+				<price-unit>1975$/Gcal</price-unit>
+				<market>India</market>
+				<sub-renewable-resource name="Scavenging">
+					<maxSubResource>555008709</maxSubResource>
+					<grade name="grade 1">
+						<extractioncost>5</extractioncost>
+					</grade>
+					<grade name="grade 2">
+						<extractioncost>7</extractioncost>
+						<available>1.0</available>
+					</grade>
+					<grade name="grade 3">
+						<extractioncost>15</extractioncost>
+						<available>1.5</available>
+					</grade>
+				</sub-renewable-resource>
+			</renewresource>
+		</region>
+	</world>
 </scenario>
