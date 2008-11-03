@@ -7,12 +7,12 @@
                <logitexp fillout="1" year="1975">-3</logitexp>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>2035</scaleYear>
+               <scaleYear>1975</scaleYear>
                <sharewt year="1975">1</sharewt>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
-               <sharewt year="2020">0.25</sharewt>
-               <sharewt year="2035">0.5</sharewt>
+               <sharewt year="2020">0.01</sharewt>
+               <sharewt year="2035">0.2</sharewt>
                <sharewt year="2050">0.5</sharewt>
                <sharewt year="2065">0.5</sharewt>
                <sharewt year="2080">0.5</sharewt>
@@ -242,12 +242,12 @@
                <logitexp fillout="1" year="1975">-3</logitexp>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>2035</scaleYear>
+               <scaleYear>1975</scaleYear>
                <sharewt year="1975">1</sharewt>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
-               <sharewt year="2020">0.25</sharewt>
-               <sharewt year="2035">0.5</sharewt>
+               <sharewt year="2020">0.005</sharewt>
+               <sharewt year="2035">0.2</sharewt>
                <sharewt year="2050">0.5</sharewt>
                <sharewt year="2065">0.5</sharewt>
                <sharewt year="2080">0.5</sharewt>
@@ -355,12 +355,12 @@
                <logitexp fillout="1" year="1975">-3</logitexp>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>2035</scaleYear>
+               <scaleYear>1975</scaleYear>
                <sharewt year="1975">1</sharewt>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
-               <sharewt year="2020">0.25</sharewt>
-               <sharewt year="2035">0.5</sharewt>
+               <sharewt year="2020">0.01</sharewt>
+               <sharewt year="2035">0.2</sharewt>
                <sharewt year="2050">0.5</sharewt>
                <sharewt year="2065">0.5</sharewt>
                <sharewt year="2080">0.5</sharewt>
@@ -468,16 +468,16 @@
                <logitexp fillout="1" year="1975">-3</logitexp>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>2035</scaleYear>
+               <scaleYear>1975</scaleYear>
                <sharewt year="1975">1</sharewt>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
-               <sharewt year="2020">0.25</sharewt>
-               <sharewt year="2035">0.5</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <sharewt year="2020">0.01</sharewt>
+               <sharewt year="2035">0.05</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.1</sharewt>
+               <sharewt year="2080">0.1</sharewt>
+               <sharewt year="2095">0.1</sharewt>
                <technology name="geothermal">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -581,12 +581,12 @@
                <logitexp fillout="1" year="1975">-3</logitexp>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>2035</scaleYear>
+               <scaleYear>1975</scaleYear>
                <sharewt year="1975">1</sharewt>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
-               <sharewt year="2020">0.25</sharewt>
-               <sharewt year="2035">0.5</sharewt>
+               <sharewt year="2020">0.01</sharewt>
+               <sharewt year="2035">0.2</sharewt>
                <sharewt year="2050">0.5</sharewt>
                <sharewt year="2065">0.5</sharewt>
                <sharewt year="2080">0.5</sharewt>
@@ -698,8 +698,8 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.05</sharewt>
-               <sharewt year="2035">0.25</sharewt>
+               <sharewt year="2020">0.01</sharewt>
+               <sharewt year="2035">0.2</sharewt>
                <sharewt year="2050">0.5</sharewt>
                <sharewt year="2065">0.5</sharewt>
                <sharewt year="2080">0.5</sharewt>
@@ -931,12 +931,12 @@
                <logitexp fillout="1" year="1975">-3</logitexp>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>2035</scaleYear>
+               <scaleYear>1975</scaleYear>
                <sharewt year="1975">1</sharewt>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
-               <sharewt year="2020">0.25</sharewt>
-               <sharewt year="2035">0.5</sharewt>
+               <sharewt year="2020">0.01</sharewt>
+               <sharewt year="2035">0.2</sharewt>
                <sharewt year="2050">0.5</sharewt>
                <sharewt year="2065">0.5</sharewt>
                <sharewt year="2080">0.5</sharewt>
@@ -1044,12 +1044,12 @@
                <logitexp fillout="1" year="1975">-3</logitexp>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>2035</scaleYear>
+               <scaleYear>1975</scaleYear>
                <sharewt year="1975">1</sharewt>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
-               <sharewt year="2020">0.25</sharewt>
-               <sharewt year="2035">0.5</sharewt>
+               <sharewt year="2020">0.05</sharewt>
+               <sharewt year="2035">0.2</sharewt>
                <sharewt year="2050">0.5</sharewt>
                <sharewt year="2065">0.5</sharewt>
                <sharewt year="2080">0.5</sharewt>
@@ -1157,12 +1157,12 @@
                <logitexp fillout="1" year="1975">-3</logitexp>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>2035</scaleYear>
+               <scaleYear>1975</scaleYear>
                <sharewt year="1975">1</sharewt>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
-               <sharewt year="2020">0.25</sharewt>
-               <sharewt year="2035">0.5</sharewt>
+               <sharewt year="2020">0.05</sharewt>
+               <sharewt year="2035">0.2</sharewt>
                <sharewt year="2050">0.5</sharewt>
                <sharewt year="2065">0.5</sharewt>
                <sharewt year="2080">0.5</sharewt>
@@ -1518,8 +1518,8 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.05</sharewt>
-               <sharewt year="2035">0.25</sharewt>
+               <sharewt year="2020">0.01</sharewt>
+               <sharewt year="2035">0.2</sharewt>
                <sharewt year="2050">0.5</sharewt>
                <sharewt year="2065">0.5</sharewt>
                <sharewt year="2080">0.5</sharewt>
