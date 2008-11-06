@@ -92,14 +92,22 @@ public class RegionMask extends Rectangle2D.Double
     //know it intersects in some way, now find if it additionally lays over a
     //region of the mask which contains some 1's, return portion which is in region
     double toReturn = 0;
+    Block inBlock = new Block(X, Y, H, W);
+    Block regionBlock = new Block();
     int lowX, highX, lowY, highY; //the range of indicies to check in the mask
     double smallX, bigX, smallY, bigY; //used for proportion finding
     double thisX, thisY; //x and y coordinates for the current place in bit mask
     // this is a long shot, but going to change the floors and ceils to rounds..
-    lowX = (int)(Math.round(((X-x))/resolution));
-    highX = (int)(Math.round((((X+(W-resolution))-x))/resolution));
-    lowY = (int)(Math.round((((y+height)-(Y+(H))))/resolution));
-    highY = (int)(Math.round((((y+height)-(Y+resolution)))/resolution));
+    /*
+    lowX = (int)(Math.round(((X-x))/resolution))-1;
+    highX = (int)(Math.round((((X+(W-resolution))-x))/resolution))+1;
+    lowY = (int)(Math.round((((y+height)-(Y+(H))))/resolution))-1;
+    highY = (int)(Math.round((((y+height)-(Y+resolution)))/resolution))+1;
+    */
+    lowX = (int)(Math.floor(((X-x))/resolution));
+    highX = (int)(Math.ceil((((X+(W-resolution))-x))/resolution));
+    lowY = (int)(Math.floor((((y+height)-(Y+(H))))/resolution));
+    highY = (int)(Math.ceil((((y+height)-(Y+resolution)))/resolution));
     for(int i = (lowY); i<=(highY); i++)
     {
       if((i<bMask.length)&&(i>=0))
@@ -108,7 +116,10 @@ public class RegionMask extends Rectangle2D.Double
         {
           if((k<bMask[i].length)&&(k>=0))
           {//assuring no out of bounds checking
-            if(bMask[i][k]==1)
+            thisX = (x+(k*resolution));
+            thisY = (y+height-((i+1)*resolution));
+            regionBlock.setRect(thisX, thisY, resolution, resolution);
+            if(bMask[i][k]==1 && inBlock.intersects(thisX, thisY, resolution, resolution))
             { //this portion of checked area lies in block, add it to the blocks weight
               thisX = (x+(k*resolution));
               thisY = (y+height-((i+1)*resolution));
@@ -132,6 +143,17 @@ public class RegionMask extends Rectangle2D.Double
                 bigY = (Y+H);
               
               toReturn += (((bigX-smallX)*(bigY-smallY))/(W*H));
+	      /*
+	      double oldWay = (((bigX-smallX)*(bigY-smallY))/(W*H));
+	      double newWay = inBlock.getOverlap(regionBlock);
+	  System.out.println("("+X+", "+Y+") - "+H+"x"+W);
+	  System.out.println("("+thisX+", "+thisY+") - "+resolution+"x"+resolution);
+    System.out.println("old: "+oldWay);
+    System.out.println("new: "+newWay);
+	  try {
+	  System.in.read();
+	  } catch(java.io.IOException e) {}
+	  */
             }
           }
         }

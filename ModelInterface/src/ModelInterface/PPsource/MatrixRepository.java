@@ -263,8 +263,12 @@ public class MatrixRepository implements DataRepository
         {
           //add weight
           Point2D.Double hold = new Point2D.Double(currXL, currYL);
+	  try {
           holdTime.put(hold, Double.valueOf(weights[(y)][(x)] /
               (landFractValues[x+X][Y-((weights.length)-y/*-1*/)]))); //took the -1 out again..
+	  } catch(ArrayIndexOutOfBoundsException e) {
+		  System.out.println(e+" -- "+weights[(y)][(x)]);
+	  }
         }
         currYL -= res;
       }
@@ -301,7 +305,7 @@ public class MatrixRepository implements DataRepository
           currYL = (yL-res);
           for(int y = (weights.length-1); y>=0; y--)
           {
-            if(weights[(y)][(x)]>0)
+            if(weights[(y)][(x)]>1e-4)
             {
               //get this point's value
               //add it to toReturn

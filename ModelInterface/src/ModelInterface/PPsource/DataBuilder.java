@@ -4155,7 +4155,7 @@ public class DataBuilder
 
       // I have to reset the resolution in the regions masks now that
       // we know what it is
-      for(Iterator<Map.Entry<String, RegionMask>> it = newRegions.entrySet().iterator(); it.hasNext(); ) {
+      for(Iterator<Map.Entry<String, RegionMask>> it = nameReverseMap.entrySet().iterator(); it.hasNext(); ) {
 	      it.next().getValue().resolution = resX;
       }
 
@@ -4246,7 +4246,7 @@ public class DataBuilder
       */
       
       //initializing byte matrix for each region
-      Iterator it = newRegions.entrySet().iterator();
+      Iterator it = nameReverseMap.entrySet().iterator();
       Map.Entry me;
       while(it.hasNext())
       {
@@ -4288,7 +4288,8 @@ public class DataBuilder
     }
     
     //adding these regions masks to the master list of masks
-    Iterator it = newRegions.entrySet().iterator();
+    // TODO: I could just do some addAll
+    Iterator it = nameReverseMap.entrySet().iterator();
     Map.Entry me;
     while(it.hasNext())
     {
