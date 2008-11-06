@@ -1474,7 +1474,7 @@ public final class ComponentManipulator
     }
     return toReturn;
   }
-  public static Wrapper[] freqAnalysis(Wrapper[] R, int bnum)
+  public static Wrapper[] freqAnalysis(Wrapper[] R, Wrapper[] weight, Wrapper[] landFract, int bnum, boolean avg)
   {
     log.log(Level.FINER, "begin function");
     /*
@@ -1492,6 +1492,8 @@ public final class ComponentManipulator
     int store; //the index this value will be added to
     double area; //the area of the current cell we are in in km^2
     double[][] holdMS;
+    double[][] holdW;
+    double[][] holdLF;
     DataWrapper[] toReturn = new DataWrapper[bnum];
     
     double circumAtLat; //the circumference of the earth at a specific latitude
@@ -1516,26 +1518,34 @@ public final class ComponentManipulator
       blockHeight = (totalHeight/R[i].data.length);
       
       holdMS = R[i].data;
+      holdW = weight[i].data;
+      holdLF = landFract[i].data;
       for(int iY = 0; iY < holdMS.length; iY++)
         for(int iX = 0; iX < holdMS[0].length; iX++)
         {
           if(!Double.isNaN(holdMS[iY][iX]))
           {
-            circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((R[i].getY()+((holdMS.length-iY)*R[i].getRes()))*(PI/180)));
+            circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((R[i].getY()+(R[i].getRes()/2)+((holdMS.length-1-iY)*R[i].getRes()))*(PI/180)));
+            //circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((R[i].getY()+((iY)*R[i].getRes()))*(PI/180)));
             totalWidth = (circumAtLat/(360/(R[i].getW())));
             blockWidth = (totalWidth/R[i].data[iY].length);
             area = blockWidth*blockHeight;
             
             store = (int)Math.floor((holdMS[iY][iX]-min)/factor);
             
-            toReturn[store].data[0][1] += (area);
+            //toReturn[store].data[0][1] += (area);
+	    if(avg) {
+		    toReturn[store].data[0][1] += holdMS[iY][iX];
+	    } else {
+		    toReturn[store].data[0][1] += (area*holdMS[iY][iX]*holdW[iY][iX]*holdLF[iY][iX]);
+	    }
           }
         }
     }
     
     return toReturn;
   }
-  public static Wrapper[] freqAnalysis(Wrapper[] R, Wrapper[] split, int bnum)
+  public static Wrapper[] freqAnalysis(Wrapper[] R, Wrapper[] split, Wrapper[] weight, Wrapper[] landFract, int bnum, boolean avg)
   {
     log.log(Level.FINER, "begin function");
     /*
@@ -1553,6 +1563,8 @@ public final class ComponentManipulator
     int store; //the index this value will be added to
     double area; //the area of the current cell we are in in km^2
     double[][] holdMS, holdMM;
+    double[][] holdW;
+    double[][] holdLF;
     DataWrapper[] toReturn = new DataWrapper[bnum];
     
     double circumAtLat; //the circumference of the earth at a specific latitude
@@ -1578,19 +1590,31 @@ public final class ComponentManipulator
       
       holdMS = R[i].data;
       holdMM = split[i].data;
+      holdW = weight[i].data;
+      holdLF = landFract[i].data;
       for(int iY = 0; iY < holdMS.length; iY++)
         for(int iX = 0; iX < holdMS[0].length; iX++)
         {
-          if(!Double.isNaN(holdMS[iY][iX]))
+		if(holdMS[iY][iX] != holdMM[iY][iX] &&
+				!(Double.isNaN(holdMS[iY][iX]) && Double.isNaN(holdMM[iY][iX]))) {
+			System.out.println("Not same: "+i+" -- "+iX+", "+iY);
+			System.out.println("Data: "+holdMS[iY][iX]+" split: "+holdMM[iY][iX]);
+			System.out.println("Data NaN: "+Double.isNaN(holdMS[iY][iX])+" split NaN: "+Double.isNaN(holdMM[iY][iX]));
+		}
+          if(!Double.isNaN(holdMS[iY][iX]) /*&& !Double.isNaN(holdMM[iY][iX])*/)
           {
-            circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((R[i].getY()+((holdMS.length-iY)*R[i].getRes()))*(PI/180)));
+            circumAtLat = Math.abs(EQUAT_CIRCUM*Math.cos((R[i].getY()+(R[i].getRes()/2)+((holdMS.length-1-iY)*R[i].getRes()))*(PI/180)));
             totalWidth = (circumAtLat/(360/(R[i].getW())));
             blockWidth = (totalWidth/R[i].data[iY].length);
             area = blockWidth*blockHeight;
             
             store = (int)Math.floor((holdMM[iY][iX]-min)/factor);
             
-            toReturn[store].data[0][1] += (area*holdMS[iY][iX]);
+	    if(avg) {
+		    toReturn[store].data[0][1] += holdMS[iY][iX];
+	    } else {
+		    toReturn[store].data[0][1] += (area*holdMS[iY][iX]/* *holdW[iY][iX]*holdLF[iY][iX] */);
+	    }
           }
         }
     }

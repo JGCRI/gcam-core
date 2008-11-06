@@ -2006,14 +2006,17 @@ public class ManipulationDriver
       
       if(VSource.sameShape(VSplit))
       {
-        VDest.setData(ComponentManipulator.freqAnalysis(VSource.getData(), VSplit.getData(), buckets));
+        VDest.setData(ComponentManipulator.freqAnalysis(VSource.getData(), VSplit.getData(), 
+				((ReferenceVariable)VSource).weight, ((ReferenceVariable)VSource).getLandFract(),
+				buckets, ((ReferenceVariable)VSource).avg));
       } else
       {
         log.log(Level.WARNING, "Command Failed: variables of different shapes.");
       }
     } else
     { //splitting on own value, not coverage
-      VDest.setData(ComponentManipulator.freqAnalysis(VSource.getData(), buckets));
+      VDest.setData(ComponentManipulator.freqAnalysis(VSource.getData(), ((ReferenceVariable)VSource).weight,
+			      ((ReferenceVariable)VSource).getLandFract(), buckets, ((ReferenceVariable)VSource).avg));
     }
     
     //need to output cuz this is an abnormally shaped return
