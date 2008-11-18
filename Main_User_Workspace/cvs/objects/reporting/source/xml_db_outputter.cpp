@@ -604,6 +604,9 @@ void XMLDBOutputter::startVisitSubsector( const Subsector* aSubsector,
         writeItem( "share", "%", aSubsector->calcShare( i, mGDP ), i );
     }
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
+        writeItem( "share-weight", "none", aSubsector->getShareWeight( i ), i );
+    }
+    for( int i = 0; i < modeltime->getmaxper(); ++i ){
         double currValue = aSubsector->getPrice( mGDP, i );
         if( !objects::isEqual<double>( currValue, 0.0 ) ) {
             writeItem( "cost", mCurrentPriceUnit, currValue, i );
@@ -679,6 +682,8 @@ void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology, const 
     stringstream* childBuffer = new stringstream();    
     
     // the opening tag goes in the parent buffer
+    // TODO: Inconsistent use of year attribute.  Technology vintage written out
+    // with "year" attribute.
     XMLWriteOpeningTag( aTechnology->getXMLName1D(), *parentBuffer, mTabs.get(),
         aTechnology->getName(), aTechnology->year,
         DefaultTechnology::getXMLNameStatic1D() );
@@ -689,19 +694,20 @@ void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology, const 
 
     // children of technology go in the child buffer
     for( int curr = 0; curr <= aPeriod; ++curr ){
-        // Same check is done for objects contained by technology.
-        if( !isTechnologyOperating( curr ) ){
-            continue;
-        }
         // Calculate the technology's indirect emissions.
  //        mCurrIndirectEmissions[ curr ] = aTechnology->getInput( curr )
  //       * mIndirectEmissCalc->getUpstreamEmissionsCoefficient( mCurrentFuel,
  //                                                              curr );
-        // Write out total cost which includes fuel and non-energy costs.
-        double currValue = aTechnology->getCost( curr );
-        if( !objects::isEqual<double>( currValue, 0.0 ) ) {
-            writeItemToBuffer( aTechnology->getCost( curr ), "cost", 
-                *childBuffer, mTabs.get(), curr, mCurrentPriceUnit );
+        // Write out total cost which includes fuel and non-energy costs
+        // for new investments only.
+        // TODO: Inconsistent use of year attribute.  WriteItemToBuffer writes
+        // "year" attribute in addition to the technology "year" attribute.
+        if( mCurrentTechnology->mProductionState[ curr ]->isNewInvestment() ){
+            double currValue = aTechnology->getCost( curr );
+            if( !objects::isEqual<double>( currValue, 0.0 ) ) {
+                writeItemToBuffer( aTechnology->getCost( curr ), "cost", 
+                    *childBuffer, mTabs.get(), curr, mCurrentPriceUnit );
+            }
         }
     }
 }
