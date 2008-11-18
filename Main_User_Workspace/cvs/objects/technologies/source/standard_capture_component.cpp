@@ -200,6 +200,18 @@ double StandardCaptureComponent::getStorageCost( const string& aRegionName,
     double storageMarketPrice = scenario->getMarketplace()->getPrice( mStorageMarket,
                                                                       aRegionName,
                                                                       aPeriod, false );
+    
+    // Check if there is a carbon market.
+    double carbonMarketPrice = scenario->getMarketplace()->getPrice( mTargetGas,
+                                                                     aRegionName,
+                                                                     aPeriod, false );
+
+    // If there is no carbon market, return a large number to disable the
+    // capture technology.
+    if( carbonMarketPrice == Marketplace::NO_MARKET_PRICE ){
+        return util::getLargeNumber();
+    }
+
     double storageCost;
     if( storageMarketPrice == Marketplace::NO_MARKET_PRICE ){
         // There is no carbon market. Use the read-in cost.
