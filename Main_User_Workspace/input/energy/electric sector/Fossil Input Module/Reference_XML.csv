@@ -25,43 +25,28 @@ ALL,electricity,oil,-3,,,,,,,,
 ALL,electricity,biomass ,-3,,,,,,,,
 ALL,electricity,wind,-3,,,,,,,,
 ALL,electricity,solar,-3,,,,,,,,
-ALL,electricity,nuclear,-3,,,,,,,,
 
 
 "subsector uses calibation shareweights, technologies do not",,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,
-15,,,,,,,,
-Fossil - Reference - scaleYear and techScaleYear,,,,,,,,
-region,Supply Sector,Subsector,scaleYear,techScaleYear,,,,
-ALL,electricity,coal,2005,1975,,,,
-ALL,electricity,gas,2005,1975,,,,
-ALL,electricity,oil,2005,1975,,,,
-ALL,electricity,biomass ,2005,1975,,,,
-ALL,electricity,nuclear,2005,1975,,,,
-,,,,,,,,
-table not read,,,,,,,,
-Variable ID,,,,,,,,
-12,,,from 050608 model run -gpk,,,,,
-set future nuclear shareweights (for use when using fixed output),,,,,,,,
-region,Supply Sector,Subsector,2020,2035,2050,2065,2080,2095
-Africa,electricity,nuclear,0.409811,0.527849,0.645887,0.763925,0.881962,1
-Australia_NZ,electricity,nuclear,0.166667,0.333333,0.5,0.666667,0.833333,1,,,
-Canada,electricity,nuclear,3.38119,2.90495,2.42872,1.95248,1.47624,1,,,
-China,electricity,nuclear,0.384947,0.507957,0.630968,0.753979,0.876989,1,,,
-Eastern Europe,electricity,nuclear,1.8459,1.67672,1.50754,1.33836,1.16918,1,,,
-Former Soviet Union,electricity,nuclear,1.63592,1.50874,1.38155,1.25437,1.12718,1,,,
-India,electricity,nuclear,0.403973,0.523178,0.642384,0.761589,0.880795,1,,,
-Japan,electricity,nuclear,3.32618,2.86095,2.39571,1.93047,1.46524,1,,,
-Korea,electricity,nuclear,4.03629,3.42903,2.82178,2.21452,1.60726,1,,,
-Latin America,electricity,nuclear,0.645662,0.716529,0.787397,0.858265,0.929132,1,,,
-Middle East,electricity,nuclear,0.166667,0.333333,0.5,0.666667,0.833333,1,,,
-Southeast Asia,electricity,nuclear,0.705654,0.764523,0.823392,0.882261,0.941131,1,,,
-USA,electricity,nuclear,2.59997,2.27998,1.95998,1.63999,1.31999,1,,,
-Western Europe,electricity,nuclear,3.51464,3.01171,2.50878,2.00585,1.50293,1,,,
-
-assume existing techs have been assigned in calibration to 2005 inputs,,,,"question, why is there a new gas baseload?",,,,,,,
-INPUT_TABLE,,,,,,,,,,,
+Variable ID,,,,,,,,,,,
+15,,,,,,,,,,
+Fossil - Reference - scaleYear and techScaleYear,,,,,sharewt,,,,,
+region,Supply Sector,Subsector,scaleYear,techScaleYear,2020,2035,2050,2065,2080,2095
+ALL,electricity,coal,2005,1975,1,1,1,1,1,1
+ALL,electricity,gas,2005,1975,1,1,1,1,1,1
+ALL,electricity,oil,2005,1975,1,1,1,1,1,1
+ALL,electricity,biomass ,2050,1975,0.25,0.25,0.25,0.25,0.25,0.25
+,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,
+Variable ID,,,,,,,,,,
+150,,,,,,,,,,
+,,,,sharewt,,,,,,
+region,supplysector,subsector,scaleYear,2020,2035,2050,2065,2080,2095,
+Middle East,electricity,biomass ,1975,0.05,0.15,0.25,0.25,0.25,0.25,
+,,,,,,,,,,
+assume existing techs have been assigned in calibration to 2005 inputs,,,,"question, why is there a new gas baseload?",,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,
 16,,,,,,,,,,,,,
 Fossil - Reference - fuelname and efficiencies,,,,,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency
@@ -79,20 +64,20 @@ ALL,electricity,biomass ,Biomass (IGCC),regional biomass,1.000,1.000,0.416,0.416
 ,,,,,,,,,,,,,
 ,,,,,,,,,,,,,
 
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-18,,,,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input
-Fossil - Reference - Nonenergy Cost (1975$),,,,costs,costs,costs,costs,costs,costs,costs,costs,costs
-region,Supply Sector,Subsector,Technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,electricity,coal,Coal (conv pul),0.00,0.00,3.71,3.71,3.50,3.29,3.10,2.92,2.75
-ALL,electricity,coal,Coal (IGCC),0.00,0.00,4.18,4.18,3.78,3.23,3.21,3.05,3.00
-ALL,electricity,gas,Gas (peak load conv),0.00,0.00,8.98,9.28,8.74,8.23,7.75,7.30,6.87
-ALL,electricity,gas,Gas (base load conv),0.00,0.00,2.04,2.10,1.98,1.87,1.76,1.66,1.56
-ALL,electricity,gas,Gas (CC),0.00,0.00,1.72,1.72,1.51,1.34,1.31,1.26,1.24
-ALL,electricity,oil,Oil (peak load conv),0.00,0.00,8.98,9.28,8.74,8.23,7.75,7.30,6.87
-ALL,electricity,oil,Oil (base load conv),0.00,0.00,2.04,2.10,1.98,1.87,1.76,1.66,1.56
-ALL,electricity,oil,Oil (IGCC),0.00,0.00,3.76,3.76,3.30,2.91,2.85,2.74,2.70
-ALL,electricity,biomass ,Biomass (conv),0.00,0.00,4.47,4.47,4.21,3.97,3.74,3.52,3.31
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+18,,,,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,
+Fossil - Reference - Nonenergy Cost (1975$),,,,costs,costs,costs,costs,costs,costs,costs,costs,costs,
+region,Supply Sector,Subsector,Technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,
+ALL,electricity,coal,Coal (conv pul),0.00,0.00,3.71,3.71,3.50,3.29,3.10,2.92,2.75,
+ALL,electricity,coal,Coal (IGCC),0.00,0.00,4.18,4.18,3.78,3.23,3.21,3.05,3.00,
+ALL,electricity,gas,Gas (peak load conv),0.00,0.00,8.98,9.28,8.74,8.23,7.75,7.30,6.87,
+ALL,electricity,gas,Gas (base load conv),0.00,0.00,2.04,2.10,1.98,1.87,1.76,1.66,1.56,
+ALL,electricity,gas,Gas (CC),0.00,0.00,1.72,1.72,1.51,1.34,1.31,1.26,1.24,
+ALL,electricity,oil,Oil (peak load conv),0.00,0.00,8.98,9.28,8.74,8.23,7.75,7.30,6.87,
+ALL,electricity,oil,Oil (base load conv),0.00,0.00,2.04,2.10,1.98,1.87,1.76,1.66,1.56,
+ALL,electricity,oil,Oil (IGCC),0.00,0.00,3.76,3.76,3.30,2.91,2.85,2.74,2.70,
+ALL,electricity,biomass ,Biomass (conv),0.00,0.00,4.47,4.47,4.21,3.97,3.74,3.52,3.31,
 ALL,electricity,biomass ,Biomass (IGCC),0.00,0.00,5.07,5.07,4.59,3.93,3.90,3.70,3.64
 
 
@@ -109,7 +94,7 @@ ALL,electricity,biomass ,Biomass (existing),3.9924,3.9924,3.9,3.83,3.76,3.69,3.6
 
 don't want to double this one either,,,,,,,,,,,,
 danger,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
+Variable ID,,,
 30,,,
 list techs to give it a  <profit-shutdown-decider,,,
 region,Supply Sector,Subsector,Technology
@@ -125,7 +110,6 @@ ALL,electricity,oil,Oil (IGCC)
 ALL,electricity,biomass ,Biomass (existing)
 ALL,electricity,biomass ,Biomass (conv)
 ALL,electricity,biomass ,Biomass (IGCC)
-ALL,electricity,nuclear,Gen_II_LWR
 
 
 
@@ -344,7 +328,7 @@ electricity,biomass ,Biomass (IGCC)_CCS,carbon-storage,carbon-storage,carbon-sto
 
 
 
-Not_Read_in,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
 37,,,,,,,,,,,,
 Fossil - Reference - sharewt (tech level),,,,,,,,,,,,
