@@ -3,19 +3,19 @@ INPUT_TABLE,,,,Indicates reference to another worksheet,,,,Generic input paramet
 Variable ID,,,,Do not adjust parameters of this color in this worksheet,,,,Affected tables have this color,,,,
 1,,,,,,,,adjust parameters here or below (and unhighlight),,,,
 ,name=limestone,,,,,,,-20,cement subsector logit exponent,,,
-region,PrimaryFuelCO2Coef,,,,,,,-6,process heating tech logit exponent,,,
-USA,79.802,,,,70,2000$/t CO2,,5,cement mfg process non-energy cost,,,
-Canada,82.760,,,,0.38007,2000 to 1975$,,0,process heating non-energy cost,,,
-Western Europe,80.173,,,,0.272727273,CO2 to C,,17%,carbon capture penalty (%),,,78.5306
-Japan,79.470,,,,7.255881818,1975$/t C,,90%,fraction of CO2 removed,,,
-Australia_NZ,78.782,,,,0.119383825,t C / t cement,,,,,,
-Former Soviet Union,81.699,,,,0.866234928,1975$ / t cement,,Set names here,,,,
-China,79.919,,,,17%,non-energy penalty,,sectors,subsectors,technologies,,
-Middle East,80.199,,,,,,,cement,cement (conv),cement (conv),,
-Africa,80.555,,,,,,,,cement_CCS,cement_CCS,,
-Latin America,80.064,,,,,,,process heat cement,biomass,biomass,,
-Southeast Asia,80.024,,,,,,,,gas,gas
-Eastern Europe,80.644,,,,,,,,coal,coal
+region,PrimaryFuelCO2Coef,,,CCS calculations,,,,-6,process heating tech logit exponent,,,
+USA,79.802,,,50,2000$/t CO2,total CCS cost,,5,cement mfg process non-energy cost,,,
+Canada,82.760,,,0.38007,2000 to 1975$,,,0,process heating non-energy cost,,,
+Western Europe,80.173,,,0.272727273,CO2 to C,,,108%,carbon capture penalty (%),,,78.5306
+Japan,79.470,,,69.6795,1975$/t C,total CCS cost,,90%,fraction of CO2 removed,,,
+Australia_NZ,78.782,,,42,1990$/t C,storage cost only,,,,,,
+Former Soviet Union,81.699,,,0.46569,1990 to 1975$,,,Set names here,,,,
+China,79.919,,,19.55898,1975$/t C,storage cost only,,sectors,subsectors,technologies,,
+Middle East,80.199,,,50.12052,1975$/t C,tech cost only,,cement,cement (conv),cement (conv),,
+Africa,80.555,,,0.119383825,t C / t cement,total C emissions,,,cement_CCS,cement_CCS,,
+Latin America,80.064,,,0.107445443,t C / t cement,C getting captured,,process heat cement,biomass,biomass,,
+Southeast Asia,80.024,,,5.385221469,1975$ / t cement,ne cost adder,,,gas,gas
+Eastern Europe,80.644,,,108%,non-energy penalty,,,,coal,coal
 Korea,79.562,,,,,,,,refined liquids,refined liquids
 India,80.499,,,,,,,,,
 
@@ -103,7 +103,7 @@ Variable ID,,,,,,,,,,,,,
 ,,,,1975 fillout,sharewt,,,,,,,,
 region,supplysector,subsector,scaleYear,logitexp,1975,1990,2005,2020,2035,2050,2065,2080,2095
 all,cement,cement (conv),2020,-20,1,1,1,1,1,1,1,1,1
-all,cement,cement_CCS,2020,-20,0,0,0,1,1,1,1,1,1
+all,cement,cement_CCS,2020,-20,0,0,0,0.333,1,1,1,1,1
 all,process heat cement,biomass,2095,-6,1,1,1,1,1,1,1,1,1
 all,process heat cement,gas,2095,-6,1,1,1,1,1,1,1,1,1
 all,process heat cement,coal,2095,-6,1,1,1,1,1,1,1,1,1
@@ -266,7 +266,7 @@ Korea,process heat cement,refined liquids,refined liquids,0.00579,0.00755,refine
 India,process heat cement,refined liquids,refined liquids,0.00233,0.00389,refined liquids industrial
 
 
-set shareweights to 0 for CCS in base years,,,,,,
+set shareweights to 0 for CCS in base years. Hardwire value for 2020.,,,,,,
 INPUT_TABLE,,,,,,
 Variable ID,,,,,,
 1004,,,,,,
@@ -509,20 +509,20 @@ Variable ID,,,,,,,,,,,,
 1013,,,,standard-capture-component,,,,,,,,
 ,,,,non-energy-penalty,,,,,,,,
 region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-USA,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
-Canada,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
-Western Europe,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
-Japan,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
-Australia_NZ,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
-Former Soviet Union,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
-China,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
-Middle East,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
-Africa,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
-Latin America,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
-Southeast Asia,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
-Eastern Europe,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
-Korea,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
-India,cement,cement_CCS,cement_CCS,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17,0.17
+USA,cement,cement_CCS,cement_CCS,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08
+Canada,cement,cement_CCS,cement_CCS,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08
+Western Europe,cement,cement_CCS,cement_CCS,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08
+Japan,cement,cement_CCS,cement_CCS,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08
+Australia_NZ,cement,cement_CCS,cement_CCS,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08
+Former Soviet Union,cement,cement_CCS,cement_CCS,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08
+China,cement,cement_CCS,cement_CCS,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08
+Middle East,cement,cement_CCS,cement_CCS,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08
+Africa,cement,cement_CCS,cement_CCS,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08
+Latin America,cement,cement_CCS,cement_CCS,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08
+Southeast Asia,cement,cement_CCS,cement_CCS,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08
+Eastern Europe,cement,cement_CCS,cement_CCS,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08
+Korea,cement,cement_CCS,cement_CCS,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08
+India,cement,cement_CCS,cement_CCS,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08,1.08
 
 
 Add CO2 tag to process heating technologies in all periods,,,,,,,,,,,,

@@ -170,7 +170,7 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -194,7 +194,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -216,7 +216,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -238,7 +238,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -259,7 +259,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -280,7 +280,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -301,7 +301,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -322,7 +322,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -343,7 +343,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -364,7 +364,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -957,7 +957,7 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -981,7 +981,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -1003,7 +1003,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -1025,7 +1025,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -1046,7 +1046,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -1067,7 +1067,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -1088,7 +1088,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -1109,7 +1109,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -1130,7 +1130,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -1151,7 +1151,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -1744,7 +1744,7 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -1768,7 +1768,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -1790,7 +1790,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -1812,7 +1812,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -1833,7 +1833,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -1854,7 +1854,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -1875,7 +1875,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -1896,7 +1896,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -1917,7 +1917,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -1938,7 +1938,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -2531,7 +2531,7 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -2555,7 +2555,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -2577,7 +2577,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -2599,7 +2599,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -2620,7 +2620,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -2641,7 +2641,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -2662,7 +2662,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -2683,7 +2683,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -2704,7 +2704,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -2725,7 +2725,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -3320,7 +3320,7 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -3344,7 +3344,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -3366,7 +3366,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -3388,7 +3388,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -3409,7 +3409,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -3430,7 +3430,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -3451,7 +3451,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -3472,7 +3472,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -3493,7 +3493,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -3514,7 +3514,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -4109,7 +4109,7 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -4133,7 +4133,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -4155,7 +4155,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -4177,7 +4177,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -4198,7 +4198,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -4219,7 +4219,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -4240,7 +4240,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -4261,7 +4261,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -4282,7 +4282,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -4303,7 +4303,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -4896,7 +4896,7 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -4920,7 +4920,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -4942,7 +4942,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -4964,7 +4964,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -4985,7 +4985,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -5006,7 +5006,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -5027,7 +5027,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -5048,7 +5048,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -5069,7 +5069,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -5090,7 +5090,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -5687,7 +5687,7 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -5711,7 +5711,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -5733,7 +5733,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -5755,7 +5755,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -5776,7 +5776,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -5797,7 +5797,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -5818,7 +5818,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -5839,7 +5839,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -5860,7 +5860,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -5881,7 +5881,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -6476,7 +6476,7 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -6500,7 +6500,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -6522,7 +6522,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -6544,7 +6544,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -6565,7 +6565,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -6586,7 +6586,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -6607,7 +6607,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -6628,7 +6628,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -6649,7 +6649,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -6670,7 +6670,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -7263,7 +7263,7 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -7287,7 +7287,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -7309,7 +7309,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -7331,7 +7331,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -7352,7 +7352,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -7373,7 +7373,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -7394,7 +7394,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -7415,7 +7415,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -7436,7 +7436,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -7457,7 +7457,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -8050,7 +8050,7 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -8074,7 +8074,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -8096,7 +8096,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -8118,7 +8118,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -8139,7 +8139,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -8160,7 +8160,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -8181,7 +8181,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -8202,7 +8202,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -8223,7 +8223,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -8244,7 +8244,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -8837,7 +8837,7 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -8861,7 +8861,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -8883,7 +8883,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -8905,7 +8905,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -8926,7 +8926,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -8947,7 +8947,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -8968,7 +8968,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -8989,7 +8989,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -9010,7 +9010,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -9031,7 +9031,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -9624,7 +9624,7 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -9648,7 +9648,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -9670,7 +9670,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -9692,7 +9692,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -9713,7 +9713,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -9734,7 +9734,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -9755,7 +9755,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -9776,7 +9776,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -9797,7 +9797,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -9818,7 +9818,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -10413,7 +10413,7 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -10437,7 +10437,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -10459,7 +10459,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -10481,7 +10481,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -10502,7 +10502,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -10523,7 +10523,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -10544,7 +10544,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -10565,7 +10565,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -10586,7 +10586,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
@@ -10607,7 +10607,7 @@
                         <storage-market>carbon-storage</storage-market>
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
-                        <non-energy-penalty>0.17</non-energy-penalty>
+                        <non-energy-penalty>1.08</non-energy-penalty>
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
