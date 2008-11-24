@@ -110,6 +110,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
@@ -124,6 +125,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
@@ -138,6 +140,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
@@ -152,6 +155,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
@@ -166,6 +170,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
@@ -180,6 +185,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
@@ -194,6 +200,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
@@ -208,6 +215,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
@@ -222,6 +230,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -325,6 +334,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional natural gas">
@@ -339,6 +349,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional natural gas">
@@ -353,6 +364,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional natural gas">
@@ -367,6 +379,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional natural gas">
@@ -381,6 +394,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional natural gas">
@@ -395,6 +409,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional natural gas">
@@ -409,6 +424,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional natural gas">
@@ -423,6 +439,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional natural gas">
@@ -437,6 +454,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -540,6 +558,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional biomass">
@@ -554,6 +573,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional biomass">
@@ -568,6 +588,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
@@ -582,6 +603,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
@@ -596,6 +618,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
@@ -610,6 +633,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
@@ -624,6 +648,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
@@ -638,6 +663,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
@@ -652,6 +678,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -1560,6 +1587,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
@@ -1574,6 +1602,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
@@ -1588,6 +1617,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
@@ -1602,6 +1632,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
@@ -1616,6 +1647,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
@@ -1630,6 +1662,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
@@ -1644,6 +1677,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
@@ -1658,6 +1692,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
@@ -1672,6 +1707,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -1775,6 +1811,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional natural gas">
@@ -1789,6 +1826,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional natural gas">
@@ -1803,6 +1841,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional natural gas">
@@ -1817,6 +1856,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional natural gas">
@@ -1831,6 +1871,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional natural gas">
@@ -1845,6 +1886,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional natural gas">
@@ -1859,6 +1901,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional natural gas">
@@ -1873,6 +1916,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional natural gas">
@@ -1887,6 +1931,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -1990,6 +2035,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional biomass">
@@ -2004,6 +2050,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional biomass">
@@ -2018,6 +2065,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
@@ -2032,6 +2080,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
@@ -2046,6 +2095,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
@@ -2060,6 +2110,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
@@ -2074,6 +2125,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
@@ -2088,6 +2140,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
@@ -2102,6 +2155,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -3010,6 +3064,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
@@ -3024,6 +3079,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
@@ -3038,6 +3094,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
@@ -3052,6 +3109,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
@@ -3066,6 +3124,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
@@ -3080,6 +3139,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
@@ -3094,6 +3154,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
@@ -3108,6 +3169,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
@@ -3122,6 +3184,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -3225,6 +3288,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional natural gas">
@@ -3239,6 +3303,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional natural gas">
@@ -3253,6 +3318,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional natural gas">
@@ -3267,6 +3333,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional natural gas">
@@ -3281,6 +3348,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional natural gas">
@@ -3295,6 +3363,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional natural gas">
@@ -3309,6 +3378,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional natural gas">
@@ -3323,6 +3393,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional natural gas">
@@ -3337,6 +3408,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -3440,6 +3512,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional biomass">
@@ -3454,6 +3527,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional biomass">
@@ -3468,6 +3542,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
@@ -3482,6 +3557,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
@@ -3496,6 +3572,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
@@ -3510,6 +3587,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
@@ -3524,6 +3602,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
@@ -3538,6 +3617,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
@@ -3552,6 +3632,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -4460,6 +4541,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
@@ -4474,6 +4556,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
@@ -4488,6 +4571,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
@@ -4502,6 +4586,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
@@ -4516,6 +4601,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
@@ -4530,6 +4616,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
@@ -4544,6 +4631,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
@@ -4558,6 +4646,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
@@ -4572,6 +4661,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -4675,6 +4765,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional natural gas">
@@ -4689,6 +4780,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional natural gas">
@@ -4703,6 +4795,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional natural gas">
@@ -4717,6 +4810,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional natural gas">
@@ -4731,6 +4825,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional natural gas">
@@ -4745,6 +4840,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional natural gas">
@@ -4759,6 +4855,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional natural gas">
@@ -4773,6 +4870,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional natural gas">
@@ -4787,6 +4885,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -4890,6 +4989,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional biomass">
@@ -4904,6 +5004,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional biomass">
@@ -4918,6 +5019,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
@@ -4932,6 +5034,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
@@ -4946,6 +5049,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
@@ -4960,6 +5064,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
@@ -4974,6 +5079,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
@@ -4988,6 +5094,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
@@ -5002,6 +5109,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -5910,6 +6018,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
@@ -5924,6 +6033,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
@@ -5938,6 +6048,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
@@ -5952,6 +6063,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
@@ -5966,6 +6078,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
@@ -5980,6 +6093,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
@@ -5994,6 +6108,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
@@ -6008,6 +6123,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
@@ -6022,6 +6138,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -6125,6 +6242,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional natural gas">
@@ -6139,6 +6257,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional natural gas">
@@ -6153,6 +6272,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional natural gas">
@@ -6167,6 +6287,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional natural gas">
@@ -6181,6 +6302,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional natural gas">
@@ -6195,6 +6317,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional natural gas">
@@ -6209,6 +6332,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional natural gas">
@@ -6223,6 +6347,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional natural gas">
@@ -6237,6 +6362,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -6340,6 +6466,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional biomass">
@@ -6354,6 +6481,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional biomass">
@@ -6368,6 +6496,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
@@ -6382,6 +6511,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
@@ -6396,6 +6526,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
@@ -6410,6 +6541,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
@@ -6424,6 +6556,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
@@ -6438,6 +6571,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
@@ -6452,6 +6586,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -7360,6 +7495,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
@@ -7374,6 +7510,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
@@ -7388,6 +7525,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
@@ -7402,6 +7540,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
@@ -7416,6 +7555,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
@@ -7430,6 +7570,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
@@ -7444,6 +7585,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
@@ -7458,6 +7600,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
@@ -7472,6 +7615,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -7575,6 +7719,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional natural gas">
@@ -7589,6 +7734,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional natural gas">
@@ -7603,6 +7749,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional natural gas">
@@ -7617,6 +7764,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional natural gas">
@@ -7631,6 +7779,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional natural gas">
@@ -7645,6 +7794,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional natural gas">
@@ -7659,6 +7809,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional natural gas">
@@ -7673,6 +7824,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional natural gas">
@@ -7687,6 +7839,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -7790,6 +7943,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional biomass">
@@ -7804,6 +7958,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional biomass">
@@ -7818,6 +7973,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
@@ -7832,6 +7988,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
@@ -7846,6 +8003,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
@@ -7860,6 +8018,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
@@ -7874,6 +8033,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
@@ -7888,6 +8048,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
@@ -7902,6 +8063,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -8810,6 +8972,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
@@ -8824,6 +8987,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
@@ -8838,6 +9002,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
@@ -8852,6 +9017,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
@@ -8866,6 +9032,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
@@ -8880,6 +9047,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
@@ -8894,6 +9062,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
@@ -8908,6 +9077,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
@@ -8922,6 +9092,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -9025,6 +9196,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional natural gas">
@@ -9039,6 +9211,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional natural gas">
@@ -9053,6 +9226,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional natural gas">
@@ -9067,6 +9241,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional natural gas">
@@ -9081,6 +9256,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional natural gas">
@@ -9095,6 +9271,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional natural gas">
@@ -9109,6 +9286,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional natural gas">
@@ -9123,6 +9301,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional natural gas">
@@ -9137,6 +9316,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -9240,6 +9420,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional biomass">
@@ -9254,6 +9435,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional biomass">
@@ -9268,6 +9450,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
@@ -9282,6 +9465,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
@@ -9296,6 +9480,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
@@ -9310,6 +9495,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
@@ -9324,6 +9510,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
@@ -9338,6 +9525,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
@@ -9352,6 +9540,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -10260,6 +10449,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
@@ -10274,6 +10464,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
@@ -10288,6 +10479,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
@@ -10302,6 +10494,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
@@ -10316,6 +10509,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
@@ -10330,6 +10524,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
@@ -10344,6 +10539,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
@@ -10358,6 +10554,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
@@ -10372,6 +10569,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -10475,6 +10673,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional natural gas">
@@ -10489,6 +10688,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional natural gas">
@@ -10503,6 +10703,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional natural gas">
@@ -10517,6 +10718,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional natural gas">
@@ -10531,6 +10733,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional natural gas">
@@ -10545,6 +10748,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional natural gas">
@@ -10559,6 +10763,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional natural gas">
@@ -10573,6 +10778,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional natural gas">
@@ -10587,6 +10793,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -10690,6 +10897,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional biomass">
@@ -10704,6 +10912,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional biomass">
@@ -10718,6 +10927,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
@@ -10732,6 +10942,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
@@ -10746,6 +10957,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
@@ -10760,6 +10972,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
@@ -10774,6 +10987,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
@@ -10788,6 +11002,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
@@ -10802,6 +11017,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -11710,6 +11926,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
@@ -11724,6 +11941,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
@@ -11738,6 +11956,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
@@ -11752,6 +11971,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
@@ -11766,6 +11986,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
@@ -11780,6 +12001,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
@@ -11794,6 +12016,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
@@ -11808,6 +12031,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
@@ -11822,6 +12046,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -11925,6 +12150,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional natural gas">
@@ -11939,6 +12165,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional natural gas">
@@ -11953,6 +12180,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional natural gas">
@@ -11967,6 +12195,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional natural gas">
@@ -11981,6 +12210,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional natural gas">
@@ -11995,6 +12225,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional natural gas">
@@ -12009,6 +12240,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional natural gas">
@@ -12023,6 +12255,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional natural gas">
@@ -12037,6 +12270,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -12140,6 +12374,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional biomass">
@@ -12154,6 +12389,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional biomass">
@@ -12168,6 +12404,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
@@ -12182,6 +12419,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
@@ -12196,6 +12434,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
@@ -12210,6 +12449,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
@@ -12224,6 +12464,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
@@ -12238,6 +12479,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
@@ -12252,6 +12494,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -13160,6 +13403,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
@@ -13174,6 +13418,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
@@ -13188,6 +13433,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
@@ -13202,6 +13448,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
@@ -13216,6 +13463,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
@@ -13230,6 +13478,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
@@ -13244,6 +13493,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
@@ -13258,6 +13508,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
@@ -13272,6 +13523,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -13375,6 +13627,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional natural gas">
@@ -13389,6 +13642,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional natural gas">
@@ -13403,6 +13657,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional natural gas">
@@ -13417,6 +13672,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional natural gas">
@@ -13431,6 +13687,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional natural gas">
@@ -13445,6 +13702,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional natural gas">
@@ -13459,6 +13717,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional natural gas">
@@ -13473,6 +13732,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional natural gas">
@@ -13487,6 +13747,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -13590,6 +13851,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional biomass">
@@ -13604,6 +13866,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional biomass">
@@ -13618,6 +13881,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
@@ -13632,6 +13896,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
@@ -13646,6 +13911,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
@@ -13660,6 +13926,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
@@ -13674,6 +13941,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
@@ -13688,6 +13956,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
@@ -13702,6 +13971,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -14610,6 +14880,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
@@ -14624,6 +14895,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
@@ -14638,6 +14910,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
@@ -14652,6 +14925,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
@@ -14666,6 +14940,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
@@ -14680,6 +14955,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
@@ -14694,6 +14970,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
@@ -14708,6 +14985,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
@@ -14722,6 +15000,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -14825,6 +15104,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional natural gas">
@@ -14839,6 +15119,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional natural gas">
@@ -14853,6 +15134,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional natural gas">
@@ -14867,6 +15149,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional natural gas">
@@ -14881,6 +15164,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional natural gas">
@@ -14895,6 +15179,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional natural gas">
@@ -14909,6 +15194,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional natural gas">
@@ -14923,6 +15209,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional natural gas">
@@ -14937,6 +15224,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -15040,6 +15328,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional biomass">
@@ -15054,6 +15343,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional biomass">
@@ -15068,6 +15358,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
@@ -15082,6 +15373,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
@@ -15096,6 +15388,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
@@ -15110,6 +15403,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
@@ -15124,6 +15418,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
@@ -15138,6 +15433,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
@@ -15152,6 +15448,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -16060,6 +16357,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
@@ -16074,6 +16372,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
@@ -16088,6 +16387,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
@@ -16102,6 +16402,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
@@ -16116,6 +16417,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
@@ -16130,6 +16432,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
@@ -16144,6 +16447,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
@@ -16158,6 +16462,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
@@ -16172,6 +16477,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -16275,6 +16581,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional natural gas">
@@ -16289,6 +16596,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional natural gas">
@@ -16303,6 +16611,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional natural gas">
@@ -16317,6 +16626,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional natural gas">
@@ -16331,6 +16641,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional natural gas">
@@ -16345,6 +16656,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional natural gas">
@@ -16359,6 +16671,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional natural gas">
@@ -16373,6 +16686,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional natural gas">
@@ -16387,6 +16701,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -16490,6 +16805,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional biomass">
@@ -16504,6 +16820,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional biomass">
@@ -16518,6 +16835,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
@@ -16532,6 +16850,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
@@ -16546,6 +16865,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
@@ -16560,6 +16880,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
@@ -16574,6 +16895,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
@@ -16588,6 +16910,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
@@ -16602,6 +16925,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -17510,6 +17834,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
@@ -17524,6 +17849,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
@@ -17538,6 +17864,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
@@ -17552,6 +17879,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
@@ -17566,6 +17894,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
@@ -17580,6 +17909,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
@@ -17594,6 +17924,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
@@ -17608,6 +17939,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
@@ -17622,6 +17954,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -17725,6 +18058,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional natural gas">
@@ -17739,6 +18073,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional natural gas">
@@ -17753,6 +18088,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional natural gas">
@@ -17767,6 +18103,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional natural gas">
@@ -17781,6 +18118,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional natural gas">
@@ -17795,6 +18133,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional natural gas">
@@ -17809,6 +18148,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional natural gas">
@@ -17823,6 +18163,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional natural gas">
@@ -17837,6 +18178,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -17940,6 +18282,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional biomass">
@@ -17954,6 +18297,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional biomass">
@@ -17968,6 +18312,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
@@ -17982,6 +18327,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
@@ -17996,6 +18342,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
@@ -18010,6 +18357,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
@@ -18024,6 +18372,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
@@ -18038,6 +18387,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
@@ -18052,6 +18402,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -18960,6 +19311,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
@@ -18974,6 +19326,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
@@ -18988,6 +19341,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
@@ -19002,6 +19356,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
@@ -19016,6 +19371,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
@@ -19030,6 +19386,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
@@ -19044,6 +19401,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
@@ -19058,6 +19416,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
@@ -19072,6 +19431,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -19175,6 +19535,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional natural gas">
@@ -19189,6 +19550,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional natural gas">
@@ -19203,6 +19565,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional natural gas">
@@ -19217,6 +19580,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional natural gas">
@@ -19231,6 +19595,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional natural gas">
@@ -19245,6 +19610,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional natural gas">
@@ -19259,6 +19625,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional natural gas">
@@ -19273,6 +19640,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional natural gas">
@@ -19287,6 +19655,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -19390,6 +19759,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional biomass">
@@ -19404,6 +19774,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional biomass">
@@ -19418,6 +19789,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
@@ -19432,6 +19804,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
@@ -19446,6 +19819,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
@@ -19460,6 +19834,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
@@ -19474,6 +19849,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
@@ -19488,6 +19864,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
@@ -19502,6 +19879,7 @@
                         <remove-fraction>0.9</remove-fraction>
                         <storage-cost>0</storage-cost>
                      </standard-capture-component>
+                     <sharewt>1</sharewt>
                   </period>
                </technology>
             </subsector>

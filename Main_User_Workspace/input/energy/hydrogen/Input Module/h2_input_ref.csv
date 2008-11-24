@@ -137,3 +137,13 @@ region,Supply Sector,Subsector,Technology,1975,1990,2005,2020,2035,2050,2065,208
 ALL,H2 Central Production,gas chemical,natural gas steam reforming CCS,0,0,0,0,0,0,0,0,0
 ALL,H2 Central Production,coal chemical,coal chemical CCS,0,0,0,0,0,0,0,0,0
 ALL,H2 Central Production,biomass to H2,biomass to H2 CCS,0,0,0,0,0,0,0,0,0
+
+
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+26,,,,,,,,,,,,
+CCS Parameters,,,,sharewt,,,,,,,,
+region,Supply Sector,Subsector,Technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+ALL,H2 Central Production,gas chemical,natural gas steam reforming CCS,0,0,0,0.333,1,1,1,1,1
+ALL,H2 Central Production,coal chemical,coal chemical CCS,0,0,0,0.333,1,1,1,1,1
+ALL,H2 Central Production,biomass to H2,biomass to H2 CCS,0,0,0,0.333,1,1,1,1,1

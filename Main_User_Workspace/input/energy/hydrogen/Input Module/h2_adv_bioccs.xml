@@ -378,6 +378,80 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="biomass to H2 CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.49</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.50</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.78</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.51</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.58</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.22</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
             </subsector>
             <subsector name="electrolysis">
                <technology name="electrolysis">
@@ -1443,6 +1517,80 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>1.69</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="biomass to H2 CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.49</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.50</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.78</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.51</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.58</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.22</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -2514,6 +2662,80 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="biomass to H2 CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.49</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.50</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.78</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.51</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.58</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.22</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
             </subsector>
             <subsector name="electrolysis">
                <technology name="electrolysis">
@@ -3579,6 +3801,80 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>1.69</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="biomass to H2 CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.49</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.50</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.78</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.51</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.58</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.22</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -4650,6 +4946,80 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="biomass to H2 CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.49</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.50</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.78</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.51</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.58</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.22</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
             </subsector>
             <subsector name="electrolysis">
                <technology name="electrolysis">
@@ -5715,6 +6085,80 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>1.69</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="biomass to H2 CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.49</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.50</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.78</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.51</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.58</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.22</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -6786,6 +7230,80 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="biomass to H2 CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.49</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.50</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.78</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.51</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.58</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.22</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
             </subsector>
             <subsector name="electrolysis">
                <technology name="electrolysis">
@@ -7851,6 +8369,80 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>1.69</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="biomass to H2 CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.49</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.50</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.78</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.51</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.58</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.22</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -8922,6 +9514,80 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="biomass to H2 CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.49</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.50</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.78</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.51</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.58</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.22</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
             </subsector>
             <subsector name="electrolysis">
                <technology name="electrolysis">
@@ -9987,6 +10653,80 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>1.69</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="biomass to H2 CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.49</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.50</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.78</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.51</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.58</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.22</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -11058,6 +11798,80 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="biomass to H2 CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.49</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.50</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.78</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.51</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.58</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.22</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
             </subsector>
             <subsector name="electrolysis">
                <technology name="electrolysis">
@@ -12123,6 +12937,80 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>1.69</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="biomass to H2 CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.49</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.50</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.78</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.51</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.58</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.22</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -13194,6 +14082,80 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="biomass to H2 CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.49</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.50</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.78</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.51</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.58</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.22</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
             </subsector>
             <subsector name="electrolysis">
                <technology name="electrolysis">
@@ -14259,6 +15221,80 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>1.69</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="biomass to H2 CCS">
+                  <period year="1975">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.45</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.88</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.49</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.50</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.78</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.51</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.58</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="regional biomass">
+                        <efficiency>0.52</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.22</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
