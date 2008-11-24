@@ -333,16 +333,16 @@ Variable ID,,,,,,,,,,,,
 37,,,,,,,,,,,,
 Fossil - Reference - sharewt (tech level),,,,,,,,,,,,
 Region,Supply Sector,Subsector,Technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,electricity,coal,Coal (IGCC)_CCS,0,0,0,1,1,1,1,1,1
-ALL,electricity,gas,Gas (CC)_CCS,0,0,0,1,1,1,1,1,1
-ALL,electricity,oil,Oil (IGCC)_CCS,0,0,0,1,1,1,1,1,1
+ALL,electricity,coal,Coal (IGCC)_CCS,0,0,0,0.333,1,1,1,1,1
+ALL,electricity,gas,Gas (CC)_CCS,0,0,0,0.333,1,1,1,1,1
+ALL,electricity,oil,Oil (IGCC)_CCS,0,0,0,0.333,1,1,1,1,1
 ,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
 37,,,,,,,,,,,,
 Fossil - Reference - sharewt (tech level),,,,,,,,,,,,
 Region,Supply Sector,Subsector,Technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,electricity,biomass,Biomass (IGCC)_CCS,0,0,0,1,1,1,1,1,1
+ALL,electricity,biomass,Biomass (IGCC)_CCS,0,0,0,0.333,1,1,1,1,1
 
 
 Not_Read_in,,,,,,,,,,,,

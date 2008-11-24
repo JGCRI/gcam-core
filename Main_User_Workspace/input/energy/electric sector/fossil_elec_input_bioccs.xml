@@ -219,7 +219,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -588,7 +588,7 @@
                         <non-energy-penalty>0.0274</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -957,7 +957,7 @@
                         <non-energy-penalty>0.0199</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -1273,7 +1273,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                      <lifetime>45</lifetime>
                      <logitexp>-10</logitexp>
                      <phased-shutdown-decider>
@@ -1614,7 +1614,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -1983,7 +1983,7 @@
                         <non-energy-penalty>0.0274</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -2352,7 +2352,7 @@
                         <non-energy-penalty>0.0199</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -2668,7 +2668,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                      <lifetime>45</lifetime>
                      <logitexp>-10</logitexp>
                      <phased-shutdown-decider>
@@ -3009,7 +3009,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -3378,7 +3378,7 @@
                         <non-energy-penalty>0.0274</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -3747,7 +3747,7 @@
                         <non-energy-penalty>0.0199</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -4063,7 +4063,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                      <lifetime>45</lifetime>
                      <logitexp>-10</logitexp>
                      <phased-shutdown-decider>
@@ -4404,7 +4404,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -4773,7 +4773,7 @@
                         <non-energy-penalty>0.0274</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -5142,7 +5142,7 @@
                         <non-energy-penalty>0.0199</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -5458,7 +5458,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                      <lifetime>45</lifetime>
                      <logitexp>-10</logitexp>
                      <phased-shutdown-decider>
@@ -5799,7 +5799,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -6168,7 +6168,7 @@
                         <non-energy-penalty>0.0274</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -6537,7 +6537,7 @@
                         <non-energy-penalty>0.0199</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -6853,7 +6853,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                      <lifetime>45</lifetime>
                      <logitexp>-10</logitexp>
                      <phased-shutdown-decider>
@@ -7194,7 +7194,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -7563,7 +7563,7 @@
                         <non-energy-penalty>0.0274</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -7932,7 +7932,7 @@
                         <non-energy-penalty>0.0199</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -8248,7 +8248,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                      <lifetime>45</lifetime>
                      <logitexp>-10</logitexp>
                      <phased-shutdown-decider>
@@ -8589,7 +8589,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -8958,7 +8958,7 @@
                         <non-energy-penalty>0.0274</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -9327,7 +9327,7 @@
                         <non-energy-penalty>0.0199</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -9643,7 +9643,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                      <lifetime>45</lifetime>
                      <logitexp>-10</logitexp>
                      <phased-shutdown-decider>
@@ -9984,7 +9984,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -10353,7 +10353,7 @@
                         <non-energy-penalty>0.0274</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -10722,7 +10722,7 @@
                         <non-energy-penalty>0.0199</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -11038,7 +11038,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                      <lifetime>45</lifetime>
                      <logitexp>-10</logitexp>
                      <phased-shutdown-decider>
@@ -11379,7 +11379,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -11748,7 +11748,7 @@
                         <non-energy-penalty>0.0274</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -12117,7 +12117,7 @@
                         <non-energy-penalty>0.0199</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -12433,7 +12433,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                      <lifetime>45</lifetime>
                      <logitexp>-10</logitexp>
                      <phased-shutdown-decider>
@@ -12774,7 +12774,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -13143,7 +13143,7 @@
                         <non-energy-penalty>0.0274</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -13512,7 +13512,7 @@
                         <non-energy-penalty>0.0199</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -13828,7 +13828,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                      <lifetime>45</lifetime>
                      <logitexp>-10</logitexp>
                      <phased-shutdown-decider>
@@ -14169,7 +14169,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -14538,7 +14538,7 @@
                         <non-energy-penalty>0.0274</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -14907,7 +14907,7 @@
                         <non-energy-penalty>0.0199</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -15223,7 +15223,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                      <lifetime>45</lifetime>
                      <logitexp>-10</logitexp>
                      <phased-shutdown-decider>
@@ -15564,7 +15564,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -15933,7 +15933,7 @@
                         <non-energy-penalty>0.0274</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -16302,7 +16302,7 @@
                         <non-energy-penalty>0.0199</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -16618,7 +16618,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                      <lifetime>45</lifetime>
                      <logitexp>-10</logitexp>
                      <phased-shutdown-decider>
@@ -16959,7 +16959,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -17328,7 +17328,7 @@
                         <non-energy-penalty>0.0274</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -17697,7 +17697,7 @@
                         <non-energy-penalty>0.0199</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -18013,7 +18013,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                      <lifetime>45</lifetime>
                      <logitexp>-10</logitexp>
                      <phased-shutdown-decider>
@@ -18354,7 +18354,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -18723,7 +18723,7 @@
                         <non-energy-penalty>0.0274</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -19092,7 +19092,7 @@
                         <non-energy-penalty>0.0199</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -19408,7 +19408,7 @@
                         <non-energy-penalty>0.0100</non-energy-penalty>
                         <storage-market>carbon-storage</storage-market>
                      </power-plant-capture-component>
-                     <sharewt>1</sharewt>
+                     <sharewt>0.333</sharewt>
                      <lifetime>45</lifetime>
                      <logitexp>-10</logitexp>
                      <phased-shutdown-decider>
