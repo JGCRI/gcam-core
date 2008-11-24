@@ -337,30 +337,25 @@ void ASimpleCarbonCalc::calcBelowGroundCarbonEmission( const unsigned int aYear,
         return;
     }
  
-    if ( carbonDifference < 0.0 ){        // sequestration
-        calcSigmoidCurve(carbonDifference, aYear, aIsCurrentYear);
-    }
-    else {    // emission
-        // Set emissions from now until the end of the model.
-        const int startYear = CarbonModelUtils::getStartYear();
-        const int endYear = CarbonModelUtils::getEndYear();
-        for( int year = aYear; year <= endYear; ++year ){
-            // The exponential decay curve has been precomputed
-            double futureAnnualEmiss = carbonDifference * precalc_expdecay[ year-aYear+startYear ]; 
-            
-            // Only store annual emissions values if this is not a historical
-            // emissions calculation. Historical emissions calculations only occur
-            // once, unlike current emissions calculations which need to remove the
-            // effect of the previous iteration.
-            if( aIsCurrentYear ){
-                mCurrentEmissions[ year ] += futureAnnualEmiss;
-            }
-            
-            // Add to the total carbon emission for the year. This will be the sum
-            // of the effects of all carbon emissions for the previous years.
-            mTotalEmissions[ year ] += futureAnnualEmiss;
-        } // for
-    } // else
+    // Set emissions (or, if negative, uptake) from now until the end of the model.
+    const int endYear = CarbonModelUtils::getEndYear();
+    const double emissionRate = 100.0 / CarbonModelUtils::getSoilTimeScale() / 100.0;
+    for( int year = aYear; year <= endYear; ++year ){
+        double futureAnnualEmiss = carbonDifference * emissionRate;
+        carbonDifference -= futureAnnualEmiss;
+        // Only store annual emissions values if this is not a historical
+        // emissions calculation. Historical emissions calculations only occur
+        // once, unlike current emissions calculations which need to remove the
+        // effect of the previous iteration.
+        if( aIsCurrentYear ){
+            mCurrentEmissions[ year ] += futureAnnualEmiss;
+        }
+
+        // Add to the total carbon emission for the year. This will be the sum
+        // of the effects of all carbon emissions for the previous years.
+        mTotalEmissions[ year ] += futureAnnualEmiss;
+    } // for
+
 }
 
 
