@@ -132,6 +132,8 @@ void LandUseHistory::toInputXML( ostream& aOut,
     {
         XMLWriteElement( i->second, "allocation", aOut, aTabs, i->first );
     }
+    XMLWriteElementCheckDefault( mHistoricAboveGroundCarbonDensity, "above-ground-carbon-density", aOut, aTabs, 0.0 );
+    XMLWriteElementCheckDefault( mHistoricBelowGroundCarbonDensity, "below-ground-carbon-density", aOut, aTabs, 0.0 );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
