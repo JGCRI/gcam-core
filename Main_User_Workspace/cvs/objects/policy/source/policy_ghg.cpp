@@ -260,29 +260,22 @@ void GHGPolicy::completeInit( const string& aRegionName ) {
         }
     }
 
-    // Put the taxes in the market as the market prices if it is a fixed tax policy.
-    if( isFixedTax ){
-        // Set any taxes that are not unset.
-        for( unsigned int i = 0; i < mFixedTax.size(); ++i ){
-            // Make sure that the market is not solved. It could have been set
-            // to solve by an earlier run.
+    // Loop through each period
+    // If it is a fixed tax, set the tax level and set the market not to solve
+    // If it is a constraint, add the constraint to the market and set the 
+    // market to solve.
+    for( unsigned int i = 0; i < modeltime->getmaxper(); ++i ){
+        if( mFixedTax[ i ] != -1 ){
             marketplace->unsetMarketToSolve( mName, aRegionName, i );
-            if( mFixedTax[ i ] != -1 ){
-                marketplace->setPrice( mName, aRegionName, mFixedTax[ i ], i );
-            }
+            marketplace->setPrice( mName, aRegionName, mFixedTax[ i ], i );
         }
-    }       
-    // Otherwise solve the market, given the read-in constraint.
-    else {
-        for( int per = 1; per < modeltime->getmaxper(); ++per ){
-            if( mConstraint[ per ] != -1 ){
-                marketplace->setMarketToSolve( mName, aRegionName, per );
-                // Adding the difference between the constraint for this period
-                // and the current supply because addToSupply adds to the current
-                // supply.  Passing false to suppress a warning the first time through.
-                marketplace->addToSupply( mName, aRegionName, mConstraint[ per ] - 
-                    marketplace->getSupply( mName, aRegionName, per ), per, false );
-            }
+        else if( mConstraint[ i ] != -1 ){
+            marketplace->setMarketToSolve( mName, aRegionName, i );
+            // Adding the difference between the constraint for this period
+            // and the current supply because addToSupply adds to the current
+            // supply.  Passing false to suppress a warning the first time through.
+            marketplace->addToSupply( mName, aRegionName, mConstraint[ i ] - 
+                marketplace->getSupply( mName, aRegionName, i ), i, false );
         }
     }
 }
