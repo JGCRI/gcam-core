@@ -11,87 +11,87 @@
                <LandAllocatorNode name="AgroLand">
                   <sigma>0.8</sigma>
                   <UnmanagedLandLeaf name="OtherArableLand">
-                     <landAllocation year="1975">76632</landAllocation>
-                     <landAllocation year="1990">76436</landAllocation>
-                     <landAllocation year="2005">64052</landAllocation>
+                     <landAllocation year="1975">76694</landAllocation>
+                     <landAllocation year="1990">76509</landAllocation>
+                     <landAllocation year="2005">64119</landAllocation>
                      <intrinsicRate fillout="1" year="1975">34745</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">66</allocation>
                         <allocation year="1750">241</allocation>
                         <allocation year="1800">767</allocation>
                         <allocation year="1850">15432</allocation>
-                        <allocation year="1900">57750</allocation>
-                        <allocation year="1950">77265</allocation>
-                        <allocation year="1975">76632</allocation>
-                        <above-ground-carbon-density>0.004162978</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.016174391</below-ground-carbon-density>
+                        <allocation year="1900">57756</allocation>
+                        <allocation year="1950">77296</allocation>
+                        <allocation year="1975">76694</allocation>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
-                     <landAllocation year="1975">43321</landAllocation>
-                     <landAllocation year="1990">42752</landAllocation>
-                     <landAllocation year="2005">47703</landAllocation>
+                     <landAllocation year="1975">43357</landAllocation>
+                     <landAllocation year="1990">42793</landAllocation>
+                     <landAllocation year="2005">47753</landAllocation>
                      <intrinsicRate fillout="1" year="1975">34745</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">279064</allocation>
                         <allocation year="1750">277368</allocation>
                         <allocation year="1800">276133</allocation>
-                        <allocation year="1850">266548</allocation>
-                        <allocation year="1900">149530</allocation>
-                        <allocation year="1950">57371</allocation>
-                        <allocation year="1975">43321</allocation>
-                        <above-ground-carbon-density>0.02059</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.0572</below-ground-carbon-density>
+                        <allocation year="1850">266550</allocation>
+                        <allocation year="1900">149544</allocation>
+                        <allocation year="1950">57394</allocation>
+                        <allocation year="1975">43357</allocation>
+                        <above-ground-carbon-density>0.007127708</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.227118458</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
-                     <landAllocation year="1975">78200</landAllocation>
-                     <landAllocation year="1990">77983</landAllocation>
-                     <landAllocation year="2005">80029</landAllocation>
+                     <landAllocation year="1975">78264</landAllocation>
+                     <landAllocation year="1990">78058</landAllocation>
+                     <landAllocation year="2005">80112</landAllocation>
                      <intrinsicRate fillout="1" year="1975">34745</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">149437</allocation>
                         <allocation year="1750">147494</allocation>
                         <allocation year="1800">145101</allocation>
-                        <allocation year="1850">146448</allocation>
-                        <allocation year="1900">120625</allocation>
-                        <allocation year="1950">84656</allocation>
-                        <allocation year="1975">78200</allocation>
-                        <above-ground-carbon-density>0.027853622</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.079447352</below-ground-carbon-density>
+                        <allocation year="1850">146449</allocation>
+                        <allocation year="1900">120637</allocation>
+                        <allocation year="1950">84690</allocation>
+                        <allocation year="1975">78264</allocation>
+                        <above-ground-carbon-density>0.007164491</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.231637512</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="AllPasture">
                      <UnmanagedLandLeaf name="UnmanagedPasture">
                         <intrinsicRate fillout="1" year="1975">34745</intrinsicRate>
-                        <landAllocation year="1975">172723</landAllocation>
-                        <landAllocation year="1990">171128</landAllocation>
-                        <landAllocation year="2005">167705</landAllocation>
+                        <landAllocation year="1975">172922</landAllocation>
+                        <landAllocation year="1990">171348</landAllocation>
+                        <landAllocation year="2005">167940</landAllocation>
                         <land-use-history>
                            <allocation year="1700">1185</allocation>
-                           <allocation year="1750">2884</allocation>
-                           <allocation year="1800">8244</allocation>
-                           <allocation year="1850">22379</allocation>
-                           <allocation year="1900">95272</allocation>
-                           <allocation year="1950">161810</allocation>
-                           <allocation year="1975">172723</allocation>
-                           <above-ground-carbon-density>0.02059</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.0572</below-ground-carbon-density>
+                           <allocation year="1750">2885</allocation>
+                           <allocation year="1800">8246</allocation>
+                           <allocation year="1850">22387</allocation>
+                           <allocation year="1900">95313</allocation>
+                           <allocation year="1950">161929</allocation>
+                           <allocation year="1975">172922</allocation>
+                           <above-ground-carbon-density>0.00716283</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.231433431</below-ground-carbon-density>
                         </land-use-history>
                      </UnmanagedLandLeaf>
                      <sigma>0.19</sigma>
                      <LandAllocatorNode name="PastureLand">
                         <sigma>0.8</sigma>
                         <land-use-history>
-                           <allocation year="1700">414</allocation>
-                           <allocation year="1750">1007</allocation>
-                           <allocation year="1800">2878</allocation>
-                           <allocation year="1850">7814</allocation>
-                           <allocation year="1900">33266</allocation>
-                           <allocation year="1950">56499</allocation>
-                           <allocation year="1975">60309</allocation>
-                           <above-ground-carbon-density>0.02059</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.0572</below-ground-carbon-density>
+                           <allocation year="1700">413</allocation>
+                           <allocation year="1750">1006</allocation>
+                           <allocation year="1800">2876</allocation>
+                           <allocation year="1850">7807</allocation>
+                           <allocation year="1900">33237</allocation>
+                           <allocation year="1950">56467</allocation>
+                           <allocation year="1975">60301</allocation>
+                           <above-ground-carbon-density>0.00716283</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.231433431</below-ground-carbon-density>
                         </land-use-history>
                      </LandAllocatorNode>
                   </LandAllocatorNode>
@@ -105,42 +105,42 @@
                         <allocation year="1900">88381</allocation>
                         <allocation year="1950">116547</allocation>
                         <allocation year="1975">114225</allocation>
-                        <above-ground-carbon-density>0.004162978</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.016174391</below-ground-carbon-density>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
                <LandAllocatorNode name="AllForestLand">
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
-                     <landAllocation year="1975">163643</landAllocation>
-                     <landAllocation year="1990">144041</landAllocation>
-                     <landAllocation year="2005">138866</landAllocation>
+                     <landAllocation year="1975">177859</landAllocation>
+                     <landAllocation year="1990">160700</landAllocation>
+                     <landAllocation year="2005">161771</landAllocation>
                      <intrinsicRate fillout="1" year="1975">34745</intrinsicRate>
                      <land-use-history>
-                        <allocation year="1700">442546</allocation>
-                        <allocation year="1750">434550</allocation>
-                        <allocation year="1800">418515</allocation>
-                        <allocation year="1850">371682</allocation>
-                        <allocation year="1900">273798</allocation>
-                        <allocation year="1950">202425</allocation>
-                        <allocation year="1975">163643</allocation>
-                        <above-ground-carbon-density>0.207505572</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.181170716</below-ground-carbon-density>
+                        <allocation year="1700">442606</allocation>
+                        <allocation year="1750">434671</allocation>
+                        <allocation year="1800">418938</allocation>
+                        <allocation year="1850">373250</allocation>
+                        <allocation year="1900">278714</allocation>
+                        <allocation year="1950">212653</allocation>
+                        <allocation year="1975">177859</allocation>
+                        <above-ground-carbon-density>0.05932824</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.181887393</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="ForestLand">
                      <sigma>0.8</sigma>
                      <land-use-history>
-                        <allocation year="1700">635</allocation>
-                        <allocation year="1750">1271</allocation>
-                        <allocation year="1800">4447</allocation>
-                        <allocation year="1850">16519</allocation>
-                        <allocation year="1900">52099</allocation>
-                        <allocation year="1950">109280</allocation>
-                        <allocation year="1975">153041</allocation>
-                        <above-ground-carbon-density>0.207505572</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.181170716</below-ground-carbon-density>
+                        <allocation year="1700">575</allocation>
+                        <allocation year="1750">1150</allocation>
+                        <allocation year="1800">4024</allocation>
+                        <allocation year="1850">14947</allocation>
+                        <allocation year="1900">47139</allocation>
+                        <allocation year="1950">98877</allocation>
+                        <allocation year="1975">138473</allocation>
+                        <above-ground-carbon-density>0.05932824</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.181887393</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
@@ -160,8 +160,8 @@
                      <allocation year="1900">44636</allocation>
                      <allocation year="1950">44636</allocation>
                      <allocation year="1975">44636</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00632</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.127368421</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -180,8 +180,8 @@
                      <allocation year="1900">11524</allocation>
                      <allocation year="1950">11524</allocation>
                      <allocation year="1975">11524</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00176</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.041978022</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -219,7 +219,7 @@
                   <UnmanagedLandLeaf name="OtherArableLand">
                      <landAllocation year="1975">18434</landAllocation>
                      <landAllocation year="1990">19364</landAllocation>
-                     <landAllocation year="2005">18071</landAllocation>
+                     <landAllocation year="2005">18133</landAllocation>
                      <intrinsicRate fillout="1" year="1975">5255</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">0</allocation>
@@ -229,31 +229,31 @@
                         <allocation year="1900">15120</allocation>
                         <allocation year="1950">18987</allocation>
                         <allocation year="1975">18434</allocation>
-                        <above-ground-carbon-density>0.019733981</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.063478574</below-ground-carbon-density>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
                      <landAllocation year="1975">6360</landAllocation>
                      <landAllocation year="1990">2812</landAllocation>
-                     <landAllocation year="2005">2571</landAllocation>
+                     <landAllocation year="2005">2580</landAllocation>
                      <intrinsicRate fillout="1" year="1975">5255</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">44936</allocation>
                         <allocation year="1750">44928</allocation>
-                        <allocation year="1800">44843</allocation>
+                        <allocation year="1800">44844</allocation>
                         <allocation year="1850">43249</allocation>
                         <allocation year="1900">27634</allocation>
                         <allocation year="1950">11070</allocation>
                         <allocation year="1975">6360</allocation>
-                        <above-ground-carbon-density>0.08317</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.221</below-ground-carbon-density>
+                        <above-ground-carbon-density>0.006917426</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.201283766</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
                      <landAllocation year="1975">359</landAllocation>
                      <landAllocation year="1990">316</landAllocation>
-                     <landAllocation year="2005">315</landAllocation>
+                     <landAllocation year="2005">317</landAllocation>
                      <intrinsicRate fillout="1" year="1975">5255</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">571</allocation>
@@ -263,8 +263,8 @@
                         <allocation year="1900">515</allocation>
                         <allocation year="1950">410</allocation>
                         <allocation year="1975">359</allocation>
-                        <above-ground-carbon-density>0.01754</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.0519</below-ground-carbon-density>
+                        <above-ground-carbon-density>0.007164491</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.231637512</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="AllPasture">
@@ -272,7 +272,7 @@
                         <intrinsicRate fillout="1" year="1975">5255</intrinsicRate>
                         <landAllocation year="1975">17992</landAllocation>
                         <landAllocation year="1990">19377</landAllocation>
-                        <landAllocation year="2005">20115</landAllocation>
+                        <landAllocation year="2005">20216</landAllocation>
                         <land-use-history>
                            <allocation year="1700">3</allocation>
                            <allocation year="1750">6</allocation>
@@ -281,8 +281,8 @@
                            <allocation year="1900">3222</allocation>
                            <allocation year="1950">12250</allocation>
                            <allocation year="1975">17992</allocation>
-                           <above-ground-carbon-density>0.08317</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.221</below-ground-carbon-density>
+                           <above-ground-carbon-density>0.00683237</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.190834027</below-ground-carbon-density>
                         </land-use-history>
                      </UnmanagedLandLeaf>
                      <sigma>0.19</sigma>
@@ -296,8 +296,8 @@
                            <allocation year="1900">1415</allocation>
                            <allocation year="1950">5381</allocation>
                            <allocation year="1975">7903</allocation>
-                           <above-ground-carbon-density>0.08317</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.221</below-ground-carbon-density>
+                           <above-ground-carbon-density>0.00683237</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.190834027</below-ground-carbon-density>
                         </land-use-history>
                      </LandAllocatorNode>
                   </LandAllocatorNode>
@@ -311,42 +311,42 @@
                         <allocation year="1900">9870</allocation>
                         <allocation year="1950">24083</allocation>
                         <allocation year="1975">26484</allocation>
-                        <above-ground-carbon-density>0.019733981</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.063478574</below-ground-carbon-density>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
                <LandAllocatorNode name="AllForestLand">
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
-                     <landAllocation year="1975">481499</landAllocation>
-                     <landAllocation year="1990">467853</landAllocation>
-                     <landAllocation year="2005">459330</landAllocation>
+                     <landAllocation year="1975">510166</landAllocation>
+                     <landAllocation year="1990">501438</landAllocation>
+                     <landAllocation year="2005">496361</landAllocation>
                      <intrinsicRate fillout="1" year="1975">5255</intrinsicRate>
                      <land-use-history>
-                        <allocation year="1700">596583</allocation>
-                        <allocation year="1750">595110</allocation>
-                        <allocation year="1800">592251</allocation>
-                        <allocation year="1850">585246</allocation>
-                        <allocation year="1900">556414</allocation>
-                        <allocation year="1950">510765</allocation>
-                        <allocation year="1975">481499</allocation>
-                        <above-ground-carbon-density>0.20642669</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.164254234</below-ground-carbon-density>
+                        <allocation year="1700">596702</allocation>
+                        <allocation year="1750">595348</allocation>
+                        <allocation year="1800">593083</allocation>
+                        <allocation year="1850">588341</allocation>
+                        <allocation year="1900">566173</allocation>
+                        <allocation year="1950">531235</allocation>
+                        <allocation year="1975">510166</allocation>
+                        <above-ground-carbon-density>0.063149723</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.308021341</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="ForestLand">
                      <sigma>0.8</sigma>
                      <land-use-history>
-                        <allocation year="1700">339</allocation>
-                        <allocation year="1750">678</allocation>
-                        <allocation year="1800">2372</allocation>
-                        <allocation year="1850">8812</allocation>
-                        <allocation year="1900">27791</allocation>
-                        <allocation year="1950">58293</allocation>
-                        <allocation year="1975">81637</allocation>
-                        <above-ground-carbon-density>0.20642669</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.164254234</below-ground-carbon-density>
+                        <allocation year="1700">220</allocation>
+                        <allocation year="1750">440</allocation>
+                        <allocation year="1800">1539</allocation>
+                        <allocation year="1850">5718</allocation>
+                        <allocation year="1900">18032</allocation>
+                        <allocation year="1950">37824</allocation>
+                        <allocation year="1975">52970</allocation>
+                        <above-ground-carbon-density>0.063149723</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.308021341</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
@@ -366,8 +366,8 @@
                      <allocation year="1900">270306</allocation>
                      <allocation year="1950">270306</allocation>
                      <allocation year="1975">270306</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00632</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.127368421</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -386,8 +386,8 @@
                      <allocation year="1900">55809</allocation>
                      <allocation year="1950">55809</allocation>
                      <allocation year="1975">55809</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00176</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.041978022</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -423,9 +423,9 @@
                <LandAllocatorNode name="AgroLand">
                   <sigma>0.8</sigma>
                   <UnmanagedLandLeaf name="OtherArableLand">
-                     <landAllocation year="1975">11055</landAllocation>
-                     <landAllocation year="1990">12912</landAllocation>
-                     <landAllocation year="2005">16215</landAllocation>
+                     <landAllocation year="1975">11046</landAllocation>
+                     <landAllocation year="1990">12881</landAllocation>
+                     <landAllocation year="2005">16172</landAllocation>
                      <intrinsicRate fillout="1" year="1975">79718</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">18589</allocation>
@@ -434,15 +434,15 @@
                         <allocation year="1850">7837</allocation>
                         <allocation year="1900">8877</allocation>
                         <allocation year="1950">10472</allocation>
-                        <allocation year="1975">11055</allocation>
-                        <above-ground-carbon-density>0.008314301</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.025885061</below-ground-carbon-density>
+                        <allocation year="1975">11046</allocation>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
-                     <landAllocation year="1975">30550</landAllocation>
-                     <landAllocation year="1990">28731</landAllocation>
-                     <landAllocation year="2005">26301</landAllocation>
+                     <landAllocation year="1975">30523</landAllocation>
+                     <landAllocation year="1990">28662</landAllocation>
+                     <landAllocation year="2005">26231</landAllocation>
                      <intrinsicRate fillout="1" year="1975">79718</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">44610</allocation>
@@ -451,15 +451,15 @@
                         <allocation year="1850">41115</allocation>
                         <allocation year="1900">39257</allocation>
                         <allocation year="1950">35168</allocation>
-                        <allocation year="1975">30550</allocation>
-                        <above-ground-carbon-density>0.04295</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.106</below-ground-carbon-density>
+                        <allocation year="1975">30523</allocation>
+                        <above-ground-carbon-density>0.007150131</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.229873212</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
-                     <landAllocation year="1975">25664</landAllocation>
-                     <landAllocation year="1990">26266</landAllocation>
-                     <landAllocation year="2005">26292</landAllocation>
+                     <landAllocation year="1975">25641</landAllocation>
+                     <landAllocation year="1990">26202</landAllocation>
+                     <landAllocation year="2005">26222</landAllocation>
                      <intrinsicRate fillout="1" year="1975">79718</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">43703</allocation>
@@ -468,42 +468,42 @@
                         <allocation year="1850">34318</allocation>
                         <allocation year="1900">32131</allocation>
                         <allocation year="1950">26835</allocation>
-                        <allocation year="1975">25664</allocation>
-                        <above-ground-carbon-density>0.01716</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.0637</below-ground-carbon-density>
+                        <allocation year="1975">25641</allocation>
+                        <above-ground-carbon-density>0.007405581</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.234897788</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="AllPasture">
                      <UnmanagedLandLeaf name="UnmanagedPasture">
                         <intrinsicRate fillout="1" year="1975">79718</intrinsicRate>
-                        <landAllocation year="1975">6652</landAllocation>
-                        <landAllocation year="1990">6291</landAllocation>
-                        <landAllocation year="2005">6050</landAllocation>
+                        <landAllocation year="1975">9399</landAllocation>
+                        <landAllocation year="1990">8874</landAllocation>
+                        <landAllocation year="2005">6034</landAllocation>
                         <land-use-history>
-                           <allocation year="1700">5721</allocation>
-                           <allocation year="1750">5818</allocation>
-                           <allocation year="1800">6095</allocation>
-                           <allocation year="1850">6250</allocation>
-                           <allocation year="1900">6463</allocation>
-                           <allocation year="1950">6465</allocation>
-                           <allocation year="1975">6652</allocation>
-                           <above-ground-carbon-density>0.04295</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.106</below-ground-carbon-density>
+                           <allocation year="1700">8090</allocation>
+                           <allocation year="1750">8227</allocation>
+                           <allocation year="1800">8620</allocation>
+                           <allocation year="1850">8838</allocation>
+                           <allocation year="1900">9139</allocation>
+                           <allocation year="1950">9142</allocation>
+                           <allocation year="1975">9399</allocation>
+                           <above-ground-carbon-density>0.007152631</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.228694554</below-ground-carbon-density>
                         </land-use-history>
                      </UnmanagedLandLeaf>
                      <sigma>0.19</sigma>
                      <LandAllocatorNode name="PastureLand">
                         <sigma>0.8</sigma>
                         <land-use-history>
-                           <allocation year="1700">57210</allocation>
-                           <allocation year="1750">58179</allocation>
-                           <allocation year="1800">60954</allocation>
-                           <allocation year="1850">62502</allocation>
-                           <allocation year="1900">64628</allocation>
-                           <allocation year="1950">64648</allocation>
-                           <allocation year="1975">66521</allocation>
-                           <above-ground-carbon-density>0.04295</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.106</below-ground-carbon-density>
+                           <allocation year="1700">54841</allocation>
+                           <allocation year="1750">55770</allocation>
+                           <allocation year="1800">58430</allocation>
+                           <allocation year="1850">59913</allocation>
+                           <allocation year="1900">61952</allocation>
+                           <allocation year="1950">61970</allocation>
+                           <allocation year="1975">63710</allocation>
+                           <above-ground-carbon-density>0.007152631</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.228694554</below-ground-carbon-density>
                         </land-use-history>
                      </LandAllocatorNode>
                   </LandAllocatorNode>
@@ -517,42 +517,42 @@
                         <allocation year="1900">92184</allocation>
                         <allocation year="1950">103781</allocation>
                         <allocation year="1975">104880</allocation>
-                        <above-ground-carbon-density>0.008314301</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.025885061</below-ground-carbon-density>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
                <LandAllocatorNode name="AllForestLand">
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
-                     <landAllocation year="1975">75261</landAllocation>
-                     <landAllocation year="1990">76937</landAllocation>
-                     <landAllocation year="2005">75055</landAllocation>
+                     <landAllocation year="1975">65567</landAllocation>
+                     <landAllocation year="1990">67038</landAllocation>
+                     <landAllocation year="2005">66260</landAllocation>
                      <intrinsicRate fillout="1" year="1975">79718</intrinsicRate>
                      <land-use-history>
-                        <allocation year="1700">190669</allocation>
-                        <allocation year="1750">181137</allocation>
-                        <allocation year="1800">164699</allocation>
-                        <allocation year="1850">140941</allocation>
-                        <allocation year="1900">108481</allocation>
-                        <allocation year="1950">80418</allocation>
-                        <allocation year="1975">75261</allocation>
-                        <above-ground-carbon-density>0.176040582</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.109514899</below-ground-carbon-density>
+                        <allocation year="1700">188617</allocation>
+                        <allocation year="1750">178417</allocation>
+                        <allocation year="1800">161312</allocation>
+                        <allocation year="1850">136336</allocation>
+                        <allocation year="1900">101673</allocation>
+                        <allocation year="1950">71290</allocation>
+                        <allocation year="1975">65567</allocation>
+                        <above-ground-carbon-density>0.060576588</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.223091059</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="ForestLand">
                      <sigma>0.8</sigma>
                      <land-use-history>
-                        <allocation year="1700">19940</allocation>
-                        <allocation year="1750">26424</allocation>
-                        <allocation year="1800">32909</allocation>
-                        <allocation year="1850">44743</allocation>
-                        <allocation year="1900">66142</allocation>
-                        <allocation year="1950">88676</allocation>
-                        <allocation year="1975">95375</allocation>
-                        <above-ground-carbon-density>0.176040582</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.109514899</below-ground-carbon-density>
+                        <allocation year="1700">21992</allocation>
+                        <allocation year="1750">29144</allocation>
+                        <allocation year="1800">36296</allocation>
+                        <allocation year="1850">49348</allocation>
+                        <allocation year="1900">72950</allocation>
+                        <allocation year="1950">97803</allocation>
+                        <allocation year="1975">105192</allocation>
+                        <above-ground-carbon-density>0.060576588</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.223091059</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
@@ -572,8 +572,8 @@
                      <allocation year="1900">17767</allocation>
                      <allocation year="1950">17767</allocation>
                      <allocation year="1975">17767</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00632</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.127368421</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -592,8 +592,8 @@
                      <allocation year="1900">4139</allocation>
                      <allocation year="1950">4139</allocation>
                      <allocation year="1975">4139</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00176</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.041978022</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -629,54 +629,54 @@
                <LandAllocatorNode name="AgroLand">
                   <sigma>0.8</sigma>
                   <UnmanagedLandLeaf name="OtherArableLand">
-                     <landAllocation year="1975">296</landAllocation>
-                     <landAllocation year="1990">348</landAllocation>
-                     <landAllocation year="2005">850</landAllocation>
+                     <landAllocation year="1975">299</landAllocation>
+                     <landAllocation year="1990">353</landAllocation>
+                     <landAllocation year="2005">868</landAllocation>
                      <intrinsicRate fillout="1" year="1975">221314</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">75</allocation>
                         <allocation year="1750">80</allocation>
                         <allocation year="1800">78</allocation>
-                        <allocation year="1850">90</allocation>
+                        <allocation year="1850">91</allocation>
                         <allocation year="1900">127</allocation>
-                        <allocation year="1950">235</allocation>
-                        <allocation year="1975">296</allocation>
-                        <above-ground-carbon-density>0.007329422</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.024319375</below-ground-carbon-density>
+                        <allocation year="1950">236</allocation>
+                        <allocation year="1975">299</allocation>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
-                     <landAllocation year="1975">66</landAllocation>
-                     <landAllocation year="1990">265</landAllocation>
-                     <landAllocation year="2005">368</landAllocation>
+                     <landAllocation year="1975">67</landAllocation>
+                     <landAllocation year="1990">269</landAllocation>
+                     <landAllocation year="2005">376</landAllocation>
                      <intrinsicRate fillout="1" year="1975">221314</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">464</allocation>
                         <allocation year="1750">464</allocation>
-                        <allocation year="1800">436</allocation>
+                        <allocation year="1800">437</allocation>
                         <allocation year="1850">465</allocation>
-                        <allocation year="1900">193</allocation>
+                        <allocation year="1900">194</allocation>
                         <allocation year="1950">75</allocation>
-                        <allocation year="1975">66</allocation>
-                        <above-ground-carbon-density>0.03586</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.0885</below-ground-carbon-density>
+                        <allocation year="1975">67</allocation>
+                        <above-ground-carbon-density>0.007286899</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.184855922</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
-                     <landAllocation year="1975">3906</landAllocation>
-                     <landAllocation year="1990">3961</landAllocation>
-                     <landAllocation year="2005">4005</landAllocation>
+                     <landAllocation year="1975">3945</landAllocation>
+                     <landAllocation year="1990">4023</landAllocation>
+                     <landAllocation year="2005">4091</landAllocation>
                      <intrinsicRate fillout="1" year="1975">221314</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">5035</allocation>
-                        <allocation year="1750">5003</allocation>
-                        <allocation year="1800">5006</allocation>
-                        <allocation year="1850">4961</allocation>
-                        <allocation year="1900">4724</allocation>
-                        <allocation year="1950">4376</allocation>
-                        <allocation year="1975">3906</allocation>
-                        <above-ground-carbon-density>0.00628602</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.027796911</below-ground-carbon-density>
+                        <allocation year="1750">5008</allocation>
+                        <allocation year="1800">5011</allocation>
+                        <allocation year="1850">4966</allocation>
+                        <allocation year="1900">4730</allocation>
+                        <allocation year="1950">4386</allocation>
+                        <allocation year="1975">3945</allocation>
+                        <above-ground-carbon-density>0.0072</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.236</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="AllPasture">
@@ -684,7 +684,7 @@
                         <intrinsicRate fillout="1" year="1975">221314</intrinsicRate>
                         <landAllocation year="1975">5</landAllocation>
                         <landAllocation year="1990">31</landAllocation>
-                        <landAllocation year="2005">19</landAllocation>
+                        <landAllocation year="2005">20</landAllocation>
                         <land-use-history>
                            <allocation year="1700">4</allocation>
                            <allocation year="1750">4</allocation>
@@ -693,8 +693,8 @@
                            <allocation year="1900">2</allocation>
                            <allocation year="1950">1</allocation>
                            <allocation year="1975">5</allocation>
-                           <above-ground-carbon-density>0.03586</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.0885</below-ground-carbon-density>
+                           <above-ground-carbon-density>0.007163359</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.231498337</below-ground-carbon-density>
                         </land-use-history>
                      </UnmanagedLandLeaf>
                      <sigma>0.19</sigma>
@@ -708,8 +708,8 @@
                            <allocation year="1900">19</allocation>
                            <allocation year="1950">13</allocation>
                            <allocation year="1975">50</allocation>
-                           <above-ground-carbon-density>0.03586</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.0885</below-ground-carbon-density>
+                           <above-ground-carbon-density>0.007163359</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.231498337</below-ground-carbon-density>
                         </land-use-history>
                      </LandAllocatorNode>
                   </LandAllocatorNode>
@@ -723,42 +723,42 @@
                         <allocation year="1900">1813</allocation>
                         <allocation year="1950">3403</allocation>
                         <allocation year="1975">4751</allocation>
-                        <above-ground-carbon-density>0.007329422</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.024319375</below-ground-carbon-density>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
                <LandAllocatorNode name="AllForestLand">
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
-                     <landAllocation year="1975">20458</landAllocation>
-                     <landAllocation year="1990">18736</landAllocation>
-                     <landAllocation year="2005">17717</landAllocation>
+                     <landAllocation year="1975">21392</landAllocation>
+                     <landAllocation year="1990">19899</landAllocation>
+                     <landAllocation year="2005">19091</landAllocation>
                      <intrinsicRate fillout="1" year="1975">221314</intrinsicRate>
                      <land-use-history>
-                        <allocation year="1700">29685</allocation>
-                        <allocation year="1750">29276</allocation>
-                        <allocation year="1800">28868</allocation>
-                        <allocation year="1850">28306</allocation>
-                        <allocation year="1900">27412</allocation>
-                        <allocation year="1950">24829</allocation>
-                        <allocation year="1975">20458</allocation>
-                        <above-ground-carbon-density>0.153147288</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.054724946</below-ground-carbon-density>
+                        <allocation year="1700">29827</allocation>
+                        <allocation year="1750">29464</allocation>
+                        <allocation year="1800">29107</allocation>
+                        <allocation year="1850">28611</allocation>
+                        <allocation year="1900">27770</allocation>
+                        <allocation year="1950">25358</allocation>
+                        <allocation year="1975">21392</allocation>
+                        <above-ground-carbon-density>0.056823733</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.099222264</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="ForestLand">
                      <sigma>0.8</sigma>
                      <land-use-history>
-                        <allocation year="1700">904</allocation>
-                        <allocation year="1750">1230</allocation>
-                        <allocation year="1800">1556</allocation>
-                        <allocation year="1850">1983</allocation>
-                        <allocation year="1900">2321</allocation>
-                        <allocation year="1950">3436</allocation>
-                        <allocation year="1975">6227</allocation>
-                        <above-ground-carbon-density>0.153147288</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.054724946</below-ground-carbon-density>
+                        <allocation year="1700">762</allocation>
+                        <allocation year="1750">1037</allocation>
+                        <allocation year="1800">1312</allocation>
+                        <allocation year="1850">1671</allocation>
+                        <allocation year="1900">1957</allocation>
+                        <allocation year="1950">2897</allocation>
+                        <allocation year="1975">5249</allocation>
+                        <above-ground-carbon-density>0.056823733</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.099222264</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
@@ -778,8 +778,8 @@
                      <allocation year="1900">14</allocation>
                      <allocation year="1950">14</allocation>
                      <allocation year="1975">14</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00632</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.127368421</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -798,8 +798,8 @@
                      <allocation year="1900">0</allocation>
                      <allocation year="1950">0</allocation>
                      <allocation year="1975">0</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00176</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.041978022</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -847,8 +847,8 @@
                         <allocation year="1900">1509</allocation>
                         <allocation year="1950">19145</allocation>
                         <allocation year="1975">28735</allocation>
-                        <above-ground-carbon-density>0.009616576</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.039343582</below-ground-carbon-density>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
@@ -864,8 +864,8 @@
                         <allocation year="1900">261855</allocation>
                         <allocation year="1950">148266</allocation>
                         <allocation year="1975">118713</allocation>
-                        <above-ground-carbon-density>0.049791317</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.120093771</below-ground-carbon-density>
+                        <above-ground-carbon-density>0.016805921</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.182607335</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
@@ -881,8 +881,8 @@
                         <allocation year="1900">350623</allocation>
                         <allocation year="1950">188501</allocation>
                         <allocation year="1975">152014</allocation>
-                        <above-ground-carbon-density>0.013568063</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.039002462</below-ground-carbon-density>
+                        <above-ground-carbon-density>0.012841533</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.205753228</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="AllPasture">
@@ -899,8 +899,8 @@
                            <allocation year="1900">119471</allocation>
                            <allocation year="1950">341619</allocation>
                            <allocation year="1975">382952</allocation>
-                           <above-ground-carbon-density>0.049791317</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.120093771</below-ground-carbon-density>
+                           <above-ground-carbon-density>0.011829003</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.209950771</below-ground-carbon-density>
                         </land-use-history>
                      </UnmanagedLandLeaf>
                      <sigma>0.19</sigma>
@@ -914,8 +914,8 @@
                            <allocation year="1900">22073</allocation>
                            <allocation year="1950">63116</allocation>
                            <allocation year="1975">70752</allocation>
-                           <above-ground-carbon-density>0.049791317</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.120093771</below-ground-carbon-density>
+                           <above-ground-carbon-density>0.011829003</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.209950771</below-ground-carbon-density>
                         </land-use-history>
                      </LandAllocatorNode>
                   </LandAllocatorNode>
@@ -929,42 +929,42 @@
                         <allocation year="1900">3379</allocation>
                         <allocation year="1950">6358</allocation>
                         <allocation year="1975">16372</allocation>
-                        <above-ground-carbon-density>0.009616576</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.039343582</below-ground-carbon-density>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
                <LandAllocatorNode name="AllForestLand">
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
-                     <landAllocation year="1975">8389</landAllocation>
-                     <landAllocation year="1990">4574</landAllocation>
-                     <landAllocation year="2005">2299</landAllocation>
+                     <landAllocation year="1975">11827</landAllocation>
+                     <landAllocation year="1990">8837</landAllocation>
+                     <landAllocation year="2005">8267</landAllocation>
                      <intrinsicRate fillout="1" year="1975">6097</intrinsicRate>
                      <land-use-history>
-                        <allocation year="1700">37866</allocation>
-                        <allocation year="1750">37864</allocation>
-                        <allocation year="1800">37860</allocation>
-                        <allocation year="1850">37472</allocation>
-                        <allocation year="1900">31298</allocation>
-                        <allocation year="1950">17720</allocation>
-                        <allocation year="1975">8389</allocation>
-                        <above-ground-carbon-density>0.206814196</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.073765358</below-ground-carbon-density>
+                        <allocation year="1700">38183</allocation>
+                        <allocation year="1750">38181</allocation>
+                        <allocation year="1800">38177</allocation>
+                        <allocation year="1850">37790</allocation>
+                        <allocation year="1900">32250</allocation>
+                        <allocation year="1950">19782</allocation>
+                        <allocation year="1975">11827</allocation>
+                        <above-ground-carbon-density>0.060671383</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.103447772</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="ForestLand">
                      <sigma>0.8</sigma>
                      <land-use-history>
-                        <allocation year="1700">1499</allocation>
-                        <allocation year="1750">1499</allocation>
-                        <allocation year="1800">1499</allocation>
-                        <allocation year="1850">1499</allocation>
-                        <allocation year="1900">4498</allocation>
-                        <allocation year="1950">9745</allocation>
-                        <allocation year="1975">16246</allocation>
-                        <above-ground-carbon-density>0.206814196</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.073765358</below-ground-carbon-density>
+                        <allocation year="1700">1182</allocation>
+                        <allocation year="1750">1182</allocation>
+                        <allocation year="1800">1182</allocation>
+                        <allocation year="1850">1182</allocation>
+                        <allocation year="1900">3546</allocation>
+                        <allocation year="1950">7683</allocation>
+                        <allocation year="1975">12809</allocation>
+                        <above-ground-carbon-density>0.060671383</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.103447772</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
@@ -984,8 +984,8 @@
                      <allocation year="1900">106</allocation>
                      <allocation year="1950">106</allocation>
                      <allocation year="1975">106</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00632</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.127368421</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -1004,8 +1004,8 @@
                      <allocation year="1900">2025</allocation>
                      <allocation year="1950">2025</allocation>
                      <allocation year="1975">2025</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00176</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.041978022</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -1041,72 +1041,72 @@
                <LandAllocatorNode name="AgroLand">
                   <sigma>0.8</sigma>
                   <UnmanagedLandLeaf name="OtherArableLand">
-                     <landAllocation year="1975">81744</landAllocation>
-                     <landAllocation year="1990">80896</landAllocation>
-                     <landAllocation year="2005">106862</landAllocation>
+                     <landAllocation year="1975">81747</landAllocation>
+                     <landAllocation year="1990">80900</landAllocation>
+                     <landAllocation year="2005">106865</landAllocation>
                      <intrinsicRate fillout="1" year="1975">5940</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">11685</allocation>
                         <allocation year="1750">11665</allocation>
                         <allocation year="1800">10214</allocation>
                         <allocation year="1850">18102</allocation>
-                        <allocation year="1900">49403</allocation>
-                        <allocation year="1950">74205</allocation>
-                        <allocation year="1975">81744</allocation>
-                        <above-ground-carbon-density>0.012740461</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.050174407</below-ground-carbon-density>
+                        <allocation year="1900">49404</allocation>
+                        <allocation year="1950">74208</allocation>
+                        <allocation year="1975">81747</allocation>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
-                     <landAllocation year="1975">168013</landAllocation>
-                     <landAllocation year="1990">167523</landAllocation>
-                     <landAllocation year="2005">165380</landAllocation>
+                     <landAllocation year="1975">168020</landAllocation>
+                     <landAllocation year="1990">167530</landAllocation>
+                     <landAllocation year="2005">165384</landAllocation>
                      <intrinsicRate fillout="1" year="1975">5940</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">467350</allocation>
                         <allocation year="1750">456943</allocation>
-                        <allocation year="1800">446883</allocation>
-                        <allocation year="1850">429435</allocation>
-                        <allocation year="1900">370996</allocation>
-                        <allocation year="1950">263858</allocation>
-                        <allocation year="1975">168013</allocation>
-                        <above-ground-carbon-density>0.056587711</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.163346736</below-ground-carbon-density>
+                        <allocation year="1800">446886</allocation>
+                        <allocation year="1850">429440</allocation>
+                        <allocation year="1900">371006</allocation>
+                        <allocation year="1950">263868</allocation>
+                        <allocation year="1975">168020</allocation>
+                        <above-ground-carbon-density>0.006566705</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.158195212</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
-                     <landAllocation year="1975">24149</landAllocation>
-                     <landAllocation year="1990">24140</landAllocation>
-                     <landAllocation year="2005">28800</landAllocation>
+                     <landAllocation year="1975">24150</landAllocation>
+                     <landAllocation year="1990">24141</landAllocation>
+                     <landAllocation year="2005">28801</landAllocation>
                      <intrinsicRate fillout="1" year="1975">5940</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">120721</allocation>
                         <allocation year="1750">117203</allocation>
-                        <allocation year="1800">112319</allocation>
-                        <allocation year="1850">105450</allocation>
-                        <allocation year="1900">89273</allocation>
-                        <allocation year="1950">58753</allocation>
-                        <allocation year="1975">24149</allocation>
-                        <above-ground-carbon-density>0.024631544</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.071914391</below-ground-carbon-density>
+                        <allocation year="1800">112320</allocation>
+                        <allocation year="1850">105451</allocation>
+                        <allocation year="1900">89275</allocation>
+                        <allocation year="1950">58756</allocation>
+                        <allocation year="1975">24150</allocation>
+                        <above-ground-carbon-density>0.007162143</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.231349034</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="AllPasture">
                      <UnmanagedLandLeaf name="UnmanagedPasture">
                         <intrinsicRate fillout="1" year="1975">5940</intrinsicRate>
-                        <landAllocation year="1975">307310</landAllocation>
-                        <landAllocation year="1990">306391</landAllocation>
-                        <landAllocation year="2005">315617</landAllocation>
+                        <landAllocation year="1975">307325</landAllocation>
+                        <landAllocation year="1990">306406</landAllocation>
+                        <landAllocation year="2005">315627</landAllocation>
                         <land-use-history>
-                           <allocation year="1700">28592</allocation>
+                           <allocation year="1700">28593</allocation>
                            <allocation year="1750">36230</allocation>
                            <allocation year="1800">46133</allocation>
-                           <allocation year="1850">62164</allocation>
-                           <allocation year="1900">115460</allocation>
-                           <allocation year="1950">213726</allocation>
-                           <allocation year="1975">307310</allocation>
-                           <above-ground-carbon-density>0.056587711</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.163346736</below-ground-carbon-density>
+                           <allocation year="1850">62165</allocation>
+                           <allocation year="1900">115464</allocation>
+                           <allocation year="1950">213735</allocation>
+                           <allocation year="1975">307325</allocation>
+                           <above-ground-carbon-density>0.006901733</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.199355756</below-ground-carbon-density>
                         </land-use-history>
                      </UnmanagedLandLeaf>
                      <sigma>0.19</sigma>
@@ -1114,14 +1114,14 @@
                         <sigma>0.8</sigma>
                         <land-use-history>
                            <allocation year="1700">4036</allocation>
-                           <allocation year="1750">5115</allocation>
+                           <allocation year="1750">5114</allocation>
                            <allocation year="1800">6513</allocation>
                            <allocation year="1850">8776</allocation>
                            <allocation year="1900">16300</allocation>
                            <allocation year="1950">30172</allocation>
                            <allocation year="1975">43384</allocation>
-                           <above-ground-carbon-density>0.056587711</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.163346736</below-ground-carbon-density>
+                           <above-ground-carbon-density>0.006901733</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.199355756</below-ground-carbon-density>
                         </land-use-history>
                      </LandAllocatorNode>
                   </LandAllocatorNode>
@@ -1135,42 +1135,42 @@
                         <allocation year="1900">87756</allocation>
                         <allocation year="1950">114908</allocation>
                         <allocation year="1975">152024</allocation>
-                        <above-ground-carbon-density>0.012740461</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.050174407</below-ground-carbon-density>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
                <LandAllocatorNode name="AllForestLand">
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
-                     <landAllocation year="1975">905238</landAllocation>
-                     <landAllocation year="1990">907701</landAllocation>
-                     <landAllocation year="2005">900866</landAllocation>
+                     <landAllocation year="1975">908583</landAllocation>
+                     <landAllocation year="1990">911189</landAllocation>
+                     <landAllocation year="2005">903524</landAllocation>
                      <intrinsicRate fillout="1" year="1975">5940</intrinsicRate>
                      <land-use-history>
-                        <allocation year="1700">1077134</allocation>
-                        <allocation year="1750">1064228</allocation>
-                        <allocation year="1800">1051197</allocation>
-                        <allocation year="1850">1027646</allocation>
-                        <allocation year="1900">972089</allocation>
-                        <allocation year="1950">930688</allocation>
-                        <allocation year="1975">905238</allocation>
-                        <above-ground-carbon-density>0.218504394</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.166093236</below-ground-carbon-density>
+                        <allocation year="1700">1077839</allocation>
+                        <allocation year="1750">1065162</allocation>
+                        <allocation year="1800">1052356</allocation>
+                        <allocation year="1850">1029219</allocation>
+                        <allocation year="1900">974411</allocation>
+                        <allocation year="1950">933798</allocation>
+                        <allocation year="1975">908583</allocation>
+                        <above-ground-carbon-density>0.063441731</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.317659541</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="ForestLand">
                      <sigma>0.8</sigma>
                      <land-use-history>
-                        <allocation year="1700">11655</allocation>
-                        <allocation year="1750">15446</allocation>
-                        <allocation year="1800">19236</allocation>
-                        <allocation year="1850">26153</allocation>
-                        <allocation year="1900">38661</allocation>
-                        <allocation year="1950">51832</allocation>
-                        <allocation year="1975">55748</allocation>
-                        <above-ground-carbon-density>0.218504394</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.166093236</below-ground-carbon-density>
+                        <allocation year="1700">10950</allocation>
+                        <allocation year="1750">14511</allocation>
+                        <allocation year="1800">18072</allocation>
+                        <allocation year="1850">24571</allocation>
+                        <allocation year="1900">36322</allocation>
+                        <allocation year="1950">48697</allocation>
+                        <allocation year="1975">52376</allocation>
+                        <above-ground-carbon-density>0.063441731</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.317659541</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
@@ -1190,8 +1190,8 @@
                      <allocation year="1900">394604</allocation>
                      <allocation year="1950">394604</allocation>
                      <allocation year="1975">394604</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00632</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.127368421</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -1210,8 +1210,8 @@
                      <allocation year="1900">59545</allocation>
                      <allocation year="1950">59545</allocation>
                      <allocation year="1975">59545</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00176</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.041978022</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -1247,7 +1247,7 @@
                <LandAllocatorNode name="AgroLand">
                   <sigma>0.8</sigma>
                   <UnmanagedLandLeaf name="OtherArableLand">
-                     <landAllocation year="1975">11393</landAllocation>
+                     <landAllocation year="1975">11394</landAllocation>
                      <landAllocation year="1990">15870</landAllocation>
                      <landAllocation year="2005">15285</landAllocation>
                      <intrinsicRate fillout="1" year="1975">18539</intrinsicRate>
@@ -1258,76 +1258,76 @@
                         <allocation year="1850">7870</allocation>
                         <allocation year="1900">8143</allocation>
                         <allocation year="1950">11101</allocation>
-                        <allocation year="1975">11393</allocation>
-                        <above-ground-carbon-density>0.007719775</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.024638832</below-ground-carbon-density>
+                        <allocation year="1975">11394</allocation>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
-                     <landAllocation year="1975">108386</landAllocation>
+                     <landAllocation year="1975">108396</landAllocation>
                      <landAllocation year="1990">87401</landAllocation>
                      <landAllocation year="2005">64911</landAllocation>
                      <intrinsicRate fillout="1" year="1975">18539</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">240294</allocation>
                         <allocation year="1750">223919</allocation>
-                        <allocation year="1800">209423</allocation>
-                        <allocation year="1850">194021</allocation>
-                        <allocation year="1900">176922</allocation>
-                        <allocation year="1950">152313</allocation>
-                        <allocation year="1975">108386</allocation>
-                        <above-ground-carbon-density>0.03816</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.108</below-ground-carbon-density>
+                        <allocation year="1800">209424</allocation>
+                        <allocation year="1850">194023</allocation>
+                        <allocation year="1900">176925</allocation>
+                        <allocation year="1950">152318</allocation>
+                        <allocation year="1975">108396</allocation>
+                        <above-ground-carbon-density>0.007286899</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.184855922</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
-                     <landAllocation year="1975">51595</landAllocation>
+                     <landAllocation year="1975">51600</landAllocation>
                      <landAllocation year="1990">44793</landAllocation>
                      <landAllocation year="2005">30617</landAllocation>
                      <intrinsicRate fillout="1" year="1975">18539</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">129710</allocation>
                         <allocation year="1750">118621</allocation>
-                        <allocation year="1800">109122</allocation>
-                        <allocation year="1850">98867</allocation>
-                        <allocation year="1900">86758</allocation>
-                        <allocation year="1950">74105</allocation>
-                        <allocation year="1975">51595</allocation>
-                        <above-ground-carbon-density>0.0391</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.113784122</below-ground-carbon-density>
+                        <allocation year="1800">109123</allocation>
+                        <allocation year="1850">98868</allocation>
+                        <allocation year="1900">86759</allocation>
+                        <allocation year="1950">74107</allocation>
+                        <allocation year="1975">51600</allocation>
+                        <above-ground-carbon-density>0.007055053</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.21819227</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="AllPasture">
                      <UnmanagedLandLeaf name="UnmanagedPasture">
                         <intrinsicRate fillout="1" year="1975">18539</intrinsicRate>
-                        <landAllocation year="1975">185960</landAllocation>
-                        <landAllocation year="1990">233412</landAllocation>
+                        <landAllocation year="1975">175310</landAllocation>
+                        <landAllocation year="1990">220024</landAllocation>
                         <landAllocation year="2005">267511</landAllocation>
                         <land-use-history>
-                           <allocation year="1700">29214</allocation>
-                           <allocation year="1750">47369</allocation>
-                           <allocation year="1800">61083</allocation>
-                           <allocation year="1850">75638</allocation>
-                           <allocation year="1900">89552</allocation>
-                           <allocation year="1950">115532</allocation>
-                           <allocation year="1975">185960</allocation>
-                           <above-ground-carbon-density>0.03816</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.108</below-ground-carbon-density>
+                           <allocation year="1700">27538</allocation>
+                           <allocation year="1750">44653</allocation>
+                           <allocation year="1800">57580</allocation>
+                           <allocation year="1850">71300</allocation>
+                           <allocation year="1900">84417</allocation>
+                           <allocation year="1950">108909</allocation>
+                           <allocation year="1975">175310</allocation>
+                           <above-ground-carbon-density>0.007112141</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.189064421</below-ground-carbon-density>
                         </land-use-history>
                      </UnmanagedLandLeaf>
                      <sigma>0.19</sigma>
                      <LandAllocatorNode name="PastureLand">
                         <sigma>0.8</sigma>
                         <land-use-history>
-                           <allocation year="1700">9272</allocation>
-                           <allocation year="1750">15034</allocation>
-                           <allocation year="1800">19386</allocation>
-                           <allocation year="1850">24005</allocation>
-                           <allocation year="1900">28422</allocation>
-                           <allocation year="1950">36667</allocation>
-                           <allocation year="1975">59019</allocation>
-                           <above-ground-carbon-density>0.03816</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.108</below-ground-carbon-density>
+                           <allocation year="1700">10947</allocation>
+                           <allocation year="1750">17751</allocation>
+                           <allocation year="1800">22890</allocation>
+                           <allocation year="1850">28344</allocation>
+                           <allocation year="1900">33558</allocation>
+                           <allocation year="1950">43295</allocation>
+                           <allocation year="1975">69691</allocation>
+                           <above-ground-carbon-density>0.007112141</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.189064421</below-ground-carbon-density>
                         </land-use-history>
                      </LandAllocatorNode>
                   </LandAllocatorNode>
@@ -1341,42 +1341,42 @@
                         <allocation year="1900">143104</allocation>
                         <allocation year="1950">173984</allocation>
                         <allocation year="1975">166011</allocation>
-                        <above-ground-carbon-density>0.007719775</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.024638832</below-ground-carbon-density>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
                <LandAllocatorNode name="AllForestLand">
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
-                     <landAllocation year="1975">201663</landAllocation>
-                     <landAllocation year="1990">154400</landAllocation>
-                     <landAllocation year="2005">132898</landAllocation>
+                     <landAllocation year="1975">212155</landAllocation>
+                     <landAllocation year="1990">167764</landAllocation>
+                     <landAllocation year="2005">150263</landAllocation>
                      <intrinsicRate fillout="1" year="1975">18539</intrinsicRate>
                      <land-use-history>
-                        <allocation year="1700">356816</allocation>
-                        <allocation year="1750">335157</allocation>
-                        <allocation year="1800">314464</allocation>
-                        <allocation year="1850">293525</allocation>
-                        <allocation year="1900">277797</allocation>
-                        <allocation year="1950">239381</allocation>
-                        <allocation year="1975">201663</allocation>
-                        <above-ground-carbon-density>0.187520793</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.06320773</below-ground-carbon-density>
+                        <allocation year="1700">358346</allocation>
+                        <allocation year="1750">337237</allocation>
+                        <allocation year="1800">317094</allocation>
+                        <allocation year="1850">296874</allocation>
+                        <allocation year="1900">281717</allocation>
+                        <allocation year="1950">245181</allocation>
+                        <allocation year="1975">212155</allocation>
+                        <above-ground-carbon-density>0.063862691</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.12417758</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="ForestLand">
                      <sigma>0.8</sigma>
                      <land-use-history>
-                        <allocation year="1700">5931</allocation>
-                        <allocation year="1750">8068</allocation>
-                        <allocation year="1800">10206</allocation>
-                        <allocation year="1850">13003</allocation>
-                        <allocation year="1900">15221</allocation>
-                        <allocation year="1950">22534</allocation>
-                        <allocation year="1975">40836</allocation>
-                        <above-ground-carbon-density>0.187520793</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.06320773</below-ground-carbon-density>
+                        <allocation year="1700">4401</allocation>
+                        <allocation year="1750">5988</allocation>
+                        <allocation year="1800">7574</allocation>
+                        <allocation year="1850">9649</allocation>
+                        <allocation year="1900">11295</allocation>
+                        <allocation year="1950">16722</allocation>
+                        <allocation year="1975">30305</allocation>
+                        <above-ground-carbon-density>0.063862691</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.12417758</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
@@ -1396,8 +1396,8 @@
                      <allocation year="1900">174833</allocation>
                      <allocation year="1950">174833</allocation>
                      <allocation year="1975">174833</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00632</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.127368421</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -1416,8 +1416,8 @@
                      <allocation year="1900">158482</allocation>
                      <allocation year="1950">158482</allocation>
                      <allocation year="1975">158482</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00176</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.041978022</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -1465,8 +1465,8 @@
                         <allocation year="1900">1154</allocation>
                         <allocation year="1950">1732</allocation>
                         <allocation year="1975">2646</allocation>
-                        <above-ground-carbon-density>0.004902118</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.01745943</below-ground-carbon-density>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
@@ -1482,8 +1482,8 @@
                         <allocation year="1900">26201</allocation>
                         <allocation year="1950">20729</allocation>
                         <allocation year="1975">13947</allocation>
-                        <above-ground-carbon-density>0.031002043</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.070900932</below-ground-carbon-density>
+                        <above-ground-carbon-density>0.00747857</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.234506464</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
@@ -1497,43 +1497,43 @@
                         <allocation year="1800">152048</allocation>
                         <allocation year="1850">141420</allocation>
                         <allocation year="1900">119970</allocation>
-                        <allocation year="1950">83929</allocation>
+                        <allocation year="1950">83930</allocation>
                         <allocation year="1975">65711</allocation>
-                        <above-ground-carbon-density>0.012601485</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.035495745</below-ground-carbon-density>
+                        <above-ground-carbon-density>0.012964801</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.205092333</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="AllPasture">
                      <UnmanagedLandLeaf name="UnmanagedPasture">
                         <intrinsicRate fillout="1" year="1975">19821</intrinsicRate>
-                        <landAllocation year="1975">101075</landAllocation>
-                        <landAllocation year="1990">105284</landAllocation>
+                        <landAllocation year="1975">102184</landAllocation>
+                        <landAllocation year="1990">106439</landAllocation>
                         <landAllocation year="2005">110481</landAllocation>
                         <land-use-history>
-                           <allocation year="1700">15438</allocation>
-                           <allocation year="1750">18060</allocation>
-                           <allocation year="1800">23803</allocation>
-                           <allocation year="1850">33825</allocation>
-                           <allocation year="1900">53816</allocation>
-                           <allocation year="1950">83734</allocation>
-                           <allocation year="1975">101075</allocation>
-                           <above-ground-carbon-density>0.02532869</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.058161677</below-ground-carbon-density>
+                           <allocation year="1700">15607</allocation>
+                           <allocation year="1750">18258</allocation>
+                           <allocation year="1800">24064</allocation>
+                           <allocation year="1850">34196</allocation>
+                           <allocation year="1900">54407</allocation>
+                           <allocation year="1950">84652</allocation>
+                           <allocation year="1975">102184</allocation>
+                           <above-ground-carbon-density>0.011768183</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.211507936</below-ground-carbon-density>
                         </land-use-history>
                      </UnmanagedLandLeaf>
                      <sigma>0.19</sigma>
                      <LandAllocatorNode name="PastureLand">
                         <sigma>0.8</sigma>
                         <land-use-history>
-                           <allocation year="1700">1355</allocation>
-                           <allocation year="1750">1585</allocation>
-                           <allocation year="1800">2089</allocation>
-                           <allocation year="1850">2969</allocation>
-                           <allocation year="1900">4724</allocation>
-                           <allocation year="1950">7349</allocation>
-                           <allocation year="1975">8872</allocation>
-                           <above-ground-carbon-density>0.02532869</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.058161677</below-ground-carbon-density>
+                           <allocation year="1700">1186</allocation>
+                           <allocation year="1750">1387</allocation>
+                           <allocation year="1800">1828</allocation>
+                           <allocation year="1850">2598</allocation>
+                           <allocation year="1900">4133</allocation>
+                           <allocation year="1950">6431</allocation>
+                           <allocation year="1975">7763</allocation>
+                           <above-ground-carbon-density>0.011768183</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.211507936</below-ground-carbon-density>
                         </land-use-history>
                      </LandAllocatorNode>
                   </LandAllocatorNode>
@@ -1547,42 +1547,42 @@
                         <allocation year="1900">11489</allocation>
                         <allocation year="1950">20246</allocation>
                         <allocation year="1975">25489</allocation>
-                        <above-ground-carbon-density>0.004902118</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.01745943</below-ground-carbon-density>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
                <LandAllocatorNode name="AllForestLand">
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
-                     <landAllocation year="1975">1026</landAllocation>
-                     <landAllocation year="1990">380</landAllocation>
-                     <landAllocation year="2005">-281</landAllocation>
+                     <landAllocation year="1975">1221</landAllocation>
+                     <landAllocation year="1990">629</landAllocation>
+                     <landAllocation year="2005">-21</landAllocation>
                      <intrinsicRate fillout="1" year="1975">19821</intrinsicRate>
                      <land-use-history>
-                        <allocation year="1700">3697</allocation>
-                        <allocation year="1750">3622</allocation>
-                        <allocation year="1800">3541</allocation>
-                        <allocation year="1850">3374</allocation>
-                        <allocation year="1900">3031</allocation>
-                        <allocation year="1950">2206</allocation>
-                        <allocation year="1975">1026</allocation>
-                        <above-ground-carbon-density>0.324533657</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.166303236</below-ground-carbon-density>
+                        <allocation year="1700">3726</allocation>
+                        <allocation year="1750">3660</allocation>
+                        <allocation year="1800">3590</allocation>
+                        <allocation year="1850">3436</allocation>
+                        <allocation year="1900">3104</allocation>
+                        <allocation year="1950">2314</allocation>
+                        <allocation year="1975">1221</allocation>
+                        <above-ground-carbon-density>0.056730769</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.096153846</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="ForestLand">
                      <sigma>0.8</sigma>
                      <land-use-history>
-                        <allocation year="1700">115</allocation>
-                        <allocation year="1750">157</allocation>
-                        <allocation year="1800">198</allocation>
-                        <allocation year="1850">253</allocation>
-                        <allocation year="1900">296</allocation>
-                        <allocation year="1950">438</allocation>
-                        <allocation year="1975">794</allocation>
-                        <above-ground-carbon-density>0.324533657</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.166303236</below-ground-carbon-density>
+                        <allocation year="1700">87</allocation>
+                        <allocation year="1750">118</allocation>
+                        <allocation year="1800">149</allocation>
+                        <allocation year="1850">190</allocation>
+                        <allocation year="1900">223</allocation>
+                        <allocation year="1950">330</allocation>
+                        <allocation year="1975">598</allocation>
+                        <above-ground-carbon-density>0.056730769</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.096153846</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
@@ -1602,8 +1602,8 @@
                      <allocation year="1900">16</allocation>
                      <allocation year="1950">16</allocation>
                      <allocation year="1975">16</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00632</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.127368421</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -1622,8 +1622,8 @@
                      <allocation year="1900">293860</allocation>
                      <allocation year="1950">293860</allocation>
                      <allocation year="1975">293860</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00176</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.041978022</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -1659,8 +1659,8 @@
                <LandAllocatorNode name="AgroLand">
                   <sigma>0.8</sigma>
                   <UnmanagedLandLeaf name="OtherArableLand">
-                     <landAllocation year="1975">14408</landAllocation>
-                     <landAllocation year="1990">17027</landAllocation>
+                     <landAllocation year="1975">14407</landAllocation>
+                     <landAllocation year="1990">17026</landAllocation>
                      <landAllocation year="2005">20162</landAllocation>
                      <intrinsicRate fillout="1" year="1975">5682</intrinsicRate>
                      <land-use-history>
@@ -1670,76 +1670,76 @@
                         <allocation year="1850">3800</allocation>
                         <allocation year="1900">5142</allocation>
                         <allocation year="1950">9490</allocation>
-                        <allocation year="1975">14408</allocation>
-                        <above-ground-carbon-density>0.006646088</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.020523672</below-ground-carbon-density>
+                        <allocation year="1975">14407</allocation>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
-                     <landAllocation year="1975">622940</landAllocation>
-                     <landAllocation year="1990">538961</landAllocation>
-                     <landAllocation year="2005">428227</landAllocation>
+                     <landAllocation year="1975">622925</landAllocation>
+                     <landAllocation year="1990">538943</landAllocation>
+                     <landAllocation year="2005">428212</landAllocation>
                      <intrinsicRate fillout="1" year="1975">5682</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">1048322</allocation>
-                        <allocation year="1750">1034796</allocation>
-                        <allocation year="1800">1024183</allocation>
-                        <allocation year="1850">977677</allocation>
-                        <allocation year="1900">936761</allocation>
-                        <allocation year="1950">785828</allocation>
-                        <allocation year="1975">622940</allocation>
-                        <above-ground-carbon-density>0.02532869</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.058161677</below-ground-carbon-density>
+                        <allocation year="1750">1034795</allocation>
+                        <allocation year="1800">1024182</allocation>
+                        <allocation year="1850">977676</allocation>
+                        <allocation year="1900">936760</allocation>
+                        <allocation year="1950">785825</allocation>
+                        <allocation year="1975">622925</allocation>
+                        <above-ground-carbon-density>0.024964382</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.140757229</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
-                     <landAllocation year="1975">136016</landAllocation>
-                     <landAllocation year="1990">119014</landAllocation>
-                     <landAllocation year="2005">98778</landAllocation>
+                     <landAllocation year="1975">136013</landAllocation>
+                     <landAllocation year="1990">119010</landAllocation>
+                     <landAllocation year="2005">98775</landAllocation>
                      <intrinsicRate fillout="1" year="1975">5682</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">281943</allocation>
                         <allocation year="1750">277031</allocation>
                         <allocation year="1800">268103</allocation>
-                        <allocation year="1850">263712</allocation>
+                        <allocation year="1850">263711</allocation>
                         <allocation year="1900">230191</allocation>
-                        <allocation year="1950">180870</allocation>
-                        <allocation year="1975">136016</allocation>
-                        <above-ground-carbon-density>0.013540559</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.039547153</below-ground-carbon-density>
+                        <allocation year="1950">180869</allocation>
+                        <allocation year="1975">136013</allocation>
+                        <above-ground-carbon-density>0.022572943</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.153578802</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="AllPasture">
                      <UnmanagedLandLeaf name="UnmanagedPasture">
                         <intrinsicRate fillout="1" year="1975">5682</intrinsicRate>
-                        <landAllocation year="1975">595303</landAllocation>
-                        <landAllocation year="1990">688759</landAllocation>
-                        <landAllocation year="2005">791149</landAllocation>
+                        <landAllocation year="1975">580025</landAllocation>
+                        <landAllocation year="1990">671077</landAllocation>
+                        <landAllocation year="2005">791118</landAllocation>
                         <land-use-history>
-                           <allocation year="1700">72022</allocation>
-                           <allocation year="1750">83976</allocation>
-                           <allocation year="1800">101146</allocation>
-                           <allocation year="1850">134534</allocation>
-                           <allocation year="1900">212485</allocation>
-                           <allocation year="1950">404013</allocation>
-                           <allocation year="1975">595303</allocation>
-                           <above-ground-carbon-density>0.031002043</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.070900932</below-ground-carbon-density>
+                           <allocation year="1700">70175</allocation>
+                           <allocation year="1750">81823</allocation>
+                           <allocation year="1800">98553</allocation>
+                           <allocation year="1850">131085</allocation>
+                           <allocation year="1900">207036</allocation>
+                           <allocation year="1950">393652</allocation>
+                           <allocation year="1975">580025</allocation>
+                           <above-ground-carbon-density>0.022821608</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.152245594</below-ground-carbon-density>
                         </land-use-history>
                      </UnmanagedLandLeaf>
                      <sigma>0.19</sigma>
                      <LandAllocatorNode name="PastureLand">
                         <sigma>0.8</sigma>
                         <land-use-history>
-                           <allocation year="1700">7607</allocation>
-                           <allocation year="1750">8870</allocation>
-                           <allocation year="1800">10683</allocation>
-                           <allocation year="1850">14210</allocation>
-                           <allocation year="1900">22443</allocation>
-                           <allocation year="1950">42673</allocation>
-                           <allocation year="1975">62877</allocation>
-                           <above-ground-carbon-density>0.031002043</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.070900932</below-ground-carbon-density>
+                           <allocation year="1700">9454</allocation>
+                           <allocation year="1750">11023</allocation>
+                           <allocation year="1800">13277</allocation>
+                           <allocation year="1850">17659</allocation>
+                           <allocation year="1900">27891</allocation>
+                           <allocation year="1950">53032</allocation>
+                           <allocation year="1975">78139</allocation>
+                           <above-ground-carbon-density>0.022821608</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.152245594</below-ground-carbon-density>
                         </land-use-history>
                      </LandAllocatorNode>
                   </LandAllocatorNode>
@@ -1753,42 +1753,42 @@
                         <allocation year="1900">94752</allocation>
                         <allocation year="1950">116440</allocation>
                         <allocation year="1975">142306</allocation>
-                        <above-ground-carbon-density>0.006646088</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.020523672</below-ground-carbon-density>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
                <LandAllocatorNode name="AllForestLand">
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
-                     <landAllocation year="1975">413247</landAllocation>
-                     <landAllocation year="1990">382464</landAllocation>
-                     <landAllocation year="2005">351856</landAllocation>
+                     <landAllocation year="1975">379899</landAllocation>
+                     <landAllocation year="1990">337959</landAllocation>
+                     <landAllocation year="2005">305745</landAllocation>
                      <intrinsicRate fillout="1" year="1975">5682</intrinsicRate>
                      <land-use-history>
-                        <allocation year="1700">536016</allocation>
-                        <allocation year="1750">533853</allocation>
-                        <allocation year="1800">527012</allocation>
-                        <allocation year="1850">537244</allocation>
-                        <allocation year="1900">516011</allocation>
-                        <allocation year="1950">471107</allocation>
-                        <allocation year="1975">413247</allocation>
-                        <above-ground-carbon-density>0.321981226</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.062711312</below-ground-carbon-density>
+                        <allocation year="1700">529000</allocation>
+                        <allocation year="1750">526772</allocation>
+                        <allocation year="1800">519864</allocation>
+                        <allocation year="1850">529828</allocation>
+                        <allocation year="1900">507125</allocation>
+                        <allocation year="1950">456345</allocation>
+                        <allocation year="1975">379899</allocation>
+                        <above-ground-carbon-density>0.119008989</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.122124462</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="ForestLand">
                      <sigma>0.8</sigma>
                      <land-use-history>
-                        <allocation year="1700">8414</allocation>
-                        <allocation year="1750">8494</allocation>
-                        <allocation year="1800">8574</allocation>
-                        <allocation year="1850">8894</allocation>
-                        <allocation year="1900">10657</allocation>
-                        <allocation year="1950">17709</allocation>
-                        <allocation year="1975">40030</allocation>
-                        <above-ground-carbon-density>0.321981226</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.062711312</below-ground-carbon-density>
+                        <allocation year="1700">15430</allocation>
+                        <allocation year="1750">15577</allocation>
+                        <allocation year="1800">15724</allocation>
+                        <allocation year="1850">16312</allocation>
+                        <allocation year="1900">19545</allocation>
+                        <allocation year="1950">32477</allocation>
+                        <allocation year="1975">73414</allocation>
+                        <above-ground-carbon-density>0.119008989</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.122124462</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
@@ -1808,8 +1808,8 @@
                      <allocation year="1900">0</allocation>
                      <allocation year="1950">0</allocation>
                      <allocation year="1975">0</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00632</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.127368421</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -1828,8 +1828,8 @@
                      <allocation year="1900">967216</allocation>
                      <allocation year="1950">967216</allocation>
                      <allocation year="1975">967216</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00176</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.041978022</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -1865,9 +1865,9 @@
                <LandAllocatorNode name="AgroLand">
                   <sigma>0.8</sigma>
                   <UnmanagedLandLeaf name="OtherArableLand">
-                     <landAllocation year="1975">12243</landAllocation>
-                     <landAllocation year="1990">13598</landAllocation>
-                     <landAllocation year="2005">13676</landAllocation>
+                     <landAllocation year="1975">12242</landAllocation>
+                     <landAllocation year="1990">13597</landAllocation>
+                     <landAllocation year="2005">13675</landAllocation>
                      <intrinsicRate fillout="1" year="1975">11882</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">2737</allocation>
@@ -1875,62 +1875,62 @@
                         <allocation year="1800">875</allocation>
                         <allocation year="1850">1317</allocation>
                         <allocation year="1900">2393</allocation>
-                        <allocation year="1950">7730</allocation>
-                        <allocation year="1975">12243</allocation>
-                        <above-ground-carbon-density>0.004915002</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.019258156</below-ground-carbon-density>
+                        <allocation year="1950">7729</allocation>
+                        <allocation year="1975">12242</allocation>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
-                     <landAllocation year="1975">288895</landAllocation>
-                     <landAllocation year="1990">261762</landAllocation>
-                     <landAllocation year="2005">249020</landAllocation>
+                     <landAllocation year="1975">288874</landAllocation>
+                     <landAllocation year="1990">261741</landAllocation>
+                     <landAllocation year="2005">249001</landAllocation>
                      <intrinsicRate fillout="1" year="1975">11882</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">570761</allocation>
-                        <allocation year="1750">567132</allocation>
-                        <allocation year="1800">563956</allocation>
-                        <allocation year="1850">546736</allocation>
-                        <allocation year="1900">502866</allocation>
-                        <allocation year="1950">369857</allocation>
-                        <allocation year="1975">288895</allocation>
-                        <above-ground-carbon-density>0.020301384</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.051398223</below-ground-carbon-density>
+                        <allocation year="1750">567131</allocation>
+                        <allocation year="1800">563955</allocation>
+                        <allocation year="1850">546734</allocation>
+                        <allocation year="1900">502861</allocation>
+                        <allocation year="1950">369846</allocation>
+                        <allocation year="1975">288874</allocation>
+                        <above-ground-carbon-density>0.01809751</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.168037623</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
-                     <landAllocation year="1975">142098</landAllocation>
-                     <landAllocation year="1990">130696</landAllocation>
-                     <landAllocation year="2005">126189</landAllocation>
+                     <landAllocation year="1975">142088</landAllocation>
+                     <landAllocation year="1990">130686</landAllocation>
+                     <landAllocation year="2005">126179</landAllocation>
                      <intrinsicRate fillout="1" year="1975">11882</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">265983</allocation>
                         <allocation year="1750">264155</allocation>
                         <allocation year="1800">261046</allocation>
-                        <allocation year="1850">255534</allocation>
-                        <allocation year="1900">239691</allocation>
-                        <allocation year="1950">188539</allocation>
-                        <allocation year="1975">142098</allocation>
-                        <above-ground-carbon-density>0.012189963</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.036452482</below-ground-carbon-density>
+                        <allocation year="1850">255533</allocation>
+                        <allocation year="1900">239689</allocation>
+                        <allocation year="1950">188534</allocation>
+                        <allocation year="1975">142088</allocation>
+                        <above-ground-carbon-density>0.018150843</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.176125177</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="AllPasture">
                      <UnmanagedLandLeaf name="UnmanagedPasture">
                         <intrinsicRate fillout="1" year="1975">11882</intrinsicRate>
-                        <landAllocation year="1975">304087</landAllocation>
-                        <landAllocation year="1990">337303</landAllocation>
-                        <landAllocation year="2005">351715</landAllocation>
+                        <landAllocation year="1975">304048</landAllocation>
+                        <landAllocation year="1990">337256</landAllocation>
+                        <landAllocation year="2005">351670</landAllocation>
                         <land-use-history>
-                           <allocation year="1700">13712</allocation>
-                           <allocation year="1750">17406</allocation>
-                           <allocation year="1800">22968</allocation>
-                           <allocation year="1850">39602</allocation>
-                           <allocation year="1900">81897</allocation>
-                           <allocation year="1950">210551</allocation>
-                           <allocation year="1975">304087</allocation>
-                           <above-ground-carbon-density>0.020301384</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.051398223</below-ground-carbon-density>
+                           <allocation year="1700">13711</allocation>
+                           <allocation year="1750">17405</allocation>
+                           <allocation year="1800">22966</allocation>
+                           <allocation year="1850">39600</allocation>
+                           <allocation year="1900">81892</allocation>
+                           <allocation year="1950">210534</allocation>
+                           <allocation year="1975">304048</allocation>
+                           <above-ground-carbon-density>0.019015785</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.165810209</below-ground-carbon-density>
                         </land-use-history>
                      </UnmanagedLandLeaf>
                      <sigma>0.19</sigma>
@@ -1938,14 +1938,14 @@
                         <sigma>0.8</sigma>
                         <land-use-history>
                            <allocation year="1700">9155</allocation>
-                           <allocation year="1750">11621</allocation>
-                           <allocation year="1800">15334</allocation>
-                           <allocation year="1850">26440</allocation>
-                           <allocation year="1900">54678</allocation>
-                           <allocation year="1950">140572</allocation>
-                           <allocation year="1975">203020</allocation>
-                           <above-ground-carbon-density>0.020301384</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.051398223</below-ground-carbon-density>
+                           <allocation year="1750">11622</allocation>
+                           <allocation year="1800">15335</allocation>
+                           <allocation year="1850">26442</allocation>
+                           <allocation year="1900">54682</allocation>
+                           <allocation year="1950">140580</allocation>
+                           <allocation year="1975">203022</allocation>
+                           <above-ground-carbon-density>0.019015785</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.165810209</below-ground-carbon-density>
                         </land-use-history>
                      </LandAllocatorNode>
                   </LandAllocatorNode>
@@ -1959,42 +1959,42 @@
                         <allocation year="1900">25437</allocation>
                         <allocation year="1950">77326</allocation>
                         <allocation year="1975">114299</allocation>
-                        <above-ground-carbon-density>0.004915002</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.019258156</below-ground-carbon-density>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
                <LandAllocatorNode name="AllForestLand">
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
-                     <landAllocation year="1975">849260</landAllocation>
-                     <landAllocation year="1990">811498</landAllocation>
-                     <landAllocation year="2005">785054</landAllocation>
+                     <landAllocation year="1975">825911</landAllocation>
+                     <landAllocation year="1990">782672</landAllocation>
+                     <landAllocation year="2005">756475</landAllocation>
                      <intrinsicRate fillout="1" year="1975">11882</intrinsicRate>
                      <land-use-history>
-                        <allocation year="1700">1080570</allocation>
-                        <allocation year="1750">1078657</allocation>
-                        <allocation year="1800">1072928</allocation>
-                        <allocation year="1850">1061599</allocation>
-                        <allocation year="1900">1033898</allocation>
-                        <allocation year="1950">934650</allocation>
-                        <allocation year="1975">849260</allocation>
-                        <above-ground-carbon-density>0.203035882</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.063523857</below-ground-carbon-density>
+                        <allocation year="1700">1077485</allocation>
+                        <allocation year="1750">1075573</allocation>
+                        <allocation year="1800">1069845</allocation>
+                        <allocation year="1850">1056975</allocation>
+                        <allocation year="1900">1026579</allocation>
+                        <allocation year="1950">920408</allocation>
+                        <allocation year="1975">825911</allocation>
+                        <above-ground-carbon-density>0.1134299</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.125400494</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="ForestLand">
                      <sigma>0.8</sigma>
                      <land-use-history>
-                        <allocation year="1700">4722</allocation>
-                        <allocation year="1750">4722</allocation>
-                        <allocation year="1800">4722</allocation>
-                        <allocation year="1850">7083</allocation>
-                        <allocation year="1900">11215</allocation>
-                        <allocation year="1950">21840</allocation>
-                        <allocation year="1975">35843</allocation>
-                        <above-ground-carbon-density>0.203035882</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.063523857</below-ground-carbon-density>
+                        <allocation year="1700">7807</allocation>
+                        <allocation year="1750">7807</allocation>
+                        <allocation year="1800">7807</allocation>
+                        <allocation year="1850">11711</allocation>
+                        <allocation year="1900">18542</allocation>
+                        <allocation year="1950">36108</allocation>
+                        <allocation year="1975">59261</allocation>
+                        <above-ground-carbon-density>0.1134299</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.125400494</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
@@ -2014,8 +2014,8 @@
                      <allocation year="1900">33922</allocation>
                      <allocation year="1950">33922</allocation>
                      <allocation year="1975">33922</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00632</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.127368421</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -2034,8 +2034,8 @@
                      <allocation year="1900">58879</allocation>
                      <allocation year="1950">58879</allocation>
                      <allocation year="1975">58879</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00176</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.041978022</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -2071,9 +2071,9 @@
                <LandAllocatorNode name="AgroLand">
                   <sigma>0.8</sigma>
                   <UnmanagedLandLeaf name="OtherArableLand">
-                     <landAllocation year="1975">10041</landAllocation>
-                     <landAllocation year="1990">11773</landAllocation>
-                     <landAllocation year="2005">12155</landAllocation>
+                     <landAllocation year="1975">10050</landAllocation>
+                     <landAllocation year="1990">11785</landAllocation>
+                     <landAllocation year="2005">12182</landAllocation>
                      <intrinsicRate fillout="1" year="1975">34827</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">1052</allocation>
@@ -2081,77 +2081,77 @@
                         <allocation year="1800">1677</allocation>
                         <allocation year="1850">2374</allocation>
                         <allocation year="1900">4012</allocation>
-                        <allocation year="1950">7418</allocation>
-                        <allocation year="1975">10041</allocation>
-                        <above-ground-carbon-density>0.005484049</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.018941799</below-ground-carbon-density>
+                        <allocation year="1950">7419</allocation>
+                        <allocation year="1975">10050</allocation>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
-                     <landAllocation year="1975">36256</landAllocation>
-                     <landAllocation year="1990">33626</landAllocation>
-                     <landAllocation year="2005">32154</landAllocation>
+                     <landAllocation year="1975">36288</landAllocation>
+                     <landAllocation year="1990">33663</landAllocation>
+                     <landAllocation year="2005">32226</landAllocation>
                      <intrinsicRate fillout="1" year="1975">34827</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">53919</allocation>
                         <allocation year="1750">53579</allocation>
                         <allocation year="1800">53105</allocation>
                         <allocation year="1850">49950</allocation>
-                        <allocation year="1900">48272</allocation>
-                        <allocation year="1950">41940</allocation>
-                        <allocation year="1975">36256</allocation>
-                        <above-ground-carbon-density>0.022458125</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.053089254</below-ground-carbon-density>
+                        <allocation year="1900">48273</allocation>
+                        <allocation year="1950">41948</allocation>
+                        <allocation year="1975">36288</allocation>
+                        <above-ground-carbon-density>0.024740189</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.137479537</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
-                     <landAllocation year="1975">42784</landAllocation>
-                     <landAllocation year="1990">38651</landAllocation>
-                     <landAllocation year="2005">33914</landAllocation>
+                     <landAllocation year="1975">42822</landAllocation>
+                     <landAllocation year="1990">38693</landAllocation>
+                     <landAllocation year="2005">33989</landAllocation>
                      <intrinsicRate fillout="1" year="1975">34827</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">67118</allocation>
                         <allocation year="1750">66493</allocation>
                         <allocation year="1800">65906</allocation>
                         <allocation year="1850">65189</allocation>
-                        <allocation year="1900">61709</allocation>
-                        <allocation year="1950">52660</allocation>
-                        <allocation year="1975">42784</allocation>
-                        <above-ground-carbon-density>0.016934632</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.046278513</below-ground-carbon-density>
+                        <allocation year="1900">61711</allocation>
+                        <allocation year="1950">52669</allocation>
+                        <allocation year="1975">42822</allocation>
+                        <above-ground-carbon-density>0.009714457</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.212761823</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="AllPasture">
                      <UnmanagedLandLeaf name="UnmanagedPasture">
                         <intrinsicRate fillout="1" year="1975">34827</intrinsicRate>
-                        <landAllocation year="1975">10426</landAllocation>
-                        <landAllocation year="1990">11355</landAllocation>
-                        <landAllocation year="2005">11120</landAllocation>
+                        <landAllocation year="1975">10475</landAllocation>
+                        <landAllocation year="1990">11410</landAllocation>
+                        <landAllocation year="2005">11235</landAllocation>
                         <land-use-history>
-                           <allocation year="1700">3318</allocation>
-                           <allocation year="1750">3484</allocation>
-                           <allocation year="1800">3737</allocation>
-                           <allocation year="1850">4189</allocation>
-                           <allocation year="1900">5789</allocation>
-                           <allocation year="1950">8322</allocation>
-                           <allocation year="1975">10426</allocation>
-                           <above-ground-carbon-density>0.022458125</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.053089254</below-ground-carbon-density>
+                           <allocation year="1700">3331</allocation>
+                           <allocation year="1750">3497</allocation>
+                           <allocation year="1800">3751</allocation>
+                           <allocation year="1850">4205</allocation>
+                           <allocation year="1900">5812</allocation>
+                           <allocation year="1950">8355</allocation>
+                           <allocation year="1975">10475</allocation>
+                           <above-ground-carbon-density>0.010254247</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.204911633</below-ground-carbon-density>
                         </land-use-history>
                      </UnmanagedLandLeaf>
                      <sigma>0.19</sigma>
                      <LandAllocatorNode name="PastureLand">
                         <sigma>0.8</sigma>
                         <land-use-history>
-                           <allocation year="1700">11641</allocation>
-                           <allocation year="1750">12223</allocation>
-                           <allocation year="1800">13111</allocation>
-                           <allocation year="1850">14699</allocation>
-                           <allocation year="1900">20313</allocation>
-                           <allocation year="1950">29197</allocation>
-                           <allocation year="1975">36582</allocation>
-                           <above-ground-carbon-density>0.022458125</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.053089254</below-ground-carbon-density>
+                           <allocation year="1700">11629</allocation>
+                           <allocation year="1750">12210</allocation>
+                           <allocation year="1800">13096</allocation>
+                           <allocation year="1850">14683</allocation>
+                           <allocation year="1900">20291</allocation>
+                           <allocation year="1950">29171</allocation>
+                           <allocation year="1975">36575</allocation>
+                           <above-ground-carbon-density>0.010254247</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.204911633</below-ground-carbon-density>
                         </land-use-history>
                      </LandAllocatorNode>
                   </LandAllocatorNode>
@@ -2165,42 +2165,42 @@
                         <allocation year="1900">47462</allocation>
                         <allocation year="1950">75569</allocation>
                         <allocation year="1975">101504</allocation>
-                        <above-ground-carbon-density>0.005484049</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.018941799</below-ground-carbon-density>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
                <LandAllocatorNode name="AllForestLand">
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
-                     <landAllocation year="1975">279342</landAllocation>
-                     <landAllocation year="1990">248285</landAllocation>
-                     <landAllocation year="2005">240499</landAllocation>
+                     <landAllocation year="1975">324623</landAllocation>
+                     <landAllocation year="1990">305751</landAllocation>
+                     <landAllocation year="2005">305168</landAllocation>
                      <intrinsicRate fillout="1" year="1975">34827</intrinsicRate>
                      <land-use-history>
-                        <allocation year="1700">412182</allocation>
-                        <allocation year="1750">406376</allocation>
-                        <allocation year="1800">400125</allocation>
-                        <allocation year="1850">392536</allocation>
-                        <allocation year="1900">368243</allocation>
-                        <allocation year="1950">329676</allocation>
-                        <allocation year="1975">279342</allocation>
-                        <above-ground-carbon-density>0.196428838</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.038852932</below-ground-carbon-density>
+                        <allocation year="1700">418776</allocation>
+                        <allocation year="1750">415346</allocation>
+                        <allocation year="1800">411472</allocation>
+                        <allocation year="1850">406993</allocation>
+                        <allocation year="1900">385162</allocation>
+                        <allocation year="1950">354704</allocation>
+                        <allocation year="1975">324623</allocation>
+                        <above-ground-carbon-density>0.113122386</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.120493518</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="ForestLand">
                      <sigma>0.8</sigma>
                      <land-use-history>
-                        <allocation year="1700">8848</allocation>
-                        <allocation year="1750">12037</allocation>
-                        <allocation year="1800">15226</allocation>
-                        <allocation year="1850">19398</allocation>
-                        <allocation year="1900">22707</allocation>
-                        <allocation year="1950">33617</allocation>
-                        <allocation year="1975">60922</allocation>
-                        <above-ground-carbon-density>0.196428838</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.038852932</below-ground-carbon-density>
+                        <allocation year="1700">2254</allocation>
+                        <allocation year="1750">3066</allocation>
+                        <allocation year="1800">3879</allocation>
+                        <allocation year="1850">4941</allocation>
+                        <allocation year="1900">5784</allocation>
+                        <allocation year="1950">8563</allocation>
+                        <allocation year="1975">15519</allocation>
+                        <above-ground-carbon-density>0.113122386</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.120493518</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
@@ -2220,8 +2220,8 @@
                      <allocation year="1900">4475</allocation>
                      <allocation year="1950">4475</allocation>
                      <allocation year="1975">4475</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00632</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.127368421</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -2240,8 +2240,8 @@
                      <allocation year="1900">41314</allocation>
                      <allocation year="1950">41314</allocation>
                      <allocation year="1975">41314</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00176</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.041978022</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -2277,87 +2277,87 @@
                <LandAllocatorNode name="AgroLand">
                   <sigma>0.8</sigma>
                   <UnmanagedLandLeaf name="OtherArableLand">
-                     <landAllocation year="1975">8974</landAllocation>
-                     <landAllocation year="1990">9834</landAllocation>
-                     <landAllocation year="2005">9842</landAllocation>
+                     <landAllocation year="1975">8891</landAllocation>
+                     <landAllocation year="1990">9743</landAllocation>
+                     <landAllocation year="2005">9740</landAllocation>
                      <intrinsicRate fillout="1" year="1975">62516</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">1474</allocation>
                         <allocation year="1750">1621</allocation>
-                        <allocation year="1800">1876</allocation>
-                        <allocation year="1850">2336</allocation>
-                        <allocation year="1900">3343</allocation>
-                        <allocation year="1950">4070</allocation>
-                        <allocation year="1975">8974</allocation>
-                        <above-ground-carbon-density>0.009401928</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.032472175</below-ground-carbon-density>
+                        <allocation year="1800">1873</allocation>
+                        <allocation year="1850">2330</allocation>
+                        <allocation year="1900">3331</allocation>
+                        <allocation year="1950">4020</allocation>
+                        <allocation year="1975">8891</allocation>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
-                     <landAllocation year="1975">3956</landAllocation>
-                     <landAllocation year="1990">3862</landAllocation>
-                     <landAllocation year="2005">3987</landAllocation>
+                     <landAllocation year="1975">3920</landAllocation>
+                     <landAllocation year="1990">3826</landAllocation>
+                     <landAllocation year="2005">3946</landAllocation>
                      <intrinsicRate fillout="1" year="1975">62516</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">11419</allocation>
                         <allocation year="1750">10279</allocation>
-                        <allocation year="1800">9286</allocation>
-                        <allocation year="1850">8142</allocation>
-                        <allocation year="1900">7181</allocation>
-                        <allocation year="1950">5019</allocation>
-                        <allocation year="1975">3956</allocation>
-                        <above-ground-carbon-density>0.0496</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.149</below-ground-carbon-density>
+                        <allocation year="1800">9274</allocation>
+                        <allocation year="1850">8122</allocation>
+                        <allocation year="1900">7154</allocation>
+                        <allocation year="1950">4958</allocation>
+                        <allocation year="1975">3920</allocation>
+                        <above-ground-carbon-density>0.007184202</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.234059105</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
-                     <landAllocation year="1975">765</landAllocation>
-                     <landAllocation year="1990">758</landAllocation>
-                     <landAllocation year="2005">743</landAllocation>
+                     <landAllocation year="1975">757</landAllocation>
+                     <landAllocation year="1990">751</landAllocation>
+                     <landAllocation year="2005">735</landAllocation>
                      <intrinsicRate fillout="1" year="1975">62516</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">1025</allocation>
                         <allocation year="1750">945</allocation>
-                        <allocation year="1800">872</allocation>
-                        <allocation year="1850">804</allocation>
-                        <allocation year="1900">803</allocation>
-                        <allocation year="1950">793</allocation>
-                        <allocation year="1975">765</allocation>
-                        <above-ground-carbon-density>0.01162</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.0473</below-ground-carbon-density>
+                        <allocation year="1800">871</allocation>
+                        <allocation year="1850">802</allocation>
+                        <allocation year="1900">800</allocation>
+                        <allocation year="1950">784</allocation>
+                        <allocation year="1975">757</allocation>
+                        <above-ground-carbon-density>0.0072</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.236</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="AllPasture">
                      <UnmanagedLandLeaf name="UnmanagedPasture">
                         <intrinsicRate fillout="1" year="1975">62516</intrinsicRate>
-                        <landAllocation year="1975">17957</landAllocation>
-                        <landAllocation year="1990">18063</landAllocation>
-                        <landAllocation year="2005">16935</landAllocation>
+                        <landAllocation year="1975">17775</landAllocation>
+                        <landAllocation year="1990">17878</landAllocation>
+                        <landAllocation year="2005">16743</landAllocation>
                         <land-use-history>
-                           <allocation year="1700">8710</allocation>
-                           <allocation year="1750">8673</allocation>
-                           <allocation year="1800">9031</allocation>
-                           <allocation year="1850">10250</allocation>
-                           <allocation year="1900">13790</allocation>
-                           <allocation year="1950">16175</allocation>
-                           <allocation year="1975">17957</allocation>
-                           <above-ground-carbon-density>0.0496</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.149</below-ground-carbon-density>
+                           <allocation year="1700">8701</allocation>
+                           <allocation year="1750">8665</allocation>
+                           <allocation year="1800">9010</allocation>
+                           <allocation year="1850">10215</allocation>
+                           <allocation year="1900">13725</allocation>
+                           <allocation year="1950">15962</allocation>
+                           <allocation year="1975">17775</allocation>
+                           <above-ground-carbon-density>0.007165579</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.231771115</below-ground-carbon-density>
                         </land-use-history>
                      </UnmanagedLandLeaf>
                      <sigma>0.19</sigma>
                      <LandAllocatorNode name="PastureLand">
                         <sigma>0.8</sigma>
                         <land-use-history>
-                           <allocation year="1700">876</allocation>
-                           <allocation year="1750">873</allocation>
-                           <allocation year="1800">909</allocation>
-                           <allocation year="1850">1032</allocation>
-                           <allocation year="1900">1388</allocation>
-                           <allocation year="1950">1628</allocation>
+                           <allocation year="1700">885</allocation>
+                           <allocation year="1750">881</allocation>
+                           <allocation year="1800">916</allocation>
+                           <allocation year="1850">1039</allocation>
+                           <allocation year="1900">1395</allocation>
+                           <allocation year="1950">1623</allocation>
                            <allocation year="1975">1807</allocation>
-                           <above-ground-carbon-density>0.0496</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.149</below-ground-carbon-density>
+                           <above-ground-carbon-density>0.007165579</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.231771115</below-ground-carbon-density>
                         </land-use-history>
                      </LandAllocatorNode>
                   </LandAllocatorNode>
@@ -2371,42 +2371,42 @@
                         <allocation year="1900">36709</allocation>
                         <allocation year="1950">38668</allocation>
                         <allocation year="1975">37873</allocation>
-                        <above-ground-carbon-density>0.009401928</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.032472175</below-ground-carbon-density>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
                <LandAllocatorNode name="AllForestLand">
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
-                     <landAllocation year="1975">29311</landAllocation>
-                     <landAllocation year="1990">28991</landAllocation>
-                     <landAllocation year="2005">29413</landAllocation>
+                     <landAllocation year="1975">5905</landAllocation>
+                     <landAllocation year="1990">4597</landAllocation>
+                     <landAllocation year="2005">3045</landAllocation>
                      <intrinsicRate fillout="1" year="1975">62516</intrinsicRate>
                      <land-use-history>
-                        <allocation year="1700">73480</allocation>
-                        <allocation year="1750">67755</allocation>
-                        <allocation year="1800">61331</allocation>
-                        <allocation year="1850">53037</allocation>
-                        <allocation year="1900">42152</allocation>
-                        <allocation year="1950">35371</allocation>
-                        <allocation year="1975">29311</allocation>
-                        <above-ground-carbon-density>0.148649172</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.07609546</below-ground-carbon-density>
+                        <allocation year="1700">68523</allocation>
+                        <allocation year="1750">61185</allocation>
+                        <allocation year="1800">53178</allocation>
+                        <allocation year="1850">41969</allocation>
+                        <allocation year="1900">25807</allocation>
+                        <allocation year="1950">13662</allocation>
+                        <allocation year="1975">5905</allocation>
+                        <above-ground-carbon-density>0.056981459</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.104428254</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="ForestLand">
                      <sigma>0.8</sigma>
                      <land-use-history>
-                        <allocation year="1700">2925</allocation>
-                        <allocation year="1750">3876</allocation>
-                        <allocation year="1800">4827</allocation>
-                        <allocation year="1850">6563</allocation>
-                        <allocation year="1900">9702</allocation>
-                        <allocation year="1950">13008</allocation>
-                        <allocation year="1975">13991</allocation>
-                        <above-ground-carbon-density>0.148649172</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.07609546</below-ground-carbon-density>
+                        <allocation year="1700">7883</allocation>
+                        <allocation year="1750">10446</allocation>
+                        <allocation year="1800">13010</allocation>
+                        <allocation year="1850">17688</allocation>
+                        <allocation year="1900">26147</allocation>
+                        <allocation year="1950">35055</allocation>
+                        <allocation year="1975">37704</allocation>
+                        <above-ground-carbon-density>0.056981459</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.104428254</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
@@ -2426,8 +2426,8 @@
                      <allocation year="1900">0</allocation>
                      <allocation year="1950">0</allocation>
                      <allocation year="1975">0</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00632</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.127368421</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -2446,8 +2446,8 @@
                      <allocation year="1900">0</allocation>
                      <allocation year="1950">0</allocation>
                      <allocation year="1975">0</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00176</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.041978022</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -2483,62 +2483,62 @@
                <LandAllocatorNode name="AgroLand">
                   <sigma>0.8</sigma>
                   <UnmanagedLandLeaf name="OtherArableLand">
-                     <landAllocation year="1975">118</landAllocation>
-                     <landAllocation year="1990">138</landAllocation>
-                     <landAllocation year="2005">162</landAllocation>
+                     <landAllocation year="1975">78</landAllocation>
+                     <landAllocation year="1990">62</landAllocation>
+                     <landAllocation year="2005">76</landAllocation>
                      <intrinsicRate fillout="1" year="1975">457893</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">10</allocation>
-                        <allocation year="1750">20</allocation>
-                        <allocation year="1800">96</allocation>
-                        <allocation year="1850">151</allocation>
+                        <allocation year="1750">15</allocation>
+                        <allocation year="1800">88</allocation>
+                        <allocation year="1850">146</allocation>
                         <allocation year="1900">41</allocation>
-                        <allocation year="1950">80</allocation>
-                        <allocation year="1975">118</allocation>
-                        <above-ground-carbon-density>0.007404536</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.028677024</below-ground-carbon-density>
+                        <allocation year="1950">78</allocation>
+                        <allocation year="1975">78</allocation>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
-                     <landAllocation year="1975">2</landAllocation>
-                     <landAllocation year="1990">12</landAllocation>
-                     <landAllocation year="2005">11</landAllocation>
+                     <landAllocation year="1975">1</landAllocation>
+                     <landAllocation year="1990">5</landAllocation>
+                     <landAllocation year="2005">5</landAllocation>
                      <intrinsicRate fillout="1" year="1975">457893</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">0</allocation>
-                        <allocation year="1750">15</allocation>
-                        <allocation year="1800">20</allocation>
-                        <allocation year="1850">21</allocation>
+                        <allocation year="1750">12</allocation>
+                        <allocation year="1800">19</allocation>
+                        <allocation year="1850">20</allocation>
                         <allocation year="1900">12</allocation>
                         <allocation year="1950">9</allocation>
-                        <allocation year="1975">2</allocation>
-                        <above-ground-carbon-density>0.035077037</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.088509391</below-ground-carbon-density>
+                        <allocation year="1975">1</allocation>
+                        <above-ground-carbon-density>0.007286899</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.184855922</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
-                     <landAllocation year="1975">91</landAllocation>
-                     <landAllocation year="1990">91</landAllocation>
-                     <landAllocation year="2005">84</landAllocation>
+                     <landAllocation year="1975">60</landAllocation>
+                     <landAllocation year="1990">41</landAllocation>
+                     <landAllocation year="2005">39</landAllocation>
                      <intrinsicRate fillout="1" year="1975">457893</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">79</allocation>
-                        <allocation year="1750">110</allocation>
-                        <allocation year="1800">121</allocation>
-                        <allocation year="1850">124</allocation>
-                        <allocation year="1900">123</allocation>
-                        <allocation year="1950">113</allocation>
-                        <allocation year="1975">91</allocation>
-                        <above-ground-carbon-density>0.017491358</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.069501276</below-ground-carbon-density>
+                        <allocation year="1750">85</allocation>
+                        <allocation year="1800">111</allocation>
+                        <allocation year="1850">120</allocation>
+                        <allocation year="1900">121</allocation>
+                        <allocation year="1950">109</allocation>
+                        <allocation year="1975">60</allocation>
+                        <above-ground-carbon-density>0.007055053</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.21819227</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="AllPasture">
                      <UnmanagedLandLeaf name="UnmanagedPasture">
                         <intrinsicRate fillout="1" year="1975">457893</intrinsicRate>
                         <landAllocation year="1975">0</landAllocation>
-                        <landAllocation year="1990">2</landAllocation>
-                        <landAllocation year="2005">3</landAllocation>
+                        <landAllocation year="1990">1</landAllocation>
+                        <landAllocation year="2005">1</landAllocation>
                         <land-use-history>
                            <allocation year="1700">0</allocation>
                            <allocation year="1750">0</allocation>
@@ -2547,8 +2547,8 @@
                            <allocation year="1900">1</allocation>
                            <allocation year="1950">1</allocation>
                            <allocation year="1975">0</allocation>
-                           <above-ground-carbon-density>0.035077037</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.088509391</below-ground-carbon-density>
+                           <above-ground-carbon-density>0.007133758</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.227861694</below-ground-carbon-density>
                         </land-use-history>
                      </UnmanagedLandLeaf>
                      <sigma>0.19</sigma>
@@ -2556,14 +2556,14 @@
                         <sigma>0.8</sigma>
                         <land-use-history>
                            <allocation year="1700">0</allocation>
-                           <allocation year="1750">4</allocation>
+                           <allocation year="1750">3</allocation>
                            <allocation year="1800">8</allocation>
                            <allocation year="1850">10</allocation>
                            <allocation year="1900">6</allocation>
-                           <allocation year="1950">10</allocation>
-                           <allocation year="1975">3</allocation>
-                           <above-ground-carbon-density>0.035077037</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.088509391</below-ground-carbon-density>
+                           <allocation year="1950">9</allocation>
+                           <allocation year="1975">2</allocation>
+                           <above-ground-carbon-density>0.007133758</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.227861694</below-ground-carbon-density>
                         </land-use-history>
                      </LandAllocatorNode>
                   </LandAllocatorNode>
@@ -2577,42 +2577,42 @@
                         <allocation year="1900">544</allocation>
                         <allocation year="1950">1023</allocation>
                         <allocation year="1975">1741</allocation>
-                        <above-ground-carbon-density>0.007404536</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.028677024</below-ground-carbon-density>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
                <LandAllocatorNode name="AllForestLand">
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
-                     <landAllocation year="1975">6538</landAllocation>
-                     <landAllocation year="1990">6341</landAllocation>
-                     <landAllocation year="2005">5868</landAllocation>
+                     <landAllocation year="1975">4472</landAllocation>
+                     <landAllocation year="1990">3776</landAllocation>
+                     <landAllocation year="2005">3199</landAllocation>
                      <intrinsicRate fillout="1" year="1975">457893</intrinsicRate>
                      <land-use-history>
-                        <allocation year="1700">9341</allocation>
-                        <allocation year="1750">9197</allocation>
-                        <allocation year="1800">9017</allocation>
-                        <allocation year="1850">8852</allocation>
-                        <allocation year="1900">8609</allocation>
-                        <allocation year="1950">7860</allocation>
-                        <allocation year="1975">6538</allocation>
-                        <above-ground-carbon-density>0.161022069</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.072055384</below-ground-carbon-density>
+                        <allocation year="1700">9031</allocation>
+                        <allocation year="1750">8809</allocation>
+                        <allocation year="1800">8502</allocation>
+                        <allocation year="1850">8181</allocation>
+                        <allocation year="1900">7816</allocation>
+                        <allocation year="1950">6687</allocation>
+                        <allocation year="1975">4472</allocation>
+                        <above-ground-carbon-density>0.057431191</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.119272365</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="ForestLand">
                      <sigma>0.8</sigma>
                      <land-use-history>
-                        <allocation year="1700">134</allocation>
-                        <allocation year="1750">182</allocation>
-                        <allocation year="1800">230</allocation>
-                        <allocation year="1850">293</allocation>
-                        <allocation year="1900">343</allocation>
-                        <allocation year="1950">508</allocation>
-                        <allocation year="1975">920</allocation>
-                        <above-ground-carbon-density>0.161022069</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.072055384</below-ground-carbon-density>
+                        <allocation year="1700">444</allocation>
+                        <allocation year="1750">604</allocation>
+                        <allocation year="1800">764</allocation>
+                        <allocation year="1850">974</allocation>
+                        <allocation year="1900">1140</allocation>
+                        <allocation year="1950">1687</allocation>
+                        <allocation year="1975">3057</allocation>
+                        <above-ground-carbon-density>0.057431191</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.119272365</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
@@ -2632,8 +2632,8 @@
                      <allocation year="1900">0</allocation>
                      <allocation year="1950">0</allocation>
                      <allocation year="1975">0</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00632</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.127368421</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -2652,8 +2652,8 @@
                      <allocation year="1900">0</allocation>
                      <allocation year="1950">0</allocation>
                      <allocation year="1975">0</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00176</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.041978022</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -2689,72 +2689,72 @@
                <LandAllocatorNode name="AgroLand">
                   <sigma>0.8</sigma>
                   <UnmanagedLandLeaf name="OtherArableLand">
-                     <landAllocation year="1975">16264</landAllocation>
-                     <landAllocation year="1990">16540</landAllocation>
-                     <landAllocation year="2005">16570</landAllocation>
+                     <landAllocation year="1975">16298</landAllocation>
+                     <landAllocation year="1990">16585</landAllocation>
+                     <landAllocation year="2005">16625</landAllocation>
                      <intrinsicRate fillout="1" year="1975">71921</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">3766</allocation>
                         <allocation year="1750">5399</allocation>
                         <allocation year="1800">7748</allocation>
                         <allocation year="1850">11130</allocation>
-                        <allocation year="1900">11923</allocation>
-                        <allocation year="1950">14168</allocation>
-                        <allocation year="1975">16264</allocation>
-                        <above-ground-carbon-density>0.005710815</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.015716773</below-ground-carbon-density>
+                        <allocation year="1900">11927</allocation>
+                        <allocation year="1950">14181</allocation>
+                        <allocation year="1975">16298</allocation>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
-                     <landAllocation year="1975">12547</landAllocation>
-                     <landAllocation year="1990">12254</landAllocation>
-                     <landAllocation year="2005">11610</landAllocation>
+                     <landAllocation year="1975">12573</landAllocation>
+                     <landAllocation year="1990">12287</landAllocation>
+                     <landAllocation year="2005">11648</landAllocation>
                      <intrinsicRate fillout="1" year="1975">71921</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">11757</allocation>
                         <allocation year="1750">13407</allocation>
-                        <allocation year="1800">17165</allocation>
-                        <allocation year="1850">20698</allocation>
-                        <allocation year="1900">12453</allocation>
-                        <allocation year="1950">10350</allocation>
-                        <allocation year="1975">12547</allocation>
-                        <above-ground-carbon-density>0.025720063</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.061951182</below-ground-carbon-density>
+                        <allocation year="1800">17166</allocation>
+                        <allocation year="1850">20700</allocation>
+                        <allocation year="1900">12457</allocation>
+                        <allocation year="1950">10359</allocation>
+                        <allocation year="1975">12573</allocation>
+                        <above-ground-carbon-density>0.024433409</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.134905167</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
-                     <landAllocation year="1975">23625</landAllocation>
-                     <landAllocation year="1990">22311</landAllocation>
-                     <landAllocation year="2005">20825</landAllocation>
+                     <landAllocation year="1975">23674</landAllocation>
+                     <landAllocation year="1990">22372</landAllocation>
+                     <landAllocation year="2005">20893</landAllocation>
                      <intrinsicRate fillout="1" year="1975">71921</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">47769</allocation>
                         <allocation year="1750">45561</allocation>
-                        <allocation year="1800">42971</allocation>
-                        <allocation year="1850">38936</allocation>
-                        <allocation year="1900">34871</allocation>
-                        <allocation year="1950">28951</allocation>
-                        <allocation year="1975">23625</allocation>
-                        <above-ground-carbon-density>0.012680926</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.043375327</below-ground-carbon-density>
+                        <allocation year="1800">42973</allocation>
+                        <allocation year="1850">38939</allocation>
+                        <allocation year="1900">34882</allocation>
+                        <allocation year="1950">28977</allocation>
+                        <allocation year="1975">23674</allocation>
+                        <above-ground-carbon-density>0.01916216</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.164453479</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="AllPasture">
                      <UnmanagedLandLeaf name="UnmanagedPasture">
                         <intrinsicRate fillout="1" year="1975">71921</intrinsicRate>
-                        <landAllocation year="1975">921</landAllocation>
-                        <landAllocation year="1990">833</landAllocation>
-                        <landAllocation year="2005">756</landAllocation>
+                        <landAllocation year="1975">923</landAllocation>
+                        <landAllocation year="1990">835</landAllocation>
+                        <landAllocation year="2005">758</landAllocation>
                         <land-use-history>
                            <allocation year="1700">107</allocation>
                            <allocation year="1750">157</allocation>
                            <allocation year="1800">256</allocation>
                            <allocation year="1850">413</allocation>
                            <allocation year="1900">306</allocation>
-                           <allocation year="1950">357</allocation>
-                           <allocation year="1975">921</allocation>
-                           <above-ground-carbon-density>0.025720063</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.061951182</below-ground-carbon-density>
+                           <allocation year="1950">358</allocation>
+                           <allocation year="1975">923</allocation>
+                           <above-ground-carbon-density>0.021527024</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.153973253</below-ground-carbon-density>
                         </land-use-history>
                      </UnmanagedLandLeaf>
                      <sigma>0.19</sigma>
@@ -2765,11 +2765,11 @@
                            <allocation year="1750">1567</allocation>
                            <allocation year="1800">2563</allocation>
                            <allocation year="1850">4132</allocation>
-                           <allocation year="1900">3063</allocation>
-                           <allocation year="1950">3575</allocation>
-                           <allocation year="1975">9206</allocation>
-                           <above-ground-carbon-density>0.025720063</above-ground-carbon-density>
-                           <below-ground-carbon-density>0.061951182</below-ground-carbon-density>
+                           <allocation year="1900">3064</allocation>
+                           <allocation year="1950">3578</allocation>
+                           <allocation year="1975">9226</allocation>
+                           <above-ground-carbon-density>0.021527024</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.153973253</below-ground-carbon-density>
                         </land-use-history>
                      </LandAllocatorNode>
                   </LandAllocatorNode>
@@ -2783,42 +2783,42 @@
                         <allocation year="1900">131606</allocation>
                         <allocation year="1950">154201</allocation>
                         <allocation year="1975">163043</allocation>
-                        <above-ground-carbon-density>0.005710815</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.015716773</below-ground-carbon-density>
+                        <above-ground-carbon-density>0.001875</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.08</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
                <LandAllocatorNode name="AllForestLand">
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
-                     <landAllocation year="1975">51827</landAllocation>
-                     <landAllocation year="1990">44966</landAllocation>
-                     <landAllocation year="2005">40824</landAllocation>
+                     <landAllocation year="1975">68587</landAllocation>
+                     <landAllocation year="1990">66232</landAllocation>
+                     <landAllocation year="2005">66202</landAllocation>
                      <intrinsicRate fillout="1" year="1975">71921</intrinsicRate>
                      <land-use-history>
-                        <allocation year="1700">161609</allocation>
-                        <allocation year="1750">149953</allocation>
-                        <allocation year="1800">135324</allocation>
-                        <allocation year="1850">113237</allocation>
-                        <allocation year="1900">98126</allocation>
-                        <allocation year="1950">76496</allocation>
-                        <allocation year="1975">51827</allocation>
-                        <above-ground-carbon-density>0.180721958</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.039218194</below-ground-carbon-density>
+                        <allocation year="1700">164062</allocation>
+                        <allocation year="1750">153290</allocation>
+                        <allocation year="1800">139542</allocation>
+                        <allocation year="1850">118609</allocation>
+                        <allocation year="1900">104399</allocation>
+                        <allocation year="1950">85763</allocation>
+                        <allocation year="1975">68587</allocation>
+                        <above-ground-carbon-density>0.107620965</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.117375547</below-ground-carbon-density>
                      </land-use-history>
                   </UnmanagedLandLeaf>
                   <LandAllocatorNode name="ForestLand">
                      <sigma>0.8</sigma>
                      <land-use-history>
-                        <allocation year="1700">3335</allocation>
-                        <allocation year="1750">4537</allocation>
-                        <allocation year="1800">5739</allocation>
-                        <allocation year="1850">7312</allocation>
-                        <allocation year="1900">8559</allocation>
-                        <allocation year="1950">12672</allocation>
-                        <allocation year="1975">22965</allocation>
-                        <above-ground-carbon-density>0.180721958</above-ground-carbon-density>
-                        <below-ground-carbon-density>0.039218194</below-ground-carbon-density>
+                        <allocation year="1700">882</allocation>
+                        <allocation year="1750">1200</allocation>
+                        <allocation year="1800">1518</allocation>
+                        <allocation year="1850">1935</allocation>
+                        <allocation year="1900">2265</allocation>
+                        <allocation year="1950">3353</allocation>
+                        <allocation year="1975">6076</allocation>
+                        <above-ground-carbon-density>0.107620965</above-ground-carbon-density>
+                        <below-ground-carbon-density>0.117375547</below-ground-carbon-density>
                      </land-use-history>
                   </LandAllocatorNode>
                </LandAllocatorNode>
@@ -2838,8 +2838,8 @@
                      <allocation year="1900">5395</allocation>
                      <allocation year="1950">5395</allocation>
                      <allocation year="1975">5395</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00632</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.127368421</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>
@@ -2858,8 +2858,8 @@
                      <allocation year="1900">17062</allocation>
                      <allocation year="1950">17062</allocation>
                      <allocation year="1975">17062</allocation>
-                     <above-ground-carbon-density>0</above-ground-carbon-density>
-                     <below-ground-carbon-density>0</below-ground-carbon-density>
+                     <above-ground-carbon-density>0.00176</above-ground-carbon-density>
+                     <below-ground-carbon-density>0.041978022</below-ground-carbon-density>
                   </land-use-history>
                </UnmanagedLandLeaf>
             </LandAllocatorNode>

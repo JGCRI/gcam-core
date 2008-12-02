@@ -30,7 +30,7 @@
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>1050</calPrice>
+            <calPrice>426</calPrice>
          </ForestSupplySector>
       </region>
       <region name="Canada">
@@ -62,7 +62,7 @@
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>1050</calPrice>
+            <calPrice>426</calPrice>
          </ForestSupplySector>
       </region>
       <region name="Western Europe">
@@ -94,7 +94,7 @@
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>1050</calPrice>
+            <calPrice>426</calPrice>
          </ForestSupplySector>
       </region>
       <region name="Japan">
@@ -126,7 +126,7 @@
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>1050</calPrice>
+            <calPrice>426</calPrice>
          </ForestSupplySector>
       </region>
       <region name="Australia_NZ">
@@ -158,7 +158,7 @@
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>1050</calPrice>
+            <calPrice>426</calPrice>
          </ForestSupplySector>
       </region>
       <region name="Former Soviet Union">
@@ -190,7 +190,7 @@
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>1050</calPrice>
+            <calPrice>426</calPrice>
          </ForestSupplySector>
       </region>
       <region name="China">
@@ -222,7 +222,7 @@
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>1050</calPrice>
+            <calPrice>426</calPrice>
          </ForestSupplySector>
       </region>
       <region name="Middle East">
@@ -254,7 +254,7 @@
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>1050</calPrice>
+            <calPrice>426</calPrice>
          </ForestSupplySector>
       </region>
       <region name="Africa">
@@ -286,7 +286,7 @@
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>1050</calPrice>
+            <calPrice>426</calPrice>
          </ForestSupplySector>
       </region>
       <region name="Latin America">
@@ -318,7 +318,7 @@
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>1050</calPrice>
+            <calPrice>426</calPrice>
          </ForestSupplySector>
       </region>
       <region name="Southeast Asia">
@@ -350,7 +350,7 @@
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>1050</calPrice>
+            <calPrice>426</calPrice>
          </ForestSupplySector>
       </region>
       <region name="Eastern Europe">
@@ -382,7 +382,7 @@
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>1050</calPrice>
+            <calPrice>426</calPrice>
          </ForestSupplySector>
       </region>
       <region name="Korea">
@@ -414,7 +414,7 @@
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>1050</calPrice>
+            <calPrice>426</calPrice>
          </ForestSupplySector>
       </region>
       <region name="India">
@@ -446,7 +446,7 @@
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>1050</calPrice>
+            <calPrice>426</calPrice>
          </ForestSupplySector>
       </region>
    </world>

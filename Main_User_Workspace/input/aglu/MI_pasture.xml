@@ -208,7 +208,7 @@
             <FoodSupplySubsector name="Pasture">
                <FoodProductionTechnology name="Pasture">
                   <period year="1975">
-                     <calLandUsed>62907.11858</calLandUsed>
+                     <calLandUsed>60156.25925</calLandUsed>
                      <CalDataOutput>
                         <calOutputValue>496289139</calOutputValue>
                      </CalDataOutput>
@@ -220,7 +220,7 @@
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
-                     <calLandUsed>62907</calLandUsed>
+                     <calLandUsed>60156</calLandUsed>
                      <CalDataOutput>
                         <calOutputValue>496289139</calOutputValue>
                      </CalDataOutput>
@@ -232,7 +232,7 @@
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
-                     <calLandUsed>60499</calLandUsed>
+                     <calLandUsed>60338</calLandUsed>
                      <CalDataOutput>
                         <calOutputValue>445816057</calOutputValue>
                      </CalDataOutput>
@@ -306,7 +306,7 @@
             <FoodSupplySubsector name="Pasture">
                <FoodProductionTechnology name="Pasture">
                   <period year="1975">
-                     <calLandUsed>309.8490771</calLandUsed>
+                     <calLandUsed>314.7625245</calLandUsed>
                      <CalDataOutput>
                         <calOutputValue>11703656</calOutputValue>
                      </CalDataOutput>
@@ -318,7 +318,7 @@
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
-                     <calLandUsed>310</calLandUsed>
+                     <calLandUsed>315</calLandUsed>
                      <CalDataOutput>
                         <calOutputValue>11703656</calOutputValue>
                      </CalDataOutput>
@@ -330,7 +330,7 @@
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
-                     <calLandUsed>193</calLandUsed>
+                     <calLandUsed>197</calLandUsed>
                      <CalDataOutput>
                         <calOutputValue>8066039</calOutputValue>
                      </CalDataOutput>
@@ -600,7 +600,7 @@
             <FoodSupplySubsector name="Pasture">
                <FoodProductionTechnology name="Pasture">
                   <period year="1975">
-                     <calLandUsed>74078.72987</calLandUsed>
+                     <calLandUsed>87466.45213</calLandUsed>
                      <CalDataOutput>
                         <calOutputValue>362985776</calOutputValue>
                      </CalDataOutput>
@@ -612,7 +612,7 @@
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
-                     <calLandUsed>74079</calLandUsed>
+                     <calLandUsed>87466</calLandUsed>
                      <CalDataOutput>
                         <calOutputValue>362985776</calOutputValue>
                      </CalDataOutput>
@@ -698,7 +698,7 @@
             <FoodSupplySubsector name="Pasture">
                <FoodProductionTechnology name="Pasture">
                   <period year="1975">
-                     <calLandUsed>9240.969626</calLandUsed>
+                     <calLandUsed>8086.498178</calLandUsed>
                      <CalDataOutput>
                         <calOutputValue>51753588</calOutputValue>
                      </CalDataOutput>
@@ -710,7 +710,7 @@
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
-                     <calLandUsed>9241</calLandUsed>
+                     <calLandUsed>8086</calLandUsed>
                      <CalDataOutput>
                         <calOutputValue>51753588</calOutputValue>
                      </CalDataOutput>
@@ -796,7 +796,7 @@
             <FoodSupplySubsector name="Pasture">
                <FoodProductionTechnology name="Pasture">
                   <period year="1975">
-                     <calLandUsed>72748.17025</calLandUsed>
+                     <calLandUsed>90405.35591</calLandUsed>
                      <CalDataOutput>
                         <calOutputValue>709682044</calOutputValue>
                      </CalDataOutput>
@@ -808,7 +808,7 @@
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
-                     <calLandUsed>72748</calLandUsed>
+                     <calLandUsed>90405</calLandUsed>
                      <CalDataOutput>
                         <calOutputValue>709682044</calOutputValue>
                      </CalDataOutput>
@@ -1188,7 +1188,7 @@
             <FoodSupplySubsector name="Pasture">
                <FoodProductionTechnology name="Pasture">
                   <period year="1975">
-                     <calLandUsed>23.36095535</calLandUsed>
+                     <calLandUsed>10.44188519</calLandUsed>
                      <CalDataOutput>
                         <calOutputValue>15472025</calOutputValue>
                      </CalDataOutput>
@@ -1200,7 +1200,7 @@
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
-                     <calLandUsed>23</calLandUsed>
+                     <calLandUsed>10</calLandUsed>
                      <CalDataOutput>
                         <calOutputValue>15472025</calOutputValue>
                      </CalDataOutput>
@@ -1212,7 +1212,7 @@
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
-                     <calLandUsed>26</calLandUsed>
+                     <calLandUsed>12</calLandUsed>
                      <CalDataOutput>
                         <calOutputValue>12377157</calOutputValue>
                      </CalDataOutput>
@@ -1286,7 +1286,7 @@
             <FoodSupplySubsector name="Pasture">
                <FoodProductionTechnology name="Pasture">
                   <period year="1975">
-                     <calLandUsed>8331.789665</calLandUsed>
+                     <calLandUsed>8354.487523</calLandUsed>
                      <CalDataOutput>
                         <calOutputValue>301118017</calOutputValue>
                      </CalDataOutput>
@@ -1298,7 +1298,7 @@
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
-                     <calLandUsed>8332</calLandUsed>
+                     <calLandUsed>8354</calLandUsed>
                      <CalDataOutput>
                         <calOutputValue>301118017</calOutputValue>
                      </CalDataOutput>
@@ -1310,7 +1310,7 @@
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
-                     <calLandUsed>7555</calLandUsed>
+                     <calLandUsed>7580</calLandUsed>
                      <CalDataOutput>
                         <calOutputValue>317338716</calOutputValue>
                      </CalDataOutput>
