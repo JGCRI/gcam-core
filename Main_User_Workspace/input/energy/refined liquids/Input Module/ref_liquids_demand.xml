@@ -482,62 +482,7 @@
          </supplysector>
          <supplysector name="electricity">
             <subsector name="oil">
-               <technology name="Oil (existing)">
-                  <period year="1975">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="1990">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
+               <technology delete="1" name="Oil (existing)"/>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
                      <minicam-energy-input delete="1" name="refined oil"/>
@@ -760,6 +705,111 @@
                      <minicam-energy-input name="refined liquids electricity">
                         <efficiency>0.5</efficiency>
                      </minicam-energy-input>
+                  </period>
+               </technology>
+               <technology name="Oil (existing)">
+                  <period year="1975">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>45</lifetime>
+                     <phased-shutdown-decider>
+                        <shutdown-rate>0.05</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
+                  <period year="2020">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -1246,62 +1296,7 @@
          </supplysector>
          <supplysector name="electricity">
             <subsector name="oil">
-               <technology name="Oil (existing)">
-                  <period year="1975">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="1990">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
+               <technology delete="1" name="Oil (existing)"/>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
                      <minicam-energy-input delete="1" name="refined oil"/>
@@ -1524,6 +1519,111 @@
                      <minicam-energy-input name="refined liquids electricity">
                         <efficiency>0.5</efficiency>
                      </minicam-energy-input>
+                  </period>
+               </technology>
+               <technology name="Oil (existing)">
+                  <period year="1975">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>45</lifetime>
+                     <phased-shutdown-decider>
+                        <shutdown-rate>0.05</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
+                  <period year="2020">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -2010,62 +2110,7 @@
          </supplysector>
          <supplysector name="electricity">
             <subsector name="oil">
-               <technology name="Oil (existing)">
-                  <period year="1975">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="1990">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
+               <technology delete="1" name="Oil (existing)"/>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
                      <minicam-energy-input delete="1" name="refined oil"/>
@@ -2288,6 +2333,111 @@
                      <minicam-energy-input name="refined liquids electricity">
                         <efficiency>0.5</efficiency>
                      </minicam-energy-input>
+                  </period>
+               </technology>
+               <technology name="Oil (existing)">
+                  <period year="1975">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>45</lifetime>
+                     <phased-shutdown-decider>
+                        <shutdown-rate>0.05</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
+                  <period year="2020">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -2774,62 +2924,7 @@
          </supplysector>
          <supplysector name="electricity">
             <subsector name="oil">
-               <technology name="Oil (existing)">
-                  <period year="1975">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="1990">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
+               <technology delete="1" name="Oil (existing)"/>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
                      <minicam-energy-input delete="1" name="refined oil"/>
@@ -3052,6 +3147,111 @@
                      <minicam-energy-input name="refined liquids electricity">
                         <efficiency>0.5</efficiency>
                      </minicam-energy-input>
+                  </period>
+               </technology>
+               <technology name="Oil (existing)">
+                  <period year="1975">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>45</lifetime>
+                     <phased-shutdown-decider>
+                        <shutdown-rate>0.05</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
+                  <period year="2020">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -3538,62 +3738,7 @@
          </supplysector>
          <supplysector name="electricity">
             <subsector name="oil">
-               <technology name="Oil (existing)">
-                  <period year="1975">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="1990">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
+               <technology delete="1" name="Oil (existing)"/>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
                      <minicam-energy-input delete="1" name="refined oil"/>
@@ -3816,6 +3961,111 @@
                      <minicam-energy-input name="refined liquids electricity">
                         <efficiency>0.5</efficiency>
                      </minicam-energy-input>
+                  </period>
+               </technology>
+               <technology name="Oil (existing)">
+                  <period year="1975">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>45</lifetime>
+                     <phased-shutdown-decider>
+                        <shutdown-rate>0.05</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
+                  <period year="2020">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -4302,62 +4552,7 @@
          </supplysector>
          <supplysector name="electricity">
             <subsector name="oil">
-               <technology name="Oil (existing)">
-                  <period year="1975">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="1990">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
+               <technology delete="1" name="Oil (existing)"/>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
                      <minicam-energy-input delete="1" name="refined oil"/>
@@ -4580,6 +4775,111 @@
                      <minicam-energy-input name="refined liquids electricity">
                         <efficiency>0.5</efficiency>
                      </minicam-energy-input>
+                  </period>
+               </technology>
+               <technology name="Oil (existing)">
+                  <period year="1975">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>45</lifetime>
+                     <phased-shutdown-decider>
+                        <shutdown-rate>0.05</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
+                  <period year="2020">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -5066,62 +5366,7 @@
          </supplysector>
          <supplysector name="electricity">
             <subsector name="oil">
-               <technology name="Oil (existing)">
-                  <period year="1975">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="1990">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
+               <technology delete="1" name="Oil (existing)"/>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
                      <minicam-energy-input delete="1" name="refined oil"/>
@@ -5344,6 +5589,111 @@
                      <minicam-energy-input name="refined liquids electricity">
                         <efficiency>0.5</efficiency>
                      </minicam-energy-input>
+                  </period>
+               </technology>
+               <technology name="Oil (existing)">
+                  <period year="1975">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>45</lifetime>
+                     <phased-shutdown-decider>
+                        <shutdown-rate>0.05</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
+                  <period year="2020">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -5830,62 +6180,7 @@
          </supplysector>
          <supplysector name="electricity">
             <subsector name="oil">
-               <technology name="Oil (existing)">
-                  <period year="1975">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="1990">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
+               <technology delete="1" name="Oil (existing)"/>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
                      <minicam-energy-input delete="1" name="refined oil"/>
@@ -6108,6 +6403,111 @@
                      <minicam-energy-input name="refined liquids electricity">
                         <efficiency>0.5</efficiency>
                      </minicam-energy-input>
+                  </period>
+               </technology>
+               <technology name="Oil (existing)">
+                  <period year="1975">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>45</lifetime>
+                     <phased-shutdown-decider>
+                        <shutdown-rate>0.05</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
+                  <period year="2020">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -6594,62 +6994,7 @@
          </supplysector>
          <supplysector name="electricity">
             <subsector name="oil">
-               <technology name="Oil (existing)">
-                  <period year="1975">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="1990">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
+               <technology delete="1" name="Oil (existing)"/>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
                      <minicam-energy-input delete="1" name="refined oil"/>
@@ -6872,6 +7217,111 @@
                      <minicam-energy-input name="refined liquids electricity">
                         <efficiency>0.5</efficiency>
                      </minicam-energy-input>
+                  </period>
+               </technology>
+               <technology name="Oil (existing)">
+                  <period year="1975">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>45</lifetime>
+                     <phased-shutdown-decider>
+                        <shutdown-rate>0.05</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
+                  <period year="2020">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -7358,62 +7808,7 @@
          </supplysector>
          <supplysector name="electricity">
             <subsector name="oil">
-               <technology name="Oil (existing)">
-                  <period year="1975">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="1990">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
+               <technology delete="1" name="Oil (existing)"/>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
                      <minicam-energy-input delete="1" name="refined oil"/>
@@ -7636,6 +8031,111 @@
                      <minicam-energy-input name="refined liquids electricity">
                         <efficiency>0.5</efficiency>
                      </minicam-energy-input>
+                  </period>
+               </technology>
+               <technology name="Oil (existing)">
+                  <period year="1975">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>45</lifetime>
+                     <phased-shutdown-decider>
+                        <shutdown-rate>0.05</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
+                  <period year="2020">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -8122,62 +8622,7 @@
          </supplysector>
          <supplysector name="electricity">
             <subsector name="oil">
-               <technology name="Oil (existing)">
-                  <period year="1975">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="1990">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
+               <technology delete="1" name="Oil (existing)"/>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
                      <minicam-energy-input delete="1" name="refined oil"/>
@@ -8400,6 +8845,111 @@
                      <minicam-energy-input name="refined liquids electricity">
                         <efficiency>0.5</efficiency>
                      </minicam-energy-input>
+                  </period>
+               </technology>
+               <technology name="Oil (existing)">
+                  <period year="1975">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>45</lifetime>
+                     <phased-shutdown-decider>
+                        <shutdown-rate>0.05</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
+                  <period year="2020">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -8886,62 +9436,7 @@
          </supplysector>
          <supplysector name="electricity">
             <subsector name="oil">
-               <technology name="Oil (existing)">
-                  <period year="1975">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="1990">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
+               <technology delete="1" name="Oil (existing)"/>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
                      <minicam-energy-input delete="1" name="refined oil"/>
@@ -9164,6 +9659,111 @@
                      <minicam-energy-input name="refined liquids electricity">
                         <efficiency>0.5</efficiency>
                      </minicam-energy-input>
+                  </period>
+               </technology>
+               <technology name="Oil (existing)">
+                  <period year="1975">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>45</lifetime>
+                     <phased-shutdown-decider>
+                        <shutdown-rate>0.05</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
+                  <period year="2020">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -9650,62 +10250,7 @@
          </supplysector>
          <supplysector name="electricity">
             <subsector name="oil">
-               <technology name="Oil (existing)">
-                  <period year="1975">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="1990">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
+               <technology delete="1" name="Oil (existing)"/>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
                      <minicam-energy-input delete="1" name="refined oil"/>
@@ -9928,6 +10473,111 @@
                      <minicam-energy-input name="refined liquids electricity">
                         <efficiency>0.5</efficiency>
                      </minicam-energy-input>
+                  </period>
+               </technology>
+               <technology name="Oil (existing)">
+                  <period year="1975">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>45</lifetime>
+                     <phased-shutdown-decider>
+                        <shutdown-rate>0.05</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
+                  <period year="2020">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -10414,62 +11064,7 @@
          </supplysector>
          <supplysector name="electricity">
             <subsector name="oil">
-               <technology name="Oil (existing)">
-                  <period year="1975">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="1990">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input delete="1" name="refined oil"/>
-                     <minicam-energy-input name="refined liquids electricity">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
+               <technology delete="1" name="Oil (existing)"/>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
                      <minicam-energy-input delete="1" name="refined oil"/>
@@ -10692,6 +11287,111 @@
                      <minicam-energy-input name="refined liquids electricity">
                         <efficiency>0.5</efficiency>
                      </minicam-energy-input>
+                  </period>
+               </technology>
+               <technology name="Oil (existing)">
+                  <period year="1975">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="1990">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.0528</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2005">
+                     <sharewt>1</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>45</lifetime>
+                     <phased-shutdown-decider>
+                        <shutdown-rate>0.05</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
+                  <period year="2020">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2035">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2050">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2065">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2080">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2095">
+                     <sharewt>0</sharewt>
+                     <logitexp>-10</logitexp>
+                     <minicam-energy-input name="refined liquids electricity">
+                        <efficiency>0.377</efficiency>
+                     </minicam-energy-input>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1</input-cost>
+                     </minicam-non-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>

@@ -1,3 +1,36 @@
+Lifetimes,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+2000,,,,,,,,,,,,
+,,,,lifetime,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+ALL,refined liquids enduse,coal to liquids,coal to liquids CCS Level 1,-1,-1,-1,45,45,45,45,45,45
+ALL,refined liquids industrial,coal to liquids,coal to liquids CCS Level 1,-1,-1,-1,45,45,45,45,45,45
+ALL,refined liquids enduse,coal to liquids,coal to liquids CCS Level 2,-1,-1,-1,45,45,45,45,45,45
+ALL,refined liquids industrial,coal to liquids,coal to liquids CCS Level 2,-1,-1,-1,45,45,45,45,45,45
+
+Phased shutdown decider for partial retirement of capital stocks,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+2001,,,,phased-shutdown-decider,,,,,,,,
+,,,,shutdown-rate,,,,,,,,
+region,supplysector,subsector,technology,2005,2020,2035,2050,2065,2080,2095,,
+ALL,refined liquids enduse,coal to liquids,coal to liquids CCS Level 1,0.03,0.03,0.03,0.03,0.03,0.03,0.03,,
+ALL,refined liquids industrial,coal to liquids,coal to liquids CCS Level 1,0.03,0.03,0.03,0.03,0.03,0.03,0.03,,
+ALL,refined liquids enduse,coal to liquids,coal to liquids CCS Level 2,0.03,0.03,0.03,0.03,0.03,0.03,0.03,,
+ALL,refined liquids industrial,coal to liquids,coal to liquids CCS Level 2,0.03,0.03,0.03,0.03,0.03,0.03,0.03,,
+
+Shareweights,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+2005,,,,,,,,,,,,
+,,,,sharewt,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+ALL,refined liquids enduse,coal to liquids,coal to liquids CCS Level 1,0,0,0,0.333,1,1,1,1,1
+ALL,refined liquids industrial,coal to liquids,coal to liquids CCS Level 1,0,0,0,0.333,1,1,1,1,1
+ALL,refined liquids enduse,coal to liquids,coal to liquids CCS Level 2,0,0,0,0.333,1,1,1,1,1
+ALL,refined liquids industrial,coal to liquids,coal to liquids CCS Level 2,0,0,0,0.333,1,1,1,1,1
+
 IO coefficients,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,
@@ -22,21 +55,21 @@ Variable ID,,,,,,,,,,,,,
 2020,,,,,,,,,,,,,
 ,,,,,input-cost,,,,,,,,
 region,supplysector,subsector,technology,minicam-non-energy-input,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,refined liquids enduse,coal to liquids,coal to liquids CCS Level 1,non-energy,3.50,3.50,3.50,3.50,3.45,3.40,3.35,3.30,3.25
-ALL,refined liquids industrial,coal to liquids,coal to liquids CCS Level 1,non-energy,2.40,2.40,2.40,2.40,2.36,2.33,2.29,2.26,2.23
-ALL,refined liquids enduse,coal to liquids,coal to liquids CCS Level 2,non-energy,3.50,3.50,3.50,3.50,3.45,3.40,3.35,3.30,3.25
-ALL,refined liquids industrial,coal to liquids,coal to liquids CCS Level 2,non-energy,2.40,2.40,2.40,2.40,2.36,2.33,2.29,2.26,2.23
+ALL,refined liquids enduse,coal to liquids,coal to liquids CCS Level 1,non-energy,3.80,3.80,3.80,3.80,3.74,3.69,3.63,3.58,3.53
+ALL,refined liquids industrial,coal to liquids,coal to liquids CCS Level 1,non-energy,2.70,2.70,2.70,2.70,2.66,2.62,2.58,2.54,2.50
+ALL,refined liquids enduse,coal to liquids,coal to liquids CCS Level 2,non-energy,3.80,3.80,3.80,3.80,3.74,3.69,3.63,3.58,3.53
+ALL,refined liquids industrial,coal to liquids,coal to liquids CCS Level 2,non-energy,2.70,2.70,2.70,2.70,2.66,2.62,2.58,2.54,2.50
 
 Logit exponent,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
 2030,,,,,,,,,,,,
 ,,,,logitexp,,,,,,,,
 region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,refined liquids enduse,coal to liquids,coal to liquids CCS Level 1,-24,-24,-24,-24,-24,-24,-24,-24,-24
-ALL,refined liquids industrial,coal to liquids,coal to liquids CCS Level 1,-24,-24,-24,-24,-24,-24,-24,-24,-24
-ALL,refined liquids enduse,coal to liquids,coal to liquids CCS Level 2,-24,-24,-24,-24,-24,-24,-24,-24,-24
-ALL,refined liquids industrial,coal to liquids,coal to liquids CCS Level 2,-24,-24,-24,-24,-24,-24,-24,-24,-24
+ALL,refined liquids enduse,coal to liquids,coal to liquids CCS Level 1,-30,-30,-30,-30,-30,-30,-30,-30,-30
+ALL,refined liquids industrial,coal to liquids,coal to liquids CCS Level 1,-30,-30,-30,-30,-30,-30,-30,-30,-30
+ALL,refined liquids enduse,coal to liquids,coal to liquids CCS Level 2,-30,-30,-30,-30,-30,-30,-30,-30,-30
+ALL,refined liquids industrial,coal to liquids,coal to liquids CCS Level 2,-30,-30,-30,-30,-30,-30,-30,-30,-30
 
 CCS Parameters,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,
@@ -74,7 +107,7 @@ Variable ID,,,,,,,,,,,,
 2053,,,,standard-capture-component,,,,,,,,
 ,,,,non-energy-penalty,,,,,,,,
 region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,refined liquids enduse,coal to liquids,coal to liquids CCS Level 1,0.202,0.202,0.202,0.202,0.205,0.208,0.212,0.215,0.218
-ALL,refined liquids industrial,coal to liquids,coal to liquids CCS Level 1,0.295,0.295,0.295,0.295,0.299,0.304,0.308,0.313,0.318
-ALL,refined liquids enduse,coal to liquids,coal to liquids CCS Level 2,0.335,0.335,0.335,0.335,0.340,0.345,0.350,0.356,0.361
-ALL,refined liquids industrial,coal to liquids,coal to liquids CCS Level 2,0.489,0.489,0.489,0.489,0.496,0.503,0.511,0.519,0.527
+ALL,refined liquids enduse,coal to liquids,coal to liquids CCS Level 1,0.186,0.186,0.186,0.186,0.189,0.192,0.195,0.198,0.201
+ALL,refined liquids industrial,coal to liquids,coal to liquids CCS Level 1,0.262,0.262,0.262,0.262,0.266,0.270,0.274,0.278,0.283
+ALL,refined liquids enduse,coal to liquids,coal to liquids CCS Level 2,0.309,0.309,0.309,0.309,0.313,0.318,0.323,0.328,0.333
+ALL,refined liquids industrial,coal to liquids,coal to liquids CCS Level 2,0.434,0.434,0.434,0.434,0.441,0.448,0.454,0.461,0.468
