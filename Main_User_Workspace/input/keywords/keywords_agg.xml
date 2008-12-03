@@ -134,9 +134,9 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional shale oil" nocreate="1">
-            <subsector name="regional shale oil" nocreate="1">
-               <technology name="regional shale oil" nocreate="1">
+         <supplysector name="regional unconventional oil" nocreate="1">
+            <subsector name="regional unconventional oil" nocreate="1">
+               <technology name="regional unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -1244,9 +1244,9 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional shale oil" nocreate="1">
-            <subsector name="regional shale oil" nocreate="1">
-               <technology name="regional shale oil" nocreate="1">
+         <supplysector name="regional unconventional oil" nocreate="1">
+            <subsector name="regional unconventional oil" nocreate="1">
+               <technology name="regional unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -2354,9 +2354,9 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional shale oil" nocreate="1">
-            <subsector name="regional shale oil" nocreate="1">
-               <technology name="regional shale oil" nocreate="1">
+         <supplysector name="regional unconventional oil" nocreate="1">
+            <subsector name="regional unconventional oil" nocreate="1">
+               <technology name="regional unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -3464,9 +3464,9 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional shale oil" nocreate="1">
-            <subsector name="regional shale oil" nocreate="1">
-               <technology name="regional shale oil" nocreate="1">
+         <supplysector name="regional unconventional oil" nocreate="1">
+            <subsector name="regional unconventional oil" nocreate="1">
+               <technology name="regional unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -4574,9 +4574,9 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional shale oil" nocreate="1">
-            <subsector name="regional shale oil" nocreate="1">
-               <technology name="regional shale oil" nocreate="1">
+         <supplysector name="regional unconventional oil" nocreate="1">
+            <subsector name="regional unconventional oil" nocreate="1">
+               <technology name="regional unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -5684,9 +5684,9 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional shale oil" nocreate="1">
-            <subsector name="regional shale oil" nocreate="1">
-               <technology name="regional shale oil" nocreate="1">
+         <supplysector name="regional unconventional oil" nocreate="1">
+            <subsector name="regional unconventional oil" nocreate="1">
+               <technology name="regional unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -6794,9 +6794,9 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional shale oil" nocreate="1">
-            <subsector name="regional shale oil" nocreate="1">
-               <technology name="regional shale oil" nocreate="1">
+         <supplysector name="regional unconventional oil" nocreate="1">
+            <subsector name="regional unconventional oil" nocreate="1">
+               <technology name="regional unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -7904,9 +7904,9 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional shale oil" nocreate="1">
-            <subsector name="regional shale oil" nocreate="1">
-               <technology name="regional shale oil" nocreate="1">
+         <supplysector name="regional unconventional oil" nocreate="1">
+            <subsector name="regional unconventional oil" nocreate="1">
+               <technology name="regional unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -9014,9 +9014,9 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional shale oil" nocreate="1">
-            <subsector name="regional shale oil" nocreate="1">
-               <technology name="regional shale oil" nocreate="1">
+         <supplysector name="regional unconventional oil" nocreate="1">
+            <subsector name="regional unconventional oil" nocreate="1">
+               <technology name="regional unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -10124,9 +10124,9 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional shale oil" nocreate="1">
-            <subsector name="regional shale oil" nocreate="1">
-               <technology name="regional shale oil" nocreate="1">
+         <supplysector name="regional unconventional oil" nocreate="1">
+            <subsector name="regional unconventional oil" nocreate="1">
+               <technology name="regional unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -11234,9 +11234,9 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional shale oil" nocreate="1">
-            <subsector name="regional shale oil" nocreate="1">
-               <technology name="regional shale oil" nocreate="1">
+         <supplysector name="regional unconventional oil" nocreate="1">
+            <subsector name="regional unconventional oil" nocreate="1">
+               <technology name="regional unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -12344,9 +12344,9 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional shale oil" nocreate="1">
-            <subsector name="regional shale oil" nocreate="1">
-               <technology name="regional shale oil" nocreate="1">
+         <supplysector name="regional unconventional oil" nocreate="1">
+            <subsector name="regional unconventional oil" nocreate="1">
+               <technology name="regional unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -13454,9 +13454,9 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional shale oil" nocreate="1">
-            <subsector name="regional shale oil" nocreate="1">
-               <technology name="regional shale oil" nocreate="1">
+         <supplysector name="regional unconventional oil" nocreate="1">
+            <subsector name="regional unconventional oil" nocreate="1">
+               <technology name="regional unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -14564,9 +14564,9 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional shale oil" nocreate="1">
-            <subsector name="regional shale oil" nocreate="1">
-               <technology name="regional shale oil" nocreate="1">
+         <supplysector name="regional unconventional oil" nocreate="1">
+            <subsector name="regional unconventional oil" nocreate="1">
+               <technology name="regional unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
