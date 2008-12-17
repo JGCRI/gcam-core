@@ -107,9 +107,9 @@ ALL,transportation,rail,coal,1,10.59,13.26,13.26,13.26,13.26,13.26,13.26,13.26
 ALL,transportation,rail,electricity,1,13.00,12.85,12.85,12.85,12.85,12.85,12.85,12.85
 ALL,transportation,rail,hydrogen,1,13.00,12.85,12.85,12.85,12.85,12.85,12.85,12.85
 ALL,transportation,rail,refined liquids,1,10.59,13.26,13.26,13.26,13.26,13.26,13.26,13.26
-ALL,transportation,road,electricity,1,36.78,40.96,40.96,40.96,40.96,40.96,40.96,40.96
-ALL,transportation,road,gas,1,36.78,40.96,40.96,40.96,40.96,40.96,40.96,40.96
-ALL,transportation,road,hydrogen,1,36.78,40.96,40.96,40.96,40.96,40.96,40.96,40.96
+ALL,transportation,road,electricity,1,35.18,39.18,39.18,38.29,37.40,37.40,37.40,37.40
+ALL,transportation,road,gas,1,33.58,37.40,37.40,37.40,37.40,37.40,37.40,37.40
+ALL,transportation,road,hydrogen,1,36.78,40.96,40.96,40.07,39.18,39.18,39.18,39.18
 ALL,transportation,road,refined liquids,1,31.98,35.62,35.62,35.62,35.62,35.62,35.62,35.62,,
 ALL,transportation,domestic ship,coal,1,0.50,0.32,0.32,0.32,0.32,0.32,0.32,0.32,,
 ALL,transportation,domestic ship,hydrogen,1,0.60,0.38,0.38,0.38,0.38,0.38,0.38,0.38,,

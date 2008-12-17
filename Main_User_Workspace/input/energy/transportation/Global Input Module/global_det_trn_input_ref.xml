@@ -7,6 +7,8 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+         </supplysector>
+         <supplysector name="transportation" nocreate="1">
             <subsector name="air">
                <sharewt fillout="1" year="1975">1</sharewt>
                <logitexp fillout="1" year="1975">-2</logitexp>
@@ -864,7 +866,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>35.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -876,7 +878,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -887,7 +889,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.133</sharewt>
                   </period>
@@ -898,7 +900,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>38.29</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.267</sharewt>
                   </period>
@@ -909,7 +911,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.4</sharewt>
                   </period>
@@ -920,7 +922,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.533</sharewt>
                   </period>
@@ -931,7 +933,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -942,7 +944,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.8</sharewt>
                   </period>
@@ -966,7 +968,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>33.58</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -978,7 +980,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -989,7 +991,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -1000,7 +1002,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -1011,7 +1013,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -1022,7 +1024,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -1033,7 +1035,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -1044,7 +1046,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.5</sharewt>
                   </period>
@@ -1101,7 +1103,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>40.07</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.333</sharewt>
                   </period>
@@ -1112,7 +1114,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.500</sharewt>
                   </period>
@@ -1123,7 +1125,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -1134,7 +1136,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.833</sharewt>
                   </period>
@@ -1145,7 +1147,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -1781,6 +1783,8 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+         </supplysector>
+         <supplysector name="transportation" nocreate="1">
             <subsector name="air">
                <sharewt fillout="1" year="1975">1</sharewt>
                <logitexp fillout="1" year="1975">-2</logitexp>
@@ -2638,7 +2642,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>35.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -2650,7 +2654,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -2661,7 +2665,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.133</sharewt>
                   </period>
@@ -2672,7 +2676,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>38.29</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.267</sharewt>
                   </period>
@@ -2683,7 +2687,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.4</sharewt>
                   </period>
@@ -2694,7 +2698,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.533</sharewt>
                   </period>
@@ -2705,7 +2709,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -2716,7 +2720,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.8</sharewt>
                   </period>
@@ -2740,7 +2744,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>33.58</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -2752,7 +2756,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -2763,7 +2767,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -2774,7 +2778,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -2785,7 +2789,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -2796,7 +2800,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -2807,7 +2811,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -2818,7 +2822,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.5</sharewt>
                   </period>
@@ -2875,7 +2879,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>40.07</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.333</sharewt>
                   </period>
@@ -2886,7 +2890,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.500</sharewt>
                   </period>
@@ -2897,7 +2901,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -2908,7 +2912,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.833</sharewt>
                   </period>
@@ -2919,7 +2923,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -3555,6 +3559,8 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+         </supplysector>
+         <supplysector name="transportation" nocreate="1">
             <subsector name="air">
                <sharewt fillout="1" year="1975">1</sharewt>
                <logitexp fillout="1" year="1975">-2</logitexp>
@@ -4412,7 +4418,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>35.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -4424,7 +4430,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -4435,7 +4441,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.133</sharewt>
                   </period>
@@ -4446,7 +4452,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>38.29</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.267</sharewt>
                   </period>
@@ -4457,7 +4463,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.4</sharewt>
                   </period>
@@ -4468,7 +4474,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.533</sharewt>
                   </period>
@@ -4479,7 +4485,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -4490,7 +4496,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.8</sharewt>
                   </period>
@@ -4514,7 +4520,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>33.58</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -4526,7 +4532,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -4537,7 +4543,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -4548,7 +4554,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -4559,7 +4565,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -4570,7 +4576,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -4581,7 +4587,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -4592,7 +4598,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.5</sharewt>
                   </period>
@@ -4649,7 +4655,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>40.07</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.333</sharewt>
                   </period>
@@ -4660,7 +4666,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.500</sharewt>
                   </period>
@@ -4671,7 +4677,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -4682,7 +4688,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.833</sharewt>
                   </period>
@@ -4693,7 +4699,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -5329,6 +5335,8 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+         </supplysector>
+         <supplysector name="transportation" nocreate="1">
             <subsector name="air">
                <sharewt fillout="1" year="1975">1</sharewt>
                <logitexp fillout="1" year="1975">-2</logitexp>
@@ -6194,7 +6202,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>35.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -6206,7 +6214,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -6217,7 +6225,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.133</sharewt>
                   </period>
@@ -6228,7 +6236,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>38.29</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.267</sharewt>
                   </period>
@@ -6239,7 +6247,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.4</sharewt>
                   </period>
@@ -6250,7 +6258,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.533</sharewt>
                   </period>
@@ -6261,7 +6269,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -6272,7 +6280,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.8</sharewt>
                   </period>
@@ -6296,7 +6304,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>33.58</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -6308,7 +6316,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -6319,7 +6327,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.083</sharewt>
                   </period>
@@ -6330,7 +6338,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.167</sharewt>
                   </period>
@@ -6341,7 +6349,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.25</sharewt>
                   </period>
@@ -6352,7 +6360,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.333</sharewt>
                   </period>
@@ -6363,7 +6371,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.417</sharewt>
                   </period>
@@ -6374,7 +6382,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.5</sharewt>
                   </period>
@@ -6431,7 +6439,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>40.07</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.333</sharewt>
                   </period>
@@ -6442,7 +6450,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.500</sharewt>
                   </period>
@@ -6453,7 +6461,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -6464,7 +6472,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.833</sharewt>
                   </period>
@@ -6475,7 +6483,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -7111,6 +7119,8 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+         </supplysector>
+         <supplysector name="transportation" nocreate="1">
             <subsector name="air">
                <sharewt fillout="1" year="1975">1</sharewt>
                <logitexp fillout="1" year="1975">-2</logitexp>
@@ -7976,7 +7986,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>35.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -7988,7 +7998,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -7999,7 +8009,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.133</sharewt>
                   </period>
@@ -8010,7 +8020,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>38.29</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.267</sharewt>
                   </period>
@@ -8021,7 +8031,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.4</sharewt>
                   </period>
@@ -8032,7 +8042,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.533</sharewt>
                   </period>
@@ -8043,7 +8053,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -8054,7 +8064,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.8</sharewt>
                   </period>
@@ -8078,7 +8088,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>33.58</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -8090,7 +8100,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -8101,7 +8111,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -8112,7 +8122,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -8123,7 +8133,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -8134,7 +8144,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -8145,7 +8155,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -8156,7 +8166,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.5</sharewt>
                   </period>
@@ -8213,7 +8223,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>40.07</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.333</sharewt>
                   </period>
@@ -8224,7 +8234,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.500</sharewt>
                   </period>
@@ -8235,7 +8245,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -8246,7 +8256,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.833</sharewt>
                   </period>
@@ -8257,7 +8267,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -8893,6 +8903,8 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+         </supplysector>
+         <supplysector name="transportation" nocreate="1">
             <subsector name="air">
                <sharewt fillout="1" year="1975">1</sharewt>
                <logitexp fillout="1" year="1975">-2</logitexp>
@@ -9750,7 +9762,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>35.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -9762,7 +9774,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -9773,7 +9785,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.133</sharewt>
                   </period>
@@ -9784,7 +9796,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>38.29</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.267</sharewt>
                   </period>
@@ -9795,7 +9807,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.4</sharewt>
                   </period>
@@ -9806,7 +9818,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.533</sharewt>
                   </period>
@@ -9817,7 +9829,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -9828,7 +9840,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.8</sharewt>
                   </period>
@@ -9852,7 +9864,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>33.58</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -9864,7 +9876,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -9875,7 +9887,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -9886,7 +9898,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -9897,7 +9909,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -9908,7 +9920,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -9919,7 +9931,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -9930,7 +9942,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.5</sharewt>
                   </period>
@@ -9987,7 +9999,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>40.07</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.333</sharewt>
                   </period>
@@ -9998,7 +10010,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.500</sharewt>
                   </period>
@@ -10009,7 +10021,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -10020,7 +10032,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.833</sharewt>
                   </period>
@@ -10031,7 +10043,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -10667,6 +10679,8 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+         </supplysector>
+         <supplysector name="transportation" nocreate="1">
             <subsector name="air">
                <sharewt fillout="1" year="1975">1</sharewt>
                <logitexp fillout="1" year="1975">-2</logitexp>
@@ -11524,7 +11538,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>35.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -11536,7 +11550,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -11547,7 +11561,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.133</sharewt>
                   </period>
@@ -11558,7 +11572,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>38.29</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.267</sharewt>
                   </period>
@@ -11569,7 +11583,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.4</sharewt>
                   </period>
@@ -11580,7 +11594,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.533</sharewt>
                   </period>
@@ -11591,7 +11605,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -11602,7 +11616,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.8</sharewt>
                   </period>
@@ -11626,7 +11640,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>33.58</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -11638,7 +11652,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -11649,7 +11663,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -11660,7 +11674,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -11671,7 +11685,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -11682,7 +11696,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -11693,7 +11707,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -11704,7 +11718,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.5</sharewt>
                   </period>
@@ -11761,7 +11775,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>40.07</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.333</sharewt>
                   </period>
@@ -11772,7 +11786,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.500</sharewt>
                   </period>
@@ -11783,7 +11797,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -11794,7 +11808,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.833</sharewt>
                   </period>
@@ -11805,7 +11819,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -12441,6 +12455,8 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+         </supplysector>
+         <supplysector name="transportation" nocreate="1">
             <subsector name="air">
                <sharewt fillout="1" year="1975">1</sharewt>
                <logitexp fillout="1" year="1975">-2</logitexp>
@@ -13314,7 +13330,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>35.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -13326,7 +13342,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -13337,7 +13353,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.133</sharewt>
                   </period>
@@ -13348,7 +13364,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>38.29</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.267</sharewt>
                   </period>
@@ -13359,7 +13375,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.4</sharewt>
                   </period>
@@ -13370,7 +13386,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.533</sharewt>
                   </period>
@@ -13381,7 +13397,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -13392,7 +13408,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.8</sharewt>
                   </period>
@@ -13416,7 +13432,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>33.58</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -13428,7 +13444,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -13439,7 +13455,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -13450,7 +13466,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -13461,7 +13477,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -13472,7 +13488,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -13483,7 +13499,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -13494,7 +13510,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.5</sharewt>
                   </period>
@@ -13551,7 +13567,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>40.07</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.333</sharewt>
                   </period>
@@ -13562,7 +13578,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.500</sharewt>
                   </period>
@@ -13573,7 +13589,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -13584,7 +13600,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.833</sharewt>
                   </period>
@@ -13595,7 +13611,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -14239,6 +14255,8 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+         </supplysector>
+         <supplysector name="transportation" nocreate="1">
             <subsector name="air">
                <sharewt fillout="1" year="1975">1</sharewt>
                <logitexp fillout="1" year="1975">-2</logitexp>
@@ -15096,7 +15114,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>35.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -15108,7 +15126,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -15119,7 +15137,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -15130,7 +15148,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>38.29</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -15141,7 +15159,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -15152,7 +15170,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -15163,7 +15181,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -15174,7 +15192,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.8</sharewt>
                   </period>
@@ -15198,7 +15216,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>33.58</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -15210,7 +15228,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -15221,7 +15239,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -15232,7 +15250,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -15243,7 +15261,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -15254,7 +15272,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -15265,7 +15283,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -15276,7 +15294,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.5</sharewt>
                   </period>
@@ -15333,7 +15351,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>40.07</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.333</sharewt>
                   </period>
@@ -15344,7 +15362,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.500</sharewt>
                   </period>
@@ -15355,7 +15373,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -15366,7 +15384,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.833</sharewt>
                   </period>
@@ -15377,7 +15395,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -16013,6 +16031,8 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+         </supplysector>
+         <supplysector name="transportation" nocreate="1">
             <subsector name="air">
                <sharewt fillout="1" year="1975">1</sharewt>
                <logitexp fillout="1" year="1975">-2</logitexp>
@@ -16878,7 +16898,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>35.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -16890,7 +16910,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -16901,7 +16921,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -16912,7 +16932,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>38.29</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -16923,7 +16943,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -16934,7 +16954,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -16945,7 +16965,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -16956,7 +16976,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.8</sharewt>
                   </period>
@@ -16980,7 +17000,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>33.58</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -16992,7 +17012,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -17003,7 +17023,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -17014,7 +17034,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -17025,7 +17045,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -17036,7 +17056,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -17047,7 +17067,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -17058,7 +17078,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.5</sharewt>
                   </period>
@@ -17115,7 +17135,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>40.07</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.333</sharewt>
                   </period>
@@ -17126,7 +17146,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.500</sharewt>
                   </period>
@@ -17137,7 +17157,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -17148,7 +17168,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.833</sharewt>
                   </period>
@@ -17159,7 +17179,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -17795,6 +17815,8 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+         </supplysector>
+         <supplysector name="transportation" nocreate="1">
             <subsector name="air">
                <sharewt fillout="1" year="1975">1</sharewt>
                <logitexp fillout="1" year="1975">-2</logitexp>
@@ -18660,7 +18682,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>35.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -18672,7 +18694,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -18683,7 +18705,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.133</sharewt>
                   </period>
@@ -18694,7 +18716,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>38.29</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.267</sharewt>
                   </period>
@@ -18705,7 +18727,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.4</sharewt>
                   </period>
@@ -18716,7 +18738,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.533</sharewt>
                   </period>
@@ -18727,7 +18749,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -18738,7 +18760,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.8</sharewt>
                   </period>
@@ -18762,7 +18784,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>33.58</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -18774,7 +18796,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -18785,7 +18807,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -18796,7 +18818,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -18807,7 +18829,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -18818,7 +18840,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -18829,7 +18851,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -18840,7 +18862,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.5</sharewt>
                   </period>
@@ -18897,7 +18919,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>40.07</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.333</sharewt>
                   </period>
@@ -18908,7 +18930,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.500</sharewt>
                   </period>
@@ -18919,7 +18941,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -18930,7 +18952,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.833</sharewt>
                   </period>
@@ -18941,7 +18963,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -19577,6 +19599,8 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+         </supplysector>
+         <supplysector name="transportation" nocreate="1">
             <subsector name="air">
                <sharewt fillout="1" year="1975">1</sharewt>
                <logitexp fillout="1" year="1975">-2</logitexp>
@@ -20434,7 +20458,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>35.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -20446,7 +20470,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -20457,7 +20481,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.133</sharewt>
                   </period>
@@ -20468,7 +20492,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>38.29</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.267</sharewt>
                   </period>
@@ -20479,7 +20503,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.4</sharewt>
                   </period>
@@ -20490,7 +20514,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.533</sharewt>
                   </period>
@@ -20501,7 +20525,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -20512,7 +20536,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.8</sharewt>
                   </period>
@@ -20536,7 +20560,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>33.58</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -20548,7 +20572,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -20559,7 +20583,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -20570,7 +20594,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -20581,7 +20605,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -20592,7 +20616,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -20603,7 +20627,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -20614,7 +20638,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.5</sharewt>
                   </period>
@@ -20671,7 +20695,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>40.07</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.333</sharewt>
                   </period>
@@ -20682,7 +20706,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.500</sharewt>
                   </period>
@@ -20693,7 +20717,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -20704,7 +20728,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.833</sharewt>
                   </period>
@@ -20715,7 +20739,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -21351,6 +21375,8 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+         </supplysector>
+         <supplysector name="transportation" nocreate="1">
             <subsector name="air">
                <sharewt fillout="1" year="1975">1</sharewt>
                <logitexp fillout="1" year="1975">-2</logitexp>
@@ -22216,7 +22242,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>35.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -22228,7 +22254,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -22239,7 +22265,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.133</sharewt>
                   </period>
@@ -22250,7 +22276,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>38.29</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.267</sharewt>
                   </period>
@@ -22261,7 +22287,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.4</sharewt>
                   </period>
@@ -22272,7 +22298,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.533</sharewt>
                   </period>
@@ -22283,7 +22309,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -22294,7 +22320,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.8</sharewt>
                   </period>
@@ -22318,7 +22344,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>33.58</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -22330,7 +22356,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -22341,7 +22367,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -22352,7 +22378,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -22363,7 +22389,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -22374,7 +22400,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -22385,7 +22411,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -22396,7 +22422,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.5</sharewt>
                   </period>
@@ -22453,7 +22479,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>40.07</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.333</sharewt>
                   </period>
@@ -22464,7 +22490,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.500</sharewt>
                   </period>
@@ -22475,7 +22501,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -22486,7 +22512,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.833</sharewt>
                   </period>
@@ -22497,7 +22523,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -23133,6 +23159,8 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+         </supplysector>
+         <supplysector name="transportation" nocreate="1">
             <subsector name="air">
                <sharewt fillout="1" year="1975">1</sharewt>
                <logitexp fillout="1" year="1975">-2</logitexp>
@@ -23998,7 +24026,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>35.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -24010,7 +24038,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -24021,7 +24049,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.133</sharewt>
                   </period>
@@ -24032,7 +24060,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>38.29</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.267</sharewt>
                   </period>
@@ -24043,7 +24071,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.4</sharewt>
                   </period>
@@ -24054,7 +24082,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.533</sharewt>
                   </period>
@@ -24065,7 +24093,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -24076,7 +24104,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.8</sharewt>
                   </period>
@@ -24100,7 +24128,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>36.78</input-cost>
+                        <input-cost>33.58</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0</sharewt>
                   </period>
@@ -24112,7 +24140,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -24123,7 +24151,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -24134,7 +24162,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -24145,7 +24173,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -24156,7 +24184,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -24167,7 +24195,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
@@ -24178,7 +24206,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>37.40</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.5</sharewt>
                   </period>
@@ -24235,7 +24263,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>40.07</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.333</sharewt>
                   </period>
@@ -24246,7 +24274,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.500</sharewt>
                   </period>
@@ -24257,7 +24285,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.667</sharewt>
                   </period>
@@ -24268,7 +24296,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>0.833</sharewt>
                   </period>
@@ -24279,7 +24307,7 @@
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.96</input-cost>
+                        <input-cost>39.18</input-cost>
                      </minicam-non-energy-input>
                      <sharewt>1</sharewt>
                   </period>
