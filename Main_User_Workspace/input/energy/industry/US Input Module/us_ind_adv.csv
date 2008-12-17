@@ -35,27 +35,27 @@ Variable ID,,,,,,,,,,,
 1015,,,,,,,,,,,
 ,,,,coefficient,,,,,,,
 supplysector,subsector,technology,minicam-energy-input,1990,2005,2020,2035,2050,2065,2080,2095
-iron and steel,iron and steel,iron and steel,feedstocks primary metals,0.346762592,0.360218891,0.33486613,0.311297735,0.290867722,0.273167593,0.25785535,0.244644633
-iron and steel,iron and steel,iron and steel,process heat primary metals,0.434132309,0.415891652,0.385166277,0.356710842,0.332360053,0.311547831,0.293807574,0.278754915
-pulp paper and wood,pulp paper and wood,pulp paper and wood,machine drive,0.224681499,0.204083439,0.184076711,0.166031284,0.15166315,0.140302253,0.13144347,0.12470922
-pulp paper and wood,pulp paper and wood,pulp paper and wood,boilers pulp paper and wood,0.503047787,0.563961871,0.505167455,0.452502502,0.411205645,0.379091126,0.354542786,0.336378476
-pulp paper and wood,pulp paper and wood,pulp paper and wood,process heat general,0.142007387,0.132188833,0.123055836,0.114553843,0.107147272,0.100696858,0.095085309,0.090213798
-pulp paper and wood,pulp paper and wood,pulp paper and wood,other end uses,0.126441586,0.09624793,0.08959811,0.083407729,0.078014935,0.073318328,0.069232506,0.065685513
-chemicals,chemicals,chemicals,boilers general,0.184910965,0.115676807,0.100022092,0.086485954,0.076541348,0.069331705,0.064274293,0.060981325
-chemicals,chemicals,chemicals,process heat general,0.098638821,0.076583226,0.066219104,0.057257574,0.0506738,0.045900693,0.04255246,0.040372368
-chemicals,chemicals,chemicals,machine drive,0.061591096,0.056052686,0.048466992,0.041907882,0.037089095,0.03359557,0.031144936,0.029549286
-chemicals,chemicals,chemicals,electrochemical,0.017576833,0.016111158,0.013930811,0.012045533,0.010660475,0.009656335,0.008951952,0.008493316
-chemicals,chemicals,chemicals,other end uses,0.044449626,0.037924559,0.032792172,0.028354359,0.025094027,0.022730351,0.021072282,0.019992684
-chemicals,chemicals,chemicals,feedstocks chemicals,0.592832658,0.697651564,0.60323734,0.521600333,0.461624008,0.418142355,0.387640898,0.36778087
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,boilers general,0.08090373,0.058029355,0.053859902,0.049990028,0.046653898,0.043780263,0.041309866,0.039193436
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,process heat primary metals,0.306920962,0.280636867,0.260472896,0.241757722,0.225623803,0.21172656,0.199779428,0.189544118
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,machine drive,0.089471065,0.088192344,0.081855658,0.075974267,0.070904056,0.066536738,0.062782258,0.059565731
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,electrochemical,0.304571296,0.302635468,0.280890881,0.260708659,0.243310032,0.228323411,0.215439765,0.204402127
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,other end uses,0.033956338,0.030352514,0.028171663,0.026147508,0.02440253,0.022899463,0.02160731,0.020500302
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,feedstocks primary metals,0.183431892,0.239460675,0.222255245,0.206286038,0.192519353,0.180661171,0.170466971,0.161733427
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,limestone feedstocks,0.000744717,0.000692776,0.000643,0.0005968,0.000556972,0.000522665,0.000493173,0.000467906
-other manufacturing,other manufacturing,other manufacturing,boilers general,0.152486037,0.128838007,0.118608499,0.109191196,0.101282365,0.094657013,0.089133893,0.084567291
-other manufacturing,other manufacturing,other manufacturing,process heat general,0.242530722,0.242545172,0.223287518,0.205558887,0.190670045,0.178197429,0.167799828,0.15920293
-other manufacturing,other manufacturing,other manufacturing,machine drive,0.220146394,0.236895989,0.21808687,0.200771161,0.186229099,0.174046986,0.163891558,0.155494893
-other manufacturing,other manufacturing,other manufacturing,electrochemical,0.004214711,0.004539574,0.00417914,0.003847324,0.003568658,0.003335215,0.00314061,0.002979707
-other manufacturing,other manufacturing,other manufacturing,other end uses,0.380622136,0.387181258,0.356439757,0.328139076,0.304371624,0.284461259,0.267863293,0.254139838
+iron and steel,iron and steel,iron and steel,feedstocks primary metals,0.021976759,0.031022765,0.016423614,0.008694747,0.005337254,0.003793355,0.003117153,0.002957451
+iron and steel,iron and steel,iron and steel,process heat primary metals,0.789881781,0.73077285,0.697203297,0.66517583,0.633737202,0.602944866,0.572850903,0.543502001
+pulp paper and wood,pulp paper and wood,pulp paper and wood,machine drive,0.231116096,0.203821357,0.183843501,0.165823804,0.151475589,0.140129952,0.131282615,0.124556605
+pulp paper and wood,pulp paper and wood,pulp paper and wood,boilers pulp paper and wood,0.488453629,0.564535005,0.505782025,0.453143658,0.411850025,0.379723095,0.355151544,0.336956046
+pulp paper and wood,pulp paper and wood,pulp paper and wood,process heat general,0.146263144,0.132011568,0.122901646,0.114420386,0.107029513,0.100590617,0.094987078,0.0901206
+pulp paper and wood,pulp paper and wood,pulp paper and wood,other end uses,0.130230858,0.096118862,0.089485842,0.083310558,0.077929193,0.073240973,0.069160984,0.065617655
+chemicals,chemicals,chemicals,boilers general,0.175026998,0.116117479,0.100410979,0.086829001,0.07684945,0.069613499,0.064536788,0.061230371
+chemicals,chemicals,chemicals,process heat general,0.09974338,0.076549127,0.066194796,0.057241032,0.050662126,0.045891908,0.042545143,0.040365426
+chemicals,chemicals,chemicals,machine drive,0.062363752,0.056023903,0.048445893,0.041892914,0.037078019,0.033586846,0.031137455,0.029542188
+chemicals,chemicals,chemicals,electrochemical,0.017797333,0.016102885,0.013924746,0.012041231,0.010657292,0.009653828,0.008949802,0.008491276
+chemicals,chemicals,chemicals,other end uses,0.044798839,0.037913283,0.032784986,0.028350362,0.025091959,0.022729363,0.021071776,0.019992205
+chemicals,chemicals,chemicals,feedstocks chemicals,0.600269699,0.697293323,0.602974729,0.521414033,0.461486152,0.418033778,0.387547782,0.367692525
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,boilers general,0.076595714,0.058219162,0.054036072,0.050153539,0.046806497,0.043923463,0.041444986,0.039321632
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,process heat primary metals,0.308359571,0.280580319,0.260420411,0.241709008,0.225578339,0.211683898,0.199739172,0.189505924
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,machine drive,0.089890437,0.088174573,0.081839164,0.075958958,0.070889769,0.066523331,0.062769607,0.059553728
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,electrochemical,0.305998892,0.302574487,0.280834282,0.260656127,0.243261005,0.228277403,0.215396354,0.20436094
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,other end uses,0.034115499,0.030346398,0.028165987,0.026142239,0.024397613,0.022894848,0.021602957,0.020496171
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,feedstocks primary metals,0.18429168,0.239412424,0.222210461,0.206244472,0.192480561,0.180624768,0.170432622,0.161700838
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,limestone feedstocks,0.000748208,0.000692637,0.00064287,0.000596679,0.000556859,0.00052256,0.000493073,0.000467812
+other manufacturing,other manufacturing,other manufacturing,boilers general,0.148785696,0.129019832,0.118775887,0.109345294,0.101425301,0.0947906,0.089259685,0.084686638
+other manufacturing,other manufacturing,other manufacturing,process heat general,0.243489274,0.242499277,0.223245267,0.205519991,0.190633966,0.178163711,0.167768077,0.159172806
+other manufacturing,other manufacturing,other manufacturing,machine drive,0.221144099,0.236844763,0.218039711,0.200727747,0.18618883,0.174009351,0.163856119,0.155461269
+other manufacturing,other manufacturing,other manufacturing,electrochemical,0.004233812,0.004538592,0.004178236,0.003846492,0.003567886,0.003334494,0.003139931,0.002979062
+other manufacturing,other manufacturing,other manufacturing,other end uses,0.382347119,0.387097535,0.356362681,0.32806812,0.304305808,0.284399748,0.267805371,0.254084884

@@ -14,25 +14,11 @@
 			     csv files which you want to convert with the given 
 			     header file
 			  -->
-			<headerFile>../../Energy/Industry/Input Module/headers_us_industry.txt</headerFile>
-			<outFile>../../Energy/Industry/Input Module/us_ind_input_ref.xml</outFile>
-			<csvFile>../../Energy/Industry/Input Module/SupplyCoeffsforXML1990.csv</csvFile>
-			<csvFile>../../Energy/Industry/Input Module/SupplyCoeffsforXML2005.csv</csvFile>
-			<csvFile>../../Energy/Industry/Input Module/CalOutputforXML1990.csv</csvFile>
-			<csvFile>../../Energy/Industry/Input Module/CalOutputforXML2005.csv</csvFile>
-			<csvFile>../../Energy/Industry/Input Module/NECostforXML.csv</csvFile>
-			<csvFile>../../Energy/Industry/Input Module/SupplyCoeffsforXMLRefCase.csv</csvFile>
-			<csvFile>../../Energy/Industry/Input Module/SubsectorsforXML.csv</csvFile>
-			<csvFile>../../Energy/Industry/Input Module/TechsforXMLRefCase.csv</csvFile>
-			<csvFile>../../Energy/Industry/Input Module/TechsCogenforXML.csv</csvFile>
-			<csvFile>../../Energy/Industry/Input Module/TechsCogenCCSforXML.csv</csvFile>
-			<csvFile>../../Energy/Industry/Input Module/TechsH2forXML.csv</csvFile>
-			<csvFile>../../Energy/Industry/Input Module/CalInputforXML1990.csv</csvFile>
-			<csvFile>../../Energy/Industry/Input Module/CalInputforXML2005.csv</csvFile>
-			<csvFile>../../Energy/Industry/Input Module/CalInputCogenforXML2005.csv</csvFile>
-			<csvFile>../../Energy/Industry/Input Module/SeqFracforXML.csv</csvFile>
-			<csvFile>../../Energy/Industry/Input Module/FinalDemandforXML.csv</csvFile>
-            <csvFile>../../Energy/Industry/Input Module/US_elec_adj.csv</csvFile>
+			<headerFile>../../Energy/Industry/US Input Module/headers_us_ind.txt</headerFile>
+			<outFile>../../Energy/Industry/US Input Module/us_ind_input_ref.xml</outFile>
+			<csvFile>../../Energy/Industry/US Input Module/industry_supply.csv</csvFile>
+			<csvFile>../../Energy/Industry/US Input Module/enduse_supply.csv</csvFile>
+			<csvFile>../../Energy/Industry/US Input Module/demand.csv</csvFile>
 		</command>
 	</class>
 </ModelInterfaceBatch>

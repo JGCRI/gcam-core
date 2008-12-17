@@ -14,10 +14,31 @@ other end uses,EJ,EJ,1975$/GJ
 agriculture energy use,EJ,EJ,1975$/GJ
 construction energy use,EJ,EJ,1975$/GJ
 mining energy use,EJ,EJ,1975$/GJ
-feedstocks chemicals,EJ,EJ,1975$/GJ,,,,,,,,
-feedstocks primary metals,EJ,EJ,1975$/GJ,,,,,,,,
-feedstocks construction,EJ,EJ,1975$/GJ,,,,,,,,
-limestone feedstocks,EJ,Gt cement feed equiv,1975$/GJ,,,,,,,,
+feedstocks chemicals,EJ,EJ,1975$/GJ
+feedstocks primary metals,EJ,EJ,1975$/GJ
+feedstocks construction,EJ,EJ,1975$/GJ
+limestone feedstocks,EJ,Gt cement feed equiv,1975$/GJ
+
+Set final energy keyword,,,
+INPUT_TABLE,,,
+Variable ID,,,
+101,,,
+,keyword,,
+supplysector,final-energy,,
+boilers general,industry,,
+boilers pulp paper and wood,industry,,
+process heat general,industry,,
+process heat primary metals,industry,,
+machine drive,industry,,
+electrochemical,industry,,,,,,,,,,
+other end uses,industry,,,,,,,,,,
+agriculture energy use,industry,,,,,,,,,,
+construction energy use,industry,,,,,,,,,,
+mining energy use,industry,,,,,,,,,,
+feedstocks chemicals,industry,,,,,,,,,,
+feedstocks primary metals,industry,,,,,,,,,,
+feedstocks construction,industry,,,,,,,,,,
+limestone feedstocks,industry,,,,,,,,,,
 
 Set scaleYear and shareweight path for subsectors,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,
@@ -68,16 +89,16 @@ mining energy use,refined liquids,2005,-3,1,1,1,1,1,1,1,1
 feedstocks chemicals,coal,1975,-2,0,0,0.001,0.001,0.001,0.001,0.001,0.001
 feedstocks chemicals,gas,2005,-2,1,1,1,1,1,1,1,1
 feedstocks chemicals,refined liquids,2005,-2,1,1,1,1,1,1,1,1
-feedstocks primary metals,coal,2005,-2,1,1,1,1,1,1,1,1
+feedstocks primary metals,coal,1975,-2,0,0,1,1,1,1,1,1
 feedstocks primary metals,gas,2005,-2,1,1,1,1,1,1,1,1
 feedstocks primary metals,refined liquids,2005,-2,1,1,1,1,1,1,1,1
 feedstocks construction,refined liquids,2005,-2,1,1,1,1,1,1,1,1
 limestone feedstocks,limestone,2005,-3,1,1,1,1,1,1,1,1
 
 
-Efficiencies of end-use supply technologies.,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
+Efficiencies of end-use supply technologies.,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,
 1000,,,,,,,,,,,,,,,,,
 ,,,,efficiency,,,,,,,,,,,,,
 supplysector,subsector,technology,minicam-energy-input,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,
@@ -89,11 +110,11 @@ boilers general,refined liquids,refined liquids conv,refined liquids industrial,
 boilers general,biomass,biomass cogen,delivered biomass,0.55,0.55,0.55,0.558308001,0.566741498,0.575302387,0.583992592,0.592814067,0.601768794,,cogen techs read from a different table,,,
 boilers general,coal,coal cogen,delivered coal,0.6,0.6,0.6,0.609063274,0.618263453,0.627602604,0.637082828,0.646706255,0.656475048,,,,,
 boilers general,gas,gas cogen,wholesale gas,0.6,0.6,0.6,0.609063274,0.618263453,0.627602604,0.637082828,0.646706255,0.656475048,,,,,
-boilers general,refined liquids,refined liquids cogen,refined liquids industrial,0.6,0.6,0.6,0.609063274,0.618263453,0.627602604,0.637082828,0.646706255,0.656475048,,,,,
-boilers pulp paper and wood,biomass,biomass conv,delivered biomass,0.74,0.74,0.74,0.751178038,0.762524925,0.774043212,0.785735488,0.797604381,0.809652559,,,,,
-boilers pulp paper and wood,coal,coal conv,delivered coal,0.8,0.8,0.8,0.812084365,0.82435127,0.836803472,0.849443771,0.862275006,0.875300064,,,,,
-boilers pulp paper and wood,electricity,electricity,elect_td_ind,1,1,1,1.015105456,1.030439088,1.04600434,1.061804713,1.077843758,1.09412508,,,,,
-boilers pulp paper and wood,gas,gas conv,wholesale gas,0.8,0.8,0.8,0.812084365,0.82435127,0.836803472,0.849443771,0.862275006,0.875300064,,,,,
+boilers general,refined liquids,refined liquids cogen,refined liquids industrial,0.6,0.6,0.6,0.609063274,0.618263453,0.627602604,0.637082828,0.646706255,0.656475048,,
+boilers pulp paper and wood,biomass,biomass conv,delivered biomass,0.74,0.74,0.74,0.751178038,0.762524925,0.774043212,0.785735488,0.797604381,0.809652559,,
+boilers pulp paper and wood,coal,coal conv,delivered coal,0.8,0.8,0.8,0.812084365,0.82435127,0.836803472,0.849443771,0.862275006,0.875300064,,
+boilers pulp paper and wood,electricity,electricity,elect_td_ind,1,1,1,1.015105456,1.030439088,1.04600434,1.061804713,1.077843758,1.09412508,,
+boilers pulp paper and wood,gas,gas conv,wholesale gas,0.8,0.8,0.8,0.812084365,0.82435127,0.836803472,0.849443771,0.862275006,0.875300064,,
 boilers pulp paper and wood,refined liquids,refined liquids conv,refined liquids industrial,0.8,0.8,0.8,0.812084365,0.82435127,0.836803472,0.849443771,0.862275006,0.875300064,,
 boilers pulp paper and wood,biomass,biomass cogen,delivered biomass,0.55,0.55,0.55,0.558308001,0.566741498,0.575302387,0.583992592,0.592814067,0.601768794,,
 boilers pulp paper and wood,coal,coal cogen,delivered coal,0.6,0.6,0.6,0.609063274,0.618263453,0.627602604,0.637082828,0.646706255,0.656475048,,
@@ -153,11 +174,11 @@ Variable ID,,,,,,,,,,,,,,
 ,,,,output-ratio,,,,,,,,,,
 supplysector,subsector,technology,secondary-output,1975,1990,2005,2020,2035,2050,2065,2080,2095,,
 boilers general,biomass,biomass cogen,electricity,0.364,0.364,0.364,0.364,0.364,0.364,0.364,0.364,0.364,,
-boilers general,coal,coal cogen,electricity,0.417,0.417,0.417,0.417,0.417,0.417,0.417,0.417,0.417,,
-boilers general,gas,gas cogen,electricity,0.417,0.417,0.417,0.417,0.417,0.417,0.417,0.417,0.417,,
-boilers general,refined liquids,refined liquids cogen,electricity,0.417,0.417,0.417,0.417,0.417,0.417,0.417,0.417,0.417,,
-boilers pulp paper and wood,biomass,biomass cogen,electricity,0.364,0.364,0.364,0.364,0.364,0.364,0.364,0.364,0.364,,
-boilers pulp paper and wood,coal,coal cogen,electricity,0.417,0.417,0.417,0.417,0.417,0.417,0.417,0.417,0.417,,
+boilers general,coal,coal cogen,electricity,0.417,0.417,0.417,0.417,0.417,0.417,0.417,0.417,0.417
+boilers general,gas,gas cogen,electricity,0.417,0.417,0.417,0.417,0.417,0.417,0.417,0.417,0.417
+boilers general,refined liquids,refined liquids cogen,electricity,0.417,0.417,0.417,0.417,0.417,0.417,0.417,0.417,0.417
+boilers pulp paper and wood,biomass,biomass cogen,electricity,0.364,0.364,0.364,0.364,0.364,0.364,0.364,0.364,0.364
+boilers pulp paper and wood,coal,coal cogen,electricity,0.417,0.417,0.417,0.417,0.417,0.417,0.417,0.417,0.417
 boilers pulp paper and wood,gas,gas cogen,electricity,0.417,0.417,0.417,0.417,0.417,0.417,0.417,0.417,0.417
 boilers pulp paper and wood,refined liquids,refined liquids cogen,electricity,0.417,0.417,0.417,0.417,0.417,0.417,0.417,0.417,0.417
 process heat general,biomass,biomass cogen,electricity,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2
@@ -169,11 +190,11 @@ process heat primary metals,coal,coal cogen,electricity,0.2,0.2,0.2,0.2,0.2,0.2,
 process heat primary metals,gas,gas cogen,electricity,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2
 process heat primary metals,refined liquids,refined liquids cogen,electricity,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2
 
-Technology non-energy costs. Also sets CO2 tag.,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-1002,,,minicam-non-energy-input,,,,,,,,,
-,,,input-cost,,,,,,,,,
+Technology non-energy costs. Also sets CO2 tag.,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1002,,,minicam-non-energy-input,,,,,,,,,,
+,,,input-cost,,,,,,,,,,
 supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,cogen suffix
 boilers general,biomass,biomass conv,3,3,3,3,3,3,3,3,3,,conv
 boilers general,coal,coal conv,3,3,3,3,3,3,3,3,3,,conv
@@ -249,11 +270,11 @@ supplysector,subsector,technology,techScaleYear,1990,2005,2020,2035,2050,2065,20
 boilers general,biomass,biomass conv,2005,1,1,1,1,1,1,1,1,,
 boilers general,coal,coal conv,2005,1,1,1,1,1,1,1,1,,
 boilers general,electricity,electricity,2005,1,1,1,1,1,1,1,1,,
-boilers general,gas,gas conv,2005,1,1,1,1,1,1,1,1,,
-boilers general,refined liquids,refined liquids conv,2005,1,1,1,1,1,1,1,1,,
-boilers general,biomass,biomass cogen,2005,1,1,1,1,1,1,1,1,,
-boilers general,coal,coal cogen,2005,1,1,1,1,1,1,1,1,,
-boilers general,gas,gas cogen,2005,1,1,1,1,1,1,1,1,,
+boilers general,gas,gas conv,2005,1,1,1,1,1,1,1,1
+boilers general,refined liquids,refined liquids conv,2005,1,1,1,1,1,1,1,1
+boilers general,biomass,biomass cogen,2005,1,1,1,1,1,1,1,1
+boilers general,coal,coal cogen,2005,1,1,1,1,1,1,1,1
+boilers general,gas,gas cogen,2005,1,1,1,1,1,1,1,1
 boilers general,refined liquids,refined liquids cogen,2005,1,1,1,1,1,1,1,1
 boilers pulp paper and wood,biomass,biomass conv,2005,1,1,1,1,1,1,1,1
 boilers pulp paper and wood,coal,coal conv,2005,1,1,1,1,1,1,1,1
@@ -274,7 +295,7 @@ process heat general,coal,coal cogen,2005,1,1,1,1,1,1,1,1
 process heat general,gas,gas cogen,2005,1,1,1,1,1,1,1,1
 process heat general,refined liquids,refined liquids cogen,2005,1,1,1,1,1,1,1,1
 process heat primary metals,biomass,biomass conv,2020,0,0,0.5,0.5,0.5,0.5,0.5,0.5
-process heat primary metals,coal,coal conv,2020,0,0,0.5,0.5,0.5,0.5,0.5,0.5
+process heat primary metals,coal,coal conv,2020,1,1,0.5,0.5,0.5,0.5,0.5,0.5
 process heat primary metals,electricity,electricity,2005,1,1,1,1,1,1,1,1
 process heat primary metals,gas,gas conv,2005,1,1,1,1,1,1,1,1
 process heat primary metals,refined liquids,refined liquids conv,2020,0,0,0.5,0.5,0.5,0.5,0.5,0.5
@@ -302,17 +323,17 @@ mining energy use,coal,coal,2005,1,1,1,1,1,1,1,1
 mining energy use,electricity,electricity,2005,1,1,1,1,1,1,1,1
 mining energy use,gas,gas,2005,1,1,1,1,1,1,1,1
 mining energy use,refined liquids,refined liquids,2005,1,1,1,1,1,1,1,1
-feedstocks chemicals,coal,coal,2020,0,0,0.01,0.01,0.01,0.01,0.01,0.01,
-feedstocks chemicals,gas,gas,2005,1,1,1,1,1,1,1,1,
-feedstocks chemicals,refined liquids,refined liquids,2005,1,1,1,1,1,1,1,1,
-feedstocks primary metals,coal,coal,2005,1,1,1,1,1,1,1,1,
-feedstocks primary metals,gas,gas,2005,1,1,1,1,1,1,1,1,
-feedstocks primary metals,refined liquids,refined liquids,2005,1,1,1,1,1,1,1,1,
-feedstocks construction,refined liquids,refined liquids,2005,1,1,1,1,1,1,1,1,
-limestone feedstocks,limestone,limestone,2005,1,1,1,1,1,1,1,1,
+feedstocks chemicals,coal,coal,2020,0,0,0.01,0.01,0.01,0.01,0.01,0.01
+feedstocks chemicals,gas,gas,2005,1,1,1,1,1,1,1,1
+feedstocks chemicals,refined liquids,refined liquids,2005,1,1,1,1,1,1,1,1
+feedstocks primary metals,coal,coal,2005,0,0,1,1,1,1,1,1
+feedstocks primary metals,gas,gas,2005,1,1,1,1,1,1,1,1
+feedstocks primary metals,refined liquids,refined liquids,2005,1,1,1,1,1,1,1,1
+feedstocks construction,refined liquids,refined liquids,2005,1,1,1,1,1,1,1,1
+limestone feedstocks,limestone,limestone,2005,1,1,1,1,1,1,1,1
 
-Set tech logit exponent,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
+Set tech logit exponent,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
 1004,,,,,,,,,,,,
 ,,,logitexp,,,,,,,,,
@@ -382,56 +403,56 @@ feedstocks primary metals,refined liquids,refined liquids,-6,-6,-6,-6,-6,-6,-6,-
 feedstocks construction,refined liquids,refined liquids,-6,-6,-6,-6,-6,-6,-6,-6,,other
 limestone feedstocks,limestone,limestone,-6,-6,-6,-6,-6,-6,-6,-6,,other
 
-Calibrate base year energy flows to end-use technologies,,,,,,,,
-INPUT_TABLE,,,,,,,,
-Variable ID,,,,,,,,
-1005,,,,,,,,
-,,,,calibrated-value,,,,
-supplysector,subsector,technology,minicam-energy-input,1990,2005,,lookup 1,lookup 2
-boilers general,biomass,biomass conv,delivered biomass,0.006150418,0.026379352,,conv,boilers generalbiomass
-boilers general,coal,coal conv,delivered coal,0.928941018,0.416549704,,conv,boilers generalcoal
-boilers general,electricity,electricity,elect_td_ind,0.007555104,0.008069932,,conv,boilers generalelectricity
-boilers general,gas,gas conv,wholesale gas,0.985409119,0.947428151,,conv,boilers generalgas
-boilers general,refined liquids,refined liquids conv,refined liquids industrial,0.087150729,0.031404086,,conv,boilers generalrefined liquids
+Calibrate base year energy flows to end-use technologies,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+1005,,,,,,,,,,,,
+,,,,calibrated-value,,,,,,,,
+supplysector,subsector,technology,minicam-energy-input,1990,2005,,lookup 1,lookup 2,,,,
+boilers general,biomass,biomass conv,delivered biomass,0.006150418,0.026379352,,conv,boilers generalbiomass,,,,
+boilers general,coal,coal conv,delivered coal,0.787679237,0.424907391,,conv,boilers generalcoal,,,,
+boilers general,electricity,electricity,elect_td_ind,0.007555104,0.008069932,,conv,boilers generalelectricity,,,,
+boilers general,gas,gas conv,wholesale gas,0.985409119,0.947428151,,conv,boilers generalgas,,,,
+boilers general,refined liquids,refined liquids conv,refined liquids industrial,0.087150729,0.031404086,,conv,boilers generalrefined liquids,,,,
 boilers general,biomass,biomass cogen,delivered biomass,0.002198467,0.009429301,,cogen,boilers generalbiomass
-boilers general,coal,coal cogen,delivered coal,0.229414119,0.102872391,,cogen,boilers generalcoal
+boilers general,coal,coal cogen,delivered coal,0.190701428,0.102872391,,cogen,boilers generalcoal
 boilers general,gas,gas cogen,wholesale gas,0.657252452,0.631919741,,cogen,boilers generalgas
 boilers general,refined liquids,refined liquids cogen,refined liquids industrial,0.019108501,0.006885599,,cogen,boilers generalrefined liquids
 boilers pulp paper and wood,biomass,biomass conv,delivered biomass,0.124216647,0.532769385,,conv,boilers pulp paper and woodbiomass
-boilers pulp paper and wood,coal,coal conv,delivered coal,0.234466003,0.105137724,,conv,boilers pulp paper and woodcoal
+boilers pulp paper and wood,coal,coal conv,delivered coal,0.201092349,0.108477692,,conv,boilers pulp paper and woodcoal
 boilers pulp paper and wood,electricity,electricity,elect_td_ind,0.010388268,0.011096156,,conv,boilers pulp paper and woodelectricity
 boilers pulp paper and wood,gas,gas conv,wholesale gas,0.21443438,0.206169361,,conv,boilers pulp paper and woodgas
 boilers pulp paper and wood,refined liquids,refined liquids conv,refined liquids industrial,0.054787484,0.019742243,,conv,boilers pulp paper and woodrefined liquids
 boilers pulp paper and wood,biomass,biomass cogen,delivered biomass,0.125487395,0.538219666,,cogen,boilers pulp paper and woodbiomass
-boilers pulp paper and wood,coal,coal cogen,delivered coal,0.228445436,0.10243802,,cogen,boilers pulp paper and woodcoal
+boilers pulp paper and wood,coal,coal cogen,delivered coal,0.189896207,0.10243802,,cogen,boilers pulp paper and woodcoal
 boilers pulp paper and wood,gas,gas cogen,wholesale gas,0.130566242,0.125533781,,cogen,boilers pulp paper and woodgas
 boilers pulp paper and wood,refined liquids,refined liquids cogen,refined liquids industrial,0.134117813,0.048328308,,cogen,boilers pulp paper and woodrefined liquids
 process heat general,biomass,biomass conv,delivered biomass,0.022801807,0.09779772,,conv,process heat generalbiomass
-process heat general,coal,coal conv,delivered coal,0.163633811,0.073375612,,conv,process heat generalcoal
+process heat general,coal,coal conv,delivered coal,0.138209908,0.074556252,,conv,process heat generalcoal
 process heat general,electricity,electricity,elect_td_ind,0.186044445,0.19872207,,conv,process heat generalelectricity
 process heat general,gas,gas conv,wholesale gas,1.771752642,1.703463362,,conv,process heat generalgas
 process heat general,refined liquids,refined liquids conv,refined liquids industrial,0.158208186,0.057009086,,conv,process heat generalrefined liquids
 process heat general,biomass,biomass cogen,delivered biomass,0.001138858,0.0048846,,cogen,process heat generalbiomass
-process heat general,coal,coal cogen,delivered coal,0.002153076,0.000965469,,cogen,process heat generalcoal
+process heat general,coal,coal cogen,delivered coal,0.001818551,0.000981003,,cogen,process heat generalcoal
 process heat general,gas,gas cogen,wholesale gas,0.004323066,0.00415644,,cogen,process heat generalgas
 process heat general,refined liquids,refined liquids cogen,refined liquids industrial,0.004722632,0.001701764,,cogen,process heat generalrefined liquids
 process heat primary metals,biomass,biomass conv,delivered biomass,0,0,,conv,process heat primary metalsbiomass
-process heat primary metals,coal,coal conv,delivered coal,0,0,,conv,process heat primary metalscoal
+process heat primary metals,coal,coal conv,delivered coal,0.672953859,0.363019685,,conv,process heat primary metalscoal
 process heat primary metals,electricity,electricity,elect_td_ind,0.132214326,0.141223806,,conv,process heat primary metalselectricity
 process heat primary metals,gas,gas conv,wholesale gas,0.541494243,0.520623241,,conv,process heat primary metalsgas
 process heat primary metals,refined liquids,refined liquids conv,refined liquids industrial,0,0,,conv,process heat primary metalsrefined liquids
 process heat primary metals,biomass,biomass cogen,delivered biomass,0,0,,cogen,process heat primary metalsbiomass
-process heat primary metals,coal,coal cogen,delivered coal,0.071051523,0.031860463,,cogen,process heat primary metalscoal
+process heat primary metals,coal,coal cogen,delivered coal,0.06641823,0.035828794,,cogen,process heat primary metalscoal
 process heat primary metals,gas,gas cogen,wholesale gas,0.011965969,0.011504761,,cogen,process heat primary metalsgas
 process heat primary metals,refined liquids,refined liquids cogen,refined liquids industrial,0,0,,cogen,process heat primary metalsrefined liquids
 machine drive,biomass,biomass,delivered biomass,0,0,,,machine drivebiomass
-machine drive,coal,coal,delivered coal,0.010765382,0.004827343,,,machine drivecoal
+machine drive,coal,coal,delivered coal,0.009092757,0.004905017,,,machine drivecoal
 machine drive,electricity,electricity,elect_td_ind,1.477967291,1.578680404,,,machine driveelectricity
 machine drive,gas,gas,wholesale gas,0.107356689,0.103218803,,,machine drivegas
 machine drive,refined liquids,refined liquids,refined liquids industrial,0.035419743,0.012763228,,,machine driverefined liquids
 electrochemical,electricity,electricity,elect_td_ind,0.277650085,0.296569993,,,electrochemicalelectricity
 other end uses,biomass,biomass,delivered biomass,0,0,,,other end usesbiomass
-other end uses,coal,coal,delivered coal,0.015071535,0.00675828,,,other end usescoal
+other end uses,coal,coal,delivered coal,0.01272986,0.006867023,,,other end usescoal
 other end uses,electricity,electricity,elect_td_ind,0.793285958,0.847342837,,,other end useselectricity
 other end uses,gas,gas,wholesale gas,0.617040387,0.593257584,,,other end usesgas
 other end uses,refined liquids,refined liquids,refined liquids industrial,0.132233708,0.047649386,,,other end usesrefined liquids
@@ -440,14 +461,14 @@ construction energy use,electricity,electricity,elect_td_ind,0.106833076,0.11411
 construction energy use,gas,gas,wholesale gas,0.08591942,0.082607797,,,construction energy usegas
 construction energy use,refined liquids,refined liquids,refined liquids industrial,1.522234443,0.548525313,,,construction energy userefined liquids
 mining energy use,biomass,biomass,delivered biomass,0.000403938,0.001732503,,,mining energy usebiomass
-mining energy use,coal,coal,delivered coal,0.040484579,0.018153832,,,mining energy usecoal
+mining energy use,coal,coal,delivered coal,0.034194461,0.018445934,,,mining energy usecoal
 mining energy use,electricity,electricity,elect_td_ind,0.218834147,0.23374616,,,mining energy useelectricity
 mining energy use,gas,gas,wholesale gas,0.682134833,0.655843072,,,mining energy usegas
 mining energy use,refined liquids,refined liquids,refined liquids industrial,0.331971348,0.119623287,,,mining energy userefined liquids
 feedstocks chemicals,coal,coal,delivered coal,0,0,,,feedstocks chemicalscoal
 feedstocks chemicals,gas,gas,wholesale gas,0.550780151,0.586597123,,,feedstocks chemicalsgas
 feedstocks chemicals,refined liquids,refined liquids,refined liquids industrial,3.303358595,4.69879332,,,feedstocks chemicalsrefined liquids
-feedstocks primary metals,coal,coal,delivered coal,0.380360364,0.380360364,,,feedstocks primary metalscoal
+feedstocks primary metals,coal,coal,delivered coal,0,0,,,feedstocks primary metalscoal
 feedstocks primary metals,gas,gas,wholesale gas,0.030598897,0.032588729,,,feedstocks primary metalsgas
 feedstocks primary metals,refined liquids,refined liquids,refined liquids industrial,0.08369544,0.119050828,,,feedstocks primary metalsrefined liquids
 feedstocks construction,refined liquids,refined liquids,refined liquids industrial,0.863385325,1.228104392,,,feedstocks constructionrefined liquids
@@ -457,11 +478,11 @@ limestone feedstocks,limestone,limestone,limestone,0.063224645,0.072793781,,,lim
 INPUT_TABLE,,,,,,,,
 Variable ID,,,,,,,,
 1005,,,,,,,,
-,,,,calibrated-value,,,,
-supplysector,subsector,technology,minicam-energy-input,1990,2005,,,
-electricity,biomass,Biomass (existing),regional biomass,1.523259319,0.316130043,,,
-electricity,coal,Coal (existing),regional coal,16.05071687,20.99597182,,,
-electricity,gas,Gas (existing),wholesale gas,3.211836031,6.032936522,,,
+,,,,calibrated-value,,,,,,
+supplysector,subsector,technology,minicam-energy-input,1990,2005,,,,,
+electricity,biomass,Biomass (existing),regional biomass,1.523259319,0.316130043,,,,,
+electricity,coal,Coal (existing),regional coal,16.10444162,20.99597182,,,,,
+electricity,gas,Gas (existing),wholesale gas,3.211836031,6.032936522,,,,,
 electricity,oil,Oil (existing),refined liquids electricity,1.046532481,1.373582725,,,,,
 
 Set sequestration fraction for feedstocks,,,,,,,,,,
@@ -473,10 +494,10 @@ supplysector,subsector,technology,1990,2005,2020,2035,2050,2065,2080,2095
 feedstocks chemicals,coal,coal,1,1,1,1,1,1,1,1
 feedstocks chemicals,gas,gas,1,1,1,1,1,1,1,1
 feedstocks chemicals,refined liquids,refined liquids,1,1,1,1,1,1,1,1
-feedstocks primary metals,coal,coal,1,1,1,1,1,1,1,1
-feedstocks primary metals,gas,gas,1,1,1,1,1,1,1,1
-feedstocks primary metals,refined liquids,refined liquids,1,1,1,1,1,1,1,1
-feedstocks construction,refined liquids,refined liquids,1,1,1,1,1,1,1,1
+feedstocks primary metals,coal,coal,1,1,1,1,1,1,1,1,
+feedstocks primary metals,gas,gas,1,1,1,1,1,1,1,1,
+feedstocks primary metals,refined liquids,refined liquids,1,1,1,1,1,1,1,1,
+feedstocks construction,refined liquids,refined liquids,1,1,1,1,1,1,1,1,
 
 Hydrogen techs,,,,,,,,,,,
 Set scaleYear and shareweight path for subsectors,,,,,,,,,,,
@@ -490,10 +511,10 @@ boilers pulp paper and wood,hydrogen,1975,-6,0,0,0.001,0.5,1,1,1,1
 process heat general,hydrogen,1975,-6,0,0,0.001,0.5,1,1,1,1
 process heat primary metals,hydrogen,1975,-6,0,0,0.001,0.5,1,1,1,1
 
-Efficiencies of end-use supply technologies.,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-1000,,,,,,,,,,,
+Efficiencies of end-use supply technologies.,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+1000,,,,,,,,,,,,
 ,,,,efficiency,,,,,,,,
 supplysector,subsector,technology,minicam-energy-input,1975,1990,2005,2020,2035,2050,2065,2080,2095
 boilers general,hydrogen,hydrogen cogen,H2 Enduse,0.45,0.45,0.45,0.457,0.464,0.471,0.478,0.485,0.492
@@ -505,11 +526,11 @@ Secondary outputs of cogen techs,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
 1001,,,,,,,,,,,,
-,,,,output-ratio,,,,,,,,
-supplysector,subsector,technology,secondary-output,1975,1990,2005,2020,2035,2050,2065,2080,2095
-boilers general,hydrogen,hydrogen cogen,electricity,1,1,1,1,1,1,1,1,1
-boilers pulp paper and wood,hydrogen,hydrogen cogen,electricity,1,1,1,1,1,1,1,1,1
-process heat general,hydrogen,hydrogen cogen,electricity,1,1,1,1,1,1,1,1,1
+,,,,output-ratio,,,,,,,,,
+supplysector,subsector,technology,secondary-output,1975,1990,2005,2020,2035,2050,2065,2080,2095,
+boilers general,hydrogen,hydrogen cogen,electricity,1,1,1,1,1,1,1,1,1,
+boilers pulp paper and wood,hydrogen,hydrogen cogen,electricity,1,1,1,1,1,1,1,1,1,
+process heat general,hydrogen,hydrogen cogen,electricity,1,1,1,1,1,1,1,1,1,
 process heat primary metals,hydrogen,hydrogen cogen,electricity,1,1,1,1,1,1,1,1,1,
 
 Technology non-energy costs. Also sets CO2 tag.,,,,,,,,,,,,,

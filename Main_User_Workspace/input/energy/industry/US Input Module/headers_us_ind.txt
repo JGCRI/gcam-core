@@ -9,6 +9,8 @@
 
 100,region/+{name}supplysector,supplysector/+output-unit,supplysector/+input-unit,supplysector/+price-unit,world/{name=USA}region,scenario/world,scenario
 
+101,region/+{name}supplysector,supplysector/+{final-energy}keyword,world/{name=USA}region,scenario/world,scenario
+
 200,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+scaleYear,subsector/+{year=1975;fillout=1}logitexp,subsector/+{year=1990}sharewt,subsector/+{year=2005}sharewt,subsector/+{year=2020}sharewt,subsector/+{year=2035}sharewt,subsector/+{year=2050}sharewt,subsector/+{year=2065}sharewt,subsector/+{year=2080}sharewt,subsector/+{year=2095}sharewt,scenario,scenario/world,world/{name=USA}region
 
 1000,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,@period/+{name}minicam-energy-input,{year=1975}period/../minicam-energy-input/+efficiency,{year=1990}period/../minicam-energy-input/+efficiency,{year=2005}period/../minicam-energy-input/+efficiency,{year=2020}period/../minicam-energy-input/+efficiency,{year=2035}period/../minicam-energy-input/+efficiency,{year=2050}period/../minicam-energy-input/+efficiency,{year=2065}period/../minicam-energy-input/+efficiency,{year=2080}period/../minicam-energy-input/+efficiency,{year=2095}period/../minicam-energy-input/+efficiency,scenario,scenario/world,world/{name=USA}region,@technology/period
