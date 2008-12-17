@@ -1,0 +1,50 @@
+Final demand attributes. Also adds final-energy-consumer tag,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,1975,1990
+30,,,,,population,215079,250181
+,,base-scaler,base-service,,,,
+energy-final-demand,perCapitaBased,1975 fillout,1975,,,,
+chemicals,0,1,6.501225418,,,,
+food processing,1,1,0.940097133,,,,
+iron and steel,0,1,1.183740155,,,,
+other nonmetallic minerals,0,1,0.697639538,,,,
+other manufacturing,0,1,1.79255579,,,,
+aluminum and nonferrous metals,0,1,0.45890546,,,,
+pulp paper and wood,1,1,1.487068189,,,,
+agriculture,1,1,0.525039385,,,,
+construction,0,1,2.578372264,,,,
+mining,0,1,1.273828845,,,,
+
+income elasticities,,,,,,
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+31,,,,,,
+,income-elasticity,,,,,
+energy-final-demand,2020,2035,2050,2065,2080,2095
+chemicals,0.1,0.1,0.1,0.1,0.1,0.1
+food processing,0,0,0,0,0,0
+iron and steel,-0.05,-0.05,-0.05,-0.05,-0.05,-0.05
+other nonmetallic minerals,0.15,0.15,0.15,0.15,0.15,0.15
+other manufacturing,0.4,0.4,0.4,0.4,0.4,0.4
+aluminum and nonferrous metals,-0.05,-0.05,-0.05,-0.05,-0.05,-0.05
+pulp paper and wood,0,0,0,0,0,0
+agriculture,0,0,0,0,0,0
+construction,0.3,0.3,0.3,0.3,0.3,0.3
+mining,0.2,0.2,0.2,0.2,0.2,0.2
+
+price elasticities,,,,,,
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+32,,,,,,
+,price-elasticity,,,,,
+energy-final-demand,2020,2035,2050,2065,2080,2095
+chemicals,-0.7,-0.7,-0.7,-0.7,-0.7,-0.7
+food processing,-0.7,-0.7,-0.7,-0.7,-0.7,-0.7
+iron and steel,-0.7,-0.7,-0.7,-0.7,-0.7,-0.7
+other nonmetallic minerals,-0.7,-0.7,-0.7,-0.7,-0.7,-0.7
+other manufacturing,-0.7,-0.7,-0.7,-0.7,-0.7,-0.7
+aluminum and nonferrous metals,-0.7,-0.7,-0.7,-0.7,-0.7,-0.7
+pulp paper and wood,-0.7,-0.7,-0.7,-0.7,-0.7,-0.7
+agriculture,-0.7,-0.7,-0.7,-0.7,-0.7,-0.7
+construction,-0.7,-0.7,-0.7,-0.7,-0.7,-0.7
+mining,-0.7,-0.7,-0.7,-0.7,-0.7,-0.7

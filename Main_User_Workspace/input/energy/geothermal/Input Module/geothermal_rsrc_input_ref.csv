@@ -1,0 +1,79 @@
+Carbon emissions coefficient,,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+1,,,,,
+,geothermal,,,,
+region,PrimaryFuelCO2Coeff,,,,
+all,0,,,,
+
+"Renewresource attributes: units, market, base year price",,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+20,,,,,
+,,,,,price
+region,renewresource,output-unit,price-unit,market,1975
+USA,geothermal,EJ,1975$/GJ,USA,0.4
+Canada,geothermal,EJ,1975$/GJ,Canada,0.4
+Western Europe,geothermal,EJ,1975$/GJ,Western Europe,0.4
+Japan,geothermal,EJ,1975$/GJ,Japan,0.4
+Australia_NZ,geothermal,EJ,1975$/GJ,Australia_NZ,0.4
+Former Soviet Union,geothermal,EJ,1975$/GJ,Former Soviet Union,0.4
+China,geothermal,EJ,1975$/GJ,China,0.4
+Middle East,geothermal,EJ,1975$/GJ,Middle East,0.4
+Africa,geothermal,EJ,1975$/GJ,Africa,0.4
+Latin America,geothermal,EJ,1975$/GJ,Latin America,0.4
+Southeast Asia,geothermal,EJ,1975$/GJ,Southeast Asia,0.4
+Eastern Europe,geothermal,EJ,1975$/GJ,Eastern Europe,0.4
+Korea,geothermal,EJ,1975$/GJ,Korea,0.4
+India,geothermal,EJ,1975$/GJ,India,0.4
+
+
+Smooth renewable resource parameters equal for all regions,,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,,,,,,,
+200,,,,,,,,,,,
+,,,environCost,gdpExpans,severanceTax,,use 1 b/c not backed up,,,,
+region,renewresource,smooth-renewable-subresource,1975 fillout,1975 fillout,1975 fillout,gdpSupplyElast,subResourceCapacityFactor,,,,
+all,geothermal,hydrothermal,0,1,0,0,1,,,,
+
+
+Tech change (assumed equal by region),,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,
+Variable ID,,,,,,,,,,,
+201,,,,,,,,,,,
+,,,techChange,,,,,,,,
+region,renewresource,smooth-renewable-subresource,1975,1990,2005,2020,2035,2050,2065,2080,2095
+all,geothermal,hydrothermal,0,0,0,0.0048,0.0053,0.0040,0.0025,0.0025,0.0025
+
+
+Supply curve characteristics,,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+202,,,divide by efficiency,multiply by efficiency,
+
+region,renewresource,smooth-renewable-subresource,maxSubResource,mid-price,curve-exponent
+USA,geothermal,hydrothermal, 8.23 ,0.613,10.735
+Canada,geothermal,hydrothermal, 0.08 ,0.613,10.735
+Western Europe,geothermal,hydrothermal, 4.28 ,0.613,10.735
+Japan,geothermal,hydrothermal, 1.84 ,0.613,10.735
+Australia_NZ,geothermal,hydrothermal, 2.47 ,0.613,10.735
+Former Soviet Union,geothermal,hydrothermal, 0.23 ,0.613,10.735
+China,geothermal,hydrothermal, 8.23 ,0.613,10.735
+Middle East,geothermal,hydrothermal, 0.08 ,0.613,10.735
+Africa,geothermal,hydrothermal, 3.84 ,0.613,10.735
+Latin America,geothermal,hydrothermal, 10.42 ,0.613,10.735
+Southeast Asia,geothermal,hydrothermal, 9.44 ,0.613,10.735
+Eastern Europe,geothermal,hydrothermal, 0.08 ,0.613,10.735
+Korea,geothermal,hydrothermal, 0.08 ,0.613,10.735
+India,geothermal,hydrothermal, 8.23 ,0.613,10.735
+
+Delete small regions,,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+400,,,,,
+
+region,renewresource,,,,
+Canada,geothermal,,,,
+Middle East,geothermal,,,,
+Eastern Europe,geothermal,,,,
+Korea,geothermal,,,,

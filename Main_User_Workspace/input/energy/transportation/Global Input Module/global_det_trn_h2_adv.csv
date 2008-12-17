@@ -1,0 +1,35 @@
+,,,Only change values in colored cells,,,,,,,,,,
+
+technology efficiency,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1005,,,,,,,,,,,,,
+,,,,,efficiency,,,,,,,,
+region,supplysector,subsector,technology,minicam-energy-input,1975,1990,2005,2020,2035,2050,2065,2080,2095
+ALL,transportation,rail,hydrogen,H2 Enduse,1,1.59,2.05,2.13,2.20,2.28,2.36,2.45,2.55
+ALL,transportation,road,hydrogen,H2 Enduse,1,1.46,1.60,1.93,2.31,2.79,3.36,4.05,4.89
+ALL,transportation,domestic ship,hydrogen,H2 Enduse,1,15.62,11.87,12.32,12.80,13.28,13.79,14.32,14.87
+ALL,transportation,international ship,hydrogen,H2 Enduse,1,22.44,25.18,26.14,27.14,28.18,29.26,30.38,31.54
+
+technology non-energy cost,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1010,,,,minicam-non-energy-input,,,,,,,,
+,,,,input-cost,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+ALL,transportation,rail,hydrogen,1,13.00,12.85,12.47,12.10,11.74,11.39,11.06,10.73
+ALL,transportation,road,hydrogen,1,36.78,40.96,38.29,35.62,35.62,35.62,35.62,35.62
+ALL,transportation,domestic ship,hydrogen,1,0.60,0.38,0.35,0.32,0.32,0.32,0.32,0.32
+ALL,transportation,international ship,hydrogen,1,0.94,1.04,0.96,0.87,0.87,0.87,0.87,0.87
+
+
+Technology availability,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+1016,,,,,,,,,,,,
+,,,,sharewt,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+ALL,transportation,rail,hydrogen,0,0,0,0.167,0.333,0.500,0.667,0.833,1
+ALL,transportation,road,hydrogen,0,0,0,0.167,0.333,0.500,0.667,0.833,1
+ALL,transportation,domestic ship,hydrogen,0,0,0,0.167,0.333,0.500,0.667,0.833,1
+ALL,transportation,international ship,hydrogen,0,0,0,0.167,0.333,0.500,0.667,0.833,1

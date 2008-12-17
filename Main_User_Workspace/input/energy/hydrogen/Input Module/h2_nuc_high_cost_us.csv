@@ -1,6 +1,0 @@
-INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-918,,,,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input
-Techology non-energy Costs,,,,costs,costs,costs,costs,costs,costs,costs,costs,costs,
-region,Supply Sector,Subsector,Technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,
-USA,H2 Central Production,nuclear,thermal splitting,10000,10000,10000,10000,10000,10000,10000,10000,10000,
