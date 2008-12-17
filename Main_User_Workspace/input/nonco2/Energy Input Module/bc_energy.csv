@@ -6,10 +6,10 @@ Variable ID,,,,,,
 region,supplysector,subsector,technology,period,generic-ghg,input-driver
 ALL,regional coal,regional coal,regional coal,ALL,BC,
 ALL,regional crude oil,regional crude oil,regional crude oil,ALL,BC,
-ALL,refined liquids industrial,shale oil refining,shale oil refining,ALL,BC,
+ALL,refined liquids industrial,unconventional oil refining,unconventional oil refining,ALL,BC,
 ALL,refined liquids industrial,coal to liquids,coal to liquids,ALL,BC,
 ALL,refined liquids industrial,gas to liquids,gas to liquids,ALL,BC,
-ALL,refined liquids enduse,shale oil refining,shale oil refining,ALL,BC,
+ALL,refined liquids enduse,unconventional oil refining,unconventional oil refining,ALL,BC,
 ALL,refined liquids enduse,coal to liquids,coal to liquids,ALL,BC,
 ALL,refined liquids enduse,gas to liquids,gas to liquids,ALL,BC,
 ALL,electricity,coal,Coal (existing),ALL,BC,
@@ -46,21 +46,29 @@ ALL,transportation,rail,coal,ALL,BC
 ALL,transportation,rail,refined liquids,ALL,BC
 ALL,transportation,road,refined liquids,ALL,BC
 ALL,transportation,domestic ship,coal,ALL,BC
-ALL,transportation,domestic ship,refined liquids,ALL,BC,,,,,,,,
-ALL,transportation,international ship,refined liquids,ALL,BC,,,,,,,,
+ALL,transportation,domestic ship,refined liquids,ALL,BC,
+ALL,transportation,international ship,refined liquids,ALL,BC,
 
-Emissions unit,,,,,,,,,,,,,
-Default value. Table not read in,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-10005,,,,,,,,,,,,,
-,,,,,emissions-unit,,,,,,,,
+Output drivers,,,,,,
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+10001,,,,,,
+
+region,supplysector,subsector,technology,period,generic-ghg,output-driver
+ALL,urban processes,urban processes,landfills,ALL,BC,
+
+Emissions unit,,,,,,
+Default value. Table not read in,,,,,,
+Variable ID,,,,,,
+10005,,,,,,
+,,,,,emissions-unit,
 region,supplysector,subsector,technology,generic-ghg,1975,1990,2005,2020,2035,2050,2065,2080,2095
 ALL,regional coal,regional coal,regional coal,BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
 ALL,regional crude oil,regional crude oil,regional crude oil,BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
-ALL,refined liquids industrial,shale oil refining,shale oil refining,BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
+ALL,refined liquids industrial,unconventional oil refining,unconventional oil refining,BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
 ALL,refined liquids industrial,coal to liquids,coal to liquids,BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
 ALL,refined liquids industrial,gas to liquids,gas to liquids,BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
-ALL,refined liquids enduse,shale oil refining,shale oil refining,BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
+ALL,refined liquids enduse,unconventional oil refining,unconventional oil refining,BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
 ALL,refined liquids enduse,coal to liquids,coal to liquids,BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
 ALL,refined liquids enduse,gas to liquids,gas to liquids,BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
 ALL,electricity,coal,Coal (existing),BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
@@ -94,62 +102,64 @@ ALL,industry,energy-use,coal,BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
 ALL,industry,energy-use,refined liquids,BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
 ALL,transportation,air,refined liquids,BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
 ALL,transportation,rail,coal,BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
-ALL,transportation,rail,refined liquids,BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
-ALL,transportation,road,refined liquids,BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
-ALL,transportation,domestic ship,coal,BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
-ALL,transportation,domestic ship,refined liquids,BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
-ALL,transportation,international ship,refined liquids,BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
+ALL,transportation,rail,refined liquids,BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
+ALL,transportation,road,refined liquids,BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
+ALL,transportation,domestic ship,coal,BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
+ALL,transportation,domestic ship,refined liquids,BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
+ALL,transportation,international ship,refined liquids,BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
+ALL,urban processes,urban processes,landfills,BC,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
 
-Base year emissions,,,,,,,,,,,,,,,,,,
+Uncontrolled emissions coefficient,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,,,,,,
-Variable ID,,,,,Table irrelevant when uncontrolled-emiss-coef's are read in,,,,,,,,,,,,,
-10010,,,,,,,,,,,,,,,,,,
-,,,,,input-emissions,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+10015,,,,,,,,,,,,,,,,,,
+,,,,,uncontrolled-emiss-coef,,,,,,,,,,,,,
 supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
-regional coal,regional coal,regional coal,1990,BC,0.01155,0.00164,0.02786,0.02488,0.00197,0.04125,0.13906,0.00076,0.00657,0.01208,0.00085,0.02053,0.0039,0.00946
-regional crude oil,regional crude oil,regional crude oil,1990,BC,0.00038,0.00011,0.00428,0.00026,0.00001,0.00015,0.00058,0.00022,0.00008,0.00595,0.00016,0.00012,0.00007,0.00007
-refined liquids industrial,shale oil refining,shale oil refining,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+regional coal,regional coal,regional coal,1990,BC,0.000536292,0.00055138,0.000524762,0.00048837,0.000566209,0.000473048,0.000466129,0.00047985,0.000470271,0.000483632,0.000472172,0.000582474,0.000518145,0.000469681
+regional crude oil,regional crude oil,regional crude oil,1990,BC,3.29689E-05,3.38965E-05,3.22601E-05,3.00229E-05,3.4808E-05,2.9081E-05,2.86556E-05,2.94991E-05,2.89102E-05,2.97316E-05,2.90271E-05,3.58079E-05,3.18533E-05,2.88739E-05
+refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 refined liquids industrial,coal to liquids,coal to liquids,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 refined liquids industrial,gas to liquids,gas to liquids,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-refined liquids enduse,shale oil refining,shale oil refining,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 refined liquids enduse,coal to liquids,coal to liquids,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 refined liquids enduse,gas to liquids,gas to liquids,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-electricity,coal,Coal (existing),1990,BC,0.00131,0.00007,0.00082,0.00007,0.0001,0.00148,0.01563,0.00004,0.0007,0.00008,0.0001,0.002,0.00002,0.00068
-electricity,coal,Coal (conv pul),1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-electricity,coal,Coal (IGCC),1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-electricity,coal,Coal (IGCC)_CCS,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-electricity,gas,Gas (existing),1990,BC,0.00001,0,0,0,0,0.00001,0,0,0,0,0,0,0,0
-electricity,gas,Gas (peak load conv),1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-electricity,gas,Gas (CC),1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-electricity,gas,Gas (CC)_CCS,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-electricity,oil,Oil (existing),1990,BC,0.00103,0.00013,0.00188,0.00177,0.00001,0.0028,0.00067,0.00077,0.00037,0.00111,0.00069,0.00158,0.00017,0.00009
-electricity,oil,Oil (peak load conv),1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-electricity,oil,Oil (IGCC),1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-electricity,oil,Oil (IGCC)_CCS,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-electricity,biomass,Biomass (existing),1990,BC,0.00379,0.00004,0.00047,0.00037,0.0001,0,0,0,0,0.00027,0,0.00006,0,0
-electricity,biomass,Biomass (conv),1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-electricity,biomass,Biomass (IGCC),1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-electricity,biomass,Biomass (IGCC)_CCS,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+electricity,coal,Coal (existing),1990,BC,1.36923E-05,1.14553E-05,3.23731E-05,2.46803E-06,5.89682E-06,5.33803E-05,9.41209E-05,6.3183E-05,9.14988E-05,4.52672E-05,0.000132661,6.95604E-05,1.48006E-05,5.37248E-05
+electricity,coal,Coal (conv pul),1990,BC,1.36923E-05,1.14553E-05,3.23731E-05,2.46803E-06,5.89682E-06,5.33803E-05,9.41209E-05,6.3183E-05,9.14988E-05,4.52672E-05,0.000132661,6.95604E-05,1.48006E-05,5.37248E-05
+electricity,coal,Coal (IGCC),1990,BC,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,2.07088E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07
+electricity,coal,Coal (IGCC)_CCS,1990,BC,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,2.07088E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07
+electricity,gas,Gas (existing),1990,BC,3.83211E-07,0,0,0,0,2.07088E-07,0,0,0,0,0,0,0,0
+electricity,gas,Gas (peak load conv),1990,BC,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,2.07088E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07
+electricity,gas,Gas (CC),1990,BC,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,2.07088E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07
+electricity,gas,Gas (CC)_CCS,1990,BC,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,2.07088E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07
+electricity,oil,Oil (existing),1990,BC,0.00018296,0.0001966,0.000338084,0.000112027,5.06784E-05,0.000497463,6.82137E-05,0.000684974,0.000212004,0.000170849,0.000963693,0.000563899,0.000560104,5.21813E-05
+electricity,oil,Oil (peak load conv),1990,BC,0.00018296,0.0001966,0.000338084,0.000112027,0.00018296,0.000497463,6.82137E-05,0.000684974,0.000212004,0.000170849,0.000963693,0.000563899,0.000560104,5.21813E-05
+electricity,oil,Oil (IGCC),1990,BC,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,2.07088E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07
+electricity,oil,Oil (IGCC)_CCS,1990,BC,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,2.07088E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07
+electricity,biomass,Biomass (existing),1990,BC,0.000932744,9.37422E-05,0.000203459,0.000208919,0.000292782,0.000313366,0.000308783,0,0.000311527,0.000454947,0.000312786,0.000264759,0.00034324,0.000311136
+electricity,biomass,Biomass (conv),1990,BC,0.000932744,9.37422E-05,0.000203459,0.000208919,0.000292782,0.000932744,0.000932744,0.000932744,0.000932744,0.000454947,0.000932744,0.000264759,0.000932744,0.000932744
+electricity,biomass,Biomass (IGCC),1990,BC,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,2.07088E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07
+electricity,biomass,Biomass (IGCC)_CCS,1990,BC,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,2.07088E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07
 H2 Central Production,coal chemical,coal chemical,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 H2 Central Production,coal chemical,coal chemical CCS,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 H2 Central Production,biomass to H2,biomass to H2,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 H2 Central Production,biomass to H2,biomass to H2 CCS,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-building,gas,gas,1990,BC,0.00001,0,0,0,0,0,0,0,0,0,0,0,0,0
-building,coal,coal,1990,BC,0.03237,0.0005,0.02338,0.00026,0.00089,0.07746,0.34526,0,0.01404,0.00078,0.00011,0.04697,0.00282,0.04326
-building,biomass,biomass,1990,BC,0.05178,0.00633,0.03905,0.00002,0.00341,0,0.004337571,0.00007,0.072270619,0.042880128,0.056986604,0.00743,0,0.056600209
-building,refined liquids,refined liquids,1990,BC,0.00295,0.00053,0.00558,0.00277,0.00004,0.00055,0.00895,0.00141,0.00224,0.00348,0.00328,0.00014,0.00053,0.00428
-building,trad biomass,trad biomass,1990,BC,0,0,0,0,0,0,0.426082429,0,0.151579381,0.010279872,0.135863396,0,0,0.220929791
-industry,energy-use,biomass,1990,BC,0.00156,0.00097,0.00417,0.0005,0.00035,0,0.00228,0.00161,0.06549,0.05528,0.02137,0.00069,0,0.02611
-industry,energy-use,gas,1990,BC,0.00001,0,0,0,0,0.00001,0,0,0,0,0,0,0,0
-industry,energy-use,coal,1990,BC,0.05121,0.00002,0.00215,0.00019,0.00023,0.01666,0.23781,0.00001,0.00322,0.00065,0.00752,0.00628,0.00006,0.01866
-industry,energy-use,refined liquids,1990,BC,0.07368,0.01093,0.06731,0.03872,0.00729,0.19101,0.05292,0.02525,0.02661,0.04236,0.03627,0.02224,0.00828,0.00475
-transportation,air,refined liquids,1990,BC,0.00755,0.00043,0.00311,0.00076,0.00032,0.00227,0.00029,0.00072,0.00048,0.00078,0.0007,0.00011,0.00022,0.00018
-transportation,rail,coal,1990,BC,0,0,0.00007,0,0,0.00933,0.02018,0,0.00029,0.00001,0,0.0003,0,0.00519
-transportation,rail,refined liquids,1990,BC,0.00524,0.00101,0.00158,0.00015,0.00028,0.00694,0.00106,0,0.0001,0.00064,0.00024,0.00042,0.00014,0.00075
-transportation,road,refined liquids,1990,BC,0.1092,0.00849,0.13334,0.0643,0.01314,0.07821,0.0219,0.0542,0.04932,0.12794,0.05823,0.02496,0.01591,0.05258
-transportation,domestic ship,coal,1990,BC,0,0,0,0,0.00017,0,0,0,0,0,0,0.00001,0,0
-transportation,domestic ship,refined liquids,1990,BC,0.00049,0.00151,0.00687,0.00423,0.00067,0.0095,0.00275,0,0.00012,0.00188,0.00153,0.00047,0.00165,0.00058
-transportation,international ship,refined liquids,1990,BC,0.02998,0.00095,0.03665,0.00534,0.00101,0.0047,0.00296,0.00965,0.00553,0.00572,0.01305,0.0005,0.00166,0.00015
+building,gas,gas,1990,BC,9.29013E-07,0,0,0,0,0,0,0,0,0,0,0,0,0
+building,coal,coal,1990,BC,0.251246416,0.210130373,0.078062282,0.020769925,0.366211858,0.199573791,0.110881935,0,0.260282086,0.398941695,0.003857526,0.127893365,0.14014689,0.129158386
+building,biomass,biomass,1990,BC,0.069486718,0.053669176,0.026873111,0.021143852,0.099287564,0.089207936,0.016744739,0.004985763,0.091095916,0.204239506,0.321959182,0.012366252,0.097712236,0.18823961
+building,refined liquids,refined liquids,1990,BC,0.001057288,0.000900592,0.001084462,0.003278528,0.002958914,0.00064867,0.004685173,0.002798768,0.004713568,0.004472719,0.005271341,0.000449726,0.007113267,0.005200261
+building,trad biomass,trad biomass,1990,BC,0,0,0,0,0,0,0.033587239,0,0.034255206,0.015808583,0.051643786,0,0,0.035652323
+industry,energy-use,biomass,1990,BC,0.000804243,0.005162189,0.008356374,0.005789254,0.005529551,0.02238599,0.02205853,0.106793428,0.017253944,0.038306895,0.026583733,0.00677386,0,0.038874406
+industry,energy-use,gas,1990,BC,9.2355E-07,0,0,0,0,8.21686E-07,0,0,0,0,0,0,0,0
+industry,energy-use,coal,1990,BC,0.021501008,0.000175448,0.001448288,0.000123412,0.001703374,0.002353479,0.04843724,0.010321762,0.010115715,0.010403109,0.019554661,0.004776521,0.000470088,0.022314684
+industry,energy-use,refined liquids,1990,BC,0.016255843,0.028774557,0.023200763,0.020513752,0.043790478,0.024030746,0.036474346,0.010063363,0.015931044,0.017229968,0.026645949,0.025964175,0.082180287,0.024704882
+transportation,air,refined liquids,1990,BC,0.002378511,0.002228516,0.001676531,0.001863301,0.001789463,0.005299727,0.001193355,0.001741683,0.001476888,0.001564307,0.001045453,0.002587648,0.002182799,0.001812142
+transportation,rail,coal,1990,BC,0,0,0.420494738,0,0,13.4084158,0.147079131,0,0.937624414,0.400506493,0,6.517044107,0,0
+transportation,rail,refined liquids,1990,BC,0.02984566,0.027549703,0.028098902,0.014215199,0.015711097,0.021814681,0.005296899,0,0.009357437,0.025013203,0.028542868,0.023284276,0.026616368,0.015451794
+transportation,road,refined liquids,1990,BC,0.012781249,0.011255864,0.025899778,0.018201357,0.016684424,0.015301712,0.017120735,0.01844133,0.038092345,0.039311107,0.045031457,0.040459959,0.043311089,0.05737784
+transportation,domestic ship,coal,1990,BC,0,0,0,0,0.064393366,0,0,0,0,0,0,0,0,0
+transportation,domestic ship,refined liquids,1990,BC,0.008326643,0.052536211,0.065173865,0.021159956,0.060151059,0.080454804,0.016034624,0,0.003742975,0.039843599,0.031872308,0.116582945,0.023537967,0.036602605
+transportation,international ship,refined liquids,1990,BC,0.023449493,0.0241092,0.022945331,0.021354071,0.024757578,0.020684128,0.020381563,0.020981542,0.020562701,0.021146902,0.020645799,0.025468771,0.022655971,0.020536876
+urban processes,urban processes,landfills,1990,BC,0.002834696,0.000331216,0.003341859,0.000893281,0.000139959,0.003000179,0.01044399,0.00075607,0.005358029,0.003616228,0.003585665,0.00111415,0.000914773,0.004440073
 
 
 Uncontrolled emissions coefficient,,,,,,,,,,,,,,,,,,
@@ -158,50 +168,51 @@ Variable ID,,,,,,,,,,,,,,,,,,
 10015,,,,,,,,,,,,,,,,,,
 ,,,,,uncontrolled-emiss-coef,,,,,,,,,,,,,
 supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
-regional coal,regional coal,regional coal,1990,BC,0.00073797,0.001978421,0.002572297,0.009313572,0.001607478,0.003202095,0.006235283,0.006100233,0.002455089,0.015168051,0.000682674,0.003137972,0.003911771,0.002109634
-regional crude oil,regional crude oil,regional crude oil,1990,BC,1.38561E-05,4.03739E-05,0.000200253,2.97219E-05,7.72038E-06,8.23429E-06,0.000117574,3.33869E-05,1.99091E-05,0.000607943,2.45128E-05,3.68815E-05,3.63968E-05,2.7623E-05
-refined liquids industrial,shale oil refining,shale oil refining,1990,BC,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
-refined liquids industrial,coal to liquids,coal to liquids,1990,BC,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
-refined liquids industrial,gas to liquids,gas to liquids,1990,BC,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
-refined liquids enduse,shale oil refining,shale oil refining,1990,BC,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
-refined liquids enduse,coal to liquids,coal to liquids,1990,BC,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
-refined liquids enduse,gas to liquids,gas to liquids,1990,BC,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
-electricity,coal,Coal (existing),1990,BC,9.86016E-05,0.000103252,0.000119802,8.04994E-05,0.000101542,0.000276464,0.002721875,0.00041045,0.000429756,0.00033256,0.000127805,0.000547678,8.87519E-05,0.000280992
-electricity,coal,Coal (conv pul),1990,BC,9.86016E-05,0.000103252,0.000119802,8.04994E-05,0.000101542,0.000276464,0.002721875,0.00041045,0.000429756,0.00033256,0.000127805,0.000547678,8.87519E-05,0.000280992
-electricity,coal,Coal (IGCC),1990,BC,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,1.12798E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06
-electricity,coal,Coal (IGCC)_CCS,1990,BC,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,1.12798E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06
-electricity,gas,Gas (existing),1990,BC,3.28288E-06,0,0,0,0,1.12798E-06,0,0,0,0,0,0,0,0
-electricity,gas,Gas (peak load conv),1990,BC,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,1.12798E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06
-electricity,gas,Gas (CC),1990,BC,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,1.12798E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06
-electricity,gas,Gas (CC)_CCS,1990,BC,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,1.12798E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06
-electricity,oil,Oil (existing),1990,BC,0.001113217,0.001008612,0.001239725,0.001069402,0.000337063,0.000802606,0.001210219,0.000660089,0.000797494,0.000956724,0.000660173,0.003410987,0.001051099,0.000600836
-electricity,oil,Oil (peak load conv),1990,BC,0.001113217,0.001008612,0.001239725,0.001069402,0.001113217,0.000802606,0.001210219,0.000660089,0.000797494,0.000956724,0.000660173,0.003410987,0.001051099,0.000600836
-electricity,oil,Oil (IGCC),1990,BC,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,1.12798E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06
-electricity,oil,Oil (IGCC)_CCS,1990,BC,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,1.12798E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06
-electricity,biomass,Biomass (existing),1990,BC,0.002815051,0.001319565,0.002434654,0.004801729,0.003654997,0,0,0,0,0.003565065,0,0.003606085,0,0
-electricity,biomass,Biomass (conv),1990,BC,0.002815051,0.001319565,0.002434654,0.004801729,0.003654997,0.002815051,0.002815051,0.002815051,0.002815051,0.003565065,0.002815051,0.003606085,0.002815051,0.002815051
-electricity,biomass,Biomass (IGCC),1990,BC,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,1.12798E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06
-electricity,biomass,Biomass (IGCC)_CCS,1990,BC,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,1.12798E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06,3.28288E-06
-H2 Central Production,coal chemical,coal chemical,1990,BC,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
-H2 Central Production,coal chemical,coal chemical CCS,1990,BC,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
-H2 Central Production,biomass to H2,biomass to H2,1990,BC,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
-H2 Central Production,biomass to H2,biomass to H2 CCS,1990,BC,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
-building,gas,gas,1990,BC,1.7984E-06,0,0,0,0,0,0,0,0,0,0,0,0,0
-building,coal,coal,1990,BC,0.099884367,0.283261681,0.023526505,0.007752436,0.103223151,0.034686416,0.079146541,0,0.120786829,0.129711823,0.021525536,0.039045974,0.008600238,0.097232687
-building,biomass,biomass,1990,BC,0.112683848,0.116040514,0.039105823,0.004035515,0.054774331,0,0.063480382,0.002482777,0.085040535,0.106201878,0.210401631,0.042835649,0,0.288116867
-building,refined liquids,refined liquids,1990,BC,0.001802699,0.001758886,0.001731123,0.00226363,0.001452268,0.000244749,0.026113546,0.001805598,0.003711113,0.003402393,0.005042187,0.000462301,0.001395131,0.009331403
-building,trad biomass,trad biomass,1990,BC,0,0,0,0,0,0,0.046904376,0,0.027690265,0.010653008,0.040023769,0,0,0.049880782
-industry,energy-use,biomass,1990,BC,0.006813403,0.005307891,0.014636542,0.010706603,0.005599095,0,0.094310075,1.649667902,0.037431917,0.033596019,0.018587427,0.015857842,0,0.027966801
-industry,energy-use,gas,1990,BC,1.76632E-06,0,0,0,0,1.27355E-06,0,0,0,0,0,0,0,0
-industry,energy-use,coal,1990,BC,0.027404742,0.000156622,0.000766663,0.000119345,0.001067277,0.003177439,0.022050291,0.000368575,0.003735434,0.001339001,0.039759712,0.003765113,0.000181824,0.01440305
-industry,energy-use,refined liquids,1990,BC,0.018734814,0.022382649,0.021054017,0.019882296,0.036699963,0.030878348,0.028385918,0.020151196,0.033504452,0.016826197,0.024496154,0.02257633,0.016952232,0.008147422
-transportation,air,refined liquids,1990,BC,0.002887442,0.002878743,0.002878879,0.00322562,0.00289773,0.002304206,0.007176103,0.001796364,0.00233683,0.002493491,0.001762222,0.001745353,0.002615404,0.002409943
-transportation,rail,coal,1990,BC,0,0,0.060651521,0,0,2.720543655,0.048739604,0,0.037064878,0.041297127,0,0.040716921,0,0.0513153
-transportation,rail,refined liquids,1990,BC,0.014451899,0.014419911,0.014557966,0.014216892,0.014448431,0.019582015,0.011508312,0,0.010712646,0.012716583,0.011627931,0.011395803,0.012761974,0.01172923
-transportation,road,refined liquids,1990,BC,0.008153185,0.007549473,0.016810894,0.029623251,0.017955738,0.021459422,0.021644542,0.026695863,0.03518762,0.033751075,0.034178867,0.026938547,0.038989477,0.057993187
-transportation,domestic ship,coal,1990,BC,0,0,0,0,0.069556515,0,0,0,0,0,0,0.049403223,0,0
-transportation,domestic ship,refined liquids,1990,BC,0.003731232,0.030033074,0.02916182,0.030748333,0.036572538,0.046770499,0.024042183,0,0.021981349,0.025299831,0.020253809,0.020691362,0.027407337,0.024899359
-transportation,international ship,refined liquids,1990,BC,0.03061546,0.030756345,0.030450337,0.029913252,0.03059067,0.041121662,0.04932361,0.026150142,0.02515151,0.026468848,0.020537079,0.023172808,0.027660649,0.024235107
+regional coal,regional coal,regional coal,1990,BC,0.000536292,0.00055138,0.000524762,0.00048837,0.000566209,0.000473048,0.000466129,0.00047985,0.000470271,0.000483632,0.000472172,0.000582474,0.000518145,0.000469681
+regional crude oil,regional crude oil,regional crude oil,1990,BC,3.29689E-05,3.38965E-05,3.22601E-05,3.00229E-05,3.4808E-05,2.9081E-05,2.86556E-05,2.94991E-05,2.89102E-05,2.97316E-05,2.90271E-05,3.58079E-05,3.18533E-05,2.88739E-05
+refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+refined liquids industrial,coal to liquids,coal to liquids,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+refined liquids industrial,gas to liquids,gas to liquids,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+refined liquids enduse,coal to liquids,coal to liquids,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+refined liquids enduse,gas to liquids,gas to liquids,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+electricity,coal,Coal (existing),1990,BC,1.36923E-05,1.14553E-05,3.23731E-05,2.46803E-06,5.89682E-06,5.33803E-05,9.41209E-05,6.3183E-05,9.14988E-05,4.52672E-05,0.000132661,6.95604E-05,1.48006E-05,5.37248E-05
+electricity,coal,Coal (conv pul),1990,BC,1.36923E-05,1.14553E-05,3.23731E-05,2.46803E-06,5.89682E-06,5.33803E-05,9.41209E-05,6.3183E-05,9.14988E-05,4.52672E-05,0.000132661,6.95604E-05,1.48006E-05,5.37248E-05
+electricity,coal,Coal (IGCC),1990,BC,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,2.07088E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07
+electricity,coal,Coal (IGCC)_CCS,1990,BC,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,2.07088E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07
+electricity,gas,Gas (existing),1990,BC,3.83211E-07,0,0,0,0,2.07088E-07,0,0,0,0,0,0,0,0
+electricity,gas,Gas (peak load conv),1990,BC,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,2.07088E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07
+electricity,gas,Gas (CC),1990,BC,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,2.07088E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07
+electricity,gas,Gas (CC)_CCS,1990,BC,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,2.07088E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07
+electricity,oil,Oil (existing),1990,BC,0.00018296,0.0001966,0.000338084,0.000112027,5.06784E-05,0.000497463,6.82137E-05,0.000684974,0.000212004,0.000170849,0.000963693,0.000563899,0.000560104,5.21813E-05
+electricity,oil,Oil (peak load conv),1990,BC,0.00018296,0.0001966,0.000338084,0.000112027,0.00018296,0.000497463,6.82137E-05,0.000684974,0.000212004,0.000170849,0.000963693,0.000563899,0.000560104,5.21813E-05
+electricity,oil,Oil (IGCC),1990,BC,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,2.07088E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07
+electricity,oil,Oil (IGCC)_CCS,1990,BC,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,2.07088E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07
+electricity,biomass,Biomass (existing),1990,BC,0.000932744,9.37422E-05,0.000203459,0.000208919,0.000292782,0.000313366,0.000308783,0,0.000311527,0.000454947,0.000312786,0.000264759,0.00034324,0.000311136
+electricity,biomass,Biomass (conv),1990,BC,0.000932744,9.37422E-05,0.000203459,0.000208919,0.000292782,0.000932744,0.000932744,0.000932744,0.000932744,0.000454947,0.000932744,0.000264759,0.000932744,0.000932744
+electricity,biomass,Biomass (IGCC),1990,BC,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,2.07088E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07
+electricity,biomass,Biomass (IGCC)_CCS,1990,BC,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,2.07088E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07
+H2 Central Production,coal chemical,coal chemical,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+H2 Central Production,coal chemical,coal chemical CCS,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+H2 Central Production,biomass to H2,biomass to H2,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+H2 Central Production,biomass to H2,biomass to H2 CCS,1990,BC,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+building,gas,gas,1990,BC,9.29013E-07,0,0,0,0,0,0,0,0,0,0,0,0,0
+building,coal,coal,1990,BC,0.251246416,0.210130373,0.078062282,0.020769925,0.366211858,0.199573791,0.110881935,0,0.260282086,0.398941695,0.003857526,0.127893365,0.14014689,0.129158386
+building,biomass,biomass,1990,BC,0.069486718,0.053669176,0.026873111,0.021143852,0.099287564,0.089207936,0.016744739,0.004985763,0.091095916,0.204239506,0.321959182,0.012366252,0.097712236,0.18823961
+building,refined liquids,refined liquids,1990,BC,0.001057288,0.000900592,0.001084462,0.003278528,0.002958914,0.00064867,0.004685173,0.002798768,0.004713568,0.004472719,0.005271341,0.000449726,0.007113267,0.005200261
+building,trad biomass,trad biomass,1990,BC,0,0,0,0,0,0,0.033587239,0,0.034255206,0.015808583,0.051643786,0,0,0.035652323
+industry,energy-use,biomass,1990,BC,0.000804243,0.005162189,0.008356374,0.005789254,0.005529551,0.02238599,0.02205853,0.106793428,0.017253944,0.038306895,0.026583733,0.00677386,0,0.038874406
+industry,energy-use,gas,1990,BC,9.2355E-07,0,0,0,0,8.21686E-07,0,0,0,0,0,0,0,0
+industry,energy-use,coal,1990,BC,0.021501008,0.000175448,0.001448288,0.000123412,0.001703374,0.002353479,0.04843724,0.010321762,0.010115715,0.010403109,0.019554661,0.004776521,0.000470088,0.022314684
+industry,energy-use,refined liquids,1990,BC,0.016255843,0.028774557,0.023200763,0.020513752,0.043790478,0.024030746,0.036474346,0.010063363,0.015931044,0.017229968,0.026645949,0.025964175,0.082180287,0.024704882
+transportation,air,refined liquids,1990,BC,0.002378511,0.002228516,0.001676531,0.001863301,0.001789463,0.005299727,0.001193355,0.001741683,0.001476888,0.001564307,0.001045453,0.002587648,0.002182799,0.001812142
+transportation,rail,coal,1990,BC,0,0,0.420494738,0,0,13.4084158,0.147079131,0,0.937624414,0.400506493,0,6.517044107,0,0
+transportation,rail,refined liquids,1990,BC,0.02984566,0.027549703,0.028098902,0.014215199,0.015711097,0.021814681,0.005296899,0,0.009357437,0.025013203,0.028542868,0.023284276,0.026616368,0.015451794
+transportation,road,refined liquids,1990,BC,0.012781249,0.011255864,0.025899778,0.018201357,0.016684424,0.015301712,0.017120735,0.01844133,0.038092345,0.039311107,0.045031457,0.040459959,0.043311089,0.05737784
+transportation,domestic ship,coal,1990,BC,0,0,0,0,0.064393366,0,0,0,0,0,0,0,0,0
+transportation,domestic ship,refined liquids,1990,BC,0.008326643,0.052536211,0.065173865,0.021159956,0.060151059,0.080454804,0.016034624,0,0.003742975,0.039843599,0.031872308,0.116582945,0.023537967,0.036602605
+transportation,international ship,refined liquids,1990,BC,0.023449493,0.0241092,0.022945331,0.021354071,0.024757578,0.020684128,0.020381563,0.020981542,0.020562701,0.021146902,0.020645799,0.025468771,0.022655971,0.020536876
+urban processes,urban processes,landfills,1990,BC,0.002834696,0.000331216,0.003341859,0.000893281,0.000139959,0.003000179,0.01044399,0.00075607,0.005358029,0.003616228,0.003585665,0.00111415,0.000914773,0.004440073
 
 
 per-capita GDP at mid-point of control curve,,,,,,,,,,,,,,,,,,
@@ -210,50 +221,51 @@ Variable ID,,,,,,,,,,,,,,,,,,
 10030,,,,,,,,,,,,,,,,,,
 ,,,,,gdp-mid-control,,,,,,,,,,,,,
 supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
-regional coal,regional coal,regional coal,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-regional crude oil,regional crude oil,regional crude oil,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-refined liquids industrial,shale oil refining,shale oil refining,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-refined liquids industrial,coal to liquids,coal to liquids,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-refined liquids industrial,gas to liquids,gas to liquids,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-refined liquids enduse,shale oil refining,shale oil refining,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-refined liquids enduse,coal to liquids,coal to liquids,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-refined liquids enduse,gas to liquids,gas to liquids,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-electricity,coal,Coal (existing),1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-electricity,coal,Coal (conv pul),1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-electricity,coal,Coal (IGCC),1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-electricity,coal,Coal (IGCC)_CCS,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-electricity,gas,Gas (existing),1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-electricity,gas,Gas (peak load conv),1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-electricity,gas,Gas (CC),1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-electricity,gas,Gas (CC)_CCS,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-electricity,oil,Oil (existing),1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-electricity,oil,Oil (peak load conv),1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-electricity,oil,Oil (IGCC),1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-electricity,oil,Oil (IGCC)_CCS,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-electricity,biomass,Biomass (existing),1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-electricity,biomass,Biomass (conv),1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-electricity,biomass,Biomass (IGCC),1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-electricity,biomass,Biomass (IGCC)_CCS,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-H2 Central Production,coal chemical,coal chemical,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-H2 Central Production,coal chemical,coal chemical CCS,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-H2 Central Production,biomass to H2,biomass to H2,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-H2 Central Production,biomass to H2,biomass to H2 CCS,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-building,gas,gas,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-building,coal,coal,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-building,biomass,biomass,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-building,refined liquids,refined liquids,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-building,trad biomass,trad biomass,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-industry,energy-use,biomass,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-industry,energy-use,gas,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-industry,energy-use,coal,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-industry,energy-use,refined liquids,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-transportation,air,refined liquids,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-transportation,rail,coal,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-transportation,rail,refined liquids,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-transportation,road,refined liquids,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-transportation,domestic ship,coal,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-transportation,domestic ship,refined liquids,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-transportation,international ship,refined liquids,1990,BC,28.6,22.3,14.3,27.4,15.9,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
+regional coal,regional coal,regional coal,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+regional crude oil,regional crude oil,regional crude oil,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+refined liquids industrial,coal to liquids,coal to liquids,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+refined liquids industrial,gas to liquids,gas to liquids,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+refined liquids enduse,coal to liquids,coal to liquids,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+refined liquids enduse,gas to liquids,gas to liquids,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+electricity,coal,Coal (existing),1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+electricity,coal,Coal (conv pul),1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+electricity,coal,Coal (IGCC),1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+electricity,coal,Coal (IGCC)_CCS,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+electricity,gas,Gas (existing),1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+electricity,gas,Gas (peak load conv),1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+electricity,gas,Gas (CC),1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+electricity,gas,Gas (CC)_CCS,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+electricity,oil,Oil (existing),1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+electricity,oil,Oil (peak load conv),1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+electricity,oil,Oil (IGCC),1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+electricity,oil,Oil (IGCC)_CCS,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+electricity,biomass,Biomass (existing),1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+electricity,biomass,Biomass (conv),1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+electricity,biomass,Biomass (IGCC),1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+electricity,biomass,Biomass (IGCC)_CCS,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+H2 Central Production,coal chemical,coal chemical,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+H2 Central Production,coal chemical,coal chemical CCS,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+H2 Central Production,biomass to H2,biomass to H2,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+H2 Central Production,biomass to H2,biomass to H2 CCS,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+building,gas,gas,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+building,coal,coal,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+building,biomass,biomass,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+building,refined liquids,refined liquids,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+building,trad biomass,trad biomass,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+industry,energy-use,biomass,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+industry,energy-use,gas,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+industry,energy-use,coal,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+industry,energy-use,refined liquids,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+transportation,air,refined liquids,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+transportation,rail,coal,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+transportation,rail,refined liquids,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+transportation,road,refined liquids,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+transportation,domestic ship,coal,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+transportation,domestic ship,refined liquids,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+transportation,international ship,refined liquids,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+urban processes,urban processes,landfills,1990,BC,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
 
 
 GDP range from 10% to 90% of maximum control value,,,,,,,,,,,,,,,,,,
@@ -262,50 +274,51 @@ Variable ID,,,,,,,,,,,,,,,,,,
 10040,,,,,,,,,,,,,,,,,,
 ,,,,,gdp-control-range,,,,,,,,,,,,,
 supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
-regional coal,regional coal,regional coal,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-regional crude oil,regional crude oil,regional crude oil,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-refined liquids industrial,shale oil refining,shale oil refining,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-refined liquids industrial,coal to liquids,coal to liquids,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-refined liquids industrial,gas to liquids,gas to liquids,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-refined liquids enduse,shale oil refining,shale oil refining,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-refined liquids enduse,coal to liquids,coal to liquids,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-refined liquids enduse,gas to liquids,gas to liquids,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-electricity,coal,Coal (existing),1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-electricity,coal,Coal (conv pul),1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-electricity,coal,Coal (IGCC),1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-electricity,coal,Coal (IGCC)_CCS,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-electricity,gas,Gas (existing),1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-electricity,gas,Gas (peak load conv),1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-electricity,gas,Gas (CC),1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-electricity,gas,Gas (CC)_CCS,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-electricity,oil,Oil (existing),1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-electricity,oil,Oil (peak load conv),1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-electricity,oil,Oil (IGCC),1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-electricity,oil,Oil (IGCC)_CCS,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-electricity,biomass,Biomass (existing),1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-electricity,biomass,Biomass (conv),1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-electricity,biomass,Biomass (IGCC),1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-electricity,biomass,Biomass (IGCC)_CCS,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-H2 Central Production,coal chemical,coal chemical,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-H2 Central Production,coal chemical,coal chemical CCS,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-H2 Central Production,biomass to H2,biomass to H2,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-H2 Central Production,biomass to H2,biomass to H2 CCS,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-building,gas,gas,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-building,coal,coal,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-building,biomass,biomass,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-building,refined liquids,refined liquids,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-building,trad biomass,trad biomass,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-industry,energy-use,biomass,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-industry,energy-use,gas,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-industry,energy-use,coal,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-industry,energy-use,refined liquids,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-transportation,air,refined liquids,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-transportation,rail,coal,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-transportation,rail,refined liquids,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-transportation,road,refined liquids,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-transportation,domestic ship,coal,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-transportation,domestic ship,refined liquids,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
-transportation,international ship,refined liquids,1990,BC,21.5,16.7,10.7,20.6,11.9,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5,7.5
+regional coal,regional coal,regional coal,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+regional crude oil,regional crude oil,regional crude oil,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+refined liquids industrial,coal to liquids,coal to liquids,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+refined liquids industrial,gas to liquids,gas to liquids,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+refined liquids enduse,coal to liquids,coal to liquids,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+refined liquids enduse,gas to liquids,gas to liquids,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+electricity,coal,Coal (existing),1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+electricity,coal,Coal (conv pul),1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+electricity,coal,Coal (IGCC),1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+electricity,coal,Coal (IGCC)_CCS,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+electricity,gas,Gas (existing),1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+electricity,gas,Gas (peak load conv),1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+electricity,gas,Gas (CC),1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+electricity,gas,Gas (CC)_CCS,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+electricity,oil,Oil (existing),1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+electricity,oil,Oil (peak load conv),1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+electricity,oil,Oil (IGCC),1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+electricity,oil,Oil (IGCC)_CCS,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+electricity,biomass,Biomass (existing),1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+electricity,biomass,Biomass (conv),1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+electricity,biomass,Biomass (IGCC),1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+electricity,biomass,Biomass (IGCC)_CCS,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+H2 Central Production,coal chemical,coal chemical,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+H2 Central Production,coal chemical,coal chemical CCS,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+H2 Central Production,biomass to H2,biomass to H2,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+H2 Central Production,biomass to H2,biomass to H2 CCS,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+building,gas,gas,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+building,coal,coal,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+building,biomass,biomass,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+building,refined liquids,refined liquids,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+building,trad biomass,trad biomass,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+industry,energy-use,biomass,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+industry,energy-use,gas,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+industry,energy-use,coal,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+industry,energy-use,refined liquids,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+transportation,air,refined liquids,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+transportation,rail,coal,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+transportation,rail,refined liquids,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+transportation,road,refined liquids,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+transportation,domestic ship,coal,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+transportation,domestic ship,refined liquids,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+transportation,international ship,refined liquids,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+urban processes,urban processes,landfills,1990,BC,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
 
 
 Diffusional lowering of gdp-mid-control over time,,,,,,,,,,,,,,,,,,
@@ -316,10 +329,10 @@ Variable ID,,,,,,,,,,,,,,,,,,
 supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
 regional coal,regional coal,regional coal,1990,BC,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
 regional crude oil,regional crude oil,regional crude oil,1990,BC,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
-refined liquids industrial,shale oil refining,shale oil refining,1990,BC,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
+refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,BC,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
 refined liquids industrial,coal to liquids,coal to liquids,1990,BC,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
 refined liquids industrial,gas to liquids,gas to liquids,1990,BC,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
-refined liquids enduse,shale oil refining,shale oil refining,1990,BC,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
+refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,BC,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
 refined liquids enduse,coal to liquids,coal to liquids,1990,BC,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
 refined liquids enduse,gas to liquids,gas to liquids,1990,BC,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
 electricity,coal,Coal (existing),1990,BC,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
@@ -358,6 +371,7 @@ transportation,road,refined liquids,1990,BC,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,
 transportation,domestic ship,coal,1990,BC,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
 transportation,domestic ship,refined liquids,1990,BC,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
 transportation,international ship,refined liquids,1990,BC,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
+urban processes,urban processes,landfills,1990,BC,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
 
 
 Final emissions coefficient,,,,,,,,,,,,,,,,,,
@@ -366,47 +380,48 @@ Variable ID,,,,,,,,,,,,,,,,,,
 10050,,,,,,,,,,,,,,,,,,
 ,,,,,final-emiss-coef,,,,,,,,,,,,,
 supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
-regional coal,regional coal,regional coal,1990,BC,0.000147594,0.000395684,0.000514459,0.001862714,0.000321496,0.000640419,0.001247057,0.001220047,0.000491018,0.00303361,0.000136535,0.000627594,0.000782354,0.000421927
-regional crude oil,regional crude oil,regional crude oil,1990,BC,2.77123E-06,8.07478E-06,4.00506E-05,5.94438E-06,1.54408E-06,1.64686E-06,2.35148E-05,6.67738E-06,3.98181E-06,0.000121589,4.90256E-06,7.3763E-06,7.27935E-06,5.5246E-06
-refined liquids industrial,shale oil refining,shale oil refining,1990,BC,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002
-refined liquids industrial,coal to liquids,coal to liquids,1990,BC,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002
-refined liquids industrial,gas to liquids,gas to liquids,1990,BC,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002
-refined liquids enduse,shale oil refining,shale oil refining,1990,BC,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002
-refined liquids enduse,coal to liquids,coal to liquids,1990,BC,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002
-refined liquids enduse,gas to liquids,gas to liquids,1990,BC,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002
-electricity,coal,Coal (existing),1990,BC,1.97203E-05,2.06504E-05,2.39604E-05,1.60999E-05,2.03084E-05,5.52929E-05,0.000544375,8.20899E-05,8.59511E-05,6.6512E-05,2.55609E-05,0.000109536,1.77504E-05,5.61984E-05
-electricity,coal,Coal (conv pul),1990,BC,1.97203E-05,2.06504E-05,2.39604E-05,1.60999E-05,2.03084E-05,5.52929E-05,0.000544375,8.20899E-05,8.59511E-05,6.6512E-05,2.55609E-05,0.000109536,1.77504E-05,5.61984E-05
-electricity,coal,Coal (IGCC),1990,BC,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,2.25597E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07
-electricity,coal,Coal (IGCC)_CCS,1990,BC,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,2.25597E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07
-electricity,gas,Gas (existing),1990,BC,6.56576E-07,-1,-1,-1,-1,2.25597E-07,-1,-1,-1,-1,-1,-1,-1,-1
-electricity,gas,Gas (peak load conv),1990,BC,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,2.25597E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07
-electricity,gas,Gas (CC),1990,BC,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,2.25597E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07
-electricity,gas,Gas (CC)_CCS,1990,BC,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,2.25597E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07
-electricity,oil,Oil (existing),1990,BC,0.000222643,0.000201722,0.000247945,0.00021388,6.74126E-05,0.000160521,0.000242044,0.000132018,0.000159499,0.000191345,0.000132035,0.000682197,0.00021022,0.000120167
-electricity,oil,Oil (peak load conv),1990,BC,0.000222643,0.000201722,0.000247945,0.00021388,0.000222643,0.000160521,0.000242044,0.000132018,0.000159499,0.000191345,0.000132035,0.000682197,0.00021022,0.000120167
-electricity,oil,Oil (IGCC),1990,BC,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,2.25597E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07
-electricity,oil,Oil (IGCC)_CCS,1990,BC,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,2.25597E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07
-electricity,biomass,Biomass (existing),1990,BC,0.00056301,0.000263913,0.000486931,0.000960346,0.000730999,-1,-1,-1,-1,0.000713013,-1,0.000721217,-1,-1
-electricity,biomass,Biomass (conv),1990,BC,0.00056301,0.000263913,0.000486931,0.000960346,0.000730999,0.00056301,0.00056301,0.00056301,0.00056301,0.000713013,0.00056301,0.000721217,0.00056301,0.00056301
-electricity,biomass,Biomass (IGCC),1990,BC,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,2.25597E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07
-electricity,biomass,Biomass (IGCC)_CCS,1990,BC,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,2.25597E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07,6.56576E-07
-H2 Central Production,coal chemical,coal chemical,1990,BC,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002
-H2 Central Production,coal chemical,coal chemical CCS,1990,BC,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002
-H2 Central Production,biomass to H2,biomass to H2,1990,BC,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002
-H2 Central Production,biomass to H2,biomass to H2 CCS,1990,BC,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002
-building,gas,gas,1990,BC,3.59681E-07,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-building,coal,coal,1990,BC,0.019976873,0.056652336,0.004705301,0.001550487,0.02064463,0.006937283,0.015829308,-1,0.024157366,0.025942365,0.004305107,0.007809195,0.001720048,0.019446537
-building,biomass,biomass,1990,BC,0.02253677,0.023208103,0.007821165,0.000807103,0.010954866,-1,0.012696076,0.000496555,0.017008107,0.021240376,0.042080326,0.00856713,-1,0.057623373
-building,refined liquids,refined liquids,1990,BC,0.00036054,0.000351777,0.000346225,0.000452726,0.000290454,4.89497E-05,0.005222709,0.00036112,0.000742223,0.000680479,0.001008437,9.24602E-05,0.000279026,0.001866281
-building,trad biomass,trad biomass,1990,BC,-1,-1,-1,-1,-1,-1,0.009380875,-1,0.005538053,0.002130602,0.008004754,-1,-1,0.009976156
-industry,energy-use,biomass,1990,BC,0.001362681,0.001061578,0.002927308,0.002141321,0.001119819,-1,0.018862015,0.32993358,0.007486383,0.006719204,0.003717485,0.003171568,-1,0.00559336
-industry,energy-use,gas,1990,BC,3.53263E-07,-1,-1,-1,-1,2.54711E-07,-1,-1,-1,-1,-1,-1,-1,-1
-industry,energy-use,coal,1990,BC,0.005480948,3.13245E-05,0.000153333,2.3869E-05,0.000213455,0.000635488,0.004410058,7.3715E-05,0.000747087,0.0002678,0.007951942,0.000753023,3.63648E-05,0.00288061
-industry,energy-use,refined liquids,1990,BC,0.003746963,0.00447653,0.004210803,0.003976459,0.007339993,0.00617567,0.005677184,0.004030239,0.00670089,0.003365239,0.004899231,0.004515266,0.003390446,0.001629484
-transportation,air,refined liquids,1990,BC,0.000577488,0.000575749,0.000575776,0.000645124,0.000579546,0.000460841,0.001435221,0.000359273,0.000467366,0.000498698,0.000352444,0.000349071,0.000523081,0.000481989
-transportation,rail,coal,1990,BC,-1,-1,0.012130304,-1,-1,0.544108731,0.009747921,-1,0.007412976,0.008259425,-1,0.008143384,-1,0.01026306
-transportation,rail,refined liquids,1990,BC,0.00289038,0.002883982,0.002911593,0.002843378,0.002889686,0.003916403,0.002301662,-1,0.002142529,0.002543317,0.002325586,0.002279161,0.002552395,0.002345846
-transportation,road,refined liquids,1990,BC,0.001630637,0.001509895,0.003362179,0.00592465,0.003591148,0.004291884,0.004328908,0.005339173,0.007037524,0.006750215,0.006835773,0.005387709,0.007797895,0.011598637
-transportation,domestic ship,coal,1990,BC,-1,-1,-1,-1,0.013911303,-1,-1,-1,-1,-1,-1,0.009880645,-1,-1
-transportation,domestic ship,refined liquids,1990,BC,0.000746246,0.006006615,0.005832364,0.006149667,0.007314508,0.0093541,0.004808437,-1,0.00439627,0.005059966,0.004050762,0.004138272,0.005481467,0.004979872
-transportation,international ship,refined liquids,1990,BC,0.006123092,0.006151269,0.006090067,0.00598265,0.006118134,0.008224332,0.009864722,0.005230028,0.005030302,0.00529377,0.004107416,0.004634562,0.00553213,0.004847021
+regional coal,regional coal,regional coal,1990,BC,0.000268146,0.00027569,0.000262381,0.000244185,0.000283104,0.000236524,0.000233064,0.000239925,0.000235136,0.000241816,0.000236086,0.000291237,0.000259072,0.00023484
+regional crude oil,regional crude oil,regional crude oil,1990,BC,1.64845E-05,1.69482E-05,1.61301E-05,1.50114E-05,1.7404E-05,1.45405E-05,1.43278E-05,1.47496E-05,1.44551E-05,1.48658E-05,1.45135E-05,1.7904E-05,1.59266E-05,1.4437E-05
+refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,BC,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
+refined liquids industrial,coal to liquids,coal to liquids,1990,BC,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
+refined liquids industrial,gas to liquids,gas to liquids,1990,BC,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
+refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,BC,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
+refined liquids enduse,coal to liquids,coal to liquids,1990,BC,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
+refined liquids enduse,gas to liquids,gas to liquids,1990,BC,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
+electricity,coal,Coal (existing),1990,BC,6.84613E-06,5.72766E-06,1.61866E-05,1.23401E-06,2.94841E-06,2.66901E-05,4.70605E-05,3.15915E-05,4.57494E-05,2.26336E-05,6.63307E-05,3.47802E-05,7.40028E-06,2.68624E-05
+electricity,coal,Coal (conv pul),1990,BC,6.84613E-06,5.72766E-06,1.61866E-05,1.23401E-06,2.94841E-06,2.66901E-05,4.70605E-05,3.15915E-05,4.57494E-05,2.26336E-05,6.63307E-05,3.47802E-05,7.40028E-06,2.68624E-05
+electricity,coal,Coal (IGCC),1990,BC,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,2.07088E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07
+electricity,coal,Coal (IGCC)_CCS,1990,BC,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,2.07088E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07
+electricity,gas,Gas (existing),1990,BC,1.91605E-07,-1,-1,-1,-1,1.03544E-07,-1,-1,-1,-1,-1,-1,-1,-1
+electricity,gas,Gas (peak load conv),1990,BC,1.91605E-07,1.91605E-07,1.91605E-07,1.91605E-07,1.91605E-07,1.03544E-07,1.91605E-07,1.91605E-07,1.91605E-07,1.91605E-07,1.91605E-07,1.91605E-07,1.91605E-07,1.91605E-07
+electricity,gas,Gas (CC),1990,BC,1.91605E-07,1.91605E-07,1.91605E-07,1.91605E-07,1.91605E-07,1.03544E-07,1.91605E-07,1.91605E-07,1.91605E-07,1.91605E-07,1.91605E-07,1.91605E-07,1.91605E-07,1.91605E-07
+electricity,gas,Gas (CC)_CCS,1990,BC,1.91605E-07,1.91605E-07,1.91605E-07,1.91605E-07,1.91605E-07,1.03544E-07,1.91605E-07,1.91605E-07,1.91605E-07,1.91605E-07,1.91605E-07,1.91605E-07,1.91605E-07,1.91605E-07
+electricity,oil,Oil (existing),1990,BC,9.14801E-05,9.83E-05,0.000169042,5.60136E-05,2.53392E-05,0.000248732,3.41069E-05,0.000342487,0.000106002,8.54243E-05,0.000481847,0.000281949,0.000280052,2.60906E-05
+electricity,oil,Oil (peak load conv),1990,BC,9.14801E-05,9.83E-05,0.000169042,5.60136E-05,9.14801E-05,0.000248732,3.41069E-05,0.000342487,0.000106002,8.54243E-05,0.000481847,0.000281949,0.000280052,2.60906E-05
+electricity,oil,Oil (IGCC),1990,BC,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,2.07088E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07
+electricity,oil,Oil (IGCC)_CCS,1990,BC,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,2.07088E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07
+electricity,biomass,Biomass (existing),1990,BC,0.000466372,4.68711E-05,0.000101729,0.000104459,0.000146391,0.000156683,0.000154391,-1,0.000155763,0.000227473,0.000156393,0.000132379,0.00017162,0.000155568
+electricity,biomass,Biomass (conv),1990,BC,0.000466372,4.68711E-05,0.000101729,0.000104459,0.000146391,0.000466372,0.000466372,0.000466372,0.000466372,0.000227473,0.000466372,0.000132379,0.000466372,0.000466372
+electricity,biomass,Biomass (IGCC),1990,BC,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,2.07088E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07
+electricity,biomass,Biomass (IGCC)_CCS,1990,BC,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,2.07088E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07,3.83211E-07
+H2 Central Production,coal chemical,coal chemical,1990,BC,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
+H2 Central Production,coal chemical,coal chemical CCS,1990,BC,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
+H2 Central Production,biomass to H2,biomass to H2,1990,BC,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
+H2 Central Production,biomass to H2,biomass to H2 CCS,1990,BC,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
+building,gas,gas,1990,BC,4.64507E-07,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
+building,coal,coal,1990,BC,0.125623208,0.105065186,0.039031141,0.010384963,0.183105929,0.099786896,0.055440968,-1,0.130141043,0.199470848,0.001928763,0.063946683,0.070073445,0.064579193
+building,biomass,biomass,1990,BC,0.026371541,0.026371541,0.013436556,0.010571926,0.026371541,0.026371541,0.00837237,0.002492881,0.026371541,0.026371541,0.026371541,0.006183126,0.026371541,0.026371541
+building,refined liquids,refined liquids,1990,BC,0.000528644,0.000450296,0.000542231,0.001639264,0.001479457,0.000324335,0.002342586,0.001399384,0.002356784,0.00223636,0.002635671,0.000224863,0.003556634,0.002600131
+building,trad biomass,trad biomass,1990,BC,-1,-1,-1,-1,-1,-1,0.016793619,-1,0.017127603,0.007904292,0.025821893,-1,-1,0.017826161
+industry,energy-use,biomass,1990,BC,0.000402121,0.002581095,0.003,0.002894627,0.002764775,0.003,0.003,0.003,0.003,0.003,0.003,0.003,-1,0.003
+industry,energy-use,gas,1990,BC,4.61775E-07,-1,-1,-1,-1,4.10843E-07,-1,-1,-1,-1,-1,-1,-1,-1
+industry,energy-use,coal,1990,BC,0.007,8.77241E-05,0.000724144,6.17059E-05,0.000851687,0.001176739,0.007,0.005160881,0.005057857,0.005201555,0.007,0.002388261,0.000235044,0.007
+industry,energy-use,refined liquids,1990,BC,0.008127921,0.01,0.01,0.01,0.01,0.01,0.01,0.005031681,0.007965522,0.008614984,0.01,0.01,0.01,0.01
+transportation,air,refined liquids,1990,BC,0.001189256,0.001114258,0.000838265,0.000931651,0.000894731,0.002649864,0.000596678,0.000870841,0.000738444,0.000782153,0.000522727,0.001293824,0.001091399,0.000906071
+transportation,rail,coal,1990,BC,-1,-1,0.210247369,-1,-1,6.704207902,0.073539566,-1,0.468812207,0.200253246,-1,3.258522053,-1,-1
+transportation,rail,refined liquids,1990,BC,0.01492283,0.013774851,0.014049451,0.007107599,0.007855549,0.01090734,0.00264845,-1,0.004678719,0.012506602,0.014271434,0.011642138,0.013308184,0.007725897
+transportation,road,refined liquids,1990,BC,0.006390624,0.005627932,0.009,0.009,0.008342212,0.007650856,0.008560367,0.009,0.009,0.009,0.009,0.009,0.009,0.009
+transportation,domestic ship,coal,1990,BC,-1,-1,-1,-1,0.032196683,-1,-1,-1,-1,-1,-1,-1,-1,-1
+transportation,domestic ship,refined liquids,1990,BC,0.004163321,0.026268105,0.032586933,0.010579978,0.030075529,0.040227402,0.008017312,-1,0.001871487,0.0199218,0.015936154,0.058291473,0.011768984,0.018301302
+transportation,international ship,refined liquids,1990,BC,0.011724746,0.0120546,0.011472665,0.010677035,0.012378789,0.010342064,0.010190781,0.010490771,0.010281351,0.010573451,0.0103229,0.012734385,0.011327985,0.010268438
+urban processes,urban processes,landfills,1990,BC,0.001417348,0.000165608,0.00167093,0.00044664,6.99793E-05,0.00150009,0.005221995,0.000378035,0.002679014,0.001808114,0.001792832,0.000557075,0.000457387,0.002220037

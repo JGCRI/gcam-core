@@ -5,11 +5,11 @@ Variable ID,,,,,,
 
 region,supplysector,subsector,technology,period,generic-ghg,input-driver
 ALL,refined liquids industrial,biomass liquids,biomass liquids,ALL,N2O,
-ALL,refined liquids industrial,shale oil refining,shale oil refining,ALL,N2O,
+ALL,refined liquids industrial,unconventional oil refining,unconventional oil refining,ALL,N2O,
 ALL,refined liquids industrial,coal to liquids,coal to liquids,ALL,N2O,
 ALL,refined liquids industrial,gas to liquids,gas to liquids,ALL,N2O,
 ALL,refined liquids enduse,biomass liquids,biomass liquids,ALL,N2O,
-ALL,refined liquids enduse,shale oil refining,shale oil refining,ALL,N2O,
+ALL,refined liquids enduse,unconventional oil refining,unconventional oil refining,ALL,N2O,
 ALL,refined liquids enduse,coal to liquids,coal to liquids,ALL,N2O,
 ALL,refined liquids enduse,gas to liquids,gas to liquids,ALL,N2O,
 ALL,electricity,coal,Coal (existing),ALL,N2O,
@@ -67,11 +67,11 @@ Variable ID,,,,,,,,,,,,,,,,,,
 ,,,,,uncontrolled-emiss-coef,,,,,,,,,,,,,
 supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
 refined liquids industrial,biomass liquids,biomass liquids,1990,N2O,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001
-refined liquids industrial,shale oil refining,shale oil refining,1990,N2O,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001
+refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,N2O,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001
 refined liquids industrial,coal to liquids,coal to liquids,1990,N2O,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001
 refined liquids industrial,gas to liquids,gas to liquids,1990,N2O,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001
 refined liquids enduse,biomass liquids,biomass liquids,1990,N2O,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001
-refined liquids enduse,shale oil refining,shale oil refining,1990,N2O,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001
+refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,N2O,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001
 refined liquids enduse,coal to liquids,coal to liquids,1990,N2O,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001
 refined liquids enduse,gas to liquids,gas to liquids,1990,N2O,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001
 electricity,coal,Coal (existing),1990,N2O,0.001881726,0.001900634,0.001455021,0.00154734,0.001597067,0.002041286,0.00144607,0.001334406,0.0013325,0.001086971,0.001177771,0.001338278,0.001799731,0.001368017
@@ -122,11 +122,11 @@ Variable ID,,,,,,,,,,,,,,,,,,
 ,,,,,gdp-mid-control,,,,,,,,,,,,,
 supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
 refined liquids industrial,biomass liquids,biomass liquids,1990,N2O,20.8,16.0,15.0,18.4,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
-refined liquids industrial,shale oil refining,shale oil refining,1990,N2O,20.8,16.0,15.0,18.4,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
+refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,N2O,20.8,16.0,15.0,18.4,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
 refined liquids industrial,coal to liquids,coal to liquids,1990,N2O,20.8,16.0,15.0,18.4,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
 refined liquids industrial,gas to liquids,gas to liquids,1990,N2O,20.8,16.0,15.0,18.4,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
 refined liquids enduse,biomass liquids,biomass liquids,1990,N2O,20.8,16.0,15.0,18.4,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
-refined liquids enduse,shale oil refining,shale oil refining,1990,N2O,20.8,16.0,15.0,18.4,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
+refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,N2O,20.8,16.0,15.0,18.4,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
 refined liquids enduse,coal to liquids,coal to liquids,1990,N2O,20.8,16.0,15.0,18.4,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
 refined liquids enduse,gas to liquids,gas to liquids,1990,N2O,20.8,16.0,15.0,18.4,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
 electricity,coal,Coal (existing),1990,N2O,20.8,16.0,15.0,18.4,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
@@ -177,11 +177,11 @@ Variable ID,,,,,,,,,,,,,,,,,,
 ,,,,,gdp-control-range,,,,,,,,,,,,,
 supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
 refined liquids industrial,biomass liquids,biomass liquids,1990,N2O,13.8,10.7,10.0,12.2,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-refined liquids industrial,shale oil refining,shale oil refining,1990,N2O,13.8,10.7,10.0,12.2,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
+refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,N2O,13.8,10.7,10.0,12.2,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
 refined liquids industrial,coal to liquids,coal to liquids,1990,N2O,13.8,10.7,10.0,12.2,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
 refined liquids industrial,gas to liquids,gas to liquids,1990,N2O,13.8,10.7,10.0,12.2,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
 refined liquids enduse,biomass liquids,biomass liquids,1990,N2O,13.8,10.7,10.0,12.2,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
-refined liquids enduse,shale oil refining,shale oil refining,1990,N2O,13.8,10.7,10.0,12.2,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
+refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,N2O,13.8,10.7,10.0,12.2,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
 refined liquids enduse,coal to liquids,coal to liquids,1990,N2O,13.8,10.7,10.0,12.2,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
 refined liquids enduse,gas to liquids,gas to liquids,1990,N2O,13.8,10.7,10.0,12.2,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
 electricity,coal,Coal (existing),1990,N2O,13.8,10.7,10.0,12.2,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0,10.0
@@ -232,11 +232,11 @@ Variable ID,,,,,,,,,,,,,,,,,,
 ,,,,,tech-diffusion,,,,,,,,,,,,,
 supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
 refined liquids industrial,biomass liquids,biomass liquids,1990,N2O,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-refined liquids industrial,shale oil refining,shale oil refining,1990,N2O,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,N2O,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 refined liquids industrial,coal to liquids,coal to liquids,1990,N2O,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 refined liquids industrial,gas to liquids,gas to liquids,1990,N2O,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 refined liquids enduse,biomass liquids,biomass liquids,1990,N2O,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-refined liquids enduse,shale oil refining,shale oil refining,1990,N2O,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,N2O,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 refined liquids enduse,coal to liquids,coal to liquids,1990,N2O,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 refined liquids enduse,gas to liquids,gas to liquids,1990,N2O,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 electricity,coal,Coal (existing),1990,N2O,0,0,0,0,0,0,0,0,0,0,0,0,0,0
@@ -287,29 +287,29 @@ Variable ID,,,,,,,,,,,,,,,,,,
 ,,,,,final-emiss-coef,,,,,,,,,,,,,
 supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
 refined liquids industrial,biomass liquids,biomass liquids,1990,N2O,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007
-refined liquids industrial,shale oil refining,shale oil refining,1990,N2O,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007
+refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,N2O,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007
 refined liquids industrial,coal to liquids,coal to liquids,1990,N2O,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007
 refined liquids industrial,gas to liquids,gas to liquids,1990,N2O,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007
 refined liquids enduse,biomass liquids,biomass liquids,1990,N2O,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007
-refined liquids enduse,shale oil refining,shale oil refining,1990,N2O,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007
+refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,N2O,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007
 refined liquids enduse,coal to liquids,coal to liquids,1990,N2O,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007
 refined liquids enduse,gas to liquids,gas to liquids,1990,N2O,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007
 electricity,coal,Coal (existing),1990,N2O,0.001317208,0.001330444,0.001018515,0.001083138,0.001117947,0.0014289,0.001012249,0.000934084,0.00093275,0.00076088,0.00082444,0.000936794,0.001259812,0.000957612
 electricity,coal,Coal (conv pul),1990,N2O,0.001317208,0.001330444,0.001018515,0.001083138,0.001117947,0.0014289,0.001012249,0.000934084,0.00093275,0.00076088,0.00082444,0.000936794,0.001259812,0.000957612
-electricity,coal,Coal (IGCC),1990,N2O,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007
-electricity,coal,Coal (IGCC)_CCS,1990,N2O,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007
+electricity,coal,Coal (IGCC),1990,N2O,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001
+electricity,coal,Coal (IGCC)_CCS,1990,N2O,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001
 electricity,gas,Gas (existing),1990,N2O,6.6968E-05,6.76409E-05,5.17822E-05,5.50677E-05,5.68374E-05,7.26465E-05,5.14636E-05,4.74896E-05,4.74218E-05,3.86838E-05,4.19152E-05,4.76274E-05,6.40499E-05,4.86858E-05
 electricity,gas,Gas (peak load conv),1990,N2O,6.6968E-05,6.76409E-05,5.17822E-05,5.50677E-05,5.68374E-05,7.26465E-05,5.14636E-05,4.74896E-05,4.74218E-05,3.86838E-05,4.19152E-05,4.76274E-05,6.40499E-05,4.86858E-05
 electricity,gas,Gas (CC),1990,N2O,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007
 electricity,gas,Gas (CC)_CCS,1990,N2O,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007
 electricity,oil,Oil (existing),1990,N2O,0.000760755,0.0007684,0.000588245,0.000625568,0.000645672,0.000825263,0.000584626,0.000539482,0.000538711,0.000439447,0.000476156,0.000541047,0.000727606,0.00055307
 electricity,oil,Oil (peak load conv),1990,N2O,0.000760755,0.0007684,0.000588245,0.000625568,0.000645672,0.000825263,0.000584626,0.000539482,0.000538711,0.000439447,0.000476156,0.000541047,0.000727606,0.00055307
-electricity,oil,Oil (IGCC),1990,N2O,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007
-electricity,oil,Oil (IGCC)_CCS,1990,N2O,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007
+electricity,oil,Oil (IGCC),1990,N2O,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001
+electricity,oil,Oil (IGCC)_CCS,1990,N2O,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001
 electricity,biomass,Biomass (existing),1990,N2O,0.000681108,0.00016693,0.000863239,0.002669235,0.001099759,0.00284973,0.000136766,-1,0.001309871,0.001944264,0.001740411,0.00019063,0.028886208,0.002966232
 electricity,biomass,Biomass (conv),1990,N2O,0.000681108,0.00016693,0.000863239,0.002669235,0.001099759,0.00284973,0.000136766,0.000681108,0.001309871,0.001944264,0.001740411,0.00019063,0.028886208,0.002966232
-electricity,biomass,Biomass (IGCC),1990,N2O,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007
-electricity,biomass,Biomass (IGCC)_CCS,1990,N2O,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007,0.00007
+electricity,biomass,Biomass (IGCC),1990,N2O,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001
+electricity,biomass,Biomass (IGCC)_CCS,1990,N2O,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001
 H2 Central Production,coal chemical,coal chemical,1990,N2O,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
 H2 Central Production,coal chemical,coal chemical CCS,1990,N2O,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
 H2 Central Production,biomass to H2,biomass to H2,1990,N2O,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
