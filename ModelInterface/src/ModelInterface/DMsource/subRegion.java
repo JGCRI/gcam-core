@@ -147,7 +147,7 @@ public class subRegion extends Region
    */
   public double getByDegree(String var, double year, double findX, double findY)
   {
-    //i dunno if this math is right... but hey maybe it is!
+    //Need to convert this to standard method if this is ever used (it is not now)
     int X = (int)(Math.floor((findX-x)/resolution));
     int Y = (int)(Math.floor(((y+height)-findY)/resolution));
     return ((Matrix)((Map)data.get(var)).get(String.valueOf(year))).get(X, Y);

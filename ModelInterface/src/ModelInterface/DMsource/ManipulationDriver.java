@@ -138,11 +138,11 @@ public class ManipulationDriver
     System.in.read();
     System.out.println("...going");
     */
-    log.log(Level.FINE, "Calling makeStrams");
+    log.log(Level.FINE, "Calling makeStreams");
     makeStreams();
     log.log(Level.FINE, "Building lowest-level regions");
     //buildRegionData();
-    log.log(Level.FINE, "Creating the regio hierarchy");
+    log.log(Level.FINE, "Creating the region hierarchy");
     buildRegionHierarchy();
     log.log(Level.FINE, "Parsing user input");
     inputParser();
@@ -164,6 +164,8 @@ public class ManipulationDriver
     Element currRegion;
     
     resolution = Double.parseDouble(root.getAttributeValue("res"));
+	// Normalize resolution to units of one quarter of a degree
+	resolution = (double)( (int)Math.round(resolution*60*4) )/(60.0*4.0);
     
     //getting the information for each field, such as reference and units
     currRegion = root.getChild("variableInfo");
@@ -2629,10 +2631,10 @@ public class ManipulationDriver
       try {
         ncfile.create();
       }  catch (IOException e) {
-        log.log(Level.SEVERE, "NetCDF file failed to create -> aborting");
+        log.log(Level.SEVERE, "NetCDF file '"+fileName+"' failed to create -> aborting");
         System.exit(0);
       }
-      log.log(Level.FINE, "NetCDF file '"+fileName+"' created");
+      log.log(Level.FINE, "Creating NetCDF file '"+fileName+"'");
 
       ArrayFloat dataArr = new ArrayFloat.D4(1, timeDim.getLength(), latDim.getLength(), lonDim.getLength());
       ArrayFloat latArr = new ArrayFloat.D1(latDim.getLength());
@@ -3397,7 +3399,8 @@ public class ManipulationDriver
    */
   private void makeStreams()
   {
-    log.log(Level.FINER, "begin function");
+    log.log(Level.FINER, "begin parsing DMfiles.xml");
+    log.log(Level.FINER, "Parsing "+dSource);
     //this function initializes all of the XML documents
     //i will add the code for additional readers as i need them
     try
@@ -3420,6 +3423,7 @@ public class ManipulationDriver
     } catch(FileNotFoundException e)
     {
       log.log(Level.SEVERE, "FileNotFound! in -> makeStreams");
+      System.exit(0);
     } catch(JDOMException e)
     {
       log.log(Level.SEVERE, "JDOM Exception! in -> makeStreams");
@@ -3880,6 +3884,8 @@ public class ManipulationDriver
 	  public void startElement(String uri, String localName, String qName, Attributes attrs) {
 		  if(localName.equals("input")) {
 			  resolution = Double.parseDouble(attrs.getValue("res"));
+			  // Normalize resolution to units of one quarter of a degree
+			  resolution = (double)( (int)Math.round(resolution*60*4) )/(60.0*4.0);
 		  } else if(localName.equals("variableInfo")) {
 			  isVarInfo = true;
 		  } else if(localName.equals("region")) {
@@ -3913,10 +3919,18 @@ public class ManipulationDriver
 		  } else if(localName.equals("data")) {
 			  currX = Integer.parseInt(attrs.getValue("x"));
 			  currY = Integer.parseInt(attrs.getValue("y"));
-			  toAddTime[currY][currX] = stringToDouble(attrs.getValue("value"));
-			  if(!varName.equals("weight") && !avg)
-			  { //this is an additive value and should be initially weighted (now)
-				  toAddTime[currY][currX] *= ((double[][])((Map)toAdd.data.get("weight")).get("0"))[currY][currX];
+			  if (currX >= sizeX) { //sjs add trap for out of bounds error.
+				  log.log(Level.WARNING, "Skipping X point "+currX+" greater than size "+sizeX+" for region: "+toAdd.name);
+			  
+			  } else if (currY >= sizeY) { //sjs add trap for out of bounds error.
+				  log.log(Level.WARNING, "Skipping Y point "+currY+" greater than size "+sizeY+" for region: "+toAdd.name);
+			  
+			  } else {
+				  toAddTime[currY][currX] = stringToDouble(attrs.getValue("value"));
+				  if(!varName.equals("weight") && !avg)
+				  { //this is an additive value and should be initially weighted (now)
+					  toAddTime[currY][currX] *= ((double[][])((Map)toAdd.data.get("weight")).get("0"))[currY][currX];
+				  }
 			  }
 		  } else if(localName.equals("variable")) {
 			  if(!isVarInfo) {

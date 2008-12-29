@@ -25,6 +25,9 @@
 package ModelInterface.DMsource;
 
 import java.text.DecimalFormat;
+import java.util.logging.*;
+import ModelInterface.PPsource.CoordConversions;
+import java.awt.geom.Point2D;
 import java.io.*;
 
 
@@ -51,6 +54,7 @@ public class ReferenceVariable extends Variable
   double w;
   double h;
   double res;
+  Logger log = Logger.getLogger("DataManipulation"); //log class to use for all logging output
   
   //***************************************************************************
   //************************Constructors***************************************
@@ -277,7 +281,7 @@ public class ReferenceVariable extends Variable
     double[][] holdWM;
     ReferenceWrapper holdD;
     ReferenceWrapper holdW;
-    double[][] toPrint = new double[(int)(h/res)][(int)(w/res)];
+    double[][] toPrint = new double[(int)Math.round(h/res)][(int)Math.round(w/res)];
     //double[][] toPrint = new double[(int)(180/res)][(int)(360/res)];
     
     for(int i = 0; i < toPrint.length; i++)
@@ -295,6 +299,8 @@ public class ReferenceVariable extends Variable
       holdM = holdD.data;
       holdW = (ReferenceWrapper)weight[i];
       holdWM = holdW.data;
+    
+      //sjsTEMP -- change to common routine. Used for printing variables. Isn't used often.
       offsetY = (int)(((y+h)-(holdD.y+holdD.height))/res);
       offsetX = (int)((holdD.x-x)/res);
       //offsetY = (int)(((90)-(holdD.y+holdD.height))/res);
@@ -337,12 +343,11 @@ public class ReferenceVariable extends Variable
   {
     //System.out.println(x+", "+y+", "+w+", "+h);
     int offsetY, offsetX;
-    int offsetWy, offsetWx;
     double[][] holdM;
     double[][] holdWM;
     ReferenceWrapper holdD;
     ReferenceWrapper holdW;
-    double[][] toPrint = new double[(int)(180/res)][(int)(360/res)];
+    double[][] toPrint = new double[(int)Math.round(180/res)][(int)Math.round(360/res)];
     
     for(int i = 0; i < toPrint.length; i++)
     {
@@ -360,9 +365,18 @@ public class ReferenceVariable extends Variable
       holdM = holdD.data;
       holdW = (ReferenceWrapper)weight[i];
       holdWM = holdW.data;
-      offsetY = (int)(((90)-(holdD.y+holdD.height))/res);
-      offsetX = (int)((holdD.x+180)/res);
-      //System.out.println(offsetX+", "+offsetY);
+
+	  Point2D.Double dataOffset;
+	  dataOffset = CoordConversions.point2index( new Point2D.Double( holdD.x, holdD.y+holdD.height), res, true );
+	  // This y coordinate starts with zero at + 90. So flip since point2index assumes the opposite.
+	  dataOffset.y = Math.round(180/res) - dataOffset.y;
+
+	  // Prev version
+	  // offsetY = (int)(((90)-(holdD.y+holdD.height))/res);
+      //offsetX = (int)((holdD.x+180)/res);
+      
+      offsetX = (int)dataOffset.x; // (int) conversion is fine since these are already integer by value
+      offsetY = (int)dataOffset.y;
       
       for(int iY = 0; iY < holdM.length; iY++)
       {

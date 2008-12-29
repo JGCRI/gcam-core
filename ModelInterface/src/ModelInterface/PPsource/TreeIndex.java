@@ -126,6 +126,7 @@ public class TreeIndex implements DataIndex
   
   public TreeMap extractMask(RegionMask m)
   {
+    // This routine is does not appear to be used.
     makeRegion = new TreeMap();
     
     extractMaskHelp(root, m);
@@ -138,7 +139,7 @@ public class TreeIndex implements DataIndex
   private void init()
   {
     init = true;
-    data = new MatrixRepository((int)Math.floor((maxX-minX)/resolution), (int)Math.floor((maxY-minY)/resolution));
+    data = new MatrixRepository( (int)Math.round((maxX-minX)/resolution ), (int)Math.round((maxY-minY)/resolution ));
   }
   
   private void addBlock(IndexBlock val)

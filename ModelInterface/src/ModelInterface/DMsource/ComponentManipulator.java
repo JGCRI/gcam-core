@@ -986,7 +986,7 @@ public final class ComponentManipulator
   {
     log.log(Level.FINER, "begin function");
     final double POLAR_CIRCUM = 40008.00;
-    final double EQUAT_CIRCUM = 40076.5;
+    final double EQUAT_CIRCUM = 40076.5; //km
     final double PI = 3.1415926535;
     
     double[][] holdMR = new double[1][1];

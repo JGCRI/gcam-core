@@ -402,7 +402,7 @@ public class DataBuilder
   /**
    * Extracts a region's worth of data from the {@link QuadBucketTree} for
    * each {@lnk RegionMask} in the list. This data is a tree hierarchy of
-   * matrices of doubles.
+   * matrices of doubles. 
    *
    */
   public void fillRegions()
@@ -450,7 +450,8 @@ public class DataBuilder
     Iterator itName, itVar, itTime, itData;
     int msizeX, msizeY;
     double normX, normY, normW, normH; //the normalized bounds of the region (rounded to a multiple of data resolution)
-    double holdMX, holdMY, work;
+    double holdMaxX, holdMaxY, work;
+    int maxXIndex, maxYIndex, minXIndex, minYIndex;
     Map.Entry var, time, data;
     try
     {
@@ -500,16 +501,76 @@ public class DataBuilder
           {
           //BEGIN WRITING OF SPECIFIC REGION DATA
             //calculating normalized bounds of region
+            //Do this by looping through index calc for weight variable and find min/max. 
+            //Need to do it this way since no way to know where region boundaries lie with a working cell
+            Map tempMap = (Map)holdToPrint.get("weight");
+            tempMap = (Map)tempMap.get("0"); // get time, we know time has index of zero
+			Iterator weightDataIt =  tempMap.entrySet().iterator();
+
+			// Dummy initital values for max and min coordinate values. Make larger than any possible value.
+            maxXIndex = (int)( -2 ); // max val
+            maxYIndex = (int)( -2 );
+            minXIndex = (int)( 362.0 / dataStruct.getResolution() ); // min val
+            minYIndex = (int)( 182.0 / dataStruct.getResolution() );
+//		 	log.log(Level.FINER, "Region "+rName+" X&Y: "+((RegionMask)maskList.get(rName)).x+","+((RegionMask)maskList.get(rName)).y); 
+
+			double smallNumber = dataStruct.getResolution() / 10; // Small number to correct for rounding errors
+			while(weightDataIt.hasNext())
+			{
+			  data = (Map.Entry)weightDataIt.next();
+			  if(!((Double)data.getValue()).isNaN()) {
+				  //determine index values for this point. 
+				  Point2D.Double thisPointIndex, thisPoint;
+				  thisPoint = new Point2D.Double( ((Point2D.Double)data.getKey()).x, ((Point2D.Double)data.getKey()).y);
+				  thisPointIndex = CoordConversions.point2index( thisPoint, dataStruct.getResolution(), true );
+				  
+				  if ( (int)thisPointIndex.x < minXIndex ) { minXIndex = (int)thisPointIndex.x; }
+				  if ( (int)thisPointIndex.x > maxXIndex ) { maxXIndex = (int)thisPointIndex.x; }
+				  if ( (int)thisPointIndex.y < minYIndex ) { minYIndex = (int)thisPointIndex.y; }
+				  if ( (int)thisPointIndex.y > maxYIndex ) { maxYIndex = (int)thisPointIndex.y; }
+			  }
+			}
+			msizeX = maxXIndex - minXIndex + 1;
+			msizeY = maxYIndex - minYIndex + 1;
+            normW = (double)msizeX * dataStruct.getResolution();
+            normH = (double)msizeY * dataStruct.getResolution();
+
+            // obtain corrdinate for corner this region. This LL coordinate of the the lower left corner cell.
+           	Point2D.Double LLPoint, LLPointIndex, LLPointNormalized;
+			LLPoint = new Point2D.Double( ((RegionMask)maskList.get(rName)).x, ((RegionMask)maskList.get(rName)).y );
+		 	LLPointIndex = CoordConversions.point2index( LLPoint, dataStruct.getResolution(), true );
+		 	LLPointNormalized = CoordConversions.index2point( LLPointIndex, dataStruct.getResolution() );
+
+            normX = LLPointNormalized.x;
+            normY = LLPointNormalized.y;
+ 
+ 	// for debugging
+ 			double minXfromIndex,minYfromIndex,maxXfromIndex,maxYfromIndex;
+ 			minXfromIndex = minXIndex*dataStruct.getResolution() -180.0;
+ 			minYfromIndex = minYIndex*dataStruct.getResolution() -90.0;
+ 			maxXfromIndex = maxXIndex*dataStruct.getResolution() -180.0;
+ 			maxYfromIndex = maxYIndex*dataStruct.getResolution() -90.0;
+ 			
+//		 log.log(Level.FINER, "       normalized X&Y: "+normX+","+normY); 
+
+ /*			
+			// Prev version
+			
             work = ((RegionMask)maskList.get(rName)).x+((RegionMask)maskList.get(rName)).width;
-            holdMX = Math.ceil(work/dataStruct.getResolution())*dataStruct.getResolution();
+            holdMaxX = Math.ceil(work/dataStruct.getResolution())*dataStruct.getResolution();
             work = ((RegionMask)maskList.get(rName)).y+((RegionMask)maskList.get(rName)).height;
-            holdMY = Math.ceil(work/dataStruct.getResolution())*dataStruct.getResolution();
-            normX = Math.floor(((RegionMask)maskList.get(rName)).x/dataStruct.getResolution())*dataStruct.getResolution();
-            normY = Math.floor(((RegionMask)maskList.get(rName)).y/dataStruct.getResolution())*dataStruct.getResolution();
-            normW = holdMX-normX;
-            normH = holdMY-normY;
+            holdMaxY = Math.ceil(work/dataStruct.getResolution())*dataStruct.getResolution();
+
+            // use (int) conversion to truncate values to obtain LL boundaries
+            normX = (int)(((RegionMask)maskList.get(rName)).x/dataStruct.getResolution())*dataStruct.getResolution();
+            normY = (int)(((RegionMask)maskList.get(rName)).y/dataStruct.getResolution())*dataStruct.getResolution();
+            normW = holdMaxX-normX;
+            normH = holdMaxY-normY;
             msizeY = (int)Math.ceil(normH/dataStruct.getResolution());
             msizeX = (int)Math.ceil(normW/dataStruct.getResolution());
+*/
+
+
             //printing regionName x y matrixHeight matrixWidth
             holder = "<region  name=\""+rName+"\" x=\""+normX+"\" y=\""+normY+"\" sizeY=\"";
             holder += (msizeY)+"\" sizeX=\""+(msizeX)+"\">";
@@ -517,7 +578,8 @@ public class DataBuilder
             rWriter.newLine();
             //iterate through variables
             itVar = holdToPrint.entrySet().iterator();
-            while(itVar.hasNext())
+
+           while(itVar.hasNext())
             {
               var = (Map.Entry)itVar.next();
               if(var.getKey() == "weight")
@@ -542,35 +604,46 @@ public class DataBuilder
                 while(itData.hasNext())
                 {
                   data = (Map.Entry)itData.next();
-		  if(!((Double)data.getValue()).isNaN()) {
-			  //prints yIndex xIndex dataValue
-			  holder = "<data y=\""
-				  +(Math.abs((int)(((((Point2D.Double)data.getKey()).y+dataStruct.getResolution())-(normY+normH))/dataStruct.getResolution())));
-			  holder += "\" x=\""+(int)((((Point2D.Double)data.getKey()).x-normX)/dataStruct.getResolution())
-				  +"\" value=\"";
-			  //holder = "<data y=\""+(int)((Point2D.Double)data.getKey()).y;
-			  //holder += "\" x=\""+(int)((Point2D.Double)data.getKey()).x+"\" value=\"";
-			  holder += data.getValue()+"\" />";
-			  rWriter.write("\t\t\t\t"+holder);
-			  rWriter.newLine();
-		  }
-                }
+				  if(!((Double)data.getValue()).isNaN()) {
+					  //Indicies are relative to upper left corner
+					  Point2D.Double thisPointIndex;
+					  thisPointIndex = CoordConversions.point2index( (Point2D.Double)data.getKey(), dataStruct.getResolution(), true );
+					  int yIndex = (int)(LLPointIndex.y + msizeY - thisPointIndex.y) - 1;
+					  int xIndex = (int)(thisPointIndex.x - LLPointIndex.x);
+
+					  holder = "<data y=\"" + yIndex;
+					  holder += "\" x=\"" + xIndex + "\" value=\"";
+					  holder += data.getValue()+"\" />";
+					  
+					  if ( (yIndex < 0 ) || (xIndex < 0) ) {
+					  	   log.log(Level.WARNING, "Negative relative index ignored for region: "+rName);
+					  	   log.log(Level.FINER, "  -- xIndex: "+xIndex+"  -- yIndex: "+yIndex);
+					  	   log.log(Level.FINER, "  --(x&y pt): "+((Point2D.Double)data.getKey()).x+","+((Point2D.Double)data.getKey()).y
+					  	   							+"  LL X&Y "+normX+","+normY+"  W&H "+normW+","+normH
+					  	   );
+
+					  } else {
+					  	rWriter.write("\t\t\t\t"+holder);
+					  	rWriter.newLine();
+					  }
+				  }
+				}
                 rWriter.write("\t\t\t</time>");
-		rWriter.newLine();
+				rWriter.newLine();
                 rWriter.flush();
               }
               if(var.getKey() == "weight")
               { //weight is output not as a regular variable
                 rWriter.write("\t\t</weight>");
-		rWriter.newLine();
+				rWriter.newLine();
               } else
               { //normal case
                 rWriter.write("\t\t</variable>");
-		rWriter.newLine();
+				rWriter.newLine();
               }  
             }
             rWriter.write("\t</region>");
-	    rWriter.newLine();
+	    	rWriter.newLine();
             //END WRITING REGION
           }
         }
@@ -710,15 +783,17 @@ public class DataBuilder
         {
           //BEGIN ADDING OF SPECIFIC REGION DATA
           //calculating normalized bounds of region
-          work = ((RegionMask)maskList.get(rName)).x
-              +((RegionMask)maskList.get(rName)).width;
+          //work = ((RegionMask)maskList.get(rName)).x
+          //    +((RegionMask)maskList.get(rName)).width;
           //holdMX = Math.ceil(work/dataStruct.getResolution())*dataStruct.getResolution();
           work = ((RegionMask)maskList.get(rName)).y
               +((RegionMask)maskList.get(rName)).height;
-          holdMY = Math.ceil(work/dataStruct.getResolution())*dataStruct.getResolution();
-          normX = Math.floor(((RegionMask)maskList.get(rName)).x/dataStruct.getResolution())
+         // use (int) conversion instead of math.ceil to round values to obtain upper boundaries that works the same for - and + values
+          holdMY = (int)(work/dataStruct.getResolution() + 0.999999999999999)*dataStruct.getResolution();
+          // use (int) conversion instead of math.floor to truncate values to obtain LL boundaries that works the same for - and + values
+           normX = (int)Math.round(((RegionMask)maskList.get(rName)).x/dataStruct.getResolution() )
               *dataStruct.getResolution();
-          normY = Math.floor(((RegionMask)maskList.get(rName)).y/dataStruct.getResolution())
+          normY = (int)Math.round(((RegionMask)maskList.get(rName)).y/dataStruct.getResolution() )
               *dataStruct.getResolution();
           //normW = holdMX-normX;
           normH = holdMY-normY;
@@ -977,6 +1052,9 @@ public class DataBuilder
       
     }
   //done reading from XML file
+
+   // Normalize resolution to units of one quarter of a degree
+   res = (double)( (int)Math.round(res*60*4) )/(60.0*4.0);
     
   //opening txt file for reading
     BufferedReader input = null;
@@ -1119,7 +1197,7 @@ public class DataBuilder
     String ref = null;
     String unit = null;
     int numCols, numRows;
-    double xLL, yLL;
+    double xLL, yLL, baseYVal;
     double currX, currY;
     double ignore;
     double time = 0;
@@ -1260,7 +1338,9 @@ public class DataBuilder
     
     
     //reading the data from the file
-    currY = (yLL+(numRows*res));
+	baseYVal = (yLL+(numRows - 1)*res);
+    currY = baseYVal;
+    
     for(int i = 0; i < numRows; i++)
     {
       currX = xLL;
@@ -1279,8 +1359,6 @@ public class DataBuilder
             dataValue = new Double(0);
           }
         }
-        
-        
         
         //only add this data if it is not the ignore value
         if(dataValue != ignore)
@@ -1587,6 +1665,9 @@ public class DataBuilder
       }
     }
   //done reading from XML file
+
+   // Normalize resolution to units of one quarter of a degree
+   res = (double)( (int)Math.round(res*60*4) )/(60.0*4.0);
     
   //opening asc file for reading
     BufferedReader input = null;
@@ -3886,6 +3967,10 @@ public class DataBuilder
     log.log(Level.FINER, "begin function");
     
     int nRegions = 0;
+    int skipLines = 0;
+    double startLat = 90;
+    double endLat = -90;
+
     int rblock;
     boolean tagged = true;
     String fileName = "it is initialized thanks";
@@ -3909,6 +3994,15 @@ public class DataBuilder
       } else if(currInfo.getName().equals("name"))
       {
         fileName = currInfo.getAttributeValue("value");
+      } else if(currInfo.getName().equals("skip-lines"))
+      {
+        skipLines = Integer.parseInt(currInfo.getAttributeValue("value"));
+      } else if(currInfo.getName().equals("start-latitude"))
+      {
+        startLat = Double.parseDouble(currInfo.getAttributeValue("value"));
+      } else if(currInfo.getName().equals("end-latitude"))
+      {
+        endLat = Double.parseDouble(currInfo.getAttributeValue("value"));
       } else if(currInfo.getName().equals("region"))
       {
         List rList = currInfo.getChildren("RID");
@@ -3936,6 +4030,17 @@ public class DataBuilder
       log.log(Level.SEVERE, "FileNotFoundException!!!");
     }
   //txt file opened
+
+    // skip lines if necessary before reading any values
+    try {
+	    for(int currLine = 0; currLine < skipLines; ++currLine) {
+		    String skippedLine = input.readLine();
+		    log.log(Level.FINER, "Skipped non-data line: "+skippedLine);
+	    }
+    } catch(IOException ioe) {
+	    log.log(Level.SEVERE, "Error reading data: "+ioe);
+	    System.exit(1);
+    }
     
     if(tagged)
     { //if didnt get these before in the xml file
@@ -3952,7 +4057,7 @@ public class DataBuilder
     
   //finding each regions bounding box
     
-    for(double y = (90-res); y >= -90; y-=res)
+    for(double y = (startLat-res); y >= endLat; y-=res)
     {
       for(double x = -180; x < 180; x+=res)
       {
@@ -4135,6 +4240,13 @@ public class DataBuilder
       double startX = lonArray.getDouble(lonI.set(0));
       double endX = lonArray.getDouble(lonI.set(lonShp[0]-1));
       double resX = (endX - startX) / (shp[shp.length-1]-1);
+      
+      // Normalize resolution to units of one quarter of a degree
+      resX = (double)( (int)Math.round(resX*60*4) )/(60.0*4.0);
+      resY = (double)( (int)Math.round(resY*60*4) )/(60.0*4.0);
+      startX = (double)( (int)Math.round(startX*60*4) )/(60.0*4.0);
+      startY = (double)( (int)Math.round(startY*60*4) )/(60.0*4.0);
+      
       //double resX = 360.0 / shp[shp.length-1];
       // move from middle of the cell to lower left of the cell
       startX = startX - resX/2;
@@ -4203,7 +4315,14 @@ public class DataBuilder
 	      // add to the land fraction
 	      toAdd.setRect(x, y, resX, resY);
 	      dataStruct.addData(toAdd, true);
-
+/*
+			if (rblock==63000000) // Debugging block to write out data for a specific region.  
+			{
+				 log.log(Level.WARNING, "ID "+rblock+" data point at x =  "+x+", y = "+y
+				 					   +", Index1 =  "+i+", Index2 = "+k);
+				 log.log(Level.WARNING, "ID "+rblock+" boundaries. Width =  "+holdR.width+", height = "+holdR.height+", LLy =  "+holdR.y+", LLx = "+holdR.x);
+			}
+*/
 	      //updating someones bounds
               if(holdR.height==-1)
               { //this is the first block being added to this region nothing to
@@ -4316,7 +4435,7 @@ public class DataBuilder
 	  TreeMap<String, RegionMask> newRegions = new TreeMap<String, RegionMask>();
 	  int numCols = 0, numRows = 0;
 	  double xLL = 0.0, yLL = 0.0;
-	  double currX, currY;
+	  double currX, currY, baseYVal;
 	  BufferedReader input = null;
 
 	  //getting file info from XML file
@@ -4412,6 +4531,7 @@ public class DataBuilder
 				  currR = (Element)rList.get(k);
 				  holdK = currR.getAttributeValue("key");
 				  holdR = new RegionMask(currR.getAttributeValue("value"), res);
+				  log.log(Level.FINER, " --Including region: "+currR.getAttributeValue("value")); // For debuging, so PPlog contains which regions were included
 				  newRegions.put(holdK, holdR);
 			  }
 		  } else
@@ -4429,32 +4549,19 @@ public class DataBuilder
 	  toAdd.data.put("landFract", timeValue);
 	  dataAvg.put("landFract", new Boolean(true));
 
-	  /*
-	  double landArea = 0;
-	  double surfaceArea = 0;
-	  Rectangle2D.Double currBlock = new Rectangle2D.Double();
-	  */
-
 	  //reading the data from the file
 	  maskArray = new int[numRows][numCols];
-	  currY = (yLL+(numRows*res));
-	  for(int i = 0; i < numRows; i++)
+	  baseYVal = (yLL+(numRows - 1)*res);
+	  currY = baseYVal;
+	  for(int latIndex = 0; latIndex < numRows; latIndex++)
 	  {
 		  currX = xLL;
-		  for(int k = 0; k <numCols; k++)
+		  for(int lonIndex = 0; lonIndex <numCols; lonIndex++)
 		  {
 			  rblock = (int)Double.parseDouble(readNumber(input));
-			  /* TODO: put in a debug construct to print this kind of thing..
-			  if(currX > -77 && currX < -75 && currY > 37 && currY < 40) {
-				  System.out.println("("+currX+", "+currY+") - "+rblock);
-			  }
-			  currBlock.setRect(currX, currY, res, res);
-			  double area = FlatIndex.getArea(currBlock);
-			  surfaceArea += area;
-			  */
 			  if(rblock == NaN)
 			  {
-				  maskArray[i][k] = 0;
+				  maskArray[latIndex][lonIndex] = 0;
 			  } else
 			  {
 				  //landArea += area;
@@ -4462,16 +4569,14 @@ public class DataBuilder
 				  toAdd.setRect(currX, currY, res, res);
 				  dataStruct.addData(toAdd, true);
 
-				  maskArray[i][k] = rblock;
+				  maskArray[latIndex][lonIndex] = rblock;
 				  // check to make sure this is a valid region and the region
 				  // defs file defines this region..
 				  if(rblock >= 0 && 
 						  (holdR = (RegionMask)newRegions.get(String.valueOf(rblock))) != null)
 				  { //updating someones bounds
-					  //holdR = ((RegionMask)newRegions.get(String.valueOf(rblock)));
 					  if(holdR.height==-1)
-					  { //this is the first block being added to this region nothing to
-						  // test against yet
+					  { //this is the first block being added to this region nothing to test against yet. 
 						  holdR.y = currY;
 						  holdR.x = currX;
 						  holdR.height = res;
@@ -4485,7 +4590,7 @@ public class DataBuilder
 						  }
 						  if(currX<holdR.x)
 						  { //x may be higher or lower
-							  holdR.width += (holdR.x-currX);
+							  holdR.width += (holdR.x-currX); 
 							  holdR.x = currX;
 						  }
 						  if((currX+res)>(holdR.x+holdR.width))
@@ -4493,16 +4598,20 @@ public class DataBuilder
 							  holdR.width = ((currX+res)-holdR.x);
 						  }
 					  }
+/*
+			if (rblock==63000001) // Debugging block to write out data for a specific region
+			{
+				 log.log(Level.WARNING, "ID "+rblock+" data point at x =  "+currX+", y = "+currY+", lonIndex =  "+lonIndex+", latIndex = "+latIndex);
+				 log.log(Level.WARNING, "ID "+rblock+" boundaries. Width =  "+holdR.width+", height = "+holdR.height+", LLy =  "+holdR.y+", LLx = "+holdR.x+", res: "+res);
+			}
+*/
 				  }
 			  }
 			  currX += res;
 		  }
 		  currY -= res;
 	  }
-	  /*
-	  System.out.println("Surface area: "+surfaceArea);
-	  System.out.println("Land area: "+landArea);
-	  */
+
 	  try {
 		  input.close();
 	  } catch(IOException ioe) {
@@ -4515,13 +4624,14 @@ public class DataBuilder
 	  while(it.hasNext())
 	  {
 		  me = (Map.Entry)it.next();
+
 		  ((RegionMask)me.getValue()).makeMatrix();
 	  }
 	  //done initializing byte matricies
 
 	  //MAIN BYTEMASK CREATION LOOP
 
-	  currY = (yLL+(numRows*res));
+	  currY = baseYVal;
 	  for(int i = 0; i < numRows; i++)
 	  {
 		  currX = xLL;
@@ -4549,9 +4659,13 @@ public class DataBuilder
 		  regionList.add(holdR.name);
 		  maskList.put(holdR.name, holdR);
 	  }
-	  //addLandFractRegion();
 	  //done adding region masks
+	  
+	  // Write data to netCDF file. Comment out since won't use this very often.
+  	 // writeData.createNetCDFFileFromData(maskArray, numCols, numRows, fileName+".nc", res, baseYVal );
+	  
   }
+  
   private void addLandFractRegion() {
 	  // special region for landFract because it needs to be world wide
 	  RegionMask holdR = new RegionMask("landFract", 0.0);
@@ -5081,7 +5195,7 @@ public void addFLTFile(Element currFile)
     //if we get to this point the attribute value does not exist
     return null;
   }
-  
+
   
   //end of class!
 }

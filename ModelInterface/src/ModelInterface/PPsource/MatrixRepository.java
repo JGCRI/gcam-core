@@ -1,5 +1,6 @@
 package ModelInterface.PPsource;
 
+import java.util.logging.*;
 import java.awt.geom.Point2D;
 import java.util.*;
 
@@ -9,6 +10,7 @@ public class MatrixRepository implements DataRepository
    * implements as a treemap of vars -> treemap of times -> double[][]
    */
   TreeMap<String, TreeMap<Double, double[][]>> root;
+  Logger log = Logger.getLogger("Preprocess"); //log class to use for all logging output
 
   double[][] currLayer;
 
@@ -109,8 +111,8 @@ public class MatrixRepository implements DataRepository
       }
     } catch(ArrayIndexOutOfBoundsException e)
     {
-      System.out.println("SEVERE: ("+X+","+Y+") out of bounds("+xSize+","+ySize
-          +") with value: "+value+" - PROGRAM TERMINATING");
+      log.log(Level.WARNING, "("+X+","+Y+") out of bounds("+xSize+","+ySize
+          +") with value: "+value);
       //System.exit(1);
     }
 
@@ -263,12 +265,13 @@ public class MatrixRepository implements DataRepository
         {
           //add weight
           Point2D.Double hold = new Point2D.Double(currXL, currYL);
-	  try {
-          holdTime.put(hold, Double.valueOf(weights[(y)][(x)] /
-              (landFractValues[x+X][Y-((weights.length)-y/*-1*/)]))); //took the -1 out again..
-	  } catch(ArrayIndexOutOfBoundsException e) {
-		  System.out.println(e+" -- "+weights[(y)][(x)]);
-	  }
+		  try {
+			  holdTime.put(hold, Double.valueOf(weights[(y)][(x)] /
+				  (landFractValues[x+X][Y-((weights.length)-y/*-1*/)]))); //took the -1 out again..
+		  } catch(ArrayIndexOutOfBoundsException e) {
+			  System.out.println(e+" -- weight: "+weights[(y)][(x)]);
+			  System.out.println("     indicies: ("+x+","+y+")  ("+(x+X)+","+(Y-((weights.length)-y))+")");
+		  }
         }
         currYL -= res;
       }
@@ -305,7 +308,8 @@ public class MatrixRepository implements DataRepository
           currYL = (yL-res);
           for(int y = (weights.length-1); y>=0; y--)
           {
-            if(weights[(y)][(x)]>1e-4)
+          	// Smallest weight if using 2.5 minute mask should be 2.5/60/res. So 1e-4 is ok.
+            if( weights[(y)][(x)] > 1e-4 )
             {
               //get this point's value
               //add it to toReturn
@@ -318,7 +322,6 @@ public class MatrixRepository implements DataRepository
         }
       }
     }
-    //System.out.println("---");
 
     return toReturn;
   }

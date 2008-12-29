@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.HashMap;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 public class FlatIndex implements DataIndex
 {
@@ -19,8 +19,8 @@ public class FlatIndex implements DataIndex
   private TreeMap<String, TreeMap<String, TreeMap<Point2D.Double, Double>>> makeRegion;
   private Map<String, Map<Double, Double>> unAlteredSums;
   private boolean trackSums;
-  
   public double resolution; //resolution of the data this index points to
+  Logger log = Logger.getLogger("Preprocess"); //log class to use for all logging output
   
 //*********************************************************
 //*****************Class Constructors**********************
@@ -69,7 +69,6 @@ public class FlatIndex implements DataIndex
   public void printSums() {
 	  // don't do anything if the flag has not been set
 	  if(trackSums) {
-		  final Logger log = Logger.getLogger("Preprocess"); //log class to use for all logging output
 		  // use a buffer so that the logs don't get jumbled with the prints
 		  final StringBuilder buff = new StringBuilder();
 		  // print each variable
@@ -186,24 +185,26 @@ public class FlatIndex implements DataIndex
     double[][] toMask;
     double weight;
     Block entry;
+    log.log(Level.FINER, "Extracting Region mask for "+m.name);
+
     if(m.name.equals("landFract")) {
 	    return data.getLandFractPrintMap(resolution);
     }
 
-    //identify rectangular bounds of region
+    //identify rectangular bounds of region in terms of working resolution
     min = point2index(new Point2D.Double(m.x, m.y), true);
-    max = point2index(new Point2D.Double((m.x+m.width+m.resolution), (m.y+m.height+m.resolution)), false);
-    
-    /*
-    System.out.println("\n"+m.name);
-    System.out.println("min X: "+(m.x)+" Y: "+(m.y));
-    System.out.println("size X: "+(m.width)+" Y: "+(m.height));
-    System.out.println("matrix X: "+(max.y-min.y)+" Y: "+(max.x-min.x));
-    */
+    // height is already full height of region and this function is set to round up, so this will give max coor that shouldn't be reached.
+	max = point2index(new Point2D.Double((m.x+m.width), (m.y+m.height)), false); 
+
+    Point2D.Double minCoor, maxCoor;
+ 	minCoor = index2point( min );
+ 	maxCoor = index2point( max );
+ 
     if(((max.y-min.y) <= 0)||((max.x-min.x) <= 0))
     {
       return null;
     }
+    // This is where the size of the region block is set. This array is in working resolution.
     toMask = new double[(int)(max.y-min.y)][(int)(max.x-min.x)];
     
     //X, and Y are now indicies
@@ -214,11 +215,17 @@ public class FlatIndex implements DataIndex
       {
         entry = index2area(new Point2D.Double(X, Y));
         weight = m.inRegion(entry.x, entry.y, entry.width, entry.height);
-        toMask[(Y-(int)min.y)][(X-(int)min.x)] = weight;
-      }
+        if ( weight > 0 ) {
+ 		}
+		
+        // min variable has already gone through the index conversion, so it is already an integer in terms of value, so (int) is fine here
+        toMask[(Y-(int)min.y)][(X-(int)min.x)] = weight; 
+       }
     }
-    
-    return data.getRegion((int)min.x, (int)max.y, toMask, m.x, (m.y+m.height+m.resolution), resolution); //returning data
+
+    // The x,y values passed in ultimately determine the coordinates of each data point
+    // Pass in UR corner -- y value has already been rounded up -- one res unit is subtracted in getRegion to get to LL corner of top cell
+    return data.getRegion((int)min.x, (int)max.y, toMask, minCoor.x, maxCoor.y, resolution); //returning data
   }
   
   /*
@@ -256,41 +263,23 @@ public class FlatIndex implements DataIndex
     //TODO maybe add an auto chooser based on resolution?
     //need to make disklayer faster first
     //data = new DiskLayerRepository((int)Math.floor((maxX-minX)/resolution), (int)Math.floor((maxY-minY)/resolution));
-    data = new MatrixRepository((int)Math.floor((maxX-minX)/resolution), (int)Math.floor((maxY-minY)/resolution));
+    
+    data = new MatrixRepository((int)Math.round((maxX-minX)/resolution), (int)Math.round((maxY-minY)/resolution));
   }
   
+  // Private function that assures this objects resolution is used in conversion
   private Point2D.Double point2index(Point2D.Double p, boolean down)
   {
-    //down is wether we should use floor or ceiling, wether we round down or up
-    int x, y;//indexes are always ints
-    
-    //translate from a point in lat/lon to an index
-    //possible given that we know resolution, which we do
-    if(down)
-    {
-      x = (int)Math.floor(((p.x/resolution)+(180/resolution)));
-      y = (int)Math.floor(((p.y/resolution)+(90/resolution)));
-    } else
-    {
-      x = (int)Math.ceil(((p.x/resolution)+(180/resolution)));
-      y = (int)Math.ceil(((p.y/resolution)+(90/resolution)));
-    }
-    
-    return new Point2D.Double(x, y);
+  	return  CoordConversions.point2index( p, resolution, down );
   }
+  
+  // Private function that assures this objects resolution is used in conversion
   private Point2D.Double index2point(Point2D.Double i)
   {
-    double x, y;
-    
-    //translate from index to point
-    //no need to know wether we round up or down because index is always an
-    //exact translation to lat/lon
-    x = ((i.x-(180/resolution))*(resolution));
-    y = ((i.y-(90/resolution))*(resolution));
-    
-    //return this index
-    return new Point2D.Double(x, y);
+  	return  CoordConversions.index2point( i, resolution );
+
   }
+  
   private Block index2area(Point2D.Double i)
   {
     Point2D.Double p;

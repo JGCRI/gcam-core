@@ -53,8 +53,10 @@ public class IndexBlock extends Block
     height = H;
     width = W;
     
-    xIndex = (int)Math.floor(((X/W)+(180/W)));
-    yIndex = (int)Math.floor(((Y/H)+(90/H)));
+   // Add small number so won't round down due to numerical error. Results should be integer, so won't change result otherwise.
+    xIndex = (int)Math.floor(((X/W)+(180/W) + W/10 ));
+    yIndex = (int)Math.floor(((Y/H)+(90/H) + H/10 ));
+
   }
   
 //*****************************************************************************
