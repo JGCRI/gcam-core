@@ -1053,7 +1053,7 @@ public class DataBuilder
     }
   //done reading from XML file
 
-   // Normalize resolution to units of one quarter of a degree
+   // Normalize resolution to units of one quarter of an arc minute
    res = (double)( (int)Math.round(res*60*4) )/(60.0*4.0);
     
   //opening txt file for reading
@@ -1666,7 +1666,7 @@ public class DataBuilder
     }
   //done reading from XML file
 
-   // Normalize resolution to units of one quarter of a degree
+   // Normalize resolution to units of one quarter of an arc minute
    res = (double)( (int)Math.round(res*60*4) )/(60.0*4.0);
     
   //opening asc file for reading
@@ -1909,6 +1909,7 @@ public class DataBuilder
         //do nothing but this is a known tag
       } else if(currElem.getName().equals("eos-webster"))
       {
+      	  // This fix may be off by 1 unit now. Will need to check. If read in as normal netCDF might work ok.
 	      isEosWeb = true;
 	      if(currElem.getAttributeValue("flip") != null) {
 		      shouldFlip = Boolean.parseBoolean(currElem.getAttributeValue("flip"));
@@ -1933,11 +1934,9 @@ public class DataBuilder
       Array ma2Array = data.read();
       
       int[] shp = ma2Array.getShape();
-      resY = 180.0 / shp[shp.length-2];
-      resX = 360.0 / shp[shp.length-1];
-      //System.out.println("Has shape: "+shp[0]+"x"+shp[1]/*+"x"+shp[2]*/);
-      double startY;
-      double endY;
+
+      double startY, startX;
+      double endY, endX;
 
       Variable latIndex = nc.findVariable(data.getDimension(shp.length-2).getName());
       if(latIndex != null) {
@@ -1946,15 +1945,66 @@ public class DataBuilder
 	      Index latI = latArray.getIndex();
 	      startY = latArray.getDouble(latI.set(0));
 	      endY = latArray.getDouble(latI.set(latShp[0]-1));
-	      resY = (startY-endY) / (shp[shp.length-2]-1);
+	      resY = Math.abs(startY-endY) / (shp[shp.length-2]-1); 
+	      
+	      // Shift to bottom of cell.
+	      startY = startY - (resY)/2;
+	      endY = endY - (resY)/2;
 
-	      // are the dang ol' .5s gettin in the way?
-	      startY = Math.ceil(startY) - resY;
-	      //endY = Math.floor(endY); // floor because it is negative, is it always -?
-	      //endY -= resY;
+		  // Round values. As resolution becomes larger (more coarse), MultX increases 
+		  // and precision of rounding decreases accordingly.
+	      double resMultY = (double)( (int)Math.round( resY * 4.0/(1.0/60.0) )) / 4.0;
+		  resY = (double)( (int)Math.round(resY*60.0/resMultY) )/(60.0/resMultY);
+		  startY = (double)( (int)Math.round(startY*60.0/resMultY) )/(60.0/resMultY);
+
+		  // If data goes from bottom to top, then flip
+		  if ( startY < endY ) {
+		  	shouldFlip = true;
+		  	double temp = startY;
+		  	// Since these will be flipped later, shift by one unit
+		  	startY = endY + resY;
+		  	endY = temp + resY;
+		  }
       } else {
 	      startY = 90;
 	      endY = -90;
+      }
+
+      // get the lon index from the data to get correct lon coordinates
+      Variable lonIndex = nc.findVariable(data.getDimension(shp.length-1).getName());
+     if(lonIndex != null) {
+	      Array lonArray = lonIndex.read();
+	      int[] lonShp = lonArray.getShape();
+	      Index lonI = lonArray.getIndex();
+	      startX = lonArray.getDouble(lonI.set(0));
+	      endX = lonArray.getDouble(lonI.set(lonShp[0]-1));
+	      resX = Math.abs(startX-endX) / (shp[shp.length-1]-1);
+
+	      // Shift to left edge of cell.
+	      startX = startX - resX/2;
+	      endX = endX - resX/2;
+
+		  // Round values. As resolution becomes larger (more coarse), MultX increases 
+		  // and precision of rounding decreases accordingly.
+	      double resMultX = (double)( (int)Math.round( resX * 4.0/(1.0/60.0) )) / 4.0;
+		  resX = (double)( (int)Math.round(resX*60.0/resMultX) )/(60.0/resMultX);
+		  startX = (double)( (int)Math.round(startX*60.0/resMultX) )/(60.0/resMultX);
+		  endX = (double)( (int)Math.round(endX*60.0/resMultX) )/(60.0/resMultX);
+	      log.log(Level.FINER, "X Data range set to: "+startX+" to "+endX);
+
+      } else {
+		  resX = 360.0 / shp[shp.length-1];
+	
+		  // Calculate resolution in multiples of an arc minute 
+		  // This equation assumes resolution is in multiples of one quarter of an arc minute.
+		  double resMultX = (double)( (int)Math.round( resX * 4.0/(1.0/60.0) )) / 4.0;
+		  
+		  // Round values. As resolution becomes larger (more coarse), MultX increases 
+		  // and precision of rounding decreases accordingly.
+		  resX = (double)( (int)Math.round(resX*60.0/resMultX) )/(60.0/resMultX);
+
+	      startX = -180;
+	      endX = 180;
       }
 
       //checking for overwrite and setting basic information (avg, ref, units)
@@ -2025,6 +2075,7 @@ public class DataBuilder
       System.out.println("endY: "+endY);
       */
 
+	  log.log(Level.FINER, "Attempting to read netCDF data array array with rank "+ma2Array.getRank() );
 
       for(int currTimeIndex = 0; currTimeIndex < numTime; currTimeIndex += timeStep)
       {
@@ -2037,11 +2088,10 @@ public class DataBuilder
 	      } else {
 		      internalTimeIndex += timeStep;
 	      }
-	      //for(double y = (90-resY); y >= -90; y-=resY)
 	      for(double y = startY; y >= endY; y-=resY)
 	      {
 		      k=0;
-		      for(double x = -180; x < 180; x+=resX)
+		      for(double x = startX; x < (endX+resX); x+=resX)
 		      {
 			      if(ma2Array.getRank() == 2)
 			      {
@@ -2060,10 +2110,15 @@ public class DataBuilder
 
 			      if(dataValue != NaN)
 			      {
+			      	  double xCoord = x;
+			      	  // Change x coordinates to negative if necessary
+			      	  if ( xCoord >= 180 ) {
+			      	  	xCoord = xCoord - 360;
+			      	  }
 				      if(!shouldFlip) {
-					      toAdd = new DataBlock(x, y, resX, resY);
+					      toAdd = new DataBlock(xCoord, y, resX, resY);
 				      } else {
-					      toAdd = new DataBlock(x, -1*y, resX, resY);
+					      toAdd = new DataBlock(xCoord, -1*y, resX, resY);
 				      }
 				      timeValue = new TreeMap();
 				      timeValue.put(new Double(time+currTimeIndex), dataValue);
@@ -4225,46 +4280,75 @@ public class DataBuilder
       Array latArray = latVar.read();
       int[] latShp = latArray.getShape();
       Index latI = latArray.getIndex();
-      double startY = latArray.getDouble(latI.set(0));
-      double endY = latArray.getDouble(latI.set(latShp[0]-1));
-      double resY = (startY - endY) / (shp[shp.length-2]-1);
+      double startYorg = latArray.getDouble(latI.set(0));
+      double endYorg = latArray.getDouble(latI.set(latShp[0]-1));
+      double resY = (startYorg - endYorg) / (shp[shp.length-2]-1);
+      
+      double startY, endY;
       // move from middle of the cell to lower left of the cell
-      startY = startY - resY/2;
-      endY = endY - resY/2;
+      startY = startYorg - resY/2;
+      endY = endYorg - resY/2;
 
       // get the lon index from the data to get correct lon coordinates
       Variable lonVar = nc.findVariable(data.getDimension(shp.length-1).getName());
       Array lonArray = lonVar.read();
       int[] lonShp = lonArray.getShape();
       Index lonI = lonArray.getIndex();
-      double startX = lonArray.getDouble(lonI.set(0));
-      double endX = lonArray.getDouble(lonI.set(lonShp[0]-1));
-      double resX = (endX - startX) / (shp[shp.length-1]-1);
-      
-      // Normalize resolution to units of one quarter of a degree
-      resX = (double)( (int)Math.round(resX*60*4) )/(60.0*4.0);
-      resY = (double)( (int)Math.round(resY*60*4) )/(60.0*4.0);
-      startX = (double)( (int)Math.round(startX*60*4) )/(60.0*4.0);
-      startY = (double)( (int)Math.round(startY*60*4) )/(60.0*4.0);
+      double startXorg = lonArray.getDouble(lonI.set(0));
+      double endXorg = lonArray.getDouble(lonI.set(lonShp[0]-1));
+      double resX = (endXorg - startXorg) / (shp[shp.length-1]-1);
       
       //double resX = 360.0 / shp[shp.length-1];
       // move from middle of the cell to lower left of the cell
-      startX = startX - resX/2;
-      endX = endX - resX/2;
+      double startX, endX;
+      startX = startXorg - resX/2;
+      endX = endXorg - resX/2;
 
-      /*
+      double resXorg, resYorg;
+	  resXorg = resX; resYorg = resY;
+	  
+      // Need to do this because there is no guarantee that the labels in the 
+      // netCDF file don't have rounding errors (this has been a problem)
+
+	  // Calculate resolution in multiples of an arc minute 
+      // This equation assumes resolution is in multiples of one quarter of an arc minute.
+      double resMultX = (double)( (int)Math.round( resX * 4.0/(1.0/60.0) )) / 4.0;
+      double resMultY = (double)( (int)Math.round( resY * 4.0/(1.0/60.0) )) / 4.0;
+      
+      // Round values. As resolution becomes larger (more coarse), MultX increases 
+      // and precision of rounding decreases accordingly.
+      resX = (double)( (int)Math.round(resX*60.0/resMultX) )/(60.0/resMultX);
+      resY = (double)( (int)Math.round(resY*60.0/resMultY) )/(60.0/resMultX);
+      startX = (double)( (int)Math.round(startX*60.0/resMultX) )/(60.0/resMultX);
+      startY = (double)( (int)Math.round(startY*60.0/resMultX) )/(60.0/resMultX);
+
+/*	  
+      System.out.println("shp.length: "+shp.length);
+      System.out.println("shp[shp.length-1]: "+shp[shp.length-1]);
+      System.out.println("startYorg: "+startYorg);
+      System.out.println("endYorg: "+endYorg);
+      System.out.println("startXorg: "+startXorg);
+      System.out.println("endXorg: "+endXorg);
+      System.out.println("resYorg: "+resYorg);
+      System.out.println("resXorg: "+resXorg);
+
       System.out.println("startY: "+startY);
-      System.out.println("endY: "+endY);
       System.out.println("startX: "+startX);
-      System.out.println("endX: "+endX);
       System.out.println("resY: "+resY);
       System.out.println("resX: "+resX);
       for(int i = 0; i < latShp[0]; ++i) {
-	      System.out.println(i+" -- "+latArray.getDouble(latI.set(i)));
+	   //   System.out.println(i+" -- "+latArray.getDouble(latI.set(i)));
       }
       System.exit(0);
       */
 
+	  // All current files have these equal, so this might indicate a problem in the 
+	  // rounding formulas. However resolution does not have to be equal.  
+	  if ( resX != resY) {
+		log.log(Level.WARNING, "X and Y resolution in region file is not the same. ");
+		log.log(Level.WARNING, "Normalized resX: "+resX+" Normalized resY: "+resY);
+	  }
+	  
       // I have to reset the resolution in the regions masks now that
       // we know what it is
       for(Iterator<Map.Entry<String, RegionMask>> it = nameReverseMap.entrySet().iterator(); it.hasNext(); ) {
