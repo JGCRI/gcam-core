@@ -187,7 +187,7 @@ public class FlatIndex implements DataIndex
     Block entry;
     log.log(Level.FINER, "Extracting Region mask for "+m.name);
 
-    if(m.name.equals("landFract")) {
+    if(m.name.equals(DataBuilder.LAND_FRACTION)) {
 	    return data.getLandFractPrintMap(resolution);
     }
 

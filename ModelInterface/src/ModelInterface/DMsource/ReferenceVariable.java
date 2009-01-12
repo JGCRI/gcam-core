@@ -30,6 +30,7 @@ import ModelInterface.PPsource.CoordConversions;
 import java.awt.geom.Point2D;
 import java.io.*;
 
+import ModelInterface.PPsource.DataBuilder;
 
 /**
  * Extension of Variable which is a collection of region data and so contains shape and location.
@@ -120,7 +121,7 @@ public class ReferenceVariable extends Variable
     h = r.height;
     res = r.resolution;
     weight = r.getWorkingM("weight", "0");
-    landFract = r.getWorkingM("landFract", "0.0");
+    landFract = r.getWorkingM(DataBuilder.LAND_FRACTION, "0.0");
   } 
   /**
    * Creates a reference variable with information, including data of passed variable
@@ -146,7 +147,7 @@ public class ReferenceVariable extends Variable
     res = r.resolution;
     data = r.getWorkingM(v, t);
     weight = r.getWorkingM("weight", "0");
-    landFract = r.getWorkingM("landFract", "0.0");
+    landFract = r.getWorkingM(DataBuilder.LAND_FRACTION, "0.0");
   }
   
   //***************************************************************************

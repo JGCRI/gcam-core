@@ -49,6 +49,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.XMLReader;
 import org.xml.sax.SAXException;
 
+import ModelInterface.PPsource.DataBuilder;
 
 
 /**
@@ -339,7 +340,7 @@ public class ManipulationDriver
     
     ref = (Region)regionList.get(reg);
     if(var.equals("RegionCellSize") && dataAvgAdd.get(var) == null) {
-	    avg = false;
+	    avg = true;
     } else {
 	    avg = ((Boolean)dataAvgAdd.get(var)).booleanValue();
     }
@@ -2154,7 +2155,7 @@ public class ManipulationDriver
     
     VDest.setData(VShape.extractRegion((ReferenceVariable)VSource));
     ((ReferenceVariable)VDest).weight = VShape.getWorkingM("weight", "0");
-    ((ReferenceVariable)VDest).landFract = VShape.getWorkingM("landFract", "0.0");
+    ((ReferenceVariable)VDest).landFract = VShape.getWorkingM(DataBuilder.LAND_FRACTION, "0.0");
   }
   /**
    * Give the user access to a contained Child varialbe in the passed
@@ -3924,6 +3925,12 @@ public class ManipulationDriver
 			  
 			  } else if (currY >= sizeY) { //sjs add trap for out of bounds error.
 				  log.log(Level.WARNING, "Skipping Y point "+currY+" greater than size "+sizeY+" for region: "+toAdd.name);
+			  
+			  } else if (currX < 0 ) { //sjs add trap for out of bounds error.
+				  log.log(Level.WARNING, "Skipping X point "+currX+" less than zero for region: "+toAdd.name);
+			  
+			  } else if (currY < 0) { //sjs add trap for out of bounds error.
+				  log.log(Level.WARNING, "Skipping Y point "+currY+" less than zero for region: "+toAdd.name);
 			  
 			  } else {
 				  toAddTime[currY][currX] = stringToDouble(attrs.getValue("value"));

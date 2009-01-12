@@ -51,4 +51,21 @@ public static Point2D.Double point2index( Point2D.Double p, double resolution, b
     return new Point2D.Double(x, y);
   }
 
+/**
+* Returns the area of a block
+* Lat should be the central lat of the block 
+*
+*/
+public static double area( double height, double width, double latitude )
+  {
+	  final double POLAR_CIRCUM = 40008.00;
+	  final double EQUAT_CIRCUM = 40076.5;
+	  
+	  double blockHeightKm = ( POLAR_CIRCUM/( 360/height ) );
+	  double circumAtLat = Math.abs( EQUAT_CIRCUM * Math.cos( latitude * (Math.PI/180) ) );
+	  double blockWidthKm = ( circumAtLat / ( 360/width ) );
+	  return blockHeightKm * blockWidthKm;
+  }
+
 }
+

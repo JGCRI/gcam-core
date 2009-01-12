@@ -80,6 +80,7 @@ public class DataBuilder
   public TreeMap dataAvg; //a listing for each data type as to wether it is averaged or added
   public TreeMap dataRef; //a listing of the references for each data type for which one was supplied
   public TreeMap dataUnits; //a listing of the units which each variables values represent, for use in DM
+  public static double landFractionNativeResolution; //native resolution of the land fraction  
   private String iSource; //the name of the data input XML file
   private String sSource; //the name of the seed XML file
   private String rSource; //the name of the region definition XML file
@@ -91,6 +92,10 @@ public class DataBuilder
   private boolean init; //whether or not the dataStruct has been initialized as of yet
   private boolean URes; //whether or not the User wishes to use their own resolution
   Logger log = Logger.getLogger("Preprocess"); //log class to use for all logging output
+
+  // String constants for special data names
+  final public static String LAND_FRACTION = "landFract"; //Internal variable that contains land fraction  
+  final public static String CELL_AREA_DATA = "landFraction"; //Name of optional read-in variable that contains actual cell land area  
 
 //*****************************************************************************
 //*****************Class Constructors******************************************
@@ -514,7 +519,6 @@ public class DataBuilder
             minYIndex = (int)( 182.0 / dataStruct.getResolution() );
 //		 	log.log(Level.FINER, "Region "+rName+" X&Y: "+((RegionMask)maskList.get(rName)).x+","+((RegionMask)maskList.get(rName)).y); 
 
-			double smallNumber = dataStruct.getResolution() / 10; // Small number to correct for rounding errors
 			while(weightDataIt.hasNext())
 			{
 			  data = (Map.Entry)weightDataIt.next();
@@ -544,15 +548,6 @@ public class DataBuilder
             normX = LLPointNormalized.x;
             normY = LLPointNormalized.y;
  
- 	// for debugging
- 			double minXfromIndex,minYfromIndex,maxXfromIndex,maxYfromIndex;
- 			minXfromIndex = minXIndex*dataStruct.getResolution() -180.0;
- 			minYfromIndex = minYIndex*dataStruct.getResolution() -90.0;
- 			maxXfromIndex = maxXIndex*dataStruct.getResolution() -180.0;
- 			maxYfromIndex = maxYIndex*dataStruct.getResolution() -90.0;
- 			
-//		 log.log(Level.FINER, "       normalized X&Y: "+normX+","+normY); 
-
  /*			
 			// Prev version
 			
@@ -700,7 +695,7 @@ public class DataBuilder
     }
   }
   /**
-   * Adds all data read by the program into a pre-created xml document.
+   * Adds all data read by the program into a read-in seed xml document.
    * This allows new data to be added to large aggregated sets without as 
    * large a computation time.
    * @param data Document which new data will be added to.
@@ -736,7 +731,7 @@ public class DataBuilder
       var = (Map.Entry)itVar.next();
       String thisVar = (String)var.getKey();
       
-      if(attributeInChild(currElem, "name", thisVar) == null)
+      if( ( attributeInChild(currElem, "name", thisVar) == null ) && !( thisVar.equals(CELL_AREA_DATA) ) )
       { //There is no entry for this variable as of yet, enter it!
         toAdd = new Element("variable");
         toAdd.setAttribute("name", thisVar);
@@ -783,30 +778,30 @@ public class DataBuilder
         {
           //BEGIN ADDING OF SPECIFIC REGION DATA
           //calculating normalized bounds of region
-          //work = ((RegionMask)maskList.get(rName)).x
-          //    +((RegionMask)maskList.get(rName)).width;
-          //holdMX = Math.ceil(work/dataStruct.getResolution())*dataStruct.getResolution();
-          work = ((RegionMask)maskList.get(rName)).y
-              +((RegionMask)maskList.get(rName)).height;
-         // use (int) conversion instead of math.ceil to round values to obtain upper boundaries that works the same for - and + values
-          holdMY = (int)(work/dataStruct.getResolution() + 0.999999999999999)*dataStruct.getResolution();
-          // use (int) conversion instead of math.floor to truncate values to obtain LL boundaries that works the same for - and + values
-           normX = (int)Math.round(((RegionMask)maskList.get(rName)).x/dataStruct.getResolution() )
-              *dataStruct.getResolution();
-          normY = (int)Math.round(((RegionMask)maskList.get(rName)).y/dataStruct.getResolution() )
-              *dataStruct.getResolution();
-          //normW = holdMX-normX;
-          normH = holdMY-normY;
-          //msizeY = (int)Math.ceil(normH/dataStruct.getResolution());
-          //msizeX = (int)Math.ceil(normW/dataStruct.getResolution());
+ 
+		    RegionMask m = (RegionMask)maskList.get(rName);
+	        Point2D.Double min, max;
 
+			//identify rectangular bounds of region in terms of working resolution
+			min = CoordConversions.point2index(new Point2D.Double( m.x, m.y ), dataStruct.getResolution() , true);
+			// height is already full height of region and this function is set to round up, so this will give max coor that shouldn't be reached.
+			max = CoordConversions.point2index(new Point2D.Double( m.x + m.width, m.y + m.height ), dataStruct.getResolution() , false); 
+			
+			Point2D.Double minCoor, maxCoor;
+			minCoor = CoordConversions.index2point( min, dataStruct.getResolution() );
+			maxCoor = CoordConversions.index2point( max, dataStruct.getResolution() );
+
+            normH = (double)(maxCoor.y - minCoor.y + 1) * dataStruct.getResolution();
+			normX = minCoor.x;
+			normY = minCoor.y;
+			
           //iterate through variables
           itVar = holdToPrint.entrySet().iterator();
           while(itVar.hasNext())
           {
             var = (Map.Entry)itVar.next();
             vName = (String)var.getKey();
-            if(vName!="weight")
+            if( vName!="weight" && !vName.equals(LAND_FRACTION) )
             { //we never want to add anything to the weight variable if it already exists
               //test to see if variable already exists in this region
               currVar = attributeInChild(currReg, "value", vName);
@@ -830,17 +825,18 @@ public class DataBuilder
                   while(itData.hasNext())
                   {
                     data = (Map.Entry)itData.next();
-		    if(!((Double)data.getValue()).isNaN()) {
-			    toChild2 = new Element("data");
-			    toChild2.setAttribute("y",String.valueOf(Math
-						    .abs((int)(((((Point2D.Double)data.getKey()).y+dataStruct.getResolution())
-									    -(normY+normH))/dataStruct.getResolution()))));
-			    toChild2.setAttribute("x", String.valueOf((int)((((Point2D.Double)data
-									    .getKey()).x-normX)/dataStruct.getResolution())));
-			    toChild2.setAttribute("value", ((Double)data.getValue()).toString());
-			    //adding the created data to this time
-			    toChild.addContent(toChild2);
-		    }
+					if(!((Double)data.getValue()).isNaN()) {
+						toChild2 = new Element("data");
+						Point2D.Double thisPoint, thisIndex;
+						thisPoint = new Point2D.Double( ((Point2D.Double)data.getKey()).x, ((Point2D.Double)data.getKey()).y);
+						thisIndex = CoordConversions.point2index( thisPoint, dataStruct.getResolution() , true);
+
+						toChild2.setAttribute("y", String.valueOf( (int)( max.y - thisIndex.y - 1 ) ) );
+						toChild2.setAttribute("x", String.valueOf( (int)( thisIndex.x - min.x ) ) );
+						toChild2.setAttribute("value", ((Double)data.getValue()).toString());
+						//adding the created data to this time
+						toChild.addContent(toChild2);
+					}
                   }
                   //adding the created time to this variable
                   toAdd.addContent(toChild);
@@ -865,16 +861,16 @@ public class DataBuilder
                     while(itData.hasNext())
                     {
                       data = (Map.Entry)itData.next();
-		      if(!((Double)data.getValue()).isNaN()) {
-			      toChild = new Element("data");
-			      toChild.setAttribute("y",String.valueOf(Math
-					      .abs((int)(((((Point2D.Double)data.getKey()).y+dataStruct.getResolution())-(normY+normH))/dataStruct.getResolution()))));
-			      toChild.setAttribute("x", String.valueOf((int)((((Point2D.Double)data
-								      .getKey()).x-normX)/dataStruct.getResolution())));
-			      toChild.setAttribute("value", ((Double)data.getValue()).toString());
-			      //adding the created data to this time
-			      toAdd.addContent(toChild);
-		      }
+					  if(!((Double)data.getValue()).isNaN()) {
+						  toChild = new Element("data");
+						  toChild.setAttribute("y",String.valueOf(Math
+								  .abs((int)(((((Point2D.Double)data.getKey()).y+dataStruct.getResolution())-(normY+normH))/dataStruct.getResolution()))));
+						  toChild.setAttribute("x", String.valueOf((int)((((Point2D.Double)data
+											  .getKey()).x-normX)/dataStruct.getResolution())));
+						  toChild.setAttribute("value", ((Double)data.getValue()).toString());
+						  //adding the created data to this time
+						  toAdd.addContent(toChild);
+					  }
                     }
                     //adding the created time to this variable
                     currVar.addContent(toAdd);
@@ -882,57 +878,57 @@ public class DataBuilder
                   { //this time already exists! Will overwrite any new values
                     //iterate through data, print in array style
                     itData = ((LinkedHashMap)time.getValue()).entrySet().iterator();
-		    List children = toAdd.getChildren();
-		    //log.log(Level.FINER, "Before processing all");
-                    while(itData.hasNext())
-                    {
-                      data = (Map.Entry)itData.next();
-                      String currY = String.valueOf((Math
-                          .abs((int)(((((Point2D.Double)data.getKey()).y+dataStruct.getResolution())-(normY+normH))/dataStruct.getResolution()))));
-                      String currX = String.valueOf(((int)((((Point2D.Double)data
-                          .getKey()).x-normX)/dataStruct.getResolution())));
-		      toChild = null;
-		      //for(int childPos = 0; childPos < children.size() && toChild == null; ++childPos) {
-		      //log.log(Level.FINER, "Before loop");
-		      for(Iterator it = children.iterator(); it.hasNext() && toChild == null; ) {
-			      //Element currChild = (Element)children.get(childPos);
-			      Element currChild = (Element)it.next();
-			      if(currChild.getAttributeValue("y").equals(currY) && currChild.getAttributeValue("x").equals(currX)) {
-				      toChild = currChild;
-				      //log.log(Level.FINER, "Found It: "+toChild);
-			      }
-		      }
-		      //log.log(Level.FINER, "After loop");
-		      /*
-		      if(toChild == null) {
-			      // didn't have the value before so we will have to create it
-			      toChild = new Element("data");
-			      toChild.setAttribute("y", currY);
-			      toChild.setAttribute("x", currX);
-			      toChild.setAttribute("value", "NaN");
-		      } else {
-			      log.log(Level.FINER, "Got back "+toChild);
-		      }
-		      */
-		      //log.log(Level.FINER, "before if");
-		      //if(!((Double)data.getValue()).isNaN() || (toChild != null && !toChild.getAttribute("value").equals("NaN"))) {
-		      if(!((Double)data.getValue()).isNaN()) {
-			      if(toChild == null) {
-				      //log.log(Level.FINER, "has to create data");
-				      // for efficiencies sake avoid creating this 
-				      toChild = new Element("data");
-				      toChild.setAttribute("y", currY);
-				      toChild.setAttribute("x", currX);
-				      toAdd.addContent(toChild);
-			      }
-			      //log.log(Level.FINER, "going to set data");
-			      toChild.setAttribute("value", data.getValue().toString());
-		      }
-		      // if toChild is still NaN should I just delete it?
-		      //log.log(Level.FINER, "after if");
-		    }
-		    //log.log(Level.FINER, "After processing all");
-                  }
+					List children = toAdd.getChildren();
+					//log.log(Level.FINER, "Before processing all");
+							while(itData.hasNext())
+							{
+							  data = (Map.Entry)itData.next();
+							  String currY = String.valueOf((Math
+								  .abs((int)(((((Point2D.Double)data.getKey()).y+dataStruct.getResolution())-(normY+normH))/dataStruct.getResolution()))));
+							  String currX = String.valueOf(((int)((((Point2D.Double)data
+								  .getKey()).x-normX)/dataStruct.getResolution())));
+					  toChild = null;
+					  //for(int childPos = 0; childPos < children.size() && toChild == null; ++childPos) {
+					  //log.log(Level.FINER, "Before loop");
+					  for(Iterator it = children.iterator(); it.hasNext() && toChild == null; ) {
+						  //Element currChild = (Element)children.get(childPos);
+						  Element currChild = (Element)it.next();
+						  if(currChild.getAttributeValue("y").equals(currY) && currChild.getAttributeValue("x").equals(currX)) {
+							  toChild = currChild;
+							  //log.log(Level.FINER, "Found It: "+toChild);
+						  }
+					  }
+					  //log.log(Level.FINER, "After loop");
+					  /*
+					  if(toChild == null) {
+						  // didn't have the value before so we will have to create it
+						  toChild = new Element("data");
+						  toChild.setAttribute("y", currY);
+						  toChild.setAttribute("x", currX);
+						  toChild.setAttribute("value", "NaN");
+					  } else {
+						  log.log(Level.FINER, "Got back "+toChild);
+					  }
+					  */
+					  //log.log(Level.FINER, "before if");
+					  //if(!((Double)data.getValue()).isNaN() || (toChild != null && !toChild.getAttribute("value").equals("NaN"))) {
+					  if(!((Double)data.getValue()).isNaN()) {
+						  if(toChild == null) {
+							  //log.log(Level.FINER, "has to create data");
+							  // for efficiencies sake avoid creating this 
+							  toChild = new Element("data");
+							  toChild.setAttribute("y", currY);
+							  toChild.setAttribute("x", currX);
+							  toAdd.addContent(toChild);
+						  }
+						  //log.log(Level.FINER, "going to set data");
+						  toChild.setAttribute("value", data.getValue().toString());
+					  }
+					  // if toChild is still NaN should I just delete it?
+					  //log.log(Level.FINER, "after if");
+					}
+					//log.log(Level.FINER, "After processing all");
+						  }
                 }
               }
             }
@@ -1123,10 +1119,11 @@ public class DataBuilder
       }
       //done settign avg/add and references
     }
-    
-    
-    
-    
+
+    if ( dataName.equals(CELL_AREA_DATA) ) {
+       landFractionNativeResolution =res;
+	}
+	    
     double curri =0;
     double currk =0;
     try {
@@ -1280,6 +1277,10 @@ public class DataBuilder
     ignore = Double.valueOf(readNumber(input));
     //System.out.println("ignore "+ignore);
     
+    if ( dataName.equals(CELL_AREA_DATA) ) {
+       landFractionNativeResolution =res;
+	}
+	
     //rectifying bounds if they are out of legal values
     if(xLL < -180)
     {
@@ -2007,6 +2008,12 @@ public class DataBuilder
 	      endX = 180;
       }
 
+      // This would be a problem if X and Y resolution were different.
+      // Numerous pieces of the code would need to be re-written to deal with non-rectangular grids
+      if ( dataName.equals(CELL_AREA_DATA) ) {
+	     landFractionNativeResolution =resX;
+	  }
+	
       //checking for overwrite and setting basic information (avg, ref, units)
       if(dataAvg.containsKey(dataName))
       {
@@ -4362,12 +4369,13 @@ public class DataBuilder
       NaN = (int)data.findAttribute("missing_value").getNumericValue().floatValue();
 
       // set up for the land fraction
+      // landFract is added as just another field
       //dataStruct.setTrackSums(true);
       final DataBlock toAdd = new DataBlock();
       final TreeMap<Double, Double> timeValue = new TreeMap();
       timeValue.put(0.0, 1.0);
-      toAdd.data.put("landFract", timeValue);
-      dataAvg.put("landFract", new Boolean(true));
+      toAdd.data.put(LAND_FRACTION, timeValue);
+      dataAvg.put(LAND_FRACTION, new Boolean(true));
 
       /*
       double landArea = 0;
@@ -4396,7 +4404,9 @@ public class DataBuilder
             if(rblock >= 0 && (holdR = ((RegionMask)newRegions.get(String.valueOf(rblock)))) != null)
             { 
 	      //landArea += area;
-	      // add to the land fraction
+	      // add to the land fraction. Each point in the region mask is implicitly 
+	      // assumed to be all land at this point. This is optionally modified in 
+	      // getRegion if more detailed landarea data is read in.
 	      toAdd.setRect(x, y, resX, resY);
 	      dataStruct.addData(toAdd, true);
 /*
@@ -4630,8 +4640,8 @@ public class DataBuilder
 	  final DataBlock toAdd = new DataBlock();
 	  final TreeMap<Double, Double> timeValue = new TreeMap();
 	  timeValue.put(0.0, 1.0);
-	  toAdd.data.put("landFract", timeValue);
-	  dataAvg.put("landFract", new Boolean(true));
+	  toAdd.data.put(LAND_FRACTION, timeValue);
+	  dataAvg.put(LAND_FRACTION, new Boolean(true));
 
 	  //reading the data from the file
 	  maskArray = new int[numRows][numCols];
@@ -4649,7 +4659,9 @@ public class DataBuilder
 			  } else
 			  {
 				  //landArea += area;
-				  // add to the land fraction
+				  // add to the land fraction. Each point in the region mask is implicitly 
+				  // assumed to be all land at this point. This is optionally modified in 
+				  // getRegion if more detailed landarea data is read in.
 				  toAdd.setRect(currX, currY, res, res);
 				  dataStruct.addData(toAdd, true);
 
@@ -4752,7 +4764,7 @@ public class DataBuilder
   
   private void addLandFractRegion() {
 	  // special region for landFract because it needs to be world wide
-	  RegionMask holdR = new RegionMask("landFract", 0.0);
+	  RegionMask holdR = new RegionMask(LAND_FRACTION, 0.0);
 	  holdR.x = -180.0;
 	  holdR.y = -90.0;
 	  holdR.height = 180 / dataStruct.getResolution();

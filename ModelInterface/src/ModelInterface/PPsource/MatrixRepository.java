@@ -249,8 +249,14 @@ public class MatrixRepository implements DataRepository
     String varName;
     Double timeName;
     double currXL, currYL;
-    double[][] landFractValues = root.get("landFract").get(0.0);
-
+    double[][] landFraction = root.get(DataBuilder.LAND_FRACTION).get(0.0); //Binary mask of land fractions
+    double[][] landFractionDetail = root.get(DataBuilder.LAND_FRACTION).get(0.0); //Just so var is defined
+     
+    // Optional data that contains fraction of land within each cell
+	if ( root.containsKey(DataBuilder.CELL_AREA_DATA) ) {
+   		landFractionDetail = root.get(DataBuilder.CELL_AREA_DATA).get(0.0); // must set time in PP input to zero for this to work
+    }
+    
     toReturn.put("weight", new LinkedHashMap<String, Map<Point2D.Double, Double>>());
     holdVar = toReturn.get("weight");
     holdVar.put("0", new LinkedHashMap<Point2D.Double, Double>());
@@ -265,9 +271,10 @@ public class MatrixRepository implements DataRepository
         {
           //add weight
           Point2D.Double hold = new Point2D.Double(currXL, currYL);
+          // Have not adjusted weight for land-fraction. 
+          // The weight just represents only the fraction of working resolution cell in a given sub-region 
 		  try {
-			  holdTime.put(hold, Double.valueOf(weights[(y)][(x)] /
-				  (landFractValues[x+X][Y-((weights.length)-y/*-1*/)]))); //took the -1 out again..
+			  holdTime.put( hold, Double.valueOf(weights[(y)][(x)] )); 
 		  } catch(ArrayIndexOutOfBoundsException e) {
 			  System.out.println(e+" -- weight: "+weights[(y)][(x)]);
 			  System.out.println("     indicies: ("+x+","+y+")  ("+(x+X)+","+(Y-((weights.length)-y))+")");
@@ -282,12 +289,12 @@ public class MatrixRepository implements DataRepository
     {
       varEntry = iV.next();
       varName = varEntry.getKey();
-      // TODO: DEFINE landFract as a constant somewhere
-      /*
-      if(varName.equals("landFract")) {
+      // Don't write out CELL_AREA_DATA as an explicit variable. 
+      // It is incorporated into landFract below.
+      if(varName.equals(DataBuilder.CELL_AREA_DATA)) {
 	      continue;
       }
-      */
+
       //some variables do not exist in root.entrySet by this point
       //System.out.println(varName);
       toReturn.put(varName, new LinkedHashMap<String, Map<Point2D.Double, Double>>());
@@ -311,10 +318,26 @@ public class MatrixRepository implements DataRepository
           	// Smallest weight if using 2.5 minute mask should be 2.5/60/res. So 1e-4 is ok.
             if( weights[(y)][(x)] > 1e-4 )
             {
+	          // Adjust landfract by land area data if available 
+	          // Landfract up until now is just fraction of native resolution grid 
+	          // cells in the working resolution cell. This adjusts for actual land
+	          // area within each cell, if this data was read-in.
+			  double landFractionAdj = 1;
+			  if ( varEntry.getKey().equals(DataBuilder.LAND_FRACTION) && root.containsKey(DataBuilder.CELL_AREA_DATA) ) {
+  			    // This is ratio of read-in land area in cell to cell size. 
+			    // Except for differences in assumed earth size, etc. this should always be < 1
+		        landFractionAdj = landFractionDetail[x+X][Y-((weights.length)-y)] /
+		      						   CoordConversions.area( res, res, currYL + res/2 );
+			    // Correct for difference in resolution. 
+			    // Cell size scale is res/native res larger than working res cell.
+			    landFractionAdj = landFractionAdj *  (res * res) /
+			          (DataBuilder.landFractionNativeResolution*DataBuilder.landFractionNativeResolution);
+				  }
+
               //get this point's value
               //add it to toReturn
               holdTime.put(new Point2D.Double(currXL, currYL), (currLayer[x+X][Y
-                  -((weights.length)-y/*-1*/)])); //took the -1 out again..
+                  -((weights.length)-y)]) * landFractionAdj );
             }
             currYL -= res;
           }
@@ -333,7 +356,7 @@ public class MatrixRepository implements DataRepository
     Map<String, Map<Point2D.Double, Double>> holdVar = toReturn.get("weight");
     holdVar.put("0", new LinkedHashMap<Point2D.Double, Double>(1));
     Map<Point2D.Double, Double> holdTime = holdVar.get("0");
-    double[][] landFractValues = root.get("landFract").get(0.0);
+    double[][] landFractValues = root.get(DataBuilder.LAND_FRACTION).get(0.0);
     double currXL = -180.0;
     double yL = 90.0;
     double currYL;
