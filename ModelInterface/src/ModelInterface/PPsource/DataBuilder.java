@@ -472,23 +472,26 @@ public class DataBuilder
       itVar = dataAvg.entrySet().iterator();
       while(itVar.hasNext())
       {
-        var = (Map.Entry)itVar.next();
-        rWriter.write("\t\t<variable name=\""+var.getKey()+"\">");
-	rWriter.newLine();
-        rWriter.write("\t\t\t<average value=\""+var.getValue()+"\" />");
-	rWriter.newLine();
-        if(dataUnits.containsKey(var.getKey()))
-        {
-          rWriter.write("\t\t\t<units value=\""+dataUnits.get(var.getKey())+"\" />");
-	  rWriter.newLine();
-        }
-        if(dataRef.containsKey(var.getKey()))
-        {
-          rWriter.write("\t\t\t<reference value=\""+dataRef.get(var.getKey())+"\" />");
-	  rWriter.newLine();
-        }
-        rWriter.write("\t\t</variable>");
-	rWriter.newLine();
+		  var = (Map.Entry)itVar.next();
+		 // Don't write out cell area header for cell area data
+         if( !( var.getKey().equals(CELL_AREA_DATA) ) ) {
+			rWriter.write("\t\t<variable name=\""+var.getKey()+"\">");
+			rWriter.newLine();
+			rWriter.write("\t\t\t<average value=\""+var.getValue()+"\" />");
+			rWriter.newLine();
+			if(dataUnits.containsKey(var.getKey()))
+			{
+			  rWriter.write("\t\t\t<units value=\""+dataUnits.get(var.getKey())+"\" />");
+			  rWriter.newLine();
+			}
+			if(dataRef.containsKey(var.getKey()))
+			{
+			  rWriter.write("\t\t\t<reference value=\""+dataRef.get(var.getKey())+"\" />");
+			  rWriter.newLine();
+			}
+			rWriter.write("\t\t</variable>");
+			rWriter.newLine();
+		}
       }
       rWriter.write("\t</variableInfo>");
       rWriter.newLine();
