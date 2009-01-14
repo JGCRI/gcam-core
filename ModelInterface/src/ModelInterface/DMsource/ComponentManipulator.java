@@ -1724,4 +1724,21 @@ public final class ComponentManipulator
 	  return toReturn;
   }
 
+  /**
+   * This sets a value into every cell of the passed in data.  Note that a copy
+   * of the data is not made.
+   * @param data The wrapper to set the value into.
+   * @param value The value to set.
+   */
+  public static void setValue(Wrapper[] data, double value) {
+    // set the value into the data arrays
+    for(int regionWrapperIndex = 0; regionWrapperIndex < data.length; ++regionWrapperIndex) {
+	    double[][] currDataArr = data[regionWrapperIndex].getData();
+	    for(int row = 0; row < currDataArr.length; ++row) {
+		    for(int col = 0; col < currDataArr[0].length; ++col) {
+			    currDataArr[row][col] = value;
+		    }
+	    }
+    }
+  }
 }

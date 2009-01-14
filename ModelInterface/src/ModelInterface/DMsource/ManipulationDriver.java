@@ -368,6 +368,97 @@ public class ManipulationDriver
 
   }
   /**
+   * Creates a new variable which is a region filled with the
+   * read in scalar value. Builds
+   * according to the contents of the passed XML node.
+   * @param command XML command the variable will be based on.
+   */
+  private void newScalarReferenceVariableCommand(Element command)
+  {
+    log.log(Level.FINER, "begin function");
+    ReferenceVariable toAdd;
+    Element currInfo;
+    String newName = command.getAttributeValue("name");
+    Region ref;
+    String time, reg;
+    double scalarValue;
+    // TODO: see if we want to allow false
+    boolean avg = true;
+
+    currInfo = command.getChild("region");
+    reg = currInfo.getAttributeValue("value");
+    currInfo = command.getChild("time");
+    time = currInfo.getAttributeValue("value");
+    
+    // get the region and make sure it exists
+    ref = (Region)regionList.get(reg);
+    if(ref == null) {
+	    log.log(Level.SEVERE, "Region "+reg+" was not found, variable "+newName+" was not created.");
+	    return;
+    }
+    /*
+    if(var.equals("RegionCellSize") && dataAvgAdd.get(var) == null) {
+	    avg = true;
+    } else {
+	    avg = ((Boolean)dataAvgAdd.get(var)).booleanValue();
+    }
+    */
+
+    // creating the reference variable (does not fill data)
+    toAdd = new ReferenceVariable(newName, ref, "", time, avg);
+
+    // fill the data with the scalars
+    // if there is a scalar element then set that into every region
+    // contained in reg 
+    currInfo = command.getChild("defaultValue");
+    if(currInfo != null) {
+	    scalarValue = Double.parseDouble(currInfo.getAttributeValue("value"));
+	    ComponentManipulator.setValue(toAdd.data, scalarValue);
+    }
+
+    // now go through every sub region and set the it's scalar
+    ArrayList<Element> subRegionElements = new ArrayList<Element>(command.getChildren("subRegion")); 
+
+    // the user may also read these from a separate xml file
+    currInfo = command.getChild("file");
+    if(currInfo != null) {
+	    try {
+		    SAXBuilder builder = new SAXBuilder();
+		    Document rDocument = builder.build(currInfo.getAttributeValue("name"));
+		    subRegionElements.addAll(rDocument.getRootElement().getChildren("subRegion"));
+	    } catch(Exception e) {
+		    e.printStackTrace();
+		    log.log(Level.WARNING, "Could not read scalers from file "+e);
+	    }
+    }
+
+    for(int i = 0; i < subRegionElements.size(); i++) {
+	    currInfo = subRegionElements.get(i);
+	    String currSubRegion = currInfo.getAttributeValue("name");
+	    scalarValue = Double.parseDouble(currInfo.getAttributeValue("value"));
+	    ref = (Region)regionList.get(currSubRegion);
+	    // check to make sure the region exists
+	    if(ref == null) {
+		    log.log(Level.WARNING, "Region "+currSubRegion+" was not found, scalar "+scalarValue
+				    +" was not set.");
+	    } else {
+		    Wrapper[] data = ref.extractRegion(toAdd);
+		    // check to see if the region was acutally a sub region to reg
+		    // if so set the value 
+		    if(data.length != 0) {
+			    ComponentManipulator.setValue(data, scalarValue);
+		    } else {
+			    log.log(Level.WARNING, "subRegion "+currSubRegion+" was not found in "+reg+", scalar "+scalarValue
+					    +" was not set.");
+		    }
+	    }
+    }
+
+    variableList.put(newName, toAdd);
+    log.log(Level.FINEST, "added "+newName+" to variable list");
+
+  }
+  /**
    * Creates a new variable which holds a group of other variables. Child
    * variables can be of any type. Defined uses are for holding all time
    * occurances of a field in a region, or holding all first level sub- regions
@@ -3502,6 +3593,10 @@ public class ManipulationDriver
       {
         log.log(Level.FINEST, "new group variable command");
         newGroupVariableCommand(currCom);
+      } else  if(currCom.getAttributeValue("type").equals("scalar reference"))
+      {
+        log.log(Level.FINEST, "new scalar reference variable command");
+        newScalarReferenceVariableCommand(currCom);
       } else
       {
         log.log(Level.WARNING, "Unknown variable type -> "+currCom.getAttributeValue("type"));
