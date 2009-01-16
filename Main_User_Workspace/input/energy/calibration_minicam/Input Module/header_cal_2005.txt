@@ -8,7 +8,7 @@ This uses many of the same headers as calallheader-mx.txt; it has been updated f
 
 100,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,period/+{name}minicam-energy-input,{year=1990}period/../minicam-energy-input/+calibrated-value,{year=2005}period/../minicam-energy-input/+calibrated-value,scenario,scenario/world,@technology/period
 
-650,world/+{name}region,region/+{name}supplysector,supplysector/+output-unit,supplysector/+input-unit,supplysector/+price-unit,supplysector/+{year=1975;fillout=1}biomass-price-adder,scenario/world,scenario
+650,world/+{name}region,region/+{name}supplysector,supplysector/+output-unit,supplysector/+input-unit,supplysector/+price-unit,supplysector/+{year=1975}price,scenario/world,scenario
 
 660,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{year=1975;fillout=1}logitexp,subsector/+{year=1975;fillout=1}sharewt,subsector/+{year=1975;fillout=1}fuelprefElasticity,subsector/+{year=1975;fillout=1}FixedInvestment,scenario/world,scenario
 

@@ -84,9 +84,9 @@
          <supplysector name="electricity">
             <subsector name="nuclear">
                <scaleYear>1975</scaleYear>
-               <sharewt year="2020">2</sharewt>
-               <sharewt year="2035">2</sharewt>
-               <sharewt year="2050">1.5</sharewt>
+               <sharewt year="2020">1</sharewt>
+               <sharewt year="2035">1.5</sharewt>
+               <sharewt year="2050">1.25</sharewt>
                <sharewt year="2065">1</sharewt>
                <sharewt year="2080">1</sharewt>
                <sharewt year="2095">1</sharewt>

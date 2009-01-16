@@ -31,12 +31,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.5069</calibrated-value>
+                        <calibrated-value>0.5311</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.7967</calibrated-value>
+                        <calibrated-value>0.7684</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -97,12 +97,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.2717</calibrated-value>
+                        <calibrated-value>0.2686</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.4184</calibrated-value>
+                        <calibrated-value>0.4181</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -163,12 +163,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.6677</calibrated-value>
+                        <calibrated-value>0.6557</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.8690</calibrated-value>
+                        <calibrated-value>0.9072</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -229,12 +229,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.5064</calibrated-value>
+                        <calibrated-value>1.4846</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>5.2011</calibrated-value>
+                        <calibrated-value>5.1624</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -295,12 +295,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.8216</calibrated-value>
+                        <calibrated-value>0.7487</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.6107</calibrated-value>
+                        <calibrated-value>0.6474</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -361,12 +361,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>3.6113</calibrated-value>
+                        <calibrated-value>3.7009</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>2.2870</calibrated-value>
+                        <calibrated-value>2.3156</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -427,12 +427,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.5267</calibrated-value>
+                        <calibrated-value>0.5230</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.0311</calibrated-value>
+                        <calibrated-value>1.0056</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -493,12 +493,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.1820</calibrated-value>
+                        <calibrated-value>1.1582</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.2273</calibrated-value>
+                        <calibrated-value>1.1898</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -564,14 +564,14 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.6469</calibrated-value>
+                        <calibrated-value>0.6471</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
                <technology name="gas">
                   <period year="1990">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.0037</calibrated-value>
+                        <calibrated-value>0.0010</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
@@ -625,12 +625,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.8969</calibrated-value>
+                        <calibrated-value>0.8996</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.6491</calibrated-value>
+                        <calibrated-value>1.6201</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -691,12 +691,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.1550</calibrated-value>
+                        <calibrated-value>0.1040</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.4501</calibrated-value>
+                        <calibrated-value>0.3668</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -757,12 +757,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.4314</calibrated-value>
+                        <calibrated-value>0.4274</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.0569</calibrated-value>
+                        <calibrated-value>1.0234</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -823,12 +823,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>3.2108</calibrated-value>
+                        <calibrated-value>3.1130</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>3.4296</calibrated-value>
+                        <calibrated-value>3.2554</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -889,12 +889,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>3.4184</calibrated-value>
+                        <calibrated-value>3.3406</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>4.2966</calibrated-value>
+                        <calibrated-value>4.1644</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>

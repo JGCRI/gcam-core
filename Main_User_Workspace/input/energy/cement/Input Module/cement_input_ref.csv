@@ -25,9 +25,9 @@ INPUT_TABLE,,,,,,,,,,
 Variable ID,,,,,,,,,,
 10,,,,,,,,,,
 ,other tables link here,,,,,,,,,
-region,supplysector,output-unit,input-unit,price-unit,keyword,,,,,
-all,cement,Gt,EJ,1975$/t,cement,,"keep ""process"" inputs to production separate from industrial sector",,,
-all,process heat cement,EJ,EJ,1975$/GJ,industry,,,,,
+region,supplysector,output-unit,input-unit,price-unit,1975 price,keyword,,,,
+all,cement,Gt,EJ,1975$/t,14.46,industry,,,,
+all,process heat cement,EJ,EJ,1975$/GJ,0.98,industry,,,,
 
 
 energy-final-demand attributes,,,,,,,,,,,,

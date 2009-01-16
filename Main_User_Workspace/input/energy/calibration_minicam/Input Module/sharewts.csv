@@ -142,23 +142,23 @@ USA,electricity,wind,wind,1,1
 Western Europe,electricity,wind,wind,1,1
 
 
-add back shareweights to techs no longer fixed,,,,,
+"shareweights: 0 if fixed output, 1 if calibrated output",,,,,
 INPUT_TABLE,,,,,
 Variable ID,,,,,
 11006,,,,,
 ,,,,sharewt,
 region,supplysector,subsector,technology,1990,2005
-Africa,electricity,nuclear,Gen_II_LWR,1,1
-Australia_NZ,electricity,nuclear,Gen_II_LWR,1,1
-Canada,electricity,nuclear,Gen_II_LWR,1,1
-China,electricity,nuclear,Gen_II_LWR,1,1
-Eastern Europe,electricity,nuclear,Gen_II_LWR,1,1
-Former Soviet Union,electricity,nuclear,Gen_II_LWR,1,1
-India,electricity,nuclear,Gen_II_LWR,1,1
-Japan,electricity,nuclear,Gen_II_LWR,1,1
-Korea,electricity,nuclear,Gen_II_LWR,1,1
-Latin America,electricity,nuclear,Gen_II_LWR,1,1
-Middle East,electricity,nuclear,Gen_II_LWR,1,1
-Southeast Asia,electricity,nuclear,Gen_II_LWR,1,1
-USA,electricity,nuclear,Gen_II_LWR,1,1
-Western Europe,electricity,nuclear,Gen_II_LWR,1,1
+Africa,electricity,nuclear,Gen_II_LWR,0,0
+Australia_NZ,electricity,nuclear,Gen_II_LWR,0,0
+Canada,electricity,nuclear,Gen_II_LWR,0,0
+China,electricity,nuclear,Gen_II_LWR,0,0
+Eastern Europe,electricity,nuclear,Gen_II_LWR,0,0
+Former Soviet Union,electricity,nuclear,Gen_II_LWR,0,0
+India,electricity,nuclear,Gen_II_LWR,0,0
+Japan,electricity,nuclear,Gen_II_LWR,0,0
+Korea,electricity,nuclear,Gen_II_LWR,0,0
+Latin America,electricity,nuclear,Gen_II_LWR,0,0
+Middle East,electricity,nuclear,Gen_II_LWR,0,0
+Southeast Asia,electricity,nuclear,Gen_II_LWR,0,0
+USA,electricity,nuclear,Gen_II_LWR,0,0
+Western Europe,electricity,nuclear,Gen_II_LWR,0,0

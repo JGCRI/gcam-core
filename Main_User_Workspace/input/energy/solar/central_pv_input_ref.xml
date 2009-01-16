@@ -67,8 +67,8 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2035</scaleYear>
-               <sharewt year="2020">0.25</sharewt>
+               <scaleYear>2020</scaleYear>
+               <sharewt year="2020">0.5</sharewt>
                <sharewt year="2035">0.5</sharewt>
                <sharewt year="2050">0.5</sharewt>
                <sharewt year="2065">0.5</sharewt>
@@ -838,8 +838,8 @@
          </intermittent-supplysector>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2035</scaleYear>
-               <sharewt year="2020">0.25</sharewt>
+               <scaleYear>2020</scaleYear>
+               <sharewt year="2020">0.5</sharewt>
                <sharewt year="2035">0.5</sharewt>
                <sharewt year="2050">0.5</sharewt>
                <sharewt year="2065">0.5</sharewt>

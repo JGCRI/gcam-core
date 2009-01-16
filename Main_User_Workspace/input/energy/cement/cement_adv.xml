@@ -10,7 +10,7 @@
                         <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.964</coefficient>
+                        <coefficient>5.350</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.529</coefficient>
@@ -21,7 +21,7 @@
                         <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.964</coefficient>
+                        <coefficient>5.350</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.529</coefficient>
@@ -32,7 +32,7 @@
                         <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.951</coefficient>
+                        <coefficient>5.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.515</coefficient>
@@ -43,7 +43,7 @@
                         <coefficient>1.426</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.108</coefficient>
+                        <coefficient>4.199</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.407</coefficient>
@@ -54,7 +54,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.444</coefficient>
+                        <coefficient>3.326</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.322</coefficient>
@@ -65,7 +65,7 @@
                         <coefficient>1.339</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.354</coefficient>
+                        <coefficient>3.204</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.317</coefficient>
@@ -76,7 +76,7 @@
                         <coefficient>1.319</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.267</coefficient>
+                        <coefficient>3.086</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.312</coefficient>
@@ -87,7 +87,7 @@
                         <coefficient>1.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.184</coefficient>
+                        <coefficient>2.972</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.307</coefficient>
@@ -98,7 +98,7 @@
                         <coefficient>1.280</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.103</coefficient>
+                        <coefficient>2.862</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.303</coefficient>
@@ -113,7 +113,7 @@
                         <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.964</coefficient>
+                        <coefficient>5.350</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.529</coefficient>
@@ -124,7 +124,7 @@
                         <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.964</coefficient>
+                        <coefficient>5.350</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.529</coefficient>
@@ -135,7 +135,7 @@
                         <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.951</coefficient>
+                        <coefficient>5.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.515</coefficient>
@@ -146,7 +146,7 @@
                         <coefficient>1.426</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.108</coefficient>
+                        <coefficient>4.199</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.407</coefficient>
@@ -157,7 +157,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.444</coefficient>
+                        <coefficient>3.326</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.322</coefficient>
@@ -168,7 +168,7 @@
                         <coefficient>1.339</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.354</coefficient>
+                        <coefficient>3.204</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.317</coefficient>
@@ -179,7 +179,7 @@
                         <coefficient>1.319</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.267</coefficient>
+                        <coefficient>3.086</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.312</coefficient>
@@ -190,7 +190,7 @@
                         <coefficient>1.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.184</coefficient>
+                        <coefficient>2.972</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.307</coefficient>
@@ -201,7 +201,7 @@
                         <coefficient>1.280</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.103</coefficient>
+                        <coefficient>2.862</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.303</coefficient>
@@ -220,7 +220,7 @@
                         <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.973</coefficient>
+                        <coefficient>5.600</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.565</coefficient>
@@ -231,7 +231,7 @@
                         <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.973</coefficient>
+                        <coefficient>5.600</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.565</coefficient>
@@ -242,7 +242,7 @@
                         <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.289</coefficient>
+                        <coefficient>4.750</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.508</coefficient>
@@ -253,7 +253,7 @@
                         <coefficient>1.426</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.842</coefficient>
+                        <coefficient>3.981</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.404</coefficient>
@@ -264,7 +264,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.456</coefficient>
+                        <coefficient>3.336</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.322</coefficient>
@@ -275,7 +275,7 @@
                         <coefficient>1.339</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.365</coefficient>
+                        <coefficient>3.213</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.317</coefficient>
@@ -286,7 +286,7 @@
                         <coefficient>1.319</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.278</coefficient>
+                        <coefficient>3.095</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.312</coefficient>
@@ -297,7 +297,7 @@
                         <coefficient>1.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.194</coefficient>
+                        <coefficient>2.981</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.308</coefficient>
@@ -308,7 +308,7 @@
                         <coefficient>1.280</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.113</coefficient>
+                        <coefficient>2.871</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.303</coefficient>
@@ -323,7 +323,7 @@
                         <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.973</coefficient>
+                        <coefficient>5.600</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.565</coefficient>
@@ -334,7 +334,7 @@
                         <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.973</coefficient>
+                        <coefficient>5.600</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.565</coefficient>
@@ -345,7 +345,7 @@
                         <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.289</coefficient>
+                        <coefficient>4.750</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.508</coefficient>
@@ -356,7 +356,7 @@
                         <coefficient>1.426</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.842</coefficient>
+                        <coefficient>3.981</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.404</coefficient>
@@ -367,7 +367,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.456</coefficient>
+                        <coefficient>3.336</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.322</coefficient>
@@ -378,7 +378,7 @@
                         <coefficient>1.339</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.365</coefficient>
+                        <coefficient>3.213</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.317</coefficient>
@@ -389,7 +389,7 @@
                         <coefficient>1.319</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.278</coefficient>
+                        <coefficient>3.095</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.312</coefficient>
@@ -400,7 +400,7 @@
                         <coefficient>1.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.194</coefficient>
+                        <coefficient>2.981</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.308</coefficient>
@@ -411,7 +411,7 @@
                         <coefficient>1.280</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.113</coefficient>
+                        <coefficient>2.871</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.303</coefficient>
@@ -430,7 +430,7 @@
                         <coefficient>1.371</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.873</coefficient>
+                        <coefficient>3.875</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.389</coefficient>
@@ -441,7 +441,7 @@
                         <coefficient>1.371</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.873</coefficient>
+                        <coefficient>3.875</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.389</coefficient>
@@ -452,7 +452,7 @@
                         <coefficient>1.371</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.533</coefficient>
+                        <coefficient>3.467</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.362</coefficient>
@@ -463,7 +463,7 @@
                         <coefficient>1.366</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.497</coefficient>
+                        <coefficient>3.408</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.343</coefficient>
@@ -474,7 +474,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.463</coefficient>
+                        <coefficient>3.350</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.324</coefficient>
@@ -485,7 +485,7 @@
                         <coefficient>1.340</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.372</coefficient>
+                        <coefficient>3.226</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.319</coefficient>
@@ -496,7 +496,7 @@
                         <coefficient>1.320</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.285</coefficient>
+                        <coefficient>3.108</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.314</coefficient>
@@ -507,7 +507,7 @@
                         <coefficient>1.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.200</coefficient>
+                        <coefficient>2.993</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.310</coefficient>
@@ -518,7 +518,7 @@
                         <coefficient>1.281</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.119</coefficient>
+                        <coefficient>2.883</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.305</coefficient>
@@ -533,7 +533,7 @@
                         <coefficient>1.371</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.873</coefficient>
+                        <coefficient>3.875</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.389</coefficient>
@@ -544,7 +544,7 @@
                         <coefficient>1.371</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.873</coefficient>
+                        <coefficient>3.875</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.389</coefficient>
@@ -555,7 +555,7 @@
                         <coefficient>1.371</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.533</coefficient>
+                        <coefficient>3.467</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.362</coefficient>
@@ -566,7 +566,7 @@
                         <coefficient>1.366</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.497</coefficient>
+                        <coefficient>3.408</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.343</coefficient>
@@ -577,7 +577,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.463</coefficient>
+                        <coefficient>3.350</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.324</coefficient>
@@ -588,7 +588,7 @@
                         <coefficient>1.340</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.372</coefficient>
+                        <coefficient>3.226</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.319</coefficient>
@@ -599,7 +599,7 @@
                         <coefficient>1.320</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.285</coefficient>
+                        <coefficient>3.108</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.314</coefficient>
@@ -610,7 +610,7 @@
                         <coefficient>1.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.200</coefficient>
+                        <coefficient>2.993</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.310</coefficient>
@@ -621,7 +621,7 @@
                         <coefficient>1.281</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.119</coefficient>
+                        <coefficient>2.883</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.305</coefficient>
@@ -640,7 +640,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.565</coefficient>
+                        <coefficient>3.400</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.342</coefficient>
@@ -651,7 +651,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.565</coefficient>
+                        <coefficient>3.400</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.342</coefficient>
@@ -662,7 +662,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.463</coefficient>
+                        <coefficient>3.350</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.364</coefficient>
@@ -673,7 +673,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.463</coefficient>
+                        <coefficient>3.350</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.343</coefficient>
@@ -684,7 +684,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.463</coefficient>
+                        <coefficient>3.350</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.324</coefficient>
@@ -695,7 +695,7 @@
                         <coefficient>1.340</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.372</coefficient>
+                        <coefficient>3.227</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.319</coefficient>
@@ -706,7 +706,7 @@
                         <coefficient>1.320</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.285</coefficient>
+                        <coefficient>3.108</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.314</coefficient>
@@ -717,7 +717,7 @@
                         <coefficient>1.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.200</coefficient>
+                        <coefficient>2.993</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.310</coefficient>
@@ -728,7 +728,7 @@
                         <coefficient>1.281</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.119</coefficient>
+                        <coefficient>2.883</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.305</coefficient>
@@ -743,7 +743,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.565</coefficient>
+                        <coefficient>3.400</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.342</coefficient>
@@ -754,7 +754,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.565</coefficient>
+                        <coefficient>3.400</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.342</coefficient>
@@ -765,7 +765,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.463</coefficient>
+                        <coefficient>3.350</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.364</coefficient>
@@ -776,7 +776,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.463</coefficient>
+                        <coefficient>3.350</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.343</coefficient>
@@ -787,7 +787,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.463</coefficient>
+                        <coefficient>3.350</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.324</coefficient>
@@ -798,7 +798,7 @@
                         <coefficient>1.340</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.372</coefficient>
+                        <coefficient>3.227</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.319</coefficient>
@@ -809,7 +809,7 @@
                         <coefficient>1.320</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.285</coefficient>
+                        <coefficient>3.108</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.314</coefficient>
@@ -820,7 +820,7 @@
                         <coefficient>1.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.200</coefficient>
+                        <coefficient>2.993</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.310</coefficient>
@@ -831,7 +831,7 @@
                         <coefficient>1.281</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.119</coefficient>
+                        <coefficient>2.883</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.305</coefficient>
@@ -850,7 +850,7 @@
                         <coefficient>1.428</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.170</coefficient>
+                        <coefficient>4.147</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.425</coefficient>
@@ -861,7 +861,7 @@
                         <coefficient>1.428</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.170</coefficient>
+                        <coefficient>4.147</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.425</coefficient>
@@ -872,7 +872,7 @@
                         <coefficient>1.428</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.161</coefficient>
+                        <coefficient>4.182</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.407</coefficient>
@@ -883,7 +883,7 @@
                         <coefficient>1.394</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.787</coefficient>
+                        <coefficient>3.740</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.363</coefficient>
@@ -894,7 +894,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.458</coefficient>
+                        <coefficient>3.344</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.323</coefficient>
@@ -905,7 +905,7 @@
                         <coefficient>1.340</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.367</coefficient>
+                        <coefficient>3.221</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.319</coefficient>
@@ -916,7 +916,7 @@
                         <coefficient>1.320</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.280</coefficient>
+                        <coefficient>3.103</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.314</coefficient>
@@ -927,7 +927,7 @@
                         <coefficient>1.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.196</coefficient>
+                        <coefficient>2.988</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.309</coefficient>
@@ -938,7 +938,7 @@
                         <coefficient>1.281</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.115</coefficient>
+                        <coefficient>2.878</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.305</coefficient>
@@ -953,7 +953,7 @@
                         <coefficient>1.428</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.170</coefficient>
+                        <coefficient>4.147</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.425</coefficient>
@@ -964,7 +964,7 @@
                         <coefficient>1.428</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.170</coefficient>
+                        <coefficient>4.147</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.425</coefficient>
@@ -975,7 +975,7 @@
                         <coefficient>1.428</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.161</coefficient>
+                        <coefficient>4.182</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.407</coefficient>
@@ -986,7 +986,7 @@
                         <coefficient>1.394</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.787</coefficient>
+                        <coefficient>3.740</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.363</coefficient>
@@ -997,7 +997,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.458</coefficient>
+                        <coefficient>3.344</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.323</coefficient>
@@ -1008,7 +1008,7 @@
                         <coefficient>1.340</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.367</coefficient>
+                        <coefficient>3.221</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.319</coefficient>
@@ -1019,7 +1019,7 @@
                         <coefficient>1.320</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.280</coefficient>
+                        <coefficient>3.103</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.314</coefficient>
@@ -1030,7 +1030,7 @@
                         <coefficient>1.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.196</coefficient>
+                        <coefficient>2.988</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.309</coefficient>
@@ -1041,7 +1041,7 @@
                         <coefficient>1.281</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.115</coefficient>
+                        <coefficient>2.878</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.305</coefficient>
@@ -1060,7 +1060,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>4.237</coefficient>
+                        <coefficient>6.106</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.425</coefficient>
@@ -1071,7 +1071,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>4.237</coefficient>
+                        <coefficient>6.106</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.425</coefficient>
@@ -1082,7 +1082,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>4.195</coefficient>
+                        <coefficient>6.148</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.407</coefficient>
@@ -1093,7 +1093,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.199</coefficient>
+                        <coefficient>4.510</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.363</coefficient>
@@ -1104,7 +1104,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.439</coefficient>
+                        <coefficient>3.308</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.323</coefficient>
@@ -1115,7 +1115,7 @@
                         <coefficient>1.340</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.349</coefficient>
+                        <coefficient>3.186</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.319</coefficient>
@@ -1126,7 +1126,7 @@
                         <coefficient>1.320</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.263</coefficient>
+                        <coefficient>3.069</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.314</coefficient>
@@ -1137,7 +1137,7 @@
                         <coefficient>1.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.179</coefficient>
+                        <coefficient>2.956</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.309</coefficient>
@@ -1148,7 +1148,7 @@
                         <coefficient>1.281</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.099</coefficient>
+                        <coefficient>2.847</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.305</coefficient>
@@ -1163,7 +1163,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>4.237</coefficient>
+                        <coefficient>6.106</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.425</coefficient>
@@ -1174,7 +1174,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>4.237</coefficient>
+                        <coefficient>6.106</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.425</coefficient>
@@ -1185,7 +1185,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>4.195</coefficient>
+                        <coefficient>6.148</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.407</coefficient>
@@ -1196,7 +1196,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.199</coefficient>
+                        <coefficient>4.510</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.363</coefficient>
@@ -1207,7 +1207,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.439</coefficient>
+                        <coefficient>3.308</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.323</coefficient>
@@ -1218,7 +1218,7 @@
                         <coefficient>1.340</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.349</coefficient>
+                        <coefficient>3.186</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.319</coefficient>
@@ -1229,7 +1229,7 @@
                         <coefficient>1.320</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.263</coefficient>
+                        <coefficient>3.069</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.314</coefficient>
@@ -1240,7 +1240,7 @@
                         <coefficient>1.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.179</coefficient>
+                        <coefficient>2.956</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.309</coefficient>
@@ -1251,7 +1251,7 @@
                         <coefficient>1.281</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.099</coefficient>
+                        <coefficient>2.847</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.305</coefficient>
@@ -1270,7 +1270,7 @@
                         <coefficient>1.411</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.867</coefficient>
+                        <coefficient>5.200</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.432</coefficient>
@@ -1281,7 +1281,7 @@
                         <coefficient>1.411</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.867</coefficient>
+                        <coefficient>5.200</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.432</coefficient>
@@ -1292,7 +1292,7 @@
                         <coefficient>1.411</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.000</coefficient>
+                        <coefficient>4.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.421</coefficient>
@@ -1303,7 +1303,7 @@
                         <coefficient>1.385</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.716</coefficient>
+                        <coefficient>3.791</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.369</coefficient>
@@ -1314,7 +1314,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.460</coefficient>
+                        <coefficient>3.343</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.323</coefficient>
@@ -1325,7 +1325,7 @@
                         <coefficient>1.340</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.369</coefficient>
+                        <coefficient>3.220</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.318</coefficient>
@@ -1336,7 +1336,7 @@
                         <coefficient>1.320</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.282</coefficient>
+                        <coefficient>3.101</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.314</coefficient>
@@ -1347,7 +1347,7 @@
                         <coefficient>1.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.198</coefficient>
+                        <coefficient>2.987</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.309</coefficient>
@@ -1358,7 +1358,7 @@
                         <coefficient>1.281</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.117</coefficient>
+                        <coefficient>2.877</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.304</coefficient>
@@ -1373,7 +1373,7 @@
                         <coefficient>1.411</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.867</coefficient>
+                        <coefficient>5.200</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.432</coefficient>
@@ -1384,7 +1384,7 @@
                         <coefficient>1.411</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.867</coefficient>
+                        <coefficient>5.200</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.432</coefficient>
@@ -1395,7 +1395,7 @@
                         <coefficient>1.411</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.000</coefficient>
+                        <coefficient>4.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.421</coefficient>
@@ -1406,7 +1406,7 @@
                         <coefficient>1.385</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.716</coefficient>
+                        <coefficient>3.791</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.369</coefficient>
@@ -1417,7 +1417,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.460</coefficient>
+                        <coefficient>3.343</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.323</coefficient>
@@ -1428,7 +1428,7 @@
                         <coefficient>1.340</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.369</coefficient>
+                        <coefficient>3.220</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.318</coefficient>
@@ -1439,7 +1439,7 @@
                         <coefficient>1.320</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.282</coefficient>
+                        <coefficient>3.101</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.314</coefficient>
@@ -1450,7 +1450,7 @@
                         <coefficient>1.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.198</coefficient>
+                        <coefficient>2.987</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.309</coefficient>
@@ -1461,7 +1461,7 @@
                         <coefficient>1.281</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.117</coefficient>
+                        <coefficient>2.877</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.304</coefficient>
@@ -1480,7 +1480,7 @@
                         <coefficient>1.547</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.722</coefficient>
+                        <coefficient>5.107</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.425</coefficient>
@@ -1491,7 +1491,7 @@
                         <coefficient>1.547</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.722</coefficient>
+                        <coefficient>5.107</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.425</coefficient>
@@ -1502,7 +1502,7 @@
                         <coefficient>1.547</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.699</coefficient>
+                        <coefficient>5.145</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.407</coefficient>
@@ -1513,7 +1513,7 @@
                         <coefficient>1.450</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.010</coefficient>
+                        <coefficient>4.139</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.363</coefficient>
@@ -1524,7 +1524,7 @@
                         <coefficient>1.359</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.449</coefficient>
+                        <coefficient>3.329</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.323</coefficient>
@@ -1535,7 +1535,7 @@
                         <coefficient>1.339</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.359</coefficient>
+                        <coefficient>3.207</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.319</coefficient>
@@ -1546,7 +1546,7 @@
                         <coefficient>1.319</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.272</coefficient>
+                        <coefficient>3.088</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.314</coefficient>
@@ -1557,7 +1557,7 @@
                         <coefficient>1.299</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.188</coefficient>
+                        <coefficient>2.975</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.309</coefficient>
@@ -1568,7 +1568,7 @@
                         <coefficient>1.280</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.108</coefficient>
+                        <coefficient>2.865</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.305</coefficient>
@@ -1583,7 +1583,7 @@
                         <coefficient>1.547</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.722</coefficient>
+                        <coefficient>5.107</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.425</coefficient>
@@ -1594,7 +1594,7 @@
                         <coefficient>1.547</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.722</coefficient>
+                        <coefficient>5.107</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.425</coefficient>
@@ -1605,7 +1605,7 @@
                         <coefficient>1.547</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.699</coefficient>
+                        <coefficient>5.145</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.407</coefficient>
@@ -1616,7 +1616,7 @@
                         <coefficient>1.450</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.010</coefficient>
+                        <coefficient>4.139</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.363</coefficient>
@@ -1627,7 +1627,7 @@
                         <coefficient>1.359</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.449</coefficient>
+                        <coefficient>3.329</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.323</coefficient>
@@ -1638,7 +1638,7 @@
                         <coefficient>1.339</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.359</coefficient>
+                        <coefficient>3.207</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.319</coefficient>
@@ -1649,7 +1649,7 @@
                         <coefficient>1.319</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.272</coefficient>
+                        <coefficient>3.088</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.314</coefficient>
@@ -1660,7 +1660,7 @@
                         <coefficient>1.299</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.188</coefficient>
+                        <coefficient>2.975</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.309</coefficient>
@@ -1671,7 +1671,7 @@
                         <coefficient>1.280</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.108</coefficient>
+                        <coefficient>2.865</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.305</coefficient>
@@ -1690,7 +1690,7 @@
                         <coefficient>1.484</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.685</coefficient>
+                        <coefficient>4.893</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.425</coefficient>
@@ -1701,7 +1701,7 @@
                         <coefficient>1.484</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.685</coefficient>
+                        <coefficient>4.893</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.425</coefficient>
@@ -1712,7 +1712,7 @@
                         <coefficient>1.484</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.669</coefficient>
+                        <coefficient>4.930</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.407</coefficient>
@@ -1723,7 +1723,7 @@
                         <coefficient>1.420</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.998</coefficient>
+                        <coefficient>4.054</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.363</coefficient>
@@ -1734,7 +1734,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.450</coefficient>
+                        <coefficient>3.333</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.323</coefficient>
@@ -1745,7 +1745,7 @@
                         <coefficient>1.339</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.359</coefficient>
+                        <coefficient>3.210</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.319</coefficient>
@@ -1756,7 +1756,7 @@
                         <coefficient>1.319</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.272</coefficient>
+                        <coefficient>3.092</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.314</coefficient>
@@ -1767,7 +1767,7 @@
                         <coefficient>1.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.189</coefficient>
+                        <coefficient>2.978</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.309</coefficient>
@@ -1778,7 +1778,7 @@
                         <coefficient>1.280</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.108</coefficient>
+                        <coefficient>2.868</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.305</coefficient>
@@ -1793,7 +1793,7 @@
                         <coefficient>1.484</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.685</coefficient>
+                        <coefficient>4.893</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.425</coefficient>
@@ -1804,7 +1804,7 @@
                         <coefficient>1.484</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.685</coefficient>
+                        <coefficient>4.893</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.425</coefficient>
@@ -1815,7 +1815,7 @@
                         <coefficient>1.484</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.669</coefficient>
+                        <coefficient>4.930</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.407</coefficient>
@@ -1826,7 +1826,7 @@
                         <coefficient>1.420</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.998</coefficient>
+                        <coefficient>4.054</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.363</coefficient>
@@ -1837,7 +1837,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.450</coefficient>
+                        <coefficient>3.333</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.323</coefficient>
@@ -1848,7 +1848,7 @@
                         <coefficient>1.339</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.359</coefficient>
+                        <coefficient>3.210</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.319</coefficient>
@@ -1859,7 +1859,7 @@
                         <coefficient>1.319</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.272</coefficient>
+                        <coefficient>3.092</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.314</coefficient>
@@ -1870,7 +1870,7 @@
                         <coefficient>1.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.189</coefficient>
+                        <coefficient>2.978</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.309</coefficient>
@@ -1881,7 +1881,7 @@
                         <coefficient>1.280</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.108</coefficient>
+                        <coefficient>2.868</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.305</coefficient>
@@ -1900,7 +1900,7 @@
                         <coefficient>1.436</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.097</coefficient>
+                        <coefficient>4.175</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.405</coefficient>
@@ -1911,7 +1911,7 @@
                         <coefficient>1.436</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.097</coefficient>
+                        <coefficient>4.175</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.405</coefficient>
@@ -1922,7 +1922,7 @@
                         <coefficient>1.436</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.533</coefficient>
+                        <coefficient>3.625</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.410</coefficient>
@@ -1933,7 +1933,7 @@
                         <coefficient>1.398</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.498</coefficient>
+                        <coefficient>3.484</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.364</coefficient>
@@ -1944,7 +1944,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.463</coefficient>
+                        <coefficient>3.349</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.323</coefficient>
@@ -1955,7 +1955,7 @@
                         <coefficient>1.340</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.372</coefficient>
+                        <coefficient>3.226</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.319</coefficient>
@@ -1966,7 +1966,7 @@
                         <coefficient>1.320</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.285</coefficient>
+                        <coefficient>3.107</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.314</coefficient>
@@ -1977,7 +1977,7 @@
                         <coefficient>1.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.200</coefficient>
+                        <coefficient>2.993</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.309</coefficient>
@@ -1988,7 +1988,7 @@
                         <coefficient>1.281</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.119</coefficient>
+                        <coefficient>2.882</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.305</coefficient>
@@ -2003,7 +2003,7 @@
                         <coefficient>1.436</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.097</coefficient>
+                        <coefficient>4.175</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.405</coefficient>
@@ -2014,7 +2014,7 @@
                         <coefficient>1.436</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.097</coefficient>
+                        <coefficient>4.175</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.405</coefficient>
@@ -2025,7 +2025,7 @@
                         <coefficient>1.436</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.533</coefficient>
+                        <coefficient>3.625</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.410</coefficient>
@@ -2036,7 +2036,7 @@
                         <coefficient>1.398</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.498</coefficient>
+                        <coefficient>3.484</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.364</coefficient>
@@ -2047,7 +2047,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.463</coefficient>
+                        <coefficient>3.349</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.323</coefficient>
@@ -2058,7 +2058,7 @@
                         <coefficient>1.340</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.372</coefficient>
+                        <coefficient>3.226</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.319</coefficient>
@@ -2069,7 +2069,7 @@
                         <coefficient>1.320</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.285</coefficient>
+                        <coefficient>3.107</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.314</coefficient>
@@ -2080,7 +2080,7 @@
                         <coefficient>1.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.200</coefficient>
+                        <coefficient>2.993</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.309</coefficient>
@@ -2091,7 +2091,7 @@
                         <coefficient>1.281</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.119</coefficient>
+                        <coefficient>2.882</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.305</coefficient>
@@ -2110,7 +2110,7 @@
                         <coefficient>1.544</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.980</coefficient>
+                        <coefficient>4.964</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.425</coefficient>
@@ -2121,7 +2121,7 @@
                         <coefficient>1.544</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.980</coefficient>
+                        <coefficient>4.964</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.425</coefficient>
@@ -2132,7 +2132,7 @@
                         <coefficient>1.544</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.973</coefficient>
+                        <coefficient>5.002</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.407</coefficient>
@@ -2143,7 +2143,7 @@
                         <coefficient>1.449</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.116</coefficient>
+                        <coefficient>4.082</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.363</coefficient>
@@ -2154,7 +2154,7 @@
                         <coefficient>1.359</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.444</coefficient>
+                        <coefficient>3.332</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.323</coefficient>
@@ -2165,7 +2165,7 @@
                         <coefficient>1.339</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.354</coefficient>
+                        <coefficient>3.209</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.319</coefficient>
@@ -2176,7 +2176,7 @@
                         <coefficient>1.319</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.267</coefficient>
+                        <coefficient>3.091</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.314</coefficient>
@@ -2187,7 +2187,7 @@
                         <coefficient>1.299</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.183</coefficient>
+                        <coefficient>2.977</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.309</coefficient>
@@ -2198,7 +2198,7 @@
                         <coefficient>1.280</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.103</coefficient>
+                        <coefficient>2.867</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.305</coefficient>
@@ -2213,7 +2213,7 @@
                         <coefficient>1.544</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.980</coefficient>
+                        <coefficient>4.964</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.425</coefficient>
@@ -2224,7 +2224,7 @@
                         <coefficient>1.544</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.980</coefficient>
+                        <coefficient>4.964</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.425</coefficient>
@@ -2235,7 +2235,7 @@
                         <coefficient>1.544</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.973</coefficient>
+                        <coefficient>5.002</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.407</coefficient>
@@ -2246,7 +2246,7 @@
                         <coefficient>1.449</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.116</coefficient>
+                        <coefficient>4.082</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.363</coefficient>
@@ -2257,7 +2257,7 @@
                         <coefficient>1.359</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.444</coefficient>
+                        <coefficient>3.332</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.323</coefficient>
@@ -2268,7 +2268,7 @@
                         <coefficient>1.339</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.354</coefficient>
+                        <coefficient>3.209</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.319</coefficient>
@@ -2279,7 +2279,7 @@
                         <coefficient>1.319</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.267</coefficient>
+                        <coefficient>3.091</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.314</coefficient>
@@ -2290,7 +2290,7 @@
                         <coefficient>1.299</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.183</coefficient>
+                        <coefficient>2.977</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.309</coefficient>
@@ -2301,7 +2301,7 @@
                         <coefficient>1.280</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.103</coefficient>
+                        <coefficient>2.867</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.305</coefficient>
@@ -2320,7 +2320,7 @@
                         <coefficient>1.455</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.740</coefficient>
+                        <coefficient>5.147</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.425</coefficient>
@@ -2331,7 +2331,7 @@
                         <coefficient>1.455</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.740</coefficient>
+                        <coefficient>5.147</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.425</coefficient>
@@ -2342,7 +2342,7 @@
                         <coefficient>1.455</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.715</coefficient>
+                        <coefficient>5.185</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.407</coefficient>
@@ -2353,7 +2353,7 @@
                         <coefficient>1.406</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.016</coefficient>
+                        <coefficient>4.154</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.363</coefficient>
@@ -2364,7 +2364,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.449</coefficient>
+                        <coefficient>3.328</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.323</coefficient>
@@ -2375,7 +2375,7 @@
                         <coefficient>1.340</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.359</coefficient>
+                        <coefficient>3.206</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.319</coefficient>
@@ -2386,7 +2386,7 @@
                         <coefficient>1.320</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.272</coefficient>
+                        <coefficient>3.088</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.314</coefficient>
@@ -2397,7 +2397,7 @@
                         <coefficient>1.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.188</coefficient>
+                        <coefficient>2.974</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.309</coefficient>
@@ -2408,7 +2408,7 @@
                         <coefficient>1.281</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.107</coefficient>
+                        <coefficient>2.864</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.305</coefficient>
@@ -2423,7 +2423,7 @@
                         <coefficient>1.455</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.740</coefficient>
+                        <coefficient>5.147</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.425</coefficient>
@@ -2434,7 +2434,7 @@
                         <coefficient>1.455</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.740</coefficient>
+                        <coefficient>5.147</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.425</coefficient>
@@ -2445,7 +2445,7 @@
                         <coefficient>1.455</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.715</coefficient>
+                        <coefficient>5.185</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.407</coefficient>
@@ -2456,7 +2456,7 @@
                         <coefficient>1.406</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.016</coefficient>
+                        <coefficient>4.154</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.363</coefficient>
@@ -2467,7 +2467,7 @@
                         <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.449</coefficient>
+                        <coefficient>3.328</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.323</coefficient>
@@ -2478,7 +2478,7 @@
                         <coefficient>1.340</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.359</coefficient>
+                        <coefficient>3.206</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.319</coefficient>
@@ -2489,7 +2489,7 @@
                         <coefficient>1.320</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.272</coefficient>
+                        <coefficient>3.088</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.314</coefficient>
@@ -2500,7 +2500,7 @@
                         <coefficient>1.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.188</coefficient>
+                        <coefficient>2.974</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.309</coefficient>
@@ -2511,7 +2511,7 @@
                         <coefficient>1.281</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.107</coefficient>
+                        <coefficient>2.864</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.305</coefficient>
@@ -2530,7 +2530,7 @@
                         <coefficient>1.632</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>4.110</coefficient>
+                        <coefficient>5.150</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.396</coefficient>
@@ -2541,7 +2541,7 @@
                         <coefficient>1.632</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>4.110</coefficient>
+                        <coefficient>5.150</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.396</coefficient>
@@ -2552,7 +2552,7 @@
                         <coefficient>1.632</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.316</coefficient>
+                        <coefficient>4.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.374</coefficient>
@@ -2563,7 +2563,7 @@
                         <coefficient>1.489</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.854</coefficient>
+                        <coefficient>3.791</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.348</coefficient>
@@ -2574,7 +2574,7 @@
                         <coefficient>1.358</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.455</coefficient>
+                        <coefficient>3.343</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.324</coefficient>
@@ -2585,7 +2585,7 @@
                         <coefficient>1.338</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.365</coefficient>
+                        <coefficient>3.220</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.319</coefficient>
@@ -2596,7 +2596,7 @@
                         <coefficient>1.318</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.278</coefficient>
+                        <coefficient>3.101</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.314</coefficient>
@@ -2607,7 +2607,7 @@
                         <coefficient>1.299</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.194</coefficient>
+                        <coefficient>2.987</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.310</coefficient>
@@ -2618,7 +2618,7 @@
                         <coefficient>1.279</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.113</coefficient>
+                        <coefficient>2.877</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.305</coefficient>
@@ -2633,7 +2633,7 @@
                         <coefficient>1.632</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>4.110</coefficient>
+                        <coefficient>5.150</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.396</coefficient>
@@ -2644,7 +2644,7 @@
                         <coefficient>1.632</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>4.110</coefficient>
+                        <coefficient>5.150</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.396</coefficient>
@@ -2655,7 +2655,7 @@
                         <coefficient>1.632</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>3.316</coefficient>
+                        <coefficient>4.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.374</coefficient>
@@ -2666,7 +2666,7 @@
                         <coefficient>1.489</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.854</coefficient>
+                        <coefficient>3.791</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.348</coefficient>
@@ -2677,7 +2677,7 @@
                         <coefficient>1.358</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.455</coefficient>
+                        <coefficient>3.343</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.324</coefficient>
@@ -2688,7 +2688,7 @@
                         <coefficient>1.338</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.365</coefficient>
+                        <coefficient>3.220</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.319</coefficient>
@@ -2699,7 +2699,7 @@
                         <coefficient>1.318</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.278</coefficient>
+                        <coefficient>3.101</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.314</coefficient>
@@ -2710,7 +2710,7 @@
                         <coefficient>1.299</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.194</coefficient>
+                        <coefficient>2.987</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.310</coefficient>
@@ -2721,7 +2721,7 @@
                         <coefficient>1.279</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.113</coefficient>
+                        <coefficient>2.877</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.305</coefficient>
@@ -2740,7 +2740,7 @@
                         <coefficient>1.513</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>4.256</coefficient>
+                        <coefficient>5.750</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.432</coefficient>
@@ -2751,7 +2751,7 @@
                         <coefficient>1.513</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>4.256</coefficient>
+                        <coefficient>5.750</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.432</coefficient>
@@ -2762,7 +2762,7 @@
                         <coefficient>1.513</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.679</coefficient>
+                        <coefficient>3.800</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.324</coefficient>
@@ -2773,7 +2773,7 @@
                         <coefficient>1.434</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.568</coefficient>
+                        <coefficient>3.567</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.324</coefficient>
@@ -2784,7 +2784,7 @@
                         <coefficient>1.359</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.462</coefficient>
+                        <coefficient>3.348</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.324</coefficient>
@@ -2795,7 +2795,7 @@
                         <coefficient>1.339</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.371</coefficient>
+                        <coefficient>3.225</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.319</coefficient>
@@ -2806,7 +2806,7 @@
                         <coefficient>1.319</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.284</coefficient>
+                        <coefficient>3.106</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.314</coefficient>
@@ -2817,7 +2817,7 @@
                         <coefficient>1.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.200</coefficient>
+                        <coefficient>2.992</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.310</coefficient>
@@ -2828,7 +2828,7 @@
                         <coefficient>1.280</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.119</coefficient>
+                        <coefficient>2.881</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.305</coefficient>
@@ -2843,7 +2843,7 @@
                         <coefficient>1.513</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>4.256</coefficient>
+                        <coefficient>5.750</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.432</coefficient>
@@ -2854,7 +2854,7 @@
                         <coefficient>1.513</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>4.256</coefficient>
+                        <coefficient>5.750</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.432</coefficient>
@@ -2865,7 +2865,7 @@
                         <coefficient>1.513</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.679</coefficient>
+                        <coefficient>3.800</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.324</coefficient>
@@ -2876,7 +2876,7 @@
                         <coefficient>1.434</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.568</coefficient>
+                        <coefficient>3.567</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.324</coefficient>
@@ -2887,7 +2887,7 @@
                         <coefficient>1.359</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.462</coefficient>
+                        <coefficient>3.348</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.324</coefficient>
@@ -2898,7 +2898,7 @@
                         <coefficient>1.339</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.371</coefficient>
+                        <coefficient>3.225</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.319</coefficient>
@@ -2909,7 +2909,7 @@
                         <coefficient>1.319</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.284</coefficient>
+                        <coefficient>3.106</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.314</coefficient>
@@ -2920,7 +2920,7 @@
                         <coefficient>1.300</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.200</coefficient>
+                        <coefficient>2.992</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.310</coefficient>
@@ -2931,7 +2931,7 @@
                         <coefficient>1.280</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>2.119</coefficient>
+                        <coefficient>2.881</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.305</coefficient>

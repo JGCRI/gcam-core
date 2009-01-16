@@ -4,8 +4,8 @@
       <region name="USA">
          <supplysector name="electricity">
             <subsector name="hydro">
-               <sharewt year="1990">1</sharewt>
-               <sharewt year="2005">1</sharewt>
+               <sharewt year="1990">0</sharewt>
+               <sharewt year="2005">0</sharewt>
                <sharewt year="2020">0</sharewt>
                <sharewt year="2035">0</sharewt>
                <sharewt year="2050">0</sharewt>
@@ -40,10 +40,10 @@
                      <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -52,8 +52,8 @@
       <region name="Canada">
          <supplysector name="electricity">
             <subsector name="hydro">
-               <sharewt year="1990">1</sharewt>
-               <sharewt year="2005">1</sharewt>
+               <sharewt year="1990">0</sharewt>
+               <sharewt year="2005">0</sharewt>
                <sharewt year="2020">0</sharewt>
                <sharewt year="2035">0</sharewt>
                <sharewt year="2050">0</sharewt>
@@ -88,10 +88,10 @@
                      <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -100,8 +100,8 @@
       <region name="Western Europe">
          <supplysector name="electricity">
             <subsector name="hydro">
-               <sharewt year="1990">1</sharewt>
-               <sharewt year="2005">1</sharewt>
+               <sharewt year="1990">0</sharewt>
+               <sharewt year="2005">0</sharewt>
                <sharewt year="2020">0</sharewt>
                <sharewt year="2035">0</sharewt>
                <sharewt year="2050">0</sharewt>
@@ -136,10 +136,10 @@
                      <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -148,8 +148,8 @@
       <region name="Japan">
          <supplysector name="electricity">
             <subsector name="hydro">
-               <sharewt year="1990">1</sharewt>
-               <sharewt year="2005">1</sharewt>
+               <sharewt year="1990">0</sharewt>
+               <sharewt year="2005">0</sharewt>
                <sharewt year="2020">0</sharewt>
                <sharewt year="2035">0</sharewt>
                <sharewt year="2050">0</sharewt>
@@ -184,10 +184,10 @@
                      <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -196,8 +196,8 @@
       <region name="Australia_NZ">
          <supplysector name="electricity">
             <subsector name="hydro">
-               <sharewt year="1990">1</sharewt>
-               <sharewt year="2005">1</sharewt>
+               <sharewt year="1990">0</sharewt>
+               <sharewt year="2005">0</sharewt>
                <sharewt year="2020">0</sharewt>
                <sharewt year="2035">0</sharewt>
                <sharewt year="2050">0</sharewt>
@@ -232,10 +232,10 @@
                      <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -244,8 +244,8 @@
       <region name="Former Soviet Union">
          <supplysector name="electricity">
             <subsector name="hydro">
-               <sharewt year="1990">1</sharewt>
-               <sharewt year="2005">1</sharewt>
+               <sharewt year="1990">0</sharewt>
+               <sharewt year="2005">0</sharewt>
                <sharewt year="2020">0</sharewt>
                <sharewt year="2035">0</sharewt>
                <sharewt year="2050">0</sharewt>
@@ -280,10 +280,10 @@
                      <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -292,8 +292,8 @@
       <region name="China">
          <supplysector name="electricity">
             <subsector name="hydro">
-               <sharewt year="1990">1</sharewt>
-               <sharewt year="2005">1</sharewt>
+               <sharewt year="1990">0</sharewt>
+               <sharewt year="2005">0</sharewt>
                <sharewt year="2020">0</sharewt>
                <sharewt year="2035">0</sharewt>
                <sharewt year="2050">0</sharewt>
@@ -328,10 +328,10 @@
                      <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -340,8 +340,8 @@
       <region name="Middle East">
          <supplysector name="electricity">
             <subsector name="hydro">
-               <sharewt year="1990">1</sharewt>
-               <sharewt year="2005">1</sharewt>
+               <sharewt year="1990">0</sharewt>
+               <sharewt year="2005">0</sharewt>
                <sharewt year="2020">0</sharewt>
                <sharewt year="2035">0</sharewt>
                <sharewt year="2050">0</sharewt>
@@ -376,10 +376,10 @@
                      <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -388,8 +388,8 @@
       <region name="Africa">
          <supplysector name="electricity">
             <subsector name="hydro">
-               <sharewt year="1990">1</sharewt>
-               <sharewt year="2005">1</sharewt>
+               <sharewt year="1990">0</sharewt>
+               <sharewt year="2005">0</sharewt>
                <sharewt year="2020">0</sharewt>
                <sharewt year="2035">0</sharewt>
                <sharewt year="2050">0</sharewt>
@@ -424,10 +424,10 @@
                      <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -436,8 +436,8 @@
       <region name="Latin America">
          <supplysector name="electricity">
             <subsector name="hydro">
-               <sharewt year="1990">1</sharewt>
-               <sharewt year="2005">1</sharewt>
+               <sharewt year="1990">0</sharewt>
+               <sharewt year="2005">0</sharewt>
                <sharewt year="2020">0</sharewt>
                <sharewt year="2035">0</sharewt>
                <sharewt year="2050">0</sharewt>
@@ -472,10 +472,10 @@
                      <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -484,8 +484,8 @@
       <region name="Southeast Asia">
          <supplysector name="electricity">
             <subsector name="hydro">
-               <sharewt year="1990">1</sharewt>
-               <sharewt year="2005">1</sharewt>
+               <sharewt year="1990">0</sharewt>
+               <sharewt year="2005">0</sharewt>
                <sharewt year="2020">0</sharewt>
                <sharewt year="2035">0</sharewt>
                <sharewt year="2050">0</sharewt>
@@ -520,10 +520,10 @@
                      <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -532,8 +532,8 @@
       <region name="Eastern Europe">
          <supplysector name="electricity">
             <subsector name="hydro">
-               <sharewt year="1990">1</sharewt>
-               <sharewt year="2005">1</sharewt>
+               <sharewt year="1990">0</sharewt>
+               <sharewt year="2005">0</sharewt>
                <sharewt year="2020">0</sharewt>
                <sharewt year="2035">0</sharewt>
                <sharewt year="2050">0</sharewt>
@@ -568,10 +568,10 @@
                      <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -580,8 +580,8 @@
       <region name="Korea">
          <supplysector name="electricity">
             <subsector name="hydro">
-               <sharewt year="1990">1</sharewt>
-               <sharewt year="2005">1</sharewt>
+               <sharewt year="1990">0</sharewt>
+               <sharewt year="2005">0</sharewt>
                <sharewt year="2020">0</sharewt>
                <sharewt year="2035">0</sharewt>
                <sharewt year="2050">0</sharewt>
@@ -616,10 +616,10 @@
                      <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                </technology>
             </subsector>
@@ -628,8 +628,8 @@
       <region name="India">
          <supplysector name="electricity">
             <subsector name="hydro">
-               <sharewt year="1990">1</sharewt>
-               <sharewt year="2005">1</sharewt>
+               <sharewt year="1990">0</sharewt>
+               <sharewt year="2005">0</sharewt>
                <sharewt year="2020">0</sharewt>
                <sharewt year="2035">0</sharewt>
                <sharewt year="2050">0</sharewt>
@@ -664,10 +664,10 @@
                      <sharewt>0</sharewt>
                   </period>
                   <period year="1990">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                </technology>
             </subsector>

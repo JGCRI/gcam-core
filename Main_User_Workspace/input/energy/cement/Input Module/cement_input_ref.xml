@@ -7,7 +7,8 @@
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/t</price-unit>
-            <keyword final-energy="cement"/>
+            <price year="1975">14.46</price>
+            <keyword final-energy="industry"/>
             <subsector name="cement (conv)">
                <scaleYear>2020</scaleYear>
                <logitexp fillout="1" year="1975">-20</logitexp>
@@ -375,6 +376,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">0.98</price>
             <keyword final-energy="industry"/>
             <subsector name="biomass">
                <scaleYear>2095</scaleYear>
@@ -794,7 +796,8 @@
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/t</price-unit>
-            <keyword final-energy="cement"/>
+            <price year="1975">14.46</price>
+            <keyword final-energy="industry"/>
             <subsector name="cement (conv)">
                <scaleYear>2020</scaleYear>
                <logitexp fillout="1" year="1975">-20</logitexp>
@@ -1162,6 +1165,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">0.98</price>
             <keyword final-energy="industry"/>
             <subsector name="biomass">
                <scaleYear>2095</scaleYear>
@@ -1581,7 +1585,8 @@
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/t</price-unit>
-            <keyword final-energy="cement"/>
+            <price year="1975">14.46</price>
+            <keyword final-energy="industry"/>
             <subsector name="cement (conv)">
                <scaleYear>2020</scaleYear>
                <logitexp fillout="1" year="1975">-20</logitexp>
@@ -1949,6 +1954,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">0.98</price>
             <keyword final-energy="industry"/>
             <subsector name="biomass">
                <scaleYear>2095</scaleYear>
@@ -2368,7 +2374,8 @@
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/t</price-unit>
-            <keyword final-energy="cement"/>
+            <price year="1975">14.46</price>
+            <keyword final-energy="industry"/>
             <subsector name="cement (conv)">
                <scaleYear>2020</scaleYear>
                <logitexp fillout="1" year="1975">-20</logitexp>
@@ -2736,6 +2743,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">0.98</price>
             <keyword final-energy="industry"/>
             <subsector name="biomass">
                <scaleYear>2095</scaleYear>
@@ -3157,7 +3165,8 @@
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/t</price-unit>
-            <keyword final-energy="cement"/>
+            <price year="1975">14.46</price>
+            <keyword final-energy="industry"/>
             <subsector name="cement (conv)">
                <scaleYear>2020</scaleYear>
                <logitexp fillout="1" year="1975">-20</logitexp>
@@ -3525,6 +3534,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">0.98</price>
             <keyword final-energy="industry"/>
             <subsector name="biomass">
                <scaleYear>2095</scaleYear>
@@ -3946,7 +3956,8 @@
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/t</price-unit>
-            <keyword final-energy="cement"/>
+            <price year="1975">14.46</price>
+            <keyword final-energy="industry"/>
             <subsector name="cement (conv)">
                <scaleYear>2020</scaleYear>
                <logitexp fillout="1" year="1975">-20</logitexp>
@@ -4314,6 +4325,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">0.98</price>
             <keyword final-energy="industry"/>
             <subsector name="biomass">
                <scaleYear>2095</scaleYear>
@@ -4733,7 +4745,8 @@
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/t</price-unit>
-            <keyword final-energy="cement"/>
+            <price year="1975">14.46</price>
+            <keyword final-energy="industry"/>
             <subsector name="cement (conv)">
                <scaleYear>2020</scaleYear>
                <logitexp fillout="1" year="1975">-20</logitexp>
@@ -5101,6 +5114,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">0.98</price>
             <keyword final-energy="industry"/>
             <subsector name="biomass">
                <scaleYear>2095</scaleYear>
@@ -5524,7 +5538,8 @@
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/t</price-unit>
-            <keyword final-energy="cement"/>
+            <price year="1975">14.46</price>
+            <keyword final-energy="industry"/>
             <subsector name="cement (conv)">
                <scaleYear>2020</scaleYear>
                <logitexp fillout="1" year="1975">-20</logitexp>
@@ -5892,6 +5907,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">0.98</price>
             <keyword final-energy="industry"/>
             <subsector name="biomass">
                <scaleYear>2095</scaleYear>
@@ -6313,7 +6329,8 @@
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/t</price-unit>
-            <keyword final-energy="cement"/>
+            <price year="1975">14.46</price>
+            <keyword final-energy="industry"/>
             <subsector name="cement (conv)">
                <scaleYear>2020</scaleYear>
                <logitexp fillout="1" year="1975">-20</logitexp>
@@ -6681,6 +6698,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">0.98</price>
             <keyword final-energy="industry"/>
             <subsector name="biomass">
                <scaleYear>2095</scaleYear>
@@ -7100,7 +7118,8 @@
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/t</price-unit>
-            <keyword final-energy="cement"/>
+            <price year="1975">14.46</price>
+            <keyword final-energy="industry"/>
             <subsector name="cement (conv)">
                <scaleYear>2020</scaleYear>
                <logitexp fillout="1" year="1975">-20</logitexp>
@@ -7468,6 +7487,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">0.98</price>
             <keyword final-energy="industry"/>
             <subsector name="biomass">
                <scaleYear>2095</scaleYear>
@@ -7887,7 +7907,8 @@
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/t</price-unit>
-            <keyword final-energy="cement"/>
+            <price year="1975">14.46</price>
+            <keyword final-energy="industry"/>
             <subsector name="cement (conv)">
                <scaleYear>2020</scaleYear>
                <logitexp fillout="1" year="1975">-20</logitexp>
@@ -8255,6 +8276,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">0.98</price>
             <keyword final-energy="industry"/>
             <subsector name="biomass">
                <scaleYear>2095</scaleYear>
@@ -8674,7 +8696,8 @@
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/t</price-unit>
-            <keyword final-energy="cement"/>
+            <price year="1975">14.46</price>
+            <keyword final-energy="industry"/>
             <subsector name="cement (conv)">
                <scaleYear>2020</scaleYear>
                <logitexp fillout="1" year="1975">-20</logitexp>
@@ -9042,6 +9065,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">0.98</price>
             <keyword final-energy="industry"/>
             <subsector name="biomass">
                <scaleYear>2095</scaleYear>
@@ -9461,7 +9485,8 @@
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/t</price-unit>
-            <keyword final-energy="cement"/>
+            <price year="1975">14.46</price>
+            <keyword final-energy="industry"/>
             <subsector name="cement (conv)">
                <scaleYear>2020</scaleYear>
                <logitexp fillout="1" year="1975">-20</logitexp>
@@ -9829,6 +9854,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">0.98</price>
             <keyword final-energy="industry"/>
             <subsector name="biomass">
                <scaleYear>2095</scaleYear>
@@ -10250,7 +10276,8 @@
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/t</price-unit>
-            <keyword final-energy="cement"/>
+            <price year="1975">14.46</price>
+            <keyword final-energy="industry"/>
             <subsector name="cement (conv)">
                <scaleYear>2020</scaleYear>
                <logitexp fillout="1" year="1975">-20</logitexp>
@@ -10618,6 +10645,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">0.98</price>
             <keyword final-energy="industry"/>
             <subsector name="biomass">
                <scaleYear>2095</scaleYear>

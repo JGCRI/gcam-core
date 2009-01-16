@@ -74,18 +74,12 @@
             <subsector name="nuclear">
                <technology name="Gen_II_LWR">
                   <period year="1990">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>0.0304164</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>0.0304164</fixedOutput>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>0.0406548</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>0.0406548</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -156,16 +150,10 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>0.2027592</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>0.2027592</fixedOutput>
                   </period>
                   <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>0.3267648</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>0.3267648</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -190,7 +178,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <price year="1975">6.75</price>
             <subsector name="electricity_net_ownuse">
                <logitexp fillout="1" year="1975">-3</logitexp>
                <sharewt fillout="1" year="1975">1</sharewt>
@@ -286,55 +274,55 @@
                <technology name="electricity_td_bld">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.891</efficiency>
+                        <efficiency>0.893</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.891</efficiency>
+                        <efficiency>0.893</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.877</efficiency>
+                        <efficiency>0.879</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.880</efficiency>
+                        <efficiency>0.883</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.884</efficiency>
+                        <efficiency>0.886</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.888</efficiency>
+                        <efficiency>0.890</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.892</efficiency>
+                        <efficiency>0.894</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.896</efficiency>
+                        <efficiency>0.898</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.900</efficiency>
+                        <efficiency>0.902</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -346,55 +334,55 @@
                <technology name="electricity_td_ind">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.891</efficiency>
+                        <efficiency>0.893</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.891</efficiency>
+                        <efficiency>0.893</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.877</efficiency>
+                        <efficiency>0.879</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.880</efficiency>
+                        <efficiency>0.883</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.884</efficiency>
+                        <efficiency>0.886</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.888</efficiency>
+                        <efficiency>0.890</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.892</efficiency>
+                        <efficiency>0.894</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.896</efficiency>
+                        <efficiency>0.898</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.900</efficiency>
+                        <efficiency>0.902</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -406,55 +394,55 @@
                <technology name="electricity_td_trn">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.891</efficiency>
+                        <efficiency>0.893</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.891</efficiency>
+                        <efficiency>0.893</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.877</efficiency>
+                        <efficiency>0.879</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.880</efficiency>
+                        <efficiency>0.883</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.884</efficiency>
+                        <efficiency>0.886</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.888</efficiency>
+                        <efficiency>0.890</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.892</efficiency>
+                        <efficiency>0.894</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.896</efficiency>
+                        <efficiency>0.898</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.900</efficiency>
+                        <efficiency>0.902</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -521,38 +509,6 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>0.905496084</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>1.185166461</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>0.466744464</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>0.708908976</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
          <supplysector name="building">
             <subsector name="biomass">
                <technology name="biomass">
@@ -586,12 +542,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.344322432</calibrated-value>
+                        <calibrated-value>0.360532077</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.814500072</calibrated-value>
+                        <calibrated-value>0.810567127</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -668,12 +624,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.531087738</calibrated-value>
+                        <calibrated-value>0.555340641</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.838067096</calibrated-value>
+                        <calibrated-value>0.809732823</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -736,12 +692,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.01632852</calibrated-value>
+                        <calibrated-value>0.017097217</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.024241572</calibrated-value>
+                        <calibrated-value>0.024124518</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -849,18 +805,12 @@
             <subsector name="nuclear">
                <technology name="Gen_II_LWR">
                   <period year="1990">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>0</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>0</fixedOutput>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>0</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>0</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -931,16 +881,10 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>0.1349568</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>0.1349568</fixedOutput>
                   </period>
                   <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>0.1409616</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>0.1409616</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -965,7 +909,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <price year="1975">6.06</price>
             <subsector name="electricity_net_ownuse">
                <logitexp fillout="1" year="1975">-3</logitexp>
                <sharewt fillout="1" year="1975">1</sharewt>
@@ -1061,55 +1005,55 @@
                <technology name="electricity_td_bld">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.916</efficiency>
+                        <efficiency>0.918</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.916</efficiency>
+                        <efficiency>0.918</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.933</efficiency>
+                        <efficiency>0.935</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.936</efficiency>
+                        <efficiency>0.938</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.940</efficiency>
+                        <efficiency>0.942</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.943</efficiency>
+                        <efficiency>0.945</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.947</efficiency>
+                        <efficiency>0.949</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.950</efficiency>
+                        <efficiency>0.952</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.953</efficiency>
+                        <efficiency>0.955</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -1121,55 +1065,55 @@
                <technology name="electricity_td_ind">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.916</efficiency>
+                        <efficiency>0.918</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.916</efficiency>
+                        <efficiency>0.918</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.933</efficiency>
+                        <efficiency>0.935</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.936</efficiency>
+                        <efficiency>0.938</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.940</efficiency>
+                        <efficiency>0.942</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.943</efficiency>
+                        <efficiency>0.945</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.947</efficiency>
+                        <efficiency>0.949</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.950</efficiency>
+                        <efficiency>0.952</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.953</efficiency>
+                        <efficiency>0.955</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -1181,55 +1125,55 @@
                <technology name="electricity_td_trn">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.916</efficiency>
+                        <efficiency>0.918</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.916</efficiency>
+                        <efficiency>0.918</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.933</efficiency>
+                        <efficiency>0.935</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.936</efficiency>
+                        <efficiency>0.938</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.940</efficiency>
+                        <efficiency>0.942</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.943</efficiency>
+                        <efficiency>0.945</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.947</efficiency>
+                        <efficiency>0.949</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.950</efficiency>
+                        <efficiency>0.952</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.953</efficiency>
+                        <efficiency>0.955</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -1296,38 +1240,6 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>0.318099851</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>0.393817909</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>0.036592632</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>0.023906628</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
          <supplysector name="building">
             <subsector name="biomass">
                <technology name="biomass">
@@ -1361,12 +1273,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.294248304</calibrated-value>
+                        <calibrated-value>0.294195837</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.469047204</calibrated-value>
+                        <calibrated-value>0.474783071</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -1429,12 +1341,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.275767441</calibrated-value>
+                        <calibrated-value>0.272662346</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.422921742</calibrated-value>
+                        <calibrated-value>0.422547563</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -1497,12 +1409,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.00669888</calibrated-value>
+                        <calibrated-value>0.006697686</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.010592604</calibrated-value>
+                        <calibrated-value>0.010722138</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -1610,18 +1522,12 @@
             <subsector name="nuclear">
                <technology name="Gen_II_LWR">
                   <period year="1990">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>0.2626812</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>0.2626812</fixedOutput>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>0.331344</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>0.331344</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -1692,16 +1598,10 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>1.0682532</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>1.0682532</fixedOutput>
                   </period>
                   <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>1.308654</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>1.308654</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -1726,7 +1626,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <price year="1975">6.33</price>
             <subsector name="electricity_net_ownuse">
                <logitexp fillout="1" year="1975">-3</logitexp>
                <sharewt fillout="1" year="1975">1</sharewt>
@@ -1822,55 +1722,55 @@
                <technology name="electricity_td_bld">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.925</efficiency>
+                        <efficiency>0.926</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.925</efficiency>
+                        <efficiency>0.926</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.932</efficiency>
+                        <efficiency>0.935</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.936</efficiency>
+                        <efficiency>0.938</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.939</efficiency>
+                        <efficiency>0.942</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.943</efficiency>
+                        <efficiency>0.945</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.946</efficiency>
+                        <efficiency>0.949</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.950</efficiency>
+                        <efficiency>0.952</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.953</efficiency>
+                        <efficiency>0.956</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -1882,55 +1782,55 @@
                <technology name="electricity_td_ind">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.925</efficiency>
+                        <efficiency>0.926</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.925</efficiency>
+                        <efficiency>0.926</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.932</efficiency>
+                        <efficiency>0.935</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.936</efficiency>
+                        <efficiency>0.938</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.939</efficiency>
+                        <efficiency>0.942</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.943</efficiency>
+                        <efficiency>0.945</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.946</efficiency>
+                        <efficiency>0.949</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.950</efficiency>
+                        <efficiency>0.952</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.953</efficiency>
+                        <efficiency>0.956</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -1942,55 +1842,55 @@
                <technology name="electricity_td_trn">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.925</efficiency>
+                        <efficiency>0.926</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.925</efficiency>
+                        <efficiency>0.926</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.932</efficiency>
+                        <efficiency>0.935</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.936</efficiency>
+                        <efficiency>0.938</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.939</efficiency>
+                        <efficiency>0.942</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.943</efficiency>
+                        <efficiency>0.945</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.946</efficiency>
+                        <efficiency>0.949</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.950</efficiency>
+                        <efficiency>0.952</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.953</efficiency>
+                        <efficiency>0.956</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -2057,38 +1957,6 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>0.896833417</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>1.197415891</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>0.158972796</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>0.17500824</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
          <supplysector name="building">
             <subsector name="biomass">
                <technology name="biomass">
@@ -2122,12 +1990,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.857624112</calibrated-value>
+                        <calibrated-value>0.8581734</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>1.026059076</calibrated-value>
+                        <calibrated-value>1.085119529</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -2190,12 +2058,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.674927311</calibrated-value>
+                        <calibrated-value>0.662918383</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.876760044</calibrated-value>
+                        <calibrated-value>0.914904406</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -2258,12 +2126,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.011764908</calibrated-value>
+                        <calibrated-value>0.011772443</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.015323688</calibrated-value>
+                        <calibrated-value>0.016205727</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -2371,18 +2239,12 @@
             <subsector name="nuclear">
                <technology name="Gen_II_LWR">
                   <period year="1990">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>0</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>0</fixedOutput>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>0.1911168</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>0.1911168</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -2453,16 +2315,10 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>0.5316804</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>0.5316804</fixedOutput>
                   </period>
                   <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>1.5539292</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>1.5539292</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -2487,7 +2343,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <price year="1975">6.92</price>
             <subsector name="electricity_net_ownuse">
                <logitexp fillout="1" year="1975">-3</logitexp>
                <sharewt fillout="1" year="1975">1</sharewt>
@@ -2583,55 +2439,55 @@
                <technology name="electricity_td_bld">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.914</efficiency>
+                        <efficiency>0.921</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.914</efficiency>
+                        <efficiency>0.921</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.924</efficiency>
+                        <efficiency>0.928</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.927</efficiency>
+                        <efficiency>0.931</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.930</efficiency>
+                        <efficiency>0.934</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.933</efficiency>
+                        <efficiency>0.938</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.937</efficiency>
+                        <efficiency>0.941</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.940</efficiency>
+                        <efficiency>0.944</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.943</efficiency>
+                        <efficiency>0.948</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -2643,55 +2499,55 @@
                <technology name="electricity_td_ind">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.914</efficiency>
+                        <efficiency>0.921</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.914</efficiency>
+                        <efficiency>0.921</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.924</efficiency>
+                        <efficiency>0.928</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.927</efficiency>
+                        <efficiency>0.931</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.930</efficiency>
+                        <efficiency>0.934</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.933</efficiency>
+                        <efficiency>0.938</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.937</efficiency>
+                        <efficiency>0.941</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.940</efficiency>
+                        <efficiency>0.944</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.943</efficiency>
+                        <efficiency>0.948</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -2703,55 +2559,55 @@
                <technology name="electricity_td_trn">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.914</efficiency>
+                        <efficiency>0.921</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.914</efficiency>
+                        <efficiency>0.921</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.924</efficiency>
+                        <efficiency>0.928</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.927</efficiency>
+                        <efficiency>0.931</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.930</efficiency>
+                        <efficiency>0.934</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.933</efficiency>
+                        <efficiency>0.938</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.937</efficiency>
+                        <efficiency>0.941</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.940</efficiency>
+                        <efficiency>0.944</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.943</efficiency>
+                        <efficiency>0.948</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -2818,38 +2674,6 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>2.47417064</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>5.840948604</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>0.556467588</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>0.698651316</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
          <supplysector name="building">
             <subsector name="biomass">
                <technology name="biomass">
@@ -2883,12 +2707,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.375221016</calibrated-value>
+                        <calibrated-value>0.373748849</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>2.040897528</calibrated-value>
+                        <calibrated-value>2.05419057</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -2965,12 +2789,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.625703682</calibrated-value>
+                        <calibrated-value>1.60386157</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>5.70959676</calibrated-value>
+                        <calibrated-value>5.670926706</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -3033,12 +2857,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.02219004</calibrated-value>
+                        <calibrated-value>0.022102978</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.074566908</calibrated-value>
+                        <calibrated-value>0.075052587</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -3146,18 +2970,12 @@
             <subsector name="nuclear">
                <technology name="Gen_II_LWR">
                   <period year="1990">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>0.2075004</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>0.2075004</fixedOutput>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>0.3109716</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>0.3109716</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -3228,16 +3046,10 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>0.1459728</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>0.1459728</fixedOutput>
                   </period>
                   <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>0.2451996</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>0.2451996</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -3262,7 +3074,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <price year="1975">7.83</price>
             <subsector name="electricity_net_ownuse">
                <logitexp fillout="1" year="1975">-3</logitexp>
                <sharewt fillout="1" year="1975">1</sharewt>
@@ -3358,55 +3170,55 @@
                <technology name="electricity_td_bld">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.890</efficiency>
+                        <efficiency>0.897</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.890</efficiency>
+                        <efficiency>0.897</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.881</efficiency>
+                        <efficiency>0.889</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.884</efficiency>
+                        <efficiency>0.892</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.888</efficiency>
+                        <efficiency>0.896</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.891</efficiency>
+                        <efficiency>0.899</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.895</efficiency>
+                        <efficiency>0.903</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.899</efficiency>
+                        <efficiency>0.907</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.902</efficiency>
+                        <efficiency>0.910</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -3418,55 +3230,55 @@
                <technology name="electricity_td_ind">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.890</efficiency>
+                        <efficiency>0.897</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.890</efficiency>
+                        <efficiency>0.897</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.881</efficiency>
+                        <efficiency>0.889</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.884</efficiency>
+                        <efficiency>0.892</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.888</efficiency>
+                        <efficiency>0.896</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.891</efficiency>
+                        <efficiency>0.899</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.895</efficiency>
+                        <efficiency>0.903</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.899</efficiency>
+                        <efficiency>0.907</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.902</efficiency>
+                        <efficiency>0.910</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -3478,55 +3290,55 @@
                <technology name="electricity_td_trn">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.890</efficiency>
+                        <efficiency>0.897</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.890</efficiency>
+                        <efficiency>0.897</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.881</efficiency>
+                        <efficiency>0.889</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.884</efficiency>
+                        <efficiency>0.892</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.888</efficiency>
+                        <efficiency>0.896</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.891</efficiency>
+                        <efficiency>0.899</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.895</efficiency>
+                        <efficiency>0.903</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.899</efficiency>
+                        <efficiency>0.907</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.902</efficiency>
+                        <efficiency>0.910</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -3593,38 +3405,6 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>1.290812578</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>0.914310562</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>0.479053656</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>0.109317348</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
          <supplysector name="building">
             <subsector name="biomass">
                <technology name="biomass">
@@ -3658,12 +3438,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.485208252</calibrated-value>
+                        <calibrated-value>0.447032185</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.680271264</calibrated-value>
+                        <calibrated-value>0.730503846</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -3726,12 +3506,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.842116999</calibrated-value>
+                        <calibrated-value>0.769185467</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.62996689</calibrated-value>
+                        <calibrated-value>0.666717415</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -3794,12 +3574,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.05819652</calibrated-value>
+                        <calibrated-value>0.053617632</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.039942072</calibrated-value>
+                        <calibrated-value>0.042891474</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -3925,18 +3705,12 @@
             <subsector name="nuclear">
                <technology name="Gen_II_LWR">
                   <period year="1990">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>0.7614612</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>0.7614612</fixedOutput>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>0.8947404</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>0.8947404</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -3991,16 +3765,10 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>0.8317908</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>0.8317908</fixedOutput>
                   </period>
                   <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>0.8752284</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>0.8752284</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -4051,12 +3819,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>3.682556355</calibrated-value>
+                        <calibrated-value>3.772102985</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>2.323588216</calibrated-value>
+                        <calibrated-value>2.352183582</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -4104,7 +3872,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <price year="1975">8.27</price>
             <subsector name="electricity_net_ownuse">
                <logitexp fillout="1" year="1975">-3</logitexp>
                <sharewt fillout="1" year="1975">1</sharewt>
@@ -4200,55 +3968,55 @@
                <technology name="electricity_td_bld">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.907</efficiency>
+                        <efficiency>0.913</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.907</efficiency>
+                        <efficiency>0.913</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.850</efficiency>
+                        <efficiency>0.864</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.853</efficiency>
+                        <efficiency>0.868</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.856</efficiency>
+                        <efficiency>0.871</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.860</efficiency>
+                        <efficiency>0.874</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.863</efficiency>
+                        <efficiency>0.877</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.866</efficiency>
+                        <efficiency>0.881</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.869</efficiency>
+                        <efficiency>0.884</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -4260,55 +4028,55 @@
                <technology name="electricity_td_ind">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.907</efficiency>
+                        <efficiency>0.913</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.907</efficiency>
+                        <efficiency>0.913</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.850</efficiency>
+                        <efficiency>0.864</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.853</efficiency>
+                        <efficiency>0.868</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.856</efficiency>
+                        <efficiency>0.871</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.860</efficiency>
+                        <efficiency>0.874</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.863</efficiency>
+                        <efficiency>0.877</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.866</efficiency>
+                        <efficiency>0.881</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.869</efficiency>
+                        <efficiency>0.884</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -4320,55 +4088,55 @@
                <technology name="electricity_td_trn">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.907</efficiency>
+                        <efficiency>0.913</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.907</efficiency>
+                        <efficiency>0.913</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.850</efficiency>
+                        <efficiency>0.864</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.853</efficiency>
+                        <efficiency>0.868</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.856</efficiency>
+                        <efficiency>0.871</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.860</efficiency>
+                        <efficiency>0.874</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.863</efficiency>
+                        <efficiency>0.877</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.866</efficiency>
+                        <efficiency>0.881</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.869</efficiency>
+                        <efficiency>0.884</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -4435,38 +4203,6 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>6.313132057</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>2.457464886</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>3.534998976</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>0.534779964</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
          <supplysector name="building">
             <subsector name="biomass">
                <technology name="biomass">
@@ -4500,12 +4236,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.880735248</calibrated-value>
+                        <calibrated-value>0.903958657</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>1.211911128</calibrated-value>
+                        <calibrated-value>1.240623618</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -4558,12 +4294,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.474322572</calibrated-value>
+                        <calibrated-value>0.486829608</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.357427116</calibrated-value>
+                        <calibrated-value>0.365895247</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -4666,12 +4402,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.186186996</calibrated-value>
+                        <calibrated-value>0.184923659</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.582551352</calibrated-value>
+                        <calibrated-value>0.568798828</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -4754,12 +4490,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.014821272</calibrated-value>
+                        <calibrated-value>0.014720705</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.037513728</calibrated-value>
+                        <calibrated-value>0.036628126</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -4809,12 +4545,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.550360829</calibrated-value>
+                        <calibrated-value>0.546626458</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.078097688</calibrated-value>
+                        <calibrated-value>1.052646603</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -4898,18 +4634,12 @@
             <subsector name="nuclear">
                <technology name="Gen_II_LWR">
                   <period year="1990">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>0.0221076</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>0.0221076</fixedOutput>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>0.0623268</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>0.0623268</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -4980,16 +4710,10 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>0.2579616</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>0.2579616</fixedOutput>
                   </period>
                   <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>0.3599964</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>0.3599964</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -5014,7 +4738,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <price year="1975">6.94</price>
             <subsector name="electricity_net_ownuse">
                <logitexp fillout="1" year="1975">-3</logitexp>
                <sharewt fillout="1" year="1975">1</sharewt>
@@ -5345,38 +5069,6 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>0.722308202</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>2.27893495</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>0.150431724</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>0.343778148</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
       </region>
       <region name="Japan">
          <supplysector name="refined liquids enduse">
@@ -5451,18 +5143,12 @@
             <subsector name="nuclear">
                <technology name="Gen_II_LWR">
                   <period year="1990">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>0.7281792</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>0.7281792</fixedOutput>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>1.097118</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>1.097118</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -5533,16 +5219,10 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>0.321498</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>0.321498</fixedOutput>
                   </period>
                   <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>0.2815596</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>0.2815596</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -5567,7 +5247,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <price year="1975">6.70</price>
             <subsector name="electricity_net_ownuse">
                <logitexp fillout="1" year="1975">-3</logitexp>
                <sharewt fillout="1" year="1975">1</sharewt>
@@ -5687,7 +5367,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.955</efficiency>
+                        <efficiency>0.956</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -5747,7 +5427,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.955</efficiency>
+                        <efficiency>0.956</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -5807,7 +5487,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.955</efficiency>
+                        <efficiency>0.956</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -5898,38 +5578,6 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>3.306483096</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>3.360669906</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>2.041441812</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>1.097402148</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
          <supplysector name="building">
             <subsector name="biomass">
                <technology name="biomass">
@@ -5963,12 +5611,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>1.418027292</calibrated-value>
+                        <calibrated-value>1.419186262</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>2.222102232</calibrated-value>
+                        <calibrated-value>2.228056709</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -6031,12 +5679,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.218283197</calibrated-value>
+                        <calibrated-value>1.19447616</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.258113266</calibrated-value>
+                        <calibrated-value>1.220599253</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -6099,12 +5747,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.060541128</calibrated-value>
+                        <calibrated-value>0.060590609</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.068621652</calibrated-value>
+                        <calibrated-value>0.068805535</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -6207,12 +5855,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.122840712</calibrated-value>
+                        <calibrated-value>0.12286333</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.590715612</calibrated-value>
+                        <calibrated-value>0.590888832</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -6276,19 +5924,19 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.204337129</calibrated-value>
+                        <calibrated-value>0.204374752</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.668248277</calibrated-value>
+                        <calibrated-value>0.668444233</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
                <technology name="gas">
                   <period year="1990">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.003684384</calibrated-value>
+                        <calibrated-value>-0.033489172</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
@@ -6365,18 +6013,12 @@
             <subsector name="nuclear">
                <technology name="Gen_II_LWR">
                   <period year="1990">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>0.1903932</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>0.1903932</fixedOutput>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>0.5284044</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>0.5284044</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -6447,16 +6089,10 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>0.0228996</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>0.0228996</fixedOutput>
                   </period>
                   <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>0.0132228</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>0.0132228</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -6481,7 +6117,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <price year="1975">7.50</price>
             <subsector name="electricity_net_ownuse">
                <logitexp fillout="1" year="1975">-3</logitexp>
                <sharewt fillout="1" year="1975">1</sharewt>
@@ -6812,38 +6448,6 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>0.72837296</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>1.803626526</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>0.178943832</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>0.19343016</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
          <supplysector name="transportation">
             <subsector name="coal">
                <technology name="coal">
@@ -6863,12 +6467,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.003642516</calibrated-value>
+                        <calibrated-value>0.003643187</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.007410636</calibrated-value>
+                        <calibrated-value>0.007412809</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -6976,18 +6580,12 @@
             <subsector name="nuclear">
                <technology name="Gen_II_LWR">
                   <period year="1990">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>0.044838</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>0.044838</fixedOutput>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>0.0991188</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>0.0991188</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -7058,16 +6656,10 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>1.3955832</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>1.3955832</fixedOutput>
                   </period>
                   <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>2.3288436</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>2.3288436</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -7092,7 +6684,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <price year="1975">8.24</price>
             <subsector name="electricity_net_ownuse">
                <logitexp fillout="1" year="1975">-3</logitexp>
                <sharewt fillout="1" year="1975">1</sharewt>
@@ -7188,13 +6780,13 @@
                <technology name="electricity_td_bld">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.852</efficiency>
+                        <efficiency>0.853</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.852</efficiency>
+                        <efficiency>0.853</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -7206,13 +6798,13 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.839</efficiency>
+                        <efficiency>0.840</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.851</efficiency>
+                        <efficiency>0.852</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -7224,7 +6816,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.874</efficiency>
+                        <efficiency>0.875</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -7236,7 +6828,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.897</efficiency>
+                        <efficiency>0.898</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -7248,13 +6840,13 @@
                <technology name="electricity_td_ind">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.852</efficiency>
+                        <efficiency>0.853</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.852</efficiency>
+                        <efficiency>0.853</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -7266,13 +6858,13 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.839</efficiency>
+                        <efficiency>0.840</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.851</efficiency>
+                        <efficiency>0.852</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -7284,7 +6876,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.874</efficiency>
+                        <efficiency>0.875</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -7296,7 +6888,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.897</efficiency>
+                        <efficiency>0.898</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -7308,13 +6900,13 @@
                <technology name="electricity_td_trn">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.852</efficiency>
+                        <efficiency>0.853</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.852</efficiency>
+                        <efficiency>0.853</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -7326,13 +6918,13 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.839</efficiency>
+                        <efficiency>0.840</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.851</efficiency>
+                        <efficiency>0.852</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -7344,7 +6936,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.874</efficiency>
+                        <efficiency>0.875</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -7356,7 +6948,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.897</efficiency>
+                        <efficiency>0.898</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -7423,38 +7015,6 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>2.975863818</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>3.793276223</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>1.273164012</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>1.692178956</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
          <supplysector name="building">
             <subsector name="biomass">
                <technology name="biomass">
@@ -7488,12 +7048,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.823669164</calibrated-value>
+                        <calibrated-value>0.829063756</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>1.533582972</calibrated-value>
+                        <calibrated-value>1.524015962</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -7570,12 +7130,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.936970801</calibrated-value>
+                        <calibrated-value>0.939596411</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.708266121</calibrated-value>
+                        <calibrated-value>1.679284732</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -7638,12 +7198,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.010467</calibrated-value>
+                        <calibrated-value>0.010535553</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.013104684</calibrated-value>
+                        <calibrated-value>0.013022933</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -7741,12 +7301,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.178539759</calibrated-value>
+                        <calibrated-value>0.127523115</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.491422125</calibrated-value>
+                        <calibrated-value>0.408091763</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -7830,18 +7390,12 @@
             <subsector name="nuclear">
                <technology name="Gen_II_LWR">
                   <period year="1990">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>0</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>0</fixedOutput>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>0</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>0</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -7912,16 +7466,10 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>0.04293</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>0.04293</fixedOutput>
                   </period>
                   <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>0.076302</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>0.076302</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -7946,7 +7494,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <price year="1975">8.76</price>
             <subsector name="electricity_net_ownuse">
                <logitexp fillout="1" year="1975">-3</logitexp>
                <sharewt fillout="1" year="1975">1</sharewt>
@@ -8277,38 +7825,6 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>1.535169365</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>3.008622965</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>1.195247664</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>2.45848896</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
          <supplysector name="building">
             <subsector name="biomass">
                <technology name="biomass">
@@ -8342,12 +7858,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.547131024</calibrated-value>
+                        <calibrated-value>0.548479494</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>1.360040112</calibrated-value>
+                        <calibrated-value>1.387033182</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -8508,12 +8024,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.00188406</calibrated-value>
+                        <calibrated-value>0.001905027</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.0052335</calibrated-value>
+                        <calibrated-value>0.00516723</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -8573,18 +8089,12 @@
             <subsector name="nuclear">
                <technology name="Gen_II_LWR">
                   <period year="1990">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>0.1193724</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>0.1193724</fixedOutput>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>0.1528416</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>0.1528416</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -8655,16 +8165,10 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>0.207252</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>0.207252</fixedOutput>
                   </period>
                   <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>0.3074832</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>0.3074832</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -8689,7 +8193,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <price year="1975">7.59</price>
             <subsector name="electricity_net_ownuse">
                <logitexp fillout="1" year="1975">-3</logitexp>
                <sharewt fillout="1" year="1975">1</sharewt>
@@ -8785,13 +8289,13 @@
                <technology name="electricity_td_bld">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.883</efficiency>
+                        <efficiency>0.884</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.883</efficiency>
+                        <efficiency>0.884</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -8845,13 +8349,13 @@
                <technology name="electricity_td_ind">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.883</efficiency>
+                        <efficiency>0.884</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.883</efficiency>
+                        <efficiency>0.884</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -8905,13 +8409,13 @@
                <technology name="electricity_td_trn">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.883</efficiency>
+                        <efficiency>0.884</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.883</efficiency>
+                        <efficiency>0.884</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -9020,38 +8524,6 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>1.672154614</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>3.670647641</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>1.053273276</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>1.075086504</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
          <supplysector name="building">
             <subsector name="biomass">
                <technology name="biomass">
@@ -9085,12 +8557,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.482570568</calibrated-value>
+                        <calibrated-value>0.487940874</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>1.506494376</calibrated-value>
+                        <calibrated-value>1.487418125</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -9167,12 +8639,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.466572694</calibrated-value>
+                        <calibrated-value>0.46259286</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.121530792</calibrated-value>
+                        <calibrated-value>1.087985686</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -9285,12 +8757,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>6.34760748</calibrated-value>
+                        <calibrated-value>6.341700967</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>10.04224914</calibrated-value>
+                        <calibrated-value>9.953160337</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -9364,18 +8836,12 @@
             <subsector name="nuclear">
                <technology name="Gen_II_LWR">
                   <period year="1990">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>2.2017204</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>2.2017204</fixedOutput>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>2.9186136</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>2.9186136</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -9446,16 +8912,10 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>0.9833472</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>0.9833472</fixedOutput>
                   </period>
                   <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>0.9808092</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>0.9808092</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -9480,7 +8940,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <price year="1975">6.35</price>
             <subsector name="electricity_net_ownuse">
                <logitexp fillout="1" year="1975">-3</logitexp>
                <sharewt fillout="1" year="1975">1</sharewt>
@@ -9576,37 +9036,37 @@
                <technology name="electricity_td_bld">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.899</efficiency>
+                        <efficiency>0.900</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.899</efficiency>
+                        <efficiency>0.900</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.931</efficiency>
+                        <efficiency>0.932</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.935</efficiency>
+                        <efficiency>0.936</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.939</efficiency>
+                        <efficiency>0.940</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.943</efficiency>
+                        <efficiency>0.944</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -9636,37 +9096,37 @@
                <technology name="electricity_td_ind">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.899</efficiency>
+                        <efficiency>0.900</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.899</efficiency>
+                        <efficiency>0.900</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.931</efficiency>
+                        <efficiency>0.932</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.935</efficiency>
+                        <efficiency>0.936</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.939</efficiency>
+                        <efficiency>0.940</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.943</efficiency>
+                        <efficiency>0.944</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -9696,37 +9156,37 @@
                <technology name="electricity_td_trn">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.899</efficiency>
+                        <efficiency>0.900</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.899</efficiency>
+                        <efficiency>0.900</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.931</efficiency>
+                        <efficiency>0.932</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.935</efficiency>
+                        <efficiency>0.936</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.939</efficiency>
+                        <efficiency>0.940</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.943</efficiency>
+                        <efficiency>0.944</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -9811,38 +9271,6 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>7.34434637</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>7.62957202</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>1.141196076</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>1.413212472</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
          <supplysector name="industry">
             <subsector name="energy-use">
                <technology name="biomass">
@@ -9872,12 +9300,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>3.253814814</calibrated-value>
+                        <calibrated-value>3.156056558</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>3.488558773</calibrated-value>
+                        <calibrated-value>3.314391007</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -9940,12 +9368,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.01486314</calibrated-value>
+                        <calibrated-value>0.01484931</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.027046728</calibrated-value>
+                        <calibrated-value>0.026806786</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -10053,18 +9481,12 @@
             <subsector name="nuclear">
                <technology name="Gen_II_LWR">
                   <period year="1990">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>2.6777772</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>2.6777772</fixedOutput>
                   </period>
                   <period year="2005">
-                     <sharewt>1</sharewt>
-                     <CalDataOutput>
-                        <calOutputValue>3.3275592</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <sharewt>0</sharewt>
+                     <fixedOutput>3.3275592</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -10135,16 +9557,10 @@
             <subsector name="hydro">
                <technology name="hydro">
                   <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>1.5793632</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>1.5793632</fixedOutput>
                   </period>
                   <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>1.7148312</calOutputValue>
-                     </CalDataOutput>
-                     <fixedOutput>-1</fixedOutput>
+                     <fixedOutput>1.7148312</fixedOutput>
                   </period>
                </technology>
             </subsector>
@@ -10169,7 +9585,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <biomass-price-adder fillout="1" year="1975">0</biomass-price-adder>
+            <price year="1975">6.62</price>
             <subsector name="electricity_net_ownuse">
                <logitexp fillout="1" year="1975">-3</logitexp>
                <sharewt fillout="1" year="1975">1</sharewt>
@@ -10265,55 +9681,55 @@
                <technology name="electricity_td_bld">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.928</efficiency>
+                        <efficiency>0.930</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.928</efficiency>
+                        <efficiency>0.930</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.923</efficiency>
+                        <efficiency>0.924</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.926</efficiency>
+                        <efficiency>0.927</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.929</efficiency>
+                        <efficiency>0.930</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.932</efficiency>
+                        <efficiency>0.933</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.934</efficiency>
+                        <efficiency>0.936</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.937</efficiency>
+                        <efficiency>0.939</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.940</efficiency>
+                        <efficiency>0.942</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -10325,55 +9741,55 @@
                <technology name="electricity_td_ind">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.928</efficiency>
+                        <efficiency>0.930</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.928</efficiency>
+                        <efficiency>0.930</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.923</efficiency>
+                        <efficiency>0.924</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.926</efficiency>
+                        <efficiency>0.927</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.929</efficiency>
+                        <efficiency>0.930</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.932</efficiency>
+                        <efficiency>0.933</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.934</efficiency>
+                        <efficiency>0.936</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.937</efficiency>
+                        <efficiency>0.939</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.940</efficiency>
+                        <efficiency>0.942</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -10385,55 +9801,55 @@
                <technology name="electricity_td_trn">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.928</efficiency>
+                        <efficiency>0.930</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.928</efficiency>
+                        <efficiency>0.930</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.923</efficiency>
+                        <efficiency>0.924</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.926</efficiency>
+                        <efficiency>0.927</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.929</efficiency>
+                        <efficiency>0.930</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.932</efficiency>
+                        <efficiency>0.933</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.934</efficiency>
+                        <efficiency>0.936</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.937</efficiency>
+                        <efficiency>0.939</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <efficiency>0.940</efficiency>
+                        <efficiency>0.942</efficiency>
                      </minicam-energy-input>
                      <minicam-energy-input delete="1" name="electricity"/>
                   </period>
@@ -10500,38 +9916,6 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>6.119425309</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>6.642192252</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <CalDataOutput>
-                        <calOutputValue>1.870411032</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-                  <period year="2005">
-                     <CalDataOutput>
-                        <calOutputValue>1.342036872</calOutputValue>
-                     </CalDataOutput>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
          <supplysector name="building">
             <subsector name="biomass">
                <technology name="biomass">
@@ -10565,12 +9949,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>3.695353416</calibrated-value>
+                        <calibrated-value>3.679890262</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>5.40222804</calibrated-value>
+                        <calibrated-value>5.319400307</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -10633,12 +10017,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>3.52591979</calibrated-value>
+                        <calibrated-value>3.448199187</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>4.40924417</calibrated-value>
+                        <calibrated-value>4.277030341</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -10701,12 +10085,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.183339972</calibrated-value>
+                        <calibrated-value>0.182572788</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.248026032</calibrated-value>
+                        <calibrated-value>0.244223261</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>

@@ -160,6 +160,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Coal (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Coal (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -526,6 +538,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>1.24</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Gas (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.60</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -898,6 +922,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Oil (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Oil (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -1190,6 +1226,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.64</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Biomass (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.90</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.90</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -1555,6 +1603,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Coal (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Coal (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -1921,6 +1981,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>1.24</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Gas (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.60</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -2293,6 +2365,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Oil (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Oil (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -2585,6 +2669,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.64</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Biomass (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.90</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.90</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -2950,6 +3046,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Coal (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Coal (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -3316,6 +3424,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>1.24</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Gas (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.60</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -3688,6 +3808,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Oil (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Oil (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -3980,6 +4112,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.64</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Biomass (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.90</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.90</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -4345,6 +4489,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Coal (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Coal (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -4711,6 +4867,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>1.24</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Gas (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.60</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -5083,6 +5251,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Oil (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Oil (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -5375,6 +5555,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.64</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Biomass (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.90</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.90</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -5740,6 +5932,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Coal (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Coal (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -6106,6 +6310,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>1.24</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Gas (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.60</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -6478,6 +6694,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Oil (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Oil (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -6770,6 +6998,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.64</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Biomass (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.90</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.90</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -7135,6 +7375,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Coal (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.95</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.95</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Coal (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -7501,6 +7753,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>1.24</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Gas (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.15</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.15</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -7873,6 +8137,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Oil (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.55</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.55</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Oil (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -8165,6 +8441,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.64</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Biomass (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.45</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.45</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -8530,6 +8818,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Coal (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Coal (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -8896,6 +9196,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>1.24</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Gas (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.60</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -9268,6 +9580,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Oil (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Oil (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -9560,6 +9884,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.64</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Biomass (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.90</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.90</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -9925,6 +10261,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Coal (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.26</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.26</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Coal (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -10291,6 +10639,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>1.24</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Gas (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.46</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.46</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -10663,6 +11023,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Oil (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.86</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.86</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Oil (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -10955,6 +11327,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.64</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Biomass (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.76</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.76</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -11320,6 +11704,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Coal (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.08</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.08</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Coal (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -11686,6 +12082,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>1.24</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Gas (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.28</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.28</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -12058,6 +12466,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Oil (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.68</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.68</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Oil (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -12350,6 +12770,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.64</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Biomass (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.58</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -12715,6 +13147,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Coal (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.78</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.78</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Coal (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -13081,6 +13525,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>1.24</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Gas (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.00</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -13453,6 +13909,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Oil (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.38</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.38</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Oil (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -13745,6 +14213,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.64</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Biomass (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.28</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.28</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -14110,6 +14590,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Coal (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.27</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.27</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Coal (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -14476,6 +14968,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>1.24</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Gas (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.47</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.47</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -14848,6 +15352,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Oil (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.87</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.87</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Oil (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -15140,6 +15656,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.64</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Biomass (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.77</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.77</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -15505,6 +16033,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Coal (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Coal (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -15871,6 +16411,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>1.24</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Gas (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.60</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -16243,6 +16795,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Oil (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Oil (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -16535,6 +17099,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.64</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Biomass (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.90</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.90</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -16900,6 +17476,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Coal (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Coal (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -17266,6 +17854,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>1.24</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Gas (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.60</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -17638,6 +18238,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Oil (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Oil (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -17930,6 +18542,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.64</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Biomass (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.90</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.90</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -18295,6 +18919,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Coal (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.40</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Coal (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -18661,6 +19297,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>1.24</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Gas (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.60</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -19033,6 +19681,18 @@
                      </minicam-non-energy-input>
                   </period>
                </technology>
+               <technology name="Oil (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.00</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
                <technology name="Oil (IGCC)_CCS">
                   <period year="1975">
                      <minicam-non-energy-input name="non-energy">
@@ -19325,6 +19985,18 @@
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.64</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+               </technology>
+               <technology name="Biomass (existing)">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.90</input-cost>
+                     </minicam-non-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3.90</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>

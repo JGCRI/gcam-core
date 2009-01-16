@@ -9,22 +9,22 @@ supplysector features,,,,,
 INPUT_TABLE,,,,,
 Variable ID,,,,,
 650,,,,,
-,,,,,1975 fillout
-Region,supplysector,output-unit,input-unit,price-unit,biomass-price-adder
-Africa,electricity_net_ownuse,EJ,EJ,1975$/GJ,0
-Australia_NZ,electricity_net_ownuse,EJ,EJ,1975$/GJ,0
-Canada,electricity_net_ownuse,EJ,EJ,1975$/GJ,0
-China,electricity_net_ownuse,EJ,EJ,1975$/GJ,0
-Eastern Europe,electricity_net_ownuse,EJ,EJ,1975$/GJ,0
-Former Soviet Union,electricity_net_ownuse,EJ,EJ,1975$/GJ,0
-India,electricity_net_ownuse,EJ,EJ,1975$/GJ,0
-Japan,electricity_net_ownuse,EJ,EJ,1975$/GJ,0
-Korea,electricity_net_ownuse,EJ,EJ,1975$/GJ,0
-Latin America,electricity_net_ownuse,EJ,EJ,1975$/GJ,0
-Middle East,electricity_net_ownuse,EJ,EJ,1975$/GJ,0
-Southeast Asia,electricity_net_ownuse,EJ,EJ,1975$/GJ,0
-USA,electricity_net_ownuse,EJ,EJ,1975$/GJ,0
-Western Europe,electricity_net_ownuse,EJ,EJ,1975$/GJ,0
+,,,,,price
+Region,supplysector,output-unit,input-unit,price-unit,1975
+Africa,electricity_net_ownuse,EJ,EJ,1975$/GJ,6.75
+Australia_NZ,electricity_net_ownuse,EJ,EJ,1975$/GJ,6.06
+Canada,electricity_net_ownuse,EJ,EJ,1975$/GJ,6.33
+China,electricity_net_ownuse,EJ,EJ,1975$/GJ,6.92
+Eastern Europe,electricity_net_ownuse,EJ,EJ,1975$/GJ,7.83
+Former Soviet Union,electricity_net_ownuse,EJ,EJ,1975$/GJ,8.27
+India,electricity_net_ownuse,EJ,EJ,1975$/GJ,6.94
+Japan,electricity_net_ownuse,EJ,EJ,1975$/GJ,6.70
+Korea,electricity_net_ownuse,EJ,EJ,1975$/GJ,7.50
+Latin America,electricity_net_ownuse,EJ,EJ,1975$/GJ,8.24
+Middle East,electricity_net_ownuse,EJ,EJ,1975$/GJ,8.76
+Southeast Asia,electricity_net_ownuse,EJ,EJ,1975$/GJ,7.59
+USA,electricity_net_ownuse,EJ,EJ,1975$/GJ,6.35
+Western Europe,electricity_net_ownuse,EJ,EJ,1975$/GJ,6.62
 
 
 subsector features,,,,,
@@ -98,20 +98,20 @@ Variable ID,,,,,,,,,,,,,
 667,,,,,,,,,,,,,
 ,,,,,Efficiencies,,,,,,,,
 Region,supplysector,subsector,technology,minicam-energy-input,1975,1990,2005,2020,2035,2050,2065,2080,2095
-Africa,elect_td_bld,electricity_td_bld,electricity_td_bld,electricity_net_ownuse,0.891,0.891,0.877,0.880,0.884,0.888,0.892,0.896,0.900
-Australia_NZ,elect_td_bld,electricity_td_bld,electricity_td_bld,electricity_net_ownuse,0.916,0.916,0.933,0.936,0.940,0.943,0.947,0.950,0.953
-Canada,elect_td_bld,electricity_td_bld,electricity_td_bld,electricity_net_ownuse,0.925,0.925,0.932,0.936,0.939,0.943,0.946,0.950,0.953
-China,elect_td_bld,electricity_td_bld,electricity_td_bld,electricity_net_ownuse,0.914,0.914,0.924,0.927,0.930,0.933,0.937,0.940,0.943
-Eastern Europe,elect_td_bld,electricity_td_bld,electricity_td_bld,electricity_net_ownuse,0.890,0.890,0.881,0.884,0.888,0.891,0.895,0.899,0.902
-Former Soviet Union,elect_td_bld,electricity_td_bld,electricity_td_bld,electricity_net_ownuse,0.907,0.907,0.850,0.853,0.856,0.860,0.863,0.866,0.869
+Africa,elect_td_bld,electricity_td_bld,electricity_td_bld,electricity_net_ownuse,0.893,0.893,0.879,0.883,0.886,0.890,0.894,0.898,0.902
+Australia_NZ,elect_td_bld,electricity_td_bld,electricity_td_bld,electricity_net_ownuse,0.918,0.918,0.935,0.938,0.942,0.945,0.949,0.952,0.955
+Canada,elect_td_bld,electricity_td_bld,electricity_td_bld,electricity_net_ownuse,0.926,0.926,0.935,0.938,0.942,0.945,0.949,0.952,0.956
+China,elect_td_bld,electricity_td_bld,electricity_td_bld,electricity_net_ownuse,0.921,0.921,0.928,0.931,0.934,0.938,0.941,0.944,0.948
+Eastern Europe,elect_td_bld,electricity_td_bld,electricity_td_bld,electricity_net_ownuse,0.897,0.897,0.889,0.892,0.896,0.899,0.903,0.907,0.910
+Former Soviet Union,elect_td_bld,electricity_td_bld,electricity_td_bld,electricity_net_ownuse,0.913,0.913,0.864,0.868,0.871,0.874,0.877,0.881,0.884
 India,elect_td_bld,electricity_td_bld,electricity_td_bld,electricity_net_ownuse,0.788,0.788,0.717,0.727,0.737,0.747,0.757,0.767,0.777
-Japan,elect_td_bld,electricity_td_bld,electricity_td_bld,electricity_net_ownuse,0.949,0.949,0.952,0.954,0.955,0.957,0.959,0.961,0.963
+Japan,elect_td_bld,electricity_td_bld,electricity_td_bld,electricity_net_ownuse,0.949,0.949,0.952,0.954,0.956,0.957,0.959,0.961,0.963
 Korea,elect_td_bld,electricity_td_bld,electricity_td_bld,electricity_net_ownuse,0.963,0.963,0.964,0.966,0.968,0.971,0.973,0.976,0.978
-Latin America,elect_td_bld,electricity_td_bld,electricity_td_bld,electricity_net_ownuse,0.852,0.852,0.828,0.839,0.851,0.863,0.874,0.886,0.897
+Latin America,elect_td_bld,electricity_td_bld,electricity_td_bld,electricity_net_ownuse,0.853,0.853,0.828,0.840,0.852,0.863,0.875,0.886,0.898
 Middle East,elect_td_bld,electricity_td_bld,electricity_td_bld,electricity_net_ownuse,0.908,0.908,0.877,0.886,0.895,0.904,0.913,0.922,0.931
-Southeast Asia,elect_td_bld,electricity_td_bld,electricity_td_bld,electricity_net_ownuse,0.883,0.883,0.900,0.911,0.922,0.932,0.943,0.954,0.965
-USA,elect_td_bld,electricity_td_bld,electricity_td_bld,electricity_net_ownuse,0.899,0.899,0.931,0.935,0.939,0.943,0.948,0.952,0.956
-Western Europe,elect_td_bld,electricity_td_bld,electricity_td_bld,electricity_net_ownuse,0.928,0.928,0.923,0.926,0.929,0.932,0.934,0.937,0.940
+Southeast Asia,elect_td_bld,electricity_td_bld,electricity_td_bld,electricity_net_ownuse,0.884,0.884,0.900,0.911,0.922,0.932,0.943,0.954,0.965
+USA,elect_td_bld,electricity_td_bld,electricity_td_bld,electricity_net_ownuse,0.900,0.900,0.932,0.936,0.940,0.944,0.948,0.952,0.956
+Western Europe,elect_td_bld,electricity_td_bld,electricity_td_bld,electricity_net_ownuse,0.930,0.930,0.924,0.927,0.930,0.933,0.936,0.939,0.942
 ,,,,,,,,,,,,,
 
 INPUT_TABLE,,,,,,,,,,,,,
@@ -119,20 +119,20 @@ Variable ID,,,,,,,,,,,,,
 667,,,,,,,,,,,,,
 ,,,,,Efficiencies,,,,,,,,
 Region,supplysector,subsector,technology,minicam-energy-input,1975,1990,2005,2020,2035,2050,2065,2080,2095
-Africa,elect_td_ind,electricity_td_ind,electricity_td_ind,electricity_net_ownuse,0.891,0.891,0.877,0.880,0.884,0.888,0.892,0.896,0.900
-Australia_NZ,elect_td_ind,electricity_td_ind,electricity_td_ind,electricity_net_ownuse,0.916,0.916,0.933,0.936,0.940,0.943,0.947,0.950,0.953
-Canada,elect_td_ind,electricity_td_ind,electricity_td_ind,electricity_net_ownuse,0.925,0.925,0.932,0.936,0.939,0.943,0.946,0.950,0.953
-China,elect_td_ind,electricity_td_ind,electricity_td_ind,electricity_net_ownuse,0.914,0.914,0.924,0.927,0.930,0.933,0.937,0.940,0.943
-Eastern Europe,elect_td_ind,electricity_td_ind,electricity_td_ind,electricity_net_ownuse,0.890,0.890,0.881,0.884,0.888,0.891,0.895,0.899,0.902
-Former Soviet Union,elect_td_ind,electricity_td_ind,electricity_td_ind,electricity_net_ownuse,0.907,0.907,0.850,0.853,0.856,0.860,0.863,0.866,0.869
+Africa,elect_td_ind,electricity_td_ind,electricity_td_ind,electricity_net_ownuse,0.893,0.893,0.879,0.883,0.886,0.890,0.894,0.898,0.902
+Australia_NZ,elect_td_ind,electricity_td_ind,electricity_td_ind,electricity_net_ownuse,0.918,0.918,0.935,0.938,0.942,0.945,0.949,0.952,0.955
+Canada,elect_td_ind,electricity_td_ind,electricity_td_ind,electricity_net_ownuse,0.926,0.926,0.935,0.938,0.942,0.945,0.949,0.952,0.956
+China,elect_td_ind,electricity_td_ind,electricity_td_ind,electricity_net_ownuse,0.921,0.921,0.928,0.931,0.934,0.938,0.941,0.944,0.948
+Eastern Europe,elect_td_ind,electricity_td_ind,electricity_td_ind,electricity_net_ownuse,0.897,0.897,0.889,0.892,0.896,0.899,0.903,0.907,0.910
+Former Soviet Union,elect_td_ind,electricity_td_ind,electricity_td_ind,electricity_net_ownuse,0.913,0.913,0.864,0.868,0.871,0.874,0.877,0.881,0.884
 India,elect_td_ind,electricity_td_ind,electricity_td_ind,electricity_net_ownuse,0.788,0.788,0.717,0.727,0.737,0.747,0.757,0.767,0.777
-Japan,elect_td_ind,electricity_td_ind,electricity_td_ind,electricity_net_ownuse,0.949,0.949,0.952,0.954,0.955,0.957,0.959,0.961,0.963
+Japan,elect_td_ind,electricity_td_ind,electricity_td_ind,electricity_net_ownuse,0.949,0.949,0.952,0.954,0.956,0.957,0.959,0.961,0.963
 Korea,elect_td_ind,electricity_td_ind,electricity_td_ind,electricity_net_ownuse,0.963,0.963,0.964,0.966,0.968,0.971,0.973,0.976,0.978
-Latin America,elect_td_ind,electricity_td_ind,electricity_td_ind,electricity_net_ownuse,0.852,0.852,0.828,0.839,0.851,0.863,0.874,0.886,0.897
+Latin America,elect_td_ind,electricity_td_ind,electricity_td_ind,electricity_net_ownuse,0.853,0.853,0.828,0.840,0.852,0.863,0.875,0.886,0.898
 Middle East,elect_td_ind,electricity_td_ind,electricity_td_ind,electricity_net_ownuse,0.908,0.908,0.877,0.886,0.895,0.904,0.913,0.922,0.931
-Southeast Asia,elect_td_ind,electricity_td_ind,electricity_td_ind,electricity_net_ownuse,0.883,0.883,0.900,0.911,0.922,0.932,0.943,0.954,0.965
-USA,elect_td_ind,electricity_td_ind,electricity_td_ind,electricity_net_ownuse,0.899,0.899,0.931,0.935,0.939,0.943,0.948,0.952,0.956
-Western Europe,elect_td_ind,electricity_td_ind,electricity_td_ind,electricity_net_ownuse,0.928,0.928,0.923,0.926,0.929,0.932,0.934,0.937,0.940
+Southeast Asia,elect_td_ind,electricity_td_ind,electricity_td_ind,electricity_net_ownuse,0.884,0.884,0.900,0.911,0.922,0.932,0.943,0.954,0.965
+USA,elect_td_ind,electricity_td_ind,electricity_td_ind,electricity_net_ownuse,0.900,0.900,0.932,0.936,0.940,0.944,0.948,0.952,0.956
+Western Europe,elect_td_ind,electricity_td_ind,electricity_td_ind,electricity_net_ownuse,0.930,0.930,0.924,0.927,0.930,0.933,0.936,0.939,0.942
 
 
 INPUT_TABLE,,,,,,,,,,,,,
@@ -140,20 +140,20 @@ Variable ID,,,,,,,,,,,,,
 667,,,,,,,,,,,,,
 ,,,,,Efficiencies,,,,,,,,
 Region,supplysector,subsector,technology,minicam-energy-input,1975,1990,2005,2020,2035,2050,2065,2080,2095
-Africa,elect_td_trn,electricity_td_trn,electricity_td_trn,electricity_net_ownuse,0.891,0.891,0.877,0.880,0.884,0.888,0.892,0.896,0.900
-Australia_NZ,elect_td_trn,electricity_td_trn,electricity_td_trn,electricity_net_ownuse,0.916,0.916,0.933,0.936,0.940,0.943,0.947,0.950,0.953
-Canada,elect_td_trn,electricity_td_trn,electricity_td_trn,electricity_net_ownuse,0.925,0.925,0.932,0.936,0.939,0.943,0.946,0.950,0.953
-China,elect_td_trn,electricity_td_trn,electricity_td_trn,electricity_net_ownuse,0.914,0.914,0.924,0.927,0.930,0.933,0.937,0.940,0.943
-Eastern Europe,elect_td_trn,electricity_td_trn,electricity_td_trn,electricity_net_ownuse,0.890,0.890,0.881,0.884,0.888,0.891,0.895,0.899,0.902
-Former Soviet Union,elect_td_trn,electricity_td_trn,electricity_td_trn,electricity_net_ownuse,0.907,0.907,0.850,0.853,0.856,0.860,0.863,0.866,0.869
+Africa,elect_td_trn,electricity_td_trn,electricity_td_trn,electricity_net_ownuse,0.893,0.893,0.879,0.883,0.886,0.890,0.894,0.898,0.902
+Australia_NZ,elect_td_trn,electricity_td_trn,electricity_td_trn,electricity_net_ownuse,0.918,0.918,0.935,0.938,0.942,0.945,0.949,0.952,0.955
+Canada,elect_td_trn,electricity_td_trn,electricity_td_trn,electricity_net_ownuse,0.926,0.926,0.935,0.938,0.942,0.945,0.949,0.952,0.956
+China,elect_td_trn,electricity_td_trn,electricity_td_trn,electricity_net_ownuse,0.921,0.921,0.928,0.931,0.934,0.938,0.941,0.944,0.948
+Eastern Europe,elect_td_trn,electricity_td_trn,electricity_td_trn,electricity_net_ownuse,0.897,0.897,0.889,0.892,0.896,0.899,0.903,0.907,0.910
+Former Soviet Union,elect_td_trn,electricity_td_trn,electricity_td_trn,electricity_net_ownuse,0.913,0.913,0.864,0.868,0.871,0.874,0.877,0.881,0.884
 India,elect_td_trn,electricity_td_trn,electricity_td_trn,electricity_net_ownuse,0.788,0.788,0.717,0.727,0.737,0.747,0.757,0.767,0.777
-Japan,elect_td_trn,electricity_td_trn,electricity_td_trn,electricity_net_ownuse,0.949,0.949,0.952,0.954,0.955,0.957,0.959,0.961,0.963
+Japan,elect_td_trn,electricity_td_trn,electricity_td_trn,electricity_net_ownuse,0.949,0.949,0.952,0.954,0.956,0.957,0.959,0.961,0.963
 Korea,elect_td_trn,electricity_td_trn,electricity_td_trn,electricity_net_ownuse,0.963,0.963,0.964,0.966,0.968,0.971,0.973,0.976,0.978
-Latin America,elect_td_trn,electricity_td_trn,electricity_td_trn,electricity_net_ownuse,0.852,0.852,0.828,0.839,0.851,0.863,0.874,0.886,0.897
+Latin America,elect_td_trn,electricity_td_trn,electricity_td_trn,electricity_net_ownuse,0.853,0.853,0.828,0.840,0.852,0.863,0.875,0.886,0.898
 Middle East,elect_td_trn,electricity_td_trn,electricity_td_trn,electricity_net_ownuse,0.908,0.908,0.877,0.886,0.895,0.904,0.913,0.922,0.931
-Southeast Asia,elect_td_trn,electricity_td_trn,electricity_td_trn,electricity_net_ownuse,0.883,0.883,0.900,0.911,0.922,0.932,0.943,0.954,0.965
-USA,elect_td_trn,electricity_td_trn,electricity_td_trn,electricity_net_ownuse,0.899,0.899,0.931,0.935,0.939,0.943,0.948,0.952,0.956
-Western Europe,elect_td_trn,electricity_td_trn,electricity_td_trn,electricity_net_ownuse,0.928,0.928,0.923,0.926,0.929,0.932,0.934,0.937,0.940
+Southeast Asia,elect_td_trn,electricity_td_trn,electricity_td_trn,electricity_net_ownuse,0.884,0.884,0.900,0.911,0.922,0.932,0.943,0.954,0.965
+USA,elect_td_trn,electricity_td_trn,electricity_td_trn,electricity_net_ownuse,0.900,0.900,0.932,0.936,0.940,0.944,0.948,0.952,0.956
+Western Europe,elect_td_trn,electricity_td_trn,electricity_td_trn,electricity_net_ownuse,0.930,0.930,0.924,0.927,0.930,0.933,0.936,0.939,0.942
 
 Delete electricity minicam-energy-input,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,

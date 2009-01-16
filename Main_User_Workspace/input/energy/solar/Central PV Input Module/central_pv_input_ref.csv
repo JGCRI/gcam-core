@@ -30,13 +30,13 @@ Variable ID,,,,,,,,,
 region,supplysector,subsector,scaleYear,2020,2035,2050,2065,2080,2095
 USA,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
 Canada,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
-Western Europe,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
+Western Europe,electricity,solar,2020,0.5,0.5,0.5,0.5,0.5,0.5
 Japan,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
 Australia_NZ,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
 Former Soviet Union,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
 China,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
 Middle East,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
-Africa,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
+Africa,electricity,solar,2020,0.5,0.5,0.5,0.5,0.5,0.5
 Latin America,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
 Southeast Asia,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
 Eastern Europe,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5

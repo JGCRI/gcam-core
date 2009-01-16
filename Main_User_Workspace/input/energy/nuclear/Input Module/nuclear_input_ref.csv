@@ -7,7 +7,7 @@ Variable ID,,,,0.9490157,0.209153583,,,,,,,
 ,,,,sharewt,,,,,,,,
 region,supplysector,subsector,scaleYear,2020,2035,2050,2065,2080,2095,,,2005 sharewt
 USA,electricity,nuclear,1975,0.4,0.8,0.9,1,1,1,,USA,0.820168
-Canada,electricity,nuclear,1975,2,2,1.5,1,1,1,,Canada,1.98487
+Canada,electricity,nuclear,1975,1,1.5,1.25,1,1,1,,Canada,2.4747
 Western Europe,electricity,nuclear,1975,0.7,0.7,0.85,1,1,1,,Western Europe,1
 Japan,electricity,nuclear,1975,1.8,1.8,1.5,1.5,1.5,1.5,,Japan,2.44679
 Australia_NZ,electricity,nuclear,1975,0,0.05,0.5,1,1,1,,Australia_NZ,3.94E-11

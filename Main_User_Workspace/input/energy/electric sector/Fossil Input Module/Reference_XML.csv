@@ -92,9 +92,72 @@ ALL,electricity,gas,Gas (existing),2.0528,2.0528,1.6,1.6,1.6,1.6,1.6,1.6,1.6
 ALL,electricity,oil,Oil (existing),2.0528,2.0528,2,1.96,1.93,1.89,1.86,1.82,1.79
 ALL,electricity,biomass ,Biomass (existing),3.9924,3.9924,3.9,3.83,3.76,3.69,3.62,3.55,3.49
 
-don't want to double this one either,,,,,,,,,,,,
-danger,,,,,,,,,,,,
-Variable ID,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+180,,,,1990,2005
+Existing techs: adjust non-energy costs,,,,minicam-non-energy-input,minicam-non-energy-input
+region,supplysector,subsector,technology,input-cost,input-cost
+Africa,electricity,biomass ,Biomass (existing),3.58,3.58
+Australia_NZ,electricity,biomass ,Biomass (existing),3.90,3.90
+Canada,electricity,biomass ,Biomass (existing),3.90,3.90
+China,electricity,biomass ,Biomass (existing),3.90,3.90
+Eastern Europe,electricity,biomass ,Biomass (existing),3.90,3.90
+Former Soviet Union,electricity,biomass ,Biomass (existing),3.45,3.45
+India,electricity,biomass ,Biomass (existing),3.90,3.90
+Japan,electricity,biomass ,Biomass (existing),3.90,3.90
+Korea,electricity,biomass ,Biomass (existing),3.90,3.90
+Latin America,electricity,biomass ,Biomass (existing),2.28,2.28
+Middle East,electricity,biomass ,Biomass (existing),3.76,3.76
+Southeast Asia,electricity,biomass ,Biomass (existing),3.77,3.77
+USA,electricity,biomass ,Biomass (existing),3.90,3.90
+Western Europe,electricity,biomass ,Biomass (existing),3.90,3.90
+Africa,electricity,coal,Coal (existing),3.08,3.08
+Australia_NZ,electricity,coal,Coal (existing),3.40,3.40
+Canada,electricity,coal,Coal (existing),3.40,3.40
+China,electricity,coal,Coal (existing),3.40,3.40
+Eastern Europe,electricity,coal,Coal (existing),3.40,3.40
+Former Soviet Union,electricity,coal,Coal (existing),2.95,2.95
+India,electricity,coal,Coal (existing),3.40,3.40
+Japan,electricity,coal,Coal (existing),3.40,3.40
+Korea,electricity,coal,Coal (existing),3.40,3.40
+Latin America,electricity,coal,Coal (existing),1.78,1.78
+Middle East,electricity,coal,Coal (existing),3.26,3.26
+Southeast Asia,electricity,coal,Coal (existing),3.27,3.27
+USA,electricity,coal,Coal (existing),3.40,3.40
+Western Europe,electricity,coal,Coal (existing),3.40,3.40
+Africa,electricity,gas,Gas (existing),1.28,1.28
+Australia_NZ,electricity,gas,Gas (existing),1.60,1.60
+Canada,electricity,gas,Gas (existing),1.60,1.60
+China,electricity,gas,Gas (existing),1.60,1.60
+Eastern Europe,electricity,gas,Gas (existing),1.60,1.60
+Former Soviet Union,electricity,gas,Gas (existing),1.15,1.15
+India,electricity,gas,Gas (existing),1.60,1.60
+Japan,electricity,gas,Gas (existing),1.60,1.60
+Korea,electricity,gas,Gas (existing),1.60,1.60
+Latin America,electricity,gas,Gas (existing),1.00,1.00
+Middle East,electricity,gas,Gas (existing),1.46,1.46
+Southeast Asia,electricity,gas,Gas (existing),1.47,1.47
+USA,electricity,gas,Gas (existing),1.60,1.60
+Western Europe,electricity,gas,Gas (existing),1.60,1.60
+Africa,electricity,oil,Oil (existing),1.68,1.68
+Australia_NZ,electricity,oil,Oil (existing),2.00,2.00
+Canada,electricity,oil,Oil (existing),2.00,2.00
+China,electricity,oil,Oil (existing),2.00,2.00
+Eastern Europe,electricity,oil,Oil (existing),2.00,2.00
+Former Soviet Union,electricity,oil,Oil (existing),1.55,1.55
+India,electricity,oil,Oil (existing),2.00,2.00
+Japan,electricity,oil,Oil (existing),2.00,2.00
+Korea,electricity,oil,Oil (existing),2.00,2.00
+Latin America,electricity,oil,Oil (existing),0.38,0.38
+Middle East,electricity,oil,Oil (existing),1.86,1.86
+Southeast Asia,electricity,oil,Oil (existing),1.87,1.87
+USA,electricity,oil,Oil (existing),2.00,2.00
+Western Europe,electricity,oil,Oil (existing),2.00,2.00
+
+
+don't want to double this one either,,,,,
+danger,,,,,
+Variable ID,,,,,
 30,,,
 list techs to give it a  <profit-shutdown-decider,,,
 region,Supply Sector,Subsector,Technology
@@ -238,7 +301,7 @@ INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
 18,,,,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input
 Fossil - Reference - Base (w/o capture) Nonenergy Cost (1975$),,,,costs,costs,costs,costs,costs,costs,costs,costs,costs
-Region,Supply Sector,Subsector,Technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,
+Region,Supply Sector,Subsector,Technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
 ALL,electricity,biomass ,Biomass (IGCC)_CCS,0.00,0.00,5.07,5.07,4.59,3.93,3.90,3.70,3.64,
 
 
@@ -270,7 +333,7 @@ electricity,oil,Oil (IGCC)_CCS,0.00,0.00,0.90,0.91,0.92,0.93,0.94,0.94,0.94,,
 ,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,
-10021,,,,,,,,,,,
+10021,,,,,,,,,,,,,
 Fossil - Reference - CO2 Capture Removal Fraction (% of CO2 captured),,,,technology/period           period/../power-plant-capture-component/+remove-fraction,,,,,,,
 Supply Sector,Subsector,Technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
 electricity,biomass ,Biomass (IGCC)_CCS,0.00,0.00,0.90,0.91,0.92,0.93,0.94,0.94,0.94
@@ -318,7 +381,7 @@ Supply Sector,Subsector,Technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
 electricity,coal,Coal (IGCC)_CCS,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage
 electricity,gas,Gas (CC)_CCS,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage
 electricity,oil,Oil (IGCC)_CCS,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage
-,,,,,,,,,,,,
+,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
 10024,,,,,,,,,,,,
@@ -398,7 +461,7 @@ ALL,electricity,biomass,Biomass (IGCC)_CCS,0.025,0.025,0.0075,0.0075,0.0075,0.00
 
 
 don’t read this again as it compounds,,,,,,,,,,,,
-Variable ID,,,
+Variable ID,,,,,,,,,,,,
 30,,,
 list techs to give it a  <profit-shutdown-decider,,,
 Region,Supply Sector,Subsector,Technology

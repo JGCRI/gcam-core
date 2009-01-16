@@ -4,8 +4,8 @@ region,2005 fixout,new production,total 2020,total 2170,exp growth 2020-2170,lin
 Africa,0.3267648,0,0.3267648,3.6,1.61%,0.32732352,,,,,,
 Australia_NZ,0.1409616,0,0.1409616,0.35580312,0.62%,0.021484152,,,,,,
 Canada,1.308654,0.086071886,1.394725886,2.181047966,0.30%,0.078632208,,,,,,
-China,1.5539292,1.107822857,2.661752057,5.794203929,0.52%,0.313245187,,,,,,
-Eastern Europe,0.2451996,0,0.2451996,0.67488264,0.68%,0.042968304,,,,,,
+China,1.5539292,1.107822857,2.661752057,5.794203929,0.52%,0.313245187,,,,Fix output,,
+Eastern Europe,0.2451996,0,0.2451996,0.67488264,0.68%,0.042968304,,,,1,"1 = fixed output, 0 = calibrated output",
 Former Soviet Union,0.8752284,0.099082286,0.974310686,2.872766366,0.72%,0.189845568,,,,,,
 India,0.3599964,0.041718857,0.401715257,2.300170937,1.17%,0.189845568,,,,,,
 Japan,0.2815596,0,0.2815596,0.376482384,0.19%,0.009492278,,,,,,
@@ -16,13 +16,13 @@ Southeast Asia,0.3074832,0,0.3074832,1.73132496,1.16%,0.142384176,,,,,,
 USA,0.9808092,0,0.9808092,1.11186288,0.08%,0.013105368,,,,,,
 Western Europe,1.7148312,0,1.7148312,2.14451424,0.15%,0.042968304,,,,,,
 
-Set subsector shareweights to 0 in future periods but not calibration periods,,,,,,,,,,,,
+"Should be 0 in periods with output fixed, 1 in periods with calibrated output",,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
 100,,,,,,,,,,,,
 ,,,sharewt,,,,,,,,,
 region,supplysector,subsector,1990,2005,2020,2035,2050,2065,2080,2095,,
-ALL,electricity,hydro,1,1,0,0,0,0,0,0,,
+ALL,electricity,hydro,0,0,0,0,0,0,0,0,,
 
 set scaleyear and techscale year to 2020 to get model to return a 0 sharewt,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,
@@ -56,10 +56,10 @@ USA,electricity,hydro,hydro,0.9808092,0.993914568,1.007019936,1.020125304,1.0332
 Western Europe,electricity,hydro,hydro,1.7148312,1.757799504,1.800767808,1.843736112,1.886704416,1.92967272,2.1442,
 
 
-Set base year sharewts to 1 and future tech sharewts to 0,,,,,,,,,,,
+"Should be 0 in periods with output fixed, 1 in periods with calibrated output",,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,
 Variable ID,,,,,,,,,,,
 1010,,,,,,,,,,,
 ,,,,sharewt,,,,,,,
 region,supplysector,subsector,technology,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,electricity,hydro,hydro,1,1,0,0,0,0,0,0
+ALL,electricity,hydro,hydro,0,0,0,0,0,0,0,0
