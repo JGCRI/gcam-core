@@ -94,7 +94,7 @@ protected:
     //! the annual rate at which carbon price is shifted due to technological change (Direct number. i.e. 1% = 0.01)
     double costReductionRate; 
     
-    //! Increase maximum reduction to this value (due to tech change)  (Direct number. i.e. 1% = 0.01)
+    //! Increase maximum reduction to this value (due to tech change)  (Direct number. i.e. 85% max reduction = 0.85)
     double finalReduction; 
     
     //! Base year from which to start decreasing costs

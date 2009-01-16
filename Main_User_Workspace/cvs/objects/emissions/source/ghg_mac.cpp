@@ -287,7 +287,7 @@ double GhgMAC::findReduction( const string& regionName, const int period ) const
     if( noBelowZero && effectiveCarbonPrice < 0 ){
         reduction = 0;
     }
-    
+ 
     const double maxCO2Tax = macCurve->getMaxX();
     double maxReduction = getMACValue( maxCO2Tax );
     reduction *= adjustPhaseIn( period );
@@ -302,7 +302,7 @@ double GhgMAC::findReduction( const string& regionName, const int period ) const
 }
 
 /*! \brief returns a multiplier that phases in the Mac Curve.
-*  if for example, the MAC curve was to be phased in over 3 periods, in the base 
+*  if for example, the MAC curve was to be phased in over 3 periods, in the first 
 *  period, it would return a multiplier of 0, the next period, 1/3, the next period 2/3,
 *  and by and after the 3rd period after the base year, it would return a 1.
 * \author Nick Fernandez
@@ -311,7 +311,7 @@ double GhgMAC::findReduction( const string& regionName, const int period ) const
 double GhgMAC::adjustPhaseIn( const int period ) const {
     double mult = 1;
     if( ( period - 1 < phaseIn ) && ( phaseIn >= 1 ) ){
-         mult = ( period - 1 ) / phaseIn;
+         mult = ( period - 1.0 ) / ( 1.0 * phaseIn );
     }
     return mult;
 }
@@ -324,22 +324,20 @@ double GhgMAC::adjustPhaseIn( const int period ) const {
 */
 double GhgMAC::adjustTechCh( const int period, const int finalReductionPeriod, const double maxReduction ) const {
     
-    const int basePeriod = scenario->getModeltime()->getBasePeriod();
-    double multiplier;
+    const int basePeriod = 2; // getModeltime()->getBasePeriod returns zero, which is too early. Start in 2005
+    double thisPerChange = 1;
 
-    if( finalReductionPeriod <= basePeriod ){
-        multiplier = 1;
-    }
-    else {
-        double maxChange = maxReduction / finalReduction;
+    // Phase in change linearly starting period beyond basePeriod
+    if( finalReductionPeriod > basePeriod && maxReduction != 0 ){
+        double maxChange = finalReduction / maxReduction - 1.0;
         if ( period <= finalReductionPeriod ){
-            multiplier =  maxChange * ( 1.0 / ( finalReductionPeriod - basePeriod ) ) * ( period - basePeriod );
+            thisPerChange =  maxChange * ( 1.0 / ( finalReductionPeriod - basePeriod ) ) * ( period - basePeriod );
         }
         else {
-            multiplier = maxChange;
+            thisPerChange = maxChange;
         }
     }
-    return multiplier;
+    return 1.0 + thisPerChange;
 }
 
 /*! \brief Returns a new effective carbon price that is shifted up or down, based on the Natural Gas price
@@ -395,7 +393,7 @@ double GhgMAC::shiftCostReduction( const int period, const double costReductionR
         int numberYears = modeltime->getper_to_yr( period ) - baseCostYear;
         // Only adjust if after baseCostYear
         if( numberYears > 0 ) {
-            return  1 / pow( 1 + costReductionRate, numberYears );
+            return pow( 1.0 + costReductionRate, numberYears );
         }
     }
     return 1;
