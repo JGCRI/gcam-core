@@ -185,7 +185,7 @@ auto_ptr<Market> Market::createMarket( const IMarketType::Type aType,
 */
 void Market::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
-    XMLWriteOpeningTag( getXMLNameStatic(), out, tabs, getName(), modeltime->getper_to_yr( period ) , convertTypeToString( getType() ) );
+    XMLWriteOpeningTag( getXMLNameStatic(), out, tabs, getName(), modeltime->getper_to_yr( period ) , convert_type_to_string( getType() ) );
     XMLWriteElement( solveMarket, "solved_Market_Flag", out, tabs );
     XMLWriteElement( good, "MarketGoodOrFuel", out, tabs );
     XMLWriteElement( region, "MarketRegion", out, tabs );
@@ -314,11 +314,43 @@ void Market::setPrice( const double priceIn ) {
 * \sa setRawPrice
 * \sa setPrice
 */
-void Market::setPriceFromLast( const double lastPrice ) {
+void Market::set_price_to_last_if_default( const double lastPrice ) {
     // Only initialize the price from last period's price if the price is set to
     // the default. This prevents overwriting read-in initial prices.
     if( price == 1 ){
         price = lastPrice;
+    }
+    // If last period price is null, reset to small number so that solver
+    // has a value to start with.
+    else if( price == 0 ){
+        price = util::getSmallNumber();
+    }
+}
+
+/*! \brief Set the market price using the price from the last period.
+* \details This function is used when setting the price for a market to the
+*          value from the last period. The reason setRawPrice is not used is so
+*          that this method can be overridden to be a no-op. This is because for
+*          CalibrationMarket the initial price is read in and should not be set
+*          from the last period.
+* \todo Markets never override their read-in price now so this function can
+*       become non-virtual.
+* \warning Use this instead of setRawPrice when setting the price to the price
+*          from the last period.
+* \param lastPrice Price from the last period to set the market price to.
+* \sa setRawPrice
+* \sa setPrice
+*/
+void Market::set_price_to_last( const double lastPrice ) {
+    // Initialize the price from last period's price.
+    // This resets all prices to last.
+    if( price > 0 ){
+        price = lastPrice;
+    }
+    // If last period price is null, reset to small number so that solver
+    // has a value to start with.
+    else if( price == 0 ){
+        price = util::getSmallNumber();
     }
 }
 
@@ -477,13 +509,6 @@ double Market::getSupply() const {
     return supply;
 }
 
-/*! \brief Get the supply for use in checking solution.
-* \return The value of the supply for use in checking the solution.
-*/
-double Market::getSupplyForChecking() const {
-    return supply;
-}
-
 /*! \brief Add to the the Market an amount of supply in a method based on the
 *          Market's type.
 * \details This method is used throughout the model to add supply to a market. 
@@ -585,6 +610,18 @@ void Market::restoreInfo() {
     price = storedPrice;
 }
 
+/*! \brief Store the original price.
+*/
+void Market::store_original_price() {
+    original_price = price;
+}
+
+/*! \brief Store the original price.
+*/
+void Market::restore_original_price() {
+    price = original_price;
+}
+
 /*! \brief Set that the market should be solved by the solution mechanism.
 * \details This function sets a flag within the market telling the solution
 *          mechanism whether it should solve it, given that it satifies whatever
@@ -618,8 +655,7 @@ bool Market::shouldSolve() const {
 * \return Whether or not to solve the market for Newton-Rhaphson.
 */
 bool Market::shouldSolveNR() const {
-    // Is this correct?
-    return ( solveMarket && price > util::getSmallNumber() && demand > util::getSmallNumber() && supply > util::getSmallNumber() );
+   return ( solveMarket && price > 0 && demand > 0 && supply > 0 );
 }
 
 /*! \brief Return whether a market is solved according to market type specific
@@ -649,7 +685,7 @@ void Market::accept( IVisitor* aVisitor, const int aPeriod ) const {
  * \return Market type as a string.
  * \todo Move this to a MarketUtils class.
  */
-const string& Market::convertTypeToString( const IMarketType::Type aType ) {
+const string& Market::convert_type_to_string( const IMarketType::Type aType ) {
     // Check that the type is legal.
     assert( aType < IMarketType::END );
 

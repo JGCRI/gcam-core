@@ -49,6 +49,7 @@
 #include <string>
 #include <iosfwd>
 #include <functional>
+#include "marketplace/include/imarket_type.h"
 
 class Market;
 class SolverInfoSet;
@@ -72,10 +73,13 @@ public:
     bool operator==( const SolverInfo& rhs ) const;
     bool operator!=( const SolverInfo& rhs ) const;
     const std::string& getName() const;
+    const IMarketType::Type getType() const;
+    std::string getTypeName() const;
     void init();
     bool isBracketed() const;
     void setBracketed();
     double getBracketSize() const;
+    double getBracketInterval() const;
     double getPrice() const;
     void setPrice( const double aPrice );
     void setPriceToCenter();

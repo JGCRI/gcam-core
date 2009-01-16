@@ -74,7 +74,8 @@ public:
 
     virtual void initPrice();
     virtual void setPrice( const double priceIn );
-    virtual void setPriceFromLast( const double lastPriceIn );
+    virtual void set_price_to_last_if_default( const double lastPriceIn );
+    virtual void set_price_to_last( const double lastPrice );
     virtual double getPrice() const;
 
     virtual void addToDemand( const double demandIn );
@@ -83,7 +84,6 @@ public:
     virtual void nullSupply();
     virtual void nullDemand();
     virtual double getSupply() const;
-    virtual double getSupplyForChecking() const;
     virtual void addToSupply( const double supplyIn );
     virtual bool meetsSpecialSolutionCriteria() const;
 

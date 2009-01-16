@@ -84,6 +84,8 @@ public:
 
     virtual void tabulateFixedDemands( const int period, const GDP* gdp );
 
+    virtual void postCalc( const int aPeriod );
+
     virtual void dbOutput( const GDP* aGDP,
                            const IndirectEmissionsCalculator* aIndEmissCalc ) const;
 protected:
@@ -124,6 +126,8 @@ protected:
 
     //! Whether the sector has a trial supply market.
     bool mHasTrialSupply;
+    //! Trial supply market prices
+    std::vector<double> mPriceTrialSupplyMarket;
 private:
     const static std::string XML_NAME; //!< node name for toXML methods 
 };

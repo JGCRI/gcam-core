@@ -38,13 +38,12 @@
  * by User.
  */
 
-
 /*! 
 * \file solver_library.h
 * \ingroup Objects
 * \brief A file containing the header for the static SolverLibrary class which
 *        contains helper methods used by SolverComponents.
-* \author Josh Lurz
+* \author Josh Lurz, Sonny Kim
 */
 #include <vector>
 #include <map>
@@ -66,44 +65,44 @@ namespace objects {
 * \ingroup Objects
 * \brief A class with all static functions which are used by the
 *        SolverComponents classes and contains common functionality. 
-* \author Josh Lurz
+* \author Josh Lurz, Sonny Kim
 */
 
 class SolverLibrary {
 public:
     // Some of these still might go.
    static double getRelativeED( const double excessDemand, const double demand, const double excessDemandFloor );
-   
+
    static bool isWithinTolerance( const double excessDemand, const double demand, const double solutionTolerance,
        const double excessDemandSolutionFloor );
-   
+
    static void derivatives( Marketplace* marketplace, World* world, SolverInfoSet& solutionVector,
        const double aDeltaPrice, const int per );
-   
+
    static Matrix invertMatrix( const Matrix& aInputMatrix, bool& aIsSingular );
-   
+
    static bool bracketOne( Marketplace* marketplace, World* world, const double aBracketInterval,
                            const double aSolutionTolerance, const double aSolutionFloor,
                            SolverInfoSet& aSolSet, SolverInfo* aSol, CalcCounter* aCalcCounter,
                            const int period );
-   
+
    static void updateMatrices( SolverInfoSet& sol, Matrix& JFSM, Matrix& JFDM, Matrix& JF );
-   
+
    static bool calculateNewPricesLogNR( SolverInfoSet& solverSet, Matrix& JFSM, Matrix& JFDM, Matrix& JF );
-   
-   static bool bracketAll( Marketplace* marketplace, World* world, const double bracketInterval,
-                           const double aSolutionTolerance, const double aSolutionFloor,
-                           SolverInfoSet& sol, CalcCounter* aCalcCounter, const int period );
-   
+
+   static bool bracket( Marketplace* marketplace, World* world, const double bracketInterval,
+                        const double aSolutionTolerance, const double aSolutionFloor,
+                        SolverInfoSet& sol, CalcCounter* aCalcCounter, const int period );
+
 private:
     typedef std::map<const objects::Atom*, std::vector<double> > RegionalMarketValues;
-    
+
     //! A simple struct to link Supplies and Demands.
     struct RegionalSDDifferences {
         RegionalMarketValues supplies;
         RegionalMarketValues demands;
     };
-    
+
     //! A function object to compare to values and see if they are approximately equal. 
     struct ApproxEqual : public std::unary_function<double, bool> {
         const double compareValue; //!< A value to compare the argument value against.
@@ -114,10 +113,10 @@ private:
             return fabs( value - compareValue ) < tolerance;
         }
     };
-    
+
     static bool doRegionalValuesSum( const RegionalMarketValues& regionalValues,
         const std::vector<double>& worldTotals );
-    
+
     static const RegionalSDDifferences calcRegionalSDDifferences( Marketplace* marketplace, World* world,
         SolverInfoSet& sol, const int per );
 
@@ -126,4 +125,3 @@ private:
 };
 
 #endif // _SOLVER_LIBRARY_H_
-

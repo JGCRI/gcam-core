@@ -117,6 +117,8 @@ protected:
     
     //! Sector price in $/service. TODO: Move to supply and production sector.
     double mBasePrice;
+    //! Sector price by period updated with solution prices.
+    std::vector<double> mPrice;
 
     std::vector<Summary> summary; //!< summary for reporting
     std::map<std::string,int> subSectorNameMap; //!< Map of subSector name to integer position in vector.

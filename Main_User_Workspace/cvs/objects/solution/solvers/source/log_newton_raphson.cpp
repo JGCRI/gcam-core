@@ -89,32 +89,39 @@ const string& LogNewtonRaphson::getName() const {
 * \param solutionTolerance Target value for maximum relative solution for worst market 
 * \param edSolutionFloor *Absolute value* beneath which market is ignored 
 * \param maxIterations The maximum number of world.calc calls to make before exiting this function.
-* \param solverSet An object containing the set of MarketInfo objects representing all markets.
+* \param solution_set An object containing the set of MarketInfo objects representing all markets.
 * \param period Model period
 */
 SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolerance, const double edSolutionFloor,
-                                                     const unsigned int maxIterations, SolverInfoSet& solverSet,
-                                                    const int period ) {
+                                                     const unsigned int maxIterations, SolverInfoSet& solution_set,
+                                                     const int period )
+{
+    ReturnCode code = SolverComponent::ORIGINAL_STATE;
+
+    // If all markets are solved, then return with succes code.
+    if( solution_set.isAllSolved( solutionTolerance, edSolutionFloor ) ){
+        return code = SolverComponent::SUCCESS;
+    }
+
     startMethod();
     const unsigned int nrCalcsStart = calcCounter->getMethodCount( getName() );
-    ReturnCode code = SolverComponent::ORIGINAL_STATE;
       
     // Constants
     const static int MAX_ITER_NO_IMPROVEMENT = 7; // Maximum number of iterations without improvement.
     // Update the SolutionVector for the correct markets to solve.
-    solverSet.updateFromMarkets();
+    solution_set.updateFromMarkets();
     // Need to update solvable status before starting solution (Ignore return code)
-    solverSet.updateSolvable( true );
+    solution_set.updateSolvable( true );
 
     ILogger& solverLog = ILogger::getLogger( "solver_log" );
     solverLog.setLevel( ILogger::NOTICE );
-    solverLog << "LogNewtonRaphson beginning" << endl;
+    solverLog << "Log-Newton-Raphson Beginning" << endl;
     ILogger& worstMarketLog = ILogger::getLogger( "worst_market_log" );
     worstMarketLog.setLevel( ILogger::DEBUG );
     ILogger& singleLog = ILogger::getLogger( "single_market_log" );
     singleLog.setLevel( ILogger::DEBUG );
 
-    if( solverSet.getNumSolvable() == 0 ){
+    if( solution_set.getNumSolvable() == 0 ){
         solverLog << "Exiting Newton-Raphson early. No non-singular markets." << endl;
         return SUCCESS; // Need a new code here.
     }
@@ -124,18 +131,19 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
     world->turnCalibrationsOff();
 
     // Setup the solution matrices.
-    size_t currSize = solverSet.getNumSolvable();
+    size_t currSize = solution_set.getNumSolvable();
     Matrix JF( currSize, currSize );
     Matrix JFDM( currSize, currSize );
     Matrix JFSM( currSize, currSize );
 
+    unsigned int number_of_NR_iteration = 1;
     bool success = true;
     do {
         singleLog.setLevel( ILogger::DEBUG );
-        solverSet.printMarketInfo( "Begin logNR", calcCounter->getPeriodCount(), singleLog );
+        solution_set.printMarketInfo( "Begin logNR", calcCounter->getPeriodCount(), singleLog );
 
         // Calculate derivatives
-        code = calculateDerivatives( solverSet, JFSM, JFDM, JF, period );        
+        code = calculateDerivatives( solution_set, JFSM, JFDM, JF, period );        
         if ( code != SUCCESS ) {
             // Restore calibration status to avoid superfluous errors in latter periods
             if ( calibrationStatus ) { 
@@ -143,79 +151,81 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
             }  
             return code;
         }
-        
+
         // Calculate new prices
-        if( SolverLibrary::calculateNewPricesLogNR( solverSet, JFSM, JFDM, JF ) ){   
-         // Call world.calc and update supplies and demands. 
-        solverSet.updateToMarkets();
-        marketplace->nullSuppliesAndDemands( period );
-        world->calc( period );
-        solverSet.updateFromMarkets();
+        if( SolverLibrary::calculateNewPricesLogNR( solution_set, JFSM, JFDM, JF ) ){   
+            // Call world.calc and update supplies and demands. 
+            solution_set.updateToMarkets();
+            marketplace->nullSuppliesAndDemands( period );
+            solverLog << "Supplies and demands calculated with new prices." << endl;
+            world->calc( period );
+            solution_set.updateFromMarkets();
 
-        // Add to the iteration list.
-        SolverInfo* currWorstSol = solverSet.getWorstSolverInfo( edSolutionFloor );
-        addIteration( currWorstSol->getName(), currWorstSol->getRelativeED( edSolutionFloor ) );
+            // Add to the iteration list.
+            SolverInfo* currWorstSol = solution_set.getWorstSolverInfo( edSolutionFloor );
+            addIteration( currWorstSol->getName(), currWorstSol->getRelativeED( edSolutionFloor ) );
 
-        worstMarketLog.setLevel( ILogger::NOTICE );
-        worstMarketLog << "NR-maxRelED: " << *currWorstSol << endl;
-        solverLog.setLevel( ILogger::DEBUG );
-            solverLog << "Solution after " << calcCounter->getMethodCount( getName() ) - nrCalcsStart << " iterations in NR_RON: " << endl;
-        solverLog << solverSet << endl;
-        
-            if( solverSet.updateSolvable( true ) != SolverInfoSet::UNCHANGED ){
-                size_t newSize = solverSet.getNumSolvable();
+            worstMarketLog.setLevel( ILogger::NOTICE );
+            worstMarketLog << "NR-maxRelED: " << *currWorstSol << endl;
+            solverLog.setLevel( ILogger::DEBUG );
+            solverLog << "Solution after " << number_of_NR_iteration << " iterations in NewtonRhapson: " << endl;
+            solverLog << solution_set << endl;
+
+            if( solution_set.updateSolvable( true ) != SolverInfoSet::UNCHANGED ){
+                size_t newSize = solution_set.getNumSolvable();
                 JF.resize( newSize, newSize );
                 JFDM.resize( newSize, newSize );
                 JFSM.resize( newSize, newSize );
             }
 
-        solverSet.printMarketInfo( "NR routine ", calcCounter->getPeriodCount(), singleLog );
+            solution_set.printMarketInfo( "NR routine ", calcCounter->getPeriodCount(), singleLog );
         }
         else {
             success = false;
         }
+        ++number_of_NR_iteration;
     } // end do loop    
-    while ( success &&
-            isImproving( MAX_ITER_NO_IMPROVEMENT ) && 
-        calcCounter->getMethodCount( getName() ) - nrCalcsStart < maxIterations && 
-        solverSet.getMaxRelativeExcessDemand( edSolutionFloor ) >= solutionTolerance );
+    while ( success && number_of_NR_iteration <= maxIterations &&
+            solution_set.getMaxRelativeExcessDemand( edSolutionFloor ) >= solutionTolerance );
 
     // Update the return code. 
-    code = ( solverSet.getMaxRelativeExcessDemand( edSolutionFloor ) < solutionTolerance ? SUCCESS : FAILURE_ITER_MAX_REACHED );
+    code = ( solution_set.getMaxRelativeExcessDemand( edSolutionFloor ) < solutionTolerance ? SUCCESS : FAILURE_ITER_MAX_REACHED );
 
     // Print if we exited NR because it had solved all the markets.
     solverLog.setLevel( ILogger::NOTICE );
-    if( code == SUCCESS && !solverSet.isAllSolved( solutionTolerance, edSolutionFloor ) ){
+    if( code == SUCCESS && !solution_set.isAllSolved( solutionTolerance, edSolutionFloor ) ){
         solverLog << "Newton-Raphson solved all markets except at least one with a singularity." << endl;
-        solverSet.printUnsolved( solutionTolerance, edSolutionFloor, solverLog );
+        solution_set.printUnsolved( solutionTolerance, edSolutionFloor, solverLog );
     }
-    else if( code == SUCCESS && solverSet.isAllSolved( solutionTolerance, edSolutionFloor ) ){
+    else if( code == SUCCESS && solution_set.isAllSolved( solutionTolerance, edSolutionFloor ) ){
         solverLog << "Newton-Raphson solved all markets successfully." << endl;
     }
-    else if( calcCounter->getMethodCount( getName() ) - nrCalcsStart > maxIterations ){
-        solverLog << "Exiting due to exceeding maximum iterations: " << maxIterations << endl;
+    else if( number_of_NR_iteration > maxIterations ){
+        solverLog << "Exiting Newton-Rhapson without solving all markets. Maximum iteration count exceeded: " << maxIterations << endl;
     }
     else {
-        solverLog << "Exiting NR due to lack of improvement. " << endl;
+        solverLog << "Exiting Newton-Rhapson due to lack of improvement. " << endl;
     }
 
     if ( calibrationStatus ) { // turn end-use calibrations back on if were on originally
         world->turnCalibrationsOn();
-    }  
+    }
+    
+    solverLog << endl; // new line
     
     return code;
 }
 
 //! Calculate derivatives
-SolverComponent::ReturnCode LogNewtonRaphson::calculateDerivatives( SolverInfoSet& solverSet, Matrix& JFSM, Matrix& JFDM, Matrix& JF, int period ) {
+SolverComponent::ReturnCode LogNewtonRaphson::calculateDerivatives( SolverInfoSet& solution_set, Matrix& JFSM, Matrix& JFDM, Matrix& JF, int period ) {
     // Calculate derivatives.
-    SolverLibrary::derivatives( marketplace, world, solverSet, mDeltaPrice, period ); 
+    SolverLibrary::derivatives( marketplace, world, solution_set, mDeltaPrice, period ); 
     ILogger& solverLog = ILogger::getLogger( "solver_log" );
     solverLog.setLevel( ILogger::NOTICE );
     solverLog << "Derivatives calculated" << endl;
 
     // Update the JF, JFDM, and JFSM matrices
-    SolverLibrary::updateMatrices( solverSet, JFSM, JFDM, JF );
+    SolverLibrary::updateMatrices( solution_set, JFSM, JFDM, JF );
     bool isSingular = false;
     JF = SolverLibrary::invertMatrix( JF, isSingular );
     if( isSingular ) {

@@ -68,8 +68,12 @@ void DemandMarket::setPrice( const double priceIn ) {
     Market::setPrice( priceIn );
 }
 
-void DemandMarket::setPriceFromLast( const double lastPrice ) {
-    Market::setPriceFromLast( lastPrice );
+void DemandMarket::set_price_to_last_if_default( const double lastPrice ) {
+    Market::set_price_to_last_if_default( lastPrice );
+}
+
+void DemandMarket::set_price_to_last( const double lastPrice ) {
+    Market::set_price_to_last( lastPrice );
 }
 
 double DemandMarket::getPrice() const {
@@ -91,10 +95,6 @@ void DemandMarket::nullSupply() {
 
 double DemandMarket::getSupply() const {
     return Market::getSupply();
-}
-
-double DemandMarket::getSupplyForChecking() const {
-   return demMktSupply;
 }
 
 void DemandMarket::addToSupply( const double supplyIn ) {

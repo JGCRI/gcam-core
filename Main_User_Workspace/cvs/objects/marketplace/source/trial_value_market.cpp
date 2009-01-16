@@ -34,7 +34,7 @@
 
 /*! 
 * \file trial_value_market.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The TrialValueMarket class header file.
 * \author Steve Smith
 */
@@ -51,7 +51,11 @@ using namespace std;
 
 //! Constructor
 TrialValueMarket::TrialValueMarket( const string& goodNameIn, const string& regionNameIn, const int periodIn ) :
-Market( goodNameIn, regionNameIn, periodIn ) {
+Market( goodNameIn, regionNameIn, periodIn )
+{
+    // Provide initial value for trial "price" at the time of creation since 
+    // call to price initialization occurs before trial market is created.
+    price = 0.001;
 }
 
 void TrialValueMarket::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {
@@ -62,17 +66,25 @@ IMarketType::Type TrialValueMarket::getType() const {
 }
 
 void TrialValueMarket::initPrice() {
-    const double MIN_PRICE = 0.01;
-    if ( price < util::getSmallNumber() ) {
-        // Initialize price to a random number between MIN_PRICE 
-        // and (1 + MIN_PRICE)
-        srand( (unsigned)time( NULL ) );
-        price = ((double) rand() / (double) RAND_MAX) + MIN_PRICE;
-    }
+    // Market price initialization is done before trial markets are created,
+    // and this method does not initialize trial market prices.
+    price = util::getSmallNumber();
 }
 
-void TrialValueMarket::setPriceFromLast( const double lastPrice ) {
-   Market::setPriceFromLast( lastPrice );
+void TrialValueMarket::setPrice( const double priceIn ) {
+    Market::setPrice( priceIn );
+}
+
+void TrialValueMarket::set_price_to_last_if_default( const double lastPrice ) {
+   Market::set_price_to_last_if_default( lastPrice );
+}
+
+void TrialValueMarket::set_price_to_last( const double lastPrice ) {
+   Market::set_price_to_last( lastPrice );
+}
+
+double TrialValueMarket::getPrice() const {
+    return Market::getPrice();
 }
 
 /*! \brief Add to the the Market an amount of demand in a method based on the Market's type.
@@ -90,6 +102,22 @@ void TrialValueMarket::addToDemand( const double demandIn ) {
     supply = price;
 }
 
+double TrialValueMarket::getDemand() const {
+    return Market::getDemand();
+}
+
+void TrialValueMarket::nullSupply() {
+   Market::nullSupply();
+}
+
+double TrialValueMarket::getSupply() const {
+    return Market::getSupply();
+}
+
+void TrialValueMarket::addToSupply( const double supplyIn ) {
+    Market::addToSupply( supplyIn );
+}
+
 bool TrialValueMarket::meetsSpecialSolutionCriteria() const {
     // Trial value markets must be solved in all periods including the base
     // period.
@@ -97,9 +125,25 @@ bool TrialValueMarket::meetsSpecialSolutionCriteria() const {
 }
 
 bool TrialValueMarket::shouldSolve() const {
-   return Market::shouldSolve();
+    bool doSolveMarket = false;
+    // Check if this market is a type that is solved.
+    if ( solveMarket ) {
+        // If trial demand exists, then solve.
+        if( demand > 0 ) {
+            doSolveMarket = true;
+        }
+    }
+    return doSolveMarket;
 }
 
 bool TrialValueMarket::shouldSolveNR() const {
-   return Market::shouldSolveNR();
+    bool doSolveMarket = false;
+    // Check if this market is a type that is solved.
+    if ( solveMarket ) {
+        // If trial demand exists, then solve.
+        if( demand > 0 ) {
+            doSolveMarket = true;
+        }
+    }
+    return doSolveMarket;
 }

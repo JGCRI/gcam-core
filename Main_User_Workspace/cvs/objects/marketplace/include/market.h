@@ -104,28 +104,28 @@ public:
     const std::vector<const objects::Atom*>& getContainedRegions() const;
 
     virtual void initPrice() = 0;
-    virtual void setPrice( const double priceIn );
+    virtual void setPrice( const double priceIn ) = 0;
     void setRawPrice( const double priceIn );
-    virtual void setPriceFromLast( const double lastPrice ) = 0;
-    virtual double getPrice() const;
+    virtual void set_price_to_last_if_default( const double lastPrice ) = 0;
+    virtual void set_price_to_last( const double lastPrice ) = 0;
+    virtual double getPrice() const = 0;
     double getRawPrice() const;
     double getStoredRawPrice() const;
 
     virtual void nullDemand();
     void setRawDemand( const double value );
-    virtual void addToDemand( const double demandIn );
+    virtual void addToDemand( const double demandIn ) = 0;
     void removeFromRawDemand( const double demandIn );
     double getRawDemand() const;
     double getStoredRawDemand() const;
-    virtual double getDemand() const;
+    virtual double getDemand() const = 0;
 
-    virtual void nullSupply();
+    virtual void nullSupply() = 0;
     double getRawSupply() const;
     double getStoredRawSupply() const;
     void setRawSupply( const double supplyIn );
     void removeFromRawSupply( const double supplyIn );
-    virtual double getSupply() const;
-    virtual double getSupplyForChecking() const;
+    virtual double getSupply() const = 0;
     virtual void addToSupply( const double supplyIn );
     const std::string& getName() const;
     const std::string& getRegionName() const;
@@ -134,6 +134,8 @@ public:
     IInfo* getMarketInfo();
     void storeInfo();
     void restoreInfo();
+    void store_original_price();
+    void restore_original_price();
 
     void setSolveMarket( const bool doSolve );
     virtual bool meetsSpecialSolutionCriteria() const = 0;
@@ -146,6 +148,7 @@ public:
     * \return The type of the market.
     */
     virtual IMarketType::Type getType() const = 0;
+    static const std::string& convert_type_to_string( const IMarketType::Type aType );
 
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
@@ -171,6 +174,9 @@ protected:
     
     //! The stored market price.
     double storedPrice;
+    
+    //! The original market price.
+    double original_price;
     
     //! The market demand.
     double demand;
@@ -200,7 +206,6 @@ protected:
     */
     virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
 
-    static const std::string& convertTypeToString( const IMarketType::Type aType );
 };
 
 #endif // _MARKET_H_

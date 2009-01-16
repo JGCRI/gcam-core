@@ -212,7 +212,7 @@ void Marketplace::resetToPriceMarket( const string& goodName, const string& regi
         string marketName = markets[ marketNumber ][ 0 ]->getRegionName();
         string demandGoodName = goodName + "Demand_int";
         createMarket( regionName, marketName, demandGoodName, IMarketType::DEMAND );
-        // Add units of the corresponding NORMAL market to the DEMAND market info object. SHK 5/8/07
+        // Add units of the corresponding NORMAL market to the DEMAND market info object.
         IInfo* marketInfoFrom = getMarketInfo( goodName, regionName, 0, true );
         IInfo* marketInfo = getMarketInfo( demandGoodName, regionName, 0, true );
         marketInfo->setString( "price-unit", marketInfoFrom->getString( "price-unit", true ) );
@@ -615,9 +615,14 @@ vector<Market*> Marketplace::getMarketsToSolve( const int period ) const {
 */
 void Marketplace::init_to_last( const int period ) { 
     // only after the starting period
-    if ( period > 0 ) {
+    if ( period > 0 && period <= scenario->getModeltime()->getFinalCalibrationPeriod() ) {
         for ( unsigned int i = 0; i < markets.size(); i++ ) {
-            markets[ i ][ period ]->setPriceFromLast( markets[ i ][ period - 1 ]->getRawPrice() );
+            markets[ i ][ period ]->set_price_to_last_if_default( markets[ i ][ period - 1 ]->getRawPrice() );
+        }
+    }
+    else if( period > scenario->getModeltime()->getFinalCalibrationPeriod() ){
+        for ( unsigned int i = 0; i < markets.size(); i++ ) {
+            markets[ i ][ period ]->set_price_to_last( markets[ i ][ period - 1 ]->getRawPrice() );
         }
     }
 }
@@ -648,6 +653,34 @@ void Marketplace::storeinfo( const int period ) {
 void Marketplace::restoreinfo( const int period) {
     for ( unsigned int i = 0; i < markets.size(); i++ ) {
         markets[ i ][ period ]->restoreInfo();
+    }
+}
+
+/*! \brief Store market prices for policy cost caluclation.
+*
+*
+* \author Sonny Kim
+*/
+void Marketplace::store_prices_for_cost_calculation()
+{
+    for ( unsigned int i = 0; i < markets.size(); ++i ){
+        for( unsigned int period = 0; period < scenario->getModeltime()->getmaxper(); ++period ){
+            markets[ i ][ period ]->store_original_price();
+        }
+    }
+}
+
+/*! \brief Restore market prices for policy cost caluclation.
+*
+*
+* \author Sonny Kim
+*/
+void Marketplace::restore_prices_for_cost_calculation()
+{
+    for ( unsigned int i = 0; i < markets.size(); ++i ){
+        for( unsigned int period = 0; period < scenario->getModeltime()->getmaxper(); ++period ){
+            markets[ i ][ period ]->restore_original_price();
+        }
     }
 }
 

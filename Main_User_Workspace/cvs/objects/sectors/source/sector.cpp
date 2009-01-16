@@ -97,6 +97,7 @@ Sector::Sector( const string& aRegionName )
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
     summary.resize( maxper ); // object containing summaries
+    mPrice.resize( maxper );
 }
 
 /*! \brief Destructor
@@ -175,6 +176,7 @@ void Sector::XMLParse( const DOMNode* node ){
             continue;
         }
         else if( nodeName == "price" ){
+            /*
             // Check if the output year is the base year.
             if( XMLHelper<int>::getAttr( curr, "year" ) == modeltime->getStartYear() ){
                 mBasePrice = XMLHelper<double>::getValue( curr );
@@ -182,6 +184,9 @@ void Sector::XMLParse( const DOMNode* node ){
             else {
                 // Warning?
             }
+            */
+            XMLHelper<double>::insertValueIntoVector( curr, mPrice, modeltime );
+            mBasePrice = mPrice[ 0 ];
         }
         else if( nodeName == "output-unit" ){
             mOutputUnit = XMLHelper<string>::getValue( curr );
@@ -262,8 +267,8 @@ void Sector::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
     XMLWriteElement( mInputUnit, "input-unit", aOut, aTabs );
     XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
+    XMLWriteVector( mPrice, "price", aOut, aTabs, modeltime );
 
-    XMLWriteElementCheckDefault( mBasePrice, "price", aOut, aTabs, 0.0, modeltime->getper_to_yr( 0 ) );
     XMLWriteElementCheckDefault( mBaseOutput, "output", aOut, aTabs, 0.0, modeltime->getper_to_yr( 0 ) );
     if( !mKeywordMap.empty() ) {
         XMLWriteElementWithAttributes( "", "keyword", aOut, aTabs, mKeywordMap );
@@ -392,9 +397,6 @@ void Sector::initCalc( NationalAccount* aNationalAccount,
                       const Demographic* aDemographics,
                       const int aPeriod )
 {
-    // normalizeShareWeights must be called before subsector initializations
-    normalizeShareWeights( aPeriod );
-
     Marketplace* marketplace = scenario->getMarketplace();
 
     // do any sub-Sector initializations
@@ -490,34 +492,38 @@ void Sector::checkForCalibrationConsistancy( const int aPeriod ) {
     }
 }
  
-/*! \brief Scales subsector share weights so that they equal number of subsectors.
+/*! \brief Normalize subsector share weights such that the share weight of the dominant
+* subsector is anchored to 1 while the others are relative to the dominant subsector. 
 *
-* This is needed so that 1) share weights can be easily interpreted (> 1 means favored) and so that
-* future share weights can be consistently applied relative to calibrated years.
+* This is needed so that share weights can be easily interpreted and so that
+* future share weights can be consistently applied relative to the dominant subsector.
+* Subsector share weight greater than 1 implies bias towards the subsector even though
+* it is not the dominant subsector. The call to normalizeShareWeights must occur after the
+* period has been solved and subsector outputs are known.  
 *
-* \author Steve Smith
-* \param period Model period
-* \warning This must be done before subsector inits so that share weights are scaled before they are interpolated
+* \author Steve Smith, Marshall Wise, Kate Calvin, Sonny Kim
+* \param aPeriod Model period
 */
-void Sector::normalizeShareWeights( const int period ) {
+void Sector::normalizeShareWeights( const int aPeriod ) {
 
-    // If this sector was completely calibrated, or otherwise fixed, then scale shareweights to equal number of subsectors
     static const bool calActive = Configuration::getInstance()->getBool( "CalibrationActive" );
-    if ( period > 0 && calActive ) {
-        if ( inputsAllFixed( period - 1, "allInputs" ) && ( getCalOutput ( period - 1) > 0 ) ) {
-
+    // Check on calibration active status is redundant but leave in here to guard against
+    // calling normalization routine without checking status.
+    if ( aPeriod > 0 && calActive ) {
+        if ( inputsAllFixed( aPeriod, "allInputs" ) && ( getCalOutput ( aPeriod ) > 0 ) ) {
             // Dominant subsector should get a share weight of one
-            // TODO: We do not want fixed output subsectors included in this
             double maxShareWeight = 0.0;
             double maxOutput = 0.0;
             for ( unsigned int i = 0; i < subsec.size(); ++i ){
-                double subsectShareWeight = subsec[ i ]->getShareWeight( period - 1 );
-                if ( subsec[ i ]->getOutput( period - 1 ) > maxOutput ) {
-                    maxShareWeight = subsectShareWeight;
-                    maxOutput = subsec[ i ]->getOutput( period - 1);
+                // Normalize only if subsector is not fully fixed.
+                if( !subsec[ i ]->containsOnlyFixedOutputTechnologies( aPeriod ) ){
+                    double subsectShareWeight = subsec[ i ]->getShareWeight( aPeriod );
+                    if ( subsec[ i ]->getOutput( aPeriod ) > maxOutput ) {
+                        maxShareWeight = subsectShareWeight;
+                        maxOutput = subsec[ i ]->getOutput( aPeriod );
+                    }
                 }
             }
-
             if ( maxShareWeight < util::getTinyNumber() ) {
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::ERROR );
@@ -525,7 +531,10 @@ void Sector::normalizeShareWeights( const int period ) {
             }
             else {
                 for ( int unsigned i= 0; i< subsec.size(); i++ ) {
-                    subsec[ i ]->scaleShareWeight( 1 / maxShareWeight, period - 1 );
+                    // Normalize only if subsector is not fully fixed.
+                    if( !subsec[ i ]->containsOnlyFixedOutputTechnologies( aPeriod ) ){
+                        subsec[ i ]->scaleShareWeight( 1 / maxShareWeight, aPeriod );
+                    }
                 }
                 ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
                 calibrationLog.setLevel( ILogger::DEBUG );
@@ -960,12 +969,24 @@ void Sector::updateMarketplace( const int period ) {
 * period is complete.
 * \param aPeriod The period to finalize.
 * \todo Finish this function.
-* \author Josh Lurz
+* \author Josh Lurz, Sonny Kim
 */
 void Sector::postCalc( const int aPeriod ){
     // Finalize sectors.
     for( SubsectorIterator subsector = subsec.begin(); subsector != subsec.end(); ++subsector ){
         (*subsector)->postCalc( aPeriod );
+    }
+    // Normalize subsector share weights after model has solved and subsector outputs
+    // are known.
+    // Do only when calibration is on and for calibration periods.
+    if( Configuration::getInstance()->getBool( "CalibrationActive" ) &&
+        aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() )
+    {
+        normalizeShareWeights( aPeriod );
+    }
+    // Set member price vector to solved market prices
+    if( aPeriod > 0 ){
+        mPrice[ aPeriod ] = scenario->getMarketplace()->getPrice( name, regionName, aPeriod, true );
     }
 }
 

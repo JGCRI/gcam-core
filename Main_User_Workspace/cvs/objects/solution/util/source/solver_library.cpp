@@ -78,9 +78,12 @@ using namespace std;
 */
 double SolverLibrary::getRelativeED( const double excessDemand, const double demand, const double excessDemandFloor ) {
 
-    double retValue;
-    double tempDemand = demand;
+    // Initialize return value
+    double retValue = 0;
+    double tempDemand = fabs( demand );
 
+    // If demand is 0, set tempDemand to small number to avoid
+    // divide by 0.
     if( tempDemand < util::getSmallNumber() ) {
         tempDemand = util::getSmallNumber();
     }
@@ -89,10 +92,15 @@ double SolverLibrary::getRelativeED( const double excessDemand, const double dem
     if( fabs( excessDemand ) < excessDemandFloor ) {
         retValue = 0;
     }
-
     // Find the ratio of excess demand to demand.
     else {
-        retValue = fabs( excessDemand ) / tempDemand * 100;
+        retValue = fabs( excessDemand ) / tempDemand;
+    }
+
+    // This case should not occur (demand null but with supply),
+    // but check and return 0.
+    if( demand == 0 && excessDemand <= util::getSmallNumber() ){
+        retValue = 0;
     }
 
     return retValue;
@@ -149,9 +157,9 @@ void SolverLibrary::derivatives( Marketplace* marketplace, World* world, SolverI
                                  const double aDeltaPrice, const int per ) {
 
     const bool doDebugChecks = Configuration::getInstance()->getBool( "debugChecking" );
-    ILogger& mainLog = ILogger::getLogger( "solver_log" );
-    mainLog.setLevel( ILogger::NOTICE );
-    mainLog << "Starting derivative calculation" << endl;
+    ILogger& solverLog = ILogger::getLogger( "solver_log" );
+    solverLog.setLevel( ILogger::NOTICE );
+    solverLog << "Starting derivative calculation" << endl;
 
     // Initial call to world.calc to fix problems with calibration.
     marketplace->nullSuppliesAndDemands( per );
@@ -172,6 +180,7 @@ void SolverLibrary::derivatives( Marketplace* marketplace, World* world, SolverI
     const vector<double>& originalDemands = solverSet.getDemands();
 
     const RegionalSDDifferences& sdDifferences = calcRegionalSDDifferences( marketplace, world, solverSet, per );
+
     // This code will sum up the additive value for each market over all regions.
     // These sums are then checked against the original global supplies and demands.
     if( doDebugChecks ) {
@@ -302,12 +311,15 @@ bool SolverLibrary::calculateNewPricesLogNR( SolverInfoSet& solverSet, Matrix& J
         // Set the new price with the exponent of the correction vector.
         double newPrice = exp( NP[ i ] );
         if( util::isValidNumber( newPrice ) ){
-            if ( newPrice > solverSet.getSolvable( i ).getPrice() * 10 ) {
-                newPrice = solverSet.getSolvable( i ).getPrice() * 10;
+            static const double MAX_NR_STEP = conf->getDouble( "MAX_NR_STEP", 0.2 );
+           
+            if ( newPrice > solverSet.getSolvable( i ).getPrice() * (1+MAX_NR_STEP) ){
+                newPrice = solverSet.getSolvable( i ).getPrice() * (1+MAX_NR_STEP);
             }
-            else if ( newPrice < solverSet.getSolvable( i ).getPrice() / 10 ) {
-                newPrice = solverSet.getSolvable( i ).getPrice() / 10;
+            else if ( newPrice < solverSet.getSolvable( i ).getPrice() / (1+MAX_NR_STEP) ){
+                newPrice = solverSet.getSolvable( i ).getPrice() / (1+MAX_NR_STEP);
             }
+            
             solverSet.getSolvable( i ).setPrice( newPrice );
         }
         else {
@@ -555,36 +567,38 @@ const SolverLibrary::RegionalSDDifferences SolverLibrary::calcRegionalSDDifferen
 
 /*! \brief Bracket a set of markets.
 * \details Function finds bracket interval for each market and puts this
-*          information into solverSet vector
-* \author Sonny Kim, Josh Lurz, Steve Smith
+*          information into solution set vector
+* \author Sonny Kim, Josh Lurz, Steve Smith, Kate Calvin
 * \param aSolutionTolerance Target value for maximum relative solution for worst
 *        market
 * \param aSolutionFloor Absolute value beneath which market is ignored
-* \param bracketInterval Relative multipliciatve interval by which trail values
-*        are moved
+* \param bracketInterval Relative interval by which trial values are moved.
 * \param solverSet Vector of market solution information
 * \param aCalcCounter The calculation counter.
 * \param period Model period
 * \return Whether bracketing of all markets completed successfully.
 */
-bool SolverLibrary::bracketAll( Marketplace* marketplace, World* world, const double bracketInterval,
-                                const double aSolutionTolerance, const double aSolutionFloor,
-                                SolverInfoSet& solverSet, CalcCounter* aCalcCounter, const int period ) {
-    int numIterations = 0;
+bool SolverLibrary::bracket( Marketplace* marketplace, World* world, const double aBracketInterval,
+                             const double aSolutionTolerance, const double aSolutionFloor,
+                             SolverInfoSet& solverSet, CalcCounter* aCalcCounter, const int period ) {
     bool code = false;
+    // Return with code true if all markets are bracketed.
+    if( solverSet.isAllBracketed() ){
+        return code = true;
+    }
+
     bool calibrationStatus = world->getCalibrationSetting();
-    // Does not solve certain markets (CO2 policy) very well
-    // if lower bound is set too low. SHK
-    //static const double LOWER_BOUND = util::getSmallNumber();
-    static const double LOWER_BOUND = 0.001;
-    static const int MAX_ITERATIONS = 30;
+
+    static const double LOWER_BOUND = util::getVerySmallNumber();
+    static const int MAX_ITERATIONS = Configuration::getInstance()->
+                                      getInt( "MAX_BRACKET_ITERATIONS", 40 );
+
     // Make sure the markets are up to date before starting.
     solverSet.updateToMarkets();
     marketplace->nullSuppliesAndDemands( period );
     world->calc( period );
     solverSet.updateFromMarkets();
     solverSet.updateSolvable( false );
-    solverSet.checkAndResetBrackets();
 
     ILogger& solverLog = ILogger::getLogger( "solver_log" );
     solverLog.setLevel( ILogger::NOTICE );
@@ -598,23 +612,15 @@ bool SolverLibrary::bracketAll( Marketplace* marketplace, World* world, const do
     world->turnCalibrationsOff();
 
     // Loop is done at least once.
+    unsigned int iterationCount = 1;
     do {
-        solverSet.printMarketInfo( "Bracket All",
-                                   aCalcCounter->getPeriodCount(),
-                                   singleLog );
+        solverSet.printMarketInfo( "Bracket All", aCalcCounter->getPeriodCount(), singleLog );
 
-        // Iterate through each solvable market.
+        // Iterate through each market.
         for ( unsigned int i = 0; i < solverSet.getNumSolvable(); i++ ) {
-            // Fetch the current
+            // Fetch the current 
             SolverInfo& currSol = solverSet.getSolvable( i );
-
-            // Check if current market is solved.
-            // We only want to bracket unsolved, but solvable markets
-            if ( currSol.isSolved( aSolutionTolerance, aSolutionFloor ) ){
-                currSol.setBracketed();
-                continue;
-            }
-
+            
             // We know current market is not solved. Check if it is bracketed
             if ( !currSol.isBracketed() ) {
                 // If a market is not bracketed, then EDL and EDR have the same sign
@@ -625,14 +631,14 @@ bool SolverLibrary::bracketAll( Marketplace* marketplace, World* world, const do
                     // So, X, XL, and XR are all greater than the solution price
                     if ( currSol.getED() < 0 ) {
                         currSol.moveRightBracketToX();
-                        currSol.decreaseX( bracketInterval, LOWER_BOUND );
+                        currSol.decreaseX( aBracketInterval, LOWER_BOUND );
                     } // END: if statement testing if ED < 0
                     // If Supply <= Demand. Price needs to increase so demand decreases
                     // If ED is positive, then so are EDL and EDR
                     // So, X, XL, and XR are all less than the solution price
                     else {
                         currSol.moveLeftBracketToX();
-                        currSol.increaseX( bracketInterval, LOWER_BOUND );
+                        currSol.increaseX( aBracketInterval, LOWER_BOUND );
                     } // END: if statement testing if ED > 0
                 } // END: if statement testing if ED and EDL have the same sign
                 // If market is unbracketed, EDL and EDR have the same sign
@@ -693,10 +699,8 @@ bool SolverLibrary::bracketAll( Marketplace* marketplace, World* world, const do
                         currSol.setBracketed();
                     }
                 }
-
             } // END: if statement testing if currSol is bracketed with XL == XR
-
-        } // END: for loop over solvable set
+        } // end for loop
 
         solverSet.updateToMarkets();
         marketplace->nullSuppliesAndDemands( period );
@@ -704,8 +708,10 @@ bool SolverLibrary::bracketAll( Marketplace* marketplace, World* world, const do
         solverSet.updateFromMarkets();
         solverSet.updateSolvable( false );
         solverLog.setLevel( ILogger::NOTICE );
-        solverLog << "Completed an iteration of bracket." << endl;
-    } while ( ++numIterations < MAX_ITERATIONS && !solverSet.isAllBracketed() );
+        solverLog << "Completed an iteration of bracket: " << iterationCount << endl;
+        solverLog << solverSet << endl;
+    } while ( ++iterationCount <= MAX_ITERATIONS && !solverSet.isAllBracketed() );
+
     code = ( solverSet.isAllBracketed() ? true : false );
 
     solverLog.setLevel( ILogger::DEBUG );
@@ -715,7 +721,7 @@ bool SolverLibrary::bracketAll( Marketplace* marketplace, World* world, const do
     solverSet.printMarketInfo( "End Bracketing Attempt", 0, singleLog );
 
     if ( calibrationStatus ) {
-        world->turnCalibrationsOn();    // sjs -- turn calibration back on if it was on before
+        world->turnCalibrationsOn(); // sjs -- turn calibration back on if it was on before
     }
     return code;
 }
@@ -863,7 +869,3 @@ void SolverLibrary::restorePrices( SolverInfoSet& aSolverSet, const vector<doubl
         aSolverSet.getAny( i ).setPrice( aPrices[ i ] );
     }
 }
-
-
-
-

@@ -39,8 +39,9 @@
 * \author Sonny Kim
 */
 
-#include "util/base/include/definitions.h"
 #include <string>
+#include "util/base/include/definitions.h"
+#include "util/base/include/util.h"
 #include "marketplace/include/normal_market.h"
 
 using namespace std;
@@ -61,8 +62,40 @@ void NormalMarket::initPrice() {
    Market::initPrice();
 }
 
-void NormalMarket::setPriceFromLast( const double lastPrice ) {
-   Market::setPriceFromLast( lastPrice );
+void NormalMarket::setPrice( const double priceIn ) {
+    Market::setPrice( priceIn );
+}
+
+void NormalMarket::set_price_to_last_if_default( const double lastPrice ) {
+   Market::set_price_to_last_if_default( lastPrice );
+}
+
+void NormalMarket::set_price_to_last( const double lastPrice ) {
+   Market::set_price_to_last( lastPrice );
+}
+
+double NormalMarket::getPrice() const {
+    return Market::getPrice();
+}
+
+void NormalMarket::addToDemand( const double demandIn ) {
+    Market::addToDemand( demandIn );
+}
+
+double NormalMarket::getDemand() const {
+    return Market::getDemand();
+}
+
+void NormalMarket::nullSupply() {
+   Market::nullSupply();
+}
+
+double NormalMarket::getSupply() const {
+    return Market::getSupply();
+}
+
+void NormalMarket::addToSupply( const double supplyIn ) {
+    Market::addToSupply( supplyIn );
 }
 
 bool NormalMarket::meetsSpecialSolutionCriteria() const {
@@ -70,9 +103,17 @@ bool NormalMarket::meetsSpecialSolutionCriteria() const {
 }
 
 bool NormalMarket::shouldSolve() const {
-   return Market::shouldSolve();
+    bool doSolveMarket = false;
+    // Check if this market is a type that is solved.
+    if ( solveMarket ) {
+        // If demand exists, then solve.
+        if( demand > 0 ) {
+            doSolveMarket = true;
+        }
+    }
+    return doSolveMarket;
 }
 
 bool NormalMarket::shouldSolveNR() const {
-   return Market::shouldSolveNR();
+   return ( solveMarket && price > 0 && demand > 0 && supply > 0 );
 }

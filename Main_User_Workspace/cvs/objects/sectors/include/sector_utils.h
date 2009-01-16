@@ -106,8 +106,9 @@ public:
     static double convertCapacityToEnergy( const double aCapacityFactor,
                                            const double aCapacity );
 
-protected:
     static const std::string getTrialMarketName( const std::string& aSector );
+
+protected:
 
     static HashMap<std::string, std::string> sTrialMarketNames;
 };

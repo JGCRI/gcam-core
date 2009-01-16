@@ -291,6 +291,8 @@ public:
                         const std::string& aRequiredInput, 
                         const int aPeriod ) const;
 
+    bool isFixedOutputTechnology( const int aPeriod ) const;
+
     const std::map<std::string, double> getFuelMap( const int aPeriod ) const;
 
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
@@ -402,9 +404,6 @@ protected:
     double getMarginalRevenue( const std::string& aRegionName,
                                const std::string& aSectorName,
                                const int aPeriod ) const;
-
-    // SHK 3/7/07: Looks like this is no longer used.  It is undefined. 
-    bool isCalibrating( const int aPeriod ) const;
 
     virtual void calcEmissionsAndOutputs( const std::string& aRegionName,
                                   const double aPrimaryOutput,

@@ -47,6 +47,7 @@
 #include <xercesc/dom/DOMNamedNodeMap.hpp>
 
 // User headers
+#include "util/base/include/configuration.h"
 #include "technologies/include/technology.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/xml_helper.h"
@@ -173,7 +174,7 @@ void Technology::copy( const Technology& techIn ) {
         mTechChangeCalc.reset( techIn.mTechChangeCalc->clone() );
     }
     
-        for (CGHGIterator iter = techIn.ghg.begin(); iter != techIn.ghg.end(); ++iter) {
+    for (CGHGIterator iter = techIn.ghg.begin(); iter != techIn.ghg.end(); ++iter) {
         ghg.push_back( (*iter)->clone() );
     }
 
@@ -188,7 +189,8 @@ void Technology::copy( const Technology& techIn ) {
     // and they cannot be cloned.
     if( techIn.mTechData.get() ) {
         mTechData.reset( techIn.mTechData->clone() );
-    } else {
+    }
+    else {
         mTechData.reset();
     }
     
@@ -294,7 +296,6 @@ bool Technology::XMLParse( const DOMNode* node )
             }
             mTechChangeCalc->XMLParse( curr );
         }
-
         else if( ShutdownDeciderFactory::isOfType( nodeName ) ) {
             parseContainerNode( curr, mShutdownDeciders, ShutdownDeciderFactory::create( nodeName ).release() );
         }
@@ -663,23 +664,38 @@ void Technology::initCalc( const string& aRegionName,
     // Determine cumulative technical change. Alpha zero defaults to 1.
     if( mTechChangeCalc.get() ){
         mAlphaZero = mTechChangeCalc->calcAndAdjustForTechChange( mInputs,
-                                                                  aPrevPeriodInfo,
-                                                                  mProductionFunction,
-                                                                  aRegionName,
-                                                                  aSectorName,
-                                                                  aPeriod );
+                     aPrevPeriodInfo, mProductionFunction, aRegionName,
+                     aSectorName, aPeriod );
     }
 
-    // If there is a calibration value re-set shareweight to 1 so that calibration can occur.
-    if( getCalibrationOutput( false, "", aPeriod ) > util::getSmallNumber() 
-        && mShareWeight == 0 && mFixedOutput == getFixedOutputDefault() ) {
-        
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "Resetting zero shareweight for Technology " << mName
-                << " in sector " << aSectorName << " in region " << aRegionName
-                << " since calibration value was present." << endl;
-        mShareWeight = 1;
+    // If Calibration is Active, reinitialize share weights for calibration.
+    if( Configuration::getInstance()->getBool( "CalibrationActive" ) ){
+        // For new technology vintages up to and including final calibration period.
+        const int FinalCalibrationPeriod = scenario->getModeltime()->getFinalCalibrationPeriod();
+
+        if( ( aPeriod <= FinalCalibrationPeriod ) &&
+            mProductionState[ aPeriod ]->isNewInvestment() ){
+            // Reinitialize share weight to 1 for competing technology with non-zero read-in share weight
+            // for calibration periods only.
+            if( mShareWeight > 0 && mShareWeight != 1.0 ){
+                // Reinitialize to 1 to remove bias, calculate new share weights and
+                // normalize in postCalc to anchor to dominant technology.
+                mShareWeight = 1.0;
+            }
+
+            // If there is a calibration value re-set 0 shareweight to 1 so that calibration 
+            // can occur.
+            if( getCalibrationOutput( false, "", aPeriod ) > util::getSmallNumber() 
+                && mShareWeight == 0 && mFixedOutput == getFixedOutputDefault() ) {
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::NOTICE );
+                mainLog << "Resetting zero shareweight for Technology " << mName
+                    << " in sector " << aSectorName << " in region " << aRegionName
+                    << " since calibration value was present." << endl;
+
+                mShareWeight = 1.0;
+            }
+        }
     }
 }
 
@@ -1072,13 +1088,14 @@ void Technology::adjustForCalibration( const double aDemand,
 
     // Shareweight must be positive.
     assert( mShareWeight >= 0 );
-
+/*
     // Report if share weight gets extremely large
-    if( mShareWeight > 1e4 ) {
+    if( mShareWeight > util::getLargeNumber() ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Large share weight in calibration for Technology: " << mName << endl;
     }
+*/    
 }
 
 //! calculate GHG emissions from Technology use
@@ -1126,11 +1143,6 @@ const map<string, double> Technology::getEmissionsByFuel( const string& aGoodNam
     map<string, double> emissionsByFuel;
     for( unsigned int i = 0; i < ghg.size(); ++i ) {
         emissionsByFuel[ ghg[ i ]->getName() ] = ghg[ i ]->getEmissFuel( aPeriod );
-
-        // This really should include the GHG name as well.
-        // TODO: FIX ME FIX ME
-        // TODO: Why is this calculated twice?
-        // emissionsByFuel[fuelName] = ghg[i]->getEmissFuel( aPeriod );
     }
     return emissionsByFuel;
 }
@@ -1232,6 +1244,24 @@ bool Technology::isOutputFixed( const bool aHasRequiredInput,
         }
     }
     // Otherwise output is not fixed.
+    return false;
+}
+
+/*!\brief Returns a boolean for whether a technology is a fixed output 
+ * technology for new investments.
+ * \param aPeriod Model period.
+ * \author Sonny Kim
+ * \return Boolean for whether the new investment technology has a fixed output.
+ */
+bool Technology::isFixedOutputTechnology( const int aPeriod ) const
+{
+    // Technology is a fixed output technology if there is an 
+    // exogenously specified output for new investments.
+    if( mProductionState[ aPeriod ]->isNewInvestment() && 
+        mFixedOutput != getFixedOutputDefault() ) {
+        return true;
+    }
+    // Otherwise new investment is not a fixed output.
     return false;
 }
 
@@ -1487,9 +1517,8 @@ void Technology::calcCost( const string& aRegionName,
                            const string& aSectorName,
                            const int aPeriod )
 {
-    // If it is an existing stock it has no marginal cost.
-    if( getFixedOutput( aRegionName, aSectorName, false, "", aPeriod ) > 0 ||
-                        util::isEqual( mFixedOutput, 0.0 ) )
+    // If technology is not operating set cost zero.
+    if( !mProductionState[ aPeriod ]->isOperating() )
     {
         mCosts[ aPeriod ] = 0;
     }
@@ -1710,15 +1739,15 @@ bool Technology::isAllCalibrated( const int aPeriod,
     if( calOutput < 0 ){
         return true;
     }
-    
+
     // Compare calibrated to actual output.
     double output = getOutput( aPeriod );
     double relativeDiff;
+    double sectorOutput = scenario->getMarketplace()->getSupply( aSectorName, aRegionName, aPeriod );
+
     // Do not write warning to main log if the calibration value or the
-    // relative difference is smaller than 2 times
-    // the criteria for calibration accuracy (0.001).
-    const double CALIBRATION_ACCURACY = aCalAccuracy * 2;
-    if( calOutput > CALIBRATION_ACCURACY ) {
+    // relative difference is smaller than the criteria for calibration accuracy.
+    if( calOutput > aCalAccuracy ) {
         relativeDiff = fabs( output - calOutput ) / calOutput;
     }
     else {
@@ -1727,27 +1756,38 @@ bool Technology::isAllCalibrated( const int aPeriod,
     }
     // Return false (not calibrated) and print warning only if relativeDiff is
     // greater than the calibration accuracy.
-    if( relativeDiff > CALIBRATION_ACCURACY ) {
-        if( aPrintWarnings ) {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog.setf(ios_base::left,ios_base::adjustfield); // left alignment
-            mainLog << "Calibration failed by ";
-            mainLog.precision(2); // for floating-point
-            mainLog.width(4); mainLog << relativeDiff * 100; mainLog << " %";
-            mainLog << " Technology: "; mainLog.width(18); mainLog << mName;
-            mainLog << " Region: "; mainLog.width(14); mainLog << aRegionName;
-            mainLog << " Sector: "; mainLog.width(12); mainLog << aSectorName;
-            mainLog << " Subsector: "; mainLog.width(12); mainLog << aSubsectorName;
-            mainLog.precision(4); // for floating-point
-            mainLog << " Output: "; mainLog.width(8); mainLog << output;
-            mainLog << " Calibration: "; mainLog.width(8); mainLog << calOutput;
-            mainLog << endl;
-            mainLog.setf(ios_base::fmtflags(0),ios_base::floatfield); //reset to default
+    if( relativeDiff > aCalAccuracy ) {
+        // If calibration value is inconsequential relative to total sector output,
+        // then treat it as calibrated.
+        if( (calOutput/sectorOutput) < aCalAccuracy ) {
+           // return true;
         }
-        return false;
+        else {
+            // Print warning then return false.
+            if( aPrintWarnings ) {
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::WARNING );
+                mainLog.setf(ios_base::left,ios_base::adjustfield); // left alignment
+                mainLog << "Calibration failed by ";
+                mainLog.precision(2); // for floating-point
+                mainLog.width(4); mainLog << relativeDiff * 100; mainLog << " %";
+                mainLog << " Technology: "; mainLog.width(18); mainLog << mName;
+                mainLog << " Region: "; mainLog.width(14); mainLog << aRegionName;
+                mainLog << " Sector: "; mainLog.width(12); mainLog << aSectorName;
+                mainLog << " Subsector: "; mainLog.width(12); mainLog << aSubsectorName;
+                mainLog.precision(4); // for floating-point
+                mainLog << " Output: "; mainLog.width(8); mainLog << output;
+                mainLog << " Calibration: "; mainLog.width(8); mainLog << calOutput;
+                mainLog << " relativeDiff: "; mainLog.width(8); mainLog << relativeDiff;
+                mainLog << " SectorOutput: "; mainLog.width(8); mainLog << sectorOutput;
+                mainLog << " SectorShare: "; mainLog.width(8); mainLog << calOutput/sectorOutput;
+                mainLog << endl;
+                mainLog.setf(ios_base::fmtflags(0),ios_base::floatfield); //reset to default
+            }
+            return false;
+        }
     }
-    
+
     // Calibration at the Technology level was successful.
     return true;
 }

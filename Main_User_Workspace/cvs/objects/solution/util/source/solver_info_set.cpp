@@ -36,7 +36,7 @@
 * \file solver_info_set.cpp
 * \ingroup Solution
 * \brief SolverInfoSet class source file.
-* \author Josh Lurz
+* \author Josh Lurz, Sonny Kim
 */
 #include "util/base/include/definitions.h"
 #include <cassert>
@@ -58,6 +58,11 @@ period( 0 )
 {
     /*!\pre Marketplace is not null. */
     assert( aMarketplace );
+}
+
+//! Constructor for new solution set
+SolverInfoSet::SolverInfoSet( const vector<SolverInfo> aSolutionSet ): solvable( aSolutionSet )
+{
 }
 
 //! Initialize the SolverInfoSet and its SolverInfo's.
@@ -85,6 +90,36 @@ void SolverInfoSet::init( const unsigned int period ) {
             unsolvable.push_back( currInfo );
         }
     }
+}
+
+//! Merge two solution sets
+void SolverInfoSet::merge( const vector<SolverInfo> aSolutionSet )
+{
+    ILogger& solverLog = ILogger::getLogger( "solver_log" );
+    solverLog.setLevel( ILogger::DEBUG );
+    // Iterate through passed-in solution set and merge with matching solvable set.
+    for( ConstSetIterator newIter = aSolutionSet.begin(); newIter != aSolutionSet.end(); ++newIter ){
+        // Find matching original solution, erase and add new solution.
+        for( SetIterator currIter = solvable.begin(); currIter != solvable.end(); ++currIter ){
+            if( currIter->getName() == newIter->getName() ){
+                solvable.erase( currIter );
+                solvable.insert( currIter, *newIter );
+                solverLog << newIter->getName() << " was merged to the solvable solution set." << endl;
+            }
+        }
+    }
+    // Iterate through passed-in solution set and merge with matching unsolvable set.
+    for( ConstSetIterator newIter = aSolutionSet.begin(); newIter != aSolutionSet.end(); ++newIter ){
+        // Find matching original solution, erase and add new solution.
+        for( SetIterator currIter = unsolvable.begin(); currIter != unsolvable.end(); ++currIter ){
+            if( currIter->getName() == newIter->getName() ){
+                unsolvable.erase( currIter );
+                unsolvable.insert( currIter, *newIter );
+                solverLog << newIter->getName() << " was merged to the unsolvable solution set." << endl;
+            }
+        }
+    }
+    solverLog << endl;
 }
 
 //! Update the prices to the marketplace.
@@ -219,6 +254,15 @@ bool SolverInfoSet::checkAndResetBrackets(){
     return didReset;
 }
 
+/*! \brief Reset solution set brackets to current prices and excess demands and 
+    set bracketed to false.
+*/
+void SolverInfoSet::resetBrackets(){
+    for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
+        iter->resetBrackets();
+    }
+}
+
 //! Find the maximum relative excess demand.
 double SolverInfoSet::getMaxRelativeExcessDemand( const double ED_SOLUTION_FLOOR ) const {
     double largest = -1;
@@ -328,6 +372,23 @@ SolverInfo* SolverInfoSet::getPolicyOrWorstSolverInfo( const double aTolerance, 
     }
     return &*worstMarket;
 }
+/*! \brief Find the policy solver info.
+* \author Josh Lurz, Sonny Kim
+* \details This function determines the SolverInfo within the set which has the largest relative excess demand as defined by
+* getRelativeED. 
+* \param aEDSolutionFloor Value of ED below which the market should be considered solved. 
+* \return The SolverInfo for the policy.
+*/
+SolverInfo* SolverInfoSet::getPolicySolverInfo( const double aTolerance, const double aEDSolutionFloor) {
+    for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++ iter ){
+        // TODO: Find a more generic method. 
+        if( iter->getName() == "globalCO2" && !iter->isSolved( aTolerance, aEDSolutionFloor ) ){
+            return &*iter;
+        }
+    }
+    return 0;
+}
+
 //! Return whether all currently solvable markets are bracketed.
 bool SolverInfoSet::isAllBracketed() const {
     for( ConstSetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
@@ -378,9 +439,60 @@ const SolverInfo& SolverInfoSet::getSolvable( unsigned int index ) const {
     return solvable.at( index );
 }
 
+//! Get the solvable set (may not be solved).
+vector<SolverInfo> SolverInfoSet::getSolvableSet() const{
+    return solvable;
+}
+
 //! Non-Const getter which references the solvable vector.
 SolverInfo& SolverInfoSet::getSolvable( unsigned int index ) {
     return solvable.at( index );
+}
+
+//! Get the solved set.
+vector<SolverInfo> SolverInfoSet::getSolvedSet( const double aSolutionTolerance,
+                                  const double aEDSolutionFloor ) const{
+    vector<SolverInfo> solvedSet;
+    for( ConstSetIterator currInfo = solvable.begin(); currInfo != solvable.end(); ++currInfo ){
+        if( currInfo->shouldSolve( false ) && currInfo->isSolved( aSolutionTolerance, aEDSolutionFloor ) ){
+            solvedSet.push_back( *currInfo );
+        }
+    }
+    for( ConstSetIterator currInfo = unsolvable.begin(); currInfo != unsolvable.end(); ++currInfo ){
+        if( currInfo->shouldSolve( false ) && currInfo->isSolved( aSolutionTolerance, aEDSolutionFloor ) ){
+            solvedSet.push_back( *currInfo );
+        }
+    }
+    return solvedSet;
+}
+
+//! Const getter which references the unsolved vector.
+SolverInfo& SolverInfoSet::getUnsolved( unsigned int index, const double aSolutionTolerance,
+                                              const double aEDSolutionFloor  ) {
+    unsolved.clear();
+    for( SetIterator curr = solvable.begin(); curr != solvable.end(); ++curr ){
+        if( !curr->isSolved( aSolutionTolerance, aEDSolutionFloor ) ){
+            unsolved.push_back( *curr );
+        }
+    }
+    return unsolved.at( index );
+}
+ 
+//! Get the unsolved set.
+vector<SolverInfo> SolverInfoSet::getUnsolvedSet( const double aSolutionTolerance,
+                                  const double aEDSolutionFloor ) const{
+    vector<SolverInfo> unsolvedSet;
+    for( ConstSetIterator currInfo = solvable.begin(); currInfo != solvable.end(); ++currInfo ){
+        if( currInfo->shouldSolve( false ) && !currInfo->isSolved( aSolutionTolerance, aEDSolutionFloor ) ){
+            unsolvedSet.push_back( *currInfo );
+        }
+    }
+    for( ConstSetIterator currInfo = unsolvable.begin(); currInfo != unsolvable.end(); ++currInfo ){
+        if( currInfo->shouldSolve( false ) && !currInfo->isSolved( aSolutionTolerance, aEDSolutionFloor ) ){
+            unsolvedSet.push_back( *currInfo );
+        }
+    }
+    return unsolvedSet;
 }
 
 //! Const getter which references the solvable and unsolvable vectors.
@@ -447,35 +559,54 @@ void SolverInfoSet::printUnsolved( const double aSolutionTolerance,
                                    const double aEDSolutionFloor,
                                    ostream& aOut )
 {
-    aOut << "Currently unsolved markets: " << endl;
-    aOut.setf(ios_base::left,ios_base::adjustfield); // left alignment
-    aOut.width(36); aOut << "Market"; aOut << " ";
-    aOut.width(10); aOut << "X"; aOut << " ";
-    aOut.width(10); aOut << "XL"; aOut << " ";
-    aOut.width(10); aOut << "XR"; aOut << " ";
-    aOut.width(10); aOut << "ED"; aOut << " ";
-    aOut.width(10); aOut << "EDL"; aOut << " ";
-    aOut.width(10); aOut << "EDR"; aOut << " ";
-    aOut.width(10); aOut << "RED"; aOut << " ";
-    aOut.width(3); aOut << "brk"; aOut << " ";
-    aOut.width(10); aOut << "Supply"; aOut << " ";
-    aOut.width(10); aOut << "Demand" << endl;
-    aOut.setf(ios_base::fmtflags(0),ios_base::floatfield); //reset to default
+    aOut << "Currently Unsolved Markets: " << endl;
 
-  //  aOut << "Market, X, XL, XR, ED, EDL, EDR, RED, bracketed, supply, demand" << endl;
-    // Check solvable first
+    // Unsolved Part 1:
+    aOut << "Unsolved Part 1: Solvable Markets" << endl;
+    aOut.setf(ios_base::left,ios_base::adjustfield); // left alignment
+    aOut.width(36); aOut << "Market,"; aOut << " ";
+    aOut.width(10); aOut << "X,"; aOut << " ";
+    aOut.width(10); aOut << "XL,"; aOut << " ";
+    aOut.width(10); aOut << "XR,"; aOut << " ";
+    aOut.width(10); aOut << "ED,"; aOut << " ";
+    aOut.width(10); aOut << "EDL,"; aOut << " ";
+    aOut.width(10); aOut << "EDR,"; aOut << " ";
+    aOut.width(10); aOut << "RED,"; aOut << " ";
+    aOut.width(3); aOut << "brk,"; aOut << " ";
+    aOut.width(10); aOut << "Supply,"; aOut << " ";
+    aOut.width(10); aOut << "Demand,"; aOut << " ";
+    aOut.width(10); aOut << "Mrk Type," << endl;
+    aOut.setf(ios_base::fmtflags(0),ios_base::floatfield); //reset to default
+    // Solvable markets that are not solved.
     for( SetIterator curr = solvable.begin(); curr != solvable.end(); ++curr ){
         if( !curr->isSolved( aSolutionTolerance, aEDSolutionFloor ) ){
             aOut << *curr << endl;
         }
     }
     
-    // Unsolvable markets must clear as well.
+    // Unsolved Part 2:
+    aOut << "Unsolved Part 2: Unsolvable Markets Not Cleared" << endl;
+    aOut.setf(ios_base::left,ios_base::adjustfield); // left alignment
+    aOut.width(36); aOut << "Market,"; aOut << " ";
+    aOut.width(10); aOut << "X,"; aOut << " ";
+    aOut.width(10); aOut << "XL,"; aOut << " ";
+    aOut.width(10); aOut << "XR,"; aOut << " ";
+    aOut.width(10); aOut << "ED,"; aOut << " ";
+    aOut.width(10); aOut << "EDL,"; aOut << " ";
+    aOut.width(10); aOut << "EDR,"; aOut << " ";
+    aOut.width(10); aOut << "RED,"; aOut << " ";
+    aOut.width(3); aOut << "brk,"; aOut << " ";
+    aOut.width(10); aOut << "Supply,"; aOut << " ";
+    aOut.width(10); aOut << "Demand,"; aOut << " ";
+    aOut.width(10); aOut << "Mrk Type," << endl;
+    aOut.setf(ios_base::fmtflags(0),ios_base::floatfield); //reset to default
+    // Unsolvable markets that are not cleared.
     for( SetIterator curr = unsolvable.begin(); curr != unsolvable.end(); ++curr ){
         if( !curr->isSolved( aSolutionTolerance, aEDSolutionFloor ) ){
             aOut << *curr << endl;
         }
     }
+    aOut << endl; // next line
 }
 
 void SolverInfoSet::unsetBisectedFlag(){
@@ -491,7 +622,7 @@ void SolverInfoSet::unsetBisectedFlag(){
 
 //! Print out all the SolutionInfo objects' information.
 void SolverInfoSet::print( ostream& out ) const {
-    out << endl << "Market, X, XL, XR, ED, EDL, EDR, RED, bracketed, supply, demand" << endl;
+    out << endl << "Market, X, XL, XR, ED, EDL, EDR, RED, bracketed, supply, demand, MRK type" << endl;
     for( ConstSetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
         out << *iter << endl;
     }

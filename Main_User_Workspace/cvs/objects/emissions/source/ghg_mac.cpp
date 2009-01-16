@@ -333,7 +333,7 @@ double GhgMAC::adjustTechCh( const int period, const int finalReductionPeriod, c
     else {
         double maxChange = maxReduction / finalReduction;
         if ( period <= finalReductionPeriod ){
-            multiplier =  maxChange * ( 1 / ( finalReductionPeriod - basePeriod ) ) * ( period - basePeriod );
+            multiplier =  maxChange * ( 1.0 / ( finalReductionPeriod - basePeriod ) ) * ( period - basePeriod );
         }
         else {
             multiplier = maxChange;

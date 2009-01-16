@@ -73,7 +73,11 @@ public:
     class PerCapitaNotAdjGDPDemandFunction: public IDemandFunction {
     public:
         virtual bool isPerCapitaBased() const {
-            return true;
+            // This object overrides with its own per capita
+            // based demand function regardless of this boolean.
+            // Setting it to false prevents writing out
+            // boolean to output.xml.
+            return false;
         }
 
         virtual double calcDemand( const Demographic* aDemographics,

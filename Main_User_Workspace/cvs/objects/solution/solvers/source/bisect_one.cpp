@@ -118,9 +118,9 @@ SolverComponent::ReturnCode BisectOne::solve( const double solutionTolerance, co
     // worstSol.setBisectedFlag();
     solverLog.setLevel( ILogger::NOTICE );
     solverLog << "BisectOne function called on market " << worstSol->getName() << "." << endl;
-    unsigned int numIterations = 0;
     SolverLibrary::bracketOne( marketplace, world, BRACKET_INTERVAL, solutionTolerance,
                                edSolutionFloor, solverSet, worstSol, calcCounter, period );
+    unsigned int numIterations = 0;
     do {
         solverSet.printMarketInfo( "Bisect One on " + worstSol->getName(), calcCounter->getPeriodCount(), singleLog );
 
@@ -143,10 +143,10 @@ SolverComponent::ReturnCode BisectOne::solve( const double solutionTolerance, co
         solverSet.updateSolvable( false );
         addIteration( worstSol->getName(), worstSol->getRelativeED( edSolutionFloor ) );
         worstMarketLog << "BisectOne-MaxRelED: "  << *worstSol << endl;
+        solverLog << "BisectOneWorst-MaxRelED: " << *worstSol << endl;
     } // end do loop        
-    while ( isImproving( MAX_ITER_NO_IMPROVEMENT )
-            && ++numIterations < maxIterations 
-            && !worstSol->isSolved( solutionTolerance, edSolutionFloor ) );
+    while ( ( ++numIterations < maxIterations ) &&
+              !worstSol->isSolved( solutionTolerance, edSolutionFloor ) );
     // Report results.
     solverLog.setLevel( ILogger::NOTICE );
     if( numIterations >= maxIterations ){

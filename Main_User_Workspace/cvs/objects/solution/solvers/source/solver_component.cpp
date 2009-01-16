@@ -92,15 +92,15 @@ auto_ptr<SolverComponent> SolverComponent::getSolverComponent( const string& sol
 {
     // Check the name against possible components. 
     if( solverName == LogNewtonRaphson::getNameStatic() ){
-        double deltaPrice = Configuration::getInstance()->getDouble( "DeltaPrice", 1e-5 );
+        double deltaPrice = Configuration::getInstance()->getDouble( "DeltaPrice", 1e-6 );
         return auto_ptr<SolverComponent>( new LogNewtonRaphson( marketplace, world, calcCounter, deltaPrice ) );
     }
     else if( solverName == BisectAll::getNameStatic() ){
         return auto_ptr<SolverComponent>( new BisectAll( marketplace, world, calcCounter ) );
     }
     else if( solverName == LogNewtonRaphsonSaveDeriv::getNameStatic() ){
-        double deltaPrice = Configuration::getInstance()->getDouble( "DeltaPrice", 1e-5 );
-        return auto_ptr<SolverComponent>( new LogNewtonRaphsonSaveDeriv( marketplace, world, calcCounter, 1e-5 ) );
+        double deltaPrice = Configuration::getInstance()->getDouble( "DeltaPrice", 1e-6 );
+        return auto_ptr<SolverComponent>( new LogNewtonRaphsonSaveDeriv( marketplace, world, calcCounter, 1e-6 ) );
     }
     else if( solverName == BisectOne::getNameStatic() ){
         return auto_ptr<SolverComponent>( new BisectOne( marketplace, world, calcCounter ) );

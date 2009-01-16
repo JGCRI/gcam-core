@@ -70,7 +70,11 @@ void CalibrationMarket::setPrice( const double priceIn ) {
     Market::setPrice( priceIn );
 }
 
-void CalibrationMarket::setPriceFromLast( const double lastPrice ) {
+void CalibrationMarket::set_price_to_last_if_default( const double lastPrice ) {
+   // Do nothing, as in a calibration market the initial values for each period are set from the XML.
+}
+
+void CalibrationMarket::set_price_to_last( const double lastPrice ) {
    // Do nothing, as in a calibration market the initial values for each period are set from the XML.
 }
 
@@ -96,10 +100,6 @@ void CalibrationMarket::nullSupply() {
 
 double CalibrationMarket::getSupply() const {
     return Market::getSupply();
-}
-
-double CalibrationMarket::getSupplyForChecking() const {
-    return Market::getSupplyForChecking();
 }
 
 void CalibrationMarket::addToSupply( const double supplyIn ) {

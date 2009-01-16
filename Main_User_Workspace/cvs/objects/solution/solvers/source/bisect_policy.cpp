@@ -46,6 +46,7 @@
 #include "solution/solvers/include/bisect_policy.h"
 #include "solution/util/include/calc_counter.h"
 #include "marketplace/include/marketplace.h"
+#include "marketplace/include/imarket_type.h"
 #include "containers/include/world.h"
 #include "solution/util/include/solver_info.h"
 #include "solution/util/include/solver_info_set.h"

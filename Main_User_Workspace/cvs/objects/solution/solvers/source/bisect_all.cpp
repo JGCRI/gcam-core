@@ -105,16 +105,14 @@ SolverComponent::ReturnCode BisectAll::solve( const double solutionTolerance, co
                                               const int period )
 {
     startMethod();
-
-    unsigned int numIterations = 0; // number of iterations
     ReturnCode code = ORIGINAL_STATE; // code that reports success 1 or failure 0
-    const static unsigned int MAX_ITER_NO_IMPROVEMENT = 10; // Maximum number of iterations without improvement.
     
     // Setup Logging.
     ILogger& solverLog = ILogger::getLogger( "solver_log" );
     solverLog.setLevel( ILogger::NOTICE );
     ILogger& worstMarketLog = ILogger::getLogger( "worst_market_log" );
     worstMarketLog.setLevel( ILogger::NOTICE );
+    worstMarketLog << "Policy All, X, XL, XR, ED, EDL, EDR, RED, bracketed, supply, demand" << endl;
     solverLog << "Bisection_all routine starting" << endl; 
 
     solverSet.updateFromMarkets();
@@ -122,32 +120,29 @@ SolverComponent::ReturnCode BisectAll::solve( const double solutionTolerance, co
     
     // Select the worst market.
     SolverInfo* worstSol = solverSet.getWorstSolverInfo( edSolutionFloor );
-    // solve all markets
     ILogger& singleLog = ILogger::getLogger( "single_market_log" );
     singleLog.setLevel( ILogger::DEBUG );
+
+    unsigned int numIterations = 1; // number of iterations
 
     do {
         solverLog.setLevel( ILogger::NOTICE );
         solverLog << "BisectionAll " << numIterations << endl;
         solverSet.printMarketInfo( "Bisect All", calcCounter->getPeriodCount(), singleLog );
 
+        // Since bisection is called after bracketing, the current price and ED will be the
+        // one of the brackets.
+        // Start bisection with mid-point to improve efficiency.
         for ( unsigned int i = 0; i < solverSet.getNumSolvable(); ++i ) {
             SolverInfo& currSol = solverSet.getSolvable( i );
-            if ( !currSol.isWithinTolerance( solutionTolerance, edSolutionFloor ) ) { // if haven't solved
-                // Move the right price bracket in if Supply > Demand
-                if ( currSol.getED() < 0 ) {
-                    currSol.moveRightBracketToX();
-                }
-                // Move the left price bracket in if Demand >= Supply
-                else {
-                    currSol.moveLeftBracketToX();
-                }
+            // If not solved.
+            if ( !currSol.isWithinTolerance( solutionTolerance, edSolutionFloor ) ) {
                 // Set new trial value to center
                 currSol.setPriceToCenter();
             }   
-            // price=0 and supply>demand. only true for constraint case
-            // other markets cannot have supply>demand as price->0
-            // Another condition that should be moved. 
+            // price=0 and supply>demand is true only for constraint case.
+            // Other markets cannot have supply>demand as price->0.
+            // Another condition that should be moved.
             if ( fabs( currSol.getPrice() ) < util::getSmallNumber() && currSol.getED() < 0 ) { 
                 currSol.setPrice( 0 ); 
             } 
@@ -155,7 +150,6 @@ SolverComponent::ReturnCode BisectAll::solve( const double solutionTolerance, co
 
         solverSet.updateToMarkets();
         marketplace->nullSuppliesAndDemands( period );
-
         world->calc( period );
         solverSet.updateFromMarkets();
         solverSet.updateSolvable( false );
@@ -164,13 +158,31 @@ SolverComponent::ReturnCode BisectAll::solve( const double solutionTolerance, co
         // and move brackets if necessary. A more general  bracket check is below, but this
         // is needed more often and can be done simply.
         solverSet.adjustBrackets();
-        
+        // Print solution set information to solver log.
+        solverLog << solverSet << endl;
+
+        // Move brackets, both price and ED, after solving mid-point.  This ensures that
+        // both price and ED for each bracket is valid and up to date.
+        for ( unsigned int i = 0; i < solverSet.getNumSolvable(); ++i ) {
+            SolverInfo& currSol = solverSet.getSolvable( i );
+            // If not solved.
+            if ( !currSol.isWithinTolerance( solutionTolerance, edSolutionFloor ) ) {
+                // Move the right price bracket in if Supply > Demand
+                if ( currSol.getED() < 0 ) {
+                    currSol.moveRightBracketToX();
+                }
+                // Move the left price bracket in if Demand >= Supply
+                else {
+                    currSol.moveLeftBracketToX();
+                }
+            }   
+        }
+
         const SolverInfo* maxSol = solverSet.getWorstSolverInfo( edSolutionFloor );
         addIteration( maxSol->getName(), maxSol->getRelativeED( edSolutionFloor ) );
         worstMarketLog << "BisectAll-maxRelED: " << *maxSol << endl;
     } // end do loop        
-    while ( isImproving( MAX_ITER_NO_IMPROVEMENT ) 
-            && ++numIterations < maxIterations 
+    while ( ++numIterations <= maxIterations 
             && !solverSet.isAllSolved( solutionTolerance, edSolutionFloor ) );
 
     // Set the return code. 
@@ -178,11 +190,8 @@ SolverComponent::ReturnCode BisectAll::solve( const double solutionTolerance, co
     
     // Report exit conditions.
     solverLog.setLevel( ILogger::NOTICE );
-    if ( numIterations >= maxIterations ){
+    if ( numIterations > maxIterations ){
         solverLog << "Exiting BisectionAll due to reaching the maximum number of iterations." << endl;
-    }
-    else if( !isImproving( MAX_ITER_NO_IMPROVEMENT ) ){
-        solverLog << "Exiting BisectionAll due to lack of improvement in relative excess demand." << endl;
     }
     else {
         solverLog << "Exiting BisectionAll with model fully solved." << endl;

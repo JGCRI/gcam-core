@@ -100,7 +100,7 @@ protected:
     std::string regionName; //!< region name
     std::string sectorName; //!< sector name
     int scaleYear; //!< year to scale share weights to after calibration
-    int techScaleYear; //!< year to scale technology share weights to after calibration
+    int mTechScaleYear; //!< year to scale technology share weights to after calibration
     std::auto_ptr<IInfo> mSubsectorInfo; //!< The subsector's information store.
 
     std::vector<std::vector<ITechnology*> > techs; //!< vector of technology by period
@@ -128,7 +128,6 @@ protected:
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {};
     void normalizeTechShareWeights( const int period );
-    virtual void adjustTechnologyShareWeights( const int period );
     void techShareWeightLinearInterpFn( const int beginPeriod,  const int endPeriod );
     void parseBaseTechHelper( const xercesc::DOMNode* curr, BaseTechnology* aNewTech );
     virtual bool isNameOfChild  ( const std::string& nodename ) const;
@@ -173,6 +172,7 @@ public:
     static const std::string& getXMLNameStatic();
     virtual double getPrice( const GDP* aGDP, const int aPeriod ) const;
     bool allOutputFixed( const int period ) const;
+    bool containsOnlyFixedOutputTechnologies( const int period ) const;
     virtual double getAverageFuelPrice( const GDP* aGDP, const int aPeriod ) const;
 
     virtual void calcCost( const int aPeriod );

@@ -84,6 +84,10 @@ void MarketTax::initPrice() {
     }
 }
 
+void MarketTax::setPrice( const double priceIn ) {
+    Market::setPrice( priceIn );
+}
+
 /* \brief Initialize the MarketTax price from last period's price.
 * \details This method checks if the lastPrice was 0. This would mean that last period's constraint was 
 * 0. If it is, price is set to a random as this is the initial constrained period.
@@ -91,7 +95,7 @@ void MarketTax::initPrice() {
 * \param lastPrice Previous period's price. This should have already been set in store to last!!
 * \author Josh Lurz, Sonny Kim
 */
-void MarketTax::setPriceFromLast( const double lastPrice ) {
+void MarketTax::set_price_to_last_if_default( const double lastPrice ) {
     const double MIN_PRICE = 5;
     // If the price is zero and the solve flag is set so a constraint exists. 
     if( price <= util::getSmallNumber() && solveMarket ){
@@ -109,8 +113,53 @@ void MarketTax::setPriceFromLast( const double lastPrice ) {
     // There is no else here because we do not want to override prices in the case of a fixed tax.
 }
 
+/* \brief Initialize the MarketTax price from last period's price.
+* \details This method checks if the lastPrice was 0. This would mean that last period's constraint was 
+* 0. If it is, price is set to a random as this is the initial constrained period.
+* Otherwise price is set to the previous period's price as is done in the normal market.
+* \param lastPrice Previous period's price. This should have already been set in store to last!!
+* \author Josh Lurz, Sonny Kim
+*/
+void MarketTax::set_price_to_last( const double lastPrice ) {
+    const double MIN_PRICE = 5;
+    // If the price is zero and the solve flag is set so a constraint exists. 
+    if( price <= util::getSmallNumber() && solveMarket ){
+        // If the last price is 0, we should set the price to a random number.
+        // New price is between MIN_PRICE and (1 + MIN_PRICE)
+        if( lastPrice < util::getSmallNumber() ){
+            srand( (unsigned)time( NULL ) );
+            price = ((double) rand() / (double) RAND_MAX) + MIN_PRICE;
+        }
+        // Otherwise set the price to the previous period's price.
+        else {
+            price = lastPrice;
+        }
+    }
+    // There is no else here because we do not want to override prices in the case of a fixed tax.
+}
+
+double MarketTax::getPrice() const {
+    return Market::getPrice();
+}
+
+void MarketTax::addToDemand( const double demandIn ) {
+    Market::addToDemand( demandIn );
+}
+
+double MarketTax::getDemand() const {
+    return Market::getDemand();
+}
+
 //! The supply in MarketTax is the constraint, it should not be removed by calls to nullSupply
 void MarketTax::nullSupply() {
+}
+
+double MarketTax::getSupply() const {
+    return Market::getSupply();
+}
+
+void MarketTax::addToSupply( const double supplyIn ) {
+    Market::addToSupply( supplyIn );
 }
 
 /* \brief This method determines whether to solve a MarketTax with the solution mechanism.
@@ -148,6 +197,7 @@ bool MarketTax::shouldSolve() const {
 */
 bool MarketTax::shouldSolveNR() const {
     bool doSolveMarket = false;
+    /* Old code: in case tax market should be included in the NR solver.
     // Check if this market is a type that is solved (i.e resource, policy, etc.)
     // Note: secondary markets are not solved in miniCAM
     if ( solveMarket) {
@@ -161,6 +211,8 @@ bool MarketTax::shouldSolveNR() const {
             }
         }
     }
+    */
+    // Do not include tax market in the NR Solver.
     return doSolveMarket;
 }
 

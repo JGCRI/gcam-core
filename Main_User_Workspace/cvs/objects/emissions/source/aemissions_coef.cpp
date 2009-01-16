@@ -105,7 +105,7 @@ double AEmissionsCoef::calcMaxCntrl( const double aFinalEmissCoef, const double 
                                      const double aMultiplier ) const {
     // Guard against divide by 0
     double maxCntrl = 0;
-    if( mEmissionsCoef > util::getSmallNumber() ){
+    if( mEmissionsCoef > 0.0 ){
         maxCntrl = 100 * ( 1 - ( aFinalEmissCoef / ( mEmissionsCoef ) ) );
     }
     else{

@@ -76,6 +76,59 @@ SupplySector::SupplySector( const string& aRegionName )
 mHasTrialSupply( false ),
 mBiomassAdder( scenario->getModeltime()->getmaxper() )
 {
+    // resize vectors
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int maxper = modeltime->getmaxper();
+    //  Price vector for the trial marekts if created
+    mPriceTrialSupplyMarket.resize( maxper );
+}
+
+/*! \brief Complete the initialization of the supply sector.
+* \param aRegionInfo Regional information object.
+* \param aDependencyFinder Regional dependency finder.
+* \param aGlobalTechDB Global technology database.
+*/
+void SupplySector::completeInit( const IInfo* aRegionInfo,
+                                 DependencyFinder* aDependencyFinder,
+                                 ILandAllocator* aLandAllocator,
+                                 const GlobalTechnologyDatabase* aGlobalTechDB )
+{
+	// default unit to EJ
+	if ( mOutputUnit.empty() ) {
+		mOutputUnit = "EJ"; 
+	}
+	// default unit to EJ
+	if ( mInputUnit.empty() ) {
+		mInputUnit = "EJ"; 
+	}
+	// default unit to $/GJ
+	if ( mPriceUnit.empty() ) {
+		mPriceUnit = "75$/GJ"; 
+	}
+	Sector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator, aGlobalTechDB );	
+    setMarket();
+}
+
+/*! \brief Create new market for this Sector
+*
+* Sets up the appropriate market within the marketplace for this Sector. Note that the type of market is NORMAL -- 
+* signifying that this market is a normal market that is solved (if necessary).
+*
+* \author Sonny Kim, Josh Lurz, Steve Smith
+*/
+void SupplySector::setMarket() {    
+    Marketplace* marketplace = scenario->getMarketplace();
+    // Creates a regional market. MiniCAM supply sectors are not independent and 
+    // cannot be members of multi-region markets.
+    if( marketplace->createMarket( regionName, regionName, name, IMarketType::NORMAL ) ) {
+        // Initialize prices for markets
+        marketplace->setPriceVector( name, regionName, mPrice );
+
+        // Set price and output units for period 0 market info
+        IInfo* marketInfo = marketplace->getMarketInfo( name, regionName, 0, true );
+        marketInfo->setString( "price-unit", mPriceUnit );
+        marketInfo->setString( "output-unit", mOutputUnit );
+    }
 }
 
 /*! \brief Initialize the SupplySector.
@@ -88,6 +141,7 @@ void SupplySector::initCalc( NationalAccount* aNationalAccount,
                             const Demographic* aDemographics,
                             const int aPeriod )
 {
+    Marketplace* marketplace = scenario->getMarketplace();
     Sector::initCalc( aNationalAccount, aDemographics, aPeriod );
 
     // Check if the sector should create a trial supply market or energy final
@@ -98,16 +152,11 @@ void SupplySector::initCalc( NationalAccount* aNationalAccount,
         if( SectorUtils::isFinalEnergySector( regionName, name ) ){
             mFinalEnergySupplier.reset( new FinalEnergySupplier( name ) );
         }
-
         if( !mHasTrialSupply ){
-            const Marketplace* marketplace = scenario->getMarketplace();
-
             // Always look for the flag in period 0.
             const IInfo* sectorInfo = marketplace->getMarketInfo( name, regionName, 0, true );
-
             // The sector's market info must exist.
             assert( sectorInfo );
-
             // Set the trial supply to true if the marketinfo has a request. 
             mHasTrialSupply = sectorInfo->getBoolean( "create-trial-supply", false );
         }
@@ -115,6 +164,13 @@ void SupplySector::initCalc( NationalAccount* aNationalAccount,
         // Create the trial supply market if requested.
         if( mHasTrialSupply ){
             SectorUtils::createTrialSupplyMarket( regionName, name );
+        }
+    }
+
+    if( aPeriod > 0 && mHasTrialSupply ){
+        if( mPriceTrialSupplyMarket[ aPeriod ] != 0 ){
+            marketplace->setPrice( SectorUtils::getTrialMarketName( name ), regionName,
+                mPriceTrialSupplyMarket[ aPeriod ], aPeriod, true );
         }
     }
 
@@ -268,33 +324,6 @@ void SupplySector::supply( const GDP* aGDP, const int aPeriod ) {
 	}
 }
 
-/*! \brief Complete the initialization of the supply sector.
-* \param aRegionInfo Regional information object.
-* \param aDependencyFinder Regional dependency finder.
-* \param aGlobalTechDB Global technology database.
-*/
-void SupplySector::completeInit( const IInfo* aRegionInfo,
-                                 DependencyFinder* aDependencyFinder,
-                                 ILandAllocator* aLandAllocator,
-                                 const GlobalTechnologyDatabase* aGlobalTechDB )
-{
-	// default unit to EJ
-	if ( mOutputUnit.empty() ) {
-		mOutputUnit = "EJ"; 
-	}
-	// default unit to EJ
-	if ( mInputUnit.empty() ) {
-		mInputUnit = "EJ"; 
-	}
-	// default unit to $/GJ
-	if ( mPriceUnit.empty() ) {
-		mPriceUnit = "75$/GJ"; 
-	}
-	Sector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator, aGlobalTechDB );
-	
-    setMarket();
-}
-
 void SupplySector::setCalSuppliesAndDemands( const int aPeriod ) const {
 
     CalQuantityTabulator calSupplyTabulator( regionName );
@@ -382,34 +411,6 @@ const std::string& SupplySector::getXMLNameStatic() {
     return XML_NAME;
 }
 
-/*! \brief XML output stream for derived classes
-*
-* Function writes output due to any variables specific to derived classes to XML.
-* This function is called by toInputXML in the base Sector class.
-*
-* \author Steve Smith, Josh Lurz, Sonny Kim
-* \param out reference to the output stream
-* \param tabs A tabs object responsible for printing the correct number of tabs. 
-*/
-void SupplySector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {  
-
-    // Temporary CCTP hack.
-    XMLWriteVector( mBiomassAdder, "biomass-price-adder", out, tabs, scenario->getModeltime(), 0.0 );
-}
-
-/*! \brief XML debugging output stream for derived classes
-*
-* Function writes output due to any variables specific to derived classes to XML.
-* This function is called by toInputXML in the base Sector class.
-*
-* \author Steve Smith, Josh Lurz, Sonny Kim
-* \param out reference to the output stream
-* \param tabs A tabs object responsible for printing the correct number of tabs. 
-*/
-void SupplySector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
-
-    XMLWriteElement( mBiomassAdder[ period ], "biomass-price-adder", out, tabs );
-}
 /*! \brief Parses any child nodes specific to derived classes
 *
 * Method parses any input data from child nodes that are specific to the classes derived from this class. Since Sector is the generic base class, there are no values here.
@@ -423,30 +424,47 @@ bool SupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode* 
     if( nodeName == "biomass-price-adder" ){
         XMLHelper<double>::insertValueIntoVector( curr, mBiomassAdder, scenario->getModeltime() );
     }
+    else if( nodeName == "price-trial-supply" ){
+        XMLHelper<double>::insertValueIntoVector( curr, mPriceTrialSupplyMarket, scenario->getModeltime() );
+    }
     else {
         return false;
     }
     return true;
 }
 
-/*! \brief Create new market for this Sector
+/*! \brief XML output stream for derived classes
 *
-* Sets up the appropriate market within the marketplace for this Sector. Note that the type of market is NORMAL -- 
-* signifying that this market is a normal market that is solved (if necessary).
+* Function writes output due to any variables specific to derived classes to XML.
+* This function is called by toInputXML in the base Sector class.
 *
-* \author Sonny Kim, Josh Lurz, Steve Smith
+* \author Steve Smith, Josh Lurz, Sonny Kim
+* \param out reference to the output stream
+* \param tabs A tabs object responsible for printing the correct number of tabs. 
 */
-void SupplySector::setMarket() {    
-    Marketplace* marketplace = scenario->getMarketplace();
-    // Creates a regional market. MiniCAM supply sectors are not independent and 
-    // cannot be members of multi-region markets.
-    if( marketplace->createMarket( regionName, regionName, name, IMarketType::NORMAL ) ) {
-        marketplace->setPrice( name, regionName, mBasePrice, 0, true );
+void SupplySector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {  
 
-        // Set price and output units for period 0 market info
-        IInfo* marketInfo = marketplace->getMarketInfo( name, regionName, 0, true );
-        marketInfo->setString( "price-unit", mPriceUnit );
-        marketInfo->setString( "output-unit", mOutputUnit );
+    // Temporary CCTP hack.
+    XMLWriteVector( mBiomassAdder, "biomass-price-adder", out, tabs, scenario->getModeltime(), 0.0 );
+    if( mHasTrialSupply ){
+        XMLWriteVector( mPriceTrialSupplyMarket, "price-trial-supply", out, tabs, scenario->getModeltime(), 0.0 );
+    }
+}
+
+/*! \brief XML debugging output stream for derived classes
+*
+* Function writes output due to any variables specific to derived classes to XML.
+* This function is called by toInputXML in the base Sector class.
+*
+* \author Steve Smith, Josh Lurz, Sonny Kim
+* \param out reference to the output stream
+* \param tabs A tabs object responsible for printing the correct number of tabs. 
+*/
+void SupplySector::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* tabs ) const {
+
+    XMLWriteElement( mBiomassAdder[ aPeriod ], "biomass-price-adder", aOut, tabs );
+    if( mHasTrialSupply ){
+        XMLWriteElement( mPriceTrialSupplyMarket[ aPeriod ], "price-trial-supply", aOut, tabs );
     }
 }
 
@@ -488,6 +506,24 @@ void SupplySector::FinalEnergySupplier::setFinalEnergy( const string& aRegionNam
 		marketplace->addToDemand( mTFEMarketName, aRegionName,
                                   aFinalEnergy, aPeriod, false );
 	}
+}
+
+/*! \brief Function to finalize objects after a period is solved.
+* \details This function is used to calculate and store variables which are only needed after the current
+* period is complete.
+* \param aPeriod The period to finalize.
+* \todo Finish this function.
+* \author Josh Lurz, Sonny Kim
+*/
+void SupplySector::postCalc( const int aPeriod ){
+    Sector::postCalc( aPeriod );
+    // If trial market exists, get solved trial "prices" and set to member
+    // price vector
+    if( aPeriod > 0 && mHasTrialSupply ){
+        string trialMarketName = SectorUtils::getTrialMarketName( name );
+        mPriceTrialSupplyMarket[ aPeriod ] = 
+            scenario->getMarketplace()->getPrice( trialMarketName, regionName, aPeriod, true );
+    }
 }
 
 //! Write MiniCAM style Sector output to database.

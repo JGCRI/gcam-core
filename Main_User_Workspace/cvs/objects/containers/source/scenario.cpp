@@ -342,6 +342,7 @@ bool Scenario::calculatePeriod( const int aPeriod,
     if( aPeriod == 0 ){
         marketplace->nullSuppliesAndDemands( aPeriod );
     }
+
     world->calc( aPeriod ); // call to calculate initial supply and demand
 
     bool success = solve( aPeriod ); // solution uses Bisect and NR routine to clear markets

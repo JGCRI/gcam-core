@@ -102,10 +102,21 @@ bool SolverInfo::isBracketed() const {
 */
 void SolverInfo::setBracketed(){
     bracketed = true;
+    // Fixes policy market erroneously set to true
+    // without actual price brackets.
+    if( XL == XR ){
+        bracketed = false;
+    }
 }
 
 //! Return the size of the bracket.
 double SolverInfo::getBracketSize() const {
+    return fabs( XR - XL );
+}
+
+//! Return dynamically calculated bracket interval.
+double SolverInfo::getBracketInterval() const {
+
     return fabs( XR - XL );
 }
 
@@ -183,6 +194,22 @@ void SolverInfo::restoreValues() {
 */
 const string& SolverInfo::getName() const {
     return linkedMarket->getName();
+}
+
+/*! \brief Return the market type of the linked market object.
+* \author Sonny Kim
+* \return The type of the market the SolutionInfo is connected to.
+*/
+const IMarketType::Type SolverInfo::getType() const {
+    return linkedMarket->getType();
+}
+
+/*! \brief Return the name of market type of the linked market object.
+* \author Sonny Kim
+* \return The name of market type the SolutionInfo is connected to.
+*/
+string SolverInfo::getTypeName() const {
+    return linkedMarket->convert_type_to_string( linkedMarket->getType() );
 }
 
 /*! \brief Sets the price contained in the Solver into its corresponding market.
@@ -377,8 +404,7 @@ void SolverInfo::calcSupplyElas( const SolverInfoSet& solvableMarkets ) {
 */
 bool SolverInfo::checkAndResetBrackets(){
     // try re-bracketing if the current bracket is empty.
-    // if ( getBracketSize() < util::getSmallNumber() ) {
-    if( !isCurrentlyBracketed() ){ // TEMP HARDCODING
+    if( !isCurrentlyBracketed() ){
         resetBrackets();
         return true;
     }
@@ -401,7 +427,6 @@ void SolverInfo::increaseX( const double multiplier, const double lowerBound ){
 //! Decrease price by 1/(1+multiplier), or set it to 0 if it is below the lower bound.
 void SolverInfo::decreaseX( const double multiplier, const double lowerBound ){
     if( X >= lowerBound ) {
-      //  X *= ( 1 - multiplier );
         X /= ( 1 + multiplier );
     }
     else if ( fabs( X ) < lowerBound ) {
@@ -499,23 +524,20 @@ bool SolverInfo::hasBisected() const {
 void SolverInfo::print( ostream& aOut ) const {
 
     aOut.setf(ios_base::left,ios_base::adjustfield); // left alignment
-    aOut.precision(4); // for floating-point
+    aOut.precision(6); // for floating-point
     aOut.width(36); aOut << getName(); aOut << ", ";
     aOut.width(10); aOut << X; aOut << ", ";
     aOut.width(10); aOut << XL; aOut << ", ";
     aOut.width(10); aOut << XR; aOut << ", ";
     aOut.width(10); aOut << getED(); aOut << ", ";
-    aOut.width(10); aOut << EDR; aOut << ", ";
     aOut.width(10); aOut << EDL; aOut << ", ";
+    aOut.width(10); aOut << EDR; aOut << ", ";
     aOut.width(10); aOut << getRelativeED( 0 ); aOut << ", ";
     aOut.width(3); aOut << isBracketed(); aOut << ", ";
     aOut.width(10); aOut << supply; aOut << ", ";
     aOut.width(10); aOut << demand; aOut << ", ";
+    aOut.width(10); aOut << getTypeName(); aOut << ", ";
     aOut.setf(ios_base::fmtflags(0),ios_base::floatfield); //reset to default
-
-//    aOut << getName() << "," << X << "," << XL << "," << XR << "," << getED() << "," 
-//         << EDR << "," << EDL << "," << getRelativeED( 0 ) << "," << isBracketed()
-//         << "," << supply << "," << demand << ",";
 }
 
 SupplyDemandCurve SolverInfo::createSDCurve(){

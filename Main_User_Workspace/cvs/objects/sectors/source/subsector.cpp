@@ -108,7 +108,7 @@ sectorName( aSectorName ){
     fuelPrefElasticity.resize( maxper );
     summary.resize( maxper );
     scaleYear = modeltime->getEndYear(); // default year to scale share weight to after calibration
-    techScaleYear = modeltime->getEndYear(); // default year to scale share weight to after calibration
+    mTechScaleYear = modeltime->getEndYear(); // default year to scale share weight to after calibration
     mInvestments.resize( maxper );
     mFixedInvestments.resize( maxper, -1 );
 }
@@ -209,7 +209,7 @@ void Subsector::XMLParse( const DOMNode* node ) {
             parseBaseTechHelper( curr, new ProductionTechnology() );
         }
         else if( nodeName == "techScaleYear" ){
-            techScaleYear = XMLHelper<int>::getValue( curr );
+            mTechScaleYear = XMLHelper<int>::getValue( curr );
         }
         else if( isNameOfChild( nodeName ) ){
             typedef vector<vector<ITechnology*> >::iterator TechVecIterator;
@@ -579,7 +579,7 @@ void Subsector::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag( getXMLName(), out, tabs, name );
 
     XMLWriteElementCheckDefault( scaleYear, "scaleYear", out, tabs, modeltime->getEndYear() );
-    XMLWriteElementCheckDefault( techScaleYear, "techScaleYear", out, tabs, modeltime->getEndYear() );
+    XMLWriteElementCheckDefault( mTechScaleYear, "techScaleYear", out, tabs, modeltime->getEndYear() );
     
 
     XMLWriteVector( shrwts, "sharewt", out, tabs, modeltime, 1.0 );
@@ -631,7 +631,7 @@ void Subsector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     // Write the data for the current period within the vector.
     XMLWriteElement( shrwts[ period ], "sharewt", out, tabs );
     XMLWriteElement( scaleYear, "scaleYear", out, tabs );
-    XMLWriteElement( techScaleYear, "techScaleYear", out, tabs );
+    XMLWriteElement( mTechScaleYear, "techScaleYear", out, tabs );
     XMLWriteElement( lexp[ period ], "lexp", out, tabs );
     XMLWriteElement( fuelPrefElasticity[ period ], "fuelprefElasticity", out, tabs );
     XMLWriteElement( getEnergyInput( period ), "input", out, tabs );
@@ -712,8 +712,12 @@ void Subsector::initCalc( NationalAccount* aNationalAccount,
         // Initialize the previous period info as having no input set and
         // cumulative Hicks neutral, energy of 1.
         PreviousPeriodInfo prevPeriodInfo = { 0, 1 };
-        for( unsigned int j = 0; j < techs[ i ].size(); ++j ){
-            techs[ i ][ j ]->initCalc( regionName, sectorName, mSubsectorInfo.get(),
+        // Warning: aPeriod is the current model period and not the technology vintage.
+        // Currently calls initCalc on all vintages past and future.
+        // TODO: Should not call initialization for all future technology vintages beyond the
+        // current period but correction causing error (SHK).
+        for( unsigned int vintage = 0; vintage < techs[ i ].size(); ++vintage ){
+            techs[ i ][ vintage ]->initCalc( regionName, sectorName, mSubsectorInfo.get(),
                                        aDemographics, prevPeriodInfo, aPeriod );
         }
     }
@@ -749,8 +753,7 @@ void Subsector::initCalc( NationalAccount* aNationalAccount,
         }
     }
 
-    interpolateShareWeights( aPeriod );
-
+    // If calibration is active, reinitialize share weights.
     if( Configuration::getInstance()->getBool( "CalibrationActive" ) ){
         // Check for zero shareweight for subsector with calibration values
         if( getTotalCalOutputs( aPeriod ) > util::getSmallNumber() 
@@ -761,9 +764,26 @@ void Subsector::initCalc( NationalAccount* aNationalAccount,
             mainLog << "Resetting zero shareweight for Subsector " << getName()
                 << " in sector " << sectorName << " in region " << regionName
                 << " since calibration values are present." << endl;
-            shrwts[ aPeriod ] = 1;
+            shrwts[ aPeriod ] = 1.0;
+        }
+        // For subsectors with only fixed output technologies.
+        if( containsOnlyFixedOutputTechnologies( aPeriod ) ){
+            // Reset share weight for all periods to 0 to indicate that it does not have an 
+            // impact on the results.
+            shrwts[ aPeriod ] = 0;
+        }
+        // Reinitialize share weights to 1 for competing subsector with non-zero read-in share weight
+        // for calibration periods only.
+        else if( shrwts[ aPeriod ] != 0 && aPeriod <= modeltime->getFinalCalibrationPeriod() ){
+            // Reinitialize to 1 to remove bias, calculate new share weights and
+            // normalize in postCalc to anchor to dominant subsector.
+            shrwts[ aPeriod ] = 1.0;
         }
     }
+
+    // Interpolate subsector and technology share weights from calibrated value to exogenously
+    // specified terminal value if applicable.
+    interpolateShareWeights( aPeriod );
 
    // Pass forward any emissions information
     for ( unsigned int i= 0; i< techs.size() && aPeriod > 0 && aPeriod < modeltime->getmaxper() ; i++ ) {
@@ -1015,49 +1035,34 @@ double Subsector::getFixedOutput( const int aPeriod ) const {
 * \param period Model period
 * \warning Share weights must be scaled (from sector) before this is called.
 */
-void Subsector::interpolateShareWeights( const int period ) {
+void Subsector::interpolateShareWeights( const int aPeriod ) {
     const Modeltime* modeltime = scenario->getModeltime();
 
     // if previous period was calibrated, then adjust future share weights Only
     // scale share weights if after the final calibration year.
-    if ( ( period > modeltime->getFinalCalibrationPeriod() ) 
-        && getCalibrationStatus( period - 1 )
+    if ( ( aPeriod > modeltime->getFinalCalibrationPeriod() ) 
+        && getCalibrationStatus( aPeriod - 1 )
         && Configuration::getInstance()->getBool( "CalibrationActive" ) )
     {
         int endPeriod = 0;
         if ( scaleYear >= modeltime->getStartYear() ) {
             endPeriod = modeltime->getyr_to_per( scaleYear );
         }
-        if  ( endPeriod >= ( period - 1) ) {
+        if  ( endPeriod >= ( aPeriod - 1 ) ) {
             ILogger& mainLog = ILogger::getLogger( "calibration_log" );
             mainLog.setLevel( ILogger::DEBUG );
             mainLog << "Interpolating share weights for subsector " << name
                 << " in sector " << sectorName << " from starting period of "
-                << period - 1 << " with scale year " << scaleYear
-                << " and starting value " << shrwts[ period - 1 ] << "." << endl;
+                << aPeriod - 1 << " with scale year " << scaleYear
+                << " and starting value " << shrwts[ aPeriod - 1 ] << "." << endl;
                 // This is wrong, the period before could have calibrated to zero.
-                if ( shrwts[ period - 1 ] > 0 ) {
-                    shareWeightLinearInterpFn( period - 1, endPeriod );
+                if ( shrwts[ aPeriod - 1 ] > 0 ) {
+                    shareWeightLinearInterpFn( aPeriod - 1, endPeriod );
                 }
         }
-        adjustTechnologyShareWeights( period );
+        // Interpolate technology share weights
+        techShareWeightLinearInterpFn( aPeriod - 1, modeltime->getyr_to_per( mTechScaleYear ) );
     }
-}
-
-/*! \brief Wrapper method for calls to normalize and/or interpolate Technology share weights  
-*
-* \author Steve Smith
-* \param period Model period
-*/
-void Subsector::adjustTechnologyShareWeights( const int period ) {
-    if ( techs.size() > 1 ) {
-        // First re-normalize share weights
-        normalizeTechShareWeights( period - 1 );
-    }
-
-    // Linearly interpolate Technology share weights
-    const Modeltime* modeltime = scenario->getModeltime();
-    techShareWeightLinearInterpFn( period - 1, modeltime->getyr_to_per( techScaleYear ) );
 }
 
 /*! \brief Linearly interpolate share weights between specified endpoints 
@@ -1131,45 +1136,52 @@ void Subsector::techShareWeightLinearInterpFn( const int beginPeriod,  const int
     }
 }
 
-/*! \brief Scales Technology share weights so that they equal number of subsectors.
+/*! \brief Scales Technology share weights so that the dominant technology is anchored to 1
+* and the others are relative to the dominant technology.
 *
-* This is needed so that 1) share weights can be easily interpreted (> 1 means favored) and so that
-* future share weights can be consistently applied relative to calibrated years. This is particularly useful
-* when new technologies are added. They can always be added with share weights relative to one no matter how
-* many other technologies are present.
+* This is needed so that share weights can be easily interpreted and so that
+* future share weights can be consistently applied relative to the dominant technology.
+* Technology share weight greater than 1 implies bias towards the technology even though
+* it is not the dominant technology. The call to normalizeShareWeights() must occur after the
+* period has been solved and technology outputs are known.  
 *
-* \author Steve Smith
+* \author Steve Smith, Marshall Wise, Kate Calvin, Sonny Kim
 * \param period Model period
-* \warning The routine assumes that all tech outputs are calibrated.
+* \warning The routine assumes that all technology outputs are calibrated.
 */
-void Subsector::normalizeTechShareWeights( const int period ) {
-    
-    
-    // Dominant technology should get a share weight of one
-    // TODO: We do not want fixed output techs included in this
+void Subsector::normalizeTechShareWeights( const int aPeriod ) {
+        
+    // Dominant technology gets a share weight of one.
     double maxShareWeight = 0.0;
     double maxOutput = 0.0;
+    const int NewVintage = aPeriod;
     for( unsigned int i = 0; i < techs.size(); ++i ){
-        double techShareWeight = techs[ i ][ period ]->getShareWeight();
-        if ( techs[ i ][ period ]->getOutput( period ) > maxOutput ) {
-            maxShareWeight = techShareWeight;
-            maxOutput = techs[ i ][ period ]->getOutput( period );
+        // Fixed output technologies are not included in the normalization.
+        if( !techs[ i ][ NewVintage ]->isFixedOutputTechnology( aPeriod ) ){
+            double techShareWeight = techs[ i ][ NewVintage ]->getShareWeight();
+            if ( techs[ i ][ NewVintage ]->getOutput( aPeriod ) > maxOutput ) {
+                maxShareWeight = techShareWeight;
+                maxOutput = techs[ i ][ NewVintage ]->getOutput( aPeriod );
+            }
         }
     }
 
     if ( maxShareWeight < util::getTinyNumber() ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::DEBUG );
-        mainLog << "Max shareweight is zero in subsector " << name << " in region " << regionName << "." << endl;
+        //mainLog << "Max shareweight is zero in subsector " << name << " in region " << regionName << "." << endl;
     } 
     else {
         for( unsigned int i = 0; i < techs.size(); ++i ){
-             techs[ i ][ period ]->scaleShareWeight( 1 / maxShareWeight );
+            // Fixed output technologies are not included in the normalization.
+            if( !techs[ i ][ NewVintage ]->isFixedOutputTechnology( aPeriod ) ){
+                techs[ i ][ NewVintage ]->scaleShareWeight( 1 / maxShareWeight );
+            }
         }
         ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
         calibrationLog.setLevel( ILogger::DEBUG );
         calibrationLog << "Shareweights normalized for technologies in subsector "
-                       << name << " in sector " << sectorName << " in region " << regionName << endl;
+            << name << " in sector " << sectorName << " in region " << regionName << endl;
     }
 }
 
@@ -1285,15 +1297,15 @@ void Subsector::adjustForCalibration( double aSubsectorVariableDemand,
             ILogger& calLog = ILogger::getLogger( "calibration_log" );
             calLog.setLevel( ILogger::WARNING );
             calLog.setf(ios_base::left,ios_base::adjustfield); // left alignment
-            calLog << " Region: "; calLog.width(14); calLog << regionName;
-            calLog << " Sector: "; calLog.width(12); calLog << sectorName;
-            calLog << " Subsector:  "; calLog.width(18); calLog << name;
+            calLog << " Region: "; calLog.width(14); calLog << regionName << ",";
+            calLog << " Sector: "; calLog.width(12); calLog << sectorName << ",";
+            calLog << " Subsector:  "; calLog.width(18); calLog << name << ",";
             calLog.precision(4); // for floating-point
-            calLog << " Calibration: "; calLog.width(8); calLog << calOutputSubsect;
-            calLog << " Output: "; calLog.width(8); calLog << aSubsectorVariableDemand;
-            calLog << " SW org: "; calLog.width(8); calLog << originalSW;
-            calLog << " SW new: "; calLog.width(8); calLog << shrwts[ aPeriod ];
-            calLog << " scaler: "; calLog.width(8); calLog << shareScaleValue;
+            calLog << " Calibration: "; calLog.width(8); calLog << calOutputSubsect << ",";
+            calLog << " Output: "; calLog.width(8); calLog << aSubsectorVariableDemand << ",";
+            calLog << " SW org: "; calLog.width(8); calLog << originalSW << ",";
+            calLog << " SW new: "; calLog.width(8); calLog << shrwts[ aPeriod ] << ",";
+            calLog << " scaler: "; calLog.width(8); calLog << shareScaleValue << ",";
             calLog << endl;
             calLog.setf(ios_base::fmtflags(0),ios_base::floatfield); //reset to default
         }
@@ -1460,6 +1472,25 @@ bool Subsector::allOutputFixed( const int period ) const {
             return false;
         }
     }
+    return true;
+}
+
+/*!\brief Returns a boolean for whether the subsector contains only fixed output technologies
+* or at least one technology that competes on the margin.
+*\author Sonny Kim
+*\return Boolean for determining whether subsector contains only fixed output technologies.
+*/
+bool Subsector::containsOnlyFixedOutputTechnologies( const int aPeriod ) const {
+    // Returns true if all technologies in the subsector has fixed exogenous outputs
+    // for new investments.
+    const int NewVintage = aPeriod;
+    for( unsigned int i = 0; i < techs.size(); ++i ){
+        // If at least one technology does not have fixed output return false.
+        if ( !techs[ i ][ NewVintage ]->isFixedOutputTechnology( aPeriod ) ) {
+            return false;
+        }
+    }
+    // Otherwise subsector contains only fixed output technologies.
     return true;
 }
 
@@ -1744,6 +1775,15 @@ void Subsector::MCoutputAllSectors( const GDP* aGDP,
     }
     dboutput4(regionName,"Subsec Share",sectorName,name,"100%", temp );
     dboutput4(regionName,"Subsec Share Wts",sectorName,name,"NoUnits", shrwts );
+    // Technology share weight by Subsector-technology for each sector
+    for ( unsigned int i = 0; i < techs.size(); ++i ){
+        for ( unsigned int m = 0; m <  techs[ i ].size(); ++m ) {
+            temp[m] = techs[i][m]->getShareWeight();
+        }
+        dboutput4( regionName, "Tech Share Wts", sectorName, name+"-"+techs[i][0]->getName(),
+            "NoUnits", temp );
+    }
+
     // Subsector emissions for all greenhouse gases
 
     // subsector CO2 emission. How is this different then below?
@@ -2100,10 +2140,10 @@ void Subsector::updateMarketplace( const int period ) {
 * \details This function is used to calculate and store variables which are only needed after the current
 * period is complete. 
 * \param aPeriod The period to finalize.
-* \todo Finish this function.
-* \author Josh Lurz
+* \author Josh Lurz, Sonny Kim
 */
 void Subsector::postCalc( const int aPeriod ){
+    const Modeltime* modeltime = scenario->getModeltime();
     // Finalize base technologies.
     for( BaseTechIterator baseTech = baseTechs.begin(); baseTech != baseTechs.end(); ++baseTech ){
         (*baseTech)->postCalc( regionName, sectorName, aPeriod );
@@ -2114,6 +2154,14 @@ void Subsector::postCalc( const int aPeriod ){
         for( unsigned int j = 0; j < techs[ i ].size(); ++j ){
             techs[ i ][ j ]->postCalc( regionName, aPeriod );
         }
+    }
+
+    // Do only when calibration is on and for calibration periods only.
+    // Normalize technology share weights after model has solved and technology outputs
+    // are known.
+    if( Configuration::getInstance()->getBool( "CalibrationActive" ) &&
+        aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() ){
+            normalizeTechShareWeights( aPeriod );
     }
 }
 

@@ -216,6 +216,9 @@ void UnlimitedResource::initCalc( const string& aRegionName,
 void UnlimitedResource::postCalc( const string& aRegionName,
                                   const int aPeriod )
 {
+    // Reset initial resource prices to solved prices
+    mFixedPrices[ aPeriod ] = scenario->getMarketplace()->getPrice( mName, aRegionName,
+                              aPeriod, true );
 }
 
 
@@ -298,8 +301,7 @@ void UnlimitedResource::setMarket( const string& aRegionName ) {
     // Setup the market for the resource. This market will not be solved. Note
     // that in a standard Resource setMarketToSolve would be called here.
     Marketplace* marketplace = scenario->getMarketplace();
-    marketplace->createMarket( aRegionName, mMarket, mName,
-                               IMarketType::NORMAL );
+    marketplace->createMarket( aRegionName, mMarket, mName, IMarketType::NORMAL );
 
     // Set price and output units for period 0 market info
     IInfo* marketInfo = marketplace->getMarketInfo( mName, aRegionName, 0, true );
@@ -311,9 +313,8 @@ void UnlimitedResource::setMarket( const string& aRegionName ) {
     // Set the read-in fixed prices for each period.
     const Modeltime* modeltime = scenario->getModeltime();
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
-        if( mFixedPrices[ i ] > util::getSmallNumber() ){
-            marketplace->setPrice( mName, aRegionName, mFixedPrices[ i ], i,
-                                   true );
+        if( mFixedPrices[ i ] != 0 ){
+            marketplace->setPrice( mName, aRegionName, mFixedPrices[ i ], i, true );
         }
     }
 }

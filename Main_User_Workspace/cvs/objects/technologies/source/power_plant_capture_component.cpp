@@ -341,7 +341,7 @@ void PowerPlantCaptureComponent::adjustNonEnergyInput( IInput* aNonEnergyInput,
 {
     assert( aBaseEnergyIntensity >= 0 );
     assert( aEffectiveEnergyIntensity >= 0 );
-    assert( aFuelEmissCoef > 0 );
+    assert( aFuelEmissCoef >= 0 );
     assert( aEffectiveEnergyIntensity >= aBaseEnergyIntensity );
 
     // Calculate the "a" term.

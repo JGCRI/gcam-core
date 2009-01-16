@@ -85,7 +85,7 @@ Resource::Resource()
     available.resize(maxper); // total resource available
     annualprod.resize(maxper); // annual production rate of resource
     cummprod.resize(maxper); // cumulative production of resource
-    rscprc.resize( maxper ); 
+    rscprc.resize( maxper );
 }
 
 //! Destructor.
@@ -176,9 +176,7 @@ void Resource::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     }
 
     // write out resource prices for base period only
-    const Modeltime* modeltime = scenario->getModeltime();
-    XMLWriteElement( rscprc[ 0 ], "price", aOut, aTabs, modeltime->getper_to_yr( 0 ) );
-
+    XMLWriteVector( rscprc, "price", aOut, aTabs, scenario->getModeltime() );
     // write out the subresource objects.
     for( vector<SubResource*>::const_iterator i = subResource.begin(); i != subResource.end(); i++ ){
         ( *i )->toInputXML( aOut, aTabs );
@@ -228,7 +226,6 @@ void Resource::toDebugXML( const int period, ostream& aOut, Tabs* aTabs ) const 
     }
 
     // finished writing xml for the class members.
-
     XMLWriteClosingTag( getXMLName(), aOut, aTabs );
 }
 
@@ -287,6 +284,7 @@ void Resource::initCalc( const string& aRegionName, const int aPeriod ) {
         subResource[i]->initCalc( aRegionName, mName, aPeriod );
     }
 }
+
 /*! \brief Perform any calculations needed for each period after solution is
 *          found.
 * \details Any calculations that only need to be done once per period after
@@ -297,10 +295,12 @@ void Resource::initCalc( const string& aRegionName, const int aPeriod ) {
 * \param aPeriod Model period
 */
 void Resource::postCalc( const string& aRegionName, const int aPeriod ) {
-    // call subResource post calculations
+    // Call subResource post calculations
     for ( unsigned int i = 0; i < subResource.size(); i++ ) {
         subResource[i]->postCalc( aRegionName, mName, aPeriod);
     }
+    // Reset initial resource prices to solved prices
+    rscprc[ aPeriod ] = scenario->getMarketplace()->getPrice( mName, aRegionName, aPeriod, true );
 }
 
 //! Create markets
@@ -340,7 +340,7 @@ void Resource::setMarket( const string& aRegionName ) {
                     metaInfoIterItem != mObjectMetaInfo.end(); 
                     ++metaInfoIterItem ) {
                         pMarketInfo->setDouble( (*metaInfoIterItem).getName(), (*metaInfoIterItem).getValue() );
-                    }
+                }
             }
         }
     }
@@ -352,24 +352,24 @@ const string& Resource::getName() const {
 }
 
 //! Calculate total resource supply for a period.
-void Resource::calcSupply( const string& regionName, const GDP* gdp, const int period ){
+void Resource::calcSupply( const string& aRegionName, const GDP* aGDP, const int aPeriod ){
     // This code is moved down from Region
     Marketplace* marketplace = scenario->getMarketplace();
 
-    double price = marketplace->getPrice( mName, regionName, period );
+    double price = marketplace->getPrice( mName, aRegionName, aPeriod );
     double lastPeriodPrice;
 
-    if ( period == 0 ) {
+    if ( aPeriod == 0 ) {
         lastPeriodPrice = price;
     }
     else {
-        lastPeriodPrice = marketplace->getPrice( mName, regionName, period - 1 );
+        lastPeriodPrice = marketplace->getPrice( mName, aRegionName, aPeriod - 1 );
     }
 
     // calculate annual supply
-    annualsupply( regionName, period, gdp, price, lastPeriodPrice ); 
+    annualsupply( aRegionName, aPeriod, aGDP, price, lastPeriodPrice ); 
     // set market supply of resource
-    marketplace->addToSupply( mName, regionName, annualprod[ period ], period );
+    marketplace->addToSupply( mName, aRegionName, annualprod[ aPeriod ], aPeriod );
 }
 
 void Resource::cumulsupply(double prc,int per)
@@ -462,7 +462,7 @@ void Resource::dbOutput( const string& regname ) {
         }
     }
     dboutput4(regname,"Resource","Available "+mName,"zTotal",mOutputUnit,temp);
-
+    
     // do for all subsectors in the sector
     for (int i=0;i<nosubrsrc;i++) {
         subResource[i]->dbOutput(regname,mName);
@@ -480,6 +480,7 @@ void Resource::accept( IVisitor* aVisitor, const int aPeriod ) const {
     for( unsigned int i = 0; i < subResource.size(); ++i ){
         subResource[ i ]->accept( aVisitor, aPeriod );
     }
+
     aVisitor->endVisitResource( this, aPeriod );
 }
 

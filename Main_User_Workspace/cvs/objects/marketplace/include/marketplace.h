@@ -173,6 +173,8 @@ public:
     
     //! The price to return if no market exists.
     const static double NO_MARKET_PRICE;
+    void store_prices_for_cost_calculation();
+    void restore_prices_for_cost_calculation();
 private:
     std::vector< std::vector<Market*> > markets; //!< no of market objects by period
     std::auto_ptr<MarketLocator> mMarketLocator; //!< An object which determines the correct market number.

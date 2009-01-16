@@ -66,9 +66,18 @@ public:
     virtual IMarketType::Type getType() const;
 
     virtual void initPrice();
-    virtual void setPriceFromLast( const double lastPrice );
+    virtual void setPrice( const double priceIn );
+    virtual void set_price_to_last_if_default( const double lastPrice );
+    virtual void set_price_to_last( const double lastPrice );
+    virtual double getPrice() const;
 
     virtual void addToDemand( const double demandIn );
+    virtual double getDemand() const;
+
+    virtual void nullSupply();
+    virtual double getSupply() const;
+    virtual void addToSupply( const double supplyIn );
+    
     virtual bool meetsSpecialSolutionCriteria() const;
     virtual bool shouldSolve() const;
     virtual bool shouldSolveNR() const;

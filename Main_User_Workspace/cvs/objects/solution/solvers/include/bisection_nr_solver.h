@@ -48,7 +48,7 @@
 * \file bisection_nr_solver.h
 * \ingroup Objects
 * \brief The BisectionNRSolver class header file. 
-* \author Josh Lurz
+* \author Josh Lurz, Sonny Kim
 */
 
 class SolverComponent;
@@ -70,7 +70,7 @@ public:
 private:
     std::auto_ptr<SolverComponent> mLogNewtonRaphson; //!< LogNewtonRaphson solver component.
     std::auto_ptr<SolverComponent> mBisectAll; //!< BisectAll solver component.
-    std::auto_ptr<SolverComponent> mBisectOne; //!< BisectOne solver component.
+    std::auto_ptr<SolverComponent> mBisectOneWorst; //!< BisectOneWorst solver component.
     std::auto_ptr<SolverComponent> mLogNewtonRaphsonSaveDeriv; //!< LogNewtonRaphsonSaveDerivatives solver component.
     void NRandSingleBisect( const double solTol, const double edSolFloor, const double maxNRRelED,  
                             const int maxCalcsNR, const int maxCalcsBisectOne, SolverInfoSet& sol, 

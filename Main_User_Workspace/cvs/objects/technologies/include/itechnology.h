@@ -179,6 +179,8 @@ public:
                                 const std::string& aRequiredInput, 
                                 const int aPeriod ) const = 0;
 
+    virtual bool isFixedOutputTechnology( const int aPeriod ) const = 0;
+
     virtual double getOutput( const int aPeriod ) const = 0;
 
     virtual double getTotalGHGCost( const std::string& aRegionName, const std::string& aSectorName, 

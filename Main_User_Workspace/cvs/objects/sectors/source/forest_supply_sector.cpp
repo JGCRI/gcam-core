@@ -124,7 +124,11 @@ void ForestSupplySector::setMarket() {
         marketInfo->setString( "price-unit", mPriceUnit );
         marketInfo->setString( "output-unit", mOutputUnit );
 
-        marketplace->setPrice( name, regionName, calPrice / CVRT90, 0 );
+        // Set market prices to initial price vector
+        marketplace->setPriceVector( name, regionName, mPrice );
+        // Reset base period price to calPrice
+        marketplace->setPrice( name, regionName, calPrice / CVRT90, 0, true );
+
         // Do not solve the period 1 market in forestry because supply is
         // inelastic due to predetermined stock and demand is inelastic because
         // there is no price elasticity.
@@ -144,7 +148,11 @@ void ForestSupplySector::setMarket() {
         marketInfo->setString( "price-unit", mPriceUnit );
         marketInfo->setString( "output-unit", mOutputUnit );
 
+        // Set market prices to initial price vector
+        marketplace->setPriceVector( futureMarket, regionName, mPrice );
+        // Reset base period price to calPrice
         marketplace->setPrice( futureMarket, regionName, calPrice / CVRT90, 0 );
+
         for( int per = 1; per < modeltime->getmaxper(); ++per ){
             marketplace->setMarketToSolve( futureMarket, regionName, per );
         }

@@ -172,6 +172,8 @@ bool TotalPolicyCostCalculator::runTrials(){
     const int maxPeriod = modeltime->getmaxper();
 
     bool success = true;
+    // Store original solved market prices before looping.
+    mSingleScenario->getInternalScenario()->getMarketplace()->store_prices_for_cost_calculation();
     // Loop through for each point.
     for( unsigned int currPoint = 0; currPoint < mNumPoints; currPoint++ ){
         // Determine the fraction of the full tax this tax will be.
@@ -206,6 +208,10 @@ bool TotalPolicyCostCalculator::runTrials(){
         // Save information.
         mEmissionsQCurves[ currPoint ] = mSingleScenario->getInternalScenario()->getEmissionsQuantityCurves( mGHGName );
         mEmissionsTCurves[ currPoint ] = mSingleScenario->getInternalScenario()->getEmissionsPriceCurves( mGHGName );
+
+        // Restore original solved market prices after each cost iteration to ensure same
+        // starting prices for each iteration.  This is necessary due to changing initial prices.
+        mSingleScenario->getInternalScenario()->getMarketplace()->restore_prices_for_cost_calculation();
     }
     return success;
 }

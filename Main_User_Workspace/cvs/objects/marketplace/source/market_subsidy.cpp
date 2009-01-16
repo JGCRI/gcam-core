@@ -86,6 +86,10 @@ void MarketSubsidy::initPrice() {
     }
 }
 
+void MarketSubsidy::setPrice( const double priceIn ) {
+    Market::setPrice( priceIn );
+}
+
 /* \brief Initialize the MarketSubsidy price from last period's price.
 * \details This method first checks if the lastPrice was 0. This would mean that last period's constraint was 
 * 0. If it is, then it checks if the constraint in the current period is greater than 0. In this case price is 
@@ -94,7 +98,7 @@ void MarketSubsidy::initPrice() {
 * \param lastPrice Previous period's price. This should have already been set in store to last!!
 * \author Josh Lurz
 */
-void MarketSubsidy::setPriceFromLast( const double lastPrice ) {
+void MarketSubsidy::set_price_to_last_if_default( const double lastPrice ) {
     const double MIN_PRICE = 0.5;
     // If the price is zero and the solve flag is set so a constraint exists. 
     if( price < util::getSmallNumber() && solveMarket ){
@@ -112,11 +116,39 @@ void MarketSubsidy::setPriceFromLast( const double lastPrice ) {
     // There is no else here because we do not want to override prices in the case of a fixed tax.
 }
 
+void MarketSubsidy::set_price_to_last( const double lastPrice ) {
+    Market::set_price_to_last( lastPrice );
+}
+
+double MarketSubsidy::getPrice() const {
+    return Market::getPrice();
+}
+
+void MarketSubsidy::addToDemand( const double demandIn ) {
+    Market::addToDemand( demandIn );
+}
+
+double MarketSubsidy::getDemand() const {
+    return Market::getDemand();
+}
+
 //! The demand in MarketSubsidy is the constraint,
 //! it should not be removed by calls to nullDemand
 void MarketSubsidy::nullDemand() {
     // Virtual function to override Market::nullDemand() and 
     // clearing of demand which is the constraint.
+}
+
+void MarketSubsidy::nullSupply() {
+   Market::nullSupply();
+}
+
+double MarketSubsidy::getSupply() const {
+    return Market::getSupply();
+}
+
+void MarketSubsidy::addToSupply( const double supplyIn ) {
+    Market::addToSupply( supplyIn );
 }
 
 /* \brief This method determines whether to solve a MarketSubsidy with the solution mechanism.
@@ -155,6 +187,7 @@ bool MarketSubsidy::shouldSolveNR() const {
     bool doSolveMarket = false;
     // Check if this market is a type is solved (i.e. resource, policy, etc.)
     // Note: secondary markets are not solved in the MiniCAM
+    /* Old code: in case subsidey market should be included in the NR solver.
     if ( solveMarket ){
         // if constraint does exist then solve
         if( demand > util::getSmallNumber() ){
@@ -166,6 +199,8 @@ bool MarketSubsidy::shouldSolveNR() const {
             }
         }
     }
+    */
+    // Do not include subsidy market in the NR Solver.
     return doSolveMarket;
 }
 
