@@ -95,7 +95,7 @@ public class DataBuilder
 
   // String constants for special data names
   final public static String LAND_FRACTION = "landFract"; //Internal variable that contains land fraction  
-  final public static String CELL_AREA_DATA = "landFraction"; //Name of optional read-in variable that contains actual cell land area  
+  final public static String CELL_AREA_DATA = "cellArea"; //Name of optional read-in variable that contains actual cell land area  
 
 //*****************************************************************************
 //*****************Class Constructors******************************************
@@ -284,9 +284,13 @@ public class DataBuilder
       } else if(currFile.getAttributeValue("type").equals("UNEP"))
       {
         addUNEPData(currFile);
-      } else if(currFile.getAttributeValue("type").equals("1x1"))
+      } else if(currFile.getAttributeValue("type").equals("1X1"))
       {
-        add1x1Data(currFile);
+        log.log(Level.WARNING, "1X1 FILE TYPE NO LONGER USED. Use 'inLine; instead");
+        System.exit(1);
+      } else if(currFile.getAttributeValue("type").equals("inLine"))
+      {
+        addInLineData(currFile);
       } else if(currFile.getAttributeValue("type").equals("ASC"))
       {
         addASCData(currFile);
@@ -491,6 +495,10 @@ public class DataBuilder
 			}
 			rWriter.write("\t\t</variable>");
 			rWriter.newLine();
+		}
+		// Print notice about cell area data
+		else {
+		   log.log(Level.INFO, "Cell Area Data read in and incorprated into land fraction");
 		}
       }
       rWriter.write("\t</variableInfo>");
@@ -1402,9 +1410,9 @@ public class DataBuilder
   //done reading data from file
   }
   
-  private void add1x1Data(Element currFile)
-  { /* function will add the data from the specified file of type '1x1'
-     * '1x1'- defined as (180x360) lines of data values, each with its x and y
+  private void addInLineData(Element currFile)
+  { /* function will add the data from the specified file of type 'inLIne'
+     * 'inLIne'- defined as any number of lines of data values, each with its x and y
      * indices and value for that location in x,y,value form.
      */
     log.log(Level.FINER, "begin function");
@@ -1415,15 +1423,17 @@ public class DataBuilder
     boolean overwrite = false;
     String dataName = "shutup,";
     String fileName = "it is initialized thanks";
+    String delimiter = ",";
     String ref = null;
     String unit = null;
-    double time = 0;
     double res = 1;
+    double time = 0;
     List infoChildren;
     Element currElem;
     TreeMap timeValue;
     Double dataValue;
     DataBlock toAdd;
+    int skipLines = 0;
     
     //check if tags are contained in the xml file, dont get them later
     tagged = (Boolean.valueOf(currFile.getAttributeValue("tagged"))).booleanValue();
@@ -1442,12 +1452,21 @@ public class DataBuilder
       } else if(currElem.getName().equals("average"))
       {
         avg = (Boolean.valueOf(currElem.getAttributeValue("value"))).booleanValue();
+      } else if(currElem.getName().equals("res"))
+      {
+        res = Double.parseDouble(currElem.getAttributeValue("value"));
       } else if(currElem.getName().equals("reference"))
       {
         ref = currElem.getAttributeValue("value");
       } else if(currElem.getName().equals("units"))
       {
         unit = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("skip-lines"))
+      {
+        skipLines = Integer.parseInt(currElem.getAttributeValue("value"));
+      } else if(currElem.getName().equals("delimiter"))
+      {
+        delimiter =currElem.getAttributeValue("value");
       } else if(currElem.getName().equals("format"))
       {
         if(currElem.getAttributeValue("value").equals("scientific"))
@@ -1464,6 +1483,14 @@ public class DataBuilder
       
     }
   //done reading from XML file
+  
+  // check for blank deliminter
+  if ( delimiter.equals("") ) {
+  	delimiter = ",";
+  }
+  
+   // Normalize resolution to units of one quarter of an arc minute
+   res = (double)( (int)Math.round(res*60*4) )/(60.0*4.0);
     
   //opening txt file for reading
     BufferedReader input = null;
@@ -1475,6 +1502,17 @@ public class DataBuilder
       System.exit(1);
     }
   //txt file opened
+
+    // skip lines if necessary before reading any values
+    try {
+	    for(int currLine = 0; currLine < skipLines; ++currLine) {
+		    String skippedLine = input.readLine();
+		    log.log(Level.FINER, "Skipped: "+skippedLine);
+	    }
+    } catch(IOException ioe) {
+	    log.log(Level.SEVERE, "Error reading data: "+ioe);
+	    System.exit(1);
+    }
 
     if(tagged)
     { //if didnt get these before in the xml file
@@ -1521,17 +1559,17 @@ public class DataBuilder
   
   //reading the data from the file
     try{
-      int firstComma, secondComma;
+        int firstDelim, secondDelim;
       double mY, mX;
       String sVal;
       String readString = input.readLine();
       while((readString!=null))
       {
-        firstComma = readString.indexOf(',');
-        secondComma = readString.indexOf(',', (firstComma+1));
-        mX = Double.parseDouble(readString.substring(0, firstComma));
-        mY = Double.parseDouble(readString.substring((firstComma+1), secondComma));
-        sVal = readString.substring((secondComma+1), readString.length());
+        firstDelim = readString.indexOf(delimiter);
+        secondDelim = readString.indexOf(delimiter, (firstDelim+1));
+        mX = Double.parseDouble(readString.substring(0, firstDelim));
+        mY = Double.parseDouble(readString.substring((firstDelim+1), secondDelim));
+        sVal = readString.substring((secondDelim+1), readString.length());
         if(dec)
         { //numbers stored in decimal format
           dataValue = Double.valueOf(sVal);
@@ -1540,7 +1578,7 @@ public class DataBuilder
           dataValue = new Double(scientificToDouble(sVal));
         }
 
-        toAdd = new DataBlock(mX, mY, 1, 1);
+        toAdd = new DataBlock(mX, mY, res, res);
         timeValue = new TreeMap();
         timeValue.put(new Double(time), dataValue);
         
@@ -1603,6 +1641,7 @@ public class DataBuilder
     String prefix = null;
     TreeMap<String, Boolean> overwrite = new TreeMap<String, Boolean>();
     HashMap nameMap = null;
+   int skipLines = 0;
     
   //getting file info from XML
     infoChildren = currFile.getChildren();
@@ -1621,6 +1660,9 @@ public class DataBuilder
       } else if(currElem.getName().equals("reference"))
       {
         ref = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("skip-lines"))
+      {
+        skipLines = Integer.parseInt(currElem.getAttributeValue("value"));
       } else if(currElem.getName().equals("units"))
       {
         unit = currElem.getAttributeValue("value");
@@ -1683,7 +1725,18 @@ public class DataBuilder
       System.exit(1);
     }
   //asc file opened
-    
+
+    // skip lines if necessary before reading any values
+    try {
+	    for(int currLine = 0; currLine < skipLines; ++currLine) {
+		    String skippedLine = input.readLine();
+		    log.log(Level.FINER, "Skipped: "+skippedLine);
+	    }
+    } catch(IOException ioe) {
+	    log.log(Level.SEVERE, "Error reading data: "+ioe);
+	    System.exit(1);
+    }
+        
     if(dataAvg.containsKey(dataName))
     {
       //then we are overwriting this data!
@@ -5188,6 +5241,7 @@ public void addFLTFile(Element currFile)
     log.log(Level.FINEST, "begin function");
     //reads an entire word from an input stream rather than just a character
     //words delimited by any whitespace 'space, new line, tab' OR A COMMA
+    // or semicolin
     //if no word exists in the stream return... null!
     String build = new String();
     int read;
@@ -5206,7 +5260,8 @@ public void addFLTFile(Element currFile)
       }
         
       build = build.concat(String.valueOf((char)read));
-      while(((read = input.read()) != -1)&&((hold = (char)read) > '\u0020')&&(hold != ','))
+      while( ((read = input.read()) != -1)&&((hold = (char)read) > '\u0020')
+      		 && ( ( hold != ',') && ( hold != ';') ) )
       {
         build = build.concat(String.valueOf(hold));
       }
