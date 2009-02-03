@@ -3109,6 +3109,7 @@ public class ManipulationDriver
   {
 	  log.log(Level.FINER, "begin function");
 	  final String currVarName = "$_";
+	  final String replaceRegionStr = "$Current_Region_Name";
 	  Variable VEachPriv; 
 	  if(variableList.containsKey(currVarName)) {
 		  VEachPriv = getVariable(currVarName);
@@ -3122,6 +3123,7 @@ public class ManipulationDriver
 	  VSource = getVariable(command.getAttributeValue("name"));
 	  currInfo = command.getChild("command");
 	  List comms = currInfo.getChildren();
+	  currInfo = null;
 	  if(VSource.isGroup())
 	  {
 		  Map.Entry me;
@@ -3133,8 +3135,27 @@ public class ManipulationDriver
 			  VCurr = (Variable)me.getValue();
 			  variableList.put(currVarName, VCurr);
 			  for(int i = 0; i < comms.size(); ++i) {
+				  // need to check if we have a extractSubRegion in which case we may need to 
+				  // do a replace to tell it what the current region we are processing is
+				  // this allows us to do joins between different variables in a forEach
+				  if(((Element)comms.get(i)).getName().equals("extractSubRegion")) {
+					  currInfo = ((Element)comms.get(i)).getChild("shape");
+					  if(currInfo.getAttributeValue("value").equals(replaceRegionStr)) {
+						  currInfo.setAttribute("value", VCurr.name);
+					  } else {
+						  currInfo = null;
+					  }
+				  }
 				  runCommand((Element)comms.get(i));
+				  // if we made a replace we should set it back so we can do it
+				  // again for the next region
+				  if(currInfo != null) {
+					  currInfo.setAttribute("value", replaceRegionStr);
+					  currInfo = null;
+				  }
 			  }
+			  // set it back into the group in case it changed
+			  me.setValue(variableList.get(currVarName));
 		  }
 	  } else 
 	  {
