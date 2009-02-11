@@ -76,33 +76,33 @@ industry,industrial processes,other industrial processes,misc emissions sources,
 
 INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
-9503,,,,,,,,,,,,
+9503,,,,,1000,divisor for ind and urb pro. Guard against mistakenly including this stuff in a TFE query.,,,,,,
 ,,,,,calibrated-value,,,,,,,
 supplysector,subsector,technology,period,minicam-energy-input,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
-urban processes,urban processes,landfills,1990,misc emissions sources,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-urban processes,urban processes,wastewater treatment,1990,misc emissions sources,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-urban processes,urban processes,aerosols,1990,misc emissions sources,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-urban processes,urban processes,fire_exting,1990,misc emissions sources,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-industry,industrial processes,adipic acid,1990,misc emissions sources,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-industry,industrial processes,nitric acid,1990,misc emissions sources,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-industry,industrial processes,foams,1990,misc emissions sources,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-industry,industrial processes,solvents,1990,misc emissions sources,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-industry,industrial processes,HCFC_22_Prod,1990,misc emissions sources,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-industry,industrial processes,semiconductors,1990,misc emissions sources,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-industry,industrial processes,Al_Mg,1990,misc emissions sources,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-industry,industrial processes,other industrial processes,1990,misc emissions sources,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-urban processes,urban processes,landfills,2005,misc emissions sources,1.1848,1.1651,1.0909,1.0347,1.1969,0.9855,1.1661,1.4249,1.4172,1.2692,1.3058,0.9507,1.1265,1.2885
-urban processes,urban processes,wastewater treatment,2005,misc emissions sources,1.1848,1.1651,1.0909,1.0347,1.1969,0.9855,1.1661,1.4249,1.4172,1.2692,1.3058,0.9507,1.1265,1.2885
-urban processes,urban processes,aerosols,2005,misc emissions sources,1.1848,1.1651,1.0909,1.0347,1.1969,0.9855,1.1661,1.4249,1.4172,1.2692,1.3058,0.9507,1.1265,1.2885
-urban processes,urban processes,fire_exting,2005,misc emissions sources,1.1848,1.1651,1.0909,1.0347,1.1969,0.9855,1.1661,1.4249,1.4172,1.2692,1.3058,0.9507,1.1265,1.2885
-industry,industrial processes,adipic acid,2005,misc emissions sources,0.8746,1.1539,1.0058,0.9373,1.1869,0.5255,1.6944,2.0055,1.2892,1.3268,1.8650,0.5747,1.4283,1.5441
-industry,industrial processes,nitric acid,2005,misc emissions sources,0.8746,1.1539,1.0058,0.9373,1.1869,0.5255,1.6944,2.0055,1.2892,1.3268,1.8650,0.5747,1.4283,1.5441
-industry,industrial processes,foams,2005,misc emissions sources,0.8746,1.1539,1.0058,0.9373,1.1869,0.5255,1.6944,2.0055,1.2892,1.3268,1.8650,0.5747,1.4283,1.5441
-industry,industrial processes,solvents,2005,misc emissions sources,0.8746,1.1539,1.0058,0.9373,1.1869,0.5255,1.6944,2.0055,1.2892,1.3268,1.8650,0.5747,1.4283,1.5441
-industry,industrial processes,HCFC_22_Prod,2005,misc emissions sources,0.8746,1.1539,1.0058,0.9373,1.1869,0.5255,1.6944,2.0055,1.2892,1.3268,1.8650,0.5747,1.4283,1.5441
-industry,industrial processes,semiconductors,2005,misc emissions sources,0.8746,1.1539,1.0058,0.9373,1.1869,0.5255,1.6944,2.0055,1.2892,1.3268,1.8650,0.5747,1.4283,1.5441
-industry,industrial processes,Al_Mg,2005,misc emissions sources,0.8746,1.1539,1.0058,0.9373,1.1869,0.5255,1.6944,2.0055,1.2892,1.3268,1.8650,0.5747,1.4283,1.5441
-industry,industrial processes,other industrial processes,2005,misc emissions sources,0.8746,1.1539,1.0058,0.9373,1.1869,0.5255,1.6944,2.0055,1.2892,1.3268,1.8650,0.5747,1.4283,1.5441
+urban processes,urban processes,landfills,1990,misc emissions sources,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
+urban processes,urban processes,wastewater treatment,1990,misc emissions sources,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
+urban processes,urban processes,aerosols,1990,misc emissions sources,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
+urban processes,urban processes,fire_exting,1990,misc emissions sources,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
+industry,industrial processes,adipic acid,1990,misc emissions sources,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
+industry,industrial processes,nitric acid,1990,misc emissions sources,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
+industry,industrial processes,foams,1990,misc emissions sources,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
+industry,industrial processes,solvents,1990,misc emissions sources,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
+industry,industrial processes,HCFC_22_Prod,1990,misc emissions sources,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
+industry,industrial processes,semiconductors,1990,misc emissions sources,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
+industry,industrial processes,Al_Mg,1990,misc emissions sources,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
+industry,industrial processes,other industrial processes,1990,misc emissions sources,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
+urban processes,urban processes,landfills,2005,misc emissions sources,0.00118,0.00117,0.00109,0.00103,0.00120,0.00099,0.00117,0.00142,0.00142,0.00127,0.00131,0.00095,0.00113,0.00129
+urban processes,urban processes,wastewater treatment,2005,misc emissions sources,0.00118,0.00117,0.00109,0.00103,0.00120,0.00099,0.00117,0.00142,0.00142,0.00127,0.00131,0.00095,0.00113,0.00129
+urban processes,urban processes,aerosols,2005,misc emissions sources,0.00118,0.00117,0.00109,0.00103,0.00120,0.00099,0.00117,0.00142,0.00142,0.00127,0.00131,0.00095,0.00113,0.00129
+urban processes,urban processes,fire_exting,2005,misc emissions sources,0.00118,0.00117,0.00109,0.00103,0.00120,0.00099,0.00117,0.00142,0.00142,0.00127,0.00131,0.00095,0.00113,0.00129
+industry,industrial processes,adipic acid,2005,misc emissions sources,0.00118,0.00117,0.00109,0.00103,0.00120,0.00099,0.00117,0.00142,0.00142,0.00127,0.00131,0.00095,0.00113,0.00129
+industry,industrial processes,nitric acid,2005,misc emissions sources,0.00118,0.00117,0.00109,0.00103,0.00120,0.00099,0.00117,0.00142,0.00142,0.00127,0.00131,0.00095,0.00113,0.00129
+industry,industrial processes,foams,2005,misc emissions sources,0.00118,0.00117,0.00109,0.00103,0.00120,0.00099,0.00117,0.00142,0.00142,0.00127,0.00131,0.00095,0.00113,0.00129
+industry,industrial processes,solvents,2005,misc emissions sources,0.00118,0.00117,0.00109,0.00103,0.00120,0.00099,0.00117,0.00142,0.00142,0.00127,0.00131,0.00095,0.00113,0.00129
+industry,industrial processes,HCFC_22_Prod,2005,misc emissions sources,0.00118,0.00117,0.00109,0.00103,0.00120,0.00099,0.00117,0.00142,0.00142,0.00127,0.00131,0.00095,0.00113,0.00129
+industry,industrial processes,semiconductors,2005,misc emissions sources,0.00118,0.00117,0.00109,0.00103,0.00120,0.00099,0.00117,0.00142,0.00142,0.00127,0.00131,0.00095,0.00113,0.00129
+industry,industrial processes,Al_Mg,2005,misc emissions sources,0.00118,0.00117,0.00109,0.00103,0.00120,0.00099,0.00117,0.00142,0.00142,0.00127,0.00131,0.00095,0.00113,0.00129
+industry,industrial processes,other industrial processes,2005,misc emissions sources,0.00118,0.00117,0.00109,0.00103,0.00120,0.00099,0.00117,0.00142,0.00142,0.00127,0.00131,0.00095,0.00113,0.00129
 
 INPUT_TABLE,,,,,,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,,,,,,

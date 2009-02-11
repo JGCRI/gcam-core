@@ -243,7 +243,7 @@ Variable ID,,,,,,,,
 100151,,,,,,,,
 ,,,,,uncontrolled-emiss-coef,,,
 supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,Eastern Europe
-regional crude oil,regional crude oil,regional crude oil,1990,SO2_1,0.031969004,0.031969004,0.031969004,0.031113237
+regional crude oil,regional crude oil,regional crude oil,1990,SO2_1,0.00126436,0.009212686,0.049763311,0.052529403
 refined liquids industrial,biomass liquids,biomass liquids,1990,SO2_1,0.01,0.01,0.01,0.01
 refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,SO2_1,0.01,0.01,0.01,0.01
 refined liquids industrial,coal to liquids,coal to liquids,1990,SO2_1,0.01,0.01,0.01,0.01
@@ -252,19 +252,19 @@ refined liquids enduse,biomass liquids,biomass liquids,1990,SO2_1,0.01,0.01,0.01
 refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,SO2_1,0.01,0.01,0.01,0.01
 refined liquids enduse,coal to liquids,coal to liquids,1990,SO2_1,0.01,0.01,0.01,0.01
 refined liquids enduse,gas to liquids,gas to liquids,1990,SO2_1,0.01,0.01,0.01,0.01
-electricity,coal,Coal (existing),1990,SO2_1,0.705476295,1.187162571,0.516787633,1.201484339
-electricity,coal,Coal (conv pul),1990,SO2_1,0.705476295,1.187162571,0.516787633,1.201484339
+electricity,coal,Coal (existing),1990,SO2_1,0.874691567,1.482685069,0.928291468,1.413679868
+electricity,coal,Coal (conv pul),1990,SO2_1,0.874691567,1.482685069,0.928291468,1.413679868
 electricity,coal,Coal (IGCC),1990,SO2_1,0.001,0.001,0.001,0.001
 electricity,coal,Coal (IGCC)_CCS,1990,SO2_1,0.001,0.001,0.001,0.001
-electricity,gas,Gas (existing),1990,SO2_1,0.434886448,0.731818938,0.318570502,0.805617337
-electricity,gas,Gas (peak load conv),1990,SO2_1,0.434886448,0.731818938,0.318570502,0.805617337
+electricity,gas,Gas (existing),1990,SO2_1,0.002213824,0.003752642,0.002349484,0.003891854
+electricity,gas,Gas (peak load conv),1990,SO2_1,0.002213824,0.003752642,0.002349484,0.003891854
 electricity,gas,Gas (CC),1990,SO2_1,0.001,0.001,0.001,0.001
 electricity,gas,Gas (CC)_CCS,1990,SO2_1,0.001,0.001,0.001,0.001
-electricity,oil,Oil (existing),1990,SO2_1,0.612306626,1.030378361,0.448537384,1.134284218
-electricity,oil,Oil (peak load conv),1990,SO2_1,0.612306626,1.030378361,0.448537384,1.134284218
+electricity,oil,Oil (existing),1990,SO2_1,0.508986812,0.862780865,0.540176827,0.894787493
+electricity,oil,Oil (peak load conv),1990,SO2_1,0.508986812,0.862780865,0.540176827,0.894787493
 electricity,oil,Oil (IGCC),1990,SO2_1,0.001,0.001,0.001,0.001
 electricity,oil,Oil (IGCC)_CCS,1990,SO2_1,0.001,0.001,0.001,0.001
-electricity,biomass,Biomass (existing),1990,SO2_1,0.000980531,3.80552E-05,0.004049831,0.000477516
+electricity,biomass,Biomass (existing),1990,SO2_1,0.000980531,3.80552E-05,0.005022013,0.00047197
 electricity,biomass,Biomass (conv),1990,SO2_1,0.000980531,0.000980531,0.000980531,0.000980531
 electricity,biomass,Biomass (IGCC),1990,SO2_1,0.001,0.001,0.001,0.001
 electricity,biomass,Biomass (IGCC)_CCS,1990,SO2_1,0.001,0.001,0.001,0.001
@@ -272,31 +272,31 @@ H2 Central Production,coal chemical,coal chemical,1990,SO2_1,0.01,0.01,0.01,0.01
 H2 Central Production,coal chemical,coal chemical CCS,1990,SO2_1,0.01,0.01,0.01,0.01
 H2 Central Production,biomass to H2,biomass to H2,1990,SO2_1,0.01,0.01,0.01,0.01
 H2 Central Production,biomass to H2,biomass to H2 CCS,1990,SO2_1,0.01,0.01,0.01,0.01
-building,gas,gas,1990,SO2_1,0.080617612,0.033078263,0.076737751,0.220057422
-building,coal,coal,1990,SO2_1,0.336473053,0.049960855,0.485353657,0.806203716
-building,biomass,biomass,1990,SO2_1,0.052442438,0.006744924,0.003841815,0.007578397
-building,refined liquids,refined liquids,1990,SO2_1,0.025701995,0.011273155,0.032813426,0.111467667
+building,gas,gas,1990,SO2_1,0.00212065,0.000768663,0.001148571,0.001631285
+building,coal,coal,1990,SO2_1,1.885656501,0.68348586,1.021295599,1.502290184
+building,biomass,biomass,1990,SO2_1,0.055115333,0.006744924,0.004296674,0.009463269
+building,refined liquids,refined liquids,1990,SO2_1,0.2631629,0.095387533,0.142532382,0.202434944
 building,trad biomass,trad biomass,1990,SO2_1,0,0,0,0
-industry,energy-use,biomass,1990,SO2_1,0.001002282,0.000121673,0.001121172,0.000420999
-industry,energy-use,gas,1990,SO2_1,0.238728747,0.385071586,0.068774017,0.139019266
-industry,energy-use,coal,1990,SO2_1,0.390743065,0.630272029,0.112566964,0.227541989
-industry,energy-use,refined liquids,1990,SO2_1,0.410025256,0.661374373,0.118121862,0.238770615
+industry,energy-use,biomass,1990,SO2_1,0.000992607,0.000121673,0.001113807,0.000351048
+industry,energy-use,gas,1990,SO2_1,0.003062465,0.006326725,0.000682365,0.000715322
+industry,energy-use,coal,1990,SO2_1,1.42565591,2.945252456,0.317658255,0.333000605
+industry,energy-use,refined liquids,1990,SO2_1,0.417740619,0.863007389,0.093079091,0.097574652
 transportation,air,refined liquids,1990,SO2_1,0.030229426,0.030412869,0.028679896,0.031051771
-transportation,rail,coal,1990,SO2_1,0,0,0.633263738,0.718290755
-transportation,rail,refined liquids,1990,SO2_1,0.445521705,0.140673614,0.633263738,0.718290755
-transportation,road,gas,1990,SO2_1,0.028088251,0.02091,0.01135047,0.08498477
-transportation,road,refined liquids,1990,SO2_1,0.033705901,0.025092,0.013620565,0.097287952
+transportation,rail,coal,1990,SO2_1,0,0,0.726964359,0.651810081
+transportation,rail,refined liquids,1990,SO2_1,0.445524168,0.140673614,0.726964359,0.651810081
+transportation,road,gas,1990,SO2_1,0.028088406,0.02091,0.013029938,0.07711909
+transportation,road,refined liquids,1990,SO2_1,0.033706087,0.025092,0.015635926,0.088283564
 transportation,domestic ship,coal,1990,SO2_1,0,0,0,0,
-transportation,domestic ship,refined liquids,1990,SO2_1,0.445521705,0.140673614,0.633263738,0.718290755,
-transportation,international ship,refined liquids,1990,SO2_1,2.289387378,2.289387378,2.289387378,2.151319647,
-industry,industrial processes,other industrial processes,1990,SO2_1,0.391522545,0.438021316,1.579182923,0.626927367,
+transportation,domestic ship,refined liquids,1990,SO2_1,0.648821603,0.191827655,1.069065234,0.860823229,
+transportation,international ship,refined liquids,1990,SO2_1,2.06533399,2.206793578,2.185894015,2.767227848,
+industry,industrial processes,other industrial processes,1990,SO2_1,387.7434883,438.0213159,1568.809307,522.7593943,
 
 INPUT_TABLE,,,,,,,,,
 Variable ID,,,,,,,,,
 100152,,,,,,,,,
 ,,,,,uncontrolled-emiss-coef,,,,
 supplysector,subsector,technology,period,generic-ghg,Japan,China,Southeast Asia,Korea,India
-regional crude oil,regional crude oil,regional crude oil,1990,SO2_2,0.031969004,0.028296924,0.028845384,0.031969004,0.028562804
+regional crude oil,regional crude oil,regional crude oil,1990,SO2_2,0.000228252,0.002953323,0.020801317,0.000876084,0.016850892
 refined liquids industrial,biomass liquids,biomass liquids,1990,SO2_2,0.01,0.01,0.01,0.01,0.01
 refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,SO2_2,0.01,0.01,0.01,0.01,0.01
 refined liquids industrial,coal to liquids,coal to liquids,1990,SO2_2,0.01,0.01,0.01,0.01,0.01
@@ -305,19 +305,19 @@ refined liquids enduse,biomass liquids,biomass liquids,1990,SO2_2,0.01,0.01,0.01
 refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,SO2_2,0.01,0.01,0.01,0.01,0.01
 refined liquids enduse,coal to liquids,coal to liquids,1990,SO2_2,0.01,0.01,0.01,0.01,0.01
 refined liquids enduse,gas to liquids,gas to liquids,1990,SO2_2,0.01,0.01,0.01,0.01,0.01
-electricity,coal,Coal (existing),1990,SO2_2,0.069807031,1.193109435,1.124156292,0.218194215,0.495432755
-electricity,coal,Coal (conv pul),1990,SO2_2,0.069807031,1.193109435,1.124156292,0.218194215,0.495432755
+electricity,coal,Coal (existing),1990,SO2_2,0.119468449,0.865332049,0.9227757,0.506169711,0.744535697
+electricity,coal,Coal (conv pul),1990,SO2_2,0.119468449,0.865332049,0.9227757,0.506169711,0.744535697
 electricity,coal,Coal (IGCC),1990,SO2_2,0.001,0.001,0.001,0.001,0.001
 electricity,coal,Coal (IGCC)_CCS,1990,SO2_2,0.001,0.001,0.001,0.001,0.001
-electricity,gas,Gas (existing),1990,SO2_2,0.043032108,0.984126819,0.896293679,0.134504459,0.402107969
-electricity,gas,Gas (peak load conv),1990,SO2_2,0.043032108,0.984126819,0.896293679,0.134504459,0.402107969
+electricity,gas,Gas (existing),1990,SO2_2,0.000302372,0.002930544,0.003020748,0.001281104,0.002481065
+electricity,gas,Gas (peak load conv),1990,SO2_2,0.000302372,0.002930544,0.003020748,0.001281104,0.002481065
 electricity,gas,Gas (CC),1990,SO2_2,0.001,0.001,0.001,0.001,0.001
 electricity,gas,Gas (CC)_CCS,1990,SO2_2,0.001,0.001,0.001,0.001,0.001
-electricity,oil,Oil (existing),1990,SO2_2,0.060587873,1.385620029,1.261953693,0.189378105,0.566155545
-electricity,oil,Oil (peak load conv),1990,SO2_2,0.060587873,1.385620029,1.261953693,0.189378105,0.566155545
+electricity,oil,Oil (existing),1990,SO2_2,0.069519208,0.673770074,0.694509081,0.294542348,0.570429045
+electricity,oil,Oil (peak load conv),1990,SO2_2,0.069519208,0.673770074,0.694509081,0.294542348,0.570429045
 electricity,oil,Oil (IGCC),1990,SO2_2,0.001,0.001,0.001,0.001,0.001
 electricity,oil,Oil (IGCC)_CCS,1990,SO2_2,0.001,0.001,0.001,0.001,0.001
-electricity,biomass,Biomass (existing),1990,SO2_2,0.004754459,0.000585057,0.020451621,0.016394303,0.017080615
+electricity,biomass,Biomass (existing),1990,SO2_2,0.004754449,0.000407774,0.008170257,0.030913291,0.022199309
 electricity,biomass,Biomass (conv),1990,SO2_2,0.000980531,0.000980531,0.000980531,0.000980531,0.000980531
 electricity,biomass,Biomass (IGCC),1990,SO2_2,0.001,0.001,0.001,0.001,0.001
 electricity,biomass,Biomass (IGCC)_CCS,1990,SO2_2,0.001,0.001,0.001,0.001,0.001
@@ -325,31 +325,31 @@ H2 Central Production,coal chemical,coal chemical,1990,SO2_2,0.01,0.01,0.01,0.01
 H2 Central Production,coal chemical,coal chemical CCS,1990,SO2_2,0.01,0.01,0.01,0.01,0.01
 H2 Central Production,biomass to H2,biomass to H2,1990,SO2_2,0.01,0.01,0.01,0.01,0.01
 H2 Central Production,biomass to H2,biomass to H2 CCS,1990,SO2_2,0.01,0.01,0.01,0.01,0.01
-building,gas,gas,1990,SO2_2,0.070757144,0.23320609,1.480773876,0.008772756,0.071101062
-building,coal,coal,1990,SO2_2,0.149558573,1.071784313,0.46354549,0.322336922,0.196659314
-building,biomass,biomass,1990,SO2_2,0.019761462,0.028742963,0.153278935,0.006324971,1.113201882
-building,refined liquids,refined liquids,1990,SO2_2,0.026978042,0.046757154,0.20663094,0.022687,0.028527214
-building,trad biomass,trad biomass,1990,SO2_2,0,0.05633328,0.023099293,0,0.202129733
-industry,energy-use,biomass,1990,SO2_2,0.001273982,0.000504575,0.011399033,0.01118985,0.020028454
-industry,energy-use,gas,1990,SO2_2,0.042037382,0.46943977,0.264000438,0.050760694,0.34473802
-industry,energy-use,coal,1990,SO2_2,0.068805352,0.775704856,0.432106906,0.083083372,0.564255424
-industry,energy-use,refined liquids,1990,SO2_2,0.072200723,0.806279779,0.453430298,0.087183328,0.592100014
+building,gas,gas,1990,SO2_2,0.001253475,0.000951997,0.001180144,0.001664774,9.37746E-05
+building,coal,coal,1990,SO2_2,1.114574859,0.999300475,1.186078901,1.480296817,0.095228864
+building,biomass,biomass,1990,SO2_2,0.05818278,0.027272535,0.125021494,0.033040196,0.451588843
+building,refined liquids,refined liquids,1990,SO2_2,0.155550469,0.11813848,0.146450464,0.206590757,0.011636993
+building,trad biomass,trad biomass,1990,SO2_2,0,0.053451392,0.018840868,0,0.081997285
+industry,energy-use,biomass,1990,SO2_2,0.001162442,0.000152116,0.004500799,0.026736902,0.011951079
+industry,energy-use,gas,1990,SO2_2,0.000235585,0.000612972,0.001158194,0.000659096,0.001360631
+industry,energy-use,coal,1990,SO2_2,0.109670985,0.288080919,0.539168858,0.306825898,0.633408734
+industry,energy-use,refined liquids,1990,SO2_2,0.032135401,0.083613501,0.157985339,0.089905032,0.185599172
 transportation,air,refined liquids,1990,SO2_2,0.030557836,0.036338687,0.013256931,0.047341887,0.036275621
-transportation,rail,coal,1990,SO2_2,0,0.47333955,0,0,0
-transportation,rail,refined liquids,1990,SO2_2,0.122962189,0.47333955,0.661209633,0.453035542,0.18964614
-transportation,road,gas,1990,SO2_2,0,0.084338697,0.153808935,0,0.162895438
-transportation,road,refined liquids,1990,SO2_2,0.038507445,0.085338871,0.158925593,0.096865163,0.166482047
-transportation,domestic ship,coal,1990,SO2_2,0,0.47333955,0,0,0
-transportation,domestic ship,refined liquids,1990,SO2_2,0.122962189,0.47333955,0.661209633,0.453035542,0.18964614
-transportation,international ship,refined liquids,1990,SO2_2,2.289387378,1.757288061,1.827601829,2.289387378,1.791022712
-industry,industrial processes,other industrial processes,1990,SO2_2,0.253280762,6.410961588,0.492248217,0.041176805,0.455351993
+transportation,rail,coal,1990,SO2_2,0,0.424326914,0,0,0
+transportation,rail,refined liquids,1990,SO2_2,0.122957768,0.424326914,0.491731683,0.223261711,0.320542509
+transportation,road,gas,1990,SO2_2,0,0.075605723,0.114385397,0,0.275328106
+transportation,road,refined liquids,1990,SO2_2,0.038506061,0.076502333,0.118190579,0.047736392,0.281390241
+transportation,domestic ship,coal,1990,SO2_2,0,0.424326914,0,0,0
+transportation,domestic ship,refined liquids,1990,SO2_2,0.164675582,0.43347145,0.522695853,0.312983707,0.333175383
+transportation,international ship,refined liquids,1990,SO2_2,1.887646514,1.794299525,1.93738109,2.128260421,1.861608555
+industry,industrial processes,other industrial processes,1990,SO2_2,231.1055533,1932.740981,194.3594994,98.38739433,271.7108037
 
 INPUT_TABLE,,,,,,,,,
 Variable ID,,,,,,,,,
 100153,,,,,,,,,
 ,,,,,uncontrolled-emiss-coef,,,,
 supplysector,subsector,technology,period,generic-ghg,Australia_NZ,Middle East,Africa,Latin America,
-regional crude oil,regional crude oil,regional crude oil,1990,SO2_3,0.031969004,0.029627513,0.028631216,0.029970044,
+regional crude oil,regional crude oil,regional crude oil,1990,SO2_3,0.14620312,0.151114095,0.251152964,0.038977857,
 refined liquids industrial,biomass liquids,biomass liquids,1990,SO2_3,0.01,0.01,0.01,0.01
 refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,SO2_3,0.01,0.01,0.01,0.01
 refined liquids industrial,coal to liquids,coal to liquids,1990,SO2_3,0.01,0.01,0.01,0.01
@@ -358,19 +358,19 @@ refined liquids enduse,biomass liquids,biomass liquids,1990,SO2_3,0.01,0.01,0.01
 refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,SO2_3,0.01,0.01,0.01,0.01
 refined liquids enduse,coal to liquids,coal to liquids,1990,SO2_3,0.01,0.01,0.01,0.01
 refined liquids enduse,gas to liquids,gas to liquids,1990,SO2_3,0.01,0.01,0.01,0.01
-electricity,coal,Coal (existing),1990,SO2_3,0.307624905,0.196920263,0.554749136,0.939611231
-electricity,coal,Coal (conv pul),1990,SO2_3,0.307624905,0.196920263,0.554749136,0.939611231
+electricity,coal,Coal (existing),1990,SO2_3,0.347604236,1.399020114,0.92594763,2.05795557
+electricity,coal,Coal (conv pul),1990,SO2_3,0.347604236,1.399020114,0.92594763,2.05795557
 electricity,coal,Coal (IGCC),1990,SO2_3,0.001,0.001,0.001,0.001
 electricity,coal,Coal (IGCC)_CCS,1990,SO2_3,0.001,0.001,0.001,0.001
-electricity,gas,Gas (existing),1990,SO2_3,0.189633448,0.148880905,0.448341921,0.692677684
-electricity,gas,Gas (peak load conv),1990,SO2_3,0.189633448,0.148880905,0.448341921,0.692677684
+electricity,gas,Gas (existing),1990,SO2_3,0.000879778,0.004342775,0.003072514,0.006228934
+electricity,gas,Gas (peak load conv),1990,SO2_3,0.000879778,0.004342775,0.003072514,0.006228934
 electricity,gas,Gas (CC),1990,SO2_3,0.001,0.001,0.001,0.001
 electricity,gas,Gas (CC)_CCS,1990,SO2_3,0.001,0.001,0.001,0.001
-electricity,oil,Oil (existing),1990,SO2_3,0.266998011,0.209619696,0.631251516,0.97526869
-electricity,oil,Oil (peak load conv),1990,SO2_3,0.266998011,0.209619696,0.631251516,0.97526869
+electricity,oil,Oil (existing),1990,SO2_3,0.202272411,0.998460054,0.706410719,1.432112494
+electricity,oil,Oil (peak load conv),1990,SO2_3,0.202272411,0.998460054,0.706410719,1.432112494
 electricity,oil,Oil (IGCC),1990,SO2_3,0.001,0.001,0.001,0.001
 electricity,oil,Oil (IGCC)_CCS,1990,SO2_3,0.001,0.001,0.001,0.001
-electricity,biomass,Biomass (existing),1990,SO2_3,0.000698352,0,0.013579388,0.022045357
+electricity,biomass,Biomass (existing),1990,SO2_3,0.00070429,0,0.01610467,0.025238154
 electricity,biomass,Biomass (conv),1990,SO2_3,0.000980531,0.000980531,0.000980531,0.000980531
 electricity,biomass,Biomass (IGCC),1990,SO2_3,0.001,0.001,0.001,0.001
 electricity,biomass,Biomass (IGCC)_CCS,1990,SO2_3,0.001,0.001,0.001,0.001
@@ -378,31 +378,31 @@ H2 Central Production,coal chemical,coal chemical,1990,SO2_3,0.01,0.01,0.01,0.01
 H2 Central Production,coal chemical,coal chemical CCS,1990,SO2_3,0.01,0.01,0.01,0.01
 H2 Central Production,biomass to H2,biomass to H2,1990,SO2_3,0.01,0.01,0.01,0.01
 H2 Central Production,biomass to H2,biomass to H2 CCS,1990,SO2_3,0.01,0.01,0.01,0.01
-building,gas,gas,1990,SO2_3,0.041320028,0.300442989,0.24713365,0.251899954
-building,coal,coal,1990,SO2_3,0.089594767,0,0.838408825,0.738260814
-building,biomass,biomass,1990,SO2_3,0.005509756,1.100362031,0.190443659,0.056722736
-building,refined liquids,refined liquids,1990,SO2_3,0.016785735,0.34415753,0.141920311,0.098272328
-building,trad biomass,trad biomass,1990,SO2_3,0,0,0.068320074,0.007336844
-industry,energy-use,biomass,1990,SO2_3,0.004513913,0.040420049,0.022604065,0.021722299
-industry,energy-use,gas,1990,SO2_3,0.408067646,0.402775941,0.307370573,0.271294859
-industry,energy-use,coal,1990,SO2_3,0.667911193,0.659249912,0.503093662,0.444046166
-industry,energy-use,refined liquids,1990,SO2_3,0.700870936,0.691782243,0.527920073,0.465958731
+building,gas,gas,1990,SO2_3,0.001949522,0.002413089,0.000742492,0.003113945
+building,coal,coal,1990,SO2_3,1.733491051,2.355230463,0.752123113,2.999725818
+building,biomass,biomass,1990,SO2_3,0.013708247,0.590947785,0.120060312,0.114272747
+building,refined liquids,refined liquids,1990,SO2_3,0.241926635,0.29945319,0.092139843,0.386426173
+building,trad biomass,trad biomass,1990,SO2_3,0,0,0.043070635,0.014780692
+industry,energy-use,biomass,1990,SO2_3,0.004492746,0.016904913,0.016539842,0.011675059
+industry,energy-use,gas,1990,SO2_3,0.003868797,0.00335793,0.001659069,0.001857446
+industry,energy-use,coal,1990,SO2_3,1.801023961,1.563202567,0.772338887,0.864688436
+industry,energy-use,refined liquids,1990,SO2_3,0.527729629,0.458044051,0.226307991,0.253367927
 transportation,air,refined liquids,1990,SO2_3,0.030548324,0.025564942,0.022254151,0.025823574
-transportation,rail,coal,1990,SO2_3,0,0,0.161210621,1.344601451
-transportation,rail,refined liquids,1990,SO2_3,0.246814642,0,0.161210621,1.344601451
-transportation,road,gas,1990,SO2_3,0.036516177,0.190639373,0,0.115407167
-transportation,road,refined liquids,1990,SO2_3,0.043819412,0.203429,0.141229445,0.125019393
-transportation,domestic ship,coal,1990,SO2_3,0.246814642,0,0,0
-transportation,domestic ship,refined liquids,1990,SO2_3,0.246814642,0,0.161210621,1.344601451
-transportation,international ship,refined liquids,1990,SO2_3,2.289387378,1.932941986,1.79980899,1.981072869
-industry,industrial processes,other industrial processes,1990,SO2_3,1.492062609,0.300140507,1.091605415,5.38170834
+transportation,rail,coal,1990,SO2_3,0,0,0.17922243,1.303035432
+transportation,rail,refined liquids,1990,SO2_3,0.255723378,0,0.17922243,1.303035432
+transportation,road,gas,1990,SO2_3,0.037834222,0.197668199,0,0.111839555
+transportation,road,refined liquids,1990,SO2_3,0.045401067,0.210929377,0.157008788,0.121154635
+transportation,domestic ship,coal,1990,SO2_3,0.255723378,0,0,0
+transportation,domestic ship,refined liquids,1990,SO2_3,0.361872705,0,0.18622432,1.528704081
+transportation,international ship,refined liquids,1990,SO2_3,2.587483762,2.17343617,1.87953833,2.29110296
+industry,industrial processes,other industrial processes,1990,SO2_3,1485.065897,125.5280308,798.7493071,2892.500639
 
 INPUT_TABLE,,,,,,,,
 Variable ID,,,,,
 100154,,,,,
 ,,,,,uncontrolled-emiss-coef
 supplysector,subsector,technology,period,generic-ghg,Former Soviet Union
-regional crude oil,regional crude oil,regional crude oil,1990,SO2_4,0.028941213
+regional crude oil,regional crude oil,regional crude oil,1990,SO2_4,0.01468765
 refined liquids industrial,biomass liquids,biomass liquids,1990,SO2_4,0.01
 refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,SO2_4,0.01
 refined liquids industrial,coal to liquids,coal to liquids,1990,SO2_4,0.01
@@ -411,19 +411,19 @@ refined liquids enduse,biomass liquids,biomass liquids,1990,SO2_4,0.01
 refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,SO2_4,0.01
 refined liquids enduse,coal to liquids,coal to liquids,1990,SO2_4,0.01
 refined liquids enduse,gas to liquids,gas to liquids,1990,SO2_4,0.01
-electricity,coal,Coal (existing),1990,SO2_4,0.543016992
-electricity,coal,Coal (conv pul),1990,SO2_4,0.543016992
+electricity,coal,Coal (existing),1990,SO2_4,1.254725142
+electricity,coal,Coal (conv pul),1990,SO2_4,1.254725142
 electricity,coal,Coal (IGCC),1990,SO2_4,0.001
 electricity,coal,Coal (IGCC)_CCS,1990,SO2_4,0.001
-electricity,gas,Gas (existing),1990,SO2_4,0.430274159
-electricity,gas,Gas (peak load conv),1990,SO2_4,0.430274159
+electricity,gas,Gas (existing),1990,SO2_4,0.00408202
+electricity,gas,Gas (peak load conv),1990,SO2_4,0.00408202
 electricity,gas,Gas (CC),1990,SO2_4,0.001
 electricity,gas,Gas (CC)_CCS,1990,SO2_4,0.001
-electricity,oil,Oil (existing),1990,SO2_4,0.605812667
-electricity,oil,Oil (peak load conv),1990,SO2_4,0.605812667
+electricity,oil,Oil (existing),1990,SO2_4,0.938509314
+electricity,oil,Oil (peak load conv),1990,SO2_4,0.938509314
 electricity,oil,Oil (IGCC),1990,SO2_4,0.001
 electricity,oil,Oil (IGCC)_CCS,1990,SO2_4,0.001
-electricity,biomass,Biomass (existing),1990,SO2_4,0.001177848
+electricity,biomass,Biomass (existing),1990,SO2_4,0.001174558
 electricity,biomass,Biomass (conv),1990,SO2_4,0.000980531
 electricity,biomass,Biomass (IGCC),1990,SO2_4,0.001
 electricity,biomass,Biomass (IGCC)_CCS,1990,SO2_4,0.001
@@ -431,24 +431,24 @@ H2 Central Production,coal chemical,coal chemical,1990,SO2_4,0.01
 H2 Central Production,coal chemical,coal chemical CCS,1990,SO2_4,0.01
 H2 Central Production,biomass to H2,biomass to H2,1990,SO2_4,0.01
 H2 Central Production,biomass to H2,biomass to H2 CCS,1990,SO2_4,0.01
-building,gas,gas,1990,SO2_4,0.089765733
-building,coal,coal,1990,SO2_4,0.284895164
-building,biomass,biomass,1990,SO2_4,0.041857367
-building,refined liquids,refined liquids,1990,SO2_4,0.068682372
+building,gas,gas,1990,SO2_4,0.001249235
+building,coal,coal,1990,SO2_4,1.251077621
+building,biomass,biomass,1990,SO2_4,0.061044695
+building,refined liquids,refined liquids,1990,SO2_4,0.155024327
 building,trad biomass,trad biomass,1990,SO2_4,0
-industry,energy-use,biomass,1990,SO2_4,0.00136209
-industry,energy-use,gas,1990,SO2_4,0.137545606
-industry,energy-use,coal,1990,SO2_4,0.225129953
-industry,energy-use,refined liquids,1990,SO2_4,0.236239551
+industry,energy-use,biomass,1990,SO2_4,0.001157575
+industry,energy-use,gas,1990,SO2_4,0.000995674
+industry,energy-use,coal,1990,SO2_4,0.463511746
+industry,energy-use,refined liquids,1990,SO2_4,0.135816562
 transportation,air,refined liquids,1990,SO2_4,0.024491379
-transportation,rail,coal,1990,SO2_4,1.113829625
-transportation,rail,refined liquids,1990,SO2_4,1.113829625
-transportation,road,gas,1990,SO2_4,0.03718391
-transportation,road,refined liquids,1990,SO2_4,0.038566847
+transportation,rail,coal,1990,SO2_4,1.118464192
+transportation,rail,refined liquids,1990,SO2_4,1.118464192
+transportation,road,gas,1990,SO2_4,0.037338629
+transportation,road,refined liquids,1990,SO2_4,0.038727321
 transportation,domestic ship,coal,1990,SO2_4,0
-transportation,domestic ship,refined liquids,1990,SO2_4,1.113829625,,,
-transportation,international ship,refined liquids,1990,SO2_4,1.840180488,,,
-industry,industrial processes,other industrial processes,1990,SO2_4,5.53078697,,,
+transportation,domestic ship,refined liquids,1990,SO2_4,1.20116144,,,
+transportation,international ship,refined liquids,1990,SO2_4,1.964138081,,,
+industry,industrial processes,other industrial processes,1990,SO2_4,4700.350122,,,
 
 per-capita GDP at mid-point of control curve,,,,,,,,
 INPUT_TABLE,,,,,,,,
@@ -501,7 +501,7 @@ transportation,road,gas,1990,SO2_1,27.7,21.4,13.3,6.0,
 transportation,road,refined liquids,1990,SO2_1,27.7,21.4,13.3,6.0,
 transportation,domestic ship,coal,1990,SO2_1,27.7,21.4,13.3,6.0,
 transportation,domestic ship,refined liquids,1990,SO2_1,27.7,21.4,13.3,6.0,
-transportation,international ship,refined liquids,1990,SO2_1,27.7,21.4,13.3,6.0,
+transportation,international ship,refined liquids,1990,SO2_1,34.6,26.7,16.6,6.0,
 industry,industrial processes,other industrial processes,1990,SO2_1,27.7,21.4,13.3,6.0,
 
 INPUT_TABLE,,,,,,,,,
@@ -554,7 +554,7 @@ transportation,road,gas,1990,SO2_2,24.5,8.0,8.0,9.8,8.0
 transportation,road,refined liquids,1990,SO2_2,24.5,8.0,8.0,9.8,8.0
 transportation,domestic ship,coal,1990,SO2_2,24.5,8.0,8.0,9.8,8.0
 transportation,domestic ship,refined liquids,1990,SO2_2,24.5,8.0,8.0,9.8,8.0
-transportation,international ship,refined liquids,1990,SO2_2,24.5,8.0,8.0,9.8,8.0
+transportation,international ship,refined liquids,1990,SO2_2,30.6,8.0,8.0,12.3,8.0
 industry,industrial processes,other industrial processes,1990,SO2_2,24.5,8.0,8.0,9.8,8.0
 
 INPUT_TABLE,,,,,,,,,
@@ -607,7 +607,7 @@ transportation,road,gas,1990,SO2_3,16.0,8.0,8.0,8.0
 transportation,road,refined liquids,1990,SO2_3,16.0,8.0,8.0,8.0
 transportation,domestic ship,coal,1990,SO2_3,16.0,8.0,8.0,8.0
 transportation,domestic ship,refined liquids,1990,SO2_3,16.0,8.0,8.0,8.0
-transportation,international ship,refined liquids,1990,SO2_3,16.0,8.0,8.0,8.0
+transportation,international ship,refined liquids,1990,SO2_3,20.0,8.0,8.0,8.0
 industry,industrial processes,other industrial processes,1990,SO2_3,16.0,8.0,8.0,8.0
 
 INPUT_TABLE,,,,,,,,
@@ -715,7 +715,7 @@ transportation,road,gas,1990,SO2_1,30.0,30.0,12.0,6.0
 transportation,road,refined liquids,1990,SO2_1,30.0,30.0,12.0,6.0
 transportation,domestic ship,coal,1990,SO2_1,30.0,30.0,12.0,6.0
 transportation,domestic ship,refined liquids,1990,SO2_1,30.0,30.0,12.0,6.0
-transportation,international ship,refined liquids,1990,SO2_1,30.0,30.0,12.0,6.0
+transportation,international ship,refined liquids,1990,SO2_1,20.0,20.0,12.0,6.0
 industry,industrial processes,other industrial processes,1990,SO2_1,30.0,30.0,12.0,6.0
 
 INPUT_TABLE,,,,,,,,,
@@ -1097,7 +1097,7 @@ Variable ID,,,,,,,,
 100501,,,,,,,,
 ,,,,,final-emiss-coef,,,
 supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,Eastern Europe
-regional crude oil,regional crude oil,regional crude oil,1990,SO2_1,0.023976753,0.023976753,0.023976753,0.023334928
+regional crude oil,regional crude oil,regional crude oil,1990,SO2_1,0.00094827,0.006909515,0.037322483,0.039397052
 refined liquids industrial,biomass liquids,biomass liquids,1990,SO2_1,0.0075,0.0075,0.0075,0.0075
 refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,SO2_1,0.0075,0.0075,0.0075,0.0075
 refined liquids industrial,coal to liquids,coal to liquids,1990,SO2_1,0.0075,0.0075,0.0075,0.0075
@@ -1106,19 +1106,19 @@ refined liquids enduse,biomass liquids,biomass liquids,1990,SO2_1,0.0075,0.0075,
 refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,SO2_1,0.0075,0.0075,0.0075,0.0075
 refined liquids enduse,coal to liquids,coal to liquids,1990,SO2_1,0.0075,0.0075,0.0075,0.0075
 refined liquids enduse,gas to liquids,gas to liquids,1990,SO2_1,0.0075,0.0075,0.0075,0.0075
-electricity,coal,Coal (existing),1990,SO2_1,0.07054763,0.118716257,0.051678763,0.120148434
-electricity,coal,Coal (conv pul),1990,SO2_1,0.035273815,0.059358129,0.025839382,0.060074217
+electricity,coal,Coal (existing),1990,SO2_1,0.087469157,0.148268507,0.092829147,0.141367987
+electricity,coal,Coal (conv pul),1990,SO2_1,0.043734578,0.074134253,0.046414573,0.070683993
 electricity,coal,Coal (IGCC),1990,SO2_1,0.001,0.001,0.001,0.001
 electricity,coal,Coal (IGCC)_CCS,1990,SO2_1,0.001,0.001,0.001,0.001
-electricity,gas,Gas (existing),1990,SO2_1,0.217443224,0.365909469,0.159285251,0.402808669
-electricity,gas,Gas (peak load conv),1990,SO2_1,0.217443224,0.365909469,0.159285251,0.402808669
+electricity,gas,Gas (existing),1990,SO2_1,0.001106912,0.001876321,0.001174742,0.001945927
+electricity,gas,Gas (peak load conv),1990,SO2_1,0.001106912,0.001876321,0.001174742,0.001945927
 electricity,gas,Gas (CC),1990,SO2_1,0.0009,0.0009,0.0009,0.0009
 electricity,gas,Gas (CC)_CCS,1990,SO2_1,0.0009,0.0009,0.0009,0.0009
-electricity,oil,Oil (existing),1990,SO2_1,0.306153313,0.51518918,0.224268692,0.567142109
-electricity,oil,Oil (peak load conv),1990,SO2_1,0.306153313,0.51518918,0.224268692,0.567142109
+electricity,oil,Oil (existing),1990,SO2_1,0.254493406,0.431390432,0.270088413,0.447393747
+electricity,oil,Oil (peak load conv),1990,SO2_1,0.254493406,0.431390432,0.270088413,0.447393747
 electricity,oil,Oil (IGCC),1990,SO2_1,0.001,0.001,0.001,0.001
 electricity,oil,Oil (IGCC)_CCS,1990,SO2_1,0.001,0.001,0.001,0.001
-electricity,biomass,Biomass (existing),1990,SO2_1,0.000490266,1.90276E-05,0.002024916,0.000238758
+electricity,biomass,Biomass (existing),1990,SO2_1,0.000490266,1.90276E-05,0.002511007,0.000235985
 electricity,biomass,Biomass (conv),1990,SO2_1,0.000490266,0.000490266,0.000490266,0.000490266
 electricity,biomass,Biomass (IGCC),1990,SO2_1,0.001,0.001,0.001,0.001
 electricity,biomass,Biomass (IGCC)_CCS,1990,SO2_1,0.001,0.001,0.001,0.001
@@ -1126,31 +1126,31 @@ H2 Central Production,coal chemical,coal chemical,1990,SO2_1,0.009,0.009,0.009,0
 H2 Central Production,coal chemical,coal chemical CCS,1990,SO2_1,0.009,0.009,0.009,0.009
 H2 Central Production,biomass to H2,biomass to H2,1990,SO2_1,0.009,0.009,0.009,0.009
 H2 Central Production,biomass to H2,biomass to H2 CCS,1990,SO2_1,0.009,0.009,0.009,0.009
-building,gas,gas,1990,SO2_1,0.040308806,0.016539132,0.038368875,0.110028711
-building,coal,coal,1990,SO2_1,0.25235479,0.037470641,0.364015243,0.604652787
-building,biomass,biomass,1990,SO2_1,0.026221219,0.003372462,0.001920908,0.003789199
-building,refined liquids,refined liquids,1990,SO2_1,0.012850998,0.005636577,0.016406713,0.055733834
+building,gas,gas,1990,SO2_1,0.001060325,0.000384331,0.000574286,0.000815642
+building,coal,coal,1990,SO2_1,1.414242375,0.512614395,0.765971699,1.126717638
+building,biomass,biomass,1990,SO2_1,0.027557667,0.003372462,0.002148337,0.004731634
+building,refined liquids,refined liquids,1990,SO2_1,0.12,0.047693766,0.071266191,0.101217472
 building,trad biomass,trad biomass,1990,SO2_1,-1,-1,-1,-1
-industry,energy-use,biomass,1990,SO2_1,0.000300684,3.65019E-05,0.000336352,0.0001263
-industry,energy-use,gas,1990,SO2_1,0.071618624,0.115521476,0.020632205,0.04170578
-industry,energy-use,coal,1990,SO2_1,0.11722292,0.189081609,0.033770089,0.068262597
-industry,energy-use,refined liquids,1990,SO2_1,0.12,0.12,0.035436558,0.071631185,
+industry,energy-use,biomass,1990,SO2_1,0.000297782,3.65019E-05,0.000334142,0.000105314
+industry,energy-use,gas,1990,SO2_1,0.00091874,0.001898018,0.000204709,0.000214597
+industry,energy-use,coal,1990,SO2_1,0.427696773,0.883575737,0.095297476,0.099900181
+industry,energy-use,refined liquids,1990,SO2_1,0.12,0.12,0.027923727,0.029272396,
 transportation,air,refined liquids,1990,SO2_1,0.015114713,0.015206435,0.014339948,0.015525885,
-transportation,rail,coal,1990,SO2_1,-1,-1,0.316631869,0.359145377,
+transportation,rail,coal,1990,SO2_1,-1,-1,0.36348218,0.325905041,
 transportation,rail,refined liquids,1990,SO2_1,0.12,0.070336807,0.12,0.12,
-transportation,road,gas,1990,SO2_1,0.014044125,0.010455,0.005675235,0.042492385,
-transportation,road,refined liquids,1990,SO2_1,0.008426475,0.006273,0.003405141,0.02,
+transportation,road,gas,1990,SO2_1,0.014044203,0.010455,0.006514969,0.038559545,
+transportation,road,refined liquids,1990,SO2_1,0.008426522,0.006273,0.003908982,0.02,
 transportation,domestic ship,coal,1990,SO2_1,-1,-1,-1,-1,
-transportation,domestic ship,refined liquids,1990,SO2_1,0.02,0.02,0.02,0.02,
-transportation,international ship,refined liquids,1990,SO2_1,0.12,0.12,0.12,0.12,
-industry,industrial processes,other industrial processes,1990,SO2_1,0.195761272,0.219010658,0.789591462,0.313463683,
+transportation,domestic ship,refined liquids,1990,SO2_1,0.019464648,0.019182765,0.021381305,0.017216465,
+transportation,international ship,refined liquids,1990,SO2_1,0.123920039,0.132407615,0.131153641,0.166033671,
+industry,industrial processes,other industrial processes,1990,SO2_1,193.8717442,219.0106579,784.4046536,261.3796971,
 
 INPUT_TABLE,,,,,,,,,
 Variable ID,,,,,,,,,
 100502,,,,,,,,,
 ,,,,,final-emiss-coef,,,,
 supplysector,subsector,technology,period,generic-ghg,Japan,China,Southeast Asia,Korea,India
-regional crude oil,regional crude oil,regional crude oil,1990,SO2_2,0.023976753,0.021222693,0.021634038,0.023976753,0.021422103
+regional crude oil,regional crude oil,regional crude oil,1990,SO2_2,0.000171189,0.002214992,0.015600988,0.000657063,0.012638169
 refined liquids industrial,biomass liquids,biomass liquids,1990,SO2_2,0.0075,0.0075,0.0075,0.0075,0.0075
 refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,SO2_2,0.0075,0.0075,0.0075,0.0075,0.0075
 refined liquids industrial,coal to liquids,coal to liquids,1990,SO2_2,0.0075,0.0075,0.0075,0.0075,0.0075
@@ -1159,19 +1159,19 @@ refined liquids enduse,biomass liquids,biomass liquids,1990,SO2_2,0.0075,0.0075,
 refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,SO2_2,0.0075,0.0075,0.0075,0.0075,0.0075
 refined liquids enduse,coal to liquids,coal to liquids,1990,SO2_2,0.0075,0.0075,0.0075,0.0075,0.0075
 refined liquids enduse,gas to liquids,gas to liquids,1990,SO2_2,0.0075,0.0075,0.0075,0.0075,0.0075
-electricity,coal,Coal (existing),1990,SO2_2,0.006980703,0.119310944,0.112415629,0.021819422,0.049543276
-electricity,coal,Coal (conv pul),1990,SO2_2,0.003490352,0.059655472,0.056207815,0.010909711,0.024771638
+electricity,coal,Coal (existing),1990,SO2_2,0.011946845,0.086533205,0.09227757,0.050616971,0.07445357
+electricity,coal,Coal (conv pul),1990,SO2_2,0.005973422,0.043266602,0.046138785,0.025308486,0.037226785
 electricity,coal,Coal (IGCC),1990,SO2_2,0.001,0.001,0.001,0.001,0.001
 electricity,coal,Coal (IGCC)_CCS,1990,SO2_2,0.001,0.001,0.001,0.001,0.001
-electricity,gas,Gas (existing),1990,SO2_2,0.021516054,0.492063409,0.448146839,0.067252229,0.201053984
-electricity,gas,Gas (peak load conv),1990,SO2_2,0.021516054,0.492063409,0.448146839,0.067252229,0.201053984
+electricity,gas,Gas (existing),1990,SO2_2,0.000151186,0.001465272,0.001510374,0.000640552,0.001240533
+electricity,gas,Gas (peak load conv),1990,SO2_2,0.000151186,0.001465272,0.001510374,0.000640552,0.001240533
 electricity,gas,Gas (CC),1990,SO2_2,0.0009,0.0009,0.0009,0.0009,0.0009
 electricity,gas,Gas (CC)_CCS,1990,SO2_2,0.0009,0.0009,0.0009,0.0009,0.0009
-electricity,oil,Oil (existing),1990,SO2_2,0.030293936,0.692810015,0.630976847,0.094689053,0.283077773
-electricity,oil,Oil (peak load conv),1990,SO2_2,0.030293936,0.692810015,0.630976847,0.094689053,0.283077773
+electricity,oil,Oil (existing),1990,SO2_2,0.034759604,0.336885037,0.347254541,0.147271174,0.285214522
+electricity,oil,Oil (peak load conv),1990,SO2_2,0.034759604,0.336885037,0.347254541,0.147271174,0.285214522
 electricity,oil,Oil (IGCC),1990,SO2_2,0.001,0.001,0.001,0.001,0.001
 electricity,oil,Oil (IGCC)_CCS,1990,SO2_2,0.001,0.001,0.001,0.001,0.001
-electricity,biomass,Biomass (existing),1990,SO2_2,0.002377229,0.000292529,0.01022581,0.008197151,0.008540308
+electricity,biomass,Biomass (existing),1990,SO2_2,0.002377225,0.000203887,0.004085128,0.015456646,0.011099654
 electricity,biomass,Biomass (conv),1990,SO2_2,0.000490266,0.000490266,0.000490266,0.000490266,0.000490266
 electricity,biomass,Biomass (IGCC),1990,SO2_2,0.001,0.001,0.001,0.001,0.001
 electricity,biomass,Biomass (IGCC)_CCS,1990,SO2_2,0.001,0.001,0.001,0.001,0.001
@@ -1179,31 +1179,31 @@ H2 Central Production,coal chemical,coal chemical,1990,SO2_2,0.009,0.009,0.009,0
 H2 Central Production,coal chemical,coal chemical CCS,1990,SO2_2,0.009,0.009,0.009,0.009,0.009
 H2 Central Production,biomass to H2,biomass to H2,1990,SO2_2,0.009,0.009,0.009,0.009,0.009
 H2 Central Production,biomass to H2,biomass to H2 CCS,1990,SO2_2,0.009,0.009,0.009,0.009,0.009
-building,gas,gas,1990,SO2_2,0.035378572,0.116603045,0.740386938,0.004386378,0.035550531
-building,coal,coal,1990,SO2_2,0.112168929,0.267946078,0.347659117,0.241752692,0.147494486
-building,biomass,biomass,1990,SO2_2,0.009880731,0.014371482,0.076639467,0.003162486,0.556600941
-building,refined liquids,refined liquids,1990,SO2_2,0.013489021,0.023378577,0.10331547,0.0113435,0.014263607
-building,trad biomass,trad biomass,1990,SO2_2,-1,0.05633328,0.023099293,-1,0.202129733
-industry,energy-use,biomass,1990,SO2_2,0.000382195,0.000151372,0.00341971,0.003356955,0.006008536
-industry,energy-use,gas,1990,SO2_2,0.012611215,0.140831931,0.079200131,0.015228208,0.103421406
-industry,energy-use,coal,1990,SO2_2,0.020641605,0.077570486,0.129632072,0.024925011,0.169276627
-industry,energy-use,refined liquids,1990,SO2_2,0.021660217,0.12,0.12,0.026154998,0.12
+building,gas,gas,1990,SO2_2,0.000626738,0.000475999,0.000590072,0.000832387,4.68873E-05
+building,coal,coal,1990,SO2_2,0.835931145,0.249825119,0.889559176,1.110222613,0.071421648
+building,biomass,biomass,1990,SO2_2,0.02909139,0.013636268,0.062510747,0.016520098,0.225794422
+building,refined liquids,refined liquids,1990,SO2_2,0.077775234,0.05906924,0.073225232,0.103295378,0.005818496
+building,trad biomass,trad biomass,1990,SO2_2,-1,0.053451392,0.018840868,-1,0.081997285
+industry,energy-use,biomass,1990,SO2_2,0.000348733,4.56349E-05,0.00135024,0.008021071,0.003585324
+industry,energy-use,gas,1990,SO2_2,7.06756E-05,0.000183892,0.000347458,0.000197729,0.000408189
+industry,energy-use,coal,1990,SO2_2,0.032901295,0.028808092,0.161750657,0.092047769,0.19002262
+industry,energy-use,refined liquids,1990,SO2_2,0.00964062,0.02508405,0.047395602,0.02697151,0.055679752
 transportation,air,refined liquids,1990,SO2_2,0.015278918,0.018169344,0.006628465,0.023670943,0.01813781
-transportation,rail,coal,1990,SO2_2,-1,0.236669775,-1,-1,-1
-transportation,rail,refined liquids,1990,SO2_2,0.061481095,0.12,0.12,0.12,0.09482307
-transportation,road,gas,1990,SO2_2,-1,0.042169349,0.076904467,-1,0.081447719
-transportation,road,refined liquids,1990,SO2_2,0.009626861,0.02,0.02,0.02,0.02
-transportation,domestic ship,coal,1990,SO2_2,-1,0.236669775,-1,-1,-1
-transportation,domestic ship,refined liquids,1990,SO2_2,0.02,0.02,0.02,0.02,0.02
-transportation,international ship,refined liquids,1990,SO2_2,0.12,0.12,0.12,0.12,0.12
-industry,industrial processes,other industrial processes,1990,SO2_2,0.126640381,0.641096159,0.049224822,0.020588402,0.045535199
+transportation,rail,coal,1990,SO2_2,-1,0.212163457,-1,-1,-1
+transportation,rail,refined liquids,1990,SO2_2,0.061478884,0.12,0.12,0.111630856,0.12
+transportation,road,gas,1990,SO2_2,-1,0.037802862,0.057192698,-1,0.137664053
+transportation,road,refined liquids,1990,SO2_2,0.009626515,0.019125583,0.02,0.011934098,0.02
+transportation,domestic ship,coal,1990,SO2_2,-1,0.212163457,-1,-1,-1
+transportation,domestic ship,refined liquids,1990,SO2_2,0.01976107,0.021673573,0.020907834,0.02190886,0.019990523
+transportation,international ship,refined liquids,1990,SO2_2,0.113258791,0.107657972,0.116242865,0.127695625,0.111696513
+industry,industrial processes,other industrial processes,1990,SO2_2,115.5527766,193.2740981,19.43594994,49.19369717,27.17108037
 
 INPUT_TABLE,,,,,,,,
 Variable ID,,,,,,,,
 100503,,,,,,,,
 ,,,,,final-emiss-coef,,,
 supplysector,subsector,technology,period,generic-ghg,Australia_NZ,Middle East,Africa,Latin America
-regional crude oil,regional crude oil,regional crude oil,1990,SO2_3,0.023976753,0.022220635,0.021473412,0.022477533
+regional crude oil,regional crude oil,regional crude oil,1990,SO2_3,0.10965234,0.113335571,0.188364723,0.029233392
 refined liquids industrial,biomass liquids,biomass liquids,1990,SO2_3,0.0075,0.0075,0.0075,0.0075
 refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,SO2_3,0.0075,0.0075,0.0075,0.0075
 refined liquids industrial,coal to liquids,coal to liquids,1990,SO2_3,0.0075,0.0075,0.0075,0.0075
@@ -1212,19 +1212,19 @@ refined liquids enduse,biomass liquids,biomass liquids,1990,SO2_3,0.0075,0.0075,
 refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,SO2_3,0.0075,0.0075,0.0075,0.0075
 refined liquids enduse,coal to liquids,coal to liquids,1990,SO2_3,0.0075,0.0075,0.0075,0.0075
 refined liquids enduse,gas to liquids,gas to liquids,1990,SO2_3,0.0075,0.0075,0.0075,0.0075
-electricity,coal,Coal (existing),1990,SO2_3,0.03076249,0.019692026,0.055474914,0.093961123
-electricity,coal,Coal (conv pul),1990,SO2_3,0.015381245,0.009846013,0.027737457,0.046980562
+electricity,coal,Coal (existing),1990,SO2_3,0.034760424,0.139902011,0.092594763,0.205795557
+electricity,coal,Coal (conv pul),1990,SO2_3,0.017380212,0.069951006,0.046297382,0.102897779
 electricity,coal,Coal (IGCC),1990,SO2_3,0.001,0.001,0.001,0.001
 electricity,coal,Coal (IGCC)_CCS,1990,SO2_3,0.001,0.001,0.001,0.001
-electricity,gas,Gas (existing),1990,SO2_3,0.094816724,0.074440453,0.224170961,0.346338842
-electricity,gas,Gas (peak load conv),1990,SO2_3,0.094816724,0.074440453,0.224170961,0.346338842
+electricity,gas,Gas (existing),1990,SO2_3,0.000439889,0.002171387,0.001536257,0.003114467
+electricity,gas,Gas (peak load conv),1990,SO2_3,0.000439889,0.002171387,0.001536257,0.003114467
 electricity,gas,Gas (CC),1990,SO2_3,0.0009,0.0009,0.0009,0.0009
 electricity,gas,Gas (CC)_CCS,1990,SO2_3,0.0009,0.0009,0.0009,0.0009
-electricity,oil,Oil (existing),1990,SO2_3,0.133499006,0.104809848,0.315625758,0.487634345
-electricity,oil,Oil (peak load conv),1990,SO2_3,0.133499006,0.104809848,0.315625758,0.487634345
+electricity,oil,Oil (existing),1990,SO2_3,0.101136205,0.499230027,0.35320536,0.716056247
+electricity,oil,Oil (peak load conv),1990,SO2_3,0.101136205,0.499230027,0.35320536,0.716056247
 electricity,oil,Oil (IGCC),1990,SO2_3,0.001,0.001,0.001,0.001
 electricity,oil,Oil (IGCC)_CCS,1990,SO2_3,0.001,0.001,0.001,0.001
-electricity,biomass,Biomass (existing),1990,SO2_3,0.000349176,-1,0.006789694,0.011022678
+electricity,biomass,Biomass (existing),1990,SO2_3,0.000352145,-1,0.008052335,0.012619077
 electricity,biomass,Biomass (conv),1990,SO2_3,0.000490266,0.000490266,0.000490266,0.000490266
 electricity,biomass,Biomass (IGCC),1990,SO2_3,0.001,0.001,0.001,0.001
 electricity,biomass,Biomass (IGCC)_CCS,1990,SO2_3,0.001,0.001,0.001,0.001
@@ -1232,31 +1232,31 @@ H2 Central Production,coal chemical,coal chemical,1990,SO2_3,0.009,0.009,0.009,0
 H2 Central Production,coal chemical,coal chemical CCS,1990,SO2_3,0.009,0.009,0.009,0.009
 H2 Central Production,biomass to H2,biomass to H2,1990,SO2_3,0.009,0.009,0.009,0.009
 H2 Central Production,biomass to H2,biomass to H2 CCS,1990,SO2_3,0.009,0.009,0.009,0.009
-building,gas,gas,1990,SO2_3,0.020660014,0.150221495,0.123566825,0.125949977
-building,coal,coal,1990,SO2_3,0.067196075,-1,0.628806619,0.55369561
-building,biomass,biomass,1990,SO2_3,0.002754878,0.550181016,0.095221829,0.028361368
-building,refined liquids,refined liquids,1990,SO2_3,0.008392868,0.12,0.070960155,0.049136164
-building,trad biomass,trad biomass,1990,SO2_3,-1,-1,0.068320074,0.007336844
-industry,energy-use,biomass,1990,SO2_3,0.001354174,0.012126015,0.006781219,0.00651669
-industry,energy-use,gas,1990,SO2_3,0.122420294,0.120832782,0.092211172,0.081388458
-industry,energy-use,coal,1990,SO2_3,0.200373358,0.197774974,0.150928099,0.13321385
-industry,energy-use,refined liquids,1990,SO2_3,0.12,0.12,0.12,0.12
+building,gas,gas,1990,SO2_3,0.000974761,0.001206544,0.000371246,0.001556972
+building,coal,coal,1990,SO2_3,1.300118288,1.766422847,0.564092335,2.249794363
+building,biomass,biomass,1990,SO2_3,0.006854123,0.295473893,0.060030156,0.057136373
+building,refined liquids,refined liquids,1990,SO2_3,0.12,0.12,0.046069922,0.12
+building,trad biomass,trad biomass,1990,SO2_3,-1,-1,0.043070635,0.014780692
+industry,energy-use,biomass,1990,SO2_3,0.001347824,0.005071474,0.004961953,0.003502518
+industry,energy-use,gas,1990,SO2_3,0.001160639,0.001007379,0.000497721,0.000557234
+industry,energy-use,coal,1990,SO2_3,0.540307188,0.46896077,0.231701666,0.259406531
+industry,energy-use,refined liquids,1990,SO2_3,0.12,0.12,0.067892397,0.076010378
 transportation,air,refined liquids,1990,SO2_3,0.015274162,0.012782471,0.011127075,0.012911787
-transportation,rail,coal,1990,SO2_3,-1,-1,0.080605311,0.672300726
-transportation,rail,refined liquids,1990,SO2_3,0.12,-1,0.080605311,0.12
-transportation,road,gas,1990,SO2_3,0.018258088,0.095319686,-1,0.057703584
-transportation,road,refined liquids,1990,SO2_3,0.010954853,0.02,0.02,0.02
-transportation,domestic ship,coal,1990,SO2_3,0.123407321,-1,-1,-1
-transportation,domestic ship,refined liquids,1990,SO2_3,0.02,0.02,0.02,0.02
-transportation,international ship,refined liquids,1990,SO2_3,0.12,0.12,0.12,0.12
-industry,industrial processes,other industrial processes,1990,SO2_3,0.746031304,0.030014051,0.109160541,0.538170834
+transportation,rail,coal,1990,SO2_3,-1,-1,0.089611215,0.651517716
+transportation,rail,refined liquids,1990,SO2_3,0.12,-1,0.089611215,0.12
+transportation,road,gas,1990,SO2_3,0.018917111,0.0988341,-1,0.055919777
+transportation,road,refined liquids,1990,SO2_3,0.011350267,0.02,0.02,0.02
+transportation,domestic ship,coal,1990,SO2_3,0.127861689,-1,-1,-1
+transportation,domestic ship,refined liquids,1990,SO2_3,0.021712362,-1,0.020484675,0.030574082
+transportation,international ship,refined liquids,1990,SO2_3,0.155249026,0.13040617,0.1127723,0.137466178
+industry,industrial processes,other industrial processes,1990,SO2_3,742.5329484,12.55280308,79.87493071,289.2500639
 
 INPUT_TABLE,,,,,,,,
 Variable ID,,,,,,,,
 100504,,,,,,,,
 ,,,,,final-emiss-coef,,,
 supplysector,subsector,technology,period,generic-ghg,Former Soviet Union,,,
-regional crude oil,regional crude oil,regional crude oil,1990,SO2_4,0.02170591,,,
+regional crude oil,regional crude oil,regional crude oil,1990,SO2_4,0.011015737,,,
 refined liquids industrial,biomass liquids,biomass liquids,1990,SO2_4,0.0075,,,
 refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,SO2_4,0.0075,,,
 refined liquids industrial,coal to liquids,coal to liquids,1990,SO2_4,0.0075,,,
@@ -1265,19 +1265,19 @@ refined liquids enduse,biomass liquids,biomass liquids,1990,SO2_4,0.0075,,,
 refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,SO2_4,0.0075
 refined liquids enduse,coal to liquids,coal to liquids,1990,SO2_4,0.0075
 refined liquids enduse,gas to liquids,gas to liquids,1990,SO2_4,0.0075
-electricity,coal,Coal (existing),1990,SO2_4,0.054301699
-electricity,coal,Coal (conv pul),1990,SO2_4,0.02715085
+electricity,coal,Coal (existing),1990,SO2_4,0.125472514
+electricity,coal,Coal (conv pul),1990,SO2_4,0.062736257
 electricity,coal,Coal (IGCC),1990,SO2_4,0.001
 electricity,coal,Coal (IGCC)_CCS,1990,SO2_4,0.001
-electricity,gas,Gas (existing),1990,SO2_4,0.215137079
-electricity,gas,Gas (peak load conv),1990,SO2_4,0.215137079
+electricity,gas,Gas (existing),1990,SO2_4,0.00204101
+electricity,gas,Gas (peak load conv),1990,SO2_4,0.00204101
 electricity,gas,Gas (CC),1990,SO2_4,0.0009
 electricity,gas,Gas (CC)_CCS,1990,SO2_4,0.0009
-electricity,oil,Oil (existing),1990,SO2_4,0.302906333
-electricity,oil,Oil (peak load conv),1990,SO2_4,0.302906333
+electricity,oil,Oil (existing),1990,SO2_4,0.469254657
+electricity,oil,Oil (peak load conv),1990,SO2_4,0.469254657
 electricity,oil,Oil (IGCC),1990,SO2_4,0.001
 electricity,oil,Oil (IGCC)_CCS,1990,SO2_4,0.001
-electricity,biomass,Biomass (existing),1990,SO2_4,0.000588924
+electricity,biomass,Biomass (existing),1990,SO2_4,0.000587279
 electricity,biomass,Biomass (conv),1990,SO2_4,0.000490266
 electricity,biomass,Biomass (IGCC),1990,SO2_4,0.001
 electricity,biomass,Biomass (IGCC)_CCS,1990,SO2_4,0.001
@@ -1285,21 +1285,21 @@ H2 Central Production,coal chemical,coal chemical,1990,SO2_4,0.009
 H2 Central Production,coal chemical,coal chemical CCS,1990,SO2_4,0.009
 H2 Central Production,biomass to H2,biomass to H2,1990,SO2_4,0.009
 H2 Central Production,biomass to H2,biomass to H2 CCS,1990,SO2_4,0.009
-building,gas,gas,1990,SO2_4,0.044882867
-building,coal,coal,1990,SO2_4,0.213671373
-building,biomass,biomass,1990,SO2_4,0.020928684
-building,refined liquids,refined liquids,1990,SO2_4,0.034341186
+building,gas,gas,1990,SO2_4,0.000624618
+building,coal,coal,1990,SO2_4,0.938308216
+building,biomass,biomass,1990,SO2_4,0.030522348
+building,refined liquids,refined liquids,1990,SO2_4,0.077512164
 building,trad biomass,trad biomass,1990,SO2_4,-1
-industry,energy-use,biomass,1990,SO2_4,0.000408627
-industry,energy-use,gas,1990,SO2_4,0.041263682
-industry,energy-use,coal,1990,SO2_4,0.067538986
-industry,energy-use,refined liquids,1990,SO2_4,0.070871865
+industry,energy-use,biomass,1990,SO2_4,0.000347272
+industry,energy-use,gas,1990,SO2_4,0.000298702
+industry,energy-use,coal,1990,SO2_4,0.139053524
+industry,energy-use,refined liquids,1990,SO2_4,0.040744968
 transportation,air,refined liquids,1990,SO2_4,0.01224569
-transportation,rail,coal,1990,SO2_4,0.556914812
+transportation,rail,coal,1990,SO2_4,0.559232096
 transportation,rail,refined liquids,1990,SO2_4,0.12
-transportation,road,gas,1990,SO2_4,0.018591955
-transportation,road,refined liquids,1990,SO2_4,0.009641712
+transportation,road,gas,1990,SO2_4,0.018669315
+transportation,road,refined liquids,1990,SO2_4,0.00968183
 transportation,domestic ship,coal,1990,SO2_4,-1
-transportation,domestic ship,refined liquids,1990,SO2_4,0.02
-transportation,international ship,refined liquids,1990,SO2_4,0.12
-industry,industrial processes,other industrial processes,1990,SO2_4,0.553078697
+transportation,domestic ship,refined liquids,1990,SO2_4,0.024023229
+transportation,international ship,refined liquids,1990,SO2_4,0.117848285
+industry,industrial processes,other industrial processes,1990,SO2_4,470.0350122
