@@ -64,6 +64,12 @@
 #include "util/base/include/ivisitor.h"
 #include "containers/include/info_factory.h"
 #include "containers/include/iinfo.h"
+#include "emissions/include/ghg_factory.h"
+#include "emissions/include/co2_emissions.h"
+#include "technologies/include/ioutput.h"
+#include "technologies/include/primary_output.h"
+#include "functions/include/iinput.h"
+
 
 using namespace std;
 using namespace xercesc;
@@ -73,6 +79,8 @@ extern Scenario* scenario;
 const string DepletableResource::XML_NAME = "depresource";
 const string FixedResource::XML_NAME = "fixedresource";
 const string RenewableResource::XML_NAME = "renewresource";
+
+typedef vector<AGHG*>::const_iterator CGHGIterator;
 
 //! Default constructor.
 Resource::Resource()
@@ -146,6 +154,9 @@ void Resource::XMLParse( const DOMNode* node ){
                 mObjectMetaInfo.push_back( metaInfo );
             }
         }
+        else if( GHGFactory::isGHGNode( nodeName ) ) {
+            parseContainerNode( curr, ghg, GHGFactory::create( nodeName ).release() );
+        }
         else if( XMLDerivedClassParse( nodeName, curr ) ){
             // no-op
         }
@@ -180,6 +191,9 @@ void Resource::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     // write out the subresource objects.
     for( vector<SubResource*>::const_iterator i = subResource.begin(); i != subResource.end(); i++ ){
         ( *i )->toInputXML( aOut, aTabs );
+    }
+    for( CGHGIterator iter = ghg.begin(); iter != ghg.end(); ++iter ) {
+        ( *iter )->toInputXML( aOut, aTabs );
     }
 
     // finished writing xml for the class members.
@@ -222,6 +236,10 @@ void Resource::toDebugXML( const int period, ostream& aOut, Tabs* aTabs ) const 
 
     // Write out the subresource objects.
     for( vector<SubResource*>::const_iterator i = subResource.begin(); i != subResource.end(); i++ ){
+        ( *i )->toDebugXML( period, aOut, aTabs );
+    }
+    // Write out ghg object, vector is of number of gases
+    for( CGHGIterator i = ghg.begin(); i != ghg.end(); i++ ) {
         ( *i )->toDebugXML( period, aOut, aTabs );
     }
 
@@ -269,6 +287,9 @@ void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo
 
     // Set markets for this sector
     setMarket( aRegionName );
+
+    // Create a single primary output for the resource output.
+    mOutputs.insert( mOutputs.begin(), new PrimaryOutput( mName ) );
 }
 
 /*! \brief Perform any initializations needed for each period.
@@ -282,6 +303,10 @@ void Resource::initCalc( const string& aRegionName, const int aPeriod ) {
     // call subResource initializations
     for ( unsigned int i = 0; i < subResource.size(); i++ ){
         subResource[i]->initCalc( aRegionName, mName, aPeriod );
+    }
+
+    for( unsigned int i = 0; i < ghg.size(); i++ ) {
+        ghg[ i ]->initCalc( aRegionName, 0, aPeriod );
     }
 }
 
@@ -340,7 +365,7 @@ void Resource::setMarket( const string& aRegionName ) {
                     metaInfoIterItem != mObjectMetaInfo.end(); 
                     ++metaInfoIterItem ) {
                         pMarketInfo->setDouble( (*metaInfoIterItem).getName(), (*metaInfoIterItem).getValue() );
-                }
+                    }
             }
         }
     }
@@ -368,8 +393,16 @@ void Resource::calcSupply( const string& aRegionName, const GDP* aGDP, const int
 
     // calculate annual supply
     annualsupply( aRegionName, aPeriod, aGDP, price, lastPeriodPrice ); 
-    // set market supply of resource
-    marketplace->addToSupply( mName, aRegionName, annualprod[ aPeriod ], aPeriod );
+
+    // There is only one primary output at the first position.
+    // Setting market supply of resource occurs in setPhysicalOutput().
+    mOutputs[0]->setPhysicalOutput( annualprod[ aPeriod ], aRegionName, 0, aPeriod );
+    vector<IInput*> inputs; // empty vector
+
+    for( unsigned int i = 0; i < ghg.size(); ++i ) {
+        // no inputs and capture components
+        ghg[i]->calcEmission( aRegionName, inputs, mOutputs, aGDP, 0, aPeriod );
+    }
 }
 
 void Resource::cumulsupply(double prc,int per)
@@ -463,6 +496,15 @@ void Resource::dbOutput( const string& regname ) {
     }
     dboutput4(regname,"Resource","Available "+mName,"zTotal",mOutputUnit,temp);
     
+    for( unsigned int i = 0; i < ghg.size(); ++i ) {
+        // no inputs and capture components
+        temp.assign( temp.size(), 0.0 );
+        for (int period = 0; period < maxper; ++period) {
+            temp[period] += ghg[i]->getEmission( period );
+        }
+        dboutput4(regname,"Emissions","Rsc-"+mName,ghg[i]->getName(),"Tg",temp);
+    }
+
     // do for all subsectors in the sector
     for (int i=0;i<nosubrsrc;i++) {
         subResource[i]->dbOutput(regname,mName);

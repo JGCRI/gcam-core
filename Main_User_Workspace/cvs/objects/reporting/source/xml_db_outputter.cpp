@@ -488,6 +488,23 @@ void XMLDBOutputter::startVisitResource( const AResource* aResource,
             aResource->getAnnualProd( mCurrentRegion, per ), per );
     }
 
+    // children of ghg go in the child buffer
+    for( unsigned int i = 0; i < aResource->ghg.size(); ++i ) {
+        XMLWriteOpeningTag( aResource->ghg[i]->getXMLName(), mBuffer, mTabs.get(),
+            aResource->ghg[i]->getName(), 0, "GHG" );
+        for( int per = 0; per < modeltime->getmaxper(); ++per ){
+            int year = modeltime->getper_to_yr( per );
+            double currEmission = aResource->ghg[i]->getEmission( per );
+            // Avoid writing zeros to save space.
+            // Write GHG emissions.
+            if( !objects::isEqual<double>( currEmission, 0.0 ) ) {
+                writeItemUsingYear( "emissions", aResource->ghg[i]->mEmissionsUnit,
+                    currEmission, year );
+            }
+        }
+        XMLWriteClosingTag( aResource->ghg[i]->getXMLName(), mBuffer, mTabs.get() );
+    }
+
     // We want to write the keywords last due to limitations in
     // XPath we could be searching for them using following-sibling
     if( !aResource->mKeywordMap.empty() ) {

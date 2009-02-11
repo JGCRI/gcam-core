@@ -42,7 +42,7 @@
  * \file aresource.h
  * \ingroup Objects
  * \brief AResource header file.
- * \author Josh Lurz
+ * \author Josh Lurz, Sonny Kim
  */
 #include <xercesc/dom/DOMNode.hpp>
 #include "util/base/include/ivisitable.h"
@@ -50,6 +50,8 @@
 class Tabs;
 class GDP;
 class IInfo;
+class IOutput;
+class AGHG;
 
 /*! 
 * \ingroup Objects
@@ -108,6 +110,9 @@ protected:
     std::string mMarket;
     //! A map of a keyword to its keyword group
     std::map<std::string, std::string> mKeywordMap;
+    //! Vector of output objects representing the outputs of the technology.
+    std::vector<IOutput*> mOutputs;
+    std::vector<AGHG*> ghg;//! Suite of greenhouse gases
 };
 
 // Inline function definitions
