@@ -165,3 +165,9 @@ ALL,electricity,oil,Oil (peak load conv),refined liquids electricity,1,1,0.377,0
 ALL,electricity,oil,Oil (base load conv),refined liquids electricity,1,1,0.377,0.397,0.403,0.409,0.415,0.421,0.428,existing tech efficiencies set to values in CCSP input file,
 ALL,electricity,oil,Oil (IGCC),refined liquids electricity,1,1,0.426,0.491,0.494,0.496,0.498,0.5,0.5,,may be over-written in fossil_elec_input file
 ALL,electricity,oil,Oil (IGCC)_CCS,refined liquids electricity,1,1,0.426,0.491,0.494,0.496,0.498,0.5,0.5,,
+
+
+
+
+
+,,,,,,,,,,,,,,,

@@ -30,21 +30,21 @@ ALL,shale oil regional,shale oil regional
 
 
 Refining supplysectors: unit tags,,
-INPUT_TABLE,,,,
-Variable ID,,,,
-20,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+20,,,,,
 
-region,supplysector,output-unit,input-unit,price-unit
-ALL,regional unconventional oil,EJ,EJ,1975$/GJ
-ALL,refined liquids enduse,EJ,EJ,1975$/GJ
-ALL,refined liquids industrial,EJ,EJ,1975$/GJ
-ALL,refined liquids electricity,EJ,EJ,1975$/GJ
+region,supplysector,output-unit,input-unit,price-unit,1975 price
+ALL,regional unconventional oil,EJ,EJ,1975$/GJ,0
+ALL,refined liquids enduse,EJ,EJ,1975$/GJ,3.61
+ALL,refined liquids industrial,EJ,EJ,1975$/GJ,2.51
+ALL,refined liquids electricity,EJ,EJ,1975$/GJ,2.46
 
 
-Scale years,,,,
-INPUT_TABLE,,,,
-Variable ID,,,,
-200,,,,
+Scale years,,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+200,,,,,
 
 region,supplysector,subsector,scaleYear
 ALL,refined liquids enduse,crude oil refining,1975
@@ -84,16 +84,16 @@ Variable ID,,,,,,,,,,,
 202,,,,,,,,,,,
 ,,,logitexp,,,,,,,,
 region,supplysector,subsector,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,refined liquids enduse,crude oil refining,-12,-12,-12,-12,-12,-12,-12,-12,-12
-ALL,refined liquids enduse,biomass liquids,-12,-12,-12,-12,-12,-12,-12,-12,-12
-ALL,refined liquids enduse,unconventional oil refining,-12,-12,-12,-12,-12,-12,-12,-12,-12
-ALL,refined liquids enduse,coal to liquids,-12,-12,-12,-12,-12,-12,-12,-12,-12
-ALL,refined liquids enduse,gas to liquids,-12,-12,-12,-12,-12,-12,-12,-12,-12
-ALL,refined liquids industrial,crude oil refining,-12,-12,-12,-12,-12,-12,-12,-12,-12
-ALL,refined liquids industrial,biomass liquids,-12,-12,-12,-12,-12,-12,-12,-12,-12
-ALL,refined liquids industrial,unconventional oil refining,-12,-12,-12,-12,-12,-12,-12,-12,-12
-ALL,refined liquids industrial,coal to liquids,-12,-12,-12,-12,-12,-12,-12,-12,-12
-ALL,refined liquids industrial,gas to liquids,-12,-12,-12,-12,-12,-12,-12,-12,-12
+ALL,refined liquids enduse,crude oil refining,-6,-6,-6,-6,-6,-6,-6,-6,-6
+ALL,refined liquids enduse,biomass liquids,-6,-6,-6,-6,-6,-6,-6,-6,-6
+ALL,refined liquids enduse,unconventional oil refining,-6,-6,-6,-6,-6,-6,-6,-6,-6
+ALL,refined liquids enduse,coal to liquids,-6,-6,-6,-6,-6,-6,-6,-6,-6
+ALL,refined liquids enduse,gas to liquids,-6,-6,-6,-6,-6,-6,-6,-6,-6
+ALL,refined liquids industrial,crude oil refining,-6,-6,-6,-6,-6,-6,-6,-6,-6
+ALL,refined liquids industrial,biomass liquids,-6,-6,-6,-6,-6,-6,-6,-6,-6
+ALL,refined liquids industrial,unconventional oil refining,-6,-6,-6,-6,-6,-6,-6,-6,-6
+ALL,refined liquids industrial,coal to liquids,-6,-6,-6,-6,-6,-6,-6,-6,-6
+ALL,refined liquids industrial,gas to liquids,-6,-6,-6,-6,-6,-6,-6,-6,-6
 ,,,,,,,,,,,,
 
 Technology lifetime and profit shutdown decider,,,,,,,,,,,,
@@ -200,16 +200,16 @@ Variable ID,,,,,,,,,,,,,
 ,,,,logitexp,,,,,,,,,
 region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,
 ALL,regional unconventional oil,regional unconventional oil,regional unconventional oil,-6,-6,-6,-6,-6,-6,-6,-6,-6,
-ALL,refined liquids enduse,crude oil refining,crude oil refining,-30,-30,-30,-30,-30,-30,-30,-30,-30,
-ALL,refined liquids enduse,biomass liquids,biomass liquids,-30,-30,-30,-30,-30,-30,-30,-30,-30,
-ALL,refined liquids enduse,unconventional oil refining,unconventional oil refining,-30,-30,-30,-30,-30,-30,-30,-30,-30,
-ALL,refined liquids enduse,coal to liquids,coal to liquids,-30,-30,-30,-30,-30,-30,-30,-30,-30,
-ALL,refined liquids enduse,gas to liquids,gas to liquids,-30,-30,-30,-30,-30,-30,-30,-30,-30,
-ALL,refined liquids industrial,crude oil refining,crude oil refining,-30,-30,-30,-30,-30,-30,-30,-30,-30,
-ALL,refined liquids industrial,biomass liquids,biomass liquids,-30,-30,-30,-30,-30,-30,-30,-30,-30
-ALL,refined liquids industrial,unconventional oil refining,unconventional oil refining,-30,-30,-30,-30,-30,-30,-30,-30,-30
-ALL,refined liquids industrial,coal to liquids,coal to liquids,-30,-30,-30,-30,-30,-30,-30,-30,-30
-ALL,refined liquids industrial,gas to liquids,gas to liquids,-30,-30,-30,-30,-30,-30,-30,-30,-30
+ALL,refined liquids enduse,crude oil refining,crude oil refining,-13,-13,-13,-13,-13,-13,-13,-13,-13,
+ALL,refined liquids enduse,biomass liquids,biomass liquids,-13,-13,-13,-13,-13,-13,-13,-13,-13,
+ALL,refined liquids enduse,unconventional oil refining,unconventional oil refining,-13,-13,-13,-13,-13,-13,-13,-13,-13,
+ALL,refined liquids enduse,coal to liquids,coal to liquids,-13,-13,-13,-13,-13,-13,-13,-13,-13,
+ALL,refined liquids enduse,gas to liquids,gas to liquids,-13,-13,-13,-13,-13,-13,-13,-13,-13,
+ALL,refined liquids industrial,crude oil refining,crude oil refining,-13,-13,-13,-13,-13,-13,-13,-13,-13,
+ALL,refined liquids industrial,biomass liquids,biomass liquids,-13,-13,-13,-13,-13,-13,-13,-13,-13
+ALL,refined liquids industrial,unconventional oil refining,unconventional oil refining,-13,-13,-13,-13,-13,-13,-13,-13,-13
+ALL,refined liquids industrial,coal to liquids,coal to liquids,-13,-13,-13,-13,-13,-13,-13,-13,-13
+ALL,refined liquids industrial,gas to liquids,gas to liquids,-13,-13,-13,-13,-13,-13,-13,-13,-13
 ALL,refined liquids electricity,crude oil refining,crude oil refining,-6,-6,-6,-6,-6,-6,-6,-6,-6
 
 Unconventional oil resource attributes,,,,,,,,,,,,

@@ -66,10 +66,10 @@ Variable ID,,,,,,,,,,,,
 2030,,,,,,,,,,,,
 ,,,,logitexp,,,,,,,,
 region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,refined liquids enduse,coal to liquids,coal to liquids CCS Level 1,-30,-30,-30,-30,-30,-30,-30,-30,-30
-ALL,refined liquids industrial,coal to liquids,coal to liquids CCS Level 1,-30,-30,-30,-30,-30,-30,-30,-30,-30
-ALL,refined liquids enduse,coal to liquids,coal to liquids CCS Level 2,-30,-30,-30,-30,-30,-30,-30,-30,-30
-ALL,refined liquids industrial,coal to liquids,coal to liquids CCS Level 2,-30,-30,-30,-30,-30,-30,-30,-30,-30
+ALL,refined liquids enduse,coal to liquids,coal to liquids CCS Level 1,-13,-13,-13,-13,-13,-13,-13,-13,-13
+ALL,refined liquids industrial,coal to liquids,coal to liquids CCS Level 1,-13,-13,-13,-13,-13,-13,-13,-13,-13
+ALL,refined liquids enduse,coal to liquids,coal to liquids CCS Level 2,-13,-13,-13,-13,-13,-13,-13,-13,-13
+ALL,refined liquids industrial,coal to liquids,coal to liquids CCS Level 2,-13,-13,-13,-13,-13,-13,-13,-13,-13
 
 CCS Parameters,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,
