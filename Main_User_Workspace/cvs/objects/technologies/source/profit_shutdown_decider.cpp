@@ -42,14 +42,21 @@
 #include "util/base/include/definitions.h"
 #include <cassert>
 #include "technologies/include/profit_shutdown_decider.h"
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
 #include "functions/include/function_utils.h"
 #include "functions/include/ifunction.h"
 #include "util/base/include/xml_helper.h"
 
 using namespace std;
+using namespace xercesc;
 
 //! Constructor
-ProfitShutdownDecider::ProfitShutdownDecider(){
+ProfitShutdownDecider::ProfitShutdownDecider():
+    mMaxShutdown(1.0),
+    mSteepness(5.0),
+    mMedianShutdownPoint(0.0)
+{
 }
 
 ProfitShutdownDecider* ProfitShutdownDecider::clone() const {
@@ -79,17 +86,50 @@ const string& ProfitShutdownDecider::getXMLNameStatic() {
 }
 
 bool ProfitShutdownDecider::XMLParse( const xercesc::DOMNode* node ){
-    // TODO: Handle success and failure better.
+    
+    // Assume we have a valid node.
+    assert( node );
+
+    const xercesc::DOMNodeList* nodeList = node->getChildNodes();
+    for( unsigned int i = 0; i < nodeList->getLength(); i++ ) {
+        const xercesc::DOMNode* curr = nodeList->item( i );
+        if( curr->getNodeType() != xercesc::DOMNode::ELEMENT_NODE ){
+            continue;
+        }
+        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+        if( nodeName == "max-shutdown" ){
+            mMaxShutdown = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "steepness" ) {
+            mSteepness = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "median-shutdown-point" ) {
+            mMedianShutdownPoint = XMLHelper<double>::getValue( curr );
+        }
+        else {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Unknown tag " << nodeName << " encountered while processing "
+                    << getXMLNameStatic() << endl;
+        }
+    }
+    
     return true;
 }
 
 void ProfitShutdownDecider::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
+    XMLWriteElementCheckDefault( mMaxShutdown, "max-shutdown", aOut, aTabs, 1.0 );
+    XMLWriteElementCheckDefault( mSteepness, "steepness", aOut, aTabs, 5.0 );
+    XMLWriteElementCheckDefault( mMedianShutdownPoint, "median-shutdown-point", aOut, aTabs, 0.0 );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
 void ProfitShutdownDecider::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
+    XMLWriteElement( mMaxShutdown, "max-shutdown", aOut, aTabs, 0.0 );
+    XMLWriteElement( mSteepness, "steepness", aOut, aTabs, 0.0 );
+    XMLWriteElement( mMedianShutdownPoint, "median-shutdown-point", aOut, aTabs, 0.0 );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
@@ -125,13 +165,12 @@ double ProfitShutdownDecider::calcShutdownCoef( const ProductionFunctionInfo* aF
             // Use the passed in profit rate.
             profitRate = aCalculatedProfitRate;
         }
+       
+        // Compute Shutdown factor using exponential S-curve.  ScaleFactor that is returned
+        // is actually the fraction not shut down, so it is 1.0 - the shutdown fraction.
 
-        // Determine if the profit rate is lower than the minimum for scaling.
-        const static double MIN_PROFIT_RATE = 0.01;
-        if( profitRate < MIN_PROFIT_RATE  ){
-            double ratio = max( profitRate, 0.0 ) / MIN_PROFIT_RATE;
-            scaleFactor = 3 * pow( ratio, 2 ) - 2 * pow( ratio, 3 );
-        }
+        scaleFactor = 1.0 - mMaxShutdown / 
+                      ( 1.0 + exp(mSteepness * (profitRate - mMedianShutdownPoint) ) );
     }
 
     // Scale factor is between 0 and 1.

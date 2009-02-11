@@ -84,12 +84,8 @@ double MarginalProfitCalculator::calcShortTermMarginalProfit( const string& aReg
 
     double nonEnergyCost = mTechnology->getCost( aPeriod ) - variableCosts;
 
-    // If the non-energy cost is zero, return the absolute value. This should
-    // not occur in practice because a technology with no capital cannot
-    // be meaningfully vintaged.
-    double marginalProfit = marginalRevenue - variableCosts;
-    if( nonEnergyCost > util::getSmallNumber() ){
-       marginalProfit /= nonEnergyCost;
-    }
+    // Marginal profit is defined here as the percentage that price exceeds
+    // variable costs
+    double marginalProfit = (marginalRevenue - variableCosts) / variableCosts;
     return marginalProfit;
 }

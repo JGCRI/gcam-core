@@ -53,17 +53,21 @@ struct ProductionFunctionInfo;
  * \ingroup Objects
  * \brief This object begins to shut down a vintage when its profit rate falls
  *        below a minimum level.
- * \details This object mimics the Legacy-SGM shutdown decision by calculating a
- *          current profit rate as determined by total profits divided by
- *          capital. It begins to shutdown the vintage when this profit rate is
- *          less than a minimum level(as determined by the MIN_PROFIT_RATE
- *          constant). Complete shutdown occurs at the zero profit point. This
- *          short term shutdown decision includes the payments to capital. The
- *          object returns a scaling factor which is used to decrease and
- *          eventually shutdown profit and output of a vintage as it is nearing
- *          zero profit. A smoothing is calculated between the MIN_PROFIT_RATE
- *          and zero to prevent a vintage from switching on and off abruptly. At
- *          the point of zero profits the vintage is shutdown fully.
+
+ * \details Profit shutdown decider which applies an exponential S-shaped curve
+ *          to determine the shutdown rate. The proportion shutdown is based
+ *          the percentage that the price receive exceeds or is below variable cost.<br>
+ *
+ *
+ *
+ *          functional form of profit shutdown decider is
+ *          
+ *          shutDownRate = mMaxShutdown / (1.0 + exp( mSteepness * (profitRate - medianShutdownPoint)))
+ *                  where  mMaxShutdown is the maximum shutdown fraction (defaults to 1)
+ *                         mSteepness is a shape parameter of curve steepness to reach Max              
+ *                         profitRate is the percentage that price exceeds variable cost
+ *                         medianShutdownPoint is the profitRate where 50% is shutdown
+ *                             shutDownRate will be 50% when profitRate = 0 when medianShutdownPoint=0.
  *
  *          <b>XML specification for ProfitShutdownDecider</b>
  *          - XML name: \c profit-shutdown-decider
@@ -72,7 +76,7 @@ struct ProductionFunctionInfo;
  *          - Attributes: None
  *          - Elements: None
  *   
- * \author Josh Lurz
+ * \author Josh Lurz, S-Curve by Marshall Wise
  */
 class ProfitShutdownDecider: public IShutdownDecider
 {
@@ -108,6 +112,16 @@ private:
     ProfitShutdownDecider();
 
     static const std::string& getXMLNameStatic();
+
+    //! Parameter for max rate of shutdown (e.g. 1 means entire vintage can be shutdown)
+    double mMaxShutdown;
+
+    //! Parameter for steepness of backup curve. Higher number means steeper ascent.
+    double mSteepness;
+
+    //! Parameter for profitRate at which 50% of is shutdown.
+    double mMedianShutdownPoint;
+  
 };
 
 #endif // _PROFIT_SHUTDOWN_DECIDER_H_

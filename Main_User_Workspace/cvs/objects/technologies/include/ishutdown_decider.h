@@ -42,6 +42,14 @@
  * \file ishutdown_decider.h
  * \ingroup Objects
  * \brief The IShutdownDecider interface header file.
+ * \details Warning! The vintage production state loops over a vector of shutdown 
+ *          deciders, with all types in the same vector. Contrary to the way most
+ *          data is read in, reading in a shutdown decider in an add-on file DOES
+ *          NOT replace the data values of a preceding input file but instead
+ *          it adds on another shutdown decider. The result is that multiple
+ *          shutdown deciders can have an unintentional compounding effect on 
+ *          the shutdown of a vintage. Be sure to delete any unwanted shutdown
+ *          deciders and don't rely on the add-on file replacing them.<br>
  * \author Josh Lurz
  */
 
