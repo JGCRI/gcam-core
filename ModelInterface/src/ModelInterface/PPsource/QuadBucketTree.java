@@ -159,20 +159,6 @@ public class QuadBucketTree implements DataIndex
   {
     return resolution;
   }
-  public void addData(DataBlock val)
-  {
-    QBNode nextNode;
-    //starting the recursive add function, will propagate through all blocks, adding where appropriate
-    for(int i = 0; i < 4; i++)
-    {
-      nextNode = ((QBNode)root.data.get(i));
-      if(nextNode.intersects(val.x, val.y, val.width, val.height))
-      { //DB overlaps quad, so enter it and add or look at children
-        addDataHelp(nextNode, val, true);
-      }
-    }
-  }
-  
   
   /**
    * Create an filled QuadBucketTree with blocks of size res which contain no data.

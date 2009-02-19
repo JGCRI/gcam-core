@@ -1907,6 +1907,7 @@ public class DataBuilder
     double time = 0;
     double resX = 1;
     double resY = 1;
+    float userNaN = 123458;
     List infoChildren;
     Element currElem;
     TreeMap timeValue;
@@ -1961,6 +1962,9 @@ public class DataBuilder
       } else if(currElem.getName().equals("name"))
       {
         fileName = currElem.getAttributeValue("value");
+      } else if(currElem.getName().equals("userNaN"))
+      {
+        userNaN = (float)Double.parseDouble(currElem.getAttributeValue("value"));
       } else if(currElem.getName().equals("storage"))
       {
         //do nothing but this is a known tag
@@ -1988,7 +1992,14 @@ public class DataBuilder
       NetcdfFile nc = NetcdfFile.open(fileName);
       /* Read a variable named *readin* from the file, it contains the masks */
       Variable data = nc.findVariable(dataVar);
-      Array ma2Array = data.read();
+      Array ma2Array;
+      if ( data != null ) {
+      	ma2Array = data.read();
+      } else {
+        log.log(Level.SEVERE, "netCDF data field "+dataVar+" not found.");
+        log.log(Level.SEVERE, "Exiting read routine.");
+        return;
+      }
       
       int[] shp = ma2Array.getShape();
 
@@ -2103,11 +2114,16 @@ public class DataBuilder
       int k = 0;
       ucar.nc2.Attribute tempAttr = data.findAttribute("missing_value");
       float NaN;
-      if(tempAttr != null) {
-	      NaN = tempAttr.getNumericValue().floatValue();
-      } else {
-	      NaN = Float.POSITIVE_INFINITY;
+      if ( userNaN == 123458 ) {
+		  if( tempAttr != null ) {
+			  NaN = tempAttr.getNumericValue().floatValue();
+		  } else {
+			  NaN = Float.POSITIVE_INFINITY;
+		  }
+      } else { // If user read in value, use this instead
+      	NaN = userNaN;
       }
+      log.log(Level.FINER, "NaN set to: "+NaN);
       Variable timeVar = null;
       Array timeArr = null;
       Index timeInd = null;
@@ -4441,39 +4457,33 @@ public class DataBuilder
 
       double y = startY;
       double x = startX;
+      //Loop through each point in data and calc size of each region.
       for(i = 0; i < shp[shp.length-2]; ++i )
-      //for(/*double y = startY*/; y >= endY; y-=resY)
       {
         //k = 0;
-	x = startX;
-	for(k = 0; k < shp[shp.length-1]; ++k)
+	    x = startX;
+	    for(k = 0; k < shp[shp.length-1]; ++k)
         //for(/*double x = startX*/; x <= endX; x+=resX)
         {
           rblock = (int)ma2Array.getFloat(in.set(0, 0, i, k));
-	  /*
-	  currBlock.setRect(x, y, resX, resY);
-	  double area = FlatIndex.getArea(currBlock);
-	  surfaceArea += area;
-	  */
           if(rblock != NaN)
           {
             if(rblock >= 0 && (holdR = ((RegionMask)newRegions.get(String.valueOf(rblock)))) != null)
             { 
-	      //landArea += area;
-	      // add to the land fraction. Each point in the region mask is implicitly 
-	      // assumed to be all land at this point. This is optionally modified in 
-	      // getRegion if more detailed landarea data is read in.
-	      toAdd.setRect(x, y, resX, resY);
-	      dataStruct.addData(toAdd, true);
-/*
-			if (rblock==63000000) // Debugging block to write out data for a specific region.  
-			{
-				 log.log(Level.WARNING, "ID "+rblock+" data point at x =  "+x+", y = "+y
-				 					   +", Index1 =  "+i+", Index2 = "+k);
-				 log.log(Level.WARNING, "ID "+rblock+" boundaries. Width =  "+holdR.width+", height = "+holdR.height+", LLy =  "+holdR.y+", LLx = "+holdR.x);
-			}
-*/
-	      //updating someones bounds
+			  // add to the land fraction. Each point in the region mask is implicitly 
+			  // assumed to be all land at this point. This is optionally modified in 
+			  // getRegion if more detailed landarea data is read in.
+			  toAdd.setRect(x, y, resX, resY);
+			  dataStruct.addData(toAdd, true);
+	/*
+				if (rblock==63000000) // Debugging block to write out data for a specific region.  
+				{
+					 log.log(Level.WARNING, "ID "+rblock+" data point at x =  "+x+", y = "+y
+										   +", Index1 =  "+i+", Index2 = "+k);
+					 log.log(Level.WARNING, "ID "+rblock+" boundaries. Width =  "+holdR.width+", height = "+holdR.height+", LLy =  "+holdR.y+", LLx = "+holdR.x);
+				}
+	*/
+			  //updating someones bounds
               if(holdR.height==-1)
               { //this is the first block being added to this region nothing to
                 // test against yet
@@ -4501,10 +4511,10 @@ public class DataBuilder
             }
           }
           //k++;
-	  x += resX;
+	      x += resX;
         } //these two are kindof important, thats how we iterate through the data! huzzah!
         //i++;
-	y -= resY;
+	    y -= resY;
       }
       /*
       System.out.println("When done: "+i+" -- "+k);
@@ -4520,7 +4530,8 @@ public class DataBuilder
       while(it.hasNext())
       {
         me = (Map.Entry)it.next();
-	holdR = (RegionMask)me.getValue();
+		holdR = (RegionMask)me.getValue();
+
       //System.out.println("region "+holdR.name+" dim: "+holdR.bMask.length+"x"+holdR.bMask[0].length);
       //System.out.println("region "+holdR.name+" coord: x: "+holdR.x+" y: "+holdR.y+" h: "+holdR.height+" w: "+holdR.width);
         ((RegionMask)me.getValue()).makeMatrix();
@@ -4535,8 +4546,8 @@ public class DataBuilder
       //for(/*double y = startY*/; y >= endY; y-=resY)
       {
         k=0;
-	x = startX;
-	for(k = 0; k < shp[shp.length-1]; ++k)
+		x = startX;
+		for(k = 0; k < shp[shp.length-1]; ++k)
         //for(/*double x = startX*/; x <= endX; x+=resX)
         {
           rblock = (int)ma2Array.getFloat(in.set(0, 0, i, k));
@@ -4546,10 +4557,10 @@ public class DataBuilder
           	holdR.setPointTrue(x, y);
           }
           //k++;
-	  x += resX;
+	  	  x += resX;
         }
         //i++;
-	y -= resY;
+	    y -= resY;
       }
       //DONE SETTING MASKS   
     } catch (java.io.IOException e) {
@@ -4565,6 +4576,7 @@ public class DataBuilder
       me = (Map.Entry)it.next();
       holdR = ((RegionMask)me.getValue());
       regionList.add(holdR.name);
+ //     holdR.printMask(); //For debugging
       maskList.put(holdR.name, holdR);
     }
     //done adding region masks

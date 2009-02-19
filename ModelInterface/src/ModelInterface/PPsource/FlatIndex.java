@@ -103,11 +103,6 @@ public class FlatIndex implements DataIndex
     init(res);
   }
 
-  public void addData(DataBlock val)
-  {
-    addData(val, true);
-  }
-
   public void addData(DataBlock val, boolean avg)
   {
     Iterator i1, i2;
@@ -164,7 +159,6 @@ public class FlatIndex implements DataIndex
               addValue = (Double)tEntry.getValue();
               
               weightValue = addValue*weight;
-              
               data.addValue(varName, timeName, X, Y, weightValue);
             }
           }
@@ -179,7 +173,7 @@ public class FlatIndex implements DataIndex
     data.mergeHoldTo(holdName, varName);
   }
 
-  public Map extractMask(RegionMask m)
+  public Map extractMask(RegionMask m )
   {
     Point2D.Double min, max;
     double[][] toMask;
@@ -206,7 +200,7 @@ public class FlatIndex implements DataIndex
     }
     // This is where the size of the region block is set. This array is in working resolution.
     toMask = new double[(int)(max.y-min.y)][(int)(max.x-min.x)];
-    
+
     //X, and Y are now indicies
     //for each block of info in the repository
     for(int Y = (int)min.y; Y < max.y; Y++)

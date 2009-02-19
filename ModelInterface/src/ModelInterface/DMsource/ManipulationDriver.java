@@ -340,7 +340,7 @@ public class ManipulationDriver
     
     ref = (Region)regionList.get(reg);
     if(var.equals("RegionCellSize") && dataAvgAdd.get(var) == null) {
-	    avg = true;
+	    avg = false;
     } else {
 	    avg = ((Boolean)dataAvgAdd.get(var)).booleanValue();
     }
@@ -396,13 +396,6 @@ public class ManipulationDriver
 	    log.log(Level.SEVERE, "Region "+reg+" was not found, variable "+newName+" was not created.");
 	    return;
     }
-    /*
-    if(var.equals("RegionCellSize") && dataAvgAdd.get(var) == null) {
-	    avg = true;
-    } else {
-	    avg = ((Boolean)dataAvgAdd.get(var)).booleanValue();
-    }
-    */
 
     // creating the reference variable (does not fill data)
     toAdd = new ReferenceVariable(newName, ref, "", time, avg);
@@ -793,6 +786,29 @@ public class ManipulationDriver
       log.log(Level.WARNING, "Command Failed: variables of different shapes.");
     }
   }
+  /**
+   * Change the average attribute of a reference variable
+   * @param command XML node defining the operation.
+   */
+  private void setAverageProperty(Element command)
+  {
+    log.log(Level.FINER, "begin function");
+    Variable Vname;
+    List infoList;
+    Element currInfo;
+    currInfo = command.getChild( "target" );
+    Vname = getVariable( currInfo.getAttributeValue("name") );
+    
+    currInfo = command.getChild( "average" );
+ 	Boolean avg = (Boolean.valueOf(currInfo.getAttributeValue("value"))).booleanValue();
+
+	if( Vname.isReference() ) {
+	    ((ReferenceVariable)Vname).avg = avg;
+	} else {
+		log.log(Level.WARNING, Vname.name+" is not a reference variable. ");
+	}
+  }
+
   /**
    * Divides the corresponding positions in the two passed variables. Requires
    * that the variables are of the same shape.
@@ -2634,8 +2650,10 @@ public class ManipulationDriver
     ReferenceVariable varR;
     String fileName;
     double res;
+    boolean missing_value_test = false;
     double[][] myData;
     float degHold;
+    float missingValue;
     Element currInfo;
     NetcdfFileWriteable ncfile;
     
@@ -2670,7 +2688,7 @@ public class ManipulationDriver
       {
         fileName += ".nc";
       }
-      
+
 //**************************DEFINING FILE*********************************
       ncfile = NetcdfFileWriteable.createNew(fileName, true);
       //define dimensions
@@ -2704,21 +2722,68 @@ public class ManipulationDriver
 
       //double data(time, lat, lon)
       ncfile.addVariable(var.name, DataType.FLOAT, dim4);
-      ncfile.addVariableAttribute(var.name, "missing_value", Float.NaN);
-      //ncfile.addVariableAttribute(var.name, "long_name", "input");
       ncfile.addVariableAttribute(var.name, "average", String.valueOf(varR.avg));
+
+	 // Add additional metadata if present
       if(varR.units != null) {
 	      ncfile.addVariableAttribute(var.name, "units", varR.units);
+      } else {
+		 currInfo = command.getChild("units");
+		 if(  !(currInfo == null) && !(currInfo.getAttributeValue( "value" ) == null) )
+		 {
+			   ncfile.addVariableAttribute( var.name,"units", currInfo.getAttributeValue("value") );
+		 }
       }
+
       if(varR.reference != null) {
 	      ncfile.addVariableAttribute(var.name, "reference", varR.reference);
+      } else {
+		 currInfo = command.getChild("reference");
+		 if(  !(currInfo == null) && !(currInfo.getAttributeValue( "value" ) == null) )
+		 {
+			   ncfile.addVariableAttribute( var.name,"reference", currInfo.getAttributeValue("value") );
+		 }
       }
-      
-      ncfile.addGlobalAttribute("title", "Data Manipulator Output");
+ 
+  	 currInfo = command.getChild("missing_value");
+	 if(  !(currInfo == null) && !(currInfo.getAttributeValue( "value" ) == null) )
+     {
+     	missingValue = Float.parseFloat( currInfo.getAttributeValue("value") );
+     } else {
+     	missingValue = Float.NaN; // default value
+     }
+     ncfile.addVariableAttribute(var.name, "missing_value", missingValue);
+
+     // Overwrite missing value in netCDF file to test if actual value was written. 
+     // This is useful since Panoply (as of Feb 2009) display the missing_value as NaN no matter what.
+  	 currInfo = command.getChild("missing_value_test");
+	 if(  !(currInfo == null) && !(currInfo.getAttributeValue( "value" ) == null) )
+     {
+           ncfile.addVariableAttribute( var.name,"missing_value", currInfo.getAttributeValue("value") );
+     }
+
+  	 currInfo = command.getChild("longName");
+	 if(  !(currInfo == null) && !(currInfo.getAttributeValue( "value" ) == null) )
+     {
+           ncfile.addVariableAttribute( var.name,"long_name", currInfo.getAttributeValue("value") );
+     }
+
+ 	 currInfo = command.getChild("title");
+	 if( !(currInfo == null) && !(currInfo.getAttributeValue( "value" ) == null) ) 
+     {
+       ncfile.addVariableAttribute( var.name,"title", currInfo.getAttributeValue("value") );
+     }
+
       if(var.comment != null) {
 	      ncfile.addGlobalAttribute("comments", var.comment);
+      }  else {
+		 currInfo = command.getChild("comments");
+		 if(  !(currInfo == null) && !(currInfo.getAttributeValue( "value" ) == null) )
+		 {
+			   ncfile.addVariableAttribute( var.name,"comments", currInfo.getAttributeValue("value") );
+		 }
       }
-      
+
       //create the file
       try {
         ncfile.create();
@@ -2747,13 +2812,11 @@ public class ManipulationDriver
 	      {
 		      for(int j = 0; j < lonDim.getLength(); j++)
 		      {
-			      /*
-				 if(myData[i][j] > 1)
-				 {
-				 System.out.println("this isnt right: "+myData[i][j]+" at: "+i+", "+j);
-				 }
-				 */
-			      dataArr.setFloat(ima.set(0,t,i,j), (float)myData[i][j]);
+		         if ( Double.isNaN( myData[i][j] ) ) {
+		             dataArr.setFloat( ima.set(0,t,i,j), missingValue );
+		         } else {
+		             dataArr.setFloat( ima.set(0,t,i,j), (float)myData[i][j] );
+		         }
 		      }
 	      }
 	      myData = null;
@@ -2789,7 +2852,8 @@ public class ManipulationDriver
       //level array is empty
       iml = lvlArr.getIndex();
       lvlArr.setFloat(iml.set(0), 1);
-      
+    
+  
       // write data out to disk
       try {
         ncfile.write(var.name, dataArr);
@@ -2827,12 +2891,13 @@ public class ManipulationDriver
     }
     
   }
+
   /**
-   * Adds a descriptive comment to a variable which will be printed with
+   * Adds a comment to a variable which will be outout to netCDF or printed with
    * that variable if the verbose option is selected.
    * @param command XML node defining the operation.
    */
-  private void commentCommand(Element command)
+  private void setComment(Element command)
   {
     log.log(Level.FINER, "begin function");
     Variable var;
@@ -2851,7 +2916,7 @@ public class ManipulationDriver
 
   }
   /**
-   * Adds a reference descriptor to the variable which will be printed with the
+   * Adds a reference to a variable which will be outout to netCDF or printed with
    * printVerbose command.
    * @param command XML node defining the operation.
    */
@@ -3718,6 +3783,9 @@ public class ManipulationDriver
     } else if(currCom.getName().equals("weightValues"))
     {
       weightValuesCommand(currCom);
+    } else if(currCom.getName().equals("setAverage"))
+    {
+      setAverageProperty(currCom);
     } else if(currCom.getName().equals("frequencyAnalysis"))
     {
       frequencyAnalysisCommand(currCom);
@@ -3747,7 +3815,7 @@ public class ManipulationDriver
       createNetCDFFileCommand(currCom);
     } else if(currCom.getName().equals("comment"))
     {
-      commentCommand(currCom);
+      setComment(currCom);
     } else if(currCom.getName().equals("setReference"))
     {
       setReferenceCommand(currCom);

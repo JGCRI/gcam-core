@@ -96,7 +96,6 @@ public class RegionMask extends Rectangle2D.Double
     //region of the mask which contains some 1's, return portion which is in region
     double toReturn = 0;
     Block inBlock = new Block(X, Y, H, W);
-    Block regionBlock = new Block();
     int lowX, highX, lowY, highY; //the range of indicies to check in the mask
     double smallX, bigX, smallY, bigY; //used for proportion finding
     double thisX, thisY; //x and y coordinates for the current place in bit mask
@@ -104,25 +103,42 @@ public class RegionMask extends Rectangle2D.Double
 // Get index of base point of this region
     Point2D.Double minThisRegion, minPassedPoint, maxThisRegion, maxPassedPoint;
     minThisRegion  = CoordConversions.point2index( new Point2D.Double(x, y), resolution, true);
-    minPassedPoint = CoordConversions.point2index( new Point2D.Double(X, Y), resolution, true);
     maxThisRegion  = CoordConversions.point2index( new Point2D.Double(x + width, y + height ), resolution, false);
-    maxPassedPoint = CoordConversions.point2index( new Point2D.Double(X + W, Y + H ), resolution, false);
- 
+
+	// Next block takes the coordinates of the passed in rectangle and converts them native resolution
+	// indices aligned on working resolution cell boundaries
+	
+	// Working resolution indices
+    minPassedPoint = CoordConversions.point2index( new Point2D.Double(X, Y), H, true);
+    maxPassedPoint = CoordConversions.point2index( new Point2D.Double(X + W, Y + H ), H, false);
+
+    Point2D.Double thisPointConverted;
+	// Back to working resolution coordinates (since coordinates passed in are not necessarily at the boundary of a working resolution cell)
+    thisPointConverted = CoordConversions.index2point(minPassedPoint, H );
+    // Native resolution coordinates
+    minPassedPoint = CoordConversions.point2index( thisPointConverted, resolution, true);
+
+	// Back to working resolution coordinates (since coordinates passed in are not necessarily at the boundary of a working resolution cell)
+    thisPointConverted = CoordConversions.index2point(maxPassedPoint, H );
+    // Native resolution coordinates
+    maxPassedPoint = CoordConversions.point2index( thisPointConverted, resolution, false);
+
 	lowX  = (int)Math.round( minPassedPoint.x - minThisRegion.x );
-	highX = (int)Math.round( maxPassedPoint.x - minThisRegion.x ) - 1;
+	highX = (int)Math.round( maxPassedPoint.x - minThisRegion.x );
 
-	// y dimension offset counts down from the top
+	// y dimension offset counts down from the top, but indicies count up from the bottom. 
+	// So min Y here (which is bmask offset) is maxY passed in 
 	lowY  = (int)Math.round( maxThisRegion.y - maxPassedPoint.y );
-	highY = (int)Math.round( maxThisRegion.y - minPassedPoint.y ) - 1;
+	highY = (int)Math.round( maxThisRegion.y - minPassedPoint.y );
 
-    for(int i = (lowY); i<=(highY); i++)
+    for(int i = (lowY); i< (highY); i++)
     {
-      if((i<bMask.length)&&(i>=0))
-      {//assuring no out of bounds checking
-        for(int k = (lowX); k<=(highX); k++)
+      if((i<bMask.length)&&(i>=0)) //Check for out of bounds
+      {
+        for(int k = (lowX); k< (highX); k++)
         {
-          if((k<bMask[i].length)&&(k>=0))
-          {//assuring no out of bounds checking
+          if((k<bMask[i].length)&&(k>=0)) //Check for out of bounds
+          {
      		Point2D.Double thisPoint;
      		// check that y is properly defined
             thisPoint = CoordConversions.index2point( new Point2D.Double(minThisRegion.x + k, maxThisRegion.y - i-1), resolution );
@@ -131,8 +147,7 @@ public class RegionMask extends Rectangle2D.Double
 //          thisY = (y+height-((i+1)*resolution)); //counting down from the top
 		    thisX = thisPoint.x; thisY = thisPoint.y;
             
-            regionBlock.setRect(thisX, thisY, resolution, resolution);
-            if(bMask[i][k]==1 && inBlock.intersects(thisX, thisY, resolution, resolution))
+           if(bMask[i][k]==1 && inBlock.intersects(thisX, thisY, resolution, resolution))
             { //this portion of checked area lies in block, add it to the blocks weight
 
               if(thisPoint.x > X)
@@ -172,14 +187,14 @@ public class RegionMask extends Rectangle2D.Double
     } //return the amount of overlap (DB of mask)
 
     // for debugging. log rounding errors if they matter. 
-    if ( ( ( (highY - lowY + 1) != (int)Math.round( H/resolution ) ) ||
-           ( (highX - lowX + 1) != (int)Math.round( W/resolution ) ) ) &&
+    if ( ( ( (highY - lowY ) != (int)Math.round( H/resolution ) ) ||
+           ( (highX - lowX ) != (int)Math.round( W/resolution ) ) ) &&
          toReturn > 0 ) {
          
     	log.log(Level.FINE, " Rounding error encountered in region "+name+" with x and y bounds: ("
     					+lowX+","+highX+")  and y ("+lowY+","+highY+") and weight of: "+toReturn);
    	 }
-     
+ 
     return toReturn;
   }
   /**
@@ -197,6 +212,7 @@ public class RegionMask extends Rectangle2D.Double
    * 
    * @param findX X-coordinate (longitude) of the point to set true.
    * @param findY Y-coordinate (latitude) of the point to set true.
+   * Note that bmask y coordinates counts down from top (as does all PP data)
    */
   public void setPointTrue(double findX, double findY)
   {
@@ -211,7 +227,8 @@ public class RegionMask extends Rectangle2D.Double
     maxThisRegion  = CoordConversions.point2index( new Point2D.Double(x + width, y + height ), resolution, false);
 
 	int Xindx = (int)Math.round( thisPointIndex.x - refPointIndex.x );
-	int Yindx = (int)Math.round( maxThisRegion.y - thisPointIndex.y ) - 1;
+	// Y index counts up from bottom. This flips to count down from top. maxThisRegion.y  should be 1 larger than any point.
+	int Yindx = (int)Math.round( maxThisRegion.y - thisPointIndex.y ) - 1; 
 	    
       if( Yindx<=-1 || Yindx >=bMask.length ) {
 	    log.log(Level.WARNING,"In "+name+" Yindx is out of bounds with "+Yindx+" possibly due to rounding errors, setting to 0");

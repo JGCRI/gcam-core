@@ -197,7 +197,7 @@ public class subRegion extends Region
 		  {
 			  if(!java.lang.Double.isNaN(weightMask[iY][iX]) && weightMask[iY][iX] != 0.0)
 			  {
-				  toReturn[iY][iX] = (cellSize);
+				  toReturn[iY][iX] = ( cellSize * weightMask[iY][iX] );
 				  //toReturn[iY][iX] = (areaS);
 			  } else {
 				  toReturn[iY][iX] = java.lang.Double.NaN;

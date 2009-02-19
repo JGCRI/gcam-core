@@ -84,11 +84,6 @@ public class TreeIndex implements DataIndex
     init();
   }
 
-  public void addData(DataBlock val)
-  {
-    addData(val, true);
-  }
-  
   public void addData(DataBlock val, boolean avg)
   {
     /*

@@ -21,7 +21,6 @@ public static Point2D.Double point2index( Point2D.Double p, double resolution, b
     int xIdx, yIdx;//indexes are always ints
     
     //translate from a point in lat/lon to an index
-    //possible given that we know resolution, which we do
 
     if(down)
     {

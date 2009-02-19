@@ -233,6 +233,12 @@ public class MatrixRepository implements DataRepository
     return toReturn;
   }
 
+  /**
+   * Key routine that takes data from global data layers and transforms to 
+   * regional data blocks. Also inserts the passed-in regional weight information, and -- if data
+   * is available, calculates revised cell land-area.
+   *
+   */
   public Map<String, Map<String, Map<Point2D.Double, Double>>> getRegion(int X, int Y,
       double[][] weights, double xL, double yL, double res)
   {
@@ -257,6 +263,7 @@ public class MatrixRepository implements DataRepository
    		landFractionDetail = root.get(DataBuilder.CELL_AREA_DATA).get(0.0); // must set time in PP input to zero for this to work
     }
     
+    // Put weight information into regional data variable. 
     toReturn.put("weight", new LinkedHashMap<String, Map<Point2D.Double, Double>>());
     holdVar = toReturn.get("weight");
     holdVar.put("0", new LinkedHashMap<Point2D.Double, Double>());
@@ -265,16 +272,22 @@ public class MatrixRepository implements DataRepository
     for(int x = 0; x<(weights[0].length); x++)
     {
       currYL = (yL-res);
-      for(int y = (weights.length-1); y>=0; y--)
+      for(int y = (weights.length-1); y>=0; y--) // invert y coordinate
       {
         if(weights[(y)][(x)]>0)
         {
           //add weight
           Point2D.Double hold = new Point2D.Double(currXL, currYL);
-          // Have not adjusted weight for land-fraction. 
-          // The weight just represents only the fraction of working resolution cell in a given sub-region 
-		  try {
-			  holdTime.put( hold, Double.valueOf(weights[(y)][(x)] )); 
+          // Adjust weight for land-fraction.  Land fraction at this point counts how much much of 
+          // each cell is in any region. Weight should be the split of each cell within some region.
+          // This assures that sum of weights is = 1, even at water boundaries.
+          if ( ( weights[(y)][(x)]  != 0 ) && ( landFraction[x+X][Y-((weights.length)-y)]  == 0 ) ) {
+              log.log(Level.WARNING, "Inconsistent weight and land fraction value at ("+currXL+","+currYL+") ");
+          }
+          try {
+			 if ( landFraction[x+X][Y-((weights.length)-y)] > 0 ) {
+			 	holdTime.put( hold, Double.valueOf(weights[(y)][(x)] / landFraction[x+X][Y-((weights.length)-y)])); 
+			 }
 		  } catch(ArrayIndexOutOfBoundsException e) {
 			  System.out.println(e+" -- weight: "+weights[(y)][(x)]);
 			  System.out.println("     indicies: ("+x+","+y+")  ("+(x+X)+","+(Y-((weights.length)-y))+")");
@@ -334,10 +347,9 @@ public class MatrixRepository implements DataRepository
 			          (DataBuilder.landFractionNativeResolution*DataBuilder.landFractionNativeResolution);
 				  }
 
-              //get this point's value
-              //add it to toReturn
-              holdTime.put(new Point2D.Double(currXL, currYL), (currLayer[x+X][Y
-                  -((weights.length)-y)]) * landFractionAdj );
+              //add this point's value to toReturn
+              double dataValue = currLayer[x+X][Y-((weights.length)-y)] * landFractionAdj;
+              holdTime.put(new Point2D.Double(currXL, currYL), dataValue );
             }
             currYL -= res;
           }

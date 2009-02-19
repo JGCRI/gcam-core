@@ -348,13 +348,15 @@ public class ReferenceVariable extends Variable
     double[][] holdWM;
     ReferenceWrapper holdD;
     ReferenceWrapper holdW;
-    double[][] toPrint = new double[(int)Math.round(180/res)][(int)Math.round(360/res)];
+    double[][] worldMatrix = new double[(int)Math.round(180/res)][(int)Math.round(360/res)];
+    double[][] weightMatrix = new double[(int)Math.round(180/res)][(int)Math.round(360/res)];
     
-    for(int i = 0; i < toPrint.length; i++)
+    for(int i = 0; i < worldMatrix.length; i++)
     {
-      for(int k = 0; k < toPrint[i].length; k++)
+      for(int k = 0; k < worldMatrix[i].length; k++)
       {
-        toPrint[i][k] = Double.NaN;
+        worldMatrix[i][k] = Double.NaN;
+        weightMatrix[i][k] = 0;
       }
     }
     
@@ -367,44 +369,53 @@ public class ReferenceVariable extends Variable
       holdW = (ReferenceWrapper)weight[i];
       holdWM = holdW.data;
 
-	  Point2D.Double dataOffset;
-	  dataOffset = CoordConversions.point2index( new Point2D.Double( holdD.x, holdD.y+holdD.height), res, true );
-	  // This y coordinate starts with zero at + 90. So flip since point2index assumes the opposite.
-	  dataOffset.y = Math.round(180/res) - dataOffset.y;
+      // Each data block is measured from UL corner of region. 
+      // Zero indices within this region is equal to the LL corner of the UL block of this region
+      // To be consistent, should calculate by rounding up for Y and subtracting 1, and rounding down for X
+      // -- turns out this was shifted by one unit, so do not subtract 1 from y
+	  Point2D.Double dataOffset, upperLeft, lowerLeft;
+	  upperLeft = CoordConversions.point2index( new Point2D.Double( holdD.x, holdD.y+holdD.height), res, false );
+	  lowerLeft = CoordConversions.point2index( new Point2D.Double( holdD.x, holdD.y), res, true );
+	  // Y coordinate here starts with zero at + 90. So flip since point2index assumes the opposite.
+	  dataOffset = lowerLeft;
+	  dataOffset.y = Math.round(180/res) - ( upperLeft.y );
 
 	  // Prev version
 	  // offsetY = (int)(((90)-(holdD.y+holdD.height))/res);
       //offsetX = (int)((holdD.x+180)/res);
       
-      offsetX = (int)dataOffset.x; // (int) conversion is fine since these are already integer by value
-      offsetY = (int)dataOffset.y;
+      offsetX = (int)Math.round(dataOffset.x);
+      offsetY = (int)Math.round(dataOffset.y);
       
       for(int iY = 0; iY < holdM.length; iY++)
       {
         for(int iX = 0; iX < holdM[iY].length; iX++)
         {
-          if(!Double.isNaN(holdM[iY][iX]))
+		  if(!Double.isNaN( holdWM[iY][iX] ) ) {
+			  weightMatrix[(offsetY+iY)][(offsetX+iX)] += holdWM[iY][iX];
+		  }
+          if(!Double.isNaN(holdM[iY][iX])) // Only proceed if valid number to be added
           {
-            if(Double.isNaN(toPrint[(offsetY+iY)][(offsetX+iX)]))
+            if(Double.isNaN(worldMatrix[(offsetY+iY)][(offsetX+iX)]))
             {
-		    if(avg) {
-			    toPrint[(offsetY+iY)][(offsetX+iX)] = ((holdM[iY][iX])*holdWM[iY][iX]);
-		    } else {
-			    toPrint[(offsetY+iY)][(offsetX+iX)] = holdM[iY][iX];
-		    }
-
-            } else
+            	// If value up to this point is a NaN then put this value in array
+				if(avg) {
+					worldMatrix[(offsetY+iY)][(offsetX+iX)] = ((holdM[iY][iX])*holdWM[iY][iX]);
+				} else {
+					worldMatrix[(offsetY+iY)][(offsetX+iX)] = holdM[iY][iX];
+				}
+            } else //  NaN
             {
-              //System.out.println("added twice: "+(90-((offsetY+iY)*res))+", "+(((offsetX+iX)*res)-180));
-		    if(avg) {
-			    toPrint[(offsetY+iY)][(offsetX+iX)] += ((holdM[iY][iX])*holdWM[iY][iX]);
-		    } else {
-			    toPrint[(offsetY+iY)][(offsetX+iX)] += holdM[iY][iX];
-		    }
+            	// If valid value already here, add this value to this. Weighting if average = true.
+            	if(avg) {
+					worldMatrix[(offsetY+iY)][(offsetX+iX)] += ((holdM[iY][iX])*holdWM[iY][iX]);
+				} else {
+					worldMatrix[(offsetY+iY)][(offsetX+iX)] += holdM[iY][iX];
+				}
               /*
-              if(toPrint[(offsetY+iY)][(offsetX+iX)] > 1)
+              if(worldMatrix[(offsetY+iY)][(offsetX+iX)] > 1)
               {
-                System.out.println("still a problem: "+(holdM[iY][iX])+"->"+toPrint[(offsetY+iY)][(offsetX+iX)]+" at "+(90-((offsetY+iY)*res))+", "+(((offsetX+iX)*res)-180)+" with weight "+holdWM[(iY)][(iX)]);
+                System.out.println("still a problem: "+(holdM[iY][iX])+"->"+worldMatrix[(offsetY+iY)][(offsetX+iX)]+" at "+(90-((offsetY+iY)*res))+", "+(((offsetX+iX)*res)-180)+" with weight "+holdWM[(iY)][(iX)]);
               }
               */
             }
@@ -413,9 +424,25 @@ public class ReferenceVariable extends Variable
       }
     }
     
-    return toPrint;
+   return worldMatrix;
+// Diagnostic to return total weight for each grid point. Used to check calcs.  
+/*
+// Uncomment this block to write out weight coverage
+    for(int i = 0; i < worldMatrix.length; i++)
+    {
+      for(int k = 0; k < worldMatrix[i].length; k++)
+      {
+        double temp = weightMatrix[i][k] ;
+        weightMatrix[i][k] = temp / temp;
+      }
+    }
+ */    
+/*
+   // Uncoment this to return weight matrix
+   return weightMatrix;
+
+
     
-    /*
      * if((holdM[iY][iX]) > 1)
               {
                 System.out.println("serious problem: "+(holdM[iY][iX])+" at "+(offsetY+iY)+", "+(offsetX+iX)+" with weight "+holdWM[(iY)][(iX)]);
