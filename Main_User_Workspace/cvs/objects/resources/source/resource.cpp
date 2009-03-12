@@ -523,6 +523,10 @@ void Resource::accept( IVisitor* aVisitor, const int aPeriod ) const {
         subResource[ i ]->accept( aVisitor, aPeriod );
     }
 
+    for( unsigned int i = 0; i < ghg.size(); ++i ) {
+        ghg[ i ]->accept( aVisitor, aPeriod );
+    }
+
     aVisitor->endVisitResource( this, aPeriod );
 }
 
