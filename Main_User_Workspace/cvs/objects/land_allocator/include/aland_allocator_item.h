@@ -355,6 +355,47 @@ public:
                                       const int aPeriod ) = 0;
 
     /*!
+     * \brief Set the maximum possible yield for a given product within a land type.
+     * \details Determines the appropriate land leaf and sets the maximum
+     *          yield for a given product.
+     * \param aLandType Land type of the product.
+     * \param aProductName Name of the product.
+     * \param aMaxYield Maximum possible yield.
+     * \param aPeriod Period.
+     * \author Kate Calvin
+     */
+    virtual void setMaxYield( const std::string& aLandType,
+                                      const std::string& aProductName,
+                                      const double aMaxYield, 
+                                      const int aPeriod ) = 0;
+
+    /*!
+     * \brief Set the rate at which the carbon price is expected to increase
+     * \details This method sets expectations about the carbon price to be
+     *          used in calculating the carbon subsidy on land. Setting the expected rate
+     *          of increase of the carbon price to zero implies myopic decision making
+     *          or an expectation of flat carbon prices. Setting this rate to a positive 
+     *          number implies an expectation that the carbon price will rise exponentially
+     *          at the rate specified.
+     * \param aLandType Land type of the product.
+     * \param aProductName Name of the product.
+     * \param aCarbonPriceIncreaseRate Expected rate of increase.
+     * \param aPeriod Period.
+     * \author Kate Calvin
+     */
+    virtual void setCarbonPriceIncreaseRate( const double aCarbonPriceIncreaseRate, 
+                                      const int aPeriod ) = 0;
+
+    /*!
+     * \brief Set the number of years needed to for soil carbons emissions/uptake
+     * \details This method sets the soil time scale into the carbon calculator
+     *          for each land leaf.
+     * \param aTimeScale soil time scale (in years)
+     * \author Kate Calvin
+     */
+    virtual void setSoilTimeScale( const int aTimeScale ) = 0;
+
+    /*!
      * \brief Apply an annual agricultural productivity change to the land
      *        associated with the given product.
      * \details Increases the cummulative technical change for the leaf using

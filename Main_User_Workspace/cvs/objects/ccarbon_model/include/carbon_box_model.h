@@ -127,6 +127,9 @@ public:
     virtual void setActualBelowGroundCarbonDensity( const double aBelowGroundCarbonDensity,
         const int aPeriod ){};
     virtual void setMatureAge( const int aMatureAge ) {};    
+    virtual double getAboveGroundCarbonSubsidyDiscountFactor( ) { return 1; };
+    virtual double getBelowGroundCarbonSubsidyDiscountFactor( ) { return 1; };
+    virtual void setSoilTimeScale( const int aTimeScale ) {};
 
     //ICarbonContainer
     virtual void doTransfers( const EnvironmentalInfo* aEnvInfo, FlowType aFlowType,

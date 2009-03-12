@@ -108,6 +108,12 @@ public:
 
     virtual void acceptDerived( IVisitor* aVisitor, const int aPeriod ) const;
 
+    virtual double getAboveGroundCarbonSubsidyDiscountFactor( );
+
+    virtual double getBelowGroundCarbonSubsidyDiscountFactor( );
+
+    virtual void setSoilTimeScale( const int aTimeScale );
+
 protected:
     //! The present period's change in carbon distributed over the lifetime of
     //! the emission for the current iteration.
@@ -115,6 +121,9 @@ protected:
 
     //! Total land used by period.
     objects::PeriodVector<double> mLandUse;
+
+    //! Total land used by period.
+    std::vector<std::vector<double> > mStoredEmissions;
 
     //! A vector of booleans per year which represent whether the year has been
     //! calculated.
@@ -125,6 +134,9 @@ protected:
     
     //! Age at maturity.  This is used to grow forests slowly.
     int mMatureAge;        
+
+    //! Time scale for soil carbon emissions
+    int mSoilTimeScale;
     
     //! Whether this is the first time the period has been calculated.
     objects::PeriodVector<bool> mIsFirstTime;

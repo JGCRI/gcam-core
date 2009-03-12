@@ -119,6 +119,7 @@ protected:
     double calLandUsed; //!< input calibration value for land use
 
     double calObservedYield; //!< the calibrated observed yield
+    double mMaxYield; //!< the maximum possible yield
     double agProdChange;  //!< the technological change factor
 
     //! Measure of multiple cropping

@@ -67,6 +67,7 @@ ASimpleCarbonCalc::ASimpleCarbonCalc()
   mHistoricalShare( 0 ),
   mLandUseHistory( 0 ),
   mMatureAge( 1 ),
+  mSoilTimeScale ( CarbonModelUtils::getSoilTimeScale() ),
   precalc_sigmoid( CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear() ),
   precalc_expdecay( CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear() )
 {
@@ -88,8 +89,14 @@ ASimpleCarbonCalc::ASimpleCarbonCalc()
         // Here we fill an array, 1975-2095, with a exp decay curve; it will be scaled in y (carbonDifference) but NOT in x (time)
         precalc_expdecay[ i ] = ( 1.0/soilTimeScale ) * ( exp( -1.0 * static_cast<double>( i-startYear ) / soilTimeScale ) );
         
-//        cout << i << "  " << precalc_sigmoid[i] << "   " << precalc_expdecay[i] << "\n";
     }
+
+    mStoredEmissions.resize( scenario->getModeltime()->getmaxper() );
+    for( unsigned int i = 0; i < mStoredEmissions.size(); ++i ){
+        mStoredEmissions[ i ].resize( CarbonModelUtils::getEndYear() - CarbonModelUtils::getStartYear() + 1 );
+        mStoredEmissions[ i ].assign( mStoredEmissions[ i ].size(), 0.0 );
+    }
+
 }
 
 //! Default destructor
@@ -107,7 +114,7 @@ void ASimpleCarbonCalc::calc( const int aYear ) {
     const Modeltime* modeltime = scenario->getModeltime();
     const int startYear = CarbonModelUtils::getStartYear();
     const int endYear = CarbonModelUtils::getEndYear();
-    
+
     // If this is a land-use history year...
     if( aYear < modeltime->getStartYear() ) {
         // This code requires our land use history to be accurate.
@@ -125,15 +132,17 @@ void ASimpleCarbonCalc::calc( const int aYear ) {
         if( mIsFirstTime[ aPeriod ] ){
             mIsFirstTime[ aPeriod ] = false;
             mCurrentEmissions.assign( mCurrentEmissions.size(), 0.0 );
+            mStoredEmissions[ aPeriod ].assign( mStoredEmissions[ aPeriod ].size(), 0.0 );
         }
         // If the period was already calculated, remove the previously added
         // emissions or uptake from the totals.
         else {
             for( int i = startYear; i <= endYear; ++i ){
-                mTotalEmissions[ i ] -= mCurrentEmissions[ i ];
+                mTotalEmissions[ i ] -= mStoredEmissions[ aPeriod ][ i - startYear ];
 
                 // Clear the current emissions for the year.
                 mCurrentEmissions[ i ] = 0;
+                mStoredEmissions[ aPeriod ][ i - startYear ] = 0.0;
             }
         }
         // Calculate the present year
@@ -190,12 +199,12 @@ void ASimpleCarbonCalc::calcSigmoidCurve( double carbonDifference, const unsigne
 
     double futureCarbon = 0.0;
     double lastCarbonValue = 0.0;
-    for( int year = aYear; year <= endYear; ++year ){
+    for( int currYear = aYear; currYear <= endYear; ++currYear ){
         // Calculate the future emissions for the year defined by the sigmoid function:
         // E(t) = a(1-e^(-10t/b))^b    where a is carbonDifference and b is mMatureAge.
         // The sigmoid curve has been precomputed; here we scale by time and carbonDifference
-        if ( year-aYear < mMatureAge) {
-            futureCarbon = carbonDifference * precalc_sigmoid[ static_cast<double>( year-aYear+1 ) * timeScale + startYear ];
+        if ( currYear-aYear < mMatureAge) {
+            futureCarbon = carbonDifference * precalc_sigmoid[ static_cast<double>( currYear-aYear+1 ) * timeScale + startYear ];
         }
         else {
             futureCarbon = carbonDifference;
@@ -208,12 +217,14 @@ void ASimpleCarbonCalc::calcSigmoidCurve( double carbonDifference, const unsigne
         // once, unlike current emissions calculations which need to remove the
         // effect of the previous iteration.
         if( aIsCurrentYear ){
-            mCurrentEmissions[ year ] += futureAnnualEmiss;
+            int period = scenario->getModeltime()->getyr_to_per( aYear );
+            mCurrentEmissions[ currYear ] += futureAnnualEmiss;
+            mStoredEmissions[ period ][ currYear - startYear ] += futureAnnualEmiss;
         }
         
         // Add to the total carbon emission for the year. This will be the sum
         // of the effects of all carbon emissions for the previous years.
-        mTotalEmissions[ year ] += futureAnnualEmiss;
+        mTotalEmissions[ currYear ] += futureAnnualEmiss;
     }
 }
 
@@ -268,6 +279,7 @@ void ASimpleCarbonCalc::calcAboveGroundCarbonEmission( const unsigned int aYear,
     
     // Carbon sequestration is stretched out in time, based on mMatureAge, because some
     // land cover types (notably forests) don't mature instantly.    
+    const int startYear = CarbonModelUtils::getStartYear();
     if ( carbonDifference < 0.0 ){        // sequestration
         calcSigmoidCurve(carbonDifference, aYear, aIsCurrentYear);
     }
@@ -277,7 +289,9 @@ void ASimpleCarbonCalc::calcAboveGroundCarbonEmission( const unsigned int aYear,
         // If this is the current year being calculated store the emission
         // separately so it can be removed in future iterations.
         if( aIsCurrentYear ){
+            int period = scenario->getModeltime()->getyr_to_per( aYear );
             mCurrentEmissions[ aYear ] += carbonDifference;
+            mStoredEmissions[ period ][ aYear - startYear ] += carbonDifference;
         }
     }
 }
@@ -339,8 +353,9 @@ void ASimpleCarbonCalc::calcBelowGroundCarbonEmission( const unsigned int aYear,
  
     // Set emissions (or, if negative, uptake) from now until the end of the model.
     const int endYear = CarbonModelUtils::getEndYear();
+    const int startYear = CarbonModelUtils::getStartYear();
     const double emissionRate = 100.0 / CarbonModelUtils::getSoilTimeScale() / 100.0;
-    for( int year = aYear; year <= endYear; ++year ){
+    for( int currYear = aYear; currYear <= endYear; ++currYear ){
         double futureAnnualEmiss = carbonDifference * emissionRate;
         carbonDifference -= futureAnnualEmiss;
         // Only store annual emissions values if this is not a historical
@@ -348,16 +363,71 @@ void ASimpleCarbonCalc::calcBelowGroundCarbonEmission( const unsigned int aYear,
         // once, unlike current emissions calculations which need to remove the
         // effect of the previous iteration.
         if( aIsCurrentYear ){
-            mCurrentEmissions[ year ] += futureAnnualEmiss;
+            int aPeriod = modeltime->getyr_to_per( aYear );
+            mCurrentEmissions[ currYear ] += futureAnnualEmiss;            
+            mStoredEmissions[ aPeriod ][ currYear - startYear ] += futureAnnualEmiss;
         }
 
         // Add to the total carbon emission for the year. This will be the sum
         // of the effects of all carbon emissions for the previous years.
-        mTotalEmissions[ year ] += futureAnnualEmiss;
+        mTotalEmissions[ currYear ] += futureAnnualEmiss;
     } // for
 
 }
 
+
+/*!
+* \brief Returns a discount factor for the carbon subsidy for soil carbon.
+* \details This method approximates a discount factor to adjust the carbon subsidy
+*          to reflect the slow uptake of soil carbons and forest vegetation
+*          growth. The carbon subsidy is based on a constant carbon tax; thus,
+*          carbon uptake in the future should be valued less than carbon uptake
+*          in the initial period
+* \return soil carbon subsidy discount factor
+*/
+double ASimpleCarbonCalc::getBelowGroundCarbonSubsidyDiscountFactor( ){
+    // If carbon uptake occurs in the first year, we do not discount it.
+    if ( mSoilTimeScale == 1 ) {
+        return 1.0;
+    }
+
+    // We are approximating this curve as alpha / (SoilTimeScale - beta)
+    // Alpha and beta are chosen by minimizing least squared error 
+    // between actual carbon subsidy discount and functional estimate
+    const double ALPHA = 20.47;
+    const double BETA = -19.46;
+    return ALPHA / ( mSoilTimeScale - BETA );
+}
+
+/*!
+* \brief Returns a discount factor for the carbon subsidy for vegetation carbon.
+* \details This method approximates a discount factor to adjust the carbon subsidy
+*          to reflect the slow uptake of soil carbons and forest vegetation
+*          growth. The carbon subsidy is based on a constant carbon tax; thus,
+*          carbon uptake in the future should be valued less than carbon uptake
+*          in the initial period
+* \return above ground carbon subsidy discount factor
+*/
+double ASimpleCarbonCalc::getAboveGroundCarbonSubsidyDiscountFactor( ){
+    // If carbon uptake occurs in the first year, we do not discount it.
+    if ( mMatureAge == 1 ) {
+        return 1.0;
+    }
+
+    // We are approximating this curve as a quadratic with an offset of
+    // 250 (If the mature age is 250, all carbon uptake occurs far enough 
+    // in the future that you wouldn't base decisions on it. So, for a 
+    // mature age of 250 the multiplier is zero
+    // quadCoef is chosen by minimizing least squared error 
+    // between actual carbon subsidy discount and functional estimate
+    const double QUADCOEF = 2.7e-10;
+    const int MAXMATUREAGE = 250; // Mature age where carbon subsidy is zero
+    return QUADCOEF * pow( mMatureAge - MAXMATUREAGE, 4.0);
+}
+
+void ASimpleCarbonCalc::setSoilTimeScale( const int aTimeScale ) {
+    mSoilTimeScale = aTimeScale;
+}
 
 
 

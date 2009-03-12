@@ -230,6 +230,12 @@ public:
     virtual void setActualBelowGroundCarbonDensity( const double aBelowGroundCarbonDensity,
                                            const int aPeriod ) = 0;
     
+
+    virtual double getAboveGroundCarbonSubsidyDiscountFactor( ) = 0;
+
+    virtual double getBelowGroundCarbonSubsidyDiscountFactor( ) = 0;
+
+    virtual void setSoilTimeScale( const int aTimeScale ) = 0;
     /*!
      * \brief Set the mature age of this land cover type; used by simple carbon calculator.
      * \details Sets the mature age.  For crops this is 1 (the default), but forests

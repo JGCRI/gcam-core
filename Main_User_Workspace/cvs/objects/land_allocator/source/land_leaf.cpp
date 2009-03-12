@@ -77,13 +77,15 @@ ALandAllocatorItem( aParent, eLeaf ),
 mIntrinsicYieldMode(),
 mYield( scenario->getModeltime()->getmaxper(), -1 ),
 mCalObservedYield(),
+mMaxYield( scenario->getModeltime()->getforestmaxper(), -1.0 ),
 mLandUseHistory( 0 ),
 mCalDataExists( false ),
 mIntrinsicYieldModeAgProdMultiplier ( 1 ),
 // Give enough room and re-size later
-mAgProdChange( scenario->getModeltime()->getmaxper() + 15 ),
+mAgProdChange( scenario->getModeltime()->getforestmaxper() ),
 mIntrinsicYieldMult( 1 ),
-mActCarbonMult( 1 )
+mActCarbonMult( 1 ),
+mCarbonPriceIncreaseRate( 0.0 )
 {
     // Can't use initializer because mName is a member of ALandAllocatorItem,
     // not LandLeaf.
@@ -359,6 +361,7 @@ void LandLeaf::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) c
     XMLWriteElement( mAgProdChange[ period ], "agProdChange", out, tabs );
     XMLWriteElement( mIntrinsicYieldModeAgProdMultiplier[ period ], "agProdMultiplier", out, tabs );
     XMLWriteElement( mInterestRate, "interest-rate", out, tabs );
+    XMLWriteVector( mCarbonPriceIncreaseRate, "carbon-price-increase-rate", out, tabs, scenario->getModeltime() );
     mCarbonContentCalc->toDebugXML( period, out, tabs );
 }
 
@@ -436,9 +439,11 @@ double LandLeaf::getCarbonValue( const string& aRegionName, const int aPeriod ) 
 
             // Calculate the carbon value as the total carbon content of the land
             // multiplied by the carbon price and the interest rate.
-            double carbonSubsidy = ( mCarbonContentCalc->getPotentialAboveGroundCarbon( year )
-                + mCarbonContentCalc->getPotentialBelowGroundCarbon( year ) )
-                * carbonPrice * mInterestRate * tC_in_TgC;
+            double carbonSubsidy = ( mCarbonContentCalc->getPotentialAboveGroundCarbon( year ) *
+                mCarbonContentCalc->getAboveGroundCarbonSubsidyDiscountFactor()
+                + mCarbonContentCalc->getPotentialBelowGroundCarbon( year ) *
+                mCarbonContentCalc->getBelowGroundCarbonSubsidyDiscountFactor() )
+                * carbonPrice * ( mInterestRate - mCarbonPriceIncreaseRate[ aPeriod ] )* tC_in_TgC;
 
             // convert average carbon contents to intrinsic carbon contents
             if ( mIntrinsicYieldMult[ aPeriod ].isInited() ) {
@@ -530,6 +535,34 @@ void LandLeaf::setCalObservedYield( const string& aLandType,
 {
     assert( aProductName == mName );
     mCalObservedYield[ aPeriod ] = aCalObservedYield;
+}
+
+void LandLeaf::setMaxYield( const string& aLandType,
+                                    const string& aProductName,
+                                    const double aMaxYield,
+                                    const int aPeriod )
+{
+    assert( aProductName == mName );
+    mMaxYield[ aPeriod ] = aMaxYield;
+}
+
+void LandLeaf::setCarbonPriceIncreaseRate( const double aCarbonPriceIncreaseRate,
+                                    const int aPeriod )
+{
+    mCarbonPriceIncreaseRate[ aPeriod ] = aCarbonPriceIncreaseRate;
+}
+
+/*!
+* \brief Set the number of years needed to for soil carbons emissions/uptake
+* \details This method sets the soil time scale into the carbon calculator
+*          for each land leaf.
+* \param aTimeScale soil time scale (in years)
+* \author Kate Calvin
+*/
+void LandLeaf::setSoilTimeScale( const int aTimeScale ) {
+
+    mCarbonContentCalc->setSoilTimeScale( aTimeScale );
+
 }
 
 void LandLeaf::applyAgProdChange( const string& aLandType,
@@ -780,6 +813,22 @@ void LandLeaf::calcYieldInternal( const string& aLandType,
         // TODO: Isn't this a discontinuity?
         mYield[ aHarvestPeriod ] = 0;
     }
+
+    // KVC: We want to prevent the fat tails associated with a log-Gumbel
+    // distribution, so we are putting an upper bound on yield.
+    int yieldPer = aHarvestPeriod;
+    // KVC: This is a hack.  The maximum yield for forests is not
+    // set until after the harvest period.  So, we are using the maximum
+    // yield from 2005 for all periods.  This is okay, since we have zero
+    // tech change on forests, but should be fixed in the future.
+    if ( mName == "Forest" ) {
+        yieldPer = scenario->getModeltime()->getFinalCalibrationPeriod();
+    }
+
+    if ( mMaxYield[ yieldPer ] != -1 ){
+        mYield[ aHarvestPeriod ] = min( mYield[ aHarvestPeriod ], mMaxYield[ yieldPer ] );
+    }
+
 }
 
 double LandLeaf::getYield( const string& aLandType,

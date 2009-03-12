@@ -128,6 +128,24 @@ public:
                                       const double aCalObservedYield, 
                                       const int aPeriod );
 
+    virtual void setMaxYield( const std::string& aLandType,
+                                      const std::string& aProductName,
+                                      const double aMaxYield, 
+                                      const int aPeriod );
+
+    virtual void setCarbonPriceIncreaseRate( const double aCarbonPriceIncreaseRate, 
+                                      const int aPeriod );
+
+            /*!
+     * \brief Set the number of years needed to for soil carbons emissions/uptake
+     * \details This method sets the soil time scale into the carbon calculator
+     *          for each land leaf.
+     * \param aTimeScale soil time scale (in years)
+     * \author Kate Calvin
+     */
+    virtual void setSoilTimeScale( const int aTimeScale );
+
+
     virtual void applyAgProdChange( const std::string& aLandType,
                                     const std::string& aProductName,
                                     const double aAgProdChange,
@@ -229,6 +247,9 @@ protected:
     //! The calibrated observed yield.
     objects::PeriodVector<Value> mCalObservedYield;
 
+    //! The maximum possible yield.
+    std::vector<Value> mMaxYield;
+
     //! Calculated cumulative technical change.
     std::vector<double> mAgProdChange;  
 
@@ -243,6 +264,9 @@ protected:
 
     //! Interest rate stored from the region info.
     Value mInterestRate;
+
+    //! Expected rate of increase of the carbon price from the region info.
+    objects::PeriodVector<Value> mCarbonPriceIncreaseRate;
 
     //! Multiplier on observedYield to get IntrinsicYieldMode.
     objects::PeriodVector<Value> mIntrinsicYieldMult;

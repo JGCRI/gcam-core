@@ -63,7 +63,8 @@ extern Scenario* scenario;
 TreeLandAllocator::TreeLandAllocator()
 : LandNode( 0 ),
   mCalDataExists( false ), 
-  mCalculated( CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear() )
+  mCalculated( CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear() ),
+  mCarbonPriceIncreaseRate( 0.0 )
 {
 }
 
@@ -98,8 +99,14 @@ bool TreeLandAllocator::XMLDerivedClassParse( const string& aNodeName, const DOM
     if( aNodeName == "landAllocation" ){
         XMLHelper<Value>::insertValueIntoVector( aCurr, mLandAllocation, scenario->getModeltime() );
     }
+    else if( aNodeName == "carbon-price-increase-rate" ){
+        XMLHelper<Value>::insertValueIntoVector( aCurr, mCarbonPriceIncreaseRate, scenario->getModeltime() );
+    }
     else if( aNodeName == "avgProfitRate" ){
         mAvgProfitRate = XMLHelper<double>::getValue( aCurr );
+    }
+    else if( aNodeName == "soilTimeScale" ){
+        mSoilTimeScale = XMLHelper<int>::getValue( aCurr );
     }
     else {
         return false;
@@ -119,12 +126,15 @@ void TreeLandAllocator::toInputXML( std::ostream& aOut, Tabs* aTabs ) const {
 
 void TreeLandAllocator::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteVector( mLandAllocation, "landAllocation", aOut, aTabs, scenario->getModeltime() );
+    XMLWriteVector( mCarbonPriceIncreaseRate, "carbon-price-increase-rate", aOut, aTabs, scenario->getModeltime() );
     XMLWriteElement( mAvgProfitRate, "avgProfitRate", aOut, aTabs );
+    XMLWriteElement( mSoilTimeScale, "soilTimeScale", aOut, aTabs );
 }
 
 void TreeLandAllocator::initCalc( const string& aRegionName, const int aPeriod )
 {
     resetToCalibrationData( aRegionName, aPeriod );
+    setCarbonPriceIncreaseRate( mCarbonPriceIncreaseRate[ aPeriod ] , aPeriod );
 }
 
 void TreeLandAllocator::completeInit( const string& aRegionName, 
@@ -139,6 +149,8 @@ void TreeLandAllocator::completeInit( const string& aRegionName,
     for( int period = 0; period < modeltime->getmaxper(); period++ ) {
         resetToCalibrationData( aRegionName, period );
     }
+
+    setSoilTimeScale( mSoilTimeScale );
 }
 
 /*!
@@ -391,6 +403,42 @@ void TreeLandAllocator::setCalObservedYield( const string& aLandType,
                                    aCalObservedYield, aPeriod );
     }
 }
+
+void TreeLandAllocator::setMaxYield( const string& aLandType,
+                                             const string& aProductName,
+                                             const double aMaxYield,
+                                             const int aPeriod )
+{
+    // TODO: This is called before the completeInit of the LandAllocator.
+    ALandAllocatorItem* node = findChild( aLandType, eNode );
+    if( node ){
+        node->setMaxYield( aLandType, aProductName,
+                                   aMaxYield, aPeriod );
+    }
+}
+
+void TreeLandAllocator::setCarbonPriceIncreaseRate( const double aCarbonPriceIncreaseRate, const int aPeriod )
+{
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        mChildren[ i ]->setCarbonPriceIncreaseRate( aCarbonPriceIncreaseRate, aPeriod );
+    }
+}
+
+/*!
+* \brief Set the number of years needed to for soil carbons emissions/uptake
+* \details This method sets the soil time scale into the carbon calculator
+*          for each land leaf.
+* \param aTimeScale soil time scale (in years)
+* \author Kate Calvin
+*/
+void TreeLandAllocator::setSoilTimeScale( const int aTimeScale ) {
+
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        mChildren[ i ]->setSoilTimeScale( aTimeScale );
+    }
+
+}
+
 
 void TreeLandAllocator::setIntrinsicRate( const string& aRegionName,
                                           const string& aLandType,

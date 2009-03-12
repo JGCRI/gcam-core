@@ -127,6 +127,16 @@ public:
                                       const double aCalObservedYield, 
                                       const int aPeriod );
 
+    virtual void setMaxYield( const std::string& aLandType,
+                                      const std::string& aProductName,
+                                      const double aMaxYield, 
+                                      const int aPeriod );
+
+    virtual void setCarbonPriceIncreaseRate( const double aCarbonPriceIncreaseRate,
+                                        const int aPeriod );
+
+    virtual void setSoilTimeScale( const int aTimeScale );
+
     virtual void setIntrinsicRate( const std::string& aRegionName,
                                    const std::string& aLandType,
                                    const std::string& aProductName,
@@ -194,6 +204,9 @@ private:
     //! Land allocated in 1000's of hectares
     objects::PeriodVector<Value> mLandAllocation;
 
+    //! Rate at which carbon price is expected to increase
+    objects::PeriodVector<Value> mCarbonPriceIncreaseRate;
+
     //! Boolean storing whether a year has been calculated or not.
     objects::YearVector<bool> mCalculated;
 
@@ -202,6 +215,9 @@ private:
 
     //! Double storing the average price of land in a region
     double mAvgProfitRate;
+
+    //! Integer storing the soil time scale for a region
+    int mSoilTimeScale;
 
     const ALandAllocatorItem* findParentOfType( const std::string& aType ) const;
 

@@ -513,6 +513,42 @@ void LandNode::setCalObservedYield( const string& aLandType,
     }
 }
 
+void LandNode::setMaxYield( const string& aLandType,
+                                    const string& aProductName,
+                                    const double aMaxYield,
+                                    const int aPeriod )
+{
+    assert( aLandType == mName );
+    ALandAllocatorItem* curr = findChild( aProductName, eLeaf );
+    
+    if( curr ){
+        curr->setMaxYield( aLandType, aProductName, aMaxYield, aPeriod );
+    }
+}
+
+void LandNode::setCarbonPriceIncreaseRate( const double aCarbonPriceIncreaseRate,
+                                    const int aPeriod )
+{
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        mChildren[ i ]->setCarbonPriceIncreaseRate( aCarbonPriceIncreaseRate, aPeriod );
+    }
+}
+
+/*!
+* \brief Set the number of years needed to for soil carbons emissions/uptake
+* \details This method sets the soil time scale into the carbon calculator
+*          for each land leaf.
+* \param aTimeScale soil time scale (in years)
+* \author Kate Calvin
+*/
+void LandNode::setSoilTimeScale( const int aTimeScale ) {
+
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        mChildren[ i ]->setSoilTimeScale( aTimeScale );
+    }
+
+}
+
 void LandNode::applyAgProdChange( const string& aLandType,
                                   const string& aProductName,
                                   const double aAgProdChange,

@@ -103,6 +103,7 @@ public:
     int getEndYear() const;
     int gettimestep( const int period ) const { return periodToTimeStep[ period ]; } // years from last to current per
     int getmaxper() const { return maxPeriod; }  // max modeling periods
+    int getforestmaxper() const { return maxPeriod + 15; }  // max modeling periods
 
     int getper_to_yr( const int period ) const;
     int getyr_to_per( const int year ) const;

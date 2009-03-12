@@ -69,6 +69,7 @@ FoodProductionTechnology::FoodProductionTechnology( const string& aName, const i
     mNonLandCostTechChange = 0;
     calLandUsed = -1;
     calYield = -1;
+    mMaxYield = -1;
     calObservedYield = -1;
     agProdChange = 0;
     mAboveGroundCarbon = 0;
@@ -98,6 +99,9 @@ bool FoodProductionTechnology::XMLDerivedClassParse( const string& nodeName, con
     }
     else if( nodeName == "calYield" ) {
         calYield = XMLHelper<double>::getValue( curr );
+    }
+    else if( nodeName == "maxYield" ) {
+        mMaxYield = XMLHelper<double>::getValue( curr );
     }
     else if( nodeName == "agProdChange" ) {
         agProdChange = XMLHelper<double>::getValue( curr );
@@ -150,6 +154,7 @@ void FoodProductionTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) con
     XMLWriteElementCheckDefault( mAboveGroundCarbon, "above-ground-carbon", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( mBelowGroundCarbon, "below-ground-carbon", out, tabs, 0.0 );
     XMLWriteElement( mMatureAge, "mature-age", out, tabs );
+    XMLWriteElement( mMaxYield, "maxYield", out, tabs );
 }
 
 //! write object to xml output stream
@@ -291,6 +296,8 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
     // Set the above and below ground carbon for this technology.
     // TODO: This may need to be moved if the carbon content is calculated dynamically.
     mLandAllocator->setCarbonContent( landType, mName, mAboveGroundCarbon, mBelowGroundCarbon, mMatureAge, aPeriod );
+
+    mLandAllocator->setMaxYield( landType, mName, mMaxYield, aPeriod );
     
 }
 
