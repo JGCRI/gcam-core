@@ -604,31 +604,31 @@
             <FoodSupplySubsector name="Corn">
                <FoodProductionTechnology name="Corn">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.083064929</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.083064929</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -703,31 +703,31 @@
             <FoodSupplySubsector name="MiscCrop">
                <FoodProductionTechnology name="MiscCrop">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.083064929</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.083064929</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -736,31 +736,31 @@
             <FoodSupplySubsector name="OilCrop">
                <FoodProductionTechnology name="OilCrop">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.083064929</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.083064929</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -769,31 +769,31 @@
             <FoodSupplySubsector name="OtherGrain">
                <FoodProductionTechnology name="OtherGrain">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.083064929</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.083064929</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -802,31 +802,31 @@
             <FoodSupplySubsector name="Rice">
                <FoodProductionTechnology name="Rice">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.083064929</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.083064929</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -835,31 +835,31 @@
             <FoodSupplySubsector name="SugarCrop">
                <FoodProductionTechnology name="SugarCrop">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.083064929</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.083064929</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -868,31 +868,31 @@
             <FoodSupplySubsector name="Wheat">
                <FoodProductionTechnology name="Wheat">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.083064929</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.083064929</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.054976987</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -903,10 +903,10 @@
             <FoodSupplySubsector name="Corn">
                <FoodProductionTechnology name="Corn">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.107534953</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.107534953</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
                      <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
@@ -1002,10 +1002,10 @@
             <FoodSupplySubsector name="MiscCrop">
                <FoodProductionTechnology name="MiscCrop">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.107534953</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.107534953</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
                      <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
@@ -1035,10 +1035,10 @@
             <FoodSupplySubsector name="OilCrop">
                <FoodProductionTechnology name="OilCrop">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.107534953</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.107534953</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
                      <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
@@ -1068,10 +1068,10 @@
             <FoodSupplySubsector name="OtherGrain">
                <FoodProductionTechnology name="OtherGrain">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.107534953</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.107534953</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
                      <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
@@ -1101,10 +1101,10 @@
             <FoodSupplySubsector name="Rice">
                <FoodProductionTechnology name="Rice">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.107534953</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.107534953</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
                      <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
@@ -1134,10 +1134,10 @@
             <FoodSupplySubsector name="SugarCrop">
                <FoodProductionTechnology name="SugarCrop">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.107534953</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.107534953</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
                      <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
@@ -1167,10 +1167,10 @@
             <FoodSupplySubsector name="Wheat">
                <FoodProductionTechnology name="Wheat">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.107534953</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.107534953</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
                      <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
@@ -1800,31 +1800,31 @@
             <FoodSupplySubsector name="Corn">
                <FoodProductionTechnology name="Corn">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.120551105</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.227653111</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.120551105</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.227653111</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -1899,31 +1899,31 @@
             <FoodSupplySubsector name="MiscCrop">
                <FoodProductionTechnology name="MiscCrop">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.120551105</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.227653111</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.120551105</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.227653111</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -1932,31 +1932,31 @@
             <FoodSupplySubsector name="OilCrop">
                <FoodProductionTechnology name="OilCrop">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.120551105</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.227653111</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.120551105</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.227653111</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -1965,31 +1965,31 @@
             <FoodSupplySubsector name="OtherGrain">
                <FoodProductionTechnology name="OtherGrain">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.120551105</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.227653111</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.120551105</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.227653111</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -1998,31 +1998,31 @@
             <FoodSupplySubsector name="Rice">
                <FoodProductionTechnology name="Rice">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.120551105</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.227653111</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.120551105</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.227653111</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -2031,31 +2031,31 @@
             <FoodSupplySubsector name="SugarCrop">
                <FoodProductionTechnology name="SugarCrop">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.120551105</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.227653111</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.120551105</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.227653111</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -2064,31 +2064,31 @@
             <FoodSupplySubsector name="Wheat">
                <FoodProductionTechnology name="Wheat">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.120551105</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.227653111</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.120551105</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.227653111</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.295711334</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.147754964</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -2404,25 +2404,25 @@
                      <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -2503,25 +2503,25 @@
                      <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -2536,25 +2536,25 @@
                      <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -2569,25 +2569,25 @@
                      <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -2602,25 +2602,25 @@
                      <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -2635,25 +2635,25 @@
                      <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -2668,25 +2668,25 @@
                      <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.107177074</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -2703,25 +2703,25 @@
                      <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -2802,25 +2802,25 @@
                      <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -2835,25 +2835,25 @@
                      <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -2868,25 +2868,25 @@
                      <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -2901,25 +2901,25 @@
                      <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -2934,25 +2934,25 @@
                      <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -2967,25 +2967,25 @@
                      <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.083523438</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -2996,31 +2996,31 @@
             <FoodSupplySubsector name="Corn">
                <FoodProductionTechnology name="Corn">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.003719031</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.003719031</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -3095,31 +3095,31 @@
             <FoodSupplySubsector name="MiscCrop">
                <FoodProductionTechnology name="MiscCrop">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.003719031</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.003719031</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -3128,31 +3128,31 @@
             <FoodSupplySubsector name="OilCrop">
                <FoodProductionTechnology name="OilCrop">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.003719031</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.003719031</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -3161,31 +3161,31 @@
             <FoodSupplySubsector name="OtherGrain">
                <FoodProductionTechnology name="OtherGrain">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.003719031</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.003719031</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -3194,31 +3194,31 @@
             <FoodSupplySubsector name="Rice">
                <FoodProductionTechnology name="Rice">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.003719031</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.003719031</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -3227,31 +3227,31 @@
             <FoodSupplySubsector name="SugarCrop">
                <FoodProductionTechnology name="SugarCrop">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.003719031</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.003719031</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -3260,31 +3260,31 @@
             <FoodSupplySubsector name="Wheat">
                <FoodProductionTechnology name="Wheat">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.003719031</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.003719031</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.143827463</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.103621207</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -3594,31 +3594,31 @@
             <FoodSupplySubsector name="Corn">
                <FoodProductionTechnology name="Corn">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.595680861</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.326437776</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.595680861</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.326437776</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -3693,31 +3693,31 @@
             <FoodSupplySubsector name="MiscCrop">
                <FoodProductionTechnology name="MiscCrop">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.595680861</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.326437776</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.595680861</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.326437776</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -3726,31 +3726,31 @@
             <FoodSupplySubsector name="OilCrop">
                <FoodProductionTechnology name="OilCrop">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.595680861</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.326437776</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.595680861</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.326437776</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -3759,31 +3759,31 @@
             <FoodSupplySubsector name="OtherGrain">
                <FoodProductionTechnology name="OtherGrain">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.595680861</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.326437776</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.595680861</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.326437776</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -3792,31 +3792,31 @@
             <FoodSupplySubsector name="Rice">
                <FoodProductionTechnology name="Rice">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.595680861</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.326437776</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.595680861</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.326437776</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -3825,31 +3825,31 @@
             <FoodSupplySubsector name="SugarCrop">
                <FoodProductionTechnology name="SugarCrop">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.595680861</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.326437776</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.595680861</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.326437776</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -3858,31 +3858,31 @@
             <FoodSupplySubsector name="Wheat">
                <FoodProductionTechnology name="Wheat">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.595680861</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.326437776</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.595680861</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.326437776</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.076394368</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.208260599</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -3893,31 +3893,31 @@
             <FoodSupplySubsector name="Corn">
                <FoodProductionTechnology name="Corn">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.144728218</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.13581501</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.144728218</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.13581501</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -3992,31 +3992,31 @@
             <FoodSupplySubsector name="MiscCrop">
                <FoodProductionTechnology name="MiscCrop">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.144728218</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.13581501</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.144728218</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.13581501</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -4025,31 +4025,31 @@
             <FoodSupplySubsector name="OilCrop">
                <FoodProductionTechnology name="OilCrop">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.144728218</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.13581501</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.144728218</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.13581501</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -4058,31 +4058,31 @@
             <FoodSupplySubsector name="OtherGrain">
                <FoodProductionTechnology name="OtherGrain">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.144728218</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.13581501</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.144728218</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.13581501</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -4091,31 +4091,31 @@
             <FoodSupplySubsector name="Rice">
                <FoodProductionTechnology name="Rice">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.144728218</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.13581501</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.144728218</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.13581501</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -4124,31 +4124,31 @@
             <FoodSupplySubsector name="SugarCrop">
                <FoodProductionTechnology name="SugarCrop">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.144728218</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.13581501</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.144728218</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.13581501</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>
@@ -4157,31 +4157,31 @@
             <FoodSupplySubsector name="Wheat">
                <FoodProductionTechnology name="Wheat">
                   <period year="1975">
-                     <harvested-to-cropped-land-ratio>1.144728218</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.13581501</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="1990">
-                     <harvested-to-cropped-land-ratio>1.144728218</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.13581501</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2005">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2020">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2035">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2050">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2065">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2080">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                   <period year="2095">
-                     <harvested-to-cropped-land-ratio>1.166678867</harvested-to-cropped-land-ratio>
+                     <harvested-to-cropped-land-ratio>1.15908967</harvested-to-cropped-land-ratio>
                   </period>
                </FoodProductionTechnology>
             </FoodSupplySubsector>

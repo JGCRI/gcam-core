@@ -6,6 +6,7 @@
 			<renewresource name="Scavenging">
 				<output-unit>Gcal</output-unit>
 				<price-unit>1975$/Gcal</price-unit>
+				<price year="1975" fillout="1">5.5</price>
 				<market>USA</market>
 				<sub-renewable-resource name="Scavenging">
 					<maxSubResource>10000</maxSubResource>
@@ -27,6 +28,7 @@
 			<renewresource name="Scavenging">
 				<output-unit>Gcal</output-unit>
 				<price-unit>1975$/Gcal</price-unit>
+<price year="1975" fillout="1">5.5</price>
 				<market>Canada</market>
 				<sub-renewable-resource name="Scavenging">
 					<maxSubResource>10000</maxSubResource>
@@ -48,6 +50,7 @@
 			<renewresource name="Scavenging">
 				<output-unit>Gcal</output-unit>
 				<price-unit>1975$/Gcal</price-unit>
+<price year="1975" fillout="1">5.5</price>
 				<market>Western Europe</market>
 				<sub-renewable-resource name="Scavenging">
 					<maxSubResource>4428577</maxSubResource>
@@ -69,6 +72,7 @@
 			<renewresource name="Scavenging">
 				<output-unit>Gcal</output-unit>
 				<price-unit>1975$/Gcal</price-unit>
+<price year="1975" fillout="1">5.5</price>
 				<market>Japan</market>
 				<sub-renewable-resource name="Scavenging">
 					<maxSubResource>10000</maxSubResource>
@@ -90,6 +94,7 @@
 			<renewresource name="Scavenging">
 				<output-unit>Gcal</output-unit>
 				<price-unit>1975$/Gcal</price-unit>
+<price year="1975" fillout="1">5.5</price>
 				<market>Australia_NZ</market>
 				<sub-renewable-resource name="Scavenging">
 					<maxSubResource>8877916</maxSubResource>
@@ -111,6 +116,7 @@
 			<renewresource name="Scavenging">
 				<output-unit>Gcal</output-unit>
 				<price-unit>1975$/Gcal</price-unit>
+<price year="1975" fillout="1">5.5</price>
 				<market>Former Soviet Union</market>
 				<sub-renewable-resource name="Scavenging">
 					<maxSubResource>8925997</maxSubResource>
@@ -132,6 +138,7 @@
 			<renewresource name="Scavenging">
 				<output-unit>Gcal</output-unit>
 				<price-unit>1975$/Gcal</price-unit>
+<price year="1975" fillout="1">5.5</price>
 				<market>China</market>
 				<sub-renewable-resource name="Scavenging">
 					<maxSubResource>50976012</maxSubResource>
@@ -153,6 +160,7 @@
 			<renewresource name="Scavenging">
 				<output-unit>Gcal</output-unit>
 				<price-unit>1975$/Gcal</price-unit>
+<price year="1975" fillout="1">5.5</price>
 				<market>Middle East</market>
 				<sub-renewable-resource name="Scavenging">
 					<maxSubResource>6011080</maxSubResource>
@@ -174,6 +182,7 @@
 			<renewresource name="Scavenging">
 				<output-unit>Gcal</output-unit>
 				<price-unit>1975$/Gcal</price-unit>
+<price year="1975" fillout="1">5.5</price>
 				<market>Africa</market>
 				<sub-renewable-resource name="Scavenging">
 					<maxSubResource>58450941</maxSubResource>
@@ -195,6 +204,7 @@
 			<renewresource name="Scavenging">
 				<output-unit>Gcal</output-unit>
 				<price-unit>1975$/Gcal</price-unit>
+<price year="1975" fillout="1">5.5</price>
 				<market>Latin America</market>
 				<sub-renewable-resource name="Scavenging">
 					<maxSubResource>112719570</maxSubResource>
@@ -216,6 +226,7 @@
 			<renewresource name="Scavenging">
 				<output-unit>Gcal</output-unit>
 				<price-unit>1975$/Gcal</price-unit>
+<price year="1975" fillout="1">5.5</price>
 				<market>Southeast Asia</market>
 				<sub-renewable-resource name="Scavenging">
 					<maxSubResource>314929927</maxSubResource>
@@ -237,6 +248,7 @@
 			<renewresource name="Scavenging">
 				<output-unit>Gcal</output-unit>
 				<price-unit>1975$/Gcal</price-unit>
+<price year="1975" fillout="1">5.5</price>
 				<market>Eastern Europe</market>
 				<sub-renewable-resource name="Scavenging">
 					<maxSubResource>10868176</maxSubResource>
@@ -258,6 +270,7 @@
 			<renewresource name="Scavenging">
 				<output-unit>Gcal</output-unit>
 				<price-unit>1975$/Gcal</price-unit>
+<price year="1975" fillout="1">5.5</price>
 				<market>Korea</market>
 				<sub-renewable-resource name="Scavenging">
 					<maxSubResource>1103141</maxSubResource>
@@ -279,6 +292,7 @@
 			<renewresource name="Scavenging">
 				<output-unit>Gcal</output-unit>
 				<price-unit>1975$/Gcal</price-unit>
+<price year="1975" fillout="1">5.5</price>
 				<market>India</market>
 				<sub-renewable-resource name="Scavenging">
 					<maxSubResource>555008709</maxSubResource>

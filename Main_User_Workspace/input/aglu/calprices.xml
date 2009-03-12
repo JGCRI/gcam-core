@@ -3,7 +3,7 @@
    <world>
       <region name="USA">
          <FoodSupplySector name="Corn">
-            <calPrice>25</calPrice>
+            <calPrice>22</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="FiberCrop">
             <calPrice>0.5</calPrice>
@@ -12,30 +12,30 @@
             <calPrice>19</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="MiscCrop">
-            <calPrice>43</calPrice>
+            <calPrice>41</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OilCrop">
-            <calPrice>84</calPrice>
+            <calPrice>75</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OtherGrain">
             <calPrice>31</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Rice">
-            <calPrice>24</calPrice>
+            <calPrice>21</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="SugarCrop">
-            <calPrice>7</calPrice>
+            <calPrice>4</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Wheat">
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>426</calPrice>
+            <calPrice>425</calPrice>
          </ForestSupplySector>
       </region>
       <region name="Canada">
          <FoodSupplySector name="Corn">
-            <calPrice>25</calPrice>
+            <calPrice>22</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="FiberCrop">
             <calPrice>0.5</calPrice>
@@ -44,30 +44,30 @@
             <calPrice>19</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="MiscCrop">
-            <calPrice>43</calPrice>
+            <calPrice>41</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OilCrop">
-            <calPrice>84</calPrice>
+            <calPrice>75</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OtherGrain">
             <calPrice>31</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Rice">
-            <calPrice>24</calPrice>
+            <calPrice>21</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="SugarCrop">
-            <calPrice>7</calPrice>
+            <calPrice>4</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Wheat">
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>426</calPrice>
+            <calPrice>425</calPrice>
          </ForestSupplySector>
       </region>
       <region name="Western Europe">
          <FoodSupplySector name="Corn">
-            <calPrice>25</calPrice>
+            <calPrice>22</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="FiberCrop">
             <calPrice>0.5</calPrice>
@@ -76,30 +76,30 @@
             <calPrice>19</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="MiscCrop">
-            <calPrice>43</calPrice>
+            <calPrice>41</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OilCrop">
-            <calPrice>84</calPrice>
+            <calPrice>75</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OtherGrain">
             <calPrice>31</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Rice">
-            <calPrice>24</calPrice>
+            <calPrice>21</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="SugarCrop">
-            <calPrice>7</calPrice>
+            <calPrice>4</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Wheat">
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>426</calPrice>
+            <calPrice>425</calPrice>
          </ForestSupplySector>
       </region>
       <region name="Japan">
          <FoodSupplySector name="Corn">
-            <calPrice>25</calPrice>
+            <calPrice>22</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="FiberCrop">
             <calPrice>0.5</calPrice>
@@ -108,30 +108,30 @@
             <calPrice>19</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="MiscCrop">
-            <calPrice>43</calPrice>
+            <calPrice>41</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OilCrop">
-            <calPrice>84</calPrice>
+            <calPrice>75</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OtherGrain">
             <calPrice>31</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Rice">
-            <calPrice>24</calPrice>
+            <calPrice>21</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="SugarCrop">
-            <calPrice>7</calPrice>
+            <calPrice>4</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Wheat">
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>426</calPrice>
+            <calPrice>425</calPrice>
          </ForestSupplySector>
       </region>
       <region name="Australia_NZ">
          <FoodSupplySector name="Corn">
-            <calPrice>25</calPrice>
+            <calPrice>22</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="FiberCrop">
             <calPrice>0.5</calPrice>
@@ -140,30 +140,30 @@
             <calPrice>19</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="MiscCrop">
-            <calPrice>43</calPrice>
+            <calPrice>41</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OilCrop">
-            <calPrice>84</calPrice>
+            <calPrice>75</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OtherGrain">
             <calPrice>31</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Rice">
-            <calPrice>24</calPrice>
+            <calPrice>21</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="SugarCrop">
-            <calPrice>7</calPrice>
+            <calPrice>4</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Wheat">
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>426</calPrice>
+            <calPrice>425</calPrice>
          </ForestSupplySector>
       </region>
       <region name="Former Soviet Union">
          <FoodSupplySector name="Corn">
-            <calPrice>25</calPrice>
+            <calPrice>22</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="FiberCrop">
             <calPrice>0.5</calPrice>
@@ -172,30 +172,30 @@
             <calPrice>19</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="MiscCrop">
-            <calPrice>43</calPrice>
+            <calPrice>41</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OilCrop">
-            <calPrice>84</calPrice>
+            <calPrice>75</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OtherGrain">
             <calPrice>31</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Rice">
-            <calPrice>24</calPrice>
+            <calPrice>21</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="SugarCrop">
-            <calPrice>7</calPrice>
+            <calPrice>4</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Wheat">
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>426</calPrice>
+            <calPrice>425</calPrice>
          </ForestSupplySector>
       </region>
       <region name="China">
          <FoodSupplySector name="Corn">
-            <calPrice>25</calPrice>
+            <calPrice>22</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="FiberCrop">
             <calPrice>0.5</calPrice>
@@ -204,30 +204,30 @@
             <calPrice>19</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="MiscCrop">
-            <calPrice>43</calPrice>
+            <calPrice>41</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OilCrop">
-            <calPrice>84</calPrice>
+            <calPrice>75</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OtherGrain">
             <calPrice>31</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Rice">
-            <calPrice>24</calPrice>
+            <calPrice>21</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="SugarCrop">
-            <calPrice>7</calPrice>
+            <calPrice>4</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Wheat">
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>426</calPrice>
+            <calPrice>425</calPrice>
          </ForestSupplySector>
       </region>
       <region name="Middle East">
          <FoodSupplySector name="Corn">
-            <calPrice>25</calPrice>
+            <calPrice>22</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="FiberCrop">
             <calPrice>0.5</calPrice>
@@ -236,30 +236,30 @@
             <calPrice>19</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="MiscCrop">
-            <calPrice>43</calPrice>
+            <calPrice>41</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OilCrop">
-            <calPrice>84</calPrice>
+            <calPrice>75</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OtherGrain">
             <calPrice>31</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Rice">
-            <calPrice>24</calPrice>
+            <calPrice>21</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="SugarCrop">
-            <calPrice>7</calPrice>
+            <calPrice>4</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Wheat">
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>426</calPrice>
+            <calPrice>425</calPrice>
          </ForestSupplySector>
       </region>
       <region name="Africa">
          <FoodSupplySector name="Corn">
-            <calPrice>25</calPrice>
+            <calPrice>22</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="FiberCrop">
             <calPrice>0.5</calPrice>
@@ -268,30 +268,30 @@
             <calPrice>19</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="MiscCrop">
-            <calPrice>43</calPrice>
+            <calPrice>41</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OilCrop">
-            <calPrice>84</calPrice>
+            <calPrice>75</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OtherGrain">
             <calPrice>31</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Rice">
-            <calPrice>24</calPrice>
+            <calPrice>21</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="SugarCrop">
-            <calPrice>7</calPrice>
+            <calPrice>4</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Wheat">
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>426</calPrice>
+            <calPrice>425</calPrice>
          </ForestSupplySector>
       </region>
       <region name="Latin America">
          <FoodSupplySector name="Corn">
-            <calPrice>25</calPrice>
+            <calPrice>22</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="FiberCrop">
             <calPrice>0.5</calPrice>
@@ -300,30 +300,30 @@
             <calPrice>19</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="MiscCrop">
-            <calPrice>43</calPrice>
+            <calPrice>41</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OilCrop">
-            <calPrice>84</calPrice>
+            <calPrice>75</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OtherGrain">
             <calPrice>31</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Rice">
-            <calPrice>24</calPrice>
+            <calPrice>21</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="SugarCrop">
-            <calPrice>7</calPrice>
+            <calPrice>4</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Wheat">
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>426</calPrice>
+            <calPrice>425</calPrice>
          </ForestSupplySector>
       </region>
       <region name="Southeast Asia">
          <FoodSupplySector name="Corn">
-            <calPrice>25</calPrice>
+            <calPrice>22</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="FiberCrop">
             <calPrice>0.5</calPrice>
@@ -332,30 +332,30 @@
             <calPrice>19</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="MiscCrop">
-            <calPrice>43</calPrice>
+            <calPrice>41</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OilCrop">
-            <calPrice>84</calPrice>
+            <calPrice>75</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OtherGrain">
             <calPrice>31</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Rice">
-            <calPrice>24</calPrice>
+            <calPrice>21</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="SugarCrop">
-            <calPrice>7</calPrice>
+            <calPrice>4</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Wheat">
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>426</calPrice>
+            <calPrice>425</calPrice>
          </ForestSupplySector>
       </region>
       <region name="Eastern Europe">
          <FoodSupplySector name="Corn">
-            <calPrice>25</calPrice>
+            <calPrice>22</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="FiberCrop">
             <calPrice>0.5</calPrice>
@@ -364,30 +364,30 @@
             <calPrice>19</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="MiscCrop">
-            <calPrice>43</calPrice>
+            <calPrice>41</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OilCrop">
-            <calPrice>84</calPrice>
+            <calPrice>75</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OtherGrain">
             <calPrice>31</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Rice">
-            <calPrice>24</calPrice>
+            <calPrice>21</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="SugarCrop">
-            <calPrice>7</calPrice>
+            <calPrice>4</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Wheat">
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>426</calPrice>
+            <calPrice>425</calPrice>
          </ForestSupplySector>
       </region>
       <region name="Korea">
          <FoodSupplySector name="Corn">
-            <calPrice>25</calPrice>
+            <calPrice>22</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="FiberCrop">
             <calPrice>0.5</calPrice>
@@ -396,30 +396,30 @@
             <calPrice>19</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="MiscCrop">
-            <calPrice>43</calPrice>
+            <calPrice>41</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OilCrop">
-            <calPrice>84</calPrice>
+            <calPrice>75</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OtherGrain">
             <calPrice>31</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Rice">
-            <calPrice>24</calPrice>
+            <calPrice>21</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="SugarCrop">
-            <calPrice>7</calPrice>
+            <calPrice>4</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Wheat">
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>426</calPrice>
+            <calPrice>425</calPrice>
          </ForestSupplySector>
       </region>
       <region name="India">
          <FoodSupplySector name="Corn">
-            <calPrice>25</calPrice>
+            <calPrice>22</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="FiberCrop">
             <calPrice>0.5</calPrice>
@@ -428,25 +428,25 @@
             <calPrice>19</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="MiscCrop">
-            <calPrice>43</calPrice>
+            <calPrice>41</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OilCrop">
-            <calPrice>84</calPrice>
+            <calPrice>75</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="OtherGrain">
             <calPrice>31</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Rice">
-            <calPrice>24</calPrice>
+            <calPrice>21</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="SugarCrop">
-            <calPrice>7</calPrice>
+            <calPrice>4</calPrice>
          </FoodSupplySector>
          <FoodSupplySector name="Wheat">
             <calPrice>20</calPrice>
          </FoodSupplySector>
          <ForestSupplySector name="Forest">
-            <calPrice>426</calPrice>
+            <calPrice>425</calPrice>
          </ForestSupplySector>
       </region>
    </world>

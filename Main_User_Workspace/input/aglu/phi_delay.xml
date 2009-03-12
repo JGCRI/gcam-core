@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Staff (PNNL) -->
+<scenario>
+	<world>
+		<region name="USA">
+			<LandAllocatorRoot name="root">
+				<carbon-price-increase-rate year="1975">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="1990">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2005">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2020">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2035">0.02</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2050">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2065">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2080">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2095">0.0</carbon-price-increase-rate>
+			</LandAllocatorRoot>
+		</region>
+		<region name="Africa">
+			<LandAllocatorRoot name="root">
+				<carbon-price-increase-rate year="1975">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="1990">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2005">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2020">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2035">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2050">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2065">0.02</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2080">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2095">0.0</carbon-price-increase-rate>
+			</LandAllocatorRoot>
+		</region>
+		<region name="Australia_NZ">
+			<LandAllocatorRoot name="root">
+				<carbon-price-increase-rate year="1975">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="1990">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2005">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2020">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2035">0.02</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2050">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2065">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2080">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2095">0.0</carbon-price-increase-rate>
+			</LandAllocatorRoot>
+		</region>
+		<region name="Canada">
+			<LandAllocatorRoot name="root">
+				<carbon-price-increase-rate year="1975">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="1990">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2005">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2020">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2035">0.02</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2050">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2065">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2080">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2095">0.0</carbon-price-increase-rate>
+			</LandAllocatorRoot>
+		</region>
+		<region name="China">
+			<LandAllocatorRoot name="root">
+				<carbon-price-increase-rate year="1975">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="1990">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2005">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2020">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2035">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2050">0.02</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2065">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2080">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2095">0.0</carbon-price-increase-rate>
+			</LandAllocatorRoot>
+		</region>
+		<region name="Eastern Europe">
+			<LandAllocatorRoot name="root">
+				<carbon-price-increase-rate year="1975">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="1990">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2005">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2020">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2035">0.02</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2050">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2065">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2080">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2095">0.0</carbon-price-increase-rate>
+			</LandAllocatorRoot>
+		</region>
+		<region name="Former Soviet Union">
+			<LandAllocatorRoot name="root">
+				<carbon-price-increase-rate year="1975">0.045</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="1990">0.045</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2005">0.045</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2020">0.045</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2035">0.045</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2050">0.0275</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2065">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2080">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2095">0.0</carbon-price-increase-rate>
+			</LandAllocatorRoot>
+		</region>
+		<region name="India">
+			<LandAllocatorRoot name="root">
+				<carbon-price-increase-rate year="1975">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="1990">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2005">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2020">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2035">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2050">0.02</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2065">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2080">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2095">0.0</carbon-price-increase-rate>
+			</LandAllocatorRoot>
+		</region>
+		<region name="Japan">
+			<LandAllocatorRoot name="root">
+				<carbon-price-increase-rate year="1975">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="1990">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2005">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2020">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2035">0.02</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2050">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2065">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2080">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2095">0.0</carbon-price-increase-rate>
+			</LandAllocatorRoot>
+		</region>
+		<region name="Korea">
+			<LandAllocatorRoot name="root">
+				<carbon-price-increase-rate year="1975">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="1990">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2005">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2020">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2035">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2050">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2065">0.02</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2080">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2095">0.0</carbon-price-increase-rate>
+			</LandAllocatorRoot>
+		</region>
+		<region name="Latin America">
+			<LandAllocatorRoot name="root">
+				<carbon-price-increase-rate year="1975">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="1990">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2005">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2020">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2035">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2050">0.02</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2065">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2080">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2095">0.0</carbon-price-increase-rate>
+			</LandAllocatorRoot>
+		</region>
+		<region name="Middle East">
+			<LandAllocatorRoot name="root">
+				<carbon-price-increase-rate year="1975">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="1990">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2005">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2020">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2035">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2050">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2065">0.02</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2080">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2095">0.0</carbon-price-increase-rate>
+			</LandAllocatorRoot>
+		</region>
+		<region name="Southeast Asia">
+			<LandAllocatorRoot name="root">
+				<carbon-price-increase-rate year="1975">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="1990">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2005">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2020">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2035">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2050">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2065">0.02</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2080">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2095">0.0</carbon-price-increase-rate>
+			</LandAllocatorRoot>
+		</region>
+		<region name="Western Europe">
+			<LandAllocatorRoot name="root">
+				<carbon-price-increase-rate year="1975">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="1990">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2005">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2020">0.04</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2035">0.02</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2050">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2065">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2080">0.0</carbon-price-increase-rate>
+				<carbon-price-increase-rate year="2095">0.0</carbon-price-increase-rate>
+			</LandAllocatorRoot>
+		</region>
+	</world>
+</scenario>

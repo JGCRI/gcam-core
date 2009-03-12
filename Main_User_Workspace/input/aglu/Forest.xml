@@ -16,30 +16,30 @@
                   <period year="1975">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>596920000</calOutputValue>
+                        <calOutputValue>304723008</calOutputValue>
                      </CalDataOutput>
                      <calYield>177985</calYield>
-                     <futureProduction>620370020</futureProduction>
+                     <futureProduction>487979838</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>548065000</calOutputValue>
+                        <calOutputValue>510100000</calOutputValue>
                      </CalDataOutput>
                      <calYield>177985</calYield>
-                     <futureProduction>688451962</futureProduction>
+                     <futureProduction>487961152</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>540838000</calOutputValue>
+                        <calOutputValue>467347350</calOutputValue>
                      </CalDataOutput>
                      <calYield>177985</calYield>
-                     <futureProduction>741086939</futureProduction>
+                     <futureProduction>470268133</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
@@ -93,21 +93,21 @@
                <technology name="Forest">
                   <period year="1975">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>655707110</calibrated-value>
+                        <calibrated-value>316790466</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>702671068</calibrated-value>
+                        <calibrated-value>432490276</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>740987177</calibrated-value>
+                        <calibrated-value>616251360</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
@@ -231,30 +231,30 @@
                   <period year="1975">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>195869000</calOutputValue>
+                        <calOutputValue>115511000</calOutputValue>
                      </CalDataOutput>
                      <calYield>189449</calYield>
-                     <futureProduction>256366415</futureProduction>
+                     <futureProduction>277721631</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>214788000</calOutputValue>
+                        <calOutputValue>162127000</calOutputValue>
                      </CalDataOutput>
                      <calYield>189449</calYield>
-                     <futureProduction>284501114</futureProduction>
+                     <futureProduction>345581750</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>223500000</calOutputValue>
+                        <calOutputValue>211501300</calOutputValue>
                      </CalDataOutput>
                      <calYield>189449</calYield>
-                     <futureProduction>306252392</futureProduction>
+                     <futureProduction>412450425</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
@@ -308,21 +308,21 @@
                <technology name="Forest">
                   <period year="1975">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>267956026</calibrated-value>
+                        <calibrated-value>22399300</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>270675192</calibrated-value>
+                        <calibrated-value>31065753</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>346728708</calibrated-value>
+                        <calibrated-value>45050618</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
@@ -446,30 +446,30 @@
                   <period year="1975">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>334533000</calOutputValue>
+                        <calOutputValue>224580000</calOutputValue>
                      </CalDataOutput>
                      <calYield>181730</calYield>
-                     <futureProduction>434859382</futureProduction>
+                     <futureProduction>359721373</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>362983000</calOutputValue>
+                        <calOutputValue>315038700</calOutputValue>
                      </CalDataOutput>
                      <calYield>181730</calYield>
-                     <futureProduction>482582628</futureProduction>
+                     <futureProduction>341749570</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>379110000</calOutputValue>
+                        <calOutputValue>358926219</calOutputValue>
                      </CalDataOutput>
                      <calYield>181730</calYield>
-                     <futureProduction>519478050</futureProduction>
+                     <futureProduction>308349703</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
@@ -523,21 +523,21 @@
                <technology name="Forest">
                   <period year="1975">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>495188204</calibrated-value>
+                        <calibrated-value>116907400</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>509380562</calibrated-value>
+                        <calibrated-value>162479186</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>594890128</calibrated-value>
+                        <calibrated-value>211914456</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
@@ -661,30 +661,30 @@
                   <period year="1975">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>31130000</calOutputValue>
+                        <calOutputValue>34888999</calOutputValue>
                      </CalDataOutput>
                      <calYield>170471</calYield>
-                     <futureProduction>25618289</futureProduction>
+                     <futureProduction>16814904</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>18843000</calOutputValue>
+                        <calOutputValue>29403000</calOutputValue>
                      </CalDataOutput>
                      <calYield>170471</calYield>
-                     <futureProduction>28429744</futureProduction>
+                     <futureProduction>16599824</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>22334000</calOutputValue>
+                        <calOutputValue>16276067</calOutputValue>
                      </CalDataOutput>
                      <calYield>170471</calYield>
-                     <futureProduction>30603315</futureProduction>
+                     <futureProduction>15747070</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
@@ -738,21 +738,21 @@
                <technology name="Forest">
                   <period year="1975">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>165297945</calibrated-value>
+                        <calibrated-value>477637951</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>98538484</calibrated-value>
+                        <calibrated-value>637071997</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>47082131</calibrated-value>
+                        <calibrated-value>700086724</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
@@ -876,30 +876,30 @@
                   <period year="1975">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>35089000</calOutputValue>
+                        <calOutputValue>22968000</calOutputValue>
                      </CalDataOutput>
                      <calYield>182014</calYield>
-                     <futureProduction>63943634</futureProduction>
+                     <futureProduction>61550701</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>50821000</calOutputValue>
+                        <calOutputValue>32755312</calOutputValue>
                      </CalDataOutput>
                      <calYield>182014</calYield>
-                     <futureProduction>70961070</futureProduction>
+                     <futureProduction>71527841</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>55746000</calOutputValue>
+                        <calOutputValue>50938000</calOutputValue>
                      </CalDataOutput>
                      <calYield>182014</calYield>
-                     <futureProduction>76386335</futureProduction>
+                     <futureProduction>80608902</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
@@ -953,21 +953,21 @@
                <technology name="Forest">
                   <period year="1975">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>49600966</calibrated-value>
+                        <calibrated-value>123904800</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>47569305</calibrated-value>
+                        <calibrated-value>88287560</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>71455976</calibrated-value>
+                        <calibrated-value>111950384</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
@@ -1091,30 +1091,30 @@
                   <period year="1975">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>350533000</calOutputValue>
+                        <calOutputValue>395100000</calOutputValue>
                      </CalDataOutput>
                      <calYield>190325</calYield>
-                     <futureProduction>234299404</futureProduction>
+                     <futureProduction>311033329</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>172549000</calOutputValue>
+                        <calOutputValue>386400000</calOutputValue>
                      </CalDataOutput>
                      <calYield>190325</calYield>
-                     <futureProduction>260012378</futureProduction>
+                     <futureProduction>390183643</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>204262000</calOutputValue>
+                        <calOutputValue>234341200</calOutputValue>
                      </CalDataOutput>
                      <calYield>190325</calYield>
-                     <futureProduction>279891392</futureProduction>
+                     <futureProduction>468644512</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
@@ -1168,21 +1168,21 @@
                <technology name="Forest">
                   <period year="1975">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>703536045</calibrated-value>
+                        <calibrated-value>379215500</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>510141157</calibrated-value>
+                        <calibrated-value>375697589</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>212356503</calibrated-value>
+                        <calibrated-value>179113908</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
@@ -1306,30 +1306,30 @@
                   <period year="1975">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>160165000</calOutputValue>
+                        <calOutputValue>458534617</calOutputValue>
                      </CalDataOutput>
                      <calYield>191588</calYield>
-                     <futureProduction>155865045</futureProduction>
+                     <futureProduction>703333617</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>145223000</calOutputValue>
+                        <calOutputValue>607241182</calOutputValue>
                      </CalDataOutput>
                      <calYield>191588</calYield>
-                     <futureProduction>172970313</futureProduction>
+                     <futureProduction>731882539</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>135883000</calOutputValue>
+                        <calOutputValue>650658663</calOutputValue>
                      </CalDataOutput>
                      <calYield>191588</calYield>
-                     <futureProduction>186194603</futureProduction>
+                     <futureProduction>738774849</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
@@ -1383,21 +1383,21 @@
                <technology name="Forest">
                   <period year="1975">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>181219769</calibrated-value>
+                        <calibrated-value>232883938</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>181773071</calibrated-value>
+                        <calibrated-value>311700422</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>232970896</calibrated-value>
+                        <calibrated-value>328095354</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
@@ -1521,30 +1521,30 @@
                   <period year="1975">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>1789000</calOutputValue>
+                        <calOutputValue>5197651</calOutputValue>
                      </CalDataOutput>
                      <calYield>170192</calYield>
-                     <futureProduction>2867633</futureProduction>
+                     <futureProduction>1829734</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>2240000</calOutputValue>
+                        <calOutputValue>1854543</calOutputValue>
                      </CalDataOutput>
                      <calYield>170192</calYield>
-                     <futureProduction>3182339</futureProduction>
+                     <futureProduction>1900283</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>2500000</calOutputValue>
+                        <calOutputValue>1695687</calOutputValue>
                      </CalDataOutput>
                      <calYield>170192</calYield>
-                     <futureProduction>3425642</futureProduction>
+                     <futureProduction>1913995</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
@@ -1598,21 +1598,21 @@
                <technology name="Forest">
                   <period year="1975">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>11608213</calibrated-value>
+                        <calibrated-value>70519599</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>2518861</calibrated-value>
+                        <calibrated-value>57007250</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>1983496</calibrated-value>
+                        <calibrated-value>26907367</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
@@ -1736,30 +1736,30 @@
                   <period year="1975">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>500252000</calOutputValue>
+                        <calOutputValue>362730393</calOutputValue>
                      </CalDataOutput>
                      <calYield>357027</calYield>
-                     <futureProduction>768291721</futureProduction>
+                     <futureProduction>821518497</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>626806000</calOutputValue>
+                        <calOutputValue>495463018</calOutputValue>
                      </CalDataOutput>
                      <calYield>357027</calYield>
-                     <futureProduction>852607195</futureProduction>
+                     <futureProduction>1019119379</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>669796000</calOutputValue>
+                        <calOutputValue>628149838</calOutputValue>
                      </CalDataOutput>
                      <calYield>357027</calYield>
-                     <futureProduction>917792514</futureProduction>
+                     <futureProduction>1213368840</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
@@ -1813,21 +1813,21 @@
                <technology name="Forest">
                   <period year="1975">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>84801633</calibrated-value>
+                        <calibrated-value>8863697</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>88581906</calibrated-value>
+                        <calibrated-value>13921850</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>115295507</calibrated-value>
+                        <calibrated-value>11032989</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
@@ -1951,30 +1951,30 @@
                   <period year="1975">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>507965000</calOutputValue>
+                        <calOutputValue>251305544</calOutputValue>
                      </CalDataOutput>
                      <calYield>340290</calYield>
-                     <futureProduction>540047612</futureProduction>
+                     <futureProduction>561610798</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>460906000</calOutputValue>
+                        <calOutputValue>356498506</calOutputValue>
                      </CalDataOutput>
                      <calYield>340290</calYield>
-                     <futureProduction>599314644</futureProduction>
+                     <futureProduction>653873286</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>470813000</calOutputValue>
+                        <calOutputValue>463791435</calOutputValue>
                      </CalDataOutput>
                      <calYield>340290</calYield>
-                     <futureProduction>645134708</futureProduction>
+                     <futureProduction>738123620</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
@@ -2028,21 +2028,21 @@
                <technology name="Forest">
                   <period year="1975">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>142108284</calibrated-value>
+                        <calibrated-value>258684631</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>204980093</calibrated-value>
+                        <calibrated-value>365082336</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>322993035</calibrated-value>
+                        <calibrated-value>455726371</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
@@ -2166,30 +2166,30 @@
                   <period year="1975">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>179820000</calOutputValue>
+                        <calOutputValue>381758241</calOutputValue>
                      </CalDataOutput>
                      <calYield>339367</calYield>
-                     <futureProduction>136966195</futureProduction>
+                     <futureProduction>326868783</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>141534000</calOutputValue>
+                        <calOutputValue>371223707</calOutputValue>
                      </CalDataOutput>
                      <calYield>339367</calYield>
-                     <futureProduction>151997425</futureProduction>
+                     <futureProduction>316090901</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>119407000</calOutputValue>
+                        <calOutputValue>321689344</calOutputValue>
                      </CalDataOutput>
                      <calYield>339367</calYield>
-                     <futureProduction>163618252</futureProduction>
+                     <futureProduction>292035789</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
@@ -2243,21 +2243,21 @@
                <technology name="Forest">
                   <period year="1975">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>76035250</calibrated-value>
+                        <calibrated-value>5730092</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>142701506</calibrated-value>
+                        <calibrated-value>2304389</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>129744374</calibrated-value>
+                        <calibrated-value>2255596</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
@@ -2381,30 +2381,30 @@
                   <period year="1975">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>94958000</calOutputValue>
+                        <calOutputValue>125317000</calOutputValue>
                      </CalDataOutput>
                      <calYield>170944</calYield>
-                     <futureProduction>147772584</futureProduction>
+                     <futureProduction>122193455</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>119815000</calOutputValue>
+                        <calOutputValue>88985000</calOutputValue>
                      </CalDataOutput>
                      <calYield>170944</calYield>
-                     <futureProduction>163989752</futureProduction>
+                     <futureProduction>125848747</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>128828000</calOutputValue>
+                        <calOutputValue>114089189</calOutputValue>
                      </CalDataOutput>
                      <calYield>170944</calYield>
-                     <futureProduction>176527441</futureProduction>
+                     <futureProduction>125567235</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
@@ -2458,21 +2458,21 @@
                <technology name="Forest">
                   <period year="1975">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>159416501</calibrated-value>
+                        <calibrated-value>366354541</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>99683300</calibrated-value>
+                        <calibrated-value>367556335</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>132162699</calibrated-value>
+                        <calibrated-value>308830342</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
@@ -2596,30 +2596,30 @@
                   <period year="1975">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>9656000</calOutputValue>
+                        <calOutputValue>3683297</calOutputValue>
                      </CalDataOutput>
                      <calYield>172294</calYield>
-                     <futureProduction>14643283</futureProduction>
+                     <futureProduction>5100092</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>12062000</calOutputValue>
+                        <calOutputValue>3872618</calOutputValue>
                      </CalDataOutput>
                      <calYield>172294</calYield>
-                     <futureProduction>16250296</futureProduction>
+                     <futureProduction>5186437</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>12766000</calOutputValue>
+                        <calOutputValue>4814989</calOutputValue>
                      </CalDataOutput>
                      <calYield>172294</calYield>
-                     <futureProduction>17492698</futureProduction>
+                     <futureProduction>5099621</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
@@ -2673,21 +2673,21 @@
                <technology name="Forest">
                   <period year="1975">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>14421499</calibrated-value>
+                        <calibrated-value>292965308</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>19374149</calibrated-value>
+                        <calibrated-value>488680243</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>15163242</calibrated-value>
+                        <calibrated-value>461163501</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
@@ -2811,30 +2811,30 @@
                   <period year="1975">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>46783000</calOutputValue>
+                        <calOutputValue>226255672</calOutputValue>
                      </CalDataOutput>
                      <calYield>322863</calYield>
-                     <futureProduction>53836947</futureProduction>
+                     <futureProduction>320123228</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>46455000</calOutputValue>
+                        <calOutputValue>300646233</calOutputValue>
                      </CalDataOutput>
                      <calYield>322863</calYield>
-                     <futureProduction>59745234</futureProduction>
+                     <futureProduction>292591171</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <landType>ForestLand</landType>
                      <CalDataOutput>
-                        <calOutputValue>46935000</calOutputValue>
+                        <calOutputValue>328677293</calOutputValue>
                      </CalDataOutput>
                      <calYield>322863</calYield>
-                     <futureProduction>64313002</futureProduction>
+                     <futureProduction>249787829</futureProduction>
                      <agProdChange>0</agProdChange>
                      <CO2 name="CO2"/>
                   </period>
@@ -2888,21 +2888,21 @@
                <technology name="Forest">
                   <period year="1975">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>38564554</calibrated-value>
+                        <calibrated-value>239696200</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>44501345</calibrated-value>
+                        <calibrated-value>328263632</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="Forest">
-                        <calibrated-value>48904127</calibrated-value>
+                        <calibrated-value>394517604</calibrated-value>
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
