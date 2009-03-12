@@ -471,6 +471,10 @@ void World::runClimateModel() {
     EmissionsSummer so22Summer( "SO2_2" );
     EmissionsSummer so23Summer( "SO2_3" );
     EmissionsSummer so24Summer( "SO2_4" );
+    EmissionsSummer so21awbSummer( "SO2_1_AWB" );
+    EmissionsSummer so22awbSummer( "SO2_2_AWB" );
+    EmissionsSummer so23awbSummer( "SO2_3_AWB" );
+    EmissionsSummer so24awbSummer( "SO2_4_AWB" );
     EmissionsSummer cf4Summer( "CF4" );
     EmissionsSummer c2f6Summer( "C2F6" );
     EmissionsSummer sf6Summer( "SF6" );
@@ -481,7 +485,7 @@ void World::runClimateModel() {
     EmissionsSummer vocagrSummer( "NMVOC_AGR" );
     EmissionsSummer vocawbSummer( "NMVOC_AWB" );
 
-   const double MMT_TO_TG = 1000;
+   const double TG_TO_PG = 1000;
    const double N_TO_N2O = 1.571132; 
    const double N_TO_NO2 = 3.2857;
    const double S_TO_SO2 = 2.0; 
@@ -494,7 +498,7 @@ void World::runClimateModel() {
     if( netDef80sSummer.areEmissionsSet( dummyPeriod ) ){
        mClimateModel->setEmissions( MagiccModel::getnetDefor80sName(), dummyPeriod,
                                     netDef80sSummer.getEmissions( dummyPeriod )
-                                    / MMT_TO_TG );
+                                    / TG_TO_PG );
     }
 
     // The Climate model reads in data for the base period, so skip passing it in.
@@ -519,6 +523,10 @@ void World::runClimateModel() {
         accept( &so22Summer, period );
         accept( &so23Summer, period );
         accept( &so24Summer, period );
+        accept( &so21awbSummer, period );
+        accept( &so22awbSummer, period );
+        accept( &so23awbSummer, period );
+        accept( &so24awbSummer, period );
         accept( &cf4Summer, period );
         accept( &c2f6Summer, period );
         accept( &sf6Summer, period );
@@ -534,13 +542,13 @@ void World::runClimateModel() {
         if( co2Summer.areEmissionsSet( period ) ){
             mClimateModel->setEmissions( "CO2", period,
                                           co2Summer.getEmissions( period )
-                                          / MMT_TO_TG );
+                                          / TG_TO_PG );
         }
 
         if( co2LandUseSummer.areEmissionsSet( period ) ){
             mClimateModel->setEmissions( "CO2NetLandUse", period,
                                           co2LandUseSummer.getEmissions( period )
-                                          / MMT_TO_TG );
+                                          / TG_TO_PG );
         }
 
         if( ch4Summer.areEmissionsSet( period ) ){
@@ -580,8 +588,10 @@ void World::runClimateModel() {
         // Region 1 includes SO21 and 60% of SO24 (FSU)
         if( so21Summer.areEmissionsSet( period ) && so24Summer.areEmissionsSet( period )){
             mClimateModel->setEmissions( "SOXreg1", period,
-                                          ( so21Summer.getEmissions( period ) 
-                                            + 0.6*so24Summer.getEmissions( period ) )
+                                          ( so21Summer.getEmissions( period ) +
+                                            so21awbSummer.getEmissions( period )
+                                            + 0.6*so24Summer.getEmissions( period ) 
+                                            + 0.6*so24awbSummer.getEmissions( period ))
                                           / S_TO_SO2 );
         }
 
@@ -589,15 +599,18 @@ void World::runClimateModel() {
         // Region 2 includes SO22 and 40% of SO24 (FSU)
         if( so22Summer.areEmissionsSet( period ) && so24Summer.areEmissionsSet( period )){
             mClimateModel->setEmissions( "SOXreg2", period,
-                                          ( so22Summer.getEmissions( period ) 
-                                            + 0.4*so24Summer.getEmissions( period ) )
+                                          ( so22Summer.getEmissions( period ) +
+                                            so22awbSummer.getEmissions( period )
+                                            + 0.4*so24Summer.getEmissions( period ) 
+                                            + 0.4*so24awbSummer.getEmissions( period ))
                                           / S_TO_SO2 );
         }
 
         // MAGICC wants SO2 emissions in Tg S, but miniCAM calculates Tg SO2
         if( so23Summer.areEmissionsSet( period ) ){
             mClimateModel->setEmissions( "SOXreg3", period,
-                                          so23Summer.getEmissions( period ) 
+                                          ( so23Summer.getEmissions( period ) +
+                                          so23awbSummer.getEmissions( period ) )
                                           / S_TO_SO2 );
         }
 
@@ -638,8 +651,7 @@ void World::runClimateModel() {
             mClimateModel->setEmissions( "NMVOCs", period,
                                           ( vocSummer.getEmissions( period ) +
                                           vocagrSummer.getEmissions( period ) +
-                                          vocawbSummer.getEmissions( period ) )
-                                          / MMT_TO_TG );
+                                          vocawbSummer.getEmissions( period ) ));
         }
 
     }
