@@ -7,7 +7,7 @@
 		<Value name="bugOutFileName">bugoutfile.csv</Value>
 		<Value name="logOutFileName">logfile.csv</Value>
 		<Value name="climatFileName">gas.emk</Value>
-         <Value name="xmlInputFileName">../cvs/objects/model_data/base/ccsp_multi_input_slowshutdown.xml</Value>
+         <Value name="xmlInputFileName">../cvs/objects/model_data/base/core_model_input_2009-03-13.xml</Value>
 		<Value name="xmlOutputFileName">../output/treas_output.xml</Value>
 		<Value name="xmlDebugFileName">debug.xml</Value>
 		<Value name="sdCurveFileName">sdcurve.csv</Value>
