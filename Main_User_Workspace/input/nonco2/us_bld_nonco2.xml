@@ -1,0 +1,3579 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <supplysector name="residential heating service" nocreate="1">
+            <subsector name="gas" nocreate="1">
+               <technology name="gasfurnace" nocreate="1">
+                  <period year="1975">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="1990">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0058</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0002</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.1179</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0471</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.1781</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0713</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0104</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0041</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0013</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.0007</final-emiss-coef>
+                     </generic-ghg>
+                  </period>
+                  <period year="2005">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2020">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2035">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2050">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2065">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2080">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2095">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+               </technology>
+               <technology name="gasheatpump" nocreate="1">
+                  <period year="1975">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="1990">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0058</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0002</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.1179</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0471</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.1781</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0713</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0104</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0041</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0013</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.0007</final-emiss-coef>
+                     </generic-ghg>
+                  </period>
+                  <period year="2005">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2020">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2035">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2050">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2065">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2080">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2095">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids" nocreate="1">
+               <technology name="oilfurnace" nocreate="1">
+                  <period year="1975">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="1990">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0124</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0012</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.1179</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0471</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.1781</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0713</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0104</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0041</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.3729</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.1491</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0014</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.0007</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0007</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.0004</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0013</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.0007</final-emiss-coef>
+                     </generic-ghg>
+                  </period>
+                  <period year="2005">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2020">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2035">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2050">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2065">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2080">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2095">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <technology name="woodfurnace" nocreate="1">
+                  <period year="1975">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="1990">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.2692</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0057</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.1406</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0562</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>14.1120</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>5.6448</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>4.0676</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>1.6270</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0245</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0098</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.1000</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.0500</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.5489</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.2745</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0013</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.0007</final-emiss-coef>
+                     </generic-ghg>
+                  </period>
+                  <period year="2005">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2020">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2035">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2050">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2065">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2080">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2095">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="residential water heating service" nocreate="1">
+            <subsector name="gas" nocreate="1">
+               <technology name="gaswaterheater" nocreate="1">
+                  <period year="1975">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="1990">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0058</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0002</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.1179</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0471</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.1781</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0713</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0104</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0041</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0013</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.0007</final-emiss-coef>
+                     </generic-ghg>
+                  </period>
+                  <period year="2005">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2020">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2035">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2050">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2065">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2080">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2095">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+               </technology>
+               <technology name="gashpwaterheater" nocreate="1">
+                  <period year="1975">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="1990">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0058</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0002</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.1179</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0471</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.1781</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0713</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0104</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0041</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0013</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.0007</final-emiss-coef>
+                     </generic-ghg>
+                  </period>
+                  <period year="2005">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2020">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2035">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2050">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2065">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2080">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2095">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids" nocreate="1">
+               <technology name="oilwaterheater" nocreate="1">
+                  <period year="1975">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="1990">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0124</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0012</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.1179</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0471</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.1781</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0713</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0104</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0041</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.3729</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.1491</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0014</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.0007</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0007</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.0004</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0013</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.0007</final-emiss-coef>
+                     </generic-ghg>
+                  </period>
+                  <period year="2005">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2020">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2035">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2050">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2065">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2080">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2095">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="commercial heating service" nocreate="1">
+            <subsector name="gas" nocreate="1">
+               <technology name="gasfurnace" nocreate="1">
+                  <period year="1975">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="1990">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0091</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0003</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.2846</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.1139</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.1334</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0534</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0195</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0078</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0023</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.0011</final-emiss-coef>
+                     </generic-ghg>
+                  </period>
+                  <period year="2005">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2020">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2035">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2050">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2065">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2080">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2095">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+               </technology>
+               <technology name="gasheatpump" nocreate="1">
+                  <period year="1975">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="1990">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0091</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0003</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.2846</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.1139</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.1334</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0534</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0195</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0078</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0023</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.0011</final-emiss-coef>
+                     </generic-ghg>
+                  </period>
+                  <period year="2005">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2020">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2035">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2050">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2065">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2080">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2095">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids" nocreate="1">
+               <technology name="oilfurnace" nocreate="1">
+                  <period year="1975">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="1990">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0383</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0046</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.6588</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.2635</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.1978</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0791</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0254</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0102</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>2.3783</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.9513</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0049</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.0025</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0025</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.0013</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0079</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.0040</final-emiss-coef>
+                     </generic-ghg>
+                  </period>
+                  <period year="2005">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2020">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2035">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2050">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2065">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2080">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2095">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <technology name="woodfurnace" nocreate="1">
+                  <period year="1975">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="1990">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.1971</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0042</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.6755</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.2702</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>1.3534</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.5414</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.1201</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0480</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.1508</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0603</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0351</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.0175</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.1927</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.0964</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0000</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.0000</final-emiss-coef>
+                     </generic-ghg>
+                  </period>
+                  <period year="2005">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2020">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2035">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2050">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2065">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2080">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2095">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="commercial water heating service" nocreate="1">
+            <subsector name="gas" nocreate="1">
+               <technology name="gaswaterheater" nocreate="1">
+                  <period year="1975">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="1990">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0091</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0003</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.2846</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.1139</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.1334</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0534</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0195</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0078</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0023</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.0011</final-emiss-coef>
+                     </generic-ghg>
+                  </period>
+                  <period year="2005">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2020">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2035">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2050">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2065">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2080">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2095">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+               </technology>
+               <technology name="gashpwaterheater" nocreate="1">
+                  <period year="1975">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="1990">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0091</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0003</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.2846</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.1139</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.1334</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0534</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0195</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0078</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0023</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.0011</final-emiss-coef>
+                     </generic-ghg>
+                  </period>
+                  <period year="2005">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2020">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2035">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2050">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2065">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2080">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2095">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids" nocreate="1">
+               <technology name="oilwaterheater" nocreate="1">
+                  <period year="1975">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="1990">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0383</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0046</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.6588</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.2635</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.1978</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0791</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0254</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.0102</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>2.3783</uncontrolled-emiss-coef>
+                        <gdp-mid-control>23</gdp-mid-control>
+                        <gdp-control-range>20</gdp-control-range>
+                        <final-emiss-coef>0.9513</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0049</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.0025</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0025</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.0013</final-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                        <uncontrolled-emiss-coef>0.0079</uncontrolled-emiss-coef>
+                        <gdp-mid-control>25</gdp-mid-control>
+                        <gdp-control-range>15</gdp-control-range>
+                        <final-emiss-coef>0.0040</final-emiss-coef>
+                     </generic-ghg>
+                  </period>
+                  <period year="2005">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2020">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2035">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2050">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2065">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2080">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2095">
+                     <generic-ghg name="CH4">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <input-driver/>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <input-driver/>
+                     </generic-ghg>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="residential cooling service" nocreate="1">
+            <subsector name="electricity" nocreate="1">
+               <technology name="AC" nocreate="1">
+                  <period year="1975">
+                     <generic-ghg name="HFC134a">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                     </generic-ghg>
+                  </period>
+                  <period year="1990">
+                     <generic-ghg name="HFC134a">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                        <input-emissions>0</input-emissions>
+                     </generic-ghg>
+                  </period>
+                  <period year="2005">
+                     <generic-ghg name="HFC134a">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                        <input-emissions>6.898306448</input-emissions>
+                     </generic-ghg>
+                  </period>
+                  <period year="2020">
+                     <generic-ghg name="HFC134a">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                        <input-emissions>42.29667185</input-emissions>
+                        <MAC>
+                           <reduction tax="0">0.038</reduction>
+                           <reduction tax="15">0.077</reduction>
+                           <reduction tax="30">0.077</reduction>
+                           <reduction tax="45">0.077</reduction>
+                           <reduction tax="60">0.077</reduction>
+                        </MAC>
+                     </generic-ghg>
+                  </period>
+                  <period year="2035">
+                     <generic-ghg name="HFC134a">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                     </generic-ghg>
+                  </period>
+                  <period year="2050">
+                     <generic-ghg name="HFC134a">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                     </generic-ghg>
+                  </period>
+                  <period year="2065">
+                     <generic-ghg name="HFC134a">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                     </generic-ghg>
+                  </period>
+                  <period year="2080">
+                     <generic-ghg name="HFC134a">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                     </generic-ghg>
+                  </period>
+                  <period year="2095">
+                     <generic-ghg name="HFC134a">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                     </generic-ghg>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="commercial cooling service" nocreate="1">
+            <subsector name="electricity" nocreate="1">
+               <technology name="AC" nocreate="1">
+                  <period year="1975">
+                     <generic-ghg name="HFC134a">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                     </generic-ghg>
+                     <generic-ghg name="HFC125">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                     </generic-ghg>
+                  </period>
+                  <period year="1990">
+                     <generic-ghg name="HFC134a">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                        <input-emissions>0</input-emissions>
+                     </generic-ghg>
+                     <generic-ghg name="HFC125">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                        <input-emissions>0</input-emissions>
+                     </generic-ghg>
+                  </period>
+                  <period year="2005">
+                     <generic-ghg name="HFC134a">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                        <input-emissions>3.139884331</input-emissions>
+                     </generic-ghg>
+                     <generic-ghg name="HFC125">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                        <input-emissions>0.705386678</input-emissions>
+                     </generic-ghg>
+                  </period>
+                  <period year="2020">
+                     <generic-ghg name="HFC134a">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                        <input-emissions>10.70481829</input-emissions>
+                        <MAC>
+                           <reduction tax="0">0.038</reduction>
+                           <reduction tax="15">0.077</reduction>
+                           <reduction tax="30">0.077</reduction>
+                           <reduction tax="45">0.077</reduction>
+                           <reduction tax="60">0.077</reduction>
+                        </MAC>
+                     </generic-ghg>
+                     <generic-ghg name="HFC125">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                        <input-emissions>2.404877193</input-emissions>
+                        <MAC>
+                           <reduction tax="0">0.038</reduction>
+                           <reduction tax="15">0.077</reduction>
+                           <reduction tax="30">0.077</reduction>
+                           <reduction tax="45">0.077</reduction>
+                           <reduction tax="60">0.077</reduction>
+                        </MAC>
+                     </generic-ghg>
+                  </period>
+                  <period year="2035">
+                     <generic-ghg name="HFC134a">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                     </generic-ghg>
+                     <generic-ghg name="HFC125">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                     </generic-ghg>
+                  </period>
+                  <period year="2050">
+                     <generic-ghg name="HFC134a">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                     </generic-ghg>
+                     <generic-ghg name="HFC125">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                     </generic-ghg>
+                  </period>
+                  <period year="2065">
+                     <generic-ghg name="HFC134a">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                     </generic-ghg>
+                     <generic-ghg name="HFC125">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                     </generic-ghg>
+                  </period>
+                  <period year="2080">
+                     <generic-ghg name="HFC134a">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                     </generic-ghg>
+                     <generic-ghg name="HFC125">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                     </generic-ghg>
+                  </period>
+                  <period year="2095">
+                     <generic-ghg name="HFC134a">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                     </generic-ghg>
+                     <generic-ghg name="HFC125">
+                        <output-driver/>
+                        <emissions-unit>Gg</emissions-unit>
+                     </generic-ghg>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+   </world>
+</scenario>

@@ -226,271 +226,271 @@ Variable ID,,,,,,,,,,,,,,,,,
 10070,,,,,,,,,,,,,,,,,
 ,,,,,,reduction (tax),,,,,,,,,,,
 region,supplysector,subsector,technology,period,generic-ghg,0,10,20,30,40,50,75,100,125,150,175,200
-USA,elect_td_bld,electricity_td_bld,electricity_td_bld,1990,SF6,0.196,0.304,0.304,0.304,0.304,0.304,0.304,0.304,0.304,0.304,0.304,0.304
-Canada,elect_td_bld,electricity_td_bld,electricity_td_bld,1990,SF6,0.205,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-Western Europe,elect_td_bld,electricity_td_bld,electricity_td_bld,1990,SF6,0.014,0.163,0.163,0.163,0.163,0.163,0.163,0.163,0.163,0.163,0.163,0.163
-Japan,elect_td_bld,electricity_td_bld,electricity_td_bld,1990,SF6,0.111,0.172,0.172,0.172,0.172,0.172,0.172,0.172,0.172,0.172,0.172,0.172
-Australia_NZ,elect_td_bld,electricity_td_bld,electricity_td_bld,1990,SF6,0,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-Former Soviet Union,elect_td_bld,electricity_td_bld,electricity_td_bld,1990,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-China,elect_td_bld,electricity_td_bld,electricity_td_bld,1990,SF6,0.099,0.513,0.513,0.513,0.513,0.513,0.513,0.513,0.513,0.513,0.513,0.513
-Middle East,elect_td_bld,electricity_td_bld,electricity_td_bld,1990,SF6,0.205,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-Africa,elect_td_bld,electricity_td_bld,electricity_td_bld,1990,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-Latin America,elect_td_bld,electricity_td_bld,electricity_td_bld,1990,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-Southeast Asia,elect_td_bld,electricity_td_bld,electricity_td_bld,1990,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-Eastern Europe,elect_td_bld,electricity_td_bld,electricity_td_bld,1990,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-Korea,elect_td_bld,electricity_td_bld,electricity_td_bld,1990,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-India,elect_td_bld,electricity_td_bld,electricity_td_bld,1990,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-USA,elect_td_ind,electricity_td_ind,electricity_td_ind,1990,SF6,0.196,0.304,0.304,0.304,0.304,0.304,0.304,0.304,0.304,0.304,0.304,0.304
-Canada,elect_td_ind,electricity_td_ind,electricity_td_ind,1990,SF6,0.205,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-Western Europe,elect_td_ind,electricity_td_ind,electricity_td_ind,1990,SF6,0.014,0.163,0.163,0.163,0.163,0.163,0.163,0.163,0.163,0.163,0.163,0.163
-Japan,elect_td_ind,electricity_td_ind,electricity_td_ind,1990,SF6,0.111,0.172,0.172,0.172,0.172,0.172,0.172,0.172,0.172,0.172,0.172,0.172
-Australia_NZ,elect_td_ind,electricity_td_ind,electricity_td_ind,1990,SF6,0,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-Former Soviet Union,elect_td_ind,electricity_td_ind,electricity_td_ind,1990,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-China,elect_td_ind,electricity_td_ind,electricity_td_ind,1990,SF6,0.099,0.513,0.513,0.513,0.513,0.513,0.513,0.513,0.513,0.513,0.513,0.513
-Middle East,elect_td_ind,electricity_td_ind,electricity_td_ind,1990,SF6,0.205,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-Africa,elect_td_ind,electricity_td_ind,electricity_td_ind,1990,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-Latin America,elect_td_ind,electricity_td_ind,electricity_td_ind,1990,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-Southeast Asia,elect_td_ind,electricity_td_ind,electricity_td_ind,1990,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-Eastern Europe,elect_td_ind,electricity_td_ind,electricity_td_ind,1990,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-Korea,elect_td_ind,electricity_td_ind,electricity_td_ind,1990,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-India,elect_td_ind,electricity_td_ind,electricity_td_ind,1990,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-USA,elect_td_trn,electricity_td_trn,electricity_td_trn,1990,SF6,0.196,0.304,0.304,0.304,0.304,0.304,0.304,0.304,0.304,0.304,0.304,0.304
-Canada,elect_td_trn,electricity_td_trn,electricity_td_trn,1990,SF6,0.205,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-Western Europe,elect_td_trn,electricity_td_trn,electricity_td_trn,1990,SF6,0.014,0.163,0.163,0.163,0.163,0.163,0.163,0.163,0.163,0.163,0.163,0.163
-Japan,elect_td_trn,electricity_td_trn,electricity_td_trn,1990,SF6,0.111,0.172,0.172,0.172,0.172,0.172,0.172,0.172,0.172,0.172,0.172,0.172
-Australia_NZ,elect_td_trn,electricity_td_trn,electricity_td_trn,1990,SF6,0,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-Former Soviet Union,elect_td_trn,electricity_td_trn,electricity_td_trn,1990,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-China,elect_td_trn,electricity_td_trn,electricity_td_trn,1990,SF6,0.099,0.513,0.513,0.513,0.513,0.513,0.513,0.513,0.513,0.513,0.513,0.513
-Middle East,elect_td_trn,electricity_td_trn,electricity_td_trn,1990,SF6,0.205,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-Africa,elect_td_trn,electricity_td_trn,electricity_td_trn,1990,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-Latin America,elect_td_trn,electricity_td_trn,electricity_td_trn,1990,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-Southeast Asia,elect_td_trn,electricity_td_trn,electricity_td_trn,1990,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-Eastern Europe,elect_td_trn,electricity_td_trn,electricity_td_trn,1990,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-Korea,elect_td_trn,electricity_td_trn,electricity_td_trn,1990,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
-India,elect_td_trn,electricity_td_trn,electricity_td_trn,1990,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+USA,elect_td_bld,electricity_td_bld,electricity_td_bld,2020,SF6,0.196,0.304,0.304,0.304,0.304,0.304,0.304,0.304,0.304,0.304,0.304,0.304
+Canada,elect_td_bld,electricity_td_bld,electricity_td_bld,2020,SF6,0.205,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+Western Europe,elect_td_bld,electricity_td_bld,electricity_td_bld,2020,SF6,0.014,0.163,0.163,0.163,0.163,0.163,0.163,0.163,0.163,0.163,0.163,0.163
+Japan,elect_td_bld,electricity_td_bld,electricity_td_bld,2020,SF6,0.111,0.172,0.172,0.172,0.172,0.172,0.172,0.172,0.172,0.172,0.172,0.172
+Australia_NZ,elect_td_bld,electricity_td_bld,electricity_td_bld,2020,SF6,0,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+Former Soviet Union,elect_td_bld,electricity_td_bld,electricity_td_bld,2020,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+China,elect_td_bld,electricity_td_bld,electricity_td_bld,2020,SF6,0.099,0.513,0.513,0.513,0.513,0.513,0.513,0.513,0.513,0.513,0.513,0.513
+Middle East,elect_td_bld,electricity_td_bld,electricity_td_bld,2020,SF6,0.205,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+Africa,elect_td_bld,electricity_td_bld,electricity_td_bld,2020,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+Latin America,elect_td_bld,electricity_td_bld,electricity_td_bld,2020,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+Southeast Asia,elect_td_bld,electricity_td_bld,electricity_td_bld,2020,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+Eastern Europe,elect_td_bld,electricity_td_bld,electricity_td_bld,2020,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+Korea,elect_td_bld,electricity_td_bld,electricity_td_bld,2020,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+India,elect_td_bld,electricity_td_bld,electricity_td_bld,2020,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+USA,elect_td_ind,electricity_td_ind,electricity_td_ind,2020,SF6,0.196,0.304,0.304,0.304,0.304,0.304,0.304,0.304,0.304,0.304,0.304,0.304
+Canada,elect_td_ind,electricity_td_ind,electricity_td_ind,2020,SF6,0.205,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+Western Europe,elect_td_ind,electricity_td_ind,electricity_td_ind,2020,SF6,0.014,0.163,0.163,0.163,0.163,0.163,0.163,0.163,0.163,0.163,0.163,0.163
+Japan,elect_td_ind,electricity_td_ind,electricity_td_ind,2020,SF6,0.111,0.172,0.172,0.172,0.172,0.172,0.172,0.172,0.172,0.172,0.172,0.172
+Australia_NZ,elect_td_ind,electricity_td_ind,electricity_td_ind,2020,SF6,0,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+Former Soviet Union,elect_td_ind,electricity_td_ind,electricity_td_ind,2020,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+China,elect_td_ind,electricity_td_ind,electricity_td_ind,2020,SF6,0.099,0.513,0.513,0.513,0.513,0.513,0.513,0.513,0.513,0.513,0.513,0.513
+Middle East,elect_td_ind,electricity_td_ind,electricity_td_ind,2020,SF6,0.205,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+Africa,elect_td_ind,electricity_td_ind,electricity_td_ind,2020,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+Latin America,elect_td_ind,electricity_td_ind,electricity_td_ind,2020,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+Southeast Asia,elect_td_ind,electricity_td_ind,electricity_td_ind,2020,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+Eastern Europe,elect_td_ind,electricity_td_ind,electricity_td_ind,2020,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+Korea,elect_td_ind,electricity_td_ind,electricity_td_ind,2020,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+India,elect_td_ind,electricity_td_ind,electricity_td_ind,2020,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+USA,elect_td_trn,electricity_td_trn,electricity_td_trn,2020,SF6,0.196,0.304,0.304,0.304,0.304,0.304,0.304,0.304,0.304,0.304,0.304,0.304
+Canada,elect_td_trn,electricity_td_trn,electricity_td_trn,2020,SF6,0.205,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+Western Europe,elect_td_trn,electricity_td_trn,electricity_td_trn,2020,SF6,0.014,0.163,0.163,0.163,0.163,0.163,0.163,0.163,0.163,0.163,0.163,0.163
+Japan,elect_td_trn,electricity_td_trn,electricity_td_trn,2020,SF6,0.111,0.172,0.172,0.172,0.172,0.172,0.172,0.172,0.172,0.172,0.172,0.172
+Australia_NZ,elect_td_trn,electricity_td_trn,electricity_td_trn,2020,SF6,0,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+Former Soviet Union,elect_td_trn,electricity_td_trn,electricity_td_trn,2020,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+China,elect_td_trn,electricity_td_trn,electricity_td_trn,2020,SF6,0.099,0.513,0.513,0.513,0.513,0.513,0.513,0.513,0.513,0.513,0.513,0.513
+Middle East,elect_td_trn,electricity_td_trn,electricity_td_trn,2020,SF6,0.205,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+Africa,elect_td_trn,electricity_td_trn,electricity_td_trn,2020,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+Latin America,elect_td_trn,electricity_td_trn,electricity_td_trn,2020,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+Southeast Asia,elect_td_trn,electricity_td_trn,electricity_td_trn,2020,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+Eastern Europe,elect_td_trn,electricity_td_trn,electricity_td_trn,2020,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+Korea,elect_td_trn,electricity_td_trn,electricity_td_trn,2020,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
+India,elect_td_trn,electricity_td_trn,electricity_td_trn,2020,SF6,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319,0.319
 
 INPUT_TABLE,,,,,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,,,,,
 10070,,,,,,,,,,,,,,,,,
 
 region,supplysector,subsector,technology,period,gas,0,10,20,30,40,50,75,100,125,150,175,200
-USA,building,electricity,electricity,1990,HFC134a,0.126,0.168,0.416,0.416,0.416,0.416,0.632,0.677,0.677,0.677,0.677,0.677
-Canada,building,electricity,electricity,1990,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
-Western Europe,building,electricity,electricity,1990,HFC134a,0.189331663,0.256159355,0.443469174,0.461148731,0.461148731,0.461148731,0.495669993,0.570559614,0.699635634,0.721264229,0.721264229,0.721286248
-Japan,building,electricity,electricity,1990,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.458,0.458,0.458,0.548,0.548,0.548
-Australia_NZ,building,electricity,electricity,1990,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
-Former Soviet Union,building,electricity,electricity,1990,HFC134a,0.304251875,0.510111966,0.510111966,0.510111966,0.541816449,0.647146164,0.651771903,0.725373032,0.725373032,0.725373032,0.725373032,0.725737451
-China,building,electricity,electricity,1990,HFC134a,0.371,0.601,0.601,0.601,0.643,0.688,0.688,0.733,0.733,0.733,0.733,0.734
-Middle East,building,electricity,electricity,1990,HFC134a,0.105,0.23,0.601,0.601,0.601,0.601,0.601,0.733,0.733,0.733,0.733,0.734
-Africa,building,electricity,electricity,1990,HFC134a,0.371,0.601,0.601,0.601,0.688,0.688,0.688,0.733,0.733,0.733,0.733,0.734
-Latin America,building,electricity,electricity,1990,HFC134a,0.38,0.601,0.601,0.601,0.601,0.601,0.625,0.691,0.733,0.733,0.733,0.734
-Southeast Asia,building,electricity,electricity,1990,HFC134a,0.454,0.601,0.601,0.601,0.601,0.601,0.601,0.722,0.733,0.733,0.733,0.734
-Eastern Europe,building,electricity,electricity,1990,HFC134a,0.396846161,0.458,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
-Korea,building,electricity,electricity,1990,HFC134a,0.105,0.601,0.601,0.601,0.601,0.601,0.601,0.733,0.733,0.733,0.733,0.734
-India,building,electricity,electricity,1990,HFC134a,0.476,0.601,0.601,0.601,0.601,0.601,0.601,0.643,0.733,0.733,0.733,0.734
-USA,building,electricity,electricity,1990,HFC125,0.126,0.168,0.416,0.416,0.416,0.416,0.632,0.677,0.677,0.677,0.677,0.677
-Canada,building,electricity,electricity,1990,HFC125,0.168,0.21,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
-Western Europe,building,electricity,electricity,1990,HFC125,0.189331663,0.256159355,0.443469174,0.461148731,0.461148731,0.461148731,0.495669993,0.570559614,0.699635634,0.721264229,0.721264229,0.721286248
-Japan,building,electricity,electricity,1990,HFC125,0.168,0.21,0.458,0.458,0.458,0.458,0.458,0.458,0.458,0.548,0.548,0.548
-Australia_NZ,building,electricity,electricity,1990,HFC125,0.168,0.21,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
-Former Soviet Union,building,electricity,electricity,1990,HFC125,0.304251875,0.510111966,0.510111966,0.510111966,0.541816449,0.647146164,0.651771903,0.725373032,0.725373032,0.725373032,0.725373032,0.725737451
-China,building,electricity,electricity,1990,HFC125,0.371,0.601,0.601,0.601,0.643,0.688,0.688,0.733,0.733,0.733,0.733,0.734
-Middle East,building,electricity,electricity,1990,HFC125,0.105,0.23,0.601,0.601,0.601,0.601,0.601,0.733,0.733,0.733,0.733,0.734
-Africa,building,electricity,electricity,1990,HFC125,0.371,0.601,0.601,0.601,0.688,0.688,0.688,0.733,0.733,0.733,0.733,0.734
-Latin America,building,electricity,electricity,1990,HFC125,0.38,0.601,0.601,0.601,0.601,0.601,0.625,0.691,0.733,0.733,0.733,0.734
-Southeast Asia,building,electricity,electricity,1990,HFC125,0.454,0.601,0.601,0.601,0.601,0.601,0.601,0.722,0.733,0.733,0.733,0.734
-Eastern Europe,building,electricity,electricity,1990,HFC125,0.396846161,0.458,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
-Korea,building,electricity,electricity,1990,HFC125,0.105,0.601,0.601,0.601,0.601,0.601,0.601,0.733,0.733,0.733,0.733,0.734
-India,building,electricity,electricity,1990,HFC125,0.476,0.601,0.601,0.601,0.601,0.601,0.601,0.643,0.733,0.733,0.733,0.734
+USA,building,electricity,electricity,2020,HFC134a,0.126,0.168,0.416,0.416,0.416,0.416,0.632,0.677,0.677,0.677,0.677,0.677
+Canada,building,electricity,electricity,2020,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
+Western Europe,building,electricity,electricity,2020,HFC134a,0.189331663,0.256159355,0.443469174,0.461148731,0.461148731,0.461148731,0.495669993,0.570559614,0.699635634,0.721264229,0.721264229,0.721286248
+Japan,building,electricity,electricity,2020,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.458,0.458,0.458,0.548,0.548,0.548
+Australia_NZ,building,electricity,electricity,2020,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
+Former Soviet Union,building,electricity,electricity,2020,HFC134a,0.304251875,0.510111966,0.510111966,0.510111966,0.541816449,0.647146164,0.651771903,0.725373032,0.725373032,0.725373032,0.725373032,0.725737451
+China,building,electricity,electricity,2020,HFC134a,0.371,0.601,0.601,0.601,0.643,0.688,0.688,0.733,0.733,0.733,0.733,0.734
+Middle East,building,electricity,electricity,2020,HFC134a,0.105,0.23,0.601,0.601,0.601,0.601,0.601,0.733,0.733,0.733,0.733,0.734
+Africa,building,electricity,electricity,2020,HFC134a,0.371,0.601,0.601,0.601,0.688,0.688,0.688,0.733,0.733,0.733,0.733,0.734
+Latin America,building,electricity,electricity,2020,HFC134a,0.38,0.601,0.601,0.601,0.601,0.601,0.625,0.691,0.733,0.733,0.733,0.734
+Southeast Asia,building,electricity,electricity,2020,HFC134a,0.454,0.601,0.601,0.601,0.601,0.601,0.601,0.722,0.733,0.733,0.733,0.734
+Eastern Europe,building,electricity,electricity,2020,HFC134a,0.396846161,0.458,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
+Korea,building,electricity,electricity,2020,HFC134a,0.105,0.601,0.601,0.601,0.601,0.601,0.601,0.733,0.733,0.733,0.733,0.734
+India,building,electricity,electricity,2020,HFC134a,0.476,0.601,0.601,0.601,0.601,0.601,0.601,0.643,0.733,0.733,0.733,0.734
+USA,building,electricity,electricity,2020,HFC125,0.126,0.168,0.416,0.416,0.416,0.416,0.632,0.677,0.677,0.677,0.677,0.677
+Canada,building,electricity,electricity,2020,HFC125,0.168,0.21,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
+Western Europe,building,electricity,electricity,2020,HFC125,0.189331663,0.256159355,0.443469174,0.461148731,0.461148731,0.461148731,0.495669993,0.570559614,0.699635634,0.721264229,0.721264229,0.721286248
+Japan,building,electricity,electricity,2020,HFC125,0.168,0.21,0.458,0.458,0.458,0.458,0.458,0.458,0.458,0.548,0.548,0.548
+Australia_NZ,building,electricity,electricity,2020,HFC125,0.168,0.21,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
+Former Soviet Union,building,electricity,electricity,2020,HFC125,0.304251875,0.510111966,0.510111966,0.510111966,0.541816449,0.647146164,0.651771903,0.725373032,0.725373032,0.725373032,0.725373032,0.725737451
+China,building,electricity,electricity,2020,HFC125,0.371,0.601,0.601,0.601,0.643,0.688,0.688,0.733,0.733,0.733,0.733,0.734
+Middle East,building,electricity,electricity,2020,HFC125,0.105,0.23,0.601,0.601,0.601,0.601,0.601,0.733,0.733,0.733,0.733,0.734
+Africa,building,electricity,electricity,2020,HFC125,0.371,0.601,0.601,0.601,0.688,0.688,0.688,0.733,0.733,0.733,0.733,0.734
+Latin America,building,electricity,electricity,2020,HFC125,0.38,0.601,0.601,0.601,0.601,0.601,0.625,0.691,0.733,0.733,0.733,0.734
+Southeast Asia,building,electricity,electricity,2020,HFC125,0.454,0.601,0.601,0.601,0.601,0.601,0.601,0.722,0.733,0.733,0.733,0.734
+Eastern Europe,building,electricity,electricity,2020,HFC125,0.396846161,0.458,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
+Korea,building,electricity,electricity,2020,HFC125,0.105,0.601,0.601,0.601,0.601,0.601,0.601,0.733,0.733,0.733,0.733,0.734
+India,building,electricity,electricity,2020,HFC125,0.476,0.601,0.601,0.601,0.601,0.601,0.601,0.643,0.733,0.733,0.733,0.734
 
 INPUT_TABLE,,,,,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,,,,,
 10070,,,,,,,,,,,,,,,,,
 
 region,supplysector,subsector,technology,period,gas,0,10,20,30,40,50,75,100,125,150,175,200
-USA,transportation,air,refined liquids,1990,HFC134a,0.126,0.168,0.416,0.416,0.416,0.416,0.632,0.677,0.677,0.677,0.677,0.677
-Canada,transportation,air,refined liquids,1990,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
-Western Europe,transportation,air,refined liquids,1990,HFC134a,0.189331663,0.256159355,0.443469174,0.461148731,0.461148731,0.461148731,0.495669993,0.570559614,0.699635634,0.721264229,0.721264229,0.721286248
-Japan,transportation,air,refined liquids,1990,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.458,0.458,0.458,0.548,0.548,0.548
-Australia_NZ,transportation,air,refined liquids,1990,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
-Former Soviet Union,transportation,air,refined liquids,1990,HFC134a,0.304251875,0.510111966,0.510111966,0.510111966,0.541816449,0.647146164,0.651771903,0.725373032,0.725373032,0.725373032,0.725373032,0.725737451
-China,transportation,air,refined liquids,1990,HFC134a,0.371,0.601,0.601,0.601,0.643,0.688,0.688,0.733,0.733,0.733,0.733,0.734
-Middle East,transportation,air,refined liquids,1990,HFC134a,0.105,0.23,0.601,0.601,0.601,0.601,0.601,0.733,0.733,0.733,0.733,0.734
-Africa,transportation,air,refined liquids,1990,HFC134a,0.371,0.601,0.601,0.601,0.688,0.688,0.688,0.733,0.733,0.733,0.733,0.734
-Latin America,transportation,air,refined liquids,1990,HFC134a,0.38,0.601,0.601,0.601,0.601,0.601,0.625,0.691,0.733,0.733,0.733,0.734
-Southeast Asia,transportation,air,refined liquids,1990,HFC134a,0.454,0.601,0.601,0.601,0.601,0.601,0.601,0.722,0.733,0.733,0.733,0.734
-Eastern Europe,transportation,air,refined liquids,1990,HFC134a,0.396846161,0.458,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
-Korea,transportation,air,refined liquids,1990,HFC134a,0.105,0.601,0.601,0.601,0.601,0.601,0.601,0.733,0.733,0.733,0.733,0.734
-India,transportation,air,refined liquids,1990,HFC134a,0.476,0.601,0.601,0.601,0.601,0.601,0.601,0.643,0.733,0.733,0.733,0.734
-USA,transportation,rail,electricity,1990,HFC134a,0.126,0.168,0.416,0.416,0.416,0.416,0.632,0.677,0.677,0.677,0.677,0.677
-Canada,transportation,rail,electricity,1990,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
-Western Europe,transportation,rail,electricity,1990,HFC134a,0.189331663,0.256159355,0.443469174,0.461148731,0.461148731,0.461148731,0.495669993,0.570559614,0.699635634,0.721264229,0.721264229,0.721286248
-Japan,transportation,rail,electricity,1990,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.458,0.458,0.458,0.548,0.548,0.548
-Australia_NZ,transportation,rail,electricity,1990,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
-Former Soviet Union,transportation,rail,electricity,1990,HFC134a,0.304251875,0.510111966,0.510111966,0.510111966,0.541816449,0.647146164,0.651771903,0.725373032,0.725373032,0.725373032,0.725373032,0.725737451
-China,transportation,rail,electricity,1990,HFC134a,0.371,0.601,0.601,0.601,0.643,0.688,0.688,0.733,0.733,0.733,0.733,0.734
-Middle East,transportation,rail,electricity,1990,HFC134a,0.105,0.23,0.601,0.601,0.601,0.601,0.601,0.733,0.733,0.733,0.733,0.734
-Africa,transportation,rail,electricity,1990,HFC134a,0.371,0.601,0.601,0.601,0.688,0.688,0.688,0.733,0.733,0.733,0.733,0.734
-Latin America,transportation,rail,electricity,1990,HFC134a,0.38,0.601,0.601,0.601,0.601,0.601,0.625,0.691,0.733,0.733,0.733,0.734
-Southeast Asia,transportation,rail,electricity,1990,HFC134a,0.454,0.601,0.601,0.601,0.601,0.601,0.601,0.722,0.733,0.733,0.733,0.734
-Eastern Europe,transportation,rail,electricity,1990,HFC134a,0.396846161,0.458,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
-Korea,transportation,rail,electricity,1990,HFC134a,0.105,0.601,0.601,0.601,0.601,0.601,0.601,0.733,0.733,0.733,0.733,0.734
-India,transportation,rail,electricity,1990,HFC134a,0.476,0.601,0.601,0.601,0.601,0.601,0.601,0.643,0.733,0.733,0.733,0.734
-USA,transportation,road,electricity,1990,HFC134a,0.126,0.168,0.416,0.416,0.416,0.416,0.632,0.677,0.677,0.677,0.677,0.677
-Canada,transportation,road,electricity,1990,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
-Western Europe,transportation,road,electricity,1990,HFC134a,0.189331663,0.256159355,0.443469174,0.461148731,0.461148731,0.461148731,0.495669993,0.570559614,0.699635634,0.721264229,0.721264229,0.721286248
-Japan,transportation,road,electricity,1990,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.458,0.458,0.458,0.548,0.548,0.548
-Australia_NZ,transportation,road,electricity,1990,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
-Former Soviet Union,transportation,road,electricity,1990,HFC134a,0.304251875,0.510111966,0.510111966,0.510111966,0.541816449,0.647146164,0.651771903,0.725373032,0.725373032,0.725373032,0.725373032,0.725737451
-China,transportation,road,electricity,1990,HFC134a,0.371,0.601,0.601,0.601,0.643,0.688,0.688,0.733,0.733,0.733,0.733,0.734
-Middle East,transportation,road,electricity,1990,HFC134a,0.105,0.23,0.601,0.601,0.601,0.601,0.601,0.733,0.733,0.733,0.733,0.734
-Africa,transportation,road,electricity,1990,HFC134a,0.371,0.601,0.601,0.601,0.688,0.688,0.688,0.733,0.733,0.733,0.733,0.734
-Latin America,transportation,road,electricity,1990,HFC134a,0.38,0.601,0.601,0.601,0.601,0.601,0.625,0.691,0.733,0.733,0.733,0.734
-Southeast Asia,transportation,road,electricity,1990,HFC134a,0.454,0.601,0.601,0.601,0.601,0.601,0.601,0.722,0.733,0.733,0.733,0.734
-Eastern Europe,transportation,road,electricity,1990,HFC134a,0.396846161,0.458,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
-Korea,transportation,road,electricity,1990,HFC134a,0.105,0.601,0.601,0.601,0.601,0.601,0.601,0.733,0.733,0.733,0.733,0.734
-India,transportation,road,electricity,1990,HFC134a,0.476,0.601,0.601,0.601,0.601,0.601,0.601,0.643,0.733,0.733,0.733,0.734
-USA,transportation,road,refined liquids,1990,HFC134a,0.126,0.168,0.416,0.416,0.416,0.416,0.632,0.677,0.677,0.677,0.677,0.677
-Canada,transportation,road,refined liquids,1990,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
-Western Europe,transportation,road,refined liquids,1990,HFC134a,0.189331663,0.256159355,0.443469174,0.461148731,0.461148731,0.461148731,0.495669993,0.570559614,0.699635634,0.721264229,0.721264229,0.721286248
-Japan,transportation,road,refined liquids,1990,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.458,0.458,0.458,0.548,0.548,0.548
-Australia_NZ,transportation,road,refined liquids,1990,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
-Former Soviet Union,transportation,road,refined liquids,1990,HFC134a,0.304251875,0.510111966,0.510111966,0.510111966,0.541816449,0.647146164,0.651771903,0.725373032,0.725373032,0.725373032,0.725373032,0.725737451
-China,transportation,road,refined liquids,1990,HFC134a,0.371,0.601,0.601,0.601,0.643,0.688,0.688,0.733,0.733,0.733,0.733,0.734
-Middle East,transportation,road,refined liquids,1990,HFC134a,0.105,0.23,0.601,0.601,0.601,0.601,0.601,0.733,0.733,0.733,0.733,0.734
-Africa,transportation,road,refined liquids,1990,HFC134a,0.371,0.601,0.601,0.601,0.688,0.688,0.688,0.733,0.733,0.733,0.733,0.734
-Latin America,transportation,road,refined liquids,1990,HFC134a,0.38,0.601,0.601,0.601,0.601,0.601,0.625,0.691,0.733,0.733,0.733,0.734
-Southeast Asia,transportation,road,refined liquids,1990,HFC134a,0.454,0.601,0.601,0.601,0.601,0.601,0.601,0.722,0.733,0.733,0.733,0.734
-Eastern Europe,transportation,road,refined liquids,1990,HFC134a,0.396846161,0.458,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
-Korea,transportation,road,refined liquids,1990,HFC134a,0.105,0.601,0.601,0.601,0.601,0.601,0.601,0.733,0.733,0.733,0.733,0.734
-India,transportation,road,refined liquids,1990,HFC134a,0.476,0.601,0.601,0.601,0.601,0.601,0.601,0.643,0.733,0.733,0.733,0.734
+USA,transportation,air,refined liquids,2020,HFC134a,0.126,0.168,0.416,0.416,0.416,0.416,0.632,0.677,0.677,0.677,0.677,0.677
+Canada,transportation,air,refined liquids,2020,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
+Western Europe,transportation,air,refined liquids,2020,HFC134a,0.189331663,0.256159355,0.443469174,0.461148731,0.461148731,0.461148731,0.495669993,0.570559614,0.699635634,0.721264229,0.721264229,0.721286248
+Japan,transportation,air,refined liquids,2020,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.458,0.458,0.458,0.548,0.548,0.548
+Australia_NZ,transportation,air,refined liquids,2020,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
+Former Soviet Union,transportation,air,refined liquids,2020,HFC134a,0.304251875,0.510111966,0.510111966,0.510111966,0.541816449,0.647146164,0.651771903,0.725373032,0.725373032,0.725373032,0.725373032,0.725737451
+China,transportation,air,refined liquids,2020,HFC134a,0.371,0.601,0.601,0.601,0.643,0.688,0.688,0.733,0.733,0.733,0.733,0.734
+Middle East,transportation,air,refined liquids,2020,HFC134a,0.105,0.23,0.601,0.601,0.601,0.601,0.601,0.733,0.733,0.733,0.733,0.734
+Africa,transportation,air,refined liquids,2020,HFC134a,0.371,0.601,0.601,0.601,0.688,0.688,0.688,0.733,0.733,0.733,0.733,0.734
+Latin America,transportation,air,refined liquids,2020,HFC134a,0.38,0.601,0.601,0.601,0.601,0.601,0.625,0.691,0.733,0.733,0.733,0.734
+Southeast Asia,transportation,air,refined liquids,2020,HFC134a,0.454,0.601,0.601,0.601,0.601,0.601,0.601,0.722,0.733,0.733,0.733,0.734
+Eastern Europe,transportation,air,refined liquids,2020,HFC134a,0.396846161,0.458,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
+Korea,transportation,air,refined liquids,2020,HFC134a,0.105,0.601,0.601,0.601,0.601,0.601,0.601,0.733,0.733,0.733,0.733,0.734
+India,transportation,air,refined liquids,2020,HFC134a,0.476,0.601,0.601,0.601,0.601,0.601,0.601,0.643,0.733,0.733,0.733,0.734
+USA,transportation,rail,electricity,2020,HFC134a,0.126,0.168,0.416,0.416,0.416,0.416,0.632,0.677,0.677,0.677,0.677,0.677
+Canada,transportation,rail,electricity,2020,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
+Western Europe,transportation,rail,electricity,2020,HFC134a,0.189331663,0.256159355,0.443469174,0.461148731,0.461148731,0.461148731,0.495669993,0.570559614,0.699635634,0.721264229,0.721264229,0.721286248
+Japan,transportation,rail,electricity,2020,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.458,0.458,0.458,0.548,0.548,0.548
+Australia_NZ,transportation,rail,electricity,2020,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
+Former Soviet Union,transportation,rail,electricity,2020,HFC134a,0.304251875,0.510111966,0.510111966,0.510111966,0.541816449,0.647146164,0.651771903,0.725373032,0.725373032,0.725373032,0.725373032,0.725737451
+China,transportation,rail,electricity,2020,HFC134a,0.371,0.601,0.601,0.601,0.643,0.688,0.688,0.733,0.733,0.733,0.733,0.734
+Middle East,transportation,rail,electricity,2020,HFC134a,0.105,0.23,0.601,0.601,0.601,0.601,0.601,0.733,0.733,0.733,0.733,0.734
+Africa,transportation,rail,electricity,2020,HFC134a,0.371,0.601,0.601,0.601,0.688,0.688,0.688,0.733,0.733,0.733,0.733,0.734
+Latin America,transportation,rail,electricity,2020,HFC134a,0.38,0.601,0.601,0.601,0.601,0.601,0.625,0.691,0.733,0.733,0.733,0.734
+Southeast Asia,transportation,rail,electricity,2020,HFC134a,0.454,0.601,0.601,0.601,0.601,0.601,0.601,0.722,0.733,0.733,0.733,0.734
+Eastern Europe,transportation,rail,electricity,2020,HFC134a,0.396846161,0.458,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
+Korea,transportation,rail,electricity,2020,HFC134a,0.105,0.601,0.601,0.601,0.601,0.601,0.601,0.733,0.733,0.733,0.733,0.734
+India,transportation,rail,electricity,2020,HFC134a,0.476,0.601,0.601,0.601,0.601,0.601,0.601,0.643,0.733,0.733,0.733,0.734
+USA,transportation,road,electricity,2020,HFC134a,0.126,0.168,0.416,0.416,0.416,0.416,0.632,0.677,0.677,0.677,0.677,0.677
+Canada,transportation,road,electricity,2020,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
+Western Europe,transportation,road,electricity,2020,HFC134a,0.189331663,0.256159355,0.443469174,0.461148731,0.461148731,0.461148731,0.495669993,0.570559614,0.699635634,0.721264229,0.721264229,0.721286248
+Japan,transportation,road,electricity,2020,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.458,0.458,0.458,0.548,0.548,0.548
+Australia_NZ,transportation,road,electricity,2020,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
+Former Soviet Union,transportation,road,electricity,2020,HFC134a,0.304251875,0.510111966,0.510111966,0.510111966,0.541816449,0.647146164,0.651771903,0.725373032,0.725373032,0.725373032,0.725373032,0.725737451
+China,transportation,road,electricity,2020,HFC134a,0.371,0.601,0.601,0.601,0.643,0.688,0.688,0.733,0.733,0.733,0.733,0.734
+Middle East,transportation,road,electricity,2020,HFC134a,0.105,0.23,0.601,0.601,0.601,0.601,0.601,0.733,0.733,0.733,0.733,0.734
+Africa,transportation,road,electricity,2020,HFC134a,0.371,0.601,0.601,0.601,0.688,0.688,0.688,0.733,0.733,0.733,0.733,0.734
+Latin America,transportation,road,electricity,2020,HFC134a,0.38,0.601,0.601,0.601,0.601,0.601,0.625,0.691,0.733,0.733,0.733,0.734
+Southeast Asia,transportation,road,electricity,2020,HFC134a,0.454,0.601,0.601,0.601,0.601,0.601,0.601,0.722,0.733,0.733,0.733,0.734
+Eastern Europe,transportation,road,electricity,2020,HFC134a,0.396846161,0.458,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
+Korea,transportation,road,electricity,2020,HFC134a,0.105,0.601,0.601,0.601,0.601,0.601,0.601,0.733,0.733,0.733,0.733,0.734
+India,transportation,road,electricity,2020,HFC134a,0.476,0.601,0.601,0.601,0.601,0.601,0.601,0.643,0.733,0.733,0.733,0.734
+USA,transportation,road,refined liquids,2020,HFC134a,0.126,0.168,0.416,0.416,0.416,0.416,0.632,0.677,0.677,0.677,0.677,0.677
+Canada,transportation,road,refined liquids,2020,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
+Western Europe,transportation,road,refined liquids,2020,HFC134a,0.189331663,0.256159355,0.443469174,0.461148731,0.461148731,0.461148731,0.495669993,0.570559614,0.699635634,0.721264229,0.721264229,0.721286248
+Japan,transportation,road,refined liquids,2020,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.458,0.458,0.458,0.548,0.548,0.548
+Australia_NZ,transportation,road,refined liquids,2020,HFC134a,0.168,0.21,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
+Former Soviet Union,transportation,road,refined liquids,2020,HFC134a,0.304251875,0.510111966,0.510111966,0.510111966,0.541816449,0.647146164,0.651771903,0.725373032,0.725373032,0.725373032,0.725373032,0.725737451
+China,transportation,road,refined liquids,2020,HFC134a,0.371,0.601,0.601,0.601,0.643,0.688,0.688,0.733,0.733,0.733,0.733,0.734
+Middle East,transportation,road,refined liquids,2020,HFC134a,0.105,0.23,0.601,0.601,0.601,0.601,0.601,0.733,0.733,0.733,0.733,0.734
+Africa,transportation,road,refined liquids,2020,HFC134a,0.371,0.601,0.601,0.601,0.688,0.688,0.688,0.733,0.733,0.733,0.733,0.734
+Latin America,transportation,road,refined liquids,2020,HFC134a,0.38,0.601,0.601,0.601,0.601,0.601,0.625,0.691,0.733,0.733,0.733,0.734
+Southeast Asia,transportation,road,refined liquids,2020,HFC134a,0.454,0.601,0.601,0.601,0.601,0.601,0.601,0.722,0.733,0.733,0.733,0.734
+Eastern Europe,transportation,road,refined liquids,2020,HFC134a,0.396846161,0.458,0.458,0.458,0.458,0.458,0.631,0.721,0.721,0.721,0.721,0.721
+Korea,transportation,road,refined liquids,2020,HFC134a,0.105,0.601,0.601,0.601,0.601,0.601,0.601,0.733,0.733,0.733,0.733,0.734
+India,transportation,road,refined liquids,2020,HFC134a,0.476,0.601,0.601,0.601,0.601,0.601,0.601,0.643,0.733,0.733,0.733,0.734
 
 INPUT_TABLE,,,,,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,,,,,
 10070,,,,,,,,,,,,,,,,,
 
 region,supplysector,subsector,technology,period,gas,0,10,20,30,40,50,75,100,125,150,175,200
-USA,urban processes,urban processes,aerosols,1990,HFC134a,0.199,0.199,0.199,0.199,0.199,0.199,0.199,0.199,0.199,0.199,0.199,0.199160366
-Canada,urban processes,urban processes,aerosols,1990,HFC134a,0,0,0,0,0,0,0,0,0,0,0,0
-Western Europe,urban processes,urban processes,aerosols,1990,HFC134a,0.191,0.191,0.191,0.191,0.191,0.191,0.191,0.191,0.191,0.191,0.191,0.191144061
-Japan,urban processes,urban processes,aerosols,1990,HFC134a,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.089506884
-Australia_NZ,urban processes,urban processes,aerosols,1990,HFC134a,0.378,0.378,0.378,0.378,0.378,0.378,0.378,0.378,0.378,0.378,0.378,0.378141465
-Former Soviet Union,urban processes,urban processes,aerosols,1990,HFC134a,0.427,0.427,0.427,0.427,0.427,0.427,0.427,0.427,0.427,0.427,0.427,0.427042033
-China,urban processes,urban processes,aerosols,1990,HFC134a,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005060264
-Middle East,urban processes,urban processes,aerosols,1990,HFC134a,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005071742
-Africa,urban processes,urban processes,aerosols,1990,HFC134a,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005225521
-Latin America,urban processes,urban processes,aerosols,1990,HFC134a,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005135018
-Southeast Asia,urban processes,urban processes,aerosols,1990,HFC134a,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005037052
-Eastern Europe,urban processes,urban processes,aerosols,1990,HFC134a,0.468,0.468,0.468,0.468,0.468,0.468,0.468,0.468,0.468,0.468,0.468,0.468302346
-Korea,urban processes,urban processes,aerosols,1990,HFC134a,0,0,0,0,0,0,0,0,0,0,0,0
-India,urban processes,urban processes,aerosols,1990,HFC134a,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005189605
-USA,urban processes,urban processes,fire_exting,1990,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.22,0.22,0.22,0.22,0.22,0.31
-Canada,urban processes,urban processes,fire_exting,1990,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.22,0.22,0.22,0.22,0.22,0.31
-Western Europe,urban processes,urban processes,fire_exting,1990,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.034,0.22,0.22,0.22,0.22,0.31
-Japan,urban processes,urban processes,fire_exting,1990,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.22,0.22,0.22,0.31
-Australia_NZ,urban processes,urban processes,fire_exting,1990,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.22,0.22,0.22,0.22,0.31
-Former Soviet Union,urban processes,urban processes,fire_exting,1990,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.22,0.22,0.22,0.22,0.22,0.31
-China,urban processes,urban processes,fire_exting,1990,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.22,0.22,0.22,0.22,0.22,0.31
-Middle East,urban processes,urban processes,fire_exting,1990,HFC125,0,0,0,0,0,0,0,0,0,0,0,0
-Africa,urban processes,urban processes,fire_exting,1990,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.22,0.22,0.22,0.22,0.22,0.31
-Latin America,urban processes,urban processes,fire_exting,1990,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.22,0.22,0.22,0.22,0.31
-Southeast Asia,urban processes,urban processes,fire_exting,1990,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.22,0.22,0.22,0.22,0.31
-Eastern Europe,urban processes,urban processes,fire_exting,1990,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.22,0.22,0.22,0.22,0.31
-Korea,urban processes,urban processes,fire_exting,1990,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.22,0.22,0.22,0.22,0.31
-India,urban processes,urban processes,fire_exting,1990,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.22,0.22,0.22,0.22,0.31
+USA,urban processes,urban processes,aerosols,2020,HFC134a,0.199,0.199,0.199,0.199,0.199,0.199,0.199,0.199,0.199,0.199,0.199,0.199160366
+Canada,urban processes,urban processes,aerosols,2020,HFC134a,0,0,0,0,0,0,0,0,0,0,0,0
+Western Europe,urban processes,urban processes,aerosols,2020,HFC134a,0.191,0.191,0.191,0.191,0.191,0.191,0.191,0.191,0.191,0.191,0.191,0.191144061
+Japan,urban processes,urban processes,aerosols,2020,HFC134a,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.09,0.089506884
+Australia_NZ,urban processes,urban processes,aerosols,2020,HFC134a,0.378,0.378,0.378,0.378,0.378,0.378,0.378,0.378,0.378,0.378,0.378,0.378141465
+Former Soviet Union,urban processes,urban processes,aerosols,2020,HFC134a,0.427,0.427,0.427,0.427,0.427,0.427,0.427,0.427,0.427,0.427,0.427,0.427042033
+China,urban processes,urban processes,aerosols,2020,HFC134a,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005060264
+Middle East,urban processes,urban processes,aerosols,2020,HFC134a,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005071742
+Africa,urban processes,urban processes,aerosols,2020,HFC134a,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005225521
+Latin America,urban processes,urban processes,aerosols,2020,HFC134a,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005135018
+Southeast Asia,urban processes,urban processes,aerosols,2020,HFC134a,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005037052
+Eastern Europe,urban processes,urban processes,aerosols,2020,HFC134a,0.468,0.468,0.468,0.468,0.468,0.468,0.468,0.468,0.468,0.468,0.468,0.468302346
+Korea,urban processes,urban processes,aerosols,2020,HFC134a,0,0,0,0,0,0,0,0,0,0,0,0
+India,urban processes,urban processes,aerosols,2020,HFC134a,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005189605
+USA,urban processes,urban processes,fire_exting,2020,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.22,0.22,0.22,0.22,0.22,0.31
+Canada,urban processes,urban processes,fire_exting,2020,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.22,0.22,0.22,0.22,0.22,0.31
+Western Europe,urban processes,urban processes,fire_exting,2020,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.034,0.22,0.22,0.22,0.22,0.31
+Japan,urban processes,urban processes,fire_exting,2020,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.22,0.22,0.22,0.31
+Australia_NZ,urban processes,urban processes,fire_exting,2020,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.22,0.22,0.22,0.22,0.31
+Former Soviet Union,urban processes,urban processes,fire_exting,2020,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.22,0.22,0.22,0.22,0.22,0.31
+China,urban processes,urban processes,fire_exting,2020,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.22,0.22,0.22,0.22,0.22,0.31
+Middle East,urban processes,urban processes,fire_exting,2020,HFC125,0,0,0,0,0,0,0,0,0,0,0,0
+Africa,urban processes,urban processes,fire_exting,2020,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.22,0.22,0.22,0.22,0.22,0.31
+Latin America,urban processes,urban processes,fire_exting,2020,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.22,0.22,0.22,0.22,0.31
+Southeast Asia,urban processes,urban processes,fire_exting,2020,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.22,0.22,0.22,0.22,0.31
+Eastern Europe,urban processes,urban processes,fire_exting,2020,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.22,0.22,0.22,0.22,0.31
+Korea,urban processes,urban processes,fire_exting,2020,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.22,0.22,0.22,0.22,0.31
+India,urban processes,urban processes,fire_exting,2020,HFC125,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.22,0.22,0.22,0.22,0.31
 
 INPUT_TABLE,,,,,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,,,,,
 10070,,,,,,,,,,,,,,,,,
 
 region,supplysector,subsector,technology,period,gas,0,10,20,30,40,50,75,100,125,150,175,200
-USA,industry,industrial processes,foams,1990,HFC245fa,0.1395,0.199,0.199,0.202895071,0.202895071,0.202895071,0.232895071,0.232895071,0.312895071,0.312895071,0.312895071,0.312895071
-Canada,industry,industrial processes,foams,1990,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
-Western Europe,industry,industrial processes,foams,1990,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
-Japan,industry,industrial processes,foams,1990,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
-Australia_NZ,industry,industrial processes,foams,1990,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
-Former Soviet Union,industry,industrial processes,foams,1990,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
-China,industry,industrial processes,foams,1990,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
-Middle East,industry,industrial processes,foams,1990,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
-Africa,industry,industrial processes,foams,1990,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
-Latin America,industry,industrial processes,foams,1990,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
-Southeast Asia,industry,industrial processes,foams,1990,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
-Eastern Europe,industry,industrial processes,foams,1990,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
-Korea,industry,industrial processes,foams,1990,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
-India,industry,industrial processes,foams,1990,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
-USA,industry,industrial processes,solvents,1990,HFC134a,0,0.21,0.31,0.41,0.41,0.41,0.41,0.41,0.815,0.815,0.815,0.815
-Canada,industry,industrial processes,solvents,1990,HFC134a,0,0,0.25,0.5,0.5,0.5,0.5,0.5,0.905,0.905,0.905,0.905
-Western Europe,industry,industrial processes,solvents,1990,HFC134a,0,0,0.249922805,0.499845611,0.499845611,0.499845611,0.499845611,0.499845611,0.904741398,0.904741398,0.904741398,0.904741398
-Japan,industry,industrial processes,solvents,1990,HFC134a,0,0,0.25,0.5,0.5,0.5,0.5,0.5,0.905,0.905,0.905,0.905
-Australia_NZ,industry,industrial processes,solvents,1990,HFC134a,0,0,0.25,0.5,0.5,0.5,0.5,0.5,0.905,0.905,0.905,0.905
-Former Soviet Union,industry,industrial processes,solvents,1990,HFC134a,0,0,0.246524231,0.493048462,0.493048462,0.493048462,0.493048462,0.493048462,0.893356174,0.893356174,0.893356174,0.893356174
-China,industry,industrial processes,solvents,1990,HFC134a,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
-Middle East,industry,industrial processes,solvents,1990,HFC134a,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
-Africa,industry,industrial processes,solvents,1990,HFC134a,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
-Latin America,industry,industrial processes,solvents,1990,HFC134a,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
-Southeast Asia,industry,industrial processes,solvents,1990,HFC134a,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
-Eastern Europe,industry,industrial processes,solvents,1990,HFC134a,0,0,0.25,0.5,0.5,0.5,0.5,0.5,0.905,0.905,0.905,0.905
-Korea,industry,industrial processes,solvents,1990,HFC134a,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
-India,industry,industrial processes,solvents,1990,HFC134a,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
-USA,industry,industrial processes,solvents,1990,CF4,0,0.21,0.31,0.41,0.41,0.41,0.41,0.41,0.815,0.815,0.815,0.815
-Canada,industry,industrial processes,solvents,1990,CF4,0,0,0.25,0.5,0.5,0.5,0.5,0.5,0.905,0.905,0.905,0.905
-Western Europe,industry,industrial processes,solvents,1990,CF4,0,0,0.249922805,0.499845611,0.499845611,0.499845611,0.499845611,0.499845611,0.904741398,0.904741398,0.904741398,0.904741398
-Japan,industry,industrial processes,solvents,1990,CF4,0,0,0.25,0.5,0.5,0.5,0.5,0.5,0.905,0.905,0.905,0.905
-Australia_NZ,industry,industrial processes,solvents,1990,CF4,0,0,0.25,0.5,0.5,0.5,0.5,0.5,0.905,0.905,0.905,0.905
-Former Soviet Union,industry,industrial processes,solvents,1990,CF4,0,0,0.246524231,0.493048462,0.493048462,0.493048462,0.493048462,0.493048462,0.893356174,0.893356174,0.893356174,0.893356174
-China,industry,industrial processes,solvents,1990,CF4,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
-Middle East,industry,industrial processes,solvents,1990,CF4,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
-Africa,industry,industrial processes,solvents,1990,CF4,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
-Latin America,industry,industrial processes,solvents,1990,CF4,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
-Southeast Asia,industry,industrial processes,solvents,1990,CF4,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
-Eastern Europe,industry,industrial processes,solvents,1990,CF4,0,0,0.25,0.5,0.5,0.5,0.5,0.5,0.905,0.905,0.905,0.905
-Korea,industry,industrial processes,solvents,1990,CF4,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
-India,industry,industrial processes,solvents,1990,CF4,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
+USA,industry,industrial processes,foams,2020,HFC245fa,0.1395,0.199,0.199,0.202895071,0.202895071,0.202895071,0.232895071,0.232895071,0.312895071,0.312895071,0.312895071,0.312895071
+Canada,industry,industrial processes,foams,2020,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
+Western Europe,industry,industrial processes,foams,2020,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
+Japan,industry,industrial processes,foams,2020,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
+Australia_NZ,industry,industrial processes,foams,2020,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
+Former Soviet Union,industry,industrial processes,foams,2020,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
+China,industry,industrial processes,foams,2020,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
+Middle East,industry,industrial processes,foams,2020,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
+Africa,industry,industrial processes,foams,2020,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
+Latin America,industry,industrial processes,foams,2020,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
+Southeast Asia,industry,industrial processes,foams,2020,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
+Eastern Europe,industry,industrial processes,foams,2020,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
+Korea,industry,industrial processes,foams,2020,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
+India,industry,industrial processes,foams,2020,HFC245fa,0.15,0.22,0.22,0.224582437,0.224582437,0.224582437,0.254582437,0.254582437,0.334582437,0.334582437,0.334582437,0.334582437
+USA,industry,industrial processes,solvents,2020,HFC134a,0,0.21,0.31,0.41,0.41,0.41,0.41,0.41,0.815,0.815,0.815,0.815
+Canada,industry,industrial processes,solvents,2020,HFC134a,0,0,0.25,0.5,0.5,0.5,0.5,0.5,0.905,0.905,0.905,0.905
+Western Europe,industry,industrial processes,solvents,2020,HFC134a,0,0,0.249922805,0.499845611,0.499845611,0.499845611,0.499845611,0.499845611,0.904741398,0.904741398,0.904741398,0.904741398
+Japan,industry,industrial processes,solvents,2020,HFC134a,0,0,0.25,0.5,0.5,0.5,0.5,0.5,0.905,0.905,0.905,0.905
+Australia_NZ,industry,industrial processes,solvents,2020,HFC134a,0,0,0.25,0.5,0.5,0.5,0.5,0.5,0.905,0.905,0.905,0.905
+Former Soviet Union,industry,industrial processes,solvents,2020,HFC134a,0,0,0.246524231,0.493048462,0.493048462,0.493048462,0.493048462,0.493048462,0.893356174,0.893356174,0.893356174,0.893356174
+China,industry,industrial processes,solvents,2020,HFC134a,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
+Middle East,industry,industrial processes,solvents,2020,HFC134a,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
+Africa,industry,industrial processes,solvents,2020,HFC134a,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
+Latin America,industry,industrial processes,solvents,2020,HFC134a,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
+Southeast Asia,industry,industrial processes,solvents,2020,HFC134a,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
+Eastern Europe,industry,industrial processes,solvents,2020,HFC134a,0,0,0.25,0.5,0.5,0.5,0.5,0.5,0.905,0.905,0.905,0.905
+Korea,industry,industrial processes,solvents,2020,HFC134a,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
+India,industry,industrial processes,solvents,2020,HFC134a,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
+USA,industry,industrial processes,solvents,2020,CF4,0,0.21,0.31,0.41,0.41,0.41,0.41,0.41,0.815,0.815,0.815,0.815
+Canada,industry,industrial processes,solvents,2020,CF4,0,0,0.25,0.5,0.5,0.5,0.5,0.5,0.905,0.905,0.905,0.905
+Western Europe,industry,industrial processes,solvents,2020,CF4,0,0,0.249922805,0.499845611,0.499845611,0.499845611,0.499845611,0.499845611,0.904741398,0.904741398,0.904741398,0.904741398
+Japan,industry,industrial processes,solvents,2020,CF4,0,0,0.25,0.5,0.5,0.5,0.5,0.5,0.905,0.905,0.905,0.905
+Australia_NZ,industry,industrial processes,solvents,2020,CF4,0,0,0.25,0.5,0.5,0.5,0.5,0.5,0.905,0.905,0.905,0.905
+Former Soviet Union,industry,industrial processes,solvents,2020,CF4,0,0,0.246524231,0.493048462,0.493048462,0.493048462,0.493048462,0.493048462,0.893356174,0.893356174,0.893356174,0.893356174
+China,industry,industrial processes,solvents,2020,CF4,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
+Middle East,industry,industrial processes,solvents,2020,CF4,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
+Africa,industry,industrial processes,solvents,2020,CF4,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
+Latin America,industry,industrial processes,solvents,2020,CF4,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
+Southeast Asia,industry,industrial processes,solvents,2020,CF4,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
+Eastern Europe,industry,industrial processes,solvents,2020,CF4,0,0,0.25,0.5,0.5,0.5,0.5,0.5,0.905,0.905,0.905,0.905
+Korea,industry,industrial processes,solvents,2020,CF4,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
+India,industry,industrial processes,solvents,2020,CF4,0,0,0.15,0.3,0.3,0.3,0.3,0.3,0.57,0.57,0.57,0.57
 
 INPUT_TABLE,,,,,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,,,,,
 10070,,,,,,,,,,,,,,,,,
 
 region,supplysector,subsector,technology,period,gas,0,10,20,30,40,50,75,100,125,150,175,200
-USA,industry,industrial processes,HCFC_22_Prod,1990,SF6,0,0,0,0,0,0,0,0,0,0,0,0
-Canada,industry,industrial processes,HCFC_22_Prod,1990,SF6,0,0,0,0,0,0,0,0,0,0,0,0
-Western Europe,industry,industrial processes,HCFC_22_Prod,1990,SF6,0,0,0,0,0,0,0,0,0,0,0,0
-Japan,industry,industrial processes,HCFC_22_Prod,1990,SF6,0,0,0,0,0,0,0,0,0,0,0,0
-Australia_NZ,industry,industrial processes,HCFC_22_Prod,1990,SF6,0,0,0,0,0,0,0,0,0,0,0,0
-Former Soviet Union,industry,industrial processes,HCFC_22_Prod,1990,SF6,0,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95
-China,industry,industrial processes,HCFC_22_Prod,1990,SF6,0,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95
-Middle East,industry,industrial processes,HCFC_22_Prod,1990,SF6,0,0,0,0,0,0,0,0,0,0,0,0
-Africa,industry,industrial processes,HCFC_22_Prod,1990,SF6,0,0,0,0,0,0,0,0,0,0,0,0
-Latin America,industry,industrial processes,HCFC_22_Prod,1990,SF6,0,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95
-Southeast Asia,industry,industrial processes,HCFC_22_Prod,1990,SF6,0,0,0,0,0,0,0,0,0,0,0,0
-Eastern Europe,industry,industrial processes,HCFC_22_Prod,1990,SF6,0,0,0,0,0,0,0,0,0,0,0,0
-Korea,industry,industrial processes,HCFC_22_Prod,1990,SF6,0,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95
-India,industry,industrial processes,HCFC_22_Prod,1990,SF6,0,0,0,0,0,0,0,0,0,0,0,0
-USA,industry,industrial processes,semiconductors,1990,C2F6,0,0,0,0,0,0,0,0.0495,0.0495,0.099,0.099,0.099
-Canada,industry,industrial processes,semiconductors,1990,C2F6,0,0,0,0,0,0,0,0.0495,0.0495,0.099,0.099,0.099
-Western Europe,industry,industrial processes,semiconductors,1990,C2F6,0,0,0,0,0,0,0,0.0495,0.0495,0.099,0.099,0.099
-Japan,industry,industrial processes,semiconductors,1990,C2F6,0,0,0,0,0,0,0,0.0495,0.0495,0.099,0.099,0.099
-Australia_NZ,industry,industrial processes,semiconductors,1990,C2F6,0,0,0,0,0,0,0,0.0495,0.0495,0.099,0.099,0.099
-Former Soviet Union,industry,industrial processes,semiconductors,1990,C2F6,0,0,0,0,0,0,0,0.0495,0.0495,0.099,0.099,0.099
-China,industry,industrial processes,semiconductors,1990,C2F6,0,0,0,0,0,0,0,0.0495,0.0495,0.099,0.099,0.099
-Middle East,industry,industrial processes,semiconductors,1990,C2F6,0,0,0,0,0,0,0,0.0495,0.0495,0.099,0.099,0.099
-Africa,industry,industrial processes,semiconductors,1990,C2F6,0,0,0,0,0,0,0,0,0,0,0,0
-Latin America,industry,industrial processes,semiconductors,1990,C2F6,0,0,0,0,0,0,0,0,0,0,0,0
-Southeast Asia,industry,industrial processes,semiconductors,1990,C2F6,0,0,0,0,0,0,0,0.0495,0.0495,0.099,0.099,0.099
-Eastern Europe,industry,industrial processes,semiconductors,1990,C2F6,0,0,0,0,0,0,0,0.0495,0.0495,0.099,0.099,0.099
-Korea,industry,industrial processes,semiconductors,1990,C2F6,0,0,0,0,0,0,0,0.0495,0.0495,0.099,0.099,0.099
-India,industry,industrial processes,semiconductors,1990,C2F6,0,0,0,0,0,0,0,0.0495,0.0495,0.099,0.099,0.099
-USA,industry,industrial processes,Al_Mg,1990,CF4,0.095,0.109,0.352,0.388,0.395,0.395,0.405,0.405,0.405,0.405,0.405,0.405471757
-Canada,industry,industrial processes,Al_Mg,1990,CF4,0.133,0.133,0.406,0.406,0.406,0.406,0.412,0.412,0.412,0.412,0.412,0.411661435
-Western Europe,industry,industrial processes,Al_Mg,1990,CF4,0.007,0.154,0.177,0.224,0.232,0.232,0.246,0.246,0.246,0.246,0.246,0.24621348
-Japan,industry,industrial processes,Al_Mg,1990,CF4,0,0,0.531,0.604,0.604,0.604,0.604,0.661,0.661,0.661,0.661,0.660578625
-Australia_NZ,industry,industrial processes,Al_Mg,1990,CF4,0.119,0.119,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3
-Former Soviet Union,industry,industrial processes,Al_Mg,1990,CF4,0.273,0.273,0.386,0.438,0.438,0.438,0.445,0.445,0.445,0.445,0.445,0.445
-China,industry,industrial processes,Al_Mg,1990,CF4,0.147,0.572,0.572,0.621,0.621,0.621,0.621,0.632,0.632,0.632,0.632,0.632
-Middle East,industry,industrial processes,Al_Mg,1990,CF4,0.042,0.042,0.159,0.159,0.159,0.159,0.159,0.159,0.159,0.159,0.159,0.159
-Africa,industry,industrial processes,Al_Mg,1990,CF4,0.247,0.271,0.271,0.271,0.271,0.271,0.271,0.271,0.271,0.271,0.271,0.271281318
-Latin America,industry,industrial processes,Al_Mg,1990,CF4,0.171,0.219,0.258,0.258,0.275,0.275,0.275,0.278,0.278,0.278,0.278,0.277829633
-Southeast Asia,industry,industrial processes,Al_Mg,1990,CF4,0,0,0.104,0.104,0.104,0.104,0.104,0.104,0.104,0.104,0.104,0.104469088
-Eastern Europe,industry,industrial processes,Al_Mg,1990,CF4,0.225,0.225,0.298,0.308,0.308,0.308,0.308,0.308,0.308,0.308,0.308,0.308184648
-Korea,industry,industrial processes,Al_Mg,1990,CF4,0,0,0,0,0,0,0,0,0,0,0,0
-India,industry,industrial processes,Al_Mg,1990,CF4,0.199,0.199,0.199,0.253,0.253,0.253,0.253,0.27,0.27,0.27,0.27,0.27
+USA,industry,industrial processes,HCFC_22_Prod,2020,SF6,0,0,0,0,0,0,0,0,0,0,0,0
+Canada,industry,industrial processes,HCFC_22_Prod,2020,SF6,0,0,0,0,0,0,0,0,0,0,0,0
+Western Europe,industry,industrial processes,HCFC_22_Prod,2020,SF6,0,0,0,0,0,0,0,0,0,0,0,0
+Japan,industry,industrial processes,HCFC_22_Prod,2020,SF6,0,0,0,0,0,0,0,0,0,0,0,0
+Australia_NZ,industry,industrial processes,HCFC_22_Prod,2020,SF6,0,0,0,0,0,0,0,0,0,0,0,0
+Former Soviet Union,industry,industrial processes,HCFC_22_Prod,2020,SF6,0,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95
+China,industry,industrial processes,HCFC_22_Prod,2020,SF6,0,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95
+Middle East,industry,industrial processes,HCFC_22_Prod,2020,SF6,0,0,0,0,0,0,0,0,0,0,0,0
+Africa,industry,industrial processes,HCFC_22_Prod,2020,SF6,0,0,0,0,0,0,0,0,0,0,0,0
+Latin America,industry,industrial processes,HCFC_22_Prod,2020,SF6,0,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95
+Southeast Asia,industry,industrial processes,HCFC_22_Prod,2020,SF6,0,0,0,0,0,0,0,0,0,0,0,0
+Eastern Europe,industry,industrial processes,HCFC_22_Prod,2020,SF6,0,0,0,0,0,0,0,0,0,0,0,0
+Korea,industry,industrial processes,HCFC_22_Prod,2020,SF6,0,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.95
+India,industry,industrial processes,HCFC_22_Prod,2020,SF6,0,0,0,0,0,0,0,0,0,0,0,0
+USA,industry,industrial processes,semiconductors,2020,C2F6,0,0,0,0,0,0,0,0.0495,0.0495,0.099,0.099,0.099
+Canada,industry,industrial processes,semiconductors,2020,C2F6,0,0,0,0,0,0,0,0.0495,0.0495,0.099,0.099,0.099
+Western Europe,industry,industrial processes,semiconductors,2020,C2F6,0,0,0,0,0,0,0,0.0495,0.0495,0.099,0.099,0.099
+Japan,industry,industrial processes,semiconductors,2020,C2F6,0,0,0,0,0,0,0,0.0495,0.0495,0.099,0.099,0.099
+Australia_NZ,industry,industrial processes,semiconductors,2020,C2F6,0,0,0,0,0,0,0,0.0495,0.0495,0.099,0.099,0.099
+Former Soviet Union,industry,industrial processes,semiconductors,2020,C2F6,0,0,0,0,0,0,0,0.0495,0.0495,0.099,0.099,0.099
+China,industry,industrial processes,semiconductors,2020,C2F6,0,0,0,0,0,0,0,0.0495,0.0495,0.099,0.099,0.099
+Middle East,industry,industrial processes,semiconductors,2020,C2F6,0,0,0,0,0,0,0,0.0495,0.0495,0.099,0.099,0.099
+Africa,industry,industrial processes,semiconductors,2020,C2F6,0,0,0,0,0,0,0,0,0,0,0,0
+Latin America,industry,industrial processes,semiconductors,2020,C2F6,0,0,0,0,0,0,0,0,0,0,0,0
+Southeast Asia,industry,industrial processes,semiconductors,2020,C2F6,0,0,0,0,0,0,0,0.0495,0.0495,0.099,0.099,0.099
+Eastern Europe,industry,industrial processes,semiconductors,2020,C2F6,0,0,0,0,0,0,0,0.0495,0.0495,0.099,0.099,0.099
+Korea,industry,industrial processes,semiconductors,2020,C2F6,0,0,0,0,0,0,0,0.0495,0.0495,0.099,0.099,0.099
+India,industry,industrial processes,semiconductors,2020,C2F6,0,0,0,0,0,0,0,0.0495,0.0495,0.099,0.099,0.099
+USA,industry,industrial processes,Al_Mg,2020,CF4,0.095,0.109,0.352,0.388,0.395,0.395,0.405,0.405,0.405,0.405,0.405,0.405471757
+Canada,industry,industrial processes,Al_Mg,2020,CF4,0.133,0.133,0.406,0.406,0.406,0.406,0.412,0.412,0.412,0.412,0.412,0.411661435
+Western Europe,industry,industrial processes,Al_Mg,2020,CF4,0.007,0.154,0.177,0.224,0.232,0.232,0.246,0.246,0.246,0.246,0.246,0.24621348
+Japan,industry,industrial processes,Al_Mg,2020,CF4,0,0,0.531,0.604,0.604,0.604,0.604,0.661,0.661,0.661,0.661,0.660578625
+Australia_NZ,industry,industrial processes,Al_Mg,2020,CF4,0.119,0.119,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3
+Former Soviet Union,industry,industrial processes,Al_Mg,2020,CF4,0.273,0.273,0.386,0.438,0.438,0.438,0.445,0.445,0.445,0.445,0.445,0.445
+China,industry,industrial processes,Al_Mg,2020,CF4,0.147,0.572,0.572,0.621,0.621,0.621,0.621,0.632,0.632,0.632,0.632,0.632
+Middle East,industry,industrial processes,Al_Mg,2020,CF4,0.042,0.042,0.159,0.159,0.159,0.159,0.159,0.159,0.159,0.159,0.159,0.159
+Africa,industry,industrial processes,Al_Mg,2020,CF4,0.247,0.271,0.271,0.271,0.271,0.271,0.271,0.271,0.271,0.271,0.271,0.271281318
+Latin America,industry,industrial processes,Al_Mg,2020,CF4,0.171,0.219,0.258,0.258,0.275,0.275,0.275,0.278,0.278,0.278,0.278,0.277829633
+Southeast Asia,industry,industrial processes,Al_Mg,2020,CF4,0,0,0.104,0.104,0.104,0.104,0.104,0.104,0.104,0.104,0.104,0.104469088
+Eastern Europe,industry,industrial processes,Al_Mg,2020,CF4,0.225,0.225,0.298,0.308,0.308,0.308,0.308,0.308,0.308,0.308,0.308,0.308184648
+Korea,industry,industrial processes,Al_Mg,2020,CF4,0,0,0,0,0,0,0,0,0,0,0,0
+India,industry,industrial processes,Al_Mg,2020,CF4,0.199,0.199,0.199,0.253,0.253,0.253,0.253,0.27,0.27,0.27,0.27,0.27
