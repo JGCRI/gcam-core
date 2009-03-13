@@ -73,7 +73,7 @@ ALL,refined liquids enduse,unconventional oil refining,0,0,0,0.2,0.4,0.6,0.6,0.6
 ALL,refined liquids enduse,coal to liquids,0,0,0,0.2,0.4,0.6,0.6,0.6,0.6
 ALL,refined liquids enduse,gas to liquids,0,0,0,0.2,0.4,0.6,0.6,0.6,0.6
 ALL,refined liquids industrial,crude oil refining,1,1,1,1,1,1,1,1,1
-ALL,refined liquids industrial,biomass liquids,0,1,1,1,1,1,1,1,1
+ALL,refined liquids industrial,biomass liquids,0,0,0,1,1,1,1,1,1
 ALL,refined liquids industrial,unconventional oil refining,0,0,0,0.2,0.4,0.6,0.6,0.6,0.6
 ALL,refined liquids industrial,coal to liquids,0,0,0,0.2,0.4,0.6,0.6,0.6,0.6
 ALL,refined liquids industrial,gas to liquids,0,0,0,0.2,0.4,0.6,0.6,0.6,0.6
@@ -108,7 +108,7 @@ ALL,refined liquids enduse,unconventional oil refining,unconventional oil refini
 ALL,refined liquids enduse,coal to liquids,coal to liquids,-1,-1,-1,45,45,45,45,45,45
 ALL,refined liquids enduse,gas to liquids,gas to liquids,-1,-1,-1,45,45,45,45,45,45
 ALL,refined liquids industrial,crude oil refining,crude oil refining,-1,-1,45,45,45,45,45,45,45
-ALL,refined liquids industrial,biomass liquids,biomass liquids,-1,-1,45,45,45,45,45,45,45
+ALL,refined liquids industrial,biomass liquids,biomass liquids,-1,-1,-1,45,45,45,45,45,45
 ALL,refined liquids industrial,unconventional oil refining,unconventional oil refining,-1,-1,-1,45,45,45,45,45,45
 ALL,refined liquids industrial,coal to liquids,coal to liquids,-1,-1,-1,45,45,45,45,45,45
 ALL,refined liquids industrial,gas to liquids,gas to liquids,-1,-1,-1,45,45,45,45,45,45
