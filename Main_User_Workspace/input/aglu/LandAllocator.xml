@@ -13,7 +13,7 @@
                   <UnmanagedLandLeaf name="OtherArableLand">
                      <landAllocation year="1975">74348</landAllocation>
                      <landAllocation year="1990">74418</landAllocation>
-                     <landAllocation year="2005">64165</landAllocation>
+                     <landAllocation year="2005">64156</landAllocation>
                      <intrinsicRate fillout="1" year="1975">34745</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">63</allocation>
@@ -29,8 +29,8 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
                      <landAllocation year="1975">38067</landAllocation>
-                     <landAllocation year="1990">37885</landAllocation>
-                     <landAllocation year="2005">41263</landAllocation>
+                     <landAllocation year="1990">38328</landAllocation>
+                     <landAllocation year="2005">41345</landAllocation>
                      <intrinsicRate fillout="1" year="1975">34745</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">279752</allocation>
@@ -46,8 +46,8 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
                      <landAllocation year="1975">77561</landAllocation>
-                     <landAllocation year="1990">77663</landAllocation>
-                     <landAllocation year="2005">78213</landAllocation>
+                     <landAllocation year="1990">77520</landAllocation>
+                     <landAllocation year="2005">78259</landAllocation>
                      <intrinsicRate fillout="1" year="1975">34745</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">147660</allocation>
@@ -64,17 +64,17 @@
                   <LandAllocatorNode name="AllPasture">
                      <UnmanagedLandLeaf name="UnmanagedPasture">
                         <intrinsicRate fillout="1" year="1975">34745</intrinsicRate>
-                        <landAllocation year="1975">173233</landAllocation>
-                        <landAllocation year="1990">171746</landAllocation>
-                        <landAllocation year="2005">172063</landAllocation>
+                        <landAllocation year="1975">173186</landAllocation>
+                        <landAllocation year="1990">171530</landAllocation>
+                        <landAllocation year="2005">171876</landAllocation>
                         <land-use-history>
                            <allocation year="1700">1058</allocation>
-                           <allocation year="1750">2697</allocation>
-                           <allocation year="1800">7982</allocation>
-                           <allocation year="1850">22048</allocation>
-                           <allocation year="1900">94960</allocation>
-                           <allocation year="1950">162491</allocation>
-                           <allocation year="1975">173233</allocation>
+                           <allocation year="1750">2696</allocation>
+                           <allocation year="1800">7980</allocation>
+                           <allocation year="1850">22042</allocation>
+                           <allocation year="1900">94934</allocation>
+                           <allocation year="1950">162446</allocation>
+                           <allocation year="1975">173186</allocation>
                            <above-ground-carbon-density>0.024928111</above-ground-carbon-density>
                            <below-ground-carbon-density>0.13618584</below-ground-carbon-density>
                         </land-use-history>
@@ -84,12 +84,12 @@
                         <sigma>0.8</sigma>
                         <land-use-history>
                            <allocation year="1700">359</allocation>
-                           <allocation year="1750">914</allocation>
-                           <allocation year="1800">2706</allocation>
-                           <allocation year="1850">7475</allocation>
-                           <allocation year="1900">32196</allocation>
-                           <allocation year="1950">55092</allocation>
-                           <allocation year="1975">58735</allocation>
+                           <allocation year="1750">915</allocation>
+                           <allocation year="1800">2709</allocation>
+                           <allocation year="1850">7481</allocation>
+                           <allocation year="1900">32222</allocation>
+                           <allocation year="1950">55137</allocation>
+                           <allocation year="1975">58782</allocation>
                            <above-ground-carbon-density>0.024928111</above-ground-carbon-density>
                            <below-ground-carbon-density>0.13618584</below-ground-carbon-density>
                         </land-use-history>
@@ -114,8 +114,8 @@
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
                      <landAllocation year="1975">179636</landAllocation>
-                     <landAllocation year="1990">202822</landAllocation>
-                     <landAllocation year="2005">214489</landAllocation>
+                     <landAllocation year="1990">202751</landAllocation>
+                     <landAllocation year="2005">214555</landAllocation>
                      <intrinsicRate fillout="1" year="1975">34745</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">297994</allocation>
@@ -149,8 +149,8 @@
                <sigma>0.8</sigma>
                <UnmanagedLandLeaf name="Tundra">
                   <landAllocation year="1975">25900</landAllocation>
-                  <landAllocation year="1990">25898</landAllocation>
-                  <landAllocation year="2005">25890</landAllocation>
+                  <landAllocation year="1990">25895</landAllocation>
+                  <landAllocation year="2005">25891</landAllocation>
                   <intrinsicRate fillout="1" year="1975">34745</intrinsicRate>
                   <land-use-history>
                      <allocation year="1700">26008</allocation>
@@ -169,8 +169,8 @@
                <sigma>0.8</sigma>
                <UnmanagedLandLeaf name="RockIceDesert">
                   <landAllocation year="1975">3866</landAllocation>
-                  <landAllocation year="1990">3868</landAllocation>
-                  <landAllocation year="2005">3846</landAllocation>
+                  <landAllocation year="1990">3867</landAllocation>
+                  <landAllocation year="2005">3847</landAllocation>
                   <intrinsicRate fillout="1" year="1975">34745</intrinsicRate>
                   <land-use-history>
                      <allocation year="1700">4222</allocation>
@@ -219,7 +219,7 @@
                   <UnmanagedLandLeaf name="OtherArableLand">
                      <landAllocation year="1975">25006</landAllocation>
                      <landAllocation year="1990">24877</landAllocation>
-                     <landAllocation year="2005">24334</landAllocation>
+                     <landAllocation year="2005">24324</landAllocation>
                      <intrinsicRate fillout="1" year="1975">5255</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">0</allocation>
@@ -235,8 +235,8 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
                      <landAllocation year="1975">6084</landAllocation>
-                     <landAllocation year="1990">3958</landAllocation>
-                     <landAllocation year="2005">5183</landAllocation>
+                     <landAllocation year="1990">5526</landAllocation>
+                     <landAllocation year="2005">5230</landAllocation>
                      <intrinsicRate fillout="1" year="1975">5255</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">45472</allocation>
@@ -252,7 +252,7 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
                      <landAllocation year="1975">252</landAllocation>
-                     <landAllocation year="1990">210</landAllocation>
+                     <landAllocation year="1990">226</landAllocation>
                      <landAllocation year="2005">203</landAllocation>
                      <intrinsicRate fillout="1" year="1975">5255</intrinsicRate>
                      <land-use-history>
@@ -320,8 +320,8 @@
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
                      <landAllocation year="1975">507600</landAllocation>
-                     <landAllocation year="1990">503131</landAllocation>
-                     <landAllocation year="2005">487658</landAllocation>
+                     <landAllocation year="1990">501547</landAllocation>
+                     <landAllocation year="2005">487620</landAllocation>
                      <intrinsicRate fillout="1" year="1975">5255</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">537118</allocation>
@@ -425,7 +425,7 @@
                   <UnmanagedLandLeaf name="OtherArableLand">
                      <landAllocation year="1975">8806</landAllocation>
                      <landAllocation year="1990">8571</landAllocation>
-                     <landAllocation year="2005">8051</landAllocation>
+                     <landAllocation year="2005">8053</landAllocation>
                      <intrinsicRate fillout="1" year="1975">79718</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">11708</allocation>
@@ -441,8 +441,8 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
                      <landAllocation year="1975">10383</landAllocation>
-                     <landAllocation year="1990">10849</landAllocation>
-                     <landAllocation year="2005">11335</landAllocation>
+                     <landAllocation year="1990">10932</landAllocation>
+                     <landAllocation year="2005">11336</landAllocation>
                      <intrinsicRate fillout="1" year="1975">79718</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">13192</allocation>
@@ -458,8 +458,8 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
                      <landAllocation year="1975">11579</landAllocation>
-                     <landAllocation year="1990">12623</landAllocation>
-                     <landAllocation year="2005">14222</landAllocation>
+                     <landAllocation year="1990">12441</landAllocation>
+                     <landAllocation year="2005">14225</landAllocation>
                      <intrinsicRate fillout="1" year="1975">79718</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">23057</allocation>
@@ -478,7 +478,7 @@
                         <intrinsicRate fillout="1" year="1975">79718</intrinsicRate>
                         <landAllocation year="1975">5524</landAllocation>
                         <landAllocation year="1990">5197</landAllocation>
-                        <landAllocation year="2005">4755</landAllocation>
+                        <landAllocation year="2005">4756</landAllocation>
                         <land-use-history>
                            <allocation year="1700">5420</allocation>
                            <allocation year="1750">5488</allocation>
@@ -526,8 +526,8 @@
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
                      <landAllocation year="1975">41603</landAllocation>
-                     <landAllocation year="1990">61406</landAllocation>
-                     <landAllocation year="2005">69026</landAllocation>
+                     <landAllocation year="1990">61534</landAllocation>
+                     <landAllocation year="2005">69013</landAllocation>
                      <intrinsicRate fillout="1" year="1975">79718</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">89636</allocation>
@@ -561,8 +561,8 @@
                <sigma>0.8</sigma>
                <UnmanagedLandLeaf name="Tundra">
                   <landAllocation year="1975">9409</landAllocation>
-                  <landAllocation year="1990">9538</landAllocation>
-                  <landAllocation year="2005">9762</landAllocation>
+                  <landAllocation year="1990">9510</landAllocation>
+                  <landAllocation year="2005">9760</landAllocation>
                   <intrinsicRate fillout="1" year="1975">79718</intrinsicRate>
                   <land-use-history>
                      <allocation year="1700">10569</allocation>
@@ -631,7 +631,7 @@
                   <UnmanagedLandLeaf name="OtherArableLand">
                      <landAllocation year="1975">475</landAllocation>
                      <landAllocation year="1990">442</landAllocation>
-                     <landAllocation year="2005">411</landAllocation>
+                     <landAllocation year="2005">410</landAllocation>
                      <intrinsicRate fillout="1" year="1975">221314</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">674</allocation>
@@ -647,7 +647,7 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
                      <landAllocation year="1975">349</landAllocation>
-                     <landAllocation year="1990">360</landAllocation>
+                     <landAllocation year="1990">372</landAllocation>
                      <landAllocation year="2005">383</landAllocation>
                      <intrinsicRate fillout="1" year="1975">221314</intrinsicRate>
                      <land-use-history>
@@ -664,8 +664,8 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
                      <landAllocation year="1975">757</landAllocation>
-                     <landAllocation year="1990">887</landAllocation>
-                     <landAllocation year="2005">981</landAllocation>
+                     <landAllocation year="1990">850</landAllocation>
+                     <landAllocation year="2005">980</landAllocation>
                      <intrinsicRate fillout="1" year="1975">221314</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">1156</allocation>
@@ -732,8 +732,8 @@
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
                      <landAllocation year="1975">21119</landAllocation>
-                     <landAllocation year="1990">22451</landAllocation>
-                     <landAllocation year="2005">24489</landAllocation>
+                     <landAllocation year="1990">22478</landAllocation>
+                     <landAllocation year="2005">24491</landAllocation>
                      <intrinsicRate fillout="1" year="1975">221314</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">26059</allocation>
@@ -767,7 +767,7 @@
                <sigma>0.8</sigma>
                <UnmanagedLandLeaf name="Tundra">
                   <landAllocation year="1975">12</landAllocation>
-                  <landAllocation year="1990">10</landAllocation>
+                  <landAllocation year="1990">12</landAllocation>
                   <landAllocation year="2005">8</landAllocation>
                   <intrinsicRate fillout="1" year="1975">221314</intrinsicRate>
                   <land-use-history>
@@ -837,7 +837,7 @@
                   <UnmanagedLandLeaf name="OtherArableLand">
                      <landAllocation year="1975">29758</landAllocation>
                      <landAllocation year="1990">34006</landAllocation>
-                     <landAllocation year="2005">25769</landAllocation>
+                     <landAllocation year="2005">27967</landAllocation>
                      <intrinsicRate fillout="1" year="1975">6097</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">26</allocation>
@@ -853,8 +853,8 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
                      <landAllocation year="1975">113832</landAllocation>
-                     <landAllocation year="1990">119381</landAllocation>
-                     <landAllocation year="2005">129402</landAllocation>
+                     <landAllocation year="1990">120351</landAllocation>
+                     <landAllocation year="2005">128374</landAllocation>
                      <intrinsicRate fillout="1" year="1975">6097</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">312871</allocation>
@@ -870,8 +870,8 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
                      <landAllocation year="1975">149309</landAllocation>
-                     <landAllocation year="1990">160959</landAllocation>
-                     <landAllocation year="2005">171654</landAllocation>
+                     <landAllocation year="1990">160405</landAllocation>
+                     <landAllocation year="2005">170453</landAllocation>
                      <intrinsicRate fillout="1" year="1975">6097</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">435207</allocation>
@@ -888,17 +888,17 @@
                   <LandAllocatorNode name="AllPasture">
                      <UnmanagedLandLeaf name="UnmanagedPasture">
                         <intrinsicRate fillout="1" year="1975">6097</intrinsicRate>
-                        <landAllocation year="1975">376749</landAllocation>
-                        <landAllocation year="1990">357675</landAllocation>
-                        <landAllocation year="2005">340473</landAllocation>
+                        <landAllocation year="1975">376753</landAllocation>
+                        <landAllocation year="1990">357684</landAllocation>
+                        <landAllocation year="2005">340495</landAllocation>
                         <land-use-history>
                            <allocation year="1700">0</allocation>
                            <allocation year="1750">0</allocation>
                            <allocation year="1800">6</allocation>
-                           <allocation year="1850">19611</allocation>
-                           <allocation year="1900">117574</allocation>
-                           <allocation year="1950">336332</allocation>
-                           <allocation year="1975">376749</allocation>
+                           <allocation year="1850">19612</allocation>
+                           <allocation year="1900">117575</allocation>
+                           <allocation year="1950">336336</allocation>
+                           <allocation year="1975">376753</allocation>
                            <above-ground-carbon-density>0.026778157</above-ground-carbon-density>
                            <below-ground-carbon-density>0.129801693</below-ground-carbon-density>
                         </land-use-history>
@@ -911,9 +911,9 @@
                            <allocation year="1750">0</allocation>
                            <allocation year="1800">1</allocation>
                            <allocation year="1850">3897</allocation>
-                           <allocation year="1900">23364</allocation>
-                           <allocation year="1950">66835</allocation>
-                           <allocation year="1975">74866</allocation>
+                           <allocation year="1900">23363</allocation>
+                           <allocation year="1950">66831</allocation>
+                           <allocation year="1975">74862</allocation>
                            <above-ground-carbon-density>0.026778157</above-ground-carbon-density>
                            <below-ground-carbon-density>0.129801693</below-ground-carbon-density>
                         </land-use-history>
@@ -938,8 +938,8 @@
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
                      <landAllocation year="1975">12306</landAllocation>
-                     <landAllocation year="1990">11915</landAllocation>
-                     <landAllocation year="2005">9868</landAllocation>
+                     <landAllocation year="1990">11496</landAllocation>
+                     <landAllocation year="2005">9878</landAllocation>
                      <intrinsicRate fillout="1" year="1975">6097</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">24114</allocation>
@@ -973,7 +973,7 @@
                <sigma>0.8</sigma>
                <UnmanagedLandLeaf name="Tundra">
                   <landAllocation year="1975">22</landAllocation>
-                  <landAllocation year="1990">22</landAllocation>
+                  <landAllocation year="1990">21</landAllocation>
                   <landAllocation year="2005">21</landAllocation>
                   <intrinsicRate fillout="1" year="1975">6097</intrinsicRate>
                   <land-use-history>
@@ -993,8 +993,8 @@
                <sigma>0.8</sigma>
                <UnmanagedLandLeaf name="RockIceDesert">
                   <landAllocation year="1975">1728</landAllocation>
-                  <landAllocation year="1990">1743</landAllocation>
-                  <landAllocation year="2005">1748</landAllocation>
+                  <landAllocation year="1990">1740</landAllocation>
+                  <landAllocation year="2005">1747</landAllocation>
                   <intrinsicRate fillout="1" year="1975">6097</intrinsicRate>
                   <land-use-history>
                      <allocation year="1700">2022</allocation>
@@ -1043,7 +1043,7 @@
                   <UnmanagedLandLeaf name="OtherArableLand">
                      <landAllocation year="1975">79509</landAllocation>
                      <landAllocation year="1990">78626</landAllocation>
-                     <landAllocation year="2005">90218</landAllocation>
+                     <landAllocation year="2005">90372</landAllocation>
                      <intrinsicRate fillout="1" year="1975">5940</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">15624</allocation>
@@ -1059,8 +1059,8 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
                      <landAllocation year="1975">179068</landAllocation>
-                     <landAllocation year="1990">173272</landAllocation>
-                     <landAllocation year="2005">170938</landAllocation>
+                     <landAllocation year="1990">172766</landAllocation>
+                     <landAllocation year="2005">170794</landAllocation>
                      <intrinsicRate fillout="1" year="1975">5940</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">459072</allocation>
@@ -1076,8 +1076,8 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
                      <landAllocation year="1975">37770</landAllocation>
-                     <landAllocation year="1990">35908</landAllocation>
-                     <landAllocation year="2005">28525</landAllocation>
+                     <landAllocation year="1990">35772</landAllocation>
+                     <landAllocation year="2005">28503</landAllocation>
                      <intrinsicRate fillout="1" year="1975">5940</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">115887</allocation>
@@ -1094,17 +1094,17 @@
                   <LandAllocatorNode name="AllPasture">
                      <UnmanagedLandLeaf name="UnmanagedPasture">
                         <intrinsicRate fillout="1" year="1975">5940</intrinsicRate>
-                        <landAllocation year="1975">278146</landAllocation>
-                        <landAllocation year="1990">286116</landAllocation>
-                        <landAllocation year="2005">316593</landAllocation>
+                        <landAllocation year="1975">278154</landAllocation>
+                        <landAllocation year="1990">286192</landAllocation>
+                        <landAllocation year="2005">316667</landAllocation>
                         <land-use-history>
                            <allocation year="1700">24878</allocation>
-                           <allocation year="1750">31699</allocation>
-                           <allocation year="1800">40582</allocation>
-                           <allocation year="1850">55162</allocation>
-                           <allocation year="1900">103681</allocation>
-                           <allocation year="1950">195369</allocation>
-                           <allocation year="1975">278146</allocation>
+                           <allocation year="1750">31700</allocation>
+                           <allocation year="1800">40583</allocation>
+                           <allocation year="1850">55163</allocation>
+                           <allocation year="1900">103684</allocation>
+                           <allocation year="1950">195375</allocation>
+                           <allocation year="1975">278154</allocation>
                            <above-ground-carbon-density>0.019817391</above-ground-carbon-density>
                            <below-ground-carbon-density>0.130109156</below-ground-carbon-density>
                         </land-use-history>
@@ -1114,12 +1114,12 @@
                         <sigma>0.8</sigma>
                         <land-use-history>
                            <allocation year="1700">3442</allocation>
-                           <allocation year="1750">4386</allocation>
-                           <allocation year="1800">5615</allocation>
-                           <allocation year="1850">7633</allocation>
-                           <allocation year="1900">14347</allocation>
-                           <allocation year="1950">27033</allocation>
-                           <allocation year="1975">38487</allocation>
+                           <allocation year="1750">4385</allocation>
+                           <allocation year="1800">5614</allocation>
+                           <allocation year="1850">7631</allocation>
+                           <allocation year="1900">14344</allocation>
+                           <allocation year="1950">27028</allocation>
+                           <allocation year="1975">38479</allocation>
                            <above-ground-carbon-density>0.019817391</above-ground-carbon-density>
                            <below-ground-carbon-density>0.130109156</below-ground-carbon-density>
                         </land-use-history>
@@ -1144,8 +1144,8 @@
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
                      <landAllocation year="1975">1013902</landAllocation>
-                     <landAllocation year="1990">1009869</landAllocation>
-                     <landAllocation year="2005">1010866</landAllocation>
+                     <landAllocation year="1990">1010355</landAllocation>
+                     <landAllocation year="2005">1010792</landAllocation>
                      <intrinsicRate fillout="1" year="1975">5940</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">1131647</allocation>
@@ -1179,8 +1179,8 @@
                <sigma>0.8</sigma>
                <UnmanagedLandLeaf name="Tundra">
                   <landAllocation year="1975">210301</landAllocation>
-                  <landAllocation year="1990">209833</landAllocation>
-                  <landAllocation year="2005">208732</landAllocation>
+                  <landAllocation year="1990">209907</landAllocation>
+                  <landAllocation year="2005">208725</landAllocation>
                   <intrinsicRate fillout="1" year="1975">5940</intrinsicRate>
                   <land-use-history>
                      <allocation year="1700">217896</allocation>
@@ -1199,8 +1199,8 @@
                <sigma>0.8</sigma>
                <UnmanagedLandLeaf name="RockIceDesert">
                   <landAllocation year="1975">40400</landAllocation>
-                  <landAllocation year="1990">40286</landAllocation>
-                  <landAllocation year="2005">39664</landAllocation>
+                  <landAllocation year="1990">40293</landAllocation>
+                  <landAllocation year="2005">39681</landAllocation>
                   <intrinsicRate fillout="1" year="1975">5940</intrinsicRate>
                   <land-use-history>
                      <allocation year="1700">44728</allocation>
@@ -1249,7 +1249,7 @@
                   <UnmanagedLandLeaf name="OtherArableLand">
                      <landAllocation year="1975">11319</landAllocation>
                      <landAllocation year="1990">14502</landAllocation>
-                     <landAllocation year="2005">17271</landAllocation>
+                     <landAllocation year="2005">17304</landAllocation>
                      <intrinsicRate fillout="1" year="1975">18539</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">5545</allocation>
@@ -1265,8 +1265,8 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
                      <landAllocation year="1975">77789</landAllocation>
-                     <landAllocation year="1990">49930</landAllocation>
-                     <landAllocation year="2005">40296</landAllocation>
+                     <landAllocation year="1990">50004</landAllocation>
+                     <landAllocation year="2005">40176</landAllocation>
                      <intrinsicRate fillout="1" year="1975">18539</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">236797</allocation>
@@ -1282,8 +1282,8 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
                      <landAllocation year="1975">39354</landAllocation>
-                     <landAllocation year="1990">30458</landAllocation>
-                     <landAllocation year="2005">32539</landAllocation>
+                     <landAllocation year="1990">30236</landAllocation>
+                     <landAllocation year="2005">32485</landAllocation>
                      <intrinsicRate fillout="1" year="1975">18539</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">122458</allocation>
@@ -1300,17 +1300,17 @@
                   <LandAllocatorNode name="AllPasture">
                      <UnmanagedLandLeaf name="UnmanagedPasture">
                         <intrinsicRate fillout="1" year="1975">18539</intrinsicRate>
-                        <landAllocation year="1975">352938</landAllocation>
-                        <landAllocation year="1990">429362</landAllocation>
-                        <landAllocation year="2005">413263</landAllocation>
+                        <landAllocation year="1975">353007</landAllocation>
+                        <landAllocation year="1990">429578</landAllocation>
+                        <landAllocation year="2005">413723</landAllocation>
                         <land-use-history>
-                           <allocation year="1700">52713</allocation>
-                           <allocation year="1750">87193</allocation>
-                           <allocation year="1800">113219</allocation>
-                           <allocation year="1850">140771</allocation>
-                           <allocation year="1900">166992</allocation>
-                           <allocation year="1950">217631</allocation>
-                           <allocation year="1975">352938</allocation>
+                           <allocation year="1700">52723</allocation>
+                           <allocation year="1750">87210</allocation>
+                           <allocation year="1800">113241</allocation>
+                           <allocation year="1850">140799</allocation>
+                           <allocation year="1900">167025</allocation>
+                           <allocation year="1950">217674</allocation>
+                           <allocation year="1975">353007</allocation>
                            <above-ground-carbon-density>0.015808956</above-ground-carbon-density>
                            <below-ground-carbon-density>0.142436919</below-ground-carbon-density>
                         </land-use-history>
@@ -1319,13 +1319,13 @@
                      <LandAllocatorNode name="PastureLand">
                         <sigma>0.8</sigma>
                         <land-use-history>
-                           <allocation year="1700">11196</allocation>
-                           <allocation year="1750">18519</allocation>
-                           <allocation year="1800">24047</allocation>
-                           <allocation year="1850">29899</allocation>
-                           <allocation year="1900">35468</allocation>
-                           <allocation year="1950">46224</allocation>
-                           <allocation year="1975">74962</allocation>
+                           <allocation year="1700">11186</allocation>
+                           <allocation year="1750">18502</allocation>
+                           <allocation year="1800">24025</allocation>
+                           <allocation year="1850">29872</allocation>
+                           <allocation year="1900">35436</allocation>
+                           <allocation year="1950">46181</allocation>
+                           <allocation year="1975">74893</allocation>
                            <above-ground-carbon-density>0.015808956</above-ground-carbon-density>
                            <below-ground-carbon-density>0.142436919</below-ground-carbon-density>
                         </land-use-history>
@@ -1350,8 +1350,8 @@
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
                      <landAllocation year="1975">43589</landAllocation>
-                     <landAllocation year="1990">39148</landAllocation>
-                     <landAllocation year="2005">31747</landAllocation>
+                     <landAllocation year="1990">39664</landAllocation>
+                     <landAllocation year="2005">31578</landAllocation>
                      <intrinsicRate fillout="1" year="1975">18539</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">180472</allocation>
@@ -1385,8 +1385,8 @@
                <sigma>0.8</sigma>
                <UnmanagedLandLeaf name="Tundra">
                   <landAllocation year="1975">71659</landAllocation>
-                  <landAllocation year="1990">38013</landAllocation>
-                  <landAllocation year="2005">38486</landAllocation>
+                  <landAllocation year="1990">37561</landAllocation>
+                  <landAllocation year="2005">38373</landAllocation>
                   <intrinsicRate fillout="1" year="1975">18539</intrinsicRate>
                   <land-use-history>
                      <allocation year="1700">157556</allocation>
@@ -1405,8 +1405,8 @@
                <sigma>0.8</sigma>
                <UnmanagedLandLeaf name="RockIceDesert">
                   <landAllocation year="1975">140363</landAllocation>
-                  <landAllocation year="1990">137209</landAllocation>
-                  <landAllocation year="2005">128039</landAllocation>
+                  <landAllocation year="1990">137133</landAllocation>
+                  <landAllocation year="2005">128001</landAllocation>
                   <intrinsicRate fillout="1" year="1975">18539</intrinsicRate>
                   <land-use-history>
                      <allocation year="1700">153896</allocation>
@@ -1455,7 +1455,7 @@
                   <UnmanagedLandLeaf name="OtherArableLand">
                      <landAllocation year="1975">2805</landAllocation>
                      <landAllocation year="1990">3023</landAllocation>
-                     <landAllocation year="2005">3662</landAllocation>
+                     <landAllocation year="2005">3695</landAllocation>
                      <intrinsicRate fillout="1" year="1975">19821</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">4603</allocation>
@@ -1471,8 +1471,8 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
                      <landAllocation year="1975">10071</landAllocation>
-                     <landAllocation year="1990">8409</landAllocation>
-                     <landAllocation year="2005">13127</landAllocation>
+                     <landAllocation year="1990">8798</landAllocation>
+                     <landAllocation year="2005">13080</landAllocation>
                      <intrinsicRate fillout="1" year="1975">19821</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">30242</allocation>
@@ -1488,8 +1488,8 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
                      <landAllocation year="1975">84642</landAllocation>
-                     <landAllocation year="1990">69651</landAllocation>
-                     <landAllocation year="2005">74517</landAllocation>
+                     <landAllocation year="1990">69323</landAllocation>
+                     <landAllocation year="2005">74488</landAllocation>
                      <intrinsicRate fillout="1" year="1975">19821</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">161158</allocation>
@@ -1506,17 +1506,17 @@
                   <LandAllocatorNode name="AllPasture">
                      <UnmanagedLandLeaf name="UnmanagedPasture">
                         <intrinsicRate fillout="1" year="1975">19821</intrinsicRate>
-                        <landAllocation year="1975">150858</landAllocation>
-                        <landAllocation year="1990">184979</landAllocation>
-                        <landAllocation year="2005">173708</landAllocation>
+                        <landAllocation year="1975">150873</landAllocation>
+                        <landAllocation year="1990">185011</landAllocation>
+                        <landAllocation year="2005">174099</landAllocation>
                         <land-use-history>
-                           <allocation year="1700">18895</allocation>
-                           <allocation year="1750">21699</allocation>
-                           <allocation year="1800">27821</allocation>
-                           <allocation year="1850">38907</allocation>
-                           <allocation year="1900">63935</allocation>
-                           <allocation year="1950">117457</allocation>
-                           <allocation year="1975">150858</allocation>
+                           <allocation year="1700">18897</allocation>
+                           <allocation year="1750">21701</allocation>
+                           <allocation year="1800">27824</allocation>
+                           <allocation year="1850">38911</allocation>
+                           <allocation year="1900">63942</allocation>
+                           <allocation year="1950">117469</allocation>
+                           <allocation year="1975">150873</allocation>
                            <above-ground-carbon-density>0.027102762</above-ground-carbon-density>
                            <below-ground-carbon-density>0.129292423</below-ground-carbon-density>
                         </land-use-history>
@@ -1525,13 +1525,13 @@
                      <LandAllocatorNode name="PastureLand">
                         <sigma>0.8</sigma>
                         <land-use-history>
-                           <allocation year="1700">877</allocation>
-                           <allocation year="1750">1007</allocation>
-                           <allocation year="1800">1291</allocation>
-                           <allocation year="1850">1806</allocation>
-                           <allocation year="1900">2967</allocation>
-                           <allocation year="1950">5451</allocation>
-                           <allocation year="1975">7001</allocation>
+                           <allocation year="1700">875</allocation>
+                           <allocation year="1750">1005</allocation>
+                           <allocation year="1800">1288</allocation>
+                           <allocation year="1850">1802</allocation>
+                           <allocation year="1900">2961</allocation>
+                           <allocation year="1950">5439</allocation>
+                           <allocation year="1975">6986</allocation>
                            <above-ground-carbon-density>0.027102762</above-ground-carbon-density>
                            <below-ground-carbon-density>0.129292423</below-ground-carbon-density>
                         </land-use-history>
@@ -1556,8 +1556,8 @@
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
                      <landAllocation year="1975">789</landAllocation>
-                     <landAllocation year="1990">443</landAllocation>
-                     <landAllocation year="2005">354</landAllocation>
+                     <landAllocation year="1990">550</landAllocation>
+                     <landAllocation year="2005">351</landAllocation>
                      <intrinsicRate fillout="1" year="1975">19821</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">2609</allocation>
@@ -1611,8 +1611,8 @@
                <sigma>0.8</sigma>
                <UnmanagedLandLeaf name="RockIceDesert">
                   <landAllocation year="1975">229588</landAllocation>
-                  <landAllocation year="1990">208776</landAllocation>
-                  <landAllocation year="2005">208766</landAllocation>
+                  <landAllocation year="1990">208592</landAllocation>
+                  <landAllocation year="2005">208420</landAllocation>
                   <intrinsicRate fillout="1" year="1975">19821</intrinsicRate>
                   <land-use-history>
                      <allocation year="1700">287984</allocation>
@@ -1661,7 +1661,7 @@
                   <UnmanagedLandLeaf name="OtherArableLand">
                      <landAllocation year="1975">39659</landAllocation>
                      <landAllocation year="1990">47388</landAllocation>
-                     <landAllocation year="2005">31493</landAllocation>
+                     <landAllocation year="2005">31504</landAllocation>
                      <intrinsicRate fillout="1" year="1975">5682</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">4000</allocation>
@@ -1677,8 +1677,8 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
                      <landAllocation year="1975">488091</landAllocation>
-                     <landAllocation year="1990">459926</landAllocation>
-                     <landAllocation year="2005">422349</landAllocation>
+                     <landAllocation year="1990">459379</landAllocation>
+                     <landAllocation year="2005">422269</landAllocation>
                      <intrinsicRate fillout="1" year="1975">5682</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">1002909</allocation>
@@ -1694,8 +1694,8 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
                      <landAllocation year="1975">119603</landAllocation>
-                     <landAllocation year="1990">116288</landAllocation>
-                     <landAllocation year="2005">116819</landAllocation>
+                     <landAllocation year="1990">116480</landAllocation>
+                     <landAllocation year="2005">116776</landAllocation>
                      <intrinsicRate fillout="1" year="1975">5682</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">278021</allocation>
@@ -1712,17 +1712,17 @@
                   <LandAllocatorNode name="AllPasture">
                      <UnmanagedLandLeaf name="UnmanagedPasture">
                         <intrinsicRate fillout="1" year="1975">5682</intrinsicRate>
-                        <landAllocation year="1975">775593</landAllocation>
-                        <landAllocation year="1990">786422</landAllocation>
-                        <landAllocation year="2005">796120</landAllocation>
+                        <landAllocation year="1975">775605</landAllocation>
+                        <landAllocation year="1990">786508</landAllocation>
+                        <landAllocation year="2005">796233</landAllocation>
                         <land-use-history>
-                           <allocation year="1700">118825</allocation>
-                           <allocation year="1750">139685</allocation>
-                           <allocation year="1800">168915</allocation>
-                           <allocation year="1850">226826</allocation>
-                           <allocation year="1900">350562</allocation>
-                           <allocation year="1950">624569</allocation>
-                           <allocation year="1975">775593</allocation>
+                           <allocation year="1700">118827</allocation>
+                           <allocation year="1750">139687</allocation>
+                           <allocation year="1800">168918</allocation>
+                           <allocation year="1850">226829</allocation>
+                           <allocation year="1900">350567</allocation>
+                           <allocation year="1950">624578</allocation>
+                           <allocation year="1975">775605</allocation>
                            <above-ground-carbon-density>0.028121455</above-ground-carbon-density>
                            <below-ground-carbon-density>0.123830751</below-ground-carbon-density>
                         </land-use-history>
@@ -1731,13 +1731,13 @@
                      <LandAllocatorNode name="PastureLand">
                         <sigma>0.8</sigma>
                         <land-use-history>
-                           <allocation year="1700">13535</allocation>
-                           <allocation year="1750">15911</allocation>
-                           <allocation year="1800">19240</allocation>
-                           <allocation year="1850">25837</allocation>
-                           <allocation year="1900">39931</allocation>
-                           <allocation year="1950">71142</allocation>
-                           <allocation year="1975">88344</allocation>
+                           <allocation year="1700">13533</allocation>
+                           <allocation year="1750">15909</allocation>
+                           <allocation year="1800">19238</allocation>
+                           <allocation year="1850">25833</allocation>
+                           <allocation year="1900">39926</allocation>
+                           <allocation year="1950">71133</allocation>
+                           <allocation year="1975">88333</allocation>
                            <above-ground-carbon-density>0.028121455</above-ground-carbon-density>
                            <below-ground-carbon-density>0.123830751</below-ground-carbon-density>
                         </land-use-history>
@@ -1762,8 +1762,8 @@
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
                      <landAllocation year="1975">325517</landAllocation>
-                     <landAllocation year="1990">318643</landAllocation>
-                     <landAllocation year="2005">290721</landAllocation>
+                     <landAllocation year="1990">319000</landAllocation>
+                     <landAllocation year="2005">290692</landAllocation>
                      <intrinsicRate fillout="1" year="1975">5682</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">423457</allocation>
@@ -1817,8 +1817,8 @@
                <sigma>0.8</sigma>
                <UnmanagedLandLeaf name="RockIceDesert">
                   <landAllocation year="1975">878502</landAllocation>
-                  <landAllocation year="1990">882126</landAllocation>
-                  <landAllocation year="2005">878666</landAllocation>
+                  <landAllocation year="1990">882039</landAllocation>
+                  <landAllocation year="2005">878694</landAllocation>
                   <intrinsicRate fillout="1" year="1975">5682</intrinsicRate>
                   <land-use-history>
                      <allocation year="1700">946950</allocation>
@@ -1867,7 +1867,7 @@
                   <UnmanagedLandLeaf name="OtherArableLand">
                      <landAllocation year="1975">18480</landAllocation>
                      <landAllocation year="1990">23373</landAllocation>
-                     <landAllocation year="2005">16335</landAllocation>
+                     <landAllocation year="2005">16362</landAllocation>
                      <intrinsicRate fillout="1" year="1975">11882</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">3847</allocation>
@@ -1883,8 +1883,8 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
                      <landAllocation year="1975">288243</landAllocation>
-                     <landAllocation year="1990">262097</landAllocation>
-                     <landAllocation year="2005">248478</landAllocation>
+                     <landAllocation year="1990">261454</landAllocation>
+                     <landAllocation year="2005">248186</landAllocation>
                      <intrinsicRate fillout="1" year="1975">11882</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">563433</allocation>
@@ -1900,8 +1900,8 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
                      <landAllocation year="1975">136245</landAllocation>
-                     <landAllocation year="1990">131294</landAllocation>
-                     <landAllocation year="2005">127262</landAllocation>
+                     <landAllocation year="1990">131162</landAllocation>
+                     <landAllocation year="2005">127171</landAllocation>
                      <intrinsicRate fillout="1" year="1975">11882</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">248285</allocation>
@@ -1918,17 +1918,17 @@
                   <LandAllocatorNode name="AllPasture">
                      <UnmanagedLandLeaf name="UnmanagedPasture">
                         <intrinsicRate fillout="1" year="1975">11882</intrinsicRate>
-                        <landAllocation year="1975">283983</landAllocation>
-                        <landAllocation year="1990">307404</landAllocation>
-                        <landAllocation year="2005">315644</landAllocation>
+                        <landAllocation year="1975">284282</landAllocation>
+                        <landAllocation year="1990">308137</landAllocation>
+                        <landAllocation year="2005">316422</landAllocation>
                         <land-use-history>
-                           <allocation year="1700">13731</allocation>
-                           <allocation year="1750">17399</allocation>
-                           <allocation year="1800">22816</allocation>
-                           <allocation year="1850">39167</allocation>
-                           <allocation year="1900">80601</allocation>
-                           <allocation year="1950">206202</allocation>
-                           <allocation year="1975">283983</allocation>
+                           <allocation year="1700">13745</allocation>
+                           <allocation year="1750">17418</allocation>
+                           <allocation year="1800">22840</allocation>
+                           <allocation year="1850">39208</allocation>
+                           <allocation year="1900">80686</allocation>
+                           <allocation year="1950">206420</allocation>
+                           <allocation year="1975">284282</allocation>
                            <above-ground-carbon-density>0.023964342</above-ground-carbon-density>
                            <below-ground-carbon-density>0.139278793</below-ground-carbon-density>
                         </land-use-history>
@@ -1937,13 +1937,13 @@
                      <LandAllocatorNode name="PastureLand">
                         <sigma>0.8</sigma>
                         <land-use-history>
-                           <allocation year="1700">10272</allocation>
-                           <allocation year="1750">13017</allocation>
-                           <allocation year="1800">17069</allocation>
-                           <allocation year="1850">29302</allocation>
-                           <allocation year="1900">60300</allocation>
-                           <allocation year="1950">154265</allocation>
-                           <allocation year="1975">212455</allocation>
+                           <allocation year="1700">10258</allocation>
+                           <allocation year="1750">12999</allocation>
+                           <allocation year="1800">17045</allocation>
+                           <allocation year="1850">29260</allocation>
+                           <allocation year="1900">60215</allocation>
+                           <allocation year="1950">154048</allocation>
+                           <allocation year="1975">212156</allocation>
                            <above-ground-carbon-density>0.023964342</above-ground-carbon-density>
                            <below-ground-carbon-density>0.139278793</below-ground-carbon-density>
                         </land-use-history>
@@ -1968,8 +1968,8 @@
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
                      <landAllocation year="1975">809385</landAllocation>
-                     <landAllocation year="1990">784882</landAllocation>
-                     <landAllocation year="2005">759376</landAllocation>
+                     <landAllocation year="1990">784981</landAllocation>
+                     <landAllocation year="2005">759101</landAllocation>
                      <intrinsicRate fillout="1" year="1975">11882</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">1007760</allocation>
@@ -2003,8 +2003,8 @@
                <sigma>0.8</sigma>
                <UnmanagedLandLeaf name="Tundra">
                   <landAllocation year="1975">23258</landAllocation>
-                  <landAllocation year="1990">22137</landAllocation>
-                  <landAllocation year="2005">22111</landAllocation>
+                  <landAllocation year="1990">22152</landAllocation>
+                  <landAllocation year="2005">22095</landAllocation>
                   <intrinsicRate fillout="1" year="1975">11882</intrinsicRate>
                   <land-use-history>
                      <allocation year="1700">30910</allocation>
@@ -2023,8 +2023,8 @@
                <sigma>0.8</sigma>
                <UnmanagedLandLeaf name="RockIceDesert">
                   <landAllocation year="1975">46056</landAllocation>
-                  <landAllocation year="1990">45623</landAllocation>
-                  <landAllocation year="2005">45416</landAllocation>
+                  <landAllocation year="1990">45570</landAllocation>
+                  <landAllocation year="2005">45285</landAllocation>
                   <intrinsicRate fillout="1" year="1975">11882</intrinsicRate>
                   <land-use-history>
                      <allocation year="1700">52181</allocation>
@@ -2073,7 +2073,7 @@
                   <UnmanagedLandLeaf name="OtherArableLand">
                      <landAllocation year="1975">10611</landAllocation>
                      <landAllocation year="1990">12189</landAllocation>
-                     <landAllocation year="2005">12654</landAllocation>
+                     <landAllocation year="2005">12682</landAllocation>
                      <intrinsicRate fillout="1" year="1975">34827</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">1136</allocation>
@@ -2089,8 +2089,8 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
                      <landAllocation year="1975">32325</landAllocation>
-                     <landAllocation year="1990">31164</landAllocation>
-                     <landAllocation year="2005">30854</landAllocation>
+                     <landAllocation year="1990">31373</landAllocation>
+                     <landAllocation year="2005">30841</landAllocation>
                      <intrinsicRate fillout="1" year="1975">34827</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">52663</allocation>
@@ -2106,8 +2106,8 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
                      <landAllocation year="1975">41708</landAllocation>
-                     <landAllocation year="1990">40785</landAllocation>
-                     <landAllocation year="2005">39402</landAllocation>
+                     <landAllocation year="1990">40707</landAllocation>
+                     <landAllocation year="2005">39380</landAllocation>
                      <intrinsicRate fillout="1" year="1975">34827</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">66917</allocation>
@@ -2124,17 +2124,17 @@
                   <LandAllocatorNode name="AllPasture">
                      <UnmanagedLandLeaf name="UnmanagedPasture">
                         <intrinsicRate fillout="1" year="1975">34827</intrinsicRate>
-                        <landAllocation year="1975">11371</landAllocation>
-                        <landAllocation year="1990">11674</landAllocation>
-                        <landAllocation year="2005">11348</landAllocation>
+                        <landAllocation year="1975">11425</landAllocation>
+                        <landAllocation year="1990">11742</landAllocation>
+                        <landAllocation year="2005">11417</landAllocation>
                         <land-use-history>
-                           <allocation year="1700">4031</allocation>
-                           <allocation year="1750">4172</allocation>
-                           <allocation year="1800">4406</allocation>
-                           <allocation year="1850">4878</allocation>
-                           <allocation year="1900">6544</allocation>
-                           <allocation year="1950">9519</allocation>
-                           <allocation year="1975">11371</allocation>
+                           <allocation year="1700">4050</allocation>
+                           <allocation year="1750">4192</allocation>
+                           <allocation year="1800">4427</allocation>
+                           <allocation year="1850">4901</allocation>
+                           <allocation year="1900">6575</allocation>
+                           <allocation year="1950">9564</allocation>
+                           <allocation year="1975">11425</allocation>
                            <above-ground-carbon-density>0.023397437</above-ground-carbon-density>
                            <below-ground-carbon-density>0.134445136</below-ground-carbon-density>
                         </land-use-history>
@@ -2143,13 +2143,13 @@
                      <LandAllocatorNode name="PastureLand">
                         <sigma>0.8</sigma>
                         <land-use-history>
-                           <allocation year="1700">14488</allocation>
-                           <allocation year="1750">14995</allocation>
-                           <allocation year="1800">15836</allocation>
-                           <allocation year="1850">17529</allocation>
-                           <allocation year="1900">23519</allocation>
-                           <allocation year="1950">34209</allocation>
-                           <allocation year="1975">40866</allocation>
+                           <allocation year="1700">14469</allocation>
+                           <allocation year="1750">14975</allocation>
+                           <allocation year="1800">15815</allocation>
+                           <allocation year="1850">17506</allocation>
+                           <allocation year="1900">23488</allocation>
+                           <allocation year="1950">34164</allocation>
+                           <allocation year="1975">40812</allocation>
                            <above-ground-carbon-density>0.023397437</above-ground-carbon-density>
                            <below-ground-carbon-density>0.134445136</below-ground-carbon-density>
                         </land-use-history>
@@ -2174,8 +2174,8 @@
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
                      <landAllocation year="1975">279510</landAllocation>
-                     <landAllocation year="1990">271783</landAllocation>
-                     <landAllocation year="2005">270067</landAllocation>
+                     <landAllocation year="1990">271793</landAllocation>
+                     <landAllocation year="2005">270028</landAllocation>
                      <intrinsicRate fillout="1" year="1975">34827</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">355363</allocation>
@@ -2209,8 +2209,8 @@
                <sigma>0.8</sigma>
                <UnmanagedLandLeaf name="Tundra">
                   <landAllocation year="1975">4849</landAllocation>
-                  <landAllocation year="1990">4827</landAllocation>
-                  <landAllocation year="2005">4834</landAllocation>
+                  <landAllocation year="1990">4826</landAllocation>
+                  <landAllocation year="2005">4825</landAllocation>
                   <intrinsicRate fillout="1" year="1975">34827</intrinsicRate>
                   <land-use-history>
                      <allocation year="1700">5566</allocation>
@@ -2229,8 +2229,8 @@
                <sigma>0.8</sigma>
                <UnmanagedLandLeaf name="RockIceDesert">
                   <landAllocation year="1975">36453</landAllocation>
-                  <landAllocation year="1990">36246</landAllocation>
-                  <landAllocation year="2005">35764</landAllocation>
+                  <landAllocation year="1990">36047</landAllocation>
+                  <landAllocation year="2005">35749</landAllocation>
                   <intrinsicRate fillout="1" year="1975">34827</intrinsicRate>
                   <land-use-history>
                      <allocation year="1700">40039</allocation>
@@ -2279,7 +2279,7 @@
                   <UnmanagedLandLeaf name="OtherArableLand">
                      <landAllocation year="1975">38655</landAllocation>
                      <landAllocation year="1990">37943</landAllocation>
-                     <landAllocation year="2005">32426</landAllocation>
+                     <landAllocation year="2005">32439</landAllocation>
                      <intrinsicRate fillout="1" year="1975">62516</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">13092</allocation>
@@ -2295,8 +2295,8 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
                      <landAllocation year="1975">20906</landAllocation>
-                     <landAllocation year="1990">19927</landAllocation>
-                     <landAllocation year="2005">19335</landAllocation>
+                     <landAllocation year="1990">19671</landAllocation>
+                     <landAllocation year="2005">19437</landAllocation>
                      <intrinsicRate fillout="1" year="1975">62516</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">40867</allocation>
@@ -2312,8 +2312,8 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
                      <landAllocation year="1975">7541</landAllocation>
-                     <landAllocation year="1990">7344</landAllocation>
-                     <landAllocation year="2005">7246</landAllocation>
+                     <landAllocation year="1990">6994</landAllocation>
+                     <landAllocation year="2005">7244</landAllocation>
                      <intrinsicRate fillout="1" year="1975">62516</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">12527</allocation>
@@ -2331,8 +2331,8 @@
                      <UnmanagedLandLeaf name="UnmanagedPasture">
                         <intrinsicRate fillout="1" year="1975">62516</intrinsicRate>
                         <landAllocation year="1975">28507</landAllocation>
-                        <landAllocation year="1990">30068</landAllocation>
-                        <landAllocation year="2005">30435</landAllocation>
+                        <landAllocation year="1990">30070</landAllocation>
+                        <landAllocation year="2005">30434</landAllocation>
                         <land-use-history>
                            <allocation year="1700">12145</allocation>
                            <allocation year="1750">12625</allocation>
@@ -2380,8 +2380,8 @@
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
                      <landAllocation year="1975">21401</landAllocation>
-                     <landAllocation year="1990">25893</landAllocation>
-                     <landAllocation year="2005">29893</landAllocation>
+                     <landAllocation year="1990">26494</landAllocation>
+                     <landAllocation year="2005">29782</landAllocation>
                      <intrinsicRate fillout="1" year="1975">62516</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">62434</allocation>
@@ -2415,7 +2415,7 @@
                <sigma>0.8</sigma>
                <UnmanagedLandLeaf name="Tundra">
                   <landAllocation year="1975">177</landAllocation>
-                  <landAllocation year="1990">166</landAllocation>
+                  <landAllocation year="1990">169</landAllocation>
                   <landAllocation year="2005">153</landAllocation>
                   <intrinsicRate fillout="1" year="1975">62516</intrinsicRate>
                   <land-use-history>
@@ -2518,7 +2518,7 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
                      <landAllocation year="1975">18</landAllocation>
-                     <landAllocation year="1990">18</landAllocation>
+                     <landAllocation year="1990">16</landAllocation>
                      <landAllocation year="2005">19</landAllocation>
                      <intrinsicRate fillout="1" year="1975">457893</intrinsicRate>
                      <land-use-history>
@@ -2586,7 +2586,7 @@
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
                      <landAllocation year="1975">5329</landAllocation>
-                     <landAllocation year="1990">5584</landAllocation>
+                     <landAllocation year="1990">5585</landAllocation>
                      <landAllocation year="2005">5752</landAllocation>
                      <intrinsicRate fillout="1" year="1975">457893</intrinsicRate>
                      <land-use-history>
@@ -2690,8 +2690,8 @@
                   <sigma>0.8</sigma>
                   <UnmanagedLandLeaf name="OtherArableLand">
                      <landAllocation year="1975">16442</landAllocation>
-                     <landAllocation year="1990">16736</landAllocation>
-                     <landAllocation year="2005">16752</landAllocation>
+                     <landAllocation year="1990">16737</landAllocation>
+                     <landAllocation year="2005">16787</landAllocation>
                      <intrinsicRate fillout="1" year="1975">71921</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">3751</allocation>
@@ -2707,8 +2707,8 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="GrassLand">
                      <landAllocation year="1975">18595</landAllocation>
-                     <landAllocation year="1990">18459</landAllocation>
-                     <landAllocation year="2005">18332</landAllocation>
+                     <landAllocation year="1990">18645</landAllocation>
+                     <landAllocation year="2005">18370</landAllocation>
                      <intrinsicRate fillout="1" year="1975">71921</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">11257</allocation>
@@ -2724,8 +2724,8 @@
                   </UnmanagedLandLeaf>
                   <UnmanagedLandLeaf name="ShrubLand">
                      <landAllocation year="1975">21546</landAllocation>
-                     <landAllocation year="1990">20408</landAllocation>
-                     <landAllocation year="2005">19528</landAllocation>
+                     <landAllocation year="1990">20217</landAllocation>
+                     <landAllocation year="2005">19502</landAllocation>
                      <intrinsicRate fillout="1" year="1975">71921</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">45291</allocation>
@@ -2743,8 +2743,8 @@
                      <UnmanagedLandLeaf name="UnmanagedPasture">
                         <intrinsicRate fillout="1" year="1975">71921</intrinsicRate>
                         <landAllocation year="1975">1039</landAllocation>
-                        <landAllocation year="1990">959</landAllocation>
-                        <landAllocation year="2005">893</landAllocation>
+                        <landAllocation year="1990">969</landAllocation>
+                        <landAllocation year="2005">905</landAllocation>
                         <land-use-history>
                            <allocation year="1700">86</allocation>
                            <allocation year="1750">133</allocation>
@@ -2792,8 +2792,8 @@
                   <sigma>0.2</sigma>
                   <UnmanagedLandLeaf name="UnmanagedForest">
                      <landAllocation year="1975">12084</landAllocation>
-                     <landAllocation year="1990">22183</landAllocation>
-                     <landAllocation year="2005">24533</landAllocation>
+                     <landAllocation year="1990">22212</landAllocation>
+                     <landAllocation year="2005">24502</landAllocation>
                      <intrinsicRate fillout="1" year="1975">71921</intrinsicRate>
                      <land-use-history>
                         <allocation year="1700">109532</allocation>
@@ -2827,8 +2827,8 @@
                <sigma>0.8</sigma>
                <UnmanagedLandLeaf name="Tundra">
                   <landAllocation year="1975">2758</landAllocation>
-                  <landAllocation year="1990">2726</landAllocation>
-                  <landAllocation year="2005">2717</landAllocation>
+                  <landAllocation year="1990">2676</landAllocation>
+                  <landAllocation year="2005">2662</landAllocation>
                   <intrinsicRate fillout="1" year="1975">71921</intrinsicRate>
                   <land-use-history>
                      <allocation year="1700">3046</allocation>
@@ -2847,8 +2847,8 @@
                <sigma>0.8</sigma>
                <UnmanagedLandLeaf name="RockIceDesert">
                   <landAllocation year="1975">10596</landAllocation>
-                  <landAllocation year="1990">10456</landAllocation>
-                  <landAllocation year="2005">10188</landAllocation>
+                  <landAllocation year="1990">10381</landAllocation>
+                  <landAllocation year="2005">10097</landAllocation>
                   <intrinsicRate fillout="1" year="1975">71921</intrinsicRate>
                   <land-use-history>
                      <allocation year="1700">12451</allocation>
