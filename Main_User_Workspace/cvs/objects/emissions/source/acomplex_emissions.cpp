@@ -264,8 +264,12 @@ void AComplexEmissions::calcEmission( const string& aRegionName,
         fControl = controlFunction( maxCntrl, mGDPControlRange, mAdjustedGDPMidControl, gdpCap );
     }
 
-    double adjEmissDriver = emissDriver * ( 1 - emAdjust ) * ( 1 - fControl ) * ( 1 - macReduction );
+    double adjEmissDriver = emissDriver * ( 1 - emAdjust ) * ( 1 - fControl );
+
+	// apply mac reductions after updating coef which means we assume that if the user
+	// used an "input-emissions" that was the emissions before any mac reductions
     mEmissionsCoef->updateCoef( adjEmissDriver );
+	adjEmissDriver *= ( 1 - macReduction );
  
     // This will dynamically get the emissions value.
     mEmissions[ aPeriod ] = mEmissionsCoef->getEmissions( adjEmissDriver );
