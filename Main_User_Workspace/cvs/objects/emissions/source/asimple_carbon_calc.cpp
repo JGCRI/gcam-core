@@ -422,7 +422,7 @@ double ASimpleCarbonCalc::getAboveGroundCarbonSubsidyDiscountFactor( ){
     // between actual carbon subsidy discount and functional estimate
     const double QUADCOEF = 2.7e-10;
     const int MAXMATUREAGE = 250; // Mature age where carbon subsidy is zero
-    return QUADCOEF * pow( mMatureAge - MAXMATUREAGE, 4);
+    return QUADCOEF * pow( double(mMatureAge - MAXMATUREAGE), 4);
 }
 
 void ASimpleCarbonCalc::setSoilTimeScale( const int aTimeScale ) {
