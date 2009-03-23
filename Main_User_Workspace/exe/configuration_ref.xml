@@ -130,7 +130,7 @@
 		<Value name="SolutionFloor">0.0001</Value>
 		<Value name="DeltaPrice">1e-6</Value>
 		<!--Value name="SolutionFloor">1.0E-6</Value-->
-		<Value name="MAX_NR_STEP">0.4</Value>
+		<Value name="MAX_NR_STEP">0.2</Value>
 		<Value name="bracket-interval">0.3</Value>
 	</Doubles>
 </Configuration>
