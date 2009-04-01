@@ -41,6 +41,7 @@ import org.jdom.input.*;
 import ucar.ma2.DataType;
 import ucar.nc2.Dimension;
 import ucar.nc2.NetcdfFileWriteable;
+import ucar.nc2.NetcdfFile;
 import ucar.ma2.*;
 
 import org.xml.sax.helpers.DefaultHandler;
@@ -2893,6 +2894,217 @@ public class ManipulationDriver
   }
 
   /**
+   * Appends a variable to a NetCDF file. TODO: there is no error checking to make sure
+   * the existing lat/lon/time dimensions make sense for this new variable.  Also it is
+   * unclear how much of a performance hit this operation will take.
+   * @param command XML node defining the operation.
+   */
+  private void appendNetCDFFileCommand(Element command)
+  {
+    log.log(Level.FINER, "begin function");
+    Variable var;
+    ReferenceVariable varR;
+    String fileName;
+    double res;
+    boolean missing_value_test = false;
+    double[][] myData;
+    float degHold;
+    float missingValue;
+    Element currInfo;
+    NetcdfFileWriteable ncfile = null;
+
+    currInfo = command.getChild("source");
+    var = getVariable(currInfo.getAttributeValue("name"));
+    // need to figure out what type of var we have
+    // TODO: currently only a single reference variable is supported
+    if(var.isReference() && !var.isGroup()) {
+	    varR = (ReferenceVariable)var;
+    } else {
+	    log.log(Level.WARNING, "Only reference vars are currently supported for append");
+	    return;
+    }
+    res = varR.res;
+
+    currInfo = command.getChild("file");
+    fileName = currInfo.getAttributeValue("name"); //storing netcdf file name
+    if(!fileName.endsWith(".nc"))
+    {
+	    fileName += ".nc";
+    }
+
+    File tmpFile = null;
+    try {
+	    //ncfile = NetcdfFileWriteable.openExisting(fileName, false);
+	    File prevFile = new File(fileName);
+	    tmpFile = new File(fileName+".tmp");
+	    if (tmpFile.exists()) tmpFile.delete();
+	    if (!prevFile.renameTo(tmpFile)) {
+		    System.out.println("prevFile.exists "+prevFile.exists()+" canRead = "+ prevFile.canRead());
+		    System.out.println("tmpFile.exists "+tmpFile.exists()+" canWrite "+ tmpFile.canWrite());
+		    throw new RuntimeException("Cant rename "+prevFile.getAbsolutePath()+" to "+ tmpFile.getAbsolutePath());
+	    }
+
+	    NetcdfFile oldFile = NetcdfFile.open(tmpFile.getPath());
+	    ucar.nc2.FileWriter fw = new ucar.nc2.FileWriter(fileName, true);
+	    List<ucar.nc2.Variable> oldOnes = oldFile.getVariables();
+	    fw.writeVariables(oldOnes);
+	    ncfile = fw.getNetcdf();
+
+	    // TODO: the following would be ideal method for appending to netcdf which are available in NetCDF4
+	    // however I had trouble with NetCDF4 seemingly not working correctly.  In particluar FileWriter.copyVarData
+	    // didn't seem to work at all.  Also trying a basic test of copying a NetCDF file with 
+	    // FileWriter.writeToFile(NetcdfFile fileIn, String fileOutName) did not even work.
+	    /*
+	       if(ncfile.setRedefineMode(true)) {
+	       log.log(Level.FINER, "Will need to rewrite the entire file -- initial");
+	       }
+	       */
+
+	    // find the existing dimensions so we can use them for the new var
+	    // WARNING: we are expecting the dimensions names to be the data manipulator names
+	    ArrayList<Dimension> dim4 = new ArrayList<Dimension>(4);
+	    for(int dimIndex = 0; dimIndex < 4; ++dimIndex) {
+		    String currDimName = null;
+		    Dimension currDim;
+		    switch(dimIndex) {
+			    case 0:
+				    currDimName = "level";
+				    break;
+			    case 1:
+				    currDimName = "time";
+				    break;
+			    case 2:
+				    currDimName = "latitude";
+				    break;
+			    case 3:
+				    currDimName = "longitude";
+				    break;
+		    }
+		    currDim = oldFile.findDimension(currDimName);
+		    if(currDim == null) {
+			    log.log(Level.WARNING, "Could not find dimension "+currDimName+" in NetCDF File "+fileName+" while appending");
+			    return;
+		    }
+		    dim4.add(currDim);
+	    }
+
+	    // add the new var with the existing dimensions
+	    // TODO: we need some error check to make sure the existing dimensions make sense
+	    ncfile.addVariable(var.name, DataType.FLOAT, "level time latitude longitude");
+	    //ncfile.addVariable(var.name, DataType.FLOAT, dim4);
+	    ncfile.addVariableAttribute(var.name, "average", String.valueOf(varR.avg));
+
+	    // Add additional metadata if present
+	    if(varR.units != null) {
+		    ncfile.addVariableAttribute(var.name, "units", varR.units);
+	    } else {
+		    currInfo = command.getChild("units");
+		    if(  !(currInfo == null) && !(currInfo.getAttributeValue( "value" ) == null) )
+		    {
+			    ncfile.addVariableAttribute( var.name,"units", currInfo.getAttributeValue("value") );
+		    }
+	    }
+
+	    if(varR.reference != null) {
+		    ncfile.addVariableAttribute(var.name, "reference", varR.reference);
+	    } else {
+		    currInfo = command.getChild("reference");
+		    if(  !(currInfo == null) && !(currInfo.getAttributeValue( "value" ) == null) )
+		    {
+			    ncfile.addVariableAttribute( var.name,"reference", currInfo.getAttributeValue("value") );
+		    }
+	    }
+
+	    currInfo = command.getChild("missing_value");
+	    if(  !(currInfo == null) && !(currInfo.getAttributeValue( "value" ) == null) )
+	    {
+		    missingValue = Float.parseFloat( currInfo.getAttributeValue("value") );
+	    } else {
+		    missingValue = Float.NaN; // default value
+	    }
+	    ncfile.addVariableAttribute(var.name, "missing_value", missingValue);
+
+	    // Overwrite missing value in netCDF file to test if actual value was written. 
+	    // This is useful since Panoply (as of Feb 2009) display the missing_value as NaN no matter what.
+	    currInfo = command.getChild("missing_value_test");
+	    if(  !(currInfo == null) && !(currInfo.getAttributeValue( "value" ) == null) )
+	    {
+		    ncfile.addVariableAttribute( var.name,"missing_value", currInfo.getAttributeValue("value") );
+	    }
+
+	    currInfo = command.getChild("longName");
+	    if(  !(currInfo == null) && !(currInfo.getAttributeValue( "value" ) == null) )
+	    {
+		    ncfile.addVariableAttribute( var.name,"long_name", currInfo.getAttributeValue("value") );
+	    }
+
+	    currInfo = command.getChild("title");
+	    if( !(currInfo == null) && !(currInfo.getAttributeValue( "value" ) == null) ) 
+	    {
+		    ncfile.addVariableAttribute( var.name,"title", currInfo.getAttributeValue("value") );
+	    }
+
+	    if(var.comment != null) {
+		    ncfile.addGlobalAttribute("comments", var.comment);
+	    }  else {
+		    currInfo = command.getChild("comments");
+		    if(  !(currInfo == null) && !(currInfo.getAttributeValue( "value" ) == null) )
+		    {
+			    ncfile.addVariableAttribute( var.name,"comments", currInfo.getAttributeValue("value") );
+		    }
+	    }
+
+	    /* part of the methodology what should work for NetCDF4 see the note above
+	       if(ncfile.setRedefineMode(false)) {
+	       log.log(Level.FINER, "Will need to rewrite the entire file -- close");
+	       }
+	       */
+
+	    // 0 -- Level, 1 -- Time, 2 -- latitude, 3 -- longitude
+	    ArrayFloat dataArr = new ArrayFloat.D4(dim4.get(0).getLength(), dim4.get(1).getLength(), dim4.get(2).getLength(), dim4.get(3).getLength());
+
+	    //filling the array with the data
+	    Index ima = dataArr.getIndex();
+	    myData = varR.buildWorldMatrix();
+	    // iterate over the lat index
+	    for(int i = 0; i < dim4.get(2).getLength(); i++)
+	    {
+		    // iterate of the the lon index
+		    for(int j = 0; j < dim4.get(3).getLength(); j++)
+		    {
+			    if ( Double.isNaN( myData[i][j] ) ) {
+				    dataArr.setFloat( ima.set(0,0,i,j), missingValue );
+			    } else {
+				    dataArr.setFloat( ima.set(0,0,i,j), (float)myData[i][j] );
+			    }
+		    }
+	    }
+	    myData = null;
+
+
+	    fw.finish();
+	    ncfile = null;
+	    ncfile = NetcdfFileWriteable.openExisting(fileName, true);
+	    ncfile.write(var.name, dataArr);
+
+    } catch(IOException ioe) {
+	    log.log(Level.WARNING, "Error while appending to NetCDF file: "+ioe);
+	    ioe.printStackTrace();
+    } catch(InvalidRangeException ire) {
+	    log.log(Level.WARNING, "Invalid range when adding "+var.name+": "+ire);
+    } finally {
+	    try {
+		    if (tmpFile != null && tmpFile.exists()) tmpFile.delete();
+		    if(ncfile != null) {
+			    ncfile.close();
+		    }
+	    } catch(IOException ioe) {
+		    // ignore
+	    }
+    }
+  }
+
+  /**
    * Adds a comment to a variable which will be outout to netCDF or printed with
    * that variable if the verbose option is selected.
    * @param command XML node defining the operation.
@@ -3813,6 +4025,9 @@ public class ManipulationDriver
     } else if(currCom.getName().equals("createNetCDFFile"))
     {
       createNetCDFFileCommand(currCom);
+    } else if(currCom.getName().equals("appendNetCDFFile"))
+    {
+      appendNetCDFFileCommand(currCom);
     } else if(currCom.getName().equals("comment"))
     {
       setComment(currCom);
