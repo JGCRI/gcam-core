@@ -1255,8 +1255,65 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
     for( int year = scenario->getModeltime()->getStartYear();
          year <= endingYear; year += outputInterval )
     {
+        // Kyoto Forcing
+        writeItemUsingYear( "forcing-Kyoto", "W/m^2",
+                             aClimateModel->getForcing( "CO2", util::round( year ) )
+        + aClimateModel->getForcing( "CH4", util::round( year ) )
+        - aClimateModel->getForcing( "TropO3CH4", util::round( year ) )
+        - aClimateModel->getForcing( "StratH2OCH4", util::round( year ) )
+        + aClimateModel->getForcing( "N2O", util::round( year ) )
+        + aClimateModel->getForcing( "HCFC125", util::round( year ) )
+        + aClimateModel->getForcing( "HCFC134A", util::round( year ) )
+        + aClimateModel->getForcing( "HCFC143A", util::round( year ) )
+        + aClimateModel->getForcing( "HFC227ea", util::round( year ) )
+        + aClimateModel->getForcing( "HCFC245fa", util::round( year ) )
+        + aClimateModel->getForcing( "SF6", util::round( year ) )
+        + aClimateModel->getForcing( "CF4", util::round( year ) )
+        + aClimateModel->getForcing( "C2F6", util::round( year ) )
+        + aClimateModel->getForcing( "otherHC", util::round( year ) ),
+                             year );
+
+        // Long-lived Forcing
+        writeItemUsingYear( "forcing-longlived", "W/m^2",
+                             aClimateModel->getForcing( "CO2", util::round( year ) )
+        + aClimateModel->getForcing( "CH4", util::round( year ) )
+        - aClimateModel->getForcing( "TropO3CH4", util::round( year ) )
+        - aClimateModel->getForcing( "StratH2OCH4", util::round( year ) )
+        + aClimateModel->getForcing( "N2O", util::round( year ) )
+        + aClimateModel->getForcing( "HCFC125", util::round( year ) )
+        + aClimateModel->getForcing( "HCFC134A", util::round( year ) )
+        + aClimateModel->getForcing( "HCFC143A", util::round( year ) )
+        + aClimateModel->getForcing( "HFC227ea", util::round( year ) )
+        + aClimateModel->getForcing( "HCFC245fa", util::round( year ) )
+        + aClimateModel->getForcing( "SF6", util::round( year ) )
+        + aClimateModel->getForcing( "CF4", util::round( year ) )
+        + aClimateModel->getForcing( "C2F6", util::round( year ) )
+        + aClimateModel->getForcing( "otherHC", util::round( year ) )
+        + aClimateModel->getForcing( "Montreal", util::round( year ) ),
+                             year );
+
+                // Long-lived Forcing
+        writeItemUsingYear( "forcing-halocarbons", "W/m^2",
+        aClimateModel->getForcing( "HCFC125", util::round( year ) )
+        + aClimateModel->getForcing( "HCFC134A", util::round( year ) )
+        + aClimateModel->getForcing( "HCFC143A", util::round( year ) )
+        + aClimateModel->getForcing( "HFC227ea", util::round( year ) )
+        + aClimateModel->getForcing( "HCFC245fa", util::round( year ) )
+        + aClimateModel->getForcing( "SF6", util::round( year ) )
+        + aClimateModel->getForcing( "CF4", util::round( year ) )
+        + aClimateModel->getForcing( "C2F6", util::round( year ) )
+        + aClimateModel->getForcing( "otherHC", util::round( year ) )
+        + aClimateModel->getForcing( "Montreal", util::round( year ) ),
+                             year );
+
+        // CO2 Forcing
+        writeItemUsingYear( "forcing-CO2", "W/m^2",
+                             aClimateModel->getForcing( "CO2", util::round( year ) ),
+                             year );
+
+        // Total Forcing
         writeItemUsingYear( "forcing-total", "W/m^2",
-                             aClimateModel->getTotalForcing( year ),
+                            aClimateModel->getTotalForcing( year ),
                              year );
     }
 
