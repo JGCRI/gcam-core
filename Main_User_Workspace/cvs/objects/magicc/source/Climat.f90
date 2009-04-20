@@ -1,193 +1,82 @@
-!
 ! MAGTAR.FOR
 !
-
-! EXPLANATION:
-!   THIS PROGRAM IS RUN 4 TIMES BY MAGICC/SCENGEN. IT IS RUN TWICE
-!    FOR EACH OF TWO EMISSIONS SCENARIOS, A REFERENCE CASE ('R') AND
-!    A POLICY CASE ('P'). THE TWO RUNS PER SCENARIO ARE A USER MODEL
-!    CASE ('U') AND A DEFAULT MODEL CASE ('D'). THE 'D' CASE IS THE
-!    SAME AS THE 'U' CASE EXCEPT THAT THE USER MODEL PARAMETERS ARE
-!    REPLACED BY THE BEST GUESS VALUES.
 !   THE OUTPUTS PASSED TO THE Tcl CODE ARE:
-!    THE FIVE DISPLAY FILES, *.dis, FOR GLOBAL-MEAN TEMP AND SEALEVEL,
-!     AND EMISSIONS, CONCENTRATIONS, AND RADIATIVE FORCING; AND
-!    THE FOUR SCENGEN DRIVER FILES lo/mid/hi/usrdrive.out.
+!    (1) THE FIVE DISPLAY FILES, *.dis, FOR GLOBAL-MEAN TEMP AND MSL,
+!        AND EMISSIONS, CONCENTRATIONS, AND RADIATIVE FORCING; AND
+!    (2) THE FOUR SCENGEN DRIVER FILES lo/mid/hi/usrdrive.out.
 !
 ! Revision history:
+! 022409  *  Added read-in and calc of BC+OC forcing directly from emissions
+!            Enable by setting MAGICC input parameter IFOC = 3
+! 013009  *  Updated output arrays for ObjECTS MiniCAM
+! 091708  *  Changed file paths for use as stand-alone model in own directory sjs
 
-! 012605  *  Added output of total Kyoto forcing to MiniCAM
+! 012605  *  Added output of total Kyoto forcing to MiniCAM sjs
 ! 030526  *  Revised to work with MiniCAM 5/2003 mrj
 ! changes based on those by sjs and hmp in prior MAGICC version
-! Major changes:
-
-! - input and output passed to/from CLIMATTAR subroutine rather than
-!   through text files
-
 
 ! 030518  * sjs added extra halocarbon outputs to mag.csv
 ! 030321  * sjs changed mag.out to mag.csv output
 ! 03032?  * sjs added SAVE to DELTAQ to correct error
 
-! 030213  * CORRECTION TO LIFETIME SWITCH FOR HALOCARBONS -- DOES
-!            NOT AFFECT BEST GUESS VALUES.
-! 030126  * ADDED IN RLO DEPENDENCE ON SENSITIVITY TO AVOID
-!            UNREALISTIC RESULTS AT HIGH SENSITIVITY. SWITCH THIS ON
-!            BY SPECIFYING RLO>2.0 ON MAGMOD.CFG
-! 030119  * STATEMENT RE USE OF CO2-CLIMATE FEDDBACKS (OR NOT) ADDED
-!            TO MAG.OUT OUTPUT
-!           IVARW VALUE USED ADDED TO MAG.OUT OUTPUT
-!           ORDER OF FORCINGS IN FORCINGS.DIS AND MAG.OUT CHANGED TO
-!            PUT FOC+FBC AFTER TOTAL FORCING. THIS IS TO ENSURE 
-!            CORRECT GRAPHICAL DISPLAY OF FORCING IN MAGICC GUI,
-!            (WHICH USES FORCINGS.DIS).
-! 021024  * VERSION WITH SCALING OPTIONS SAVED AS MAGTEST.FOR. FOR
-!            THIS VERSION, TESTING OPTIONS REMOVED AND ONLY ORIGINAL
-!            VERSION (METHOD 1) WITH ADDED SMOOTHING RETAINED.
-! 021023  * VARIOUS METHODS TRIED TO ACCOUNT FOR AEROSOL NON-
-!            LINEARITIES.
-!           METHOD 2 USES A DIFFERENT RESIDUAL METHOD.
-!           METHOD 3 SIMPLY APPORTIONS THE TOTAL AEROSOL TEMPERATURE
-!            TERM INTO THE THREE REGIONS IN PROPORTION TO THE
-!            REGIONAL EMISSIONS RELATIVE TO 1990.
-!           NONE OF THESE GETS OVER THE PROBLEM OF ERRATIC
-!            VARIATIONS IN THE SCALED TEMPERATURES WHEN TOTAL
-!            EMISSIONS ARE NEAR ZERO. THERE IS NO WAY AROUND THIS
-!            IF ONE WANTS TO GET THE SUM OF REGIONS IDENTICAL TO
-!            THE ALL MINUS GHG VALUE.
-!           AS A COMPROMISE, THE SCALING FACTOR WAS REPLACED BY A
-!            7-TERM BINOMIALLY FILTERED VALUE, AFTER FIRST LIMITING
-!            IT TO 0.0.LE.SCALER.LE.2.0. WHEN APPLIED, THIS SMOOTHED
-!            VERSION MATCHES THE TEMPERATURES VERY WELL EXCEPT NEAR
-!            THE TIMES OF NEAR-ZERO TOTAL EMISSIONS. SINCE AEROSOL
-!            TEMPERATURES ARE VERY SMALL HERE, THE ABSOLUTE ERRORS
-!            ARE VERY SMALL (LESS THAN 0.02degC FOR THE P50 SCENARIO),
-!            EVEN THOUGH THE RELATIVE ERRORS ARE LARGE. ERRATIC
-!            BEHAVIOR IN THE REGIONAL WEIGHTS IS ELIMINATED.
-! 021019  * CORRECTION MADE TO SO2 EMISSIONS IN SUBROUTINE DELTAQ.
-!            IN GOING FROM SAR TO TAR, ALL CONCS WERE FORCED TO
-!            AGREE WITH OBSERVATIONS TO 2000. AS PART OF THIS, SO2
-!            EMISSIONS WERE ALSO HARD WIRED TO 2000. IN DERIVING
-!            THE SCENGEN DRIVES, REGIONAL EMISSIONS MUST BE ABLE
-!            TO BE PERTURBED BACK TO 1990. TO DO THIS, SO2 EMISSIONS
-!            FOR 1990-2000 HAD TO BE 'FREED UP' IN DELTAQ.
-!           ACCOUNTING FOR SULFATE AEROSOL NONLINEARITIES IN
-!            DETERMINING SCALING FACTORS STILL NOT IDEAL.
-! 020918  * OVRWRITE (INTEGER) ADDED AT START OF MAGGAS.CFG TO
-!            OVERWRITE LEVCO2 AND LEVSO4 IN MAGUSER.CFG. THESE ARE
-!            SET FROM THE SHELL, BUT THE SHELL CAN ONLY SPECIFY LOW,
-!            MID OR HIGH (LEV* = 1,2 OR 3). TO ALLOW FULL USER
-!            SPECIFICATION OF CARBON CYCLE AND AEROSOL PARAMETERS,
-!            LEV* MUST BE SET AT 4. SETTING OVRWRITE = 1 IN MAGGAS.CFG
-!            RE-SETS BOTH LEV*s AT 4 AND ALLOWS DIRECT USER-SPECIFIED
-!            VALUES IN MAGGAS.CFG TO OPERATE.
-! 020917  * PREVIOUS CODE HAD iTp=670, GIVING A MAXIMUM LAST YEAR OF
-!            1765+670=2435. iTp=740 COMPILES AND RUNS, SO iTp CHANGED 
-!            TO THIS (GIVING MAXIMUM LAST YEAR OF 2505). TRAP ADDED 
-!            TO MAKE SURE SPECIFIED VALUE OF LASTYEAR DOES NOT EXCEED
-!            1765+iTp.
-! 020916  * NEW MAGUSER.CFG CONFIGURATION FILE ADDED CONTAINING ONLY
-!            THOSE PARAMETERS THAT CAN BE MODIFIED FROM THE SHELL.
-!           concs.dis MODIFIED TO GIVE FULL OUTPUT (ALL COLUMNS)
-!            PRIOR TO 1990. LOW, MID AND HIGH CO2 CONCENTRATIONS
-!            CORRECTED TO AGREE WITH OBSERVATIONS THROUGH 2000. ALL
-!            CONCENTRATIONS CHANGED TO OUTPUT MIDYEAR VALUES. MID CH4
-!            LIFETIME VARIATIONS ADDED TO OUTPUT.
-!           emiss.dis MODIFIED TO GIVE CORRECT REGIONAL ESO2 BREAKDOWN
-!            AND GLOBAL TOTAL.
-!           ICE MELT PARAMETERS SPLIT OFF FROM MAGMOD.CFG AND PUT INTO
-!            NEW CONFIGURATION FILE MAGICE.CFG.
-! 020915  * CODE MODIFICATIONS FOR NEW VERSION OF MAGICC/SCENGEN BEGUN.
-! 010809  * ADDED IN MOISTURE EFFECT FOR METHANE
-! 010509  * OPTION ADDED TO USE DIFFERENT METHODS TO SCALE W(t).
-!            METHOD 1 USES DW = W0*(T/TW0), 2 USES DW = AW*W0*(T/TW0)
-!             WHERE AW IS THE 'ACTIVE' PART OF W (0.3 IN TAR):
-!             KEYDW=1; METHOD 1, T= TGLOBE
-!             KEYDW=2; METHOD 1, T= TOCEAN
-!             KEYDW=3; METHOD 1, T= HEMISPHERIC TOCEAN
-!             KEYDW=4; METHOD 2, T= TGLOBE  (THIS IS WHAT TAR USES)
-!             KEYDW=5; METHOD 2, T= TOCEAN
-!           KEYDW IS SET IN MAGRUN.CFG AND TRANSFERRED IN COMMON BLOCK
-!            'VARW'.
-!           ACTIVE W OPTION ONLY APPLIED IF IVARW=2.
-! 010508    PARAMETER VALUES FOR IPCC TAR MODELS 1 THROUGH 7 HARD
-!            WIRED INTO CODE. DATA FROM TAR CH.6 APPENDIX TABLE A1.
-! 010507  * VARIABLE UPWELLING RATE CODE CHANGED TO MATCH MAGFLUX.FOR
-! 010418  * TROP OZONE PARAMETERS MOVED INTO MAGGAS.CFG, SINCE THESE
-!            HAD TO BE REVISED BECAUSE OF AN ERROR IN THE TAR.
-! 010418  * REVISION HISTORY FOR 991130 AND EARLIER DELETED
-! 001229  * OUTPUT FOR NOUT=5 CHANGED TO GIVE MORE DECIMALS FOR T,MSL
-! 001016  * SENT TO SARAH
-! 001016  * FOSSIL FUEL ORGANIC CARBON UPDATED TO -0.1, PER SCBR EMAIL
-! 001008  * IOLDHALO DELETED AND REPLACED BY IHALOETC, WHICH GIVES 
-!            THE USER THE OPTION TO SELECT EMS DROP TO ZERO BY 2200 
-!            OR CONSTANT EMS AFTER 2200 FOR HALOCARBONS NOT SPECIFIED 
-!            IN GAS.EMK. QHALOS.IN CHANGED TO ALLOW THIS USING RESULTS
-!            FROM HALOSRES.FOR. MAGGAS.CFG ALSO CHANGED. MINOR CHANGES
-!            TO PRINT OUT.
-! 001001  * VERSION SENT TO SARAH (0.F18)
-! 000929  * NOTE : POSSIBLE COMPILATION ERROR IF ARRAY LIMIT iTp SET
-!            TOO LARGE ("FATAL ERROR F1050, CODE SEGMENT TOO LARGE").
-!            THIS VERSION WORKS IF iTp=670 BUT NOT IF iTp=740. HENCE,
-!            MAX RUN LENGTH IS ONLY 1765+670 = 2435.
-! 000929  * (1) IFOC SWITCH ADDED TO MAGGAS.CFG TO ALLOW FUTURE FOSSIL
-!                OC+BC TO BE SCALED WITH ESO2 (IFOC=1) OR ECO (IFOC=2).
-!           (2) *.CFG FILES RENAMED MAGGAS, MAGMOD, MAGRUN AND MAGXTRA.
-!           (3) TROP OZONE FORCING SENSITIVITY FACTOR, TROZSENS,
-!                (W/m**2/DU) NOW SPECIFIED IN MAGGAS.CFG (PREVIOUSLY
-!                HARD WIRED).
-!           (4) NEW HALOCARBON QHALOS.IN IMPLEMENTED. NOTE THAT THE
-!                FORCING FOR KYOTO GASES CALCULATED BY MAGICC IS
-!                SLIGHTLY GREATER THAN IN THE OFF LINE HALOSRES
-!                MODEL BECAUSE MAGICC ACCOUNTS FOR LIFETIME VARIATIONS
-!                FOR HYDROGEN-CONTAINING SPECIES (ABOUT 0.02W/m**2
-!                IN 2100).
-! 000912  * LEVSO4 ERROR CORRECTED. WAS NOT PICKING UP USER-DEFINED
-!            1990 AEROSOL REF LEVELS WHEN LEVSO4=4.
-! 000909  * HALOCARBONS UPDATED : LIFETIMES AND RADIATIVE EFFICENCIES
-!            (dQ/dC) FROM TAR TABLE 6.7 RECEIVED FROM SUSAN SOLOMON
-!            000907 : OH EFFECT ON TROPOSPHERIC LIFETIMES ADDED
-!           CARBON CYCLE CLIMATE 'FEEDBACK' TERMS MOVED TO MAG3GAS.CFG
-!           CARBON CYCLE CLIMATE 'FEEDBACK' IMPLEMENTED.
-!           CARBON CYCLE MODEL OUTPUT CORRECTION APPLIED TO ENSURE
-!            RESULTS AGREE WITH OBSERVATIONS THROUGH J=JSTART.
-!           *.CFG FILES RENAMED MAG4GAS, MAG4MOD, MAG4RUN AND MAG4XTRA
-!            TO DISTIGUISH THEM FROM MAG-F3 *.CFG FILES.
-! 000906  * DETAILS OF FORCING OUTPUT CHANGED TO BE MORE INFORMATIVE
-! 000820  * MAJOR REVISIONS TO MAG-F4.FOR MADE OVER 8/20 TO 9/5
-!           (1) CHANGE METHANE MODEL TO TAR MODEL
-!           (2) CHANGE N2O MODEL TO TAR MODEL
-!           (3) SIMULATIONS START IN 2000 INSTEAD OF 1990
-!           (4) TROP OZONE ADDED FOLLOWING TAR. REQUIRES INPUT
-!                OF FOSSIL CO2 EMISSIONS HISTORY, NOW INPUT
-!                IN CO2HIST.IN
-! 000322  * FORCING FACTOR FOR N2O (QQQN2O) PUT INTO MAG3GAS.CFG
-!           IOLDHALO ADDED TO MAG3GAS.CFG. IF =1, USES SAR HALOCARBON
-!            FORCING (INCLUDING STRAT O3). OTHERWISE USES INPUT DATA.
-!            IF =2, KEEPS HALOCARBON FORCING CONSTANT AFTER 2100.
-! 991219  * (1) ICOMP,COMPRATE,SO2SCALE,IQCONST,QCONST,RAMPDQDT
-!               REMOVED FROM CODE AND FROM MAGEXTRA.CFG. THIS ALSO
-!               ELIMINATES ICO2READ=4 OPTION.
-!           (2) ES1990 INPUT ADDED TO MAGEXTRA.CFG (75TgS IN SAR, BUT
-!               72TgS FOR TAR).
-!           (3) COMMON BLOCKS RATIONALIZED.
-!           (4) MAGEXTRA.CFG AND MAGUSER.CFG REPLACED BY MAG3GAS.CFG,
-!               MAG3MOD.CFG, MAG3RUN.CFG, MAG3XTRA.CFG.
-!           (5) NH/SH, LAND/OCEAN FORCING BREAKDOWN OUTPUT AND DECADAL
-!               FORCING OUTPUT REMOVED.
-!           (6) IEXPAN AND METHHIST OPTIONS DELETED.
-!           (7) ADJUST ADDED (SEA ICE MELT TERM).
-!           (8) XKLO AND XKNS MOVED OUT OF MAG3XTRA.CFG TO
-!               MAG3MOD.CFG.
-!           (9) SIMPLIFIED SELECTION OF LOW, MID, HIGH ADDED FOR
-!               CO2, CH4 AND SO4 AEROSOL (IN MAG3GAS.CFG). THIS
-!               REPLACES IUSERGAS IN EARLIER VERSIONS.
-!          (10) 'MODEL' SWITCH ADDED (TO MAG3MOD.CFG) TO AUTOMATICALLY
-!               SELECT PARAMETERS FOR SPECIFIC MODELS (MODEL.GE.1)
-!               (PARAMETERS ARE SPECIFIED DIRECTLY IN THE FORTRAN
-!               CODE) OR TO USE PARAMETERS AS SPECIFIED MAG3MOD.CFG
-!               (MODEL=0). CHOICE OF MODEL IS IDENTIFIED IN MODNAME.
-!          (11) VARIOUS CHANGES TO OUTPUT TO SHOW SELECTIONS MADE.
+! 080625  * FOR NOUT=1, MSL TOTAL LESS TAR "OTHER" ADDED TO OUTPUT.
+! 080619  * ADDED OUTPUT FILE FOR CCSM INPUT, OUTPUT ONLY IF ICCSM=1
+! 080619  * FOR FORCINGS FROM 1765, CFC12 AND EFFECTIVE CFC11 CONCS
+!            ADDED AS OUTPUT. THIS REQUIRED ADDING CFC12 CONCS AS AN
+!            INPUT IN QHALOS.IN
+! 080617  * MAG.OUT OUTPUT REDUCED EVEN MORE FOR FULL VERSION. THIS
+!            REDUCES COLLATION TIME MORE. (SEE LINE 1542.) THIS HAS THE
+!            DESIRED EFFECT ON RUN  TIME, BUT IT REMOVES CRUCIAL OUTPUT
+!            FROM THE REPORTS FILES. HENCE, BACK TO PREVIOUS VERSION.
+!           ERROR IDENTIFIED IN ***drive OUTPUTS THAT DEFINE THE WEIGHTS
+!            FOR THE AEROSOL PATTERNS IN SCENGEN. BECAUSE OF SMOOTHING,
+!            THESE WERE NOT BEING PRODUCED FOR THE LAST THREE YEARS.
+!            CORRECTED USING LINEAR EXTRAPOLATION.
+!           THIS IS THE VERSION HANDED OVER TO SETH.
+! 080612  * VZERO IN GSIC MODEL CHANGED TO 18, 29, 44 CM. THESE ARE 1.2
+!            TIMES THE AR4 NUMBERS (AS IN AR4) TO ACCOUNT FOR GREENLAND
+!            AND ANTARCTICA GSICs. NOTE THAT THE CENTRAL NUMBER MUST BE
+!            SPECIFIED IN MAGICE.CFG.
+!           THE METHOD FOR CALCULATING SLT SEEMS TO BE WRONG. IT ATTEMPTS
+!            TO USE QUADRATURE FOR THE ERRORS IN INDIVIDUAL COMPONENTS,
+!            BUT DOES NOT DO THIS CONSISTENTLY. SO IT IS BETTER TO SUM
+!            THE INDIVIDUAL COMPONENT VALUES. THIS GIVES EXTREMES THAT
+!            ARE TOO HIGH OR TOO LOW. TO GET THE 5th AND 95th %ILES,
+!            A GOOD ESTIMATE IS TO HALVE THE DEPARTURES OF THESE EXTREME
+!            FROM THE BEST ESTIMATE.
+! 080611  * FOR FULL VERSION (ISCENGEN=1) REDUCE MAG.OUT OUTPUT TO GIVE
+!            RESULTS ONLY FOR FULL SO2 EMISSIONS CASE (NESO2=1). THIS
+!            IS TO REDUCE COLLATION TIME IN RUNNING MAGICC.
+! 080611  * HANDED OVER TO SETH
+! 080608  * FOR NOUT=1, SUM OF GREENLAND+ANTARCTICA NOW OUTPUTTED.
+!           CO2 UNCERTAINTY VALUES FOR DN80S UPDATED TO USE NEW BEST
+!            ESTIMATE OF 1.5 (BUT STILL +/- 0.7).
+! 080605  * NUMEROUS CORRECTIONS TO HANDLE QMN CORRECTLY AND KEYED TO 
+!            MAGINV.FOR
+!           CH4 AND N2O BALANCE METHOD GENERALIZED SO THAT YEAR 2000 DOES 
+!            NOT HAVE TO BE D*(2).
+! 080531  * NO3 PLUS MINERAL AEROSOL FORCING (QMN) OUTPUT SEPARATELY
+! 080528  * BEST GUESS SENSITIVITY BACK TO 3.0
+!           IDIS NOW BACK TO BEING SET IN MAGRUN.CFG
+! 080527  * NEW GSIC MODEL ADDED FROM MAGMSL.FOR, SING WIGLEY AND RAPER
+!            (2005). NEW GSIC PARAMETERS PUT INTO A NEW CFG FILE
+!            'MAGICE.CFG'.
+! 080520  * INTERIM VERSION WITH BEST GUESS DT2x = 2.6C TO ACCORD
+!            WITH OLD MAG4.1 CFG FILES FOR DEFAULT.
+! 080517  * THREE NEW FORCINGS ADDED: DIRECT NITRATE AEROSOL FORCING
+!            QNO3 (-0.1 IN 1990), MINERAL DUST QMIN (-0.1 IN 1990),
+!            AND LAND ALBEDO QLAND (-0.2 IN 1990). THESE RAMP UP
+!            LINEARLY TO 1990 AND ARE KEPT CONSTANT AFTER THIS.
+!           QNO3 AND QMIN ARE SET IN SUBROUTINE SUPHATE AND ADDED TO
+!            INDIRECT SO4 AEROSOL FORCING
+!           QLAND IS SET IN SUBROUTINE DELTAQ AND PASSED TO MAIN
+!           DEFAULT VALUES OF S90DIR, S90IND, S90BIO AND FOC90 RESET
+!           BASE TROP OZONE FORCING CORRECTED TO GIVE 0.35 IN 2005 AS
+!            IN AR4
+!           CLIMATE SENSITIVITY 90% RANGE AND BEST ESTIMATE CHANGED
+!            FROM 1.5(2.6)4.5 TO 1.5(3.0)6.0, IN ACCORD WITH AR4.
+! 080517  * LAST 4.1 VERSION BEFORE UPDATING TO VERSION 5.3. SEE THIS
+!            VERSION FOR EARLIER HISTORY.
 !
 !-------------------------------------------------------------------------------
 ! Written by Tom Wigley, Sarah Raper & Mike Salmon, Climatic Research Unit, UEA.
@@ -200,16 +89,16 @@
 ! Expose subroutine climat to users of this DLL
 !
 !DEC$ ATTRIBUTES DLLEXPORT::climat
-!      IMPLICIT REAL*8 (a-h,o-z), Integer (I-N)
+      IMPLICIT REAL*4 (a-h,o-z), Integer (I-N)
 
 !
 !   THIS IS THE CLIMATE MODEL MODULE.
 !
       parameter (iTp=740)
 !
-  	  REAL*8 MAGICCCResults(0:30,75), MagEM(20,19) ! mrj 5/03 pass data to/from MiniCAM
-	  Integer IWrite ! and this toggles writing on/off to save time
-
+  	  REAL*4 MAGICCCResults(0:30,75) ! sjs pass data to ObjECTS
+	  REAL*4 getForcing, getSLR
+  	  
       INTEGER IY1(100),OVRWRITE
 !
 ! sjs removed TEMUSER(iTp), QSO2SAVE(0:iTp+1),QDIRSAVE(0:iTp+1) from dimension statement since now in common block
@@ -217,30 +106,35 @@
       DNOX(100),DVOC(100),DCO(100),DSO2(100), &
       DSO21(100),DSO22(100),DSO23(100),DCF4(100),DC2F6(100), &
       D125(100),D134A(100),D143A(100),D227(100),D245(100),DSF6(100), &
+      DBC(100),DOC(100), &
       TEMLO(iTp),TEMMID(iTp),TEMHI(iTp),TEMNOSO2(iTp), &
-      SLUSER(iTp),SLLO(iTp),SLMID(iTp),SLHI(iTp),SLNOSO2(iTp), &
+      SLUSER(iTp),SLLO(iTp),SLMID(iTp),SLHI(iTp), &
       TALL(4,iTp-225),TGHG(4,iTp-225),TSO21(4,iTp-225), &
       TSO22(4,iTp-225),TSO23(4,iTp-225),TREF(4),XSO21(4,iTp-225), &
       XSO22(4,iTp-225),XSO23(4,iTp-225),XGHG(4,iTp-225), &
       SCALER(197:iTp),SCALAR(197:iTp)
 !
-      Real*8 FBC1990, FOC1990, FSO2_dir1990,FSO2_ind1990
-      COMMON/BCOC/FBC1990, FOC1990, FSO2_dir1990,FSO2_ind1990
+      REAL*4 FBC1990, FOC1990, FSO2_dir1990,FSO2_ind1990, aBCUnitForcing, aOCUnitForcing !sjs
+      COMMON/BCOC/FBC1990, FOC1990, FSO2_dir1990,FSO2_ind1990, aBCUnitForcing, aOCUnitForcing
 
+      DIMENSION EESS1(iTp),EESS2(iTp),EESS3(iTp),EESST(iTp),QTROZ(iTp), &
+     QSTROZ(iTp),C11EFF(iTp)
+!
       common /Limits/KEND
 !
       COMMON/OZ/OZ00CH4,OZCH4,OZNOX,OZCO,OZVOC
 !
       COMMON/CLIM/IC,IP,KC,DT,DZ,FK,HM,Q2X,QXX,PI,T,TE,TEND,W0,XK,XKLO, &
-      XKNS,XLAM,FL(2),FO(2),FLSUM,FOSUM,HEM(2),P(40),TEM(40),TO(2,40), &
-      AL,BL,CL,DTH,DTZ,DZ1,XLL,WWW,XXX,YYY,RHO,SPECHT,HTCONS,Y(4)
+     XKNS,XLAM,FL(2),FO(2),FLSUM,FOSUM,HEM(2),P(40),TEM(40),TO(2,40), &
+     AL,BL,CL,DTH,DTZ,DZ1,XLL,WWW,XXX,YYY,RHO,SPECHT,HTCONS,Y(4)
 !
 !  NOTE THAT EMISSIONS START WITH J=226, =1990.
 !
       COMMON/CONCS/CH4(0:iTp),CN2O(0:iTp),ECH4(226:iTp+1), &
-     EN2O(226:iTp+1),ECO(226:iTp+1),EVOC(226:iTp+1), &
+     EN2O(226:iTp+1),ECO(226:iTp+1),COE(iTp+1),EVOC(226:iTp+1), &
      ENOX(226:iTp+1),ESO2(0:iTp+1),ESO2SUM(226:iTp+1), &
-     ESO21(226:iTp+1),ESO22(226:iTp+1),ESO23(226:iTp+1)
+     ESO21(226:iTp+1),ESO22(226:iTp+1),ESO23(226:iTp+1), &
+     EBC(226:iTp+1), EOC(226:iTp+1) ! sjs- add BC-OC
 !
       COMMON/NEWCONCS/CF4(iTp),C2F6(iTp),C125(iTp),C134A(iTp), &
      C143A(iTp),C227(iTp),C245(iTp),CSF6(iTp), &
@@ -252,14 +146,14 @@
       COMMON/CARB/CCO2(4,224:iTp),EDGROSS(4,226:iTp),EF(226:iTp+1), &
      REGROW(4,226:iTp),PL(4,226:iTp),HL(4,226:iTp),SOIL(4,226:iTp), &
      TTT(226:iTp),ESUM(226:iTp),ETOT(4,226:iTp),EDNET90(4), &
-     FOC(4,226:iTp),co2(0:iTp)
+     FOC(4,226:iTp),CO2(0:iTp),CO2SAVE(0:iTp)
 !
       COMMON/TANDSL/TEQU(iTp),TGAV(iTp),TNHO(iTp), &
      TSHO(iTp),TNHL(iTp),TSHL(iTp),TDEEP(iTp),TNHAV(iTp),TSHAV(iTp), &
      TLAND(iTp),TOCEAN(iTp),TOCN(40),TOCNPREV(40), &
      SIP,SGP,SAP,SLI(iTp),SLG(iTp),SLA(iTp),EX(0:iTp),SLT(iTp), &
-     QTOT(0:iTp),QGH(0:iTp),QOZ(0:iTp),QBIO(0:iTp), &
-     QSO2(0:iTp+1),QDIR(0:iTp+1)
+     QTOT(0:iTp),QGH(0:iTp),QOZ(0:iTp),QBIO(0:iTp),SLO(iTp), &
+     QSO2(0:iTp+1),QDIR(0:iTp+1),QLAND(0:iTp),QMN(0:iTp+1)
 !
       COMMON/CAR/EL1,EL2,EL3,TINV0(5),TINV(4,5),A(3,5),AA(4,5), &
      BCO2(4),BTGPP,BTRESP,BTHUM,GAMP,GPP0,RESP0,QA0,U0,C0,B340(4), &
@@ -274,7 +168,7 @@
 !
       COMMON /FORCE/qco2(0:iTp),qm(0:iTp),qn(0:iTp),QCFC(0:iTp), &
      QMONT(0:iTp),QOTHER(0:iTp),QSTRATOZ(0:iTp),QCH4O3(0:iTp), &
-     QCH4H2O(0:iTp)
+     CFC12(0:iTp), QCH4H2O(0:iTp),QBC(0:iTp),QOC(0:iTp)
 !
       COMMON /METH2/LEVCH4,ch4bar90,QQQN2O
 !
@@ -282,25 +176,24 @@
      ANOX,ACO,AVOC,DELANOX,DELACO,DELAVOC,ICH4FEED
 !
       COMMON /METH4/GAM,TAUOTHER,BBCH4,CM00
-      common /TauNitr/TN2O00,BBN2O,SN2O,CN00,NOFFSET
+      common /TauNitr/TN2000,BBN2O,SN2O,CN00,NOFFSET
       common /Sulph/S90DIR,S90IND,S90BIO,enat,ES1990,ECO90,FOC90,IFOC
       COMMON /CO2READ/ICO2READ,XC(226:iTp),CO2SCALE,qtot86,LEVCO2
       COMMON /DSENS/IXLAM,XLAML,XLAMO,ADJUST
       COMMON /VARW/Z(40),W(2),DW(2),TO0(2),TP0(2),WNH(iTp),WSH(iTp), &
      TW0NH,TW0SH,IVARW,KEYDW
-
-	  Real*8 FDecline	! sjs
       COMMON /QSPLIT/QNHO,QNHL,QSHO,QSHL,QGLOBE(0:iTp), &
      QQNHO(0:iTp),QQNHL(0:iTp),QQSHO(0:iTp),QQSHL(0:iTp), &
      QQQNHO(0:iTp),QQQNHL(0:iTp),QQQSHO(0:iTp),QQQSHL(0:iTp), &
-     IConstForcing, FDecline     ! sjs
+      EHistBC(iTp),EHistOC(iTp) ! Vars to store read-in BC-OC history.
 !
-      COMMON /ICE/TAUI,DTSTAR,DTEND,BETAG,BETA1,BETA2,DB3,ZI0, &
-     NVALUES,MANYTAU,TAUFACT,ZI0BIT(100),SIPBIT(100),SIBIT(100)
+      COMMON /ICE/T1990,G1990,SEN,SENG,SENA,ERRG,ERRA, &
+     DMG,DMA,SENI,SENP,SENS,DSENI,DSENP,DSENS,ICE,MODEL, &
+     NEWGSIC,IXG,VZERO,XG
 !
       COMMON /AREAS/FNO,FNL,FSO,FSL
 !
-      COMMON /QADD/IQREAD,JQFIRST,JQLAST,QEX(0:iTp),QEXNH(0:iTp), &
+      COMMON /QADD/IQREAD,OrgIQREAD,JQFIRST,JQLAST,QEX(0:iTp),QEXNH(0:iTp), &
      QEXSH(0:iTp),QEXNHO(0:iTp),QEXNHL(0:iTp),QEXSHO(0:iTp), &
      QEXSHL(0:iTp),IOLDTZ
 !
@@ -310,17 +203,19 @@
       COMMON /JSTART/JSTART,FOSSHIST(0:236),QKYMAG(0:iTp),IGHG, &
      QCH4OZ,QFOC(0:iTp),ICO2CORR,TROZSENS
 !
+      COMMON /CORREN/CORREN1,CORREN2,CORREN3,CORREN4,CORREN
+!
 ! sjs -- add storage for halocarbon variables
       COMMON /HALOF/QCF4_ar(0:iTp),QC2F6_ar(0:iTp),qSF6_ar(0:iTp), &
-       Q125_ar(0:iTp),Q134A_ar(0:iTp), &
-       Q143A_ar(0:iTp),Q227_ar(0:iTp),Q245_ar(0:iTp)
+      Q125_ar(0:iTp),Q134A_ar(0:iTp), &
+      Q143A_ar(0:iTp),Q227_ar(0:iTp),Q245_ar(0:iTp)
 
 !sjs -- parameters that can be modified directly from ObjECTS
 ! Note need to add the appropriate model variables to a common block if they are not in one
 ! already so that they can be set via subroutine
-	  REAL*8 aNewClimSens, aNewBTsoil, aNewBTGPP,aNewBTHumus,aNewDUSER,aNewFUSER, aNewSO2dir1990, aNewSO2ind1990
+	  REAL*4 aNewClimSens, aNewBTsoil, aNewBTGPP,aNewBTHumus,aNewDUSER,aNewFUSER, aNewSO2dir1990, aNewSO2ind1990
       COMMON/NEWPARAMS/aNewClimSens, aNewBTsoil, DT2XUSER,aNewBTGPP,aNewBTHumus,aNewDUSER,aNewFUSER, &
-      					aNewSO2dir1990, aNewSO2ind1990
+     					aNewSO2dir1990, aNewSO2ind1990
       DATA aNewClimSens/-1.0/,aNewBTsoil/-1.0/,aNewBTHumus/-1.0/
       DATA aNewDUSER/-1.0/,aNewFUSER/-1.0/,aNewBTGPP/-1.0/
 
@@ -331,37 +226,22 @@
 !
       CHARACTER*4 LEVEL(4)
 !
-      CHARACTER*10 MODNAME(0:10)
+      CHARACTER*7 MODNAME(0:10)
 !
       character*20 mnem
       character*3  month(12)
 !
       DATA (LEVEL(I),I=1,4) /' LOW',' MID','HIGH','USER'/
 !
-      DATA (MODNAME(I),I=0,10) /'USER MODEL','      GFDL','     CSIRO', &
-     '    HadCM3','    HadCM2',' ECH4/OPYC','       CSM','       PCM', &
-     'OAGCM No.8','OAGCM No.9','OAGCM No.0'/
+      DATA (MODNAME(I),I=0,10) /' MAGICC','   GFDL','  CSIRO', &
+     ' HadCM3',' HadCM2',' ECHAM4','    CSM','    PCM', &
+     'OAGCM 8','OAGCM 9','OAGCM 0'/
 !
       data (month(i),i=1,12) /'Jan','Feb','Mar','Apr','May','Jun', &
                              'Jul','Aug','Sep','Oct','Nov','Dec'/
-
-! Set this to zero to flag read in of emissions from input file. sjs
-	  MagEM(1,1) = 0
-
-! This should be passed in if MAGICC will be called many times. sjs
-
-	  IWrite = 1
-!
-!  ********************************************************************
-!
-!  TO MAKE PROGRAM MORE FLEXIBLE, SPECIFY JSTART VALUE HERE
 !
       JSTART=236
 !
-!  ********************************************************************
-!
-
-
 !  READ CO2 CONCENTRATION AND FOSSIL EMISSIONS HISTORIES
 !
       lun = 42   ! spare logical unit no.
@@ -370,8 +250,6 @@
       READ(LUN,4445)IIII,COBS(ICO2),FOSSHIST(ICO2)
       END DO
       CLOSE(lun)
-!
-!  ********************************************************************
 !
 !  READ PARAMETERS FROM MAGUSER.CFG.
 !
@@ -389,14 +267,28 @@
         READ(LUN,4240) IY0
         READ(LUN,4240) LASTYEAR
         READ(LUN,4240) ITEMPRT
+        READ(LUN,4240) ICE
+        NONOFF=0
 !
       close(lun)
 !
-!   Call overrite subroutine after each file that may have parameters to overwrite
-      call overrideParameters( )
-
       LASTMAX=1764+iTp
       IF(LASTYEAR.GT.LASTMAX)LASTYEAR=LASTMAX
+!
+!  ********************************************************************
+!
+!  READ PARAMETERS FROM MAGICE.CFG.
+!
+      lun = 42   ! spare logical unit no.
+      open(unit=lun,file='../cvs/objects/magicc/inputs/MAGICE.CFG',status='OLD')
+!
+        READ(LUN,4240) NEWGSIC  ! SET = 1 TO USE NEW ALGORITHM
+        READ(LUN,4241) VZERO
+        READ(LUN,4241) XG
+        READ(LUN,4240) IXG
+        READ(LUN,4241) ASEN
+!
+      CLOSE(lun)
 !
 !  ********************************************************************
 !
@@ -422,7 +314,7 @@
         READ(LUN,4241) TAUSTRAT
         READ(LUN,4241) CMBAL
         READ(LUN,4241) DCMBAL
-        READ(LUN,4241) TN2O00
+        READ(LUN,4241) TN2000
         READ(LUN,4241) CNBAL
         READ(LUN,4241) DCNBAL
         READ(LUN,4241) QQQN2O
@@ -440,13 +332,19 @@
         READ(LUN,4241) OZCO
         READ(LUN,4241) OZVOC
         READ(LUN,4240) ICH4FEED
-        READ(LUN,4240) IConstForcing  
-        READ(LUN,4241) FDecline 
+        IOLDOZ=0
 !
       close(lun)
+
+! Initiailize internal BC-OC vars
+       aBCUnitForcing = 0
+       aOCUnitForcing = 0
+       aNewSO2dir1990 = 0
+       aNewSO2ind1990 = 0
+	
 !
 !   Call overrite subroutine after each file that may have parameters to overwrite
-      call overrideParameters( )
+      call overrideParameters( )	! sjs
 
        IF ( FSO2_dir1990 .LT. 0) THEN
           S90Duser = FSO2_dir1990
@@ -458,11 +356,27 @@
 	      S90Buser = 0
 	   END IF
 
+!
       IF(OVRWRITE.EQ.1)THEN
         LEVCO2=4
         LEVSO4=4
       ENDIF
-
+!
+!  NEW METHOD FOR CALCULATING CO2 OUTPUT PDF FROM INVERSE VERSION
+!   OF MAGICC. XB=0.074 gives DUSER=1.1, BTGPP=0.015
+!
+      XB=BTSOIL
+!      DUSER=1.8*EXP(-6.6551*XB)
+!      BTGPP=0.03*EXP(-9.3669*XB)
+!
+      IF(IOLDOZ.EQ.1)THEN
+         OZ00CH4 = 0.168
+         OZCH4   = 6.2048
+         OZNOX   = 0.17
+         OZCO    = 0.0014
+         OZVOC   = 0.0042
+      ENDIF
+!
       TAUOTHER=1.0/(1.0/TAUSOIL+1.0/TAUSTRAT)
 !
       IF(IFEED.EQ.0)THEN
@@ -472,39 +386,16 @@
         BTSOIL = 0.0
       ENDIF
 !
-!  TRAP IN CASE LEV* MIS-SPECIFIED OUTSIDE PERMISSIBLE RANGE
+!  TRAP IN CASE LEV* MIS-SPECIFIED OUTSIDE PERMISSIBLE RANGE. IF SO, 
+!   RE-SET TO BEST GUESS CASE.
 !
       IF((LEVCO2.GT.4).OR.(LEVCH4.GT.4).OR.(LEVSO4.GT.4))THEN
-        IF(IWrite.eq.1)WRITE(8,115)
+        WRITE(8,115)
       ENDIF
 !
       IF(LEVCO2.GT.4)LEVCO2=2
       IF(LEVCH4.GT.4)LEVCH4=2
       IF(LEVSO4.GT.4)LEVSO4=2
-!
-!  ********************************************************************
-!
-!  READ PARAMETERS FROM MAGICE.CFG (ICE MELT PARAMETERS)
-!
-      lun = 42   ! spare logical unit no.
-      open(unit=lun,file='../cvs/objects/magicc/inputs/MAGICE.CFG',status='OLD')
-!
-        READ(LUN,4241) ZI0IN
-        READ(LUN,4241) TAUIN
-        READ(LUN,4241) DTSTARIN
-        READ(LUN,4241) DTENDIN
-        READ(LUN,4240) NVALUES
-        READ(LUN,4241) BETAGIN
-        READ(LUN,4241) BETA1IN
-        READ(LUN,4241) BETA2IN
-        READ(LUN,4241) DB3IN
-!
-      close(lun)
-!
-!   Call overrite subroutine after each file that may have parameters to overwrite
-      call overrideParameters( )
-
-!  ********************************************************************
 !
 !  READ PARAMETERS FROM MAGMOD.CFG
 !
@@ -527,107 +418,186 @@
         READ(LUN,4241) QOFFSET
         READ(LUN,4241) QFACTOR
 !
-      close(lun)
-!
-!   Call overrite subroutine after each file that may have parameters to overwrite
-      call overrideParameters( )
-
+      IF(NONOFF.EQ.1)ICO2READ=5
       IF(RLO.GT.2.0)THEN
         RLO=1.05+0.6228*EXP(-0.339*DT2XUSER)
       ENDIF
 !
-       IF ( FBC1990 .NE. 0) THEN
-          IQREAD = 1
-	   END IF	      
-
       close(lun)
+!
+!   Call overrite subroutine after each file that may have parameters to overwrite
+      call overrideParameters( )	! sjs
+!
       IF(IVARW.EQ.2)THEN
         TW0SH=TW0NH
         TW0=TW0NH
       ENDIF
 !
+!  'DEFAULT' (= AOGCM MEAN) ICE MELT PARAMETERS FOR MAGICC. NOTE
+!    THAT T1990 IS NOT USED FOR THIS CASE.
+!
+      T1990    =  0.607
+      G1990    =  2.14     ! CM
+      SEN      =  0.0625   ! CM/YR-degC (GSIC)
+      SENG     =  0.0110   ! CM/YR-degC (GREENLAND)
+      SENA     = -0.0341   ! CM/YR-degC (ANTARCTICA)
+      ERRG     =  1.896    ! GREENLAND
+      ERRA     =  1.242    ! GREENLAND
+!
+!  ICE PARAMETERS COMMON TO ALL CASES
+!
+      DMG      =  0.005    ! CM/YR-degC
+      DMA      =  0.008    ! CM/YR-degC
+      SENI     =  0.025    ! CM/YR
+      DSENI    =  0.025    ! CM/YR
+      SENP     =  0.01136  ! CM/YR
+      DSENP    =  0.01136  ! CM/YR
+      SENS     =  0.0025   ! CM/YR
+      DSENS    =  0.0025   ! CM/YR
+!
 !  IF MODEL.NE.0, THEN SELECT MODEL FROM 'LIBRARY' GIVEN BELOW.
 !
       IF(MODEL.EQ.1)THEN
-        CO2DELQ  =  5.35
+        CO2DELQ  =  5.352
         DT2XUSER =  4.20
         TW0NH    =  8.00
         YK       =  2.30
         RLO      =  1.20
         XKLO     =  1.00
+        T1990    =  0.635
+        G1990    =  1.5      ! CM
+        SEN      =  0.0576   ! CM/YR-degC (GSIC)
+        SENG     =  0.0121   ! CM/YR-degC (GREENLAND)
+        SENA     = -0.0177   ! CM/YR-degC (ANTARCTICA)
+        ERRG     =  1.879    ! GREENLAND
+        ERRA     =  0.799    ! GREENLAND
       ENDIF
 !
       IF(MODEL.EQ.2)THEN
-        CO2DELQ  =  4.98
+        CO2DELQ  =  4.977
         DT2XUSER =  3.70
         TW0NH    =  5.00
         YK       =  1.60
         RLO      =  1.20
         XKLO     =  1.00
+        T1990    =  0.593
+        G1990    =  2.2      ! CM
+        SEN      =  0.0733   ! CM/YR-degC (GSIC)
+        SENG     =  0.0157   ! CM/YR-degC (GREENLAND)
+        SENA     = -0.0373   ! CM/YR-degC (ANTARCTICA)
+        ERRG     =  2.042    ! GREENLAND
+        ERRA     =  1.120    ! GREENLAND
       ENDIF
 !
       IF(MODEL.EQ.3)THEN
-        CO2DELQ  =  5.40
+        CO2DELQ  =  5.396
         DT2XUSER =  3.00
         TW0NH    = 25.00
         YK       =  1.90
         RLO      =  1.40
         XKLO     =  0.50
+        T1990    =  0.562
+        G1990    =  2.1      ! CM
+        SEN      =  0.0622   ! CM/YR-degC (GSIC)
+        SENG     =  0.0085   ! CM/YR-degC (GREENLAND)
+        SENA     = -0.0354   ! CM/YR-degC (ANTARCTICA)
+        ERRG     =  1.443    ! GREENLAND
+        ERRA     =  1.288    ! GREENLAND
       ENDIF
 !
       IF(MODEL.EQ.4)THEN
-        CO2DELQ  =  5.00
+        CO2DELQ  =  5.006
         DT2XUSER =  2.50
         TW0NH    = 12.00
         YK       =  1.70
         RLO      =  1.40
         XKLO     =  0.50
+        T1990    =  0.603
+        G1990    =  2.7      ! CM
+        SEN      =  0.0613   ! CM/YR-degC (GSIC)
+        SENG     =  0.0096   ! CM/YR-degC (GREENLAND)
+        SENA     = -0.0214   ! CM/YR-degC (ANTARCTICA)
+        ERRG     =  1.441    ! GREENLAND
+        ERRA     =  1.239    ! GREENLAND
       ENDIF
 !
       IF(MODEL.EQ.5)THEN
-        CO2DELQ  =  5.48
+        CO2DELQ  =  5.482
         DT2XUSER =  2.60
         TW0NH    = 20.00
         YK       =  9.00
         RLO      =  1.40
         XKLO     =  0.50
+        T1990    =  0.780
+        G1990    =  2.7      ! CM
+        SEN      =  0.0637   ! CM/YR-degC (GSIC)
+        SENG     =  0.0029   ! CM/YR-degC (GREENLAND)
+        SENA     = -0.0478   ! CM/YR-degC (ANTARCTICA)
+        ERRG     =  1.153    ! GREENLAND
+        ERRA     =  1.484    ! GREENLAND
       ENDIF
 !
       IF(MODEL.EQ.6)THEN
-        CO2DELQ  =  5.20
+        CO2DELQ  =  5.194
         DT2XUSER =  1.90
-        TW0NH    = 14.00
+        TW0NH    = 1000.00
         YK       =  2.30
         RLO      =  1.40
         XKLO     =  0.50
+        T1990    =  0.567
+        G1990    =  2.1      ! CM
+        SEN      =  0.0608   ! CM/YR-degC (GSIC)
+        SENG     =  0.0146   ! CM/YR-degC (GREENLAND)
+        SENA     = -0.0305   ! CM/YR-degC (ANTARCTICA)
+        ERRG     =  3.147    ! GREENLAND
+        ERRA     =  1.143    ! GREENLAND
       ENDIF
 !
       IF(MODEL.EQ.7)THEN
-        CO2DELQ  =  5.20
+        CO2DELQ  =  5.194
         DT2XUSER =  1.70
         TW0NH    = 14.00
         YK       =  2.30
         RLO      =  1.40
         XKLO     =  0.50
+        T1990    =  0.510
+        G1990    =  1.7      ! CM
+        SEN      =  0.0587   ! CM/YR-degC (GSIC)
+        SENG     =  0.0136   ! CM/YR-degC (GREENLAND)
+        SENA     = -0.0484   ! CM/YR-degC (ANTARCTICA)
+        ERRG     =  2.165    ! GREENLAND
+        ERRA     =  1.618    ! GREENLAND
       ENDIF
+!
+!  OVERWRITE GSIC SENSITIVITY
+!
+      SEN=ASEN*SEN
 !
       IF(MODEL.NE.0)THEN
         TW0SH=TW0NH
-        XLNS=XKLO
+        XKNS=XKLO
       ENDIF
 !
 !  ********************************************************************
 !
 !  READ PARAMETERS FROM MAGRUN.CFG
+!  NOTE (051308): IDIS NOW DEFINED IN MAGUSER.CFG TO BE THE SAME
+!   AS ITEMPRT. IDIS BELOW RELABELLED AS JDIS TO AVOID OVERWRITING.
+!  052808: IDIS BACK TO BEING SPECIFIED HERE
 !
       lun = 42   ! spare logical unit no.
       open(unit=lun,file='../cvs/objects/magicc/inputs/MAGRUN.CFG',status='OLD')
 !
         READ(LUN,4240) ISCENGEN
         READ(LUN,4240) IDIS
+!        READ(LUN,4240) JDIS
         READ(LUN,4240) KSTART
         READ(LUN,4240) ICO2CORR
         READ(LUN,4240) KEYDW
+        READ(LUN,4240) IMAGTAR
+        READ(LUN,4240) IPEAK
+        READ(LUN,4241) DPEAK
+        READ(LUN,4241) D2400
 !
       close(lun)
 !
@@ -665,9 +635,14 @@
         READ(LUN,4240) NOFFSET
         READ(LUN,4241) WTHRESH
         READ(LUN,4241) ES1990
+        READ(LUN,4240) ICCSM
+        IYRQALL=1990
 !
       close(lun)
 !
+!   Call overrite subroutine after each file that may have parameters to overwrite
+      call overrideParameters( ) !sjs
+
       IF(NOOTHER.EQ.1)THEN
         ANOX=0.0
         ACO=0.0
@@ -676,11 +651,11 @@
 !
 !  ************************************************************
 !
-!  OPEN MAIN OUTPUT FILE (MAG.CSV).
+!  OPEN MAIN OUTPUT FILE (MAG.OUT).
 !
-   IF(IWrite.eq.1)OPEN(UNIT=8,file='../cvs/objects/magicc/inputs/MAG.CSV',STATUS='UNKNOWN')
+   OPEN(UNIT=8,file='../cvs/objects/magicc/outputs/MAG.CSV',STATUS='UNKNOWN')
 ! sjs changed to .csv
-!  ************************************************************
+      OPEN(UNIT=88,FILE='../cvs/objects/magicc/outputs/CCSM.TXT', STATUS='UNKNOWN')
 !
 !  INTERIM CORRECTION TO AVOID CRASH IF S90IND SET TO ZERO IN
 !   MAGUSER.CFG
@@ -693,22 +668,22 @@
 !   SO4 AEROSOL LEVEL IS SET HERE.
 !
       IF(LEVSO4.EQ.1)THEN      ! LOW
-        S90DIR   = -0.3
-        S90IND   = -0.4
-        S90BIO   = -0.2
-        FOC90    =  0.0
+        S90DIR   = -0.2
+        S90IND   = -0.3
+        S90BIO   = -0.095
+        FOC90    =  0.094
       ENDIF
       IF(LEVSO4.EQ.2)THEN      ! MID
         S90DIR   = -0.4
-        S90IND   = -0.8
-        S90BIO   = -0.2
-        FOC90    =  0.1
+        S90IND   = -0.7
+        S90BIO   =  0.025
+        FOC90    =  0.244
       ENDIF
       IF(LEVSO4.EQ.3)THEN      ! HIGH
-        S90DIR   = -0.5
-        S90IND   = -1.2
-        S90BIO   = -0.2
-        FOC90    =  0.2
+        S90DIR   = -0.6
+        S90IND   = -1.1
+        S90BIO   =  0.145
+        FOC90    =  0.394
       ENDIF
       IF(LEVSO4.EQ.4)THEN      ! user
         S90DIR   = S90Duser
@@ -716,8 +691,6 @@
         S90BIO   = S90Buser
         FOC90    = FOC90usr
       ENDIF
-!
-!  ************************************************************
 !
 !  READ IN HALOCARBON FORCINGS. FORCINGS ARE ZERO TO AND INCLUDING
 !   1930 (1930-1940 FORCINGS ARE LINEARLY INTERPOLATED FROM ZERO IN
@@ -737,11 +710,12 @@
 !  FIRST INITIALIZE QCFC, QMONT, ETC. ARRAYS WITH ZEROES.
 !
       DO JCFC=0,LASTYEAR-1764
-      QCFC(JCFC)=0.0
-      QMONT(JCFC)=0.0
-      QOTHER(JCFC)=0.0
-      QSTRATOZ(JCFC)=0.0
-      QKYMAG(JCFC)=0.0
+        QCFC(JCFC)=0.0
+        QMONT(JCFC)=0.0
+        QOTHER(JCFC)=0.0
+        QSTRATOZ(JCFC)=0.0
+        QKYMAG(JCFC)=0.0
+        CFC12(JCFC)=0.0
       END DO
 !
       lun = 42   ! spare logical unit no.
@@ -762,21 +736,17 @@
       DO JCFC=L0+1,LAST
       IF(IHALOETC.EQ.2)THEN
         READ(LUN,4448)IYCFC,QMONT(JCFC),QSTRATOZ(JCFC),QKYMAG(JCFC), &
-       QOTHER(JCFC)
+       QOTHER(JCFC),CFC12(JCFC)
       ELSE
         READ(LUN,4447)IYCFC,QMONT(JCFC),QSTRATOZ(JCFC),QKYMAG(JCFC), &
-       QOTHER(JCFC)
+       QOTHER(JCFC),CFC12(JCFC)
       ENDIF
       END DO
 !
       CLOSE(lun)
 !
-!  ************************************************************
-!
 !  TAU FOR CH4 SOIL SINK CHANGED TO ACCORD WITH IPCC94 (160 yr).
 !  SPECIFICATION OF TauSoil MOVED TO MAGEXTRA.CFG ON 1/10/97.
-!
-!  ************************************************************
 !
       IF(ISCENGEN.EQ.1)THEN
         NUMSIMS=20
@@ -791,16 +761,12 @@
       IXLAM=1
       IF(RLO.EQ.1.0) IXLAM=0
 !
-!  ************************************************************
-!
       IF(ICO2READ.GE.1)IMETH=0
 !
       IF(DT.GT.1.0)DT=1.0
 !
       QXX=CO2DELQ
       Q2X=QXX*ALOG(2.)
-!
-!  *****************************************************************
 !
 !   FO(I) AND FL(I) ARE N.H. AND S.H. OCEAN AND LAND FRACTIONS.
 !
@@ -809,26 +775,22 @@
 !
       FK=RHO*SPECHT*HTCONS/31.5576
 !
-!  ***************************************************************
-!
 !  TRAP TO CATCH AND OVERWRITE UNREALISTIC D80SIN
 !
       IF(DUSER.LT.-0.5)THEN
         DOLD=DUSER
         DUSER=-0.5
-        IF(IWrite.eq.1)WRITE(8,808)DOLD,DUSER
+        WRITE(8,808)DOLD,DUSER
       ENDIF
       IF(DUSER.GT.3.0)THEN
         DOLD=DUSER
         DUSER=3.0
-        IF(IWrite.eq.1)WRITE(8,809)DOLD,DUSER
+        WRITE(8,809)DOLD,DUSER
       ENDIF
 !
-!  ************************************************************
+!  READ CO2 CONCS DIRECTLY FROM CO2INPUT.DAT IF ICO2READ=1,2,3,4
 !
-!  READ CO2 CONCS DIRECTLY FROM CO2INPUT.DAT IF ICO2READ.GE.1
-!
-      IF(ICO2READ.GE.1)THEN
+      IF(ICO2READ.GE.1.AND.ICO2READ.LE.4)THEN
         lun = 42   ! spare logical unit no.
         open(unit=lun,file='../cvs/objects/magicc/inputs/co2input.dat',status='OLD')
 !
@@ -898,7 +860,8 @@
             QEXSHL(JQ)=(QEXSH(JQ)-QOFFSET)*QFACTOR
           ENDIF
           IF(NCOLS.EQ.4)THEN
-            READ(lun,904)JYEAR,QEXNHO(JQ),QEXNHL(JQ),QEXSHO(JQ),QEXSHL(JQ)
+            READ(lun,904)JYEAR,QEXNHO(JQ),QEXNHL(JQ),QEXSHO(JQ), &
+           QEXSHL(JQ)
             QEXNHO(JQ)=(QEXNHO(JQ)-QOFFSET)*QFACTOR
             QEXNHL(JQ)=(QEXNHL(JQ)-QOFFSET)*QFACTOR
             QEXSHO(JQ)=(QEXSHO(JQ)-QOFFSET)*QFACTOR
@@ -916,29 +879,92 @@
           QEXSHL(JQFIRST-1)=QEXSHL(JQFIRST)
         ENDIF
         close(lun)
+      ELSE
+        JQLAST=2100-1764
+        DO JQ=1,JQLAST ! sjs
+            QEXNHO(JQ)=0.0
+            QEXNHL(JQ)=0.0
+            QEXSHO(JQ)=0.0
+            QEXSHL(JQ)=0.0
+          END DO
+      ! If QEXTRA was not read-in initialize arrays with zeros in case used for BCOC forcing
       ENDIF
 
 
-! ******************************************************************
-! ******************************************************************
+!
+!  ************************************************************
+!
+!  Read in historical BC and OC emissions and translate into
+!  radiative forcing. Add to QXTRA forcing and set QEXTRA to be
+!  true if not already. 
+!
+!  Emissions are read in as global values. sjs
 
-! ORIGINAL MAGICC CODE READS DATA FROM GAS.EMK  mrj 5/03
-IF ( MagEM(1,1) .LE. 0 ) THEN
-! toggled off for MiniCAM
+! Store original value
+      OrgIQREAD = IQREAD
 
+! Read in BC emissions if IFOC is set to 3  
+! and if IQREAD is NE 2 (which means only qextra should be used)
+     IF( IFOC.GE.3 .AND. IQREAD.NE.2 )THEN
+
+        lun = 42   ! spare logical unit no.
+        open(unit=lun,file='../cvs/objects/magicc/inputs/BCOCHist.csv',status='OLD')
+!
+        READ(LUN,*)QtempBCUnitForcing
+        READ(LUN,*)QtempOCUnitForcing
+
+! Convert to W/m^2 per Gg
+        QtempBCUnitForcing = QtempBCUnitForcing / 1000.
+        QtempOCUnitForcing = QtempOCUnitForcing / 1000.
+        
+! Use default read-in values if have not been otherwise set.
+        IF(aBCUnitForcing.EQ.0)THEN
+           aBCUnitForcing   = QtempBCUnitForcing
+        ENDIF
+        
+        IF(aOCUnitForcing.EQ.0)THEN
+           aOCUnitForcing   = QtempOCUnitForcing
+        ENDIF
+
+        READ(lun,*)IQFIRST,IQLAST
+        JQFIRST=IQFIRST-1764
+!
+!  TRAP IN CASE FIRST YEAR IS BEFORE 1765 with dummy read
+!
+        IF(JQFIRST.LT.1)THEN
+          DO JQ=JQFIRST,0
+             READ(lun,902)JYEAR,QQQGL
+          END DO
+          JQFIRST=1
+          IQFIRST=1765
+        ENDIF
+!
+        JQLAST=IQLAST-1764
+        DO JQ=JQFIRST,JQLAST
+            READ(lun,*)JYEAR,EHistBC(JQ),EHistOC(JQ)
+        END DO
+        
+        close(lun)
+        
+        ! Flag to use QExtra forcing
+        IQREAD = 1
+        
+        !Remove forcing from MAGICC internal calc if BCOC is read in
+        S90BIO   = 0
+        FOC90    = 0
+
+      ENDIF
 !
 !  ******************************************************************
 !
 !  Read in gas emissions from GAS.EMK
 !
       lun = 42   ! spare logical unit no.
-!	  write(*,*) "Reading in gas.emk"
 !
       open(unit=lun,file='GAS.EMK',status='OLD')
 !
 !  READ HEADER AND NUMBER OR ROWS OF EMISIONS DATA FROM GAS.EMK
 !
-
       read(lun,4243)  NVAL
       read(lun,'(a)') mnem
       read(lun,*) !   skip description
@@ -946,107 +972,58 @@ IF ( MagEM(1,1) .LE. 0 ) THEN
       read(lun,*) !   skip units
 !
 !  READ INPUT EMISSIONS DATA FROM GAS.EMK
-!  NOTE THAT, IN CONTRAST TO STAG.FOR AND EARLIER VERSIONS OF MAGICC,
-!   THE SO2 EMISSIONS (BY REGION) MUST BE INPUT AS CHANGES FROM 1990.
+!  SO2 EMISSIONS (BY REGION) MUST BE INPUT AS CHANGES FROM 1990.
 !
-      do i=1,NVAL
-        read(lun,*) IY1(I),FOS(I),DEF(I),DCH4(I),DN2O(I), &
+	iReadNative = 0
+
+	! Maintain code to read in original magicc input file format
+    do i=1,NVAL
+	  if ( iReadNative .EQ. 1 )THEN
+        read(lun,4242) IY1(I),FOS(I),DEF(I),DCH4(I),DN2O(I), &
+       DNOX(I),DVOC(I),DCO(I), &
        DSO21(I),DSO22(I),DSO23(I),DCF4(I),DC2F6(I),D125(I), &
-       D134A(I),D143A(I),D227(I),D245(I),DSF6(I), &
-       DNOX(I),DVOC(I),DCO(I)  ! Change to match order of writout -- this may be different than magicc default - sjs
+        D134A(I),D143A(I),D227(I),D245(I),DSF6(I)
+  	 END IF
+
+! For objects, read in our csv format.
+	 IF ( iReadNative .EQ. 0 )THEN
+        read(lun,*) IY1(I),FOS(I),DEF(I),DCH4(I),DN2O(I), &
+      DSO21(I),DSO22(I),DSO23(I),DCF4(I),DC2F6(I),D125(I), &
+      D134A(I),D143A(I),D227(I),D245(I),DSF6(I), &
+      DNOX(I),DVOC(I),DCO(I), DBC(I), DOC(I)  ! Change to match order of writeout -- this is different than magicc default - sjs
+  	 END IF
  
-	IF(i.eq.1)THEN !collect our 1990 values since MAGICC wants differences from 1990
+	IF(i.eq.1) THEN !collect our 1990 values since MAGICC wants differences from 1990
 	  ES1990 = DSO21(1) + DSO22(1) + DSO23(1) !global 1990 emissions
 	  DSO211990 = DSO21(1) !regional 1990 emissions
 	  DSO221990 = DSO22(1)
 	  DSO231990 = DSO23(1)
 	END IF
 
+!
+        DERROR=DPEAK
+        FOS(I)=FOS(I)-DERROR
+        IF(IY1(I).EQ.2000)ICORR=I
 !
 !  ADJUST SO2 EMISSIONS INPUT
 !
-
-	DSO21(I) = DSO21(I) - DSO211990 + ES1990 !where ES1990 is the MAGICC global 1990 emissions
-	DSO22(I) = DSO22(I) - DSO221990 + ES1990 !note it is added in to all three regions...
-	DSO23(I) = DSO23(I) - DSO231990 + ES1990
-
-    DSO2(I) = DSO21(I)+DSO22(I)+DSO23(I)-2.0*ES1990 !but here they correct for it in the global number
+    IF ( iReadNative .EQ. 1 )THEN ! Original MAGICC code
+        DSO21(I)= DSO21(I)+ES1990
+        DSO22(I)= DSO22(I)+ES1990
+        DSO23(I)= DSO23(I)+ES1990
+        DSO2(I) = DSO21(I)+DSO22(I)+DSO23(I)-2.0*ES1990
+    END IF
 !
-
-	!write statement for debugging
-	IF(1.eq.2) Write(*,854) "MAG: ",NVAL,IY1(i),FOS(i),DEF(i),DCH4(i), &
-		DN2O(i),DSO21(i),DSO22(i),DSO23(i),DCF4(i),DC2F6(i),D125(i), &
-        D134A(i),D143A(i),D227(i),D245(i),DSF6(i),DNOX(i),DVOC(i),DCO(i)
- 
-
-      end do
-      close(lun)
-
-!
-
-END IF ! end toggle off original read in mrj 5/03
-
-! ******************************************************************
-! ******************************************************************
-! new code to read from array mrj 5/03 (based on sjs code)
-
-IF ( MagEM(1,1) .GT. 0 ) THEN !toggle on new read in (from passed array)
-	  	  write(*,*) "Using values from MagEM"
-
-      NVAL = MagEM(1,1)
-      mnem = "unknown"
-
-      do i=1,NVAL
-          IY1(i) = nint(MagEM(i+1,1))
-          FOS(i) = MagEM(i+1,2) 
-          DEF(i) = MagEM(i+1,3) 
-          DCH4(i) = MagEM(i+1,4) 
-          DN2O(i) = MagEM(i+1,5) 
-          DSO21(i) = MagEM(i+1,6) 
-          DSO22(i) = MagEM(i+1,7) 
-          DSO23(i) = MagEM(i+1,8) 
-          DCF4(i) = MagEM(i+1,9) 
-          DC2F6(i) = MagEM(i+1,10) 
-          D125(i) = MagEM(i+1,11) 
-          D134A(i) = MagEM(i+1,12) 
-          D143A(i) = MagEM(i+1,13) 
-          D227(i) = MagEM(i+1,14) 
-          D245(i) = MagEM(i+1,15) 
-          DSF6(i) = MagEM(i+1,16) 
-          DNOX(i) = MagEM(i+1,17) 
-          DVOC(i) = MagEM(i+1,18) 
-          DCO(i) = MagEM(i+1,19) 
-
-	!write statement for debugging
-	IF(1.eq.2) Write(*,854) "MAG: ",NVAL,IY1(i),FOS(i),DEF(i),DCH4(i), &
-		DN2O(i),DSO21(i),DSO22(i),DSO23(i),DCF4(i),DC2F6(i),D125(i), &
-        D134A(i),D143A(i),D227(i),D245(i),DSF6(i),DNOX(i),DVOC(i),DCO(i)
-    854 FORMAT(a,2(I4,','),25(F7.2,','))
-
-
-	IF(i.eq.1)THEN !collect our 1990 values since MAGICC wants differences from 1990
-	  ES1990 = DSO21(1) + DSO22(1) + DSO23(1) !global 1990 emissions
-	  DSO211990 = DSO21(1) !regional 1990 emissions
-	  DSO221990 = DSO22(1)
-	  DSO231990 = DSO23(1)
-	END IF
-
-	DSO21(I) = DSO21(I) - DSO211990 + ES1990 !where ES1990 is the MAGICC global 1990 emissions
-	DSO22(I) = DSO22(I) - DSO221990 + ES1990 !note it is added in to all three regions...
-	DSO23(I) = DSO23(I) - DSO231990 + ES1990
-
-    DSO2(I) = DSO21(I)+DSO22(I)+DSO23(I)-2.0*ES1990 !but here they correct for it in the global number
-
-	end do  !*** end loop over input periods ***
-
-END IF	!end toggle for MiniCAM input
-
-!  ***************************************************************
-!  ***************************************************************
-
-
-
-!  ************************************************************
+    IF ( iReadNative .EQ. 0 )THEN 
+		DSO21(I) = DSO21(I) - DSO211990 + ES1990 !where ES1990 is the MAGICC global 1990 emissions
+		DSO22(I) = DSO22(I) - DSO221990 + ES1990 !note it is added in to all three regions...
+		DSO23(I) = DSO23(I) - DSO231990 + ES1990
+	
+		DSO2(I) = DSO21(I)+DSO22(I)+DSO23(I)-2.0*ES1990 !but here correct for it in the global number
+     END IF
+     
+     END DO
+     close(lun)
 !
 !  TRAP TO CATCH INCONSISTENCY BETWEEN LASTYEAR FROM CFG FILE
 !   AND LAST YEAR OF EMISSIONS INPUT OR MAX ARRAY SIZE
@@ -1059,7 +1036,6 @@ END IF	!end toggle for MiniCAM input
       KEND  = IYEND-1764
       KREF  = KYRREF-1764
       TEND  = FLOAT(KEND-1)
-
 !
 !  Offset IY1 entries from 1990 : i.e., make IY1(1)=0,
 !   IY1(2)=IY1(2)-1990, etc.
@@ -1067,8 +1043,6 @@ END IF	!end toggle for MiniCAM input
       do i=1,NVAL
         IY1(i) = IY1(i) - 1990
       end do
-!
-!  ***************************************************************
 !
 ! INITIAL (1990) METHANE VALUES: EMISS (LO, MID, HI OR CON) IS THE
 !  'CORRECT' 1990 VALUE CALCULATED TO BE CONSISTENT WITH THE
@@ -1096,14 +1070,14 @@ END IF	!end toggle for MiniCAM input
       EMISSHI  = BBCH4*(DCDT +CBAL/TTHI  +CBAL/TAUOTHER)
       EMISSCON = BBCH4*(DCDT +CBAL/TTCON +CBAL/TAUOTHER)
 !
-! INITIAL (1990) N2O VALUE: FOLLOWS CH4 CASE, BUT THERE IS ONLY ONE
+! INITIAL (2000) N2O VALUE: FOLLOWS CH4 CASE, BUT THERE IS ONLY ONE
 !  CORRECTION FACTOR (emissN). THIS IS CALCULATED to be consistent
-!  with TN2O00. Note that C and dC/dt must be for mid 1990.
+!  with TN2000. Note that C and dC/dt must be for mid 2000.
 !
       CBAL=CNBAL
       DCDT=DCNBAL
 !
-      EMISSN   = BBN2O*(DCDT +CBAL/TN2O00)
+      EMISSN   = BBN2O*(DCDT +CBAL/TN2000)
 !
 !  ADD (OR SUBTRACT) CONSTANT TO ALL CH4 AND N2O EMISSIONS TO GIVE
 !   1990 VALUE CONSISTENT WITH LIFETIME, CONC AND DC/DT.
@@ -1118,13 +1092,15 @@ END IF	!end toggle for MiniCAM input
       IF(LEVCH4.EQ.4) TTUSER = TTCON
 !
 !  NOTE : D*(2) MUST BE 2000 VALUE
+!  THIS IS I=ICORR
 !
-      CORRMLO  = EMISSLO  - DCH4(2)
-      CORRMMID = EMISSMID - DCH4(2)
-      CORRMHI  = EMISSHI  - DCH4(2)
-      CORRMCON = EMISSCON - DCH4(2)
+
+      CORRMLO  = EMISSLO  - DCH4(ICORR)
+      CORRMMID = EMISSMID - DCH4(ICORR)
+      CORRMHI  = EMISSHI  - DCH4(ICORR)
+      CORRMCON = EMISSCON - DCH4(ICORR)
 !
-      CORRN2O  = EMISSN   - DN2O(2)
+      CORRN2O  = EMISSN   - DN2O(ICORR)
 !
       IF(LEVCH4.EQ.1) CORRUSER = CORRMLO
       IF(LEVCH4.EQ.2) CORRUSER = CORRMMID
@@ -1138,26 +1114,8 @@ END IF	!end toggle for MiniCAM input
 !
 !  ***************************************************************
 !
-! INTERP(no-of-input-values,start-of-output,key-years,input-values,output)
-! INTERP(N,ISTART,IY,X,Y)
-!
-!  SUBROUTINE INTERP TAKES EMISSIONS (E.G. ARRAY X=DCO2) SPECIFIED AT
-!   KEY YEARS, WITH THE KEY YEARS IDENTIFIED RELATIVE TO 1990=0 IN
-!   THE IY ARRAY, AND LINEARLY INTERPOLATES TO FIND ANNUAL VALUES
-!   WHICH ARE OUTPUT TO AN ARRAY (E.G. Y=ECH4) BEGINNING WITH ISTART
-!   AND ENDING WITH IEND.  THUS X(1) AND Y(ISTART) ARE THE SAME, AS
-!   ARE X(IY(N)) AND Y(IEND). NOTE THAT ONLY ISTART MUST BE SPECIFIED
-!   (USUALLY AS 226, CORRESP TO 1990), SINCE IEND=ISTART+IY(N).
-!   HERE, N IS THE SIZE OF THE IY ARRAY.
-!
-!  NOTE : AUGUST 2000
-!   EVEN THOUGH CODE IS MODIFIED TO BEGIN SIMULATIONS IN 2000
-!   (JSTART=236), EMISSIONS INPUTS ARE STILL GIVEN FROM 1990
-!   (J=226) IN GAS.EMK FILE
-!
       call interp(NVAL,226,IY1,fos,ef)
       call interp(NVAL,226,IY1,def,ednet)
-!
       call interp(NVAL,226,IY1,DCH4,ECH4)
       call interp(NVAL,226,IY1,DN2O,EN2O)
       call interp(NVAL,226,IY1,DNOX,ENOX)
@@ -1170,11 +1128,9 @@ END IF	!end toggle for MiniCAM input
 !   AND SUBROUTINE INTERP. THIS IS AVOIDED BY USING ESO2SUM.
 !
       call interp(NVAL,226,IY1,dSO2,ESO2SUM)
-!
       call interp(NVAL,226,IY1,dSO21,ESO21)
       call interp(NVAL,226,IY1,dSO22,ESO22)
       call interp(NVAL,226,IY1,dSO23,ESO23)
-!
       call interp(NVAL,226,IY1,DCF4 ,ECF4 )
       call interp(NVAL,226,IY1,DC2F6,EC2F6)
       call interp(NVAL,226,IY1,D125 ,E125 )
@@ -1183,28 +1139,28 @@ END IF	!end toggle for MiniCAM input
       call interp(NVAL,226,IY1,D227 ,E227 )
       call interp(NVAL,226,IY1,D245 ,E245 )
       call interp(NVAL,226,IY1,DSF6 ,ESF6 )
+      call interp(NVAL,226,IY1,DBC  ,EBC  )
+      call interp(NVAL,226,IY1,DOC  ,EOC  )
 !
 !  SET ESO2 ARRAY
 !
       DO KE=226,KEND
-      ESO2(KE)=ESO2SUM(KE)
+        ESO2(KE)=ESO2SUM(KE)
       END DO
-!
-!  ************************************************************
 !
 !  FIRST PRINT OUTS TO MAG.OUT
 !  PRINT OUT DATE HEADER
 !
-	myr = 0
-	imon = 1
-	iday = 0
 !      call getdat(myr,imon,iday)  ! sjs - comment out since not available on all platforms
-	
-IF(IWrite.eq.1)THEN
+	myr = 0
+	imon = 0
+	iday = 0
+
       write(8,87) mnem,iday,month(imon),myr
+      write(88,87) mnem,iday,month(imon),myr
   87  format(' Emissions profile: ',a20,20x,' Date: ',i2,1x,a3,1x,i4,/)
 !
-!  PRINT OUT CO2, CH4 AND SO4 AEROSOL CHOICES
+!  PRINT OUT CO2, CH4 AND SO4 AEROSOL CHOICES (IN WORDS)
 !
         WRITE(8,110) LEVEL(LEVCO2)
         IF(IFEED.EQ.0)WRITE(8,1100)
@@ -1213,6 +1169,13 @@ IF(IWrite.eq.1)THEN
         IF(LEVCH4.LE.3) WRITE (8,112) LEVEL(LEVCH4)
         IF(LEVCH4.EQ.4) WRITE (8,113) TCH4CON
         WRITE(8,114) LEVEL(LEVSO4)
+!
+        WRITE(88,110) LEVEL(LEVCO2)
+        IF(IFEED.EQ.0)WRITE(88,1100)
+        IF(IFEED.EQ.1)WRITE(88,1101)
+        IF(LEVCO2.EQ.4)WRITE(88,111) DUSER,FUSER
+        IF(LEVCH4.LE.3) WRITE (88,112) LEVEL(LEVCH4)
+        IF(LEVCH4.EQ.4) WRITE (88,113) TCH4CON
 !
 !  PRINT OUT HALOCARBON CHOICES
 !
@@ -1225,13 +1188,14 @@ IF(IWrite.eq.1)THEN
 !
         WRITE(8,116) MODNAME(MODEL)
 !
-END IF !IWrite
-!  ****************************************************************
+!  PRINT OUT ICE MELT SELECTED (LOW, MID OR HIGH)
+!
+        IF(ICE.EQ.1)WRITE(8,1161)
+        IF(ICE.EQ.2)WRITE(8,1162)
+        IF(ICE.EQ.3)WRITE(8,1163)
 !
       NCLIM=1
       CALL INIT
-!
-!  ****************************************************************
 !
 !  LINEARLY EXTRAPOLATE LAST ESO2 VALUES FOR ONE YEAR
 !
@@ -1241,7 +1205,14 @@ END IF !IWrite
       ESO23(KEND+1)   = 2.*ESO23(KEND)-ESO23(KEND-1)
       ESO2(KEND+1)    = ESO2SUM(KEND+1)
 !
-!  ****************************************************************
+!  DEFINE ECO FOR J=1,225
+!
+      DO KC=1,225
+        COE(KC)=ECO90*KC/226
+      END DO
+      DO KC=226,KEND
+        COE(KC)=ECO(KC)
+      END DO
 !
 !  WRITE OUT HEADER INFORMATION FOR MAG.OUT
 !
@@ -1249,15 +1220,12 @@ END IF !IWrite
 !   (QTOT-Q1990)=(QCO2-QCO2.1990)*CO2SCALE
 !
       SCAL=100.*(CO2SCALE-1.)
-IF(IWrite.eq.1)THEN
       IF(ICO2READ.EQ.1)WRITE(8,871)SCAL
       IF(ICO2READ.EQ.2)WRITE(8,872)
       IF(ICO2READ.EQ.3)WRITE(8,873)
 !
-!  ************************************************************
-!
       IF(IQREAD.EQ.0)WRITE(8,756)
-      IF(IQREAD.GE.1)THEN
+      IF(OrgIQREAD.GE.1)THEN
         IF(NCOLS.EQ.1)WRITE(8,757)IQFIRST,IQLAST
         IF(NCOLS.EQ.2)WRITE(8,758)IQFIRST,IQLAST
         IF(NCOLS.EQ.4)WRITE(8,759)IQFIRST,IQLAST
@@ -1265,11 +1233,16 @@ IF(IWrite.eq.1)THEN
         IF(QFACTOR.NE.1.0)WRITE(8,761)QFACTOR
       ENDIF
       IF(IQREAD.EQ.2)WRITE(8,762)
+      
+      IF ( IFOC.GE.3 ) THEN	! sjs
+         WRITE(8,*) "ObjECTS Custom BC-OC forcing Used."
+      ELSE
+         WRITE(8,*) "MAGICC Internal BC-OC forcing Used."
+      ENDIF
+      
 !
       WRITE (8,10) Q2X
 !      WRITE (8,11) FO(1),FO(2),FL(1),FL(2)
-!
-!  ************************************************************
 !
       IF(S90DIR.EQ.0.0) write(8,*) 'DIRECT AEROSOL FORCING IGNORED'
       IF(ABS(S90DIR).GT.0.0) write(8,60)S90DIR
@@ -1282,8 +1255,6 @@ IF(IWrite.eq.1)THEN
       IF(ABS(FOC90).GT.0.0) write(8,63)FOC90
       write(8,53)STRATH2O
 !
-END IF !IWrite
-!  ****************************************************************
 !  ****************************************************************
 !
 !  Run model NUMSIMS times for different values of DT2X.
@@ -1380,57 +1351,12 @@ END IF !IWrite
         END DO
       ENDIF
 !
-!  ****************************************************************
+!  SET CLIMATE SENSITIVITY
 !
-!  SET CLIMATE SENSITIVITY AND ICE MELT PARAMETERS
-!
-      IF(NCLIM.EQ.1)THEN ! LOW
-        TE    =   1.5
-        ZI0   =  30.0
-        TAUI  = 150.0
-        DTSTAR=   0.9
-        DTEND =   4.5
-        BETAG =   0.01
-        BETA1 =  -0.045
-        BETA2 =   0.0
-        DB3   =  -0.04
-      ENDIF
-!
-      IF(NCLIM.EQ.2)THEN ! MID
-        TE    =   2.5
-        ZI0   =  30.0
-        TAUI  = 100.0
-        DTSTAR=   0.7
-        DTEND =   3.0
-        BETAG =   0.03
-        BETA1 =  -0.03
-        BETA2 =   0.01
-        DB3   =   0.01
-      ENDIF
-!
-      IF(NCLIM.EQ.3)THEN ! HIGH
-        TE    =   4.5
-        ZI0   =  30.0
-        TAUI  =  50.0
-        DTSTAR=   0.6
-        DTEND =   2.5
-        BETAG =   0.05
-        BETA1 =  -0.015
-        BETA2 =   0.02
-        DB3   =   0.06
-      ENDIF
-!
-      IF(NCLIM.EQ.4)THEN ! USER
-        TE    =  DT2XUSER
-        ZI0   =  ZI0IN
-        TAUI  =  TAUIN
-        DTSTAR=  DTSTARIN
-        DTEND =  DTENDIN
-        BETAG =  BETAGIN
-        BETA1 =  BETA1IN
-        BETA2 =  BETA2IN
-        DB3   =  DB3IN
-      ENDIF
+      IF(NCLIM.EQ.1)TE=1.5        ! LOW
+      IF(NCLIM.EQ.2)TE=3.0        ! MID
+      IF(NCLIM.EQ.3)TE=6.0        ! HIGH
+      IF(NCLIM.EQ.4)TE=DT2XUSER   ! USER
 !
       IF(IXLAM.EQ.1)THEN
         CALL LAMCALC(Q2X,FL(1),FL(2),XKLO,XKNS,TE,RLO,XLAMO,XLAML)
@@ -1440,62 +1366,56 @@ END IF !IWrite
 !
       CALL INIT
 !
-IF(IWrite.eq.1)THEN
-      WRITE (8,179)
-      WRITE (8,176) NSIM,TE
-      IF(NESO2.EQ.1)WRITE(8,186)
-      IF(NESO2.EQ.2)WRITE(8,187)
-      IF(NESO2.EQ.3)WRITE(8,188)
-      IF(NESO2.EQ.4)WRITE(8,189)
-      IF(NESO2.EQ.5)WRITE(8,190)
-      WRITE(8,1220)IVARW
-      IF(IVARW.EQ.0)THEN
-        WRITE (8,122)
-      ENDIF
-      IF(IVARW.EQ.1)THEN
-        WRITE (8,123) TW0NH
-        WRITE (8,124) TW0SH
-        IF(KEYDW.EQ.1)WRITE (8,1231)
-        IF(KEYDW.EQ.2)WRITE (8,1232)
-        IF(KEYDW.EQ.3)WRITE (8,1233)
-        IF(KEYDW.EQ.4)WRITE (8,1234)
-        IF(KEYDW.EQ.5)WRITE (8,1235)
-      ENDIF
-      IF(IVARW.EQ.2)THEN
-        WRITE (8,126) WTHRESH
-        WRITE (8,127) TW0NH
-        IF(KEYDW.EQ.1)WRITE (8,1231)
-        IF(KEYDW.EQ.2)WRITE (8,1232)
-        IF(KEYDW.EQ.3)WRITE (8,1233)
-        IF(KEYDW.EQ.4)WRITE (8,1234)
-        IF(KEYDW.EQ.5)WRITE (8,1235)
-      ENDIF
-      IF(IVARW.EQ.3)THEN
-        WRITE (8,125)
+      IF(NESO2.EQ.1)THEN
+        WRITE (8,179)
+        WRITE (8,176) NSIM,TE
+        WRITE (88,1761) TE
+        IF(NESO2.EQ.1)WRITE(8,186)
+        IF(NESO2.EQ.2)WRITE(8,187)
+        IF(NESO2.EQ.3)WRITE(8,188)
+        IF(NESO2.EQ.4)WRITE(8,189)
+        IF(NESO2.EQ.5)WRITE(8,190)
+        WRITE(8,1220)IVARW
+        IF(IVARW.EQ.0)THEN
+          WRITE (8,122)
+        ENDIF
+        IF(IVARW.EQ.1)THEN
+          WRITE (8,123) TW0NH
+          WRITE (8,124) TW0SH
+          IF(KEYDW.EQ.1)WRITE (8,1231)
+          IF(KEYDW.EQ.2)WRITE (8,1232)
+          IF(KEYDW.EQ.3)WRITE (8,1233)
+          IF(KEYDW.EQ.4)WRITE (8,1234)
+          IF(KEYDW.EQ.5)WRITE (8,1235)
+        ENDIF
+        IF(IVARW.EQ.2)THEN
+          WRITE (8,126) WTHRESH
+          WRITE (8,127) TW0NH
+          IF(KEYDW.EQ.1)WRITE (8,1231)
+          IF(KEYDW.EQ.2)WRITE (8,1232)
+          IF(KEYDW.EQ.3)WRITE (8,1233)
+          IF(KEYDW.EQ.4)WRITE (8,1234)
+          IF(KEYDW.EQ.5)WRITE (8,1235)
+        ENDIF
+        IF(IVARW.EQ.3)THEN
+          WRITE (8,125)
+        ENDIF
+!
+        WRITE (8,12) XKNS,XKLO
+        WRITE (8,120) HM,YK
+        WRITE (8,121) PI,W0
+!
+        IF(IXLAM.EQ.1)THEN
+          WRITE(8,914) RLO,XLAML,XLAMO
+          IF(XLAML.LT.0.0)WRITE(8,916)
+        ELSE
+          WRITE(8,915) XLAM
+        ENDIF
       ENDIF
 !
-      WRITE (8,12) XKNS,XKLO
-      WRITE (8,120) HM,YK
-      WRITE (8,121) PI,W0
-!
-      WRITE (8,910) DTSTAR,DTEND,taui,zi0
-      WRITE (8,912) betag
-      WRITE (8,913) beta1,beta2,db3
-      IF(IXLAM.EQ.1)THEN
-        WRITE(8,914) RLO,XLAML,XLAMO
-        IF(XLAML.LT.0.0)WRITE(8,916)
-      ELSE
-        WRITE(8,915) XLAM
-      ENDIF
-!
-END IF !IWrite
 !  ***********************************************************
 !
-! sjsTEMP
-  
       CALL RUNMOD
-!
-!  ***********************************************************
 !
 !  EXTRA CALL TO RUNMOD TO GET FINAL FORCING VALUES FOR K=KEND
 !   WHEN DT=1.0
@@ -1507,8 +1427,8 @@ END IF !IWrite
 !
       IF(NSIM.EQ.1)THEN
         DO K=1,KEND
-        QSO2SAVE(K)=QSO2(K)
-        QDIRSAVE(K)=QDIR(K)
+          QSO2SAVE(K)=QSO2(K)
+          QDIRSAVE(K)=QDIR(K)
         END DO
       ENDIF
 !
@@ -1525,262 +1445,253 @@ END IF !IWrite
       DTNHL  = TNHL(226)-TNHL(116)
       DTSHL  = TSHL(226)-TSHL(116)
 !
-IF(IWrite.eq.1)THEN
-      WRITE (8,140) DT1,DMSL1
-      WRITE (8,141) DTNHL,DTNHO,DTSHL,DTSHO
-      WRITE (8,142) DTNH1,DTSH1,DTLAND,DTOCEAN
-      WRITE (8,15) KYRREF
-      WRITE (8,16)
+      IF(NESO2.EQ.1)THEN
+        WRITE (8,140) DT1,DMSL1
+        WRITE (8,141) DTNHL,DTNHO,DTSHL,DTSHO
+        WRITE (8,142) DTNH1,DTSH1,DTLAND,DTOCEAN
+        WRITE (8,15) KYRREF
+        WRITE (8,16)
 !
-      IF(IVARW.GE.1)THEN
-        WRITE(8,178)TE
-      ELSE
-        WRITE(8,177)TE
-      ENDIF
+        IF(IVARW.GE.1)THEN
+          WRITE(8,178)TE
+        ELSE
+          WRITE(8,177)TE
+        ENDIF
 !
-      IF(NCLIM.EQ.1)WRITE(8,161)
-      IF(NCLIM.EQ.2)WRITE(8,162)
-      IF(NCLIM.EQ.3)WRITE(8,163)
-      IF(NCLIM.EQ.4)WRITE(8,164)
+        IF(NCLIM.EQ.1)WRITE(8,161)
+        IF(NCLIM.EQ.2)WRITE(8,162)
+        IF(NCLIM.EQ.3)WRITE(8,163)
+        IF(NCLIM.EQ.4)WRITE(8,164)
 !
-      IF(NOUT.EQ.1)WRITE(8,171)
-      IF(NOUT.EQ.2)WRITE(8,172)
-      IF(NOUT.EQ.3)WRITE(8,173)
-      IF(NOUT.EQ.4)WRITE(8,174)
-      IF(NOUT.EQ.5)THEN
-        WRITE(8,175)
-      ENDIF
+        IF(NOUT.EQ.1)WRITE(8,171)
+        IF(NOUT.EQ.2)WRITE(8,172)
+        IF(NOUT.EQ.3)WRITE(8,173)
+        IF(NOUT.EQ.4)WRITE(8,174)
+        IF(NOUT.EQ.5)THEN
+          WRITE(8,175)
+        ENDIF
 !
-END IF !IWrite
 !  PRINTOUT OPTIONS
 !
-      IF(NOUT.EQ.1)THEN
-        COL9   = TNHAV(226)
-        COL10  = TSHAV(226)
-      ENDIF
-      IF(NOUT.EQ.2.OR.NOUT.EQ.5)THEN
-        COL9   = TLAND(226)
-        COL10  = TOCEAN(226)
-        IF(COL10.NE.0.0)THEN
-          COL11= COL9/COL10
-        ELSE
-          COL11= 9.999
+        IF(NOUT.EQ.1)THEN
+          COL9   = TNHAV(226)
+          COL10  = TSHAV(226)
         ENDIF
-      ENDIF
-      IF(NOUT.EQ.3.OR.NOUT.EQ.4)THEN
-        COL9   = TEQU(226)-TGAV(226)
-        COL10  = TDEEP(226)
-      ENDIF
+        IF(NOUT.EQ.2.OR.NOUT.EQ.5)THEN
+          COL9   = TLAND(226)
+          COL10  = TOCEAN(226)
+          IF(COL10.NE.0.0)THEN
+            COL11= COL9/COL10
+          ELSE
+            COL11= 9.999
+          ENDIF
+        ENDIF
+        IF(NOUT.EQ.3.OR.NOUT.EQ.4)THEN
+          COL9   = TEQU(226)-TGAV(226)
+          COL10  = TDEEP(226)
+        ENDIF
 !
-      TEOUT=TEQU(226)
+        TEOUT=TEQU(226)
 !
-IF(IWrite.eq.1)THEN
-      IF(NOUT.EQ.1)THEN
-        WRITE(8,181)QGLOBE(226),TEOUT,TGAV(226),EX(226),SLI(226), &
-       SLG(226),SLA(226),SLT(226),COL9,COL10,WNH(226),WSH(226)
-      ENDIF
-      IF(NOUT.EQ.2) THEN
-        WRITE(8,182)QGLOBE(226),TEOUT,TGAV(226),EX(226),SLI(226), &
-       SLG(226),SLA(226),SLT(226),COL9,COL10,COL11,WNH(226),WSH(226)
-      ENDIF
-      IF(NOUT.EQ.3)THEN
-        WRITE(8,183)QGLOBE(226),TEOUT,TGAV(226),EX(226),SLI(226), &
-       SLG(226),SLA(226),SLT(226),COL9,COL10,WNH(226),WSH(226)
-      ENDIF
-      IF(NOUT.EQ.4)THEN
+!  THE METHOD FOR CALCULATING SLT SEEMS TO BE WRONG. IT ATTEMPTS TO
+!   USE QUADRATURE FOR THE ERRORS IN INDIVIDUAL COMPONENTS, BUT DOES
+!   NOT DO THIS CONSISTENTLY. SO IT IS BETTER TO SUM THE INDIVIDUAL
+!   VALUES.
+!
+        SLT(226)=EX(226)+SLI(226)+SLG(226)+SLA(226)+SLO(226)         
+        IF(NOUT.EQ.1)THEN
+          SLICE=SLA(226)+SLG(226)
+          SLRAW=SLT(226)-SLO(226)
+          WRITE(8,181)QGLOBE(226),TEOUT,TGAV(226),EX(226),SLI(226), &
+         SLG(226),SLA(226),SLO(226),SLT(226),COL9,COL10,WNH(226), &
+         WSH(226),SLICE,SLRAW
+        ENDIF
+        IF(NOUT.EQ.2) THEN
+          WRITE(8,182)QGLOBE(226),TEOUT,TGAV(226),EX(226),SLI(226), &
+         SLG(226),SLA(226),SLO(226),SLT(226),COL9,COL10,COL11,WNH(226), &
+         WSH(226)
+        ENDIF
+        IF(NOUT.EQ.3)THEN
+          WRITE(8,183)QGLOBE(226),TEOUT,TGAV(226),EX(226),SLI(226), &
+         SLG(226),SLA(226),SLO(226),SLT(226),COL9,COL10,WNH(226), &
+         WSH(226)
+        ENDIF
+        IF(NOUT.EQ.4)THEN
 !
 !  CONVERT W/M**2 TO EQUIV CO2 RELATIVE TO END-1765 CO2 CONC
 !
-        EQUIVCO2=COBS(1)*EXP(QGLOBE(226)/QXX)
-        WRITE(8,184)EQUIVCO2,TEOUT,TGAV(226),EX(226),SLI(226), &
-       SLG(226),SLA(226),SLT(226),COL9,COL10,WNH(226),WSH(226)
-      ENDIF
-      IF(NOUT.EQ.5)THEN
-        WRITE(8,185)QGLOBE(226),TGAV(226),COL11,SLT(226),EX(226), &
-       SLI(226),SLG(226),SLA(226),WNH(226)
-      ENDIF
+          EQUIVCO2=COBS(1)*EXP(QGLOBE(226)/QXX)
+          WRITE(8,184)EQUIVCO2,TEOUT,TGAV(226),EX(226),SLI(226), &
+         SLG(226),SLA(226),SLO(226),SLT(226),COL9,COL10,WNH(226), &
+         WSH(226)
+        ENDIF
+        IF(NOUT.EQ.5)THEN
+          WRITE(8,185)QGLOBE(226),TGAV(226),COL11,SLT(226),EX(226), &
+         SLI(226),SLG(226),SLA(226),SLO(226),WNH(226)
+        ENDIF
 !
-END IF !IWrite
 !  ****************************************************************
 !
 !  MAIN PRINT OUT LOOP
 !
-      TE1 = 0.
-      TT1 = 0.
-      TN1 = 0.
-      TS1 = 0.
+        TE1 = 0.
+        TT1 = 0.
+        TN1 = 0.
+        TS1 = 0.
 !
-      QR    = QGLOBE(KREF)
-      XPRT  = FLOAT(ITEMPRT)
-      NPRT  = INT(225./XPRT +0.01)
-      MPRT  = NPRT*ITEMPRT
-      KYEAR0= 1990-MPRT
+        QR    = QGLOBE(KREF)
+        XPRT  = FLOAT(ITEMPRT)
+        NPRT  = INT(225./XPRT +0.01)
+        MPRT  = NPRT*ITEMPRT
+        KYEAR0= 1990-MPRT
 !
-      TREFSUM=0.0
+        TREFSUM=0.0
 !
-      DO 987 K=1,KEND
+        DO 987 K=1,KEND
 !
-      KYEAR=1764+K
-      QK = QGLOBE(K)
-      Q1     = QK-QR
-      TEQUIL = TEQU(K)
-      TEQUIL0= TEQU(KREF)
+          KYEAR=1764+K
+          QK = QGLOBE(K)
+          Q1 = QK-QR
+          TEQUIL = TEQU(K)
+          TEQUIL0= TEQU(KREF)
 !
-      TE1 = TEQUIL-TEQUIL0
-      TT1 = TGAV(K)-TGAV(KREF)
-      TN1 = TNHAV(K)-TNHAV(KREF)
-      TS1 = TSHAV(K)-TSHAV(KREF)
-!
-!  ******************************************************
-!
-!  OLD (SAR VERSION OF SCENGEN) REFERENCE PERIOD CASE .....
-!  CALCULATE 1961-1990 MEAN TEMPERATURE AS REFERENCE LEVEL FOR
-!   CALCULATION OF INPUT INTO SCENGEN DRIVER FILES.
-!  NOTE : TREF DEPENDS ON CLIMATE MODEL PARAMS (I.E. ON NCLIM)
-!
-!      IF(K.GE.197.AND.K.LE.226)TREFSUM=TREFSUM+TGAV(K)
-!      IF(K.EQ.226)TREF(NCLIM)=TREFSUM/30.
-!
-!  ******************************************************
+          TE1 = TEQUIL-TEQUIL0
+          TT1 = TGAV(K)-TGAV(KREF)
+          TN1 = TNHAV(K)-TNHAV(KREF)
+          TS1 = TSHAV(K)-TSHAV(KREF)
 !
 !  CALCULATE 1981-2000 MEAN TEMPERATURE AS REFERENCE LEVEL FOR
 !   CALCULATION OF INPUT INTO SCENGEN DRIVER FILES.
 !  NOTE : TREF DEPENDS ON CLIMATE MODEL PARAMS (I.E., ON NCLIM)
 !
-      IF(K.GE.217.AND.K.LE.236)TREFSUM=TREFSUM+TGAV(K)
-      IF(K.EQ.236)TREF(NCLIM)=TREFSUM/20.
+          IF(K.GE.217.AND.K.LE.236)TREFSUM=TREFSUM+TGAV(K)
+          IF(K.EQ.236)TREF(NCLIM)=TREFSUM/20.
 !
 !  ******************************************************
 !
 !  PRINTOUT OPTIONS
 !
-      IF(NOUT.EQ.1)THEN
-        COL9   = TN1
-        COL10  = TS1
-      ENDIF
+          IF(NOUT.EQ.1)THEN
+            COL9   = TN1
+            COL10  = TS1
+          ENDIF
 !
-      IF(NOUT.EQ.2.OR.NOUT.EQ.5)THEN
-        COL9   = TLAND(K)-TLAND(KREF)
-        COL10  = TOCEAN(K)-TOCEAN(KREF)
-        IF(TOCEAN(K).NE.0.0)THEN
-          COL11= TLAND(K)/TOCEAN(K)
-        ELSE
-          COL11= 9.999
-        ENDIF
-      ENDIF
+          IF(NOUT.EQ.2.OR.NOUT.EQ.5)THEN
+            COL9   = TLAND(K)-TLAND(KREF)
+            COL10  = TOCEAN(K)-TOCEAN(KREF)
+            IF(TOCEAN(K).NE.0.0)THEN
+              COL11= TLAND(K)/TOCEAN(K)
+            ELSE
+              COL11= 9.999
+            ENDIF
+          ENDIF
 !
-      IF(NOUT.EQ.3.OR.NOUT.EQ.4)THEN
-        COL9   = TE1-TT1
-        COL10  = TDEEP(K)-TDEEP(KREF)
-      ENDIF
+          IF(NOUT.EQ.3.OR.NOUT.EQ.4)THEN
+            COL9   = TE1-TT1
+            COL10  = TDEEP(K)-TDEEP(KREF)
+          ENDIF
 !
-      EX1=EX(K) -EX(KREF)
-      SI1=SLI(K)-SLI(KREF)
-      SG1=SLG(K)-SLG(KREF)
-      SA1=SLA(K)-SLA(KREF)
-      ST1=SLT(K)-SLT(KREF)
+          EX1=EX(K) -EX(KREF)
+          SI1=SLI(K)-SLI(KREF)
+          SG1=SLG(K)-SLG(KREF)
+          SA1=SLA(K)-SLA(KREF)
+          ST1=SLT(K)-SLT(KREF)
+          SO1=SLO(K)-SLO(KREF)
+          ST1=EX1+SI1+SG1+SA1+SO1 
 !
 !  PUT TEMPERATURE AND SEA LEVEL RESULTS FOR FULL GLOBAL FORCING
 !   INTO DISPLAY OUTPUT FILES
 !
-      IF(ISCENGEN.NE.9)THEN
-        IF(NSIM.EQ.1)THEN
-          TEMLO(K)  = TT1
-          SLLO(K)   = ST1
-        ENDIF
-      ENDIF
+          IF(ISCENGEN.NE.9)THEN
+            IF(NSIM.EQ.1)THEN
+              TEMLO(K)  = TT1
+              SLLO(K)   = ST1
+            ENDIF
+          ENDIF
 !
-      IF(NSIM.EQ.2)THEN
-        TEMMID(K) = TT1
-        SLMID(K)  = ST1
-      ENDIF
+          IF(NSIM.EQ.2)THEN
+            TEMMID(K) = TT1
+            SLMID(K)  = ST1
+          ENDIF
 !
-      IF(NSIM.EQ.3)THEN
-        TEMHI(K)  = TT1
-        SLHI(K)   = ST1
-      ENDIF
+          IF(NSIM.EQ.3)THEN
+            TEMHI(K)  = TT1
+            SLHI(K)   = ST1
+          ENDIF
 !
-      IF((ISCENGEN.EQ.9).OR.(NSIM.EQ.4))THEN
-        TEMUSER(K)= TT1
-        SLUSER(K) = ST1
-      ENDIF
+          IF((ISCENGEN.EQ.9).OR.(NSIM.EQ.4))THEN
+            TEMUSER(K)= TT1
+            SLUSER(K) = ST1
+          ENDIF
 !
 !  RESULTS FOR ESO2 CONST AFTER 1990 STORED ONLY FOR MID CLIMATE CASE.
 !   ZERO VALUES STORED IF ISCENGEN=0 OR =9
 !
-      IF(ISCENGEN.EQ.0.OR.ISCENGEN.EQ.9)THEN
-        TEMNOSO2(K)= 0.0
-        SLNOSO2(K) = 0.0
-      ENDIF
+          IF(ISCENGEN.EQ.0.OR.ISCENGEN.EQ.9)THEN
+            TEMNOSO2(K)= 0.0
+          ENDIF
 !
-      IF(NSIM.EQ.6)THEN
-        TEMNOSO2(K)= TT1
-        SLNOSO2(K) = ST1
-      ENDIF
-!
-!      IF(NOUT.EQ.1.)THEN
-!        WRITE (8,191) KYEAR,Q1,TE1,TT1,EX1,SI1,SG1,SA1,ST1,COL9,
-!     &  COL10,WNH(K),WSH(K),KYEAR
-!      ENDIF
+          IF(NSIM.EQ.6)THEN
+            TEMNOSO2(K)= TT1
+          ENDIF
 !
 !  PRINT OUT FLAG IS KKKK=1
 !
-      KKKK=0
+          KKKK=0
 !
 !  ALWAYS PRINT OUT 1765, IY0 AND 1990 VALUES
 !
-      IF(KYEAR.EQ.1764.OR.KYEAR.EQ.IY0.OR.KYEAR.EQ.1990)KKKK=1
+          IF(KYEAR.EQ.1764.OR.KYEAR.EQ.IY0.OR.KYEAR.EQ.1990)KKKK=1
 !
-      IF(KYEAR.GE.IY0)THEN
-        PRIN=(KYEAR-KYEAR0+0.01)/XPRT
-        BIT=PRIN-INT(PRIN)
-        IF(PRIN.GT.0.0.AND.BIT.LT.0.02)KKKK=1
-        IF(KKKK.EQ.1)THEN
+          IF(KYEAR.GE.IY0)THEN
+            PRIN=(KYEAR-KYEAR0+0.01)/XPRT
+            BIT=PRIN-INT(PRIN)
+            IF(PRIN.GT.0.0.AND.BIT.LT.0.02)KKKK=1
+            IF(KKKK.EQ.1)THEN
 !
 !  ADD CONSTANT TO ALL TEMPS FOR IPCC DETEX TIME FIGURE
 !
-          TT1=TT1+TOFFSET
+              TT1=TT1+TOFFSET
 !
-IF(IWrite.eq.1)THEN
-          IF(NOUT.EQ.1.)THEN
-            WRITE (8,191) KYEAR,Q1,TE1,TT1,EX1,SI1,SG1,SA1,ST1,COL9, &
-           COL10,WNH(K),WSH(K),KYEAR
+              IF(NOUT.EQ.1)THEN
+                SLICE1=SG1+SA1
+                SLRAW1=ST1-SO1
+                WRITE (8,191) KYEAR,Q1,TE1,TT1,EX1,SI1,SG1,SA1,SO1,ST1, &
+                COL9,COL10,WNH(K),WSH(K),KYEAR,SLICE1,SLRAW1
+              ENDIF
+!
+              IF(NOUT.EQ.2)THEN
+                WRITE (8,192) KYEAR,Q1,TE1,TT1,EX1,SI1,SG1,SA1,SO1,ST1, &
+                COL9,COL10,COL11,WNH(K),WSH(K),KYEAR
+              ENDIF
+!
+              IF(NOUT.EQ.3)THEN
+                WRITE (8,193) KYEAR,Q1,TE1,TT1,EX1,SI1,SG1,SA1,SO1,ST1, &
+                COL9,COL10,WNH(K),WSH(K),KYEAR
+              ENDIF
+!
+              IF(NOUT.EQ.4)THEN
+                EQUIVCO2=COBS(1)*EXP(QK/QXX)
+                WRITE (8,194) KYEAR,EQUIVCO2,TE1,TT1,EX1,SI1,SG1,SA1, &
+                SO1,ST1,COL9,COL10,WNH(K),WSH(K),KYEAR
+              ENDIF
+!
+              IF(NOUT.EQ.5)THEN
+                WRITE(8,195) KYEAR,Q1,TT1,COL11,ST1,EX1,SI1,SG1,SA1,SO1, &
+                WNH(K),KYEAR
+              ENDIF
+!
+            ENDIF
           ENDIF
-!
-          IF(NOUT.EQ.2)THEN
-            WRITE (8,192) KYEAR,Q1,TE1,TT1,EX1,SI1,SG1,SA1,ST1,COL9, &
-           COL10,COL11,WNH(K),WSH(K),KYEAR
-          ENDIF
-!
-          IF(NOUT.EQ.3)THEN
-            WRITE (8,193) KYEAR,Q1,TE1,TT1,EX1,SI1,SG1,SA1,ST1,COL9, &
-           COL10,WNH(K),WSH(K),KYEAR
-          ENDIF
-!
-          IF(NOUT.EQ.4)THEN
-            EQUIVCO2=COBS(1)*EXP(QK/QXX)
-            WRITE (8,194) KYEAR,EQUIVCO2,TE1,TT1,EX1,SI1,SG1,SA1,ST1, &
-           COL9,COL10,WNH(K),WSH(K),KYEAR
-          ENDIF
-!
-          IF(NOUT.EQ.5)THEN
-            WRITE(8,195) KYEAR,Q1,TT1,COL11,ST1,EX1,SI1,SG1,SA1, &
-           WNH(K),KYEAR
-          ENDIF
-END IF !IWrite
-!
-        ENDIF
-      ENDIF
  987  CONTINUE
 !
-IF(IWrite.eq.1)THEN
-      IF(NOUT.EQ.1)WRITE(8,171)
-      IF(NOUT.EQ.2)WRITE(8,172)
-      IF(NOUT.EQ.3)WRITE(8,173)
-      IF(NOUT.EQ.4)WRITE(8,174)
-      IF(NOUT.EQ.5)WRITE(8,175)
-      WRITE(8,30)
-END IF !IWrite
+          IF(NOUT.EQ.1)WRITE(8,171)
+          IF(NOUT.EQ.2)WRITE(8,172)
+          IF(NOUT.EQ.3)WRITE(8,173)
+          IF(NOUT.EQ.4)WRITE(8,174)
+          IF(NOUT.EQ.5)WRITE(8,175)
+          WRITE(8,30)
+      ENDIF
 !
 !  **************************************************************
 !
@@ -1809,7 +1720,7 @@ END IF !IWrite
 !   SUM TSO2i MAY CHANGE SIGN AT A DIFFERENT TIME FROM DIFF, LEADING
 !   TO 'WILD' FLUCTUATIONS IN THE RATIO.
 !
-      DO K=197,KEND
+          DO K=197,KEND
         KSG=K-196
         KKYR=K+1764
 !
@@ -1843,12 +1754,707 @@ END IF !IWrite
         TSO23(NCLIM,KSG)=TSO23(NCLIM,KSG)-TSO23REF
       END DO
 !
+!  **************************************************************
+!
+!  PRINT OUT EMISSIONS, CONCS AND FORCING DETAILS
+!
+!  PRINT OUT INPUT EMISSIONS
+!
+        IF(NESO2.EQ.1)THEN
+          WRITE (8,30)
+          WRITE (8,31)
+          WRITE (8,30)
+          WRITE (8,23)
+          WRITE (8,231)
+          WRITE (8,21)
+!
+!  PRINTOUT INTERVAL IS DET BY VALUE OF IEMPRT
+!
+          DO K=226,KEND,IEMPRT
+            IYEAR=1764+K
+            ES1=ESO21(K)-ES1990
+            ES2=ESO22(K)-ES1990
+            ES3=ESO23(K)-ES1990
+            EST=ES1+ES2+ES3
+            WRITE (8,222) IYEAR,EF(K),EDNET(K),ECH4(K),EN2O(K),ENOX(K), &
+             EVOC(K),ECO(K),ES1,ES2,ES3,ECF4(K),EC2F6(K),E125(K), &
+             E134A(K),E143A(K),E227(K),E245(K),ESF6(K),EST,EBC(K),EOC(K),IYEAR
+          END DO
+!
+          WRITE (8,21)
+          WRITE (8,30)
+          WRITE (8,31)
+          WRITE (8,30)
+!
+!  **************************************************************
+!
+!  PRINT OUT USER CARBON CYCLE DETAILS
+!
+          WRITE(8,24)
+          WRITE(8,241)LEVCO2
+          WRITE(8,800)R(1)
+          WRITE(8,801)R(2)
+          WRITE(8,802)R(3)
+          WRITE(8,803)DUSER,R(4)
+          WRITE(8,804)
+          WRITE(8,805)
+!
+          if(iMeth.eq.1) then
+            write(8,806)
+          else
+            write(8,807)
+          endif
+!
+          WRITE(8,8071)
+          MID=0
+          IF(MID.NE.1)WRITE(8,810)
+          IF(MID.EQ.1)WRITE(8,811)
+          WRITE(8,812)
+!
+!  PRINTOUT INTERVAL IS DET BY VALUE OF ICO2PRT. NOTE THAT CARBON
+!   CYCLE MODEL RESULTS GIVE RAW (UNCORRECTED) CO2 CONC OUTPUT.
+!
+          DO K=226,KEND,ICO2PRT
+            IYEAR=1764+K
+            CONCOUT=CCO2(LEVCO2,K)
+            IF(MID.EQ.1)CONCOUT=(CCO2(LEVCO2,K-1)+CCO2(LEVCO2,K))/2.
+!
+            IF(IMETH.EQ.0)THEN
+              TOTE=EF(K)+EDNET(K)
+            ELSE
+              TOTE=EF(K)+EDNET(K)+EMETH(K)
+            ENDIF
+!
+            IF(TOTE.EQ.0.0)THEN
+              IF(DELMASS(4,K).EQ.0.0)THEN
+                ABX=1.0
+              ELSE
+                ABX=DELMASS(4,K)/ABS(DELMASS(4,K))
+              ENDIF
+              ABFRAC(4,K)=ABX*9.999
+            ELSE
+              ABFRAC(4,K)=DELMASS(4,K)/TOTE
+            ENDIF
+!
+            IF(ABFRAC(4,K).GT.9.999)ABFRAC(4,K)=9.999
+            IF(ABFRAC(4,K).LT.-9.999)ABFRAC(4,K)=-9.999
+!
+            ECH4OX=EMETH(K)
+            IF(IMETH.EQ.0)ECH4OX=0.0
+            WRITE(8,813)IYEAR,TOTE,EF(K),ECH4OX,EDNET(K),EDGROSS(4,K), &
+            FOC(4,K),ABFRAC(4,K),PL(4,K),HL(4,K),SOIL(4,K),CONCOUT, &
+            DELMASS(4,K),IYEAR
+!
+          END DO
+          WRITE(8,812)
+!
+!  **************************************************************
+!
+!  PRINT OUT CONCENTRATIONS
+!
+          WRITE (8,30)
+          WRITE (8,31)
+          WRITE (8,30)
+          IF(KSTART.EQ.0)WRITE (8,20)
+          IF(KSTART.EQ.1)WRITE (8,202)
+          IF(KSTART.EQ.2)WRITE (8,203)
+          WRITE (8,201)
+          WRITE (8,210)
+!
+!  PRINTOUT INTERVAL IS DET BY VALUE OF ICONCPRT
+!
+         CO2(0) =CO2(1)
+         CH4(0) =CH4(1)-0.4
+         CN2O(0)=CN2O(1)
+!
+         DO K=1,KEND,ICONCPRT
+           IYEAR=1764+K
+!
+!  CONVERT END OF YEAR TO MIDYEAR CONCS
+!
+           CO2MID =(CO2(K)+CO2(K-1))/2.
+           CH4MID =(CH4(K)+CH4(K-1))/2.
+           CN2OMID=(CN2O(K)+CN2O(K-1))/2.
+!
+           IF(K.GE.226)THEN
+!
+             CH4LMID=(CH4L(K)+CH4L(K-1))/2.
+             CH4BMID=(CH4B(K)+CH4B(K-1))/2.
+             CH4HMID=(CH4H(K)+CH4H(K-1))/2.
+!
+             CO2LMID=(CCO2(1,K)+CCO2(1,K-1))/2.
+             CO2BMID=(CCO2(2,K)+CCO2(2,K-1))/2.
+             CO2HMID=(CCO2(3,K)+CCO2(3,K-1))/2.
+!
+!  ADD CORRECTIONS TO LO, MID, HI CO2 TO FIT OBSERVED DATA IN 2000
+!
+             IF(ICO2CORR.EQ.1)THEN
+               CO2LMID=CO2LMID+CORREN1
+               CO2BMID=CO2BMID+CORREN2
+               CO2HMID=CO2HMID+CORREN3
+             ENDIF
+!
+             IF(K.LE.236)THEN
+               CO2LMID=CO2MID
+               CO2BMID=CO2MID
+               CO2HMID=CO2MID
+             ENDIF
+!
+!  DEFINE LOW, MID AND HIGH CH4 VALUES OVER 1991 TO JSTART YEAR
+!
+             IF(K.LT.236)THEN
+               CH4LMID=CH4MID
+               CH4BMID=CH4MID
+               CH4HMID=CH4MID
+             ENDIF
+!
+!  SPECIFY METHANE LIFETIME OUTPUT
+!
+             IF(K.LE.236)THEN
+               TOR=TTUSER
+             ELSE
+               TOR=TCH4(K)
+             ENDIF
+             IF(K.EQ.236)TORREF=TOR
+!
+!  IF KSTART SPECIFIED IN MAGRUN.CFG AS 1, OVERWRITE MIDYEAR
+!   CONCENTRATION VALUES WITH START OR END YEAR VALUES (START IS
+!   WHAT TAR USES, AT LEAST FOR NON-CO2 GASES).
+!
+             IF(KSTART.EQ.1)THEN
+               CO2MID=CO2(K-1)
+               CH4MID=CH4(K-1)
+               CN2OMID=CN2O(K-1)
+             ENDIF
+!
+             IF(KSTART.EQ.2)THEN
+               CO2MID=CO2(K)
+               CH4MID=CH4(K)
+               CN2OMID=CN2O(K)
+             ENDIF
+!
+             WRITE (8,220) IYEAR,CO2MID,CH4MID,CN2OMID, &
+             ch4lMID,ch4bMID,ch4hMID, &
+             CO2LMID,CO2BMID,CO2HMID,IYEAR,TOR
+           ELSE
+             WRITE (8,221) IYEAR,CO2MID,CH4MID,CN2OMID,IYEAR
+           ENDIF
+         END DO
+!
+         WRITE (8,210)
+         WRITE (8,201)
+!
+!  **************************************************************
+!
+!  PRINT OUT TABLES OF DELTA-Q FROM IYRQALL AND 1765 TO MAG.OUT.
+!  FIRST CALCULATE REFERENCE VALUES (MID IYRQALL)
+!
+         M00=IYRQALL-1764
+         M01=M00-1
+!
+         QQQCO2R  = (qco2(M00)     +qco2(M01))     /2.
+         QQQMR    = (QM(M00)       +QM(M01))       /2.
+         QQQNR    = (QN(M00)       +QN(M01))       /2.
+         QQQCFCR  = (QCFC(M00)     +QCFC(M01))     /2.
+         QQQSO2R  = (QSO2SAVE(M00) +QSO2SAVE(M01)) /2.
+         QQQDIRR  = (QDIRSAVE(M00) +QDIRSAVE(M01)) /2.
+         QQQFOCR  = (QFOC(M00)     +QFOC(M01))     /2.
+         QQQMNR   = (QMN(M00)      +QMN(M01))      /2.
+!
+! NOTE SPECIAL CASE FOR QOZ BECAUSE OF NONLINEAR CHANGE OVER 1990
+!
+         QQQOZR=(QOZ(M00)+QOZ(M01))/2.
+         IF(IYRQALL.EQ.1990)QQQOZR=QOZ(M00)
+!
+         QQQLANDR = (QLAND(M00)    +QLAND(M01))     /2.
+         QQQBIOR  = (QBIO(M00)     +QBIO(M01))     /2.
+         QQQMO3R  = (QCH4O3(M00)   +QCH4O3(M01))   /2.
+         QQRSTROZ = (QSTRATOZ(M00) +QSTRATOZ(M01)) /2.
+         QQRKYMAG = (QKYMAG(M00)   +QKYMAG(M01))   /2.
+         QQRMONT  = (QMONT(M00)    +QMONT(M01))    /2.
+         QQROTHER = (QOTHER(M00)   +QOTHER(M01))   /2.
+!
+!   PRINT OUT DELTA-Q FROM MID 1990 TO MAG.OUT
+!
+         write(8,30)
+         write(8,31)
+         WRITE(8,30)
+         write(8,55)IYRQALL
+         write(8,56)
+         write(8,561)
+         write(8,5611)
+         IF(IO3FEED.EQ.1)write(8,562)
+         IF(IO3FEED.EQ.0)write(8,563)
+         write(8,57)
+!
+!  PRINTOUT INTERVAL IS DET BY VALUE OF IQGASPRT
+!
+         DO K=1990,IYEND,IQGASPRT
+           IYR = K-1990+226
+           IYRP=IYR-1
+! 
+           DELQCO2 = (QCO2(IYR)+QCO2(IYRP))/2.-QQQCO2R
+           DELQM   = (QM(IYR)+QM(IYRP))/2.    -QQQMR
+           DELQN   = (QN(IYR)+QN(IYRP))/2.    -QQQNR
+           DELQCFC = (QCFC(IYR)+QCFC(IYRP))/2.-QQQCFCR
+!
+!  NOTE : DELQSO2 AND DELQDIR BOTH INCLUDE QFOC
+!
+           DELQSO2 = (QSO2SAVE(IYR)+QSO2SAVE(IYRP))/2.-QQQSO2R
+           DELQDIR = (QDIRSAVE(IYR)+QDIRSAVE(IYRP))/2.-QQQDIRR
+           DELQIND = DELQSO2-DELQDIR
+           DELQFOC = (QFOC(IYR)+QFOC(IYRP))/2.-QQQFOCR
+           DELQD   = DELQDIR-DELQFOC
+           DELQMN  = (QMN(IYR)+QMN(IYRP))/2.-QQQMNR
+!
+! NOTE SPECIAL CASE FOR QOZ BECAUSE OF NONLINEAR CHANGE OVER 1990
+!
+           IF(IYR.EQ.226)THEN
+             QOZMID= QOZ(IYR)
+           ELSE
+             QOZMID= (QOZ(IYR)+QOZ(IYRP))/2.
+           ENDIF
+           DELQOZ  = QOZMID-QQQOZR
+!
+           DELQLAND= (QLAND(IYR)+QLAND(IYRP))/2.-QQQLANDR
+           DELQBIO = (QBIO(IYR)+QBIO(IYRP))/2.-QQQBIOR
+           DELQTOT = DELQCO2+DELQM+DELQN+DELQCFC+DELQSO2+DELQBIO &
+           +DELQOZ+DELQLAND+DELQMN
+!
+           DQCH4O3 = (QCH4O3(IYR)+QCH4O3(IYRP))/2.-QQQMO3R
+           DELQM   = DELQM-DQCH4O3
+           DELQOZ  = DELQOZ+DQCH4O3
+!
+           DELSTROZ= (QSTRATOZ(IYR)+QSTRATOZ(IYRP))/2.-QQRSTROZ
+           IF(IO3FEED.EQ.0)DELSTROZ=0.0
+!
+           DELKYMAG = (QKYMAG(IYR) +QKYMAG(IYRP))  /2.-QQRKYMAG
+           DELMONT  = (QMONT(IYR)  +QMONT(IYRP))   /2.-QQRMONT
+           DELOTHER = (QOTHER(IYR) +QOTHER(IYRP))  /2.-QQROTHER
+           DELKYOTO = DELKYMAG+DELOTHER
+!
+           WRITE(8,571)K,DELQCO2,DELQM,DELQN,DELQCFC,DELQOZ, &
+           DELQD,DELQIND,DELQBIO,DELQFOC,DELQMN,DELQLAND,DELQTOT, &
+           K,DQCH4O3,DELSTROZ,DELMONT,DELKYOTO
+         END DO
+!
+!  ************************************************************
+!
+!  SAVE ARRAYS FOR TROPOZ, STRATOZ, CFC12, C11EFF
+!
+        ALF11=0.000250
+        ALF12=0.000320
+      DO KK=1,IYEND-1764
+        KKP=1
+        IF(KK.GT.1)KKP=KK-1
+        QQQCH4O3=(QCH4O3(KK)+QCH4O3(KKP))/2.
+        QTROZ(KK)=QQQCH4O3+(QOZ(KK)+QOZ(KKP))/2.
+        QSTROZ(KK)=(QSTRATOZ(KK)+QSTRATOZ(KKP))/2.
+        QQQCFC=(QCFC(KK)+QCFC(KKP))/2.
+        C11EFF(KK)=(QQQCFC-QSTROZ(KK)-CFC12(Kk)*ALF12)/ALF11
+      END DO
+!
+!  ************************************************************
+!
+!  NOW PRINT OUT FORCING CHANGES FROM MID 1765.
+!
+         WRITE(8,57)
+         write(8,30)
+         write(8,31)
+         WRITE(8,30)
+         write(8,58)
+         write(8,56)
+         write(8,561)
+         write(8,5611)
+         IF(IO3FEED.EQ.1)write(8,562)
+         IF(IO3FEED.EQ.0)write(8,563)
+         write(8,573)
+!
+       DO K=1770,IYEND,IQGASPRT
+         IYR = K-1990+226
+         IYRP=IYR-1
+!
+         QQQSO2 = 0.0
+         QQQDIR = 0.0
+         IF(K.GT.1860)THEN
+           QQQSO2 = (QSO2SAVE(IYR)+QSO2SAVE(IYRP))/2.
+           QQQDIR = (QDIRSAVE(IYR)+QDIRSAVE(IYRP))/2.
+         ENDIF
+         QQQIND = QQQSO2-QQQDIR
+! 
+         QQQCO2 = (QCO2(IYR)+QCO2(IYRP))/2.
+         QQQM   = (QM(IYR)+QM(IYRP))/2.
+         QQQN   = (QN(IYR)+QN(IYRP))/2.
+         QQQCFC = (QCFC(IYR)+QCFC(IYRP))/2.
+         QQQOZ  = (QOZ(IYR)+QOZ(IYRP))/2.
+         QQQFOC = (QFOC(IYR)+QFOC(IYRP))/2.
+         QQQMN  = (QMN(IYR)+QMN(IYRP))/2.
+!
+! NOTE SPECIAL CASE FOR QOZ BECAUSE OF NONLINEAR CHANGE OVER 1990
+!
+         IF(IYR.EQ.226)QQQOZ=QOZ(IYR)
+!
+         QQQLAND= (QLAND(IYR)+QLAND(IYRP))/2.
+         QQQBIO = (QBIO(IYR)+QBIO(IYRP))/2.
+         QQQTOT = QQQCO2+QQQM+QQQN+QQQCFC+QQQSO2+QQQBIO+QQQOZ+QQQLAND &
+         +QQQMN
+!
+         QQCH4O3= (QCH4O3(IYR)+QCH4O3(IYRP))/2.
+         QQQM   = QQQM-QQCH4O3
+         QQQOZ  = QQQOZ+QQCH4O3
+         QQQD   = QQQDIR-QQQFOC
+!
+         QQQSTROZ= (QSTRATOZ(IYR)+QSTRATOZ(IYRP))/2.
+         IF(IO3FEED.EQ.0)QQQSTROZ=0.0
+!
+         QQQKYMAG = (QKYMAG(IYR)+QKYMAG(IYRP))/2.
+         QQQMONT  = (QMONT(IYR) +QMONT(IYRP)) /2.
+         QQQOTHER = (QOTHER(IYR)+QOTHER(IYRP))/2.
+         QQQKYOTO = QQQKYMAG+QQQOTHER
+!
+! Add BC, OC, and QExtra forcing to output. Note this is not included in foring total since is in QExtra instead
+         QQQEXTRA = ( QEXNH(IYR)+QEXSH(IYR)+QEXNHO(IYR)+QEXNHL(IYR) + &
+                      QEXNH(IYRP)+QEXSH(IYRP)+QEXNHO(IYRP)+QEXNHL(IYRP) )/2.
+         QQQBC = ( QBC(IYR) + QBC(IYRP) )/2.
+         QQQOC = ( QOC(IYR) + QOC(IYRP) )/2.
+
+         WRITE(8,571)K,QQQCO2,QQQM,QQQN,QQQCFC,QQQOZ,QQQD,QQQIND, &
+         QQQBIO,QQQFOC,QQQMN,QQQLAND,QQQTOT,K,QQCH4O3,QQQSTROZ,QQQMONT, &
+         QQQKYOTO, QQQBC, QQQOC, QQQEXTRA
+       END DO
+!
+       WRITE(8,573)
+
+
+! *******************************************************************************************
+! sjs -- write out halocarbon forcings separately as well
+! *******************************************************************************************
+
+! Calculate 1990 halocarbon forcings so these can be output
+	QCF4_ar(226) = CF4(226) * ( QCF4_ar(227)/CF4(227) )
+	QC2F6_ar(226) = C2F6(226) * ( QC2F6_ar(227)/C2F6(227) )
+	qSF6_ar(226) = CSF6(226) * ( qSF6_ar(227)/CSF6(227) )
+
+! Approximate to same 1989 forcing
+	QCF4_ar(225) = QCF4_ar(226)
+	QC2F6_ar(225) = QC2F6_ar(226)
+	qSF6_ar(225) = qSF6_ar(226)
+
+!
+!
+
+       write(8,30)
+        write(8,31)
+        WRITE(8,30)
+        WRITE(8,*) "Halocarbon Emissions"
+        WRITE(8,588)
+
+        DO K=1990,IYEND,IQGASPRT
+          IYR = K-1990+226
+          IYRP=IYR-1
+!
+        WRITE(8,589)K,E245(IYR),E134A(IYR),E125(IYR),E227(IYR), &
+      E143A(IYR),ECF4(IYR),EC2F6(IYR),ESF6(IYR)
+         
+      END DO
+
+       write(8,30)
+        write(8,31)
+        WRITE(8,30)
+        WRITE(8,*) "Halocarbon Concentrations"
+        WRITE(8,588)
+
+        DO K=1990,IYEND,IQGASPRT
+          IYR = K-1990+226
+          IYRP=IYR-1
+
+        WRITE(8,589)K,C245(IYR),C134A(IYR),C125(IYR),C227(IYR), &
+      C143A(IYR),CF4(IYR),C2F6(IYR),CSF6(IYR)
+          
+      END DO
+
+       write(8,30)
+        write(8,31)
+        WRITE(8,30)
+        WRITE(8,*) "Halocarbon Forcing"
+        write(8,590)
+
+        DO K=1990,IYEND,IQGASPRT
+          IYR = K-1990+226
+          IYRP=IYR-1
+
+        WRITE(8,589)K, &
+      Q245_ar(IYR),Q134A_ar(IYR),Q125_ar(IYR), &
+      Q227_ar(IYR),Q143A_ar(IYR),QCF4_ar(IYR), &
+      QC2F6_ar(IYR),qSF6_ar(IYR), QOTHER(IYR), &
+      QMONT(IYR),QSTRATOZ(IYR),QMONT(IYR)+ &
+      QKYMAG(IYR)+QOTHER(IYR)+QSTRATOZ(IYR), &
+      QKYMAG(IYR)+QOTHER(IYR)
+
+
+      END DO
+      write(8,590)
+        WRITE(8,30)
+        WRITE(8,30)
+
+ 588  FORMAT (1X,'YEAR,HFC245,HFC134A,HFC125,HFC227,HFC143A,','CF4,C2F6,SF6,')
+ 590  FORMAT (1X,'YEAR,HFC245,HFC134A,HFC125,HFC227,HFC143A,','CF4,C2F6,SF6,Qother,QMont,QStratOz,HaloTot,','KyotoTot')
+ 589  FORMAT (1X,I5,',',15(e18.10,',')) 
+		
+
+! *******************************************************************************************
+! End halocarbon write
+! *******************************************************************************************
+
+      ENDIF
+
+!*******************************************************************
+!*******************************************************************
+!	minicam csv output mrj 4/26/00
+!   revised for TAR vsn 5/03 mrj
+
+
+!**** following code is from mag.csv (formerly mag.out) computations
+        QQQCO2R  = (qco2(226)     +qco2(225))     /2.
+        QQQMR    = (QM(226)       +QM(225))       /2.
+        QQQNR    = (QN(226)       +QN(225))       /2.
+        QQQCFCR  = (QCFC(226)     +QCFC(225))     /2.
+        QQQSO2R  = (QSO2SAVE(226) +QSO2SAVE(225)) /2.
+        QQQDIRR  = (QDIRSAVE(226) +QDIRSAVE(225)) /2.
+        QQQFOCR  = (QFOC(226)     +QFOC(225))     /2.
+        QQQOZR   = QOZ(226)
+        QQQBIOR  = (QBIO(226)     +QBIO(225))     /2.
+        QQQMO3R  = (QCH4O3(226)   +QCH4O3(225))   /2.
+        QQRSTROZ = (QSTRATOZ(226) +QSTRATOZ(225)) /2.
+        QQRKYMAG = (QKYMAG(226)   +QKYMAG(225))   /2.
+        QQRMONT  = (QMONT(226)    +QMONT(225))    /2.
+        QQROTHER = (QOTHER(226)   +QOTHER(225))   /2.
+!*** end code block
+
+	OPEN (UNIT=9, FILE='MAGOUT.CSV')
+
+  100 FORMAT(I5,1H,,27(F15.5,1H,))
+
+  101 FORMAT('Year,Temp,CO2Conc,CH4Conc,N2OConc,', &
+     'FcCO2,FcCH4,FcN2O,FcHALOS,FcTROPO3,', &
+     'FcSO4DIR,FcSO4IND,FcBIOAER,', &
+     'FcTOTAL,FOSSCO2,NETDEFOR,CH4Em,N2OEm,SO2-REG1,SO2-REG2,SO2-REG3,', &
+     'SeaLevel,FcKyoto,FcHFC,FcCFC+SF6,FcCH4H2O')
+
+	WRITE(9,101)  !header row
+
+        IIPRT=5	! sjs -- changed to 5 year interval in order to save more data points
+        DO K=1990,IYEND,IIPRT
+          IYR = K-1990+226
+          IYRP=IYR-1
+
+! code to pass these items to MiniCAM in Results array
+
+	 MAGICCCResults(0,(K-1990)/IIPRT+1) = Float(K)
+	 MAGICCCResults(1,(K-1990)/IIPRT+1) = TEMUSER(IYR)+TGAV(226)
+	 MAGICCCResults(2,(K-1990)/IIPRT+1) = CO2(IYR)
+	 MAGICCCResults(3,(K-1990)/IIPRT+1) = CH4(IYR)
+	 MAGICCCResults(4,(K-1990)/IIPRT+1) = CN2O(IYR)
+	 MAGICCCResults(5,(K-1990)/IIPRT+1) = getForcing( 1, K ) ! CO2
+	 MAGICCCResults(6,(K-1990)/IIPRT+1) = getForcing( 2, K ) ! CH4 (no indirect components)
+	 MAGICCCResults(7,(K-1990)/IIPRT+1) = getForcing( 3, K ) ! N2O
+	 MAGICCCResults(8,(K-1990)/IIPRT+1) = & ! Halocarbon forcing
+	    getForcing( 4, K ) + getForcing( 9, K ) + getForcing( 10, K ) + &! Long-lived F-gases
+	    getForcing( 5, K ) + getForcing( 6, K ) + getForcing( 7, K ) + &
+	    getForcing( 8, K ) + getForcing( 11, K ) + getForcing( 12, K ) ! Shorter-lived F-gases
+	 MAGICCCResults(9,(K-1990)/IIPRT+1) = getForcing( 15, K ) !O3 including CH4 part
+	 MAGICCCResults(10,(K-1990)/IIPRT+1) = getForcing( 14, K ) ! SO2 direct only
+	 MAGICCCResults(11,(K-1990)/IIPRT+1) = getForcing( 13, K ) - getForcing( 14, K ) ! indirect only
+	 MAGICCCResults(12,(K-1990)/IIPRT+1) = getForcing( 20, K ) ! biomas burning (MAGICC internal)
+	 MAGICCCResults(13,(K-1990)/IIPRT+1) = getForcing( 0, K ) ! Total antro forcing
+	 MAGICCCResults(14,(K-1990)/IIPRT+1) = EF(IYR)
+	 MAGICCCResults(15,(K-1990)/IIPRT+1) = EDNET(IYR)
+	 MAGICCCResults(16,(K-1990)/IIPRT+1) = ECH4(IYR)
+	 MAGICCCResults(17,(K-1990)/IIPRT+1) = EN2O(IYR)
+	 MAGICCCResults(18,(K-1990)/IIPRT+1) = ESO21(IYR)-ES1990
+	 MAGICCCResults(19,(K-1990)/IIPRT+1) = ESO22(IYR)-ES1990
+	 MAGICCCResults(20,(K-1990)/IIPRT+1) = ESO23(IYR)-ES1990
+	 MAGICCCResults(21,(K-1990)/IIPRT+1) = getSLR( IYR )
+	 MAGICCCResults(22,(K-1990)/IIPRT+1) = & !Kyoto Forcing
+	    getForcing( 1, K ) + getForcing( 2, K )  + getForcing( 3, K ) + & ! CO2, CH4, and N2O
+	    getForcing( 4, K ) + getForcing( 9, K ) + getForcing( 10, K ) + &! Long-lived F-gases
+	    getForcing( 5, K ) + getForcing( 6, K ) + getForcing( 7, K ) + &
+	    getForcing( 8, K ) + getForcing( 11, K ) + getForcing( 12, K ) ! Shorter-lived F-gases
+	 MAGICCCResults(23,(K-1990)/IIPRT+1) = &
+	    getForcing( 5, K ) + getForcing( 6, K ) + getForcing( 7, K ) + &
+	    getForcing( 8, K ) + getForcing( 11, K ) + getForcing( 12, K ) ! Shorter-lived F-gases
+	 MAGICCCResults(24,(K-1990)/IIPRT+1) = &
+	    getForcing( 4, K ) + getForcing( 9, K ) + getForcing( 10, K ) ! Long-lived F-gases
+	 MAGICCCResults(25,(K-1990)/IIPRT+1) = getForcing( 17, K )	! Strat H2O forcing from CH4
+	 MAGICCCResults(26,(K-1990)/IIPRT+1) = getForcing( 24, K )	! BC forcing 
+	 MAGICCCResults(27,(K-1990)/IIPRT+1) = getForcing( 25, K )	! OC forcing 
+
+! now we can write stuff out
+
+	   WRITE (9,100) K,MAGICCCResults(1:25,(K-1990)/IIPRT+1)
+
+	END DO
+
+	WRITE(9,*)
+!     ******* END MINICAM OUTPUT ***
+	CLOSE (9)
+!
+!
+!  ***************************************************************
+!
+!  WRITE CONCENTRATIONS CONSISTENT WITH USER CLIMATE MODEL AND WITH
+!   THE CORRESPONDING SET OF RESULTS IN THE MAG.OUT CONCS
+!   DISPLAY FILE.
+!
+      IF(ISCENGEN.EQ.9.OR.NSIM.EQ.4)THEN
+!
+      open(unit=9,file='../cvs/objects/magicc/outputs/concs.dis',status='UNKNOWN')
+!
+        WRITE (9,211)
+!
+!  PRINTOUT INTERVAL FOR DISPLAY PURPOSES SET BY IDIS IN MAGEXTRA.CFG
+!
+        DO K=1,KEND,IDIS
+!
+!  CONVERT END OF YEAR TO MIDYEAR CONCS
+!
+          CO2MID =(CO2(K)+CO2(K-1))/2.
+          CH4MID =(CH4(K)+CH4(K-1))/2.
+          CN2OMID=(CN2O(K)+CN2O(K-1))/2.
+!
+          IYEAR=1764+K
+!
+          IF(K.GE.226)THEN
+!
+            CH4LMID=(CH4L(K)+CH4L(K-1))/2.
+            CH4BMID=(CH4B(K)+CH4B(K-1))/2.
+            CH4HMID=(CH4H(K)+CH4H(K-1))/2.
+!
+            CO2LMID=(CCO2(1,K)+CCO2(1,K-1))/2.
+            CO2BMID=(CCO2(2,K)+CCO2(2,K-1))/2.
+            CO2HMID=(CCO2(3,K)+CCO2(3,K-1))/2.
+!
+!  ADD CORRECTIONS TO LO, MID, HI CO2 TO FIT OBSERVED DATA IN 2000
+!
+            IF(ICO2CORR.EQ.1)THEN
+              CO2LMID=CO2LMID+CORREN1
+              CO2BMID=CO2BMID+CORREN2
+              CO2HMID=CO2HMID+CORREN3
+            ENDIF
+!
+            IF(K.LE.236)THEN
+              CO2LMID=CO2MID
+              CO2BMID=CO2MID
+              CO2HMID=CO2MID
+            ENDIF
+!
+!  DEFINE LOW, MID AND HIGH CH4 VALUES OVER 1991 TO JSTART YEAR
+!
+            IF(K.LT.236)THEN
+              CH4LMID=CH4MID
+              CH4BMID=CH4MID
+              CH4HMID=CH4MID
+            ENDIF
+!
+!  SPECIFY METHANE LIFETIME OUTPUT (CENTRAL VALUE)
+!
+            IF(K.LE.236)THEN
+              TOR=TORREF
+            ELSE
+              TOR=TCH4(K)
+            ENDIF
+!
+          ENDIF
+!
+          IF(IYEAR.LT.1990) &
+           WRITE (9,223) IYEAR,CO2MID,CO2MID,CO2MID,CO2MID, &
+           CH4MID,CH4MID,CH4MID,CH4MID,CN2OMID
+          IF(IYEAR.GE.1990)THEN
+            IF(IYEAR.LE.2000)THEN
+              CO2LMID=CO2MID
+              CO2BMID=CO2MID
+              CO2HMID=CO2MID
+            ENDIF
+            WRITE (9,224) IYEAR,CO2MID,CO2LMID,CO2BMID,CO2HMID, &
+           CH4MID,CH4LMID,CH4BMID,CH4HMID,CN2OMID,TOR
+          ENDIF
+!
+        END DO
+!
+        WRITE (9,211)
+!
+      CLOSE(9)
+!
+!  ************************************************************
+!
+!  WRITE FORCING CHANGES FROM MID-1990 TO MAG DISPLAY FILE
+!
+      open(unit=9,file='../cvs/objects/magicc/outputs/forcings.dis',status='UNKNOWN')
+!
+        WRITE (9,57)
+!
+!  PRINTOUT INTERVAL FOR DISPLAY PURPOSES SET BY IDIS IN MAGEXTRA.CFG
+!
+        DO K=1990,IYEND,IDIS
+          IYR = K-1990+226
+          IYRP=IYR-1
+!
+          DELQCO2 = (QCO2(IYR)+QCO2(IYRP))/2.-QQQCO2R
+          DELQM   = (QM(IYR)+QM(IYRP))/2.    -QQQMR
+          DELQN   = (QN(IYR)+QN(IYRP))/2.    -QQQNR
+          DELQCFC = (QCFC(IYR)+QCFC(IYRP))/2.-QQQCFCR
+!
+!  NOTE : DELQSO2 INCLUDES QFOC
+!
+          DELQSO2 = (QSO2SAVE(IYR)+QSO2SAVE(IYRP))/2.-QQQSO2R
+          DELQDIR = (QDIRSAVE(IYR)+QDIRSAVE(IYRP))/2.-QQQDIRR
+          DELQIND = DELQSO2-DELQDIR
+          DELQFOC = (QFOC(IYR)+QFOC(IYRP))/2.-QQQFOCR
+          DELQD   = DELQDIR-DELQFOC
+!
+! NOTE SPECIAL CASE FOR QOZ BECAUSE OF NONLINEAR CHANGE OVER 1990
+!
+          IF(IYR.EQ.226)THEN
+            QOZMID= QOZ(IYR)
+          ELSE
+            QOZMID= (QOZ(IYR)+QOZ(IYRP))/2.
+          ENDIF
+          DELQOZ  = QOZMID-QQQOZR
+!
+          DELQMN  = (QMN(IYR)+QMN(IYRP))/2.-QQQMNR
+          DELQLAND= (QLAND(IYR)+QLAND(IYRP))/2.-QQQLANDR
+          DELQBIO = (QBIO(IYR)+QBIO(IYRP))/2.-QQQBIOR
+          DELQTOT = DELQCO2+DELQM+DELQN+DELQCFC+DELQSO2+DELQBIO &
+         +DELQOZ+DELQLAND+DELQMN
+!
+          DQCH4O3 = (QCH4O3(IYR)+QCH4O3(IYRP))/2.-QQQMO3R
+          DELQM   = DELQM-DQCH4O3
+          DELQOZ  = DELQOZ+DQCH4O3
+          DELSTROZ= (QSTRATOZ(IYR)+QSTRATOZ(IYRP))/2.-QQRSTROZ
+          IF(IO3FEED.EQ.0)DELSTROZ=0.0
+!
+          DELKYMAG = (QKYMAG(IYR) +QKYMAG(IYRP))  /2.-QQRKYMAG
+          DELMONT  = (QMONT(IYR)  +QMONT(IYRP))   /2.-QQRMONT
+          DELOTHER = (QOTHER(IYR) +QOTHER(IYRP))  /2.-QQROTHER
+          DELKYOTO = DELKYMAG+DELOTHER
+!
+          WRITE(9,571)K,DELQCO2,DELQM,DELQN,DELQCFC,DELQOZ, &
+         DELQD,DELQIND,DELQBIO,DELQFOC,DELQMN,DELQLAND,DELQTOT,K, &
+         DQCH4O3,DELSTROZ,DELMONT,DELKYOTO
+        END DO
+!
+        WRITE (9,57)
+!
+      CLOSE(9)
+!
+      ENDIF
+!
+!  **************************************************************
+!
 !  end of NSIM loop
 !
   1   CONTINUE
 !
-!  **************************************************************
-!  **************************************************************
 !  **************************************************************
 !
 !  SCALE TEMPERATURES TO GET DRIVER TEMPERATURES, XSO2i. THIS IS IN
@@ -1912,20 +2518,42 @@ END IF !IWrite
 !  WRITE TEMPERATURES TO OLD AND NEW SCENGEN DRIVER FILES.
 !   UNSCALED TEMPS GO TO OLD FILES, SCALED TEMPS TO NEW FILES.
 !
-        OPEN(UNIT=10,file='../cvs/objects/magicc/inputs/lodrive.raw' ,STATUS='UNKNOWN')
-        OPEN(UNIT=11,file='../cvs/objects/magicc/inputs/middrive.raw',STATUS='UNKNOWN')
-        OPEN(UNIT=12,file='../cvs/objects/magicc/inputs/hidrive.raw' ,STATUS='UNKNOWN')
-        OPEN(UNIT=13,file='../cvs/objects/magicc/inputs/usrdrive.raw',STATUS='UNKNOWN')
+        OPEN(UNIT=10,file='../cvs/objects/magicc/outputs/lodrive.raw' ,STATUS='UNKNOWN')
+        OPEN(UNIT=11,file='../cvs/objects/magicc/outputs/middrive.raw',STATUS='UNKNOWN')
+        OPEN(UNIT=12,file='../cvs/objects/magicc/outputs/hidrive.raw' ,STATUS='UNKNOWN')
+        OPEN(UNIT=13,file='../cvs/objects/magicc/outputs/usrdrive.raw',STATUS='UNKNOWN')
 !
-        OPEN(UNIT=14,file='../cvs/objects/magicc/inputs/lodrive.out' ,STATUS='UNKNOWN')
-        OPEN(UNIT=15,file='../cvs/objects/magicc/inputs/middrive.out',STATUS='UNKNOWN')
-        OPEN(UNIT=16,file='../cvs/objects/magicc/inputs/hidrive.out' ,STATUS='UNKNOWN')
-        OPEN(UNIT=17,file='../cvs/objects/magicc/inputs/usrdrive.out',STATUS='UNKNOWN')
+        OPEN(UNIT=14,file='../cvs/objects/magicc/outputs/lodrive.out' ,STATUS='UNKNOWN')
+        OPEN(UNIT=15,file='../cvs/objects/magicc/outputs/middrive.out',STATUS='UNKNOWN')
+        OPEN(UNIT=16,file='../cvs/objects/magicc/outputs/hidrive.out' ,STATUS='UNKNOWN')
+        OPEN(UNIT=17,file='../cvs/objects/magicc/outputs/usrdrive.out',STATUS='UNKNOWN')
 !
         DO NCLIM=1,4
-        DO KSG=1,KEND-196
+        KSGL=KEND-196
+        DO KSG=1,KSGL
         KYY=KSG+1960
 !
+!  BECAUSE OF SMOOTHING, TSOij AND XSOij ARE NOT DEFINED FOR THE
+!   LAST 3 YEARS OF THE RUN. WE THEREFORE DEFINE THEN BY LINEAR
+!   EXTRAPOLATION.
+!
+        IF(KSG.EQ.KSGL-3)THEN
+          DT21=(TSO21(NCLIM,KSG)-TSO21(NCLIM,KSG-3))/3.0
+          DT22=(TSO22(NCLIM,KSG)-TSO22(NCLIM,KSG-3))/3.0
+          DT23=(TSO23(NCLIM,KSG)-TSO23(NCLIM,KSG-3))/3.0
+          DX21=(XSO21(NCLIM,KSG)-XSO21(NCLIM,KSG-3))/3.0
+          DX22=(XSO22(NCLIM,KSG)-XSO22(NCLIM,KSG-3))/3.0
+          DX23=(XSO23(NCLIM,KSG)-XSO23(NCLIM,KSG-3))/3.0
+        ENDIF
+        IF(KSG.GT.KSGL-3)THEN
+          KKK=KSG-(KSGL-3)
+          TSO21(NCLIM,KSG)=TSO21(NCLIM,KSGL-3)+KKK*DT21
+          TSO22(NCLIM,KSG)=TSO22(NCLIM,KSGL-3)+KKK*DT22
+          TSO23(NCLIM,KSG)=TSO23(NCLIM,KSGL-3)+KKK*DT23
+          XSO21(NCLIM,KSG)=XSO21(NCLIM,KSGL-3)+KKK*DX21
+          XSO22(NCLIM,KSG)=XSO22(NCLIM,KSGL-3)+KKK*DX22
+          XSO23(NCLIM,KSG)=XSO23(NCLIM,KSGL-3)+KKK*DX23
+        ENDIF  
         IF(NCLIM.EQ.1)THEN
           IF(KSG.EQ.1)THEN
             WRITE(10,937)mnem
@@ -2009,14 +2637,13 @@ END IF !IWrite
       ENDIF
 !
 !  **************************************************************
-!  **************************************************************
-!  **************************************************************
 !
-!  WRITE TEMPERATURES TO MAG DISPLAY FILE
+!  WRITE TEMPERATURES TO MAG DISPLAY FILE. NOTE THAT APPROPRIATE
+!   TEMP (AND SEA LEVEL) DATA ARE SAVED AT THE RIGHT POINTS IN THE
+!   NSIM LOOP, SO THESE DISPLAY FILES CAN BE PRODUCED *OUTSIDE*
+!   THE NSIM LOOP.
 !
-IF(IWrite.eq.1)THEN 
-
-      open(unit=9,file='../cvs/objects/magicc/inputs/temps.dis',status='UNKNOWN')
+      open(unit=9,file='../cvs/objects/magicc/outputs/temps.dis',status='UNKNOWN')
 !
         WRITE (9,213)
 !
@@ -2024,10 +2651,8 @@ IF(IWrite.eq.1)THEN
 !
         DO K=1,KEND,IDIS
           IYEAR=1764+K
-!          PRIN=FLOAT(K+4)/IDIS+0.01
-!          IF((PRIN-INT(PRIN)).LT.0.05)THEN
-            WRITE (9,226) IYEAR,TEMUSER(K),TEMLO(K),TEMMID(K),TEMHI(K),TEMNOSO2(K)
-!          ENDIF
+          WRITE (9,226) IYEAR,TEMUSER(K),TEMLO(K),TEMMID(K), &
+         TEMHI(K),TEMNOSO2(K)
         END DO
 !
         WRITE (9,213)
@@ -2038,7 +2663,7 @@ IF(IWrite.eq.1)THEN
 !
 !  WRITE SEALEVEL CHANGES TO MAG DISPLAY FILE
 !
-      open(unit=9,file='../cvs/objects/magicc/inputs/sealev.dis',status='UNKNOWN')
+      open(unit=9,file='../cvs/objects/magicc/outputs/sealev.dis',status='UNKNOWN')
 !
         WRITE (9,214)
 !
@@ -2046,54 +2671,19 @@ IF(IWrite.eq.1)THEN
 !
         DO K=1,KEND,IDIS
           IYEAR=1764+K
-!          PRIN=FLOAT(K+4)/IDIS+0.01
-!          IF((PRIN-INT(PRIN)).LT.0.05)THEN
-            WRITE (9,227) IYEAR,SLUSER(K),SLLO(K),SLMID(K),SLHI(K),SLNOSO2(K)
-!          ENDIF
+            WRITE (9,227) IYEAR,SLUSER(K),SLLO(K),SLMID(K), &
+           SLHI(K)
         END DO
 !
         WRITE (9,214)
 !
       CLOSE(9)
 !
-END IF !***IWRITE***
-
 !  **************************************************************
-!
-!  PRINT OUT EMISSIONS, CONCS AND FORCING DETAILS
-!
-!  PRINT OUT INPUT EMISSIONS
-!
-IF(IWrite.eq.1)THEN
-        WRITE (8,30)
-        WRITE (8,31)
-        WRITE (8,30)
-        WRITE (8,23)
-        WRITE (8,231)
-        WRITE (8,21)
-!
-!  PRINTOUT INTERVAL IS DET BY VALUE OF IEMPRT
-!
-        DO K=226,KEND,IEMPRT
-          IYEAR=1764+K
-          ES1=ESO21(K)-ES1990
-          ES2=ESO22(K)-ES1990
-          ES3=ESO23(K)-ES1990
-          EST=ES1+ES2+ES3
-          WRITE (8,222) IYEAR,EF(K),EDNET(K),ECH4(K),EN2O(K),ES1,ES2,ES3,EST,IYEAR
-        END DO
-!
-        WRITE (8,21)
-        WRITE (8,30)
-        WRITE (8,31)
-        WRITE (8,30)
 !
 !  WRITE EMISSIONS TO MAG DISPLAY FILE
 !
-END IF !IWrite
-
-IF(IWrite.eq.1)THEN
-      open(unit=9,file='../cvs/objects/magicc/inputs/emiss.dis',status='UNKNOWN')
+      open(unit=9,file='../cvs/objects/magicc/outputs/emiss.dis',status='UNKNOWN')
 !
         WRITE (9,212)
 !
@@ -2104,710 +2694,90 @@ IF(IWrite.eq.1)THEN
 !   REGION THEN ADD THE REGIONAL 1990 VALUE. THE REGIONAL VALUES FROM
 !   BEFORE WERE 37,28,10 TgSO4, SUMMING TO 75 TgSO4.
 !
+        DO K=1,225
+          EESS1(K)=0.0
+          EESS2(K)=0.0
+          EESS3(K)=0.0
+          EESST(K)=0.0
+        END DO
+! 
         DO K=226,KEND,IDIS
           IYEAR=1764+K
-          EESS1=ESO21(K)-ES1990*(1.0-37.0/75.0)
-          EESS2=ESO22(K)-ES1990*(1.0-28.0/75.0)
-          EESS3=ESO23(K)-ES1990*(1.0-10.0/75.0)
-          EESST=EESS1+EESS2+EESS3
-          WRITE (9,225) IYEAR,EF(K),EDNET(K),ECH4(K),EN2O(K),EESS1,EESS2,EESS3,EESST
+          EESS1(K)=ESO21(K)-ES1990*(1.0-37.0/75.0)
+          EESS2(K)=ESO22(K)-ES1990*(1.0-28.0/75.0)
+          EESS3(K)=ESO23(K)-ES1990*(1.0-10.0/75.0)
+          EESST(K)=EESS1(K)+EESS2(K)+EESS3(K)
+          WRITE (9,225) IYEAR,EF(K),EDNET(K),ECH4(K),EN2O(K), &
+          EESS1(K),EESS2(K),EESS3(K),EESST(K)
         END DO
 !
         WRITE (9,212)
 !
       CLOSE(9)
 !
-END IF !IWrite
-!  **************************************************************
+!  ************************************************************
 !
-!  PRINT OUT USER CARBON CYCLE DETAILS
+!  OPEN NEW OUTPUT FILE (FRACLEFT.OUT).
 !
-IF(IWrite.eq.1)THEN
-
-        WRITE(8,24)
-        WRITE(8,241)LEVCO2
-        WRITE(8,800)R(1)
-        WRITE(8,801)R(2)
-        WRITE(8,802)R(3)
-        WRITE(8,803)DUSER,R(4)
-        WRITE(8,804)
-        WRITE(8,805)
+      OPEN(UNIT=888,FILE='../cvs/objects/magicc/outputs/FRACLEFT.OUT',STATUS='UNKNOWN')
 !
-        if(iMeth.eq.1) then
-          write(8,806)
-        else
-          write(8,807)
-        endif
+!  FRACTION OF CO2 REMAINING IN ATMOSPHERE
 !
-END IF !IWrite
-
-        MID=0
-		
-IF(IWrite.eq.1)THEN
-        IF(MID.NE.1)WRITE(8,810)
-        IF(MID.EQ.1)WRITE(8,811)
-        WRITE(8,812)
-END IF !IWrite
+      WRITE(888,887)
+      EMTOT=300.0
 !
-!  PRINTOUT INTERVAL IS DET BY VALUE OF ICO2PRT. NOTE THAT CARBON
-!   CYCLE MODEL RESULTS GIVE RAW (UNCORRECTED) CO2 CONC OUTPUT.
-!
-        DO K=226,KEND,ICO2PRT
-          IYEAR=1764+K
-          CONCOUT=CCO2(LEVCO2,K)
-          IF(MID.EQ.1)CONCOUT=(CCO2(LEVCO2,K-1)+CCO2(LEVCO2,K))/2.
-!
-          IF(IMETH.EQ.0)THEN
-            TOTE=EF(K)+EDNET(K)
-          ELSE
-            TOTE=EF(K)+EDNET(K)+EMETH(K)
-          ENDIF
-!
-          IF(TOTE.EQ.0.0)THEN
-            IF(DELMASS(4,K).EQ.0.0)THEN
-              ABX=1.0
-            ELSE
-              ABX=DELMASS(4,K)/ABS(DELMASS(4,K))
-            ENDIF
-            ABFRAC(4,K)=ABX*9.999
-          ELSE
-            ABFRAC(4,K)=DELMASS(4,K)/TOTE
-          ENDIF
-!
-          IF(ABFRAC(4,K).GT.9.999)ABFRAC(4,K)=9.999
-          IF(ABFRAC(4,K).LT.-9.999)ABFRAC(4,K)=-9.999
-!
-          ECH4OX=EMETH(K)
-          IF(IMETH.EQ.0)ECH4OX=0.0
-          IF(IWrite.eq.1)WRITE(8,813)IYEAR,TOTE,EF(K),ECH4OX,EDNET(K),EDGROSS(4,K), &
-         FOC(4,K),ABFRAC(4,K),PL(4,K),HL(4,K),SOIL(4,K),CONCOUT, &
-         DELMASS(4,K),IYEAR
-!
-        END DO
-        IF(IWrite.eq.1)WRITE(8,812)
+      DO K=226,KEND
+        EMTOT=EMTOT+EF(K)+EDNET(K)
+        ATBIT=2.123*(CO2(K)-278.)
+        FRACLEFT=ATBIT/EMTOT
+        IIYY=K+1764
+        WRITE(888,889)IIYY,ATBIT,EMTOT,FRACLEFT
+      END DO
+ 887  FORMAT(/1X,'  YEAR    ATMASS    CUMEMS  FRACLEFT')
+ 889  FORMAT(1X,I6,2F10.3,F10.5)
 !
 !  **************************************************************
 !
-!  PRINT OUT CONCENTRATIONS
+!  WRITE DATA TO CCSM FILE
 !
-IF(IWrite.eq.1)THEN
-        WRITE (8,30)
-        WRITE (8,31)
-        WRITE (8,30)
-        IF(KSTART.NE.1)WRITE (8,20)
-        IF(KSTART.EQ.1)WRITE (8,202)
-        WRITE (8,201)
-        WRITE (8,210)
-END IF !IWrite
-!
-!  PRINTOUT INTERVAL IS DET BY VALUE OF ICONCPRT
-!
-       CO2(0) =CO2(1)
-       CH4(0) =CH4(1)-0.4
-       CN2O(0)=CN2O(1)
-!
-       DO K=1,KEND,ICONCPRT
-          IYEAR=1764+K
+      IF(ICCSM.EQ.1)THEN
+        WRITE(88,883)
+        WRITE(88,882)
+        DO K=1,IYEND-1764
+          KKYR=K+1764
 !
 !  CONVERT END OF YEAR TO MIDYEAR CONCS
 !
           CO2MID =(CO2(K)+CO2(K-1))/2.
           CH4MID =(CH4(K)+CH4(K-1))/2.
           CN2OMID=(CN2O(K)+CN2O(K-1))/2.
-!
-          IF(K.GE.226)THEN
-!
-            CH4LMID=(CH4L(K)+CH4L(K-1))/2.
-            CH4BMID=(CH4B(K)+CH4B(K-1))/2.
-            CH4HMID=(CH4H(K)+CH4H(K-1))/2.
-            CO2LMID=(CCO2(1,K)+CCO2(1,K-1))/2.
-            CO2BMID=(CCO2(2,K)+CCO2(2,K-1))/2.
-            CO2HMID=(CCO2(3,K)+CCO2(3,K-1))/2.
-!
-!  CALCULATE CORRECTIONS FOR CO2 TO GIVE CORRECT ANSWERS IN 2000
-!
-            IF(K.EQ.236)THEN
-              DELLO =CO2MID-CO2LMID
-              DELMID=CO2MID-CO2BMID
-              DELHI =CO2MID-CO2HMID
-            ENDIF
-!
-!  DEFINE LOW, MID AND HIGH CH4 VALUES OVER 1991 TO JSTART YEAR
-!
-            IF(K.LT.236)THEN
-              CH4LMID=CH4MID
-              CH4BMID=CH4MID
-              CH4HMID=CH4MID
-            ENDIF
-!
-!  SPECIFY METHANE LIFETIME OUTPUT
-!
-            IF(K.LE.236)THEN
-              TOR=TTUSER
-            ELSE
-              TOR=TCH4(K)
-            ENDIF
-            IF(K.EQ.236)TORREF=TOR
-!
-!  IF KSTART SPECIFIED IN MAG3RUN.CFG AS 1, OVERWRITE MIDYEAR
-!   CONCENTRATION VALUES WITH START YEAR VALUES (SINCE THIS IS
-!   WHAT TAR USES (AT LEAST FOR NON-CO2 GASES).
-!
-            IF(KSTART.EQ.1)THEN
-              CO2MID=CO2(K-1)
-              CH4MID=CH4(K-1)
-              CN2OMID=CN2O(K-1)
-!              CH4LMID=CH4L(K-1)
-!              CH4BMID=CH4B(K-1)
-!              CH4HMID=CH4H(K-1)
-!              CO2LMID=CCO2(1,K-1)
-!              CO2BMID=CCO2(2,K-1)
-!              CO2HMID=CCO2(3,K-1)
-            ENDIF
-!
-            IF(IWrite.eq.1)WRITE (8,220) IYEAR,CO2MID,CH4MID,CN2OMID, &
-            ch4lMID,ch4bMID,ch4hMID, &
-            CO2LMID,CO2BMID,CO2HMID,IYEAR,TOR
+          IF(K.LE.225)THEN
+            XBC=0.0
+            XOC=0.0
           ELSE
-            IF(IWrite.eq.1)WRITE (8,221) IYEAR,CO2MID,CH4MID,CN2OMID,IYEAR
+            XBC=EBC(K)
+            XOC=EOC(K)
           ENDIF
+          WRITE(88,881)KKYR,CO2MID,CH4MID,CN2OMID,CFC12(K),C11EFF(K), &
+          QTROZ(K),QSTROZ(K),EESST(K),XBC,XOC,KKYR
         END DO
-!
-        IF(IWrite.eq.1)WRITE (8,210)
-        IF(IWrite.eq.1)WRITE (8,201)
-!
-!  ***************************************************************
-!
-!  WRITE CONCENTRATIONS CONSISTENT WITH THE ABOVE TO MAG CONCS
-!   DISPLAY FILE. HOWEVER, HERE THE LO, MID AND HIGH CO2 VALUES ARE
-!   CORRECTED TO GIVE CORRECT CONCENTRATIONS UP TO 2000.
-!
-IF(IWrite.eq.1)THEN
-	  open(unit=9,file='../cvs/objects/magicc/inputs/concs.dis',status='UNKNOWN')
-!
-        WRITE (9,211)
-!
-!  PRINTOUT INTERVAL FOR DISPLAY PURPOSES SET BY IDIS IN MAGEXTRA.CFG
-!
-        DO K=1,KEND,IDIS
-!
-!  CONVERT END OF YEAR TO MIDYEAR CONCS
-!
-          CO2MID =(CO2(K)+CO2(K-1))/2.
-          CH4MID =(CH4(K)+CH4(K-1))/2.
-          CN2OMID=(CN2O(K)+CN2O(K-1))/2.
-!
-          IF(K.GE.226)THEN
-!
-            CH4LMID=(CH4L(K)+CH4L(K-1))/2.
-            CH4BMID=(CH4B(K)+CH4B(K-1))/2.
-            CH4HMID=(CH4H(K)+CH4H(K-1))/2.
-            CO2LMID=(CCO2(1,K)+CCO2(1,K-1))/2.
-            CO2BMID=(CCO2(2,K)+CCO2(2,K-1))/2.
-            CO2HMID=(CCO2(3,K)+CCO2(3,K-1))/2.
-!
-!  DEFINE LOW, MID AND HIGH CH4 VALUES OVER 1991 TO JSTART YEAR
-!
-            IF(K.LT.236)THEN
-              CH4LMID=CH4MID
-              CH4BMID=CH4MID
-              CH4HMID=CH4MID
-            ENDIF
-!
-!  SPECIFY METHANE LIFETIME OUTPUT (CENTRAL VALUE)
-!
-            IF(K.LE.236)THEN
-              TOR=TORREF
-            ELSE
-              TOR=TCH4(K)
-            ENDIF
-!
-          ENDIF
-!
-          IYEAR=1764+K
-          if(k.ge.226) then
-            IF(K.LT.236)THEN
-              CO2LMID=CO2MID
-              CO2BMID=CO2MID
-              CO2HMID=CO2MID
-            ELSE
-              CO2LMID=CO2LMID+DELLO
-              CO2BMID=CO2BMID+DELMID
-              CO2HMID=CO2HMID+DELHI
-            ENDIF
-!
-            WRITE (9,224) IYEAR,CO2MID,CO2LMID,CO2BMID,CO2HMID, &
-           CH4MID,CH4LMID,CH4BMID,CH4HMID,CN2OMID,TOR
-          else
-            WRITE (9,223) IYEAR,CO2MID,CO2MID,CO2MID,CO2MID, &
-           CH4MID,CH4MID,CH4MID,CH4MID,CN2OMID
-          endif
-        END DO
-!
-        WRITE (9,211)
-!
-      CLOSE(9)
-END IF !IWrite
-!
-!  **************************************************************
-!
-!  PRINT OUT TABLES OF DELTA-Q FROM 1990 AND 1765 TO MAG.OUT.
-!
-!  FIRST CALCULATE REFERENCE VALUES (MID 1990)
-!
-
-        QQQCO2R  = (qco2(226)     +qco2(225))     /2.
-        QQQMR    = (QM(226)       +QM(225))       /2.
-        QQQNR    = (QN(226)       +QN(225))       /2.
-        QQQCFCR  = (QCFC(226)     +QCFC(225))     /2.
-        QQQSO2R  = (QSO2SAVE(226) +QSO2SAVE(225)) /2.
-        QQQDIRR  = (QDIRSAVE(226) +QDIRSAVE(225)) /2.
-        QQQFOCR  = (QFOC(226)     +QFOC(225))     /2.
-!
-! NOTE SPECIAL CASE FOR QOZ BECAUSE OF NONLINEAR CHANGE OVER 1990
-!
-        QQQOZR   = QOZ(226)
-!
-        QQQBIOR  = (QBIO(226)     +QBIO(225))     /2.
-        QQQMO3R  = (QCH4O3(226)   +QCH4O3(225))   /2.
-        QQRSTROZ = (QSTRATOZ(226) +QSTRATOZ(225)) /2.
-        QQRKYMAG = (QKYMAG(226)   +QKYMAG(225))   /2.
-        QQRMONT  = (QMONT(226)    +QMONT(225))    /2.
-        QQROTHER = (QOTHER(226)   +QOTHER(225))   /2.
-        QQCH4H2O = (QCH4H2O(226)  +QCH4H2O(225)) /2.	! sjs
-!
-!   PRINT OUT DELTA-Q FROM MID 1990 TO MAG.OUT
-!
-IF(IWrite.eq.1)THEN
-
-        write(8,30)
-        write(8,31)
-        WRITE(8,30)
-        write(8,55)
-        write(8,56)
-        write(8,561)
-        IF(IO3FEED.EQ.1)write(8,562)
-        IF(IO3FEED.EQ.0)write(8,563)
-        write(8,57)
-END IF !IWrite
-!
-!  PRINTOUT INTERVAL IS DET BY VALUE OF IQGASPRT
-!
-        DO K=1990,IYEND,IQGASPRT
-          IYR = K-1990+226
-          IYRP=IYR-1
-!
-          DELQCO2 = (QCO2(IYR)+QCO2(IYRP))/2.-QQQCO2R
-          DELQM   = (QM(IYR)+QM(IYRP))/2.    -QQQMR
-          DELQN   = (QN(IYR)+QN(IYRP))/2.    -QQQNR
-          DELQCFC = (QCFC(IYR)+QCFC(IYRP))/2.-QQQCFCR
-!
-!  NOTE : DELQSO2 AND DELQDIR BOTH INCLUDE QFOC
-!
-          DELQSO2 = (QSO2SAVE(IYR)+QSO2SAVE(IYRP))/2.-QQQSO2R
-          DELQDIR = (QDIRSAVE(IYR)+QDIRSAVE(IYRP))/2.-QQQDIRR
-          DELQIND = DELQSO2-DELQDIR
-          DELQFOC = (QFOC(IYR)+QFOC(IYRP))/2.-QQQFOCR
-          DELQD   = DELQDIR-DELQFOC
-!
-! NOTE SPECIAL CASE FOR QOZ BECAUSE OF NONLINEAR CHANGE OVER 1990
-!
-          IF(IYR.EQ.226)THEN
-            QOZMID= QOZ(IYR)
-          ELSE
-            QOZMID= (QOZ(IYR)+QOZ(IYRP))/2.
-          ENDIF
-          DELQOZ  = QOZMID-QQQOZR
-!
-          DELQBIO = (QBIO(IYR)+QBIO(IYRP))/2.-QQQBIOR
-          DELQTOT = DELQCO2+DELQM+DELQN+DELQCFC+DELQSO2+DELQBIO &
-         +DELQOZ
-!
-          DQCH4O3 = (QCH4O3(IYR)+QCH4O3(IYRP))/2.-QQQMO3R
-          DELQM   = DELQM-DQCH4O3
-          DELQOZ  = DELQOZ+DQCH4O3
-!
-          DELSTROZ= (QSTRATOZ(IYR)+QSTRATOZ(IYRP))/2.-QQRSTROZ
-          IF(IO3FEED.EQ.0)DELSTROZ=0.0
-!
-          DELKYMAG = (QKYMAG(IYR) +QKYMAG(IYRP))  /2.-QQRKYMAG
-          DELMONT  = (QMONT(IYR)  +QMONT(IYRP))   /2.-QQRMONT
-          DELOTHER = (QOTHER(IYR) +QOTHER(IYRP))  /2.-QQROTHER
-          DELKYOTO = DELKYMAG+DELOTHER
-!
-          IF(IWrite.eq.1)WRITE(8,571)K,DELQCO2,DELQM,DELQN,DELQCFC,DELQOZ, &
-         DELQD,DELQIND,DELQBIO,DELQTOT,DELQFOC, &
-         K,DQCH4O3,DELSTROZ,DELMONT,DELKYOTO
-        END DO
-!
-!  ************************************************************
-!
-!  WRITE FORCING CHANGES FROM MID-1990 TO MAG DISPLAY FILE
-!
-IF(IWrite.eq.1)THEN
-      open(unit=9,file='../cvs/objects/magicc/inputs/forcings.dis',status='UNKNOWN')
-!
-        WRITE (9,57)
-!
-!  PRINTOUT INTERVAL FOR DISPLAY PURPOSES SET BY IDIS IN MAGEXTRA.CFG
-!
-        DO K=1990,IYEND,IDIS
-          IYR = K-1990+226
-          IYRP=IYR-1
-!
-          DELQCO2 = (QCO2(IYR)+QCO2(IYRP))/2.-QQQCO2R
-          DELQM   = (QM(IYR)+QM(IYRP))/2.    -QQQMR
-          DELQN   = (QN(IYR)+QN(IYRP))/2.    -QQQNR
-          DELQCFC = (QCFC(IYR)+QCFC(IYRP))/2.-QQQCFCR
-!
-!  NOTE : DELQSO2 INCLUDES QFOC
-!
-          DELQSO2 = (QSO2SAVE(IYR)+QSO2SAVE(IYRP))/2.-QQQSO2R
-          DELQDIR = (QDIRSAVE(IYR)+QDIRSAVE(IYRP))/2.-QQQDIRR
-          DELQIND = DELQSO2-DELQDIR
-          DELQFOC = (QFOC(IYR)+QFOC(IYRP))/2.-QQQFOCR
-          DELQD   = DELQDIR-DELQFOC
-!
-! NOTE SPECIAL CASE FOR QOZ BECAUSE OF NONLINEAR CHANGE OVER 1990
-!
-          IF(IYR.EQ.226)THEN
-            QOZMID= QOZ(IYR)
-          ELSE
-            QOZMID= (QOZ(IYR)+QOZ(IYRP))/2.
-          ENDIF
-          DELQOZ  = QOZMID-QQQOZR
-!
-          DELQBIO = (QBIO(IYR)+QBIO(IYRP))/2.-QQQBIOR
-          DELQTOT = DELQCO2+DELQM+DELQN+DELQCFC+DELQSO2+DELQBIO &
-         +DELQOZ
-!
-          DQCH4O3 = (QCH4O3(IYR)+QCH4O3(IYRP))/2.-QQQMO3R
-          DELQM   = DELQM-DQCH4O3
-          DELQOZ  = DELQOZ+DQCH4O3
-          DELSTROZ= (QSTRATOZ(IYR)+QSTRATOZ(IYRP))/2.-QQRSTROZ
-          IF(IO3FEED.EQ.0)DELSTROZ=0.0
-!
-          DELKYMAG = (QKYMAG(IYR) +QKYMAG(IYRP))  /2.-QQRKYMAG
-          DELMONT  = (QMONT(IYR)  +QMONT(IYRP))   /2.-QQRMONT
-          DELOTHER = (QOTHER(IYR) +QOTHER(IYRP))  /2.-QQROTHER
-          DELKYOTO = DELKYMAG+DELOTHER
-!
-          WRITE(9,571)K,DELQCO2,DELQM,DELQN,DELQCFC,DELQOZ, &
-         DELQD,DELQIND,DELQBIO,DELQTOT,DELQFOC,K, &
-         DQCH4O3,DELSTROZ,DELMONT,DELKYOTO
-        END DO
-!
-        WRITE (9,57)
-!
-      CLOSE(9)
-!
-END IF !IWrite
-!  ************************************************************
-!
-!  NOW PRINT OUT FORCING CHANGES FROM MID 1765.
-!
-IF(IWrite.eq.1)THEN
-        WRITE(8,57)
-        write(8,30)
-        write(8,31)
-        WRITE(8,30)
-        write(8,58)
-        write(8,56)
-        write(8,561)
-        IF(IO3FEED.EQ.1)write(8,562)
-        IF(IO3FEED.EQ.0)write(8,563)
-        write(8,57)
-END IF !IWrite
-!
-      DO K=1770,IYEND,IQGASPRT
-        IYR = K-1990+226
-        IYRP=IYR-1
-!
-        QQQSO2 = 0.0
-        QQQDIR = 0.0
-        IF(K.GT.1860)THEN
-          QQQSO2 = (QSO2SAVE(IYR)+QSO2SAVE(IYRP))/2.
-          QQQDIR = (QDIRSAVE(IYR)+QDIRSAVE(IYRP))/2.
-        ENDIF
-        QQQIND = QQQSO2-QQQDIR
-!
-        QQQCO2 = (QCO2(IYR)+QCO2(IYRP))/2.
-        QQQM   = (QM(IYR)+QM(IYRP))/2.
-        QQQN   = (QN(IYR)+QN(IYRP))/2.
-        QQQCFC = (QCFC(IYR)+QCFC(IYRP))/2.
-        QQQOZ  = (QOZ(IYR)+QOZ(IYRP))/2.
-        QQQFOC = (QFOC(IYR)+QFOC(IYRP))/2.
-!
-! NOTE SPECIAL CASE FOR QOZ BECAUSE OF NONLINEAR CHANGE OVER 1990
-!
-        IF(IYR.EQ.226)QQQOZ=QOZ(IYR)
-!
-        QQQBIO = (QBIO(IYR)+QBIO(IYRP))/2.
-        QQQTOT = QQQCO2+QQQM+QQQN+QQQCFC+QQQSO2+QQQBIO+QQQOZ
-!
-        QQCH4O3= (QCH4O3(IYR)+QCH4O3(IYRP))/2.
-        QQQM   = QQQM-QQCH4O3
-        QQQOZ  = QQQOZ+QQCH4O3
-        QQQD   = QQQDIR-QQQFOC
-!
-        QQQSTROZ= (QSTRATOZ(IYR)+QSTRATOZ(IYRP))/2.
-        IF(IO3FEED.EQ.0)QQQSTROZ=0.0
-!
-        QQQKYMAG = (QKYMAG(IYR)+QKYMAG(IYRP))/2.
-        QQQMONT  = (QMONT(IYR) +QMONT(IYRP)) /2.
-        QQQOTHER = (QOTHER(IYR)+QOTHER(IYRP))/2.
-        QQQKYOTO = QQQKYMAG+QQQOTHER
-!
-        IF(IWrite.eq.1)WRITE(8,571)K,QQQCO2,QQQM,QQQN,QQQCFC,QQQOZ,QQQD,QQQIND, &
-       QQQBIO,QQQTOT,QQQFOC,K,QQCH4O3,QQQSTROZ,QQQMONT,QQQKYOTO
-      END DO
-!
-      IF(IWrite.eq.1)WRITE(8,57)
-!
-
-! *******************************************************************************************
-! sjs -- write out halocarbon forcings separately as well
-! *******************************************************************************************
-
-! Calculate 1990 halocarbon forcings so these can be output
-	QCF4_ar(226) = CF4(226) * ( QCF4_ar(227)/CF4(227) )
-	QC2F6_ar(226) = C2F6(226) * ( QC2F6_ar(227)/C2F6(227) )
-	qSF6_ar(226) = CSF6(226) * ( qSF6_ar(227)/CSF6(227) )
-
-! Approximate to same 1989 forcing
-	QCF4_ar(225) = QCF4_ar(226)
-	QC2F6_ar(225) = QC2F6_ar(226)
-	qSF6_ar(225) = qSF6_ar(226)
-
-!
-!
-IF(IWrite.eq.1)THEN
-
-       write(8,30)
-        write(8,31)
-        WRITE(8,30)
-        WRITE(8,*) "Halocarbon Emissions"
-        WRITE(8,588)
-
-        DO K=1990,IYEND,IQGASPRT
-          IYR = K-1990+226
-          IYRP=IYR-1
-!
-        WRITE(8,589)K,E245(IYR),E134A(IYR),E125(IYR),E227(IYR), &
-       E143A(IYR),ECF4(IYR),EC2F6(IYR),ESF6(IYR)
-         
-      END DO
-
-       write(8,30)
-        write(8,31)
-        WRITE(8,30)
-        WRITE(8,*) "Halocarbon Concentrations"
-        WRITE(8,588)
-
-        DO K=1990,IYEND,IQGASPRT
-          IYR = K-1990+226
-          IYRP=IYR-1
-
-        WRITE(8,589)K,C245(IYR),C134A(IYR),C125(IYR),C227(IYR), &
-       C143A(IYR),CF4(IYR),C2F6(IYR),CSF6(IYR)
-          
-      END DO
-
-       write(8,30)
-        write(8,31)
-        WRITE(8,30)
-        WRITE(8,*) "Halocarbon Forcing"
-        write(8,590)
-
-        DO K=1990,IYEND,IQGASPRT
-          IYR = K-1990+226
-          IYRP=IYR-1
-
-        WRITE(8,589)K, &
-       Q245_ar(IYR),Q134A_ar(IYR),Q125_ar(IYR), &
-       Q227_ar(IYR),Q143A_ar(IYR),QCF4_ar(IYR), &
-       QC2F6_ar(IYR),qSF6_ar(IYR), QOTHER(IYR), &
-       QMONT(IYR),QSTRATOZ(IYR),QMONT(IYR)+ &
-       QKYMAG(IYR)+QOTHER(IYR)+QSTRATOZ(IYR), &
-       QKYMAG(IYR)+QOTHER(IYR)
-
-
-      END DO
-      write(8,590)
-        WRITE(8,30)
-        WRITE(8,30)
-
- END IF !IWrite
-
- 588  FORMAT (1X,'YEAR,HFC245,HFC134A,HFC125,HFC227,HFC143A,','CF4,C2F6,SF6,')
- 590  FORMAT (1X,'YEAR,HFC245,HFC134A,HFC125,HFC227,HFC143A,','CF4,C2F6,SF6,Qother,QMont,QStratOz,HaloTot,','KyotoTot')
- 589  FORMAT (1X,I5,',',15(e15.7,',')) 
-		
-	IF (IWrite .eq. 1) CLOSE (8)
-!
-
-!*******************************************************************
-!*******************************************************************
-!	minicam csv output mrj 4/26/00
-!   revised for TAR vsn 5/03 mrj
-
-
-!**** following code is from mag.csv (formerly mag.out) computations
-        QQQCO2R  = (qco2(226)     +qco2(225))     /2.
-        QQQMR    = (QM(226)       +QM(225))       /2.
-        QQQNR    = (QN(226)       +QN(225))       /2.
-        QQQCFCR  = (QCFC(226)     +QCFC(225))     /2.
-        QQQSO2R  = (QSO2SAVE(226) +QSO2SAVE(225)) /2.
-        QQQDIRR  = (QDIRSAVE(226) +QDIRSAVE(225)) /2.
-        QQQFOCR  = (QFOC(226)     +QFOC(225))     /2.
-        QQQOZR   = QOZ(226)
-        QQQBIOR  = (QBIO(226)     +QBIO(225))     /2.
-        QQQMO3R  = (QCH4O3(226)   +QCH4O3(225))   /2.
-        QQRSTROZ = (QSTRATOZ(226) +QSTRATOZ(225)) /2.
-        QQRKYMAG = (QKYMAG(226)   +QKYMAG(225))   /2.
-        QQRMONT  = (QMONT(226)    +QMONT(225))    /2.
-        QQROTHER = (QOTHER(226)   +QOTHER(225))   /2.
-!*** end code block
-
-	IF (IWrite .eq. 1) OPEN (UNIT=9, FILE='MAGOUT.CSV')
-
-  100 FORMAT(I5,1H,,27(F15.5,1H,))
-
-  101 FORMAT('Year,Temp,CO2Conc,CH4Conc,N2OConc,', &
-      'FcCO2,FcCH4,FcN2O,FcHALOS,FcTROPO3,', &
-      'FcSO4DIR,FcSO4IND,FcBIOAER,', &
-      'FcTOTAL,FOSSCO2,NETDEFOR,CH4Em,N2OEm,SO2-REG1,SO2-REG2,SO2-REG3,', &
-      'SeaLevel,FcKyoto,FcHFC,FcCFC+SF6,FcCH4H2O')
-
-	IF (IWrite .eq. 1) WRITE(9,101)  !header row
-
-        IIPRT=5	! sjs -- changed to 5 year interval in order to save more data points
-        DO K=1990,IYEND,IIPRT
-
-!*** code from mag.out forcing table again...
-! note: the indexes they use are confusing here
-          IYR = K-1990+226
-          IYRP=IYR-1
-          DELQCO2 = (QCO2(IYR)+QCO2(IYRP))/2.-QQQCO2R
-          DELQM   = (QM(IYR)+QM(IYRP))/2.    -QQQMR
-          DELQN   = (QN(IYR)+QN(IYRP))/2.    -QQQNR
-          DELQCFC = (QCFC(IYR)+QCFC(IYRP))/2.-QQQCFCR
-          DELQSO2 = (QSO2SAVE(IYR)+QSO2SAVE(IYRP))/2.-QQQSO2R
-          DELQDIR = (QDIRSAVE(IYR)+QDIRSAVE(IYRP))/2.-QQQDIRR
-          DELQIND = DELQSO2-DELQDIR
-          DELQFOC = (QFOC(IYR)+QFOC(IYRP))/2.-QQQFOCR
-          DELQD   = DELQDIR-DELQFOC
-          IF(IYR.EQ.226)THEN
-            QOZMID= QOZ(IYR)
-          ELSE
-            QOZMID= (QOZ(IYR)+QOZ(IYRP))/2.
-          ENDIF
-          DELQOZ  = QOZMID-QQQOZR
-          DELQBIO = (QBIO(IYR)+QBIO(IYRP))/2.-QQQBIOR
-          DELQTOT = DELQCO2+DELQM+DELQN+DELQCFC+DELQSO2+DELQBIO &
-         +DELQOZ
-          DQCH4O3 = (QCH4O3(IYR)+QCH4O3(IYRP))/2.-QQQMO3R
-          DELQM   = DELQM-DQCH4O3
-          DELQOZ  = DELQOZ+DQCH4O3
-          DELSTROZ= (QSTRATOZ(IYR)+QSTRATOZ(IYRP))/2.-QQRSTROZ
-          IF(IO3FEED.EQ.0)DELSTROZ=0.0
-          DELKYMAG = (QKYMAG(IYR) +QKYMAG(IYRP))  /2.-QQRKYMAG
-          DELMONT  = (QMONT(IYR)  +QMONT(IYRP))   /2.-QQRMONT
-          DELOTHER = (QOTHER(IYR) +QOTHER(IYRP))  /2.-QQROTHER
-          DELKYOTO = DELKYMAG+DELOTHER
-
-! SJS -- Repeat code from above to get proper total forcing
-        QQQSO2 = 0.0
-        QQQDIR = 0.0
-        IF(K.GT.1860)THEN
-          QQQSO2 = (QSO2SAVE(IYR)+QSO2SAVE(IYRP))/2.
-          QQQDIR = (QDIRSAVE(IYR)+QDIRSAVE(IYRP))/2.
-        ENDIF
-        QQQIND = QQQSO2-QQQDIR
-!
-        QQQCO2 = (QCO2(IYR)+QCO2(IYRP))/2.
-        QQQM   = (QM(IYR)+QM(IYRP))/2.
-        QQQN   = (QN(IYR)+QN(IYRP))/2.
-        QQQCFC = (QCFC(IYR)+QCFC(IYRP))/2.
-        QQQOZ  = (QOZ(IYR)+QOZ(IYRP))/2.
-        QQQFOC = (QFOC(IYR)+QFOC(IYRP))/2.
-
-!
-! NOTE SPECIAL CASE FOR QOZ BECAUSE OF NONLINEAR CHANGE OVER 1990
-!
-        IF(IYR.EQ.226)QQQOZ=QOZ(IYR)
-!
-        QQQBIO = (QBIO(IYR)+QBIO(IYRP))/2.
-        QQQTOT = QQQCO2+QQQM+QQQN+QQQCFC+QQQSO2+QQQBIO+QQQOZ
-
-! Halocarbon forcing
-       QHCFC1 = Q245_ar(IYR)+Q134A_ar(IYR)+Q125_ar(IYR)+Q227_ar(IYR)+ &
-				Q143A_ar(IYR)+QOTHER(IYR)
-	   QLong1 = QCF4_ar(IYR)+QC2F6_ar(IYR)+qSF6_ar(IYR)
-       QHCFC2 = Q245_ar(IYRP)+Q134A_ar(IYRP)+Q125_ar(IYRP)+ &
-				Q227_ar(IYRP)+Q143A_ar(IYRP)+QOTHER(IYRP)
-	   QLong2 = QCF4_ar(IYRP)+QC2F6_ar(IYRP)+qSF6_ar(IYRP)
-	   
-! Add Kyoto total forcing output to MC Array
-          DELCH4H2O = (QCH4H2O(IYR)+QCH4H2O(IYRP))/2. ! rel to preindustrial
-          QKyotoTot = DELQCO2 + DELQM - DELCH4H2O + DELQN + DELKYOTO
-! Add back in offsets so this is relative to preindustrial
-          QKyotoTot = QKyotoTot + QQQCO2R + (QQQMR-QQQMO3R) + QQQNR + QQRKYMAG + QQROTHER
-
-!*** end MAGICC code block
-
-! code to pass these items to MiniCAM in Results array
-
-	 MAGICCCResults(0,(K-1990)/IIPRT+1) = Float(K)
-	 MAGICCCResults(1,(K-1990)/IIPRT+1) = TEMUSER(IYR)+TGAV(226)
-	 MAGICCCResults(2,(K-1990)/IIPRT+1) = CO2(IYR)
-	 MAGICCCResults(3,(K-1990)/IIPRT+1) = CH4(IYR)
-	 MAGICCCResults(4,(K-1990)/IIPRT+1) = CN2O(IYR)
-	 MAGICCCResults(5,(K-1990)/IIPRT+1) = DELQCO2+QQQCO2R
-	 MAGICCCResults(6,(K-1990)/IIPRT+1) = DELQM + (QQQMR-QQQMO3R)
-	 MAGICCCResults(7,(K-1990)/IIPRT+1) = DELQN + QQQNR
-	 MAGICCCResults(8,(K-1990)/IIPRT+1) = DELQCFC + QQQCFCR
-	 MAGICCCResults(9,(K-1990)/IIPRT+1) = QOZMID + QQQMO3R
-	 MAGICCCResults(10,(K-1990)/IIPRT+1) = DELQD + QQQDIRR
-	 MAGICCCResults(11,(K-1990)/IIPRT+1) = DELQIND + (QQQSO2R - QQQDIRR)
-	 MAGICCCResults(12,(K-1990)/IIPRT+1) = DELQBIO + QQQBIOR
-	 MAGICCCResults(13,(K-1990)/IIPRT+1) = QQQTOT	! sjs -- changed to reflect actual forcing including qextra & any other mods
-	 MAGICCCResults(14,(K-1990)/IIPRT+1) = EF(IYR)
-	 MAGICCCResults(15,(K-1990)/IIPRT+1) = EDNET(IYR)
-	 MAGICCCResults(16,(K-1990)/IIPRT+1) = ECH4(IYR)
-	 MAGICCCResults(17,(K-1990)/IIPRT+1) = EN2O(IYR)
-	 MAGICCCResults(18,(K-1990)/IIPRT+1) = ESO21(IYR)-ES1990
-	 MAGICCCResults(19,(K-1990)/IIPRT+1) = ESO22(IYR)-ES1990
-	 MAGICCCResults(20,(K-1990)/IIPRT+1) = ESO23(IYR)-ES1990
-	 MAGICCCResults(21,(K-1990)/IIPRT+1) = SLUSER(IYR)
-	 MAGICCCResults(22,(K-1990)/IIPRT+1) = QKyotoTot	! Added 1/26/05
-	 MAGICCCResults(23,(K-1990)/IIPRT+1) = (QHCFC1+QHCFC2)/2.	! Added 1/26/05
-	 MAGICCCResults(24,(K-1990)/IIPRT+1) = (QLong1+QLong2)/2.	! Added 1/26/05
-	 MAGICCCResults(25,(K-1990)/IIPRT+1) = DELCH4H2O	! Added 1/26/05
-
-! now we can write stuff out
-
-		IF (IWrite .eq. 1)  &
-          WRITE (9,100) K,MAGICCCResults(1:25,(K-1990)/IIPRT+1)
-
-	END DO
-
-	IF (IWrite .eq. 1) WRITE(9,*)
-!     ******* END MINICAM OUTPUT ***
-	IF (IWrite .eq. 1) CLOSE (9)
-!
-
-!
+      ENDIF
+!
+ 881  FORMAT(1X,I5,5F10.3,2F10.4,3F10.3,I9)
+ 882  FORMAT(/2X,'YEAR       CO2       CH4       N2O     CFC12', &
+     '    C11EFF   QTROPOZ  QSTRATOZ      ESO2', &
+     '        BC        OC     YEAR')
+ 883  FORMAT(/1X,'*** MIDYEAR CONCENTRATIONS : ESO2, BC & OC SET', &
+     ' TO ZERO BEFORE 1990 ***')
+!                  
 !  **************************************************************
 !  **************************************************************
 !
 !  FORMAT STATEMENTS
 !
-!  **************************************************************
-!  **************************************************************
-!
  10   FORMAT (/1X,'CO2-DOUBLING FORCING IN W/M**2 =',F6.3)
- 11   FORMAT (1X,'FNHOC= ',F4.2,' * FSHOC= ',F4.2,' * FNHLAND= ',F4.2,' * FSHLAND= ',F4.2)
+ 11   FORMAT (1X,'FNHOC= ',F4.2,' * FSHOC= ',F4.2,' * FNHLAND= ',F4.2, &
+     ' * FSHLAND= ',F4.2)
  110  FORMAT (1X,A4,' CONCENTRATION PROJECTION FOR CO2')
  1100 FORMAT (3X,'(CO2-CLIMATE FEEDBACK NOT INCLUDED)')
  1101 FORMAT (3X,'(CO2-CLIMATE FEEDBACK INCLUDED)')
@@ -2815,101 +2785,148 @@ IF(IWrite.eq.1)THEN
  112  FORMAT (1X,A4,' CONCENTRATION PROJECTION FOR CH4')
  113  FORMAT (1X,'CH4 CONCS USE CONSTANT LIFETIME OF',F7.3,'YEARS')
  114  FORMAT (1X,A4,' 1990 FORCINGS FOR SO4 AEROSOL')
- 115  FORMAT (1X,'LEVCO2, LEVCH4 AND/OR LEVSO4 WRONGLY SET > 4 :',' RESET AT 2')
+ 115  FORMAT (1X,'LEVCO2, LEVCH4 AND/OR LEVSO4 WRONGLY SET > 4 :', &
+     ' RESET AT 2')
  117  FORMAT (2X,'STRAT OZONE DEPLETION FEEDBACK OMITTED')
  1171 FORMAT (2X,'STRAT OZONE DEPLETION FEEDBACK INCLUDED')
- 118  FORMAT (2X,'FOR HALOCARBONS NOT IN GAS.EMK,',' EMS DROP TO ZERO OVER 2100-2200')
- 1181 FORMAT (2X,'FOR HALOCARBONS NOT IN GAS.EMK,',' EMS CONSTANT AFTER 2100')
- 116  FORMAT (/1X,'CLIMATE MODEL SELECTED = ',A10)
+ 118  FORMAT (2X,'FOR HALOCARBONS NOT IN GAS.EMK,', &
+     ' EMS DROP TO ZERO OVER 2100-2200')
+ 1181 FORMAT (2X,'FOR HALOCARBONS NOT IN GAS.EMK,', &
+     ' EMS CONSTANT AFTER 2100')
+ 116  FORMAT (/1X,'CLIMATE MODEL SELECTED = ',A7)
+ 1161 FORMAT (1X,'USER ICE MELT = LOW')
+ 1162 FORMAT (1X,'USER ICE MELT = MID')
+ 1163 FORMAT (1X,'USER ICE MELT = HIGH')
+ 1164 FORMAT (1X,'TAR GSIC SENSITIVITY =',F8.4,' CM/YR-DEGC : VZERO =', &
+     F5.1,'CM')
  12   FORMAT (1X,'XKNS=',F4.1,' : XKLO=',F4.1)
  120  FORMAT (1X,'HM=',F5.1,'M : XK=',F6.4,'CM**2/SEC')
  121  FORMAT (1X,'PI=',F6.4,' : INITIAL W=',F5.2,'M/YR',/)
  122  FORMAT (1X,'CONSTANT W CASE')
  1220 FORMAT (1X,'IVARW SET AT',I2)
- 123  FORMAT (1X,'VARIABLE W : NH W = ZERO WHEN TEMPERATURE =',F6.2,'degC')
+ 123  FORMAT (1X,'VARIABLE W : NH W = ZERO WHEN TEMPERATURE =',F6.2, &
+     'degC')
  1231 FORMAT (1X,'FULL W SCALED WITH GLOBAL-MEAN TEMPERATURE',/)
  1232 FORMAT (1X,'FULL W SCALED WITH GLOBAL-MEAN OCEAN TEMPERATURE',/)
- 1233 FORMAT (1X,'FULL W SCALED WITH HEMISPHERIC-MEAN OCEAN','TEMPERATURE',/)
+ 1233 FORMAT (1X,'FULL W SCALED WITH HEMISPHERIC-MEAN OCEAN', &
+     'TEMPERATURE',/)
  1234 FORMAT (1X,'ACTIVE W SCALED WITH GLOBAL-MEAN TEMPERATURE',/)
  1235 FORMAT (1X,'ACTIVE W SCALED WITH GLOBAL-MEAN OCEAN TEMPERATURE',/)
- 124  FORMAT (1X,'VARIABLE W : SH W = ZERO WHEN TEMPERATURE =',F6.2,'degC')
+ 124  FORMAT (1X,'VARIABLE W : SH W = ZERO WHEN TEMPERATURE =',F6.2, &
+     'degC')
  125  FORMAT (1X,'VARIABLE W : NH AND SH W(t) SPECIFIED IN WINPUT.IN')
  126  FORMAT (1X,'PERMANENT THC SHUTDOWN AT W =',F6.2,'M/YR')
- 127  FORMAT (1X,'W = ZERO WHEN TEMPERATURE =',F6.2,'degC')
- 140  FORMAT (/1X,'1880-1990 CHANGES : GLOBAL DTEMP =',F7.3,' :   DMSL =',F7.3)
- 141  FORMAT (1X,'          DTNHL =',F7.3,' : DTNHO =',F7.3,' :  DTSHL =',f7.3,' :   DTSHO =',f7.3)
- 142  FORMAT (1X,'           DTNH =',F7.3,' :  DTSH =',F7.3,' : DTLAND =',f7.3,' : DTOCEAN =',f7.3)
+ 127  FORMAT (1X,'W = ZERO WHEN TEMPERATURE =',F6.2, &
+     'degC')
+ 140  FORMAT (/1X,'1880-1990 CHANGES : GLOBAL DTEMP =',F7.3, &
+     ' :   DMSL =',F7.3)
+ 141  FORMAT (1X,'          DTNHL =',F7.3,' : DTNHO =',F7.3, &
+     ' :  DTSHL =',f7.3,' :   DTSHO =',f7.3)
+ 142  FORMAT (1X,'           DTNH =',F7.3,' :  DTSH =',F7.3, &
+     ' : DTLAND =',f7.3,' : DTOCEAN =',f7.3)
  15   FORMAT (/1X,'** TEMPERATURE AND SEA LEVEL CHANGES FROM',I5,' **')
- 16   FORMAT (1X,'     (FIRST LINE GIVES 1765-1990 CHANGES : ','ALL VALUES ARE MID-YEAR TO MID-YEAR)')
+ 16   FORMAT (1X,'     (FIRST LINE GIVES 1765-1990 CHANGES : ', &
+                      'ALL VALUES ARE MID-YEAR TO MID-YEAR)')
  161  FORMAT (/1X,'LOW CLIMATE AND SEA LEVEL MODEL PARAMETERS')
  162  FORMAT (/1X,'MID CLIMATE AND SEA LEVEL MODEL PARAMETERS')
  163  FORMAT (/1X,'HIGH CLIMATE AND SEA LEVEL MODEL PARAMETERS')
  164  FORMAT (/1X,'USER CLIMATE AND SEA LEVEL MODEL PARAMETERS')
- 171  FORMAT (1X,' YEAR, DELTAQ, TEQU, TEMP, EXPN, GLAC,',' GREENL, ANTAR, MSLTOT,   TNH, TSH, WNH, WSH, YEAR')
- 172  FORMAT (1X,' YEAR, DELTAQ, TEQU, TEMP, EXPN, GLAC,',' GREENL  ANTAR MSLTOT TLAND  TOCN TL/TO   WNH   WSH  YEAR')
- 173  FORMAT (1X,' YEAR, DELTAQ, TEQU, TEMP, EXPN, GLAC,',' GREENL  ANTAR MSLTOT TEQ-T TDEEP   WNH   WSH  YEAR')
- 174  FORMAT (1X,' YEAR, EQVCO2,  TEQU,   TEMP, EXPN,   GLAC,',' GREENL  ANTAR MSLTOT TEQ-T TDEEP   WNH   WSH  YEAR')
- 175  FORMAT (1X,' YEAR DELTAQ     TEMP  TL/TO  MSLTOT   EXPN   GLAC',' GREENL  ANTAR   WNH  YEAR')
- 176  FORMAT (1X,'NSIM =',I3,' : DELT(2XCO2) =',F6.3,'DEGC')
+ 171  FORMAT (1X,' YEAR,DELTAQ, TEQU, TEMP, EXPN, GLAC,', &
+      ' GREENL,ANTAR,Z-XTRA,MSLTOT, TNH, TSH, WNH, WSH,YEAR,', &
+      '  GR+ANT,ZTOT-ZXTRA')
+ 172  FORMAT (1X,' YEAR,DELTAQ, TEQU, TEMP, EXPN, GLAC,', &
+      ' GREENL,ANTAR, Z-XTRA, MSLTOT, TLAND,  TOCN, TL/TO,   WNH,   WSH,', &
+      '  YEAR')
+ 173  FORMAT (1X,' YEAR,DELTAQ, TEQU, TEMP, EXPN, GLAC,', &
+      ' GREENL,  ANTAR, Z-XTRA, MSLTOT, TEQ-T, TDEEP,   WNH,   WSH,  YEAR,')
+ 174  FORMAT (1X,' YEAR,EQVCO2, TEQU, TEMP, EXPN, GLAC,', &
+      ' GREENL,ANTAR.Z-XTRA.MSLTOT.TEQ-T.TDEEP, WNH, WSH,YEAR,')
+ 175  FORMAT (1X,' YEAR,DELTAQ,   TEMP,TL/TO,MSLTOT, EXPN, GLAC,', &
+      ' GREENL,ANTAR Z-XTRA, WNH,YEAR')
+ 176  FORMAT (/1X,'NSIM =',I3,' : DELT(2XCO2) =',F6.3,'DEGC')
+1761  FORMAT (/1X,' DELT(2XCO2) =',F6.3,'DEGC')
  177  FORMAT (/1X,'DT2X =',F5.2,' : CONSTANT W')
  178  FORMAT (/1X,'DT2X =',F5.2,' : VARIABLE W')
  179  FORMAT (/1X,'*************************************************')
- 181  FORMAT ('TO1990, ',e15.7,20(',',e15.7))
- 182  FORMAT ('TO1990, ',e15.7,20(',',e15.7))
- 183  FORMAT ('TO1990, ',e15.7,20(',',e15.7))
- 184  FORMAT ('TO1990, ',e15.7,20(',',e15.7))
- 185  FORMAT ('TO1990, ',e15.7,20(',',e15.7))
+ 181  FORMAT ('TO1990, ',e18.10,20(',',e18.10))
+ 182  FORMAT ('TO1990, ',e18.10,20(',',e18.10))
+ 183  FORMAT ('TO1990, ',e18.10,20(',',e18.10))
+ 184  FORMAT ('TO1990, ',e18.10,20(',',e18.10))
+ 185  FORMAT ('TO1990, ',e18.10,20(',',e18.10))
  186  FORMAT (1X,'FULL GLOBAL SO2 EMISSIONS',/)
  187  FORMAT (1X,'SO2 EMISSIONS CONSTANT AFTER 1990',/)
  188  FORMAT (1X,'REGION 1 SO2 EMISSIONS',/)
  189  FORMAT (1X,'REGION 2 SO2 EMISSIONS',/)
  190  FORMAT (1X,'REGION 3 SO2 EMISSIONS',/)
- 191  FORMAT (1X,I5,',',e15.7,11(',',e15.7),',',I6)
- 192  FORMAT (1X,I5,',',e15.7,12(',',e15.7),',',I6)
- 193  FORMAT (1X,I5,',',e15.7,11(',',e15.7),',',I6)
- 194  FORMAT (1X,I5,',',e15.7,11(',',e15.7),',',I6)
- 195  FORMAT (1X,I5,',',e15.7,8(',',e15.7),',',I6)
+ 191  FORMAT (1X,I5,',',e18.10,12(',',e18.10),',',I6,2(',',e18.10))
+ 192  FORMAT (1X,I5,',',e18.10,12(',',e18.10),',',I6)
+ 193  FORMAT (1X,I5,',',e18.10,11(',',e18.10),',',I6)
+ 194  FORMAT (1X,I5,',',e18.10,11(',',e18.10),',',I6)
+ 195  FORMAT (1X,I5,',',e18.10,8(',',e18.10),',',I6)
 !
- 20   FORMAT (1X,'*** CONCENTRATIONS (CO2,PPM : CH4,N2O,PPB) ***',/1X,'*** MIDYEAR VALUES ***')
- 202  FORMAT (1X,'*** CONCENTRATIONS (CO2,PPM : CH4,N2O,PPB) ***',/1X,'*** START OF YEAR VALUES FOR YR.GE.1990 IN COLS 2,3,4 ***')
- 201  FORMAT (5X,'<- USER MODEL CONCS ->','<------ CH4 & CO2 MID CONCS & RANGES ------->')
- 21   FORMAT (1X,'YEAR,EFOSS, NETDEF,CH4,N2O,',' SO2REG1, SO2REG2,SO2REG3,SO2TOT,YEAR')
- 210  FORMAT (1X,'YEAR,CO2,CH4,N2O,','   CH4LO,CH4MID,CH4HI,CO2LO,CO2MID,CO2HI,YEAR,',' TAUCH4')
- 211  FORMAT (1X,'YEAR,CO2USER,CO2LO,CO2MID,CO2HI,',' CH4USER,CH4LO,CH4MID,CH4HI,N2O,',' MIDTAUCH4')
- 212  FORMAT (1X,'YEAR,FOSSCO2, NETDEFOR,CH4,N2O,',' SO2-REG1, SO2-REG2, SO2-REG3, SO2-GL')
- 213  FORMAT (1X,'YEAR, TEMUSER,TEMLO, TEMMID,,TEMHI, TEMNOSO2')
- 214  FORMAT (1X,'YEAR,MSLUSER,MSLLO, MSLMID,,MSLHI, MSLNOSO2')
- 220  FORMAT (1X,I4,',',e15.7,',',e15.7,7(',',e15.7),',',I6,',',e15.7)
- 221  FORMAT (1X,I4,',',e15.7,',',e15.7,',',e15.7,',',',,,,,,',I6)
- 222  FORMAT (1X,I4,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',e15.7,',',I6)
+ 20   FORMAT (1X,'*** CONCENTRATIONS (CO2,PPM : CH4,N2O,PPB) ***', &
+     /1X,'*** MIDYEAR VALUES ***')
+ 202  FORMAT (1X,'*** CONCENTRATIONS (CO2,PPM : CH4,N2O,PPB) ***', &
+     /1X,'*** START OF YEAR VALUES FOR YR.GE.1990 IN COLS 2,3,4 ***')
+ 203  FORMAT (1X,'*** CONCENTRATIONS (CO2,PPM : CH4,N2O,PPB) ***', &
+     /1X,'*** END OF YEAR VALUES FOR YR.GE.1990 IN COLS 2,3,4 ***')
+ 201  FORMAT (5X,'<- USER MODEL CONCS ->', &
+      '<------ CH4 & CO2 MID CONCS & RANGES ------->')
+ 21   FORMAT (1X,'YEAR,EFOSS,NETDEF,CH4,N2O,NOX,VOC,CO,SO2REG1,SO2REG2,SO2REG3,',&
+                 'CF4,C2F6,HFC125,HFC134A,HFC143A,HFC227ea,HFC245ca,SF6,ESO2TOT,YEAR')
+ 210  FORMAT (1X,'YEAR      CO2     CH4    N2O', &
+     '   CH4LO  CH4MID   CH4HI   CO2LO  CO2MID   CO2HI  YEAR', &
+     ' TAUCH4')
+ 211  FORMAT (1X,'YEAR CO2USER   CO2LO  CO2MID   CO2HI', &
+                ' CH4USER   CH4LO  CH4MID   CH4HI     N2O', &
+     ' MIDTAUCH4')
+ 212  FORMAT (1X,'YEAR  FOSSCO2 NETDEFOR      CH4      N2O', &
+     ' SO2-REG1 SO2-REG2 SO2-REG3   SO2-GL')
+ 213  FORMAT (1X,'YEAR  TEMUSER    TEMLO   TEMMID    TEMHI TEMNOSO2')
+ 214  FORMAT (1X,'YEAR  MSLUSER    MSLLO   MSLMID    MSLHI')
+ 220  FORMAT (1X,I4,',',e18.10,',',e18.10,7(',',e18.10),',',I6,',',e18.10)
+ 221  FORMAT (1X,I4,',',e18.10,',',e18.10,',',e18.10,',',',,,,,,',I6)
+ 222  FORMAT (1X,I4,',',21(e18.10,','),I6)
  223  FORMAT (1X,I4,9F8.1)
  224  FORMAT (1X,I4,9F8.1,F10.2)
  225  FORMAT (1X,I4,8F9.2)
  226  FORMAT (1X,I4,5F9.3)
  227  FORMAT (1X,I4,5F9.1)
  23   FORMAT (1X,'** INPUT EMISSIONS **')
- 231  FORMAT (4X,'CO2=EFOSS+NETDEF : SO2 EMISSIONS RELATIVE TO 1990')
+ 231  FORMAT (4X,'BALANCED EMISSIONS FOR CH4 & N2O : SO2 EMISSIONS', &
+     ' RELATIVE TO 1990')
  24   FORMAT (1X,'** CARBON CYCLE DETAILS **')
- 241  FORMAT (1X,'CONCENTRATIONS ARE UNCORRECTED MODEL OUTPUT',' : LEVCO2 =',I2)
+ 241  FORMAT (1X,'CONCENTRATIONS ARE UNCORRECTED MODEL OUTPUT', &
+     ' : LEVCO2 =',I2)
 ! 25   FORMAT (1X,'FEEDBACKS ** TEMPERATURE * GPP :',F7.4,' * RESP :'
 !     +,F7.4,' * LITT OXDN :',F7.4,'  **  FERTIL :',F7.4)
  28   FORMAT (1X,F8.1,7F8.2,4f8.1)
 !
  30   FORMAT (1X,'  ')
  31   FORMAT (1X,'****************************************************')
- 47   FORMAT (1X,'** DECADAL CONTRIBUTIONS TO',' GLOBAL RADIATIVE FORCING **')
- 48   FORMAT (1X,'   (DELTA-Q in W/m**2 : PERCENTAGES IN BRACKETS : ','BASED ON END-OF-YEAR FORCING VALUES)')
+ 47   FORMAT (1X,'** DECADAL CONTRIBUTIONS TO', &
+      ' GLOBAL RADIATIVE FORCING **')
+ 48   FORMAT (1X,'   (DELTA-Q in W/m**2 : PERCENTAGES IN BRACKETS : ', &
+      'BASED ON END-OF-YEAR FORCING VALUES)')
 !
  50   FORMAT (1X,'  INTERVAL')
  53   FORMAT (1X,'STRAT H2O FROM CH4 : DELQH2O/DELQCH4 =',F6.3)
- 55   FORMAT (1X,'** GAS BY GAS DELTA-Q FROM 1990 : MIDYEAR VALUES **')
- 56   FORMAT (1X,'(BASED ON MID-YEAR FORCING VALUES : QEXTRA',' NOT INCLUDED)')
- 561  FORMAT (1X,'CH4tot INCLUDES STRATH2O : TROPO3 INCLUDES CH4',' COMPONENT')
+ 55   FORMAT (1X,'** GAS BY GAS DELTA-Q FROM',I5' : MIDYEAR VALUES **')
+ 56   FORMAT (1X,'(BASED ON MID-YEAR FORCING VALUES : QEXTRA', &
+     ' NOT INCLUDED)')
+ 561  FORMAT (1X,'CH4tot INCLUDES STRATH2O : TROPO3 INCLUDES CH4', &
+     ' COMPONENT')
+5611  FORMAT (1X,'QAERMN IS THE SUM OF NITRATE AND MINERAL DUST', &
+     ' AEROSOL FORCING')
  562  FORMAT (1X,'HALOtot INCLUDES STRAT O3')
  563  FORMAT (1X,'HALOtot (AND QTOTAL) DOES NOT INCLUDE STRAT O3')
- 57   FORMAT (1X,'YEAR,CO2,CH4tot,N2O, HALOtot,','TROPOZ,SO4DIR,SO4IND,BIOAER,TOTAL, FOC+FBC,',' YEAR,CH4-O3,',&
+ 57   FORMAT (1X,'YEAR,CO2,CH4tot,N2O, HALOtot,','TROPOZ,SO4DIR,SO4IND,BIOAER,FOC+FBC,QAERMN,QLAND,',&
+ 	   ' TOTAL, YEAR,CH4-O3,',&
  		' STRATO3, MONTDIR,QKYOTO')
- 571  FORMAT (1X,I4,10(',',e15.7),',',I4,10(',',e15.7))
+ 573   FORMAT (1X,'YEAR,CO2,CH4tot,N2O, HALOtot,','TROPOZ,SO4DIR,SO4IND,BIOAER,FOC+FBC,QAERMN,QLAND,',&
+ 	   ' TOTAL, YEAR,CH4-O3,',&
+ 		' STRATO3, MONTDIR,QKYOTO,BC,OC,QEXTRA')
+ 571  FORMAT (1X,I4,12(',',e18.10),',',I4,10(',',e18.10))
  58   FORMAT (1X,'** GAS BY GAS DELTA-Q FROM 1765 : MIDYEAR VALUES **')
 !
  60   FORMAT (1X,'1990 DIRECT AEROSOL FORCING          =',F6.3,'W/m**2')
@@ -2918,34 +2935,46 @@ IF(IWrite.eq.1)THEN
  63   FORMAT (1X,'1990 FOSSIL ORG C + BLACK C FORCING  =',F6.3,'W/m**2')
 !
  756  FORMAT (/1X,'NO EXTRA FORCING ADDED')
- 757  FORMAT (/1X,'EXTRA GLOBAL MEAN FORCING ADDED FROM',' QEXTRA.IN OVER',I5,' TO',I5,' INCLUSIVE')
- 758  FORMAT (/1X,'EXTRA HEMISPHERIC FORCINGS ADDED FROM',' QEXTRA.IN OVER',I5,' TO',I5,' INCLUSIVE')
- 759  FORMAT (/1X,'EXTRA NHO, NHL, SHO, SHL FORCINGS ADDED FROM',' QEXTRA.IN OVER',I5,' TO',I5,' INCLUSIVE')
+ 757  FORMAT (/1X,'EXTRA GLOBAL MEAN FORCING ADDED FROM', &
+     ' QEXTRA.IN OVER',I5,' TO',I5,' INCLUSIVE')
+ 758  FORMAT (/1X,'EXTRA HEMISPHERIC FORCINGS ADDED FROM', &
+     ' QEXTRA.IN OVER',I5,' TO',I5,' INCLUSIVE')
+ 759  FORMAT (/1X,'EXTRA NHO, NHL, SHO, SHL FORCINGS ADDED FROM', &
+     ' QEXTRA.IN OVER',I5,' TO',I5,' INCLUSIVE')
  760  FORMAT (2X,F10.3,' W/m**2 SUBTRACTED FROM ALL VALUES')
  761  FORMAT (2X,'FORCING SCALED BY',F7.3,' AFTER OFFSET')
  762  FORMAT (/1X,'QEXTRA FORCING USED ALONE')
 !
- 800  FORMAT (1X,'LOW CONC CASE  : NETDEF(80s) = 1.80GtC/yr',' : GIFFORD FERTILIZATION FACTOR =',F6.3)
- 801  FORMAT (1X,'MID CONC CASE  : NETDEF(80s) = 1.10GtC/yr',' : GIFFORD FERTILIZATION FACTOR =',F6.3)
- 802  FORMAT (1X,'HIGH CONC CASE : NETDEF(80s) = 0.40GtC/yr',' : GIFFORD FERTILIZATION FACTOR =',F6.3)
- 803  FORMAT (1X,'USER CONC CASE : NETDEF(80s) =',F5.2,'GtC/yr : GIFFORD FERTILIZATION FACTOR =',F6.3)
+ 800  FORMAT (1X,'LOW CONC CASE  : NETDEF(80s) = 1.80GtC/yr', &
+     ' : GIFFORD FERTILIZATION FACTOR =',F6.3)
+ 801  FORMAT (1X,'MID CONC CASE  : NETDEF(80s) = 1.10GtC/yr', &
+     ' : GIFFORD FERTILIZATION FACTOR =',F6.3)
+ 802  FORMAT (1X,'HIGH CONC CASE : NETDEF(80s) = 0.40GtC/yr', &
+     ' : GIFFORD FERTILIZATION FACTOR =',F6.3)
+ 803  FORMAT (1X,'USER CONC CASE : NETDEF(80s) =',F5.2, &
+     'GtC/yr : GIFFORD FERTILIZATION FACTOR =',F6.3)
  804  FORMAT (/1X,'ALL CASES USE 1980s MEAN OCEAN FLUX OF 2.0GtC/yr')
  805  FORMAT (1X,'DETAILED CARBON CYCLE OUTPUT IS FOR LEVCO2 CASE ONLY')
  806  FORMAT (1X,'METHANE OXIDATION TERM INCLUDED IN EMISSIONS')
  807  FORMAT (1X,'METHANE OXIDATION TERM NOT INCLUDED IN EMISSIONS')
- 808  FORMAT (/1X,'*** ERROR : D80SIN SET TOO LOW AT',F7.3,' : RESET AT'F7.3,' ***')
- 809  FORMAT (/1X,'*** ERROR : D80SIN SET TOO HIGH AT',F7.3,' : RESET AT'F7.3,' ***')
+ 8071 FORMAT (1X,'NOTE: CORRECTION TO MATCH OBSERVED IN 2000 NOT', &
+     ' APPLIED IN THIS SECTION')
+ 808  FORMAT (/1X,'*** ERROR : D80SIN SET TOO LOW AT',F7.3, &
+     ' : RESET AT'F7.3,' ***')
+ 809  FORMAT (/1X,'*** ERROR : D80SIN SET TOO HIGH AT',F7.3, &
+     ' : RESET AT'F7.3,' ***')
  810  FORMAT (/77X,'ENDYEAR')
  811  FORMAT (/77X,'MIDYEAR')
-! 812  FORMAT (1X,'YEAR ETOTAL  EFOSS CH4OXN   NETD GROSSD  OFLUX',
-!     &' ABFRAC PLANT C HLITT    SOIL    CONC  DEL-M  YEAR')
  812  FORMAT (1X,'YEAR, ETOTAL,  EFOSS, CH4OXN,   NETD, GROSSD,  OFLUX,',' ABFRAC, PLANT C, HLITT,    SOIL,',&
  '    CONC,  DEL-M,  YEAR') 
- 813  FORMAT (1X,I4,',',e15.7,11(',',e15.7),',',I6)
+ 813  FORMAT (1X,I4,',',e18.10,11(',',e18.10),',',I6)
 !
- 871  FORMAT (/1X,'CO2 CONC INPUT OVERWRITES CO2 EMISSIONS :',' POST-1990 CO2 FORCING SCALED UP BY',f5.1,'%')
- 872  FORMAT (/1X,'CO2 CONC INPUT OVERWRITES CO2 EMISSIONS :',' OTHER GAS EMISSIONS AS SPECIFIED IN GAS.EMK')
- 873  FORMAT (/1X,'CO2 CONC INPUT OVERWRITES CO2 EMISSIONS :',' SO2 EMISSIONS AS SPECIFIED IN GAS.EMK')
+ 871  FORMAT (/1X,'CO2 CONC INPUT OVERWRITES CO2 EMISSIONS :', &
+     ' POST-1990 CO2 FORCING SCALED UP BY',f5.1,'%')
+ 872  FORMAT (/1X,'CO2 CONC INPUT OVERWRITES CO2 EMISSIONS :', &
+     ' OTHER GAS EMISSIONS AS SPECIFIED IN GAS.EMK')
+ 873  FORMAT (/1X,'CO2 CONC INPUT OVERWRITES CO2 EMISSIONS :', &
+     ' SO2 EMISSIONS AS SPECIFIED IN GAS.EMK')
 !
  900  FORMAT (1X,I5)
  901  FORMAT (1X,2I5)
@@ -2953,29 +2982,28 @@ IF(IWrite.eq.1)THEN
  903  FORMAT (1X,I5,2F10.0)
  904  FORMAT (1X,I5,4F10.0)
 !
- 910  FORMAT (1X,'GSIC MODEL PARAMS : DTSTAR =',F6.3,' : DTEND =',F6.3,' : TAU  =',F6.1,' : INIT VOL =',F6.1)
- 912  FORMAT (1X,'GREENLAND PARAMS  : BETA   =',F6.3)
- 913  FORMAT (1X,'ANTARCTIC PARAMS  : BETA1  =',F6.3,' : BETA2=',F6.3,' : DB3   =',F6.3)
- 914  FORMAT (/1X,'DIFF/L SENSITIVITY CASE : RLO =',F6.3,' : XLAML =',F10.4,' : XLAMO =',F10.4)
+ 914  FORMAT (/1X,'DIFF/L SENSITIVITY CASE : RLO =',F6.3,' : XLAML =', &
+     F10.4,' : XLAMO =',F10.4)
  915  FORMAT (/1X,'GLOBAL SENSITIVITY CASE : INITIAL XLAM =',F10.4)
  916  FORMAT (1X,'  **  WARNING, XLAML<0.0 : USE SMALLER XKLO **')
  930  FORMAT (/1X,'LOW CLIMATE MODEL PARAMETERS')
  931  FORMAT (/1X,'MID CLIMATE MODEL PARAMETERS')
  932  FORMAT (/1X,'HIGH CLIMATE MODEL PARAMETERS')
  933  FORMAT (/1X,'USER CLIMATE MODEL PARAMETERS')
- 934  FORMAT (/2X,'YEAR       GHG     ESO21     ESO22     ESO23','       SUM')
+ 934  FORMAT (/2X,'YEAR       GHG     ESO21     ESO22     ESO23', &
+     '       ALL')
  935  FORMAT (1X,I5,5F10.4)
  936  FORMAT (1X,'REF T',40X,F10.4)
  937  format (1x,'PROFILE: ',A20)
 !
  4240 FORMAT (I10)
  4241 FORMAT (F10.0)
- 4242 FORMAT (1X,I5,18F10.0)
+ 4242 FORMAT (1X,I5,20F10.0)
  4243 FORMAT (I2)
  4445 FORMAT(1X,I5,2F10.0)
  4446 FORMAT(1X,2I5)
- 4447 FORMAT(1X,I5,4F10.0)
- 4448 FORMAT(1X,I5,2F10.0,20X,2F10.0)
+ 4447 FORMAT(1X,I5,4F10.0,20X,F10.0)
+ 4448 FORMAT(1X,I5,2F10.0,20X,3F10.0)
 !
       END
 !
@@ -2994,7 +3022,7 @@ IF(IWrite.eq.1)THEN
       COMMON/CARB/CCO2(4,224:iTp),EDGROSS(4,226:iTp),EF(226:iTp+1), &
      REGROW(4,226:iTp),PL(4,226:iTp),HL(4,226:iTp),SOIL(4,226:iTp), &
      TTT(226:iTp),ESUM(226:iTp),ETOT(4,226:iTp),EDNET90(4), &
-     FOC(4,226:iTp),co2(0:iTp)
+     FOC(4,226:iTp),CO2(0:iTp),CO2SAVE(0:iTp)
 !
       COMMON/CAR/EL1,EL2,EL3,TINV0(5),TINV(4,5),A(3,5),AA(4,5), &
      BCO2(4),BTGPP,BTRESP,BTHUM,GAMP,GPP0,RESP0,QA0,U0,C0,B340(4), &
@@ -3006,12 +3034,6 @@ IF(IWrite.eq.1)THEN
       DATA FL(1)/0.420/,FL(2)/0.210/
 !
       DATA RHO/1.026/,SPECHT/0.9333/,HTCONS/4.1856/
-!
-!  CO2 CONCS FROM END OF 1764 TO END OF 1990.
-!   UPDATED TO FEB 95 VERSION OF IPCC ON 3.11.95
-!   UPDATED TO MAR 95 VERSION OF IPCC ON 4.02.95
-!   UPDATED TO JUN 95 VERSION OF IPCC ON 8.08.95
-!   REMOVED FROM BLOCK DATA TO CO2HIST.IN ON 2.26.96
 !
 !  INITIALISE CARBON CYCLE MODEL PARAMETERS.
 !  FIRST SPECIFY CUMULATIVE EMISSIONS TRANSITION POINTS.
@@ -3033,6 +3055,7 @@ IF(IWrite.eq.1)THEN
 !********************************************************************
 !
       SUBROUTINE INIT
+      IMPLICIT REAL*4 (a-h,o-z), Integer (I-N)
 !
       parameter (iTp=740)
 !
@@ -3043,28 +3066,29 @@ IF(IWrite.eq.1)THEN
      AL,BL,CL,DTH,DTZ,DZ1,XLL,WWW,XXX,YYY,RHO,SPECHT,HTCONS,Y(4)
 !
       COMMON/CONCS/CH4(0:iTp),CN2O(0:iTp),ECH4(226:iTp+1), &
-     EN2O(226:iTp+1),ECO(226:iTp+1),EVOC(226:iTp+1), &
+     EN2O(226:iTp+1),ECO(226:iTp+1),COE(iTp+1),EVOC(226:iTp+1), &
      ENOX(226:iTp+1),ESO2(0:iTp+1),ESO2SUM(226:iTp+1), &
-     ESO21(226:iTp+1),ESO22(226:iTp+1),ESO23(226:iTp+1)
+     ESO21(226:iTp+1),ESO22(226:iTp+1),ESO23(226:iTp+1), &
+     EBC(226:iTp+1), EOC(226:iTp+1) ! sjs- add BC-OC
 !
       COMMON/TANDSL/TEQU(iTp),TGAV(iTp),TNHO(iTp), &
      TSHO(iTp),TNHL(iTp),TSHL(iTp),TDEEP(iTp),TNHAV(iTp),TSHAV(iTp), &
      TLAND(iTp),TOCEAN(iTp),TOCN(40),TOCNPREV(40), &
      SIP,SGP,SAP,SLI(iTp),SLG(iTp),SLA(iTp),EX(0:iTp),SLT(iTp), &
-     QTOT(0:iTp),QGH(0:iTp),QOZ(0:iTp),QBIO(0:iTp), &
-     QSO2(0:iTp+1),QDIR(0:iTp+1)
+     QTOT(0:iTp),QGH(0:iTp),QOZ(0:iTp),QBIO(0:iTp),SLO(iTp), &
+     QSO2(0:iTp+1),QDIR(0:iTp+1),QLAND(0:iTp),QMN(0:iTp+1)
 !
       COMMON /FORCE/qco2(0:iTp),qm(0:iTp),qn(0:iTp),QCFC(0:iTp), &
      QMONT(0:iTp),QOTHER(0:iTp),QSTRATOZ(0:iTp),QCH4O3(0:iTp), &
-     QCH4H2O(0:iTp)
- 
+     CFC12(0:iTp), QCH4H2O(0:iTp),QBC(0:iTp),QOC(0:iTp)
 !
       common /Sulph/S90DIR,S90IND,S90BIO,ENAT,ES1990,ECO90,FOC90,IFOC
       COMMON /VARW/Z(40),W(2),DW(2),TO0(2),TP0(2),WNH(iTp),WSH(iTp), &
      TW0NH,TW0SH,IVARW,KEYDW
 !
-      COMMON /ICE/TAUI,DTSTAR,DTEND,BETAG,BETA1,BETA2,DB3,ZI0, &
-     NVALUES,MANYTAU,TAUFACT,ZI0BIT(100),SIPBIT(100),SIBIT(100)
+      COMMON /ICE/T1990,G1990,SEN,SENG,SENA,ERRG,ERRA, &
+     DMG,DMA,SENI,SENP,SENS,DSENI,DSENP,DSENS,ICE,MODEL, &
+     NEWGSIC,IXG,VZERO,XG
 !
       COMMON /AREAS/FNO,FNL,FSO,FSL
 !
@@ -3181,21 +3205,6 @@ IF(IWrite.eq.1)THEN
       SLT(1)=0.0
       EX(0)=0.0
 !
-!  SET ICE PARAMS AND INITIAL VALUES
-!
-      MANYTAU=1
-      TAUFACT=0.3
-!
-      DO N=1,NVALUES
-      ZI0BIT(N)=ZI0/NVALUES
-      SIBIT(N)=0.0
-      SIPBIT(N)=0.0
-      END DO
-!
-      SIP=0.0
-      SGP=0.0
-      SAP=0.0
-!
 !  CALCULATE NEW RADIATIVE FORCINGS EVERY FOURTH LOOP (I.E., WHEN
 !   NSIM=1,5,9,13,17) WHEN NEW SO2 EMISSIONS ARE USED.
 !
@@ -3216,6 +3225,8 @@ IF(IWrite.eq.1)THEN
         QCH4O3(0)    = -QCH4O3(1)
         qgh(0)       = -qgh(1)
         QBIO(0)      = -QBIO(1)
+        QLAND(0)     = -QLAND(1)
+        QMN(0)       = -QMN(1)
       ENDIF
 !
       RETURN
@@ -3224,8 +3235,15 @@ IF(IWrite.eq.1)THEN
 !  *******************************************************************
 !
       SUBROUTINE TSLCALC(N)
+      IMPLICIT REAL*4 (a-h,o-z), Integer (I-N)
 !
       parameter (iTp=740)
+!
+      DIMENSION SLI1(iTp),SLG1(iTp),SLA1(iTp),SLO1(iTp),ZALL1(iTp), &
+     EX1(iTp),ZALL(iTp), &
+     SLI2(iTp),SLG2(iTp),SLA2(iTp),SLO2(iTp),ZALL2(iTp),EX2(iTp), &
+     SLI3(iTp),SLG3(iTp),SLA3(iTp),SLO3(iTp),ZALL3(iTp),EX3(iTp), &
+     SLI4(iTp),SLG4(iTp),SLA4(iTp),SLO4(iTp),ZALL4(iTp),EX4(iTp)
 !
       common /Limits/KEND
 !
@@ -3234,33 +3252,37 @@ IF(IWrite.eq.1)THEN
      AL,BL,CL,DTH,DTZ,DZ1,XLL,WWW,XXX,YYY,RHO,SPECHT,HTCONS,Y(4)
 !
       COMMON/CONCS/CH4(0:iTp),CN2O(0:iTp),ECH4(226:iTp+1), &
-     EN2O(226:iTp+1),ECO(226:iTp+1),EVOC(226:iTp+1), &
+     EN2O(226:iTp+1),ECO(226:iTp+1),COE(iTp+1),EVOC(226:iTp+1), &
      ENOX(226:iTp+1),ESO2(0:iTp+1),ESO2SUM(226:iTp+1), &
-     ESO21(226:iTp+1),ESO22(226:iTp+1),ESO23(226:iTp+1)
+     ESO21(226:iTp+1),ESO22(226:iTp+1),ESO23(226:iTp+1), &
+     EBC(226:iTp+1), EOC(226:iTp+1) ! sjs- add BC-OC
 !
       COMMON/CARB/CCO2(4,224:iTp),EDGROSS(4,226:iTp),EF(226:iTp+1), &
      REGROW(4,226:iTp),PL(4,226:iTp),HL(4,226:iTp),SOIL(4,226:iTp), &
      TTT(226:iTp),ESUM(226:iTp),ETOT(4,226:iTp),EDNET90(4), &
-     FOC(4,226:iTp),co2(0:iTp)
+     FOC(4,226:iTp),CO2(0:iTp),CO2SAVE(0:iTp)
 !
       COMMON/TANDSL/TEQU(iTp),TGAV(iTp),TNHO(iTp), &
      TSHO(iTp),TNHL(iTp),TSHL(iTp),TDEEP(iTp),TNHAV(iTp),TSHAV(iTp), &
      TLAND(iTp),TOCEAN(iTp),TOCN(40),TOCNPREV(40), &
      SIP,SGP,SAP,SLI(iTp),SLG(iTp),SLA(iTp),EX(0:iTp),SLT(iTp), &
-     QTOT(0:iTp),QGH(0:iTp),QOZ(0:iTp),QBIO(0:iTp), &
-     QSO2(0:iTp+1),QDIR(0:iTp+1)
+     QTOT(0:iTp),QGH(0:iTp),QOZ(0:iTp),QBIO(0:iTp),SLO(iTp), &
+     QSO2(0:iTp+1),QDIR(0:iTp+1),QLAND(0:iTp),QMN(0:iTp+1)
 !
       COMMON /VARW/Z(40),W(2),DW(2),TO0(2),TP0(2),WNH(iTp),WSH(iTp), &
      TW0NH,TW0SH,IVARW,KEYDW
-
-	  Real*8 FDecline	! sjs
       COMMON /QSPLIT/QNHO,QNHL,QSHO,QSHL,QGLOBE(0:iTp), &
      QQNHO(0:iTp),QQNHL(0:iTp),QQSHO(0:iTp),QQSHL(0:iTp), &
      QQQNHO(0:iTp),QQQNHL(0:iTp),QQQSHO(0:iTp),QQQSHL(0:iTp), &
-     IConstForcing, FDecline     ! sjs
+     EHistBC(iTp),EHistOC(iTp) ! Vars to store read-in BC-OC history.
+
 !
-      COMMON /ICE/TAUI,DTSTAR,DTEND,BETAG,BETA1,BETA2,DB3,ZI0, &
-     NVALUES,MANYTAU,TAUFACT,ZI0BIT(100),SIPBIT(100),SIBIT(100)
+      COMMON /ICE/T1990,G1990,SEN,SENG,SENA,ERRG,ERRA, &
+     DMG,DMA,SENI,SENP,SENS,DSENI,DSENP,DSENS,ICE,MODEL, &
+     NEWGSIC,IXG,VZERO,XG
+!
+      COMMON /NSIM/NSIM,NCLIM,ISCENGEN,TEMEXP(2,40),IWNHOFF,IWSHOFF, &
+     WTHRESH
 !
       QQNHO(N)  = QNHO
       QQNHL(N)  = QNHL
@@ -3280,8 +3302,8 @@ IF(IWrite.eq.1)THEN
 !   CHANGE OVER ONE YEAR
 !
       DO L=1,40
-      TOCNPREV(L)=TOCN(L)
-      TOCN(L)=(FO(1)*TO(1,L)+FO(2)*TO(2,L))/FOSUM
+        TOCNPREV(L)=TOCN(L)
+        TOCN(L)=(FO(1)*TO(1,L)+FO(2)*TO(2,L))/FOSUM
       END DO
       TDEEP(N)=TOCN(40)
 !
@@ -3290,53 +3312,296 @@ IF(IWrite.eq.1)THEN
       EXPAN=EX(N-1)
 !
       ZLAYER=HM
+!
       DO I=1,40
 !
-      DELTOC=TOCN(I)-TOCNPREV(I)
-      DELTBAR=(TOCN(I)+TOCNPREV(I))/2.0
+        DELTOC=TOCN(I)-TOCNPREV(I)
+        DELTBAR=(TOCN(I)+TOCNPREV(I))/2.0
 !
-      TL1=TEM(I)+DELTBAR
-      TL2=TL1*TL1
-      TL3=TL2*TL1/6000.
-      PPL=P(I)
-      COEFE=52.55+28.051*PPL-0.7108*PPL*PPL+TL1*(12.9635-1.0833*PPL)- &
-     TL2*(0.1713-0.019263*PPL)+TL3*(10.41-1.1338*PPL)
-      DLR=COEFE*DELTOC*ZLAYER/10000.
-      ZLAYER=DZ
-      EXPAN=EXPAN+DLR
+        TL1=TEM(I)+DELTBAR
+        TL2=TL1*TL1
+        TL3=TL2*TL1/6000.
+        PPL=P(I)
+        COEFE=52.55+28.051*PPL-0.7108*PPL*PPL+TL1*(12.9635-1.0833*PPL)- &
+        TL2*(0.1713-0.019263*PPL)+TL3*(10.41-1.1338*PPL)
+        DLR=COEFE*DELTOC*ZLAYER/10000.
+        ZLAYER=DZ
+        EXPAN=EXPAN+DLR
+!
       END DO
+!
       EX(N)=EXPAN
 !
 !  ICE MELT CONTRIBUTIONS TO SEA LEVEL RISE.
-!   NSTEADY IS THE N VALUE FOR BEGINNING ICE MELT AT STEADY STATE
+!  FOR TAR MODELS, KEY TEMPERATURE PROBABLY SHOULD BE CHANGE
+!   FROM 1880, BUT CHANGE FROM PRE-INDUISTRIAL TIMES WAS USED.
+!  FOR MAGICC (MODEL=0) T1990=TBASE
 !
-      NSTEADY=116
-      IF(N.LE.NSTEADY)THEN
-        DO NNN=1,NVALUES
-        SIBIT(NNN)=0.0
-        END DO
-        SI=0.0
-        SG=0.0
-        SA=0.0
-      ELSE
-        DD=TGAV(N)-TGAV(NSTEADY)
-        CALL ICEMELT(DD,SIPBIT,SGP,SAP,SIBIT,SI,SG,SA)
+      IF(N.LE.226)THEN
+        TBAR = 0.0
+        TCUM = 0.0
+        SLT(N)=EX(N)
       ENDIF
 !
-!  ABOVE GIVES END OF YEAR VALUES FOR ICE MELT. CALC MID YEAR
-!   VALUES FOR CONSISTENCY WITH TEMP AND EXPANSION AND THEN RESET
-!   FOR NEXT CALL TO SUBROUTINE.
+      IF(N.EQ.226)THEN
+        TBASE=TGAV(N)
+        XX=G1990
+        GS1990=0.934*XX-0.01165*XX*XX        ! CM
+        B19901=(0.934-0.0233*XX)*SEN*0.6                 ! NEW CODE
+        B19902=(0.934-0.0233*XX)*SEN                     ! NEW CODE
+        B19903=(0.934-0.0233*XX)*SEN*1.4                 ! NEW CODE
+        B19904=(0.934-0.0233*XX)*SEN*(1.0+(ICE-2)*0.4)   ! NEW CODE
 !
-      SLI(N)=(SIP+SI)/2.0
-      SLG(N)=(SGP+SG)/2.0
-      SLA(N)=(SAP+SA)/2.0
-      SLT(N)=SLI(N)+SLG(N)+SLA(N)+EX(N)
-      SIP=SI
-      SGP=SG
-      SAP=SA
-      DO NNN=1,NVALUES
-      SIPBIT(NNN)=SIBIT(NNN)
-      END DO
+!  YG IS TO ALLOW BZERO SCALING TO BE TURNED OFF
+!
+        YG=XG                                            ! NEW CODE
+        IF(IXG.EQ.0)YG=1.0                               ! NEW CODE
+!
+!  ERROR BOUNDS ON VZERO CHANGED FROM +/-10 TO FOLLOW AR4 (JUNE 2008)
+!
+        VZ1=VZERO-11.                                    ! NEW CODE
+        VZ2=VZERO                                        ! NEW CODE
+        VZ3=VZERO+15.                                    ! NEW CODE
+        VZ4=VZERO+(ICE-2)*11.                            ! NEW CODE
+        IF(ICE.EQ.3)VZ4=VZ4+4.
+        BZERO1=B19901/((1.0-GS1990/VZ1)**YG)             ! NEW CODE
+        BZERO2=B19902/((1.0-GS1990/VZ2)**YG)             ! NEW CODE
+        BZERO3=B19903/((1.0-GS1990/VZ3)**YG)             ! NEW CODE
+        BZERO4=B19904/((1.0-GS1990/VZ4)**YG)             ! NEW CODE
+        GSPREV1=GS1990                                   ! NEW CODE
+        GSPREV2=GS1990                                   ! NEW CODE
+        GSPREV3=GS1990                                   ! NEW CODE
+        GSPREV4=GS1990                                   ! NEW CODE
+!        WRITE(8,*)SEN,VZ4,B19904,BZERO4,GSPREV4
+      ENDIF
+      IF(MODEL.EQ.0)T1990=TBASE
+!
+!  NEED TCUM = INTEGRAL OF TEMP CHANGE FROM MID 1990
+!
+      IF(N.GE.226)THEN
+!        TBAR=(TGAV(N)+TGAV(N-1))/2.0-TGAV(226)
+        TBAR=(TGAV(N)+TGAV(N-1))/2.0
+        IF(N.EQ.226)TBAR=0.0
+        TCUM=TCUM+TBAR
+        DTB=0.15
+        AAA=T1990-TBASE
+        DYR=FLOAT(N-226)
+        BBB=AAA*DYR+TCUM
+!
+!  NEW GSIC. NOTE THAT LO, MID, HIGH AND USER CASES MUST ALL BE
+!   CARRIED THRU TOGETHER SINCE THEY CANNOT BE CALCULATED BY
+!   SIMPLY SCALING THE CENTRAL VALUE AS PREVIOUSLY.
+!
+        IF(NEWGSIC.EQ.1)THEN                                     ! NEW CODE
+!
+          FF1=BZERO1*(DTB+AAA+TGAV(N))                           ! NEW CODE
+          FF2=BZERO2*(DTB+AAA+TGAV(N))                           ! NEW CODE
+          FF3=BZERO3*(DTB+AAA+TGAV(N))                           ! NEW CODE
+          FF4=BZERO4*(DTB+AAA+TGAV(N))                           ! NEW CODE
+          X1=1.0-GSPREV1/VZ1                                     ! NEW CODE
+          X2=1.0-GSPREV2/VZ2                                     ! NEW CODE
+          X3=1.0-GSPREV3/VZ3                                     ! NEW CODE
+          X4=1.0-GSPREV4/VZ4                                     ! NEW CODE
+          DEL1=FF1*(X1**XG)/(1.0+0.5*FF1*XG*(X1**(XG-1.0))/VZ1)  ! NEW CODE
+          DEL2=FF2*(X2**XG)/(1.0+0.5*FF2*XG*(X2**(XG-1.0))/VZ2)  ! NEW CODE
+          DEL3=FF3*(X3**XG)/(1.0+0.5*FF3*XG*(X3**(XG-1.0))/VZ3)  ! NEW CODE
+          DEL4=FF4*(X4**XG)/(1.0+0.5*FF4*XG*(X4**(XG-1.0))/VZ4)  ! NEW CODE
+          GS1=GSPREV1+DEL1                                       ! NEW CODE
+          GS2=GSPREV2+DEL2                                       ! NEW CODE
+          GS3=GSPREV3+DEL3                                       ! NEW CODE
+          GS4=GSPREV4+DEL4                                       ! NEW CODE
+!
+          GSPREV1=GS1                                            ! NEW CODE
+          GSPREV2=GS2                                            ! NEW CODE
+          GSPREV3=GS3                                            ! NEW CODE
+          GSPREV4=GS4                                            ! NEW CODE
+        ELSE                                                     ! NEW CODE
+!
+!  GSICs, GS = MELT CONTRIB FROM 1880, DGS = 1-SIGMA UNCERT.,
+!   SEN = GSIC SENSITIVITY.
+!
+          GU=G1990+DTB*SEN*DYR+SEN*BBB         ! THIS IS IN CM
+!
+!  TRAP TO AVOID UNREALISTIC BEHAVIOR IN GS FOR LARGE GU. THIS
+!   IMPOSES AN UPPER BOUND ON THE CENTRAL GU VALUE OF 40.1 CM, WITH
+!   A CORRESP. UPPER BOUND ON GS OF 18.7201 CM.
+!
+          IF(GU.GT.40.0858)GU=40.0858          ! GU IS IN CM
+          GUM=GU/100.                          ! THIS IS IN M
+          GSM=0.934*GUM-1.165*GUM*GUM          ! AREA CORRECTED, IN M
+          GS=GSM*100.                          ! BACK TO CM
+!
+        ENDIF                                                    ! NEW CODE
+!
+        GREF=GS-GS1990
+        DGS=0.40*GREF
+        IF(NEWGSIC.EQ.1)DGS=(GS3-GS1)/2.0                        ! NEW CODE
+!
+!  GREENLAND AND ANTARCTICA  (ZGR AND ZAN, FROM 1990)
+!
+        ZGR=SENG*BBB
+        DZGR1=ERRG*DMG*BBB
+        DZGR2=0.1*ZGR
+!
+        ZAN=SENA*BBB
+        DZAN=ERRA*DMA*BBB
+!
+!  ICE MELT UNCERTAINTY TERM
+!
+        DHV=SQRT(DGS**2+DZGR1**2+DZGR2**2+DZAN**2)
+!
+!  OTHER CONTRIBUTORS
+!
+        ZI=SENI*DYR
+        DZI=DSENI*DYR
+        ZP=SENP*DYR
+        DZP=DSENP*DYR
+        ZS=SENS*DYR
+        DZS=DSENS*DYR
+!
+!  TOTAL NON-EXPANSION SEA LEVEL RISE, FROM 1880 BUT IGNORING
+!   ALL CHANGES OVER 1880-1990 EXCEPT GSICs
+!
+        ZTOT=GS+ZGR+ZAN+ZI+ZP+ZS
+        IF(NEWGSIC.EQ.1)ZTOT=GS2+ZGR+ZAN+ZI+ZP+ZS       ! REVISED CODE
+!
+!  UNCERTAINTY TERM (2-SIGMA)
+!
+        DZTOT=2.0*DHV+DZI+DZP+DZS
+!
+!  ABOVE GIVES MID YEAR VALUES.
+!
+        SLI(N)=GS
+        IF(NEWGSIC.EQ.1)SLI(N)=GS2           ! NEW CODE
+        SLG(N)=ZGR
+        SLA(N)=ZAN
+        SLO(N)=ZI+ZP+ZS
+        ZALL(N)=ZTOT
+!
+!  CASES:
+!   ICE MELT ONLY CALCULATED FOR NSIM=1,2,3 OR 4.
+!   NCLIM=1 = LOW = LOW EXPAN + LOW MELT
+!
+       IF(NSIM.EQ.1)THEN
+          SLI(N)=GS-2.0*DGS
+!                       
+! THE FACTOR 2.0 IS BECAUSE THIS IS THE 2-SIGMA UNCERTAINTY
+!
+          IF(NEWGSIC.EQ.1)SLI(N)=GS1          ! NEW CODE
+          SLG(N)=ZGR-2.0*SQRT(DZGR1**2+DZGR2**2)
+          SLA(N)=ZAN-2.0*DZAN
+          SLO(N)=0.0
+          ZALL(N)=ZTOT-DZTOT
+!
+          SLI1(N) =SLI(N)
+          SLG1(N) =SLG(N)
+          SLA1(N) =SLA(N)
+          SLO1(N) =SLO(N)
+          ZALL1(N)=ZALL(N)
+          EX1(N)=EX(N)
+        ENDIF
+!
+!     NCLIM=2 = MID = MID EXPAN + MID MELT
+!
+        IF(NSIM.EQ.2)THEN
+          SLI(N)=GS
+          IF(NEWGSIC.EQ.1)SLI(N)=GS2          ! NEW CODE
+          SLG(N)=ZGR
+          SLA(N)=ZAN
+          SLO(N)=ZI+ZP+ZS
+          ZALL(N)=ZTOT
+!
+          SLI2(N) =SLI(N)
+          SLG2(N) =SLG(N)
+          SLA2(N) =SLA(N)
+          SLO2(N) =SLO(N)
+          ZALL2(N)=ZALL(N)
+          EX2(N)=EX(N)
+        ENDIF
+!
+!     NCLIM=3 = HIGH = HIGH EXPAN + HIGH MELT
+!
+        IF(NSIM.EQ.3)THEN
+          SLI(N)=GS+DGS                       ! PREVIOUSLY +2.0*DGS (??)
+          IF(NEWGSIC.EQ.1)SLI(N)=GS3          ! NEW CODE
+          SLG(N)=ZGR+2.0*SQRT(DZGR1**2+DZGR2**2)
+          SLA(N)=ZAN+2.0*DZAN
+          SLO(N)=2.0*(ZI+ZP+ZS)
+          ZALL(N)=ZTOT+DZTOT
+!
+          SLI3(N) =SLI(N)
+          SLG3(N) =SLG(N)
+          SLA3(N) =SLA(N)
+          SLO3(N) =SLO(N)
+          ZALL3(N)=ZALL(N)
+          EX3(N)=EX(N)
+        ENDIF
+!
+!  NCLIM=4 = USER = USER EXPAN + USER MELT
+!   NOTE THAT NSIM=1 RESULTS ABOVE (LOW CASE) ARE OVER-WRITTEN
+!    BY USER CASE IF ISCENGEN=9
+!   PARAMETER 'ICE' DETERMINES WHETHER USER HAS CHOSEN TO USE
+!    LOW, MID OR HIGH ICE MELT
+!
+        IF(NSIM.EQ.4.OR.ISCENGEN.EQ.9)THEN
+          SCALE=(ICE-2)*2.0
+!
+          SLI(N)=GS+SCALE*DGS
+          IF(NEWGSIC.EQ.1)SLI(N)=GS4          ! NEW CODE
+          SLG(N)=ZGR+SCALE*SQRT(DZGR1**2+DZGR2**2)
+          SLA(N)=ZAN+SCALE*DZAN
+          SLO(N)=(ICE-1)*(ZI+ZP+ZS)
+          ZALL(N)=ZTOT+SCALE*DZTOT/2.0
+!
+          SLI4(N) =SLI(N)
+          SLG4(N) =SLG(N)
+          SLA4(N) =SLA(N)
+          SLO4(N) =SLO(N)
+          ZALL4(N)=ZALL(N)
+          EX4(N)=EX(N)
+        ENDIF
+!
+!  NOW TRANSFER APPROPRIATE MELT CASE RESULTS FOR NSIM VALUES
+!   GREATER THAN 4.
+!
+        IF(NSIM.EQ.5.OR.NSIM.EQ.9.OR.NSIM.EQ.13.OR.NSIM.EQ.17)THEN
+          SLI(N) =SLI1(N)
+          SLG(N) =SLG1(N)
+          SLA(N) =SLA1(N)
+          SLO(N) =SLO1(N)
+          ZALL(N)=ZALL1(N)
+          EX(N)=EX1(N)
+        ENDIF
+!
+        IF(NSIM.EQ.6.OR.NSIM.EQ.10.OR.NSIM.EQ.14.OR.NSIM.EQ.18)THEN
+          SLI(N) =SLI2(N)
+          SLG(N) =SLG2(N)
+          SLA(N) =SLA2(N)
+          SLO(N) =SLO2(N)
+          ZALL(N)=ZALL2(N)
+          EX(N)=EX2(N)
+        ENDIF
+!
+        IF(NSIM.EQ.7.OR.NSIM.EQ.11.OR.NSIM.EQ.15.OR.NSIM.EQ.19)THEN
+          SLI(N) =SLI3(N)
+          SLG(N) =SLG3(N)
+          SLA(N) =SLA3(N)
+          SLO(N) =SLO3(N)
+          ZALL(N)=ZALL3(N)
+          EX(N)=EX3(N)
+        ENDIF
+!
+        IF(NSIM.EQ.8.OR.NSIM.EQ.12.OR.NSIM.EQ.16.OR.NSIM.EQ.20)THEN
+          SLI(N) =SLI4(N)
+          SLG(N) =SLG4(N)
+          SLA(N) =SLA4(N)
+          SLO(N) =SLO4(N)
+          ZALL(N)=ZALL4(N)
+          EX(N)=EX4(N)
+        ENDIF
+!
+        SLT(N)=ZALL(N)+EX(N)
+      ENDIF
 !
       RETURN
       END
@@ -3344,12 +3609,14 @@ IF(IWrite.eq.1)THEN
 !  *******************************************************************
 !
       SUBROUTINE SPLIT(QGLOBE,A,BN,BS,QNO,QNL,QSO,QSL)
+      IMPLICIT REAL*4 (a-h,o-z), Integer (I-N)
 !
       COMMON /AREAS/FNO,FNL,FSO,FSL
 !
 !  Q VALUES ARE FORCINGS OVER AREAS IN W/M**2, F VALUES ARE THESE
-!   MULTIPLIED BY AREA FRACTIONS. THE SUM OF THE F MUST BE THE
-!   GLOBAL Q.
+!   MULTIPLIED BY AREA FRACTIONS. 
+!   The resulting fractions times the appropriate area fractions
+!   (FNO,FNL,FSO,FSL) sum to the global forcing. sjs
 !
 !  FIRST SPLIT QGLOBE INTO NH AND SH
 !
@@ -3373,6 +3640,7 @@ IF(IWrite.eq.1)THEN
 !  *******************************************************************
 !
       SUBROUTINE RUNMOD
+      IMPLICIT REAL*4 (a-h,o-z), Integer (I-N)
 !
       parameter (iTp=740)
 !
@@ -3386,21 +3654,22 @@ IF(IWrite.eq.1)THEN
      AL,BL,CL,DTH,DTZ,DZ1,XLL,WWW,XXX,YYY,RHO,SPECHT,HTCONS,Y(4)
 !
       COMMON/CONCS/CH4(0:iTp),CN2O(0:iTp),ECH4(226:iTp+1), &
-     EN2O(226:iTp+1),ECO(226:iTp+1),EVOC(226:iTp+1), &
+     EN2O(226:iTp+1),ECO(226:iTp+1),COE(iTp+1),EVOC(226:iTp+1), &
      ENOX(226:iTp+1),ESO2(0:iTp+1),ESO2SUM(226:iTp+1), &
-     ESO21(226:iTp+1),ESO22(226:iTp+1),ESO23(226:iTp+1)
+     ESO21(226:iTp+1),ESO22(226:iTp+1),ESO23(226:iTp+1), &
+     EBC(226:iTp+1), EOC(226:iTp+1) ! sjs- add BC-OC
 !
       COMMON/CARB/CCO2(4,224:iTp),EDGROSS(4,226:iTp),EF(226:iTp+1), &
      REGROW(4,226:iTp),PL(4,226:iTp),HL(4,226:iTp),SOIL(4,226:iTp), &
      TTT(226:iTp),ESUM(226:iTp),ETOT(4,226:iTp),EDNET90(4), &
-     FOC(4,226:iTp),co2(0:iTp)
+     FOC(4,226:iTp),CO2(0:iTp),CO2SAVE(0:iTp)
 !
       COMMON/TANDSL/TEQU(iTp),TGAV(iTp),TNHO(iTp), &
      TSHO(iTp),TNHL(iTp),TSHL(iTp),TDEEP(iTp),TNHAV(iTp),TSHAV(iTp), &
      TLAND(iTp),TOCEAN(iTp),TOCN(40),TOCNPREV(40), &
      SIP,SGP,SAP,SLI(iTp),SLG(iTp),SLA(iTp),EX(0:iTp),SLT(iTp), &
-     QTOT(0:iTp),QGH(0:iTp),QOZ(0:iTp),QBIO(0:iTp), &
-     QSO2(0:iTp+1),QDIR(0:iTp+1)
+     QTOT(0:iTp),QGH(0:iTp),QOZ(0:iTp),QBIO(0:iTp),SLO(iTp), &
+     QSO2(0:iTp+1),QDIR(0:iTp+1),QLAND(0:iTp),QMN(0:iTp+1)
 !
       COMMON /CO2READ/ICO2READ,XC(226:iTp),CO2SCALE,qtot86,LEVCO2
 !
@@ -3408,17 +3677,22 @@ IF(IWrite.eq.1)THEN
       COMMON /DSENS/IXLAM,XLAML,XLAMO,ADJUST
       COMMON /VARW/Z(40),W(2),DW(2),TO0(2),TP0(2),WNH(iTp),WSH(iTp), &
      TW0NH,TW0SH,IVARW,KEYDW
-
-	  Real*8 FDecline	! sjs
       COMMON /QSPLIT/QNHO,QNHL,QSHO,QSHL,QGLOBE(0:iTp), &
      QQNHO(0:iTp),QQNHL(0:iTp),QQSHO(0:iTp),QQSHL(0:iTp), &
      QQQNHO(0:iTp),QQQNHL(0:iTp),QQQSHO(0:iTp),QQQSHL(0:iTp), &
-     IConstForcing, FDecline     ! sjs     ! sjs, IConstForcing     ! sjs
+      EHistBC(iTp),EHistOC(iTp) ! Vars to store read-in BC-OC history.
+
       COMMON /AREAS/FNO,FNL,FSO,FSL
 !
-      COMMON /QADD/IQREAD,JQFIRST,JQLAST,QEX(0:iTp),QEXNH(0:iTp), &
+      COMMON /QADD/IQREAD,OrgIQREAD,JQFIRST,JQLAST,QEX(0:iTp),QEXNH(0:iTp), &
      QEXSH(0:iTp),QEXNHO(0:iTp),QEXNHL(0:iTp),QEXSHO(0:iTp), &
      QEXSHL(0:iTp),IOLDTZ
+! BCOC params to set read-in forcing
+      REAL*4 FBC1990, FOC1990, FSO2_dir1990,FSO2_ind1990, aBCUnitForcing, aOCUnitForcing !sjs
+      COMMON/BCOC/FBC1990, FOC1990, FSO2_dir1990,FSO2_ind1990, aBCUnitForcing, aOCUnitForcing
+      COMMON /FORCE/qco2(0:iTp),qm(0:iTp),qn(0:iTp),QCFC(0:iTp), &
+      QMONT(0:iTp),QOTHER(0:iTp),QSTRATOZ(0:iTp),QCH4O3(0:iTp), &
+      CFC12(0:iTp), QCH4H2O(0:iTp),QBC(0:iTp),QOC(0:iTp)
 !
       COMMON /NSIM/NSIM,NCLIM,ISCENGEN,TEMEXP(2,40),IWNHOFF,IWSHOFF, &
      WTHRESH
@@ -3452,18 +3726,15 @@ IF(IWrite.eq.1)THEN
 !  THIS IS ONLY NECESSARY FOR FIRST PASS THROUGH NUMSIMS LOOP
 !   WHICH WILL SET ALL VALUES OF FORCING COMPONENT ARRAYS.
 !
-      IF(NCLIM.EQ.1.OR.ISCENGEN.EQ.9)THEN
+!      IF(NCLIM.EQ.1.OR.ISCENGEN.EQ.9)THEN
 !
-! ****************************************
-        IF(IC.GT.IP) CALL DELTAQ
-! ****************************************
+       IF(IC.GT.IP) CALL DELTAQ
 !
-      ENDIF
+!      ENDIF
 !
 !  INTERPOLATE FORCING FROM VALUES AT ENDS OF YEARS TO
 !   VALUE AT MIDPOINT OF TIME STEP.
 !
-!  ***********************************************************
 !  ***********************************************************
 !
 !  REVISED ALGORITHM FOR INTERPOLATION (15 APR, 1994)
@@ -3481,35 +3752,24 @@ IF(IWrite.eq.1)THEN
 !   FORCING AT START (0) AND END (1) OF YEAR, AND AT START OF
 !   PREVIOUS YEAR (P).
 !
-
-! sjs - added option to freeze (or steadily decrease) forcing after specified year
-!		do this by overwriting values in each forcing category
-
-	  IF (IConstForcing .gt. 0) THEN
-		Iinc_temp = IConstForcing - 1990
-		IConstVal_temp = 226 + Iinc_temp
-		IF (JC .GT. IConstVal_temp) THEN
-		    QGH(JC)  = QGH(IConstVal_temp) 
-	        QBIO(JC) = QBIO(IConstVal_temp)
-			QDIR(JC) = QDIR(IConstVal_temp)
-			QSO2(JC) = QSO2(IConstVal_temp)
-			QOZ(JC)  = QOZ(IConstVal_temp)
-		    QGH(JC)  = QGH(JC -1 ) + FDecline
-			if (QGH(JC) .lt. QGH(IConstVal_temp)/2d0) THEN
-				QGH(JC) = QGH(IConstVal_temp)/2d0
-			ENDIF
-		ENDIF
-	  ENDIF
-
       JPREV=0
       IF(JC.GE.2)JPREV=JC-2
 !
       QGHP  = QGH(JPREV)
       QGH0  = QGH(JC-1)
       QGH1  = QGH(JC)
+!
       QBIOP = QBIO(JPREV)
       QBIO0 = QBIO(JC-1)
       QBIO1 = QBIO(JC)
+!
+      QLANDP= QLAND(JPREV)
+      QLAND0= QLAND(JC-1)
+      QLAND1= QLAND(JC)
+!
+      QMNP  = QMN(JPREV)
+      QMN0  = QMN(JC-1)
+      QMN1  = QMN(JC)
 !
 !  RELABEL DIRECT AEROSOL AND OZONE FORCINGS
 !
@@ -3525,7 +3785,6 @@ IF(IWrite.eq.1)THEN
       QINDP  =QSO2(JPREV)-QDIRP
       QIND0  =QSO2(JC-1)-QDIR0
       QIND1  =QSO2(JC)-QDIR1
-
 !
 !  ***********************************************************
 !
@@ -3565,19 +3824,6 @@ IF(IWrite.eq.1)THEN
      QOZSO0,QOZSL0)
       CALL SPLIT(QOZ1,AOZ,BNOZ,BSOZ,QOZNO1,QOZNL1, &
      QOZSO1,QOZSL1)
-!
-!  CATCH QOZ AT 1990
-!
-!      IF((QOZ1.EQ.S90OZ).AND.(QOZ0.LT.S90OZ))THEN
-!        OZBITNO=(QOZNO1-QOZNO0)/2.0
-!        OZBITNL=(QOZNL1-QOZNL0)/2.0
-!        OZBITSO=(QOZSO1-QOZSO0)/2.0
-!        OZBITSL=(QOZSL1-QOZSL0)/2.0
-!      ENDIF
-!
-!  ***********************************************************
-!
-!  NOW ADD
 !
       QSNHOP =QDIRNOP+QINDNOP+QOZNOP
       QSNHLP =QDIRNLP+QINDNLP+QOZNLP
@@ -3631,10 +3877,61 @@ IF(IWrite.eq.1)THEN
           QEXSHL1=QEXSHL(JC)
         ENDIF
       ENDIF
+
+! If read-in, calc explicit BCOC forcing, split into hemispheres and add to QEXTRA here
+     IF( IFOC.GE.3 .AND. IQREAD.NE.2 )THEN
+        ! Save total BC and OC Forcing
+        QBC(JC) = EHistBC(JC) * aBCUnitForcing
+        QOC(JC) = EHistOC(JC) * aOCUnitForcing
+
+!  A IS THE NH/SH FORCING RATIO
+!  BN IS THE LAND/OCEAN FORCING RATIO IN THE NH
+!  BS IS THE LAND/OCEAN FORCING RATIO IN THE SH
+!
+      A_BCOC = 8.0
+      BN_BCOC = 9.0
+      BS_BCOC = 9.0
+ 
+        QBCOCP = ( EHistBC(JPREV) * aBCUnitForcing + EHistOC(JPREV) * aOCUnitForcing )
+        QBCOC0 = ( EHistBC(JC-1) * aBCUnitForcing + EHistOC(JC-1) * aOCUnitForcing )
+        QBCOC1 = QBC(JC) + QOC(JC)
+        QBCOCP = QBC(JPREV) + QOC(JPREV)
+        QBCOC0 = QBC(JC-1) + QOC(JC-1)
+        
+        ! If 1990 or later, then use values from input file
+        ! Input values are in units of Tg
+        IF ( JC .GT. 225 ) THEN
+            QBC(JC) = EBC(JC) * aBCUnitForcing
+            QOC(JC) = EOC(JC) * aOCUnitForcing
+            
+            QBCOCP = QBC(JPREV) + QOC(JPREV)
+            QBCOC0 = QBC(JC-1) + QOC(JC-1)
+            QBCOC1 = QBC(JC) + QOC(JC)
+        ENDIF
+
+		! Split into N and S Hem and ocean same as SO2 Dir
+        CALL SPLIT(QBCOCP,A_BCOC,BN_BCOC,BS_BCOC,QBCOCNOP,QBCOCNLP,QBCOCSOP,QBCOCSLP)
+        CALL SPLIT(QBCOC0,A_BCOC,BN_BCOC,BS_BCOC,QBCOCNO0,QBCOCNL0,QBCOCSO0,QBCOCSL0)
+        CALL SPLIT(QBCOC1,A_BCOC,BN_BCOC,BS_BCOC,QBCOCNO1,QBCOCNL1,QBCOCSO1,QBCOCSL1)
+
+        QEXNHOP = QEXNHOP + QBCOCNOP
+        QEXNHLP = QEXNHLP + QBCOCNLP
+        QEXSHOP = QEXSHOP + QBCOCSOP
+        QEXSHLP = QEXSHLP + QBCOCSLP
+        QEXNHO0 = QEXNHO0 + QBCOCNO0
+        QEXNHL0 = QEXNHL0 + QBCOCNL0
+        QEXSHO0 = QEXSHO0 + QBCOCSO0
+        QEXSHL0 = QEXSHL0 + QBCOCSL0
+        QEXNHO1 = QEXNHO1 + QBCOCNO1
+        QEXNHL1 = QEXNHL1 + QBCOCNL1
+        QEXSHO1 = QEXSHO1 + QBCOCSO1
+        QEXSHL1 = QEXSHL1 + QBCOCSL1
+    
+      ENDIF
+
 !
 !  IF EXTRA NH AND SH FORCING INPUT THROUGH QEXTRA.IN, ADD
 !   TO AEROSOL FORCING
-!
 !  IF IQREAD=2, USE EXTRA FORCING ONLY
 !
       IQR=1
@@ -3646,6 +3943,8 @@ IF(IWrite.eq.1)THEN
       QSSHLP=IQR*QSSHLP+QEXSHLP
       QGHP  =IQR*QGHP
       QBIOP =IQR*QBIOP
+      QLANDP=IQR*QLANDP
+      QMNP  =IQR*QMNP
 !
       QSNHO0=IQR*QSNHO0+QEXNHO0
       QSSHO0=IQR*QSSHO0+QEXSHO0
@@ -3653,6 +3952,8 @@ IF(IWrite.eq.1)THEN
       QSSHL0=IQR*QSSHL0+QEXSHL0
       QGH0  =IQR*QGH0
       QBIO0 =IQR*QBIO0
+      QLAND0=IQR*QLAND0
+      QMN0  =IQR*QMN0
 !
       QSNHO1=IQR*QSNHO1+QEXNHO1
       QSSHO1=IQR*QSSHO1+QEXSHO1
@@ -3660,6 +3961,8 @@ IF(IWrite.eq.1)THEN
       QSSHL1=IQR*QSSHL1+QEXSHL1
       QGH1  =IQR*QGH1
       QBIO1 =IQR*QBIO1
+      QLAND1=IQR*QLAND1
+      QMN1  =IQR*QMN1
 !
 !  CALCULATE FORCING COMPONENTS FOR MIDPOINT OF INTERVAL.
 !
@@ -3669,30 +3972,22 @@ IF(IWrite.eq.1)THEN
       QSSHOM =(QSSHO0+QSSHO1)/2.0
       QGHM   =(QGH0  +QGH1  )/2.0
       QBIOM  =(QBIO0 +QBIO1 )/2.0
-!
-!  CORRECT FOR NONLINEAR CHANGE IN QOZ AT 1990
-!
-!      IF((QOZ1.EQ.S90OZ).AND.(QOZ0.LT.S90OZ))THEN
-!        QSNHOM = QSNHOM+OZBITNO
-!        QSNHLM = QSNHLM+OZBITNL
-!        QSSHOM = QSSHOM+OZBITSO
-!        QSSHLM = QSSHLM+OZBITSL
-!      ENDIF
+      QLANDM =(QLAND0+QLAND1)/2.0
+      QMNM   =(QMN0+QMN1)/2.0
 !
 !  ************************************************************
 !
 !   PUT TOTAL FORCINGS AT MIDPOINT OF YEAR JC INTO ARRAYS.
 !
-      QQQNHL(JC)=QSNHLM+QGHM+QBIOM
-      QQQNHO(JC)=QSNHOM+QGHM+QBIOM
-      QQQSHL(JC)=QSSHLM+QGHM+QBIOM
-      QQQSHO(JC)=QSSHOM+QGHM+QBIOM
+      QQQNHL(JC)=QSNHLM+QGHM+QBIOM+QLANDM+QMNM
+      QQQNHO(JC)=QSNHOM+QGHM+QBIOM+QLANDM+QMNM
+      QQQSHL(JC)=QSSHLM+QGHM+QBIOM+QLANDM+QMNM
+      QQQSHO(JC)=QSSHOM+QGHM+QBIOM+QLANDM+QMNM
       FNHL=QQQNHL(JC)*FNL
       FNHO=QQQNHO(JC)*FNO
       FSHL=QQQSHL(JC)*FSL
       FSHO=QQQSHO(JC)*FSO
       QGLOBE(JC)=FNHL+FNHO+FSHL+FSHO
-
       TEQU(JC)=TE*QGLOBE(JC)/Q2X
 !
 !  CALCULATE FORCING INCREMENTS OVER YEAR IN WHICH TIME STEP LIES.
@@ -3704,6 +3999,8 @@ IF(IWrite.eq.1)THEN
       DSSHO0M =(QSSHOM-QSSHO0)*2.0
       DGH0M   =(QGHM  -QGH0  )*2.0
       DBIO0M  =(QBIOM -QBIO0 )*2.0
+      DLAND0M =(QLANDM-QLAND0)*2.0
+      DMN0M   =(QMNM-QMN0)*2.0
 !
       DSNHLM1 =(QSNHL1-QSNHLM)*2.0
       DSSHLM1 =(QSSHL1-QSSHLM)*2.0
@@ -3711,32 +4008,38 @@ IF(IWrite.eq.1)THEN
       DSSHOM1 =(QSSHO1-QSSHOM)*2.0
       DGHM1   =(QGH1  -QGHM  )*2.0
       DBIOM1  =(QBIO1 -QBIOM )*2.0
+      DLANDM1 =(QLAND1-QLANDM)*2.0
+      DMNM1   =(QMN1-QMNM)*2.0
 !
 !  NOW CALCULATE THE FORCING VALUES AT THE MIDPOINT OF THE TIME STEP.
 !
       IF(FRAC.LE.0.5)THEN
-        QSNHL=QSNHL0+FRAC*DSNHL0M
-        QSSHL=QSSHL0+FRAC*DSSHL0M
-        QSNHO=QSNHO0+FRAC*DSNHO0M
-        QSSHO=QSSHO0+FRAC*DSSHO0M
-        QGHG =QGH0  +FRAC*DGH0M
-        QBIOG=QBIO0 +FRAC*DBIO0M
+        QSNHL =QSNHL0+FRAC*DSNHL0M
+        QSSHL =QSSHL0+FRAC*DSSHL0M
+        QSNHO =QSNHO0+FRAC*DSNHO0M
+        QSSHO =QSSHO0+FRAC*DSSHO0M
+        QGHG  =QGH0  +FRAC*DGH0M
+        QBIOG =QBIO0 +FRAC*DBIO0M
+        QLANDG=QLAND0+FRAC*DLAND0M
+        QMNG  =QMN0+FRAC*DMN0M
       ELSE
-        QSNHL=QSNHLM+(FRAC-0.5)*DSNHLM1
-        QSSHL=QSSHLM+(FRAC-0.5)*DSSHLM1
-        QSNHO=QSNHOM+(FRAC-0.5)*DSNHOM1
-        QSSHO=QSSHOM+(FRAC-0.5)*DSSHOM1
-        QGHG =QGHM  +(FRAC-0.5)*DGHM1
-        QBIOG=QBIOM +(FRAC-0.5)*DBIOM1
+        QSNHL =QSNHLM+(FRAC-0.5)*DSNHLM1
+        QSSHL =QSSHLM+(FRAC-0.5)*DSSHLM1
+        QSNHO =QSNHOM+(FRAC-0.5)*DSNHOM1
+        QSSHO =QSSHOM+(FRAC-0.5)*DSSHOM1
+        QGHG  =QGHM  +(FRAC-0.5)*DGHM1
+        QBIOG =QBIOM +(FRAC-0.5)*DBIOM1
+        QLANDG=QLANDM+(FRAC-0.5)*DLANDM1
+        QMNG  =QMNM+(FRAC-0.5)*DMNM1
       ENDIF
 !
 !  COMBINE GREENHOUSE, (SO4 AEROSOL + TROP O3 + QEXTRA) AND BIO
 !   AEROSOL FORCINGS
 !
-      QNHL=QGHG+QSNHL+QBIOG
-      QNHO=QGHG+QSNHO+QBIOG
-      QSHL=QGHG+QSSHL+QBIOG
-      QSHO=QGHG+QSSHO+QBIOG
+      QNHL=QGHG+QSNHL+QBIOG+QLANDG+QMNG
+      QNHO=QGHG+QSNHO+QBIOG+QLANDG+QMNG
+      QSHL=QGHG+QSSHL+QBIOG+QLANDG+QMNG
+      QSHO=QGHG+QSSHO+QBIOG+QLANDG+QMNG
 !
 !  **********************************************************
 !
@@ -3935,7 +4238,10 @@ IF(IWrite.eq.1)THEN
 !  SPACE FOR CODE TO USE INPUT WNH AND WSH TIME SERIES
 !
 !      IF(IVARW.EQ.3)THEN
-!
+!        if(jc.ge.246) w(1)=wthresh
+!        if(jc.ge.246) w(2)=wthresh
+!        if(jc.ge.246) dw(1)=0.0
+!        if(jc.ge.246) dw(2)=0.0
         WNH(JC)=W(1)
         WSH(JC)=W(2)
 !
@@ -3958,6 +4264,7 @@ IF(IWrite.eq.1)THEN
 !  *******************************************************************
 !
       SUBROUTINE DELTAQ
+      IMPLICIT REAL*4 (a-h,o-z), Integer (I-N)
 !
       parameter (iTp=740)
 !
@@ -3970,9 +4277,10 @@ IF(IWrite.eq.1)THEN
      AL,BL,CL,DTH,DTZ,DZ1,XLL,WWW,XXX,YYY,RHO,SPECHT,HTCONS,Y(4)
 !
       COMMON/CONCS/CH4(0:iTp),CN2O(0:iTp),ECH4(226:iTp+1), &
-     EN2O(226:iTp+1),ECO(226:iTp+1),EVOC(226:iTp+1), &
+     EN2O(226:iTp+1),ECO(226:iTp+1),COE(iTp+1),EVOC(226:iTp+1), &
      ENOX(226:iTp+1),ESO2(0:iTp+1),ESO2SUM(226:iTp+1), &
-     ESO21(226:iTp+1),ESO22(226:iTp+1),ESO23(226:iTp+1)
+     ESO21(226:iTp+1),ESO22(226:iTp+1),ESO23(226:iTp+1), &
+     EBC(226:iTp+1), EOC(226:iTp+1) ! sjs- add BC-OC
 !
       COMMON/NEWCONCS/CF4(iTp),C2F6(iTp),C125(iTp),C134A(iTp), &
      C143A(iTp),C227(iTp),C245(iTp),CSF6(iTp), &
@@ -3982,14 +4290,14 @@ IF(IWrite.eq.1)THEN
       COMMON/CARB/CCO2(4,224:iTp),EDGROSS(4,226:iTp),EF(226:iTp+1), &
      REGROW(4,226:iTp),PL(4,226:iTp),HL(4,226:iTp),SOIL(4,226:iTp), &
      TTT(226:iTp),ESUM(226:iTp),ETOT(4,226:iTp),EDNET90(4), &
-     FOC(4,226:iTp),co2(0:iTp)
+     FOC(4,226:iTp),CO2(0:iTp),CO2SAVE(0:iTp)
 !
       COMMON/TANDSL/TEQU(iTp),TGAV(iTp),TNHO(iTp), &
      TSHO(iTp),TNHL(iTp),TSHL(iTp),TDEEP(iTp),TNHAV(iTp),TSHAV(iTp), &
      TLAND(iTp),TOCEAN(iTp),TOCN(40),TOCNPREV(40), &
      SIP,SGP,SAP,SLI(iTp),SLG(iTp),SLA(iTp),EX(0:iTp),SLT(iTp), &
-     QTOT(0:iTp),QGH(0:iTp),QOZ(0:iTp),QBIO(0:iTp), &
-     QSO2(0:iTp+1),QDIR(0:iTp+1)
+     QTOT(0:iTp),QGH(0:iTp),QOZ(0:iTp),QBIO(0:iTp),SLO(iTp), &
+     QSO2(0:iTp+1),QDIR(0:iTp+1),QLAND(0:iTp),QMN(0:iTp+1)
 !
       COMMON/CAR/EL1,EL2,EL3,TINV0(5),TINV(4,5),A(3,5),AA(4,5), &
      BCO2(4),BTGPP,BTRESP,BTHUM,GAMP,GPP0,RESP0,QA0,U0,C0,B340(4), &
@@ -4004,8 +4312,7 @@ IF(IWrite.eq.1)THEN
 !
       COMMON /FORCE/qco2(0:iTp),qm(0:iTp),qn(0:iTp),QCFC(0:iTp), &
      QMONT(0:iTp),QOTHER(0:iTp),QSTRATOZ(0:iTp),QCH4O3(0:iTp), &
-     QCH4H2O(0:iTp)
-
+     CFC12(0:iTp), QCH4H2O(0:iTp),QBC(0:iTp),QOC(0:iTp)
 !
       COMMON /METH2/LEVCH4,ch4bar90,QQQN2O
 !
@@ -4013,33 +4320,51 @@ IF(IWrite.eq.1)THEN
      ANOX,ACO,AVOC,DELANOX,DELACO,DELAVOC,ICH4FEED
 !
       COMMON /METH4/GAM,TAUOTHER,BBCH4,CM00
-      common /TauNitr/TN2O00,BBN2O,SN2O,CN00,NOFFSET
+      common /TauNitr/TN2000,BBN2O,SN2O,CN00,NOFFSET
       common /Sulph/S90DIR,S90IND,S90BIO,ENAT,ES1990,ECO90,FOC90,IFOC
+!
+      COMMON /NSIM/NSIM,NCLIM,ISCENGEN,TEMEXP(2,40),IWNHOFF,IWSHOFF, &
+     WTHRESH
+!
       COMMON /CO2READ/ICO2READ,XC(226:iTp),CO2SCALE,qtot86,LEVCO2
 !
       COMMON /JSTART/JSTART,FOSSHIST(0:236),QKYMAG(0:iTp),IGHG, &
      QCH4OZ,QFOC(0:iTp),ICO2CORR,TROZSENS
-
-	SAVE T00MID, T00LO, T00Hi, T00USER
-! sjs -- change to make MAGICC work. need to save these vars
+!
+      COMMON /CORREN/CORREN1,CORREN2,CORREN3,CORREN4,CORREN
+!
+      SAVE T00LO,T00MID,T00HI,T00USER
+! sjs -- change to make MAGICC  work. need to save these vars
 
 ! sjs -- add storage for halocarbon variables
       COMMON /HALOF/QCF4_ar(0:iTp),QC2F6_ar(0:iTp),qSF6_ar(0:iTp), &
-       Q125_ar(0:iTp),Q134A_ar(0:iTp), &
-       Q143A_ar(0:iTp),Q227_ar(0:iTp),Q245_ar(0:iTp)
+      Q125_ar(0:iTp),Q134A_ar(0:iTp), &
+      Q143A_ar(0:iTp),Q227_ar(0:iTp),Q245_ar(0:iTp)
 
 ! sjs-- g95 seems to have optomized away these local variables, so put them in common block
      COMMON /TEMPSTOR/DQOZPP, DQOZ
-     
+
+!
 !  THIS SUBROUTINE IS ONLY ENTERED WHEN THE IC YEAR COUNT
 !   INCREMENTS.  CONCENTRATIONS AND RADIATIVE FORCINGS ARE
 !   THEN CALCULATED FOR THE END OF THE IC YEAR.  SINCE THE
 !   IC INCREMENT MAY BE GREATER THAN 1, A LOOP IS NEEDED TO
 !   FILL IN THE MISSING IC VALUES.
 !
+      QLAND90=-0.2
+!
       DO 10 J=IP+1,IC
 !
-!  *******************************************************
+!********************************************************
+!
+!  LAND ALBEDO CHANGE FORCING
+!
+      IF(J.LE.226)THEN
+        QLAND(J)=QLAND90*FLOAT(J)/226.0
+      ELSE
+        QLAND(J)=QLAND90
+      ENDIF
+!
 !  *******************************************************
 !
 !  START OF LONG SET OF IF STATEMENTS (MODIFIED AUGUST, 2000).
@@ -4114,10 +4439,11 @@ IF(IWrite.eq.1)THEN
 !   EXTRAPOLATED VALUES FOR TEMPERATURE AND CO2 CONCENTRATION.
 !   RELEVANT VALUES ARE FROM START YEAR FOR MODEL PROJECTIONS.
 !
-      TX = 0.0
-      IF (J .GT. 2) TX=2.0*TGAV(J-1)-TGAV(J-2)
-      IF(J.EQ.226)DELT90=TX
-      IF(J.EQ.236)DELT00=TX
+      IF(J.GE.226)THEN
+        TX=2.0*TGAV(J-1)-TGAV(J-2)
+        IF(J.EQ.226)DELT90=TX
+        IF(J.EQ.236)DELT00=TX
+      ENDIF
 !
       IF(J.GT.JSTART)THEN
 !
@@ -4314,11 +4640,13 @@ IF(IWrite.eq.1)THEN
 !
       IF(J.GT.226)THEN
 !
-!   NC=1, BCO2 BASED ON D80S=1.8 TO GIVE LOWER BOUND CONCS
-!   NC=2, BCO2 BASED ON D80S=1.1 TO GIVE BEST GUESS CONCS
-!   NC=3, BCO2 BASED ON D80S=0.4 TO GIVE UPPER BOUND CONCS
-!   NC=4, BCO2 BASED ON USER SELECTED D80S
+!  NC=1, BCO2 BASED ON D80S=1.8 TO GIVE LOWER BOUND CONCS
+!  NC=2, BCO2 BASED ON D80S=1.1 TO GIVE BEST GUESS CONCS
+!  NC=3, BCO2 BASED ON D80S=0.4 TO GIVE UPPER BOUND CONCS
+!  NC=4, BCO2 BASED ON USER SELECTED D80S
 !  ALL CASES USE F80S =2.0
+!
+!  BEST GUES CHANGED TO 1.5 (MAY 2008)
 !
         DO 444 NC = 1,4
 !
@@ -4326,7 +4654,8 @@ IF(IWrite.eq.1)THEN
 !
         IF(J.EQ.227)THEN
           FIN=2.0
-          DIN=2.5-0.7*NC
+          DIN=2.9-0.7*NC
+!         DIN=2.5-0.7*NC
           IF(NC.EQ.4)THEN
             FIN=FUSER
             DIN=DUSER
@@ -4349,8 +4678,9 @@ IF(IWrite.eq.1)THEN
           END DO
         ENDIF
 !
-!  Note: for temp feedback on CO2, default or user temp is used in all
-!        four nc cases. Strictly in (eg) the upper bound case should
+!  Note: for temp feedback on CO2, temp from default or user carbon cycle
+!        model is used in all four nc cases.
+!        Strictly in (eg) the upper bound case one should
 !        use the corresponding temp. However the upper bound CO2 is not
 !        generally passed to the climate model so this temp is not
 !        calculated. The error in making this approx must be small
@@ -4370,25 +4700,49 @@ IF(IWrite.eq.1)THEN
 !  SELECT CO2 VALUES (CO2(J)) TO CARRY ON TO FORCING :
 !   THE PARTICULAR CARBON CYCLE MODEL OUTPUT THAT IS CARRIED ON IS
 !   DETERMINED BY THE SPECIFIED VALUE OF LEVCO2.
-!  NOTE THAT THE ARRAY CARRIED THROUGH IS CORRECTED TO AGREE WITH
-!   OBSERVATIONS THROUGH JSTART. THE ARRAY CO2(J) HAS ALREADY BEEN
-!   SPECIFIED AS HISTORICAL OBSERVED DATA THROUGH J=JSTART.
-!   WHEN J=JSTART A CORRECTION FACTOR IS CALCULATED AND THIS IS
-!   APPLIED TO ALL SUBSEQUENT YEARS.
+!  NOTE THAT, IF ICO2CORR=1 (THE DEFAULT VALUE) ALL CO2 ARRAYS ARE
+!   CORRECTED (CHANGE MADE ON 6/10/03). THE ARRAYS ARE CORRECTED TO
+!   AGREE WITH OBSERVATIONS THROUGH JSTART. THE ARRAY CO2(J) HAS
+!   ALREADY BEEN SPECIFIED AS HISTORICAL OBSERVED DATA THROUGH
+!   J=JSTART. WHEN J=JSTART A CORRECTION FACTOR IS CALCULATED AND
+!   THIS IS APPLIED TO ALL SUBSEQUENT YEARS.
 !
-        IF(J.GT.JSTART)THEN
-          IF(ICO2CORR.NE.1)THEN
-            CO2(J)=CCO2(LEVCO2,J)
-          ELSE
-            CO2(J)=CCO2(LEVCO2,J)+CO2(JSTART)-CCO2(LEVCO2,JSTART)
+        IF(J.EQ.JSTART)THEN
+          CORREN1=CO2(J)-CCO2(1,J)
+          CORREN2=CO2(J)-CCO2(2,J)
+          CORREN3=CO2(J)-CCO2(3,J)
+          CORREN4=CO2(J)-CCO2(4,J)
+          CORREN=CO2(J)-CCO2(LEVCO2,J)
+        ENDIF
+!
+        IF(J.GE.JSTART)THEN
+          CO2(J)=CCO2(LEVCO2,J)
+          IF(ICO2CORR.EQ.1)THEN
+            CO2(J)=CCO2(LEVCO2,J)+CORREN
           ENDIF
         ENDIF
+!
+!  FEEDBACK PERCENTILE VALUES
+!
+!       IF(J.GE.JSTART)THEN
+!         CO2(J)=CO2(J)*(1.0-0.0855*(J-236)/100.0)          !! 10%
+!         CO2(J)=CO2(J)*(1.0-0.0414*(J-236)/100.0)          !! 30%
+!         CO2(J)=CO2(J)*(1.0+0.0650*((J-236)/100.0)**1.5)   !! 70%
+!         CO2(J)=CO2(J)*(1.0+0.2340*((J-236)/100.0)**1.5)   !! 90%
+!       ENDIF
 !
 !  OVERWRITE CARBON CYCLE CO2 CONCS FOR YEARS.GE.1990 WITH INPUT
 !   DATA FROM CO2INPUT.DAT IF ICO2READ.GE.1.
 !
-        IF(ICO2READ.GE.1) co2(J)=xc(J)
+        IF(ICO2READ.GE.1.AND.ICO2READ.LE.4) co2(J)=xc(J)
 !
+      ENDIF
+!
+!      NSAVE=4
+!      IF(ISCENGEN.EQ.9)NSAVE=1
+!      IF(NSIM.EQ.NSAVE)THEN
+      IF(NSIM.LE.4.AND.NCLIM.EQ.4)THEN
+        CO2SAVE(J)=CO2(J)
       ENDIF
 !
 !  **************************************************
@@ -4396,34 +4750,10 @@ IF(IWrite.eq.1)THEN
 !  END OF LONG SEQUENCE OF IF STATEMENTS
 !
 !  *******************************************************
-!  *******************************************************
 !
 !  HALOCARBON FORCING (IOLDHALO OPTION DELETED, 8 OCT 2000)
 !
-!      IF(IOLDHALO.EQ.1)THEN
-!
-!        IF(J.LE.186)QCFC(J)=0.0
-!        IF(J.LE.215.AND.J.GT.186)QCFC(J)=0.0884*(J-186)/29.
-!        IF(J.LE.226.AND.J.GT.215)QCFC(J)=0.0884+0.0233*(J-215)/11.
-!        IF(J.GT.226)THEN
-!          XJ=(J-226)/10.
-!          IF(J.LT.266)DQCFC=XJ*.032
-!          IF(J.GE.266.AND.J.LT.281)DQCFC=0.128+(XJ-4.)*0.04133
-!          IF(J.GT.281)DQCFC=0.190+0.043*(XJ-5.5)
-!     &          -0.003719*(XJ-5.5)*(XJ-5.5)
-!          QCFC(J)=0.1117+DQCFC
-!          IF(QCFC(J).LT.0.0)QCFC(J)=0.0
-!        ENDIF
-!
-!      ELSE
-!
       QCFC(J)=QMONT(J)+QKYMAG(J)+QOTHER(J)+QSTRATOZ(J)
-!
-!      ENDIF
-!
-!      IF((IOLDHALO.EQ.2).AND.(J.GT.336))THEN
-!        QCFC(J)=QCFC(336)
-!      ENDIF
 !
 !  SUBTRACT STRAT OZONE FORCING IF IO3FEED=0 (I.E., NFB CASE)
 !
@@ -4442,7 +4772,7 @@ IF(IWrite.eq.1)THEN
       XM0=CH4(1)/1000.
       AB0=0.636*((XM0*WW)**0.75) + 0.007*XM0*((XM0*WW)**1.52)
 !
-      QMeth=QCH4+0.47*ALOG((1.0+AB0)/(1.0+AB))
+      QMeth=QCH4+0.47*ALOG((1.+AB0)/(1.+AB))
 !
 !  QH2O IS THE ADDITIONAL INDIRECT CH4 FORCING DUE TO PRODUCTION
 !   OF STRAT H2O FORM CH4 OXIDATION.  QCH4OZ IS THE ENHANCEMENT
@@ -4453,14 +4783,13 @@ IF(IWrite.eq.1)THEN
 !   CORRECTION TERM IS TO MAKE THE CHANGE RELATIVE TO MID 1765.
 !
       QH2O=STRATH2O*QCH4
-      QCH4H2O(J) = QH2O
 !
 !  QCH4OZ IS THE TROP OZONE FORCING FROM CH4 CHANGES.
 !   HISTORY : USE THE TAR LOGARITHMIC RELATIONSHIP, SCALED TO
 !    OZ00CH4 (THE CENTRAL TAR CH4-RELATED FORCING IN 2000).
 !
       IF(J.LE.235)THEN
-        AAA=OZ00CH4/ALOG(1760.0/700.0)
+        AAA=OZ00CH4/ALOG(1760./700.)
         QCH4OZ=AAA*ALOG(CH4(J)/700.0)
       ELSE
         QCH4OZ=OZ00CH4+TROZSENS*OZCH4*ALOG(CH4(J)/CH4(235))
@@ -4479,20 +4808,19 @@ IF(IWrite.eq.1)THEN
 !    OZONE FORCING = 0.35 W/m**2 AT BEGINNING OF 2000.
 !   FUTURE : USE TAR RELATIONSHIP AND REACTIVE GAS EMISSIONS.
 !
-      QREF=0.35-OZ00CH4
+      QREF=0.33-OZ00CH4
       IF(J.LE.235)THEN
         FOSS0=FOSSHIST(1)
         QOZ(J)=QREF*(FOSSHIST(J)-FOSS0)/(FOSSHIST(235)-FOSS0)
-        IF(J.EQ.234)DQOZPP=QOZ(J)
-        IF(J.EQ.235)DQOZ=QOZ(J)-DQOZPP
-       ELSE
+        IF(J.EQ.234)QOZ1=QOZ(J)
+        IF(J.EQ.235)DQOZ=QOZ(J)-QOZ1
+      ELSE
         DDEN=ENOX(J)-ENOX(236)
         DDEC=ECO(J) -ECO(236)
         DDEV=EVOC(J)-EVOC(236)
         QOZ(J)=QREF+DQOZ &
        +TROZSENS*(OZNOX*DDEN+OZCO*DDEC+OZVOC*DDEV)
       ENDIF
-      
 !
       IF(IGHG.LE.1)QOZ(J)=0.0
 !
@@ -4505,7 +4833,7 @@ IF(IWrite.eq.1)THEN
       XM=XM0
       WW=CN2O(J)/1000.
       AB=0.636*((XM*WW)**0.75) + 0.007*(XM*(XM*WW)**1.52)
-      QN(J)=QN2O+0.47*ALOG((1.0+AB0)/(1.0+AB))
+      QN(J)=QN2O+0.47*ALOG((1.+AB0)/(1.+AB))
 !
 !  *******************************************************
 !
@@ -4551,16 +4879,14 @@ IF(IWrite.eq.1)THEN
 !    AEROSOL FORCING.
 !   NOT : BOTH QSO2 AND QDIR OUTPUTS INCLUDE QFOC
 !
-     IF (J .lt. 226) THEN
-      CALL SULPHATE(J,ESO2(J),ESO2(J+1),ECO(226),QSO2(J),QDIR(J),QFOC(J))
-	 ELSE
-      CALL SULPHATE(J,ESO2(J),ESO2(J+1),ECO(J),QSO2(J),QDIR(J),QFOC(J))
-	 END IF
+      CALL SULPHATE(J,ESO2(J),ESO2(J+1),COE(J),QSO2(J),QDIR(J),QFOC(J), &
+     QMN(J))
 !
 !   TOTAL GLOBAL FORCING INCLUDING AEROSOLS. NOTE THAT QSO2(J)
 !    ALREADY INCLUDES QFOC(J)
 !
-      qtot(J) = QGH(J) + qso2(J) + qoz(J) + QBIO(J)
+      qtot(J) = QGH(J)+qso2(J)+qoz(J)+QBIO(J)+qland(j)+QMN(J)
+!
       if(j.eq.86)qtot86=qtot(J)
 !
 !  ***************************************************************
@@ -4574,46 +4900,67 @@ IF(IWrite.eq.1)THEN
 !    FORCING AS DETERMINED BY THE EMISSIONS INPUTS.
 !
       IF(ICO2READ.EQ.1.AND.J.GT.226)THEN
-        QTOT(J)=QTOT(226)+CO2SCALE*(QXX*ALOG(CO2(J)/CO2(226)))
-        QSO2(J)=QSO2(226)
-        QDIR(J)=QDIR(226)
-        QOZ(J) =QOZ(226)
-        QBIO(J)=QBIO(226)
-        QGH(J) =QGH(226)+CO2SCALE*(QXX*ALOG(CO2(J)/CO2(226)))
+        QTOT(J) =QTOT(226)+CO2SCALE*(QXX*ALOG(CO2(J)/CO2(226)))
+        QSO2(J) =QSO2(226)
+        QDIR(J) =QDIR(226)
+        QOZ(J)  =QOZ(226)
+        QBIO(J) =QBIO(226)
+        QLAND(J)=QLAND(226)
+        QMN(J)  =QMN(226)
+        QGH(J)  =QGH(226)+CO2SCALE*(QXX*ALOG(CO2(J)/CO2(226)))
       ENDIF
 !
 !  IF ICO2READ=2, THE CHANGE REQUIRED IS ONLY FOR CO2 AND THIS HAS
 !   ALREADY BEEN MADE.
 !
-      IF(ICO2READ.GE.3.AND.J.GT.226)THEN
-        QTOT(J)=QTOT(226)+CO2SCALE*(QXX*ALOG(CO2(J)/CO2(226)))
-        QTOT(J)=QTOT(J)+(QSO2(J)-QSO2(226))
-        QOZ(J) =QOZ(226)
-        QBIO(J)=QBIO(226)
-        QGH(J) =QGH(226)+CO2SCALE*(QXX*ALOG(CO2(J)/CO2(226)))
+      IF((ICO2READ.EQ.3.OR.ICO2READ.EQ.4).AND.J.GT.226)THEN
+        QTOT(J) =QTOT(226)+CO2SCALE*(QXX*ALOG(CO2(J)/CO2(226)))
+        QTOT(J) =QTOT(J)+(QSO2(J)-QSO2(226))
+        QOZ(J)  =QOZ(226)
+        QBIO(J) =QBIO(226)
+        QLAND(J)=QLAND(226)
+        QMN(J)  =QMN(226)
+        QGH(J)  =QGH(226)+CO2SCALE*(QXX*ALOG(CO2(J)/CO2(226)))
+      ENDIF
+!
+      IF(ICO2READ.EQ.5.AND.J.GT.236)THEN
+        QTOT(J) =QTOT(236)+QXX*ALOG(CO2(J)/CO2(236))
+        QSO2(J) =QSO2(236)
+        QDIR(J) =QDIR(236)
+        QOZ(J)  =QOZ(236)
+        QBIO(J) =QBIO(236)
+        QLAND(J)=QLAND(236)
+        QMN(J)  =QMN(236)
+        QGH(J)  =QGH(236)+QXX*ALOG(CO2(J)/CO2(236))
       ENDIF
 !
       IF(J.EQ.225)THEN
-        QTOT89=QTOT(J)
-        QSO289=QSO2(J)
-        QDIR89=QDIR(J)
-        QOZ89 =QOZ(J)
-        QBIO89=QBIO(J)
-        QGH89 =QGH(J)
+        QTOT89 =QTOT(J)
+        QSO289 =QSO2(J)
+        QDIR89 =QDIR(J)
+        QOZ89  =QOZ(J)
+        QBIO89 =QBIO(J)
+        QLAND89=QLAND(J)
+        QMN89  =QMN(J)
+        QGH89  =QGH(J)
       ENDIF
 !
       IF(J.EQ.226)THEN
-        QTOT90=QTOT(J)
-        QSO290=QSO2(J)
-        QDIR90=QDIR(J)
-        QOZ90 =QOZ(J)
-        QBIO90=QBIO(J)
-        QGH90 =QGH(J)
+        QTOT90 =QTOT(J)
+        QSO290 =QSO2(J)
+        QDIR90 =QDIR(J)
+        QOZ90  =QOZ(J)
+        QBIO90 =QBIO(J)
+        QLAND90=QLAND(J)
+        QMN90  =QMN(J)
+        QGH90  =QGH(J)
         QTOTM =(QTOT89+QTOT90)/2.0
         QSO2M =(QSO289+QSO290)/2.0
         QDIRM =(QDIR89+QDIR90)/2.0
         QOZM  =(QOZ89+QOZ90)/2.0
         QBIOM =(QBIO89+QBIO90)/2.0
+        QLANDM=(QLAND89+QLAND90)/2.0
+        QMNM  =(QMN89+QMN90)/2.0
         QGHM  =(QGH89+QGH90)/2.0
       ENDIF
 !
@@ -4625,6 +4972,7 @@ IF(IWrite.eq.1)THEN
 !  *******************************************
 !
       SUBROUTINE HALOCARB(N,C0,E,C1,Q,TAU00,TAUCH4)
+      IMPLICIT REAL*4 (a-h,o-z), Integer (I-N)
 !
 !  N   GASNAME AND FORMULA
 !  1   CF4           (CF4)
@@ -4701,6 +5049,7 @@ IF(IWrite.eq.1)THEN
 !  *******************************************
 !
       SUBROUTINE INITCAR(NN,D80,F80)
+      IMPLICIT REAL*4 (a-h,o-z), Integer (I-N)
 !
       parameter (iTp=740)
 !
@@ -4711,7 +5060,7 @@ IF(IWrite.eq.1)THEN
       COMMON/CARB/CCO2(4,224:iTp),EDGROSS(4,226:iTp),EF(226:iTp+1), &
      REGROW(4,226:iTp),PL(4,226:iTp),HL(4,226:iTp),SOIL(4,226:iTp), &
      TTT(226:iTp),ESUM(226:iTp),ETOT(4,226:iTp),EDNET90(4), &
-     FOC(4,226:iTp),co2(0:iTp)
+     FOC(4,226:iTp),CO2(0:iTp),CO2SAVE(0:iTp)
 !
       COMMON/CAR/EL1,EL2,EL3,TINV0(5),TINV(4,5),A(3,5),AA(4,5), &
      BCO2(4),BTGPP,BTRESP,BTHUM,GAMP,GPP0,RESP0,QA0,U0,C0,B340(4), &
@@ -4919,9 +5268,10 @@ IF(IWrite.eq.1)THEN
 !  *******************************************
 !
       SUBROUTINE CARBON(MM,TEM,EFOSS,ENETDEF,CPP,CPREV,C, &
-     PL ,HU ,SO ,REGRO ,ETOT , &
-     PL1,HU1,SO1,REGRO1,ETOT1, &
-     SUMEM1,FLUX,DELM,EGROSSD,C1)
+      PL ,HU ,SO ,REGRO ,ETOT , &
+      PL1,HU1,SO1,REGRO1,ETOT1, &
+      SUMEM1,FLUX,DELM,EGROSSD,C1)
+      IMPLICIT REAL*4 (a-h,o-z), Integer (I-N)
 !
       parameter (iTp=740)
 !
@@ -4956,7 +5306,6 @@ IF(IWrite.eq.1)THEN
       FR=EXP(BTRESP*TEM)
       FH=EXP(BTHUM*TEM)
       FS=EXP(BTSOIL*TEM)
-
 !
 !  DEFORESTATION TERMS
 !
@@ -4979,19 +5328,19 @@ IF(IWrite.eq.1)THEN
 !        Y1=BCO2(MM)*(GEE-1.0)+1.0
 !
         CB=31.
-        R(MM)=(1.0+BCO2(MM)*ALOG(680.0/C0))/(1.0+BCO2(MM)*ALOG(340.0/C0))
-        AR=680.0-CB
-        BR=340.0-CB
+        R(MM)=(1.+BCO2(MM)*ALOG(680./C0))/(1.+BCO2(MM)*ALOG(340./C0))
+        AR=680.-CB
+        BR=340.-CB
         BEE=999.9
         IF(R(MM).NE.1.)BEE=(AR/BR-R(MM))/(R(MM)-1.)/AR
         DR=CBAR-CB
         CR=C0-CB
         Y1=1.0
-        CCC=340.0
+        CCC=340.
         B340(MM)=0.0
         IF(R(MM).NE.1.)THEN
-          Y1=(1.0/CR+BEE)/(1.0/DR+BEE)
-          B340(MM)=(1.0/CR+BEE)*CCC/(1.0+BEE*(CCC-CB))**2
+          Y1=(1./CR+BEE)/(1./DR+BEE)
+          B340(MM)=(1./CR+BEE)*CCC/(1.+BEE*(CCC-CB))**2
         ENDIF
       ENDIF
 !
@@ -5171,7 +5520,8 @@ IF(IWrite.eq.1)THEN
 !  *******************************************
 !
       SUBROUTINE HISTORY(JJJ,CO2,CH4,CN2O,eso2,eso21, &
-     CF4,C2F6,C125,C134A,C143A,C227,C245,CSF6)
+      CF4,C2F6,C125,C134A,C143A,C227,C245,CSF6)
+      IMPLICIT REAL*4 (a-h,o-z), Integer (I-N)
 !
 !  THIS SUBROUTINE CALCULATES THE CONCS UP TO AND INCLUDING
 !   1990 USING FITS TO OBSERVED DATA.
@@ -5354,7 +5704,8 @@ IF(IWrite.eq.1)THEN
 !  &  T00MID,TAUBEST,SCH4,ANOX,ACO,AVOC)
 !
       SUBROUTINE METHANE(ICH4F,CPREV,E,DEN,DEC,DEV,CONC, &
-     TAU00,TAUOUT,S,AANOX,AACO,AAVOC,TEMP)
+      TAU00,TAUOUT,S,AANOX,AACO,AAVOC,TEMP)
+      IMPLICIT REAL*4 (a-h,o-z), Integer (I-N)
 !
 !  ********************************************************************
 !
@@ -5436,7 +5787,8 @@ IF(IWrite.eq.1)THEN
 !  ********************************************************************
 !
       SUBROUTINE NITROUS(C,CP,CPP,E,C1)
-      common /TauNitr/TN2O00,BBN2O,SN2O,CN00,NOFFSET
+      IMPLICIT REAL*4 (a-h,o-z), Integer (I-N)
+      common /TauNitr/TN2000,BBN2O,SN2O,CN00,NOFFSET
 !
 !  *******************************************************
 !
@@ -5450,7 +5802,7 @@ IF(IWrite.eq.1)THEN
 !  FIRST ITERATION
 !
       BBAR=B
-      TAUBAR=TN2O00*((BBAR/B00)**S)
+      TAUBAR=TN2000*((BBAR/B00)**S)
       DB1=E-BBARPREV/TAUBAR
       B1=B+DB1
 !
@@ -5459,21 +5811,21 @@ IF(IWrite.eq.1)THEN
 !  SECOND ITERATION
 !
       BBAR=(B+B1)/2.0
-      TAUBAR=TN2O00*((BBAR/B00)**S)
+      TAUBAR=TN2000*((BBAR/B00)**S)
       DB2=E-BBARPREV/TAUBAR
       B2=B+DB2
 !
 !  THIRD ITERATION
 !
       BBAR=(B+B2)/2.0
-      TAUBAR=TN2O00*((BBAR/B00)**S)
+      TAUBAR=TN2000*((BBAR/B00)**S)
       DB3=E-BBARPREV/TAUBAR
       B3=B+DB3
 !
 !  FOURTH ITERATION
 !
       BBAR=(B+B3)/2.0
-      TAUBAR=TN2O00*((BBAR/B00)**S)
+      TAUBAR=TN2000*((BBAR/B00)**S)
       DB4=E-BBARPREV/TAUBAR
       B4=B+DB4
       C1=B4/BBN2O
@@ -5483,55 +5835,8 @@ IF(IWrite.eq.1)THEN
 !
 !  ***************************************
 !
-      SUBROUTINE ICEMELT(DTEM,S0BIT,G0,A0,S1BIT,S1,G1,A1)
-!
-!        S0 = Small glaciers input    S1 = 1 year increment
-!        G0 = Greenland              etc
-!        A0 = Antartica
-!
-!        NOTE : S0 NOT USED DIRECTLY - INPUT IS S0BIT
-!
-      DIMENSION DTST(100),S0BIT(100),S1BIT(100)
-!
-      COMMON /ICE/TAUI,DTSTAR,DTEND,BETAG,BETA1,BETA2,DB3,ZI0, &
-     NVALUES,MANYTAU,TAUFACT,ZI0BIT(100),SIPBIT(100),SIBIT(100)
-!
-      TAU=TAUI
-      DTSTBIT=(DTEND-DTSTAR)/(NVALUES-1)
-      DTSTMIN=DTSTAR
-      DTSTMAX=DTEND
-      TAUMIN=(1.0-TAUFACT)*TAU
-      TAUMAX=(1.0+TAUFACT)*TAU
-!
-      S1=0.0
-!
-      DO 1 N=1,NVALUES
-!
-      DTST(N)=DTSTAR+(N-1)*DTSTBIT
-      IF(MANYTAU.EQ.1)THEN
-        DELTAU=(TAUMAX-TAUMIN)/(NVALUES-1)
-        TAU=TAUMIN+(N-1)*DELTAU
-      ENDIF
-!
-      S1BIT(N)=(S0BIT(N)*(TAU-0.5)+ZI0BIT(N)*DTEM/DTST(N)) &
-     /(TAU+0.5)
-      IF(S1BIT(N).GE.ZI0BIT(N))THEN
-        S1BIT(N)=ZI0BIT(N)
-      ENDIF
-!
-      S1=S1+S1BIT(N)
-!
-   1  CONTINUE
-!
-      G1=G0+BETAG*DTEM*1.5
-      A1=A0+DB3+(BETA1+BETA2)*DTEM
-!
-      RETURN
-      END
-!
-!  ****************************************
-!
       SUBROUTINE INTERP(N,ISTART,IY,X,Y)
+      IMPLICIT REAL*4 (a-h,o-z), Integer (I-N)
 !
       parameter (iTp =700)
 !
@@ -5565,7 +5870,8 @@ IF(IWrite.eq.1)THEN
 !
 !*************************************************
 !
-      SUBROUTINE SULPHATE(JY,ESO2,ESO21,ECO,QSO2,QDIR,QFOC)
+      SUBROUTINE SULPHATE(JY,ESO2,ESO21,ECO,QSO2,QDIR,QFOC,QMN)
+      IMPLICIT REAL*4 (a-h,o-z), Integer (I-N)
 !
       parameter (iTp=740)
 !
@@ -5615,18 +5921,31 @@ IF(IWrite.eq.1)THEN
 !
 !  FOSSIL ORGANIC PLUS BLACK CARBON
 !   HISTORY : FOR SIMPLICITY, SCALE WITH SO2 EMISSIONS
-!   FUTURE : IF IFOC=1, SCALE WITH SO2 EMISSIONS
+!   FUTURE : IF IFOC=0, QFOC CONSTANT AT 1990 LEVEL
+!            IF IFOC=1, SCALE WITH SO2 EMISSIONS
 !            IF IFOC=2, SCALE WITH CO EMISSIONS
 !
-      IF(JY.LE.226)THEN
-        QFOC=E*FOC90/ES1990
-      ELSE
-        IF(IFOC.EQ.2)THEN
-          QFOC=ECO*FOC90/ECO90
-        ELSE
-          QFOC=E*FOC90/ES1990
-        ENDIF
+      IF(JY.LE.226)QFOC=E*FOC90/ES1990
+      IF(JY.GT.226)THEN
+        IF(IFOC.EQ.0)QFOC=FOC90
+        IF(IFOC.EQ.1)QFOC=E*FOC90/ES1990
+        IF(IFOC.EQ.2)QFOC=ECO*FOC90/ECO90
       ENDIF
+!
+!********************************************************
+!
+!  ADD NITRATE AND MINERAL DUST TO QDIR AND QSO2
+!
+      QNO390=-0.1
+      QMIN90=-0.1
+      IF(JY.LE.226)THEN
+        QNO3=QNO390*FLOAT(JY)/226.0
+        QMIN=QMIN90*FLOAT(JY)/226.0
+      ELSE
+        QNO3=QNO390
+        QMIN=QMIN90
+      ENDIF
+      QMN=QNO3+QMIN
 !
 !********************************************************
 !
@@ -5644,6 +5963,7 @@ IF(IWrite.eq.1)THEN
 !  ******************************************************************
 !
       SUBROUTINE LAMCALC(Q,FNHL,FSHL,XK,XKH,DT2X,A,LAMOBEST,LAMLBEST)
+      IMPLICIT REAL*4 (a-h,o-z), Integer (I-N)
 !
 ! Revision history:
 !  950215 : CONVERTED TO SUBROUTINE FOR STAG.FOR
@@ -5782,18 +6102,23 @@ IF(IWrite.eq.1)THEN
       RETURN
       END
 
+!*****************************************************************************************
+! sjs New routines to get values from MAGICC 
+!*****************************************************************************************
+
       FUNCTION getCO2Conc( inYear )
+      IMPLICIT REAL*4 (a-h,o-z), Integer (I-N)
 ! Expose subroutine co2Conc to users of this DLL
 !DEC$ATTRIBUTES DLLEXPORT::getCO2Conc
 
       parameter (iTp=740)
 
       COMMON/CARB/CCO2(4,224:iTp),EDGROSS(4,226:iTp),EF(226:iTp+1), &
-      REGROW(4,226:iTp),PL(4,226:iTp),HL(4,226:iTp),SOIL(4,226:iTp), &
-      TTT(226:iTp),ESUM(226:iTp),ETOT(4,226:iTp),EDNET90(4), &
-      FOC(4,226:iTp),co2(0:iTp)
+     REGROW(4,226:iTp),PL(4,226:iTp),HL(4,226:iTp),SOIL(4,226:iTp), &
+     TTT(226:iTp),ESUM(226:iTp),ETOT(4,226:iTp),EDNET90(4), &
+     FOC(4,226:iTp),co2(0:iTp),CO2SAVE(0:iTp)
 
-	  REAL*8 getCO2Conc
+	  REAL*4 getCO2Conc
 
       IYR = inYear-1990+226
 
@@ -5802,32 +6127,61 @@ IF(IWrite.eq.1)THEN
       RETURN 
 	  END
 	    
+      FUNCTION getSLR( inYear )
+      IMPLICIT REAL*4 (a-h,o-z), Integer (I-N)
+! Expose subroutine co2Conc to users of this DLL
+!DEC$ATTRIBUTES DLLEXPORT::getCO2Conc
+
+      parameter (iTp=740)
+
+      COMMON/TANDSL/TEQU(iTp),TGAV(iTp),TNHO(iTp), &
+     TSHO(iTp),TNHL(iTp),TSHL(iTp),TDEEP(iTp),TNHAV(iTp),TSHAV(iTp), &
+     TLAND(iTp),TOCEAN(iTp),TOCN(40),TOCNPREV(40), &
+     SIP,SGP,SAP,SLI(iTp),SLG(iTp),SLA(iTp),EX(0:iTp),SLT(iTp), &
+     QTOT(0:iTp),QGH(0:iTp),QOZ(0:iTp),QBIO(0:iTp),SLO(iTp), &
+     QSO2(0:iTp+1),QDIR(0:iTp+1),QLAND(0:iTp),QMN(0:iTp+1)
+
+	  REAL*4 getSLR
+
+      IYR = inYear-1990+226
+      ST1=SLT(IYR)
+      SO1=SLO(IYR)
+      SLRAW1=ST1-SO1
+
+      getSLR = SLRAW1
+
+      RETURN 
+	  END
+
       FUNCTION getGHGConc( ghgNumber, inYear )
+      IMPLICIT REAL*4 (a-h,o-z), Integer (I-N)
 ! Expose subroutine ghgConc to users of this DLL
 !DEC$ATTRIBUTES DLLEXPORT::getGHGConc
 
       parameter (iTp=740)
 
       COMMON/CARB/CCO2(4,224:iTp),EDGROSS(4,226:iTp),EF(226:iTp+1), &
-      REGROW(4,226:iTp),PL(4,226:iTp),HL(4,226:iTp),SOIL(4,226:iTp), &
-      TTT(226:iTp),ESUM(226:iTp),ETOT(4,226:iTp),EDNET90(4), &
-      FOC(4,226:iTp),co2(0:iTp)
+     REGROW(4,226:iTp),PL(4,226:iTp),HL(4,226:iTp),SOIL(4,226:iTp), &
+     TTT(226:iTp),ESUM(226:iTp),ETOT(4,226:iTp),EDNET90(4), &
+     FOC(4,226:iTp),co2(0:iTp),CO2SAVE(0:iTp)
 
       COMMON/CONCS/CH4(0:iTp),CN2O(0:iTp),ECH4(226:iTp+1), &
-     EN2O(226:iTp+1),ECO(226:iTp+1),EVOC(226:iTp+1), &
+     EN2O(226:iTp+1),ECO(226:iTp+1),COE(iTp+1),EVOC(226:iTp+1), &
      ENOX(226:iTp+1),ESO2(0:iTp+1),ESO2SUM(226:iTp+1), &
-     ESO21(226:iTp+1),ESO22(226:iTp+1),ESO23(226:iTp+1)
+     ESO21(226:iTp+1),ESO22(226:iTp+1),ESO23(226:iTp+1), &
+     EBC(226:iTp+1), EOC(226:iTp+1) ! sjs- add BC-OC
 !
       COMMON/NEWCONCS/CF4(iTp),C2F6(iTp),C125(iTp),C134A(iTp), &
      C143A(iTp),C227(iTp),C245(iTp),CSF6(iTp), &
      ECF4(226:iTp+1),EC2F6(226:iTp+1),E125(226:iTp+1),E134A(226:iTp+1), &
      E143A(226:iTp+1),E227(226:iTp+1),E245(226:iTp+1),ESF6(226:iTp+1)
 
-	  REAL*8 getGHGConc
+	  REAL*4 getGHGConc
       INTEGER ghgNumber
 
       IYR = inYear-1990+226
 	  
+	  ! For consistency, make sure indices are same here as in getForcing
       select case (ghgNumber)
       case(1); getGHGConc = CO2( IYR )
       case(2); getGHGConc = CH4( IYR )
@@ -5849,6 +6203,7 @@ IF(IWrite.eq.1)THEN
 	  
 ! Returns mid-year forcing for a given gas
       FUNCTION getForcing( iGasNumber, inYear )
+      IMPLICIT REAL*4 (a-h,o-z), Integer (I-N)
 ! Expose subroutine getForcing to users of this DLL
 !DEC$ATTRIBUTES DLLEXPORT::getForcing
 
@@ -5856,22 +6211,29 @@ IF(IWrite.eq.1)THEN
 
       COMMON /FORCE/qco2(0:iTp),qm(0:iTp),qn(0:iTp),QCFC(0:iTp), &
      QMONT(0:iTp),QOTHER(0:iTp),QSTRATOZ(0:iTp),QCH4O3(0:iTp), &
-     QCH4H2O(0:iTp)
+     CFC12(0:iTp), QCH4H2O(0:iTp),QBC(0:iTp),QOC(0:iTp)
 !
       COMMON /HALOF/QCF4_ar(0:iTp),QC2F6_ar(0:iTp),qSF6_ar(0:iTp), &
-       Q125_ar(0:iTp),Q134A_ar(0:iTp), &
-       Q143A_ar(0:iTp),Q227_ar(0:iTp),Q245_ar(0:iTp)
+      Q125_ar(0:iTp),Q134A_ar(0:iTp), &
+      Q143A_ar(0:iTp),Q227_ar(0:iTp),Q245_ar(0:iTp)
 
       COMMON/TANDSL/TEQU(iTp),TGAV(iTp),TNHO(iTp), &
      TSHO(iTp),TNHL(iTp),TSHL(iTp),TDEEP(iTp),TNHAV(iTp),TSHAV(iTp), &
      TLAND(iTp),TOCEAN(iTp),TOCN(40),TOCNPREV(40), &
      SIP,SGP,SAP,SLI(iTp),SLG(iTp),SLA(iTp),EX(0:iTp),SLT(iTp), &
-     QTOT(0:iTp),QGH(0:iTp),QOZ(0:iTp),QBIO(0:iTp), &
-     QSO2(0:iTp+1),QDIR(0:iTp+1)
+     QTOT(0:iTp),QGH(0:iTp),QOZ(0:iTp),QBIO(0:iTp),SLO(iTp), &
+     QSO2(0:iTp+1),QDIR(0:iTp+1),QLAND(0:iTp),QMN(0:iTp+1)
+
+      COMMON /JSTART/JSTART,FOSSHIST(0:236),QKYMAG(0:iTp),IGHG, &
+     QCH4OZ,QFOC(0:iTp),ICO2CORR,TROZSENS
 
       COMMON/STOREDVALS/ TEMUSER(iTp),QSO2SAVE(0:iTp+1),QDIRSAVE(0:iTp+1)
 
-	  REAL*8 getForcing
+      COMMON /QADD/IQREAD,OrgIQREAD,JQFIRST,JQLAST,QEX(0:iTp),QEXNH(0:iTp), &
+     QEXSH(0:iTp),QEXNHO(0:iTp),QEXNHL(0:iTp),QEXSHO(0:iTp), &
+     QEXSHL(0:iTp),IOLDTZ
+
+	  REAL*4 getForcing
         
       IYR = inYear-1990+226
       IYRP = IYR - 1
@@ -5882,6 +6244,7 @@ IF(IWrite.eq.1)THEN
         QQQN   = (QN(IYR)+QN(IYRP))/2.
         QQQCFC = (QCFC(IYR)+QCFC(IYRP))/2.
         QQQOZ  = (QOZ(IYR)+QOZ(IYRP))/2.
+        QQQFOCR  = (QFOC(M00)     +QFOC(M01))     /2.
 
         QQQSO2 = 0.0
         QQQDIR = 0.0
@@ -5889,20 +6252,56 @@ IF(IWrite.eq.1)THEN
           QQQSO2 = (QSO2SAVE(IYR)+QSO2SAVE(IYRP))/2.
           QQQDIR = (QDIRSAVE(IYR)+QDIRSAVE(IYRP))/2.
         ENDIF
-
+         QQQIND = QQQSO2-QQQDIR
+         DELQFOC = (QFOC(IYR)+QFOC(IYRP))/2.-QQQFOCR
+!
+         QQQCO2 = (QCO2(IYR)+QCO2(IYRP))/2.
+         QQQM   = (QM(IYR)+QM(IYRP))/2.
+         QQQN   = (QN(IYR)+QN(IYRP))/2.
+         QQQCFC = (QCFC(IYR)+QCFC(IYRP))/2.
+         QQQOZ  = (QOZ(IYR)+QOZ(IYRP))/2.
+         QQQFOC = (QFOC(IYR)+QFOC(IYRP))/2.
+         QQQMN  = (QMN(IYR)+QMN(IYRP))/2.
+         
+         QQQEXTRA = ( QEXNH(IYR)+QEXSH(IYR)+QEXNHO(IYR)+QEXNHL(IYR) + &
+                      QEXNH(IYRP)+QEXSH(IYRP)+QEXNHO(IYRP)+QEXNHL(IYRP) )/2.
 !
 ! NOTE SPECIAL CASE FOR QOZ BECAUSE OF NONLINEAR CHANGE OVER 1990
 !
-        IF(IYR.EQ.226)QQQOZ=QOZ(IYR)
+         IF(IYR.EQ.226)QQQOZ=QOZ(IYR)
 !
-        QQQBIO = (QBIO(IYR)+QBIO(IYRP))/2.
-        QQQTOT = QQQCO2+QQQM+QQQN+QQQCFC+QQQSO2+QQQBIO+QQQOZ
+         QQQLAND= (QLAND(IYR)+QLAND(IYRP))/2.
+         QQQBIO = (QBIO(IYR)+QBIO(IYRP))/2.
+         QQQTOT = QQQCO2+QQQM+QQQN+QQQCFC+QQQSO2+QQQBIO+QQQOZ+QQQLAND &
+         +QQQMN
+!
+         QQCH4O3= (QCH4O3(IYR)+QCH4O3(IYRP))/2.
+         QQQM   = QQQM-QQCH4O3
+         QQQOZ  = QQQOZ+QQCH4O3
+         QQQD   = QQQDIR-QQQFOC
+ 
+         QQQSTROZ= (QSTRATOZ(IYR)+QSTRATOZ(IYRP))/2.
+         IF(IO3FEED.EQ.0)QQQSTROZ=0.0 
+!
+         QQQKYMAG = (QKYMAG(IYR)+QKYMAG(IYRP))/2.
+         QQQMONT  = (QMONT(IYR) +QMONT(IYRP)) /2.
+         QQQOTHER = (QOTHER(IYR)+QOTHER(IYRP))/2.
+         QQQKYOTO = QQQKYMAG+QQQOTHER
+!
+         QQQStratCH4H2O = (QCH4H2O(IYR)+QCH4H2O(IYRP))/2.	! Strat H2O forcing from CH4
 
+         QQQBC = ( QBC(IYR) + QBC(IYRP) )/2.
+         QQQOC = ( QOC(IYR) + QOC(IYRP) )/2.
+ 
+ 	     QQQTOT = QQQTOT + QQQBC + QQQOC
+ 	     QQQEXTRA = QQQEXTRA - (QQQBC + QQQOC)
+ 	     
+	  ! For consistency, make sure indices are same here as in getGHGConc for gases that overlap
       select case (iGasNumber)
-      case(0); getForcing = QQQTOT
+      case(0); getForcing = QQQTOT	! Total anthropogenic forcing
       case(1); getForcing = (QCO2(IYR)+QCO2(IYRP))/2.
-      case(2); getForcing = (qm(IYR)+qm(IYRP))/2.
-      case(3); getForcing = (qn(IYR)+qn(IYRP))/2.
+      case(2); getForcing = (qm(IYR)+qm(IYRP))/2. - QQQStratCH4H2O - QQCH4O3! CH4 forcing, subtract indirect components so are just reporting just CH4 forcing
+      case(3); getForcing = (qn(IYR)+qn(IYRP))/2.  ! N2O forcing
       case(4); getForcing = (QC2F6_ar(IYR)+QC2F6_ar(IYRP))/2.
       case(5); getForcing = (Q125_ar(IYR)+Q125_ar(IYRP))/2.
       case(6); getForcing = (Q134A_ar(IYR)+Q134A_ar(IYRP))/2.
@@ -5911,23 +6310,32 @@ IF(IWrite.eq.1)THEN
       case(9); getForcing = (qSF6_ar(IYR)+qSF6_ar(IYRP))/2.
       case(10); getForcing = (QCF4_ar(IYR)+QCF4_ar(IYRP))/2.
       case(11); getForcing = (Q227_ar(IYR)+Q227_ar(IYRP))/2.
-      case(12); getForcing = QQQSO2
-      case(13); getForcing = QQQDIR	! SO2 direct forcing only
-      case(14); getForcing = QQQOZ
-      case(15); getForcing = QQQBIO
-      case(16); getForcing = (QCH4O3(IYR)+QCH4O3(IYRP))/2.
-      case(17); getForcing = (QOTHER(IYR)+QOTHER(IYRP))/2.
-      case(18); getForcing = (QMONT(IYR)+QMONT(IYRP))/2.
-      case(19); getForcing = (QCH4H2O(IYR)+QCH4H2O(IYRP))/2.
-      case(20); getForcing = (QFOC(IYR)+QFOC(IYRP))/2.
+      case(12); getForcing = (QOTHER(IYR)+QOTHER(IYRP))/2.	! Other halo forcing (exogenous input)
+      case(13); getForcing = QQQSO2 - DELQFOC ! Total SO2 forcing. Note QSO2 and QDIR includes FOC
+      case(14); getForcing = QQQDIR	- DELQFOC ! SO2 direct forcing only. Note QSO2 and QDIR includes FOC
+      case(15); getForcing = QQQOZ ! Tropospheric Ozone forcing, including CH4 component
+      case(16); getForcing = (QCH4O3(IYR)+QCH4O3(IYRP))/2.	! Trop O3 change due to CH4
+      case(17); getForcing = (QCH4H2O(IYR)+QCH4H2O(IYRP))/2.	! Strat H2O forcing from CH4
+      case(18); getForcing = (QMONT(IYR)+QMONT(IYRP))/2.	! Montreal Protocol Gases forcing
+      case(19); getForcing = (QSTRATOZ(IYR)+QSTRATOZ(IYRP))/2.	! Stratospheric Ozone Forcing due to CFC emissions changes
+      case(20); getForcing = QQQBIO  ! MAGICC biomass burning aerosol forcing
+      case(21); getForcing = (QFOC(IYR)+QFOC(IYRP))/2. ! MAGICC internal fossil BC+OC
+      case(22); getForcing = QQQLAND ! Land Surface Albedo forcing
+      case(23); getForcing = QQQMN	! Mineral and nitrous oxide aerosol forcing
+      case(24); getForcing = QQQBC	! Custom BC forcing (total BC; land + combustion)
+      case(25); getForcing = QQQOC	! Custom OC forcing (total BC; land + combustion)
+      ! Note, QEXTRA is not included in total (since this is not always anthropogenic).
+      case(26); getForcing = QQQEXTRA	! User (exogenous) input forcing
+      ! RCPForcing. This is the older TAR definition of total forcing , exclusive of Albedo, Mineral and nitrous oxide aerosol forcing.
+      case(27); getForcing = QQQTOT - (QQQLAND + QQQMN)	! User (exogenous) input forcing
       case default; getForcing = -1.0
       end select;
       
-
       RETURN 
 	  END
 	  
       FUNCTION getGMTemp( inYear )
+      IMPLICIT REAL*4 (a-h,o-z), Integer (I-N)
 ! Expose subroutine gmTemp to users of this DLL
 !DEC$ATTRIBUTES DLLEXPORT::gmTemp
 
@@ -5939,10 +6347,10 @@ IF(IWrite.eq.1)THEN
      TSHO(iTp),TNHL(iTp),TSHL(iTp),TDEEP(iTp),TNHAV(iTp),TSHAV(iTp), &
      TLAND(iTp),TOCEAN(iTp),TOCN(40),TOCNPREV(40), &
      SIP,SGP,SAP,SLI(iTp),SLG(iTp),SLA(iTp),EX(0:iTp),SLT(iTp), &
-     QTOT(0:iTp),QGH(0:iTp),QOZ(0:iTp),QBIO(0:iTp), &
-     QSO2(0:iTp+1),QDIR(0:iTp+1)
+     QTOT(0:iTp),QGH(0:iTp),QOZ(0:iTp),QBIO(0:iTp),SLO(iTp), &
+     QSO2(0:iTp+1),QDIR(0:iTp+1),QLAND(0:iTp),QMN(0:iTp+1)
 
-	  REAL*8 getGMTemp
+	  REAL*4 getGMTemp
 
       IYR = inYear-1990+226
       getGMTemp = TEMUSER(IYR)+TGAV(226)
@@ -5950,16 +6358,19 @@ IF(IWrite.eq.1)THEN
       RETURN 
 	  END
 
-! Routine to pass in new values of parameters from calling program (e.g. ObjECTS)	  
+! Routine to pass in new values of parameters from calling program (e.g. ObjECTS) - sjs	  
     SUBROUTINE setParameterValues( index, value )
+      IMPLICIT REAL*4 (a-h,o-z), Integer (I-N)
 ! Expose subroutine co2Conc to users of this DLL
 !DEC$ATTRIBUTES DLLEXPORT::setParameterValues
 
-	  REAL*8 value
+	  REAL*4 value
       
-	  REAL*8 aNewClimSens, aNewBTsoil, aNewBTGPP,aNewBTHumus,aNewDUSER,aNewFUSER, aNewSO2dir1990, aNewSO2ind1990
+	  REAL*4 aNewClimSens, aNewBTsoil, aNewBTGPP,aNewBTHumus,aNewDUSER,aNewFUSER, aNewSO2dir1990, aNewSO2ind1990
       COMMON/NEWPARAMS/aNewClimSens, aNewBTsoil, DT2XUSER,aNewBTGPP,aNewBTHumus,aNewDUSER,aNewFUSER, &
       					aNewSO2dir1990, aNewSO2ind1990
+      REAL*4 FBC1990, FOC1990, FSO2_dir1990,FSO2_ind1990, aBCUnitForcing, aOCUnitForcing !sjs
+      COMMON/BCOC/FBC1990, FOC1990, FSO2_dir1990,FSO2_ind1990, aBCUnitForcing, aOCUnitForcing
 
       select case (index)
       case(1); aNewClimSens = value
@@ -5968,6 +6379,10 @@ IF(IWrite.eq.1)THEN
       case(4); aNewBTGPP = value
       case(5); aNewDUSER = value
       case(6); aNewFUSER = value
+      case(7); aNewSO2dir1990 = value
+      case(8); aNewSO2ind1990 = value
+      case(9); aBCUnitForcing = value
+      case(10); aOCUnitForcing = value
       case default; 
       end select;
 
@@ -5976,10 +6391,11 @@ IF(IWrite.eq.1)THEN
 
 ! Routine to overide MAGICC parameeters with new values if these have been read-in
     SUBROUTINE overrideParameters( )
+      IMPLICIT REAL*4 (a-h,o-z), Integer (I-N)
 
       parameter (iTp=740)
 
-	  REAL*8 aNewClimSens, aNewBTsoil, aNewBTGPP,aNewBTHumus,aNewDUSER,aNewFUSER, aNewSO2dir1990, aNewSO2ind1990
+	  REAL*4 aNewClimSens, aNewBTsoil, aNewBTGPP,aNewBTHumus,aNewDUSER,aNewFUSER, aNewSO2dir1990, aNewSO2ind1990
       COMMON/NEWPARAMS/aNewClimSens, aNewBTsoil, DT2XUSER,aNewBTGPP,aNewBTHumus,aNewDUSER,aNewFUSER, &
       					aNewSO2dir1990, aNewSO2ind1990
 
@@ -5994,8 +6410,8 @@ IF(IWrite.eq.1)THEN
      ch4h(225:iTp),ef4(226:iTp),StratH2O,TCH4(iTp),iO3feed, &
      ednet(226:iTp+1),DUSER,FUSER,CORRUSER,CORRMHI,CORRMMID,CORRMLO
 
-      Real*8 FBC1990, FOC1990, FSO2_dir1990,FSO2_ind1990
-      COMMON/BCOC/FBC1990, FOC1990, FSO2_dir1990,FSO2_ind1990
+      REAL*4 FBC1990, FOC1990, FSO2_dir1990,FSO2_ind1990, aBCUnitForcing, aOCUnitForcing !sjs
+      COMMON/BCOC/FBC1990, FOC1990, FSO2_dir1990,FSO2_ind1990, aBCUnitForcing, aOCUnitForcing
 
       IF(aNewClimSens.GT.0)THEN
         DT2XUSER   = aNewClimSens
@@ -6034,7 +6450,8 @@ IF(IWrite.eq.1)THEN
 	    
 ! Returns climate results forcing for a given gas
       FUNCTION getCarbonResults( iResultNumber, inYear )
-! Expose subroutine getForcing to users of this DLL
+      IMPLICIT REAL*4 (a-h,o-z), Integer (I-N)
+! Expose subroutine getCarbonResults to users of this DLL
 !DEC$ATTRIBUTES DLLEXPORT::getCarbonResults
 
       parameter (iTp=740)
@@ -6042,7 +6459,7 @@ IF(IWrite.eq.1)THEN
       COMMON/CARB/CCO2(4,224:iTp),EDGROSS(4,226:iTp),EF(226:iTp+1), &
      REGROW(4,226:iTp),PL(4,226:iTp),HL(4,226:iTp),SOIL(4,226:iTp), &
      TTT(226:iTp),ESUM(226:iTp),ETOT(4,226:iTp),EDNET90(4), &
-     FOC(4,226:iTp),co2(0:iTp)
+     FOC(4,226:iTp),co2(0:iTp),CO2SAVE(0:iTp)
 !
       COMMON/CAR/EL1,EL2,EL3,TINV0(5),TINV(4,5),A(3,5),AA(4,5), &
      BCO2(4),BTGPP,BTRESP,BTHUM,GAMP,GPP0,RESP0,QA0,U0,C0,B340(4), &
@@ -6055,8 +6472,8 @@ IF(IWrite.eq.1)THEN
      ch4h(225:iTp),ef4(226:iTp),StratH2O,TCH4(iTp),iO3feed, &
      ednet(226:iTp+1),DUSER,FUSER,CORRUSER,CORRMHI,CORRMMID,CORRMLO
 
-	  REAL*8 getCarbonResults
-	  REAL*8 NetDef, GrossDef
+	  REAL*4 getCarbonResults
+	  REAL*4 NetDef, GrossDef
 
         
       IYR = inYear-1990+226

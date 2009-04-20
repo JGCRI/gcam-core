@@ -1,9 +1,6 @@
-To compile a dynamically linked library for GCC
+ (for testing links)
+ /Documents/Information\ \&\ Documents/downloads\ to\ transfer/g95-install/bin/i386-apple-darwin8.11.1-g95 -fstatic -o -fcase-upper magicc.o 'Climat(MAGICC 5.3).f90'
 
-Debug:
-g77 -x f77 -ffree-form -g -shared -c Climat.f90 -o magiccd.so
-
-Release:
-g77 -x f77 -ffree-form -O3 -shared -c Climat.f90 -o magicc.so
-
+(version for actual use)
+ /Documents/Information\ \&\ Documents/downloads\ to\ transfer/g95-install/bin/i386-apple-darwin8.11.1-g95 -fstatic -fno-underscoring -fcase-upper -c -o magicc.o 'Climat.f90'
 
