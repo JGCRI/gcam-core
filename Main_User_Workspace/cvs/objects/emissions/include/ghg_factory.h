@@ -58,7 +58,7 @@ class GHGFactory{
 
 public:
     static std::auto_ptr<AGHG> create( const std::string& aType );
-    static const bool isGHGNode( const std::string& aType );
+    static bool isGHGNode( const std::string& aType );
 
 };
 

@@ -90,7 +90,7 @@ EnvironmentalInfo::~EnvironmentalInfo(){
  * \param aYear the year.
  * \return a double representing the temperature in the given year.
  */
-const double EnvironmentalInfo::getTemperature( const int aYear ) const {
+double EnvironmentalInfo::getTemperature( const int aYear ) const {
     return mClimateModel->getTemperature( aYear );
 }
 
@@ -155,7 +155,7 @@ void EnvironmentalInfo::setLandUse( const double aLandUse, const int aYear ){
  * \details Returns the historical share object.
  * \return the historical share object.
  */
-const double EnvironmentalInfo::getHistoricalShare() const {
+double EnvironmentalInfo::getHistoricalShare() const {
     return mHistoricalShare;
 }
 

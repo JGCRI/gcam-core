@@ -88,7 +88,7 @@ bool Info::setString( const string& aStringKey, const string& aValue ){
     return setItemValueLocal( aStringKey, eString, aValue );
 }
     
-const bool Info::getBoolean( const string& aStringKey, const bool aMustExist ) const
+bool Info::getBoolean( const string& aStringKey, const bool aMustExist ) const
 {
     // Perform a local search.
     bool found = false;
@@ -107,7 +107,7 @@ const bool Info::getBoolean( const string& aStringKey, const bool aMustExist ) c
     return value;
 }
 
-const int Info::getInteger( const string& aStringKey, const bool aMustExist ) const
+int Info::getInteger( const string& aStringKey, const bool aMustExist ) const
 {
     // Perform a local search.
     bool found = false;
@@ -126,7 +126,7 @@ const int Info::getInteger( const string& aStringKey, const bool aMustExist ) co
     return value;
 }
 
-const double Info::getDouble( const string& aStringKey, const bool aMustExist ) const
+double Info::getDouble( const string& aStringKey, const bool aMustExist ) const
 {
     // Perform a local search.
     bool found = false;
@@ -165,7 +165,7 @@ const string& Info::getString( const string& aStringKey, const bool aMustExist )
     return value;
 }
 
-const bool Info::getBooleanHelper( const string& aStringKey, bool& aFound ) const
+bool Info::getBooleanHelper( const string& aStringKey, bool& aFound ) const
 {
     // Perform a local search.
     bool value = getItemValueLocal<bool>( aStringKey, aFound );
@@ -177,7 +177,7 @@ const bool Info::getBooleanHelper( const string& aStringKey, bool& aFound ) cons
     return value;
 }
 
-const int Info::getIntegerHelper( const string& aStringKey, bool& aFound ) const
+int Info::getIntegerHelper( const string& aStringKey, bool& aFound ) const
 {
     // Perform a local search.
     int value = getItemValueLocal<int>( aStringKey, aFound );
@@ -189,7 +189,7 @@ const int Info::getIntegerHelper( const string& aStringKey, bool& aFound ) const
     return value;
 }
 
-const double Info::getDoubleHelper( const string& aStringKey, bool& aFound ) const
+double Info::getDoubleHelper( const string& aStringKey, bool& aFound ) const
 {
     // Perform a local search.
     double value = getItemValueLocal<double>( aStringKey, aFound );

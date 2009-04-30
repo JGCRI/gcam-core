@@ -96,16 +96,16 @@ public:
     static const std::string& getXMLNameStatic();
     static const std::string parseIdentifier( const xercesc::DOMNode* tempnode );
 
-    const int getYear() const;
+    int getYear() const;
 
     // getters and setters, setters do nothing here
     virtual const std::string& getName() const;
     virtual const std::string& getFuelName() const;
-    virtual const double getEfficiency() const;
-    virtual const double getNonEnergyCost() const;
+    virtual double getEfficiency() const;
+    virtual double getNonEnergyCost() const;
 
-    virtual const double getFMultiplier() const;
-    virtual const double getFuelPrefElasticity() const;
+    virtual double getFMultiplier() const;
+    virtual double getFuelPrefElasticity() const;
 
     virtual void setFuelName( const std::string& aFuelName );
     virtual void setEfficiency( const double aEfficiency );

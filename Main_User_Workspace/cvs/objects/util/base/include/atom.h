@@ -75,7 +75,7 @@ namespace objects {
 		Atom( const std::string& aUniqueID );
 		~Atom();
 		inline const std::string& getID() const;
-		inline const size_t getHashCode() const;
+		inline size_t getHashCode() const;
 	protected:
 		//! The unique string identifier of the atom.
 		const std::string mUniqueID;
@@ -108,7 +108,7 @@ namespace objects {
 	* \details Atoms precompute there hash code to optimize lookups. 
 	* \return The hash code for the atom.
 	*/
-	const size_t Atom::getHashCode() const {
+    size_t Atom::getHashCode() const {
 		return mHashCode;
 	}
 }

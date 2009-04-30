@@ -96,7 +96,7 @@ public:
      * \brief Returns the current stock.
      * \return the current stock.
      */
-    virtual const double getStock( const int aYear ) = 0;
+    virtual double getStock( const int aYear ) = 0;
 
     /*!
      * \brief Sets the current stock for the specified year.

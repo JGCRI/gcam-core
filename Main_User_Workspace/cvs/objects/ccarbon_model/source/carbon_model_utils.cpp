@@ -118,7 +118,7 @@ double CarbonModelUtils::getLandUse( const unsigned int aYear,
  * \return The start year.
  * \todo The model is spending a lot of time (2% of total) in this function. Calculate once and cache.
  */
-const int CarbonModelUtils::getStartYear(){
+int CarbonModelUtils::getStartYear(){
     const IClimateModel* climateModel = scenario->getClimateModel();
     if( climateModel != 0 ){
         return scenario->getClimateModel()->getCarbonModelStartYear();
@@ -135,7 +135,7 @@ const int CarbonModelUtils::getStartYear(){
  * \author Jim Naslund
  * \return The last year of the climate calculation.
  */
-const int CarbonModelUtils::getEndYear(){
+int CarbonModelUtils::getEndYear(){
     return 2095;
 }
 
@@ -155,7 +155,7 @@ double CarbonModelUtils::getSoilTimeScale(){
  *          into an int, which is a unique key for the conceptual root.
  * \return The start year.
  */
-const size_t CarbonModelUtils::getConceptualRootKey(const ALandAllocatorItem* const aItem ){
+size_t CarbonModelUtils::getConceptualRootKey(const ALandAllocatorItem* const aItem ){
 
     const ALandAllocatorItem* conceptualRoot = aItem;
     while( conceptualRoot->getParent() && !conceptualRoot->isConceptualRoot() ){

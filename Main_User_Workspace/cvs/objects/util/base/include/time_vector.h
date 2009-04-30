@@ -178,7 +178,7 @@ namespace objects {
         TimeVectorBase( const unsigned int aSize, const T aDefaultValue );
         virtual ~TimeVectorBase();
         TimeVectorBase( const TimeVectorBase& aOther );
-        const TimeVectorBase& operator=( const TimeVectorBase& aOther );
+        TimeVectorBase& operator=( const TimeVectorBase& aOther );
 
         bool operator==( TimeVectorBase& aOther ) const;
         
@@ -187,7 +187,7 @@ namespace objects {
         virtual T& operator[]( const size_t aIndex ) = 0;
         virtual const T& operator[]( const size_t aIndex ) const = 0;
 
-        const size_t size() const;
+        size_t size() const;
         void assign( const size_t aPositions, const T& aValue );
         const_iterator begin() const;
         const_iterator end() const;
@@ -613,7 +613,7 @@ namespace objects {
      *         assignment).
      */
     template<class T>
-        const TimeVectorBase<T>& TimeVectorBase<T>::operator=( const TimeVectorBase<T>& aOther ){
+        TimeVectorBase<T>& TimeVectorBase<T>::operator=( const TimeVectorBase<T>& aOther ){
             // Check for self-assignment.
             if( this != &aOther ){
                 clear();
@@ -652,7 +652,7 @@ namespace objects {
     * \return Size of the vector.
     */
     template<class T>
-        const size_t TimeVectorBase<T>::size() const {
+        size_t TimeVectorBase<T>::size() const {
             return mSize;
         }
 

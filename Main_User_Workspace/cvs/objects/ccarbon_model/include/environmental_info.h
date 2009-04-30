@@ -67,12 +67,12 @@ public:
     EnvironmentalInfo( const IClimateModel* aClimateModel );
     EnvironmentalInfo( const EnvironmentalInfo& aEnvironmentalInfo );
     ~EnvironmentalInfo();
-    const double getTemperature( const int aYear ) const;
+    double getTemperature( const int aYear ) const;
     const objects::PeriodVector<double>& getModeledLandUse() const;
     void setModeledLandUse( const double aLandUse, const int aPeriod );
     double getLandUse( const int aYear ) const;
     void setLandUse( const double aLandUse, const int aYear );
-    const double getHistoricalShare() const;
+    double getHistoricalShare() const;
     void setHistoricalShare( double aShare );
     const LandUseHistory* getLandUseHistory() const;
     void setLandUseHistory( const LandUseHistory* aLandUseHistory );

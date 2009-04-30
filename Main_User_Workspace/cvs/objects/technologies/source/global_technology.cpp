@@ -171,7 +171,7 @@ const std::string& GlobalTechnology::getXMLNameStatic() {
  *
  * \return The year.
  */
-const int GlobalTechnology::getYear() const {
+int GlobalTechnology::getYear() const {
     return year;
 }
 
@@ -183,19 +183,19 @@ const string& GlobalTechnology::getFuelName() const {
     return fuelname;
 }
 
-const double GlobalTechnology::getEfficiency() const {
+double GlobalTechnology::getEfficiency() const {
     return mBaseEfficiency;
 }
 
-const double GlobalTechnology::getNonEnergyCost() const {
+double GlobalTechnology::getNonEnergyCost() const {
     return mBaseNonEnergyCost;
 }
 
-const double GlobalTechnology::getFMultiplier() const {
+double GlobalTechnology::getFMultiplier() const {
     return fMultiplier;
 }
 
-const double GlobalTechnology::getFuelPrefElasticity() const {
+double GlobalTechnology::getFuelPrefElasticity() const {
     return fuelPrefElasticity;
 }
 

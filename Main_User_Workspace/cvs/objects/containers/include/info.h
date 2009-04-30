@@ -81,19 +81,19 @@ public:
 
     bool setString( const std::string& aStringKey, const std::string& aValue );
 
-    const bool getBoolean( const std::string& aStringKey, const bool aMustExist ) const;
+    bool getBoolean( const std::string& aStringKey, const bool aMustExist ) const;
 
-    const int getInteger( const std::string& aStringKey, const bool aMustExist ) const;
+    int getInteger( const std::string& aStringKey, const bool aMustExist ) const;
 
-    const double getDouble( const std::string& aStringKey, const bool aMustExist ) const;
+    double getDouble( const std::string& aStringKey, const bool aMustExist ) const;
 
     const std::string& getString( const std::string& aStringKey, const bool aMustExist ) const;
 
-    const bool getBooleanHelper( const std::string& aStringKey, bool& aFound ) const;
+    bool getBooleanHelper( const std::string& aStringKey, bool& aFound ) const;
 
-    const int getIntegerHelper( const std::string& aStringKey, bool& aFound ) const;
+    int getIntegerHelper( const std::string& aStringKey, bool& aFound ) const;
 
-    const double getDoubleHelper( const std::string& aStringKey, bool& aFound ) const;
+    double getDoubleHelper( const std::string& aStringKey, bool& aFound ) const;
 
     const std::string& getStringHelper( const std::string& aStringKey, bool& aFound ) const;
 

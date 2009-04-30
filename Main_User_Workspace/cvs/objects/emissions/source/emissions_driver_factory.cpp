@@ -68,7 +68,7 @@ auto_ptr<AEmissionsDriver> EmissionsDriverFactory::create( const string& aType )
     return auto_ptr<AEmissionsDriver>();
 }
 
-const bool EmissionsDriverFactory::isEmissionsDriverNode( const string& aNodeName ){
+bool EmissionsDriverFactory::isEmissionsDriverNode( const string& aNodeName ){
     return aNodeName == InputDriver::getXMLNameStatic() 
            || aNodeName == OutputDriver::getXMLNameStatic()
            || aNodeName == InputOutputDriver::getXMLNameStatic();

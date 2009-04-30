@@ -72,7 +72,7 @@ public:
     void merge( const std::vector<SolverInfo> aSolutionSet );
     void updateFromMarkets();
     void updateToMarkets();
-    const UpdateCode updateSolvable( const bool isNR );
+    UpdateCode updateSolvable( const bool isNR );
     void updateElasticities();
     void adjustBrackets();
     void storeValues();

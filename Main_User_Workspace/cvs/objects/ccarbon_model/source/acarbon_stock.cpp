@@ -101,7 +101,7 @@ void ACarbonStock::addToStock( double aValueToAdd, const int aYear ){
     mCarbonStock[ aYear ] += aValueToAdd;
 }
 
-const double ACarbonStock::getStock( const int aYear ) {
+double ACarbonStock::getStock( const int aYear ) {
     return mCarbonStock[ aYear ];
 }
 

@@ -76,11 +76,11 @@ public:
     // getters   
     virtual const std::string& getName() const;
     virtual const std::string& getFuelName() const;
-    virtual const double getEfficiency() const;
-    virtual const double getNonEnergyCost() const;
+    virtual double getEfficiency() const;
+    virtual double getNonEnergyCost() const;
 
-    virtual const double getFMultiplier() const;
-    virtual const double getFuelPrefElasticity() const;
+    virtual double getFMultiplier() const;
+    virtual double getFuelPrefElasticity() const;
 
     // setters
     virtual void setFuelName( const std::string& aFuelName );

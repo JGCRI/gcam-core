@@ -471,7 +471,7 @@ vector<double> SimplePolicyTargetRunner::curveToConstraintVector( const Curve* a
     // Loop through the vector of pairs
     for(unsigned int i = 0; i < points.size(); i++){
         // Assign constraint[period of this points year] to this points value.
-        constraint[ modelTime->getyr_to_per( (const int)points[i].first ) ] = points[ i ].second;
+        constraint[ modelTime->getyr_to_per( ( int)points[i].first ) ] = points[ i ].second;
     }
     return constraint;
 }

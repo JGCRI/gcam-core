@@ -102,19 +102,19 @@ const string& GenericTechnologyInfo::getFuelName() const {
     return fuelname;
 }
 
-const double GenericTechnologyInfo::getEfficiency() const {
+double GenericTechnologyInfo::getEfficiency() const {
     return mBaseEfficiency;
 }
 
-const double GenericTechnologyInfo::getNonEnergyCost() const {
+double GenericTechnologyInfo::getNonEnergyCost() const {
     return mBaseNonEnergyCost;
 }
 
-const double GenericTechnologyInfo::getFMultiplier() const {
+double GenericTechnologyInfo::getFMultiplier() const {
     return fMultiplier;
 }
 
-const double GenericTechnologyInfo::getFuelPrefElasticity() const {
+double GenericTechnologyInfo::getFuelPrefElasticity() const {
     return fuelPrefElasticity;
 }
 

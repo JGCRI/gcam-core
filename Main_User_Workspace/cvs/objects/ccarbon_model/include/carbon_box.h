@@ -105,7 +105,7 @@ public:
 
     void setCurrentStock( const int aYear );
 
-    const double getStock( const int aYear );
+    double getStock( const int aYear );
 
     virtual void doTransfers( const EnvironmentalInfo* aEnvInfo, FlowType aFlowType,
                               const int aYear );

@@ -316,7 +316,7 @@ namespace objects {
     * \return Returns -1 if the number is less than 0, +1 otherwise.
     */
     template <class T>
-    const int sign( const T number ) {
+    int sign( const T number ) {
         return ( number < 0 )?(-1):(1);
     }
 

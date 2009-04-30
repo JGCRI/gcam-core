@@ -75,7 +75,7 @@ public:
     virtual double transfer( const EnvironmentalInfo* aEnvInfo,
                              FlowType aFlowType, const int aYear ) = 0;
     virtual void addToStock( double aValueToAdd, const int aYear );
-    virtual const double getStock( const int aYear );
+    virtual double getStock( const int aYear );
     virtual void setCurrentStock( const int aYear );
     virtual double getNPPOverAreaRatio( const int aYear );
     virtual void deductFromStock( const double aDeductValue, const int aYear );

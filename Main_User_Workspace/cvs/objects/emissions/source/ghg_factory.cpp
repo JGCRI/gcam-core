@@ -91,7 +91,7 @@ auto_ptr<AGHG> GHGFactory::create( const string& aType ){
  * \param aType type
  * \return boolean indicating whether the type of node is a valid GHG type
  */
-const bool GHGFactory::isGHGNode( const string& aType ){
+bool GHGFactory::isGHGNode( const string& aType ){
     return aType == CO2Emissions::getXMLNameStatic() 
            || aType == SO2Emissions::getXMLNameStatic()
            || aType == GenericEmissions::getXMLNameStatic();

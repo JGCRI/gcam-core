@@ -105,25 +105,25 @@ public:
      * \brief Get the efficiency of this technology.
      * \return The efficiency.
      */
-    virtual const double getEfficiency() const = 0;
+    virtual double getEfficiency() const = 0;
     
     /*!
      * \brief Get the non energy cost of this technology.
      * \return The non energy cost.
      */
-    virtual const double getNonEnergyCost() const = 0;
+    virtual double getNonEnergyCost() const = 0;
 
     /*!
      * \brief Get the fMultiplier of this technology.
      * \return The fMultiplier.
      */
-    virtual const double getFMultiplier() const = 0;
+    virtual double getFMultiplier() const = 0;
 
     /*!
      * \brief Get the fuel pref elasticity of this technology.
      * \return The fuel pref elasticity.
      */
-    virtual const double getFuelPrefElasticity() const = 0;
+    virtual double getFuelPrefElasticity() const = 0;
 
     /*!
      * \brief Set the fuelname of this technology

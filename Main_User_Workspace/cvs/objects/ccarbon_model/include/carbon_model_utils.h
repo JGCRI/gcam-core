@@ -122,10 +122,10 @@ public:
                               const objects::PeriodVector<double>& aLandUse );
 
     static double getSoilTimeScale();
-    static const int getStartYear();
-    static const int getEndYear();
+    static int getStartYear();
+    static int getEndYear();
 
-    static const size_t getConceptualRootKey(const ALandAllocatorItem* const aItem );
+    static size_t getConceptualRootKey(const ALandAllocatorItem* const aItem );
 
     static double interpYearHelper( const objects::PeriodVector<double>& aPeriodVector,
                                     const unsigned int aYear );

@@ -604,7 +604,7 @@ ICarbonStock* CarbonBox::getCarbonStock() {
  * \brief Return the carbonStock object pointer
  * \return the CarbonStock object pointer
  */
-const double CarbonBox::getStock( const int aYear ) {
+double CarbonBox::getStock( const int aYear ) {
     return mStock->getStock( aYear );
 }
 

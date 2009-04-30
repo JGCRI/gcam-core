@@ -275,7 +275,7 @@ void NPP::addToStock( double aValueToAdd, const int aYear ){
     assert( false );
 }
 
-const double NPP::getStock( const int aYear ){
+double NPP::getStock( const int aYear ){
     if( aYear >= CarbonModelUtils::getStartYear() &&
         aYear <= CarbonModelUtils::getEndYear()) {
         return mNPP[ aYear ];

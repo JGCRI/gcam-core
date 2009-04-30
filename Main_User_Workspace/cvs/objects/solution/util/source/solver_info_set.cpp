@@ -147,7 +147,7 @@ void SolverInfoSet::updateFromMarkets(){
 }
 
 //! Update which markets are currently being solved.
-const SolverInfoSet::UpdateCode SolverInfoSet::updateSolvable( const bool isNR ) {
+SolverInfoSet::UpdateCode SolverInfoSet::updateSolvable( const bool isNR ) {
     /*! \pre The updateFromMarkets has been called. */
     // Code which indicates whether markets were added, removed, both or neither. 
     UpdateCode code( UNCHANGED );

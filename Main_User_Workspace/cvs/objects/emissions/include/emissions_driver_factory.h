@@ -58,7 +58,7 @@ class EmissionsDriverFactory{
 
 public:
     static std::auto_ptr<AEmissionsDriver> create( const std::string& aType );
-    static const bool isEmissionsDriverNode( const std::string& aNodeName );
+    static bool isEmissionsDriverNode( const std::string& aNodeName );
 
 };
 
