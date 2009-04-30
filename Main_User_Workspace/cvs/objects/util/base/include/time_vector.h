@@ -509,6 +509,46 @@ namespace objects {
                                                          const_cast<TimeVectorBase<T>*>( mParent ) );
         }
 
+	/*!
+     * \brief Increment the iterator by a specified number of positions.
+     * \param aIncrement Amount by which to increment the iterator.
+     * \return A reference to the iterator after incrementing.
+     */
+    template<class T>
+	typename TimeVectorBase<T>::iterator&
+	TimeVectorBase<T>::iterator::operator+=( const size_t aIncrement ) {
+		// Check that this does not exceed the bounds of the iterator.
+		mPos += aIncrement;
+		if( mPos < 0 || mPos >= mParent->mSize ){
+			mPos = mParent->mSize;
+		}
+		return *this;
+	}
+	
+    /*!
+     * \brief Decrement the iterator by a specified number of positions.
+     * \param aDecrement Amount by which to decrement the iterator.
+     * \return A reference to the iterator after decrementing.
+     */
+    template<class T>
+	typename TimeVectorBase<T>::iterator&
+	TimeVectorBase<T>::iterator::operator-=( const size_t aDecrement ) {
+		// Use the increment operator to do the work.
+		return operator+=( -1 * aDecrement );
+	}
+    
+    /*! 
+     * \brief Return the difference in position between two iterators.
+     * \param aOther Iterator to return the difference between this iterator and,
+     *                  such that i = j + n where n is the difference.
+     * \return Difference in position between the two iterators.
+     */
+    template<class T>
+    size_t TimeVectorBase<T>::iterator::operator-(const typename TimeVectorBase<T>::iterator& aOther) const {
+        // Check that they have the same parent.
+        // assert( mParent == aOther.mParent ); Perhaps undefined in copy operation?
+        return mPos - aOther.mPos;
+    }
 
     /*!
      * \brief Constructor.

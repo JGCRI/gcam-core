@@ -643,7 +643,7 @@ protected:
      */
     TreeItemType mType;
 
-    double ALandAllocatorItem::getDefaultShare( ) const;
+    double getDefaultShare( ) const;
     
 };
 
