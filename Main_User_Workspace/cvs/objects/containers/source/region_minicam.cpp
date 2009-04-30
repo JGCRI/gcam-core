@@ -1443,7 +1443,6 @@ void RegionMiniCAM::calcEmissFuel( const list<string>& aPrimaryFuelList, const i
     for( list<string>::const_iterator fuelIter = aPrimaryFuelList.begin();
         fuelIter != aPrimaryFuelList.end(); ++fuelIter )
     {
-        double primaryCoef = objects::searchForValue( primaryFuelCO2Coef, *fuelIter );
         fuelemiss[ *fuelIter ] = summary[period].get_pemap_second( *fuelIter )
                                  * util::searchForValue( primaryFuelCO2Coef, *fuelIter );
     }

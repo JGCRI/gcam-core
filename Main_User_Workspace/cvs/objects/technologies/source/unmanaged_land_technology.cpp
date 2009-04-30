@@ -129,7 +129,7 @@ const string& UnmanagedLandTechnology::getXMLNameStatic1D() {
 /*! \brief Return name to be used for input object containing land amount.
 *
 * NOTE -- this is here only to faciliate production of non-CO2 GHG emissions.
-* A full implimentation of land as a multiple input is yet to be done.
+* A full implementation of land as a multiple input is yet to be done.
 * \author Steve Smith
 * \return The constant XML_NAME as a static.
 */
@@ -281,9 +281,6 @@ void UnmanagedLandTechnology::production( const string& aRegionName,
         return;
     }
 
-    // This technology produces no primary output
-    double primaryOutput = 0;
-
     // Set the input to be the land used. 
     double landInput = mLandAllocator->getLandAllocation( landType, mLandItemName, aPeriod );
 
@@ -384,7 +381,6 @@ void UnmanagedLandTechnology::initializeInputLocations( const string& aRegionNam
     // Set the inputs to the error value.
     mResourceInput = mInputs.end();
 
-    const Marketplace* marketplace = scenario->getMarketplace();
     for( InputIterator i = mInputs.begin(); i != mInputs.end(); ++i ){
         // Parse location for energy inputs.
         if( ( *i )->hasTypeFlag( IInput::ENERGY ) ){

@@ -82,8 +82,6 @@ double MarginalProfitCalculator::calcShortTermMarginalProfit( const string& aReg
     // have zero variable costs.
     assert( variableCosts >= 0 );
 
-    double nonEnergyCost = mTechnology->getCost( aPeriod ) - variableCosts;
-
     // Marginal profit is defined here as the percentage that price exceeds
     // variable costs
     double marginalProfit = (marginalRevenue - variableCosts) / variableCosts;

@@ -99,7 +99,6 @@ auto_ptr<SolverComponent> SolverComponent::getSolverComponent( const string& sol
         return auto_ptr<SolverComponent>( new BisectAll( marketplace, world, calcCounter ) );
     }
     else if( solverName == LogNewtonRaphsonSaveDeriv::getNameStatic() ){
-        double deltaPrice = Configuration::getInstance()->getDouble( "DeltaPrice", 1e-6 );
         return auto_ptr<SolverComponent>( new LogNewtonRaphsonSaveDeriv( marketplace, world, calcCounter, 1e-6 ) );
     }
     else if( solverName == BisectOne::getNameStatic() ){

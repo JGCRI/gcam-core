@@ -261,7 +261,6 @@ double CESProductionFunction::calcFinalProfitScaler( const InputSet& input, cons
         }
     }
     // use price received for the good in the next equation
-    const Marketplace* marketplace = scenario->getMarketplace();
     double priceReceived = FunctionUtils::getPriceReceived( regionName, sectorName, period );
     double Z = 1 - tempZ * pow( ( priceReceived * alphaZero), (rho * sigma) );
     return ( Z > 0 ) ? pow( Z, -(1/rho) ) : 0;
@@ -278,7 +277,6 @@ double CESProductionFunction::calcDemand( InputSet& input, double personalIncome
     *        production function. 
     */
     assert( sigma >= 0.05 );
-    Marketplace* marketplace = scenario->getMarketplace();
 
     const double Z1 = calcCapitalScaler( input, alphaZero, sigma, capitalStock, period );
     const double Z2 = calcFinalProfitScaler( input, regionName, sectorName, period, alphaZero, sigma );
@@ -460,7 +458,6 @@ double CESProductionFunction::calcUnscaledProfits( const InputSet& input, const 
     double rho = FunctionUtils::getRho( sigma );
     double Z1 = calcCapitalScaler( input, alphaZero, sigma, capitalStock, period );
     double Z2 = calcFinalProfitScaler( input, regionName, sectorName, period, alphaZero, sigma );
-    Marketplace* marketplace = scenario->getMarketplace();
     double priceReceived = FunctionUtils::getPriceReceived( regionName, sectorName, period );
     return alphaZero * priceReceived * Z1 * pow( Z2, (1 - rho) );
 }

@@ -353,8 +353,6 @@ void BuildingDemandInput::scaleCalibrationQuantity( const double aScaleFactor ){
 
 double BuildingDemandInput::getCalibrationQuantity( const int aPeriod ) const
 {
-    const int BASE_PERIOD = 1;
-
     // Dynamically calculate the calibration quantity using the calibrated
     // output of the service supply sector. It is ensured that there is a
     // one-to-one mapping between building service demand inputs and building

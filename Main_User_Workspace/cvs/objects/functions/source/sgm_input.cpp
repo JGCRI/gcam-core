@@ -407,7 +407,6 @@ void SGMInput::initializeCachedCoefficients( const string& aRegionName ){
 * \param aRegionName Name of the region.
 */
 void SGMInput::initializeTypeFlags( const string& aRegionName ) {
-    const Marketplace* marketplace = scenario->getMarketplace();
     // Initialize the type.
     if( mName == "Land" ){
         mTypeFlags |= IInput::LAND;

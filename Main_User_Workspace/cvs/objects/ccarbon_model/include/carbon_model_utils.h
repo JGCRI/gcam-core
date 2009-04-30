@@ -125,7 +125,7 @@ public:
     static const int getStartYear();
     static const int getEndYear();
 
-    static const int getConceptualRootKey(const ALandAllocatorItem* const aItem );
+    static const size_t getConceptualRootKey(const ALandAllocatorItem* const aItem );
 
     static double interpYearHelper( const objects::PeriodVector<double>& aPeriodVector,
                                     const unsigned int aYear );

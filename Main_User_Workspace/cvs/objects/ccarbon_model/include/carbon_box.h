@@ -68,7 +68,7 @@ typedef std::vector<CarbonBox*>::const_iterator CarbonBoxConstIterator;
 /*!
  * \brief Carbon box class.
  * \details An implementation  of the ICarbonContainer interface that is used
- *          to hold each carbon box. This basic implimentation represents a 
+ *          to hold each carbon box. This basic implementation represents a 
  *          normal carbon box (e.g. vegetation, soil, etc.)
  */
 class CarbonBox : public ICarbonContainer,

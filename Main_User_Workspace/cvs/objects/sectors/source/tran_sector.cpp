@@ -194,8 +194,6 @@ void TranSector::setFinalDemand( const string& aRegionName,
              
     double gdp1 = gdp->getApproxScaledGDP(aPeriod);
     
-    const Modeltime* modeltime = scenario->getModeltime();
-
     // Data for periods 0 and 1 is read-in, so do not recalculate. The known
     // demands will be added to the marketplace.
     if ( aPeriod > 1 ){

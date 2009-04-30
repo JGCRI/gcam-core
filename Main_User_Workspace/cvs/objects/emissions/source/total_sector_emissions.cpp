@@ -73,7 +73,6 @@ void TotalSectorEmissions::XMLParse( const DOMNode* aNode ){
 
     // get all child nodes.
     const DOMNodeList* nodeList = aNode->getChildNodes();
-    const Modeltime* modeltime = scenario->getModeltime();
 
     // loop through the child nodes.
     for( unsigned int i = 0; i < nodeList->getLength(); i++ ){

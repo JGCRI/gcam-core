@@ -280,7 +280,6 @@ void ProductionSector::initCalc( NationalAccount* aNationalAccount,
         Marketplace* marketplace = scenario->getMarketplace();
         double corpIncTaxRate = aNationalAccount->getAccountValue(NationalAccount::CORPORATE_INCOME_TAX_RATE);
         double totalRetEarnings = aNationalAccount->getAccountValue(NationalAccount::RETAINED_EARNINGS);
-        double totalProfits2 = aNationalAccount->getAccountValue(NationalAccount::CORPORATE_PROFITS);
         double totalProfits = marketplace->getDemand("Capital", regionName, aPeriod);
         // Set retained earnings to zero by setting MAX_CORP_RET_EARNINGS_RATE
         // to 0. This is for the technology sectors, like the transportation

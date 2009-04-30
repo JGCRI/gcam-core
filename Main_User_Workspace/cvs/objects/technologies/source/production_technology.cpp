@@ -333,7 +333,6 @@ void ProductionTechnology::initCalc( const MoreSectorInfo* aMoreSectorInfo, cons
         else if( ( year == scenario->getModeltime()->getper_to_yr(aPeriod - 1) ) || 
             ( year < scenario->getModeltime()->getper_to_yr(0) && (aPeriod == 1) ) ) 
         { // transform base and pre-base period vintages in period 1.
-            const Marketplace* marketplace = scenario->getMarketplace();
             double priceReceivedLastPer = FunctionUtils::getPriceReceived( aRegionName, aSectorName, aPeriod - 1 );
             currSigma = sigma2;
             double sigmaNew = sigma1;
@@ -387,9 +386,6 @@ void ProductionTechnology::operate( NationalAccount& aNationalAccount, const Dem
 
             // \todo capital here is capital stock, change name
             double shutdownCoef = calcShutdownCoef( aRegionName, aSectorName, aPeriod );
-            double demand = prodDmdFn->calcDemand( input, 0, aRegionName, aSectorName,
-                                                   shutdownCoef, aPeriod, capital,
-                                                   alphaZeroScaler, currSigma );
 
             // Add wages and land rents to national account
             for( unsigned int i = 0; i < input.size(); i++ ) {
@@ -419,8 +415,6 @@ void ProductionTechnology::operate( NationalAccount& aNationalAccount, const Dem
                 aNationalAccount.addToAccount(NationalAccount::ANNUAL_INVESTMENT, mAnnualInvestment );
             }
             
-            // calculate costs. Shouldn't costs used the scaled output?
-            double costs = prodDmdFn->calcCosts( input, aRegionName, alphaZeroScaler, aPeriod );
             // Calculate output of Production Technology
             double primaryOutput = prodDmdFn->calcOutput( input, aRegionName, aSectorName, shutdownCoef,
                                                           aPeriod, capital, alphaZeroScaler, currSigma );
@@ -710,7 +704,6 @@ void ProductionTechnology::postCalc( const string& aRegionName, const string& aS
         // Save cost, profit rate, and output. Profit rate is needed to convert
         // elasticities, not just for reporting. Calculate the number of years
         // in the lifetime. This would not be correct with variable time steps.
-        const double lifetimeYears = lifeTime * scenario->getModeltime()->gettimestep( aPeriod );
         double shutdownCoef = calcShutdownCoef( aRegionName, aSectorName, aPeriod );
         mProfits[ aPeriod ] = prodDmdFn->calcProfits( input, aRegionName, aSectorName, shutdownCoef,
                                                       aPeriod, capital,

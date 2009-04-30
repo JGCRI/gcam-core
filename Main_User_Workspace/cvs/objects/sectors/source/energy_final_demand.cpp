@@ -547,7 +547,6 @@ double EnergyFinalDemand::PerCapitaGDPDemandFunction::calcDemand(
 {
     // If perCapitaBased, service_demand = B * P^r * GDPperCap^r * Population.
     // All ratios are based on previous period values.
-    const Modeltime* modeltime = scenario->getModeltime();
     if( aPeriod == 0 ){
         // No changes in price, income and population scales.
         return 1;
@@ -574,7 +573,6 @@ double EnergyFinalDemand::TotalGDPDemandFunction::calcDemand( const Demographic*
 {
     // If not perCapitaBased, service_demand = B * P^r * GDP^r
     // Demand based on price changes and scale of GDP 
-    const Modeltime* modeltime = scenario->getModeltime();
     if( aPeriod == 0 ){
         // No changes in price and income.
         return 1;

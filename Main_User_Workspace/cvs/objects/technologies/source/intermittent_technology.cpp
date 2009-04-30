@@ -292,9 +292,6 @@ void IntermittentTechnology::setCoefficients( const string& aRegionName,
                                               const string& aSectorName,
                                               const int aPeriod )
 {
-    // Conversion: 1 gigaWattHour of electricity = 3.6E-6 ExaJoules
-    const double EJ_PER_GWH = 0.0000036;
-
     // Convert backup capacity per unit of resource energy to energy required
     // (in EJ) per unit of resource energy (in EJ) using backup capacity factor.
     // Based on average backup capacity as this is multiplied by sector output

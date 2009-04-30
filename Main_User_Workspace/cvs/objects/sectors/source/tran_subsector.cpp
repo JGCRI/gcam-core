@@ -349,7 +349,6 @@ void TranSubsector::MCoutputSupplySector( const GDP* aGDP ) const {
     
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
-    const double CVRT_90 = 2.212; //  convert '75 price to '90 price
 	const string& outputUnit = mSubsectorInfo->getString( "output-unit", true );
 	const string& priceUnit = mSubsectorInfo->getString( "price-unit", true );
     vector<double> temp(maxper);

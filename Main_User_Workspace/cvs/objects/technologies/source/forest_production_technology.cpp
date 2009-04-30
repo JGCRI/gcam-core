@@ -89,7 +89,7 @@ bool ForestProductionTechnology::XMLDerivedClassParse( const string& nodeName, c
 
 /*! \brief Derived class visitor.
 *
-* This may have already been implimented in multi-inputs version, so replace with that if so.
+* This may have already been implemented in multi-inputs version, so replace with that if so.
 * \author Steve Smith
 */
 void ForestProductionTechnology::acceptDerived( IVisitor* aVisitor, const int aPeriod ) const {

@@ -104,10 +104,7 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
     }
 
     startMethod();
-    const unsigned int nrCalcsStart = calcCounter->getMethodCount( getName() );
       
-    // Constants
-    const static int MAX_ITER_NO_IMPROVEMENT = 7; // Maximum number of iterations without improvement.
     // Update the SolutionVector for the correct markets to solve.
     solution_set.updateFromMarkets();
     // Need to update solvable status before starting solution (Ignore return code)

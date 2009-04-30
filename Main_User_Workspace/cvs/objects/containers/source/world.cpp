@@ -489,7 +489,6 @@ void World::runClimateModel() {
    const double N_TO_N2O = 1.571132; 
    const double N_TO_NO2 = 3.2857;
    const double S_TO_SO2 = 2.0; 
-   const double KT_TO_TG = 0.001; 
    const double HFC_CA_TO_FA = ( 950 / 640 ); 
         
     // Sum 80s deforestation

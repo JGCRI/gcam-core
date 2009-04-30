@@ -328,7 +328,7 @@ void GovtConsumer::calcGovtCapitalDemand( const std::string& regionName, int per
 //! calculate government tax or subsidy
 /*! \todo This isn't called and doesn't work. */
 void GovtConsumer::calcGovtTaxOrSubsidy( const string& regionName, int period ){
-    double taxProAdd = 0;
+
     // need to read in transportationCost in the future!
     double transportationCost = 0;
     double eximport = 1;

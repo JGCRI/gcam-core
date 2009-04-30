@@ -207,7 +207,7 @@ void SubResource::initCalc( const string& aRegionName, const string& aResourceNa
 * \param period Model aPeriod
 */
 void SubResource::postCalc( const string& aRegionName, const string& aResourceName, const int aPeriod ) {
-    const Modeltime* modeltime = scenario->getModeltime();
+
     // Available is the total resource (stock) initialized in initCalc and
     // is the initial amount at the beginning of the period.
     // It does not subtract the amount used in that period.
@@ -323,9 +323,6 @@ string SubResource::getName() const {
 }
 
 void SubResource::cumulsupply(double prc,int per){  
-    const Modeltime* modeltime = scenario->getModeltime();
-
-
     if (per == 0) {
         cumulprod[per] = 0.0;
     }

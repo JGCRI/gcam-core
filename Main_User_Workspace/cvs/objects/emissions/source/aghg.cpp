@@ -250,7 +250,6 @@ double AGHG::getGHGValue( const IInput* aInput, const string& aRegionName,
 double AGHG::calcInputCO2Emissions( const vector<IInput*>& aInputs, const string& aRegionName, const int aPeriod ) const {
     double totalEmissions = 0;
 
-    const Marketplace* marketplace = scenario->getMarketplace();
     // Loop over the inputs calculating the amount of carbon in each.
     for( CInputIterator input = aInputs.begin(); input != aInputs.end(); ++input ){
         // Add on the physical amount of the input multplied by the amount of

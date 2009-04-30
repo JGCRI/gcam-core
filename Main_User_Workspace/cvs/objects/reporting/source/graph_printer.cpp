@@ -175,20 +175,20 @@ void GraphPrinter::startVisitTechnology( const Technology* aTechnology, const in
     }
     
     // Do not show links with values below this.
-    const double DISPLAY_THRESHOLD = 1E-5;
+//    const double DISPLAY_THRESHOLD = 1E-5;
     
     // Number of digits to print of the value on the graph.
-    const unsigned int DISPLAY_PRECISION = 2;
+//    const unsigned int DISPLAY_PRECISION = 2;
 
     // Values at which to switch the type of line used to display the link.
-    const double DOTTED_LEVEL = 1.0;
-    const double DASHED_LEVEL = 5.0;
-    const double LINE_LEVEL = 10.0;
+//    const double DOTTED_LEVEL = 1.0;
+//    const double DASHED_LEVEL = 5.0;
+//    const double LINE_LEVEL = 10.0;
 
     // Set whether to print prices or quantities on the graph. Initialize the
     // value of the line to a price or quantity.
-    double graphValue = 0;
-    const static bool printPrices = Configuration::getInstance()->getBool( "PrintPrices", false );
+//    double graphValue = 0;
+//    const static bool printPrices = Configuration::getInstance()->getBool( "PrintPrices", false );
 
     // TODO: Fix this to work with multiple inputs.
     /*

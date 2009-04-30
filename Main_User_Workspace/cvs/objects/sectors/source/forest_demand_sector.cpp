@@ -72,7 +72,7 @@ bool ForestDemandSector::XMLDerivedClassParse( const string& nodeName, const DOM
     if( nodeName == "perCapitaBased" ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
-        mainLog << "perCapitaBased not implimented for forest sector " << endl;
+        mainLog << "perCapitaBased not implemented for forest sector " << endl;
     }
 
     // Reset demand function to one based on GDP that is never adjusted for price feedbacks.
@@ -307,7 +307,6 @@ double ForestDemandSector::PerCapitaNotAdjGDPDemandFunction::calcDemand(
 {
     // If perCapitaBased, service_demand = B * P^r * GDPperCap^r * Population.
     // All ratios are based on previous period values.
-    const Modeltime* modeltime = scenario->getModeltime();
     if( aPeriod == 0 ){
         // No changes in price, income and population scales.
         return 1;

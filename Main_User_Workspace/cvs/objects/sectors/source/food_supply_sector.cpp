@@ -187,7 +187,6 @@ void FoodSupplySector::supply( const GDP* aGDP, const int aPeriod ) {
 void FoodSupplySector::setMarket() {
     Marketplace* marketplace = scenario->getMarketplace();
     const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
     // name is resource name
     if ( marketplace->createMarket( regionName, mMarketName, name, IMarketType::NORMAL ) ) {

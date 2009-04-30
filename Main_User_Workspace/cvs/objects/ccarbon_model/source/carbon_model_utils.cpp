@@ -155,14 +155,14 @@ double CarbonModelUtils::getSoilTimeScale(){
  *          into an int, which is a unique key for the conceptual root.
  * \return The start year.
  */
-const int CarbonModelUtils::getConceptualRootKey(const ALandAllocatorItem* const aItem ){
+const size_t CarbonModelUtils::getConceptualRootKey(const ALandAllocatorItem* const aItem ){
 
     const ALandAllocatorItem* conceptualRoot = aItem;
     while( conceptualRoot->getParent() && !conceptualRoot->isConceptualRoot() ){
         conceptualRoot = conceptualRoot->getParent();
     }
 
-    return (int)conceptualRoot;
+    return (size_t)conceptualRoot;
 }
 
 /*!

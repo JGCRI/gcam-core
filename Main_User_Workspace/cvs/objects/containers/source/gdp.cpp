@@ -184,8 +184,6 @@ void GDP::toInputXML( ostream& out, Tabs* tabs ) const {
 //! Writes data members to debugging data stream in XML format.
 void GDP::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
-    const Modeltime* modeltime = scenario->getModeltime();
-
     XMLWriteOpeningTag( getXMLNameStatic(), out, tabs );
 
     // GDP to PPP conversion factor

@@ -101,7 +101,6 @@ double HouseholdDemandFunction::calcCoefficient( InputSet& input, double consump
                                                  int period, double sigma, double IBT,
                                                  double capitalStock ) const
 {
-	Marketplace* marketplace = scenario->getMarketplace();
 	for ( unsigned int i = 0; i < input.size(); ++i ) {
 		if( !input[ i ]->hasTypeFlag( IInput::FACTOR ) ){
              // if we use price paid for calcDemand probably need to use it here also

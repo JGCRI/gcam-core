@@ -102,7 +102,6 @@ bool CSPBackupCalculator::XMLParse( const xercesc::DOMNode* node ){
 
     // get all child nodes.
     DOMNodeList* nodeList = node->getChildNodes();
-    const Modeltime* modeltime = scenario->getModeltime();
 
     // loop through the child nodes.
     for( unsigned int i = 0; i < nodeList->getLength(); i++ ){

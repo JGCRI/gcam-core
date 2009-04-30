@@ -1458,7 +1458,6 @@ void XMLDBOutputter::endVisitGDP( const GDP* aGDP, const int aPeriod ){
 
 void XMLDBOutputter::startVisitCarbonBox( const CarbonBox* aCarbonBox,
                                           const int aPeriod ){
-    const Modeltime* modeltime = scenario->getModeltime();
     XMLWriteOpeningTag( CarbonBox::getXMLNameStatic(), mBuffer, mTabs.get(), aCarbonBox->getName() );
     int endingYear = scenario->getModeltime()->getEndYear();
     const Configuration* conf = Configuration::getInstance();

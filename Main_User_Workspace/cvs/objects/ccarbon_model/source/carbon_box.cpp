@@ -552,7 +552,6 @@ void CarbonBox::acceptTransfer( double aCarbonValue, const int aYear,
                                 const BoxType aBoxType ){
 
     if( matches( aBoxType ) ){
-        double prevStock = mStock->getStock( aYear );
         mStock->addToStock( aCarbonValue, aYear );
     }
 }

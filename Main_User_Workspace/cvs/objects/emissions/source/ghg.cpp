@@ -363,7 +363,7 @@ void Ghg::copyGHGParameters( const Ghg* prevGHG ) {
     adjMaxCntrl = prevGHG->adjMaxCntrl;
 
     // Adjust for maximum control level once GDP per capita is determined
-    // This could better be put into a post-calculation processing function if we implimented that in general
+    // This could better be put into a post-calculation processing function if we implemented that in general
     adjustMaxCntrl( prevGHG->gdpCap );
     
 

@@ -87,7 +87,7 @@
  *   - \c mid-price ResidueBiomassOutput::mCostCurve.get/setMidprice()
  *
  * \author Kevin Walker
- * \todo Impliment XMLDB derived class output so that maximum supply can be written out
+ * \todo Implement XMLDB derived class output so that maximum supply can be written out
  * \todo Figure out way to check for invalid input of mErosCtrl for non ag technology (need to check for existance of land allocator (easy) and existance of specified leaf)
  * \date $ Date $
  * \version $ Revision $

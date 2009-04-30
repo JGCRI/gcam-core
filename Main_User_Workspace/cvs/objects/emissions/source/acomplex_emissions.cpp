@@ -211,7 +211,6 @@ double AComplexEmissions::getGHGValue( const string& aRegionName,
     
     // Constants
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
-    const double CVRT_tg_MT = 1e-3; // to get teragrams of carbon per EJ to metric tons of carbon per GJ
     
     double GHGTax = marketplace->getPrice( getName(), aRegionName, aPeriod, false );
     if( GHGTax == Marketplace::NO_MARKET_PRICE ){

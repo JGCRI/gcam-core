@@ -119,7 +119,6 @@ SolverComponent::ReturnCode BisectAll::solve( const double solutionTolerance, co
     solverSet.updateSolvable( false );
     
     // Select the worst market.
-    SolverInfo* worstSol = solverSet.getWorstSolverInfo( edSolutionFloor );
     ILogger& singleLog = ILogger::getLogger( "single_market_log" );
     singleLog.setLevel( ILogger::DEBUG );
 

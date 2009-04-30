@@ -397,8 +397,6 @@ void Sector::initCalc( NationalAccount* aNationalAccount,
                       const Demographic* aDemographics,
                       const int aPeriod )
 {
-    Marketplace* marketplace = scenario->getMarketplace();
-
     // do any sub-Sector initializations
     for ( unsigned int i = 0; i < subsec.size(); ++i ){
         subsec[ i ]->initCalc( aNationalAccount, aDemographics, moreSectorInfo.get(), aPeriod );

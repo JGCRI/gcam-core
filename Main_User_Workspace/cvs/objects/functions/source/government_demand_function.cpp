@@ -107,7 +107,6 @@ double GovernmentDemandFunction::calcCoefficient( InputSet& input, double consum
 												  int period, double sigma, double IBT, 
 											      double capitalStock ) const 
 {
-	Marketplace* marketplace = scenario->getMarketplace();
 	// get government's demand for capital
 	double capitalDemand = 0;
 	for( unsigned int i = 0; i < input.size(); ++i ){

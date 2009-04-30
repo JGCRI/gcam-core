@@ -129,7 +129,7 @@ bool FoodProductionTechnology::XMLDerivedClassParse( const string& nodeName, con
 
 /*! \brief Derived class visitor.
 *
-* This may have already been implimented in multi-inputs version, so replace with that if so.
+* This may have already been implemented in multi-inputs version, so replace with that if so.
 * \author Steve Smith
 */
 void FoodProductionTechnology::acceptDerived( IVisitor* aVisitor, const int aPeriod ) const {

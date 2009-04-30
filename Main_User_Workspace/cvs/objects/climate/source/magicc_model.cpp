@@ -179,7 +179,6 @@ void MagiccModel::XMLParse( const DOMNode* node ){
     assert( node );
 
     DOMNodeList* nodeList = node->getChildNodes();
-    const Modeltime* modeltime = scenario->getModeltime();
 
     for( unsigned int i = 0; i < nodeList->getLength(); ++i ){
         DOMNode* curr = nodeList->item( i );

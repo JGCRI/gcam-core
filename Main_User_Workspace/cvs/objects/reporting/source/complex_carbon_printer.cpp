@@ -108,7 +108,6 @@ void ComplexCarbonPrinter::endVisitCarbonCalc( const ICarbonCalc* aCarbonCalc,
 
 void ComplexCarbonPrinter::startVisitCarbonBox( const CarbonBox* aCarbonBox,
                                                 const int aPeriod ){
-    const Modeltime* modeltime = scenario->getModeltime();
     XMLWriteOpeningTag( CarbonBox::getXMLNameStatic(), mFile, &mTabs, aCarbonBox->getName() );
     XMLWriteElement( aCarbonBox->mStock->getStock( aPeriod ),
                      "carbon-stock", mFile, &mTabs );

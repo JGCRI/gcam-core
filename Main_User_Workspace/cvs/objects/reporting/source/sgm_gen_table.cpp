@@ -300,7 +300,6 @@ void SGMGenTable::startVisitTradeConsumer( const TradeConsumer* tradeConsumer,
         }
 
         // Loop through the inputs and find primary goods.
-        Marketplace* marketplace = scenario->getMarketplace();
         for( unsigned int i = 0; i < tradeConsumer->input.size(); ++i ){
             // Skip non-primary inputs
             if( !tradeConsumer->input[ i ]->hasTypeFlag( IInput::PRIMARY ) ){

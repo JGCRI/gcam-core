@@ -223,9 +223,6 @@ void NukeFuelTechnology::completeInit( const string& aRegionName,
     Technology::completeInit( aRegionName, aSectorName, aSubsectorName, aDepFinder,
         aSubsectorInfo, aLandAllocator, aGlobalTechDB );
 
-    // Adjust byproduct coefficients by the initial mass.
-    // TODO: Can this function and the scaleCoefficient function be removed?
-    const double initalMass = getInitialMass();
     for( OutputIterator i = mOutputs.begin(); i != mOutputs.end(); ++i ){
         ( *i )->scaleCoefficient( getInitialMass() );
     }

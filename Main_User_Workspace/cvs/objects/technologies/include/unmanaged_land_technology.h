@@ -64,7 +64,7 @@ class DependencyFinder;
 * by land area while "Output" GHG objects will be driven by land-area change
 * (e.g. deforestation).
 * \todo Need to change from land-area driver to net-CO2 emissions driver
-* \todo Need to fully impliment land as a new type of physical input. 
+* \todo Need to fully implement land as a new type of physical input. 
 *       Once that is done remove UnmanagedLandTechnology as a friend class in RenewableInput 
 * \author Steve Smith
 */

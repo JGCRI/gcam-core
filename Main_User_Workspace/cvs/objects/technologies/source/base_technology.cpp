@@ -301,7 +301,6 @@ void BaseTechnology::completeInit( const string& aRegionName,
 {
     const Modeltime* modeltime = scenario->getModeltime();
     const int initialYear = max( modeltime->getStartYear(), year );
-    const int initialPeriod = modeltime->getyr_to_per( initialYear );
 
     for( InputIterator anInput = input.begin(); anInput != input.end(); ++anInput ) {
          // This does not appear to do anything, might not work if it did due to later copying.
@@ -457,7 +456,6 @@ void BaseTechnology::calcPricePaid( const MoreSectorInfo* aMoreSectorInfo, const
         additiveTax = aMoreSectorInfo->getValue(MoreSectorInfo::ADDITIVE_TAX);
     }
 
-    Marketplace* marketplace = scenario->getMarketplace();
     for( unsigned int i = 0; i < input.size(); i++ ) {
         // Could this be simplified some by moving it into input? Possibly a derived class for capital?
         // fails without using inputName in argument, don't know the cause

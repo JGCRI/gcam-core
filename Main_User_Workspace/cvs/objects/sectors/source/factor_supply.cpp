@@ -67,8 +67,6 @@ extern Scenario* scenario;
 //! Default Constructor
 FactorSupply::FactorSupply() {
     // resize vectors
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
     mBasePrice = 0;
     mBaseSupply = 0;
     // instantiate moreSectorInfo object here,
@@ -92,7 +90,6 @@ bool FactorSupply::XMLParse( const xercesc::DOMNode* node) {
     // get all child nodes.
     DOMNodeList* nodeList = node->getChildNodes();
 
-    const Modeltime* modeltime = scenario->getModeltime();
     // loop through the child nodes.
     for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
         DOMNode* curr = nodeList->item( i );
@@ -120,7 +117,6 @@ bool FactorSupply::XMLParse( const xercesc::DOMNode* node) {
 
 //! Write to XML
 void FactorSupply::toInputXML( ostream &out, Tabs* tabs ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
 
     // write the beginning tag.
     XMLWriteOpeningTag ( getXMLName(), out, tabs, name );

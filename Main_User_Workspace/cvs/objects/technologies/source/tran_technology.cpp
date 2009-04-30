@@ -261,7 +261,6 @@ double TranTechnology::getNonEnergyCost( const string& aRegionName,
                                       const int aPeriod ) const
 {
     // NOTE: This entire function is copied so the units can be adjusted.
-    const double CVRT90 = 2.212; // 1975 $ to 1990 $
 
     // Initialize non-energy cost.
     double cost = 0;

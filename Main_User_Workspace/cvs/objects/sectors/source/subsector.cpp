@@ -477,7 +477,6 @@ void Subsector::completeInit( const IInfo* aSectorInfo,
         baseTechs[i]->completeInit( regionName, sectorName, name );
     }
 
-    const Modeltime* modeltime = scenario->getModeltime();
     for( unsigned int j = 0; j < baseTechs.size(); ++j ){
         //if( baseTechs[ j ]->getYear() == modeltime->getper_to_yr( 0 ) ) {
             baseTechs[ j ]->removeEmptyInputs();
@@ -2116,7 +2115,6 @@ double Subsector::getCapitalOutputRatio( const IDistributor* aDistributor,
 * \param aPeriod Period to operate in.
 */
 void Subsector::operate( NationalAccount& aNationalAccount, const Demographic* aDemographic, const MoreSectorInfo* aMoreSectorInfo, const bool isNewVintageMode, const int aPeriod ){
-    const Modeltime* modeltime = scenario->getModeltime();
     typedef vector<BaseTechnology*>::iterator BaseTechIterator;
     for( BaseTechIterator currTech = baseTechs.begin(); currTech != baseTechs.end(); ++currTech ){
         (*currTech)->operate( aNationalAccount, aDemographic, aMoreSectorInfo, regionName, sectorName, isNewVintageMode, aPeriod );
@@ -2143,7 +2141,6 @@ void Subsector::updateMarketplace( const int period ) {
 * \author Josh Lurz, Sonny Kim
 */
 void Subsector::postCalc( const int aPeriod ){
-    const Modeltime* modeltime = scenario->getModeltime();
     // Finalize base technologies.
     for( BaseTechIterator baseTech = baseTechs.begin(); baseTech != baseTechs.end(); ++baseTech ){
         (*baseTech)->postCalc( regionName, sectorName, aPeriod );

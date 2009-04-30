@@ -97,8 +97,6 @@ void GlobalTechnologyDatabase::XMLParse( const DOMNode* aNode ){
     // get all the children.
     DOMNodeList* nodeList = aNode->getChildNodes();
 
-    const Modeltime* modeltime = scenario->getModeltime();
-
     for( unsigned int i = 0;  i < nodeList->getLength(); ++i ){
         DOMNode* curr = nodeList->item( i );
         const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
