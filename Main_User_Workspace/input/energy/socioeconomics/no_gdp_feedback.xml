@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Staff (PNNL) -->
+<scenario>
+	<world>
+		<region name="Africa">
+			<GDP>
+				<e_GDP_elas>0</e_GDP_elas>
+			</GDP>
+		</region>
+		<region name="Australia_NZ">
+			<GDP>
+				<e_GDP_elas>0</e_GDP_elas>
+			</GDP>
+		</region>
+		<region name="Canada">
+			<GDP>
+				<e_GDP_elas>0</e_GDP_elas>
+			</GDP>
+		</region>
+		<region name="China">
+			<GDP>
+				<e_GDP_elas>0</e_GDP_elas>
+			</GDP>
+		</region>
+		<region name="Eastern Europe">
+			<GDP>
+				<e_GDP_elas>0</e_GDP_elas>
+			</GDP>
+		</region>
+		<region name="Former Soviet Union">
+			<GDP>
+				<e_GDP_elas>0</e_GDP_elas>
+			</GDP>
+		</region>
+		<region name="India">
+			<GDP>
+				<e_GDP_elas>0</e_GDP_elas>
+			</GDP>
+		</region>
+		<region name="Japan">
+			<GDP>
+				<e_GDP_elas>0</e_GDP_elas>
+			</GDP>
+		</region>
+		<region name="Korea">
+			<GDP>
+				<e_GDP_elas>0</e_GDP_elas>
+			</GDP>
+		</region>
+		<region name="Latin America">
+			<GDP>
+				<e_GDP_elas>0</e_GDP_elas>
+			</GDP>
+		</region>
+		<region name="Middle East">
+			<GDP>
+				<e_GDP_elas>0</e_GDP_elas>
+			</GDP>
+		</region>
+		<region name="Southeast Asia">
+			<GDP>
+				<e_GDP_elas>0</e_GDP_elas>
+			</GDP>
+		</region>
+		<region name="USA">
+			<GDP>
+				<e_GDP_elas>0</e_GDP_elas>
+			</GDP>
+		</region>
+		<region name="Western Europe">
+			<GDP>
+				<e_GDP_elas>0</e_GDP_elas>
+			</GDP>
+		</region>
+	</world>
+</scenario>
