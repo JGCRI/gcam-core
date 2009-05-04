@@ -8,7 +8,7 @@
 		<Value name="logOutFileName">logfile.csv</Value>
 		<Value name="climatFileName">gas.emk</Value>
          <Value name="xmlInputFileName">../cvs/objects/model_data/base/core_model_input_2009-03-13.xml</Value>
-		<Value name="xmlOutputFileName">../output/treas_output.xml</Value>
+		<Value name="xmlOutputFileName">../output/output.xml</Value>
 		<Value name="xmlDebugFileName">debug.xml</Value>
 		<Value name="sdCurveFileName">sdcurve.csv</Value>
 		<Value name="sdFileName">sdall.csv</Value>
@@ -56,6 +56,7 @@
 		<Value name="nonlandcostchange">../input/aglu/nonlandcostchange.xml</Value>
 
           <Value name="socioeconomics">../input/energy/socioeconomics/gdp_population.xml</Value>
+		  <Value name="no_gdp_feedback">../input/energy/socioeconomics/no_gdp_feedback.xml</Value>
           <Value name="demand">../input/energy/socioeconomics/agg_demand_elasticities.xml</Value>
           <Value name="bld_aeei">../input/energy/socioeconomics/agg_building_aeei_ref.xml</Value>
           <Value name="ind_aeei">../input/energy/socioeconomics/agg_industry_aeei_ref.xml</Value>
