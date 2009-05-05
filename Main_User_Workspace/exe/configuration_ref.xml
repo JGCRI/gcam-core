@@ -23,37 +23,16 @@
         <Value name="BatchFileName">batch_emf.xml</Value>
 	</Files>
 	<ScenarioComponents>
-		<Value name="del_gen_bio">../input/aglu/SmoothWasteBio.xml</Value>
-		<Value name="fooddemand">../input/aglu/fooddemand_fiber.xml</Value>
-		<Value name="beef">../input/aglu/beef_zeroIEcal.xml</Value>
-		<Value name="pork">../input/aglu/pork.xml</Value>
-		<Value name="poultry">../input/aglu/poultry.xml</Value>
-		<Value name="dairy">../input/aglu/dairy.xml</Value>
-		<Value name="sheepgoat">../input/aglu/sheepgoat.xml</Value>
-		<Value name="all_tech">../input/aglu/detailed_techchange.xml</Value>
-		<Value name="biomass">../input/aglu/biomassAT_vcost2.xml</Value>
-		<Value name="noadder">../input/aglu/Add_On_bioadder_0.xml</Value>
-		<Value name="food">../input/aglu/foodsupply_nozero_fiber.xml</Value>
-		<Value name="food">../input/aglu/foodsupply_fakeyields.xml</Value>
-		<Value name="harvest">../input/aglu/harvested_cropped.xml</Value>
-		<Value name="resources">../input/aglu/Resources.xml</Value>
-		<Value name="Pasture">../input/aglu/MI_pasture.xml</Value>
-		<Value name="ruminant_logitexp">../input/aglu/ruminant_logitexp2.xml</Value>
-		<Value name="forest">../input/aglu/Forest.xml</Value>
-		<Value name="calPrices">../input/aglu/calprices.xml</Value>
+		<Value name="del_gen_bio">..\input\aglu\smoothwastebio.xml</Value>
+		<Value name="aglu">..\input\aglu\aglu_input_ref.xml</Value>
+		<Value name="noadder">..\input\aglu\Add_On_bioadder_0.xml</Value>
 		<Value name="start_year">../input/aglu/CCcycle_Start_1700.xml</Value>
 		<Value name="cclandallocator">../input/aglu/LandAllocator.xml</Value>
-		<Value name="managed">../input/aglu/ManagedCarbon.xml</Value>
-		<Value name="unmanaged">../input/aglu/UnmanagedCarbon.xml</Value>
-		<Value name="meatdemand">../input/aglu/MeatIncomeElasticity.xml</Value>
-		<Value name="techChange">../input/aglu/CCTPRefAgTech.xml</Value>
-		<Value name="ag_bio">../input/aglu/ag_res_bio3.xml</Value>
-		<Value name="forest_bio">../input/aglu/forest_res_bio2.xml</Value>
-		<Value name="mill_bio">../input/aglu/mill_res_bio2.xml</Value>
-		<Value name="fodder">../input/aglu/globalfodder.xml</Value>
-		<Value name="calPrices">../input/aglu/calprices_pasture.xml</Value>
-		<Value name="maxYield">../input/aglu/MaximumYield.xml</Value>
-		<Value name="nonlandcostchange">../input/aglu/nonlandcostchange.xml</Value>
+		<Value name="managed">..\input\aglu\ManagedCarbon.xml</Value>
+		<Value name="unmanaged">..\input\aglu\UnmanagedCarbon.xml</Value>
+		<Value name="ag_bio">..\input\aglu\ag_res_bio3.xml</Value>
+		<Value name="forest_bio">..\input\aglu\forest_res_bio2.xml</Value>
+		<Value name="mill_bio">..\input\aglu\mill_res_bio2.xml</Value>
 
           <Value name="socioeconomics">../input/energy/socioeconomics/gdp_population.xml</Value>
 		  <Value name="no_gdp_feedback">../input/energy/socioeconomics/no_gdp_feedback.xml</Value>
