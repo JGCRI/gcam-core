@@ -1,0 +1,113 @@
+Biomass supply,,,,,
+"Unit tags, sector type",,,,,
+INPUT_TABLE,,unit tags,,,
+Variable ID,,,,,
+20,,,,,
+
+region,FoodSupplySector,output-unit,input-unit,price-unit,sectorType
+ALL,biomass,EJ,000Ha,1975$/GJ,Agriculture
+
+
+Market,,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+21,,,,,
+,,,1975,,
+region,FoodSupplySector,market,price,,
+USA,biomass,global,0.623
+Canada,biomass,global,0.623
+Western Europe,biomass,global,0.623
+Japan,biomass,global,0.623
+Australia_NZ,biomass,global,0.623
+Former Soviet Union,biomass,global,0.623
+China,biomass,global,0.623
+Middle East,biomass,global,0.623
+Africa,biomass,global,0.623
+Latin America,biomass,global,0.623
+Southeast Asia,biomass,global,0.623
+Eastern Europe,biomass,global,0.623
+Korea,biomass,global,0.623
+India,biomass,global,0.623
+
+
+landType,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+2003,,,,,,,,,,,,,
+,,,,landType,landType,landType,landType,landType,landType,landType,landType,landType,
+region,FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,1975,1990,2005,2020,2035,2050,2065,2080,2095,
+ALL,biomass,biomass,biomass,CropLand,CropLand,CropLand,CropLand,CropLand,CropLand,CropLand,CropLand,CropLand,
+
+calYield,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+2005,,,,GJ per thousand hectares,,,Regional biomass yields roughtly adjusted according to regional above-ground biomass contents. Need to improve.,,,,,,
+,,,,calYield,calYield,,Assume median productivity for mid-lat of,,,,12,dryton/ha,based on
+region,FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,1990,2005,,,,,,,,
+USA,biomass,biomass,biomass,140000,140000,,Allison's version - reduced yield by 1/3 based on assumtion that this is grass and avg. yield for US would be closer to 8.,,,,,,
+Canada,biomass,biomass,biomass,112000,112000,,Also set EEU to same yield as the rest of Europe.,,,,,,
+Western Europe,biomass,biomass,biomass,140000,140000,,,,,,
+Japan,biomass,biomass,biomass,140000,140000,,,region,Bioyield(dry tons/ha),GJ/ton,GJ/1000ha
+Australia_NZ,biomass,biomass,biomass,70000,70000,,USA,1,8,17.5,140000
+Former Soviet Union,biomass,biomass,biomass,7000,7000,fsu lowered,Canada,2,6.4,17.5,112000
+China,biomass,biomass,biomass,140000,140000,,OECD90 Europe,3,8,17.5,140000
+Middle East,biomass,biomass,biomass,70000,70000,,Japan,4,8,17.5,140000
+Africa,biomass,biomass,biomass,140000,140000,,Aus & NZ,5,4,17.5,70000
+Latin America,biomass,biomass,biomass,140000,140000,,FSU,6,8,17.5,140000
+Southeast Asia,biomass,biomass,biomass,196000,196000,,China/CPA,7,8,17.5,140000
+Eastern Europe,biomass,biomass,biomass,140000,140000,,MiddleEast,8,4,17.5,70000
+Korea,biomass,biomass,biomass,140000,140000,,Africa,9,8,17.5,140000
+India,biomass,biomass,biomass,196000,196000,,Latin America,10,8,17.5,140000
+,,,,,,,S&E Asia,11,11.2,17.5,196000
+,,,,,,,EEU,12,8,17.5,140000
+variableCost,,,,,,,Korea,13,8,17.5,140000
+INPUT_TABLE,,,,,,,India,14,11.2,17.5,196000
+Variable ID,,,,,,,,,,,,
+2006,,,,,,,,,,,,
+
+region,FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,biomass,biomass,biomass,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67
+Canada,biomass,biomass,biomass,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67
+Western Europe,biomass,biomass,biomass,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67
+Japan,biomass,biomass,biomass,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67
+Australia_NZ,biomass,biomass,biomass,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67
+Former Soviet Union,biomass,biomass,biomass,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67
+China,biomass,biomass,biomass,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67
+Middle East,biomass,biomass,biomass,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67
+Africa,biomass,biomass,biomass,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67
+Latin America,biomass,biomass,biomass,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67
+Southeast Asia,biomass,biomass,biomass,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67
+Eastern Europe,biomass,biomass,biomass,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67
+Korea,biomass,biomass,biomass,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67
+India,biomass,biomass,biomass,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67,1.67
+
+
+Non-energy input cost,,,,,,,,,,,,
+table not necessary,,,,,,,,,,,,
+,,,,,,,,,,,,
+2010,,,,,,,,,,,,
+,,,,,,,,,,,,
+region,FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,biomass,biomass,biomass,0,0,0,0,0,0,0,0,0
+Canada,biomass,biomass,biomass,0,0,0,0,0,0,0,0,0
+Western Europe,biomass,biomass,biomass,0,0,0,0,0,0,0,0,0
+Japan,biomass,biomass,biomass,0,0,0,0,0,0,0,0,0
+Australia_NZ,biomass,biomass,biomass,0,0,0,0,0,0,0,0,0
+Former Soviet Union,biomass,biomass,biomass,0,0,0,0,0,0,0,0,0
+China,biomass,biomass,biomass,0,0,0,0,0,0,0,0,0
+Middle East,biomass,biomass,biomass,0,0,0,0,0,0,0,0,0
+Africa,biomass,biomass,biomass,0,0,0,0,0,0,0,0,0
+Latin America,biomass,biomass,biomass,0,0,0,0,0,0,0,0,0
+Southeast Asia,biomass,biomass,biomass,0,0,0,0,0,0,0,0,0
+Eastern Europe,biomass,biomass,biomass,0,0,0,0,0,0,0,0,0
+Korea,biomass,biomass,biomass,0,0,0,0,0,0,0,0,0
+India,biomass,biomass,biomass,0,0,0,0,0,0,0,0,0
+
+
+CO2 tag,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+2011,,,,,,,,,,,,
+,,,,,,,,,,,,
+region,FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+ALL,biomass,biomass,biomass,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2

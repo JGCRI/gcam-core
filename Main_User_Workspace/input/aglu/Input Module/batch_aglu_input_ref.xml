@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ModelInterfaceBatch>
+	<!-- You must first identify the class which will run the command.
+	     For csv conversions it will always be InputViewer.
+	     TODO: make it so the class name is not necessary.
+	  -->
+	<class name="ModelInterface.ModelGUI2.InputViewer">
+		<!-- The command you want to run.  It would be the same name as
+		     the name in the Open.. submenu.
+		  -->
+		<command name="CSV file">
+			<!-- For csv conversions you need to give it a header file,
+			     where to place the resulting xml file, and one or more
+			     csv files which you want to convert with the given 
+			     header file
+			  -->
+			<headerFile>../../AgLu/Input Module/Aglu_headers_050109.txt</headerFile>
+			<outFile>../../AgLu/Input Module/aglu_input_ref.xml</outFile>
+			<csvFile>../../AgLu/Input Module/pasture.csv</csvFile>
+			<csvFile>../../AgLu/Input Module/scavenging.csv</csvFile>
+			<csvFile>../../AgLu/Input Module/food_supply.csv</csvFile>
+			<csvFile>../../AgLu/Input Module/food_demand.csv</csvFile>
+			<csvFile>../../AgLu/Input Module/beef.csv</csvFile>
+			<csvFile>../../AgLu/Input Module/dairy.csv</csvFile>
+			<csvFile>../../AgLu/Input Module/pork.csv</csvFile>
+			<csvFile>../../AgLu/Input Module/poultry.csv</csvFile>
+			<csvFile>../../AgLu/Input Module/sheepgoat.csv</csvFile>
+			<csvFile>../../AgLu/Input Module/forest.csv</csvFile>
+			<csvFile>../../AgLu/Input Module/biomass.csv</csvFile>
+			<csvFile>../../AgLu/Input Module/max_yield_ref.csv</csvFile>
+			<csvFile>../../AgLu/Input Module/tech_change_ref.csv</csvFile>
+			<csvFile>../../AgLu/Input Module/non_land_cost.csv</csvFile>
+			<csvFile>../../AgLu/Input Module/food_delete_nocal.csv</csvFile>
+		</command>
+	</class>
+</ModelInterfaceBatch>

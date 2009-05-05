@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Staff (PNNL) -->
+<scenario>
+	<world>
+		<region name="Canada">
+			<FoodSupplySector name="Corn">
+				<FoodSupplySubsector name="Corn">
+					<FoodProductionTechnology name="Corn">
+						<period year="1975">
+							<NonLandCostTechChange>0</NonLandCostTechChange>
+						</period>
+						<period year="1990">
+							<NonLandCostTechChange>0</NonLandCostTechChange>
+						</period>
+						<period year="2005">
+							<NonLandCostTechChange>0</NonLandCostTechChange>
+						</period>
+						<period year="2020">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2035">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2050">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2065">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2080">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2095">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+					</FoodProductionTechnology>
+				</FoodSupplySubsector>
+			</FoodSupplySector>
+			<FoodSupplySector name="OilCrop">
+				<FoodSupplySubsector name="OilCrop">
+					<FoodProductionTechnology name="OilCrop">
+						<period year="1975">
+							<NonLandCostTechChange>0</NonLandCostTechChange>
+						</period>
+						<period year="1990">
+							<NonLandCostTechChange>0</NonLandCostTechChange>
+						</period>
+						<period year="2005">
+							<NonLandCostTechChange>0</NonLandCostTechChange>
+						</period>
+						<period year="2020">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2035">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2050">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2065">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2080">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2095">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+					</FoodProductionTechnology>
+				</FoodSupplySubsector>
+			</FoodSupplySector>
+			<FoodSupplySector name="OtherGrain">
+				<FoodSupplySubsector name="OtherGrain">
+					<FoodProductionTechnology name="OtherGrain">
+						<period year="1975">
+							<NonLandCostTechChange>0</NonLandCostTechChange>
+						</period>
+						<period year="1990">
+							<NonLandCostTechChange>0</NonLandCostTechChange>
+						</period>
+						<period year="2005">
+							<NonLandCostTechChange>0</NonLandCostTechChange>
+						</period>
+						<period year="2020">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2035">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2050">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2065">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2080">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2095">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+					</FoodProductionTechnology>
+				</FoodSupplySubsector>
+			</FoodSupplySector>
+			<FoodSupplySector name="Wheat">
+				<FoodSupplySubsector name="Wheat">
+					<FoodProductionTechnology name="Wheat">
+						<period year="1975">
+							<NonLandCostTechChange>0</NonLandCostTechChange>
+						</period>
+						<period year="1990">
+							<NonLandCostTechChange>0</NonLandCostTechChange>
+						</period>
+						<period year="2005">
+							<NonLandCostTechChange>0</NonLandCostTechChange>
+						</period>
+						<period year="2020">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2035">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2050">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2065">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2080">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2095">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+					</FoodProductionTechnology>
+				</FoodSupplySubsector>
+			</FoodSupplySector>
+		</region>
+		<region name="Australia_NZ">
+			<FoodSupplySector name="Rice">
+				<FoodSupplySubsector name="Rice">
+					<FoodProductionTechnology name="Rice">
+						<period year="1975">
+							<NonLandCostTechChange>0</NonLandCostTechChange>
+						</period>
+						<period year="1990">
+							<NonLandCostTechChange>0</NonLandCostTechChange>
+						</period>
+						<period year="2005">
+							<NonLandCostTechChange>0</NonLandCostTechChange>
+						</period>
+						<period year="2020">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2035">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2050">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2065">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2080">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2095">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+					</FoodProductionTechnology>
+				</FoodSupplySubsector>
+			</FoodSupplySector>
+		</region>
+		<region name="China">
+			<FoodSupplySector name="Rice">
+				<FoodSupplySubsector name="Rice">
+					<FoodProductionTechnology name="Rice">
+						<period year="1975">
+							<NonLandCostTechChange>0</NonLandCostTechChange>
+						</period>
+						<period year="1990">
+							<NonLandCostTechChange>0</NonLandCostTechChange>
+						</period>
+						<period year="2005">
+							<NonLandCostTechChange>0</NonLandCostTechChange>
+						</period>
+						<period year="2020">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2035">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2050">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2065">
+							<NonLandCostTechChange>0.0005</NonLandCostTechChange>
+						</period>
+						<period year="2080">
+							<NonLandCostTechChange>0.0005</NonLandCostTechChange>
+						</period>
+						<period year="2095">
+							<NonLandCostTechChange>0.0005</NonLandCostTechChange>
+						</period>
+					</FoodProductionTechnology>
+				</FoodSupplySubsector>
+			</FoodSupplySector>
+		</region>
+		<region name="Former Soviet Union">
+			<FoodSupplySector name="Wheat">
+				<FoodSupplySubsector name="Wheat">
+					<FoodProductionTechnology name="Wheat">
+						<period year="1975">
+							<NonLandCostTechChange>0</NonLandCostTechChange>
+						</period>
+						<period year="1990">
+							<NonLandCostTechChange>0</NonLandCostTechChange>
+						</period>
+						<period year="2005">
+							<NonLandCostTechChange>0</NonLandCostTechChange>
+						</period>
+						<period year="2020">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2035">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2050">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2065">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2080">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+						<period year="2095">
+							<NonLandCostTechChange>0.001</NonLandCostTechChange>
+						</period>
+					</FoodProductionTechnology>
+				</FoodSupplySubsector>
+			</FoodSupplySector>
+		</region>
+	</world>
+</scenario>

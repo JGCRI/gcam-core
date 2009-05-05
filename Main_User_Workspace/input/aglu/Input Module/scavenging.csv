@@ -1,0 +1,68 @@
+Non-agricultural feed supply,,,,,
+"Unit tags, market, 1975 price",,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+80,,,,,
+,,,,,1975
+region,renew-resource,output-unit,price-unit,market,price
+USA,Scavenging,Gcal,1975$/Gcal,USA,5.5
+Canada,Scavenging,Gcal,1975$/Gcal,Canada,5.5
+Western Europe,Scavenging,Gcal,1975$/Gcal,Western Europe,5.5
+Japan,Scavenging,Gcal,1975$/Gcal,Japan,5.5
+Australia_NZ,Scavenging,Gcal,1975$/Gcal,Australia_NZ,5.5
+Former Soviet Union,Scavenging,Gcal,1975$/Gcal,Former Soviet Union,5.5
+China,Scavenging,Gcal,1975$/Gcal,China,5.5
+Middle East,Scavenging,Gcal,1975$/Gcal,Middle East,5.5
+Africa,Scavenging,Gcal,1975$/Gcal,Africa,5.5
+Latin America,Scavenging,Gcal,1975$/Gcal,Latin America,5.5,,,,
+Southeast Asia,Scavenging,Gcal,1975$/Gcal,Southeast Asia,5.5,,,,
+Eastern Europe,Scavenging,Gcal,1975$/Gcal,Eastern Europe,5.5,,,,
+Korea,Scavenging,Gcal,1975$/Gcal,Korea,5.5,,,,
+India,Scavenging,Gcal,1975$/Gcal,India,5.5,,,,
+
+
+"Max Subresource, extraction cost",,,,,,,,,
+INPUT_TABLE,,,,,,,,,
+Variable ID,,,"Assumed to be max (1990,2005) consumption by all sectors",,,,,,
+800,,,,,,,,,
+,,,,grade 1,grade 2,grade 3,,,
+region,renewresource,subrenew-resource,maxSubResource,extractioncost,extractioncost,extractioncost,,,
+USA,Scavenging,Scavenging,10000,5,7,15,,,
+Canada,Scavenging,Scavenging,10000,5,7,15,,,
+Western Europe,Scavenging,Scavenging,4428577,5,7,15,,,
+Japan,Scavenging,Scavenging,10000,5,7,15,,,
+Australia_NZ,Scavenging,Scavenging,8877916,5,7,15,,,
+Former Soviet Union,Scavenging,Scavenging,8925997,5,7,15,,,
+China,Scavenging,Scavenging,50976012,5,7,15,,,
+Middle East,Scavenging,Scavenging,6011080,5,7,15,,,
+Africa,Scavenging,Scavenging,58450941,5,7,15,,,
+Latin America,Scavenging,Scavenging,112719570,5,7,15,,,
+Southeast Asia,Scavenging,Scavenging,314929927,5,7,15,,,
+Eastern Europe,Scavenging,Scavenging,10868176,5,7,15,,,
+Korea,Scavenging,Scavenging,1103141,5,7,15,,,
+India,Scavenging,Scavenging,555008709,5,7,15,,,
+
+
+Resource available,,,,,,,,,
+INPUT_TABLE,,,,,,,,,
+Variable ID,,,,,,,,,
+801,,,,
+,,,grade 2,grade 3
+region,renew-resource,subrenew-resource,available,available
+USA,Scavenging,Scavenging,1.0,1.5
+Canada,Scavenging,Scavenging,1.0,1.5
+Western Europe,Scavenging,Scavenging,1.0,1.5
+Japan,Scavenging,Scavenging,1.0,1.5
+Australia_NZ,Scavenging,Scavenging,1.0,1.5
+Former Soviet Union,Scavenging,Scavenging,1.0,1.5
+China,Scavenging,Scavenging,1.0,1.5
+Middle East,Scavenging,Scavenging,1.0,1.5
+Africa,Scavenging,Scavenging,1.0,1.5
+Latin America,Scavenging,Scavenging,1.0,1.5
+Southeast Asia,Scavenging,Scavenging,1.0,1.5
+Eastern Europe,Scavenging,Scavenging,1.0,1.5
+Korea,Scavenging,Scavenging,1.0,1.5
+India,Scavenging,Scavenging,1.0,1.5
+
+
+,,,,

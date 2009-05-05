@@ -1,0 +1,182 @@
+Pasture supply,,,,,,
+"unit tags, sector type, and market",,,,,,
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+20,,,,,,
+
+region,FoodSupplySector,output-unit,input-unit,price-unit,sectorType,
+ALL,Pasture,Gcal,Gcal,$/Gcal,pastureSupply,
+,,,,,,
+,,,,,,
+Market,,,,,,
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+21,,,,,,
+,,,1975,from model output,,
+region,FoodSupplySector,market,price,,,
+USA,Pasture,USA,2.057,,,
+Canada,Pasture,Canada,0.36,,,
+Western Europe,Pasture,Western Europe,3.96,,,
+Japan,Pasture,Japan,3.61,,,
+Australia_NZ,Pasture,Australia_NZ,0.745,,,
+Former Soviet Union,Pasture,Former Soviet Union,0.542,,,
+China,Pasture,China,2.17,,,
+Middle East,Pasture,Middle East,1.627,,,
+Africa,Pasture,Africa,0.339,,,
+Latin America,Pasture,Latin America,0.859,,,
+Southeast Asia,Pasture,Southeast Asia,2.51,,,
+Eastern Europe,Pasture,Eastern Europe,4.52,,,
+Korea,Pasture,Korea,0.452,,,
+India,Pasture,India,0.74,,,
+,,,,,,
+,,,,,,
+calPrice,,,
+INPUT_TABLE,,,
+Variable ID,,,
+22,,,
+,,,from model output
+region,FoodSupplySector,calPrice,
+USA,Pasture,4.55,
+Canada,Pasture,0.80,
+Western Europe,Pasture,8.76,
+Japan,Pasture,8.00,
+Australia_NZ,Pasture,1.65,
+Former Soviet Union,Pasture,1.20,
+China,Pasture,4.80,
+Middle East,Pasture,3.60,
+Africa,Pasture,0.75,
+Latin America,Pasture,1.90,
+Southeast Asia,Pasture,5.54,,,,,,,,,,
+Eastern Europe,Pasture,10.00,,,,,,,,,,
+Korea,Pasture,1.00,,,,,,,,,,
+India,Pasture,1.63,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+landType,,,,,,,,,,,,
+INPUT_TABLE,,All regions equal,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+2003,,,,,,,,,,,,
+,,,,landType,landType,landType,landType,landType,landType,landType,landType,landType
+region,FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+ALL,Pasture,Pasture,Pasture,PastureLand,PastureLand,PastureLand,PastureLand,PastureLand,PastureLand,PastureLand,PastureLand,PastureLand
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+calLandUsed,,,,,,,,,,,,
+INPUT_TABLE,,"table # is 2000 when future path not fixed, 2100 when fixed",,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,Total Pasture Land,,,,
+2000,,,,,,,,,,,,,,,,,,
+,,,,calLandUsed,calLandUsed,calLandUsed,calLandUsed,calLandUsed,calLandUsed,calLandUsed,calLandUsed,,,calLandUsed,calLandUsed,,,
+region,FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,1990,2005,2020,2035,2050,2065,2080,2095,,,1990,2005,,,
+USA,Pasture,Pasture,Pasture,58220,58338,235818,234036,232254,230472,228690,226908,,,229750,230214,,25%,25%
+Canada,Pasture,Pasture,Pasture,9583,9274,15784,15664,15545,15426,15307,15187,,,15792,15282,,61%,61%
+Western Europe,Pasture,Pasture,Pasture,51973,47560,72703,72153,71604,71054,70505,69956,,,57170,52316,,91%,91%
+Japan,Pasture,Pasture,Pasture,273,286,450,450,450,450,450,450,,,300,314,,91%,91%
+Australia_NZ,Pasture,Pasture,Pasture,71073,67658,406237,403167,400098,397028,393958,390888,,,428757,408153,,17%,17%
+Former Soviet Union,Pasture,Pasture,Pasture,39607,43825,363871,366579,369288,371997,374706,377414,,,325784,360474,,12%,12%
+China,Pasture,Pasture,Pasture,91138,87775,556328,580284,604241,628198,652154,676111,,,520716,501498,,18%,18%
+Middle East,Pasture,Pasture,Pasture,8606,8098,259551,274242,288934,303625,318317,333008,,,193577,182161,,4%,4%
+Africa,Pasture,Pasture,Pasture,91422,92552,934231,948038,961844,975651,989457,1003263,,,876083,886916,,10%,10%
+Latin America,Pasture,Pasture,Pasture,229958,236141,565674,572381,579089,585796,592504,599212,,,538094,552562,,43%,43%
+Southeast Asia,Pasture,Pasture,Pasture,41954,40793,53960,54758,55555,56353,57150,57948,,,53687,52201,,78%,78%
+Eastern Europe,Pasture,Pasture,Pasture,1713,1734,18674,18813,18952,19091,19230,19369,,,31783,32168,,5%,5%,,,,,,,,,,,
+Korea,Pasture,Pasture,Pasture,28,18,711,721,732,742,753,763,,,31,20,,91%,91%,,,,,,,,,,,
+India,Pasture,Pasture,Pasture,9686,9050,10846,11162,11478,11794,12110,12425,,,10655,9955,,91%,91%,,,,,,,,,,,
+
+
+Calibrated Output / Fixed Output,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,"table # is 2001 when future path not fixed, 2101 when fixed",,,,,,,,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,FixedOutput,FixedOutput,,,,,,,,,,,,,,,,,,,,,,,,
+2001,,,,CalDataOutput,CalDataOutput,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,calOutputValue,calOutputValue,FixedOutput,FixedOutput,FixedOutput,FixedOutput,FixedOutput,FixedOutput,,,Actual Yield,,,Desired Yield,,,Original Yield,,,25% of Fodder,,,,,,
+region,FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,,,,,,,,,,,,,
+USA,Pasture,Pasture,Pasture,460092231,446874347,444806381,442719014,440612249,438486084,436340520,434175556,,USA," 7,903 "," 7,660 ",,7903,7660,,2003,1941,,7011,7660,,Africa,FodderCrop,39021.3,37108.6
+Canada,Pasture,Pasture,Pasture,64687716,80031076,78936966,77850319,76771137,75699419,74635164,73578374,,Canada," 6,750 "," 8,630 ",,6750,8630,,4096,5237,,8016,8630,,Australia_NZ,FodderCrop,23660.1,21542.6
+Western Europe,Pasture,Pasture,Pasture,496289139,445816057,437207898,428679302,420230272,411860807,403570906,395360570,,Western Europe," 9,549 "," 9,374 ",,9549,9374,,8681,8522,,7686,6861,,Canada,FodderCrop,32063,34519
+Japan,Pasture,Pasture,Pasture,11703656,8066039,7311432,6556824,5802216,5047608,4293000,3538392,,Japan," 42,886 "," 28,247 ",,42886,28247,,38988,25679,,13030,13402,,China,FodderCrop,29620.2,35111.6
+Australia_NZ,Pasture,Pasture,Pasture,268692147,364380871,375440697,386292070,396934989,407369455,417595467,427613025,,Australia_NZ," 3,780 "," 5,386 ",,3780,5386,,627,893,,5915,5386,,Eastern Europe,FodderCrop,36017,25007.2
+Former Soviet Union,Pasture,Pasture,Pasture,519789589,220087244,223604782,227238129,230900573,234592111,238312746,242062475,,Former Soviet Union," 13,124 "," 5,022 ",,13124,5022,,1596,611,,4980,5022,,Former Soviet Union,FodderCrop,19921.1,20088
+China,Pasture,Pasture,Pasture,362985776,770477017,832825141,897556900,964672294,1034171324,1106053990,1180320291,,China," 3,983 "," 8,778 ",,3983,8778,,697,1536,,7405,8778,,India,FodderCrop,23539.8,30976.5
+Middle East,Pasture,Pasture,Pasture,51940283,45201785,49161361,53492890,57990363,62653780,67483140,72478445,,Middle East," 6,035 "," 5,582 ",,6035,5582,,268,248,,5600,5582,,Japan,FodderCrop,52121.8,53609
+Africa,Pasture,Pasture,Pasture,729463683,858620922,821754765,801285196,779865712,757496314,734177001,709907774,,Africa," 7,979 "," 9,277 ",,7979,9277,,833,968,,9755,9277,,Korea,FodderCrop,24032.3,27532.2
+Latin America,Pasture,Pasture,Pasture,1463780522,1774957742,1796774017,1818602770,1840443783,1862297058,1884162593,1906040389,,Latin America," 6,365 "," 7,517 ",,6365,7517,,2720,3212,,6174,7517,,Latin America,FodderCrop,24697.9,30066.1
+Southeast Asia,Pasture,Pasture,Pasture,279026139,309044592,311520214,314000427,316418790,318775302,321069964,323302775,,Southeast Asia," 6,651 "," 7,576 ",,6651,7576,,5197,5920,,6071,7576,,Middle East,FodderCrop,22401.8,22326.5
+Eastern Europe,Pasture,Pasture,Pasture,127420375,78957887,23782515,36914383,50237702,63752472,77458692,91356363,,Eastern Europe," 74,384 "," 45,535 ",,74384,45535,,4009,2455,,9004,6252,,Southeast Asia,FodderCrop,24282.9,30303.8
+Korea,Pasture,Pasture,Pasture,15472025,12377157,12460268,12540347,12617396,12691413,12762400,12830356,,Korea," 554,525 "," 697,493 ",,554525,697493,,504114,634084,,6008,6883,,USA,FodderCrop,28043.8,30640.4
+India,Pasture,Pasture,Pasture,301118017,317338716,298276395,277549074,255156755,231099437,205377120,177989804,,India," 31,087 "," 35,064 ",,31087,35064,,28261,31876,,5885,7744,,Western Europe,FodderCrop,30745.1,27444.8
+
+Pasture inputs to animal supplysectors (aggregated),,,,check to make sure data is balanced,,,multipliers (paste values from table to left),,,,,,,,,,,,,,,,,,,,,,
+,1990,2005,,1990,2005,,1990,2005,,,,,,,,,,,,,,,,,,,,,
+USA,460092231,446874347,,1,1,,1.000,1.000,,,,,,,,,,,,,,,,,,,,,
+Canada,64687716,80031076,,1,1,,1.000,1.000,,,,,,,,,,,,,,,,,,,,,
+Western Europe,496289139,445816057,,1,1,,1.000,1.000,,,,,,,,,,,,,,,,,,,,,
+Japan,11703656,8066039,,1,1,,1.000,1.000,,,,,,,,,,,,,,,,,,,,,
+Australia_NZ,268692147,364380871,,1,1,,1.000,1.000
+Former Soviet Union,519789589,220087244,,1,1,,1.001,1.000
+China,362985776,770477017,,1,1,,1.000,1.000
+Middle East,51940283,45201785,,1,1,,1.004,1.005
+Africa,729463683,858620922,,1,1,,1.028,1.021
+Latin America,1463780522,1774957742,,1,1,,1.000,1.000
+Southeast Asia,279026139,309044592,,1,1,,1.001,1.000
+Eastern Europe,127420375,78957887,,1,1,,1.001,7.283
+Korea,15472025,12377157,,1,1,,1.000,1.000
+India,301118017,317338716,,1,1,,1.000,1.000
+
+
+
+agProdChange,,,,,,,,
+INPUT_TABLE,,,,,,,,
+Variable ID,,,,,,,,
+2002,,,,,,,,,,,,
+,,,,agProdChange,agProdChange,agProdChange,agProdChange,agProdChange,agProdChange,agProdChange,agProdChange,agProdChange
+region,FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+Canada,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+Western Europe,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+Japan,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+Australia_NZ,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+Former Soviet Union,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+China,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+Middle East,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+Africa,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+Latin America,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+Southeast Asia,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+Eastern Europe,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+Korea,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+India,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+Non-energy input cost,,,,,,,,,,,,
+table not necessary,,,,,,,,,,,,
+,,,,,,,,,,,,
+2010,,,,,,,,,,,,
+,,,,,,,,,,,,
+region,FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+Canada,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+Western Europe,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+Japan,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+Australia_NZ,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+Former Soviet Union,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+China,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+Middle East,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+Africa,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+Latin America,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+Southeast Asia,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+Eastern Europe,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+Korea,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+India,Pasture,Pasture,Pasture,0,0,0,0,0,0,0,0,0
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+CO2 tag,,,,,,,,,,,,
+INPUT_TABLE,,All regions equal,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+2011,,,,,,,,,,,,
+,,,,,,,,,,,,,
+region,FoodSupplySector,FoodSupplySubsector,FoodProductionTechnology,1975,1990,2005,2020,2035,2050,2065,2080,2095,
+ALL,Pasture,Pasture,Pasture,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,
+
+
+,,,,,,,,,,,,,

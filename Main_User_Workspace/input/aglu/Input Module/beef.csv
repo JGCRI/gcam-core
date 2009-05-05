@@ -1,0 +1,1259 @@
+Beef Supply,,,,,
+Units and sector type,,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+70,,,,,
+
+region,supplysector,output-unit,input-unit,price-unit,sectorType
+ALL,Beef,Gcal,Gcal,1975$/Gcal,AnimalSupply
+
+
+Scale Year,,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+700,,,,,
+Source Inputs,,,,,
+region,supplysector,subsector,scaleYear,,
+USA,Beef,Mixed,2005
+Canada,Beef,Mixed,2005
+Western Europe,Beef,Mixed,2005
+Japan,Beef,Mixed,2005
+Australia_NZ,Beef,Mixed,2005
+Former Soviet Union,Beef,Mixed,2005
+China,Beef,Mixed,2005
+Middle East,Beef,Mixed,2005
+Africa,Beef,Mixed,2005
+Latin America,Beef,Mixed,2005
+Southeast Asia,Beef,Mixed,2005
+Eastern Europe,Beef,Mixed,2005
+Korea,Beef,Mixed,2005
+India,Beef,Mixed,2005
+USA,Beef,Pastoral,2005
+Canada,Beef,Pastoral,2005
+Western Europe,Beef,Pastoral,2005
+Japan,Beef,Pastoral,2005
+Australia_NZ,Beef,Pastoral,2005
+Former Soviet Union,Beef,Pastoral,2005
+China,Beef,Pastoral,2005
+Middle East,Beef,Pastoral,2005
+Africa,Beef,Pastoral,2005
+Latin America,Beef,Pastoral,2005
+Southeast Asia,Beef,Pastoral,2005
+Eastern Europe,Beef,Pastoral,2005
+Korea,Beef,Pastoral,2005
+India,Beef,Pastoral,2005
+
+
+Tech Scale Year,,,
+INPUT_TABLE,,,
+Variable ID,,,
+701,,,
+Source Inputs,,,
+region,supplysector,subsector,techScaleYear
+USA,Beef,Mixed,2005
+Canada,Beef,Mixed,2005
+Western Europe,Beef,Mixed,2005
+Japan,Beef,Mixed,2005
+Australia_NZ,Beef,Mixed,2005
+Former Soviet Union,Beef,Mixed,2005
+China,Beef,Mixed,2005
+Middle East,Beef,Mixed,2005
+Africa,Beef,Mixed,2005
+Latin America,Beef,Mixed,2005
+Southeast Asia,Beef,Mixed,2005
+Eastern Europe,Beef,Mixed,2005
+Korea,Beef,Mixed,2005
+India,Beef,Mixed,2005
+USA,Beef,Pastoral,2005
+Canada,Beef,Pastoral,2005
+Western Europe,Beef,Pastoral,2005
+Japan,Beef,Pastoral,2005
+Australia_NZ,Beef,Pastoral,2005
+Former Soviet Union,Beef,Pastoral,2005
+China,Beef,Pastoral,2005
+Middle East,Beef,Pastoral,2005
+Africa,Beef,Pastoral,2005
+Latin America,Beef,Pastoral,2005
+Southeast Asia,Beef,Pastoral,2005
+Eastern Europe,Beef,Pastoral,2005
+Korea,Beef,Pastoral,2005
+India,Beef,Pastoral,2005
+
+
+Subsector Logit Exponent,,,
+INPUT_TABLE,,,
+Variable ID,,,
+702,,,
+Source Inputs,,,
+region,supplysector,subsector,logitexp
+USA,Beef,Mixed,-3
+Canada,Beef,Mixed,-3
+Western Europe,Beef,Mixed,-3
+Japan,Beef,Mixed,-3
+Australia_NZ,Beef,Mixed,-3
+Former Soviet Union,Beef,Mixed,-3
+China,Beef,Mixed,-3
+Middle East,Beef,Mixed,-3
+Africa,Beef,Mixed,-3
+Latin America,Beef,Mixed,-3
+Southeast Asia,Beef,Mixed,-3
+Eastern Europe,Beef,Mixed,-3
+Korea,Beef,Mixed,-3
+India,Beef,Mixed,-3
+USA,Beef,Pastoral,-3
+Canada,Beef,Pastoral,-3
+Western Europe,Beef,Pastoral,-3
+Japan,Beef,Pastoral,-3
+Australia_NZ,Beef,Pastoral,-3
+Former Soviet Union,Beef,Pastoral,-3
+China,Beef,Pastoral,-3
+Middle East,Beef,Pastoral,-3
+Africa,Beef,Pastoral,-3
+Latin America,Beef,Pastoral,-3
+Southeast Asia,Beef,Pastoral,-3,,,,,,,,,,
+Eastern Europe,Beef,Pastoral,-3,,,,,,,,,,
+Korea,Beef,Pastoral,-3,,,,,,,,,,
+India,Beef,Pastoral,-3,,,,,,,,,,
+
+
+Efficiency: Mixed,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+7001,,,,minicam-energy-input,,,,,,,,,
+,,,,efficiency,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input
+USA,Beef,Mixed,Corn,0.01909,0.01909,0.02120,0.02120,0.02120,0.02120,0.02120,0.02120,0.02120,Corn
+Canada,Beef,Mixed,Corn,0.01369,0.01369,0.01584,0.01584,0.01584,0.01584,0.01584,0.01584,0.01584,Corn
+Western Europe,Beef,Mixed,Corn,0.02318,0.02318,0.02131,0.02131,0.02131,0.02131,0.02131,0.02131,0.02131,Corn
+Japan,Beef,Mixed,Corn,0.02347,0.02347,0.02208,0.02208,0.02208,0.02208,0.02208,0.02208,0.02208,Corn
+Australia_NZ,Beef,Mixed,Corn,0.01649,0.01649,0.01783,0.01783,0.01783,0.01783,0.01783,0.01783,0.01783,Corn
+Former Soviet Union,Beef,Mixed,Corn,0.02011,0.02011,0.02734,0.02734,0.02734,0.02734,0.02734,0.02734,0.02734,Corn
+China,Beef,Mixed,Corn,0.00557,0.00557,0.01599,0.01599,0.01599,0.01599,0.01599,0.01599,0.01599,Corn
+Middle East,Beef,Mixed,Corn,0.01808,0.01808,0.02671,0.02671,0.02671,0.02671,0.02671,0.02671,0.02671,Corn
+Africa,Beef,Mixed,Corn,0.01228,0.01228,0.01304,0.01304,0.01304,0.01304,0.01304,0.01304,0.01304,Corn
+Latin America,Beef,Mixed,Corn,0.01049,0.01049,0.01086,0.01086,0.01086,0.01086,0.01086,0.01086,0.01086,Corn
+Southeast Asia,Beef,Mixed,Corn,0.00549,0.00549,0.00621,0.00621,0.00621,0.00621,0.00621,0.00621,0.00621,Corn
+Eastern Europe,Beef,Mixed,Corn,0.02127,0.02127,0.02363,0.02363,0.02363,0.02363,0.02363,0.02363,0.02363,Corn
+Korea,Beef,Mixed,Corn,0.01000,0.01000,0.02356,0.02356,0.02356,0.02356,0.02356,0.02356,0.02356,Corn
+India,Beef,Mixed,Corn,0.00441,0.00441,0.00552,0.00552,0.00552,0.00552,0.00552,0.00552,0.00552,Corn
+USA,Beef,Mixed,FodderCrop,0.01909,0.01909,0.02120,0.02120,0.02120,0.02120,0.02120,0.02120,0.02120,FodderCrop
+Canada,Beef,Mixed,FodderCrop,0.01369,0.01369,0.01584,0.01584,0.01584,0.01584,0.01584,0.01584,0.01584,FodderCrop
+Western Europe,Beef,Mixed,FodderCrop,0.02318,0.02318,0.02131,0.02131,0.02131,0.02131,0.02131,0.02131,0.02131,FodderCrop
+Japan,Beef,Mixed,FodderCrop,0.02347,0.02347,0.02208,0.02208,0.02208,0.02208,0.02208,0.02208,0.02208,FodderCrop
+Australia_NZ,Beef,Mixed,FodderCrop,0.01649,0.01649,0.01783,0.01783,0.01783,0.01783,0.01783,0.01783,0.01783,FodderCrop
+Former Soviet Union,Beef,Mixed,FodderCrop,0.02011,0.02011,0.02734,0.02734,0.02734,0.02734,0.02734,0.02734,0.02734,FodderCrop
+China,Beef,Mixed,FodderCrop,0.00557,0.00557,0.01599,0.01599,0.01599,0.01599,0.01599,0.01599,0.01599,FodderCrop
+Middle East,Beef,Mixed,FodderCrop,0.01808,0.01808,0.02671,0.02671,0.02671,0.02671,0.02671,0.02671,0.02671,FodderCrop
+Africa,Beef,Mixed,FodderCrop,0.01228,0.01228,0.01304,0.01304,0.01304,0.01304,0.01304,0.01304,0.01304,FodderCrop
+Latin America,Beef,Mixed,FodderCrop,0.01049,0.01049,0.01086,0.01086,0.01086,0.01086,0.01086,0.01086,0.01086,FodderCrop
+Southeast Asia,Beef,Mixed,FodderCrop,0.00549,0.00549,0.00621,0.00621,0.00621,0.00621,0.00621,0.00621,0.00621,FodderCrop
+Eastern Europe,Beef,Mixed,FodderCrop,0.02127,0.02127,0.02363,0.02363,0.02363,0.02363,0.02363,0.02363,0.02363,FodderCrop
+Korea,Beef,Mixed,FodderCrop,0.01000,0.01000,0.02356,0.02356,0.02356,0.02356,0.02356,0.02356,0.02356,FodderCrop
+India,Beef,Mixed,FodderCrop,0.00441,0.00441,0.00552,0.00552,0.00552,0.00552,0.00552,0.00552,0.00552,FodderCrop
+USA,Beef,Mixed,MiscCrop,0.01909,0.01909,0.02120,0.02120,0.02120,0.02120,0.02120,0.02120,0.02120,MiscCrop
+Canada,Beef,Mixed,MiscCrop,0.01369,0.01369,0.01584,0.01584,0.01584,0.01584,0.01584,0.01584,0.01584,MiscCrop
+Western Europe,Beef,Mixed,MiscCrop,0.02318,0.02318,0.02131,0.02131,0.02131,0.02131,0.02131,0.02131,0.02131,MiscCrop
+Japan,Beef,Mixed,MiscCrop,0.02347,0.02347,0.02208,0.02208,0.02208,0.02208,0.02208,0.02208,0.02208,MiscCrop
+Australia_NZ,Beef,Mixed,MiscCrop,0.01649,0.01649,0.01783,0.01783,0.01783,0.01783,0.01783,0.01783,0.01783,MiscCrop
+Former Soviet Union,Beef,Mixed,MiscCrop,0.02011,0.02011,0.02734,0.02734,0.02734,0.02734,0.02734,0.02734,0.02734,MiscCrop
+China,Beef,Mixed,MiscCrop,0.00557,0.00557,0.01599,0.01599,0.01599,0.01599,0.01599,0.01599,0.01599,MiscCrop
+Middle East,Beef,Mixed,MiscCrop,0.01808,0.01808,0.02671,0.02671,0.02671,0.02671,0.02671,0.02671,0.02671,MiscCrop
+Africa,Beef,Mixed,MiscCrop,0.01228,0.01228,0.01304,0.01304,0.01304,0.01304,0.01304,0.01304,0.01304,MiscCrop
+Latin America,Beef,Mixed,MiscCrop,0.01049,0.01049,0.01086,0.01086,0.01086,0.01086,0.01086,0.01086,0.01086,MiscCrop
+Southeast Asia,Beef,Mixed,MiscCrop,0.00549,0.00549,0.00621,0.00621,0.00621,0.00621,0.00621,0.00621,0.00621,MiscCrop
+Eastern Europe,Beef,Mixed,MiscCrop,0.02127,0.02127,0.02363,0.02363,0.02363,0.02363,0.02363,0.02363,0.02363,MiscCrop
+Korea,Beef,Mixed,MiscCrop,0.01000,0.01000,0.02356,0.02356,0.02356,0.02356,0.02356,0.02356,0.02356,MiscCrop
+India,Beef,Mixed,MiscCrop,0.00441,0.00441,0.00552,0.00552,0.00552,0.00552,0.00552,0.00552,0.00552,MiscCrop
+USA,Beef,Mixed,OilCrop,0.01909,0.01909,0.02120,0.02120,0.02120,0.02120,0.02120,0.02120,0.02120,OilCrop
+Canada,Beef,Mixed,OilCrop,0.01369,0.01369,0.01584,0.01584,0.01584,0.01584,0.01584,0.01584,0.01584,OilCrop
+Western Europe,Beef,Mixed,OilCrop,0.02318,0.02318,0.02131,0.02131,0.02131,0.02131,0.02131,0.02131,0.02131,OilCrop
+Japan,Beef,Mixed,OilCrop,0.02347,0.02347,0.02208,0.02208,0.02208,0.02208,0.02208,0.02208,0.02208,OilCrop
+Australia_NZ,Beef,Mixed,OilCrop,0.01649,0.01649,0.01783,0.01783,0.01783,0.01783,0.01783,0.01783,0.01783,OilCrop
+Former Soviet Union,Beef,Mixed,OilCrop,0.02011,0.02011,0.02734,0.02734,0.02734,0.02734,0.02734,0.02734,0.02734,OilCrop
+China,Beef,Mixed,OilCrop,0.00557,0.00557,0.01599,0.01599,0.01599,0.01599,0.01599,0.01599,0.01599,OilCrop
+Middle East,Beef,Mixed,OilCrop,0.01808,0.01808,0.02671,0.02671,0.02671,0.02671,0.02671,0.02671,0.02671,OilCrop
+Africa,Beef,Mixed,OilCrop,0.01228,0.01228,0.01304,0.01304,0.01304,0.01304,0.01304,0.01304,0.01304,OilCrop
+Latin America,Beef,Mixed,OilCrop,0.01049,0.01049,0.01086,0.01086,0.01086,0.01086,0.01086,0.01086,0.01086,OilCrop
+Southeast Asia,Beef,Mixed,OilCrop,0.00549,0.00549,0.00621,0.00621,0.00621,0.00621,0.00621,0.00621,0.00621,OilCrop
+Eastern Europe,Beef,Mixed,OilCrop,0.02127,0.02127,0.02363,0.02363,0.02363,0.02363,0.02363,0.02363,0.02363,OilCrop
+Korea,Beef,Mixed,OilCrop,0.01000,0.01000,0.02356,0.02356,0.02356,0.02356,0.02356,0.02356,0.02356,OilCrop
+India,Beef,Mixed,OilCrop,0.00441,0.00441,0.00552,0.00552,0.00552,0.00552,0.00552,0.00552,0.00552,OilCrop
+USA,Beef,Mixed,OtherGrain,0.01909,0.01909,0.02120,0.02120,0.02120,0.02120,0.02120,0.02120,0.02120,OtherGrain
+Canada,Beef,Mixed,OtherGrain,0.01369,0.01369,0.01584,0.01584,0.01584,0.01584,0.01584,0.01584,0.01584,OtherGrain
+Western Europe,Beef,Mixed,OtherGrain,0.02318,0.02318,0.02131,0.02131,0.02131,0.02131,0.02131,0.02131,0.02131,OtherGrain
+Japan,Beef,Mixed,OtherGrain,0.02347,0.02347,0.02208,0.02208,0.02208,0.02208,0.02208,0.02208,0.02208,OtherGrain
+Australia_NZ,Beef,Mixed,OtherGrain,0.01649,0.01649,0.01783,0.01783,0.01783,0.01783,0.01783,0.01783,0.01783,OtherGrain
+Former Soviet Union,Beef,Mixed,OtherGrain,0.02011,0.02011,0.02734,0.02734,0.02734,0.02734,0.02734,0.02734,0.02734,OtherGrain
+China,Beef,Mixed,OtherGrain,0.00557,0.00557,0.01599,0.01599,0.01599,0.01599,0.01599,0.01599,0.01599,OtherGrain
+Middle East,Beef,Mixed,OtherGrain,0.01808,0.01808,0.02671,0.02671,0.02671,0.02671,0.02671,0.02671,0.02671,OtherGrain
+Africa,Beef,Mixed,OtherGrain,0.01228,0.01228,0.01304,0.01304,0.01304,0.01304,0.01304,0.01304,0.01304,OtherGrain
+Latin America,Beef,Mixed,OtherGrain,0.01049,0.01049,0.01086,0.01086,0.01086,0.01086,0.01086,0.01086,0.01086,OtherGrain
+Southeast Asia,Beef,Mixed,OtherGrain,0.00549,0.00549,0.00621,0.00621,0.00621,0.00621,0.00621,0.00621,0.00621,OtherGrain
+Eastern Europe,Beef,Mixed,OtherGrain,0.02127,0.02127,0.02363,0.02363,0.02363,0.02363,0.02363,0.02363,0.02363,OtherGrain
+Korea,Beef,Mixed,OtherGrain,0.01000,0.01000,0.02356,0.02356,0.02356,0.02356,0.02356,0.02356,0.02356,OtherGrain
+India,Beef,Mixed,OtherGrain,0.00441,0.00441,0.00552,0.00552,0.00552,0.00552,0.00552,0.00552,0.00552,OtherGrain
+USA,Beef,Mixed,Rice,0.01909,0.01909,0.02120,0.02120,0.02120,0.02120,0.02120,0.02120,0.02120,Rice
+Canada,Beef,Mixed,Rice,0.01369,0.01369,0.01584,0.01584,0.01584,0.01584,0.01584,0.01584,0.01584,Rice
+Western Europe,Beef,Mixed,Rice,0.02318,0.02318,0.02131,0.02131,0.02131,0.02131,0.02131,0.02131,0.02131,Rice
+Japan,Beef,Mixed,Rice,0.02347,0.02347,0.02208,0.02208,0.02208,0.02208,0.02208,0.02208,0.02208,Rice
+Australia_NZ,Beef,Mixed,Rice,0.01649,0.01649,0.01783,0.01783,0.01783,0.01783,0.01783,0.01783,0.01783,Rice
+Former Soviet Union,Beef,Mixed,Rice,0.02011,0.02011,0.02734,0.02734,0.02734,0.02734,0.02734,0.02734,0.02734,Rice
+China,Beef,Mixed,Rice,0.00557,0.00557,0.01599,0.01599,0.01599,0.01599,0.01599,0.01599,0.01599,Rice
+Middle East,Beef,Mixed,Rice,0.01808,0.01808,0.02671,0.02671,0.02671,0.02671,0.02671,0.02671,0.02671,Rice
+Africa,Beef,Mixed,Rice,0.01228,0.01228,0.01304,0.01304,0.01304,0.01304,0.01304,0.01304,0.01304,Rice
+Latin America,Beef,Mixed,Rice,0.01049,0.01049,0.01086,0.01086,0.01086,0.01086,0.01086,0.01086,0.01086,Rice
+Southeast Asia,Beef,Mixed,Rice,0.00549,0.00549,0.00621,0.00621,0.00621,0.00621,0.00621,0.00621,0.00621,Rice
+Eastern Europe,Beef,Mixed,Rice,0.02127,0.02127,0.02363,0.02363,0.02363,0.02363,0.02363,0.02363,0.02363,Rice
+Korea,Beef,Mixed,Rice,0.01000,0.01000,0.02356,0.02356,0.02356,0.02356,0.02356,0.02356,0.02356,Rice
+India,Beef,Mixed,Rice,0.00441,0.00441,0.00552,0.00552,0.00552,0.00552,0.00552,0.00552,0.00552,Rice
+USA,Beef,Mixed,SugarCrop,0.01909,0.01909,0.02120,0.02120,0.02120,0.02120,0.02120,0.02120,0.02120,SugarCrop
+Canada,Beef,Mixed,SugarCrop,0.01369,0.01369,0.01584,0.01584,0.01584,0.01584,0.01584,0.01584,0.01584,SugarCrop
+Western Europe,Beef,Mixed,SugarCrop,0.02318,0.02318,0.02131,0.02131,0.02131,0.02131,0.02131,0.02131,0.02131,SugarCrop
+Japan,Beef,Mixed,SugarCrop,0.02347,0.02347,0.02208,0.02208,0.02208,0.02208,0.02208,0.02208,0.02208,SugarCrop
+Australia_NZ,Beef,Mixed,SugarCrop,0.01649,0.01649,0.01783,0.01783,0.01783,0.01783,0.01783,0.01783,0.01783,SugarCrop
+Former Soviet Union,Beef,Mixed,SugarCrop,0.02011,0.02011,0.02734,0.02734,0.02734,0.02734,0.02734,0.02734,0.02734,SugarCrop
+China,Beef,Mixed,SugarCrop,0.00557,0.00557,0.01599,0.01599,0.01599,0.01599,0.01599,0.01599,0.01599,SugarCrop
+Middle East,Beef,Mixed,SugarCrop,0.01808,0.01808,0.02671,0.02671,0.02671,0.02671,0.02671,0.02671,0.02671,SugarCrop
+Africa,Beef,Mixed,SugarCrop,0.01228,0.01228,0.01304,0.01304,0.01304,0.01304,0.01304,0.01304,0.01304,SugarCrop
+Latin America,Beef,Mixed,SugarCrop,0.01049,0.01049,0.01086,0.01086,0.01086,0.01086,0.01086,0.01086,0.01086,SugarCrop
+Southeast Asia,Beef,Mixed,SugarCrop,0.00549,0.00549,0.00621,0.00621,0.00621,0.00621,0.00621,0.00621,0.00621,SugarCrop
+Eastern Europe,Beef,Mixed,SugarCrop,0.02127,0.02127,0.02363,0.02363,0.02363,0.02363,0.02363,0.02363,0.02363,SugarCrop
+Korea,Beef,Mixed,SugarCrop,0.01000,0.01000,0.02356,0.02356,0.02356,0.02356,0.02356,0.02356,0.02356,SugarCrop
+India,Beef,Mixed,SugarCrop,0.00441,0.00441,0.00552,0.00552,0.00552,0.00552,0.00552,0.00552,0.00552,SugarCrop
+USA,Beef,Mixed,Wheat,0.01909,0.01909,0.02120,0.02120,0.02120,0.02120,0.02120,0.02120,0.02120,Wheat
+Canada,Beef,Mixed,Wheat,0.01369,0.01369,0.01584,0.01584,0.01584,0.01584,0.01584,0.01584,0.01584,Wheat
+Western Europe,Beef,Mixed,Wheat,0.02318,0.02318,0.02131,0.02131,0.02131,0.02131,0.02131,0.02131,0.02131,Wheat
+Japan,Beef,Mixed,Wheat,0.02347,0.02347,0.02208,0.02208,0.02208,0.02208,0.02208,0.02208,0.02208,Wheat
+Australia_NZ,Beef,Mixed,Wheat,0.01649,0.01649,0.01783,0.01783,0.01783,0.01783,0.01783,0.01783,0.01783,Wheat
+Former Soviet Union,Beef,Mixed,Wheat,0.02011,0.02011,0.02734,0.02734,0.02734,0.02734,0.02734,0.02734,0.02734,Wheat
+China,Beef,Mixed,Wheat,0.00557,0.00557,0.01599,0.01599,0.01599,0.01599,0.01599,0.01599,0.01599,Wheat
+Middle East,Beef,Mixed,Wheat,0.01808,0.01808,0.02671,0.02671,0.02671,0.02671,0.02671,0.02671,0.02671,Wheat
+Africa,Beef,Mixed,Wheat,0.01228,0.01228,0.01304,0.01304,0.01304,0.01304,0.01304,0.01304,0.01304,Wheat
+Latin America,Beef,Mixed,Wheat,0.01049,0.01049,0.01086,0.01086,0.01086,0.01086,0.01086,0.01086,0.01086,Wheat
+Southeast Asia,Beef,Mixed,Wheat,0.00549,0.00549,0.00621,0.00621,0.00621,0.00621,0.00621,0.00621,0.00621,Wheat
+Eastern Europe,Beef,Mixed,Wheat,0.02127,0.02127,0.02363,0.02363,0.02363,0.02363,0.02363,0.02363,0.02363,Wheat
+Korea,Beef,Mixed,Wheat,0.01000,0.01000,0.02356,0.02356,0.02356,0.02356,0.02356,0.02356,0.02356,Wheat
+India,Beef,Mixed,Wheat,0.00441,0.00441,0.00552,0.00552,0.00552,0.00552,0.00552,0.00552,0.00552,Wheat
+USA,Beef,Mixed,Pasture,0.01909,0.01909,0.02120,0.02120,0.02120,0.02120,0.02120,0.02120,0.02120,Pasture
+Canada,Beef,Mixed,Pasture,0.01369,0.01369,0.01584,0.01584,0.01584,0.01584,0.01584,0.01584,0.01584,Pasture
+Western Europe,Beef,Mixed,Pasture,0.02318,0.02318,0.02131,0.02131,0.02131,0.02131,0.02131,0.02131,0.02131,Pasture
+Japan,Beef,Mixed,Pasture,0.02347,0.02347,0.02208,0.02208,0.02208,0.02208,0.02208,0.02208,0.02208,Pasture
+Australia_NZ,Beef,Mixed,Pasture,0.01649,0.01649,0.01783,0.01783,0.01783,0.01783,0.01783,0.01783,0.01783,Pasture
+Former Soviet Union,Beef,Mixed,Pasture,0.02011,0.02011,0.02734,0.02734,0.02734,0.02734,0.02734,0.02734,0.02734,Pasture
+China,Beef,Mixed,Pasture,0.00557,0.00557,0.01599,0.01599,0.01599,0.01599,0.01599,0.01599,0.01599,Pasture
+Middle East,Beef,Mixed,Pasture,0.01808,0.01808,0.02671,0.02671,0.02671,0.02671,0.02671,0.02671,0.02671,Pasture
+Africa,Beef,Mixed,Pasture,0.01228,0.01228,0.01304,0.01304,0.01304,0.01304,0.01304,0.01304,0.01304,Pasture
+Latin America,Beef,Mixed,Pasture,0.01049,0.01049,0.01086,0.01086,0.01086,0.01086,0.01086,0.01086,0.01086,Pasture
+Southeast Asia,Beef,Mixed,Pasture,0.00549,0.00549,0.00621,0.00621,0.00621,0.00621,0.00621,0.00621,0.00621,Pasture
+Eastern Europe,Beef,Mixed,Pasture,0.02127,0.02127,0.02363,0.02363,0.02363,0.02363,0.02363,0.02363,0.02363,Pasture
+Korea,Beef,Mixed,Pasture,0.01000,0.01000,0.02356,0.02356,0.02356,0.02356,0.02356,0.02356,0.02356,Pasture
+India,Beef,Mixed,Pasture,0.00441,0.00441,0.00552,0.00552,0.00552,0.00552,0.00552,0.00552,0.00552,Pasture
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+Efficiency: Pastoral,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+7001,,,,minicam-energy-input,,,,,,,,,
+,,,,efficiency,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input
+Australia_NZ,Beef,Pastoral,Corn,0.01389,0.01389,0.01337,0.01337,0.01337,0.01337,0.01337,0.01337,0.01337,Corn
+Africa,Beef,Pastoral,Corn,0.00487,0.00487,0.00499,0.00499,0.00499,0.00499,0.00499,0.00499,0.00499,Corn
+Australia_NZ,Beef,Pastoral,FodderCrop,0.01389,0.01389,0.01337,0.01337,0.01337,0.01337,0.01337,0.01337,0.01337,FodderCrop
+Africa,Beef,Pastoral,FodderCrop,0.00487,0.00487,0.00499,0.00499,0.00499,0.00499,0.00499,0.00499,0.00499,FodderCrop
+Australia_NZ,Beef,Pastoral,MiscCrop,0.01389,0.01389,0.01337,0.01337,0.01337,0.01337,0.01337,0.01337,0.01337,MiscCrop
+Africa,Beef,Pastoral,MiscCrop,0.00487,0.00487,0.00499,0.00499,0.00499,0.00499,0.00499,0.00499,0.00499,MiscCrop
+Australia_NZ,Beef,Pastoral,OilCrop,0.01389,0.01389,0.01337,0.01337,0.01337,0.01337,0.01337,0.01337,0.01337,OilCrop
+Africa,Beef,Pastoral,OilCrop,0.00487,0.00487,0.00499,0.00499,0.00499,0.00499,0.00499,0.00499,0.00499,OilCrop
+Australia_NZ,Beef,Pastoral,OtherGrain,0.01389,0.01389,0.01337,0.01337,0.01337,0.01337,0.01337,0.01337,0.01337,OtherGrain
+Africa,Beef,Pastoral,OtherGrain,0.00487,0.00487,0.00499,0.00499,0.00499,0.00499,0.00499,0.00499,0.00499,OtherGrain
+Australia_NZ,Beef,Pastoral,Rice,0.01389,0.01389,0.01337,0.01337,0.01337,0.01337,0.01337,0.01337,0.01337,Rice
+Africa,Beef,Pastoral,Rice,0.00487,0.00487,0.00499,0.00499,0.00499,0.00499,0.00499,0.00499,0.00499,Rice
+Australia_NZ,Beef,Pastoral,SugarCrop,0.01389,0.01389,0.01337,0.01337,0.01337,0.01337,0.01337,0.01337,0.01337,SugarCrop
+Africa,Beef,Pastoral,SugarCrop,0.00487,0.00487,0.00499,0.00499,0.00499,0.00499,0.00499,0.00499,0.00499,SugarCrop
+Australia_NZ,Beef,Pastoral,Wheat,0.01389,0.01389,0.01337,0.01337,0.01337,0.01337,0.01337,0.01337,0.01337,Wheat
+Africa,Beef,Pastoral,Wheat,0.00487,0.00487,0.00499,0.00499,0.00499,0.00499,0.00499,0.00499,0.00499,Wheat
+USA,Beef,Pastoral,Pasture,0.01595,0.01595,0.01710,0.01710,0.01710,0.01710,0.01710,0.01710,0.01710,Pasture
+Canada,Beef,Pastoral,Pasture,0.01358,0.01358,0.01399,0.01399,0.01399,0.01399,0.01399,0.01399,0.01399,Pasture
+Western Europe,Beef,Pastoral,Pasture,0.00473,0.00473,0.00490,0.00490,0.00490,0.00490,0.00490,0.00490,0.00490,Pasture
+Japan,Beef,Pastoral,Pasture,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,Pasture
+Australia_NZ,Beef,Pastoral,Pasture,0.01389,0.01389,0.01337,0.01337,0.01337,0.01337,0.01337,0.01337,0.01337,Pasture
+Former Soviet Union,Beef,Pastoral,Pasture,0.01947,0.01947,0.02736,0.02736,0.02736,0.02736,0.02736,0.02736,0.02736,Pasture
+China,Beef,Pastoral,Pasture,0.00343,0.00343,0.00897,0.00897,0.00897,0.00897,0.00897,0.00897,0.00897,Pasture
+Middle East,Beef,Pastoral,Pasture,0.00965,0.00965,0.01244,0.01244,0.01244,0.01244,0.01244,0.01244,0.01244,Pasture
+Africa,Beef,Pastoral,Pasture,0.00487,0.00487,0.00499,0.00499,0.00499,0.00499,0.00499,0.00499,0.00499,Pasture
+Latin America,Beef,Pastoral,Pasture,0.00811,0.00811,0.00919,0.00919,0.00919,0.00919,0.00919,0.00919,0.00919,Pasture
+Southeast Asia,Beef,Pastoral,Pasture,0.00378,0.00378,0.00451,0.00451,0.00451,0.00451,0.00451,0.00451,0.00451,Pasture
+Eastern Europe,Beef,Pastoral,Pasture,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,Pasture
+Korea,Beef,Pastoral,Pasture,0.01073,0.01073,0.01992,0.01992,0.01992,0.01992,0.01992,0.01992,0.01992,Pasture
+India,Beef,Pastoral,Pasture,0.00361,0.00361,0.00422,0.00422,0.00422,0.00422,0.00422,0.00422,0.00422,Pasture
+
+
+Efficiency: Scavenging,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+7001,,,,minicam-energy-input,,,,,,,,,
+,,,,efficiency,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input
+USA,Beef,Mixed,Scavenging,0.01909,0.01909,0.02120,0.02120,0.02120,0.02120,0.02120,0.02120,0.02120,Scavenging
+Canada,Beef,Mixed,Scavenging,0.01369,0.01369,0.01584,0.01584,0.01584,0.01584,0.01584,0.01584,0.01584,Scavenging
+Western Europe,Beef,Mixed,Scavenging,0.02318,0.02318,0.02131,0.02131,0.02131,0.02131,0.02131,0.02131,0.02131,Scavenging
+Japan,Beef,Mixed,Scavenging,0.02347,0.02347,0.02208,0.02208,0.02208,0.02208,0.02208,0.02208,0.02208,Scavenging
+Australia_NZ,Beef,Mixed,Scavenging,0.01649,0.01649,0.01783,0.01783,0.01783,0.01783,0.01783,0.01783,0.01783,Scavenging
+Former Soviet Union,Beef,Mixed,Scavenging,0.02011,0.02011,0.02734,0.02734,0.02734,0.02734,0.02734,0.02734,0.02734,Scavenging
+China,Beef,Mixed,Scavenging,0.00557,0.00557,0.01599,0.01599,0.01599,0.01599,0.01599,0.01599,0.01599,Scavenging
+Middle East,Beef,Mixed,Scavenging,0.01808,0.01808,0.02671,0.02671,0.02671,0.02671,0.02671,0.02671,0.02671,Scavenging
+Africa,Beef,Mixed,Scavenging,0.01228,0.01228,0.01304,0.01304,0.01304,0.01304,0.01304,0.01304,0.01304,Scavenging
+Latin America,Beef,Mixed,Scavenging,0.01049,0.01049,0.01086,0.01086,0.01086,0.01086,0.01086,0.01086,0.01086,Scavenging
+Southeast Asia,Beef,Mixed,Scavenging,0.00549,0.00549,0.00621,0.00621,0.00621,0.00621,0.00621,0.00621,0.00621,Scavenging
+Eastern Europe,Beef,Mixed,Scavenging,0.02127,0.02127,0.02363,0.02363,0.02363,0.02363,0.02363,0.02363,0.02363,Scavenging
+Korea,Beef,Mixed,Scavenging,0.01000,0.01000,0.02356,0.02356,0.02356,0.02356,0.02356,0.02356,0.02356,Scavenging
+India,Beef,Mixed,Scavenging,0.00441,0.00441,0.00552,0.00552,0.00552,0.00552,0.00552,0.00552,0.00552,Scavenging
+USA,Beef,Pastoral,Scavenging,0.01595,0.01595,0.01710,0.01710,0.01710,0.01710,0.01710,0.01710,0.01710,Scavenging
+Canada,Beef,Pastoral,Scavenging,0.01358,0.01358,0.01399,0.01399,0.01399,0.01399,0.01399,0.01399,0.01399,Scavenging
+Western Europe,Beef,Pastoral,Scavenging,0.00473,0.00473,0.00490,0.00490,0.00490,0.00490,0.00490,0.00490,0.00490,Scavenging
+Japan,Beef,Pastoral,Scavenging,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,Scavenging
+Australia_NZ,Beef,Pastoral,Scavenging,0.01389,0.01389,0.01337,0.01337,0.01337,0.01337,0.01337,0.01337,0.01337,Scavenging
+Former Soviet Union,Beef,Pastoral,Scavenging,0.01947,0.01947,0.02736,0.02736,0.02736,0.02736,0.02736,0.02736,0.02736,Scavenging
+China,Beef,Pastoral,Scavenging,0.00343,0.00343,0.00897,0.00897,0.00897,0.00897,0.00897,0.00897,0.00897,Scavenging
+Middle East,Beef,Pastoral,Scavenging,0.00965,0.00965,0.01244,0.01244,0.01244,0.01244,0.01244,0.01244,0.01244,Scavenging
+Africa,Beef,Pastoral,Scavenging,0.00487,0.00487,0.00499,0.00499,0.00499,0.00499,0.00499,0.00499,0.00499,Scavenging
+Latin America,Beef,Pastoral,Scavenging,0.00811,0.00811,0.00919,0.00919,0.00919,0.00919,0.00919,0.00919,0.00919,Scavenging
+Southeast Asia,Beef,Pastoral,Scavenging,0.00378,0.00378,0.00451,0.00451,0.00451,0.00451,0.00451,0.00451,0.00451,Scavenging
+Eastern Europe,Beef,Pastoral,Scavenging,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,Scavenging
+Korea,Beef,Pastoral,Scavenging,0.01073,0.01073,0.01992,0.01992,0.01992,0.01992,0.01992,0.01992,0.01992,Scavenging
+India,Beef,Pastoral,Scavenging,0.00361,0.00361,0.00422,0.00422,0.00422,0.00422,0.00422,0.00422,0.00422,Scavenging
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+Calibrated inputs: mixed,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+7000,,,,minicam-energy-input,,,,,,,,,
+,,,,calibrated-value,calibrated-value,,,,,,,,
+region,supplysector,subsector,technology,1990,2005,minicam-energy-input,,,,,,,
+USA,Beef,Mixed,Corn,138600719,156642624,Corn,,,,,,,
+Canada,Beef,Mixed,Corn,7624717,11759379,Corn,,,,,,,
+Western Europe,Beef,Mixed,Corn,7760156,15441926,Corn,,,,,,,
+Japan,Beef,Mixed,Corn,8244737,9679731,Corn,,,,,,,
+Australia_NZ,Beef,Mixed,Corn,90820,270361,Corn
+Former Soviet Union,Beef,Mixed,Corn,8440820,3740658,Corn
+China,Beef,Mixed,Corn,4849086,26818176,Corn
+Middle East,Beef,Mixed,Corn,792662,962429,Corn
+Africa,Beef,Mixed,Corn,5156388,8161461,Corn
+Latin America,Beef,Mixed,Corn,7065206,18513281,Corn
+Southeast Asia,Beef,Mixed,Corn,12268628,28128426,Corn
+Eastern Europe,Beef,Mixed,Corn,6882703,7186352,Corn
+Korea,Beef,Mixed,Corn,2116311,674231,Corn
+India,Beef,Mixed,Corn,947661,5457734,Corn
+USA,Beef,Mixed,FodderCrop,88579947,82869506,FodderCrop
+Canada,Beef,Mixed,FodderCrop,11661005,12358140,FodderCrop
+Western Europe,Beef,Mixed,FodderCrop,160895818,131257515,FodderCrop
+Japan,Beef,Mixed,FodderCrop,8928820,8963545,FodderCrop
+Australia_NZ,Beef,Mixed,FodderCrop,8680146,7646103,FodderCrop
+Former Soviet Union,Beef,Mixed,FodderCrop,84461357,28018737,FodderCrop
+China,Beef,Mixed,FodderCrop,59629409,98958898,FodderCrop
+Middle East,Beef,Mixed,FodderCrop,1902202,1156094,FodderCrop
+Africa,Beef,Mixed,FodderCrop,41142155,58939240,FodderCrop
+Latin America,Beef,Mixed,FodderCrop,110590676,181898968,FodderCrop
+Southeast Asia,Beef,Mixed,FodderCrop,59764723,77871985,FodderCrop
+Eastern Europe,Beef,Mixed,FodderCrop,29803123,11279117,FodderCrop
+Korea,Beef,Mixed,FodderCrop,1870407,2383818,FodderCrop
+India,Beef,Mixed,FodderCrop,77242422,79982685,FodderCrop
+USA,Beef,Mixed,MiscCrop,106633,171907,MiscCrop
+Canada,Beef,Mixed,MiscCrop,27308,571903,MiscCrop
+Western Europe,Beef,Mixed,MiscCrop,5593970,2497521,MiscCrop
+Japan,Beef,Mixed,MiscCrop,60489,99976,MiscCrop
+Australia_NZ,Beef,Mixed,MiscCrop,108847,391940,MiscCrop
+Former Soviet Union,Beef,Mixed,MiscCrop,9932823,2474443,MiscCrop
+China,Beef,Mixed,MiscCrop,1362797,6668741,MiscCrop
+Middle East,Beef,Mixed,MiscCrop,35100,4406,MiscCrop
+Africa,Beef,Mixed,MiscCrop,2831648,5957619,MiscCrop
+Latin America,Beef,Mixed,MiscCrop,2230168,3766341,MiscCrop
+Southeast Asia,Beef,Mixed,MiscCrop,1016579,1553145,MiscCrop
+Eastern Europe,Beef,Mixed,MiscCrop,1366080,461054,MiscCrop
+Korea,Beef,Mixed,MiscCrop,380793,28328,MiscCrop
+India,Beef,Mixed,MiscCrop,1514495,1827538,MiscCrop
+USA,Beef,Mixed,OilCrop,1847967,3141689,OilCrop
+Canada,Beef,Mixed,OilCrop,1049547,4407749,OilCrop
+Western Europe,Beef,Mixed,OilCrop,975663,2395634,OilCrop
+Japan,Beef,Mixed,OilCrop,142968,179908,OilCrop
+Australia_NZ,Beef,Mixed,OilCrop,27114,97347,OilCrop
+Former Soviet Union,Beef,Mixed,OilCrop,1138720,733843,OilCrop
+China,Beef,Mixed,OilCrop,251812,1478581,OilCrop
+Middle East,Beef,Mixed,OilCrop,10937,22620,OilCrop
+Africa,Beef,Mixed,OilCrop,9041,10889,OilCrop
+Latin America,Beef,Mixed,OilCrop,242144,951183,OilCrop
+Southeast Asia,Beef,Mixed,OilCrop,1200442,1532694,OilCrop
+Eastern Europe,Beef,Mixed,OilCrop,30180,28900,OilCrop
+Korea,Beef,Mixed,OilCrop,6782,2137,OilCrop
+India,Beef,Mixed,OilCrop,1134370,1401938,OilCrop
+USA,Beef,Mixed,OtherGrain,19622834,8763889,OtherGrain
+Canada,Beef,Mixed,OtherGrain,13470493,19187640,OtherGrain
+Western Europe,Beef,Mixed,OtherGrain,20278624,22391311,OtherGrain
+Japan,Beef,Mixed,OtherGrain,3254832,2204620,OtherGrain
+Australia_NZ,Beef,Mixed,OtherGrain,1146202,7018978,OtherGrain
+Former Soviet Union,Beef,Mixed,OtherGrain,55157967,11524987,OtherGrain
+China,Beef,Mixed,OtherGrain,486984,1061769,OtherGrain
+Middle East,Beef,Mixed,OtherGrain,3018378,1500998,OtherGrain
+Africa,Beef,Mixed,OtherGrain,2122920,2502870,OtherGrain
+Latin America,Beef,Mixed,OtherGrain,3278256,5750045,OtherGrain
+Southeast Asia,Beef,Mixed,OtherGrain,610519,602418,OtherGrain
+Eastern Europe,Beef,Mixed,OtherGrain,7761690,5812070,OtherGrain
+Korea,Beef,Mixed,OtherGrain,101896,3854,OtherGrain
+India,Beef,Mixed,OtherGrain,733921,709014,OtherGrain
+USA,Beef,Mixed,Rice,0,0,Rice
+Canada,Beef,Mixed,Rice,0,0,Rice
+Western Europe,Beef,Mixed,Rice,96106,102476,Rice
+Japan,Beef,Mixed,Rice,11913,47775,Rice
+Australia_NZ,Beef,Mixed,Rice,0,0,Rice
+Former Soviet Union,Beef,Mixed,Rice,0,0,Rice
+China,Beef,Mixed,Rice,318979,614149,Rice
+Middle East,Beef,Mixed,Rice,52398,54150,Rice
+Africa,Beef,Mixed,Rice,213668,197730,Rice
+Latin America,Beef,Mixed,Rice,68922,112767,Rice
+Southeast Asia,Beef,Mixed,Rice,4224020,7401519,Rice
+Eastern Europe,Beef,Mixed,Rice,592,2989,Rice
+Korea,Beef,Mixed,Rice,0,0,Rice
+India,Beef,Mixed,Rice,496058,541520,Rice
+USA,Beef,Mixed,SugarCrop,0,0,SugarCrop
+Canada,Beef,Mixed,SugarCrop,17186,4709,SugarCrop
+Western Europe,Beef,Mixed,SugarCrop,774912,403101,SugarCrop
+Japan,Beef,Mixed,SugarCrop,0,0,SugarCrop
+Australia_NZ,Beef,Mixed,SugarCrop,0,0,SugarCrop
+Former Soviet Union,Beef,Mixed,SugarCrop,929218,516044,SugarCrop
+China,Beef,Mixed,SugarCrop,567776,1013668,SugarCrop
+Middle East,Beef,Mixed,SugarCrop,14197,7028,SugarCrop
+Africa,Beef,Mixed,SugarCrop,82558,120635,SugarCrop
+Latin America,Beef,Mixed,SugarCrop,3847205,4434147,SugarCrop
+Southeast Asia,Beef,Mixed,SugarCrop,1237688,2445482,SugarCrop
+Eastern Europe,Beef,Mixed,SugarCrop,127886,53220,SugarCrop
+Korea,Beef,Mixed,SugarCrop,0,0,SugarCrop
+India,Beef,Mixed,SugarCrop,1707428,1722864,SugarCrop
+USA,Beef,Mixed,Wheat,8720264,4352310,Wheat
+Canada,Beef,Mixed,Wheat,4265479,4586734,Wheat
+Western Europe,Beef,Mixed,Wheat,8598834,18950340,Wheat
+Japan,Beef,Mixed,Wheat,392366,287079,Wheat
+Australia_NZ,Beef,Mixed,Wheat,285355,1344261,Wheat
+Former Soviet Union,Beef,Mixed,Wheat,41457668,10207091,Wheat
+China,Beef,Mixed,Wheat,263538,343366,Wheat
+Middle East,Beef,Mixed,Wheat,449156,312008,Wheat
+Africa,Beef,Mixed,Wheat,820958,1112443,Wheat
+Latin America,Beef,Mixed,Wheat,358411,291449,Wheat
+Southeast Asia,Beef,Mixed,Wheat,739951,1172085,Wheat
+Eastern Europe,Beef,Mixed,Wheat,5155328,3006512,Wheat
+Korea,Beef,Mixed,Wheat,545015,124263,Wheat
+India,Beef,Mixed,Wheat,798935,1065851,Wheat
+USA,Beef,Mixed,Pasture,283599210,279005722,Pasture
+Canada,Beef,Mixed,Pasture,41655427,54915567,Pasture
+Western Europe,Beef,Mixed,Pasture,281946958,252068816,Pasture
+Japan,Beef,Mixed,Pasture,5426397,4122306,Pasture
+Australia_NZ,Beef,Mixed,Pasture,28907455,40439364,Pasture,
+Former Soviet Union,Beef,Mixed,Pasture,243167081,74131273,Pasture,
+China,Beef,Mixed,Pasture,91441250,181669232,Pasture,
+Middle East,Beef,Mixed,Pasture,2761545,1731735,Pasture,
+Africa,Beef,Mixed,Pasture,86623754,138084159,Pasture,
+Latin America,Beef,Mixed,Pasture,342980461,571145995,Pasture,
+Southeast Asia,Beef,Mixed,Pasture,122234689,124978188,Pasture,
+Eastern Europe,Beef,Mixed,Pasture,63174843,33716107,Pasture,
+Korea,Beef,Mixed,Pasture,5493708,3967512,Pasture,
+India,Beef,Mixed,Pasture,54454828,58558223,Pasture,
+,,,,,,,
+,,,,,,,
+Calibrated inputs: Pastoral,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+7000,,,,,,,
+,,,,,,
+region,supplysector,subsector,technology,1990,2005,minicam-energy-input
+Australia_NZ,Beef,Pastoral,Corn,124264,0,Corn
+Africa,Beef,Pastoral,Corn,381785,466552,Corn
+Australia_NZ,Beef,Pastoral,FodderCrop,11876505,0,FodderCrop
+Africa,Beef,Pastoral,FodderCrop,3340626,3714604,FodderCrop
+Australia_NZ,Beef,Pastoral,MiscCrop,148929,0,MiscCrop
+Africa,Beef,Pastoral,MiscCrop,209659,340569,MiscCrop
+Australia_NZ,Beef,Pastoral,OilCrop,37098,0,OilCrop
+Africa,Beef,Pastoral,OilCrop,669,622,OilCrop
+Australia_NZ,Beef,Pastoral,OtherGrain,1568278,0,OtherGrain
+Africa,Beef,Pastoral,OtherGrain,157184,143077,OtherGrain
+Australia_NZ,Beef,Pastoral,Rice,0,0,Rice
+Africa,Beef,Pastoral,Rice,15820,11303,Rice
+Australia_NZ,Beef,Pastoral,SugarCrop,0,0,SugarCrop
+Africa,Beef,Pastoral,SugarCrop,6113,6896,SugarCrop
+Australia_NZ,Beef,Pastoral,Wheat,390434,0,Wheat
+Africa,Beef,Pastoral,Wheat,60785,63593,Wheat
+USA,Beef,Pastoral,Pasture,96810975,87647334,Pasture
+Canada,Beef,Pastoral,Pasture,14199318,16130028,Pasture
+Western Europe,Beef,Pastoral,Pasture,8468747,7098608,Pasture
+Japan,Beef,Pastoral,Pasture,0,0,Pasture
+Australia_NZ,Beef,Pastoral,Pasture,118656828,176219341,Pasture
+Former Soviet Union,Beef,Pastoral,Pasture,48991052,26902045,Pasture
+China,Beef,Pastoral,Pasture,172349096,294624976,Pasture
+Middle East,Beef,Pastoral,Pasture,31279221,21204173,Pasture
+Africa,Beef,Pastoral,Pasture,436701406,474029270,Pasture
+Latin America,Beef,Pastoral,Pasture,904334412,944469093,Pasture
+Southeast Asia,Beef,Pastoral,Pasture,124185852,138654534,Pasture
+Eastern Europe,Beef,Pastoral,Pasture,0,0,Pasture
+Korea,Beef,Pastoral,Pasture,6516513,4412495,Pasture
+India,Beef,Pastoral,Pasture,205741777,201529924,Pasture
+,,,,,,,
+,,,,,,,
+Calibrated inputs: Scavenging,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+7000,,,,minicam-energy-input,,,
+,,,,,,,
+region,supplysector,subsector,technology,1990,2005,minicam-energy-input,
+USA,Beef,Mixed,Scavenging,0,0,Scavenging,
+Canada,Beef,Mixed,Scavenging,0,0,Scavenging,
+Western Europe,Beef,Mixed,Scavenging,420227,418220,Scavenging,
+Japan,Beef,Mixed,Scavenging,0,0,Scavenging,
+Australia_NZ,Beef,Mixed,Scavenging,0,0,Scavenging,
+Former Soviet Union,Beef,Mixed,Scavenging,926615,482668,Scavenging,
+China,Beef,Mixed,Scavenging,8500833,16888874,Scavenging,
+Middle East,Beef,Mixed,Scavenging,403428,252985,Scavenging,
+Africa,Beef,Mixed,Scavenging,7331639,11376972,Scavenging
+Latin America,Beef,Mixed,Scavenging,25052631,41718731,Scavenging
+Southeast Asia,Beef,Mixed,Scavenging,77171800,96752683,Scavenging
+Eastern Europe,Beef,Mixed,Scavenging,5873047,0,Scavenging
+Korea,Beef,Mixed,Scavenging,510722,368840,Scavenging
+India,Beef,Mixed,Scavenging,139215757,149706235,Scavenging
+USA,Beef,Pastoral,Scavenging,0,0,Scavenging
+Canada,Beef,Pastoral,Scavenging,0,0,Scavenging
+Western Europe,Beef,Pastoral,Scavenging,455803,382060,Scavenging
+Japan,Beef,Pastoral,Scavenging,0,0,Scavenging
+Australia_NZ,Beef,Pastoral,Scavenging,0,0,Scavenging
+Former Soviet Union,Beef,Pastoral,Scavenging,2636788,1447917,Scavenging
+China,Beef,Pastoral,Scavenging,9276142,15857253,Scavenging
+Middle East,Beef,Pastoral,Scavenging,1683505,1141247,Scavenging
+Africa,Beef,Pastoral,Scavenging,23717902,25757541,Scavenging
+Latin America,Beef,Pastoral,Scavenging,48672925,50833047,Scavenging
+Southeast Asia,Beef,Pastoral,Scavenging,115765376,130906693,Scavenging,,,,,,
+Eastern Europe,Beef,Pastoral,Scavenging,0,0,Scavenging,,,,,,
+Korea,Beef,Pastoral,Scavenging,350731,237489,Scavenging,,,,,,
+India,Beef,Pastoral,Scavenging,210394547,206087444,Scavenging,,,,,,
+
+
+Non-energy cost: Mixed,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+7002,,,,minicam-non-energy-input,,,,,,,,
+,,,,input-cost,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,Beef,Mixed,Corn,10,10,10,10,10,10,10,10,10
+Canada,Beef,Mixed,Corn,10,10,10,10,10,10,10,10,10
+Western Europe,Beef,Mixed,Corn,10,10,10,10,10,10,10,10,10
+Japan,Beef,Mixed,Corn,10,10,10,10,10,10,10,10,10
+Australia_NZ,Beef,Mixed,Corn,10,10,10,10,10,10,10,10,10
+Former Soviet Union,Beef,Mixed,Corn,10,10,10,10,10,10,10,10,10
+China,Beef,Mixed,Corn,10,10,10,10,10,10,10,10,10
+Middle East,Beef,Mixed,Corn,10,10,10,10,10,10,10,10,10
+Africa,Beef,Mixed,Corn,10,10,10,10,10,10,10,10,10
+Latin America,Beef,Mixed,Corn,10,10,10,10,10,10,10,10,10
+Southeast Asia,Beef,Mixed,Corn,10,10,10,10,10,10,10,10,10
+Eastern Europe,Beef,Mixed,Corn,10,10,10,10,10,10,10,10,10
+Korea,Beef,Mixed,Corn,10,10,10,10,10,10,10,10,10
+India,Beef,Mixed,Corn,10,10,10,10,10,10,10,10,10
+USA,Beef,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
+Canada,Beef,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
+Western Europe,Beef,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
+Japan,Beef,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
+Australia_NZ,Beef,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
+Former Soviet Union,Beef,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
+China,Beef,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
+Middle East,Beef,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
+Africa,Beef,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
+Latin America,Beef,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
+Southeast Asia,Beef,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
+Eastern Europe,Beef,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
+Korea,Beef,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
+India,Beef,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
+USA,Beef,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
+Canada,Beef,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
+Western Europe,Beef,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
+Japan,Beef,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
+Australia_NZ,Beef,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
+Former Soviet Union,Beef,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
+China,Beef,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
+Middle East,Beef,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
+Africa,Beef,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
+Latin America,Beef,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
+Southeast Asia,Beef,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
+Eastern Europe,Beef,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
+Korea,Beef,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
+India,Beef,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
+USA,Beef,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
+Canada,Beef,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
+Western Europe,Beef,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
+Japan,Beef,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
+Australia_NZ,Beef,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
+Former Soviet Union,Beef,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
+China,Beef,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
+Middle East,Beef,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
+Africa,Beef,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
+Latin America,Beef,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
+Southeast Asia,Beef,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
+Eastern Europe,Beef,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
+Korea,Beef,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
+India,Beef,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
+USA,Beef,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
+Canada,Beef,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
+Western Europe,Beef,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
+Japan,Beef,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
+Australia_NZ,Beef,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
+Former Soviet Union,Beef,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
+China,Beef,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
+Middle East,Beef,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
+Africa,Beef,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
+Latin America,Beef,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
+Southeast Asia,Beef,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
+Eastern Europe,Beef,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
+Korea,Beef,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
+India,Beef,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
+USA,Beef,Mixed,Rice,10,10,10,10,10,10,10,10,10
+Canada,Beef,Mixed,Rice,10,10,10,10,10,10,10,10,10
+Western Europe,Beef,Mixed,Rice,10,10,10,10,10,10,10,10,10
+Japan,Beef,Mixed,Rice,10,10,10,10,10,10,10,10,10
+Australia_NZ,Beef,Mixed,Rice,10,10,10,10,10,10,10,10,10
+Former Soviet Union,Beef,Mixed,Rice,10,10,10,10,10,10,10,10,10
+China,Beef,Mixed,Rice,10,10,10,10,10,10,10,10,10
+Middle East,Beef,Mixed,Rice,10,10,10,10,10,10,10,10,10
+Africa,Beef,Mixed,Rice,10,10,10,10,10,10,10,10,10
+Latin America,Beef,Mixed,Rice,10,10,10,10,10,10,10,10,10
+Southeast Asia,Beef,Mixed,Rice,10,10,10,10,10,10,10,10,10
+Eastern Europe,Beef,Mixed,Rice,10,10,10,10,10,10,10,10,10
+Korea,Beef,Mixed,Rice,10,10,10,10,10,10,10,10,10
+India,Beef,Mixed,Rice,10,10,10,10,10,10,10,10,10
+USA,Beef,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
+Canada,Beef,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
+Western Europe,Beef,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
+Japan,Beef,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
+Australia_NZ,Beef,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
+Former Soviet Union,Beef,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
+China,Beef,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
+Middle East,Beef,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
+Africa,Beef,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
+Latin America,Beef,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
+Southeast Asia,Beef,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
+Eastern Europe,Beef,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
+Korea,Beef,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
+India,Beef,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
+USA,Beef,Mixed,Wheat,10,10,10,10,10,10,10,10,10
+Canada,Beef,Mixed,Wheat,10,10,10,10,10,10,10,10,10
+Western Europe,Beef,Mixed,Wheat,10,10,10,10,10,10,10,10,10
+Japan,Beef,Mixed,Wheat,10,10,10,10,10,10,10,10,10
+Australia_NZ,Beef,Mixed,Wheat,10,10,10,10,10,10,10,10,10
+Former Soviet Union,Beef,Mixed,Wheat,10,10,10,10,10,10,10,10,10
+China,Beef,Mixed,Wheat,10,10,10,10,10,10,10,10,10
+Middle East,Beef,Mixed,Wheat,10,10,10,10,10,10,10,10,10
+Africa,Beef,Mixed,Wheat,10,10,10,10,10,10,10,10,10
+Latin America,Beef,Mixed,Wheat,10,10,10,10,10,10,10,10,10
+Southeast Asia,Beef,Mixed,Wheat,10,10,10,10,10,10,10,10,10
+Eastern Europe,Beef,Mixed,Wheat,10,10,10,10,10,10,10,10,10
+Korea,Beef,Mixed,Wheat,10,10,10,10,10,10,10,10,10
+India,Beef,Mixed,Wheat,10,10,10,10,10,10,10,10,10
+USA,Beef,Mixed,Pasture,10,10,10,10,10,10,10,10,10
+Canada,Beef,Mixed,Pasture,10,10,10,10,10,10,10,10,10
+Western Europe,Beef,Mixed,Pasture,10,10,10,10,10,10,10,10,10
+Japan,Beef,Mixed,Pasture,10,10,10,10,10,10,10,10,10
+Australia_NZ,Beef,Mixed,Pasture,10,10,10,10,10,10,10,10,10
+Former Soviet Union,Beef,Mixed,Pasture,10,10,10,10,10,10,10,10,10
+China,Beef,Mixed,Pasture,10,10,10,10,10,10,10,10,10
+Middle East,Beef,Mixed,Pasture,10,10,10,10,10,10,10,10,10
+Africa,Beef,Mixed,Pasture,10,10,10,10,10,10,10,10,10
+Latin America,Beef,Mixed,Pasture,10,10,10,10,10,10,10,10,10
+Southeast Asia,Beef,Mixed,Pasture,10,10,10,10,10,10,10,10,10
+Eastern Europe,Beef,Mixed,Pasture,10,10,10,10,10,10,10,10,10
+Korea,Beef,Mixed,Pasture,10,10,10,10,10,10,10,10,10
+India,Beef,Mixed,Pasture,10,10,10,10,10,10,10,10,10
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+Non-energy cost: Pastoral,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+7002,,,,minicam-non-energy-input,,,,,,,,
+,,,,input-cost,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+Australia_NZ,Beef,Pastoral,Corn,10,10,10,10,10,10,10,10,10
+Africa,Beef,Pastoral,Corn,10,10,10,10,10,10,10,10,10
+Australia_NZ,Beef,Pastoral,FodderCrop,10,10,10,10,10,10,10,10,10
+Africa,Beef,Pastoral,FodderCrop,10,10,10,10,10,10,10,10,10
+Australia_NZ,Beef,Pastoral,MiscCrop,10,10,10,10,10,10,10,10,10
+Africa,Beef,Pastoral,MiscCrop,10,10,10,10,10,10,10,10,10
+Australia_NZ,Beef,Pastoral,OilCrop,10,10,10,10,10,10,10,10,10
+Africa,Beef,Pastoral,OilCrop,10,10,10,10,10,10,10,10,10
+Australia_NZ,Beef,Pastoral,OtherGrain,10,10,10,10,10,10,10,10,10
+Africa,Beef,Pastoral,OtherGrain,10,10,10,10,10,10,10,10,10
+Australia_NZ,Beef,Pastoral,Rice,10,10,10,10,10,10,10,10,10
+Africa,Beef,Pastoral,Rice,10,10,10,10,10,10,10,10,10
+Australia_NZ,Beef,Pastoral,SugarCrop,10,10,10,10,10,10,10,10,10
+Africa,Beef,Pastoral,SugarCrop,10,10,10,10,10,10,10,10,10
+Australia_NZ,Beef,Pastoral,Wheat,10,10,10,10,10,10,10,10,10
+Africa,Beef,Pastoral,Wheat,10,10,10,10,10,10,10,10,10
+USA,Beef,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
+Canada,Beef,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
+Western Europe,Beef,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
+Japan,Beef,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
+Australia_NZ,Beef,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
+Former Soviet Union,Beef,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
+China,Beef,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
+Middle East,Beef,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
+Africa,Beef,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
+Latin America,Beef,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
+Southeast Asia,Beef,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
+Eastern Europe,Beef,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
+Korea,Beef,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
+India,Beef,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+Non-energy cost: Scavenging,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,nonenergycost,nonenergycost,nonenergycost,nonenergycost,nonenergycost,nonenergycost,nonenergycost,nonenergycost,nonenergycost
+7002,,,,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input
+,,,,input-cost,input-cost,input-cost,input-cost,input-cost,input-cost,input-cost,input-cost,input-cost
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,Beef,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
+Canada,Beef,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
+Western Europe,Beef,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
+Japan,Beef,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
+Australia_NZ,Beef,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
+Former Soviet Union,Beef,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
+China,Beef,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
+Middle East,Beef,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
+Africa,Beef,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
+Latin America,Beef,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
+Southeast Asia,Beef,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
+Eastern Europe,Beef,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
+Korea,Beef,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
+India,Beef,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
+USA,Beef,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
+Canada,Beef,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
+Western Europe,Beef,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
+Japan,Beef,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
+Australia_NZ,Beef,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
+Former Soviet Union,Beef,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
+China,Beef,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
+Middle East,Beef,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
+Africa,Beef,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
+Latin America,Beef,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
+Southeast Asia,Beef,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
+Eastern Europe,Beef,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
+Korea,Beef,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
+India,Beef,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
+
+
+Technology Logit Exponent,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+7003,,,,,,,,,,,,
+,,,,logitexp,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,Beef,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Canada,Beef,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Western Europe,Beef,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Japan,Beef,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Australia_NZ,Beef,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Former Soviet Union,Beef,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
+China,Beef,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Middle East,Beef,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Africa,Beef,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Latin America,Beef,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Southeast Asia,Beef,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Eastern Europe,Beef,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Korea,Beef,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
+India,Beef,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
+USA,Beef,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Canada,Beef,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Western Europe,Beef,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Japan,Beef,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Australia_NZ,Beef,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Former Soviet Union,Beef,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+China,Beef,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Middle East,Beef,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Africa,Beef,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Latin America,Beef,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Southeast Asia,Beef,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Eastern Europe,Beef,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Korea,Beef,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+India,Beef,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+USA,Beef,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Canada,Beef,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Western Europe,Beef,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Japan,Beef,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Australia_NZ,Beef,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Former Soviet Union,Beef,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+China,Beef,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Middle East,Beef,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Africa,Beef,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Latin America,Beef,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Southeast Asia,Beef,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Eastern Europe,Beef,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Korea,Beef,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+India,Beef,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+USA,Beef,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Canada,Beef,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Western Europe,Beef,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Japan,Beef,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Australia_NZ,Beef,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Former Soviet Union,Beef,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+China,Beef,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Middle East,Beef,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Africa,Beef,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Latin America,Beef,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Southeast Asia,Beef,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Eastern Europe,Beef,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Korea,Beef,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+India,Beef,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+USA,Beef,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Canada,Beef,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Western Europe,Beef,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Japan,Beef,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Australia_NZ,Beef,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Former Soviet Union,Beef,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
+China,Beef,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Middle East,Beef,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Africa,Beef,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Latin America,Beef,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Southeast Asia,Beef,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Eastern Europe,Beef,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Korea,Beef,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
+India,Beef,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
+USA,Beef,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Canada,Beef,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Western Europe,Beef,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Japan,Beef,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Australia_NZ,Beef,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Former Soviet Union,Beef,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
+China,Beef,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Middle East,Beef,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Africa,Beef,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Latin America,Beef,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Southeast Asia,Beef,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Eastern Europe,Beef,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Korea,Beef,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
+India,Beef,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
+USA,Beef,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Canada,Beef,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Western Europe,Beef,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Japan,Beef,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Australia_NZ,Beef,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Former Soviet Union,Beef,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+China,Beef,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Middle East,Beef,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Africa,Beef,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Latin America,Beef,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Southeast Asia,Beef,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Eastern Europe,Beef,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Korea,Beef,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+India,Beef,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+USA,Beef,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Canada,Beef,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Western Europe,Beef,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Japan,Beef,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Australia_NZ,Beef,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Former Soviet Union,Beef,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
+China,Beef,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Middle East,Beef,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Africa,Beef,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Latin America,Beef,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Southeast Asia,Beef,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Eastern Europe,Beef,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Korea,Beef,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
+India,Beef,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
+USA,Beef,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Canada,Beef,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Western Europe,Beef,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Japan,Beef,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Australia_NZ,Beef,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Former Soviet Union,Beef,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+China,Beef,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Middle East,Beef,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Africa,Beef,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Latin America,Beef,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Southeast Asia,Beef,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Eastern Europe,Beef,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Korea,Beef,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+India,Beef,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+Technology Logit Exponent,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+7003,,,,,,,,,,,,
+,,,,logitexp,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+Australia_NZ,Beef,Pastoral,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Africa,Beef,Pastoral,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Australia_NZ,Beef,Pastoral,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Africa,Beef,Pastoral,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Australia_NZ,Beef,Pastoral,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Africa,Beef,Pastoral,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Australia_NZ,Beef,Pastoral,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Africa,Beef,Pastoral,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Australia_NZ,Beef,Pastoral,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Africa,Beef,Pastoral,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Australia_NZ,Beef,Pastoral,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Africa,Beef,Pastoral,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Australia_NZ,Beef,Pastoral,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Africa,Beef,Pastoral,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Australia_NZ,Beef,Pastoral,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Africa,Beef,Pastoral,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
+USA,Beef,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Canada,Beef,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Western Europe,Beef,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Japan,Beef,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Australia_NZ,Beef,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Former Soviet Union,Beef,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+China,Beef,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Middle East,Beef,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Africa,Beef,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Latin America,Beef,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Southeast Asia,Beef,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Eastern Europe,Beef,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Korea,Beef,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+India,Beef,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+Technology Logit Exponent: Animal Products and Scavenging,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+7003,,,,,,,,,,,,
+,,,,logitexp,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,Beef,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Canada,Beef,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Western Europe,Beef,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Japan,Beef,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Australia_NZ,Beef,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Former Soviet Union,Beef,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+China,Beef,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Middle East,Beef,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Africa,Beef,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Latin America,Beef,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Southeast Asia,Beef,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Eastern Europe,Beef,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Korea,Beef,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+India,Beef,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+USA,Beef,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Canada,Beef,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Western Europe,Beef,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Japan,Beef,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Australia_NZ,Beef,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Former Soviet Union,Beef,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+China,Beef,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Middle East,Beef,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Africa,Beef,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Latin America,Beef,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Southeast Asia,Beef,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Eastern Europe,Beef,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+Korea,Beef,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+India,Beef,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
+
+
+Set shareweights to 0 for techs with 0 share in base years,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+7004,,,,,,,,,,,,
+,,,,sharewt,,,,,,,,
+region,supplysector,subsector,technology,1990,2005,2020,2035,2050,2065,2080,2095,
+USA,Beef,Mixed,Rice,0,0,0,0,0,0,0,0,
+Canada,Beef,Mixed,Rice,0,0,0,0,0,0,0,0,
+Australia_NZ,Beef,Mixed,Rice,0,0,0,0,0,0,0,0,
+Former Soviet Union,Beef,Mixed,Rice,0,0,0,0,0,0,0,0,
+Korea,Beef,Mixed,Rice,0,0,0,0,0,0,0,0
+USA,Beef,Mixed,SugarCrop,0,0,0,0,0,0,0,0
+Japan,Beef,Mixed,SugarCrop,0,0,0,0,0,0,0,0
+Australia_NZ,Beef,Mixed,SugarCrop,0,0,0,0,0,0,0,0
+Korea,Beef,Mixed,SugarCrop,0,0,0,0,0,0,0,0
+Australia_NZ,Beef,Pastoral,Corn,1,0,0,0,0,0,0,0
+Australia_NZ,Beef,Pastoral,FodderCrop,1,0,0,0,0,0,0,0
+Australia_NZ,Beef,Pastoral,MiscCrop,1,0,0,0,0,0,0,0
+Australia_NZ,Beef,Pastoral,OilCrop,1,0,0,0,0,0,0,0
+Australia_NZ,Beef,Pastoral,OtherGrain,1,0,0,0,0,0,0,0
+Australia_NZ,Beef,Pastoral,Rice,0,0,0,0,0,0,0,0
+Australia_NZ,Beef,Pastoral,SugarCrop,0,0,0,0,0,0,0,0
+Australia_NZ,Beef,Pastoral,Wheat,1,0,0,0,0,0,0,0
+Japan,Beef,Pastoral,Pasture,0,0,0,0,0,0,0,0
+Eastern Europe,Beef,Pastoral,Pasture,0,0,0,0,0,0,0,0
+USA,Beef,Mixed,Scavenging,0,0,0,0,0,0,0,0
+Canada,Beef,Mixed,Scavenging,0,0,0,0,0,0,0,0,
+Japan,Beef,Mixed,Scavenging,0,0,0,0,0,0,0,0,
+Australia_NZ,Beef,Mixed,Scavenging,0,0,0,0,0,0,0,0,
+Eastern Europe,Beef,Mixed,Scavenging,1,0,0,0,0,0,0,0,
+USA,Beef,Pastoral,Scavenging,0,0,0,0,0,0,0,0,
+Canada,Beef,Pastoral,Scavenging,0,0,0,0,0,0,0,0,
+Japan,Beef,Pastoral,Scavenging,0,0,0,0,0,0,0,0,
+Australia_NZ,Beef,Pastoral,Scavenging,0,0,0,0,0,0,0,0,
+Eastern Europe,Beef,Pastoral,Scavenging,0,0,0,0,0,0,0,0,
+
+
+CO2 tag,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+7010,,,,,,,,,,,,
+,,,,CO2,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+ALL,Beef,Mixed,Corn,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+ALL,Beef,Mixed,FodderCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+ALL,Beef,Mixed,MiscCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+ALL,Beef,Mixed,OilCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+ALL,Beef,Mixed,OtherGrain,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+ALL,Beef,Mixed,Rice,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+ALL,Beef,Mixed,SugarCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+ALL,Beef,Mixed,Wheat,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+ALL,Beef,Mixed,Pasture,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+ALL,Beef,Pastoral,Pasture,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+ALL,Beef,Mixed,Scavenging,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+ALL,Beef,Pastoral,Scavenging,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+
+
+CO2 tag,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+7011,,,,,,,,,,,,
+,,,,CO2,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+Australia_NZ,Beef,Pastoral,Corn,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Africa,Beef,Pastoral,Corn,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Australia_NZ,Beef,Pastoral,FodderCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Africa,Beef,Pastoral,FodderCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Australia_NZ,Beef,Pastoral,MiscCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Africa,Beef,Pastoral,MiscCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Australia_NZ,Beef,Pastoral,OilCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Africa,Beef,Pastoral,OilCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Australia_NZ,Beef,Pastoral,OtherGrain,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Africa,Beef,Pastoral,OtherGrain,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Australia_NZ,Beef,Pastoral,Rice,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Africa,Beef,Pastoral,Rice,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Australia_NZ,Beef,Pastoral,SugarCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Africa,Beef,Pastoral,SugarCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Australia_NZ,Beef,Pastoral,Wheat,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+Africa,Beef,Pastoral,Wheat,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+
+
+Energy-final-demand drivers,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+62,,,,,,,,,,,,
+,,,base-service,,,price-elasticity,,,,,,
+region,energy-final-demand,perCapitaBased,1975,1990,2005,2020 fillout,2020,2035,2050,2065,2080,2095
+USA,BeefDemand,1,11798675,11798675,12771464,-0.5,0.016,0.0115,0.007,0.007,0.007,0.007
+Canada,BeefDemand,1,1275167,1275167,1920123,-0.5,0.016,0.0115,0.007,0.007,0.007,0.007
+Western Europe,BeefDemand,1,11018342,11018342,9305631,-0.5,0.016,0.0115,0.007,0.007,0.007,0.007
+Japan,BeefDemand,1,605976,605976,553289,-0.5,0.016,0.0115,0.007,0.007,0.007,0.007
+Australia_NZ,BeefDemand,1,2415437,2415437,3282856,-0.5,0.016,0.0115,0.007,0.007,0.007,0.007
+Former Soviet Union,BeefDemand,1,9519557,9519557,4250206,-0.5,0.016,0.0115,0.007,0.007,0.007,0.007
+China,BeefDemand,1,1551993,1551993,8129449,-0.5,0.134,0.074,0.014,0.014,0.014,0.014
+Middle East,BeefDemand,1,474184,474184,427360,-0.5,0.134,0.074,0.014,0.014,0.014,0.014
+Africa,BeefDemand,1,4008377,4008377,5388792,-0.5,0.134,0.074,0.014,0.014,0.014,0.014
+Latin America,BeefDemand,1,12770999,12770999,17944961,-0.5,0.134,0.074,0.014,0.014,0.014,0.014
+Southeast Asia,BeefDemand,1,2421484,2421484,3304674,-0.5,0.134,0.074,0.014,0.014,0.014,0.014
+Eastern Europe,BeefDemand,1,2486269,2486269,1416617,-0.5,0.016,0.0115,0.007,0.007,0.007,0.007
+Korea,BeefDemand,1,180877,180877,266046,-0.5,0.134,0.074,0.014,0.014,0.014,0.014
+India,BeefDemand,1,2699350,2699350,3341215,-0.5,0.1005,0.0555,0.0105,0.0105,0.0105,0.0105
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+Meat demand supplysectors: unit tags and sector type,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+50,,,,,
+,,,,,
+region,supplysector,input-unit,output-unit,price-unit,sectorType
+ALL,BeefDemand,Gcal,Gcal,1975$/Gcal,agDemand
+
+
+Meat Food Demands scale year,,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+500,,,,,
+,demandsector,,,,
+region,supplysector,subsector,scaleYear,,
+USA,BeefDemand,BeefDemand,2005,,
+Canada,BeefDemand,BeefDemand,2005,,
+Western Europe,BeefDemand,BeefDemand,2005,,
+Japan,BeefDemand,BeefDemand,2005,,
+Australia_NZ,BeefDemand,BeefDemand,2005
+Former Soviet Union,BeefDemand,BeefDemand,2005
+China,BeefDemand,BeefDemand,2005
+Middle East,BeefDemand,BeefDemand,2005
+Africa,BeefDemand,BeefDemand,2005
+Latin America,BeefDemand,BeefDemand,2005
+Southeast Asia,BeefDemand,BeefDemand,2005
+Eastern Europe,BeefDemand,BeefDemand,2005
+Korea,BeefDemand,BeefDemand,2005
+India,BeefDemand,BeefDemand,2005
+USA,BeefDemand,BeefNonfoodDemand,2005
+Canada,BeefDemand,BeefNonfoodDemand,2005
+Western Europe,BeefDemand,BeefNonfoodDemand,2005
+Japan,BeefDemand,BeefNonfoodDemand,2005
+Australia_NZ,BeefDemand,BeefNonfoodDemand,2005
+Former Soviet Union,BeefDemand,BeefNonfoodDemand,2005
+China,BeefDemand,BeefNonfoodDemand,2005,,,,,,,,,,
+Middle East,BeefDemand,BeefNonfoodDemand,2005,,,,,,,,,,
+Africa,BeefDemand,BeefNonfoodDemand,2005,,,,,,,,,,
+Latin America,BeefDemand,BeefNonfoodDemand,2005,,,,,,,,,,
+Southeast Asia,BeefDemand,BeefNonfoodDemand,2005,,,,,,,,,,
+Eastern Europe,BeefDemand,BeefNonfoodDemand,2005,,,,,,,,,,
+Korea,BeefDemand,BeefNonfoodDemand,2005,,,,,,,,,,
+India,BeefDemand,BeefNonfoodDemand,2005,,,,,,,,,,
+
+
+Efficiency,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+5001,,,,minicam-energy-input,,,,,,,,,
+,,,,efficiency,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input
+USA,BeefDemand,BeefDemand,BeefDemand,0.993802,0.993802,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,Beef
+Canada,BeefDemand,BeefDemand,BeefDemand,0.992460,0.992460,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,Beef
+Western Europe,BeefDemand,BeefDemand,BeefDemand,0.971631,0.971631,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,Beef
+Japan,BeefDemand,BeefDemand,BeefDemand,0.975731,0.975731,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,Beef
+Australia_NZ,BeefDemand,BeefDemand,BeefDemand,0.969646,0.969646,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,Beef
+Former Soviet Union,BeefDemand,BeefDemand,BeefDemand,0.955114,0.955114,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,Beef
+China,BeefDemand,BeefDemand,BeefDemand,0.997776,0.997776,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,Beef
+Middle East,BeefDemand,BeefDemand,BeefDemand,0.970052,0.970052,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,Beef
+Africa,BeefDemand,BeefDemand,BeefDemand,0.987908,0.987908,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,Beef
+Latin America,BeefDemand,BeefDemand,BeefDemand,0.988096,0.988096,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,Beef
+Southeast Asia,BeefDemand,BeefDemand,BeefDemand,0.989652,0.989652,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,Beef
+Eastern Europe,BeefDemand,BeefDemand,BeefDemand,0.972651,0.972651,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,Beef
+Korea,BeefDemand,BeefDemand,BeefDemand,0.983135,0.983135,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,Beef
+India,BeefDemand,BeefDemand,BeefDemand,0.989984,0.989984,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,Beef
+USA,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,0.993802,0.993802,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,Beef
+Canada,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,0.992460,0.992460,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,Beef
+Western Europe,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,0.971631,0.971631,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,Beef
+Japan,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,0.975731,0.975731,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,Beef
+Australia_NZ,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,0.969646,0.969646,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,Beef
+Former Soviet Union,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,0.955114,0.955114,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,Beef
+China,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,0.997776,0.997776,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,Beef
+Middle East,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,0.970052,0.970052,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,Beef
+Africa,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,0.987908,0.987908,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,Beef
+Latin America,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,0.988096,0.988096,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,Beef
+Southeast Asia,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,0.989652,0.989652,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,Beef
+Eastern Europe,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,0.972651,0.972651,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,Beef
+Korea,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,0.983135,0.983135,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,Beef
+India,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,0.989984,0.989984,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,Beef
+
+Calibrated inputs to demand sectors,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,Afr and Aus_NZ have pastoral inputs of ag crops
+Variable ID,,,,,,,,,,,,,
+5000,,,,,,,,,,,,,,,,,
+,,,,calibrated-value,,,,from data,,,demands,,supplies,,,demand scalers,
+region,supplysector,subsector,technology,1990,2005,minicam-energy-input,,1990,2005,,1990,2005,1990,2005,,1990,2005
+USA,BeefDemand,BeefDemand,BeefDemand,6440300,7703611,Beef,,6443293,7707047,,11877776,12844795,11872260,12839069,,0.999535564,0.999554198
+Canada,BeefDemand,BeefDemand,BeefDemand,619081,583160,Beef,,619415,583458,,1285546,1934381,1284854,1933392,,0.999461567,0.999488844
+Western Europe,BeefDemand,BeefDemand,BeefDemand,9114575,7937841,Beef,,9134446,7953558,,11364777,9559693,11340053,9540803,,0.997824573,0.998023966
+Japan,BeefDemand,BeefDemand,BeefDemand,621047,564831,Beef,,623660,566898,,623661,566899,621048,564832,,0.995810555,0.996353527
+Australia_NZ,BeefDemand,BeefDemand,BeefDemand,759814,686943,Beef,,760768,688048,,2494177,3380779,2491051,3375347,,0.998746707,0.99839326
+Former Soviet Union,BeefDemand,BeefDemand,BeefDemand,9966930,4379384,Beef,,10003901,4391928,,10003902,4391929,9966931,4379385,,0.996304296,0.997143833
+China,BeefDemand,BeefDemand,BeefDemand,1555451,8151389,Beef,,1555688,8153670,,1555689,8153671,1555452,8151390,,0.999848111,0.99972026
+Middle East,BeefDemand,BeefDemand,BeefDemand,488823,438413,Beef,,489522,438982,,489523,438983,488824,438414,,0.998571078,0.998704966
+Africa,BeefDemand,BeefDemand,BeefDemand,3810842,5287794,Beef,,3812147,5290303,,4058830,5474326,4057441,5471730,,0.999657722,0.999525778
+Latin America,BeefDemand,BeefDemand,BeefDemand,9500007,11393105,Beef,,9502538,11396024,,12928301,18152612,12924859,18147962,,0.999733697,0.999743797
+Southeast Asia,BeefDemand,BeefDemand,BeefDemand,2140752,3342833,Beef,,2141790,3345083,,2447991,3345084,2446804,3342834,,0.9995152,0.999327157
+Eastern Europe,BeefDemand,BeefDemand,BeefDemand,1192657,669462,Beef,,1195654,671160,,2562602,1457885,2556178,1454198,,0.997493401,0.997471345
+Korea,BeefDemand,BeefDemand,BeefDemand,183978,270598,Beef,,184199,271095,,184200,271096,183979,270599,,0.99880167,0.998169148
+India,BeefDemand,BeefDemand,BeefDemand,2031968,2161727,Beef,,2032751,2163140,,2727711,3383980,2726661,3381770,,0.99961506,0.999346912
+USA,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,5431959,5135457,Beef,,5434483,5137748,,,,,,,,
+Canada,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,665773,1350232,Beef,,666132,1350922,,,,,,,,
+Western Europe,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,2225479,1602961,Beef,,2230331,1606135,,,,,,,,
+Japan,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,1,1,Beef,,1,1,,,,,,,,
+Australia_NZ,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,1731237,2688404,Beef,,1733409,2692731,,,,,,,,
+Former Soviet Union,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,1,1,Beef,,1,1,,,,,,,,
+China,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,1,1,Beef,,1,1,,,,,,,,
+Middle East,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,1,1,Beef,,1,1,,,,,,,,
+Africa,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,246599,183936,Beef,,246683,184023,,,,,,,,
+Latin America,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,3424851,6754857,Beef,,3425764,6756588,,,,,,,,
+Southeast Asia,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,306052,1,Beef,,306200,1,,,,,,,,
+Eastern Europe,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,1363521,784736,Beef,,1366947,786725,,,,,,,,
+Korea,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,1,1,Beef,,1,1,,,,,,,,
+India,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,694693,1220043,Beef,,694961,1220840,,,,,,,,
+
+
+Non-energy input cost,,,,,,,,,,,,
+table not necessary,,,,,,,,,,,,
+,,,,,,,,,,,,
+5002,,,,minicam-non-energy-input,,,,,,,,
+,,,,input-cost,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+ALL,BeefDemand,BeefDemand,BeefDemand,0,0,0,0,0,0,0,0,0
+ALL,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,0,0,0,0,0,0,0,0,0
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+add CO2 tag,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+5010,,,,,,,,,,,,
+,,,,CO2,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+ALL,BeefDemand,BeefDemand,BeefDemand,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+ALL,BeefDemand,BeefNonfoodDemand,BeefNonfoodDemand,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
+
+
+
+
+
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
