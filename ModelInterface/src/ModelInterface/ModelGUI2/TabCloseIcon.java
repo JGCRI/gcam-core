@@ -13,19 +13,24 @@ import ModelInterface.InterfaceMain;
 
 public class TabCloseIcon implements Icon {
 
-	private Icon showingIcon;
-	private final Icon closeIcon;
+	private static final Icon closeIcon = new ImageIcon( TabCloseIcon.class.getResource("icons/closeTab.PNG"));
+	//mOverCloseIcon = new ImageIcon( TabCloseIcon.class.getResource("icons/mOverCloseTab.PNG"));
+	private static final Icon mPressCloseIcon = new ImageIcon( TabCloseIcon.class.getResource("icons/mPressCloseTab.PNG"));
 	//private final Icon mOverCloseIcon;
-	private final Icon mPressCloseIcon;
+	private static final Icon loadingIcon = new ImageIcon( TabCloseIcon.class.getResource("icons/loadTab.PNG"));
 	private JTabbedPane tabPane = null;
+	private Icon showingIcon;
 	private transient Rectangle position = null;
 	
 	public TabCloseIcon() {
-		closeIcon = new ImageIcon( TabCloseIcon.class.getResource("icons/closeTab.PNG"));
-		//mOverCloseIcon = new ImageIcon( TabCloseIcon.class.getResource("icons/mOverCloseTab.PNG"));
-		mPressCloseIcon = new ImageIcon( TabCloseIcon.class.getResource("icons/mPressCloseTab.PNG"));
-		showingIcon = closeIcon;
+		showingIcon = loadingIcon;
 	}
+	
+	public void finishedLoading() {
+		showingIcon = closeIcon;
+		tabPane.repaint();
+	}
+	
 	
 	public void paintIcon(Component c, Graphics g, int x, int y) {
 		if( tabPane == null) {
@@ -35,8 +40,10 @@ public class TabCloseIcon implements Icon {
 					// asking for isConsumed is *very* important, otherwise more than one tab might get closed!
 					if ( !e.isConsumed()  &&   position.contains( e.getX(), e.getY() ) ) {
 						final int index = tabPane.indexAtLocation(e.getX(), e.getY());
+						QueryResultsPanel closeThread = (QueryResultsPanel)(tabPane.getComponentAt(index));
+						closeThread.killThread();
 						InterfaceMain.getInstance().fireProperty("Query", 
-								DbViewer.getTableModelFromComponent(tabPane.getComponentAt(index)), null);
+								DbViewer.getTableModelFromComponent(closeThread), null);
 						tabPane.removeMouseListener(this);
 						tabPane.remove( index );
 						e.consume();

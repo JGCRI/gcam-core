@@ -16,6 +16,7 @@ import java.util.TreeSet;
 import java.util.Vector;
 import java.util.Iterator;
 
+import javax.imageio.ImageIO;
 import javax.swing.JTable;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,6 +29,9 @@ import javax.swing.undo.UndoManager;
 import org.apache.poi.hssf.usermodel.*;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.Plot;
@@ -74,8 +78,8 @@ public class NewDataTableModel extends BaseTableModel{
 		data = new TreeMap();
 		w3 = "";
 		wild = chooseTableHeaders(tp/*, parentFrame*/);
-	        wild.set(0, ((DOMmodel.DOMNodeAdapter)wild.get(0)).getNode().getNodeName());
-	        wild.set(1, ((DOMmodel.DOMNodeAdapter)wild.get(1)).getNode().getNodeName());
+		wild.set(0, ((DOMmodel.DOMNodeAdapter)wild.get(0)).getNode().getNodeName());
+		wild.set(1, ((DOMmodel.DOMNodeAdapter)wild.get(1)).getNode().getNodeName());
 		buildTable(treePathtoXPath(tp, doc.getDocumentElement(), 1));
 		//indCol.add(0,w3 /*set2Name*/);
 		ind1Name = (String)wild.get(0);
@@ -99,24 +103,24 @@ public class NewDataTableModel extends BaseTableModel{
 	 * @param xpe an XPath expression which will be evaluated to get a set of nodes
 	 */
 	protected void buildTable(XPathExpression xpe) {
-	  XPathResult res = (XPathResult)xpe.evaluate(doc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
-	  xpe = null;
-	  // TreeSets don't allow duplicates
-	  TreeSet col = new TreeSet();
-	  TreeSet row = new TreeSet();
-	  Node tempNode;
-	  // region and year isn't a good name anymore
-	  // more like axis keys
-	  Object[] regionAndYear;
-	  while ((tempNode = res.iterateNext()) != null) {
-		regionAndYear = getRegionAndYearFromNode(tempNode.getParentNode());
-		col.add(regionAndYear[0]);
-		row.add(regionAndYear[1]);
-		// colKey;rowKey maps to the data that should go in that cell
-		data.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
-	  }
-	  indCol = new Vector(col);
-	  indRow = new Vector(row);
+		XPathResult res = (XPathResult)xpe.evaluate(doc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+		xpe = null;
+		// TreeSets don't allow duplicates
+		TreeSet col = new TreeSet();
+		TreeSet row = new TreeSet();
+		Node tempNode;
+		// region and year isn't a good name anymore
+		// more like axis keys
+		Object[] regionAndYear;
+		while ((tempNode = res.iterateNext()) != null) {
+			regionAndYear = getRegionAndYearFromNode(tempNode.getParentNode());
+			col.add(regionAndYear[0]);
+			row.add(regionAndYear[1]);
+			// colKey;rowKey maps to the data that should go in that cell
+			data.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
+		}
+		indCol = new Vector(col);
+		indRow = new Vector(row);
 	}
 
 	/**
@@ -124,29 +128,29 @@ public class NewDataTableModel extends BaseTableModel{
 	 * @param n the node whos wild node's attrubutes need to be determined
 	 * @return an array of size 2 with the attrubute values of the wild which lead to this node
 	 */
-  	private Object[] getRegionAndYearFromNode(Node n) {
-	  Vector ret = new Vector(2,0);
-	  do {
-		  if(n.getNodeName().equals((String)wild.get(0)) || n.getNodeName().equals((String)wild.get(1))) {
-			  //ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
-			  if(!n.hasAttributes()) {
-				  ret.add(n.getNodeName());
-			  } else {
-				  ret.add(getOneAttrVal(n));
-			  }
-				  /*
+	private Object[] getRegionAndYearFromNode(Node n) {
+		Vector ret = new Vector(2,0);
+		do {
+			if(n.getNodeName().equals((String)wild.get(0)) || n.getNodeName().equals((String)wild.get(1))) {
+				//ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
+				if(!n.hasAttributes()) {
+					ret.add(n.getNodeName());
+				} else {
+					ret.add(getOneAttrVal(n));
+				}
+				/*
 			  } else if(!getOneAttrVal(n).equals("fillout=1")) {
 			  	ret.add(getOneAttrVal(n));
 			  } else {
 			        ret.add(getOneAttrVal(n, 1));
 			  }
-			  */
+				 */
 
-		  }  
-		  n = n.getParentNode();
-	  } while(n.getNodeType() != Node.DOCUMENT_NODE /*&& (region == null || year == null)*/);
-	  return ret.toArray();
-  	}
+			}  
+			n = n.getParentNode();
+		} while(n.getNodeType() != Node.DOCUMENT_NODE /*&& (region == null || year == null)*/);
+		return ret.toArray();
+	}
 
 	/**
 	 * not supported for a single table
@@ -332,7 +336,7 @@ public class NewDataTableModel extends BaseTableModel{
 	 * @param col the col of the cell being edited
 	 */
 	public void setValueAt(Object val, int row, int col) {
-		
+
 		//TreeMap data = ((TreeMap)TreeMapVector.get( row / (indRow.size())));
 
 		Node n = (Node)data.get(getKey(row,col));
@@ -348,7 +352,7 @@ public class NewDataTableModel extends BaseTableModel{
 			}
 			// Try to look in this row to see if there is a value
 			for(int i = 1; i < getColumnCount() && 
-					( side = (Node)data.get(getKey(row, i))) == null; ++i) {
+			( side = (Node)data.get(getKey(row, i))) == null; ++i) {
 			}
 			// If there weren't values in the same column and row won't be 
 			// able to figure out the path down the tree to put the data
@@ -362,8 +366,8 @@ public class NewDataTableModel extends BaseTableModel{
 			}
 			ArrayList nodePath = new ArrayList();
 			Node parent = ((Node)side.getParentNode());
-			
-			
+
+
 			String headerone = ind1Name; // ex. region
 			String headertwo = ind2Name; // ex. populationSGM
 
@@ -374,7 +378,7 @@ public class NewDataTableModel extends BaseTableModel{
 				/*
 				attributesLineArray[0] = attributesLineArray[1];
 				attributesLineArray[1] = temp;
-				*/
+				 */
 				temp = headerone;
 				headerone = headertwo;
 				headertwo = temp;
@@ -382,14 +386,14 @@ public class NewDataTableModel extends BaseTableModel{
 
 			/*
 			StringTokenizer st = new StringTokenizer( attributesLineArray[ 1 ], "=", false);
-			
+
 			String attrFrom1 = st.nextToken();
 			String attrTo1 = st.nextToken();
-			
+
 			st = new StringTokenizer( attributesLineArray[0], "=", false);
 			String attrFrom2 = st.nextToken();
 			String attrTo2 = st.nextToken();
-			*/
+			 */
 
 			// attr names are not available here, but we can figure them out
 			// when we reach the headone or headertwo(warning I am assuming the
@@ -445,7 +449,7 @@ public class NewDataTableModel extends BaseTableModel{
 			parent.appendChild( n );
 			data.put( getKey(row,col), n );
 		}
-		
+
 		fireTableCellUpdated(row, col);
 
 		// fireOffSomeListeners?
@@ -495,7 +499,7 @@ public class NewDataTableModel extends BaseTableModel{
 			if(rowNameFull.equals("Total")) {
 				continue;
 			}
-			
+
 			// Split out the name attribute if it contains it.
 			String rowName;
 			if( rowNameFull.indexOf('=') != -1 ){
@@ -534,7 +538,7 @@ public class NewDataTableModel extends BaseTableModel{
 		// Done adding series, create the chart.
 		// Create the domain axis label.  // TODO: Improve naming.
 		NumberAxis xAxis = new NumberAxis(/*ind2Name*/"Year");
-		
+
 		// Use the parent element name as the name of the axis.
 		String appendUnits;
 		if(units != null) {
@@ -543,29 +547,29 @@ public class NewDataTableModel extends BaseTableModel{
 			appendUnits = "";
 		}
 		NumberAxis yAxis = new NumberAxis(ind2Name+appendUnits);
-		
+
 		// This turns off always including zero in the domain.
 		xAxis.setAutoRangeIncludesZero(false);
-		
+
 		// This turns on automatic resizing of the domain..
 		xAxis.setAutoRange(true);
-		
+
 		// This makes the X axis use integer tick units.
 		xAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-		
+
 		// This turns on automatic resizing of the range.
 		yAxis.setAutoRange(true);
-		
+
 		// Create the plot.
 		//XYPlot xyPlot = new XYPlot( chartData, xAxis, yAxis, new XYLineAndShapeRenderer());
 		XYPlot xyPlot = new XYPlot( chartData, xAxis, yAxis, new org.jfree.chart.renderer.xy.StackedXYAreaRenderer());
-		
+
 		// Draw the zero line.
 		//xyPlot.setZeroRangeBaselineVisible(true);
-		
+
 		// Create the chart.
 		chart = new JFreeChart( xyPlot );
-		
+
 		// Create a title for the chart.
 		TextTitle ttitle = new TextTitle(title);
 		chart.setTitle(ttitle);
@@ -579,7 +583,7 @@ public class NewDataTableModel extends BaseTableModel{
 		} else {
 			icon.setImage(chartImage);
 		}
-		*/
+		 */
 
 		return chart;
 	}
@@ -600,39 +604,76 @@ public class NewDataTableModel extends BaseTableModel{
 	public ImageIcon getChartImage() {
 		return icon;
 	}
-	*/
-  public void exportToExcel(HSSFSheet sheet, HSSFWorkbook wb, HSSFPatriarch dp) {
-	  HSSFRow row = sheet.createRow(sheet.getLastRowNum()+1);
-	  for(int i = 0; i < getColumnCount(); ++i) {
-		  row.createCell((short)i).setCellValue(getColumnName(i));
-	  }
-	  for(int rowN = 0; rowN < getRowCount(); ++rowN) {
-		  row = sheet.createRow(sheet.getLastRowNum()+1);
-		  for(int col = 0; col < getColumnCount(); ++col) {
-			  Object obj = sortedTable.getValueAt(rowN, col);
-			  if(obj instanceof Double) {
-				  row.createCell((short)col).setCellValue(((Double)obj).doubleValue());
-			  } else {
-				  row.createCell((short)col).setCellValue(getValueAt(rowN,col).toString());
-			  }
-		  }
-	  }
-	  if(dp == null) {
-		  // did not want images so just return now we are done
-		  return;
-	  }
-	  try {
-		  java.awt.image.BufferedImage chartImage = createChart(0,0).createBufferedImage(350,350);
-		  // WARNING: This is a hack because of java some how looking to load some class that did
-		  // not exist.  Instead of using the utilities which uses the Factory which uses the 
-		  // reflextion which causes that mess I will use this encoder directly.
-		  int where = wb.addPicture(new org.jfree.chart.encoders.SunJPEGEncoderAdapter().encode(chartImage), HSSFWorkbook.PICTURE_TYPE_JPEG);
-		  dp.createPicture(new HSSFClientAnchor(0,0,50,50,(short)(getColumnCount()+1),
-					  sheet.getLastRowNum()-getRowCount(),(short)(getColumnCount()+5),sheet.getLastRowNum()+1), where);
-	  } catch(java.io.IOException ioe) {
-		  ioe.printStackTrace();
-	  }
-  }
+	 */
+	public void exportToExcel(HSSFSheet sheet, HSSFWorkbook wb, HSSFPatriarch dp) {
+		HSSFRow row = sheet.createRow(sheet.getLastRowNum()+1);
+		for(int i = 0; i < getColumnCount(); ++i) {
+			row.createCell((short)i).setCellValue(getColumnName(i));
+		}
+		for(int rowN = 0; rowN < getRowCount(); ++rowN) {
+			row = sheet.createRow(sheet.getLastRowNum()+1);
+			for(int col = 0; col < getColumnCount(); ++col) {
+				Object obj = sortedTable.getValueAt(rowN, col);
+				if(obj instanceof Double) {
+					row.createCell((short)col).setCellValue(((Double)obj).doubleValue());
+				} else {
+					row.createCell((short)col).setCellValue(getValueAt(rowN,col).toString());
+				}
+			}
+		}
+		if(dp == null) {
+			// did not want images so just return now we are done
+			return;
+		}
+		try {
+			//for a good chart, the number of rows labeling the cart is added the the 350*350 square
+			//at 10 pixels per line and 3 labels per line
+			double add = getRowCount()/6*10;
+			
+			//adjusts the standard size of 350*350+rows to be as large or small as desired
+			//TODO: make this controlled by the user
+			double sizeMult = 1.4;
+			
+			int imgWidth = (int)(350*sizeMult);
+			int imgHeight =(int)(sizeMult*(350+add));
+			java.awt.image.BufferedImage chartImage = createChart(0,0).createBufferedImage(imgWidth,imgHeight);
+
+
+
+			//TODO: figure out how many pixels are in a char dependent on system
+			int pixelWidthPerChar = 8;
+			short firstRow = (short) (sheet.getLastRowNum()-getRowCount());
+			short firstCol = (short)(sheet.getRow(firstRow).getLastCellNum()+2);
+			short colSpan = (short) (imgWidth/(pixelWidthPerChar*(sheet.getColumnWidth((short)(getColumnCount()+1)))) + firstCol);
+			short rowSpan = (short)((imgHeight/(sheet.getDefaultRowHeightInPoints()*5/3))  +firstRow);
+
+
+			// WARNING: This is a hack because of java some how looking to load some class that did
+			// not exist.  Instead of using the utilities which uses the Factory which uses the 
+			// reflextion which causes that mess I will use this encoder directly.
+
+
+			int where = wb.addPicture(new org.jfree.chart.encoders.SunJPEGEncoderAdapter().encode(chartImage), HSSFWorkbook.PICTURE_TYPE_JPEG);
+			dp.createPicture(new HSSFClientAnchor(0,0,255,255,firstCol,firstRow,colSpan,rowSpan), where);
+			
+			
+			//TODO: Make this a user selectable option
+			/*
+			try {
+				File outputfile = new File("saved.jpg");
+				ImageIO.write(chartImage, "jpg", outputfile);
+			} catch (IOException e3){
+				JOptionPane.showMessageDialog(parentFrame, 
+						"Image didn't save",
+						"Who knows why", JOptionPane.ERROR_MESSAGE);
+			}
+			*/	
+
+		} catch(java.io.IOException ioe) {
+			ioe.printStackTrace();
+		}
+
+	}
 	public boolean equals(Object other) {
 		if(other == this) {
 			return true;

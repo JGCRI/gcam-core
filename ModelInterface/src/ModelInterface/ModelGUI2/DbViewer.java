@@ -18,6 +18,7 @@ import ModelInterface.common.FileChooserFactory;
 import ModelInterface.common.RecentFilesList.RecentFile;
 import ModelInterface.MenuAdder;
 import ModelInterface.InterfaceMain;
+import ModelInterface.ModelGUI2.QueryResultsPanel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
@@ -44,6 +45,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.geom.Point2D;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
@@ -60,7 +63,6 @@ import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.ls.DOMImplementationLS;
 import org.w3c.dom.ls.*;
 import org.w3c.dom.bootstrap.DOMImplementationRegistry;
 import org.w3c.dom.Node;
@@ -73,7 +75,7 @@ import org.jfree.report.JFreeReport;
 /*
 import org.w3c.dom.ls.*;
 import org.w3c.dom.bootstrap.*;
-*/
+ */
 import org.apache.xpath.domapi.XPathEvaluatorImpl;
 import org.jfree.chart.JFreeChart;
 import org.w3c.dom.xpath.*;
@@ -100,7 +102,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 	private static String controlStr = "DbViewer";
 
 	private JTable jTable; // does this still need to be a field?
-		
+
 	private DOMImplementationLS implls;
 
 
@@ -154,7 +156,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 						Properties prop = ((InterfaceMain)parentFrame).getProperties();
 						// I should probably stop being lazy
 						prop.setProperty("queryFile", queryFileName = 
-								prop.getProperty("queryFile", "standard_queries.xml"));
+							prop.getProperty("queryFile", "standard_queries.xml"));
 						// TODO: move to load preferences
 						scenarioRegionSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true);
 						scenarioRegionSplit.setResizeWeight(.5);
@@ -187,10 +189,10 @@ public class DbViewer implements ActionListener, MenuAdder {
 
 		try {
 			System.setProperty(DOMImplementationRegistry.PROPERTY,
-					"com.sun.org.apache.xerces.internal.dom.DOMImplementationSourceImpl");
-					//"org.apache.xerces.dom.DOMImplementationSourceImpl");
+			"com.sun.org.apache.xerces.internal.dom.DOMImplementationSourceImpl");
+			//"org.apache.xerces.dom.DOMImplementationSourceImpl");
 			DOMImplementationRegistry reg = DOMImplementationRegistry
-					.newInstance();
+			.newInstance();
 			implls = (DOMImplementationLS)reg.getDOMImplementation("XML 3.0");
 			if (implls == null) {
 				System.out.println("Could not find a DOM3 Load-Save compliant parser.");
@@ -218,7 +220,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		JMenuItem menuItem = new JMenuItem("DB Open");
 		menuItem.addActionListener(this);
 		menuMan.getSubMenuManager(InterfaceMain.FILE_MENU_POS).
-			getSubMenuManager(InterfaceMain.FILE_OPEN_SUBMENU_POS).addMenuItem(menuItem, 30);
+		getSubMenuManager(InterfaceMain.FILE_OPEN_SUBMENU_POS).addMenuItem(menuItem, 30);
 
 		final JMenuItem menuManage = makeMenuItem("Manage DB");
 		menuMan.getSubMenuManager(InterfaceMain.FILE_MENU_POS).addMenuItem(menuManage, 10);
@@ -227,14 +229,14 @@ public class DbViewer implements ActionListener, MenuAdder {
 		final JMenuItem menuBatch = makeMenuItem("Batch Query");
 		menuMan.getSubMenuManager(InterfaceMain.FILE_MENU_POS).addMenuItem(menuBatch, 11);
 		menuBatch.setEnabled(false);
-		*/
+		 */
 		// TODO: why are there two property change listeners
 		final ActionListener thisListener = this;
 		parentFrame.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if(evt.getPropertyName().equals("Control")) {
 					if(evt.getOldValue().equals(controlStr) || 
-						evt.getOldValue().equals(controlStr+"Same")) {
+							evt.getOldValue().equals(controlStr+"Same")) {
 						menuManage.setEnabled(false);
 						//menuBatch.setEnabled(false);
 						// TODO: have the inteface main hanlde all batch files including
@@ -264,7 +266,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if(evt.getPropertyName().equals("Control")) {
 					if(evt.getOldValue().equals(controlStr) || 
-						evt.getOldValue().equals(controlStr+"Same")) {
+							evt.getOldValue().equals(controlStr+"Same")) {
 						menuExpPrn.setEnabled(false);
 					}
 				} else if(evt.getPropertyName().equals("Query") && evt.getOldValue() == null) {
@@ -297,7 +299,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 				// Now open chooser
 				dbFiles = fc.doFilePrompt(parentFrame, "Choose XML Database", FileChooser.LOAD_DIALOG, 
 						new File(((InterfaceMain)parentFrame).getProperties()
-							.getProperty("lastDirectory", ".")), dbFilter, this, "DB Open");
+								.getProperty("lastDirectory", ".")), dbFilter, this, "DB Open");
 			}
 
 			if(dbFiles != null) {
@@ -355,11 +357,11 @@ public class DbViewer implements ActionListener, MenuAdder {
 					}
 				}
 				if (!file.exists() || JOptionPane.showConfirmDialog(null,
-							"Overwrite existing file?", "Confirm Overwrite",
-							JOptionPane.YES_NO_OPTION,
-							JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+						"Overwrite existing file?", "Confirm Overwrite",
+						JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
 					((InterfaceMain)parentFrame).getProperties().setProperty("queryFile", 
-												 file.getAbsolutePath());
+							file.getAbsolutePath());
 					writeQueries();
 				}
 			}
@@ -377,7 +379,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 			parentFrame.getGlassPane().setVisible(false);
 			// tell the user it didn't open.
 			JOptionPane.showMessageDialog(parentFrame, "Could not open the xml database.", 
-						"DB Open Error", JOptionPane.ERROR_MESSAGE);
+					"DB Open Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
@@ -474,18 +476,18 @@ public class DbViewer implements ActionListener, MenuAdder {
 		ToolTipManager.sharedInstance().registerComponent(queryList);
 		queryList.setCellRenderer(new DefaultTreeCellRenderer() {
 			public Component getTreeCellRendererComponent(JTree tree,
-				Object value, boolean sel, boolean expanded, boolean leaf,
-				int row, boolean hasFocus) {
+					Object value, boolean sel, boolean expanded, boolean leaf,
+					int row, boolean hasFocus) {
 				super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf,
-					row, hasFocus);
+						row, hasFocus);
 				if(value instanceof QueryGenerator) {
 					setToolTipText(createCommentTooltip(new TreePath(value)));
 					setIcon(queryIcon);
 				} else if(value instanceof SingleQueryExtension.SingleQueryValue) {
 					Object[] tp = new Object[] {
-						"root", // will be skipped
-						((SingleQueryExtension.SingleQueryValue)value).getParent(),
-						value
+							"root", // will be skipped
+							((SingleQueryExtension.SingleQueryValue)value).getParent(),
+							value
 					};
 					setToolTipText(createCommentTooltip(new TreePath(tp)));
 					setIcon(singleQueryIcon);
@@ -553,7 +555,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		/*
 		final JPanel tablePanel = new JPanel();
 		tablePanel.setLayout( new BoxLayout(tablePanel, BoxLayout.X_AXIS));
-		*/
+		 */
 		//final JTabbedPane tablesTabs = new JTabbedPane();
 		tableCreatorSplit.setRightComponent(tablesTabs);
 
@@ -580,7 +582,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 							if(!((QueryGenerator)selectedObj).hasSingleQueryExtension()) {
 								// only add the listeners the first time.
 								SingleQueryExtension se = ((QueryGenerator)selectedObj)
-									.getSingleQueryExtension();
+								.getSingleQueryExtension();
 								// could be null if it is not to
 								// build list
 								if(se != null) {
@@ -604,7 +606,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 						} else if(selectedObj instanceof SingleQueryExtension.SingleQueryValue) {
 							canEdit = false;
 							if(!((SingleQueryExtension.SingleQueryValue)
-										selectedObj).canExecute()) {
+									selectedObj).canExecute()) {
 								canRun = false;
 							}
 							canCreate = false;
@@ -647,7 +649,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 			public void actionPerformed(ActionEvent e) {
 				if(queryList.getSelectionCount() != 1) {
 					JOptionPane.showMessageDialog(parentFrame, "Please select one Query or Query Group before creating", 
-						"Create Query Error", JOptionPane.ERROR_MESSAGE);
+							"Create Query Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 
@@ -666,7 +668,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 			public void actionPerformed(ActionEvent e) {
 				if(queryList.getSelectionCount() == 0) {
 					JOptionPane.showMessageDialog(parentFrame, "Please select a Query or Query Group to Remove", 
-						"Query Remove Error", JOptionPane.ERROR_MESSAGE);
+							"Query Remove Error", JOptionPane.ERROR_MESSAGE);
 				} else {
 					TreePath[] selPaths = queryList.getSelectionPaths();
 					for(int i = 0; i < selPaths.length; ++i) {
@@ -682,13 +684,13 @@ public class DbViewer implements ActionListener, MenuAdder {
 				int[] regionSel = regionList.getSelectedIndices();
 				if(scnSel.length == 0) {
 					JOptionPane.showMessageDialog(parentFrame, "Please select Scenarios to run the query against", 
-						"Run Query Error", JOptionPane.ERROR_MESSAGE);
+							"Run Query Error", JOptionPane.ERROR_MESSAGE);
 				} else if(regionSel.length == 0) {
 					JOptionPane.showMessageDialog(parentFrame, "Please select Regions to run the query against", 
-						"Run Query Error", JOptionPane.ERROR_MESSAGE);
+							"Run Query Error", JOptionPane.ERROR_MESSAGE);
 				} else if(queryList.getSelectionCount() == 0) {
 					JOptionPane.showMessageDialog(parentFrame, "Please select a query to run", 
-						"Run Query Error", JOptionPane.ERROR_MESSAGE);
+							"Run Query Error", JOptionPane.ERROR_MESSAGE);
 				} else {
 					parentFrame.getGlassPane().setVisible(true);
 					TreePath[] selPaths = queryList.getSelectionPaths();
@@ -701,25 +703,20 @@ public class DbViewer implements ActionListener, MenuAdder {
 								qg = (QueryGenerator)selPaths[i].getLastPathComponent();
 							} else {
 								singleBinding = ((SingleQueryExtension.SingleQueryValue)selPaths[i].
-									getLastPathComponent()).getAsQueryBinding();
+										getLastPathComponent()).getAsQueryBinding();
 								qg = (QueryGenerator)selPaths[i].getParentPath().getLastPathComponent();
 							}
-							JComponent ret = null;
-							if(qg.isGroup() && singleBinding == null) {
-								ret = createGroupTableContent(qg);
-							} else {
-								ret = createSingleTableContent(qg, singleBinding);
-							}
-							if(ret != null) {
-								tablesTabs.addTab(qg.toString(), new TabCloseIcon(), ret, 
-										createCommentTooltip(selPaths[i]));
-								if(!movedTabAlready) {
-									tablesTabs.setSelectedIndex(tablesTabs.getTabCount()-1);
-									movedTabAlready = true;
-								}
-								// fire this here, or after they are all done??
-								((InterfaceMain)parentFrame).fireProperty("Query", null, bt);
-							}
+							//add loading icon to QueryResultsPanel
+							TabCloseIcon loadingIcon = new TabCloseIcon();
+							JComponent ret = new QueryResultsPanel(qg, singleBinding, parentFrame, scnList.getSelectedValues(), regionList.getSelectedValues(), loadingIcon);
+
+							tablesTabs.addTab(qg.toString(), new TabCloseIcon(), ret, createCommentTooltip(selPaths[i])); 
+							if(!movedTabAlready) { 
+								tablesTabs.setSelectedIndex(tablesTabs.getTabCount()-1);
+								movedTabAlready = true; 
+							} 
+
+
 						} catch(ClassCastException cce) {
 							System.out.println("Warning: Caught "+cce+" likely a QueryGroup was in the selection");
 						}
@@ -735,7 +732,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 			public void actionPerformed(ActionEvent e) {
 				if(queryList.getSelectionCount() == 0) {
 					JOptionPane.showMessageDialog(parentFrame, "Please select a query to edit", 
-						"Edit Query Error", JOptionPane.ERROR_MESSAGE);
+							"Edit Query Error", JOptionPane.ERROR_MESSAGE);
 				} else {
 					TreePath[] selPaths = queryList.getSelectionPaths();
 					for(int i = 0; i < selPaths.length; ++i) {
@@ -771,81 +768,6 @@ public class DbViewer implements ActionListener, MenuAdder {
 		parentFrame.setVisible(true);
 	}
 
-	private JComponent createGroupTableContent(QueryGenerator qg) {
-		BaseTableModel btBefore = bt;
-		try {
-			bt = new MultiTableModel(qg, scnList.getSelectedValues(), 
-					regionList.getSelectedValues(), parentFrame);
-		} catch(NullPointerException e) {
-			e.printStackTrace();
-			System.out.println("Warning null pointer while creating MultiTableModel");
-			System.out.println("Likely the query didn't get any results");
-			bt = btBefore;
-			return null;
-		}
-		btBefore = null;
-		jTable = new JTable(bt);
-		jTable.setCellSelectionEnabled(true);
-		jTable.getColumnModel().getColumn(0).setCellRenderer(((MultiTableModel)bt).getCellRenderer(0,0));
-		jTable.getColumnModel().getColumn(0).setCellEditor(((MultiTableModel)bt).getCellEditor(0,0));
-		jsp = new JScrollPane(jTable);
-		return jsp;
-	}
-
-	private JComponent createSingleTableContent(QueryGenerator qg, QueryBinding singleBinding) {
-		BaseTableModel btBefore = bt;
-		try {
-			bt = new ComboTableModel(qg, scnList.getSelectedValues(), 
-					regionList.getSelectedValues(), parentFrame, singleBinding);
-		} catch(NullPointerException e) {
-			System.out.println("Warning null pointer while creating ComboTableModel");
-			System.out.println("Likely the query didn't get any results");
-			bt = btBefore;
-			return null;
-		}
-		btBefore = null;
-		jTable = bt.getAsSortedTable();
-		new CopyPaste(jTable);
-
-		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
-		jTable.setCellSelectionEnabled(true);
-
-		javax.swing.table.TableColumn col;
-		int j = 0;
-		while(j < jTable.getColumnCount()) {
-			col = jTable.getColumnModel().getColumn(j);
-			if(jTable.getColumnName(j).equals("")) {
-				col.setPreferredWidth(75);
-			} else {
-				col.setPreferredWidth(jTable.getColumnName(j).length()*5+30);
-			}
-			j++;
-		}
-		JLabel labelChart = new JLabel();
-		try {
-			JFreeChart chart = bt.createChart(0,0);
-			Dimension chartDim = bt.getChartDimensions(chart);
-			BufferedImage chartImage = chart.createBufferedImage(
-					(int)chartDim.getWidth(), (int)chartDim.getHeight());
-			/*
-			BufferedImage chartImage = chart.createBufferedImage(
-					350, 350);
-					*/
-
-			labelChart.setIcon(new ImageIcon(chartImage));
-		} catch(Exception e) {
-			e.printStackTrace();
-			labelChart.setText("Cannot Create Chart");
-		}
-		JSplitPane sp = new JSplitPane();
-		sp.setLeftComponent(new JScrollPane(jTable));
-		sp.setRightComponent(labelChart);
-		sp.setDividerLocation(parentFrame.getWidth()-350-15);
-		//return sp;
-		return jsp = new JScrollPane(sp);
-	}
-	
 	/**
 	 * A class which represents a dirty bit.
 	 * @author Josh Lurz
@@ -862,14 +784,14 @@ public class DbViewer implements ActionListener, MenuAdder {
 		public DirtyBit(){
 			mIsDirty = false;
 		}
-		
+
 		/**
 		 * Set the dirty bit.
 		 */
 		public void setDirty(){
 			mIsDirty = true;
 		}
-		
+
 		/**
 		 * Get the value of the dirty bit.
 		 * @return Whether the dirty bit is set.
@@ -878,7 +800,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 			return mIsDirty;
 		}
 	}
-	
+
 	private void manageDB() {
 		final JDialog filterDialog = new JDialog(parentFrame, "Manage Database", true);
 		filterDialog.getGlassPane().addMouseListener( new MouseAdapter() {});
@@ -913,23 +835,23 @@ public class DbViewer implements ActionListener, MenuAdder {
 				}
 			}
 		});
-		
+
 		final DirtyBit dirtyBit = new DirtyBit();
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FileChooser fc = FileChooserFactory.getFileChooser();
 				final FileFilter xmlFilter = new XMLFilter();
 				final File[] xmlFiles = fc.doFilePrompt(parentFrame, "Open XML File", FileChooser.LOAD_DIALOG,
-					new File(((InterfaceMain)parentFrame).getProperties().  getProperty("lastDirectory", ".")),
-					xmlFilter);
+						new File(((InterfaceMain)parentFrame).getProperties().  getProperty("lastDirectory", ".")),
+						xmlFilter);
 
 				if(xmlFiles != null) {
 					dirtyBit.setDirty();
 					((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", 
-						 xmlFiles[0].getParent());
+							xmlFiles[0].getParent());
 					final JProgressBar progBar = new JProgressBar(0, xmlFiles.length);
 					final JDialog jd = XMLDB.createProgressBarGUI(parentFrame, progBar, "Adding Runs",
-						"Importing runs into the database");
+					"Importing runs into the database");
 					final Runnable incProgress = (new Runnable() {
 						public void run() {
 							progBar.setValue(progBar.getValue() + 1);
@@ -983,7 +905,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 					JPanel currPanel = new JPanel();
 					currPanel.setLayout(new BoxLayout(currPanel, BoxLayout.X_AXIS));
 					JLabel currLabel = new JLabel("<html>Rename <b>"+currItem.getScnName()+
-						"</b> on <b>"+currItem.getScnDate()+"</b> to:</html>");
+							"</b> on <b>"+currItem.getScnDate()+"</b> to:</html>");
 					JTextField currTextBox = new JTextField(currItem.getScnName(), 20);
 					currTextBox.setMaximumSize(currTextBox.getPreferredSize());
 					renameBoxes.add(currTextBox);
@@ -1068,8 +990,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 				}
 				FileChooser fc = FileChooserFactory.getFileChooser();
 				final File[] exportLocation = fc.doFilePrompt(parentFrame, saveDialogTitle, FileChooser.SAVE_DIALOG,
-					new File(((InterfaceMain)parentFrame).getProperties().  getProperty("lastDirectory", ".")),
-					fileFilter);
+						new File(((InterfaceMain)parentFrame).getProperties().  getProperty("lastDirectory", ".")),
+						fileFilter);
 				if(isSingleSelection && !exportLocation[0].getName().endsWith(".xml")) {
 					exportLocation[0] = new File(exportLocation[0].getParentFile(), 
 							exportLocation[0].getName()+".xml");
@@ -1080,7 +1002,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 				}
 				final JProgressBar progBar = new JProgressBar(0, selectedList.length);
 				final JDialog jd = XMLDB.createProgressBarGUI(parentFrame, progBar, "Exporting Runs",
-						"Exporting runs from the database");
+				"Exporting runs from the database");
 				final Runnable incProgress = (new Runnable() {
 					public void run() {
 						progBar.setValue(progBar.getValue() + 1);
@@ -1099,12 +1021,12 @@ public class DbViewer implements ActionListener, MenuAdder {
 								exportFile = exportLocation[0];
 							} else {
 								String exportFileName = currItem.getScnName()+"_"+
-									currItem.getScnDate().replaceAll(":", "_")+".xml";
+								currItem.getScnDate().replaceAll(":", "_")+".xml";
 								exportFile = new File(exportLocation[0], exportFileName);
 							}
 							success = success && XMLDB.getInstance()
-								.exportDoc(currItem.getDocName(), 
-								exportFile);
+							.exportDoc(currItem.getDocName(), 
+									exportFile);
 							SwingUtilities.invokeLater(incProgress);
 						}
 						jd.setVisible(false);
@@ -1266,6 +1188,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		JButton cancelButton = new JButton("Cancel");
 		listPane.setLayout( new BoxLayout(listPane, BoxLayout.Y_AXIS));
 		Container contentPane = scenarioDialog.getContentPane();
+		final JCheckBox overwriteCheckBox = new JCheckBox("Overwrite selected file if it exists", false);
 
 		scenarioList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
@@ -1303,6 +1226,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		listPane.add(Box.createVerticalStrut(10));
 		listPane.add(sp);
 		listPane.add(singleSheetCheckBox);
+		listPane.add(overwriteCheckBox);
 		listPane.add(drawPicsCheckBox);
 		listPane.add(seperateRunsCheckBox);
 		listPane.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -1331,118 +1255,13 @@ public class DbViewer implements ActionListener, MenuAdder {
 				toRunScns.add(temp);
 			}
 		}
-		final JProgressBar progressBar = new JProgressBar(0, numQueries*toRunScns.size());
-		// TODO: createProgressBarGUI should be moved somewhere else
-		final JDialog progressDialog = XMLDB.createProgressBarGUI(parentFrame, progressBar, 
-				"Running Queries", "Run and Export Progress");
-		// the createProgressBarGUI sets it visible
-		final Runnable increaseProgress = new Runnable() {
-			public void run() {
-				progressBar.setValue(progressBar.getValue()+1);
-			}
-		};
-		new Thread(new Runnable() {
-			public void run() {
+		//create window
 
-		Node tempNode;
-		HSSFWorkbook wb = null;
-		HSSFSheet sheet = null;
-		HSSFPatriarch drawingPat = null;
-		QueryGenerator qgTemp = null;
-		Vector tempRegions = new Vector();
-		// read/create the output excel file
-		if(excelFile.exists()) {
-			try {
-				wb = new HSSFWorkbook(new FileInputStream(excelFile));
-			} catch (IOException ioe) {
-				ioe.printStackTrace();
-				return;
-			}
-		}
-		if(wb == null) {
-			wb = new HSSFWorkbook();
-		}
-		for(Iterator<Object[]> itScn = toRunScns.iterator(); itScn.hasNext(); ) {
-			Object[] currScns = itScn.next();
-		if(!singleSheetCheckBox.isSelected()) {
-			sheet = wb.createSheet("Sheet"+String.valueOf(wb.getNumberOfSheets()+1));
-			drawingPat = drawPicsCheckBox.isSelected() ? sheet.createDrawingPatriarch() : null;
-		}
-		for(int snapshotIndex = 0; snapshotIndex < numQueries; ++snapshotIndex) {
-			tempNode = res.snapshotItem(snapshotIndex);
-			tempRegions.removeAllElements();
-			NodeList nl = tempNode.getChildNodes();
-			boolean isGlobal = false;
-			for(int i = 0; i < nl.getLength(); ++i) {
-				Element currEl = (Element)nl.item(i);
-				if(currEl.getNodeName().equals("region")) {
-					String currRegionName = currEl.getAttribute("name");
-					// if Global is in the list we will run it seperately
-					if(!currRegionName.equals("Global")) {
-						tempRegions.add(currEl.getAttribute("name"));
-					} else {
-						isGlobal = true;
-					}
-				} else {
-					qgTemp = new QueryGenerator(currEl);
-				}
-			}
-			if(singleSheetCheckBox.isSelected()) {
-				sheet = wb.createSheet("Sheet"+String.valueOf(wb.getNumberOfSheets()+1));
-				drawingPat = drawPicsCheckBox.isSelected() ? sheet.createDrawingPatriarch() : null;
-			}
-			try {
-				if(tempRegions.size() > 0) {
-					if(qgTemp.isGroup()) {
-						(new MultiTableModel(qgTemp, currScns, 
-								     tempRegions.toArray(), 
-								     parentFrame)).exportToExcel(sheet, wb, drawingPat);
-					} else {
-						(new ComboTableModel(qgTemp, currScns, 
-								     tempRegions.toArray(), 
-								     parentFrame, null)).exportToExcel(sheet, wb, drawingPat);
-					}
-				}
-				// if global was selected we will run it again.  this covers the case where
-				// Global and other regions where selected
-				if(isGlobal) {
-					tempRegions.removeAllElements();
-					tempRegions.add("Global");
-					if(qgTemp.isGroup()) {
-						(new MultiTableModel(qgTemp, currScns, 
-								     tempRegions.toArray(), 
-								     parentFrame)).exportToExcel(sheet, wb, drawingPat);
-					} else {
-						(new ComboTableModel(qgTemp, currScns, 
-								     tempRegions.toArray(), 
-								     parentFrame, null)).exportToExcel(sheet, wb, drawingPat);
-					}
-				}
-			} catch(NullPointerException e) {
-				System.out.println("Warning possible that a query didn't get results");
-				e.printStackTrace();
-			} finally {
-				SwingUtilities.invokeLater(increaseProgress);
-			}
-		}
-		}
-		try {
-			FileOutputStream fos = new FileOutputStream(excelFile);
-			wb.write(fos);
-			fos.close();
-			JOptionPane.showMessageDialog(parentFrame,
-					"Sucessfully ran batch query",
-					"Batch Query", JOptionPane.INFORMATION_MESSAGE);
-		} catch(IOException ioe) {
-			ioe.printStackTrace();
-			JOptionPane.showMessageDialog(parentFrame,
-					"There was an error while trying to write results",
-					"Batch Query Error", JOptionPane.ERROR_MESSAGE);
-		} finally {
-			progressDialog.dispose();
-		}
-		}
-		}).start();
+		final BatchWindow bWindow = new BatchWindow(excelFile, toRunScns, singleSheetCheckBox, drawPicsCheckBox, 
+				numQueries,res, parentFrame, overwriteCheckBox);
+		//create listener for window
+
+
 	}
 
 	public boolean writeFile(File file, Document theDoc) {
@@ -1491,11 +1310,11 @@ public class DbViewer implements ActionListener, MenuAdder {
 	private void writeQueries() {
 		try {
 			Document tempDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-				.getDOMImplementation().createDocument(null, "queries", null);
+			.getDOMImplementation().createDocument(null, "queries", null);
 			queries.getAsNode(tempDoc);
 			//writeDocument(tempDoc, queryFile);
 			writeFile(new File(((InterfaceMain)parentFrame).getProperties().getProperty("queryFile"))
-					, tempDoc);
+			, tempDoc);
 			queries.resetChanges();
 		} catch(ParserConfigurationException pce) {
 			// TODO: error to the sceen that it could no save..
@@ -1505,7 +1324,13 @@ public class DbViewer implements ActionListener, MenuAdder {
 	public static BaseTableModel getTableModelFromComponent(java.awt.Component comp) {
 		Object c;
 		try {
-			c = ((JScrollPane)comp).getViewport().getView();
+			c = ((QueryResultsPanel)comp).getComponent(0);
+			//If a JPanel is returned, QueryResultsPanel returned a Panel with text,
+			//so no table can be extracted
+			if(c instanceof JPanel){
+				return null;
+			}
+			c = ((JScrollPane)c).getViewport().getView();
 			if(c instanceof JSplitPane) {
 				return (BaseTableModel)((TableSorter)((JTable)((JScrollPane)((JSplitPane)c).getLeftComponent()).getViewport().getView()).getModel()).getTableModel();
 			} else {
@@ -1543,7 +1368,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 			ret.append(path.getPathComponent(i)).append(":<br>");
 		}
 		ret.append(path.getLastPathComponent()).append("<br><br>Comments:<br>")
-			.append(qg.getComments()).append("</td></tr></table></html>");
+		.append(qg.getComments()).append("</td></tr></table></html>");
 		return ret.toString();
 	}
 	private class TabDragListener implements MouseListener, MouseMotionListener {
@@ -1673,13 +1498,13 @@ public class DbViewer implements ActionListener, MenuAdder {
 				if(doc == null) {
 					scanDialog.setVisible(false);
 					JOptionPane.showMessageDialog(parentFrame,
-						"Could not get cache from the database.",
-						"Cache Error", JOptionPane.ERROR_MESSAGE);
+							"Could not get cache from the database.",
+							"Cache Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 
 				boolean wasInterrupted = false;
-				
+
 				// for each query that is enabled have the extension create and cache it's 
 				// single query list.  The cache will be set as metadata on the cache doc
 				// if we got interrupted we must stop now

@@ -8,10 +8,18 @@ import java.io.*;
 import java.util.*;
 
 import javax.swing.*;
-import java.awt.*;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import com.sleepycat.db.*;
 import com.sleepycat.dbxml.*;
+
+/*This version is 
+ * 
+ */
 
 public class XMLDB {
 	public static final boolean lockCheck = false;
@@ -47,7 +55,7 @@ public class XMLDB {
 		// TODO: not thread safe
 		if(xmldbInstance != null) {
 			throw new Exception("Could not open databse because "+xmldbInstance.contName+
-					" is still open");
+			" is still open");
 		}
 		xmldbInstance = new XMLDB(dbLocation, parentFrame);
 	}
@@ -122,7 +130,7 @@ public class XMLDB {
 				   boolean didDel = new File(path+System.getProperty("file.separator")+"__db.001").delete();
 				   didDel = didDel && new File(path+System.getProperty("file.separator")+"__db.002").delete();
 				   didDel = didDel && new File(path+System.getProperty("file.separator")+"__db.003").delete();
-				   */
+				 */
 				dbEnv = new Environment(new File(path), envConfig);
 				ls = dbEnv.getLockStats(StatsConfig.DEFAULT);
 				System.out.println("Current Locks: "+ls.getNumLocks());
@@ -196,18 +204,18 @@ public class XMLDB {
 		} catch (DatabaseException dbe) {
 			dbe.printStackTrace();
 		}
-		*/
+		 */
 	}
 	public void addFile(String fileName) {
-	    XmlDocumentConfig docConfig = new XmlDocumentConfig();
-	    docConfig.setGenerateName(true);
-	    try {
-		    myContainer.putDocument("run", manager.createLocalFileInputStream(fileName), uc, docConfig);
-		    printLockStats("addFile");
-		    //myContainer.sync();
-	    } catch(XmlException e) {
-		    e.printStackTrace();
-	    }
+		XmlDocumentConfig docConfig = new XmlDocumentConfig();
+		docConfig.setGenerateName(true);
+		try {
+			myContainer.putDocument("run", manager.createLocalFileInputStream(fileName), uc, docConfig);
+			printLockStats("addFile");
+			//myContainer.sync();
+		} catch(XmlException e) {
+			e.printStackTrace();
+		}
 	}
 	public void removeDoc(String docName) {
 		try {
@@ -218,7 +226,7 @@ public class XMLDB {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Export a document to a text file.
 	 * @param aDocName Name of the document to export.
@@ -286,6 +294,49 @@ public class XMLDB {
 				regions);
 	}
 
+	/*This new version is used to utilize the multi-threading capabilities and the ability to
+	 *cancel a query call once it has been made, by killing the process as well as closing
+	 *the tab.
+	 * 
+	 */
+	public XmlResults createQuery(QueryGenerator qg, Object[] scenarios, Object[] regions, XmlQueryContext context) {
+		return createQuery(QueryBindingFactory.getQueryBinding(qg, contName), scenarios,
+				regions,context);
+	}
+
+	public XmlQueryContext createQueryContext(){
+		try {
+			return manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
+		} catch (XmlException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public XmlResults createQuery(QueryBinding queryBinding, Object[] scenarios, Object[] regions, XmlQueryContext context) {
+		String queryComplete = queryBinding.bindToQuery(scenarios, regions);
+		System.out.println("About to perform query: "+queryComplete);
+		if(context == null){
+			return createQuery(queryBinding, scenarios, regions);
+		}
+		try {
+			//XmlQueryContext qc = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
+			/*
+			XmlQueryExpression qeTemp = manager.prepare(queryBuff.toString(), qc);
+			System.out.println("Query Plan: "+qeTemp.getQueryPlan());
+			return qeTemp.execute(qc);
+			 */
+			/*
+			System.out.println("Number of values are currently: "+numVals);
+			return new XmlResultsWrapper(manager.query(queryComplete, qc));
+			 */
+			return manager.query(queryComplete, context);
+		} catch(XmlException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	public XmlResults createQuery(QueryBinding queryBinding, Object[] scenarios, Object[] regions) {
 		String queryComplete = queryBinding.bindToQuery(scenarios, regions);
 		System.out.println("About to perform query: "+queryComplete);
@@ -295,11 +346,11 @@ public class XMLDB {
 			XmlQueryExpression qeTemp = manager.prepare(queryBuff.toString(), qc);
 			System.out.println("Query Plan: "+qeTemp.getQueryPlan());
 			return qeTemp.execute(qc);
-			*/
+			 */
 			/*
 			System.out.println("Number of values are currently: "+numVals);
 			return new XmlResultsWrapper(manager.query(queryComplete, qc));
-			*/
+			 */
 			return manager.query(queryComplete, qc);
 		} catch(XmlException e) {
 			e.printStackTrace();
@@ -407,7 +458,7 @@ public class XMLDB {
 	public String getQueryFunctionAsDistinctNames() {
 		/* Does not work anymore since BDBXML 2.3
 		return "declare function local:distinct-node-names ($arg as node()*, $before_a as xs:string*) as xs:string* {    for $a at $apos in $arg  let $b := fn:local-name($a), $c_before := fn:count($before_a) + $apos - $apos, $before_a := fn:distinct-values(fn:insert-before($before_a, 0, $b))  where not(fn:count($before_a) = $c_before)  return $b }; local:distinct-node-names";
-		*/
+		 */
 		return "declare function local:distinct-node-names ($args as node()*) as xs:string* { fn:distinct-values(for $nname in $args return fn:local-name($nname)) }; local:distinct-node-names";
 	}
 	public void setValue(XmlValue val, String content) {
@@ -446,135 +497,135 @@ public class XMLDB {
 						}
 					});
 					try {
-					XmlResults tempRes;
-					XmlValue tempVal;
-					XmlValue delVal;
-					//XmlDocument docTemp; 
-					java.util.List<String> getVarFromDoucmentNames = new ArrayList<String>();
-					boolean gotVars = false;
-					while(res.hasNext()) {
-						gotVars = true;
-						tempVal = res.next();
-						//docTemp = tempVal.asDocument();
-						getVarFromDoucmentNames.add(tempVal.getNodeHandle());
-						//docTemp.delete();
-						tempVal.delete();
-					}
-					res.delete();
-					for(Iterator<String> it = getVarFromDoucmentNames.iterator(); it.hasNext(); ) {
-						tempVal = myContainer.getNode(it.next(), 0);
-						System.out.println("Getting new MetaData");
-						String path = "local:distinct-node-names(/scenario/world/*[@type='region']/demographics//*[fn:count(child::text()) = 1])";
-						tempRes = getVars(tempVal, path);
-						StringBuffer strBuff = new StringBuffer();
-						while(tempRes.hasNext()) {
-							delVal = tempRes.next();
-							strBuff.append(delVal.asString());
-							delVal.delete();
-							strBuff.append(';');
+						XmlResults tempRes;
+						XmlValue tempVal;
+						XmlValue delVal;
+						//XmlDocument docTemp; 
+						java.util.List<String> getVarFromDoucmentNames = new ArrayList<String>();
+						boolean gotVars = false;
+						while(res.hasNext()) {
+							gotVars = true;
+							tempVal = res.next();
+							//docTemp = tempVal.asDocument();
+							getVarFromDoucmentNames.add(tempVal.getNodeHandle());
+							//docTemp.delete();
+							tempVal.delete();
 						}
-						printLockStats("after first var look-up");
-						XmlDocument docTemp = tempVal.asDocument();
-						printLockStats("after get document");
-						docTemp.setMetaData("", "demographicsVar", new XmlValue(strBuff.toString()));
-						tempRes.delete();
-						SwingUtilities.invokeLater(incProgress);
-						printLockStats("After done adding demoVar");
-
-						path = "local:distinct-node-names(/scenario/world/*[@type='region']/*[@type='sector']/*[@type='subsector']/*[@type='technology']/*[fn:count(child::text()) = 1])";
-						tempRes = getVars(tempVal, path);
-						strBuff = new StringBuffer();
-						while(tempRes.hasNext()) {
-							//System.out.println("adding");
-							delVal = tempRes.next();
-							strBuff.append(delVal.asString());
-							delVal.delete();
-							strBuff.append(';');
-						}
-						tempRes.delete();
-						docTemp.setMetaData("", "var", new XmlValue(strBuff.toString()));
-						SwingUtilities.invokeLater(incProgress);
-
-						XmlQueryContext qcL = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
-						XmlQueryExpression qe = manager.prepare("distinct-values(/scenario/world/*[@type='region']/*[@type='sector']/*[@type='subsector']/*[@type='technology']/*[@type='GHG']/@name)", qcL);
-						tempRes = qe.execute(tempVal, qcL);
-						strBuff = new StringBuffer();
-						while(tempRes.hasNext()) {
-							delVal = tempRes.next();
-							strBuff.append(delVal.asString()).append(';');
-							delVal.delete();
-						}
-						docTemp.setMetaData("", "ghgNames", new XmlValue(strBuff.toString()));
-						tempRes.delete();
-						SwingUtilities.invokeLater(incProgress);
-
-						qe = manager.prepare("distinct-values(/scenario/world/*[@type='region']/*[@type='sector']/*[@type='subsector']/*[@type='technology']/*[@type='GHG']/emissions/@fuel-name)", qcL);
-						tempRes = qe.execute(tempVal, qcL);
-						strBuff = new StringBuffer();
-						while(tempRes.hasNext()) {
-							delVal = tempRes.next();
-							strBuff.append(delVal.asString()).append(';');
-							delVal.delete();
-						}
-						docTemp.setMetaData("", "fuelNames", new XmlValue(strBuff.toString()));
-						tempRes.delete();
-						SwingUtilities.invokeLater(incProgress);
-
-						path = "local:distinct-node-names(/scenario/world/climate-model/*[fn:count(child::text()) = 1])";
-						tempRes = getVars(tempVal, path);
-						strBuff = new StringBuffer();
-						while(tempRes.hasNext()) {
-							delVal = tempRes.next();
-							strBuff.append(delVal.asString());
-							delVal.delete();
-							strBuff.append(';');
-						}
-						docTemp.setMetaData("", "ClimateVar", new XmlValue(strBuff.toString()));
-						tempRes.delete();
-						SwingUtilities.invokeLater(incProgress);
-
-						path = "local:distinct-node-names(//LandLeaf/*[fn:count(child::text()) = 1])";
-						tempRes = getVars(tempVal, path);
-						strBuff = new StringBuffer();
-						while(tempRes.hasNext()) {
-							delVal = tempRes.next();
-							strBuff.append(delVal.asString());
-							delVal.delete();
-							strBuff.append(';');
-						}
-						docTemp.setMetaData("", "LandAllocationVar", new XmlValue(strBuff.toString()));
-						tempRes.delete();
-						SwingUtilities.invokeLater(incProgress);
-
-						path = "local:distinct-node-names(/scenario/world/*[@type='region']/GDP/*[fn:count(child::text()) = 1])";
-						tempRes = getVars(tempVal, path);
-						strBuff = new StringBuffer();
-						while(tempRes.hasNext()) {
-							delVal = tempRes.next();
-							strBuff.append(delVal.asString());
-							delVal.delete();
-							strBuff.append(';');
-						}
-						docTemp.setMetaData("", "GDPVar", new XmlValue(strBuff.toString()));
-						myContainer.updateDocument(docTemp, uc);
-						docTemp.delete();
-						tempVal.delete();
-						tempRes.delete();
-						SwingUtilities.invokeLater(incProgress);
-					}
-					res.delete();
-					printLockStats("addVarMetaData1");
-					getVarMetaData();
-					if(jd != null) {
-						SwingUtilities.invokeLater(new Runnable() {
-							public void run(){
-								jd.setVisible(false);
+						res.delete();
+						for(Iterator<String> it = getVarFromDoucmentNames.iterator(); it.hasNext(); ) {
+							tempVal = myContainer.getNode(it.next(), 0);
+							System.out.println("Getting new MetaData");
+							String path = "local:distinct-node-names(/scenario/world/*[@type='region']/demographics//*[fn:count(child::text()) = 1])";
+							tempRes = getVars(tempVal, path);
+							StringBuffer strBuff = new StringBuffer();
+							while(tempRes.hasNext()) {
+								delVal = tempRes.next();
+								strBuff.append(delVal.asString());
+								delVal.delete();
+								strBuff.append(';');
 							}
-						});
-					}
-					String message = gotVars ? "Finished getting new variables." : "There were no new variables.";
-					JOptionPane.showMessageDialog(parentFrame, message, "Get Variables", 
-							JOptionPane.INFORMATION_MESSAGE);
+							printLockStats("after first var look-up");
+							XmlDocument docTemp = tempVal.asDocument();
+							printLockStats("after get document");
+							docTemp.setMetaData("", "demographicsVar", new XmlValue(strBuff.toString()));
+							tempRes.delete();
+							SwingUtilities.invokeLater(incProgress);
+							printLockStats("After done adding demoVar");
+
+							path = "local:distinct-node-names(/scenario/world/*[@type='region']/*[@type='sector']/*[@type='subsector']/*[@type='technology']/*[fn:count(child::text()) = 1])";
+							tempRes = getVars(tempVal, path);
+							strBuff = new StringBuffer();
+							while(tempRes.hasNext()) {
+								//System.out.println("adding");
+								delVal = tempRes.next();
+								strBuff.append(delVal.asString());
+								delVal.delete();
+								strBuff.append(';');
+							}
+							tempRes.delete();
+							docTemp.setMetaData("", "var", new XmlValue(strBuff.toString()));
+							SwingUtilities.invokeLater(incProgress);
+
+							XmlQueryContext qcL = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
+							XmlQueryExpression qe = manager.prepare("distinct-values(/scenario/world/*[@type='region']/*[@type='sector']/*[@type='subsector']/*[@type='technology']/*[@type='GHG']/@name)", qcL);
+							tempRes = qe.execute(tempVal, qcL);
+							strBuff = new StringBuffer();
+							while(tempRes.hasNext()) {
+								delVal = tempRes.next();
+								strBuff.append(delVal.asString()).append(';');
+								delVal.delete();
+							}
+							docTemp.setMetaData("", "ghgNames", new XmlValue(strBuff.toString()));
+							tempRes.delete();
+							SwingUtilities.invokeLater(incProgress);
+
+							qe = manager.prepare("distinct-values(/scenario/world/*[@type='region']/*[@type='sector']/*[@type='subsector']/*[@type='technology']/*[@type='GHG']/emissions/@fuel-name)", qcL);
+							tempRes = qe.execute(tempVal, qcL);
+							strBuff = new StringBuffer();
+							while(tempRes.hasNext()) {
+								delVal = tempRes.next();
+								strBuff.append(delVal.asString()).append(';');
+								delVal.delete();
+							}
+							docTemp.setMetaData("", "fuelNames", new XmlValue(strBuff.toString()));
+							tempRes.delete();
+							SwingUtilities.invokeLater(incProgress);
+
+							path = "local:distinct-node-names(/scenario/world/climate-model/*[fn:count(child::text()) = 1])";
+							tempRes = getVars(tempVal, path);
+							strBuff = new StringBuffer();
+							while(tempRes.hasNext()) {
+								delVal = tempRes.next();
+								strBuff.append(delVal.asString());
+								delVal.delete();
+								strBuff.append(';');
+							}
+							docTemp.setMetaData("", "ClimateVar", new XmlValue(strBuff.toString()));
+							tempRes.delete();
+							SwingUtilities.invokeLater(incProgress);
+
+							path = "local:distinct-node-names(//LandLeaf/*[fn:count(child::text()) = 1])";
+							tempRes = getVars(tempVal, path);
+							strBuff = new StringBuffer();
+							while(tempRes.hasNext()) {
+								delVal = tempRes.next();
+								strBuff.append(delVal.asString());
+								delVal.delete();
+								strBuff.append(';');
+							}
+							docTemp.setMetaData("", "LandAllocationVar", new XmlValue(strBuff.toString()));
+							tempRes.delete();
+							SwingUtilities.invokeLater(incProgress);
+
+							path = "local:distinct-node-names(/scenario/world/*[@type='region']/GDP/*[fn:count(child::text()) = 1])";
+							tempRes = getVars(tempVal, path);
+							strBuff = new StringBuffer();
+							while(tempRes.hasNext()) {
+								delVal = tempRes.next();
+								strBuff.append(delVal.asString());
+								delVal.delete();
+								strBuff.append(';');
+							}
+							docTemp.setMetaData("", "GDPVar", new XmlValue(strBuff.toString()));
+							myContainer.updateDocument(docTemp, uc);
+							docTemp.delete();
+							tempVal.delete();
+							tempRes.delete();
+							SwingUtilities.invokeLater(incProgress);
+						}
+						res.delete();
+						printLockStats("addVarMetaData1");
+						getVarMetaData();
+						if(jd != null) {
+							SwingUtilities.invokeLater(new Runnable() {
+								public void run(){
+									jd.setVisible(false);
+								}
+							});
+						}
+						String message = gotVars ? "Finished getting new variables." : "There were no new variables.";
+						JOptionPane.showMessageDialog(parentFrame, message, "Get Variables", 
+								JOptionPane.INFORMATION_MESSAGE);
 					} catch(XmlException e) {
 						e.printStackTrace();
 					}
@@ -592,16 +643,16 @@ public class XMLDB {
 			XmlQueryContext qc = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
 
 			/* The xQuery more readable:
-			* declare function local:distinct-node-names ($arg as node()*, $before_a as xs:string*) as xs:string* { 
-			*	for $a at $apos in $arg
-			*	let $b := fn:local-name($a),
-			*	    $c_before := fn:count($before_a) + $apos - $apos,
-			*	    $before_a := fn:distinct-values(fn:insert-before($before_a, 0, $b))
-			*	where not(fn:count($before_a) = $c_before)
-			*	return $b
-			* };
-			* local:distinct-node-names(/scenario/world/region/supplysector/subsector/technology/*[fn:count(child::text()) = 1], ())
-			*/
+			 * declare function local:distinct-node-names ($arg as node()*, $before_a as xs:string*) as xs:string* { 
+			 *	for $a at $apos in $arg
+			 *	let $b := fn:local-name($a),
+			 *	    $c_before := fn:count($before_a) + $apos - $apos,
+			 *	    $before_a := fn:distinct-values(fn:insert-before($before_a, 0, $b))
+			 *	where not(fn:count($before_a) = $c_before)
+			 *	return $b
+			 * };
+			 * local:distinct-node-names(/scenario/world/region/supplysector/subsector/technology/*[fn:count(child::text()) = 1], ())
+			 */
 			/* The above seems to be broken with the new XQuery lib in dbxml 2.3
 			 * so here goes another shot..
 			 * declare function local:distinct-node-names ($args as node()*) as xs:string* { 
@@ -611,7 +662,7 @@ public class XMLDB {
 			 */ 
 			/* Does not work since BDBXML 2.3
 			String queryStr = "declare function local:distinct-node-names ($arg as node()*, $before_a as xs:string*) as xs:string* {    for $a at $apos in $arg  let $b := fn:local-name($a), $c_before := fn:count($before_a) + $apos - $apos, $before_a := fn:distinct-values(fn:insert-before($before_a, 0, $b))  where not(fn:count($before_a) = $c_before)  return $b }; "+path;
-			*/
+			 */
 			String queryStr = "declare function local:distinct-node-names ($args as node()*) as xs:string* { fn:distinct-values(for $nname in $args return fn:local-name($nname)) }; "+path;
 			XmlQueryExpression qe = manager.prepare(queryStr, qc);
 			return qe.execute(contextVal, qc);
@@ -774,7 +825,7 @@ public class XMLDB {
 					System.out.println("After destroy");
 				}
 			}).start();
-			*/
+			 */
 
 			ret = proc.waitFor() == 0;
 			//System.out.println("return value: "+proc.exitValue());
@@ -783,8 +834,10 @@ public class XMLDB {
 		}
 		return ret;
 	}
+	
 	// TODO: this is a util method and should be moved somewhere else
-	public static JDialog createProgressBarGUI(Frame parentFrame, JProgressBar progBar, String title, String labelStr) {
+	public static JDialog createProgressBarGUI(Frame parentFrame, JProgressBar progBar, String title, 
+			String labelStr) {
 		if(progBar.getMaximum() == 0) {
 			return null;
 		}
@@ -795,15 +848,46 @@ public class XMLDB {
 		progBar.setPreferredSize(new Dimension(200, 20));
 		JLabel label = new JLabel(labelStr);
 		Container contentPane = filterDialog.getContentPane();
+
 		all.add(label, BorderLayout.PAGE_START);
 		all.add(Box.createVerticalStrut(10));
 		all.add(progBar);
 		all.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+
 		contentPane.add(all, BorderLayout.PAGE_START);
 		filterDialog.pack();
 		filterDialog.setVisible(true);
 		return filterDialog;
 	}
+	
+	public static Window createProgressBarGUI2(Frame parentFrame, JProgressBar progBar, String title, 
+			String labelStr) {
+		if(progBar.getMaximum() == 0) {
+			return null;
+		}
+		Window filterDialog = new JDialog(parentFrame, title, false);
+		filterDialog.setAlwaysOnTop(true);
+		JPanel all = new JPanel();
+		all.setLayout( new BoxLayout(all, BoxLayout.Y_AXIS));
+		progBar.setPreferredSize(new Dimension(200, 20));
+		JLabel label = new JLabel(labelStr);
+
+		all.add(label, BorderLayout.PAGE_START);
+		all.add(Box.createVerticalStrut(10));
+		all.add(progBar);
+		all.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+
+		filterDialog.add(all, BorderLayout.PAGE_START);
+		filterDialog.pack();
+		filterDialog.setVisible(true);
+		return filterDialog;
+	}
+	
+	
+	
+	
 	// the following classes can be used in order to figure out if any 
 	// references managed to avoid manual deletion which could lead to
 	// references still alive at db close time which is bad. Use in

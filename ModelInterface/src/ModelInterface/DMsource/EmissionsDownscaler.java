@@ -626,7 +626,7 @@ public class EmissionsDownscaler {
 		assert(qg.isValid());
 		// could get complicated when trying to get data from tables
 		assert(!qg.isGroup());
-		return new ComboTableModel(qg, scenarioList, regionList, null, null);
+		return new ComboTableModel(qg, scenarioList, regionList, null, null, null);
 	}
 
 	/**
