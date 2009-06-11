@@ -36,11 +36,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="libdb45d.lib libdbxml23d.lib ddao36D.lib xerces-c_2D.lib magiccd.lib aglud.lib xqilla10d.lib"
-				OutputFile="$(OutDir)/../Objects-MI-D.exe"
+				OutputFile="$(OutDir)/../Objects-Main-D.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\..\..\libs\access;..\..\..\..\libs\dbxml\lib;&quot;..\..\..\..\libs\xerces-c-src_2_7_0\lib&quot;;..\..\..\..\libs\magicclib\lib;..\..\..\..\libs\AgLib\lib"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="$(OutDir)/CIAM-Scratch.pdb"
+				ProgramDatabaseFile="$(OutDir)/Objects-Main-Scratch.pdb"
 				SubSystem="1"
 				TargetMachine="1"/>
 			<Tool
@@ -92,7 +92,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="libdb45.lib libdbxml23.lib ddao36.lib xerces-c_2.lib magicc.lib aglu.lib xqilla10.lib"
-				OutputFile="$(OutDir)/../Objects-MI.exe"
+				OutputFile="$(OutDir)/../Objects-Main.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\..\..\..\libs\access;..\..\..\..\libs\dbxml\lib;&quot;..\..\..\..\libs\xerces-c-src_2_7_0\lib&quot;;..\..\..\..\libs\AgLib\lib;..\..\..\..\libs\magicclib\lib"
@@ -617,6 +617,9 @@
 						RelativePath="..\..\util\base\source\atom_registry.cpp">
 					</File>
 					<File
+						RelativePath="..\..\util\base\source\calibrate_share_weight_visitor.cpp">
+					</File>
+					<File
 						RelativePath="..\..\util\base\source\configuration.cpp">
 					</File>
 					<File
@@ -745,6 +748,9 @@
 				</File>
 				<File
 					RelativePath="..\..\reporting\source\demand_components_table.cpp">
+				</File>
+				<File
+					RelativePath="..\..\reporting\source\energy_balance_table.cpp">
 				</File>
 				<File
 					RelativePath="..\..\reporting\source\govt_results.cpp">
@@ -1182,6 +1188,9 @@
 					RelativePath="..\..\marketplace\include\imarket_type.h">
 				</File>
 				<File
+					RelativePath="..\..\marketplace\include\inverse_calibration_market.h">
+				</File>
+				<File
 					RelativePath="..\..\marketplace\include\market.h">
 				</File>
 				<File
@@ -1531,6 +1540,9 @@
 						RelativePath="..\..\util\base\include\auto_file.h">
 					</File>
 					<File
+						RelativePath="..\..\util\base\include\calibrate_share_weight_visitor.h">
+					</File>
+					<File
 						RelativePath="..\..\util\base\include\configuration.h">
 					</File>
 					<File
@@ -1678,6 +1690,9 @@
 				</File>
 				<File
 					RelativePath="..\..\reporting\include\demand_components_table.h">
+				</File>
+				<File
+					RelativePath="..\..\reporting\include\energy_balance_table.h">
 				</File>
 				<File
 					RelativePath="..\..\reporting\include\govt_results.h">
