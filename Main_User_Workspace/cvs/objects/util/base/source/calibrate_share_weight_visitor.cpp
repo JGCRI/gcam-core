@@ -41,7 +41,7 @@
 
 #include "util/base/include/definitions.h"
 #include <cassert>
-#include "sectors/include/calibrate_share_weight_visitor.h"
+#include "util/base/include/calibrate_share_weight_visitor.h"
 #include "technologies/include/itechnology.h"
 #include "sectors/include/subsector.h"
 #include "sectors/include/sector.h"

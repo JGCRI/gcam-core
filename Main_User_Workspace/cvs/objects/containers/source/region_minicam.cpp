@@ -97,7 +97,7 @@
 #include "reporting/include/indirect_emissions_calculator.h"
 
 #include "containers/include/sector_cycle_breaker.h"
-#include "sectors/include/calibrate_share_weight_visitor.h"
+#include "util/base/include/calibrate_share_weight_visitor.h"
 
 using namespace std;
 using namespace xercesc;
