@@ -123,20 +123,6 @@ Variable ID,,,,,,,,,
 2002,,,,,,,,,
 ,,,,sharewt,,,,,
 region,supplysector,subsector,technology,2020,2035,2050,2065,2080,2095
-Africa,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
-Australia_NZ,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
-Canada,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
-China,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
-Eastern Europe,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
-Former Soviet Union,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
-India,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
-Japan,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
-Korea,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
-Latin America,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
-Middle East,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
-Southeast Asia,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
-USA,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
-Western Europe,industry,energy-use,fuelcell,0.25,0.25,0.25,0.25,0.25,0.25
 Africa,industry,energy-use,gas,0.219,0.219,0.219,0.219,0.219,0.219
 Australia_NZ,industry,energy-use,gas,0.274,0.274,0.274,0.274,0.274,0.274
 Canada,industry,energy-use,gas,0.412,0.412,0.412,0.412,0.412,0.412
@@ -156,8 +142,8 @@ Australia_NZ,industry,energy-use,refined liquids,0.285,0.285,0.285,0.285,0.285,0
 Canada,industry,energy-use,refined liquids,0.223,0.223,0.223,0.223,0.223,0.223
 China,industry,energy-use,refined liquids,0.229,0.229,0.229,0.229,0.229,0.229
 Eastern Europe,industry,energy-use,refined liquids,0.254,0.254,0.254,0.254,0.254,0.254
-Former Soviet Union,industry,energy-use,refined liquids,0.184,0.184,0.184,0.184,0.184,0.184
-India,industry,energy-use,refined liquids,0.296,0.296,0.296,0.296,0.296,0.296
+Former Soviet Union,industry,energy-use,refined liquids,0.184,0.184,0.184,0.184,0.184,0.184,,,
+India,industry,energy-use,refined liquids,0.296,0.296,0.296,0.296,0.296,0.296,,,
 Japan,industry,energy-use,refined liquids,0.650,0.650,0.650,0.650,0.650,0.650,,,
 Korea,industry,energy-use,refined liquids,0.398,0.398,0.398,0.398,0.398,0.398,,,
 Latin America,industry,energy-use,refined liquids,0.448,0.448,0.448,0.448,0.448,0.448,,,
@@ -165,6 +151,27 @@ Middle East,industry,energy-use,refined liquids,0.810,0.810,0.810,0.810,0.810,0.
 Southeast Asia,industry,energy-use,refined liquids,0.706,0.706,0.706,0.706,0.706,0.706,,,
 USA,industry,energy-use,refined liquids,0.355,0.355,0.355,0.355,0.355,0.355,,,
 Western Europe,industry,energy-use,refined liquids,0.333,0.333,0.333,0.333,0.333,0.333,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+2002,,,,set this equal to gas shareweight,,,,,,,,
+,,,,sharewt,,,,,,,,
+region,supplysector,subsector,technology,2020,2035,2050,2065,2080,2095,,,2005 gas shareweight
+Africa,industry,energy-use,fuelcell,0.157125,0.157125,0.157125,0.157125,0.157125,0.157125,,Africa,0.157125
+Australia_NZ,industry,energy-use,fuelcell,0.0155594,0.0155594,0.0155594,0.0155594,0.0155594,0.0155594,,Australia_NZ,0.0155594
+Canada,industry,energy-use,fuelcell,1,1,1,1,1,1,,Canada,1
+China,industry,energy-use,fuelcell,0.0702486,0.0702486,0.0702486,0.0702486,0.0702486,0.0702486,,China,0.0702486
+Eastern Europe,industry,energy-use,fuelcell,1.57314,1.57314,1.57314,1.57314,1.57314,1.57314,,Eastern Europe,1.57314
+Former Soviet Union,industry,energy-use,fuelcell,1,1,1,1,1,1,,Former Soviet Union,1
+India,industry,energy-use,fuelcell,0.635636,0.635636,0.635636,0.635636,0.635636,0.635636,,India,0.635636
+Japan,industry,energy-use,fuelcell,0.0626325,0.0626325,0.0626325,0.0626325,0.0626325,0.0626325,,Japan,0.0626325
+Korea,industry,energy-use,fuelcell,0.00300786,0.00300786,0.00300786,0.00300786,0.00300786,0.00300786,,Korea,0.00300786
+Latin America,industry,energy-use,fuelcell,1,1,1,1,1,1,,Latin America,1
+Middle East,industry,energy-use,fuelcell,1,1,1,1,1,1,,Middle East,1
+Southeast Asia,industry,energy-use,fuelcell,0.179432,0.179432,0.179432,0.179432,0.179432,0.179432,,Southeast Asia,0.179432
+USA,industry,energy-use,fuelcell,1,1,1,1,1,1,,USA,1
+Western Europe,industry,energy-use,fuelcell,0.0136755,0.0136755,0.0136755,0.0136755,0.0136755,0.0136755,,Western Europe,0.0136755
 ,,,,,,,,,,,,
 ,,,,,,,,,,,,
 reset logit exponents to -3 for all techs,,,,,,,,,,,,
@@ -183,13 +190,13 @@ ALL,industry,energy-use,gas,-3,-3,-3,-3,-3,-3,-3,-3,-3
 ,,,,,,,,,,,,
 Final demand elasticities,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-30,,,,,,,,,,,,
-,,2020 fillout,,,,,,,,,,
-region,energy-final-demand,price-elasticity,,,,,,,,,,
-ALL,industry,-0.65,,,,,,,,,,
-,,,,,,,,,,,,
-Base service,,,,,,,,,,,,
+Variable ID,,,,,,
+30,,,,,,
+,,2020 fillout,,,,
+region,energy-final-demand,price-elasticity,,,,
+ALL,industry,-0.65,,,,
+,,,,,,
+Base service,,,,,,
 INPUT_TABLE,,,,,,
 Variable ID,,,,,,
 31,,,,,,

@@ -196,36 +196,42 @@
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.015</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.030</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.046</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.062</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.078</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.094</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                </technology>
@@ -593,36 +599,42 @@
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.015</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.030</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.046</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.062</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.078</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.094</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                </technology>
@@ -990,36 +1002,42 @@
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.015</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.0136755</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.030</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.0136755</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.046</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.0136755</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.062</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.0136755</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.078</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.0136755</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.094</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.0136755</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                </technology>
@@ -1387,36 +1405,42 @@
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.015</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.0626325</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.030</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.0626325</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.046</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.0626325</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.062</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.0626325</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.078</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.0626325</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.094</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.0626325</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                </technology>
@@ -1784,36 +1808,42 @@
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.015</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.0155594</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.030</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.0155594</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.046</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.0155594</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.062</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.0155594</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.078</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.0155594</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.094</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.0155594</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                </technology>
@@ -2181,36 +2211,42 @@
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.015</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.030</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.046</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.062</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.078</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.094</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                </technology>
@@ -2578,36 +2614,42 @@
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.015</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.0702486</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.030</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.0702486</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.046</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.0702486</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.062</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.0702486</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.078</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.0702486</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.094</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.0702486</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                </technology>
@@ -2975,36 +3017,42 @@
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.015</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.030</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.046</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.062</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.078</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.094</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                </technology>
@@ -3372,36 +3420,42 @@
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.015</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.157125</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.030</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.157125</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.046</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.157125</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.062</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.157125</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.078</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.157125</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.094</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.157125</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                </technology>
@@ -3769,36 +3823,42 @@
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.015</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.030</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.046</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.062</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.078</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.094</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                </technology>
@@ -4166,36 +4226,42 @@
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.015</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.179432</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.030</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.179432</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.046</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.179432</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.062</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.179432</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.078</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.179432</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.094</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.179432</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                </technology>
@@ -4563,36 +4629,42 @@
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.015</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1.57314</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.030</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1.57314</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.046</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1.57314</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.062</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1.57314</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.078</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1.57314</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.094</efficiency>
                      </minicam-energy-input>
+                     <sharewt>1.57314</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                </technology>
@@ -4960,36 +5032,42 @@
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.015</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.00300786</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.030</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.00300786</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.046</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.00300786</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.062</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.00300786</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.078</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.00300786</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.094</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.00300786</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                </technology>
@@ -5357,36 +5435,42 @@
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.015</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.635636</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.030</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.635636</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.046</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.635636</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.062</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.635636</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.078</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.635636</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="H2 Enduse">
                         <efficiency>1.094</efficiency>
                      </minicam-energy-input>
+                     <sharewt>0.635636</sharewt>
                      <logitexp>-3</logitexp>
                   </period>
                </technology>
