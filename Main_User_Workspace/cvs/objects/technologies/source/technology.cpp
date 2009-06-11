@@ -467,8 +467,23 @@ void Technology::completeInit( const string& aRegionName,
         mCalValue->completeInit();
     }
 
-    // Adjust any coefficients for calibrated values to ensure consistency.
-    adjustCoefficients( aRegionName, aSectorName, modeltime->getyr_to_per( year ) );
+    if( Configuration::getInstance()->getBool( "CalibrationActive" ) ){
+        bool hasCalInput = false;
+        const int periodForYear = modeltime->getyr_to_per( year );
+        for( CInputIterator it = mInputs.begin(); it != mInputs.end() && !hasCalInput; ++it ) {
+            hasCalInput = (*it)->getCalibrationQuantity( periodForYear ) >= 0;
+        }
+        if( mCalValue.get() && hasCalInput ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            ILogger& calLog = ILogger::getLogger( "calibration_log" );
+            calLog.setLevel( ILogger::WARNING );
+            mainLog << "Technology " << getName() << " year " << year << "has both calibrated inputs and outputs.";
+            mainLog << "Note that we are assuming the coefficient is consistent and the calibrated output takes precedence.";
+            calLog << "Technology " << getName() << " year " << year << "has both calibrated inputs and outputs.";
+            calLog << "Note that we are assuming the coefficient is consistent and the calibrated output takes precedence.";
+        }
+    }
 }
 
 //! write object to xml output stream
@@ -904,32 +919,6 @@ double Technology::getFixedOutput( const string& aRegionName,
                                                         aPeriod );
 }
 
-/* \brief Return the amount of input required to produce a specified amount of
-*         output.
-* \param aRequiredInput The name of the input this technology must have.
-* \param aRequiredOutput The required amount of output.
-* \param aPeriod Model period.
-* \return The amount of input required for the output.
-*/
-double Technology::getRequiredInputForOutput( const string& aRequiredInput,
-                                              const double aRequiredOutput,
-                                              const int aPeriod ) const
-{
-    /*! \pre There is a positive required output.*/
-    assert( aRequiredOutput >= 0 );
-    assert( !aRequiredInput.empty() && aRequiredInput != "allInputs" );
-
-    for( unsigned int i = 0; i < mInputs.size(); ++i ) {
-        if( aRequiredInput == mInputs[ i ]->getName() ) {
-            // Make sure this is an energy input.
-            assert( mInputs[ i ]->hasTypeFlag( IInput::ENERGY ) );
-            // TODO: Leontief assumption.
-            return mInputs[ i ]->getCoefficient( aPeriod ) * aRequiredOutput / mAlphaZero;
-        }
-    }
-    return -1;
-}
-
 /*! \brief Calculates fuel input and Technology output.
 * \details Adds demands for fuels and ghg emissions to markets in the
 *          marketplace.
@@ -1005,97 +994,6 @@ void Technology::calcEmissionsAndOutputs( const string& aRegionName,
     for( unsigned int i = 0; i < ghg.size(); ++i ) {
         ghg[ i ]->calcEmission( aRegionName, mInputs, mOutputs, aGDP, mCaptureComponent.get(), aPeriod );
     }
-}
-
-/*! \brief Adjusts Technology share weights to be consistent with calibration
-*          value.
-* This is done only if there is more than one Technology Calibration is,
-* therefore, performed as part of the iteration process. Since this can change
-* derivatives, best to turn calibration off when using N-R solver.
-*
-* This routine adjusts Technology shareweights so that relative shares are
-* correct for each subsector. Note that all calibration values are scaled (up or
-* down) according to total sectorDemand -- getting the overall scale correct is
-* the job of the TFE calibration
-*
-* \author Steve Smith
-* \param aDemand Demand for the technology's product.
-* \param aCalibratedDemand Calibrated demand for the technology if the subsector
-*        is all calibrated. If not this parameter will be -1.
-* \param aIsOnlyTechnology Whether this is the only Technology in the subsector.
-* \param aRegionName Region name.
-* \param aSubsectorInfo Subsector information object.
-* \param aPeriod Model period.
-*/
-void Technology::adjustForCalibration( const double aDemand,
-                                       const double aCalibratedDemand,
-                                       const bool aIsOnlyTechnology,
-                                       const string& aRegionName,
-                                       const string& aSectorName,
-                                       const IInfo* aSubsectorInfo,
-                                       const int aPeriod )
-{
-    // Variable demand must be positive.
-    assert( aDemand >= 0 );
-
-    // Don't try and adjust the Technology if it isn't available.
-    if( !isAvailable( aPeriod ) ) {
-        return;
-    }
-
-    // total calibrated outputs for this technology
-    double calOutput = getCalibrationOutput( false, "", aPeriod );
-
-    // If a tech is available for calibration, it must have a calibration value
-    // greater than or equal to zero. 
-    assert( calOutput >= 0 );
-
-    // Cannot have shareweights of zero and positive calibration output. 
-    assert( !( calOutput > 0 && mShareWeight == 0 ) );
-
-    // Adjust share weights based on the calibrated demand if it is known.
-    // Otherwise use the variable demand.
-    assert( aCalibratedDemand == -1 || aCalibratedDemand >= 0 );
-
-    double desiredDemand = ( aCalibratedDemand == -1 ) ? aDemand : aCalibratedDemand;
-    if( !aIsOnlyTechnology && desiredDemand > util::getSmallNumber() ) {
-        /*! \invariant Zero share weight technologies should not be calibrated. */
-        assert( mShareWeight != 0 );
-        double shareScaleValue = calOutput / desiredDemand;
-        double orgShareWeight = mShareWeight;
-        mShareWeight *= shareScaleValue;
-
-        // Print for debugging purpose.
-        bool printCalibrationInfo = false;
-        if( printCalibrationInfo ){
-            ILogger& calLog = ILogger::getLogger( "calibration_log" );
-            calLog.setLevel( ILogger::WARNING );
-            calLog.setf(ios_base::left,ios_base::adjustfield); // left alignment
-            calLog << " Region: "; calLog.width(14); calLog << aRegionName;
-            calLog << " Sector: "; calLog.width(12); calLog << aSectorName;
-            calLog << " Technology: "; calLog.width(18); calLog << mName;
-            calLog.precision(4); // for floating-point
-            calLog << " Calibration: "; calLog.width(8); calLog << calOutput;
-            calLog << " Output: "; calLog.width(8); calLog << desiredDemand;
-            calLog << " SW org: "; calLog.width(8); calLog << orgShareWeight;
-            calLog << " SW new: "; calLog.width(8); calLog << mShareWeight;
-            calLog << " scaler: "; calLog.width(8); calLog << shareScaleValue;
-            calLog << endl;
-            calLog.setf(ios_base::fmtflags(0),ios_base::floatfield); //reset to default
-        }
-        // End print for debugging purpose.
-    }
-
-    // Shareweight must be positive.
-    assert( mShareWeight >= 0 );
-/*
-    // Report if share weight gets extremely large
-    if( mShareWeight > util::getLargeNumber() ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Large share weight in calibration for Technology: " << mName << endl;
-    }
-*/    
 }
 
 //! calculate GHG emissions from Technology use
@@ -1457,53 +1355,6 @@ bool Technology::hasCalibratedValue( const int aPeriod ) const {
     return true;
 }
 
-/*! \brief Scale technology calibration value.
-* \param aInput Name of the input for which to scale the value.
-* \param aScaleFactor Amount by which to scale the input.
-* \param aPeriod Model period.
-*/
-void Technology::scaleCalibrationInput( const string& aInput,
-                                        const double aScaleFactor,
-                                        const int aPeriod )
-{
-    // Only scale calibration values in the initial investment period.
-    assert( mProductionState[ aPeriod ]->isNewInvestment() );
-
-    /*! \pre An input name was passed. */
-    assert( !aInput.empty() );
-
-    /*! \pre Ensure that allInputs has not reached technology as an input name. */
-    assert( aInput != "allInputs" );
-
-    /*! \pre scaleFactor is greater than or equal to zero. */
-    assert( aScaleFactor >= 0 );
-
-    if( hasInput( aInput ) ) {
-        // TODO: Make this work correctly.
-        // Don't scale technologies with multiple energy inputs as this can cause impossible to
-        // solve scaling problems.
-        unsigned int numEnergyInputs = 0;
-        for( unsigned int i = 0; i < mInputs.size(); ++i ) {
-            if( mInputs[ i ]->hasTypeFlag( IInput::ENERGY ) ) {
-                ++numEnergyInputs;
-            }
-        }
-        if( numEnergyInputs > 1 ) {
-            return;
-        }
-
-        // Check if the calibration output should be scaled.
-        if( mCalValue.get() ) {
-            mCalValue->scaleValue( aScaleFactor );
-        }
-
-        // Scale all calibration quantities as a set if the technology has an input.
-        for( unsigned int i = 0; i < mInputs.size(); ++i ) {
-            mInputs[ i ]->scaleCalibrationQuantity( aScaleFactor );
-        }
-    }
-}
-
 /*! \brief Calculate Technology fuel cost and total cost.
 * \details This calculates the cost (per unit output) of this specific
 *          Technology. The cost includes fuel cost, carbon value, and non-fuel
@@ -1665,53 +1516,6 @@ const map<string, double> Technology::getFuelMap( const int aPeriod ) const
     return inputMap;
 }
 
-/*! \brief Check for fixed demands and set values to the counter.
-* If the output of this Technology is fixed then set that value to the
-* appropriate marketplace counter. If it is not, then reset counter.
-* \author Steve Smith
-* \param aRegionName Region name.
-* \param aSectorName Sector name.
-* \param aPeriod Model period.
-*/
-void Technology::tabulateFixedDemands( const string& aRegionName,
-                                       const string& aSectorName,
-                                       const int aPeriod )
-{
-    // Non-operating technologies have no fixed demands.
-    if( !mProductionState[ aPeriod ]->isOperating() ){
-        return;
-    }
-    // Loop through inputs and require each to tabulate its fixed demand.
-    double fixedOutput = getFixedOutput( aRegionName, aSectorName, false, "", aPeriod );
-
-    // Reset fixed output to the -1 flag.
-    // TODO: Fix this.
-    if( fixedOutput == 0 && mFixedOutput == getFixedOutputDefault() ) {
-        fixedOutput = -1;
-    }
-
-    // Check if there is calibrated output.
-    if( fixedOutput == -1 && mCalValue.get() ) {
-        fixedOutput = mCalValue->getCalOutput();
-    }
-
-    // If the shareweight is zero the output is set to zero.
-    if( util::isEqual( mShareWeight, 0.0 ) ){
-        fixedOutput = 0;
-    }
-
-    if( fixedOutput != -1 ){
-        // Account for technical change.
-        fixedOutput /= mAlphaZero;
-    }
-
-    bool isInvestmentPeriod = mProductionState[ aPeriod ]->isNewInvestment();
-    for( unsigned int i = 0; i < mInputs.size(); ++i ) {
-        // TODO: The production function should handle this instead of the input.
-        mInputs[ i ]->tabulateFixedQuantity( aRegionName, fixedOutput, isInvestmentPeriod, aPeriod );
-    }
-}
-
 /*! \brief Test to see if calibration worked for this Technology.
 * \author Josh Lurz
 * \param aPeriod The model period.
@@ -1756,36 +1560,37 @@ bool Technology::isAllCalibrated( const int aPeriod,
     }
     // Return false (not calibrated) and print warning only if relativeDiff is
     // greater than the calibration accuracy.
-    if( relativeDiff > aCalAccuracy ) {
-        // If calibration value is inconsequential relative to total sector output,
-        // then treat it as calibrated.
-        if( (calOutput/sectorOutput) < aCalAccuracy ) {
-           // return true;
+    /*!
+     * \warning We must also allow calibration values to be off when it is inconsequential
+     *          to the sector output.  This is due to the solver not being able to solve
+     *          to a tight enough accuracy.  For example global Rice has an order of magnitude
+     *          of 10^9 however Rice in Australia_NZ is in the 10^5 range.  So unless we used
+     *          a very tight tolerence we probably won't be able to calibrate exactly when scales
+     *          are so different.
+     */
+    if( relativeDiff > aCalAccuracy && ( fabs( output - calOutput ) / sectorOutput ) > aCalAccuracy ) {
+        // Print warning then return false.
+        if( aPrintWarnings ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog.setf(ios_base::left,ios_base::adjustfield); // left alignment
+            mainLog << "Calibration failed by ";
+            mainLog.precision(2); // for floating-point
+            mainLog.width(4); mainLog << relativeDiff * 100; mainLog << " %";
+            mainLog << " Technology: "; mainLog.width(18); mainLog << mName;
+            mainLog << " Region: "; mainLog.width(14); mainLog << aRegionName;
+            mainLog << " Sector: "; mainLog.width(12); mainLog << aSectorName;
+            mainLog << " Subsector: "; mainLog.width(12); mainLog << aSubsectorName;
+            mainLog.precision(4); // for floating-point
+            mainLog << " Output: "; mainLog.width(8); mainLog << output;
+            mainLog << " Calibration: "; mainLog.width(8); mainLog << calOutput;
+            mainLog << " relativeDiff: "; mainLog.width(8); mainLog << relativeDiff;
+            mainLog << " SectorOutput: "; mainLog.width(8); mainLog << sectorOutput;
+            mainLog << " SectorShare: "; mainLog.width(8); mainLog << calOutput/sectorOutput;
+            mainLog << endl;
+            mainLog.setf(ios_base::fmtflags(0),ios_base::floatfield); //reset to default
         }
-        else {
-            // Print warning then return false.
-            if( aPrintWarnings ) {
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::WARNING );
-                mainLog.setf(ios_base::left,ios_base::adjustfield); // left alignment
-                mainLog << "Calibration failed by ";
-                mainLog.precision(2); // for floating-point
-                mainLog.width(4); mainLog << relativeDiff * 100; mainLog << " %";
-                mainLog << " Technology: "; mainLog.width(18); mainLog << mName;
-                mainLog << " Region: "; mainLog.width(14); mainLog << aRegionName;
-                mainLog << " Sector: "; mainLog.width(12); mainLog << aSectorName;
-                mainLog << " Subsector: "; mainLog.width(12); mainLog << aSubsectorName;
-                mainLog.precision(4); // for floating-point
-                mainLog << " Output: "; mainLog.width(8); mainLog << output;
-                mainLog << " Calibration: "; mainLog.width(8); mainLog << calOutput;
-                mainLog << " relativeDiff: "; mainLog.width(8); mainLog << relativeDiff;
-                mainLog << " SectorOutput: "; mainLog.width(8); mainLog << sectorOutput;
-                mainLog << " SectorShare: "; mainLog.width(8); mainLog << calOutput/sectorOutput;
-                mainLog << endl;
-                mainLog.setf(ios_base::fmtflags(0),ios_base::floatfield); //reset to default
-            }
-            return false;
-        }
+        return false;
     }
 
     // Calibration at the Technology level was successful.
@@ -1849,90 +1654,6 @@ double Technology::getMarginalRevenue( const string& aRegionName,
 }
 
 /*!
- * \brief Adjust input coefficients for consistency with calibrated values.
- * \details Input coefficients need to be adjusted to ensure they are consistent
- *          with calibrated input and output values. If a calibration output is
- *          read-in, input coefficients are determined for any calibrated inputs
- *          such that calibrated output multiplied by intensity for the input is
- *          equal to the calibrated input. If only calibrated inputs and
- *          coefficients are read-in, the first calibrated input is assumed to
- *          be correct. Using that input's calibrated input and coefficient, a
- *          calibrated output is determined and the above procedure is
- *          performed.
- * \param aRegionName Region name.
- * \param aSectorName Sector name.
- * \param aPeriod Period.
- */
-void Technology::adjustCoefficients( const string& aRegionName,
-                                     const string& aSectorName,
-                                     const int aPeriod )
-{
-    // Check for a calibrated output.
-    double calOutput = -1;
-    if( mCalValue.get() ) {
-        calOutput = mCalValue->getCalOutput();
-    }
-    else {
-        // Loop through the inputs and find the first calibrated input.
-        for( unsigned int i = 0; i < mInputs.size(); ++i ) {
-            if( mInputs[ i ]->getCalibrationQuantity( aPeriod ) >= 0 ) {
-                // Found a calibrated input. 
-                // TODO: Leontief assumption.
-                calOutput = mInputs[ i ]->getCalibrationQuantity( aPeriod )
-                            / mInputs[ i ]->getCoefficient( aPeriod )
-                            * mAlphaZero;
-                break;
-            }
-        }
-    }
-
-    // If there isn't a calibrated output then skip adjustments.
-    if( calOutput == -1 ) {
-        return;
-    }
-
-    // Adjust the calibrated output for hicks neutral technical change. It now represents
-    // the calibrated output if there were no technical change.
-    calOutput *= mAlphaZero;
-
-    // Perform coefficient adjustment.
-    for( unsigned int i = 0; i < mInputs.size(); ++i ) {
-        double calInput = mInputs[ i ]->getCalibrationQuantity( aPeriod );
-        if( calInput >= 0 ) {
-            double adjCoef;
-            // Calculate the adjusted coefficient as calibrated input divided by
-            // calibrated output.
-            // TODO: Leontief assumption.
-            if( calOutput > 0 ) {
-                adjCoef = calInput / calOutput;
-            }
-            // If calibrated input is positive and calibrated output is zero set
-            // the coefficient to zero.
-            else if( calInput > 0 ) {
-                adjCoef = 0;
-            }
-                // If the calibrated output is zero and the calibrated output is
-                // zero, don't adjust the coefficient.
-                // TODO: Does this actually matter?
-            else {
-                continue;
-            }
-
-            // Print a message to the user if the adjustment is significant.
-            if( fabs( mInputs[ i ]->getCoefficient( aPeriod ) - adjCoef ) > util::getSmallNumber() ) {
-                ILogger& calLog = ILogger::getLogger( "calibration_log" );
-                calLog.setLevel( ILogger::NOTICE );
-                calLog << "Adjusting coefficient from " << mInputs[ i ]->getCoefficient( aPeriod )
-                       << " to " << adjCoef << " for input " << mInputs[ i ]->getName()
-                       << " in technology " << mName << " in sector " << aSectorName
-                       << " in region " << aRegionName << "." << endl;
-            }
-            mInputs[ i ]->setCoefficient( adjCoef, aPeriod );
-        }
-    }
-}
-
-/*!
  * \brief Return the Technology info object if one exists.
  * \details By default, Technologies do not have an info object. This function
  *          allows derived classes to supply an IInfo object. The Technology
@@ -1964,6 +1685,13 @@ void Technology::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->endVisitTechnology( this, aPeriod );
 }
 
+/*!
+ * \brief Get the logit exponent used by this technology.
+ * \return The current logit exponent.
+ */
+double Technology::getLogitExp() const {
+	return mLogitExp;
+}
 
 /**
  * \brief Method for visiting derived technologies.

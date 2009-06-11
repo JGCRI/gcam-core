@@ -99,6 +99,7 @@ class Sector: public IVisitable,
     // TODO: Replace with visitor.
     friend class TotalSectorEmissions;
     friend class CalQuantityTabulator;
+    friend class CalibrateShareWeightVisitor;
 protected:
     std::string name; //!< Sector name
     std::string mOutputUnit; //!< unit of good or service produced by sector
@@ -136,7 +137,6 @@ protected:
     virtual void toDebugXMLDerived( const int period, std::ostream& aOut, Tabs* aTabs ) const = 0;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual const std::string& getXMLName() const = 0;
-    void checkForCalibrationConsistancy( const int period );
     
     double getFixedOutput( const int period ) const;
     const std::vector<double> calcSubsectorShares( const GDP* aGDP, const int aPeriod ) const;
@@ -167,8 +167,6 @@ public:
                            const Demographic* aDemographics,
                            const int aPeriod ) = 0;
 
-    virtual void calibrateSector( const GDP* aGDP, const int aPeriod );
-
     bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
 
     virtual void supply( const GDP* aGDP,
@@ -178,17 +176,7 @@ public:
 
     virtual double getOutput( const int period ) const = 0;
 
-    virtual void tabulateFixedDemands( const int period, const GDP* aGDP ) = 0;
-
-    virtual void setCalSuppliesAndDemands( const int aPeriod ) const = 0;
-
     bool inputsAllFixed( const int period, const std::string& goodName ) const;
-    
-    double getCalAndFixedOutputs( const int period, const std::string& goodName ) const;
-
-    void setImpliedFixedInput( const int period, const std::string& goodName, const double requiredOutput );
-
-    virtual void scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue );
 
     virtual void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ) = 0;
 

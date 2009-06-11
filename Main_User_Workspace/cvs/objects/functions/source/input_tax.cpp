@@ -298,18 +298,6 @@ void InputTax::setPrice( const string& aRegionName,
     // Not hooking this up yet, it could work.
 }
 
-void InputTax::tabulateFixedQuantity( const string& aRegionName,
-                                         const double aFixedOutput,
-                                         const bool aIsInvestmentPeriod,
-                                         const int aPeriod )
-{
-    // do nothing
-}
-
-void InputTax::scaleCalibrationQuantity( const double aScaleFactor ){
-    // do nothing
-}
-
 double InputTax::getCalibrationQuantity( const int aPeriod ) const
 {
     return 0;

@@ -66,8 +66,6 @@ public:
 
     virtual double getCalOutput();
 
-    virtual void scaleValue( const double aScaleFactor );
-
 private:
     //! Calibrated output on a per capita basis.
     double mCalOutputPercapValue;

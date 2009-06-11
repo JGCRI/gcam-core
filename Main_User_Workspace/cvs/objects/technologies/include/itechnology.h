@@ -147,15 +147,6 @@ public:
 
     virtual bool hasCalibratedValue( const int aPeriod ) const = 0;
 
-    virtual void adjustForCalibration( const double aDemand,
-                                       const double aCalibratedDemand,
-                                       const bool aIsOnlyTechnology,
-                                       const std::string& aRegionName, 
-                                       const std::string& aSectorName,
-                                       const IInfo* aSubsectorInfo,
-                                       const int aPeriod ) = 0;
-
-
     virtual const std::map<std::string,double> getEmissions( const std::string& aGoodName,
                                                              const int aPeriod ) const = 0;
 
@@ -163,14 +154,6 @@ public:
                                                                    const int aPeriod ) const = 0;
 
     virtual const std::string& getName() const = 0;
-    
-    virtual double getRequiredInputForOutput( const std::string& aRequiredInput,
-                                              double aRequiredOutput,
-                                              const int aPeriod ) const = 0;
-
-    virtual void scaleCalibrationInput( const std::string& aInput,
-                                        const double aScaleFactor,
-                                        const int aPeriod ) = 0;
 
     virtual void scaleShareWeight( double scaleValue ) = 0;
     virtual void setShareWeight( double shareWeightValue ) = 0;
@@ -201,8 +184,6 @@ public:
                                    const bool aHasRequiredInput,
                                    const std::string& aRequiredInput,
                                    const int aPeriod ) const = 0;
-
-    virtual void tabulateFixedDemands( const std::string& aRegionName, const std::string& aSectorName, const int aPeriod ) = 0;
     
     virtual bool isAllCalibrated( const int aPeriod,
                           double aCalAccuracy,
@@ -215,6 +196,12 @@ public:
     virtual void acceptDerived( IVisitor* aVisitor, const int aPeriod ) const = 0;
 
     virtual const std::map<std::string, double> getFuelMap( const int aPeriod ) const = 0;
+
+    virtual double getLogitExp() const = 0;
+
+    virtual bool isAvailable( const int aPeriod ) const = 0;
+    
+    virtual double calcFuelPrefElasticity( const int aPeriod ) const = 0;
 
     protected:
 

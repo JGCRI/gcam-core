@@ -164,6 +164,7 @@ class Technology: public ITechnology
     friend class XMLDBOutputter;
     friend class MarginalProfitCalculator;
     friend class IndirectEmissionsCalculator;
+    friend class EnergyBalanceTable;
 public:
     Technology( const std::string& aName, const int aYear );
     Technology( const Technology& aTech );
@@ -218,26 +219,10 @@ public:
 
     double getCost( const int aPeriod ) const;
 
-    virtual void adjustForCalibration( const double aDemand,
-                                       const double aCalibratedDemand,
-                                       const bool aIsOnlyTechnology,
-                                       const std::string& aRegionName, 
-                                       const std::string& aSectorName,
-                                       const IInfo* aSubsectorInfo,
-                                       const int aPeriod );
-
     const std::map<std::string,double> getEmissions( const std::string& aGoodName, const int aPeriod ) const;
     const std::map<std::string,double> getEmissionsByFuel( const std::string& aGoodName, const int aPeriod ) const;
 
     const std::string& getName() const;
-
-    void scaleCalibrationInput( const std::string& aInput,
-                                const double aScaleFactor,
-                                const int aPeriod );
-    
-    double getRequiredInputForOutput( const std::string& aRequiredInput,
-                                      double aRequiredOutput,
-                                      const int aPeriod ) const;
 
     void scaleShareWeight( double scaleValue );
     void setShareWeight( double shareWeightValue );
@@ -277,8 +262,6 @@ public:
                            const bool aHasRequiredInput,
                            const std::string& aRequiredInput,
                            const int aPeriod ) const;
-
-    void tabulateFixedDemands( const std::string& regionName, const std::string& aSectorName, const int period );
     
     bool isAllCalibrated( const int aPeriod,
                           double aCalAccuracy,
@@ -287,11 +270,20 @@ public:
                           const std::string& aSubsectorName,
                           const bool aPrintWarnings ) const;
 
+    // TODO: rename this method to isOutputFixedOrCalibrated
+    //       or something else which better describes what it
+    //       is intended for
     bool isOutputFixed( const bool aHasRequiredInput,
                         const std::string& aRequiredInput, 
                         const int aPeriod ) const;
 
     bool isFixedOutputTechnology( const int aPeriod ) const;
+
+    virtual double getLogitExp() const;
+    
+    virtual double calcFuelPrefElasticity( const int aPeriod ) const;
+
+    virtual bool isAvailable( const int aPeriod ) const;
 
     const std::map<std::string, double> getFuelMap( const int aPeriod ) const;
 
@@ -387,19 +379,11 @@ protected:
                               const std::string& aSectorName,
                               const int aPeriod ) const;
 
-    bool isAvailable( const int aPeriod ) const;
-
     bool hasInput( const std::string& aInput ) const;
     
     virtual double getTotalInputCost( const std::string& aRegionName,
                                       const std::string& aSectorName,
                                       const int aPeriod ) const;
-    
-    double calcFuelPrefElasticity( const int aPeriod ) const;
-
-    virtual void adjustCoefficients( const std::string& aRegionName,
-                                     const std::string& aSectorName,
-                                     const int aPeriod );
 
     double getMarginalRevenue( const std::string& aRegionName,
                                const std::string& aSectorName,

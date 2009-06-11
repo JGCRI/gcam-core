@@ -79,10 +79,6 @@ template <class T, class U> class HashMap;
 * argument of the method world.calc()) by calling region.calc() to run the model
 * for one iteration for these regions.
 *
-* The world object includes a switch for running the model in calibration mode,
-* methods for determining the chain of sector dependecies (necessary for solving
-* partial equilibrium model), and the methods for setting global fixed GHG
-* taxes.
 * \author Sonny Kim
 */
 
@@ -109,9 +105,6 @@ public:
     void dbOutput( const std::list<std::string>& aPrimaryFuelList ) const; 
     const std::map<std::string,int> getOutputRegionMap() const;
     const AtomVector getRegionIDs() const;
-    void turnCalibrationsOn(); 
-    void turnCalibrationsOff();
-    bool getCalibrationSetting() const;
     bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
     void setTax( const GHGPolicy* aTax );
     const IClimateModel* getClimateModel() const;
@@ -140,7 +133,6 @@ private:
     std::vector<Region*> regions; //!< array of pointers to Region objects
     std::auto_ptr<IClimateModel> mClimateModel; //!< The climate model.
 
-    bool doCalibrations; //!< turn on or off calibration routines
     std::auto_ptr<GlobalTechnologyDatabase> globalTechDB; //!< The Global Technology Database.
 
     //! Reference to an object which maintains a count of the number of time

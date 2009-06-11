@@ -55,6 +55,8 @@
 #include "functions/include/function_manager.h"
 #include "functions/include/function_utils.h"
 #include "technologies/include/iproduction_state.h"
+#include "util/base/include/ivisitor.h"
+#include "util/base/include/configuration.h"
 
 using namespace std;
 using namespace xercesc;
@@ -170,7 +172,12 @@ void BuildingGenericDmdTechnology::initCalc( const string& aRegionName,
                           aDemographics, aPrevPeriodInfo, aPeriod );
 
     // Check coefficients in the initial year of the technology.
-    if( mProductionState[ aPeriod ]->isNewInvestment() ){
+    // We skip this check if calibration is active since the coefs
+    // will be backed out.  If we are missing calibration values upstream
+    // that will be flagged elsewhere
+    const bool calibrationPeriod = aPeriod > 0 && aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod();
+    static const bool calibrationActive = Configuration::getInstance()->getBool( "CalibrationActive" );
+    if( mProductionState[ aPeriod ]->isNewInvestment() && !( calibrationActive && calibrationPeriod ) ){
         checkCoefficients( aSectorName, aPeriod );
     }
 }
@@ -223,54 +230,6 @@ double BuildingGenericDmdTechnology::calcShare( const string& aRegionName,
     return Technology::calcShare( aRegionName, aSectorName, aGDP, aPeriod );
 }
 
-/*! \brief Adjusts technology parameters as necessary to be consistent with calibration value.
-*
-* For these demand "technologies" the unitDemand needs to be adjusted so that output
-* is consistent with calibrated input demand. This version works for demands that do not take into account internal gains.
-*
-* \author Steve Smith
-* \param aTechnologyDemand calibrated unit demand (demand per unit floorspace) for this subsector
-* \param aRegionName regionName
-* \param aSubSectorInfo Info object (not used for this class so name is left out) 
-* \param aPeriod model period
-*/
-void BuildingGenericDmdTechnology::adjustForCalibration( const double aDemand,
-                                                         const double aCalibratedDemand,
-                                                         const bool aIsOnlyTechnology,
-                                                         const string& aRegionName,
-                                                         const string& aSectorName,
-                                                         const IInfo* aSubsectorInfo,
-                                                         const int aPeriod )
-{
-    // Only adjust for calibration in the new investment period.
-    if( !mProductionState[ aPeriod ]->isNewInvestment() ){
-        return;
-    }
-    
-
-    // Default technology calibration is required for adjusting technology
-    // shareweights so that the building shell received the correct amount of
-    // demand.
-    Technology::adjustForCalibration( aDemand,
-                                      aCalibratedDemand,
-                                      aIsOnlyTechnology,
-                                      aRegionName,
-                                      aSectorName,
-                                      aSubsectorInfo,
-                                      aPeriod );
-
-    adjustCoefsForCalibration( aDemand, aRegionName, aPeriod );
-}
-
-void BuildingGenericDmdTechnology::adjustCoefficients( const string& aRegionName,
-                                                       const string& aSectorName,
-                                                       const int aPeriod )
-{
-    // Override this function to prevent the base technology from adjusting coefficients
-    // based on a leontief assumption.
-    // TODO: Find a cleaner way to do this.
-}
-
 void BuildingGenericDmdTechnology::production( const string& aRegionName,
                                                const string& aSectorName,
 											   double aVariableDemand,
@@ -304,59 +263,18 @@ const IFunction* BuildingGenericDmdTechnology::getProductionFunction() const {
 }
 
 /*!
- * \brief Adjust the input coefficients to scale them such that output will
- *        equal calibrated output.
- * \details Loops through the inputs and adjusts the coefficient of each energy
- *          input. The coefficient is adjusted so the input demand for the given
- *          output is equal to the calibrated demand.
- * \param aDemand Demand for the output of the technology.
- * \param aRegionName Name of the containing region.
- * \param aPeriod Model period.
- */
-void BuildingGenericDmdTechnology::adjustCoefsForCalibration( const double aDemand,
-                                                              const string& aRegionName,
-                                                              const int aPeriod )
-{
-    int normPeriod = SectorUtils::getDemandNormPeriod( aPeriod );
-
-    // Adjust coefficients of the inputs if the total calibrated output is
-    // known.
-    // TODO: Make this function agnostic to production function choice.
-    for( InputIterator i = mInputs.begin(); i != mInputs.end(); ++i ){
-        // Skip non-energy inputs.
-        if( !(*i)->hasTypeFlag( IInput::ENERGY ) ){
-            continue;
-        }
-
-        double calOutput = (*i)->getCalibrationQuantity( aPeriod );
-
-        double priceRatio = SectorUtils::calcPriceRatio( aRegionName, (*i)->getName(),
-                                                         normPeriod, aPeriod );
-        double adjustedDemand = aDemand * pow( priceRatio, (*i)->getPriceElasticity() );
-        // Calculate a coefficient that would cause actual demand to equal
-        // calibrated demand.
-        double coef = adjustedDemand > util::getSmallNumber() ? calOutput / adjustedDemand : 0;
-        (*i)->setCoefficient( coef / mAlphaZero, aPeriod );
-
-        // Double check things worked correctly.
-        assert( util::isEqual( coef / mAlphaZero * aDemand * pow( priceRatio, ( *i )->getPriceElasticity() ),
-                               calOutput ) );
-    }
-}
-
-/*!
  * \brief Error check the input coefficients to ensure they have been
  *        initialized correctly.
  * \details Prints a warning if the input coefficients have not been
  *          initialized. The input is valid if:
- *              - It has a calibration value, which will cause the input to be
- *                adjusted
  *              - It read-in a coefficient adjustment
  *              - It copied a coefficient adjustment from the previous period.
  *              - It is a non-energy input.
  * \note The check for coefficient greater than one does not directly check for
  *       a non-unity coefficient adjustment but should be correct most of the
  *       time.
+ * \note If calibration is active we would not want to do this check since
+ *       consistency checks will be done elsewhere.
  * \param aSectorName Name of the containing sector.
  * \param aPeriod Model period.
  */
@@ -365,7 +283,6 @@ void BuildingGenericDmdTechnology::checkCoefficients( const string& aSectorName,
 {
     for( CInputIterator i = mInputs.begin(); i != mInputs.end(); ++i ){
         if( ( *i )->hasTypeFlag( IInput::ENERGY ) &&
-            ( *i )->getCalibrationQuantity( aPeriod ) == -1 &&
             ( *i )->getCoefficient( aPeriod ) >= 1 )
         {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -376,4 +293,10 @@ void BuildingGenericDmdTechnology::checkCoefficients( const string& aSectorName,
                 << endl;
         }
     }
+}
+
+void BuildingGenericDmdTechnology::accept( IVisitor* aVisitor, const int aPeriod ) const {
+    aVisitor->startVisitBuildingGenericDmdTechnology( this, aPeriod );
+    Technology::accept( aVisitor, aPeriod );
+    aVisitor->endVisitBuildingGenericDmdTechnology( this, aPeriod );
 }

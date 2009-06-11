@@ -217,16 +217,6 @@ void RenewableInput::setCoefficient( const double aCoefficient,
     assert( false );
 }
 
-void RenewableInput::tabulateFixedQuantity( const string& aRegionName,
-                                            const double aFixedOutput,
-                                            const bool aIsInvestmentPeriod,
-                                            const int aPeriod )
-{
-}
-
-void RenewableInput::scaleCalibrationQuantity( const double aScaleFactor ){
-}
-
 double RenewableInput::getCalibrationQuantity( const int aPeriod ) const
 {
     // This is a hack so that renewable outputs appear to be fixed.

@@ -126,23 +126,3 @@ double ForestSupplySubsector::calcShare( const int aPeriod,
 {
     return 1;
 }
-
-void ForestSupplySubsector::adjustForCalibration( double aSubsectorVariableDemand,
-                                                  const GDP* aGDP,
-                                                  const int aPeriod )
-{
-    // Food and forestry supply sectors do not calibrate. Calibration occurs in
-    // the land allocator. Call the Technology adjustForCalibration in case it
-    // has something to do.
-    for( unsigned int i = 0; i < techs.size(); ++i ){
-        // Shares are always one and so subsector variable demand is the same as
-        // technology variable demand.
-        techs[ i ][ aPeriod ]->adjustForCalibration( aSubsectorVariableDemand,
-                                                     0,
-                                                     techs.size() == 1,
-                                                     regionName,
-                                                     name,
-                                                     mSubsectorInfo.get(),
-                                                     aPeriod );
-    }
-}

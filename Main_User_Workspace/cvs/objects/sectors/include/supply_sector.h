@@ -80,10 +80,6 @@ public:
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic,
                           const int aPeriod ){};
 
-    virtual void setCalSuppliesAndDemands( const int aPeriod ) const;
-
-    virtual void tabulateFixedDemands( const int period, const GDP* gdp );
-
     virtual void postCalc( const int aPeriod );
 
     virtual void dbOutput( const GDP* aGDP,

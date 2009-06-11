@@ -362,16 +362,6 @@ bool SGMInput::hasTypeFlag( const int aTypeFlag ) const {
     return ( ( aTypeFlag & ~mTypeFlags ) == 0 );
 }
 
-void SGMInput::tabulateFixedQuantity( const string& aRegionName,
-                                      const double aFixedOutput,
-                                      const bool aIsInvestmentPeriod,
-                                      const int aPeriod )
-{
-}
-
-void SGMInput::scaleCalibrationQuantity( const double aScaleFactor ){
-}
-
 double SGMInput::getCalibrationQuantity( const int aPeriod ) const
 {
     return -1;

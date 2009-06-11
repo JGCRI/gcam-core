@@ -78,6 +78,7 @@ class IInfo;
 
 class BuildingGenericDmdTechnology : public Technology
 {
+    friend class CalibrateShareWeightVisitor;
 public:
     static const std::string& getXMLNameStatic1D();
 	static const std::string& getInternalGainsInfoName();
@@ -123,15 +124,8 @@ public:
                               const std::string& aSectorName, 
 		                      const GDP* aGDP,
                               const int aPeriod ) const;
-
-    virtual void adjustForCalibration( const double aDemand,
-                                       const double aCalibratedDemand,
-                                       const bool aIsOnlyTechnology,
-                                       const std::string& aRegionName, 
-                                       const std::string& aSectorName,
-                                       const IInfo* aSubsectorInfo,
-                                       const int aPeriod );
-
+    
+    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
@@ -145,14 +139,6 @@ protected:
     virtual const IInfo* getTechInfo() const;
 
     virtual const IFunction* getProductionFunction() const;
-    
-    void adjustCoefsForCalibration( const double aDemand,
-                                    const std::string& aRegionName,
-                                    const int aPeriod );
-
-    virtual void adjustCoefficients( const std::string& aRegionName,
-                                     const std::string& aSectorName,
-                                     const int aPeriod );
 
     void checkCoefficients( const std::string& aSectorName,
                             const int aPeriod ) const;

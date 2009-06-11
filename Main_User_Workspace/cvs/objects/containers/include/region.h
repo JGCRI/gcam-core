@@ -85,7 +85,7 @@ public:
     virtual void completeInit( const GlobalTechnologyDatabase* aGlobalTechDB );
     const std::string& getName() const;
 
-    virtual void calc( const int period, const bool doCalibrations ) = 0;
+    virtual void calc( const int period ) = 0;
     
     virtual void initCalc( const int period ) = 0;
     
@@ -104,8 +104,6 @@ public:
     virtual bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const { return true; };
     virtual void setCalSuppliesAndDemands( const int period ) {};
     virtual void initializeCalValues( const int period ) {};
-    virtual bool setImpliedCalInputs( const int period ) { return false; };
-    virtual int scaleCalInputs( const int period ) { return 0; };
     virtual void updateAllOutputContainers( const int period ) = 0;
     virtual void updateMarketplace( const int period ) {};
 

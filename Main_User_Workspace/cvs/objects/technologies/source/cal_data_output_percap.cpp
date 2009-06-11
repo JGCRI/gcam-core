@@ -139,7 +139,3 @@ void CalDataOutputPercap::completeInit(){
 double CalDataOutputPercap::getCalOutput() {
     return mCalOutputPercapValue * mPopulation;
 }
-
-void CalDataOutputPercap::scaleValue( const double aScaleFactor ) {
-    mCalOutputPercapValue *= aScaleFactor;
-}

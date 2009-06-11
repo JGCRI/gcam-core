@@ -219,12 +219,6 @@ void BuildingDemandInput::initCalc( const string& aRegionName,
                                     const bool aIsTrade,
                                     const int aPeriod )
 {
-    // Set the calibration quantity for the input from the supply side of the
-    // market.
-    if( aIsNewInvestmentPeriod ){
-        mBaseCalibrationQuantity = calcBaseCalibrationQuantity( aRegionName, aPeriod );
-    }
-
     if( FunctionUtils::getCO2Coef( aRegionName, mName, aPeriod ) > util::getSmallNumber() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
@@ -288,13 +282,12 @@ void BuildingDemandInput::setCoefficient( const double aCoefficient,
 double BuildingDemandInput::getPrice( const string& aRegionName,
                                       const int aPeriod ) const 
 {
-	const double EJtoGJ = 1.0e9;
-    
     // The market price for building services will be in units of $ per GJ_out.
     // The building demand function needs a service cost in units of $ per EJ_out.
-    // So need to convert from EJ to GJ to get cost units correct.
+    // However because the service is in billions of m^2 the EJ to GJ will cancel
+    // itself out with the billions of m^2 so we do not want to adjust here.
     
-    return scenario->getMarketplace()->getPrice( mName, aRegionName, aPeriod ) * EJtoGJ;
+    return scenario->getMarketplace()->getPrice( mName, aRegionName, aPeriod );
 }
 
 void BuildingDemandInput::setPrice( const string& aRegionName,
@@ -304,64 +297,13 @@ void BuildingDemandInput::setPrice( const string& aRegionName,
     // Not hooking this up yet, it could work.
 }
 
-void BuildingDemandInput::tabulateFixedQuantity( const string& aRegionName,
-                                                 const double aFixedOutput,
-                                                 const bool aIsInvestmentPeriod,
-                                                 const int aPeriod )
-{
-    // Get the existing calibrated demand from the marketplace.
-    IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( mName, aRegionName,
-                                                                   aPeriod, false );
-
-    // Normal inputs must have markets. However an error in the input file may
-    // cause them not to.
-    if( !marketInfo ){
-        // Could log an error here, however this error may have already been
-        // printed and this would be a lot of messages.
-        return;
-    }
-
-    // Update the base calibration value as it may have changed due to
-    // adjustments in calibrated supply.
-    mBaseCalibrationQuantity = calcBaseCalibrationQuantity( aRegionName, aPeriod );
-
-    static const string CAL_DEMAND = "calDemand";
-    double existingDemand = marketInfo->getDouble( CAL_DEMAND, false );
-    
-    // Add the calibrated output to the fixed demand in the initial investment
-    // period. A technology and its' inputs may operate for multiple periods
-    // after the initial period.
-    if( !aIsInvestmentPeriod ){
-        // TODO: Currently building vintages do not work.
-    }
-    // Note: Does not use the calibration value adjusted for internal gains.
-    else if( mBaseCalibrationQuantity != -1 ){
-        marketInfo->setDouble( CAL_DEMAND, mBaseCalibrationQuantity
-                               + max( existingDemand, 0.0 ) );
-    }
-    else {
-        // If not fixed, then set to DEMAND_VARIABLE to indicate a demand that
-        // is not completely fixed
-        const double DEMAND_VARIABLE = -1;
-        marketInfo->setDouble( CAL_DEMAND, DEMAND_VARIABLE );
-    }
-}
-
-void BuildingDemandInput::scaleCalibrationQuantity( const double aScaleFactor ){
-    // Calibration quantities are on the supply side and cannot be scaled.
-}
-
 double BuildingDemandInput::getCalibrationQuantity( const int aPeriod ) const
 {
-    // Dynamically calculate the calibration quantity using the calibrated
-    // output of the service supply sector. It is ensured that there is a
-    // one-to-one mapping between building service demand inputs and building
-    // service supply sectors in each period.
-    assert( mCoefficient.isInited() && mCoefficient > util::getSmallNumber() );
-    assert( mBaseCalibrationQuantity.isInited() );
-    
-    // Adjust demand for price changes.
-    return mBaseCalibrationQuantity;
+    // Calibration for detailed buildings is a special case where we are
+    // calibrating the coef by using upstream and downstream calibrated
+    // values.  So to avoid the potential for inconsistencies we are not
+    // allowing calibrated values here.
+    return -1;
 }
 
 bool BuildingDemandInput::hasTypeFlag( const int aTypeFlag ) const {
@@ -435,32 +377,6 @@ double BuildingDemandInput::calcDemandAdjustmentFactor() const {
 }
 
 /*!
- * \brief Calculate the base calibration quantity based on the supply side
- *        calibrated output without internal gains added or adjustments made for
- *        the production function.
- * \param aRegionName Region name.
- * \param aPeriod period.
- * \return Calibration quantity.
- */
-double BuildingDemandInput::calcBaseCalibrationQuantity( const string& aRegionName,
-                                                         const int aPeriod ) const
-{
-   // Get the calibration value for the output.
-    const IInfo* supplyInfo = scenario->getMarketplace()->getMarketInfo( mName,
-                                                                         aRegionName,
-                                                                         aPeriod,
-                                                                         true );
-
-    // Market info can be missing if incorrect input is read in. The above
-    // function will warn the user.
-    if( !supplyInfo ){
-        return -1;
-    }
-
-    return supplyInfo->getDouble( "calSupply", true );
-}
-
-/*!
  * \brief Return a structure containing the type information.
  * \param aType Enum type.
  * \return The type information.
@@ -505,18 +421,10 @@ void BuildingDemandInput::copyParamsInto( BuildingDemandInput& aInput,
 
     // Only copy the coefficient adjustment factor, not the entire coefficient
     // as that includes components such as saturation that may change over time.
-    // If the current period did not read in a coefficient adjustment and is not
-    // calibrated, or if the previous period had a calibrated output and the
-    // current period does not then the input is copied forward.
-    // TODO: The second condition does not currently work correctly because
-    // the base calibration quantity is overridden by the initCalc on the input
-    // in the first vintage period.
-    // TODO: Second condition is also wrong with calibration off.
-    if( ( !aInput.mCoefficientAdjustment.isInited() &&
-        !aInput.mBaseCalibrationQuantity.isInited() ) )
-        // || ( !aInput.mBaseCalibrationQuantity.isInited() &&
-        // mBaseCalibrationQuantity.isInited() ) )
-    {
+    // do not override a future adjustment if it was already read in
+    // we do not need to check calibration conditions since the user will get
+    // warned elsewhere if they set up something that will lead to trouble
+    if( !aInput.mCoefficientAdjustment.isInited() ) {
         aInput.mCoefficientAdjustment = mCoefficientAdjustment;
     }
 }

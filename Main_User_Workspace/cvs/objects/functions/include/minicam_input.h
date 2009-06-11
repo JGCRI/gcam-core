@@ -154,13 +154,6 @@ public:
     
     virtual double getIncomeElasticity() const = 0;
 
-    virtual void tabulateFixedQuantity( const std::string& aRegionName,
-                                        const double aFixedOutput,
-                                        const bool aIsInvestmentPeriod,
-                                        const int aPeriod ) = 0;
-
-    virtual void scaleCalibrationQuantity( const double aScaleFactor ) = 0;
-
     virtual double getCalibrationQuantity( const int aPeriod ) const = 0;
 
     virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const;

@@ -151,17 +151,6 @@ public:
                                        const int aPeriod ) = 0;
 
     /*!
-     * \brief Scale the calibrated output of the final demand by a ratio.
-     * \param aInputName Name of the input to scale, the string "allInputs" if
-     *        all inputs should be scaled.
-     * \param aScaleValue Value by which to scale.
-     * \param aPeriod Model period.
-     */
-    virtual void scaleCalibratedValues( const std::string& aFuelName,
-                                        const double aScaleValue,
-                                        const int aPeriod ) = 0;
-
-    /*!
      * \brief Write output to the CSV file.
      * \param aRegionName Region name.
      */

@@ -82,10 +82,6 @@ public:
 
     virtual void dbOutput( const GDP* aGDP,
                            const IndirectEmissionsCalculator* aIndEmissCalc ) const {}
-
-    virtual void tabulateFixedDemands( const int period, const GDP* aGDP ) {}
-
-    virtual void setCalSuppliesAndDemands( const int aPeriod ) const {}
 protected:
     virtual double getOutput( const int aPeriod ) const { return 0; }
 	

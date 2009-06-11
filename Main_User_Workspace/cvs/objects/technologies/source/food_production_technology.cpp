@@ -463,14 +463,6 @@ double FoodProductionTechnology::getNonEnergyCost( const string& aRegionName,
     return 0;
 }
 
-void FoodProductionTechnology::adjustForCalibration( double aTechnologyDemand,
-                                                     const string& aRegionName,
-                                                     const IInfo* aSubsectorInfo,
-                                                     const int aPeriod )
-{
-    // Calibration adjustments occur in the land allocator.
-}
-
 /*! \brief Calculates the output of the technology.
 * \details Calculates the amount of current forestry output based on the amount
 *          of planted forestry land and it's yield. Forestry production

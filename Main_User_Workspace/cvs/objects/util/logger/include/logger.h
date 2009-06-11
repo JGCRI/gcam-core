@@ -142,7 +142,7 @@ protected:
     virtual void logCompleteMessage( const std::string& aMessage ) = 0;
     void printToScreenIfConfigured( const std::string& aMessage );
     static void parseHeader( std::string& aHeader );
-    const static int MAX_LINE_SIZE = 1000;
+    const static int MAX_LINE_SIZE = 5000;
 	static const std::string& convertLevelToString( ILogger::WarningLevel aLevel );
 private:
 	 //! Buffer which contains characters waiting to be printed.

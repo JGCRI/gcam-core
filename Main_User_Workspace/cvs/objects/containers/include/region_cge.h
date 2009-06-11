@@ -84,7 +84,7 @@ public:
     virtual void completeInit( const GlobalTechnologyDatabase* aGlobalTechDB );
     virtual void initCalc( const int period);
     virtual void postCalc( const int aPeriod );
-    virtual void calc( const int period, const bool aDoCalibrations );
+    virtual void calc( const int period );
     virtual void updateMarketplace( const int period );
     virtual void updateAllOutputContainers( const int period );
     virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const;

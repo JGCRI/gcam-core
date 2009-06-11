@@ -815,22 +815,6 @@ void Subsector::initCalc( NationalAccount* aNationalAccount,
     } // End For
 }
 
-/*! \brief check for fixed demands and set values to counter
-*
-* Routine flows down to technology and sets fixed demands to the appropriate marketplace to be counted
-*
-* \author Steve Smith
-* \param aSectorInfo Subsector info container.
-* \param period Model period
-*/
-void Subsector::tabulateFixedDemands( const int period, const IInfo* aSectorInfo ) {
-    for( unsigned int i = 0; i < techs.size(); ++i ){
-        for( int j = 0; j <= period; ++j ){
-            techs[ i ][ j ]->tabulateFixedDemands( regionName, sectorName, period );
-        }
-   }
-}
-
 /*! \brief Returns the subsector price.
 * \details Calculates and returns share-weighted total price (subsectorprice)
 *          and cost of fuel (fuelprice). 
@@ -1247,86 +1231,6 @@ bool Subsector::isAllCalibrated( const int aPeriod, double aCalAccuracy, const b
 
 }
 
-/*! \brief Adjusts share weights and Subsector demand to be consistent with calibration value.
-* Calibration is performed by scaling share weights to be consistent with the calibration value. 
-* Calibration is, therefore, performed as part of the iteration process. 
-* Since this can change derivatives, best to turn calibration off when using N-R solver.
-*
-* This routine adjusts subsector shareweights so that relative shares are correct for each subsector.
-* Note that all calibration values are scaled (up or down) according to total sectorDemand 
-* -- getting the overall scale correct is the job of the TFE calibration
-*
-* Routine also calls adjustment to scale Technology share weights if necessary.
-*
-* \author Steve Smith
-* \param aSubsectorVariableDemand Total variable demand for this subsector
-* \param aIsOnlySubsector Whether this is the only subsector in the sector.
-* \param aGDP Regional GDP object.
-* \param aPeriod Model period
-*/
-void Subsector::adjustForCalibration( double aSubsectorVariableDemand,
-                                      const bool aIsOnlySubsector,
-                                      const GDP* aGDP,
-                                      const int aPeriod )
-{
-    // Don't adjust for calibration if the calibration status is off.
-    if( !getCalibrationStatus( aPeriod ) ){
-        return;
-    }
-
-    // total calibrated outputs for this subsector
-    double calOutputSubsect = getTotalCalOutputs( aPeriod );
-
-    /*! \invariant Total calibrated output is greater than or equal to zero. */
-    assert( calOutputSubsect >= 0 );
-    
-    // Adjust the subsector shareweight if the entire subsector is fixed or if
-    // the total sum of calibrated output is greater than the variable output of
-    // the subsector.
-    if ( !aIsOnlySubsector &&
-        ( aSubsectorVariableDemand > 0 ) &&
-        ( allOutputFixed( aPeriod ) || ( calOutputSubsect > aSubsectorVariableDemand ) ) )
-    {
-        double shareScaleValue = calOutputSubsect / aSubsectorVariableDemand;
-        double originalSW = shrwts[ aPeriod ];
-        shrwts[ aPeriod ] *= shareScaleValue;
-        // Print for debugging purpose.
-        bool printCalibrationInfo = false;
-        if( printCalibrationInfo ){
-            ILogger& calLog = ILogger::getLogger( "calibration_log" );
-            calLog.setLevel( ILogger::WARNING );
-            calLog.setf(ios_base::left,ios_base::adjustfield); // left alignment
-            calLog << " Region: "; calLog.width(14); calLog << regionName << ",";
-            calLog << " Sector: "; calLog.width(12); calLog << sectorName << ",";
-            calLog << " Subsector:  "; calLog.width(18); calLog << name << ",";
-            calLog.precision(4); // for floating-point
-            calLog << " Calibration: "; calLog.width(8); calLog << calOutputSubsect << ",";
-            calLog << " Output: "; calLog.width(8); calLog << aSubsectorVariableDemand << ",";
-            calLog << " SW org: "; calLog.width(8); calLog << originalSW << ",";
-            calLog << " SW new: "; calLog.width(8); calLog << shrwts[ aPeriod ] << ",";
-            calLog << " scaler: "; calLog.width(8); calLog << shareScaleValue << ",";
-            calLog << endl;
-            calLog.setf(ios_base::fmtflags(0),ios_base::floatfield); //reset to default
-        }
-        // End print for debugging purpose.
-    }
-
-    /*! \post Subsector shareweight must be positive after calibration. */
-    assert( shrwts[ aPeriod ] >= 0 );
-    
-    const vector<double> techShares = calcTechShares( aGDP, aPeriod );
-    bool hasSingleTechnology = ( techs.size() == 1 );
-
-    // TODO: breaking technology encapsulation by getting technology shares
-    // Move technology share calculation into technology. SHK 7/5/07
-    for( unsigned int i = 0; i < techs.size(); ++i ){
-        double techCalOutput = calOutputSubsect * techShares[ i ];
-        double techVarOutput = aSubsectorVariableDemand * techShares[ i ];
-        techs[ i ][ aPeriod ]->adjustForCalibration( techVarOutput, techCalOutput, hasSingleTechnology,
-                                               regionName, sectorName, mSubsectorInfo.get(), aPeriod );
-    }
-}
-
 /*! \brief returns the total calibrated output from this sector.
 *
 * Routine adds up calibrated values from both the sub-sector and (if not
@@ -1349,105 +1253,6 @@ double Subsector::getTotalCalOutputs( const int period ) const {
     assert( sumCalValues >= 0 );
 
     return sumCalValues;
-}
-
-/*! \brief returns the total calibrated or fixed input from this sector for the specified good.
-*
-* Routine adds up calibrated or fixed input values from all technologies.
-*
-* \author Steve Smith
-* \param period Model period
-* \param goodName market good to return inputs for. If equal to the value "allInputs" then returns all inputs.
-* \return Total calibrated input for this Subsector
-*/
-double Subsector::getCalAndFixedOutputs( const int aPeriod, const string& aRequiredInput ) const {
-    double sumCalOutputValues = 0;
-
-    for ( unsigned int i=0; i< techs.size(); i++ ) {
-        for( int per = 0; per <= aPeriod; ++per ){
-            // TODO: move logic into getCalibrationOutput.
-            const bool hasRequiredInput = ( aRequiredInput != "allInputs" );
-            double currCalOutput = techs[ i ][ per ]->getCalibrationOutput( hasRequiredInput,
-                aRequiredInput, aPeriod );
-            if ( currCalOutput >= 0 ) {
-                sumCalOutputValues += currCalOutput;
-                continue; // if there was a caloutput, don't count twice as fixed.
-            } 
-            // TODO: move logic into getFixedOutput.
-            double currFixedOutput = techs[ i ][ per ]->getFixedOutput( regionName, sectorName,
-                hasRequiredInput, aRequiredInput, aPeriod );
-            if( currFixedOutput > 0 ){
-                sumCalOutputValues += currFixedOutput;
-            }
-        }
-    }
-    return sumCalOutputValues;
-}
-
-/*! \brief Adds the input value needed to produce the required output to the marketplace calDemand value
-*
-* \author Steve Smith
-* \param period Model period
-* \param goodName market good to determine the inputs for.
-* \param requiredOutput Amount of output to produce
-* \return Whether any input was changed.
-*/
-bool Subsector::setImpliedFixedInput( const int period, const std::string& goodName, const double requiredOutput ) {
-    /*! \pre There is a good name and it is not allInputs. */
-    assert( !goodName.empty() && goodName != "allInputs" );
-
-    /*! \pre Required output is greater than or equal to zero. */
-    assert( requiredOutput >= 0 );
-
-    IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( goodName, regionName, period, false );
-
-    // Certain inputs may not exist.
-    if( !marketInfo ){
-        return false;
-    }
-
-    bool inputWasChanged = false;
-    for( unsigned int i=0; i< techs.size(); i++ ){
-        // Only iterate over technologies with non-zero share weights.
-        if( techs[ i ][ period ]->getShareWeight() > util::getSmallNumber() ){
-            double inputValue = techs[ i ][ period ]->getRequiredInputForOutput( goodName, requiredOutput, period );
-            if( inputValue != -1 ){
-                if( !inputWasChanged ){
-                    inputWasChanged = true;
-                    // The market may not exist if this is a fake fuel such as renewable.
-                    double existingMarketDemand = max( marketInfo->getDouble( "calDemand", false ), 0.0 );
-                    marketInfo->setDouble( "calDemand", existingMarketDemand + inputValue );
-                } 
-                else{
-                    ILogger& mainLog = ILogger::getLogger( "main_log" );
-                    mainLog.setLevel( ILogger::WARNING );
-                    mainLog << "More than one Technology input would have been changed " 
-                        << " in sub-sector " << name << " in sector " << sectorName
-                        << " in region " << regionName << endl; 
-                }
-            }
-        }
-    }
-    return inputWasChanged;
-}
-
-/*! \brief Scales calibrated values for the specified good.
-*
-* \author Steve Smith
-* \param period Model period
-* \param goodName market good to return inputs for
-* \param scaleValue multipliciative scaler for calibrated values 
-* \return Total calibrated input for this Subsector
-*/
-void Subsector::scaleCalibratedValues( const int aPeriod, const string& aGoodName, const double aScaleValue ) {
-    /*! \pre There is a good name and it is not allInputs. */
-    assert( !aGoodName.empty() && aGoodName != "allInputs" );
-    /*! \pre Scale value is greater than or equal to zero. */
-    assert( aScaleValue >= 0 );
-    // TODO: Should vintage production ever be scaled?
-    for ( unsigned int i=0; i< techs.size(); i++ ) {
-        techs[ i ][ aPeriod ]->scaleCalibrationInput( aGoodName, aScaleValue, aPeriod );
-    }
 }
 
 /*! \brief returns true if all output is either fixed or calibrated.
@@ -1485,7 +1290,9 @@ bool Subsector::containsOnlyFixedOutputTechnologies( const int aPeriod ) const {
     const int NewVintage = aPeriod;
     for( unsigned int i = 0; i < techs.size(); ++i ){
         // If at least one technology does not have fixed output return false.
-        if ( !techs[ i ][ NewVintage ]->isFixedOutputTechnology( aPeriod ) ) {
+        // Do not consider a technology that has a zero share weight
+        if ( techs[ i ][ NewVintage ]->getShareWeight() != 0 
+            && !techs[ i ][ NewVintage ]->isFixedOutputTechnology( aPeriod ) ) {
             return false;
         }
     }

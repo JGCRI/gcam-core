@@ -132,6 +132,12 @@ void ForestDemandSector::initCalc( const string& aRegionName,
 {
     EnergyFinalDemand::initCalc( aRegionName, aGDP, aDemographics, aPeriod );
     // TODO: Calibration checking needs to be implemented.
+    
+    // Forest needs to apply the macro scaler during calibration so that they can
+    // have price behavior.  So to allow the user to read in the actual final service
+    // we calculate the macro scalar here so that we can cancel it out during calcFinalDemand
+    // in calibration periods and get what the user read in.
+    mMacroScalerCalAdjust = 1 / calcMacroScaler( aRegionName, aDemographics, aGDP, aPeriod);
 }
 
 /*! \brief Complete the initialization of a forest demand sector.
@@ -141,32 +147,6 @@ void ForestDemandSector::completeInit( const string& aRegionName,
 {
 	mRotationPeriod = aRegionInfo->getInteger( "rotationPeriod", true );
     EnergyFinalDemand::completeInit( aRegionName, aRegionInfo );
-}
-
-/*!\brief Set baseScaler for all future periods to current value.
- *
- * This is needed so that future forest demand will be calculated consistently 
- * with current demand.
- *
- * \param aFuelName 
- * \param aScaleValue 
- * \param aPeriod 
- */
-void ForestDemandSector::scaleCalibratedValues( const string& aFuelName,
-                                               const double aScaleValue,
-                                               const int aPeriod )
-{
-    EnergyFinalDemand::scaleCalibratedValues( aFuelName, aScaleValue, aPeriod );
-
-    if ( aPeriod > 0 ) {
-        const Modeltime* modeltime = scenario->getModeltime();
-        for( int aFuturePeriod = aPeriod + 1; aFuturePeriod < modeltime->getmaxper(); ++aFuturePeriod ){
-                // Set to previous value, which is what was used to calc demand
-                // Need to do this for all future periods since this same scaler needs to be used to
-                // calculate future forest as well as current forest.
-   //             mBaseScaler[ aFuturePeriod ] = mBaseScaler[ aFuturePeriod - 1 ];
-       }
-    }
 }
 
 /*! \brief Aggregate sector forest service demand function
@@ -205,6 +185,27 @@ void ForestDemandSector::setFinalDemand( const string& aRegionName,
     
     // Need to put the demand for future forests into the marketplace
     marketplace->addToDemand( forwardForestMarketName, aRegionName, mFutureForestDemand, aPeriod );    
+}
+
+double ForestDemandSector::calcFinalDemand( const string& aRegionName,
+                                          const Demographic* aDemographics,
+                                          const GDP* aGDP,
+                                          const int aPeriod )
+{
+    // Forest's supply (current year) is fixed and the only response to forest price is the macro
+    // scalaer affecting the demand so we must apply it in calibration periods to allow for some
+    // behavior when calculating derivatives.
+    if( aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() ) {
+        // apply the macro scalar adjustment so that the solved service matches the service read in
+        // assuming that the read in data was balance
+        mServiceDemands[ aPeriod ] = mMacroScalerCalAdjust * mBaseService[ aPeriod ] * calcMacroScaler( aRegionName, aDemographics, aGDP, aPeriod);
+        mPreTechChangeServiceDemand[ aPeriod ] = mServiceDemands[ aPeriod ];
+    }
+    else {
+        // we can just use the base class otherwise
+        EnergyFinalDemand::calcFinalDemand( aRegionName, aDemographics, aGDP, aPeriod );
+    }
+    return mServiceDemands[ aPeriod ];
 }
 
 //TODO add docs
@@ -261,16 +262,14 @@ double ForestDemandSector::calcFutureForestDemand( const string& aRegionName,
     // preTechChangeServiceDemand in the previous period which is always stored in the
     // final element of the vector.
     if ( aPeriod > thisPeriodForParameters ){
-        mServiceDemands[ thisPeriodForParameters ] = mBaseScaler[ thisPeriodForParameters ] 
-                               * mPreTechChangeServiceDemand[ thisPeriodForParameters ]
+        mServiceDemands[ thisPeriodForParameters ] = mPreTechChangeServiceDemand[ thisPeriodForParameters ]
                                * demandScaler;
     }
     // Prior to the end of the model horizon, we use the previous period's preTechChangeServiceDemand
     // to compute the service demand in the current period. This preTechChangeServiceDemand is 
     // stored in the vector as the previous period's element.
     else {
-        mServiceDemands[ thisPeriodForParameters ] = mBaseScaler[ thisPeriodForParameters ] 
-                               * mPreTechChangeServiceDemand[ thisPeriodForParameters - 1]
+        mServiceDemands[ thisPeriodForParameters ] = mPreTechChangeServiceDemand[ thisPeriodForParameters - 1]
                                * demandScaler;
     }
 

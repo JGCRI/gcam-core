@@ -173,11 +173,6 @@ void SupplySector::initCalc( NationalAccount* aNationalAccount,
                 mPriceTrialSupplyMarket[ aPeriod ], aPeriod, true );
         }
     }
-
-    // Only call calibration related routines if calibration is active.
-    if( Configuration::getInstance()->getBool( "CalibrationActive" ) ){
-        setCalSuppliesAndDemands( aPeriod );
-    }
 }
 
 /*! \brief returns Sector output.
@@ -322,68 +317,6 @@ void SupplySector::supply( const GDP* aGDP, const int aPeriod ) {
 	if( mHasTrialSupply ){
 		SectorUtils::setTrialSupply( regionName, name, getOutput( aPeriod ), aPeriod );
 	}
-}
-
-void SupplySector::setCalSuppliesAndDemands( const int aPeriod ) const {
-
-    CalQuantityTabulator calSupplyTabulator( regionName );
-    accept( &calSupplyTabulator, aPeriod );
-
-    Marketplace* marketplace = scenario->getMarketplace();
-
-    // Flag that the market is not all fixed.
-    const double MARKET_NOT_ALL_FIXED = -1;
-
-    // Name of the cal supply info string.
-    const string CAL_SUPPLY_NAME = "calSupply";
-
-    // Iterate over the entire map of goods.
-    const CalQuantityTabulator::CalInfoMap& calSupplies = calSupplyTabulator.getSupplyInfo();
-
-    for( CalQuantityTabulator::CalInfoMap::const_iterator iter = calSupplies.begin();
-         iter != calSupplies.end(); ++iter )
-    {
-        // Get the market info for the good.
-        // TODO: Require market info to exist once demand sectors are separated.
-        IInfo* marketInfo = marketplace->getMarketInfo( iter->first, regionName, aPeriod, false );
-
-        // Incorrect input files may cause the market to not exist. This will be
-        // flagged elsewhere.
-        if( !marketInfo ){
-            continue;
-        }
-    
-        double existingCalSupply = marketInfo->getDouble( CAL_SUPPLY_NAME, false );
-        // Check is to see if some other region has flagged this as having all
-        // inputs not fixed.
-        if ( existingCalSupply != MARKET_NOT_ALL_FIXED && iter->second.mAllFixed ) {
-            // If supply of this good has not been elimiated from the search and
-            // output is fixed then add to fixed supply value.
-            marketInfo->setDouble( CAL_SUPPLY_NAME, max( existingCalSupply, 0.0 )
-                                   + iter->second.mCalQuantity + iter->second.mFixedQuantity );
-        }
-        else {
-            // If supply of this good is not fixed then set flag to eliminate
-            // this from other searches
-            marketInfo->setDouble( CAL_SUPPLY_NAME, MARKET_NOT_ALL_FIXED );
-        }
-    }
-}
-
-/*! \brief check for fixed demands and set values to counter
-*
-* Sets up the appropriate market within the marketplace for this Sector. Note
-* that the type of market is NORMAL -- signifying that this market is a normal
-* market that is solved (if necessary).
-*
-* \author Steve Smith
-* \param period Model period
-*/
-void SupplySector::tabulateFixedDemands( const int period, const GDP* gdp ) {
-
-    for( vector<Subsector*>::const_iterator j = subsec.begin(); j != subsec.end(); j++ ){
-        ( *j )->tabulateFixedDemands( period, mSectorInfo.get() );
-    }
 }
 
 /*! \brief Get the XML node name for output to XML.

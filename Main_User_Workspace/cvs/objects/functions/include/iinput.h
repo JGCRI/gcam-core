@@ -353,31 +353,6 @@ public:
                                              const int aPeriod ) const = 0;
 
     /*!
-     * \brief Tabulate fixed demands for the input.
-     * \details Determines the amount of the input that is fixed due to
-     *          calibration of the input or calibration of the Technology. The
-     *          calibration of the Technology is only valid in the initial
-     *          investment period of the Technology. The fixed demand is added
-     *          to the sum of fixed demand for the good in the marketplace.
-     * \param aRegionName Name of the region containing the input.
-     * \param aFixedOutput Fixed technology level output.
-     * \param aIsInvestmentPeriod Whether this is the initial investment period
-     *        of the Technology.
-     * \param aPeriod Model period.
-     */
-    virtual void tabulateFixedQuantity( const std::string& aRegionName,
-                                        const double aFixedOutput,
-                                        const bool aIsInvestmentPeriod,
-                                        const int aPeriod ) = 0;
-
-    /*!
-     * \brief Scale the current calibration value for the input.
-     * \details
-     * \param aScaleFactor Scale factor by which to adjust the value.
-     */
-    virtual void scaleCalibrationQuantity( const double aScaleFactor ) = 0;
-
-    /*!
      * \brief Get the current calibration quantity.
      * \param aPeriod The period for which to get the calibration quantity.
      * \details

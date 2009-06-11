@@ -91,12 +91,6 @@ public:
     * \return Calibration output value.
     */
     virtual double getCalOutput() = 0;
-
-    /*!
-     * \brief Scale the calibration value by a constant factor.
-     * \param aScaleFactor Scale the calibration value by a constant factor.
-     */
-    virtual void scaleValue( const double aScaleFactor ) = 0;
 };
 
 // Inline function definitions.

@@ -297,7 +297,7 @@ void RegionCGE::postCalc( const int aPeriod ){
 *
 * \param period Model time period
 */
-void RegionCGE::calc( const int period, const bool aDoCalibrations ) {
+void RegionCGE::calc( const int period ) {
     mNationalAccounts[ period ]->reset();
     // calls operate for both production and final demand sectors
     operate( period ); // This sector function operates existing capital, invests, and operates total.

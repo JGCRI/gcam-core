@@ -233,8 +233,6 @@ void EnergyInput::toDebugXML( const int aPeriod,
                      "calibrated-value", aOut, aTabs );
     XMLWriteElement( mTechChange.isInited() ? mTechChange.get() : -1,
                      "tech-change", aOut, aTabs );
-    XMLWriteElement( mCurrentCalibration.isInited() ? mCurrentCalibration.get() : -1,
-                     "curr-calibrated-value", aOut, aTabs );
     XMLWriteElement( mAdjustedCoefficients[ aPeriod ], "current-coef", aOut, aTabs );
     XMLWriteElement( mCO2Coefficient.isInited() ? mCO2Coefficient.get() : -1,
                      "cached-co2-coef", aOut, aTabs );
@@ -254,11 +252,6 @@ void EnergyInput::completeInit( const string& aRegionName,
 
     // Add the input dependency to the dependency finder.
     aDependencyFinder->addDependency( aSectorName, mName );
-    
-    // Initialize the current calibration value.
-    if( mCalibrationInput.isInited() ){
-        mCurrentCalibration = mCalibrationInput;
-    }
 
     // If there is a coefficient, initialize it and determine the current
     // coefficient. Otherwise use a default intensity of 1.
@@ -375,80 +368,10 @@ void EnergyInput::setPrice( const string& aRegionName,
     // Not hooking this up yet, it could work.
 }
 
-void EnergyInput::tabulateFixedQuantity( const string& aRegionName,
-                                         const double aFixedOutput,
-                                         const bool aIsInvestmentPeriod,
-                                         const int aPeriod )
-{
-    // Get the existing calibrated demand from the marketplace.
-    IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( mName, aRegionName,
-                                                                   aPeriod, false );
-
-    // Normal inputs must have markets. However an error in the input file may
-    // cause them not to.
-    if( !marketInfo ){
-        // Could log an error here, however this error may have already been
-        // printed and this would be a lot of messages.
-        return;
-    }
-
-    const string CAL_DEMAND = "calDemand";
-    double existingDemand = marketInfo->getDouble( CAL_DEMAND, false );
-    
-    // Check if it is already not fixed.
-    const double DEMAND_VARIABLE = -1;
-
-    // Calibrated output is preferred to calibrated input. Coefficients should
-    // have already been adjusted so that these are equivalent.
-    if( aFixedOutput != -1 ){
-        // set demand for fuel in marketInfo counter
-        // TODO: Remove leontief assumption.
-        marketInfo->setDouble( CAL_DEMAND, aFixedOutput *
-                               getCoefficient( aPeriod ) + max( existingDemand, 0.0 ) );
-
-        // Ensure that if a calibration input exists it is equal to the
-        // coefficient multiplied by the calibrated output.
-        assert( !aIsInvestmentPeriod
-                || !mCurrentCalibration.isInited()
-                || util::isEqual( aFixedOutput *
-                                  getCoefficient( aPeriod ), mCurrentCalibration.get() ) );
-    }
-    // Add the calibrated output to the fixed demand in the initial investment
-    // period. A technology and its' inputs may operate for multiple periods
-    // after the initial period. TODO: Is this right? If its not new investment
-    // should it set demand to variable? Why doesn't that hit the fixed output
-    // block?
-    else if( aIsInvestmentPeriod && mCurrentCalibration.isInited() ){
-        marketInfo->setDouble( CAL_DEMAND, mCurrentCalibration + max( existingDemand, 0.0 ) );
-    }
-    else {
-        // If not fixed, then set to DEMAND_VARIABLE to indicate a demand that is not
-        // completely fixed
-        marketInfo->setDouble( CAL_DEMAND, DEMAND_VARIABLE );
-    }
-}
-
-void EnergyInput::scaleCalibrationQuantity( const double aScaleFactor ){
-    // Scale factor must be positive.
-    assert( aScaleFactor >= 0 );
-
-    // If the calibration value was read in than the current value should be
-    // initialized. 
-    assert( !mCalibrationInput.isInited() || mCurrentCalibration.isInited() );
-
-    // Only scale the calibration input if it was initialized.
-    if( mCurrentCalibration.isInited() ){
-        mCurrentCalibration = mCurrentCalibration * aScaleFactor;
-    }
-}
-
 double EnergyInput::getCalibrationQuantity( const int aPeriod ) const
 {
-    // If the calibration value was read in than the current value
-    // should be initialized. 
-    assert( !mCalibrationInput.isInited() || mCurrentCalibration.isInited() );
-    
-    return mCurrentCalibration.isInited() ? mCurrentCalibration.get() : -1;
+    // return -1 if no calibration value is read in
+    return mCalibrationInput.isInited() ? mCalibrationInput.get() : -1;
 }
 
 bool EnergyInput::hasTypeFlag( const int aTypeFlag ) const {

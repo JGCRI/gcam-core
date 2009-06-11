@@ -106,11 +106,6 @@ public:
 
     virtual double getNonEnergyCost( const std::string& aRegionName,
                                      const int aPeriod ) const;
-
-    virtual void adjustForCalibration( double aTechnologyDemand,
-                                       const std::string& aRegionName,
-                                       const IInfo* aSubsectorInfo,
-                                       const int aPeriod );
 protected:
     std::string landType; //!< Type of land that will be used for this product
     double variableCost; //!< The non-land cost of producing a unit of product

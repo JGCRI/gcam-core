@@ -123,10 +123,6 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
         return SUCCESS; // Need a new code here.
     }
 
-    // Turn off calibration.
-    const bool calibrationStatus = world->getCalibrationSetting();
-    world->turnCalibrationsOff();
-
     // Setup the solution matrices.
     size_t currSize = solution_set.getNumSolvable();
     Matrix JF( currSize, currSize );
@@ -142,10 +138,6 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
         // Calculate derivatives
         code = calculateDerivatives( solution_set, JFSM, JFDM, JF, period );        
         if ( code != SUCCESS ) {
-            // Restore calibration status to avoid superfluous errors in latter periods
-            if ( calibrationStatus ) { 
-                world->turnCalibrationsOn();
-            }  
             return code;
         }
 
@@ -203,10 +195,6 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( const double solutionTolera
     else {
         solverLog << "Exiting Newton-Rhapson due to lack of improvement. " << endl;
     }
-
-    if ( calibrationStatus ) { // turn end-use calibrations back on if were on originally
-        world->turnCalibrationsOn();
-    }
     
     solverLog << endl; // new line
     
@@ -226,8 +214,23 @@ SolverComponent::ReturnCode LogNewtonRaphson::calculateDerivatives( SolverInfoSe
     bool isSingular = false;
     JF = SolverLibrary::invertMatrix( JF, isSingular );
     if( isSingular ) {
+        // print the derivative matrix to help the user understand why it was singular
         solverLog.setLevel( ILogger::ERROR );
         solverLog << "Matrix came back as singular, could not invert." << endl;
+        solverLog << ',';
+        for( int col = 0; col < solution_set.getNumSolvable(); ++col ) {
+            solverLog << solution_set.getSolvable( col ).getName() << ',';
+        }
+        solverLog << endl;
+        for( int row = 0; row < solution_set.getNumSolvable(); ++row ) {
+            solverLog << solution_set.getSolvable( row ).getName() << ',';
+            for( int col = 0; col < solution_set.getNumSolvable(); ++col ) {
+                // we need to recalculate JF since invertMatrix will not necessarily
+                // return it with the rows properly ordered when there is a singularity
+                solverLog << JFSM( row , col ) - JFDM( row , col ) << ',';
+            }
+            solverLog << endl;
+        }
         solverLog.setLevel( ILogger::NOTICE );
         return FAILURE_SINGULAR_MATRIX;
     } 

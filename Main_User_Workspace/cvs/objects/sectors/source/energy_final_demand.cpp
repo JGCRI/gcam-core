@@ -67,8 +67,7 @@ extern Scenario* scenario;
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
 EnergyFinalDemand::EnergyFinalDemand():
-mBaseService( scenario->getModeltime()->getmaxper() ),
-mBaseScaler( scenario->getModeltime()->getmaxper(), 1 ) //mBaseScaler should always be initialized to 1
+mBaseService( scenario->getModeltime()->getmaxper() )
 {
     // TODO: Use in place construction.
     const Modeltime* modeltime = scenario->getModeltime();
@@ -129,10 +128,6 @@ bool EnergyFinalDemand::XMLParse( const DOMNode* aNode ) {
             parseSingleNode( curr, mFinalEnergyConsumer,
                 new FinalEnergyConsumer( mName ) );
         }
-        else if( nodeName == "base-scaler" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mBaseScaler,
-                                                     modeltime );
-        }
         else if( !XMLDerivedClassParse( nodeName, curr ) ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
@@ -160,12 +155,6 @@ void EnergyFinalDemand::toInputXML( ostream& aOut, Tabs* aTabs ) const {
         XMLWriteElementCheckDefault( mBaseService[ i ].get(), "base-service",
                                      aOut, aTabs, 0.0,
                                      modeltime->getper_to_yr( i ) );
-    }
-
-    // Always write out mBaseScaler for all years.
-    for( unsigned int i = 0; i < mBaseScaler.size(); ++i ){
-        XMLWriteElement( mBaseScaler[ i ], "base-scaler", aOut, aTabs,
-            modeltime->getper_to_yr( i ) );
     }
 
     // TODO: XMLWriteVector
@@ -200,7 +189,6 @@ void EnergyFinalDemand::toDebugXML( const int aPeriod,
     }
 
     XMLWriteElement( mBaseService[ aPeriod ], "base-service", aOut, aTabs );
-    XMLWriteElement( mBaseScaler[ aPeriod ], "base-scaler", aOut, aTabs );
     XMLWriteElement( mServiceDemands[ aPeriod ], "service", aOut, aTabs );
     XMLWriteElement( mPreTechChangeServiceDemand[ aPeriod ], "service-pre-tech-change", aOut, aTabs );
     XMLWriteElement( mIncomeElasticity[ aPeriod ], "income-elasticity", aOut, aTabs );
@@ -329,26 +317,6 @@ void EnergyFinalDemand::tabulateFixedDemands( const string& aRegionName,
     }
 }
 
-/*!\brief Scales the final demand service to match the calibrated supply sector service.
- * \details This method is called when calibration mode is turned on to ensure that 
- *  calibration is based on one set of values, namely supply sector calibration values.
- *
- * \param aFuelName 
- * \param aScaleValue 
- * \param aPeriod 
- */
-void EnergyFinalDemand::scaleCalibratedValues( const string& aFuelName,
-                                               const double aScaleValue,
-                                               const int aPeriod )
-{
-    // Only scale if the input is the input of the final demand, or if all
-    // inputs should be scaled.
-    if( aFuelName == mName || aFuelName == "allInputs" ){
-        // Adjust the base scaler.
-        mBaseScaler[ aPeriod ]  *= aScaleValue;
-    }
-}
-
 /*! \brief Set the final demand for service into the marketplace after 
 * calling the aggregate demand function.
 *
@@ -391,13 +359,12 @@ double EnergyFinalDemand::calcFinalDemand( const string& aRegionName,
                                            const GDP* aGDP,
                                            const int aPeriod )
 {
-    if( aPeriod == 0 ){
+    if( aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() ){
         // read-in initial demand 
-        mServiceDemands[ aPeriod ] = mBaseService[ aPeriod ]; 
+        mServiceDemands[ aPeriod ] = mBaseService[ aPeriod ];
         mPreTechChangeServiceDemand[ aPeriod ] = mBaseService[ aPeriod ];
-
     }
-    // Do for all periods > 0
+    // Do for non-calibration periods
     else{
         // Update AEEI.
         if( mFinalEnergyConsumer.get() ){
@@ -408,8 +375,7 @@ double EnergyFinalDemand::calcFinalDemand( const string& aRegionName,
         // applied.
         // TODO: preferable to use actual previous service with technical change for
         // current period applied.
-        mServiceDemands[ aPeriod ] = mBaseScaler[ aPeriod ] 
-                                   * mPreTechChangeServiceDemand[ aPeriod - 1]
+        mServiceDemands[ aPeriod ] = mPreTechChangeServiceDemand[ aPeriod - 1]
                                    * calcMacroScaler( aRegionName, aDemographics, aGDP, aPeriod);
 
         assert( mServiceDemands[ aPeriod ] >= 0 );

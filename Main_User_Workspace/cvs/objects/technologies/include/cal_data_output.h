@@ -81,8 +81,6 @@ public:
 
     virtual double getCalOutput();
 
-    virtual void scaleValue( const double aScaleFactor );
-
 private:
     //! Calibrated output value.
     double mCalOutputValue;

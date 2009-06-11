@@ -105,8 +105,6 @@ public:
 
     virtual void csvOutputFile( const GDP* aGDP,
                                 const IndirectEmissionsCalculator* aIndirectEmissCalc ) const;
-
-    virtual void calibrateSector( const GDP* aGDP, const int aPeriod );
     
     double getWeightedEnergyPrice( const GDP* aGDP, const int aPeriod ) const;
 

@@ -74,6 +74,7 @@
 #include "util/base/include/atom_registry.h"
 #include "emissions/include/emissions_summer.h"
 #include "technologies/include/global_technology_database.h"
+#include "reporting/include/energy_balance_table.h"
 
 using namespace std;
 using namespace xercesc;
@@ -83,7 +84,6 @@ extern Scenario* scenario;
 
 //! Default constructor.
 World::World():
-doCalibrations( true ),
 calcCounter( 0 )
 {
 }
@@ -224,14 +224,17 @@ void World::toInputXML( ostream& out, Tabs* tabs ) const {
     if( globalTechDB.get() ) {
         globalTechDB->toInputXML( out, tabs );
     }
+	
+    // Climate model parameters
+    // note that due to a dependency in the carbon cycle model this
+    // must be written out before any of the carbon cycle historical
+    // year data is written which is contained in the regions
+    if ( mClimateModel.get() ) {
+        mClimateModel->toInputXML( out, tabs );
+    }
 
     for( CRegionIterator i = regions.begin(); i != regions.end(); i++ ){
         ( *i )->toInputXML( out, tabs );
-    }
-    
-    // Climate model parameters
-    if ( mClimateModel.get() ) {
-        mClimateModel->toInputXML( out, tabs );
     }
 
     // finished writing xml for the class members.
@@ -314,45 +317,35 @@ void World::initCalc( const int period ) {
     
     Configuration* conf = Configuration::getInstance();
     if( conf->getBool( "CalibrationActive" ) ){
-        // cal consistency check needs to be before initCalc so calInput values have already been scaled if necessary
-        // If any values are scaled, then this is checked at least one more time to see if further scalings are necessary
-        const unsigned int MAX_CALCHECK_CALCS = 10;
-        unsigned int calCheckIterations = 0;
+        // print an I/O table for debuging before we do any calibration
+        ILogger& calLog = ILogger::getLogger( "calibration_log" );
+        calLog.setLevel( ILogger::DEBUG );
+        for( CRegionIterator reigonIt = regions.begin(); reigonIt != regions.end(); ++reigonIt ){
+            // for this table we will want a condensed table without non-calibrated values
+            // so the user can get an easy to see view of what they put in
+            EnergyBalanceTable table( (*reigonIt)->getName(), calLog, true, false );
+            (*reigonIt)->accept( &table, period );
+            table.finish();
+        }
         
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::DEBUG );
-        mainLog << "Performing world calibration consistency check " << endl;
-        while ( calCheckIterations < MAX_CALCHECK_CALCS && checkCalConsistancy( period ) ) {
-            ++calCheckIterations;
-        }
-
-        if ( calCheckIterations == MAX_CALCHECK_CALCS ) {
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "CALIBRATION CONSISTENCY CHECK FAILED. Max check count exceeded." << endl;
-        }
+        // TODO: could rename although we could also just get rid of it
+        // see the comments for RegionMiniCAM::setCalSuppliesAndDemands
+        checkCalConsistancy( period );
     }
     
     // Reset the calc counter.
     calcCounter->startNewPeriod();
 }
 
-/*! \brief Assure that calibrated inputs and outputs are consistant.
-*
-* Function determines if calibrated supplies and demands are consistent and 
-* scales demands if necessary to make this so. The calsupply and demand values
-* are put into corresponding values in marketInfo. These are then used to
-* determine transitive fixed demands (for example the calibrated demand for
-* electricity due to a calibrated demand for elec_T&D_buildings). If all supply
-* and demand for a good are calibrated or otherwise fixed then calibration 
-* demand values are adjusted for consistency Each of these steps is called
-* separately for each region. This, and using markets as the basis of
-* calculating cal supplies and demands means that both regional and global (or
-* anything in-between) markets are handled appropriately.
-*
-* \author Steve Smith
-* \warning A simultaneity in the base year may or may not be handled correctly.
-* \todo Shouldn't this all be at the regional level?
-* \return Whether any values were adjusted this period.
+/*! \brief Tabulates calibrated supplies and demands and stores them in the
+ *         corresponding market info.
+ * \details Has each region set their calibrated supplies and demands.  This method
+ *          no longer checks for consistency however.
+ * \param period The current model period.
+ * \author Steve Smith
+ * \todo Shouldn't this all be at the regional level?
+ * \todo This method could be eliminated if it were not for detailed buildings.
+ * \return It will always return false currently.
 */
 bool World::checkCalConsistancy( const int period ) {
 
@@ -370,43 +363,6 @@ bool World::checkCalConsistancy( const int period ) {
     //Setup for checking by adding up all fixed supplies and demands
     for( RegionIterator i = regions.begin(); i != regions.end(); ++i ){
         ( *i )->setCalSuppliesAndDemands( period );
-    }
-
-    // Now walk through sectors in each region to calculate dependent
-    // (transitive) outputs 
-    bool calIsDone = false;
-    unsigned int iteration = 0;
-    while (!calIsDone ) {
-        calIsDone = true;
-        for ( RegionIterator i = regions.begin(); i != regions.end(); ++i ){
-            // If any region returns status as not done (false) then save that status
-            if ( !( *i )->setImpliedCalInputs( period ) ) {
-                calIsDone = false;
-            }
-        }
-        ++iteration;
-
-        // In case user sets up infinite loop in input, break.
-        if (iteration > 50 ) {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Calibration check stuck in large loop. Aborting. " << endl;
-            return true;
-        }
-    }
-
-    unsigned int numberOfScaledValues = 0;
-
-    // Scale calibrated input values once all supplies and demands have been counted
-    for( RegionIterator i = regions.begin(); i != regions.end(); ++i ){
-        numberOfScaledValues += ( *i )->scaleCalInputs( period );
-    }
-
-    if ( numberOfScaledValues > 0 ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::DEBUG );
-        mainLog << numberOfScaledValues << " markets had demand calibration values scaled. " << endl;
-        return true;
     }
 
     return false;
@@ -435,7 +391,7 @@ void World::calc( const int aPeriod, const AtomVector& aRegionsToCalc ) {
     
     // Perform calculation loop on each region to calculate. 
     for ( vector<unsigned int>::const_iterator currIndex = regionNumbersToCalc.begin(); currIndex != regionNumbersToCalc.end(); ++currIndex ) {
-        regions[ *currIndex ]->calc( aPeriod, doCalibrations );
+        regions[ *currIndex ]->calc( aPeriod );
     }
 }
 
@@ -702,22 +658,6 @@ void World::dbOutput( const list<string>& aPrimaryFuelList ) const {
     }
 }
 
-//! turn on calibrations
-void World::turnCalibrationsOn() {
-    doCalibrations = true;
-}
-
-//! turn off calibrations
-void World::turnCalibrationsOff(){
-    doCalibrations = false;
-}
-
-//! return calibration setting
-bool World::getCalibrationSetting() const {
-    return doCalibrations;
-}
-
-
 /*! \brief Test to see if calibration worked for all regions
 *
 * Compares the sum of calibrated + fixed values to output of each sector.
@@ -731,9 +671,30 @@ bool World::getCalibrationSetting() const {
 */
 bool World::isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const {
     bool isAllCalibrated = true;
+    ILogger& calLog = ILogger::getLogger( "calibration_log" );
+    calLog.setLevel( ILogger::DEBUG );
     for( CRegionIterator i = regions.begin(); i != regions.end(); i++ ){
-        isAllCalibrated &= ( *i )->isAllCalibrated( period, calAccuracy, printWarnings );
+        bool currRegionCalibrated = ( *i )->isAllCalibrated( period, calAccuracy, printWarnings );
+        isAllCalibrated &= currRegionCalibrated;
+        // if we did not calibrate this region correctly and we are printing warnings then give the
+        // user some I/O tables to help them understand what was inconsistent
+        if( !currRegionCalibrated && printWarnings ) {
+            // we want to give the user two tables to use one with a condensed view
+            // with all inputs and outputs so they can see what didn't calibrate
+            // and another table fully expanded with just the calibrated values
+            calLog << "Energy balance table where inputs and outputs have been replaced by a"
+                << " calibrated value if it exists:" << endl;
+            EnergyBalanceTable condensedTable( (*i)->getName(), calLog, true, true );
+            (*i)->accept( &condensedTable, period );
+            condensedTable.finish();
+            
+            calLog << "Full energy balalce table with just cal values:" << endl;
+            EnergyBalanceTable fullTable( (*i)->getName(), calLog, false, false );
+            (*i)->accept( &fullTable, period );
+            fullTable.finish();
+        }
     }
+	
     return isAllCalibrated;
 }
 
@@ -949,22 +910,18 @@ void World::csvSGMGenFile( ostream& aFile ) const {
 * \param aPeriod Period to update.
 */
 void World::accept( IVisitor* aVisitor, const int aPeriod ) const {
-	aVisitor->startVisitWorld( this, aPeriod );
-	
-	// Visit the marketplace
-	scenario->getMarketplace()->accept( aVisitor, aPeriod );
-	
-	// Visit the climate model.
-	mClimateModel->accept( aVisitor, aPeriod );
+    aVisitor->startVisitWorld( this, aPeriod );
 
-	// loop for regions
-	for( CRegionIterator currRegion = regions.begin(); currRegion != regions.end(); ++currRegion ){
-		(*currRegion)->accept( aVisitor, aPeriod );
+    // Visit the marketplace
+    scenario->getMarketplace()->accept( aVisitor, aPeriod );
+
+    // Visit the climate model.
+    mClimateModel->accept( aVisitor, aPeriod );
+
+    // loop for regions
+    for( CRegionIterator currRegion = regions.begin(); currRegion != regions.end(); ++currRegion ){
+        (*currRegion)->accept( aVisitor, aPeriod );
     }
 
     aVisitor->endVisitWorld( this, aPeriod );
 }
-
-
-
-

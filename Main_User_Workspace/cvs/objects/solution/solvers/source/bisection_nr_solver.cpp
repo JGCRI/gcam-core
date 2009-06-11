@@ -67,9 +67,6 @@ BisectionNRSolver::BisectionNRSolver( Marketplace* aMarketplace, World* aWorld )
     mCalcCounter.reset( new CalcCounter() );
     mLogNewtonRaphson = SolverComponent::getSolverComponent( "LogNewtonRaphson", marketplace, world, mCalcCounter.get() );
     mBisectAll = SolverComponent::getSolverComponent( "BisectAll", marketplace, world, mCalcCounter.get() );
-    if( scenario->getWorld()->getCalibrationSetting() ){
-        mLogNewtonRaphsonSaveDeriv = SolverComponent::getSolverComponent( "LogNewtonRaphsonSaveDeriv", marketplace, world, mCalcCounter.get() );
-    }
 }
 
 //! Destructor
@@ -188,71 +185,6 @@ bool BisectionNRSolver::solve( const int period ) {
 
             solverLog << "Solution after bisect all and update: " << endl << solution_set << endl;
         }
-
-        /*********** Begin: For Calibration Only **************/
-        if( Configuration::getInstance()->getBool( "CalibrationActive" ) )
-        {
-            // If model has solved, then check to see if calibrated -- if not, run world.calc once to move toward calibration
-            // This check is inside main solver loop so that full solver routine is available for this stage. If the attempt at calibration fails, this 
-            // returns to the main solution loop to solve -- this way this should always exit solved, even if not calibrated. 
-            // Note -- only do this if maximum solution_set count has not been exceeded. This way the model will still solve, if perhaps not calibrate.
-
-            ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
-            calibrationLog.setLevel( ILogger::NOTICE );
-            solverLog.setLevel( ILogger::NOTICE );
-            // Number of times to try to fix calibration
-            static const int MAX_CAL_ATTEMPTS = 10;
-            int calFixAttempts = 1;
-            if( solution_set.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR )
-                && mCalcCounter->getPeriodCount() < MAX_PERIOD_CALCULATIONS
-                && calFixAttempts <= MAX_CAL_ATTEMPTS )
-            {
-                solverLog << "***** Starting calibration mode after solving all markets. N = "
-                          << mCalcCounter->getPeriodCount() << endl;
-                solverLog << ",Calibration fixed attempt: " << calFixAttempts << endl;
-                calibrationLog << "***** Starting calibration mode after solving all markets. N = "
-                               << mCalcCounter->getPeriodCount() << endl;
-
-                // As long as solution is solved, but not calibrated, then repeat this loop to 
-                // try and calibrate.
-                // Max number of iterations to allow inner loop to run for calibration fix
-                // (this does not have to be terribly small, since loop will exit once model
-                // does not solve).
-                static const int CAL_LOOP_LIMIT = 10;
-                int calInnerLoopCount = 1;
-                while( ( !world->isAllCalibrated( period, CALIBRATION_ACCURACY, false )
-                         && solution_set.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) )
-                         && calInnerLoopCount <= CAL_LOOP_LIMIT
-                         && calFixAttempts < MAX_CAL_ATTEMPTS )
-                {
-                    // While solved, and not calibrated, keep calling world->calc() to try and calibrate
-                    // Exit loop if not solved (then need to try and solve), or calibrated.
-                    // Maximum numbers of times to try world->calc(). This max is not likely to be approached 
-                    // since, after a few world calc calls this generally falls out of solution and this loop is exited.
-                    solverLog << ",Calling calibration inner loop (solved but not calibrated): " << calInnerLoopCount << endl;
-                    calibrationLog << ",Calling calibration inner loop (solved but not calibrated): " << calInnerLoopCount << endl;
-                    static const int MAX_CAL_FIX_LOOP = 10;
-                    for( unsigned int i = 1; i <= MAX_CAL_FIX_LOOP 
-                        && solution_set.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) 
-                        && !world->isAllCalibrated( period, CALIBRATION_ACCURACY, false ); i++ ){
-                        marketplace->nullSuppliesAndDemands( period );
-                        world->calc( period );
-                        solution_set.updateFromMarkets();
-                        solverLog << ",,Calling calibration fix loop (solved but not calibrated): " << i << endl;
-                        calibrationLog << ",,Calling calibration fix loop (solved but not calibrated): " << i << endl;
-                    }
-
-                    mLogNewtonRaphson->solve( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR, MAX_NR_ITER, solution_set, period );
-                    ++calInnerLoopCount;
-                }
-
-                ++calFixAttempts;
-                if ( !world->isAllCalibrated( period, CALIBRATION_ACCURACY, false ) ) {
-                    solverLog << "Calibration failed. " << "Returning to full solution loop." << endl;
-                }
-            }
-        }
-        /*********** End: For Calibration Only **************/
 
         // Determine if the model has solved. 
     } while ( !solution_set.isAllSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR )

@@ -587,8 +587,6 @@ bool SolverLibrary::bracket( Marketplace* marketplace, World* world, const doubl
         return code = true;
     }
 
-    bool calibrationStatus = world->getCalibrationSetting();
-
     static const double LOWER_BOUND = util::getVerySmallNumber();
     static const int MAX_ITERATIONS = Configuration::getInstance()->
                                       getInt( "MAX_BRACKET_ITERATIONS", 40 );
@@ -607,9 +605,6 @@ bool SolverLibrary::bracket( Marketplace* marketplace, World* world, const doubl
     solverLog << solverSet << endl;
 
     ILogger& singleLog = ILogger::getLogger( "single_market_log" );
-
-    // sjs -- turn off calibration to let bracketing operate faster. Let calibrations happen in Bisection
-    world->turnCalibrationsOff();
 
     // Loop is done at least once.
     unsigned int iterationCount = 1;
@@ -720,9 +715,6 @@ bool SolverLibrary::bracket( Marketplace* marketplace, World* world, const doubl
 
     solverSet.printMarketInfo( "End Bracketing Attempt", 0, singleLog );
 
-    if ( calibrationStatus ) {
-        world->turnCalibrationsOn(); // sjs -- turn calibration back on if it was on before
-    }
     return code;
 }
 
@@ -743,10 +735,6 @@ bool SolverLibrary::bracketOne( Marketplace* marketplace, World* world, const do
                                 SolverInfoSet& aSolSet, SolverInfo* aSol, CalcCounter* aCalcCounter,
                                 const int period )
 {
-    // Turn off calibration.
-    const bool calibrationStatus = world->getCalibrationSetting();
-    world->turnCalibrationsOff();
-
     static const double LOWER_BOUND = util::getSmallNumber();
 
     // Constants.
@@ -839,10 +827,6 @@ bool SolverLibrary::bracketOne( Marketplace* marketplace, World* world, const do
     solverLog << "Solution info set after bracket one." << endl;
     solverLog << aSolSet << endl;
 
-    // turn calibration back on if it was on before
-    if ( calibrationStatus ) {
-        world->turnCalibrationsOn();
-    }
     return aSol->isBracketed();
 }
 

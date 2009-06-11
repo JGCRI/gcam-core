@@ -146,13 +146,6 @@ public:
     virtual void setCoefficient( const double aCoefficient,
                                  const int aPeriod );
 
-    virtual void tabulateFixedQuantity( const std::string& aRegionName,
-                                        const double aFixedOutput,
-                                        const bool aIsInvestmentPeriod,
-                                        const int aPeriod );
-
-    virtual void scaleCalibrationQuantity( const double aScaleFactor );
-
     virtual double getCalibrationQuantity( const int aPeriod ) const;
 
     virtual bool hasTypeFlag( const int aTypeFlag ) const;
@@ -179,9 +172,6 @@ protected:
 
     //! Read-in calibration value.
     Value mCalibrationInput;
-
-    //! Scaled calibration value.
-    Value mCurrentCalibration;
 
     //! Income elasticity.
     Value mIncomeElasticity;

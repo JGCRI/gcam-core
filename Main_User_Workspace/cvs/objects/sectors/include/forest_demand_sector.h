@@ -94,9 +94,11 @@ protected:
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual const std::string& getXMLName() const;
 
-    virtual void scaleCalibratedValues( const std::string& aFuelName,
-                                        const double aScaleValue,
-                                        const int aPeriod );
+    virtual double calcFinalDemand( const std::string& aRegionName,
+                                   const Demographic* aDemographics,
+                                   const GDP* aGDP,
+                                   const int aPeriod );
+    
     double calcFutureForestDemand(  const std::string& aRegionName,
                                     const Demographic* aDemographics,
                                     const GDP* aGDP,
@@ -111,6 +113,10 @@ private:
 
     //! Save future demand so can be written out for debugging
     double mFutureForestDemand; 
+
+    //! Adjusts the service calculation in calibration years to account for the
+    //! macro scaler
+    double mMacroScalerCalAdjust;
 };
 
 #endif // _FOREST_DEMAND_SECTOR_H_

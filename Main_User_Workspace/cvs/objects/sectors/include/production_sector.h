@@ -84,10 +84,6 @@ public:
                            const Demographic* aDemographics,
                            const int aPeriod );
 
-    virtual void tabulateFixedDemands( const int period, const GDP* aGDP ) {}
-
-    virtual void setCalSuppliesAndDemands( const int aPeriod ) const {}
-
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic, const int aPeriod ); // Passing demographic here is not good.
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 

@@ -105,11 +105,6 @@ public:
                            const GDP* aGDP,
                            const Demographic* aDemographics,
                            const int aPeriod );
-
-    virtual void tabulateFixedDemands( const std::string& aRegionName,
-                                       const Demographic* aDemographics,
-                                       const GDP* aGDP,
-                                       const int aPeriod );
                                        
 protected:
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 

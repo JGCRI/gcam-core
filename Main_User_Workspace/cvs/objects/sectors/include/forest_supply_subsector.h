@@ -69,10 +69,6 @@ public:
     virtual double calcShare( const int aPeriod,
                               const GDP* aGDP ) const;
 
-    virtual void adjustForCalibration( double aSubsectorVariableDemand,
-                                       const GDP* aGDP,
-                                       const int aPeriod );
-
 protected:
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual const std::string& getXMLName() const;

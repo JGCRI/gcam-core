@@ -66,6 +66,7 @@ class Demographic;
 class EnergyFinalDemand: public AFinalDemand
 {
     friend class XMLDBOutputter;
+    friend class EnergyBalanceTable; // TODO: currently only to get mServiceDemands
 
 public:
     static const std::string& getXMLNameStatic();
@@ -105,10 +106,6 @@ public:
                                        const Demographic* aDemographic,
                                        const GDP* aGDP,
                                        const int aPeriod );
-    
-    virtual void scaleCalibratedValues( const std::string& aFuelName,
-                                        const double aScaleValue,
-                                        const int aPeriod );
 
     virtual void csvOutputFile( const std::string& aRegionName ) const;
 
@@ -213,9 +210,6 @@ protected:
 
     //! Per capita service for each period to which to calibrate.
     std::vector<Value> mBaseService;
-
-    //! Scaler for determing demand for future years.
-    std::vector<Value> mBaseScaler;
 
     //! Demand function used to calculate unscaled demand.
     std::auto_ptr<IDemandFunction> mDemandFunction;

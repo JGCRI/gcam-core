@@ -183,15 +183,3 @@ double BuildingFinalDemand::calcMacroScaler( const string& aRegionName,
 
     return macroScaler;
 }
-
-void BuildingFinalDemand::tabulateFixedDemands( const string& aRegionName,
-                                                const Demographic* aDemographics,
-                                                const GDP* aGDP,
-                                                const int aPeriod )
-{
-  // Building demand sectors do not set calibrated demands.
-  // This is because the supply sector that supplies building services
-  // cannot calibrate to a building final demand (they calibrate to the building
-  // final service supply sectors only), and must only receive the final
-  // demand (in terms of floorspace) and then supply services to that demand.
-} 

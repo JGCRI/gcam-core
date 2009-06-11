@@ -83,10 +83,6 @@ SupplyDemandCurve::~SupplyDemandCurve() {
 */
 
 void SupplyDemandCurve::calculatePoints( const int numPoints, World* world, Marketplace* marketplace, const int period ) {
-    
-    bool calibrationStatus = world->getCalibrationSetting();
-    world->turnCalibrationsOff();
-
     vector<double> priceMults;
 
     // Determine price ratios.
@@ -136,10 +132,6 @@ void SupplyDemandCurve::calculatePoints( const int numPoints, World* world, Mark
 
     // Call world.calc a final time to restore information for summary.
     world->calc( period );
-
-    if ( calibrationStatus ) { // turn end-use calibrations back on if were on originally
-        world->turnCalibrationsOn();
-    }  
 }
 
 /*! \brief Print the supply demand curve.

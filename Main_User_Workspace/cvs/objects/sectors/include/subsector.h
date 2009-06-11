@@ -92,6 +92,7 @@ class Subsector: public IInvestable,
     friend class SectorReport;
     friend class SGMGenTable;
     friend class XMLDBOutputter;
+    friend class CalibrateShareWeightVisitor;
 private:
     static const std::string XML_NAME; //!< node name for toXML methods
     void clear();
@@ -191,10 +192,8 @@ public:
 
     virtual double getTotalCalOutputs( const int period ) const;
 
-    double getCalAndFixedOutputs( const int period, const std::string& goodName ) const;
     bool inputsAllFixed( const int period, const std::string& goodName ) const;
 
-    bool setImpliedFixedInput( const int period, const std::string& goodName, const double requiredOutput );
     void csvOutputFile( const GDP* aGDP,
                         const IndirectEmissionsCalculator* aIndirectEmissCalc ) const; 
     virtual void MCoutputSupplySector( const GDP* aGDP ) const; 
@@ -225,14 +224,6 @@ public:
     std::map<std::string, double> getemfuelmap( const int period ) const; 
 
     void updateSummary( const std::list<std::string>& aPrimaryFuelList, const int period );
-    
-    void adjustForCalibration( double aSubsectorVariableDemand,
-                               const bool aIsOnlySubsector,
-                               const GDP* aGDP,
-                               const int aPeriod );
-    
-    void scaleCalibratedValues( const int period, const std::string& goodName, const double scaleValue );
-    virtual void tabulateFixedDemands( const int period, const IInfo* aSectorInfo );
     
     double getExpectedProfitRate( const NationalAccount& aNationalAccount,
                                   const std::string& aRegionName,

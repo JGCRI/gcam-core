@@ -116,7 +116,7 @@ public:
     virtual ~RegionMiniCAM();
     static const std::string& getXMLNameStatic();
     virtual void completeInit( const GlobalTechnologyDatabase* aGlobalTechDB );
-    virtual void calc( const int period, const bool doCalibrations );
+    virtual void calc( const int period );
     
     virtual void initCalc( const int period );
 
@@ -131,8 +131,6 @@ public:
     virtual bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
     virtual void setCalSuppliesAndDemands( const int period );
     virtual void initializeCalValues( const int period );
-    virtual bool setImpliedCalInputs( const int period );
-    virtual int scaleCalInputs( const int period );
     virtual void updateAllOutputContainers( const int period );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
@@ -145,9 +143,6 @@ protected:
     //! The region's information store.
     std::auto_ptr<IInfo> mRegionInfo;
 
-    //! Map of fuel relationships used for calibration consistency adjustments
-    typedef std::map<std::string, std::vector<std::string> > FuelRelationshipMap;
-    std::auto_ptr<FuelRelationshipMap> fuelRelationshipMap;
     std::vector<AResource*> resources; //!< vector of pointers to resource objects
     std::vector<AFinalDemand*> mFinalDemands; //!< vector of pointers to demand sector objects
 
@@ -204,7 +199,7 @@ protected:
     void calcEndUseDemand( const int period );
     void setFinalSupply( const int period );
     void calcAgSector( const int period );
-    void calibrateRegion( const bool doCalibrations, const int period );
+    void calibrateRegion( const int period );
 
     const std::vector<double> calcFutureGDP() const;
     void calcEmissions( const int period );

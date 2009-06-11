@@ -250,17 +250,6 @@ void NonEnergyInput::setCoefficient( const double aCoefficient,
     mAdjustedCoefficients[ aPeriod ] = aCoefficient;
 }
 
-void NonEnergyInput::tabulateFixedQuantity( const string& aRegionName,
-                                            const double aFixedOutput,
-                                            const bool aIsInvestmentPeriod,
-                                            const int aPeriod )
-{
-}
-
-void NonEnergyInput::scaleCalibrationQuantity( const double aScaleFactor ){
-    // Non-energy inputs are not calibrated.
-}
-
 double NonEnergyInput::getCalibrationQuantity( const int aPeriod ) const
 {
     // Non-energy inputs are not calibrated.

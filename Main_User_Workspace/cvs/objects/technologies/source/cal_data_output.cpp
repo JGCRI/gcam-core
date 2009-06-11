@@ -130,7 +130,3 @@ void CalDataOutput::completeInit(){
 double CalDataOutput::getCalOutput() {
     return mCalOutputValue;
 }
-
-void CalDataOutput::scaleValue( const double aScaleFactor ){
-    mCalOutputValue *= aScaleFactor;
-}

@@ -402,93 +402,6 @@ void Sector::initCalc( NationalAccount* aNationalAccount,
         subsec[ i ]->initCalc( aNationalAccount, aDemographics, moreSectorInfo.get(), aPeriod );
     }
 }
-
-/*! \brief Warns if user may have missed entering a calibration value.
-*
-* Prints a warning if a sector containts mostly calibration values but not every potential output has
-* a calibration value entered. In this case the sector will likely not correctly calibrate.
-* Print warning in this situation.
-*
-* \author Steve Smith
-* \param period Model period
-*/
-void Sector::checkForCalibrationConsistancy( const int aPeriod ) {
-
-    // Don't bother checking for base period.
-    if ( aPeriod == 0 ) {
-        return;
-    }
-
-    // Get fuel consumption map for sector.
-    InputFinder inputFinder;
-    accept( &inputFinder, aPeriod );
-    const list<string>& inputsUsed = inputFinder.getInputs();
-
-    double totalCalOutputs = 0;
-    typedef list<string>::const_iterator CI;
-    stack<string> adjustableInputs;
-
-    for( CI currInput = inputsUsed.begin(); currInput != inputsUsed.end(); ++currInput ){
-        // If inputs are all fixed for this fuel.
-        // For each input, this loops thru all subsectors and all technologies.
-        // If subsector share weight is 0, inputsAllFixed is true.
-        if ( inputsAllFixed( aPeriod, *currInput ) ) {
-            // This call loops thru all subsectors and technologies again.
-            //TODO: Double accounting occurs when subsector share weights are null
-            // and other subsectors have fixed outputs.
-            totalCalOutputs += getCalAndFixedOutputs( aPeriod, *currInput );
-            ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
-            calibrationLog.setLevel( ILogger::DEBUG );
-            calibrationLog  << "Input " <<  *currInput << " in region " << regionName
-                << " has calibrated output of " << totalCalOutputs << endl;
-
-        }
-        // else have an input that can be adjusted
-        else {
-            adjustableInputs.push( *currInput );
-        }
-    }
-    // Note -- code before this point copied from RegionMiniCAM::setImpliedCalInputs().
-    // Is done here so that check is only done once and more detailed information can be printed.
-
-    // If this sector has caloutputs but is not completely calibrated this could be a user mistake, so warn about this
-    if ( ( ( totalCalOutputs - getFixedOutput( aPeriod ) ) > util::getSmallNumber() ) && ( adjustableInputs.size() > 0 ) ) {
-        ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
-        calibrationLog.setLevel( ILogger::DEBUG );
-        calibrationLog  << "Sector " <<  getName() << " in region " << regionName
-            << " has calibrated output of " << totalCalOutputs
-            << " but " << adjustableInputs.size() << " uncalibrated inputs: " << endl;
-
-        stack<string> adjustableInputsCopy = adjustableInputs;
-
-        calibrationLog << "    "; // indent
-        while( !adjustableInputs.empty() ){
-            calibrationLog << adjustableInputs.top() << ", ";
-            adjustableInputs.pop();
-        }
-        calibrationLog << endl;
-
-        calibrationLog << "    Suspect sub-sectors: ";
-        for ( unsigned int i = 0; i < subsec.size(); ++i ){
-            if ( !(subsec[ i ]->inputsAllFixed( aPeriod, "allInputs" ) ) ) {
-                calibrationLog << subsec[ i ]->getName() << ", ";
-            }
-        }
-        calibrationLog << endl;
-        calibrationLog << "Fixed outputs = " << getFixedOutput( aPeriod ) << endl;
-
-        calibrationLog<< "All Inputs: ";
-        for( CI currInput = inputsUsed.begin(); currInput != inputsUsed.end(); ++currInput ){
-            calibrationLog << *currInput << ", ";
-        }
-        calibrationLog << endl;
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Potential calibration data issue with sector " << name 
-            << " in region " << regionName << "." 
-            << " See calibration_log for details."<< endl;
-    }
-}
  
 /*! \brief Normalize subsector share weights such that the share weight of the dominant
 * subsector is anchored to 1 while the others are relative to the dominant subsector. 
@@ -733,52 +646,6 @@ double Sector::getCalOutput( const int period  ) const {
     return totalCalOutput;
 }
 
-/*! \brief Return subsector total fixed or calibrated inputs.
-*
-* Returns the total fixed inputs from all subsectors and technologies.
-* Note that any calibrated output values are converted to inputs and are included.
-*
-* \author Steve Smith
-* \param period Model period
-* \param goodName market good to return inputs for. If equal to the value "allInputs" then returns all inputs.
-* \return total fixed inputs
-*/
-double Sector::getCalAndFixedOutputs( const int period, const string& goodName ) const {
-    double sumCalOutputValues = 0;
-    for ( unsigned int i = 0; i < subsec.size(); ++i ){
-        sumCalOutputValues += subsec[ i ]->getCalAndFixedOutputs( period, goodName );
-    }
-    return sumCalOutputValues;
-}
-
-/*! \brief Sets the input value needed to produce the required output to the marketplace
-*
-* \author Steve Smith
-* \param period Model period
-* \param goodName market good to determine the inputs for.
-* \param requiredOutput Amount of output to produce
-*/
-void Sector::setImpliedFixedInput( const int period, const string& goodName,
-                                   const double requiredOutput )
-{
-    bool inputWasChanged = false;
-    for ( unsigned int i = 0; i < subsec.size(); ++i ){
-        if ( !inputWasChanged ) {
-            inputWasChanged = subsec[ i ]->setImpliedFixedInput( period, goodName,
-                                                                 requiredOutput );
-        }
-        else {
-            if( subsec[ i ]->setImpliedFixedInput( period, goodName, requiredOutput ) ){
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::NOTICE );
-                mainLog << "caldemands for more than one subsector were changed for good "
-                        << goodName << " in sector " << name << " in region "
-                        << regionName << endl; 
-            }
-        }
-    }
-}
-
 /*! \brief Returns true if all subsector inputs for the the specified good are fixed.
 *
 * Fixed inputs can be by either fixedCapacity, calibration, or zero share.
@@ -796,44 +663,6 @@ bool Sector::inputsAllFixed( const int period, const string& goodName ) const {
     }
     return true;
 }
-
-/*! \brief Scales calibrated values for the specified good.
-*
-* \author Steve Smith
-* \param period Model period
-* \param goodName market good to return inputs for
-* \param scaleValue multipliciative scaler for calibrated values
-* \return total calibrated inputs
-*/
-void Sector::scaleCalibratedValues( const int period, const string& goodName, const double scaleValue ) {
-    for ( unsigned int i = 0; i < subsec.size(); ++i ){
-        subsec[ i ]->scaleCalibratedValues( period, goodName, scaleValue );
-    }
-}
-
-/*! \brief Calibrate Sector output.
-*
-* This performs supply Sector technology and sub-Sector output/input calibration.
-Determines total amount of calibrated and fixed output and passes that down to the subsectors.
-
-* Note that this routine only performs subsector and technology-level calibration. Total final energy calibration is done by Region::calibrateTFE and GDP calibration is set up in Region::calibrateRegion.
-*
-* \author Steve Smith
-* \param period Model period
-*/
-void Sector::calibrateSector( const GDP* aGDP, const int aPeriod ) {
-    double marketDemand = scenario->getMarketplace()->getDemand( name, regionName, aPeriod );
-    // Calculate the demand for new investment.
-    double variableDemand = max( marketDemand - getFixedOutput( aPeriod ), 0.0 );
-
-    const vector<double> subsecShares = calcSubsectorShares( aGDP, aPeriod );
-    bool hasOneSubsector = ( subsec.size() == 1 );
-    for ( unsigned int i = 0; i < subsec.size(); ++i ){
-        double subsectorDemand = subsecShares[ i ] * variableDemand;
-        subsec[ i ]->adjustForCalibration( subsectorDemand, hasOneSubsector, aGDP, aPeriod );
-    }
-}
-
 
 /*! \brief Calculate GHG emissions for each Sector from subsectors.
 *
