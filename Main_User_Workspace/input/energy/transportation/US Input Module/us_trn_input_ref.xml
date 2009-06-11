@@ -6,8 +6,8 @@
          <energy-final-demand delete="1" name="transportation"/>
          <energy-final-demand name="passenger">
             <perCapitaBased>1</perCapitaBased>
-            <base-scaler fillout="1" year="1975">1</base-scaler>
-            <base-service year="1975">3609117</base-service>
+            <base-service year="1990">6744635</base-service>
+            <base-service year="2005">9889884</base-service>
             <final-energy-consumer/>
             <income-elasticity year="1975">0</income-elasticity>
             <income-elasticity year="1990">0</income-elasticity>
@@ -30,8 +30,8 @@
          </energy-final-demand>
          <energy-final-demand name="freight">
             <perCapitaBased>0</perCapitaBased>
-            <base-scaler fillout="1" year="1975">1</base-scaler>
-            <base-service year="1975">6437155</base-service>
+            <base-service year="1990">12782971</base-service>
+            <base-service year="2005">14027439</base-service>
             <final-energy-consumer/>
             <income-elasticity year="1975">0</income-elasticity>
             <income-elasticity year="1990">0</income-elasticity>
@@ -54,8 +54,8 @@
          </energy-final-demand>
          <energy-final-demand name="recreational offroad">
             <perCapitaBased>0</perCapitaBased>
-            <base-scaler fillout="1" year="1975">1</base-scaler>
-            <base-service year="1975">0.559615232</base-service>
+            <base-service year="1990">0.559615232</base-service>
+            <base-service year="2005">0.675906007</base-service>
             <final-energy-consumer/>
             <income-elasticity year="1975">0</income-elasticity>
             <income-elasticity year="1990">0</income-elasticity>
@@ -78,8 +78,8 @@
          </energy-final-demand>
          <energy-final-demand name="military">
             <perCapitaBased>0</perCapitaBased>
-            <base-scaler fillout="1" year="1975">1</base-scaler>
-            <base-service year="1975">0.632140422</base-service>
+            <base-service year="1990">0.632140422</base-service>
+            <base-service year="2005">0.712323353</base-service>
             <final-energy-consumer/>
             <income-elasticity year="1975">0</income-elasticity>
             <income-elasticity year="1990">0</income-elasticity>
@@ -102,8 +102,8 @@
          </energy-final-demand>
          <energy-final-demand name="pipeline">
             <perCapitaBased>0</perCapitaBased>
-            <base-scaler fillout="1" year="1975">1</base-scaler>
-            <base-service year="1975">0.24647747</base-service>
+            <base-service year="1990">0.24647747</base-service>
+            <base-service year="2005">0.226845726</base-service>
             <final-energy-consumer/>
             <income-elasticity year="1975">0</income-elasticity>
             <income-elasticity year="1990">0</income-elasticity>
@@ -125,9 +125,10 @@
             <price-elasticity year="2095">-1</price-elasticity>
          </energy-final-demand>
          <supplysector name="passenger">
-            <output-unit>million-pass-mi</output-unit>
+            <output-unit>million-pass-km</output-unit>
             <input-unit>EJ</input-unit>
-            <price-unit>1990$/pass-mi</price-unit>
+            <price-unit>1990$/pass-km</price-unit>
+            <price year="1975">0.60</price>
             <keyword final-energy="transportation"/>
             <tranSubsector name="auto">
                <scaleYear>2005</scaleYear>
@@ -156,7 +157,7 @@
                      <sharewt>1</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>5695</coefficient>
+                        <coefficient>3540</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.3884</input-cost>
@@ -168,7 +169,7 @@
                      <sharewt>1</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>5695</coefficient>
+                        <coefficient>3540</coefficient>
                         <calibrated-value>8.48608</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -181,7 +182,7 @@
                      <sharewt>1</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>4994</coefficient>
+                        <coefficient>3104</coefficient>
                         <calibrated-value>8.92928</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -194,7 +195,7 @@
                      <sharewt>1</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>4135</coefficient>
+                        <coefficient>2570</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4151</input-cost>
@@ -206,7 +207,7 @@
                      <sharewt>1</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>3778</coefficient>
+                        <coefficient>2348</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4151</input-cost>
@@ -218,7 +219,7 @@
                      <sharewt>1</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>3452</coefficient>
+                        <coefficient>2145</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4151</input-cost>
@@ -230,7 +231,7 @@
                      <sharewt>1</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>3060</coefficient>
+                        <coefficient>1902</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4151</input-cost>
@@ -242,7 +243,7 @@
                      <sharewt>1</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>2713</coefficient>
+                        <coefficient>1686</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4151</input-cost>
@@ -254,7 +255,7 @@
                      <sharewt>1</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>2405</coefficient>
+                        <coefficient>1495</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4151</input-cost>
@@ -268,7 +269,7 @@
                      <sharewt>0</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>1923</coefficient>
+                        <coefficient>1195</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4272</input-cost>
@@ -280,7 +281,7 @@
                      <sharewt>0</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>1923</coefficient>
+                        <coefficient>1195</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4272</input-cost>
@@ -292,7 +293,7 @@
                      <sharewt>0</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>1686</coefficient>
+                        <coefficient>1048</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4566</input-cost>
@@ -304,7 +305,7 @@
                      <sharewt>0.0067</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>1624</coefficient>
+                        <coefficient>1009</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4498</input-cost>
@@ -316,7 +317,7 @@
                      <sharewt>0.0474</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>1564</coefficient>
+                        <coefficient>972</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4431</input-cost>
@@ -328,7 +329,7 @@
                      <sharewt>0.2689</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>1507</coefficient>
+                        <coefficient>936</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4365</input-cost>
@@ -340,7 +341,7 @@
                      <sharewt>0.731</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>1451</coefficient>
+                        <coefficient>902</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4365</input-cost>
@@ -352,7 +353,7 @@
                      <sharewt>0.953</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>1398</coefficient>
+                        <coefficient>869</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4365</input-cost>
@@ -364,7 +365,7 @@
                      <sharewt>1</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>1346</coefficient>
+                        <coefficient>837</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4365</input-cost>
@@ -378,7 +379,7 @@
                      <sharewt>0</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>3607</coefficient>
+                        <coefficient>2242</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4467</input-cost>
@@ -390,7 +391,7 @@
                      <sharewt>0</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>3607</coefficient>
+                        <coefficient>2242</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4467</input-cost>
@@ -402,7 +403,7 @@
                      <sharewt>0</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>3163</coefficient>
+                        <coefficient>1966</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4773</input-cost>
@@ -414,7 +415,7 @@
                      <sharewt>0.0067</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>2804</coefficient>
+                        <coefficient>1742</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4702</input-cost>
@@ -426,7 +427,7 @@
                      <sharewt>0.0474</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>2485</coefficient>
+                        <coefficient>1545</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4632</input-cost>
@@ -438,7 +439,7 @@
                      <sharewt>0.2689</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>2203</coefficient>
+                        <coefficient>1369</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4563</input-cost>
@@ -450,7 +451,7 @@
                      <sharewt>0.731</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>1953</coefficient>
+                        <coefficient>1214</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4563</input-cost>
@@ -462,7 +463,7 @@
                      <sharewt>0.953</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>1731</coefficient>
+                        <coefficient>1076</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4563</input-cost>
@@ -474,7 +475,7 @@
                      <sharewt>1</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>1535</coefficient>
+                        <coefficient>954</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4563</input-cost>
@@ -511,7 +512,7 @@
                      <sharewt>1</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>7151</coefficient>
+                        <coefficient>4444</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4415</input-cost>
@@ -523,7 +524,7 @@
                      <sharewt>1</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>7151</coefficient>
+                        <coefficient>4444</coefficient>
                         <calibrated-value>4.33558</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -536,7 +537,7 @@
                      <sharewt>1</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>7064</coefficient>
+                        <coefficient>4391</coefficient>
                         <calibrated-value>7.89775</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -549,7 +550,7 @@
                      <sharewt>1</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>5850</coefficient>
+                        <coefficient>3636</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4685</input-cost>
@@ -561,7 +562,7 @@
                      <sharewt>1</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>5345</coefficient>
+                        <coefficient>3322</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4685</input-cost>
@@ -573,7 +574,7 @@
                      <sharewt>1</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>4883</coefficient>
+                        <coefficient>3035</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4685</input-cost>
@@ -585,7 +586,7 @@
                      <sharewt>1</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>4329</coefficient>
+                        <coefficient>2691</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4685</input-cost>
@@ -597,7 +598,7 @@
                      <sharewt>1</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>3838</coefficient>
+                        <coefficient>2385</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4685</input-cost>
@@ -609,7 +610,7 @@
                      <sharewt>1</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>3402</coefficient>
+                        <coefficient>2114</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4685</input-cost>
@@ -623,7 +624,7 @@
                      <sharewt>0</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>2415</coefficient>
+                        <coefficient>1501</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4856</input-cost>
@@ -635,7 +636,7 @@
                      <sharewt>0</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>2415</coefficient>
+                        <coefficient>1501</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4856</input-cost>
@@ -647,7 +648,7 @@
                      <sharewt>0</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>2385</coefficient>
+                        <coefficient>1483</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.5154</input-cost>
@@ -659,7 +660,7 @@
                      <sharewt>0.0067</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>2297</coefficient>
+                        <coefficient>1428</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4964</input-cost>
@@ -671,7 +672,7 @@
                      <sharewt>0.0474</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>2213</coefficient>
+                        <coefficient>1375</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4964</input-cost>
@@ -683,7 +684,7 @@
                      <sharewt>0.2689</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>2131</coefficient>
+                        <coefficient>1325</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4964</input-cost>
@@ -695,7 +696,7 @@
                      <sharewt>0.731</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>2053</coefficient>
+                        <coefficient>1276</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4964</input-cost>
@@ -707,7 +708,7 @@
                      <sharewt>0.953</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>1977</coefficient>
+                        <coefficient>1229</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4964</input-cost>
@@ -719,7 +720,7 @@
                      <sharewt>1</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>1904</coefficient>
+                        <coefficient>1183</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4964</input-cost>
@@ -733,7 +734,7 @@
                      <sharewt>0</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>4529</coefficient>
+                        <coefficient>2815</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.5077</input-cost>
@@ -745,7 +746,7 @@
                      <sharewt>0</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>4529</coefficient>
+                        <coefficient>2815</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.5077</input-cost>
@@ -757,7 +758,7 @@
                      <sharewt>0</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>4474</coefficient>
+                        <coefficient>2781</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.5388</input-cost>
@@ -769,7 +770,7 @@
                      <sharewt>0.0067</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>3966</coefficient>
+                        <coefficient>2465</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.5190</input-cost>
@@ -781,7 +782,7 @@
                      <sharewt>0.0474</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>3516</coefficient>
+                        <coefficient>2185</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4998</input-cost>
@@ -793,7 +794,7 @@
                      <sharewt>0.2689</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>3117</coefficient>
+                        <coefficient>1937</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4965</input-cost>
@@ -805,7 +806,7 @@
                      <sharewt>0.731</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>2763</coefficient>
+                        <coefficient>1717</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4965</input-cost>
@@ -817,7 +818,7 @@
                      <sharewt>0.953</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>2450</coefficient>
+                        <coefficient>1522</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4965</input-cost>
@@ -829,7 +830,7 @@
                      <sharewt>1</sharewt>
                      <logitexp>-18</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>2171</coefficient>
+                        <coefficient>1350</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.4965</input-cost>
@@ -867,10 +868,10 @@
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>23578</coefficient>
+                        <coefficient>15828</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.4511</input-cost>
+                        <input-cost>1.4840</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>18.4</loadFactor>
                      <CO2 name="CO2"/>
@@ -879,11 +880,11 @@
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>23578</coefficient>
+                        <coefficient>15828</coefficient>
                         <calibrated-value>0.16294</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.4511</input-cost>
+                        <input-cost>1.4840</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>18.4</loadFactor>
                      <CO2 name="CO2"/>
@@ -892,85 +893,85 @@
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>24246</coefficient>
+                        <coefficient>16268</coefficient>
                         <calibrated-value>0.17107</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.5801</input-cost>
+                        <input-cost>1.6403</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>18.8</loadFactor>
+                     <loadFactor>18.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>23885</coefficient>
+                        <coefficient>16026</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.5801</input-cost>
+                        <input-cost>1.6403</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>18.8</loadFactor>
+                     <loadFactor>18.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>23529</coefficient>
+                        <coefficient>15787</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.5801</input-cost>
+                        <input-cost>1.6403</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>18.8</loadFactor>
+                     <loadFactor>18.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>23178</coefficient>
+                        <coefficient>15552</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.5801</input-cost>
+                        <input-cost>1.6403</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>18.8</loadFactor>
+                     <loadFactor>18.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>22833</coefficient>
+                        <coefficient>15320</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.5801</input-cost>
+                        <input-cost>1.6403</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>18.8</loadFactor>
+                     <loadFactor>18.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>22493</coefficient>
+                        <coefficient>15092</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.5801</input-cost>
+                        <input-cost>1.6403</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>18.8</loadFactor>
+                     <loadFactor>18.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>22158</coefficient>
+                        <coefficient>14867</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.5801</input-cost>
+                        <input-cost>1.6403</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>18.8</loadFactor>
+                     <loadFactor>18.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                </tranTechnology>
@@ -979,10 +980,10 @@
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="delivered gas">
-                        <coefficient>47834</coefficient>
+                        <coefficient>29729</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.5236</input-cost>
+                        <input-cost>1.5582</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>18.4</loadFactor>
                      <CO2 name="CO2"/>
@@ -991,11 +992,11 @@
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="delivered gas">
-                        <coefficient>47834</coefficient>
+                        <coefficient>29729</coefficient>
                         <calibrated-value>0.00048</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.5236</input-cost>
+                        <input-cost>1.5582</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>18.4</loadFactor>
                      <CO2 name="CO2"/>
@@ -1004,85 +1005,85 @@
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="delivered gas">
-                        <coefficient>47992</coefficient>
+                        <coefficient>29827</coefficient>
                         <calibrated-value>0.01456</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.6591</input-cost>
+                        <input-cost>1.7223</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>18.8</loadFactor>
+                     <loadFactor>18.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="delivered gas">
-                        <coefficient>47278</coefficient>
+                        <coefficient>29383</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.6591</input-cost>
+                        <input-cost>1.7223</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>18.8</loadFactor>
+                     <loadFactor>18.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="delivered gas">
-                        <coefficient>46573</coefficient>
+                        <coefficient>28945</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.6591</input-cost>
+                        <input-cost>1.7223</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>18.8</loadFactor>
+                     <loadFactor>18.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="delivered gas">
-                        <coefficient>45880</coefficient>
+                        <coefficient>28514</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.6591</input-cost>
+                        <input-cost>1.7223</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>18.8</loadFactor>
+                     <loadFactor>18.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="delivered gas">
-                        <coefficient>45196</coefficient>
+                        <coefficient>28090</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.6591</input-cost>
+                        <input-cost>1.7223</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>18.8</loadFactor>
+                     <loadFactor>18.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="delivered gas">
-                        <coefficient>44523</coefficient>
+                        <coefficient>27671</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.6591</input-cost>
+                        <input-cost>1.7223</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>18.8</loadFactor>
+                     <loadFactor>18.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="delivered gas">
-                        <coefficient>43860</coefficient>
+                        <coefficient>27259</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.6591</input-cost>
+                        <input-cost>1.7223</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>18.8</loadFactor>
+                     <loadFactor>18.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                </tranTechnology>
@@ -1091,10 +1092,10 @@
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>10792</coefficient>
+                        <coefficient>6707</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.6787</input-cost>
+                        <input-cost>1.7242</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>18.4</loadFactor>
                      <CO2 name="CO2"/>
@@ -1103,11 +1104,11 @@
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>10792</coefficient>
+                        <coefficient>6707</coefficient>
                         <calibrated-value>0.00037</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.6787</input-cost>
+                        <input-cost>1.7242</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>18.4</loadFactor>
                      <CO2 name="CO2"/>
@@ -1116,85 +1117,85 @@
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>10828</coefficient>
+                        <coefficient>6729</coefficient>
                         <calibrated-value>0.00025</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.8279</input-cost>
+                        <input-cost>1.9059</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>18.8</loadFactor>
+                     <loadFactor>18.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>10666</coefficient>
+                        <coefficient>6629</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.8279</input-cost>
+                        <input-cost>1.9059</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>18.8</loadFactor>
+                     <loadFactor>18.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>10508</coefficient>
+                        <coefficient>6530</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.8279</input-cost>
+                        <input-cost>1.9059</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>18.8</loadFactor>
+                     <loadFactor>18.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>10351</coefficient>
+                        <coefficient>6433</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.8279</input-cost>
+                        <input-cost>1.9059</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>18.8</loadFactor>
+                     <loadFactor>18.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>10197</coefficient>
+                        <coefficient>6337</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.8279</input-cost>
+                        <input-cost>1.9059</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>18.8</loadFactor>
+                     <loadFactor>18.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>10045</coefficient>
+                        <coefficient>6243</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.8279</input-cost>
+                        <input-cost>1.9059</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>18.8</loadFactor>
+                     <loadFactor>18.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <sharewt>1</sharewt>
                      <logitexp>-12</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>9895</coefficient>
+                        <coefficient>6150</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.8279</input-cost>
+                        <input-cost>1.9059</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>18.8</loadFactor>
+                     <loadFactor>18.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                </tranTechnology>
@@ -1227,110 +1228,110 @@
                      <sharewt>1</sharewt>
                      <logitexp>-8</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>88761</coefficient>
+                        <coefficient>33952</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.1797</input-cost>
+                        <input-cost>2.3176</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>24.8</loadFactor>
+                     <loadFactor>24.6</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <sharewt>1</sharewt>
                      <logitexp>-8</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>88761</coefficient>
+                        <coefficient>33952</coefficient>
                         <calibrated-value>0.01848</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.1797</input-cost>
+                        <input-cost>2.3176</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>24.8</loadFactor>
+                     <loadFactor>24.6</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <logitexp>-8</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>69474</coefficient>
+                        <coefficient>32445</coefficient>
                         <calibrated-value>0.01867</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.7632</input-cost>
+                        <input-cost>3.4289</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>25.3</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <sharewt>1</sharewt>
                      <logitexp>-8</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>68439</coefficient>
+                        <coefficient>31962</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.7632</input-cost>
+                        <input-cost>3.4289</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>25.3</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <sharewt>1</sharewt>
                      <logitexp>-8</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>67420</coefficient>
+                        <coefficient>31486</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.7632</input-cost>
+                        <input-cost>3.4289</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>25.3</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <sharewt>1</sharewt>
                      <logitexp>-8</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>66416</coefficient>
+                        <coefficient>31017</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.7632</input-cost>
+                        <input-cost>3.4289</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>25.3</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <sharewt>1</sharewt>
                      <logitexp>-8</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>65426</coefficient>
+                        <coefficient>30555</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.7632</input-cost>
+                        <input-cost>3.4289</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>25.3</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <sharewt>1</sharewt>
                      <logitexp>-8</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>64452</coefficient>
+                        <coefficient>30099</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.7632</input-cost>
+                        <input-cost>3.4289</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>25.3</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <sharewt>1</sharewt>
                      <logitexp>-8</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>63492</coefficient>
+                        <coefficient>29651</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.7632</input-cost>
+                        <input-cost>3.4289</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>25.3</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                </tranTechnology>
@@ -1339,110 +1340,110 @@
                      <sharewt>1</sharewt>
                      <logitexp>-8</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>24729</coefficient>
+                        <coefficient>15264</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.6764</input-cost>
+                        <input-cost>2.8159</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>24.8</loadFactor>
+                     <loadFactor>24.6</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <sharewt>1</sharewt>
                      <logitexp>-8</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>24729</coefficient>
+                        <coefficient>15264</coefficient>
                         <calibrated-value>0.01836</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.6764</input-cost>
+                        <input-cost>2.8159</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>24.8</loadFactor>
+                     <loadFactor>24.6</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <logitexp>-8</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>23226</coefficient>
+                        <coefficient>14549</coefficient>
                         <calibrated-value>0.02238</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.6774</input-cost>
+                        <input-cost>2.8312</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>25.3</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <sharewt>1</sharewt>
                      <logitexp>-8</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>22880</coefficient>
+                        <coefficient>14332</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.6774</input-cost>
+                        <input-cost>2.8312</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>25.3</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <sharewt>1</sharewt>
                      <logitexp>-8</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>22539</coefficient>
+                        <coefficient>14119</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.6774</input-cost>
+                        <input-cost>2.8312</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>25.3</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <sharewt>1</sharewt>
                      <logitexp>-8</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>22203</coefficient>
+                        <coefficient>13908</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.6774</input-cost>
+                        <input-cost>2.8312</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>25.3</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <sharewt>1</sharewt>
                      <logitexp>-8</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>21873</coefficient>
+                        <coefficient>13701</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.6774</input-cost>
+                        <input-cost>2.8312</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>25.3</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <sharewt>1</sharewt>
                      <logitexp>-8</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>21547</coefficient>
+                        <coefficient>13497</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.6774</input-cost>
+                        <input-cost>2.8312</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>25.3</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <sharewt>1</sharewt>
                      <logitexp>-8</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>21226</coefficient>
+                        <coefficient>13296</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.6774</input-cost>
+                        <input-cost>2.8312</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>25.3</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                </tranTechnology>
@@ -1474,10 +1475,10 @@
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>214408</coefficient>
+                        <coefficient>133256</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>49.7873</input-cost>
+                        <input-cost>50.6446</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>310</loadFactor>
                      <CO2 name="CO2"/>
@@ -1486,10 +1487,10 @@
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>214408</coefficient>
+                        <coefficient>133256</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>49.7873</input-cost>
+                        <input-cost>50.6446</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>310</loadFactor>
                      <CO2 name="CO2"/>
@@ -1498,10 +1499,10 @@
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>214408</coefficient>
+                        <coefficient>133256</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>49.7873</input-cost>
+                        <input-cost>50.6446</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>310</loadFactor>
                      <CO2 name="CO2"/>
@@ -1510,10 +1511,10 @@
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>211215</coefficient>
+                        <coefficient>131271</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>49.7873</input-cost>
+                        <input-cost>50.6446</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>310</loadFactor>
                      <CO2 name="CO2"/>
@@ -1522,10 +1523,10 @@
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>208069</coefficient>
+                        <coefficient>129315</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>49.7873</input-cost>
+                        <input-cost>50.6446</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>310</loadFactor>
                      <CO2 name="CO2"/>
@@ -1534,10 +1535,10 @@
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>204969</coefficient>
+                        <coefficient>127389</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>49.7873</input-cost>
+                        <input-cost>50.6446</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>310</loadFactor>
                      <CO2 name="CO2"/>
@@ -1546,10 +1547,10 @@
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>201916</coefficient>
+                        <coefficient>125492</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>49.7873</input-cost>
+                        <input-cost>50.6446</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>310</loadFactor>
                      <CO2 name="CO2"/>
@@ -1558,10 +1559,10 @@
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>198909</coefficient>
+                        <coefficient>123622</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>49.7873</input-cost>
+                        <input-cost>50.6446</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>310</loadFactor>
                      <CO2 name="CO2"/>
@@ -1570,10 +1571,10 @@
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>195946</coefficient>
+                        <coefficient>121781</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>49.7873</input-cost>
+                        <input-cost>50.6446</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>310</loadFactor>
                      <CO2 name="CO2"/>
@@ -1607,10 +1608,10 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>444515</coefficient>
+                        <coefficient>276268</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>9.6596</input-cost>
+                        <input-cost>10.3993</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>120</loadFactor>
                      <CO2 name="CO2"/>
@@ -1619,11 +1620,11 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>444515</coefficient>
+                        <coefficient>276268</coefficient>
                         <calibrated-value>1.97716</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>9.6596</input-cost>
+                        <input-cost>10.3993</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>120</loadFactor>
                      <CO2 name="CO2"/>
@@ -1632,11 +1633,11 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>320576</coefficient>
+                        <coefficient>199239</coefficient>
                         <calibrated-value>2.41613</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>8.9113</input-cost>
+                        <input-cost>9.6978</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>124</loadFactor>
                      <CO2 name="CO2"/>
@@ -1645,10 +1646,10 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>308762</coefficient>
+                        <coefficient>191897</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>8.2658</input-cost>
+                        <input-cost>8.9954</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>124</loadFactor>
                      <CO2 name="CO2"/>
@@ -1657,10 +1658,10 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>297384</coefficient>
+                        <coefficient>184826</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.9612</input-cost>
+                        <input-cost>8.6639</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>124</loadFactor>
                      <CO2 name="CO2"/>
@@ -1669,10 +1670,10 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>286425</coefficient>
+                        <coefficient>178015</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.9612</input-cost>
+                        <input-cost>8.6639</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>124</loadFactor>
                      <CO2 name="CO2"/>
@@ -1681,10 +1682,10 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>275870</coefficient>
+                        <coefficient>171455</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.9612</input-cost>
+                        <input-cost>8.6639</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>124</loadFactor>
                      <CO2 name="CO2"/>
@@ -1693,10 +1694,10 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>265704</coefficient>
+                        <coefficient>165136</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.9612</input-cost>
+                        <input-cost>8.6639</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>124</loadFactor>
                      <CO2 name="CO2"/>
@@ -1705,10 +1706,10 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>255913</coefficient>
+                        <coefficient>159051</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.9612</input-cost>
+                        <input-cost>8.6639</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>124</loadFactor>
                      <CO2 name="CO2"/>
@@ -1717,9 +1718,10 @@
             </tranSubsector>
          </supplysector>
          <supplysector name="freight">
-            <output-unit>million-ton-mi</output-unit>
+            <output-unit>million-ton-km</output-unit>
             <input-unit>EJ</input-unit>
-            <price-unit>1990$/ton-mi</price-unit>
+            <price-unit>1990$/ton-km</price-unit>
+            <price year="1975">0.04</price>
             <keyword final-energy="transportation"/>
             <tranSubsector name="truck">
                <scaleYear>2005</scaleYear>
@@ -1748,110 +1750,110 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>21552</coefficient>
+                        <coefficient>13395</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.9980</input-cost>
+                        <input-cost>0.9288</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>6.1</loadFactor>
+                     <loadFactor>5.6</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>21552</coefficient>
+                        <coefficient>13395</coefficient>
                         <calibrated-value>3.32553</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.9980</input-cost>
+                        <input-cost>0.9288</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>6.1</loadFactor>
+                     <loadFactor>5.6</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>19321</coefficient>
+                        <coefficient>12008</coefficient>
                         <calibrated-value>4.54263</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.9277</input-cost>
+                        <input-cost>0.8857</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>5.6</loadFactor>
+                     <loadFactor>5.1</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>18057</coefficient>
+                        <coefficient>11223</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.9207</input-cost>
+                        <input-cost>0.8790</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>5.6</loadFactor>
+                     <loadFactor>5.1</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>17003</coefficient>
+                        <coefficient>10568</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.9139</input-cost>
+                        <input-cost>0.8725</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>5.6</loadFactor>
+                     <loadFactor>5.1</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>16011</coefficient>
+                        <coefficient>9951</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.9070</input-cost>
+                        <input-cost>0.8660</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>5.6</loadFactor>
+                     <loadFactor>5.1</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>15077</coefficient>
+                        <coefficient>9370</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.9002</input-cost>
+                        <input-cost>0.8595</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>5.6</loadFactor>
+                     <loadFactor>5.1</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>14197</coefficient>
+                        <coefficient>8824</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.8935</input-cost>
+                        <input-cost>0.8531</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>5.6</loadFactor>
+                     <loadFactor>5.1</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>13369</coefficient>
+                        <coefficient>8309</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.8868</input-cost>
+                        <input-cost>0.8467</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>5.6</loadFactor>
+                     <loadFactor>5.1</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                </tranTechnology>
@@ -1860,108 +1862,108 @@
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>7277</coefficient>
+                        <coefficient>4523</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.0978</input-cost>
+                        <input-cost>1.0216</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>6.1</loadFactor>
+                     <loadFactor>5.6</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>7277</coefficient>
+                        <coefficient>4523</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.0978</input-cost>
+                        <input-cost>1.0216</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>6.1</loadFactor>
+                     <loadFactor>5.6</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>6524</coefficient>
+                        <coefficient>4055</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.0204</input-cost>
+                        <input-cost>0.9742</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>5.6</loadFactor>
+                     <loadFactor>5.1</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>6097</coefficient>
+                        <coefficient>3789</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.0052</input-cost>
+                        <input-cost>0.9597</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>5.6</loadFactor>
+                     <loadFactor>5.1</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>5741</coefficient>
+                        <coefficient>3568</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.9903</input-cost>
+                        <input-cost>0.9454</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>5.6</loadFactor>
+                     <loadFactor>5.1</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>5406</coefficient>
+                        <coefficient>3360</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.9829</input-cost>
+                        <input-cost>0.9384</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>5.6</loadFactor>
+                     <loadFactor>5.1</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <sharewt>0.0067</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>5091</coefficient>
+                        <coefficient>3164</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.9755</input-cost>
+                        <input-cost>0.9313</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>5.6</loadFactor>
+                     <loadFactor>5.1</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <sharewt>0.0474</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>4794</coefficient>
+                        <coefficient>2979</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.9682</input-cost>
+                        <input-cost>0.9244</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>5.6</loadFactor>
+                     <loadFactor>5.1</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <sharewt>0.2689</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>4514</coefficient>
+                        <coefficient>2806</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.9610</input-cost>
+                        <input-cost>0.9175</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>5.6</loadFactor>
+                     <loadFactor>5.1</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                </tranTechnology>
@@ -1970,108 +1972,108 @@
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>13650</coefficient>
+                        <coefficient>8483</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.1477</input-cost>
+                        <input-cost>1.0681</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>6.1</loadFactor>
+                     <loadFactor>5.6</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>13650</coefficient>
+                        <coefficient>8483</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.1477</input-cost>
+                        <input-cost>1.0681</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>6.1</loadFactor>
+                     <loadFactor>5.6</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>12237</coefficient>
+                        <coefficient>7605</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.0668</input-cost>
+                        <input-cost>1.0185</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>5.6</loadFactor>
+                     <loadFactor>5.1</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>11436</coefficient>
+                        <coefficient>7108</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>1.0275</input-cost>
+                        <input-cost>0.9810</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>5.6</loadFactor>
+                     <loadFactor>5.1</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>10769</coefficient>
+                        <coefficient>6693</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.9896</input-cost>
+                        <input-cost>0.9448</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>5.6</loadFactor>
+                     <loadFactor>5.1</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>10141</coefficient>
+                        <coefficient>6302</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.9830</input-cost>
+                        <input-cost>0.9385</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>5.6</loadFactor>
+                     <loadFactor>5.1</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <sharewt>0.0067</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>9549</coefficient>
+                        <coefficient>5935</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.9756</input-cost>
+                        <input-cost>0.9315</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>5.6</loadFactor>
+                     <loadFactor>5.1</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <sharewt>0.0474</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>8992</coefficient>
+                        <coefficient>5588</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.9683</input-cost>
+                        <input-cost>0.9245</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>5.6</loadFactor>
+                     <loadFactor>5.1</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <sharewt>0.2689</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>8467</coefficient>
+                        <coefficient>5262</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.9611</input-cost>
+                        <input-cost>0.9176</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>5.6</loadFactor>
+                     <loadFactor>5.1</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                </tranTechnology>
@@ -2103,110 +2105,110 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>15420</coefficient>
+                        <coefficient>9583</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.7006</input-cost>
+                        <input-cost>0.6523</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>24.8</loadFactor>
+                     <loadFactor>35.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>15420</coefficient>
+                        <coefficient>9583</coefficient>
                         <calibrated-value>0.42558</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.7006</input-cost>
+                        <input-cost>0.6523</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>24.8</loadFactor>
+                     <loadFactor>35.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>14059</coefficient>
+                        <coefficient>8738</coefficient>
                         <calibrated-value>0.55942</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.7405</input-cost>
+                        <input-cost>0.7034</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>40.8</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>13850</coefficient>
+                        <coefficient>8608</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.7241</input-cost>
+                        <input-cost>0.6877</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>40.8</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>13644</coefficient>
+                        <coefficient>8480</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.7079</input-cost>
+                        <input-cost>0.6724</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>40.8</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>13440</coefficient>
+                        <coefficient>8353</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.6922</input-cost>
+                        <input-cost>0.6574</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>40.8</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>13240</coefficient>
+                        <coefficient>8229</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.6819</input-cost>
+                        <input-cost>0.6476</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>40.8</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>13043</coefficient>
+                        <coefficient>8106</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.6717</input-cost>
+                        <input-cost>0.6380</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>40.8</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>12849</coefficient>
+                        <coefficient>7985</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.6617</input-cost>
+                        <input-cost>0.6285</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>40.8</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                </tranTechnology>
@@ -2215,108 +2217,108 @@
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>5207</coefficient>
+                        <coefficient>3236</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.7706</input-cost>
+                        <input-cost>0.7175</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>24.8</loadFactor>
+                     <loadFactor>35.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>5207</coefficient>
+                        <coefficient>3236</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.7706</input-cost>
+                        <input-cost>0.7175</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>24.8</loadFactor>
+                     <loadFactor>35.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>4747</coefficient>
+                        <coefficient>2950</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.8146</input-cost>
+                        <input-cost>0.7737</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>40.8</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>4677</coefficient>
+                        <coefficient>2907</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.7965</input-cost>
+                        <input-cost>0.7565</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>40.8</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>4607</coefficient>
+                        <coefficient>2863</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.7787</input-cost>
+                        <input-cost>0.7396</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>40.8</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>4538</coefficient>
+                        <coefficient>2821</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.7614</input-cost>
+                        <input-cost>0.7232</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>40.8</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <sharewt>0.0067</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>4471</coefficient>
+                        <coefficient>2779</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.7500</input-cost>
+                        <input-cost>0.7124</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>40.8</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <sharewt>0.0474</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>4404</coefficient>
+                        <coefficient>2737</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.7389</input-cost>
+                        <input-cost>0.7018</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>40.8</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <sharewt>0.2689</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_trn">
-                        <coefficient>4338</coefficient>
+                        <coefficient>2696</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.7279</input-cost>
+                        <input-cost>0.6913</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>40.8</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                </tranTechnology>
@@ -2325,108 +2327,108 @@
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>9766</coefficient>
+                        <coefficient>6069</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.8057</input-cost>
+                        <input-cost>0.7501</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>24.8</loadFactor>
+                     <loadFactor>35.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>9766</coefficient>
+                        <coefficient>6069</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.8057</input-cost>
+                        <input-cost>0.7501</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>24.8</loadFactor>
+                     <loadFactor>35.9</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>8904</coefficient>
+                        <coefficient>5534</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.8516</input-cost>
+                        <input-cost>0.8089</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>40.8</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>8772</coefficient>
+                        <coefficient>5452</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.8327</input-cost>
+                        <input-cost>0.7908</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>40.8</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>8641</coefficient>
+                        <coefficient>5370</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.8141</input-cost>
+                        <input-cost>0.7732</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>40.8</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>8512</coefficient>
+                        <coefficient>5290</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.7960</input-cost>
+                        <input-cost>0.7560</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>40.8</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <sharewt>0.0067</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>8385</coefficient>
+                        <coefficient>5212</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.7841</input-cost>
+                        <input-cost>0.7448</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>40.8</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <sharewt>0.0474</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>8261</coefficient>
+                        <coefficient>5134</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.7725</input-cost>
+                        <input-cost>0.7337</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>40.8</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <sharewt>0.2689</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>8137</coefficient>
+                        <coefficient>5057</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0.7610</input-cost>
+                        <input-cost>0.7227</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>25.1</loadFactor>
+                     <loadFactor>40.8</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                </tranTechnology>
@@ -2458,110 +2460,110 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>444515</coefficient>
+                        <coefficient>276268</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.9969</input-cost>
+                        <input-cost>7.7371</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>20.8</loadFactor>
+                     <loadFactor>18.8</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>444515</coefficient>
+                        <coefficient>276268</coefficient>
                         <calibrated-value>0.37049</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.9969</input-cost>
+                        <input-cost>7.7371</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>20.8</loadFactor>
+                     <loadFactor>18.8</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>320576</coefficient>
+                        <coefficient>199239</coefficient>
                         <calibrated-value>0.43641</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>13.5690</input-cost>
+                        <input-cost>13.2190</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>30.4</loadFactor>
+                     <loadFactor>27.6</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>301871</coefficient>
+                        <coefficient>187614</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>13.4676</input-cost>
+                        <input-cost>13.1202</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>30.4</loadFactor>
+                     <loadFactor>27.6</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>284257</coefficient>
+                        <coefficient>176667</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>13.3669</input-cost>
+                        <input-cost>13.0221</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>30.4</loadFactor>
+                     <loadFactor>27.6</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>267671</coefficient>
+                        <coefficient>166359</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>13.2670</input-cost>
+                        <input-cost>12.9248</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>30.4</loadFactor>
+                     <loadFactor>27.6</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>252053</coefficient>
+                        <coefficient>156652</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>13.1679</input-cost>
+                        <input-cost>12.8282</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>30.4</loadFactor>
+                     <loadFactor>27.6</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>237346</coefficient>
+                        <coefficient>147511</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>13.0694</input-cost>
+                        <input-cost>12.7323</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>30.4</loadFactor>
+                     <loadFactor>27.6</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>223497</coefficient>
+                        <coefficient>138904</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>12.9718</input-cost>
+                        <input-cost>12.6372</input-cost>
                      </minicam-non-energy-input>
-                     <loadFactor>30.4</loadFactor>
+                     <loadFactor>27.6</loadFactor>
                      <CO2 name="CO2"/>
                   </period>
                </tranTechnology>
@@ -2593,10 +2595,10 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>359590</coefficient>
+                        <coefficient>223487</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.1215</input-cost>
+                        <input-cost>4.6385</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1000</loadFactor>
                      <CO2 name="CO2"/>
@@ -2605,11 +2607,11 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>359590</coefficient>
+                        <coefficient>223487</coefficient>
                         <calibrated-value>0.31637</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.1215</input-cost>
+                        <input-cost>4.6385</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1000</loadFactor>
                      <CO2 name="CO2"/>
@@ -2618,11 +2620,11 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>473215</coefficient>
+                        <coefficient>294105</coefficient>
                         <calibrated-value>0.29726</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.6235</input-cost>
+                        <input-cost>3.5981</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1000</loadFactor>
                      <CO2 name="CO2"/>
@@ -2631,10 +2633,10 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>466166</coefficient>
+                        <coefficient>289724</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.6235</input-cost>
+                        <input-cost>3.5981</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1000</loadFactor>
                      <CO2 name="CO2"/>
@@ -2643,10 +2645,10 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>459223</coefficient>
+                        <coefficient>285409</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.6235</input-cost>
+                        <input-cost>3.5981</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1000</loadFactor>
                      <CO2 name="CO2"/>
@@ -2655,10 +2657,10 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>452382</coefficient>
+                        <coefficient>281157</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.6235</input-cost>
+                        <input-cost>3.5981</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1000</loadFactor>
                      <CO2 name="CO2"/>
@@ -2667,10 +2669,10 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>445644</coefficient>
+                        <coefficient>276969</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.6235</input-cost>
+                        <input-cost>3.5981</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1000</loadFactor>
                      <CO2 name="CO2"/>
@@ -2679,10 +2681,10 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>439006</coefficient>
+                        <coefficient>272844</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.6235</input-cost>
+                        <input-cost>3.5981</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1000</loadFactor>
                      <CO2 name="CO2"/>
@@ -2691,10 +2693,10 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>432467</coefficient>
+                        <coefficient>268780</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.6235</input-cost>
+                        <input-cost>3.5981</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1000</loadFactor>
                      <CO2 name="CO2"/>
@@ -2705,10 +2707,10 @@
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>227740</coefficient>
+                        <coefficient>141541</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.7397</input-cost>
+                        <input-cost>5.3343</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1000</loadFactor>
                      <CO2 name="CO2"/>
@@ -2717,10 +2719,10 @@
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>227740</coefficient>
+                        <coefficient>141541</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.7397</input-cost>
+                        <input-cost>5.3343</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1000</loadFactor>
                      <CO2 name="CO2"/>
@@ -2729,10 +2731,10 @@
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>299703</coefficient>
+                        <coefficient>186267</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.0170</input-cost>
+                        <input-cost>4.1379</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1000</loadFactor>
                      <CO2 name="CO2"/>
@@ -2741,10 +2743,10 @@
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>295239</coefficient>
+                        <coefficient>183492</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.0170</input-cost>
+                        <input-cost>4.1379</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1000</loadFactor>
                      <CO2 name="CO2"/>
@@ -2753,10 +2755,10 @@
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>290841</coefficient>
+                        <coefficient>180759</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.0170</input-cost>
+                        <input-cost>4.1379</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1000</loadFactor>
                      <CO2 name="CO2"/>
@@ -2765,10 +2767,10 @@
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>286509</coefficient>
+                        <coefficient>178066</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.0170</input-cost>
+                        <input-cost>4.1379</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1000</loadFactor>
                      <CO2 name="CO2"/>
@@ -2777,10 +2779,10 @@
                      <sharewt>0.0067</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>282241</coefficient>
+                        <coefficient>175414</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.0170</input-cost>
+                        <input-cost>4.1379</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1000</loadFactor>
                      <CO2 name="CO2"/>
@@ -2789,10 +2791,10 @@
                      <sharewt>0.0474</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>278037</coefficient>
+                        <coefficient>172801</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.0170</input-cost>
+                        <input-cost>4.1379</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1000</loadFactor>
                      <CO2 name="CO2"/>
@@ -2801,10 +2803,10 @@
                      <sharewt>0.2689</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>273895</coefficient>
+                        <coefficient>170227</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.0170</input-cost>
+                        <input-cost>4.1379</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1000</loadFactor>
                      <CO2 name="CO2"/>
@@ -2838,10 +2840,10 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>4867598</coefficient>
+                        <coefficient>2258635</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>88.2327</input-cost>
+                        <input-cost>98.1432</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>19449</loadFactor>
                      <CO2 name="CO2"/>
@@ -2850,11 +2852,11 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>4867598</coefficient>
+                        <coefficient>2258635</coefficient>
                         <calibrated-value>0.89441</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>88.2327</input-cost>
+                        <input-cost>98.1432</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>19449</loadFactor>
                      <CO2 name="CO2"/>
@@ -2863,11 +2865,11 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>4339102</coefficient>
+                        <coefficient>2013405</coefficient>
                         <calibrated-value>0.79482</calibrated-value>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>66.2472</input-cost>
+                        <input-cost>84.9310</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>19449</loadFactor>
                      <CO2 name="CO2"/>
@@ -2876,10 +2878,10 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>4274470</coefficient>
+                        <coefficient>1983415</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>66.2472</input-cost>
+                        <input-cost>84.9310</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>19449</loadFactor>
                      <CO2 name="CO2"/>
@@ -2888,10 +2890,10 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>4210799</coefficient>
+                        <coefficient>1953871</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>66.2472</input-cost>
+                        <input-cost>84.9310</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>19449</loadFactor>
                      <CO2 name="CO2"/>
@@ -2900,10 +2902,10 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>4148078</coefficient>
+                        <coefficient>1924767</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>66.2472</input-cost>
+                        <input-cost>84.9310</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>19449</loadFactor>
                      <CO2 name="CO2"/>
@@ -2912,10 +2914,10 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>4086290</coefficient>
+                        <coefficient>1896097</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>66.2472</input-cost>
+                        <input-cost>84.9310</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>19449</loadFactor>
                      <CO2 name="CO2"/>
@@ -2924,10 +2926,10 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>4025423</coefficient>
+                        <coefficient>1867854</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>66.2472</input-cost>
+                        <input-cost>84.9310</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>19449</loadFactor>
                      <CO2 name="CO2"/>
@@ -2936,10 +2938,10 @@
                      <sharewt>1</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="refined liquids enduse">
-                        <coefficient>3965463</coefficient>
+                        <coefficient>1840031</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>66.2472</input-cost>
+                        <input-cost>84.9310</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>19449</loadFactor>
                      <CO2 name="CO2"/>
@@ -2950,10 +2952,10 @@
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>3082812</coefficient>
+                        <coefficient>1430469</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>101.4676</input-cost>
+                        <input-cost>112.8647</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>19449</loadFactor>
                      <CO2 name="CO2"/>
@@ -2962,10 +2964,10 @@
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>3082812</coefficient>
+                        <coefficient>1430469</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>101.4676</input-cost>
+                        <input-cost>112.8647</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>19449</loadFactor>
                      <CO2 name="CO2"/>
@@ -2974,10 +2976,10 @@
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>2748098</coefficient>
+                        <coefficient>1275157</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>76.1843</input-cost>
+                        <input-cost>97.6707</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>19449</loadFactor>
                      <CO2 name="CO2"/>
@@ -2986,10 +2988,10 @@
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>2707164</coefficient>
+                        <coefficient>1256163</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>76.1843</input-cost>
+                        <input-cost>97.6707</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>19449</loadFactor>
                      <CO2 name="CO2"/>
@@ -2998,10 +3000,10 @@
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>2666840</coefficient>
+                        <coefficient>1237452</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>76.1843</input-cost>
+                        <input-cost>97.6707</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>19449</loadFactor>
                      <CO2 name="CO2"/>
@@ -3010,10 +3012,10 @@
                      <sharewt>0</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>2627116</coefficient>
+                        <coefficient>1219019</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>76.1843</input-cost>
+                        <input-cost>97.6707</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>19449</loadFactor>
                      <CO2 name="CO2"/>
@@ -3022,10 +3024,10 @@
                      <sharewt>0.0067</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>2587984</coefficient>
+                        <coefficient>1200861</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>76.1843</input-cost>
+                        <input-cost>97.6707</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>19449</loadFactor>
                      <CO2 name="CO2"/>
@@ -3034,10 +3036,10 @@
                      <sharewt>0.0474</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>2549435</coefficient>
+                        <coefficient>1182974</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>76.1843</input-cost>
+                        <input-cost>97.6707</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>19449</loadFactor>
                      <CO2 name="CO2"/>
@@ -3046,10 +3048,10 @@
                      <sharewt>0.2689</sharewt>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="H2 Enduse">
-                        <coefficient>2511460</coefficient>
+                        <coefficient>1165353</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>76.1843</input-cost>
+                        <input-cost>97.6707</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>19449</loadFactor>
                      <CO2 name="CO2"/>
@@ -3061,6 +3063,7 @@
             <output-unit>SerUnit</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1990$/service</price-unit>
+            <price year="1975">4.61</price>
             <keyword final-energy="transportation"/>
             <subsector name="boat">
                <scaleYear>2005</scaleYear>
@@ -3265,6 +3268,7 @@
             <output-unit>SerUnit</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1990$/service</price-unit>
+            <price year="1975">4.61</price>
             <keyword final-energy="transportation"/>
             <subsector name="military">
                <technology name="refined liquids">
@@ -3578,6 +3582,7 @@
             <output-unit>SerUnit</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1990$/GJ</price-unit>
+            <price year="1975">12.06</price>
             <keyword final-energy="transportation"/>
             <subsector name="pipeline">
                <techScaleYear>2005</techScaleYear>

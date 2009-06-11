@@ -8,6 +8,7 @@
             <output-unit>FinalService</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">16.47</price>
             <subsector name="chemicals">
                <technology name="chemicals">
                   <period year="1975">
@@ -221,6 +222,7 @@
             <output-unit>FinalService</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">25.60</price>
             <subsector name="food processing">
                <technology name="food processing">
                   <period year="1975">
@@ -386,6 +388,7 @@
             <output-unit>FinalService</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">15.95</price>
             <subsector name="iron and steel">
                <technology name="iron and steel">
                   <period year="1975">
@@ -623,6 +626,7 @@
             <output-unit>FinalService</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">17.96</price>
             <subsector name="other nonmetallic minerals">
                <technology name="other nonmetallic minerals">
                   <period year="1975">
@@ -812,6 +816,7 @@
             <output-unit>FinalService</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">39.04</price>
             <subsector name="other manufacturing">
                <technology name="other manufacturing">
                   <period year="1975">
@@ -1001,6 +1006,7 @@
             <output-unit>FinalService</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">17.41</price>
             <subsector name="aluminum and nonferrous metals">
                <technology name="aluminum and nonferrous metals">
                   <period year="1975">
@@ -1238,6 +1244,7 @@
             <output-unit>FinalService</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">18.88</price>
             <subsector name="pulp paper and wood">
                <technology name="pulp paper and wood">
                   <period year="1975">
@@ -1427,6 +1434,7 @@
             <output-unit>FinalService</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">21.15</price>
             <subsector name="agriculture">
                <technology name="agriculture">
                   <period year="1975">
@@ -1520,6 +1528,7 @@
             <output-unit>FinalService</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">19.50</price>
             <subsector name="construction">
                <technology name="construction">
                   <period year="1975">
@@ -1637,6 +1646,7 @@
             <output-unit>FinalService</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">19.92</price>
             <subsector name="mining">
                <technology name="mining">
                   <period year="1975">
@@ -1730,6 +1740,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">4.28903</price>
             <keyword final-energy="industry"/>
             <subsector name="biomass">
                <scaleYear>2005</scaleYear>
@@ -2940,6 +2951,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">4.57418</price>
             <keyword final-energy="industry"/>
             <subsector name="biomass">
                <scaleYear>2005</scaleYear>
@@ -4150,6 +4162,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">5.08192</price>
             <keyword final-energy="industry"/>
             <subsector name="biomass">
                <scaleYear>2005</scaleYear>
@@ -5360,6 +5373,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">5.65024</price>
             <keyword final-energy="industry"/>
             <subsector name="biomass">
                <scaleYear>1975</scaleYear>
@@ -6570,6 +6584,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">9.58449</price>
             <keyword final-energy="industry"/>
             <subsector name="biomass">
                <scaleYear>1975</scaleYear>
@@ -7146,6 +7161,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">9.71997</price>
             <keyword final-energy="industry"/>
             <subsector name="electricity">
                <scaleYear>2005</scaleYear>
@@ -7266,6 +7282,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">6.51922</price>
             <keyword final-energy="industry"/>
             <subsector name="biomass">
                <scaleYear>1975</scaleYear>
@@ -7842,6 +7859,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">4.50555</price>
             <keyword final-energy="industry"/>
             <subsector name="refined liquids">
                <scaleYear>2005</scaleYear>
@@ -7962,6 +7980,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">4.75999</price>
             <keyword final-energy="industry"/>
             <subsector name="electricity">
                <scaleYear>2005</scaleYear>
@@ -8310,6 +8329,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">4.60491</price>
             <keyword final-energy="industry"/>
             <subsector name="biomass">
                <scaleYear>2005</scaleYear>
@@ -8886,6 +8906,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">4.32783</price>
             <keyword final-energy="industry"/>
             <subsector name="coal">
                <scaleYear>1975</scaleYear>
@@ -9306,6 +9327,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">3.05951</price>
             <keyword final-energy="industry"/>
             <subsector name="coal">
                <scaleYear>1975</scaleYear>
@@ -9726,6 +9748,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">4.50555</price>
             <keyword final-energy="industry"/>
             <subsector name="refined liquids">
                <scaleYear>2005</scaleYear>
@@ -9870,6 +9893,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>Gt cement feed equiv</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">3</price>
             <keyword final-energy="industry"/>
             <subsector name="limestone">
                <scaleYear>2005</scaleYear>
@@ -10046,8 +10070,8 @@
          </supplysector>
          <energy-final-demand name="chemicals">
             <perCapitaBased>0</perCapitaBased>
-            <base-scaler fillout="1" year="1975">1</base-scaler>
-            <base-service year="1975">6.420678489</base-service>
+            <base-service year="1990">6.420678489</base-service>
+            <base-service year="2005">7.579866703</base-service>
             <final-energy-consumer/>
             <income-elasticity year="2020">0.1</income-elasticity>
             <income-elasticity year="2035">0.1</income-elasticity>
@@ -10064,8 +10088,8 @@
          </energy-final-demand>
          <energy-final-demand name="food processing">
             <perCapitaBased>1</perCapitaBased>
-            <base-scaler fillout="1" year="1975">1</base-scaler>
-            <base-service year="1975">0.899374549</base-service>
+            <base-service year="1990">1.046157105</base-service>
+            <base-service year="2005">0.902829198</base-service>
             <final-energy-consumer/>
             <income-elasticity year="2020">0</income-elasticity>
             <income-elasticity year="2035">0</income-elasticity>
@@ -10082,8 +10106,8 @@
          </energy-final-demand>
          <energy-final-demand name="iron and steel">
             <perCapitaBased>0</perCapitaBased>
-            <base-scaler fillout="1" year="1975">1</base-scaler>
-            <base-service year="1975">1.370376787</base-service>
+            <base-service year="1990">1.370376787</base-service>
+            <base-service year="2005">1.080197352</base-service>
             <final-energy-consumer/>
             <income-elasticity year="2020">-0.05</income-elasticity>
             <income-elasticity year="2035">-0.05</income-elasticity>
@@ -10100,8 +10124,8 @@
          </energy-final-demand>
          <energy-final-demand name="other nonmetallic minerals">
             <perCapitaBased>0</perCapitaBased>
-            <base-scaler fillout="1" year="1975">1</base-scaler>
-            <base-service year="1975">0.67688226</base-service>
+            <base-service year="1990">0.67688226</base-service>
+            <base-service year="2005">0.592292997</base-service>
             <final-energy-consumer/>
             <income-elasticity year="2020">0.15</income-elasticity>
             <income-elasticity year="2035">0.15</income-elasticity>
@@ -10118,8 +10142,8 @@
          </energy-final-demand>
          <energy-final-demand name="other manufacturing">
             <perCapitaBased>0</perCapitaBased>
-            <base-scaler fillout="1" year="1975">1</base-scaler>
-            <base-service year="1975">1.784468566</base-service>
+            <base-service year="1990">1.784468566</base-service>
+            <base-service year="2005">1.778069308</base-service>
             <final-energy-consumer/>
             <income-elasticity year="2020">0.4</income-elasticity>
             <income-elasticity year="2035">0.4</income-elasticity>
@@ -10136,8 +10160,8 @@
          </energy-final-demand>
          <energy-final-demand name="aluminum and nonferrous metals">
             <perCapitaBased>0</perCapitaBased>
-            <base-scaler fillout="1" year="1975">1</base-scaler>
-            <base-service year="1975">0.4567645</base-service>
+            <base-service year="1990">0.4567645</base-service>
+            <base-service year="2005">0.493411522</base-service>
             <final-energy-consumer/>
             <income-elasticity year="2020">-0.05</income-elasticity>
             <income-elasticity year="2035">-0.05</income-elasticity>
@@ -10154,8 +10178,8 @@
          </energy-final-demand>
          <energy-final-demand name="pulp paper and wood">
             <perCapitaBased>1</perCapitaBased>
-            <base-scaler fillout="1" year="1975">1</base-scaler>
-            <base-service year="1975">1.443799598</base-service>
+            <base-service year="1990">1.679435125</base-service>
+            <base-service year="2005">2.009898073</base-service>
             <final-energy-consumer/>
             <income-elasticity year="2020">0</income-elasticity>
             <income-elasticity year="2035">0</income-elasticity>
@@ -10172,8 +10196,8 @@
          </energy-final-demand>
          <energy-final-demand name="agriculture">
             <perCapitaBased>1</perCapitaBased>
-            <base-scaler fillout="1" year="1975">1</base-scaler>
-            <base-service year="1975">0.525039385</base-service>
+            <base-service year="1990">0.610728516</base-service>
+            <base-service year="2005">0.685462896</base-service>
             <final-energy-consumer/>
             <income-elasticity year="2020">0</income-elasticity>
             <income-elasticity year="2035">0</income-elasticity>
@@ -10190,8 +10214,8 @@
          </energy-final-demand>
          <energy-final-demand name="construction">
             <perCapitaBased>0</perCapitaBased>
-            <base-scaler fillout="1" year="1975">1</base-scaler>
-            <base-service year="1975">2.578372264</base-service>
+            <base-service year="1990">2.578372264</base-service>
+            <base-service year="2005">1.973350504</base-service>
             <final-energy-consumer/>
             <income-elasticity year="2020">0.3</income-elasticity>
             <income-elasticity year="2035">0.3</income-elasticity>
@@ -10208,8 +10232,8 @@
          </energy-final-demand>
          <energy-final-demand name="mining">
             <perCapitaBased>0</perCapitaBased>
-            <base-scaler fillout="1" year="1975">1</base-scaler>
-            <base-service year="1975">1.267538727</base-service>
+            <base-service year="1990">1.267538727</base-service>
+            <base-service year="2005">1.029390956</base-service>
             <final-energy-consumer/>
             <income-elasticity year="2020">0.2</income-elasticity>
             <income-elasticity year="2035">0.2</income-elasticity>

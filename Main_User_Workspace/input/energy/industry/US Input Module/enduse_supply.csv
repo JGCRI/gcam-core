@@ -1,35 +1,35 @@
-Set unit tags for end-use supplysectors,,,
-INPUT_TABLE,,,
-Variable ID,,,
-100,,,
+Set unit tags for end-use supplysectors,,,,
+INPUT_TABLE,,,,
+Variable ID,,,,
+100,,,,
 
-supplysector,output-unit,input-unit,price-unit
-boilers general,EJ,EJ,1975$/GJ
-boilers pulp paper and wood,EJ,EJ,1975$/GJ
-process heat general,EJ,EJ,1975$/GJ
-process heat primary metals,EJ,EJ,1975$/GJ
-machine drive,EJ,EJ,1975$/GJ
-electrochemical,EJ,EJ,1975$/GJ
-other end uses,EJ,EJ,1975$/GJ
-agriculture energy use,EJ,EJ,1975$/GJ
-construction energy use,EJ,EJ,1975$/GJ
-mining energy use,EJ,EJ,1975$/GJ
-feedstocks chemicals,EJ,EJ,1975$/GJ
-feedstocks primary metals,EJ,EJ,1975$/GJ
-feedstocks construction,EJ,EJ,1975$/GJ
-limestone feedstocks,EJ,Gt cement feed equiv,1975$/GJ
+supplysector,output-unit,input-unit,price-unit,1975 price
+boilers general,EJ,EJ,1975$/GJ,4.28903
+boilers pulp paper and wood,EJ,EJ,1975$/GJ,4.57418
+process heat general,EJ,EJ,1975$/GJ,5.08192
+process heat primary metals,EJ,EJ,1975$/GJ,5.65024
+machine drive,EJ,EJ,1975$/GJ,9.58449
+electrochemical,EJ,EJ,1975$/GJ,9.71997
+other end uses,EJ,EJ,1975$/GJ,6.51922
+agriculture energy use,EJ,EJ,1975$/GJ,4.50555
+construction energy use,EJ,EJ,1975$/GJ,4.75999
+mining energy use,EJ,EJ,1975$/GJ,4.60491
+feedstocks chemicals,EJ,EJ,1975$/GJ,4.32783
+feedstocks primary metals,EJ,EJ,1975$/GJ,3.05951
+feedstocks construction,EJ,EJ,1975$/GJ,4.50555
+limestone feedstocks,EJ,Gt cement feed equiv,1975$/GJ,3
 
-Set final energy keyword,,,
-INPUT_TABLE,,,
-Variable ID,,,
-101,,,
-,keyword,,
-supplysector,final-energy,,
-boilers general,industry,,
-boilers pulp paper and wood,industry,,
-process heat general,industry,,
-process heat primary metals,industry,,
-machine drive,industry,,
+Set final energy keyword,,,,
+INPUT_TABLE,,,,
+Variable ID,,,,
+101,,,,
+,keyword,,,
+supplysector,final-energy,,,
+boilers general,industry,,,
+boilers pulp paper and wood,industry,,,
+process heat general,industry,,,
+process heat primary metals,industry,,,
+machine drive,industry,,,
 electrochemical,industry,,,,,,,,,,
 other end uses,industry,,,,,,,,,,
 agriculture energy use,industry,,,,,,,,,,

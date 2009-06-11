@@ -14,9 +14,9 @@ China,79.919,,,19.55898,1975$/t C,storage cost only,,sectors,subsectors,technolo
 Middle East,80.199,,,50.12052,1975$/t C,tech cost only,,cement,cement (conv),cement (conv),,
 Africa,80.555,,,0.119383825,t C / t cement,total C emissions,,,cement_CCS,cement_CCS,,
 Latin America,80.064,,,0.107445443,t C / t cement,C getting captured,,process heat cement,biomass,biomass,,
-Southeast Asia,80.024,,,5.385221469,1975$ / t cement,ne cost adder,,,gas,gas
-Eastern Europe,80.644,,,108%,non-energy penalty,,,,coal,coal
-Korea,79.562,,,,,,,,refined liquids,refined liquids
+Southeast Asia,80.024,,,5.385221469,1975$ / t cement,ne cost adder,,process heat cement,gas,gas
+Eastern Europe,80.644,,,108%,non-energy penalty,,,process heat cement,coal,coal
+Korea,79.562,,,,,,,process heat cement,refined liquids,refined liquids
 India,80.499,,,,,,,,,
 
 
@@ -33,35 +33,35 @@ all,process heat cement,EJ,EJ,1975$/GJ,0.98,industry,,,,
 energy-final-demand attributes,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
-20,,,set base service to return correct value in 1990,,,,,,,,,
-,,,year=1975,1975 fillout,,,cement (Gt),population,population,,,
-region,energy-final-demand,perCapitaBased,base-service,base-scaler,final-energy-consumer (empty node),,1990,1975,1990,,,
-USA,cement,1,0.069922577,1,,,0.0813,215079,250181,,,
-Canada,cement,1,0.010735253,1,,,0.0129,23139,27698,,,
-Western Europe,cement,1,0.256271385,1,,,0.2766,402474,434467,,,
-Japan,cement,1,0.09587183,1,,,0.1062,111469,123478,,,
-Australia_NZ,cement,1,0.007788894,1,,,0.0095,16909,20532,,,
-Former Soviet Union,cement,1,0.147465625,1,,,0.1677,254228,289091,,,
-China,cement,1,0.221324758,1,,,0.2761,980561,1.22E+06,,,
-Middle East,cement,1,0.032253146,1,,,0.0553,76657,131495,,,
-Africa,cement,1,0.03723646,1,,,0.0570,412028,630697,,,
-Latin America,cement,1,0.072270072,1,,,0.0989,319222,436676,,,
-Southeast Asia,cement,1,0.059027969,1,,,0.0829,474445,666169
-Eastern Europe,cement,1,0.044179723,1,,,0.0482,112678,122883
-Korea,cement,1,0.028963544,1,,,0.0352,35278,42869
-India,cement,1,0.039039955,1,,,0.0547,606142,849515
+20,,,,,,,,,,,,
+,,,base-service,,,,,,,,,
+region,energy-final-demand,perCapitaBased,1990,2005,final-energy-consumer (empty node),,,,,,,
+USA,cement,1,0.081334301,0.114596763,,,,,,,,
+Canada,cement,1,0.012850385,0.015225,,,,,,,,
+Western Europe,cement,1,0.276642615,0.31072158,,,,,,,,
+Japan,cement,1,0.106200485,0.084780889,,,,,,,,
+Australia_NZ,cement,1,0.009457778,0.011013333,,,,,,,,
+Former Soviet Union,cement,1,0.167688,0.08982,,,,,,,,
+China,cement,1,0.276111698,1.207261509,,,,,,,,
+Middle East,cement,1,0.055326029,0.101457913,,,,,,,,
+Africa,cement,1,0.056998367,0.101671633,,,,,,,,
+Latin America,cement,1,0.098861,0.144186786,,,,,,,,
+Southeast Asia,cement,1,0.082881268,0.158852392,,,
+Eastern Europe,cement,1,0.048180984,0.047439344,,,
+Korea,cement,1,0.035195821,0.056906328,,,
+India,cement,1,0.054714947,0.145162105,,,
 
 
-energy-final-demand income-elasticity,,,,,,,,,
-INPUT_TABLE,,,,,,,,,
-Variable ID,,,,,,,,,
-21,,,,,,,,,
-,,2020,2035,2050,2065,2080,2095,,
-region,energy-final-demand,income-elasticity,income-elasticity,income-elasticity,income-elasticity,income-elasticity,income-elasticity,,
-USA,cement,-0.07,-0.12,-0.25,-0.17,-0.06,-0.02,,
-Canada,cement,0.35,-0.29,0.41,-0.14,-0.08,-0.10,,
-Western Europe,cement,-0.20,-0.14,-0.10,-0.14,-0.10,-0.02,,
-Japan,cement,-0.17,-0.26,-0.32,-0.18,-0.05,-0.19,,
+energy-final-demand income-elasticity,,,,,,,
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+21,,,,,,,
+,,2020,2035,2050,2065,2080,2095
+region,energy-final-demand,income-elasticity,income-elasticity,income-elasticity,income-elasticity,income-elasticity,income-elasticity
+USA,cement,-0.07,-0.12,-0.25,-0.17,-0.06,-0.02
+Canada,cement,0.35,-0.29,0.41,-0.14,-0.08,-0.10
+Western Europe,cement,-0.20,-0.14,-0.10,-0.14,-0.10,-0.02
+Japan,cement,-0.17,-0.26,-0.32,-0.18,-0.05,-0.19
 Australia_NZ,cement,-0.15,-0.06,-0.30,-0.09,0.15,0.23
 Former Soviet Union,cement,0.43,0.61,0.10,-0.03,-0.03,-0.02
 China,cement,0.60,0.35,0.03,-0.08,-0.13,-0.04

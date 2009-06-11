@@ -1,13 +1,13 @@
 
 1,world/+{name}region,region/{name=transportation;delete=1}supplysector,region/{name=transportation;delete=1}energy-final-demand,scenario/world,scenario
 
-10,region/+{name}energy-final-demand,energy-final-demand/+perCapitaBased,energy-final-demand/+{year=1975;fillout=1}base-scaler,energy-final-demand/+{year=1975}base-service,energy-final-demand/final-energy-consumer,world/{name=USA}region,scenario/world,scenario
+10,region/+{name}energy-final-demand,energy-final-demand/+perCapitaBased,energy-final-demand/+{year=1990}base-service,energy-final-demand/+{year=2005}base-service,energy-final-demand/final-energy-consumer,world/{name=USA}region,scenario/world,scenario
 
 11,region/+{name}energy-final-demand,energy-final-demand/+{year=1975}income-elasticity,energy-final-demand/+{year=1990}income-elasticity,energy-final-demand/+{year=2005}income-elasticity,energy-final-demand/+{year=2020}income-elasticity,energy-final-demand/+{year=2035}income-elasticity,energy-final-demand/+{year=2050}income-elasticity,energy-final-demand/+{year=2065}income-elasticity,energy-final-demand/+{year=2080}income-elasticity,energy-final-demand/+{year=2095}income-elasticity,world/{name=USA}region,scenario/world,scenario
 
 12,region/+{name}energy-final-demand,energy-final-demand/+{year=1975}price-elasticity,energy-final-demand/+{year=1990}price-elasticity,energy-final-demand/+{year=2005}price-elasticity,energy-final-demand/+{year=2020}price-elasticity,energy-final-demand/+{year=2035}price-elasticity,energy-final-demand/+{year=2050}price-elasticity,energy-final-demand/+{year=2065}price-elasticity,energy-final-demand/+{year=2080}price-elasticity,energy-final-demand/+{year=2095}price-elasticity,world/{name=USA}region,scenario/world,scenario
 
-20,region/+{name}supplysector,supplysector/+output-unit,supplysector/+input-unit,supplysector/+price-unit,supplysector/+{final-energy}keyword,world/{name=USA}region,scenario/world,scenario
+20,region/+{name}supplysector,supplysector/+output-unit,supplysector/+input-unit,supplysector/+price-unit,supplysector/+{year=1975}price,supplysector/+{final-energy}keyword,world/{name=USA}region,scenario/world,scenario
 
 300,region/+{name}supplysector,supplysector/+{name}tranSubsector,tranSubsector/+scaleYear,tranSubsector/+addTimeValue,tranSubsector/+{year=1975;fillout=1}logitexp,world/{name=USA}region,scenario/world,scenario
 

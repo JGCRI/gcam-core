@@ -1,28 +1,28 @@
-Delete old industry,,,
-INPUT_TABLE,,,
-Variable ID,,,
-10,,,
+Delete old industry,,,,
+INPUT_TABLE,,,,
+Variable ID,,,,
+10,,,,
 
-supplysector,energy-final-demand,,
-industry,industry,,
+supplysector,energy-final-demand,,,
+industry,industry,,,
 
 
-set unit tags for industries,,,
-INPUT_TABLE,,,
-Variable ID,,,
-100,,,
+set unit tags for industries,,,,
+INPUT_TABLE,,,,
+Variable ID,,,,
+100,,,,
 
-supplysector,output-unit,input-unit,price-unit
-chemicals,FinalService,EJ,1975$/GJ
-food processing,FinalService,EJ,1975$/GJ,,,,,,,,
-iron and steel,FinalService,EJ,1975$/GJ,,,,,,,,
-other nonmetallic minerals,FinalService,EJ,1975$/GJ,,,,,,,,
-other manufacturing,FinalService,EJ,1975$/GJ,,,,,,,,
-aluminum and nonferrous metals,FinalService,EJ,1975$/GJ,,,,,,,,
-pulp paper and wood,FinalService,EJ,1975$/GJ,,,,,,,,
-agriculture,FinalService,EJ,1975$/GJ,,,,,,,,
-construction,FinalService,EJ,1975$/GJ,,,,,,,,
-mining,FinalService,EJ,1975$/GJ,,,,,,,,
+supplysector,output-unit,input-unit,price-unit,1975 price
+chemicals,FinalService,EJ,1975$/GJ,16.47
+food processing,FinalService,EJ,1975$/GJ,25.60,,,,,,,
+iron and steel,FinalService,EJ,1975$/GJ,15.95,,,,,,,
+other nonmetallic minerals,FinalService,EJ,1975$/GJ,17.96,,,,,,,
+other manufacturing,FinalService,EJ,1975$/GJ,39.04,,,,,,,
+aluminum and nonferrous metals,FinalService,EJ,1975$/GJ,17.41,,,,,,,
+pulp paper and wood,FinalService,EJ,1975$/GJ,18.88,,,,,,,
+agriculture,FinalService,EJ,1975$/GJ,21.15,,,,,,,
+construction,FinalService,EJ,1975$/GJ,19.50,,,,,,,
+mining,FinalService,EJ,1975$/GJ,19.92,,,,,,,
 
 read in non-fuel costs for industries. Also adds CO2 tag.,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,

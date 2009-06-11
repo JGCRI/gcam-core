@@ -7,8 +7,8 @@
          <heatingDegreeDays>4524</heatingDegreeDays>
          <coolingDegreeDays>1215</coolingDegreeDays>
          <building-final-demand name="residential">
-            <base-service year="1975">15093416485</base-service>
-            <base-scaler fillout="1" year="1975">1</base-scaler>
+            <base-service year="1990">17556739754</base-service>
+            <base-service year="2005">20800913061</base-service>
             <final-energy-consumer/>
             <saturation-elasticity year="1975">0</saturation-elasticity>
             <saturation-elasticity year="1990">0</saturation-elasticity>
@@ -51,6 +51,7 @@
             <output-unit>m^2</output-unit>
             <input-unit>EJ-service</input-unit>
             <price-unit>1975$/m^2</price-unit>
+            <price year="1975">42.4553</price>
             <subsector name="aggregatebuilding">
                <building-demand-technology name="aggregatebuilding">
                   <period year="1975">
@@ -70,7 +71,7 @@
                      <floorToSurfaceArea>5.5</floorToSurfaceArea>
                      <building-demand-input name="residential heating service">
                         <type>heating</type>
-                        <saturation>1.000</saturation>
+                        <saturation>0.972</saturation>
                         <price-elasticity>0</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential cooling service">
@@ -80,7 +81,7 @@
                      </building-demand-input>
                      <building-demand-input name="residential water heating service">
                         <type>generic</type>
-                        <saturation>0.98683532</saturation>
+                        <saturation>0.973709722</saturation>
                         <price-elasticity>0</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential lighting service">
@@ -108,7 +109,7 @@
                      <floorToSurfaceArea>5.5</floorToSurfaceArea>
                      <building-demand-input name="residential heating service">
                         <type>heating</type>
-                        <saturation>0.985</saturation>
+                        <saturation>0.972</saturation>
                         <price-elasticity>0</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential cooling service">
@@ -118,7 +119,7 @@
                      </building-demand-input>
                      <building-demand-input name="residential water heating service">
                         <type>generic</type>
-                        <saturation>0.98683532</saturation>
+                        <saturation>0.973709722</saturation>
                         <price-elasticity>0</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential lighting service">
@@ -146,33 +147,33 @@
                      <floorToSurfaceArea>5.5</floorToSurfaceArea>
                      <building-demand-input name="residential heating service">
                         <type>heating</type>
-                        <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <saturation>0.994</saturation>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential cooling service">
                         <type>cooling</type>
                         <saturation>0.900</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential water heating service">
                         <type>generic</type>
                         <saturation>1</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential lighting service">
                         <type>generic</type>
                         <saturation>1</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential appliances service">
                         <type>generic</type>
                         <saturation>0.95</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential others service">
                         <type>generic</type>
                         <saturation>0.800</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                   </period>
                   <period year="2035">
@@ -185,32 +186,32 @@
                      <building-demand-input name="residential heating service">
                         <type>heating</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential cooling service">
                         <type>cooling</type>
                         <saturation>0.975</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential water heating service">
                         <type>generic</type>
                         <saturation>1</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential lighting service">
                         <type>generic</type>
                         <saturation>1</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential appliances service">
                         <type>generic</type>
                         <saturation>1</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential others service">
                         <type>generic</type>
                         <saturation>0.900</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                   </period>
                   <period year="2050">
@@ -223,32 +224,32 @@
                      <building-demand-input name="residential heating service">
                         <type>heating</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential cooling service">
                         <type>cooling</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential water heating service">
                         <type>generic</type>
                         <saturation>1</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential lighting service">
                         <type>generic</type>
                         <saturation>1</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential appliances service">
                         <type>generic</type>
                         <saturation>1</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential others service">
                         <type>generic</type>
                         <saturation>0.950</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                   </period>
                   <period year="2065">
@@ -261,32 +262,32 @@
                      <building-demand-input name="residential heating service">
                         <type>heating</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential cooling service">
                         <type>cooling</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential water heating service">
                         <type>generic</type>
                         <saturation>1</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential lighting service">
                         <type>generic</type>
                         <saturation>1</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential appliances service">
                         <type>generic</type>
                         <saturation>1</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential others service">
                         <type>generic</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                   </period>
                   <period year="2080">
@@ -299,32 +300,32 @@
                      <building-demand-input name="residential heating service">
                         <type>heating</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential cooling service">
                         <type>cooling</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential water heating service">
                         <type>generic</type>
                         <saturation>1</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential lighting service">
                         <type>generic</type>
                         <saturation>1</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential appliances service">
                         <type>generic</type>
                         <saturation>1</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential others service">
                         <type>generic</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                   </period>
                   <period year="2095">
@@ -337,32 +338,32 @@
                      <building-demand-input name="residential heating service">
                         <type>heating</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential cooling service">
                         <type>cooling</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential water heating service">
                         <type>generic</type>
                         <saturation>1</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential lighting service">
                         <type>generic</type>
                         <saturation>1</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential appliances service">
                         <type>generic</type>
                         <saturation>1</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="residential others service">
                         <type>generic</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                   </period>
                </building-demand-technology>
@@ -374,6 +375,7 @@
             <output-unit>EJ-service</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">6.77</price>
             <keyword final-energy="building"/>
             <subsector name="gas">
                <scaleYear>2005</scaleYear>
@@ -411,7 +413,7 @@
                   <period year="1990">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.70</efficiency>
-                        <calibrated-value>2.9987</calibrated-value>
+                        <calibrated-value>2.9888</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -423,7 +425,7 @@
                   <period year="2005">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.82</efficiency>
-                        <calibrated-value>3.4194</calibrated-value>
+                        <calibrated-value>3.4023</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -637,7 +639,7 @@
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.98</efficiency>
-                        <calibrated-value>0.2001</calibrated-value>
+                        <calibrated-value>0.2057</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -649,7 +651,7 @@
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.98</efficiency>
-                        <calibrated-value>0.2200</calibrated-value>
+                        <calibrated-value>0.1622</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -740,7 +742,7 @@
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.61</efficiency>
-                        <calibrated-value>0.2120</calibrated-value>
+                        <calibrated-value>0.2063</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -752,7 +754,7 @@
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.14</efficiency>
-                        <calibrated-value>0.2345</calibrated-value>
+                        <calibrated-value>0.1637</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -864,7 +866,7 @@
                   <period year="1990">
                      <minicam-energy-input name="refined liquids enduse">
                         <efficiency>0.76</efficiency>
-                        <calibrated-value>1.0320</calibrated-value>
+                        <calibrated-value>0.9025</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>0</logitexp>
                      <sharewt>1</sharewt>
@@ -876,7 +878,7 @@
                   <period year="2005">
                      <minicam-energy-input name="refined liquids enduse">
                         <efficiency>0.82</efficiency>
-                        <calibrated-value>1.0416</calibrated-value>
+                        <calibrated-value>0.8875</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>0</logitexp>
                      <sharewt>1</sharewt>
@@ -988,7 +990,7 @@
                   <period year="1990">
                      <minicam-energy-input name="delivered biomass">
                         <efficiency>0.40</efficiency>
-                        <calibrated-value>0.5722</calibrated-value>
+                        <calibrated-value>0.4887</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -1000,7 +1002,7 @@
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
                         <efficiency>0.40</efficiency>
-                        <calibrated-value>0.4143</calibrated-value>
+                        <calibrated-value>0.3963</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -1254,6 +1256,7 @@
             <output-unit>EJ-service</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">9.60</price>
             <keyword final-energy="building"/>
             <subsector name="electricity">
                <technology name="AC">
@@ -1271,7 +1274,7 @@
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.16</efficiency>
-                        <calibrated-value>0.4710</calibrated-value>
+                        <calibrated-value>0.4708</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -1283,7 +1286,7 @@
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.81</efficiency>
-                        <calibrated-value>0.8113</calibrated-value>
+                        <calibrated-value>0.8623</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -1365,6 +1368,7 @@
             <output-unit>EJ-service</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">11.58</price>
             <keyword final-energy="building"/>
             <subsector name="gas">
                <scaleYear>2005</scaleYear>
@@ -1407,7 +1411,7 @@
                   <period year="1990">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.52</efficiency>
-                        <calibrated-value>1.0728</calibrated-value>
+                        <calibrated-value>1.0692</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -1424,7 +1428,7 @@
                   <period year="2005">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.56</efficiency>
-                        <calibrated-value>1.0479</calibrated-value>
+                        <calibrated-value>1.0306</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -1723,7 +1727,7 @@
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.84</efficiency>
-                        <calibrated-value>0.3434</calibrated-value>
+                        <calibrated-value>0.3433</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -1740,7 +1744,7 @@
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.88</efficiency>
-                        <calibrated-value>0.4037</calibrated-value>
+                        <calibrated-value>0.4012</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -2038,7 +2042,7 @@
                   <period year="1990">
                      <minicam-energy-input name="refined liquids enduse">
                         <efficiency>0.51</efficiency>
-                        <calibrated-value>0.1433</calibrated-value>
+                        <calibrated-value>0.1253</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>0</logitexp>
                      <sharewt>1</sharewt>
@@ -2055,7 +2059,7 @@
                   <period year="2005">
                      <minicam-energy-input name="refined liquids enduse">
                         <efficiency>0.55</efficiency>
-                        <calibrated-value>0.1712</calibrated-value>
+                        <calibrated-value>0.1460</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>0</logitexp>
                      <sharewt>1</sharewt>
@@ -2172,6 +2176,7 @@
             <output-unit>EJ-service</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">666</price>
             <keyword final-energy="building"/>
             <subsector name="electricity">
                <techScaleYear>2020</techScaleYear>
@@ -2195,7 +2200,7 @@
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.0210</efficiency>
-                        <calibrated-value>0.5788</calibrated-value>
+                        <calibrated-value>0.5786</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-4</logitexp>
                      <sharewt>1</sharewt>
@@ -2212,7 +2217,7 @@
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.0210</efficiency>
-                        <calibrated-value>0.6815</calibrated-value>
+                        <calibrated-value>0.6867</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-4</logitexp>
                      <sharewt>1</sharewt>
@@ -2360,7 +2365,7 @@
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.0874</efficiency>
-                        <calibrated-value>0.0757</calibrated-value>
+                        <calibrated-value>0.0763</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-4</logitexp>
                      <sharewt>1</sharewt>
@@ -2623,6 +2628,7 @@
             <output-unit>EJ-service</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">23.13</price>
             <keyword final-energy="building"/>
             <subsector name="gas">
                <scaleYear>2005</scaleYear>
@@ -2664,7 +2670,7 @@
                   <period year="1990">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.96</efficiency>
-                        <calibrated-value>0.0422</calibrated-value>
+                        <calibrated-value>0.0421</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-6</logitexp>
                      <sharewt>1</sharewt>
@@ -2681,7 +2687,7 @@
                   <period year="2005">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>1.00</efficiency>
-                        <calibrated-value>0.0693</calibrated-value>
+                        <calibrated-value>0.0682</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-6</logitexp>
                      <sharewt>1</sharewt>
@@ -2833,7 +2839,7 @@
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.73</efficiency>
-                        <calibrated-value>0.7654</calibrated-value>
+                        <calibrated-value>0.7651</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-6</logitexp>
                      <sharewt>1</sharewt>
@@ -2850,7 +2856,7 @@
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.00</efficiency>
-                        <calibrated-value>0.9727</calibrated-value>
+                        <calibrated-value>0.9039</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-6</logitexp>
                      <sharewt>1</sharewt>
@@ -2967,6 +2973,7 @@
             <output-unit>EJ-service</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">44.24</price>
             <keyword final-energy="building"/>
             <subsector name="gas">
                <scaleYear>2095</scaleYear>
@@ -3008,7 +3015,7 @@
                   <period year="1990">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.96</efficiency>
-                        <calibrated-value>0.1943</calibrated-value>
+                        <calibrated-value>0.1936</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-6</logitexp>
                      <sharewt>1</sharewt>
@@ -3025,7 +3032,7 @@
                   <period year="2005">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>1.00</efficiency>
-                        <calibrated-value>0.2083</calibrated-value>
+                        <calibrated-value>0.2049</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-6</logitexp>
                      <sharewt>1</sharewt>
@@ -3177,7 +3184,7 @@
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.96</efficiency>
-                        <calibrated-value>0.6914</calibrated-value>
+                        <calibrated-value>0.6911</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-6</logitexp>
                      <sharewt>1</sharewt>
@@ -3194,7 +3201,7 @@
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.00</efficiency>
-                        <calibrated-value>1.5006</calibrated-value>
+                        <calibrated-value>1.6124</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-6</logitexp>
                      <sharewt>1</sharewt>
@@ -3346,7 +3353,7 @@
                   <period year="1990">
                      <minicam-energy-input name="refined liquids enduse">
                         <efficiency>0.96</efficiency>
-                        <calibrated-value>0.2007</calibrated-value>
+                        <calibrated-value>0.1755</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>0</logitexp>
                      <sharewt>1</sharewt>
@@ -3363,7 +3370,7 @@
                   <period year="2005">
                      <minicam-energy-input name="refined liquids enduse">
                         <efficiency>1.00</efficiency>
-                        <calibrated-value>0.2889</calibrated-value>
+                        <calibrated-value>0.2479</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>0</logitexp>
                      <sharewt>1</sharewt>
@@ -3477,8 +3484,8 @@
             </subsector>
          </supplysector>
          <building-final-demand name="commercial">
-            <base-service year="1975">5554898815</base-service>
-            <base-scaler fillout="1" year="1975">1</base-scaler>
+            <base-service year="1990">6461486898</base-service>
+            <base-service year="2005">7655454776</base-service>
             <final-energy-consumer/>
             <saturation-elasticity year="1975">0</saturation-elasticity>
             <saturation-elasticity year="1990">0</saturation-elasticity>
@@ -3537,7 +3544,7 @@
                      <floorToSurfaceArea>5.5</floorToSurfaceArea>
                      <building-demand-input name="commercial heating service">
                         <type>heating</type>
-                        <saturation>1.000</saturation>
+                        <saturation>0.972</saturation>
                         <price-elasticity>0</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial cooling service">
@@ -3575,7 +3582,7 @@
                      <floorToSurfaceArea>5.5</floorToSurfaceArea>
                      <building-demand-input name="commercial heating service">
                         <type>heating</type>
-                        <saturation>0.985</saturation>
+                        <saturation>0.972</saturation>
                         <price-elasticity>0</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial cooling service">
@@ -3613,33 +3620,33 @@
                      <floorToSurfaceArea>5.5</floorToSurfaceArea>
                      <building-demand-input name="commercial heating service">
                         <type>heating</type>
-                        <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <saturation>0.994</saturation>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial cooling service">
                         <type>cooling</type>
                         <saturation>0.900</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial water heating service">
                         <type>generic</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial lighting service">
                         <type>generic</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial office equipment service">
                         <type>generic</type>
                         <saturation>0.800</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial others service">
                         <type>generic</type>
                         <saturation>0.900</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                   </period>
                   <period year="2035">
@@ -3652,32 +3659,32 @@
                      <building-demand-input name="commercial heating service">
                         <type>heating</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial cooling service">
                         <type>cooling</type>
                         <saturation>0.975</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial water heating service">
                         <type>generic</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial lighting service">
                         <type>generic</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial office equipment service">
                         <type>generic</type>
                         <saturation>0.900</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial others service">
                         <type>generic</type>
                         <saturation>0.950</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                   </period>
                   <period year="2050">
@@ -3690,32 +3697,32 @@
                      <building-demand-input name="commercial heating service">
                         <type>heating</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial cooling service">
                         <type>cooling</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial water heating service">
                         <type>generic</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial lighting service">
                         <type>generic</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial office equipment service">
                         <type>generic</type>
                         <saturation>0.950</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial others service">
                         <type>generic</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                   </period>
                   <period year="2065">
@@ -3728,32 +3735,32 @@
                      <building-demand-input name="commercial heating service">
                         <type>heating</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial cooling service">
                         <type>cooling</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial water heating service">
                         <type>generic</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial lighting service">
                         <type>generic</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial office equipment service">
                         <type>generic</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial others service">
                         <type>generic</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                   </period>
                   <period year="2080">
@@ -3766,32 +3773,32 @@
                      <building-demand-input name="commercial heating service">
                         <type>heating</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial cooling service">
                         <type>cooling</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial water heating service">
                         <type>generic</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial lighting service">
                         <type>generic</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial office equipment service">
                         <type>generic</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial others service">
                         <type>generic</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                   </period>
                   <period year="2095">
@@ -3804,32 +3811,32 @@
                      <building-demand-input name="commercial heating service">
                         <type>heating</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial cooling service">
                         <type>cooling</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial water heating service">
                         <type>generic</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial lighting service">
                         <type>generic</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial office equipment service">
                         <type>generic</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                      <building-demand-input name="commercial others service">
                         <type>generic</type>
                         <saturation>1.000</saturation>
-                        <price-elasticity>-0.4</price-elasticity>
+                        <price-elasticity>-0.25</price-elasticity>
                      </building-demand-input>
                   </period>
                </building-demand-technology>
@@ -3839,6 +3846,7 @@
             <output-unit>EJ-service</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">5.51</price>
             <keyword final-energy="building"/>
             <subsector name="gas">
                <scaleYear>2005</scaleYear>
@@ -3876,7 +3884,7 @@
                   <period year="1990">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.69</efficiency>
-                        <calibrated-value>1.1570</calibrated-value>
+                        <calibrated-value>1.1532</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -3888,7 +3896,7 @@
                   <period year="2005">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.76</efficiency>
-                        <calibrated-value>1.2819</calibrated-value>
+                        <calibrated-value>1.2536</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -4114,7 +4122,7 @@
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.98</efficiency>
-                        <calibrated-value>0.1220</calibrated-value>
+                        <calibrated-value>0.1018</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -4217,7 +4225,7 @@
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>3.10</efficiency>
-                        <calibrated-value>0.0775</calibrated-value>
+                        <calibrated-value>0.0647</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -4329,7 +4337,7 @@
                   <period year="1990">
                      <minicam-energy-input name="refined liquids enduse">
                         <efficiency>0.73</efficiency>
-                        <calibrated-value>0.2246</calibrated-value>
+                        <calibrated-value>0.1964</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>0</logitexp>
                      <sharewt>1</sharewt>
@@ -4341,7 +4349,7 @@
                   <period year="2005">
                      <minicam-energy-input name="refined liquids enduse">
                         <efficiency>0.77</efficiency>
-                        <calibrated-value>0.1704</calibrated-value>
+                        <calibrated-value>0.1179</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>0</logitexp>
                      <sharewt>1</sharewt>
@@ -4453,7 +4461,7 @@
                   <period year="1990">
                      <minicam-energy-input name="delivered biomass">
                         <efficiency>0.40</efficiency>
-                        <calibrated-value>0.0914</calibrated-value>
+                        <calibrated-value>0.0781</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -4547,6 +4555,7 @@
             <output-unit>EJ-service</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">8.15</price>
             <keyword final-energy="building"/>
             <subsector name="electricity">
                <technology name="AC">
@@ -4564,7 +4573,7 @@
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.44</efficiency>
-                        <calibrated-value>0.5414</calibrated-value>
+                        <calibrated-value>0.5412</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -4576,7 +4585,7 @@
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.80</efficiency>
-                        <calibrated-value>0.6498</calibrated-value>
+                        <calibrated-value>0.6133</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -4658,6 +4667,7 @@
             <output-unit>EJ-service</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">7.35</price>
             <keyword final-energy="building"/>
             <subsector name="gas">
                <scaleYear>2005</scaleYear>
@@ -4700,7 +4710,7 @@
                   <period year="1990">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.72</efficiency>
-                        <calibrated-value>0.4144</calibrated-value>
+                        <calibrated-value>0.4131</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -4717,7 +4727,7 @@
                   <period year="2005">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.82</efficiency>
-                        <calibrated-value>0.5426</calibrated-value>
+                        <calibrated-value>0.5434</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -5033,7 +5043,7 @@
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.97</efficiency>
-                        <calibrated-value>0.2091</calibrated-value>
+                        <calibrated-value>0.1870</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -5331,7 +5341,7 @@
                   <period year="1990">
                      <minicam-energy-input name="refined liquids enduse">
                         <efficiency>0.74</efficiency>
-                        <calibrated-value>0.0674</calibrated-value>
+                        <calibrated-value>0.0589</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>0</logitexp>
                      <sharewt>1</sharewt>
@@ -5348,7 +5358,7 @@
                   <period year="2005">
                      <minicam-energy-input name="refined liquids enduse">
                         <efficiency>0.76</efficiency>
-                        <calibrated-value>0.0595</calibrated-value>
+                        <calibrated-value>0.0399</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>0</logitexp>
                      <sharewt>1</sharewt>
@@ -5465,6 +5475,7 @@
             <output-unit>EJ-service</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">170</price>
             <keyword final-energy="building"/>
             <subsector name="electricity">
                <techScaleYear>2020</techScaleYear>
@@ -5488,7 +5499,7 @@
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.0209</efficiency>
-                        <calibrated-value>0.3722</calibrated-value>
+                        <calibrated-value>0.3720</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -5505,7 +5516,7 @@
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.0209</efficiency>
-                        <calibrated-value>0.4476</calibrated-value>
+                        <calibrated-value>0.4340</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -5636,7 +5647,7 @@
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.1113</efficiency>
-                        <calibrated-value>0.7906</calibrated-value>
+                        <calibrated-value>0.7903</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -5653,7 +5664,7 @@
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.1113</efficiency>
-                        <calibrated-value>0.9508</calibrated-value>
+                        <calibrated-value>0.9220</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-8</logitexp>
                      <sharewt>1</sharewt>
@@ -5916,6 +5927,7 @@
             <output-unit>EJ-service</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">54.26</price>
             <keyword final-energy="building"/>
             <subsector name="electricity">
                <technology name="office">
@@ -5938,7 +5950,7 @@
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.00</efficiency>
-                        <calibrated-value>0.2306</calibrated-value>
+                        <calibrated-value>0.2305</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-6</logitexp>
                      <sharewt>1</sharewt>
@@ -5955,7 +5967,7 @@
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.00</efficiency>
-                        <calibrated-value>0.6344</calibrated-value>
+                        <calibrated-value>0.6594</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-6</logitexp>
                      <sharewt>1</sharewt>
@@ -6072,6 +6084,7 @@
             <output-unit>EJ-service</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
+            <price year="1975">32.22</price>
             <keyword final-energy="building"/>
             <subsector name="gas">
                <scaleYear>2095</scaleYear>
@@ -6113,7 +6126,7 @@
                   <period year="1990">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.97</efficiency>
-                        <calibrated-value>1.0015</calibrated-value>
+                        <calibrated-value>0.9983</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-6</logitexp>
                      <sharewt>1</sharewt>
@@ -6130,7 +6143,7 @@
                   <period year="2005">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>1.00</efficiency>
-                        <calibrated-value>1.1720</calibrated-value>
+                        <calibrated-value>1.1749</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-6</logitexp>
                      <sharewt>1</sharewt>
@@ -6282,7 +6295,7 @@
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.97</efficiency>
-                        <calibrated-value>0.7920</calibrated-value>
+                        <calibrated-value>0.7917</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-6</logitexp>
                      <sharewt>1</sharewt>
@@ -6299,7 +6312,7 @@
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.00</efficiency>
-                        <calibrated-value>2.0256</calibrated-value>
+                        <calibrated-value>2.1021</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>-6</logitexp>
                      <sharewt>1</sharewt>
@@ -6451,7 +6464,7 @@
                   <period year="1990">
                      <minicam-energy-input name="refined liquids enduse">
                         <efficiency>0.97</efficiency>
-                        <calibrated-value>0.6401</calibrated-value>
+                        <calibrated-value>0.5598</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>0</logitexp>
                      <sharewt>1</sharewt>
@@ -6468,7 +6481,7 @@
                   <period year="2005">
                      <minicam-energy-input name="refined liquids enduse">
                         <efficiency>1.00</efficiency>
-                        <calibrated-value>0.5238</calibrated-value>
+                        <calibrated-value>0.4853</calibrated-value>
                      </minicam-energy-input>
                      <logitexp>0</logitexp>
                      <sharewt>1</sharewt>

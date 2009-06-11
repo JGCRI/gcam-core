@@ -1,0 +1,54 @@
+Set subsector shareweights to 0 so it doesn't figure in calibration,,,,
+INPUT_TABLE,,,,
+Variable ID,,,,
+100,,,,
+,,,2020 fillout,
+region,supplysector,subsector,sharewt,
+ALL,electricity,nuclear,0,
+ALL,H2 Central Production,nuclear,0,
+
+set scaleyear and techscale year to 2020 to trick model into giving a 0 sharewt,,,,
+INPUT_TABLE,,,,
+Variable ID,,,,
+110,,,,
+
+region,supplysector,subsector,ScaleYear,techScaleYear
+ALL,electricity,nuclear,2020,1975
+
+Lower Gen II lifetime to 15 so that it does not carry over to 2020,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+1020,,,,,,,,,,,,
+,,,,lifetime,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+ALL,electricity,nuclear,Gen_II_LWR,-1,-1,15,-1,-1,-1,-1,-1,-1
+
+Fix output,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+1000,,,,,,,,,,,,
+,,,,not read,fixedOutput,,,,,,,
+region,supplysector,subsector,technology,2005,2020,2035,2050,2065,2080,2095,,
+Africa,electricity,nuclear,Gen_II_LWR,0.0406548,0.0271032,0.0090344,0,0,0,0,,
+Australia_NZ,electricity,nuclear,Gen_II_LWR,0,0,0,0,0,0,0
+Canada,electricity,nuclear,Gen_II_LWR,0.331344,0.220896,0.073632,0,0,0,0
+China,electricity,nuclear,Gen_II_LWR,0.1911168,0.1274112,0.0424704,0,0,0,0
+Eastern Europe,electricity,nuclear,Gen_II_LWR,0.3109716,0.2073144,0.0691048,0,0,0,0
+Former Soviet Union,electricity,nuclear,Gen_II_LWR,0.8947404,0.5964936,0.1988312,0,0,0,0
+India,electricity,nuclear,Gen_II_LWR,0.0623268,0.0415512,0.0138504,0,0,0,0
+Japan,electricity,nuclear,Gen_II_LWR,1.097118,0.731412,0.243804,0,0,0,0
+Korea,electricity,nuclear,Gen_II_LWR,0.5284044,0.3522696,0.1174232,0,0,0,0
+Latin America,electricity,nuclear,Gen_II_LWR,0.0991188,0.0660792,0.0220264,0,0,0,0
+Middle East,electricity,nuclear,Gen_II_LWR,0,0,0,0,0,0,0
+Southeast Asia,electricity,nuclear,Gen_II_LWR,0.1528416,0.1018944,0.0339648,0,0,0,0
+USA,electricity,nuclear,Gen_II_LWR,2.9186136,1.9457424,0.6485808,0,0,0,0
+Western Europe,electricity,nuclear,Gen_II_LWR,3.3275592,2.2183728,0.7394576,0,0,0,0
+
+Set future tech sharewts to 0,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,
+Variable ID,,,,,,,,,
+1010,,,,,,,,,
+
+region,supplysector,subsector,technology,2020,2035,2050,2065,2080,2095
+ALL,electricity,nuclear,Gen_II_LWR,0,0,0,0,0,0
+ALL,electricity,nuclear,Gen_III,0,0,0,0,0,0

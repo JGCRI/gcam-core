@@ -11,13 +11,13 @@ Energy-final-demand general characteristics,,,,,215079,250181,296410,,
 INPUT_TABLE,,,,,,,,,
 Variable ID,,,,,,,,,
 10,,,"calculate to get correct 1990 service (0 elasticities, pop ratio only matters if percapitabased bool is set)",,,,,,
-,,1975 fillout,1975,,,,,,
-energy-final-demand,perCapitaBased,base-scaler,base-service,,1990 service,2005 service,,,
-passenger,1,1,3609117,,4198143,6154267,,,
-freight,0,1,6437155,,6437155,6917413,,,
-recreational offroad,0,1,0.559615232,,0.559615232,0.675906007,,,
-military,0,1,0.632140422,,0.632140422,0.712323353,,,
-pipeline,0,1,0.24647747,,0.24647747,0.226845726,,,
+,,1975 fillout,base-service,,,,,,
+energy-final-demand,perCapitaBased,base-scaler,1990,,,,,,
+passenger,1,6744635,9889884,,,,,,
+freight,0,12782971,14027439,,,,,,
+recreational offroad,0,0.559615232,0.675906007,,,,,,
+military,0,0.632140422,0.712323353,,,,,,
+pipeline,0,0.24647747,0.226845726,,,,,,
 
 
 Income elasticity,,,,,,,,,
@@ -46,22 +46,22 @@ military,0,0,0,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1
 pipeline,0,0,0,-1,-1,-1,-1,-1,-1
 
 
-unit tags and keywords,,,,
-INPUT_TABLE,,,,
-Variable ID,,,,
-20,,,,
-,,,,keyword
-supplysector,output-unit,input-unit,price-unit,final-energy
-passenger,million-pass-mi,EJ,1990$/pass-mi,transportation
-freight,million-ton-mi,EJ,1990$/ton-mi,transportation
-recreational offroad,SerUnit,EJ,1990$/service,transportation
-military,SerUnit,EJ,1990$/service,transportation
-pipeline,SerUnit,EJ,1990$/GJ,transportation
+unit tags and keywords,,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+20,,,,,
+,,,,,keyword
+supplysector,output-unit,input-unit,price-unit,1975 price,final-energy
+passenger,million-pass-km,EJ,1990$/pass-km,0.60,transportation
+freight,million-ton-km,EJ,1990$/ton-km,0.04,transportation
+recreational offroad,SerUnit,EJ,1990$/service,4.61,transportation
+military,SerUnit,EJ,1990$/service,4.61,transportation
+pipeline,SerUnit,EJ,1990$/GJ,12.06,transportation
 
 
-transportation subsector general attributes,,,,
-INPUT_TABLE,,,,
-Variable ID,,,,
+transportation subsector general attributes,,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
 300,,,,
 ,,,,1975 fillout
 supplysector,tranSubsector,scaleYear,addTimeValue,logitexp
@@ -196,30 +196,30 @@ Variable ID,,,,,,,,,,,,,,,,,,,,,,
 3002,,,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,,,,,,,,,,,
 ,,,coefficient,coefficient,coefficient,coefficient,coefficient,coefficient,coefficient,coefficient,coefficient,,,,,,,,,,,
 supplysector,tranSubsector,tranTechnology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input,,,,,,,,,,
-passenger,auto,ICE auto,5695,5695,4994,4135,3778,3452,3060,2713,2405,refined liquids enduse,,,,,,,,,,
-passenger,auto,electric auto,1923,1923,1686,1624,1564,1507,1451,1398,1346,elect_td_trn,,,,,,,,,,
-passenger,auto,fuel cell auto,3607,3607,3163,2804,2485,2203,1953,1731,1535,H2 Enduse,,,,,,,,,,
-passenger,light truck,ICE light truck,7151,7151,7064,5850,5345,4883,4329,3838,3402,refined liquids enduse,,,,,,,,,,
-passenger,light truck,electric light truck,2415,2415,2385,2297,2213,2131,2053,1977,1904,elect_td_trn,,,,,,,,,,
-passenger,light truck,fuel cell light truck,4529,4529,4474,3966,3516,3117,2763,2450,2171,H2 Enduse,,,,,,,,,,
-passenger,bus,ICE bus,23578,23578,24246,23885,23529,23178,22833,22493,22158,refined liquids enduse,,,,,,,,,,
-passenger,bus,CNG bus,47834,47834,47992,47278,46573,45880,45196,44523,43860,delivered gas,,,,,,,,,,
-passenger,bus,electric bus,10792,10792,10828,10666,10508,10351,10197,10045,9895,elect_td_trn,,,,,,,,,,
-passenger,rail,ICE rail,88761,88761,69474,68439,67420,66416,65426,64452,63492,refined liquids enduse,,,,,,,,,,
-passenger,rail,electric rail,24729,24729,23226,22880,22539,22203,21873,21547,21226,elect_td_trn,,,,,,,,,,
-passenger,high speed rail,electric high speed rail,214408,214408,214408,211215,208069,204969,201916,198909,195946,elect_td_trn,,,,,,,,,,
-passenger,passenger air,passenger air,444515,444515,320576,308762,297384,286425,275870,265704,255913,refined liquids enduse,,,,,,,,,,
-freight,truck,ICE freight truck,21552,21552,19321,18057,17003,16011,15077,14197,13369,refined liquids enduse,,,,,,,,,,
-freight,truck,electric freight truck,7277,7277,6524,6097,5741,5406,5091,4794,4514,elect_td_trn,,,,,,,,,,
-freight,truck,fuel cell freight truck,13650,13650,12237,11436,10769,10141,9549,8992,8467,H2 Enduse,,,,,,,,,,
-freight,rail,ICE freight rail,15420,15420,14059,13850,13644,13440,13240,13043,12849,refined liquids enduse,,,,,,,,,,
-freight,rail,electric freight rail,5207,5207,4747,4677,4607,4538,4471,4404,4338,elect_td_trn,,,,,,,,,,
-freight,rail,fuel cell freight rail,9766,9766,8904,8772,8641,8512,8385,8261,8137,H2 Enduse,,,,,,,,,,
-freight,freight air,freight air,444515,444515,320576,301871,284257,267671,252053,237346,223497,refined liquids enduse,,,,,,,,,,
-freight,domestic ship,ICE domestic ship,359590,359590,473215,466166,459223,452382,445644,439006,432467,refined liquids enduse,,,,,,,,,,
-freight,domestic ship,fuel cell domestic ship,227740,227740,299703,295239,290841,286509,282241,278037,273895,H2 Enduse,,,,,,,,,,
-freight,international ship,ICE international ship,4867598,4867598,4339102,4274470,4210799,4148078,4086290,4025423,3965463,refined liquids enduse,,,,,,,,,,
-freight,international ship,fuel cell international ship,3082812,3082812,2748098,2707164,2666840,2627116,2587984,2549435,2511460,H2 Enduse,,,,,,,,,,
+passenger,auto,ICE auto,3540,3540,3104,2570,2348,2145,1902,1686,1495,refined liquids enduse,,,,,,,,,,
+passenger,auto,electric auto,1195,1195,1048,1009,972,936,902,869,837,elect_td_trn,,,,,,,,,,
+passenger,auto,fuel cell auto,2242,2242,1966,1742,1545,1369,1214,1076,954,H2 Enduse,,,,,,,,,,
+passenger,light truck,ICE light truck,4444,4444,4391,3636,3322,3035,2691,2385,2114,refined liquids enduse,,,,,,,,,,
+passenger,light truck,electric light truck,1501,1501,1483,1428,1375,1325,1276,1229,1183,elect_td_trn,,,,,,,,,,
+passenger,light truck,fuel cell light truck,2815,2815,2781,2465,2185,1937,1717,1522,1350,H2 Enduse,,,,,,,,,,
+passenger,bus,ICE bus,15828,15828,16268,16026,15787,15552,15320,15092,14867,refined liquids enduse,,,,,,,,,,
+passenger,bus,CNG bus,29729,29729,29827,29383,28945,28514,28090,27671,27259,delivered gas,,,,,,,,,,
+passenger,bus,electric bus,6707,6707,6729,6629,6530,6433,6337,6243,6150,elect_td_trn,,,,,,,,,,
+passenger,rail,ICE rail,33952,33952,32445,31962,31486,31017,30555,30099,29651,refined liquids enduse,,,,,,,,,,
+passenger,rail,electric rail,15264,15264,14549,14332,14119,13908,13701,13497,13296,elect_td_trn,,,,,,,,,,
+passenger,high speed rail,electric high speed rail,133256,133256,133256,131271,129315,127389,125492,123622,121781,elect_td_trn,,,,,,,,,,
+passenger,passenger air,passenger air,276268,276268,199239,191897,184826,178015,171455,165136,159051,refined liquids enduse,,,,,,,,,,
+freight,truck,ICE freight truck,13395,13395,12008,11223,10568,9951,9370,8824,8309,refined liquids enduse,,,,,,,,,,
+freight,truck,electric freight truck,4523,4523,4055,3789,3568,3360,3164,2979,2806,elect_td_trn,,,,,,,,,,
+freight,truck,fuel cell freight truck,8483,8483,7605,7108,6693,6302,5935,5588,5262,H2 Enduse,,,,,,,,,,
+freight,rail,ICE freight rail,9583,9583,8738,8608,8480,8353,8229,8106,7985,refined liquids enduse,,,,,,,,,,
+freight,rail,electric freight rail,3236,3236,2950,2907,2863,2821,2779,2737,2696,elect_td_trn,,,,,,,,,,
+freight,rail,fuel cell freight rail,6069,6069,5534,5452,5370,5290,5212,5134,5057,H2 Enduse,,,,,,,,,,
+freight,freight air,freight air,276268,276268,199239,187614,176667,166359,156652,147511,138904,refined liquids enduse,,,,,,,,,,
+freight,domestic ship,ICE domestic ship,223487,223487,294105,289724,285409,281157,276969,272844,268780,refined liquids enduse,,,,,,,,,,
+freight,domestic ship,fuel cell domestic ship,141541,141541,186267,183492,180759,178066,175414,172801,170227,H2 Enduse,,,,,,,,,,
+freight,international ship,ICE international ship,2258635,2258635,2013405,1983415,1953871,1924767,1896097,1867854,1840031,refined liquids enduse,,,,,,,,,,
+freight,international ship,fuel cell international ship,1430469,1430469,1275157,1256163,1237452,1219019,1200861,1182974,1165353,H2 Enduse,,,,,,,,,,
 
 
 Transportation technology energy calibration,,,,,,,,,
@@ -228,19 +228,19 @@ Variable ID,,Note: technologies non-existent in base years are removed from tabl
 3003,,,minicam-energy-input,minicam-energy-input,,,,,
 ,,,calibrated-value,calibrated-value,,,service,,
 supplysector,tranSubsector,tranTechnology,1990,2005,minicam-energy-input,,1990,2005,
-passenger,auto,ICE auto,8.48608,8.92928,refined liquids enduse,,2515419,2962082,million pass mi
-passenger,light truck,ICE light truck,4.33558,7.89775,refined liquids enduse,,959530,2028871,million pass mi
-passenger,bus,ICE bus,0.16294,0.17107,refined liquids enduse,,134127,140173,million pass mi
-passenger,bus,CNG bus,0.00048,0.01456,delivered gas,,195,6028,million pass mi
-passenger,bus,electric bus,0.00037,0.00025,elect_td_trn,,666,463,million pass mi
-passenger,rail,ICE rail,0.01848,0.01867,refined liquids enduse,,5447,7121,million pass mi
-passenger,rail,electric rail,0.01836,0.02238,elect_td_trn,,19424,25540,million pass mi
-passenger,passenger air,passenger air,1.97716,2.41613,refined liquids enduse,,563335,983988,million pass mi
-freight,truck,ICE freight truck,3.32553,4.54263,refined liquids enduse,,997905,1397556,million ton mi
-freight,rail,ICE freight rail,0.42558,0.55942,refined liquids enduse,,722142,1054534,million ton mi
-freight,freight air,freight air,0.37049,0.43641,refined liquids enduse,,18260,43735,million ton mi,,
-freight,domestic ship,ICE domestic ship,0.31637,0.29726,refined liquids enduse,,928290,662779,million ton mi,,
-freight,international ship,ICE international ship,0.89441,0.79482,refined liquids enduse,,3770558,3758809,million ton mi,,
+passenger,auto,ICE auto,8.48608,8.92928,refined liquids enduse,,4047309,4765991,million pass mi
+passenger,light truck,ICE light truck,4.33558,7.89775,refined liquids enduse,,1543884,3264454,million pass mi
+passenger,bus,ICE bus,0.16294,0.17107,refined liquids enduse,,200251,209277,million pass mi
+passenger,bus,CNG bus,0.00048,0.01456,delivered gas,,315,9716,million pass mi
+passenger,bus,electric bus,0.00037,0.00025,elect_td_trn,,1075,746,million pass mi
+passenger,rail,ICE rail,0.01848,0.01867,refined liquids enduse,,14142,15369,million pass mi
+passenger,rail,electric rail,0.01836,0.02238,elect_td_trn,,31253,41094,million pass mi
+passenger,passenger air,passenger air,1.97716,2.41613,refined liquids enduse,,906406,1583237,million pass mi
+freight,truck,ICE freight truck,3.32553,4.54263,refined liquids enduse,,1456602,2039958,million ton mi
+freight,rail,ICE freight rail,0.42558,0.55942,refined liquids enduse,,1680144,2756600,million ton mi
+freight,freight air,freight air,0.37049,0.43641,refined liquids enduse,,26654,63838,million ton mi,,
+freight,domestic ship,ICE domestic ship,0.31637,0.29726,refined liquids enduse,,1493618,1066411,million ton mi,,
+freight,international ship,ICE international ship,0.89441,0.79482,refined liquids enduse,,8125953,8100633,million ton mi,,
 
 
 Transportation technology non-energy costs,,,,,,,,,,,
@@ -255,24 +255,24 @@ passenger,auto,fuel cell auto,0.4467,0.4467,0.4773,0.4702,0.4632,0.4563,0.4563,0
 passenger,light truck,ICE light truck,0.4415,0.4415,0.4685,0.4685,0.4685,0.4685,0.4685,0.4685,0.4685
 passenger,light truck,electric light truck,0.4856,0.4856,0.5154,0.4964,0.4964,0.4964,0.4964,0.4964,0.4964
 passenger,light truck,fuel cell light truck,0.5077,0.5077,0.5388,0.5190,0.4998,0.4965,0.4965,0.4965,0.4965
-passenger,bus,ICE bus,1.4511,1.4511,1.5801,1.5801,1.5801,1.5801,1.5801,1.5801,1.5801
-passenger,bus,CNG bus,1.5236,1.5236,1.6591,1.6591,1.6591,1.6591,1.6591,1.6591,1.6591
-passenger,bus,electric bus,1.6787,1.6787,1.8279,1.8279,1.8279,1.8279,1.8279,1.8279,1.8279
-passenger,rail,ICE rail,2.1797,2.1797,2.7632,2.7632,2.7632,2.7632,2.7632,2.7632,2.7632
-passenger,rail,electric rail,2.6764,2.6764,2.6774,2.6774,2.6774,2.6774,2.6774,2.6774,2.6774
-passenger,high speed rail,electric high speed rail,49.7873,49.7873,49.7873,49.7873,49.7873,49.7873,49.7873,49.7873,49.7873
-passenger,passenger air,passenger air,9.6596,9.6596,8.9113,8.2658,7.9612,7.9612,7.9612,7.9612,7.9612
-freight,truck,ICE freight truck,0.9980,0.9980,0.9277,0.9207,0.9139,0.9070,0.9002,0.8935,0.8868
-freight,truck,electric freight truck,1.0978,1.0978,1.0204,1.0052,0.9903,0.9829,0.9755,0.9682,0.9610
-freight,truck,fuel cell freight truck,1.1477,1.1477,1.0668,1.0275,0.9896,0.9830,0.9756,0.9683,0.9611
-freight,rail,ICE freight rail,0.7006,0.7006,0.7405,0.7241,0.7079,0.6922,0.6819,0.6717,0.6617
-freight,rail,electric freight rail,0.7706,0.7706,0.8146,0.7965,0.7787,0.7614,0.7500,0.7389,0.7279
-freight,rail,fuel cell freight rail,0.8057,0.8057,0.8516,0.8327,0.8141,0.7960,0.7841,0.7725,0.7610
-freight,freight air,freight air,7.9969,7.9969,13.5690,13.4676,13.3669,13.2670,13.1679,13.0694,12.9718
-freight,domestic ship,ICE domestic ship,4.1215,4.1215,2.6235,2.6235,2.6235,2.6235,2.6235,2.6235,2.6235
-freight,domestic ship,fuel cell domestic ship,4.7397,4.7397,3.0170,3.0170,3.0170,3.0170,3.0170,3.0170,3.0170
-freight,international ship,ICE international ship,88.2327,88.2327,66.2472,66.2472,66.2472,66.2472,66.2472,66.2472,66.2472
-freight,international ship,fuel cell international ship,101.4676,101.4676,76.1843,76.1843,76.1843,76.1843,76.1843,76.1843,76.1843
+passenger,bus,ICE bus,1.4840,1.4840,1.6403,1.6403,1.6403,1.6403,1.6403,1.6403,1.6403
+passenger,bus,CNG bus,1.5582,1.5582,1.7223,1.7223,1.7223,1.7223,1.7223,1.7223,1.7223
+passenger,bus,electric bus,1.7242,1.7242,1.9059,1.9059,1.9059,1.9059,1.9059,1.9059,1.9059
+passenger,rail,ICE rail,2.3176,2.3176,3.4289,3.4289,3.4289,3.4289,3.4289,3.4289,3.4289
+passenger,rail,electric rail,2.8159,2.8159,2.8312,2.8312,2.8312,2.8312,2.8312,2.8312,2.8312
+passenger,high speed rail,electric high speed rail,50.6446,50.6446,50.6446,50.6446,50.6446,50.6446,50.6446,50.6446,50.6446
+passenger,passenger air,passenger air,10.3993,10.3993,9.6978,8.9954,8.6639,8.6639,8.6639,8.6639,8.6639
+freight,truck,ICE freight truck,0.9288,0.9288,0.8857,0.8790,0.8725,0.8660,0.8595,0.8531,0.8467
+freight,truck,electric freight truck,1.0216,1.0216,0.9742,0.9597,0.9454,0.9384,0.9313,0.9244,0.9175
+freight,truck,fuel cell freight truck,1.0681,1.0681,1.0185,0.9810,0.9448,0.9385,0.9315,0.9245,0.9176
+freight,rail,ICE freight rail,0.6523,0.6523,0.7034,0.6877,0.6724,0.6574,0.6476,0.6380,0.6285
+freight,rail,electric freight rail,0.7175,0.7175,0.7737,0.7565,0.7396,0.7232,0.7124,0.7018,0.6913
+freight,rail,fuel cell freight rail,0.7501,0.7501,0.8089,0.7908,0.7732,0.7560,0.7448,0.7337,0.7227
+freight,freight air,freight air,7.7371,7.7371,13.2190,13.1202,13.0221,12.9248,12.8282,12.7323,12.6372
+freight,domestic ship,ICE domestic ship,4.6385,4.6385,3.5981,3.5981,3.5981,3.5981,3.5981,3.5981,3.5981
+freight,domestic ship,fuel cell domestic ship,5.3343,5.3343,4.1379,4.1379,4.1379,4.1379,4.1379,4.1379,4.1379
+freight,international ship,ICE international ship,98.1432,98.1432,84.9310,84.9310,84.9310,84.9310,84.9310,84.9310,84.9310
+freight,international ship,fuel cell international ship,112.8647,112.8647,97.6707,97.6707,97.6707,97.6707,97.6707,97.6707,97.6707
 
 
 Transportation technology load factor,,,,,,,,,,,
@@ -287,20 +287,20 @@ passenger,auto,fuel cell auto,1.6,1.6,1.57,1.57,1.57,1.57,1.57,1.57,1.57
 passenger,light truck,ICE light truck,1.5,1.5,1.72,1.72,1.72,1.72,1.72,1.72,1.72
 passenger,light truck,electric light truck,1.5,1.5,1.72,1.72,1.72,1.72,1.72,1.72,1.72
 passenger,light truck,fuel cell light truck,1.5,1.5,1.72,1.72,1.72,1.72,1.72,1.72,1.72
-passenger,bus,ICE bus,18.4,18.4,18.8,18.8,18.8,18.8,18.8,18.8,18.8
-passenger,bus,CNG bus,18.4,18.4,18.8,18.8,18.8,18.8,18.8,18.8,18.8
-passenger,bus,electric bus,18.4,18.4,18.8,18.8,18.8,18.8,18.8,18.8,18.8
-passenger,rail,ICE rail,24.8,24.8,25.1,25.1,25.1,25.1,25.1,25.1,25.1
-passenger,rail,electric rail,24.8,24.8,25.1,25.1,25.1,25.1,25.1,25.1,25.1
+passenger,bus,ICE bus,18.4,18.4,18.9,18.9,18.9,18.9,18.9,18.9,18.9
+passenger,bus,CNG bus,18.4,18.4,18.9,18.9,18.9,18.9,18.9,18.9,18.9
+passenger,bus,electric bus,18.4,18.4,18.9,18.9,18.9,18.9,18.9,18.9,18.9
+passenger,rail,ICE rail,24.6,24.6,25.3,25.3,25.3,25.3,25.3,25.3,25.3
+passenger,rail,electric rail,24.6,24.6,25.3,25.3,25.3,25.3,25.3,25.3,25.3
 passenger,high speed rail,electric high speed rail,310,310,310,310,310,310,310,310,310
 passenger,passenger air,passenger air,120,120,124,124,124,124,124,124,124
-freight,truck,ICE freight truck,6.1,6.1,5.6,5.6,5.6,5.6,5.6,5.6,5.6
-freight,truck,electric freight truck,6.1,6.1,5.6,5.6,5.6,5.6,5.6,5.6,5.6
-freight,truck,fuel cell freight truck,6.1,6.1,5.6,5.6,5.6,5.6,5.6,5.6,5.6
-freight,rail,ICE freight rail,24.8,24.8,25.1,25.1,25.1,25.1,25.1,25.1,25.1
-freight,rail,electric freight rail,24.8,24.8,25.1,25.1,25.1,25.1,25.1,25.1,25.1
-freight,rail,fuel cell freight rail,24.8,24.8,25.1,25.1,25.1,25.1,25.1,25.1,25.1
-freight,freight air,freight air,20.8,20.8,30.4,30.4,30.4,30.4,30.4,30.4,30.4
+freight,truck,ICE freight truck,5.6,5.6,5.1,5.1,5.1,5.1,5.1,5.1,5.1
+freight,truck,electric freight truck,5.6,5.6,5.1,5.1,5.1,5.1,5.1,5.1,5.1
+freight,truck,fuel cell freight truck,5.6,5.6,5.1,5.1,5.1,5.1,5.1,5.1,5.1
+freight,rail,ICE freight rail,35.9,35.9,40.8,40.8,40.8,40.8,40.8,40.8,40.8
+freight,rail,electric freight rail,35.9,35.9,40.8,40.8,40.8,40.8,40.8,40.8,40.8
+freight,rail,fuel cell freight rail,35.9,35.9,40.8,40.8,40.8,40.8,40.8,40.8,40.8
+freight,freight air,freight air,18.8,18.8,27.6,27.6,27.6,27.6,27.6,27.6,27.6
 freight,domestic ship,ICE domestic ship,1000,1000,1000,1000,1000,1000,1000,1000,1000
 freight,domestic ship,fuel cell domestic ship,1000,1000,1000,1000,1000,1000,1000,1000,1000
 freight,international ship,ICE international ship,19449,19449,19449,19449,19449,19449,19449,19449,19449

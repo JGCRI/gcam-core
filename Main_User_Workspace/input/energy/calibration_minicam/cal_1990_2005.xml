@@ -759,7 +759,7 @@
                   </period>
                   <period year="2005">
                      <CalDataOutput>
-                        <calOutputValue>1.56314178</calOutputValue>
+                        <calOutputValue>1.562681232</calOutputValue>
                      </CalDataOutput>
                   </period>
                </technology>
@@ -1476,7 +1476,7 @@
                   </period>
                   <period year="2005">
                      <CalDataOutput>
-                        <calOutputValue>2.669838624</calOutputValue>
+                        <calOutputValue>2.662721064</calOutputValue>
                      </CalDataOutput>
                   </period>
                </technology>
@@ -2919,12 +2919,12 @@
                <technology name="crude oil refining">
                   <period year="1990">
                      <CalDataOutput>
-                        <calOutputValue>1.419864743</calOutputValue>
+                        <calOutputValue>1.419320459</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="2005">
                      <CalDataOutput>
-                        <calOutputValue>1.891927577</calOutputValue>
+                        <calOutputValue>1.889080553</calOutputValue>
                      </CalDataOutput>
                   </period>
                </technology>
@@ -3641,7 +3641,7 @@
                   </period>
                   <period year="2005">
                      <CalDataOutput>
-                        <calOutputValue>4.298568811</calOutputValue>
+                        <calOutputValue>4.298317603</calOutputValue>
                      </CalDataOutput>
                   </period>
                </technology>
@@ -4361,7 +4361,7 @@
                   </period>
                   <period year="2005">
                      <CalDataOutput>
-                        <calOutputValue>2.3801958</calOutputValue>
+                        <calOutputValue>2.375883396</calOutputValue>
                      </CalDataOutput>
                   </period>
                </technology>
@@ -5814,7 +5814,7 @@
                   </period>
                   <period year="2005">
                      <CalDataOutput>
-                        <calOutputValue>2.168640603</calOutputValue>
+                        <calOutputValue>2.168180055</calOutputValue>
                      </CalDataOutput>
                   </period>
                </technology>
@@ -6529,12 +6529,12 @@
                <technology name="crude oil refining">
                   <period year="1990">
                      <CalDataOutput>
-                        <calOutputValue>5.841130284</calOutputValue>
+                        <calOutputValue>5.589378</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="2005">
                      <CalDataOutput>
-                        <calOutputValue>8.426688624</calOutputValue>
+                        <calOutputValue>8.134826796</calOutputValue>
                      </CalDataOutput>
                   </period>
                </technology>
@@ -8716,7 +8716,7 @@
                   </period>
                   <period year="2005">
                      <CalDataOutput>
-                        <calOutputValue>29.53665983</calOutputValue>
+                        <calOutputValue>29.19644046</calOutputValue>
                      </CalDataOutput>
                   </period>
                </technology>
@@ -9430,12 +9430,12 @@
                <technology name="crude oil refining">
                   <period year="1990">
                      <CalDataOutput>
-                        <calOutputValue>16.99966403</calOutputValue>
+                        <calOutputValue>16.9995803</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="2005">
                      <CalDataOutput>
-                        <calOutputValue>20.48350565</calOutputValue>
+                        <calOutputValue>20.35446847</calOutputValue>
                      </CalDataOutput>
                   </period>
                </technology>

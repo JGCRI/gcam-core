@@ -25,42 +25,34 @@ Variable ID,,,,,,,,,,,
 supplysector,tranSubsector,tranTechnology,1975,1990,2005,2020,2035,2050,2065,2080,2095
 passenger,auto,ICE auto,1,1,1,1,1,1,1,1,1
 passenger,auto,electric auto,0,0,0,0.1,0.5,1,1,1,1
-passenger,auto,fuel cell auto,0,0,0,0.0067,0.0474,0.2689,0.731,0.953,1
 passenger,light truck,ICE light truck,1,1,1,1,1,1,1,1,1
 passenger,light truck,electric light truck,0,0,0,0.1,0.5,1,1,1,1
-passenger,light truck,fuel cell light truck,0,0,0,0.0067,0.0474,0.2689,0.731,0.953,1
 passenger,bus,ICE bus,1,1,1,1,1,1,1,1,1
-passenger,bus,CNG bus,1,1,1,1,1,1,1,1,1,
-passenger,bus,electric bus,1,1,1,1,1,1,1,1,1,
+passenger,bus,CNG bus,1,1,1,1,1,1,1,1,1
+passenger,bus,electric bus,1,1,1,1,1,1,1,1,1
 passenger,rail,ICE rail,1,1,1,1,1,1,1,1,1,
 passenger,rail,electric rail,1,1,1,1,1,1,1,1,1,
 passenger,high speed rail,electric high speed rail,0,0,0,1,1,1,1,1,1,
 passenger,passenger air,passenger air,1,1,1,1,1,1,1,1,1,
 freight,truck,ICE freight truck,1,1,1,1,1,1,1,1,1,
 freight,truck,electric freight truck,0,0,0,0,0.1,0.5,1,1,1,
-freight,truck,fuel cell freight truck,0,0,0,0,0.0067,0.0474,0.2689,0.731,0.953,
 freight,rail,ICE freight rail,1,1,1,1,1,1,1,1,1,
 freight,rail,electric freight rail,0,0,0,0,0.1,0.5,1,1,1,
-freight,rail,fuel cell freight rail,0,0,0,0,0.0067,0.0474,0.2689,0.731,0.953,
 freight,freight air,freight air,1,1,1,1,1,1,1,1,1,
 freight,domestic ship,ICE domestic ship,1,1,1,1,1,1,1,1,1,
-freight,domestic ship,fuel cell domestic ship,0,0,0,0,0.1,0.5,1,1,1,
 freight,international ship,ICE international ship,1,1,1,1,1,1,1,1,1,
-freight,international ship,fuel cell international ship,0,0,0,0,0.1,0.5,1,1,1,,,,,,,,,,,
 
 
-Transportation technology intensity,,,,,,,,,,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,,,,,,,,,,
+Transportation technology intensity,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
 3002,,,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,,,,,,,,,,,
 ,,,coefficient,coefficient,coefficient,coefficient,coefficient,coefficient,coefficient,coefficient,coefficient,,,,,,,,,,,
 supplysector,tranSubsector,tranTechnology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input,,,,,,,,,,
 passenger,auto,ICE auto,3540,3540,3104,2570,2128,1762,1459,1208,1000,refined liquids enduse,,,,,,,,,,
 passenger,auto,electric auto,1195,1195,1048,987,929,875,824,776,731,elect_td_trn,,,,,,,,,,
-passenger,auto,fuel cell auto,2242,2242,1966,1628,1348,1116,924,765,634,H2 Enduse,,,,,,,,,,
 passenger,light truck,ICE light truck,4444,4444,4391,3636,3010,2493,2064,1709,1415,refined liquids enduse,,,,,,,,,,
 passenger,light truck,electric light truck,1501,1501,1483,1396,1315,1238,1166,1098,1034,elect_td_trn,,,,,,,,,,
-passenger,light truck,fuel cell light truck,2815,2815,2781,2303,1907,1579,1307,1083,896,H2 Enduse,,,,,,,,,,
 passenger,bus,ICE bus,15828,15828,16268,15669,14534,13481,12984,12506,12045,refined liquids enduse,,,,,,,,,,
 passenger,bus,CNG bus,29729,29729,29827,28728,27670,26650,25668,24722,23811,delivered gas,,,,,,,,,,
 passenger,bus,electric bus,6707,6707,6729,6629,6530,6433,6337,6243,6150,elect_td_trn,,,,,,,,,,
@@ -70,15 +62,11 @@ passenger,high speed rail,electric high speed rail,133256,133256,133256,128345,1
 passenger,passenger air,passenger air,276268,276268,199239,177964,158961,141987,126825,113283,101186,refined liquids enduse,,,,,,,,,,
 freight,truck,ICE freight truck,13395,13395,12008,10485,9155,7994,6981,6095,5322,refined liquids enduse,,,,,,,,,,
 freight,truck,electric freight truck,4523,4523,4055,3540,3091,2699,2357,2058,1797,elect_td_trn,,,,,,,,,,
-freight,truck,fuel cell freight truck,8483,8483,7605,6641,5798,5063,4421,3860,3371,H2 Enduse,,,,,,,,,,
 freight,rail,ICE freight rail,9583,9583,8738,8416,8106,7807,7519,7242,6975,refined liquids enduse,,,,,,,,,,
 freight,rail,electric freight rail,3236,3236,2950,2842,2737,2636,2539,2445,2355,elect_td_trn,,,,,,,,,,
-freight,rail,fuel cell freight rail,6069,6069,5534,5330,5134,4944,4762,4587,4418,H2 Enduse,,,,,,,,,,
 freight,freight air,freight air,276268,276268,199239,177964,158961,141987,126825,113283,101186,refined liquids enduse,,,,,,,,,,
 freight,domestic ship,ICE domestic ship,223487,223487,294105,283267,272828,262774,253091,243764,234782,refined liquids enduse,,,,,,,,,,
-freight,domestic ship,fuel cell domestic ship,141541,141541,186267,179402,172791,166424,160291,154384,148695,H2 Enduse,,,,,,,,,,
 freight,international ship,ICE international ship,2258635,2258635,2013405,1939210,1867748,1798920,1732629,1668780,1607284,refined liquids enduse,,,,,,,,,,
-freight,international ship,fuel cell international ship,1430469,1430469,1275157,1228166,1182907,1139316,1097331,1056894,1017946,H2 Enduse,,,,,,,,,,
 
 
 Transportation technology non-energy costs,,,,,,,,,,,,,,,,,,,,,,
@@ -89,11 +77,9 @@ Variable ID,,,,,,,,,,,,,,,,,,,,,,
 supplysector,tranSubsector,tranTechnology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,,,,,,
 passenger,auto,ICE auto,0.3884,0.3884,0.4151,0.4151,0.4151,0.4151,0.4151,0.4151,0.4151,,,,,,,,,,,
 passenger,auto,electric auto,0.4272,0.4272,0.4566,0.4332,0.4204,0.4150,0.4150,0.4150,0.4150,,,,,,,,,,,
-passenger,auto,fuel cell auto,0.4467,0.4467,0.4773,0.4428,0.4264,0.4151,0.4151,0.4151,0.4151,,,,,,,,,,,
 passenger,light truck,ICE light truck,0.4415,0.4415,0.4685,0.4685,0.4685,0.4685,0.4685,0.4685,0.4685,,,,,,,,,,,
-passenger,light truck,electric light truck,0.4856,0.4856,0.5154,0.4890,0.4745,0.4685,0.4685,0.4685,0.4685,,,,,,,,,,,
-passenger,light truck,fuel cell light truck,0.5077,0.5077,0.5388,0.4998,0.4814,0.4685,0.4685,0.4685,0.4685,,,,,,,,,,,
-passenger,bus,ICE bus,1.4840,1.4840,1.6403,1.6403,1.6403,1.6403,1.6403,1.6403,1.6403,,,,,,,,,,,
+passenger,light truck,electric light truck,0.4856,0.4856,0.5154,0.4890,0.4745,0.4685,0.4685,0.4685,0.4685
+passenger,bus,ICE bus,1.4840,1.4840,1.6403,1.6403,1.6403,1.6403,1.6403,1.6403,1.6403
 passenger,bus,CNG bus,1.5582,1.5582,1.7223,1.7223,1.7223,1.7223,1.7223,1.7223,1.7223
 passenger,bus,electric bus,1.7242,1.7242,1.9059,1.7678,1.7027,1.6473,1.6473,1.6473,1.6473
 passenger,rail,ICE rail,2.3176,2.3176,3.4289,3.3526,3.2779,3.2050,3.1336,3.0638,2.9956
@@ -102,19 +88,8 @@ passenger,high speed rail,electric high speed rail,50.6446,50.6446,50.6446,46.97
 passenger,passenger air,passenger air,10.3993,10.3993,9.6978,9.6978,9.6978,9.6978,9.6978,9.6978,9.6978
 freight,truck,ICE freight truck,0.9288,0.9288,0.8857,0.8790,0.8725,0.8660,0.8595,0.8531,0.8467
 freight,truck,electric freight truck,1.0216,1.0216,0.9742,0.9174,0.8836,0.8659,0.8594,0.8530,0.8466
-freight,truck,fuel cell freight truck,1.0681,1.0681,1.0185,0.9447,0.8963,0.8659,0.8594,0.8530,0.8466
 freight,rail,ICE freight rail,0.6523,0.6523,0.7034,0.6877,0.6724,0.6574,0.6476,0.6380,0.6285
 freight,rail,electric freight rail,0.7175,0.7175,0.7737,0.7176,0.6758,0.6577,0.6479,0.6382,0.6287
-freight,rail,fuel cell freight rail,0.7501,0.7501,0.8089,0.7390,0.6855,0.6573,0.6475,0.6378,0.6283
 freight,freight air,freight air,7.7371,7.7371,13.2190,13.1202,13.0221,12.9248,12.8282,12.7323,12.6372
 freight,domestic ship,ICE domestic ship,4.6385,4.6385,3.5981,3.5981,3.5981,3.5981,3.5981,3.5981,3.5981
-freight,domestic ship,fuel cell domestic ship,5.3343,5.3343,4.1379,3.8382,3.6967,3.5982,3.5982,3.5982,3.5982
 freight,international ship,ICE international ship,98.1432,98.1432,84.9310,84.9310,84.9310,84.9310,84.9310,84.9310,84.9310
-freight,international ship,fuel cell international ship,112.8647,112.8647,97.6707,90.5963,87.2577,84.9312,84.9312,84.9312,84.9312
-
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-4000,,,,,,,,,,,
-,,,sharewt,sharewt,sharewt,sharewt,sharewt,sharewt,sharewt,sharewt,sharewt
-supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-military,military,fuel cell,0,0,0,0,0.1,0.5,1,1,1

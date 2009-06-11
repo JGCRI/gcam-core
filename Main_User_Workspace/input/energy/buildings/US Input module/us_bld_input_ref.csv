@@ -17,9 +17,9 @@ Building Demand Sector: Residential Buildings,
 INPUT_TABLE,,,,,,,,,
 Variable ID,Unit: square meters,,,,,,,,
 101,,,,,,,,,
-,base-service,base-scaler,,,,,,,
-building-final-demand,1975,1975 fillout,,,,,,,
-residential,15093416485,1,,,,,,,
+,base-service,,,,,,,,
+building-final-demand,1990,2005,,,,,,,
+residential,17556739754,20800913061,,,,,,,
 
 Building Demand Sector: Residential Buildings,,,,,,,,,
 INPUT_TABLE,,,,,,,,,
@@ -57,9 +57,9 @@ residential,0.0,0.0,0.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0
 INPUT_TABLE,,,,,,,,,
 Variable ID,,,,,,,,,
 200,,,,,,,,,
-,,,,keyword,,,,,
-supplysector,output-unit,input-unit,price-unit,final-energy,,,,,
-residential,m^2,EJ-service,1975$/m^2,building,,,,,
+
+supplysector,output-unit,input-unit,price-unit,1975 price,,,,,
+residential,m^2,EJ-service,1975$/m^2,27.69,,,,,
 
 Aggregate Building: Building Type,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,
@@ -117,112 +117,112 @@ Variable ID,,,,,,,
 300,,,,,,,
 
 supplysector,subsector,building-demand-technology,period,building-demand-input,type,saturation,price-elasticity
-residential,aggregatebuilding,aggregatebuilding,1990,residential heating service,heating,1.000,0
-residential,aggregatebuilding,aggregatebuilding,2005,residential heating service,heating,0.985,0
-residential,aggregatebuilding,aggregatebuilding,2020,residential heating service,heating,1.000,-0.4
-residential,aggregatebuilding,aggregatebuilding,2035,residential heating service,heating,1.000,-0.4
-residential,aggregatebuilding,aggregatebuilding,2050,residential heating service,heating,1.000,-0.4
-residential,aggregatebuilding,aggregatebuilding,2065,residential heating service,heating,1.000,-0.4
-residential,aggregatebuilding,aggregatebuilding,2080,residential heating service,heating,1.000,-0.4
-residential,aggregatebuilding,aggregatebuilding,2095,residential heating service,heating,1.000,-0.4
+residential,aggregatebuilding,aggregatebuilding,1990,residential heating service,heating,0.972,0
+residential,aggregatebuilding,aggregatebuilding,2005,residential heating service,heating,0.972,0
+residential,aggregatebuilding,aggregatebuilding,2020,residential heating service,heating,0.994,-0.25
+residential,aggregatebuilding,aggregatebuilding,2035,residential heating service,heating,1.000,-0.25
+residential,aggregatebuilding,aggregatebuilding,2050,residential heating service,heating,1.000,-0.25
+residential,aggregatebuilding,aggregatebuilding,2065,residential heating service,heating,1.000,-0.25
+residential,aggregatebuilding,aggregatebuilding,2080,residential heating service,heating,1.000,-0.25
+residential,aggregatebuilding,aggregatebuilding,2095,residential heating service,heating,1.000,-0.25
 
 Cooling Service Demand ,,,,,,,
 INPUT_TABLE,,,,,,,
 Variable ID,,,,,,,
 300,,,,,,,
-,,,,,,,weighted-cooling months/12
-supplysector,subsector,building-demand-technology,period,building-demand-input,Type,Saturation,pElasticity
+
+supplysector,subsector,building-demand-technology,period,building-demand-input,Type,Saturation,price-elasticity
 residential,aggregatebuilding,aggregatebuilding,1990,residential cooling service,cooling,0.800,0
 residential,aggregatebuilding,aggregatebuilding,2005,residential cooling service,cooling,0.800,0
-residential,aggregatebuilding,aggregatebuilding,2020,residential cooling service,cooling,0.900,-0.4
-residential,aggregatebuilding,aggregatebuilding,2035,residential cooling service,cooling,0.975,-0.4
-residential,aggregatebuilding,aggregatebuilding,2050,residential cooling service,cooling,1.000,-0.4
-residential,aggregatebuilding,aggregatebuilding,2065,residential cooling service,cooling,1.000,-0.4
-residential,aggregatebuilding,aggregatebuilding,2080,residential cooling service,cooling,1.000,-0.4
-residential,aggregatebuilding,aggregatebuilding,2095,residential cooling service,cooling,1.000,-0.4
+residential,aggregatebuilding,aggregatebuilding,2020,residential cooling service,cooling,0.900,-0.25
+residential,aggregatebuilding,aggregatebuilding,2035,residential cooling service,cooling,0.975,-0.25
+residential,aggregatebuilding,aggregatebuilding,2050,residential cooling service,cooling,1.000,-0.25
+residential,aggregatebuilding,aggregatebuilding,2065,residential cooling service,cooling,1.000,-0.25
+residential,aggregatebuilding,aggregatebuilding,2080,residential cooling service,cooling,1.000,-0.25
+residential,aggregatebuilding,aggregatebuilding,2095,residential cooling service,cooling,1.000,-0.25
 
 Water Heating Service Demand,,,,,,,
 INPUT_TABLE,,,,,,,
 Variable ID,,,,,,,
 300,,,,,,,
 
-supplysector,subsector,building-demand-technology,period,building-demand-input,Type,Saturation,pElasticity
-residential,aggregatebuilding,aggregatebuilding,1990,residential water heating service,generic,0.98683532,0
-residential,aggregatebuilding,aggregatebuilding,2005,residential water heating service,generic,0.98683532,0
-residential,aggregatebuilding,aggregatebuilding,2020,residential water heating service,generic,1,-0.4
-residential,aggregatebuilding,aggregatebuilding,2035,residential water heating service,generic,1,-0.4
-residential,aggregatebuilding,aggregatebuilding,2050,residential water heating service,generic,1,-0.4
-residential,aggregatebuilding,aggregatebuilding,2065,residential water heating service,generic,1,-0.4
-residential,aggregatebuilding,aggregatebuilding,2080,residential water heating service,generic,1,-0.4
-residential,aggregatebuilding,aggregatebuilding,2095,residential water heating service,generic,1,-0.4
+supplysector,subsector,building-demand-technology,period,building-demand-input,Type,Saturation,price-elasticity
+residential,aggregatebuilding,aggregatebuilding,1990,residential water heating service,generic,0.973709722,0
+residential,aggregatebuilding,aggregatebuilding,2005,residential water heating service,generic,0.973709722,0
+residential,aggregatebuilding,aggregatebuilding,2020,residential water heating service,generic,1,-0.25
+residential,aggregatebuilding,aggregatebuilding,2035,residential water heating service,generic,1,-0.25
+residential,aggregatebuilding,aggregatebuilding,2050,residential water heating service,generic,1,-0.25
+residential,aggregatebuilding,aggregatebuilding,2065,residential water heating service,generic,1,-0.25
+residential,aggregatebuilding,aggregatebuilding,2080,residential water heating service,generic,1,-0.25
+residential,aggregatebuilding,aggregatebuilding,2095,residential water heating service,generic,1,-0.25
 
 Lighting Service Demand,,,,,,,
 INPUT_TABLE,,,,,,,
 Variable ID,,,,,,,
 300,,,,,,,
 
-supplysector,subsector,building-demand-technology,period,building-demand-input,Type,Saturation,pElasticity
+supplysector,subsector,building-demand-technology,period,building-demand-input,Type,Saturation,price-elasticity
 residential,aggregatebuilding,aggregatebuilding,1990,residential lighting service,generic,1,0
 residential,aggregatebuilding,aggregatebuilding,2005,residential lighting service,generic,1,0
-residential,aggregatebuilding,aggregatebuilding,2020,residential lighting service,generic,1,-0.4
-residential,aggregatebuilding,aggregatebuilding,2035,residential lighting service,generic,1,-0.4
-residential,aggregatebuilding,aggregatebuilding,2050,residential lighting service,generic,1,-0.4
-residential,aggregatebuilding,aggregatebuilding,2065,residential lighting service,generic,1,-0.4
-residential,aggregatebuilding,aggregatebuilding,2080,residential lighting service,generic,1,-0.4
-residential,aggregatebuilding,aggregatebuilding,2095,residential lighting service,generic,1,-0.4
+residential,aggregatebuilding,aggregatebuilding,2020,residential lighting service,generic,1,-0.25
+residential,aggregatebuilding,aggregatebuilding,2035,residential lighting service,generic,1,-0.25
+residential,aggregatebuilding,aggregatebuilding,2050,residential lighting service,generic,1,-0.25
+residential,aggregatebuilding,aggregatebuilding,2065,residential lighting service,generic,1,-0.25
+residential,aggregatebuilding,aggregatebuilding,2080,residential lighting service,generic,1,-0.25
+residential,aggregatebuilding,aggregatebuilding,2095,residential lighting service,generic,1,-0.25
 
 Appliances Service Demand,,,,,,,
 INPUT_TABLE,,,,,,,
 Variable ID,,,,,,,
 300,,,,,,,,,,,
 
-supplysector,subsector,building-demand-technology,period,building-demand-input,Type,Saturation,pElasticity,,,,
+supplysector,subsector,building-demand-technology,period,building-demand-input,Type,Saturation,price-elasticity,,,,
 residential,aggregatebuilding,aggregatebuilding,1990,residential appliances service,generic,0.9,0,,,,
 residential,aggregatebuilding,aggregatebuilding,2005,residential appliances service,generic,0.9,0,,,,
-residential,aggregatebuilding,aggregatebuilding,2020,residential appliances service,generic,0.95,-0.4,,,,
-residential,aggregatebuilding,aggregatebuilding,2035,residential appliances service,generic,1,-0.4,,,,
-residential,aggregatebuilding,aggregatebuilding,2050,residential appliances service,generic,1,-0.4,,,,
-residential,aggregatebuilding,aggregatebuilding,2065,residential appliances service,generic,1,-0.4,,,,
-residential,aggregatebuilding,aggregatebuilding,2080,residential appliances service,generic,1,-0.4,,,,
-residential,aggregatebuilding,aggregatebuilding,2095,residential appliances service,generic,1,-0.4,,,,
+residential,aggregatebuilding,aggregatebuilding,2020,residential appliances service,generic,0.95,-0.25,,,,
+residential,aggregatebuilding,aggregatebuilding,2035,residential appliances service,generic,1,-0.25,,,,
+residential,aggregatebuilding,aggregatebuilding,2050,residential appliances service,generic,1,-0.25,,,,
+residential,aggregatebuilding,aggregatebuilding,2065,residential appliances service,generic,1,-0.25,,,,
+residential,aggregatebuilding,aggregatebuilding,2080,residential appliances service,generic,1,-0.25,,,,
+residential,aggregatebuilding,aggregatebuilding,2095,residential appliances service,generic,1,-0.25,,,,
 
 Others Service Demand,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,
 Variable ID,,,,,,,,,,,
 300,,,,,,,,,,,
-,,,,,,"Assume that it will increase 0.5% annually since 2005, increasing rate decrease",
-supplysector,subsector,building-demand-technology,period,building-demand-input,Type,Saturation,pElasticity
+
+supplysector,subsector,building-demand-technology,period,building-demand-input,Type,Saturation,price-elasticity
 residential,aggregatebuilding,aggregatebuilding,1990,residential others service,generic,0.700,0
 residential,aggregatebuilding,aggregatebuilding,2005,residential others service,generic,0.700,0
-residential,aggregatebuilding,aggregatebuilding,2020,residential others service,generic,0.800,-0.4
-residential,aggregatebuilding,aggregatebuilding,2035,residential others service,generic,0.900,-0.4
-residential,aggregatebuilding,aggregatebuilding,2050,residential others service,generic,0.950,-0.4
-residential,aggregatebuilding,aggregatebuilding,2065,residential others service,generic,1.000,-0.4
-residential,aggregatebuilding,aggregatebuilding,2080,residential others service,generic,1.000,-0.4
-residential,aggregatebuilding,aggregatebuilding,2095,residential others service,generic,1.000,-0.4
+residential,aggregatebuilding,aggregatebuilding,2020,residential others service,generic,0.800,-0.25
+residential,aggregatebuilding,aggregatebuilding,2035,residential others service,generic,0.900,-0.25
+residential,aggregatebuilding,aggregatebuilding,2050,residential others service,generic,0.950,-0.25
+residential,aggregatebuilding,aggregatebuilding,2065,residential others service,generic,1.000,-0.25
+residential,aggregatebuilding,aggregatebuilding,2080,residential others service,generic,1.000,-0.25
+residential,aggregatebuilding,aggregatebuilding,2095,residential others service,generic,1.000,-0.25
 
 Internal Gains,,,,,,,
 INPUT_TABLE,,,,,,,
 Variable ID,,,,,,,
 301,,,,,,,
 
-heating-fraction-of-year-active,cooling-fraction-of-year-active,,,
-0.251,0.103,,,
+heating-fraction-of-year-active,cooling-fraction-of-year-active,,,,
+0.251,0.103,,,,
 
-*********************************************************************************,,,,
-*********************************************************************************,,,,
-units and keywords,,,,
-INPUT_TABLE,,,,
-Variable ID,,,,
-995,,,,
-,,,,keyword
-supplysector,output-unit,input-unit,price-unit,final-energy
-residential heating service,EJ-service,EJ,1975$/GJ,building
-residential cooling service,EJ-service,EJ,1975$/GJ,building
-residential water heating service,EJ-service,EJ,1975$/GJ,building
-residential lighting service,EJ-service,EJ,1975$/GJ,building
-residential appliances service,EJ-service,EJ,1975$/GJ,building
-residential others service,EJ-service,EJ,1975$/GJ,building,,,,,,,,,,,,,,,,
+*********************************************************************************,,,,,
+*********************************************************************************,,,,,
+units and keywords,,,,,
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+995,,,,,
+,,,,,keyword
+supplysector,output-unit,input-unit,price-unit,1975 price,final-energy
+residential heating service,EJ-service,EJ,1975$/GJ,6.77,building
+residential cooling service,EJ-service,EJ,1975$/GJ,9.60,building
+residential water heating service,EJ-service,EJ,1975$/GJ,11.58,building
+residential lighting service,EJ-service,EJ,1975$/GJ,666,building
+residential appliances service,EJ-service,EJ,1975$/GJ,23.13,building
+residential others service,EJ-service,EJ,1975$/GJ,44.24,building,,,,,,,,,,,,,,,
 
 "Scale year, sharewt, and logitexp",,,,,,,,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,,,,,,,,
@@ -322,16 +322,16 @@ Variable ID,,,,,,,
 1200,,,,,,,
 ,,,,,EJ,,
 supplysector,subsector,technology,Year,minicam-energy-input,calibrated-value,,
-residential heating service,gas,gasfurnace,1990,delivered gas,2.9987,,
-residential heating service,gas,gasfurnace,2005,delivered gas,3.4194,,
-residential heating service,electricity,elecfurnace,1990,elect_td_bld,0.2001,,
-residential heating service,electricity,elecfurnace,2005,elect_td_bld,0.2200,,
-residential heating service,electricity,elecheatpump,1990,elect_td_bld,0.2120,,
-residential heating service,electricity,elecheatpump,2005,elect_td_bld,0.2345,,
-residential heating service,refined liquids,oilfurnace,1990,refined liquids enduse,1.0320,,
-residential heating service,refined liquids,oilfurnace,2005,refined liquids enduse,1.0416,,
-residential heating service,biomass,woodfurnace,1990,delivered biomass,0.5722,,
-residential heating service,biomass,woodfurnace,2005,delivered biomass,0.4143,,
+residential heating service,gas,gasfurnace,1990,delivered gas,2.9888,,
+residential heating service,gas,gasfurnace,2005,delivered gas,3.4023,,
+residential heating service,electricity,elecfurnace,1990,elect_td_bld,0.2057,,
+residential heating service,electricity,elecfurnace,2005,elect_td_bld,0.1622,,
+residential heating service,electricity,elecheatpump,1990,elect_td_bld,0.2063,,
+residential heating service,electricity,elecheatpump,2005,elect_td_bld,0.1637,,
+residential heating service,refined liquids,oilfurnace,1990,refined liquids enduse,0.9025,,
+residential heating service,refined liquids,oilfurnace,2005,refined liquids enduse,0.8875,,
+residential heating service,biomass,woodfurnace,1990,delivered biomass,0.4887,,
+residential heating service,biomass,woodfurnace,2005,delivered biomass,0.3963,,
 ,,,,,,,
 Technology_Cooling,,,,,,,
 INPUT_TABLE,,,,,,,,,
@@ -355,8 +355,8 @@ Variable ID,,,,,,,,,,,
 1200,,,,,,,,,,,
 ,,,,,EJ,,,,,,
 supplysector,subsector,technology,Year,minicam-energy-input,calibrated-value,,,,,,
-residential cooling service,electricity,AC,1990,elect_td_bld,0.4710,,,,,,
-residential cooling service,electricity,AC,2005,elect_td_bld,0.8113,,,,,,
+residential cooling service,electricity,AC,1990,elect_td_bld,0.4708,,,,,,
+residential cooling service,electricity,AC,2005,elect_td_bld,0.8623,,,,,,
 ,,,,,,,,,,,
 ,,,,,,,,,,,
 Technology_WaterHeating,,,,,,,,,,,
@@ -417,12 +417,12 @@ Variable ID,,,,,,,,,,,
 1200,,,,,,,,,,,
 ,,,,,EJ,,,,,,
 supplysector,subsector,technology,Year,minicam-energy-input,calibrated-value,,,,,,
-residential water heating service,gas,gaswaterheater,1990,delivered gas,1.0728,,,,,,
-residential water heating service,gas,gaswaterheater,2005,delivered gas,1.0479,,,,,,
-residential water heating service,electricity,elecresiswaterheater,1990,elect_td_bld,0.3434,,,,,,
-residential water heating service,electricity,elecresiswaterheater,2005,elect_td_bld,0.4037,,,,,,
-residential water heating service,refined liquids,oilwaterheater,1990,refined liquids enduse,0.1433,,,,,,
-residential water heating service,refined liquids,oilwaterheater,2005,refined liquids enduse,0.1712,,,,,,
+residential water heating service,gas,gaswaterheater,1990,delivered gas,1.0692,,,,,,
+residential water heating service,gas,gaswaterheater,2005,delivered gas,1.0306,,,,,,
+residential water heating service,electricity,elecresiswaterheater,1990,elect_td_bld,0.3433,,,,,,
+residential water heating service,electricity,elecresiswaterheater,2005,elect_td_bld,0.4012,,,,,,
+residential water heating service,refined liquids,oilwaterheater,1990,refined liquids enduse,0.1253,,,,,,
+residential water heating service,refined liquids,oilwaterheater,2005,refined liquids enduse,0.1460,,,,,,
 ,,,,,,,,,,,
 Technology_Lighting,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,
@@ -464,10 +464,10 @@ Variable ID,,,,,,,,,,,,,
 1200,,,,,,,,,,,,,
 ,,,,,EJ,,,,,,
 supplysector,subsector,technology,Year,minicam-energy-input,calibrated-value,,,,,,
-residential lighting service,electricity,incandescent,1990,elect_td_bld,0.5788,,,,,,
-residential lighting service,electricity,incandescent,2005,elect_td_bld,0.6815,,,,,,
+residential lighting service,electricity,incandescent,1990,elect_td_bld,0.5786,,,,,,
+residential lighting service,electricity,incandescent,2005,elect_td_bld,0.6867,,,,,,
 residential lighting service,electricity,fluorescent,1990,elect_td_bld,0.0643,,,,,,
-residential lighting service,electricity,fluorescent,2005,elect_td_bld,0.0757,,,,,,
+residential lighting service,electricity,fluorescent,2005,elect_td_bld,0.0763,,,,,,
 ,,,,,,,,,,,
 Technology_Appliances,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,
@@ -500,10 +500,10 @@ Variable ID,,,,,,,,,
 1200,,,,,,,,,
 ,,,,,EJ,,,,
 supplysector,subsector,technology,Year,minicam-energy-input,calibrated-value,,,,
-residential appliances service,gas,gasappliances,1990,delivered gas,0.0422,,,,
-residential appliances service,gas,gasappliances,2005,delivered gas,0.0693,,,,
-residential appliances service,electricity,elecappliances,1990,elect_td_bld,0.7654,,,,
-residential appliances service,electricity,elecappliances,2005,elect_td_bld,0.9727,,,,
+residential appliances service,gas,gasappliances,1990,delivered gas,0.0421,,,,
+residential appliances service,gas,gasappliances,2005,delivered gas,0.0682,,,,
+residential appliances service,electricity,elecappliances,1990,elect_td_bld,0.7651,,,,
+residential appliances service,electricity,elecappliances,2005,elect_td_bld,0.9039,,,,
 ,,,,,,,,,
 Technology_Others,,,,,,,,,
 INPUT_TABLE,,,,,,,,,
@@ -545,12 +545,12 @@ Variable ID,,,,,,,,,,,
 1200,,,,,
 ,,,,,EJ
 supplysector,subsector,technology,Year,minicam-energy-input,calibrated-value
-residential others service,gas,gasother,1990,delivered gas,0.1943
-residential others service,gas,gasother,2005,delivered gas,0.2083
-residential others service,electricity,elecother,1990,elect_td_bld,0.6914
-residential others service,electricity,elecother,2005,elect_td_bld,1.5006
-residential others service,refined liquids,oilother,1990,refined liquids enduse,0.2007
-residential others service,refined liquids,oilother,2005,refined liquids enduse,0.2889
+residential others service,gas,gasother,1990,delivered gas,0.1936
+residential others service,gas,gasother,2005,delivered gas,0.2049
+residential others service,electricity,elecother,1990,elect_td_bld,0.6911
+residential others service,electricity,elecother,2005,elect_td_bld,1.6124
+residential others service,refined liquids,oilother,1990,refined liquids enduse,0.1755
+residential others service,refined liquids,oilother,2005,refined liquids enduse,0.2479
 
 ******************************************************,,,,,
 
@@ -558,15 +558,15 @@ Building Demand Sector: Commercial Buildings,,,,,
 INPUT_TABLE,,,,,
 Variable ID,Unit: billion m^2 ,,,,
 101,,,,,
-,BaseService,base-scaler,,,,,,,
-building-final-demand,1975,1975 fillout,,,,,,,
-commercial,5554898815,1,,,,,,,
+,base-service,,,,,,,,
+building-final-demand,1990,2005,,,,,,,
+commercial,6461486898,7655454776,,,,,,,
 
 Building Demand Sector: Commercial Buildings,,,,,,,,,
 INPUT_TABLE,,,,,,,,,
 Variable ID,,,,,,,,,
 102,,,,,,,,,
-,mSaturationElasticity,,,,,,,,
+,saturation-elasticity,,,,,,,,
 building-final-demand,1975,1990,2005,2020,2035,2050,2065,2080,2095
 commercial,0,0,0,0,0,0,0,0,0
 
@@ -574,7 +574,7 @@ Building Demand Sector: Commercial Buildings,,,,,,,,,
 INPUT_TABLE,,,,,,,,,
 Variable ID,,,,,,,,,
 103,,,,,,,,,
-,IncomeElasticity,,,,,,,,
+,income-elasticity,,,,,,,,
 building-final-demand,1975,1990,2005,2020,2035,2050,2065,2080,2095
 commercial,0.0,0.0,0.0,0.3,0.28,0.25,0.2,0.2,0.2
 
@@ -582,7 +582,7 @@ Building Demand Sector: Commercial Buildings,,,,,,,,,
 INPUT_TABLE,,,,,,,,,
 Variable ID,,,,,,,,,
 105,,,,,,,,,
-,mSaturationPoint,,,,,,,,
+,saturation-point,,,,,,,,
 building-final-demand,1975,1990,2005,2020,2035,2050,2065,2080,2095
 commercial,100000,100000,100000,100000,100000,100000,100000,100000,100000
 
@@ -597,9 +597,9 @@ commercial,0.0,0.0,0.0,-1,-1,-1,-1,-1,-1
 INPUT_TABLE,,,,,,,,,
 Variable ID,,,,,,,,,
 200,,,,,,,,,
-,,,,keyword,,,,,
-supplysector,output-unit,input-unit,price-unit,final-energy,,,,,
-residential,m^2,EJ-service,1975$/m^2,building,,,,,
+
+supplysector,output-unit,input-unit,price-unit,1975 price,,,,,
+residential,m^2,EJ-service,1975$/m^2,42.4553,,,,,
 
 Aggregate Building: Building Type,,,,,,,,,
 INPUT_TABLE,,,,,,,,,
@@ -657,103 +657,103 @@ Variable ID,,,,
 300,,,,,,,
 
 supplysector,subsector,building-demand-technology,period,building-demand-input,type,saturation,price-elasticity
-commercial,aggregatebuilding,aggregatebuilding,1990,commercial heating service,heating,1.000,0
-commercial,aggregatebuilding,aggregatebuilding,2005,commercial heating service,heating,0.985,0
-commercial,aggregatebuilding,aggregatebuilding,2020,commercial heating service,heating,1.000,-0.4
-commercial,aggregatebuilding,aggregatebuilding,2035,commercial heating service,heating,1.000,-0.4
-commercial,aggregatebuilding,aggregatebuilding,2050,commercial heating service,heating,1.000,-0.4
-commercial,aggregatebuilding,aggregatebuilding,2065,commercial heating service,heating,1.000,-0.4
-commercial,aggregatebuilding,aggregatebuilding,2080,commercial heating service,heating,1.000,-0.4
-commercial,aggregatebuilding,aggregatebuilding,2095,commercial heating service,heating,1.000,-0.4
+commercial,aggregatebuilding,aggregatebuilding,1990,commercial heating service,heating,0.972,0
+commercial,aggregatebuilding,aggregatebuilding,2005,commercial heating service,heating,0.972,0
+commercial,aggregatebuilding,aggregatebuilding,2020,commercial heating service,heating,0.994,-0.25
+commercial,aggregatebuilding,aggregatebuilding,2035,commercial heating service,heating,1.000,-0.25
+commercial,aggregatebuilding,aggregatebuilding,2050,commercial heating service,heating,1.000,-0.25
+commercial,aggregatebuilding,aggregatebuilding,2065,commercial heating service,heating,1.000,-0.25
+commercial,aggregatebuilding,aggregatebuilding,2080,commercial heating service,heating,1.000,-0.25
+commercial,aggregatebuilding,aggregatebuilding,2095,commercial heating service,heating,1.000,-0.25
 
 Cooling Service Demand ,,,,,,,
 INPUT_TABLE,,,,,,,
 Variable ID,,,,,,,
 300,,,,,,,
 
-supplysector,subsector,building-demand-technology,Year,building-demand-input,Type,Saturation,pElasticity
+supplysector,subsector,building-demand-technology,Year,building-demand-input,Type,Saturation,price-elasticity
 commercial,aggregatebuilding,aggregatebuilding,1990,commercial cooling service,cooling,0.800,0
 commercial,aggregatebuilding,aggregatebuilding,2005,commercial cooling service,cooling,0.800,0
-commercial,aggregatebuilding,aggregatebuilding,2020,commercial cooling service,cooling,0.900,-0.4
-commercial,aggregatebuilding,aggregatebuilding,2035,commercial cooling service,cooling,0.975,-0.4
-commercial,aggregatebuilding,aggregatebuilding,2050,commercial cooling service,cooling,1.000,-0.4
-commercial,aggregatebuilding,aggregatebuilding,2065,commercial cooling service,cooling,1.000,-0.4
-commercial,aggregatebuilding,aggregatebuilding,2080,commercial cooling service,cooling,1.000,-0.4
-commercial,aggregatebuilding,aggregatebuilding,2095,commercial cooling service,cooling,1.000,-0.4
+commercial,aggregatebuilding,aggregatebuilding,2020,commercial cooling service,cooling,0.900,-0.25
+commercial,aggregatebuilding,aggregatebuilding,2035,commercial cooling service,cooling,0.975,-0.25
+commercial,aggregatebuilding,aggregatebuilding,2050,commercial cooling service,cooling,1.000,-0.25
+commercial,aggregatebuilding,aggregatebuilding,2065,commercial cooling service,cooling,1.000,-0.25
+commercial,aggregatebuilding,aggregatebuilding,2080,commercial cooling service,cooling,1.000,-0.25
+commercial,aggregatebuilding,aggregatebuilding,2095,commercial cooling service,cooling,1.000,-0.25
 
 Water Heating Service Demand,,,,,,,
 INPUT_TABLE,,,,,,,
 Variable ID,,,,,,,
 300,,,,,,,
 
-supplysector,subsector,building-demand-technology,Year,building-demand-input,Type,Saturation,pElasticity
+supplysector,subsector,building-demand-technology,Year,building-demand-input,Type,Saturation,price-elasticity
 commercial,aggregatebuilding,aggregatebuilding,1990,commercial water heating service,generic,1.000,0
 commercial,aggregatebuilding,aggregatebuilding,2005,commercial water heating service,generic,1.000,0
-commercial,aggregatebuilding,aggregatebuilding,2020,commercial water heating service,generic,1.000,-0.4
-commercial,aggregatebuilding,aggregatebuilding,2035,commercial water heating service,generic,1.000,-0.4
-commercial,aggregatebuilding,aggregatebuilding,2050,commercial water heating service,generic,1.000,-0.4
-commercial,aggregatebuilding,aggregatebuilding,2065,commercial water heating service,generic,1.000,-0.4
-commercial,aggregatebuilding,aggregatebuilding,2080,commercial water heating service,generic,1.000,-0.4
-commercial,aggregatebuilding,aggregatebuilding,2095,commercial water heating service,generic,1.000,-0.4
+commercial,aggregatebuilding,aggregatebuilding,2020,commercial water heating service,generic,1.000,-0.25
+commercial,aggregatebuilding,aggregatebuilding,2035,commercial water heating service,generic,1.000,-0.25
+commercial,aggregatebuilding,aggregatebuilding,2050,commercial water heating service,generic,1.000,-0.25
+commercial,aggregatebuilding,aggregatebuilding,2065,commercial water heating service,generic,1.000,-0.25
+commercial,aggregatebuilding,aggregatebuilding,2080,commercial water heating service,generic,1.000,-0.25
+commercial,aggregatebuilding,aggregatebuilding,2095,commercial water heating service,generic,1.000,-0.25
 
 Lighting Service Demand,,,,,,,
 INPUT_TABLE,,,,,,,
 Variable ID,,,,,,,
 300,,,,,,,
 
-supplysector,subsector,building-demand-technology,Year,building-demand-input,Type,Saturation,pElasticity
+supplysector,subsector,building-demand-technology,Year,building-demand-input,Type,Saturation,price-elasticity
 commercial,aggregatebuilding,aggregatebuilding,1990,commercial lighting service,generic,1.000,0,,,
 commercial,aggregatebuilding,aggregatebuilding,2005,commercial lighting service,generic,1.000,0,,,
-commercial,aggregatebuilding,aggregatebuilding,2020,commercial lighting service,generic,1.000,-0.4,,,
-commercial,aggregatebuilding,aggregatebuilding,2035,commercial lighting service,generic,1.000,-0.4,,,
-commercial,aggregatebuilding,aggregatebuilding,2050,commercial lighting service,generic,1.000,-0.4,,,
-commercial,aggregatebuilding,aggregatebuilding,2065,commercial lighting service,generic,1.000,-0.4,,,
-commercial,aggregatebuilding,aggregatebuilding,2080,commercial lighting service,generic,1.000,-0.4,,,
-commercial,aggregatebuilding,aggregatebuilding,2095,commercial lighting service,generic,1.000,-0.4,,,
+commercial,aggregatebuilding,aggregatebuilding,2020,commercial lighting service,generic,1.000,-0.25,,,
+commercial,aggregatebuilding,aggregatebuilding,2035,commercial lighting service,generic,1.000,-0.25,,,
+commercial,aggregatebuilding,aggregatebuilding,2050,commercial lighting service,generic,1.000,-0.25,,,
+commercial,aggregatebuilding,aggregatebuilding,2065,commercial lighting service,generic,1.000,-0.25,,,
+commercial,aggregatebuilding,aggregatebuilding,2080,commercial lighting service,generic,1.000,-0.25,,,
+commercial,aggregatebuilding,aggregatebuilding,2095,commercial lighting service,generic,1.000,-0.25,,,
 
 Office Equipments Service Demand,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,
 Variable ID,,,,,,,,,,
 300,,,,,,,,,,
 ,,,,,,,,,,
-supplysector,subsector,building-demand-technology,Year,building-demand-input,Type,Saturation,pElasticity,,,
+supplysector,subsector,building-demand-technology,Year,building-demand-input,Type,Saturation,price-elasticity,,,
 commercial,aggregatebuilding,aggregatebuilding,1990,commercial office equipment service,generic,0.700,0,,,
 commercial,aggregatebuilding,aggregatebuilding,2005,commercial office equipment service,generic,0.700,0,,,
-commercial,aggregatebuilding,aggregatebuilding,2020,commercial office equipment service,generic,0.800,-0.4,,,
-commercial,aggregatebuilding,aggregatebuilding,2035,commercial office equipment service,generic,0.900,-0.4,,,
-commercial,aggregatebuilding,aggregatebuilding,2050,commercial office equipment service,generic,0.950,-0.4,,,
-commercial,aggregatebuilding,aggregatebuilding,2065,commercial office equipment service,generic,1.000,-0.4,,,
-commercial,aggregatebuilding,aggregatebuilding,2080,commercial office equipment service,generic,1.000,-0.4,,,
-commercial,aggregatebuilding,aggregatebuilding,2095,commercial office equipment service,generic,1.000,-0.4,,,
+commercial,aggregatebuilding,aggregatebuilding,2020,commercial office equipment service,generic,0.800,-0.25,,,
+commercial,aggregatebuilding,aggregatebuilding,2035,commercial office equipment service,generic,0.900,-0.25,,,
+commercial,aggregatebuilding,aggregatebuilding,2050,commercial office equipment service,generic,0.950,-0.25,,,
+commercial,aggregatebuilding,aggregatebuilding,2065,commercial office equipment service,generic,1.000,-0.25,,,
+commercial,aggregatebuilding,aggregatebuilding,2080,commercial office equipment service,generic,1.000,-0.25,,,
+commercial,aggregatebuilding,aggregatebuilding,2095,commercial office equipment service,generic,1.000,-0.25,,,
 
 Others Service Demand,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,
 Variable ID,,,,,,,,,,
 300,,,,,,,,,,
 
-supplysector,subsector,building-demand-technology,Year,building-demand-input,Type,Saturation,pElasticity,,,
+supplysector,subsector,building-demand-technology,Year,building-demand-input,Type,Saturation,price-elasticity,,,
 commercial,aggregatebuilding,aggregatebuilding,1990,commercial others service,generic,0.800,0,,,
 commercial,aggregatebuilding,aggregatebuilding,2005,commercial others service,generic,0.800,0,,,
-commercial,aggregatebuilding,aggregatebuilding,2020,commercial others service,generic,0.900,-0.4
-commercial,aggregatebuilding,aggregatebuilding,2035,commercial others service,generic,0.950,-0.4
-commercial,aggregatebuilding,aggregatebuilding,2050,commercial others service,generic,1.000,-0.4
-commercial,aggregatebuilding,aggregatebuilding,2065,commercial others service,generic,1.000,-0.4
-commercial,aggregatebuilding,aggregatebuilding,2080,commercial others service,generic,1.000,-0.4
-commercial,aggregatebuilding,aggregatebuilding,2095,commercial others service,generic,1.000,-0.4
+commercial,aggregatebuilding,aggregatebuilding,2020,commercial others service,generic,0.900,-0.25
+commercial,aggregatebuilding,aggregatebuilding,2035,commercial others service,generic,0.950,-0.25
+commercial,aggregatebuilding,aggregatebuilding,2050,commercial others service,generic,1.000,-0.25
+commercial,aggregatebuilding,aggregatebuilding,2065,commercial others service,generic,1.000,-0.25
+commercial,aggregatebuilding,aggregatebuilding,2080,commercial others service,generic,1.000,-0.25
+commercial,aggregatebuilding,aggregatebuilding,2095,commercial others service,generic,1.000,-0.25
 
 *************************************************************,,,,,,,
 units and keywords,,,,,,,
 INPUT_TABLE,,,,,,,
 Variable ID,,,,,,,
 995,,,,,,,
-,,,,keyword,,,
-supplysector,output-unit,input-unit,price-unit,final-energy,,,
-commercial heating service,EJ-service,EJ,1975$/GJ,building,,,
-commercial cooling service,EJ-service,EJ,1975$/GJ,building,,,
-commercial water heating service,EJ-service,EJ,1975$/GJ,building,,,,,,,,,,,,,,,,
-commercial lighting service,EJ-service,EJ,1975$/GJ,building,,,,,,,,,,,,,,,,
-commercial office equipment service,EJ-service,EJ,1975$/GJ,building,,,,,,,,,,,,,,,,
-commercial others service,EJ-service,EJ,1975$/GJ,building,,,,,,,,,,,,,,,,
+,,,,,keyword,,
+supplysector,output-unit,input-unit,price-unit,1975 price,final-energy,,
+commercial heating service,EJ-service,EJ,1975$/GJ,5.51,building,,
+commercial cooling service,EJ-service,EJ,1975$/GJ,8.15,building,,
+commercial water heating service,EJ-service,EJ,1975$/GJ,7.35,building,,,,,,,,,,,,,,,
+commercial lighting service,EJ-service,EJ,1975$/GJ,170,building,,,,,,,,,,,,,,,
+commercial office equipment service,EJ-service,EJ,1975$/GJ,54.26,building,,,,,,,,,,,,,,,
+commercial others service,EJ-service,EJ,1975$/GJ,32.22,building,,,,,,,,,,,,,,,
 
 "Scale year, shareweights, and logit exponents",,,,,,,,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,,,,,,,,
@@ -852,15 +852,15 @@ Variable ID,,,,,
 1200,,,,,
 ,,,,,EJ
 supplysector,subsector,technology,Year,minicam-energy-input,calibrated-value
-commercial heating service,gas,gasfurnace,1990,delivered gas,1.1570
-commercial heating service,gas,gasfurnace,2005,delivered gas,1.2819
+commercial heating service,gas,gasfurnace,1990,delivered gas,1.1532
+commercial heating service,gas,gasfurnace,2005,delivered gas,1.2536
 commercial heating service,electricity,elecfurnace,1990,elect_td_bld,0.0591
-commercial heating service,electricity,elecfurnace,2005,elect_td_bld,0.1220
+commercial heating service,electricity,elecfurnace,2005,elect_td_bld,0.1018
 commercial heating service,electricity,elecheatpump,1990,elect_td_bld,0.0612
-commercial heating service,electricity,elecheatpump,2005,elect_td_bld,0.0775
-commercial heating service,refined liquids,oilfurnace,1990,refined liquids enduse,0.2246
-commercial heating service,refined liquids,oilfurnace,2005,refined liquids enduse,0.1704
-commercial heating service,biomass,woodfurnace,1990,delivered biomass,0.0914
+commercial heating service,electricity,elecheatpump,2005,elect_td_bld,0.0647
+commercial heating service,refined liquids,oilfurnace,1990,refined liquids enduse,0.1964
+commercial heating service,refined liquids,oilfurnace,2005,refined liquids enduse,0.1179
+commercial heating service,biomass,woodfurnace,1990,delivered biomass,0.0781
 commercial heating service,biomass,woodfurnace,2005,delivered biomass,0.1133
 
 Technology_Cooling,,,,,,,,,
@@ -885,8 +885,8 @@ Variable ID,,,,,,,,,,,
 1200,,,,,,,,,,,
 ,,,,,EJ,,,,,,
 supplysector,subsector,technology,Year,minicam-energy-input,calibrated-value,,,,,,
-commercial cooling service,electricity,AC,1990,elect_td_bld,0.5414,,,,,,
-commercial cooling service,electricity,AC,2005,elect_td_bld,0.6498,,,,,,
+commercial cooling service,electricity,AC,1990,elect_td_bld,0.5412,,,,,,
+commercial cooling service,electricity,AC,2005,elect_td_bld,0.6133,,,,,,
 ,,,,,,,,,,,
 Technology_WaterHeating_NGWH,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,
@@ -947,12 +947,12 @@ Variable ID,,,,,,,
 1200,,,,,,,
 ,,,,,EJ,,
 supplysector,subsector,technology,Year,minicam-energy-input,calibrated-value,,
-commercial water heating service,gas,gaswaterheater,1990,delivered gas,0.4144,,
-commercial water heating service,gas,gaswaterheater,2005,delivered gas,0.5426,,
+commercial water heating service,gas,gaswaterheater,1990,delivered gas,0.4131,,
+commercial water heating service,gas,gaswaterheater,2005,delivered gas,0.5434,,
 commercial water heating service,electricity,elecresiswaterheater,1990,elect_td_bld,0.1704,,
-commercial water heating service,electricity,elecresiswaterheater,2005,elect_td_bld,0.2091,,
-commercial water heating service,refined liquids,oilwaterheater,1990,refined liquids enduse,0.0674,,
-commercial water heating service,refined liquids,oilwaterheater,2005,refined liquids enduse,0.0595,,
+commercial water heating service,electricity,elecresiswaterheater,2005,elect_td_bld,0.1870,,
+commercial water heating service,refined liquids,oilwaterheater,1990,refined liquids enduse,0.0589,,
+commercial water heating service,refined liquids,oilwaterheater,2005,refined liquids enduse,0.0399,,
 ,,,,,,,
 Technology_Lighting,,,,,,,
 INPUT_TABLE,,,,,,,
@@ -994,10 +994,10 @@ Variable ID,,,,,,,,,,,
 1200,,,,,,,,,,,
 ,,,,,EJ,,,,,,
 supplysector,subsector,technology,Year,minicam-energy-input,calibrated-value,,,,,,
-commercial lighting service,electricity,incandescent,1990,elect_td_bld,0.3722,,,,,,
-commercial lighting service,electricity,incandescent,2005,elect_td_bld,0.4476,,,,,,
-commercial lighting service,electricity,fluorescent,1990,elect_td_bld,0.7906,,,,,,
-commercial lighting service,electricity,fluorescent,2005,elect_td_bld,0.9508,,,,,,
+commercial lighting service,electricity,incandescent,1990,elect_td_bld,0.3720,,,,,,
+commercial lighting service,electricity,incandescent,2005,elect_td_bld,0.4340,,,,,,
+commercial lighting service,electricity,fluorescent,1990,elect_td_bld,0.7903,,,,,,
+commercial lighting service,electricity,fluorescent,2005,elect_td_bld,0.9220,,,,,,
 ,,,,,,,,,,,
 Technology_Office Equipment,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,
@@ -1021,8 +1021,8 @@ Variable ID,,,,,,,,,,,
 1200,,,,,,,,,,,
 ,,,,,EJ,,,,,,
 supplysector,subsector,technology,Year,minicam-energy-input,calibrated-value,,,,,,
-commercial office equipment service,electricity,office,1990,elect_td_bld,0.2306,,,,,,
-commercial office equipment service,electricity,office,2005,elect_td_bld,0.6344,,,,,,
+commercial office equipment service,electricity,office,1990,elect_td_bld,0.2305,,,,,,
+commercial office equipment service,electricity,office,2005,elect_td_bld,0.6594,,,,,,
 ,,,,,,,,,,,
 Technology_Others,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,
@@ -1064,12 +1064,12 @@ Variable ID,,,,,,,,,,,
 1200,,,,,,,,,,,
 ,,,,,EJ,,,,,,
 supplysector,subsector,technology,Year,minicam-energy-input,calibrated-value,,,,,,
-commercial others service,gas,gasother,1990,delivered gas,1.0015,,,,,,
-commercial others service,gas,gasother,2005,delivered gas,1.1720,,,,,,
-commercial others service,electricity,elecother,1990,elect_td_bld,0.7920,,,,,,
-commercial others service,electricity,elecother,2005,elect_td_bld,2.0256,,,,,,
-commercial others service,refined liquids,oilother,1990,refined liquids enduse,0.6401,,,,,,
-commercial others service,refined liquids,oilother,2005,refined liquids enduse,0.5238,,,,,,
+commercial others service,gas,gasother,1990,delivered gas,0.9983,,,,,,
+commercial others service,gas,gasother,2005,delivered gas,1.1749,,,,,,
+commercial others service,electricity,elecother,1990,elect_td_bld,0.7917,,,,,,
+commercial others service,electricity,elecother,2005,elect_td_bld,2.1021,,,,,,
+commercial others service,refined liquids,oilother,1990,refined liquids enduse,0.5598,,,,,,
+commercial others service,refined liquids,oilother,2005,refined liquids enduse,0.4853,,,,,,
 
 
 add non-existent techs to sector for query consistency between detailed and aggregate,,,,,,,,,,,,,,,,,,,,

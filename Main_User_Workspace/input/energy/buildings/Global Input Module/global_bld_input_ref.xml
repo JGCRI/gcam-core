@@ -396,6 +396,8 @@
          </supplysector>
          <energy-final-demand name="building" nocreate="1">
             <price-elasticity fillout="1" year="2020">-1.25</price-elasticity>
+            <base-service year="1990">12.866</base-service>
+            <base-service year="2005">19.029</base-service>
          </energy-final-demand>
       </region>
       <region name="Canada">
@@ -793,6 +795,8 @@
          </supplysector>
          <energy-final-demand name="building" nocreate="1">
             <price-elasticity fillout="1" year="2020">-1.25</price-elasticity>
+            <base-service year="1990">1.721</base-service>
+            <base-service year="2005">2.464</base-service>
          </energy-final-demand>
       </region>
       <region name="Western Europe">
@@ -1190,6 +1194,8 @@
          </supplysector>
          <energy-final-demand name="building" nocreate="1">
             <price-elasticity fillout="1" year="2020">-1.25</price-elasticity>
+            <base-service year="1990">10.613</base-service>
+            <base-service year="2005">14.759</base-service>
          </energy-final-demand>
       </region>
       <region name="Japan">
@@ -1587,6 +1593,8 @@
          </supplysector>
          <energy-final-demand name="building" nocreate="1">
             <price-elasticity fillout="1" year="2020">-1.25</price-elasticity>
+            <base-service year="1990">2.914</base-service>
+            <base-service year="2005">4.628</base-service>
          </energy-final-demand>
       </region>
       <region name="Australia_NZ">
@@ -1984,6 +1992,8 @@
          </supplysector>
          <energy-final-demand name="building" nocreate="1">
             <price-elasticity fillout="1" year="2020">-1.25</price-elasticity>
+            <base-service year="1990">0.422</base-service>
+            <base-service year="2005">0.735</base-service>
          </energy-final-demand>
       </region>
       <region name="Former Soviet Union">
@@ -2381,6 +2391,8 @@
          </supplysector>
          <energy-final-demand name="building" nocreate="1">
             <price-elasticity fillout="1" year="2020">-1.25</price-elasticity>
+            <base-service year="1990">7.287</base-service>
+            <base-service year="2005">7.415</base-service>
          </energy-final-demand>
       </region>
       <region name="China">
@@ -2778,6 +2790,8 @@
          </supplysector>
          <energy-final-demand name="building" nocreate="1">
             <price-elasticity fillout="1" year="2020">-1.25</price-elasticity>
+            <base-service year="1990">6.119</base-service>
+            <base-service year="2005">9.717</base-service>
          </energy-final-demand>
       </region>
       <region name="Middle East">
@@ -3175,6 +3189,8 @@
          </supplysector>
          <energy-final-demand name="building" nocreate="1">
             <price-elasticity fillout="1" year="2020">-1.25</price-elasticity>
+            <base-service year="1990">1.278</base-service>
+            <base-service year="2005">3.578</base-service>
          </energy-final-demand>
       </region>
       <region name="Africa">
@@ -3572,6 +3588,8 @@
          </supplysector>
          <energy-final-demand name="building" nocreate="1">
             <price-elasticity fillout="1" year="2020">-1.25</price-elasticity>
+            <base-service year="1990">3.461</base-service>
+            <base-service year="2005">5.725</base-service>
          </energy-final-demand>
       </region>
       <region name="Latin America">
@@ -3969,6 +3987,8 @@
          </supplysector>
          <energy-final-demand name="building" nocreate="1">
             <price-elasticity fillout="1" year="2020">-1.25</price-elasticity>
+            <base-service year="1990">2.450</base-service>
+            <base-service year="2005">3.693</base-service>
          </energy-final-demand>
       </region>
       <region name="Southeast Asia">
@@ -4366,6 +4386,8 @@
          </supplysector>
          <energy-final-demand name="building" nocreate="1">
             <price-elasticity fillout="1" year="2020">-1.25</price-elasticity>
+            <base-service year="1990">2.565</base-service>
+            <base-service year="2005">4.629</base-service>
          </energy-final-demand>
       </region>
       <region name="Eastern Europe">
@@ -4763,6 +4785,8 @@
          </supplysector>
          <energy-final-demand name="building" nocreate="1">
             <price-elasticity fillout="1" year="2020">-1.25</price-elasticity>
+            <base-service year="1990">1.702</base-service>
+            <base-service year="2005">2.146</base-service>
          </energy-final-demand>
       </region>
       <region name="Korea">
@@ -5160,6 +5184,8 @@
          </supplysector>
          <energy-final-demand name="building" nocreate="1">
             <price-elasticity fillout="1" year="2020">-1.25</price-elasticity>
+            <base-service year="1990">0.627</base-service>
+            <base-service year="2005">1.441</base-service>
          </energy-final-demand>
       </region>
       <region name="India">
@@ -5557,6 +5583,8 @@
          </supplysector>
          <energy-final-demand name="building" nocreate="1">
             <price-elasticity fillout="1" year="2020">-1.25</price-elasticity>
+            <base-service year="1990">2.585</base-service>
+            <base-service year="2005">3.724</base-service>
          </energy-final-demand>
       </region>
    </world>

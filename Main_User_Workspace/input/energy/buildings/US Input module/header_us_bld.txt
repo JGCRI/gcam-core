@@ -3,7 +3,7 @@
 
 99,region/+heatingDegreeDays,region/+coolingDegreeDays,world/{name=USA}region,scenario/world,scenario
 
-101,region/+{name}building-final-demand,building-final-demand/+{year=1975}base-service,building-final-demand/+{year=1975;fillout=1}base-scaler,building-final-demand/final-energy-consumer,world/{name=USA}region,scenario/world,scenario
+101,region/+{name}building-final-demand,building-final-demand/+{year=1990}base-service,building-final-demand/+{year=2005}base-service,building-final-demand/final-energy-consumer,world/{name=USA}region,scenario/world,scenario
 
 102,region/+{name}building-final-demand,building-final-demand/+{year=1975}saturation-elasticity,building-final-demand/+{year=1990}saturation-elasticity,building-final-demand/+{year=2005}saturation-elasticity,building-final-demand/+{year=2020}saturation-elasticity,building-final-demand/+{year=2035}saturation-elasticity,building-final-demand/+{year=2050}saturation-elasticity,building-final-demand/+{year=2065}saturation-elasticity,building-final-demand/+{year=2080}saturation-elasticity,building-final-demand/+{year=2095}saturation-elasticity,world/{name=USA}region,scenario/world,scenario
 
@@ -13,7 +13,7 @@
 
 106,region/+{name}building-final-demand,building-final-demand/+{year=1975}price-elasticity,building-final-demand/+{year=1990}price-elasticity,building-final-demand/+{year=2005}price-elasticity,building-final-demand/+{year=2020}price-elasticity,building-final-demand/+{year=2035}price-elasticity,building-final-demand/+{year=2050}price-elasticity,building-final-demand/+{year=2065}price-elasticity,building-final-demand/+{year=2080}price-elasticity,building-final-demand/+{year=2095}price-elasticity,world/{name=USA}region,scenario/world,scenario
 
-200,region/+{name}supplysector,supplysector/+output-unit,supplysector/+input-unit,supplysector/+price-unit,world/{name=USA}region,scenario/world,scenario
+200,region/+{name}supplysector,supplysector/+output-unit,supplysector/+input-unit,supplysector/+price-unit,supplysector/+{year=1975}price,world/{name=USA}region,scenario/world,scenario
 
 201,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}building-demand-technology,building-demand-technology/+{year}period,minicam-non-energy-input/+input-cost,period/{name=non-energy}minicam-non-energy-input,period/{name=CO2}CO2,world/{name=USA}region,scenario/world,scenario
 
@@ -25,7 +25,7 @@
 
 301,region/+heating-fraction-of-year-active,region/+cooling-fraction-of-year-active,world/{name=USA}region,scenario/world,scenario
 
-995,region/+{name}supplysector,supplysector/+output-unit,supplysector/+input-unit,supplysector/+price-unit,supplysector/+{final-energy}keyword,world/{name=USA}region,scenario/world,scenario
+995,region/+{name}supplysector,supplysector/+output-unit,supplysector/+input-unit,supplysector/+price-unit,supplysector/+{year=1975}price,supplysector/+{final-energy}keyword,world/{name=USA}region,scenario/world,scenario
 
 1000,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+scaleYear,subsector/+{year=1975}sharewt,subsector/+{year=1990}sharewt,subsector/+{year=2005}sharewt,subsector/+{year=2020}sharewt,subsector/+{year=2035}sharewt,subsector/+{year=2050}sharewt,subsector/+{year=2065}sharewt,subsector/+{year=2080}sharewt,subsector/+{year=2095}sharewt,subsector/+{year=1975}logitexp,subsector/+{year=1990}logitexp,subsector/+{year=2005}logitexp,subsector/+{year=2020}logitexp,subsector/+{year=2035}logitexp,subsector/+{year=2050}logitexp,subsector/+{year=2065}logitexp,subsector/+{year=2080}logitexp,subsector/+{year=2095}logitexp,world/{name=USA}region,scenario/world,scenario
 
