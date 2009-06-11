@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Josh Lurz (PNNL) -->
-<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="D:\cvs\Code\Ciam\Configuration.xsd">
+<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="D:/cvs/Code/Ciam/Configuration.xsd">
 	<Files>
 		<Value name="erbInputFileName">../cvs/objects/model_data/EERE/erbinput2.csv</Value>
 		<Value name="outFileName">outFile.csv</Value>
@@ -23,16 +23,16 @@
         <Value name="BatchFileName">batch_emf.xml</Value>
 	</Files>
 	<ScenarioComponents>
-		<Value name="del_gen_bio">..\input\aglu\smoothwastebio.xml</Value>
-		<Value name="aglu">..\input\aglu\aglu_input_ref.xml</Value>
-		<Value name="noadder">..\input\aglu\Add_On_bioadder_0.xml</Value>
+		<Value name="del_gen_bio">../input/aglu/smoothwastebio.xml</Value>
+		<Value name="aglu">../input/aglu/aglu_input_ref.xml</Value>
+		<Value name="noadder">../input/aglu/Add_On_bioadder_0.xml</Value>
 		<Value name="start_year">../input/aglu/CCcycle_Start_1700.xml</Value>
 		<Value name="cclandallocator">../input/aglu/LandAllocator.xml</Value>
-		<Value name="managed">..\input\aglu\ManagedCarbon.xml</Value>
-		<Value name="unmanaged">..\input\aglu\UnmanagedCarbon.xml</Value>
-		<Value name="ag_bio">..\input\aglu\ag_res_bio3.xml</Value>
-		<Value name="forest_bio">..\input\aglu\forest_res_bio2.xml</Value>
-		<Value name="mill_bio">..\input\aglu\mill_res_bio2.xml</Value>
+		<Value name="managed">../input/aglu/ManagedCarbon.xml</Value>
+		<Value name="unmanaged">../input/aglu/UnmanagedCarbon.xml</Value>
+		<Value name="ag_bio">../input/aglu/ag_res_bio3.xml</Value>
+		<Value name="forest_bio">../input/aglu/forest_res_bio2.xml</Value>
+		<Value name="mill_bio">../input/aglu/mill_res_bio2.xml</Value>
 
           <Value name="socioeconomics">../input/energy/socioeconomics/gdp_population.xml</Value>
 		  <Value name="no_gdp_feedback">../input/energy/socioeconomics/no_gdp_feedback.xml</Value>
