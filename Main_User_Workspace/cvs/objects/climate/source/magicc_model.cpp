@@ -250,6 +250,9 @@ void MagiccModel::toInputXML( ostream& out, Tabs* tabs ) const {
     // Write out 1980s net terrestrial Deforestation.
     XMLWriteElementCheckDefault( mNetDeforestCarbFlux80s, "deforestFlux80s", out, tabs, -1.0 );
 
+    // Write out Carbon model start year.
+    XMLWriteElementCheckDefault( mCarbonModelStartYear, "carbon-model-start-year", out, tabs, 1975 );
+
     XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
 }
 
@@ -275,6 +278,9 @@ void MagiccModel::toDebugXML( const int period, ostream& out, Tabs* tabs ) const
 
     // Write out 1980s net terrestrial Deforestation.
     XMLWriteElement( mNetDeforestCarbFlux80s, "deforestFlux80s", out, tabs );
+
+    // Write out Carbon model start year.
+    XMLWriteElement( mCarbonModelStartYear, "carbon-model-start-year", out, tabs );
     
     XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
 }
