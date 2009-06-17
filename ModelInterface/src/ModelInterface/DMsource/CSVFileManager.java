@@ -137,12 +137,14 @@ public class CSVFileManager {
 	}
 
 	/**
-	 * Writes all of the CSV files that are being managed to disk.
+	 * Writes all of the CSV files that are being managed to disk. It will then remove
+	 * them from the list of available files being managed.
 	 */
 	public void writeAllCSVFiles() {
 		for(Iterator<Map.Entry<String, CSVFile>> it = files.entrySet().iterator(); it.hasNext(); ) {
 			Map.Entry<String, CSVFile> currFile = it.next();
 			writeCSVFile(currFile.getKey(), currFile.getValue());
+			it.remove();
 		}
 	}
 

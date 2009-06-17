@@ -33,6 +33,7 @@ import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.text.SimpleDateFormat;
 
 import org.jdom.*;
 import org.jdom.filter.ContentFilter;
@@ -386,6 +387,11 @@ public class ManipulationDriver
     // TODO: see if we want to allow false
     boolean avg = true;
 
+    // the user may want to use an attr name other than value which would allow
+    // them some flexability to have many scalers in a single xml file
+    currInfo = command.getChild("scalar-attribute");
+    final String scalarAttrName = currInfo == null ? "value" : currInfo.getAttributeValue("name");
+
     currInfo = command.getChild("region");
     reg = currInfo.getAttributeValue("value");
     currInfo = command.getChild("time");
@@ -429,7 +435,7 @@ public class ManipulationDriver
     for(int i = 0; i < subRegionElements.size(); i++) {
 	    currInfo = subRegionElements.get(i);
 	    String currSubRegion = currInfo.getAttributeValue("name");
-	    scalarValue = Double.parseDouble(currInfo.getAttributeValue("value"));
+	    scalarValue = Double.parseDouble(currInfo.getAttributeValue(scalarAttrName));
 	    ref = (Region)regionList.get(currSubRegion);
 	    // check to make sure the region exists
 	    if(ref == null) {
@@ -793,21 +799,31 @@ public class ManipulationDriver
    */
   private void setAverageProperty(Element command)
   {
-    log.log(Level.FINER, "begin function");
-    Variable Vname;
-    List infoList;
-    Element currInfo;
-    currInfo = command.getChild( "target" );
-    Vname = getVariable( currInfo.getAttributeValue("name") );
-    
-    currInfo = command.getChild( "average" );
- 	Boolean avg = (Boolean.valueOf(currInfo.getAttributeValue("value"))).booleanValue();
+	  log.log(Level.FINER, "begin function");
+	  Variable Vname;
+	  List infoList;
+	  Element currInfo;
+	  currInfo = command.getChild( "target" );
+	  Vname = getVariable( currInfo.getAttributeValue("name") );
 
-	if( Vname.isReference() ) {
-	    ((ReferenceVariable)Vname).avg = avg;
-	} else {
-		log.log(Level.WARNING, Vname.name+" is not a reference variable. ");
-	}
+	  currInfo = command.getChild( "average" );
+	  Boolean avg = (Boolean.valueOf(currInfo.getAttributeValue("value"))).booleanValue();
+
+	  if( Vname.isReference() && !Vname.isGroup() ) { 
+		  ((ReferenceVariable)Vname).avg = avg; 
+	  } else if( Vname.isReference() && Vname.isGroup() ) { 
+		  Map.Entry me; 
+		  Variable Vcurr; 
+		  Iterator it = ((GroupVariable)Vname).data.entrySet().iterator(); 
+		  while(it.hasNext()) 
+		  { 
+			  me = (Map.Entry)it.next(); 
+			  Vcurr = (Variable)me.getValue(); 
+			  ((ReferenceVariable)Vcurr).avg = avg; 
+		  } 
+	  } else { 
+		  log.log(Level.WARNING, Vname.name+" is not a reference variable. "); 
+	  }
   }
 
   /**
@@ -2646,251 +2662,319 @@ public class ManipulationDriver
    */
   private void createNetCDFFileCommand(Element command)
   {
-    log.log(Level.FINER, "begin function");
-    Variable var;
-    ReferenceVariable varR;
-    String fileName;
-    double res;
-    boolean missing_value_test = false;
-    double[][] myData;
-    float degHold;
-    float missingValue;
-    Element currInfo;
-    NetcdfFileWriteable ncfile;
-    
-    currInfo = command.getChild("source");
-    var = getVariable(currInfo.getAttributeValue("name"));
-    if(var.isReference())
-    {//this exists and is a reference variable, now make me a file!
-      List<Map.Entry<String, ReferenceVariable>> timeSet;
-      if(!var.isGroup()) {
-	      varR = (ReferenceVariable)var;
-	      // create a one entry map so that we can get it's time right
-	      Map<String, ReferenceVariable> tempMap = new HashMap<String, ReferenceVariable>(1);
-	      // TODO: get the real time associated with this ref var,
-	      // we may need to store the time str within the ref var
-	      tempMap.put("1", varR);
-	      timeSet = new ArrayList(tempMap.entrySet());
-      } else if(var.isGroup() && ((GroupVariable)var).isTime) {
-	      GroupVariable varG = (GroupVariable)var;
-	      timeSet = new ArrayList((Set<Map.Entry<String, ReferenceVariable>>)varG.data.entrySet());
-	      // use the first in group as ref for all since they should
-	      // all have the same shape
-	      varR = timeSet.get(0).getValue();
-      } else {
-	      // don't know about this one
-	      log.log(Level.WARNING, "Variable: "+currInfo.getAttributeValue("name")+" is not grouped by time.");
-	      return;
-      }
-      res = varR.res;
-      currInfo = command.getChild("file");
-      fileName = currInfo.getAttributeValue("name"); //storing netcdf file name
-      if(!fileName.endsWith(".nc"))
-      {
-        fileName += ".nc";
-      }
+	  log.log(Level.FINER, "begin function");
+	  Variable var;
+	  ReferenceVariable varR;
+	  String fileName;
+	  double res;
+	  boolean missing_value_test = false;
+	  double[][] myData;
+	  float degHold;
+	  float missingValue = Float.NaN;
+	  Element currInfo;
+	  NetcdfFileWriteable ncfile;
+	  // constant for converting from milliseconds to days
+	  final long MILLS_TO_DAY = 1000L * 60 * 60 * 24;
+	  GregorianCalendar relativeDate = null;
+	  GregorianCalendar currDate = null;
+	  currInfo = command.getChild("use-days-from");
+	  boolean useRelativeDate = false;
+	  if(currInfo != null) {
+		  // TODO: possibly could do more detailed than just year
+		  relativeDate = new GregorianCalendar(Integer.parseInt(currInfo.getAttributeValue("from-year")), Calendar.JANUARY, 1);
+		  useRelativeDate = true;
+	  }
 
-//**************************DEFINING FILE*********************************
-      ncfile = NetcdfFileWriteable.createNew(fileName, true);
-      //define dimensions
-      Dimension latDim = ncfile.addDimension("latitude", (int)Math.round(180/res));
-      Dimension lonDim = ncfile.addDimension("longitude", (int)Math.round(360/res));
-      Dimension timeDim = ncfile.addDimension("time", timeSet.size());
-      Dimension lvlDim = ncfile.addDimension("level", 1);
-   
-      //define Variables
-      ArrayList<Dimension> dim4 = new ArrayList<Dimension>(4);
-      dim4.add(lvlDim);
-      dim4.add(timeDim);
-      dim4.add(latDim);
-      dim4.add(lonDim);
+	  List sourceVars = command.getChildren("source");
+	  //currInfo = command.getChild("source");
+	  if(sourceVars.size() == 0) {
+		  log.log(Level.WARNING, "No source vars, did not create netcdf file");
+		  return;
+	  }
+	  // TODO: assuming time and dimensions are the same for all source vars
+	  // create a set of years that will go into the netcdf
+	  currInfo = (Element)sourceVars.get(0);
+	  var = getVariable(currInfo.getAttributeValue("name"));
+	  if(var.isReference())
+	  {//this exists and is a reference variable, now make me a file!
+		  List<Map.Entry<String, ReferenceVariable>> timeSet;
+		  if(!var.isGroup()) {
+			  varR = (ReferenceVariable)var;
+			  // create a one entry map so that we can get it's time right
+			  Map<String, ReferenceVariable> tempMap = new HashMap<String, ReferenceVariable>(1);
+			  // TODO: get the real time associated with this ref var,
+			  // we may need to store the time str within the ref var
+			  tempMap.put("1", varR);
+			  timeSet = new ArrayList(tempMap.entrySet());
+		  } else if(var.isGroup() && ((GroupVariable)var).isTime) {
+			  GroupVariable varG = (GroupVariable)var;
+			  timeSet = new ArrayList((Set<Map.Entry<String, ReferenceVariable>>)varG.data.entrySet());
+			  // use the first in group as ref for all since they should
+			  // all have the same shape
+			  varR = timeSet.get(0).getValue();
+		  } else {
+			  // don't know about this one
+			  log.log(Level.WARNING, "Variable: "+currInfo.getAttributeValue("name")+" is not grouped by time.");
+			  return;
+		  }
+		  res = varR.res;
+		  currInfo = command.getChild("file");
+		  fileName = currInfo.getAttributeValue("name"); //storing netcdf file name
+		  if(!fileName.endsWith(".nc"))
+		  {
+			  fileName += ".nc";
+		  }
 
-      //float lat(lat) ;
-      ncfile.addVariable("latitude", DataType.FLOAT, new Dimension[] {latDim});
-      ncfile.addVariableAttribute("latitude", "units", "latitude");
+		  //**************************DEFINING FILE*********************************
+		  ncfile = NetcdfFileWriteable.createNew(fileName, true);
+		  //define dimensions
+		  Dimension latDim = ncfile.addDimension("lat", (int)Math.round(180/res));
+		  Dimension lonDim = ncfile.addDimension("lon", (int)Math.round(360/res));
+		  Dimension timeDim = ncfile.addDimension("time", timeSet.size());
 
-      //float lon(lon) ;
-      ncfile.addVariable("longitude", DataType.FLOAT, new Dimension[] {lonDim});
-      ncfile.addVariableAttribute("longitude", "units", "longitude");
-   
-      //float time(time) ;
-      ncfile.addVariable("time", DataType.INT, new Dimension[] {timeDim});
-      ncfile.addVariableAttribute("time", "units", "year");
-      
-      //float level(level) ;
-      ncfile.addVariable("level", DataType.FLOAT, new Dimension[] {lvlDim});
-      ncfile.addVariableAttribute("level", "units", "level/index");
+		  //define Variables
+		  ArrayList<Dimension> dim3 = new ArrayList<Dimension>(3);
+		  dim3.add(timeDim);
+		  dim3.add(latDim);
+		  dim3.add(lonDim);
 
-      //double data(time, lat, lon)
-      ncfile.addVariable(var.name, DataType.FLOAT, dim4);
-      ncfile.addVariableAttribute(var.name, "average", String.valueOf(varR.avg));
+		  //float lat(lat) ;
+		  ncfile.addVariable("lat", DataType.FLOAT, new Dimension[] {latDim});
+		  ncfile.addVariableAttribute("lat", "units", "degrees_north");
+		  ncfile.addVariableAttribute("lat", "long_name", "Latitude");
+		  ncfile.addVariableAttribute("lat", "comment", "center of cell");
 
-	 // Add additional metadata if present
-      if(varR.units != null) {
-	      ncfile.addVariableAttribute(var.name, "units", varR.units);
-      } else {
-		 currInfo = command.getChild("units");
-		 if(  !(currInfo == null) && !(currInfo.getAttributeValue( "value" ) == null) )
-		 {
-			   ncfile.addVariableAttribute( var.name,"units", currInfo.getAttributeValue("value") );
-		 }
-      }
+		  //float lon(lon) ;
+		  ncfile.addVariable("lon", DataType.FLOAT, new Dimension[] {lonDim});
+		  ncfile.addVariableAttribute("lon", "units", "degrees_east");
+		  ncfile.addVariableAttribute("lon", "long_name", "Longitdue");
+		  ncfile.addVariableAttribute("lon", "comment", "center of cell");
 
-      if(varR.reference != null) {
-	      ncfile.addVariableAttribute(var.name, "reference", varR.reference);
-      } else {
-		 currInfo = command.getChild("reference");
-		 if(  !(currInfo == null) && !(currInfo.getAttributeValue( "value" ) == null) )
-		 {
-			   ncfile.addVariableAttribute( var.name,"reference", currInfo.getAttributeValue("value") );
-		 }
-      }
- 
-  	 currInfo = command.getChild("missing_value");
-	 if(  !(currInfo == null) && !(currInfo.getAttributeValue( "value" ) == null) )
-     {
-     	missingValue = Float.parseFloat( currInfo.getAttributeValue("value") );
-     } else {
-     	missingValue = Float.NaN; // default value
-     }
-     ncfile.addVariableAttribute(var.name, "missing_value", missingValue);
+		  //float time(time) ;
+		  if(!useRelativeDate) {
+			  ncfile.addVariable("time", DataType.INT, new Dimension[] {timeDim});
+			  ncfile.addVariableAttribute("time", "units", "year");
+			  ncfile.addVariableAttribute("time", "long_name", "Time");
+		  } else {
+			  ncfile.addVariable("time", DataType.DOUBLE, new Dimension[] {timeDim});
+			  SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			  ncfile.addVariableAttribute("time", "units", "days since "+dateFormatter.format(relativeDate.getTime()));
+			  ncfile.addVariableAttribute("time", "long_name", "Time");
+			  ncfile.addVariableAttribute("time", "calendar", "gregorian");
+		  }
 
-     // Overwrite missing value in netCDF file to test if actual value was written. 
-     // This is useful since Panoply (as of Feb 2009) display the missing_value as NaN no matter what.
-  	 currInfo = command.getChild("missing_value_test");
-	 if(  !(currInfo == null) && !(currInfo.getAttributeValue( "value" ) == null) )
-     {
-           ncfile.addVariableAttribute( var.name,"missing_value", currInfo.getAttributeValue("value") );
-     }
+		  // set up the dimensions for each soruce variable
+		  for(Iterator source = sourceVars.iterator(); source.hasNext(); ) {
+			  currInfo = (Element)source.next();
+			  var = getVariable(currInfo.getAttributeValue("name"));
+			  if(!var.isGroup()) {
+				  varR = (ReferenceVariable)var;
+			  } else if(var.isGroup() && ((GroupVariable)var).isTime) {
+				  GroupVariable varG = (GroupVariable)var;
+				  timeSet = new ArrayList((Set<Map.Entry<String, ReferenceVariable>>)varG.data.entrySet());
+				  // use the first in group as ref for all since they should
+				  // all have the same shape
+				  varR = timeSet.get(0).getValue();
+			  } else {
+				  // don't know about this one
+				  log.log(Level.WARNING, "Variable: "+currInfo.getAttributeValue("name")+" is not grouped by time.");
+				  return;
+			  }
 
-  	 currInfo = command.getChild("longName");
-	 if(  !(currInfo == null) && !(currInfo.getAttributeValue( "value" ) == null) )
-     {
-           ncfile.addVariableAttribute( var.name,"long_name", currInfo.getAttributeValue("value") );
-     }
+			  //double data(time, lat, lon)
+			  ncfile.addVariable(var.name, DataType.FLOAT, dim3);
+			  ncfile.addVariableAttribute(var.name, "average", String.valueOf(varR.avg));
 
- 	 currInfo = command.getChild("title");
-	 if( !(currInfo == null) && !(currInfo.getAttributeValue( "value" ) == null) ) 
-     {
-       ncfile.addVariableAttribute( var.name,"title", currInfo.getAttributeValue("value") );
-     }
+			  // Add additional metadata if present
+			  if(varR.units != null) {
+				  ncfile.addVariableAttribute(var.name, "units", varR.units);
+			  } else {
+				  if(  !(currInfo == null) && !(currInfo.getAttributeValue( "units" ) == null) )
+				  {
+					  ncfile.addVariableAttribute( var.name,"units", currInfo.getAttributeValue("units") );
+				  }
+			  }
 
-      if(var.comment != null) {
-	      ncfile.addGlobalAttribute("comments", var.comment);
-      }  else {
-		 currInfo = command.getChild("comments");
-		 if(  !(currInfo == null) && !(currInfo.getAttributeValue( "value" ) == null) )
-		 {
-			   ncfile.addVariableAttribute( var.name,"comments", currInfo.getAttributeValue("value") );
-		 }
-      }
+			  if(varR.reference != null) {
+				  ncfile.addVariableAttribute(var.name, "reference", varR.reference);
+			  } else {
+				  if(  !(currInfo == null) && !(currInfo.getAttributeValue( "reference" ) == null) )
+				  {
+					  ncfile.addVariableAttribute( var.name,"reference", currInfo.getAttributeValue("reference") );
+				  }
+			  }
 
-      //create the file
-      try {
-        ncfile.create();
-      }  catch (IOException e) {
-        log.log(Level.SEVERE, "NetCDF file '"+fileName+"' failed to create -> aborting");
-        System.exit(0);
-      }
-      log.log(Level.FINE, "Creating NetCDF file '"+fileName+"'");
+			  if(  !(currInfo == null) && !(currInfo.getAttributeValue( "missing_value" ) == null) )
+			  {
+				  missingValue = Float.parseFloat( currInfo.getAttributeValue("missing_value") );
+			  } else {
+				  missingValue = Float.NaN; // default value
+			  }
+			  ncfile.addVariableAttribute(var.name, "missing_value", missingValue);
 
-      ArrayFloat dataArr = new ArrayFloat.D4(1, timeDim.getLength(), latDim.getLength(), lonDim.getLength());
-      ArrayFloat latArr = new ArrayFloat.D1(latDim.getLength());
-      ArrayFloat lonArr = new ArrayFloat.D1(lonDim.getLength());
-      ArrayInt timeArr = new ArrayInt.D1(timeDim.getLength());
-      ArrayFloat lvlArr = new ArrayFloat.D1(1);
-      
-      //filling the array with the data
-      Index ima = dataArr.getIndex();
-      // write
-      //System.out.println("lat: "+latDim.getLength());
-      //System.out.println("lon: "+lonDim.getLength());
-      //System.out.println("y: "+myData.length);
-      //System.out.println("x: "+myData[0].length);
-      for(int t = 0; t < timeDim.getLength(); t++) {
-	      myData = timeSet.get(t).getValue().buildWorldMatrix();
-	      for(int i = 0; i < latDim.getLength(); i++)
-	      {
-		      for(int j = 0; j < lonDim.getLength(); j++)
-		      {
-		         if ( Double.isNaN( myData[i][j] ) ) {
-		             dataArr.setFloat( ima.set(0,t,i,j), missingValue );
-		         } else {
-		             dataArr.setFloat( ima.set(0,t,i,j), (float)myData[i][j] );
-		         }
-		      }
-	      }
-	      myData = null;
-	      // only garbage collect every 25th time
-	      if(t % 25 == 0) {
-		      System.gc();
-	      }
-      }
-      //filling array with latitude degrees
-      Index iml = latArr.getIndex();
-      // want the index to be in the middle of the grid cell
-      // so we shift half a res down from the top
-      degHold = (float)(90.0 - (res / 2));
-      for(int i = 0; i < latDim.getLength(); i++)
-      {
-        latArr.setFloat(iml.set(i), degHold);
-        degHold -= res;
-      }
-      //filling array with longitude degrees
-      iml = lonArr.getIndex();
-      // want the index to be in the middle of the grid cell
-      // so we shift half a res over from the left
-      degHold = (float)(-180.0 + (res / 2));
-      for(int i = 0; i < lonDim.getLength(); i++)
-      {
-        lonArr.setFloat(iml.set(i), degHold);
-        degHold += res;
-      }
-      iml = timeArr.getIndex();
-      for(int t = 0; t < timeDim.getLength(); ++t) {
-	      timeArr.setInt(iml.set(t), (int)Double.parseDouble(timeSet.get(t).getKey()));
-      }
-      //level array is empty
-      iml = lvlArr.getIndex();
-      lvlArr.setFloat(iml.set(0), 1);
-    
-  
-      // write data out to disk
-      try {
-        ncfile.write(var.name, dataArr);
-        ncfile.flush();
-        ncfile.write("latitude", latArr);
-        ncfile.flush();
-        ncfile.write("longitude", lonArr);
-        ncfile.flush();
-        ncfile.write("time", timeArr);
-        ncfile.flush();
-        ncfile.write("level", lvlArr);
-      } catch (IOException e) {
-        log.log(Level.SEVERE, "NetCDF file failed to write data values -> "+e);
-	e.printStackTrace();
-        System.exit(0);
-      } catch (InvalidRangeException e) {
-        log.log(Level.SEVERE, "NetCDF file failed to write data values -> "+e);
-	e.printStackTrace();
-        System.exit(0);
-      }
-      
-      //all done
-      try {
-        ncfile.close();
-      } catch (IOException e) {
-        log.log(Level.WARNING, "NetCDF file failed to close -> continuing");
-      }
-    
-      
-      
-//***************************END FILE DEF*********************************
-    } else
-    {
-      log.log(Level.WARNING, "Variable: "+currInfo.getAttributeValue("name")+" is not a reference variable.");
-    }
-    
+			  // Overwrite missing value in netCDF file to test if actual value was written. 
+			  // This is useful since Panoply (as of Feb 2009) display the missing_value as NaN no matter what.
+			  if(  !(currInfo == null) && !(currInfo.getAttributeValue( "missing_value_test" ) == null) )
+			  {
+				  ncfile.addVariableAttribute( var.name,"missing_value", currInfo.getAttributeValue("missing_value_test") );
+			  }
+
+			  if(  !(currInfo == null) && !(currInfo.getAttributeValue( "longName" ) == null) )
+			  {
+				  ncfile.addVariableAttribute( var.name,"long_name", currInfo.getAttributeValue("longName") );
+			  }
+
+			  if( !(currInfo == null) && !(currInfo.getAttributeValue( "title" ) == null) ) 
+			  {
+				  ncfile.addVariableAttribute( var.name,"title", currInfo.getAttributeValue("title") );
+			  }
+
+			  if(var.comment != null) {
+				  ncfile.addGlobalAttribute("comments", var.comment);
+			  }  else {
+				  if(  !(currInfo == null) && !(currInfo.getAttributeValue( "comments" ) == null) )
+				  {
+					  ncfile.addVariableAttribute( var.name,"comments", currInfo.getAttributeValue("comments") );
+				  }
+			  }
+		  }
+
+		  //create the file
+		  try {
+			  ncfile.create();
+		  }  catch (IOException e) {
+			  log.log(Level.SEVERE, "NetCDF file '"+fileName+"' failed to create -> aborting");
+			  System.exit(0);
+		  }
+		  log.log(Level.FINE, "Creating NetCDF file '"+fileName+"'");
+
+		  ArrayFloat latArr = new ArrayFloat.D1(latDim.getLength());
+		  ArrayFloat lonArr = new ArrayFloat.D1(lonDim.getLength());
+		  ArrayInt timeArr = new ArrayInt.D1(timeDim.getLength());
+		  // add the actual data for each source variable
+		  for(Iterator source = sourceVars.iterator(); source.hasNext(); ) {
+			  ArrayFloat dataArr = new ArrayFloat.D3(timeDim.getLength(), latDim.getLength(), lonDim.getLength());
+			  currInfo = (Element)source.next();
+			  var = getVariable(currInfo.getAttributeValue("name"));
+			  if(!var.isGroup()) {
+				  varR = (ReferenceVariable)var;
+				  // create a one entry map so that we can get it's time right
+				  Map<String, ReferenceVariable> tempMap = new HashMap<String, ReferenceVariable>(1);
+				  // TODO: get the real time associated with this ref var,
+				  // we may need to store the time str within the ref var
+				  tempMap.put("1", varR);
+				  timeSet = new ArrayList(tempMap.entrySet());
+			  } else if(var.isGroup() && ((GroupVariable)var).isTime) {
+				  GroupVariable varG = (GroupVariable)var;
+				  timeSet = new ArrayList((Set<Map.Entry<String, ReferenceVariable>>)varG.data.entrySet());
+				  // use the first in group as ref for all since they should
+				  // all have the same shape
+				  varR = timeSet.get(0).getValue();
+			  } else {
+				  // don't know about this one
+				  log.log(Level.WARNING, "Variable: "+currInfo.getAttributeValue("name")+" is not grouped by time.");
+				  return;
+			  }
+
+			  //filling the array with the data
+			  Index ima = dataArr.getIndex();
+			  for(int t = 0; t < timeDim.getLength(); t++) {
+				  myData = timeSet.get(t).getValue().buildWorldMatrix();
+				  for(int i = 0; i < latDim.getLength(); i++)
+				  {
+					  for(int j = 0; j < lonDim.getLength(); j++)
+					  {
+						  if ( Double.isNaN( myData[i][j] ) ) {
+							  dataArr.setFloat( ima.set(t,i,j), missingValue );
+						  } else {
+							  dataArr.setFloat( ima.set(t,i,j), (float)myData[i][j] );
+						  }
+					  }
+				  }
+				  myData = null;
+				  // TODO: this is arbitrary and not sure if it is even necesary
+				  // only garbage collect every 25th time
+				  if(t % 25 == 0) {
+					  System.gc();
+				  }
+			  }
+			  try {
+				  ncfile.write(var.name, dataArr);
+				  ncfile.flush();
+			  } catch (IOException e) {
+				  log.log(Level.SEVERE, "NetCDF file failed to write data values -> "+e);
+				  e.printStackTrace();
+				  System.exit(0);
+			  } catch (InvalidRangeException e) {
+				  log.log(Level.SEVERE, "NetCDF file failed to write data values -> "+e);
+				  e.printStackTrace();
+				  System.exit(0);
+			  }
+		  }
+		  //filling array with latitude degrees
+		  Index iml = latArr.getIndex();
+		  // want the index to be in the middle of the grid cell
+		  // so we shift half a res down from the top
+		  degHold = (float)(90.0 - (res / 2));
+		  for(int i = 0; i < latDim.getLength(); i++)
+		  {
+			  latArr.setFloat(iml.set(i), degHold);
+			  degHold -= res;
+		  }
+		  //filling array with longitude degrees
+		  iml = lonArr.getIndex();
+		  // want the index to be in the middle of the grid cell
+		  // so we shift half a res over from the left
+		  degHold = (float)(-180.0 + (res / 2));
+		  for(int i = 0; i < lonDim.getLength(); i++)
+		  {
+			  lonArr.setFloat(iml.set(i), degHold);
+			  degHold += res;
+		  }
+		  iml = timeArr.getIndex();
+		  for(int t = 0; t < timeDim.getLength(); ++t) {
+			  if(!useRelativeDate) {
+				  timeArr.setInt(iml.set(t), (int)Double.parseDouble(timeSet.get(t).getKey()));
+			  } else {
+				  currDate = new GregorianCalendar((int)Double.parseDouble(timeSet.get(t).getKey()), Calendar.JANUARY, 1);
+				  timeArr.setDouble(iml.set(t), ((currDate.getTimeInMillis() - relativeDate.getTimeInMillis()) / MILLS_TO_DAY));
+			  }
+		  }
+
+
+		  // write data out to disk
+		  try {
+			  ncfile.write("lat", latArr);
+			  ncfile.flush();
+			  ncfile.write("lon", lonArr);
+			  ncfile.flush();
+			  ncfile.write("time", timeArr);
+			  ncfile.flush();
+		  } catch (IOException e) {
+			  log.log(Level.SEVERE, "NetCDF file failed to write data values -> "+e);
+			  e.printStackTrace();
+			  System.exit(0);
+		  } catch (InvalidRangeException e) {
+			  log.log(Level.SEVERE, "NetCDF file failed to write data values -> "+e);
+			  e.printStackTrace();
+			  System.exit(0);
+		  }
+
+		  //all done
+		  try {
+			  ncfile.close();
+		  } catch (IOException e) {
+			  log.log(Level.WARNING, "NetCDF file failed to close -> continuing");
+		  }
+
+
+
+		  //***************************END FILE DEF*********************************
+	  } else
+	  {
+		  log.log(Level.WARNING, "Variable: "+currInfo.getAttributeValue("name")+" is not a reference variable.");
+	  }
+
   }
 
   /**
@@ -2901,6 +2985,9 @@ public class ManipulationDriver
    */
   private void appendNetCDFFileCommand(Element command)
   {
+	  if(1==1) {
+		  throw new UnsupportedOperationException("Need to upgrade netcdf library first");
+	  }
     log.log(Level.FINER, "begin function");
     Variable var;
     ReferenceVariable varR;
@@ -2909,7 +2996,7 @@ public class ManipulationDriver
     boolean missing_value_test = false;
     double[][] myData;
     float degHold;
-    float missingValue;
+    float missingValue = Float.NaN;
     Element currInfo;
     NetcdfFileWriteable ncfile = null;
 
@@ -2948,7 +3035,7 @@ public class ManipulationDriver
 	    ucar.nc2.FileWriter fw = new ucar.nc2.FileWriter(fileName, true);
 	    List<ucar.nc2.Variable> oldOnes = oldFile.getVariables();
 	    fw.writeVariables(oldOnes);
-	    ncfile = fw.getNetcdf();
+	    ncfile = null; //TODO: when resupport this: fw.getNetcdf();
 
 	    // TODO: the following would be ideal method for appending to netcdf which are available in NetCDF4
 	    // however I had trouble with NetCDF4 seemingly not working correctly.  In particluar FileWriter.copyVarData
@@ -2974,10 +3061,10 @@ public class ManipulationDriver
 				    currDimName = "time";
 				    break;
 			    case 2:
-				    currDimName = "latitude";
+				    currDimName = "lat";
 				    break;
 			    case 3:
-				    currDimName = "longitude";
+				    currDimName = "lon";
 				    break;
 		    }
 		    currDim = oldFile.findDimension(currDimName);
@@ -2990,7 +3077,7 @@ public class ManipulationDriver
 
 	    // add the new var with the existing dimensions
 	    // TODO: we need some error check to make sure the existing dimensions make sense
-	    ncfile.addVariable(var.name, DataType.FLOAT, "level time latitude longitude");
+	    // TODO: add when resupported: ncfile.addVariable(var.name, DataType.FLOAT, "level time lat lon");
 	    //ncfile.addVariable(var.name, DataType.FLOAT, dim4);
 	    ncfile.addVariableAttribute(var.name, "average", String.valueOf(varR.avg));
 
@@ -3777,604 +3864,706 @@ public class ManipulationDriver
    * @param command The xml command used to determine how and what to downscale.
    */
   private void downscaleEmissionsCommand(Element command) {
-	  //EmissionsDownscaler.doDownscaling(command, this);
+	  EmissionsDownscaler.doDownscaling(command, this);
   }
 
-//*****************************************************************************
-//*********************Helper Functions****************************************
-//*****************************************************************************
   /**
-   * Creates all of the documents and read and write streams which will
-   * be used by this class. Is automatically run by {@link runAll()}.
+   * Adds a var to a group.  Currently it does not validate if it is a valid
+   * year or region or if you are trying to mix years and regions.
+   * @param command The xml command to determine which var to add, with what key,
+   * 	and to what group variable
    */
-  private void makeStreams()
-  {
-    log.log(Level.FINER, "begin parsing DMfiles.xml");
-    log.log(Level.FINER, "Parsing "+dSource);
-    //this function initializes all of the XML documents
-    //i will add the code for additional readers as i need them
-    try
-    {
-      SAXBuilder builder = new SAXBuilder();
-      //dDocument = builder.build(dSource);
-      dDocument = null;
-      try {
-	      XMLReader saxReader = XMLReaderFactory.createXMLReader();
-	      saxReader.setContentHandler(new DataContentHandler());
-	      saxReader.parse(dSource);
-      } catch(SAXException e) {
-	      e.printStackTrace();
-      }
-      log.log(Level.FINER, "data document parsed");
-      rDocument = builder.build(rSource);
-      log.log(Level.FINER, "region document parsed");
-      cDocument = builder.build(cSource);
-      log.log(Level.FINER, "command document parsed");
-    } catch(FileNotFoundException e)
-    {
-      log.log(Level.SEVERE, "FileNotFound! in -> makeStreams");
-      System.exit(0);
-    } catch(JDOMException e)
-    {
-      log.log(Level.SEVERE, "JDOM Exception! in -> makeStreams");
-    }
-    catch(IOException e)
-    {
-      log.log(Level.SEVERE, "IOException! in -> makeStreams");
-    }
-  }
-  /**
-   * Takes a string representation of a number in scientific form and returns
-   * a double containing that value. Assumes 'E' or 'e' will be used as the
-   * demarkation between mantissa and exponent. Following 'e' seperator will be
-   * a + or - sign denoting whether the exponent should be positive or
-   * negative.
-   * @param sc String to be parsed into a double.
-   * @return Double representation of supplied string.
-   */
-  private double stringToDouble(String sc)
-  {
-    //takes a string of the form #.###E+### and converts it to a double
-    double mantissa, exponent, expValue;
-    boolean expSignPos = false;
-    int E = sc.indexOf('E');
-    if(E == -1)
-    {
-      E = sc.indexOf('e');
-    }
-    if(E == -1)
-    { //this is a normal double value, use Double.parseString
-      return Double.parseDouble(sc);
-    } else
-    {
-      mantissa = Double.parseDouble(sc.substring(0, E));
-      char afterE = sc.charAt(E+1);
-      if(afterE == '+') {
-        expSignPos = true;
-	exponent = Double.parseDouble(sc.substring(E+2, sc.length()));
-      } else if(afterE == '-') {
-	exponent = Double.parseDouble(sc.substring(E+2, sc.length()));
-      } else {
-	// no sign and is positive
-        expSignPos = true;
-	exponent = Double.parseDouble(sc.substring(E+1, sc.length()));
-      }
-      if(expSignPos)
-        expValue = Math.pow(10, exponent);
-      else
-        expValue = Math.pow(10, (-1*exponent));
+  private void addToGroupCommand(Element command) {
+	  log.log(Level.FINER, "begin function");
+	  Variable VDest;
+	  Variable VSource;
+	  Element currInfo;
 
-      if(mantissa!=0)
-      {
-        return mantissa*expValue;
-      } else
-      {
-        return 0;
-      }
-    }
+	  currInfo = command.getChild("target");
+	  String VDname = currInfo.getAttributeValue("name");
+	  VDest = getVariable(VDname);
+	  currInfo = command.getChild("argument");
+	  VSource = getVariable(currInfo.getAttributeValue("name"));
+	  String key = currInfo.getAttributeValue("key");
+	  if((VDest.isGroup())) {
+		  ((GroupVariable)VDest).data.put(key, VSource);
+	  } else {
+		  log.log(Level.WARNING, "Can only add to a group variable");
+	  }
   }
 
-  private void runCommand(Element currCom)
-  {
-    log.log(Level.FINER, "parsing "+currCom.getName()+" command");
-    if(currCom.getName().equals("variable"))
-    {
-      if(currCom.getAttributeValue("type").equals("data"))
-      {
-        log.log(Level.FINEST, "new data variable command");
-        newDataVariableCommand(currCom);
-      } else  if(currCom.getAttributeValue("type").equals("reference"))
-      {
-        log.log(Level.FINEST, "new reference variable command");
-        newReferenceVariableCommand(currCom);
-      } else  if(currCom.getAttributeValue("type").equals("group"))
-      {
-        log.log(Level.FINEST, "new group variable command");
-        newGroupVariableCommand(currCom);
-      } else  if(currCom.getAttributeValue("type").equals("scalar reference"))
-      {
-        log.log(Level.FINEST, "new scalar reference variable command");
-        newScalarReferenceVariableCommand(currCom);
-      } else
-      {
-        log.log(Level.WARNING, "Unknown variable type -> "+currCom.getAttributeValue("type"));
-      }
-    } else if(currCom.getName().equals("aggregateVariables"))
-    {
-      aggregateVariablesCommand(currCom);
-    } else if(currCom.getName().equals("add"))
-    {
-      addCommand(currCom);
-    } else if(currCom.getName().equals("subtract"))
-    {
-      subCommand(currCom);
-    } else if(currCom.getName().equals("addScalar"))
-    {
-      addScalarCommand(currCom);
-    } else if(currCom.getName().equals("multiply"))
-    {
-      multiplyCommand(currCom);
-    } else if(currCom.getName().equals("divide"))
-    {
-      divideCommand(currCom);
-    } else if(currCom.getName().equals("multiplyScalar"))
-    {
-      multiplyScalarCommand(currCom);
-    } else if(currCom.getName().equals("divideScalar"))
-    {
-      divideScalarCommand(currCom);
-    } else if(currCom.getName().equals("parseGreaterThan"))
-    {
-      parseGreaterThanCommand(currCom);
-    } else if(currCom.getName().equals("parseLessThan"))
-    {
-      parseLessThanCommand(currCom);
-    } else if(currCom.getName().equals("parseLessThanOrEqual"))
-    {
-      parseLessThanOrEqualCommand(currCom);
-    } else if(currCom.getName().equals("removeRandom"))
-    {
-      removeRandomCommand(currCom);
-    } else if(currCom.getName().equals("removeRandomGuided"))
-    {
-      removeRandomGuidedCommand(currCom);
-    } else if(currCom.getName().equals("maskCombineOr"))
-    {
-      maskCombineOrCommand(currCom);
-    } else if(currCom.getName().equals("maskCombineAnd"))
-    {
-      maskCombineAndCommand(currCom);
-    } else if(currCom.getName().equals("maskRemain"))
-    {
-      maskRemainCommand(currCom);
-    } else if(currCom.getName().equals("maskRemove"))
-    {
-      maskRemoveCommand(currCom);
-    } else if(currCom.getName().equals("countGreaterThan"))
-    {
-      countGreaterThanCommand(currCom);
-    } else if(currCom.getName().equals("countLessThan"))
-    {
-      countLessThanCommand(currCom);
-    } else if(currCom.getName().equals("countElements"))
-    {
-      countElementsCommand(currCom);
-    } else if(currCom.getName().equals("largestValue"))
-    {
-      largestValueCommand(currCom);
-    } else if(currCom.getName().equals("smallestValue"))
-    {
-      smallestValueCommand(currCom);
-    } else if(currCom.getName().equals("aggregateValues"))
-    {
-      aggregateValuesCommand(currCom);
-    } else if(currCom.getName().equals("sumValues"))
-    {
-      sumValuesCommand(currCom);
-    } else if(currCom.getName().equals("sumArea"))
-    {
-      sumAreaCommand(currCom);
-    } else if(currCom.getName().equals("sumRegionArea"))
-    {
-      sumRegionAreaCommand(currCom);
-    } else if(currCom.getName().equals("avgOverRegion"))
-    {
-      avgOverRegionCommand(currCom);
-    } else if(currCom.getName().equals("avgOverRegionByArea"))
-    {
-      avgOverRegionByAreaCommand(currCom);
-    } else if(currCom.getName().equals("avgVariables"))
-    {
-      avgVariablesCommand(currCom);
-    } else if(currCom.getName().equals("avgVariablesOverRegion"))
-    {
-      avgVariablesOverRegionCommand(currCom);
-    } else if(currCom.getName().equals("avgVariablesOverRegionByArea"))
-    {
-      avgVariablesOverRegionByAreaCommand(currCom);
-    } else if(currCom.getName().equals("weightValues"))
-    {
-      weightValuesCommand(currCom);
-    } else if(currCom.getName().equals("setAverage"))
-    {
-      setAverageProperty(currCom);
-    } else if(currCom.getName().equals("frequencyAnalysis"))
-    {
-      frequencyAnalysisCommand(currCom);
-    } else if(currCom.getName().equals("windPowerCalc"))
-    {
-      windPowerCalcCommand(currCom);
-    } else if(currCom.getName().equals("extractSubRegion"))
-    {
-      extractSubRegionCommand(currCom);
-    } else if(currCom.getName().equals("getChildVariable"))
-    {
-      getChildVariable(currCom);
-    } else if(currCom.getName().equals("print"))
-    {
-      printCommand(currCom);
-    } else if(currCom.getName().equals("printVerbose"))
-    {
-      printVerboseCommand(currCom);
-    } else if(currCom.getName().equals("plot"))
-    {
-      plotCommand(currCom);
-    } else if(currCom.getName().equals("createDataSet"))
-    {
-     createDataSetCommand(currCom);
-    } else if(currCom.getName().equals("createNetCDFFile"))
-    {
-      createNetCDFFileCommand(currCom);
-    } else if(currCom.getName().equals("appendNetCDFFile"))
-    {
-      appendNetCDFFileCommand(currCom);
-    } else if(currCom.getName().equals("comment"))
-    {
-      setComment(currCom);
-    } else if(currCom.getName().equals("setReference"))
-    {
-      setReferenceCommand(currCom);
-    } else if(currCom.getName().equals("setUnits"))
-    {
-      setUnitsCommand(currCom);
-    } else if(currCom.getName().equals("forEachSubregion"))
-    {
-      forEachSubregionCommand(currCom);
-    } else if(currCom.getName().equals("forEach"))
-    {
-      forEachCommand(currCom);
-    } else if(currCom.getName().equals("zoneCombine"))
-    {
-      zoneCombineCommand(currCom);
-    } else if(currCom.getName().equals("divByAreaFract"))
-    {
-	    divByAreaFractCommand(currCom);
-    } else if(currCom.getName().equals("multByAreaFract"))
-    {
-	    multByAreaFractCommand(currCom);
-    } else if(currCom.getName().equals("printDebug"))
-    {
-	    printDebugCommand(currCom);
-    } else if(currCom.getName().equals("downscaleEmissions"))
-    {
-	    downscaleEmissionsCommand(currCom);
-    } else if(currCom.getName().equals("exit"))
-    {
-	    System.exit(0);
-    } else
-    {
-      log.log(Level.WARNING, "Unknown user command -> "+currCom.getName());
-    }
-  }
-  
-  private void fillGroupByExplicit(GroupVariable var, Element members)
-  {
-    log.log(Level.FINER, "begin function");
-    Element currMem;
-    String currName;
-    Variable currVar;
-    List mems = members.getChildren("variable");
-    
-    for(int i = 0; i < mems.size(); i++)
-    {
-      currMem = (Element)mems.get(i);
-      currName = currMem.getAttributeValue("value");
-      if(variableList.containsKey(currName))
-      {
-        currVar = getVariable(currName);
-        var.addData(currVar.getCopy());
-      } else
-      { //this variable doesnt actualyl exist, kick to null
-        log.log(Level.WARNING, currName+" does not exist, cant add to group.");
-        var = null;
-        return;
-      }
-    }
-  }
-  private void fillGroupByTime(GroupVariable var, Element members)
-  {
-    log.log(Level.FINER, "begin function");
-    Element currInfo;
-    String reg, field;
-    Region R;
-    ArrayList<String> timeList;
-    Variable currVar;
-    
-    currInfo = members.getChild("region");
-    reg = currInfo.getAttributeValue("value");
-    currInfo = members.getChild("field");
-    field = currInfo.getAttributeValue("value");
-   
-    boolean avg = ((Boolean)dataAvgAdd.get(field)).booleanValue();
-    
-    //get a list of times
-    if(regionList.containsKey(reg))
-    {
-      R = (Region)regionList.get(reg);
-      timeList = R.getTimeList(field);
-      
-      for(int i = 0; i < timeList.size(); i ++)
-      { //add each time entry as a seperate variable
-        currVar = new ReferenceVariable(timeList.get(i), R, field, timeList.get(i), avg);
-        var.addData(currVar);
-      }
-    } else
-    { //cant very well add a region if it doesnt exist now can we
-      log.log(Level.WARNING, reg+" does not exist, cant extract time group.");
-      var = null;
-    }
-  }
-  private void fillGroupByExtraction(GroupVariable var, Element members)
-  {
-    log.log(Level.FINER, "begin function");
-    Variable VSource;
-    ReferenceVariable currVar;
-    String Vname, Rname;
-    Region RShape;
-    superRegion SR;
-    Region[] regList;
-    
-    Vname = members.getAttributeValue("variable");
-   
-    if(variableList.containsKey(Vname))
-    {
-      VSource = getVariable(Vname);
-      if(VSource.isReference())
-      {
-        Rname = ((ReferenceVariable)VSource).region;
-        RShape = (Region)regionList.get(Rname);
-        if(RShape.isSuper())
-        {
-          SR = (superRegion)RShape;
-          regList = (Region[])(SR).data.toArray(new Region[0]);
-          
-          for(int i = 0; i < regList.length; i ++)
-          { //add each child region as a seperate variable
-            currVar = new ReferenceVariable(regList[i].name, regList[i]);
-            currVar.avg = ((ReferenceVariable)VSource).avg;
-            currVar.setData(regList[i].extractRegion((ReferenceVariable)VSource));
-            
-            var.addData(currVar);
-          }
-        } else
-        {
-          var = null;
-          log.log(Level.WARNING, "Variable "+Vname+" is subRegion and has no child regions.");
-          return;
-        }
-      } else
-      {
-        var = null;
-        log.log(Level.WARNING, "Variable "+Vname+" is not a reference variable.");
-        return;
-      }
-    } else
-    {
-      var = null;
-      log.log(Level.WARNING, "Variable "+Vname+" does not exist!");
-      return;
-    }
-  }
-  private void fillGroupByChildren(GroupVariable var, Element members)
-  {
-    log.log(Level.FINER, "begin function");
-    Element currInfo;
-    String reg, field, time;
-    Region R;
-    Region[] regList;
-    Variable currVar;
-    
-    currInfo = members.getChild("region");
-    reg = currInfo.getAttributeValue("value");
-    currInfo = members.getChild("field");
-    field = currInfo.getAttributeValue("value");
-    currInfo = members.getChild("time");
-    time = currInfo.getAttributeValue("value");
-   
-    boolean avg = ((Boolean)dataAvgAdd.get(field)).booleanValue();
-    
-    //get a list of times
-    if(regionList.containsKey(reg))
-    {
-      R = (Region)regionList.get(reg);
-      if(R.isSuper())
-      {
-        regList = (Region[])((superRegion)R).data.toArray(new Region[0]);
-        for(int i = 0; i < regList.length; i ++)
-        { //add each child region as a seperate variable
-          currVar = new ReferenceVariable(regList[i].name, regList[i], field, time, avg);
-          var.addData(currVar);
-        }
-      } else
-      { //this i sjust a sub region, no children to fill with, null and kick
-        var = null;
-        log.log(Level.WARNING, "Group variable "+var.name+" was seeded with a subRegion");
-        return;
-      }
-    } else
-    { //cant very well add a region if it doesnt exist now can we
-      var = null;
-      log.log(Level.WARNING, reg+" does not exist, cant extract children group.");
-      return;
-    }
-  }
   /**
-   * Checks to make sure a variable referenced in some command currently exists.
-   * @param name the name of the Variable
-   * @return the Variable, if Variable does not exist will kill program
+   * Remove a var from a group.  It will warn if it could not find the key.
+   * @param command The xml command which specifies the key to remove from the group.
    */
-  private Variable getVariable(String name)
-  {
-    Variable toReturn = (Variable)variableList.get(name);
-    
-    if(toReturn == null)
-    {
-      log.log(Level.SEVERE, "referenced variable '"+name+"' does not exist -> terminating");
-      System.exit(0);
-    }
-    
-    return toReturn;
-  }
-  /**
-   * Checks all input arguments for creation of a new Variable. Region, field, and time.
-   * If any of these do not exist will kill program.
-   * @param region The region to get data from.
-   * @param field The specific field of data.
-   * @param time The desired time within that field.
-   */
-  private void checkRegionFieldTime(String region, String field, String time)
-  {
-    Region holdRegion = (Region)regionList.get(region);
-    
-    if(holdRegion == null)
-    {
-      log.log(Level.SEVERE, "referenced region '"+region+"' does not exist -> terminating");
-      System.exit(0);
-    }
-    
-    // special case here where RegionCellSize is a special field which really
-    // does not exist.. if there was actually a field named RegionCellSize
-    // it will use the field instead of the special case
-    if(field.equals("RegionCellSize") && dataAvgAdd.get(field) == null) {
-	    return;
-    }
-    if(dataAvgAdd.get(field) == null)
-    {
-      log.log(Level.SEVERE, "referenced field '"+field+"' does not exist -> terminating");
-      System.exit(0);
-    }
-    
-    if(!holdRegion.getTimeList(field).contains(time))
-    {
-      log.log(Level.SEVERE, "referenced time '"+time+"' in field '"+field+"' does not exist\n" +
-            "valid times are: '"+holdRegion.getTimeList(field).toString()+"' -> terminating");
-      
-      System.exit(0);
-    }
+  private void removeFromGroupCommand(Element command) {
+	  log.log(Level.FINER, "begin function");
+	  Variable VSource;
+	  Element currInfo;
+
+	  currInfo = command.getChild("argument");
+	  VSource = getVariable(currInfo.getAttributeValue("name"));
+	  currInfo = command.getChild("key");
+	  String key = currInfo.getAttributeValue("value");
+	  if((VSource.isGroup())) {
+		  Object ret = ((GroupVariable)VSource).data.remove(key);
+		  if(ret == null) {
+			  log.log(Level.WARNING, "Did not find key: "+key+" in group ");
+		  }
+	  } else {
+		  log.log(Level.WARNING, "Can only remove from a group variable");
+	  }
   }
 
-  private class DataContentHandler extends DefaultHandler {
-	  subRegion toAdd;
-	  int sizeX, sizeY, currX, currY;
-	  Map toAddVar;
-	  double[][] toAddTime;
-	  String varName, timeName;
-	  boolean avg;
-	  boolean isVarInfo = false;
-	  public void startElement(String uri, String localName, String qName, Attributes attrs) {
-		  if(localName.equals("input")) {
-			  resolution = Double.parseDouble(attrs.getValue("res"));
-			  // Normalize resolution to units of one quarter of a degree
-			  resolution = (double)( (int)Math.round(resolution*60*4) )/(60.0*4.0);
-		  } else if(localName.equals("variableInfo")) {
-			  isVarInfo = true;
-		  } else if(localName.equals("region")) {
-			  // do I need to keep track of numAtomicRegions ?
-			  toAdd = new subRegion();
-			  toAdd.name = attrs.getValue("name");
-			  toAdd.resolution = resolution;
-			  toAdd.x = Double.parseDouble(attrs.getValue("x"));
-			  toAdd.y = Double.parseDouble(attrs.getValue("y"));
-			  sizeX = Integer.parseInt(attrs.getValue("sizeX"));
-			  sizeY = Integer.parseInt(attrs.getValue("sizeY"));
-			  toAdd.width = (sizeX*resolution);
-			  toAdd.height = (sizeY*resolution);
-		  } else if(localName.equals("weight")) {
-			  varName = "weight";
-			  toAddVar = new HashMap(); // does this have to be a treemap?
-		  } else if(localName.equals("time")) {
-			  timeName = attrs.getValue("value");
-			  toAddTime = new double[sizeY][sizeX];
-			  for(int hy = 0; hy<sizeY; hy++)
+  /**
+   * Realases references to a dm variable.  The idea here is that when we have long dm
+   * scripts we accumulate variables which we don't intend on using anymore.  This command
+   * allows users to flag them and hopefully release their memory. For the command element
+   * we allow a list of variables which we will try to release.  We also allow a flag on 
+   * the command which will tell this command to force garbage collection after releasing
+   * reference.
+   * @param command The xml command which specifies to dm vars to release.
+   */
+  private void releaseVarCommand(Element command) {
+	  log.log(Level.FINER, "begin function");
+	  Element currInfo;
+	  boolean forceGC = false;
+	  String valueTemp;
+
+	  // check the force-gc flag on the command, by default we will not force this
+	  if((valueTemp = command.getAttributeValue("force-gc")) != null) {
+		  forceGC = Boolean.valueOf(valueTemp);
+	  }
+
+	  List<Element> removeVars = command.getChildren("variable");
+	  for(Iterator<Element> it = removeVars.iterator(); it.hasNext(); ) {
+		  currInfo = it.next();
+		  if((valueTemp = currInfo.getAttributeValue("name")) != null) {
+			  Object ret = variableList.remove(valueTemp);
+
+			  // if we get null back that means that the variable didn't exist and
+			  // we should warn the users since they may have mistyped something
+			  if(ret == null) {
+				  log.log(Level.WARNING, 
+						  valueTemp+" was not released because it was not found in the variable list");
+			  }
+		  } else {
+			  // warn the user that a name attribute is required
+			  log.log(Level.WARNING, "Release var requires a name attribute on the variable element");
+		  }
+	  }
+
+	  // force garbage collection if the user requested it
+	  if(forceGC) {
+		  log.log(Level.FINER, "Forcing garbage collection");
+		  System.gc();
+	  }
+  }
+
+	  //*****************************************************************************
+	  //*********************Helper Functions****************************************
+	  //*****************************************************************************
+	  /**
+	   * Creates all of the documents and read and write streams which will
+	   * be used by this class. Is automatically run by {@link runAll()}.
+	   */
+	  private void makeStreams()
+	  {
+		  log.log(Level.FINER, "begin parsing DMfiles.xml");
+		  log.log(Level.FINER, "Parsing "+dSource);
+		  //this function initializes all of the XML documents
+		  //i will add the code for additional readers as i need them
+		  try
+		  {
+			  SAXBuilder builder = new SAXBuilder();
+			  //dDocument = builder.build(dSource);
+			  dDocument = null;
+			  try {
+				  XMLReader saxReader = XMLReaderFactory.createXMLReader();
+				  saxReader.setContentHandler(new DataContentHandler());
+				  saxReader.parse(dSource);
+			  } catch(SAXException e) {
+				  e.printStackTrace();
+			  }
+			  log.log(Level.FINER, "data document parsed");
+			  rDocument = builder.build(rSource);
+			  log.log(Level.FINER, "region document parsed");
+			  cDocument = builder.build(cSource);
+			  log.log(Level.FINER, "command document parsed");
+		  } catch(FileNotFoundException e)
+		  {
+			  log.log(Level.SEVERE, "FileNotFound! in -> makeStreams");
+			  System.exit(0);
+		  } catch(JDOMException e)
+		  {
+			  log.log(Level.SEVERE, "JDOM Exception! in -> makeStreams");
+		  }
+		  catch(IOException e)
+		  {
+			  log.log(Level.SEVERE, "IOException! in -> makeStreams");
+		  }
+	  }
+	  /**
+	   * Takes a string representation of a number in scientific form and returns
+	   * a double containing that value. Assumes 'E' or 'e' will be used as the
+	   * demarkation between mantissa and exponent. Following 'e' seperator will be
+	   * a + or - sign denoting whether the exponent should be positive or
+	   * negative.
+	   * @param sc String to be parsed into a double.
+	   * @return Double representation of supplied string.
+	   */
+	  private double stringToDouble(String sc)
+	  {
+		  //takes a string of the form #.###E+### and converts it to a double
+		  double mantissa, exponent, expValue;
+		  boolean expSignPos = false;
+		  int E = sc.indexOf('E');
+		  if(E == -1)
+		  {
+			  E = sc.indexOf('e');
+		  }
+		  if(E == -1)
+		  { //this is a normal double value, use Double.parseString
+			  return Double.parseDouble(sc);
+		  } else
+		  {
+			  mantissa = Double.parseDouble(sc.substring(0, E));
+			  char afterE = sc.charAt(E+1);
+			  if(afterE == '+') {
+				  expSignPos = true;
+				  exponent = Double.parseDouble(sc.substring(E+2, sc.length()));
+			  } else if(afterE == '-') {
+				  exponent = Double.parseDouble(sc.substring(E+2, sc.length()));
+			  } else {
+				  // no sign and is positive
+				  expSignPos = true;
+				  exponent = Double.parseDouble(sc.substring(E+1, sc.length()));
+			  }
+			  if(expSignPos)
+				  expValue = Math.pow(10, exponent);
+			  else
+				  expValue = Math.pow(10, (-1*exponent));
+
+			  if(mantissa!=0)
 			  {
-				  for(int hx = 0; hx<sizeX; hx++)
+				  return mantissa*expValue;
+			  } else
+			  {
+				  return 0;
+			  }
+		  }
+	  }
+
+	  private void runCommand(Element currCom)
+	  {
+		  log.log(Level.FINER, "parsing "+currCom.getName()+" command");
+		  if(currCom.getName().equals("variable"))
+		  {
+			  if(currCom.getAttributeValue("type").equals("data"))
+			  {
+				  log.log(Level.FINEST, "new data variable command");
+				  newDataVariableCommand(currCom);
+			  } else  if(currCom.getAttributeValue("type").equals("reference"))
+			  {
+				  log.log(Level.FINEST, "new reference variable command");
+				  newReferenceVariableCommand(currCom);
+			  } else  if(currCom.getAttributeValue("type").equals("group"))
+			  {
+				  log.log(Level.FINEST, "new group variable command");
+				  newGroupVariableCommand(currCom);
+			  } else  if(currCom.getAttributeValue("type").equals("scalar reference"))
+			  {
+				  log.log(Level.FINEST, "new scalar reference variable command");
+				  newScalarReferenceVariableCommand(currCom);
+			  } else
+			  {
+				  log.log(Level.WARNING, "Unknown variable type -> "+currCom.getAttributeValue("type"));
+			  }
+		  } else if(currCom.getName().equals("aggregateVariables"))
+		  {
+			  aggregateVariablesCommand(currCom);
+		  } else if(currCom.getName().equals("add"))
+		  {
+			  addCommand(currCom);
+		  } else if(currCom.getName().equals("subtract"))
+		  {
+			  subCommand(currCom);
+		  } else if(currCom.getName().equals("addScalar"))
+		  {
+			  addScalarCommand(currCom);
+		  } else if(currCom.getName().equals("multiply"))
+		  {
+			  multiplyCommand(currCom);
+		  } else if(currCom.getName().equals("divide"))
+		  {
+			  divideCommand(currCom);
+		  } else if(currCom.getName().equals("multiplyScalar"))
+		  {
+			  multiplyScalarCommand(currCom);
+		  } else if(currCom.getName().equals("divideScalar"))
+		  {
+			  divideScalarCommand(currCom);
+		  } else if(currCom.getName().equals("parseGreaterThan"))
+		  {
+			  parseGreaterThanCommand(currCom);
+		  } else if(currCom.getName().equals("parseLessThan"))
+		  {
+			  parseLessThanCommand(currCom);
+		  } else if(currCom.getName().equals("parseLessThanOrEqual"))
+		  {
+			  parseLessThanOrEqualCommand(currCom);
+		  } else if(currCom.getName().equals("removeRandom"))
+		  {
+			  removeRandomCommand(currCom);
+		  } else if(currCom.getName().equals("removeRandomGuided"))
+		  {
+			  removeRandomGuidedCommand(currCom);
+		  } else if(currCom.getName().equals("maskCombineOr"))
+		  {
+			  maskCombineOrCommand(currCom);
+		  } else if(currCom.getName().equals("maskCombineAnd"))
+		  {
+			  maskCombineAndCommand(currCom);
+		  } else if(currCom.getName().equals("maskRemain"))
+		  {
+			  maskRemainCommand(currCom);
+		  } else if(currCom.getName().equals("maskRemove"))
+		  {
+			  maskRemoveCommand(currCom);
+		  } else if(currCom.getName().equals("countGreaterThan"))
+		  {
+			  countGreaterThanCommand(currCom);
+		  } else if(currCom.getName().equals("countLessThan"))
+		  {
+			  countLessThanCommand(currCom);
+		  } else if(currCom.getName().equals("countElements"))
+		  {
+			  countElementsCommand(currCom);
+		  } else if(currCom.getName().equals("largestValue"))
+		  {
+			  largestValueCommand(currCom);
+		  } else if(currCom.getName().equals("smallestValue"))
+		  {
+			  smallestValueCommand(currCom);
+		  } else if(currCom.getName().equals("aggregateValues"))
+		  {
+			  aggregateValuesCommand(currCom);
+		  } else if(currCom.getName().equals("sumValues"))
+		  {
+			  sumValuesCommand(currCom);
+		  } else if(currCom.getName().equals("sumArea"))
+		  {
+			  sumAreaCommand(currCom);
+		  } else if(currCom.getName().equals("sumRegionArea"))
+		  {
+			  sumRegionAreaCommand(currCom);
+		  } else if(currCom.getName().equals("avgOverRegion"))
+		  {
+			  avgOverRegionCommand(currCom);
+		  } else if(currCom.getName().equals("avgOverRegionByArea"))
+		  {
+			  avgOverRegionByAreaCommand(currCom);
+		  } else if(currCom.getName().equals("avgVariables"))
+		  {
+			  avgVariablesCommand(currCom);
+		  } else if(currCom.getName().equals("avgVariablesOverRegion"))
+		  {
+			  avgVariablesOverRegionCommand(currCom);
+		  } else if(currCom.getName().equals("avgVariablesOverRegionByArea"))
+		  {
+			  avgVariablesOverRegionByAreaCommand(currCom);
+		  } else if(currCom.getName().equals("weightValues"))
+		  {
+			  weightValuesCommand(currCom);
+		  } else if(currCom.getName().equals("setAverage"))
+		  {
+			  setAverageProperty(currCom);
+		  } else if(currCom.getName().equals("frequencyAnalysis"))
+		  {
+			  frequencyAnalysisCommand(currCom);
+		  } else if(currCom.getName().equals("windPowerCalc"))
+		  {
+			  windPowerCalcCommand(currCom);
+		  } else if(currCom.getName().equals("extractSubRegion"))
+		  {
+			  extractSubRegionCommand(currCom);
+		  } else if(currCom.getName().equals("getChildVariable"))
+		  {
+			  getChildVariable(currCom);
+		  } else if(currCom.getName().equals("print"))
+		  {
+			  printCommand(currCom);
+		  } else if(currCom.getName().equals("printVerbose"))
+		  {
+			  printVerboseCommand(currCom);
+		  } else if(currCom.getName().equals("plot"))
+		  {
+			  plotCommand(currCom);
+		  } else if(currCom.getName().equals("createDataSet"))
+		  {
+			  createDataSetCommand(currCom);
+		  } else if(currCom.getName().equals("createNetCDFFile"))
+		  {
+			  createNetCDFFileCommand(currCom);
+		  } else if(currCom.getName().equals("appendNetCDFFile"))
+		  {
+			  appendNetCDFFileCommand(currCom);
+		  } else if(currCom.getName().equals("comment"))
+		  {
+			  setComment(currCom);
+		  } else if(currCom.getName().equals("setReference"))
+		  {
+			  setReferenceCommand(currCom);
+		  } else if(currCom.getName().equals("setUnits"))
+		  {
+			  setUnitsCommand(currCom);
+		  } else if(currCom.getName().equals("forEachSubregion"))
+		  {
+			  forEachSubregionCommand(currCom);
+		  } else if(currCom.getName().equals("forEach"))
+		  {
+			  forEachCommand(currCom);
+		  } else if(currCom.getName().equals("zoneCombine"))
+		  {
+			  zoneCombineCommand(currCom);
+		  } else if(currCom.getName().equals("divByAreaFract"))
+		  {
+			  divByAreaFractCommand(currCom);
+		  } else if(currCom.getName().equals("multByAreaFract"))
+		  {
+			  multByAreaFractCommand(currCom);
+		  } else if(currCom.getName().equals("printDebug"))
+		  {
+			  printDebugCommand(currCom);
+		  } else if(currCom.getName().equals("downscaleEmissions"))
+		  {
+			  downscaleEmissionsCommand(currCom);
+		  } else if(currCom.getName().equals("addToGroup"))
+		  {
+			  addToGroupCommand(currCom);
+		  } else if(currCom.getName().equals("removeFromGroup"))
+		  {
+			  removeFromGroupCommand(currCom);
+		  } else if(currCom.getName().equals("releaseVar"))
+		  {
+			  releaseVarCommand(currCom);
+		  } else if(currCom.getName().equals("exit"))
+		  {
+			  System.exit(0);
+		  } else
+		  {
+			  log.log(Level.WARNING, "Unknown user command -> "+currCom.getName());
+		  }
+	  }
+
+	  private void fillGroupByExplicit(GroupVariable var, Element members)
+	  {
+		  log.log(Level.FINER, "begin function");
+		  Element currMem;
+		  String currName;
+		  Variable currVar;
+		  List mems = members.getChildren("variable");
+
+		  for(int i = 0; i < mems.size(); i++)
+		  {
+			  currMem = (Element)mems.get(i);
+			  currName = currMem.getAttributeValue("value");
+			  if(variableList.containsKey(currName))
+			  {
+				  currVar = getVariable(currName);
+				  var.addData(currVar.getCopy());
+			  } else
+			  { //this variable doesnt actualyl exist, kick to null
+				  log.log(Level.WARNING, currName+" does not exist, cant add to group.");
+				  var = null;
+				  return;
+			  }
+		  }
+	  }
+	  private void fillGroupByTime(GroupVariable var, Element members)
+	  {
+		  log.log(Level.FINER, "begin function");
+		  Element currInfo;
+		  String reg, field;
+		  Region R;
+		  ArrayList<String> timeList;
+		  Variable currVar;
+
+		  currInfo = members.getChild("region");
+		  reg = currInfo.getAttributeValue("value");
+		  currInfo = members.getChild("field");
+		  field = currInfo.getAttributeValue("value");
+
+		  boolean avg = ((Boolean)dataAvgAdd.get(field)).booleanValue();
+
+		  //get a list of times
+		  if(regionList.containsKey(reg))
+		  {
+			  R = (Region)regionList.get(reg);
+			  timeList = R.getTimeList(field);
+
+			  for(int i = 0; i < timeList.size(); i ++)
+			  { //add each time entry as a seperate variable
+				  currVar = new ReferenceVariable(timeList.get(i), R, field, timeList.get(i), avg);
+				  var.addData(currVar);
+			  }
+		  } else
+		  { //cant very well add a region if it doesnt exist now can we
+			  log.log(Level.WARNING, reg+" does not exist, cant extract time group.");
+			  var = null;
+		  }
+	  }
+	  private void fillGroupByExtraction(GroupVariable var, Element members)
+	  {
+		  log.log(Level.FINER, "begin function");
+		  Variable VSource;
+		  ReferenceVariable currVar;
+		  String Vname, Rname;
+		  Region RShape;
+		  superRegion SR;
+		  Region[] regList;
+
+		  Vname = members.getAttributeValue("variable");
+
+		  if(variableList.containsKey(Vname))
+		  {
+			  VSource = getVariable(Vname);
+			  if(VSource.isReference())
+			  {
+				  Rname = ((ReferenceVariable)VSource).region;
+				  RShape = (Region)regionList.get(Rname);
+				  if(RShape.isSuper())
 				  {
-					  if(varName.equals("weight")) {
-						  toAddTime[hy][hx] = 0;
-					  } else { // variable
-						  toAddTime[hy][hx] = Double.NaN;
+					  SR = (superRegion)RShape;
+					  regList = (Region[])(SR).data.toArray(new Region[0]);
+
+					  for(int i = 0; i < regList.length; i ++)
+					  { //add each child region as a seperate variable
+						  currVar = new ReferenceVariable(regList[i].name, regList[i]);
+						  currVar.avg = ((ReferenceVariable)VSource).avg;
+						  currVar.setData(regList[i].extractRegion((ReferenceVariable)VSource));
+
+						  var.addData(currVar);
+					  }
+				  } else
+				  {
+					  var = null;
+					  log.log(Level.WARNING, "Variable "+Vname+" is subRegion and has no child regions.");
+					  return;
+				  }
+			  } else
+			  {
+				  var = null;
+				  log.log(Level.WARNING, "Variable "+Vname+" is not a reference variable.");
+				  return;
+			  }
+		  } else
+		  {
+			  var = null;
+			  log.log(Level.WARNING, "Variable "+Vname+" does not exist!");
+			  return;
+		  }
+	  }
+	  private void fillGroupByChildren(GroupVariable var, Element members)
+	  {
+		  log.log(Level.FINER, "begin function");
+		  Element currInfo;
+		  String reg, field, time;
+		  Region R;
+		  Region[] regList;
+		  Variable currVar;
+
+		  currInfo = members.getChild("region");
+		  reg = currInfo.getAttributeValue("value");
+		  currInfo = members.getChild("field");
+		  field = currInfo.getAttributeValue("value");
+		  currInfo = members.getChild("time");
+		  time = currInfo.getAttributeValue("value");
+
+		  boolean avg = ((Boolean)dataAvgAdd.get(field)).booleanValue();
+
+		  //get a list of times
+		  if(regionList.containsKey(reg))
+		  {
+			  R = (Region)regionList.get(reg);
+			  if(R.isSuper())
+			  {
+				  regList = (Region[])((superRegion)R).data.toArray(new Region[0]);
+				  for(int i = 0; i < regList.length; i ++)
+				  { //add each child region as a seperate variable
+					  currVar = new ReferenceVariable(regList[i].name, regList[i], field, time, avg);
+					  var.addData(currVar);
+				  }
+			  } else
+			  { //this i sjust a sub region, no children to fill with, null and kick
+				  var = null;
+				  log.log(Level.WARNING, "Group variable "+var.name+" was seeded with a subRegion");
+				  return;
+			  }
+		  } else
+		  { //cant very well add a region if it doesnt exist now can we
+			  var = null;
+			  log.log(Level.WARNING, reg+" does not exist, cant extract children group.");
+			  return;
+		  }
+	  }
+	  /**
+	   * Checks to make sure a variable referenced in some command currently exists.
+	   * @param name the name of the Variable
+	   * @return the Variable, if Variable does not exist will kill program
+	   */
+	  private Variable getVariable(String name)
+	  {
+		  Variable toReturn = (Variable)variableList.get(name);
+
+		  if(toReturn == null)
+		  {
+			  log.log(Level.SEVERE, "referenced variable '"+name+"' does not exist -> terminating");
+			  System.exit(0);
+		  }
+
+		  return toReturn;
+	  }
+	  /**
+	   * Checks all input arguments for creation of a new Variable. Region, field, and time.
+	   * If any of these do not exist will kill program.
+	   * @param region The region to get data from.
+	   * @param field The specific field of data.
+	   * @param time The desired time within that field.
+	   */
+	  private void checkRegionFieldTime(String region, String field, String time)
+	  {
+		  Region holdRegion = (Region)regionList.get(region);
+
+		  if(holdRegion == null)
+		  {
+			  log.log(Level.SEVERE, "referenced region '"+region+"' does not exist -> terminating");
+			  System.exit(0);
+		  }
+
+		  // special case here where RegionCellSize is a special field which really
+		  // does not exist.. if there was actually a field named RegionCellSize
+		  // it will use the field instead of the special case
+		  if(field.equals("RegionCellSize") && dataAvgAdd.get(field) == null) {
+			  return;
+		  }
+		  if(dataAvgAdd.get(field) == null)
+		  {
+			  log.log(Level.SEVERE, "referenced field '"+field+"' does not exist -> terminating");
+			  System.exit(0);
+		  }
+
+		  if(!holdRegion.getTimeList(field).contains(time))
+		  {
+			  log.log(Level.SEVERE, "referenced time '"+time+"' in field '"+field+"' does not exist\n" +
+					  "valid times are: '"+holdRegion.getTimeList(field).toString()+"' -> terminating");
+
+			  System.exit(0);
+		  }
+	  }
+
+	  private class DataContentHandler extends DefaultHandler {
+		  subRegion toAdd;
+		  int sizeX, sizeY, currX, currY;
+		  Map toAddVar;
+		  double[][] toAddTime;
+		  String varName, timeName;
+		  boolean avg;
+		  boolean isVarInfo = false;
+		  public void startElement(String uri, String localName, String qName, Attributes attrs) {
+			  if(localName.equals("input")) {
+				  resolution = Double.parseDouble(attrs.getValue("res"));
+				  // Normalize resolution to units of one quarter of a degree
+				  resolution = (double)( (int)Math.round(resolution*60*4) )/(60.0*4.0);
+			  } else if(localName.equals("variableInfo")) {
+				  isVarInfo = true;
+			  } else if(localName.equals("region")) {
+				  // do I need to keep track of numAtomicRegions ?
+				  toAdd = new subRegion();
+				  toAdd.name = attrs.getValue("name");
+				  toAdd.resolution = resolution;
+				  toAdd.x = Double.parseDouble(attrs.getValue("x"));
+				  toAdd.y = Double.parseDouble(attrs.getValue("y"));
+				  sizeX = Integer.parseInt(attrs.getValue("sizeX"));
+				  sizeY = Integer.parseInt(attrs.getValue("sizeY"));
+				  toAdd.width = (sizeX*resolution);
+				  toAdd.height = (sizeY*resolution);
+			  } else if(localName.equals("weight")) {
+				  varName = "weight";
+				  toAddVar = new HashMap(); // does this have to be a treemap?
+			  } else if(localName.equals("time")) {
+				  timeName = attrs.getValue("value");
+				  toAddTime = new double[sizeY][sizeX];
+				  for(int hy = 0; hy<sizeY; hy++)
+				  {
+					  for(int hx = 0; hx<sizeX; hx++)
+					  {
+						  if(varName.equals("weight")) {
+							  toAddTime[hy][hx] = 0;
+						  } else { // variable
+							  toAddTime[hy][hx] = Double.NaN;
+						  }
 					  }
 				  }
-			  }
-		  } else if(localName.equals("data")) {
-			  currX = Integer.parseInt(attrs.getValue("x"));
-			  currY = Integer.parseInt(attrs.getValue("y"));
-			  if (currX >= sizeX) { //sjs add trap for out of bounds error.
-				  log.log(Level.WARNING, "Skipping X point "+currX+" greater than size "+sizeX+" for region: "+toAdd.name);
-			  
-			  } else if (currY >= sizeY) { //sjs add trap for out of bounds error.
-				  log.log(Level.WARNING, "Skipping Y point "+currY+" greater than size "+sizeY+" for region: "+toAdd.name);
-			  
-			  } else if (currX < 0 ) { //sjs add trap for out of bounds error.
-				  log.log(Level.WARNING, "Skipping X point "+currX+" less than zero for region: "+toAdd.name);
-			  
-			  } else if (currY < 0) { //sjs add trap for out of bounds error.
-				  log.log(Level.WARNING, "Skipping Y point "+currY+" less than zero for region: "+toAdd.name);
-			  
-			  } else {
-				  toAddTime[currY][currX] = stringToDouble(attrs.getValue("value"));
-				  if(!varName.equals("weight") && !avg)
-				  { //this is an additive value and should be initially weighted (now)
-					  toAddTime[currY][currX] *= ((double[][])((Map)toAdd.data.get("weight")).get("0"))[currY][currX];
+			  } else if(localName.equals("data")) {
+				  currX = Integer.parseInt(attrs.getValue("x"));
+				  currY = Integer.parseInt(attrs.getValue("y"));
+				  if (currX >= sizeX) { //sjs add trap for out of bounds error.
+					  log.log(Level.WARNING, "Skipping X point "+currX+" greater than size "+sizeX+" for region: "+toAdd.name);
+
+				  } else if (currY >= sizeY) { //sjs add trap for out of bounds error.
+					  log.log(Level.WARNING, "Skipping Y point "+currY+" greater than size "+sizeY+" for region: "+toAdd.name);
+
+				  } else if (currX < 0 ) { //sjs add trap for out of bounds error.
+					  log.log(Level.WARNING, "Skipping X point "+currX+" less than zero for region: "+toAdd.name);
+
+				  } else if (currY < 0) { //sjs add trap for out of bounds error.
+					  log.log(Level.WARNING, "Skipping Y point "+currY+" less than zero for region: "+toAdd.name);
+
+				  } else {
+					  toAddTime[currY][currX] = stringToDouble(attrs.getValue("value"));
+					  if(!varName.equals("weight") && !avg)
+					  { //this is an additive value and should be initially weighted (now)
+						  toAddTime[currY][currX] *= ((double[][])((Map)toAdd.data.get("weight")).get("0"))[currY][currX];
+					  }
 				  }
-			  }
-		  } else if(localName.equals("variable")) {
-			  if(!isVarInfo) {
-				  varName = attrs.getValue("value");
-				  avg = ((Boolean)dataAvgAdd.get(varName)).booleanValue();
-				  toAddVar = new HashMap(); // again has to be TreeMap?
+			  } else if(localName.equals("variable")) {
+				  if(!isVarInfo) {
+					  varName = attrs.getValue("value");
+					  avg = ((Boolean)dataAvgAdd.get(varName)).booleanValue();
+					  toAddVar = new HashMap(); // again has to be TreeMap?
+				  } else {
+					  varName = attrs.getValue("name");
+				  }
+			  } else if(localName.equals("average")) {
+				  avg = (Boolean.valueOf(attrs.getValue("value"))).booleanValue();
+				  dataAvgAdd.put(varName, new Boolean(avg));
+			  } else if(localName.equals("reference")) {
+				  dataRef.put(varName, attrs.getValue("value"));
+			  } else if(localName.equals("units")) {
+				  dataUnits.put(varName, attrs.getValue("value"));
 			  } else {
-				  varName = attrs.getValue("name");
+				  log.log(Level.WARNING, "Didn't recognize element name: "+localName);
 			  }
-		  } else if(localName.equals("average")) {
-			  avg = (Boolean.valueOf(attrs.getValue("value"))).booleanValue();
-			  dataAvgAdd.put(varName, new Boolean(avg));
-		  } else if(localName.equals("reference")) {
-			  dataRef.put(varName, attrs.getValue("value"));
-		  } else if(localName.equals("units")) {
-			  dataUnits.put(varName, attrs.getValue("value"));
-		  } else {
-			  log.log(Level.WARNING, "Didn't recognize element name: "+localName);
+		  }
+		  public void endElement(String uri, String localName, String qName) {
+			  // make sure things get reset to null?
+			  if(localName.equals("variableInfo")) {
+				  isVarInfo = false;
+			  } else if(localName.equals("region")) {
+				  //adding region to master list
+				  regionList.put(toAdd.name, toAdd);
+			  } else if(localName.equals("weight")) {
+				  //end getting weight
+			  } else if(localName.equals("time")) {
+				  //end getting time
+				  toAddVar.put(timeName, toAddTime);
+				  toAdd.data.put(varName, toAddVar);
+			  } else if(localName.equals("data")) {
+				  //end getting data
+			  }
 		  }
 	  }
-	  public void endElement(String uri, String localName, String qName) {
-		  // make sure things get reset to null?
-		  if(localName.equals("variableInfo")) {
-			  isVarInfo = false;
-		  } else if(localName.equals("region")) {
-			  //adding region to master list
-			  regionList.put(toAdd.name, toAdd);
-		  } else if(localName.equals("weight")) {
-			  //end getting weight
-		  } else if(localName.equals("time")) {
-			  //end getting time
-			  toAddVar.put(timeName, toAddTime);
-			  toAdd.data.put(varName, toAddVar);
-		  } else if(localName.equals("data")) {
-			  //end getting data
-		  }
-	  }
+
+	  //*****************************************************************************
   }
-  
-//*****************************************************************************
-}

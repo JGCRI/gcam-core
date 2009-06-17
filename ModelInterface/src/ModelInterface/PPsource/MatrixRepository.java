@@ -240,7 +240,7 @@ public class MatrixRepository implements DataRepository
    *
    */
   public Map<String, Map<String, Map<Point2D.Double, Double>>> getRegion(int X, int Y,
-      double[][] weights, double xL, double yL, double res)
+      double[][] weights, double xL, double yL, double res, RegionMask mask)
   {
     /*
      * X and Y are the top left corner
@@ -269,6 +269,7 @@ public class MatrixRepository implements DataRepository
     holdVar.put("0", new LinkedHashMap<Point2D.Double, Double>());
     holdTime = holdVar.get("0");
     currXL = xL;
+    boolean isGlobalRegion = mask.name.equals(DataBuilder.GLOBAL_REGION_MASK);
     for(int x = 0; x<(weights[0].length); x++)
     {
       currYL = (yL-res);
@@ -281,13 +282,16 @@ public class MatrixRepository implements DataRepository
           // Adjust weight for land-fraction.  Land fraction at this point counts how much much of 
           // each cell is in any region. Weight should be the split of each cell within some region.
           // This assures that sum of weights is = 1, even at water boundaries.
-          if ( ( weights[(y)][(x)]  != 0 ) && ( landFraction[x+X][Y-((weights.length)-y)]  == 0 ) ) {
-              log.log(Level.WARNING, "Inconsistent weight and land fraction value at ("+currXL+","+currYL+") ");
-          }
           try {
+		  if(!isGlobalRegion) {
 			 if ( landFraction[x+X][Y-((weights.length)-y)] > 0 ) {
 			 	holdTime.put( hold, Double.valueOf(weights[(y)][(x)] / landFraction[x+X][Y-((weights.length)-y)])); 
+			 } else {
+				 log.log(Level.WARNING, "Inconsistent weight and land fraction value at ("+currXL+","+currYL+") ");
 			 }
+		  } else {
+			  holdTime.put(hold, weights[y][x]);
+		  }
 		  } catch(ArrayIndexOutOfBoundsException e) {
 			  System.out.println(e+" -- weight: "+weights[(y)][(x)]);
 			  System.out.println("     indicies: ("+x+","+y+")  ("+(x+X)+","+(Y-((weights.length)-y))+")");
@@ -304,7 +308,8 @@ public class MatrixRepository implements DataRepository
       varName = varEntry.getKey();
       // Don't write out CELL_AREA_DATA as an explicit variable. 
       // It is incorporated into landFract below.
-      if(varName.equals(DataBuilder.CELL_AREA_DATA)) {
+      // TODO: merge CELL_AREA_DATA into the exludes list
+      if(varName.equals(DataBuilder.CELL_AREA_DATA) || mask.shouldExcludeVariable(varName)) {
 	      continue;
       }
 
@@ -319,6 +324,7 @@ public class MatrixRepository implements DataRepository
         timeName = timeEntry.getKey();
         holdVar.put(timeName.toString(), new LinkedHashMap<Point2D.Double, Double>());
         holdTime = holdVar.get(timeName.toString());
+	boolean doAllOnes = isGlobalRegion && varName.equals(DataBuilder.LAND_FRACTION);
 
         changeLayer(varName, timeName);
 
@@ -348,7 +354,7 @@ public class MatrixRepository implements DataRepository
 				  }
 
               //add this point's value to toReturn
-              double dataValue = currLayer[x+X][Y-((weights.length)-y)] * landFractionAdj;
+              double dataValue = !doAllOnes ? currLayer[x+X][Y-((weights.length)-y)] * landFractionAdj : 1.0;
               holdTime.put(new Point2D.Double(currXL, currYL), dataValue );
             }
             currYL -= res;

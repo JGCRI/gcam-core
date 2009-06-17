@@ -53,14 +53,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import org.w3c.dom.NodeList;
+
 import ModelInterface.InterfaceMain;
 import ModelInterface.MenuAdder;
+import ModelInterface.BatchRunner;
 import ModelInterface.InterfaceMain.MenuManager;
 import ModelInterface.ModelGUI2.DOMmodel;
 import ModelInterface.ModelGUI2.Documentation;
 import ModelInterface.ModelGUI2.XMLFilter;
 
-public class DMViewer implements ActionListener, MenuAdder
+public class DMViewer implements ActionListener, MenuAdder, BatchRunner
 {
   
 //*****************************************************************************
@@ -419,5 +422,61 @@ public class DMViewer implements ActionListener, MenuAdder
           JOptionPane.PLAIN_MESSAGE);
       return;
     }
+  }
+  public void runBatch(Node command) {
+	  // set up logging
+	  Handler fHand, cHand;
+	  Logger log = Logger.getLogger("DataManipulation");
+	  log.setLevel(Level.parse("WARNING"));
+	  log.setUseParentHandlers(false);
+
+	  cHand = new ConsoleHandler();
+	  cHand.setLevel(Level.WARNING);//use ALL for diagnostics, WARNING usually
+	  log.addHandler(cHand);
+	  try
+	  {
+		  fHand = new FileHandler("DMLog.log");
+		  fHand.setLevel(Level.ALL);
+		  fHand.setFormatter(new SimpleFormatter());
+		  log.addHandler(fHand);
+	  } catch(SecurityException e)
+	  {
+		  e.printStackTrace();
+	  } catch(IOException e)
+	  {
+		  e.printStackTrace();
+	  }
+
+	  NodeList children = command.getChildNodes();
+	  String dataFilename = null;
+	  String regionDefFilename = null;
+	  String commandFilename = null;
+	  for(int i = 0; i < children.getLength(); ++i ) {
+		  Node child = children.item(i);
+		  // TODO: put in a parse filter for this
+		  if(child.getNodeType() != Node.ELEMENT_NODE) {
+			  continue;
+		  }
+		  String actionCommand = ((Element)child).getNodeName();
+		  if(actionCommand.equals("data")) {
+			  dataFilename = ((Element)child).getAttribute("file");
+		  } else if(actionCommand.equals("region")) {
+			  regionDefFilename = ((Element)child).getAttribute("file");
+		  } else if(actionCommand.equals("command")) {
+			  commandFilename = ((Element)child).getAttribute("file");
+		  } else if(actionCommand.equals("log")) {
+			  log.setLevel(Level.parse(((Element)child).getAttribute("level")));
+		  } else {
+			  log.warning("Unreckognized command: "+actionCommand);
+		  }
+	  }
+	  if(dataFilename == null || regionDefFilename == null || commandFilename == null) {
+		  log.severe("Not enough information to run data manipulator");
+	  } else {
+		  ManipulationDriver mainRun = new ManipulationDriver(dataFilename, regionDefFilename, commandFilename);
+		  log.log(Level.INFO, "calling runAll in DataBuilder");
+		  mainRun.runAll();
+	  }
+
   }
 }

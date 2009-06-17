@@ -93,9 +93,21 @@ public class DataBuilder
   private boolean URes; //whether or not the User wishes to use their own resolution
   Logger log = Logger.getLogger("Preprocess"); //log class to use for all logging output
 
+  /**
+   * A list to keep track of any variables which should be included only in a Global
+   * region mask.
+   */
+  private List<String> globalVarList;
+
   // String constants for special data names
   final public static String LAND_FRACTION = "landFract"; //Internal variable that contains land fraction  
   final public static String CELL_AREA_DATA = "cellArea"; //Name of optional read-in variable that contains actual cell land area  
+
+  /**
+   * The hard coded name for the Global reigon mask.  This region would only be
+   * created if a user asked for atleast one variable to be placed in it.
+   */
+  final public static String GLOBAL_REGION_MASK = "Global-All"; 
 
 //*****************************************************************************
 //*****************Class Constructors******************************************
@@ -120,6 +132,7 @@ public class DataBuilder
     dataAvg = new TreeMap();
     dataRef = new TreeMap();
     dataUnits = new TreeMap();
+    globalVarList = new ArrayList<String>();
   }
   /**
    * Standard file name constructor. Takes in three file names to later
@@ -145,6 +158,7 @@ public class DataBuilder
     dataAvg = new TreeMap();
     dataRef = new TreeMap();
     dataUnits = new TreeMap();
+    globalVarList = new ArrayList<String>();
   }
   
 //*****************************************************************************
@@ -262,6 +276,8 @@ public class DataBuilder
 	      dataStruct.setTrackSums(Boolean.valueOf(currFile.getAttributeValue("value")));
       } else if(currFile.getName().equals("printSums")) {
 	      dataStruct.printSums();
+      } else if(currFile.getName().equals("addToGlobalVarMask")) {
+	      addToGlobalVarMask(currFile);
       } else if(currFile.getName().equals("seed")) {
 	      // skip this
       } else if(currFile.getAttributeValue("type").equals("txt"))
@@ -425,6 +441,7 @@ public class DataBuilder
     {
       rName = (String)it.next();
       //System.out.println("filling "+rName);
+      initializeExcludes(rName, (RegionMask)maskList.get(rName));
       holdToPrint = dataStruct.extractMask((RegionMask)maskList.get(rName));
       if(holdToPrint != null)
       {
@@ -435,6 +452,29 @@ public class DataBuilder
     //congratulations the actual work of the proprocess stage is done once this works
     //yeah... i just congratulated myself... in comments
   }
+
+  /**
+   * Initializes the exclude lists for the given region mask.  At the moment
+   * the GLOBAL_REGION_MASK will exclude everything not in globalVarList and
+   * all the other region mask will exclude everything in globalVarList.
+   * @param regionName The name of the region mask.
+   * @param regionMask The acutal region mask.
+   */
+  private void initializeExcludes(String regionName, RegionMask regionMask) {
+	  if(!regionName.equals(GLOBAL_REGION_MASK)) {
+		  for(Iterator<String> it = globalVarList.iterator(); it.hasNext(); ) {
+			  regionMask.addToExclusionList(it.next());
+		  }
+	  } else {
+		  for(Iterator<String> it = dataAvg.keySet().iterator(); it.hasNext(); ) {
+			  String varName = it.next();
+			  if(!globalVarList.contains(varName) && !varName.equals(LAND_FRACTION)) {
+				  regionMask.addToExclusionList(varName);
+			  }
+		  }
+	  }
+  }
+
   /**
    * Writes an XML structure which defines each region and its corresponding
    * data. Does as much computation as possible in terms of matrix bounds and
@@ -5360,6 +5400,55 @@ public void addFLTFile(Element currFile)
     }
     //if we get to this point the attribute value does not exist
     return null;
+  }
+
+  /**
+   * Adds the variable name to the global region mask.  We need to keep a list of 
+   * any variables the user wants to be included in the global all region mask.  
+   * This would occur for instance with a data set which has data over land and 
+   * water.  We will have to store the var names and then let each region mask know 
+   * if they should include the variables or not after the all the region masks 
+   * have been created.
+   * @param command The xml command which will have the variables in the following format:
+   *                &lt;variable name="[name of var]" /&gt;
+   */
+  private void addToGlobalVarMask(Element command) {
+	  // if the Global region mask has yet to be created do that now
+	  RegionMask globalRegionMask = (RegionMask)maskList.get(GLOBAL_REGION_MASK);
+	  if(globalRegionMask == null) {
+		  final double res = dataStruct.getResolution();
+		  globalRegionMask = new RegionMask(GLOBAL_REGION_MASK, res);
+		  regionList.add(GLOBAL_REGION_MASK);
+		  maskList.put(GLOBAL_REGION_MASK, globalRegionMask);
+
+		  // create a mask of the entire global and set every point to true
+		  final int xLL = -180;
+		  final int yLL = -90;
+		  final int height = 180;
+		  final int width = 360;
+		  // region masks need UL with the lower left of the cell
+		  globalRegionMask.setRect(xLL, yLL, width, height);
+		  globalRegionMask.makeMatrix();
+		  for(double x = xLL; x < xLL+width; x += res) {
+			  for(double y = yLL; y < yLL+height; y += res) {
+				  globalRegionMask.setPointTrue(x, y);
+			  }
+		  }
+	  }
+
+	  // process the variable list by just adding them to a list for now
+	  // we will do the real work of setting up region exclusions later
+	  // after all of the RegionMasks have been created
+	  List<Element> variables = command.getChildren("variable");
+	  for(Iterator<Element> it = variables.iterator(); it.hasNext(); ) {
+		  String varName = it.next().getAttributeValue("name");
+		  if(dataAvg.containsKey(varName)) {
+			  globalVarList.add(varName);
+		  } else {
+			  log.log(Level.WARNING, "Variable "+varName+
+					  " must be read in before adding it to the global variable mask.");
+		  }
+	  }
   }
 
   

@@ -15,6 +15,8 @@ import java.util.Iterator;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.File;
+import java.io.PrintStream;
 
 import ModelInterface.ModelGUI2.xmldb.XMLDB;
 import ModelInterface.ModelGUI2.queries.QueryGenerator;
@@ -31,7 +33,7 @@ import ModelInterface.ModelGUI2.ScenarioListItem;
  * 	Detlef P. van Vuuren, Paul L Lucas, Henk Kilderink; 24 April 2006
  *
  * Note that this class is separated from ComponentManipulator so that dependencies on other
- * parts of the ModelInterface and be easily removed is necessary.
+ * parts of the ModelInterface and be easily removed if necessary.
  * @author Pralit Patel
  */
 public class EmissionsDownscaler {
@@ -42,16 +44,26 @@ public class EmissionsDownscaler {
 	 * @param driver The ManipulationDriver that is running this command. 
 	 */
 	public static boolean doDownscaling(Element command, ManipulationDriver driver) {
-		//log class to use for all logging output
+		// log class to use for all logging output
 		final Logger log = Logger.getLogger("DataManipulation"); 
 		Element currInfo;
 		// TODO: get base year
 		final int BASE_YEAR = 2005;
+		// we define a max allowed convergence year if the user reads in one greater
+		// than this we will assume no convergence in emissions and the base year
+		// pattern will be used
+		final int MAX_CONV_YEAR = 5000;
 		currInfo = command.getChild("convergent-year");
 		final int CONV_YEAR = Integer.valueOf(currInfo.getAttributeValue("value"));
+		if(CONV_YEAR > MAX_CONV_YEAR) {
+			log.warning("Convergence year "+CONV_YEAR+" is greater than the max: "
+					+MAX_CONV_YEAR+" we will assume no emissions convergence.");
+		}
 		final List<Region> minicamRegions = ((superRegion)driver.regionList.get("World-MiniCAM")).data;
+		currInfo = command.getChild("show-query-table");
+		final boolean showQueryTable = currInfo == null;
 
-		// Initialize and get data from the xmld database that has the model's
+		// Initialize and get data from the xml database that has the model's
 		// output
 		BaseTableModel populationTable = null;
 		BaseTableModel gdpTable = null;
@@ -68,7 +80,8 @@ public class EmissionsDownscaler {
 			// hard coded as all regions
 			final Object[] regionList = new Object[minicamRegions.size()];
 			for(int i = 0; i < minicamRegions.size(); ++i) {
-				regionList[i] = minicamRegions.get(i).name;
+				regionList[i] = minicamRegions.get(i).name.equals("China/CPA") ?
+					"China" : minicamRegions.get(i).name;
 			}
 
 			XMLDB.openDatabase(dbLocation, null);
@@ -78,14 +91,14 @@ public class EmissionsDownscaler {
 					scenarioList, regionList);
 			emissTable = getModelData(command.getChild("emissionsQuery"),
 					scenarioList, regionList);
-			/*
-			javax.swing.JDialog jd = new javax.swing.JDialog();
-			javax.swing.JTable tbl = new javax.swing.JTable(emissTable);
-			javax.swing.JScrollPane sp = new javax.swing.JScrollPane(tbl);
-			jd.setContentPane(sp);
-			jd.pack();
-			jd.setVisible(true);
-			*/
+			if(showQueryTable) {
+				javax.swing.JDialog jd = new javax.swing.JDialog();
+				javax.swing.JTable tbl = new javax.swing.JTable(emissTable);
+				javax.swing.JScrollPane sp = new javax.swing.JScrollPane(tbl);
+				jd.setContentPane(sp);
+				jd.pack();
+				jd.setVisible(true);
+			}
 		} catch(Exception e) {
 			log.severe("Error getting data from database: "+e);
 			e.printStackTrace();
@@ -99,11 +112,10 @@ public class EmissionsDownscaler {
 			return false;
 		}
 		// all model data must have be retrieved by this point
-		// TODO: figure out if closing will cause the tables to get errors
 
 		// initialize the country population data.
 		// the population by country stored as a Map of Time -> Region -> Data
-		final Map<Integer, Map<String, Double>> POPc = new /*java.util.Linked*/HashMap<Integer, Map<String, Double>>();
+		final Map<Integer, Map<String, Double>> POPc = new HashMap<Integer, Map<String, Double>>();
 		final Map<Integer, Map<String, Double>> Ar = new HashMap<Integer, Map<String, Double>>();
 
 		currInfo = command.getChild("population-file");
@@ -118,7 +130,7 @@ public class EmissionsDownscaler {
 			while((currLine = buff.readLine()) != null) {
 				final String[] currLineSplit = currLine.split(",");
 				final Map<String, Double> currCountryMap = 
-					new /*java.util.Linked*/HashMap<String, Double>(currLineSplit.length-1);
+					new HashMap<String, Double>(currLineSplit.length-1);
 				final Map<String, Double> currRegionMap = 
 					new HashMap<String, Double>(minicamRegions.size());
 				// initialize region population sums to zero
@@ -170,7 +182,7 @@ public class EmissionsDownscaler {
 			Map<String, Double> currRegionMap = 
 				Ar.get(currYear);
 			for(int j = 0; j < populationTable.getRowCount(); ++j) {
-				final String currMinicamRegionName = (String)populationTable.getValueAt(j, popRegionIndex);
+				final String currMinicamRegionName = checkRegion((String)populationTable.getValueAt(j, popRegionIndex));
 				Region currRegion = null;
 				for(Iterator<Region> it = minicamRegions.iterator(); it.hasNext(); ) {
 					Region tempRegion = it.next();
@@ -193,14 +205,6 @@ public class EmissionsDownscaler {
 						 */ 
 						final double POPc_temp = (Double)populationTable.getValueAt(j, popIndex) *
 							(currCountry.getValue() / currRegionMap.get(currMinicamRegionName));
-						/*
-						if(currMinicamRegionName.equals("Canada")) {
-							System.out.println("POPr: "+populationTable.getValueAt(j, popIndex));
-							System.out.println("Ac: "+currCountry.getValue());
-							System.out.println("Ar: "+currRegionMap.get(currMinicamRegionName));
-							System.out.println("POPc: "+POPc_temp);
-						}
-						*/
 						currCountry.setValue(POPc_temp);
 					}
 				}
@@ -208,16 +212,103 @@ public class EmissionsDownscaler {
 			++popIndex;
 		}
 
+		currInfo = command.getChild("emissions-conversion-factor");
+		final double emissConvFactor = Double.valueOf(currInfo.getAttributeValue("value"));
+
+		// initialize region level base year data for emissions and GDPpc
+		// so that we can adjust base year data to eventually match model data
+		currInfo = command.getChild("gdp-varname");
+		final ReferenceVariable gdpVarName = (ReferenceVariable)driver.variableList.get(currInfo.getAttributeValue("value"));
+		currInfo = command.getChild("emissions-varname");
+		final ReferenceVariable emissVarName = (ReferenceVariable)driver.variableList.get(currInfo.getAttributeValue("value"));
+		currInfo = command.getChild("emissions-diff-convergence");
+		final int emissDiffConvYear = Integer.valueOf(currInfo.getAttributeValue("year"));
+		currInfo = command.getChild("debug-country");
+		final String debugCountry = currInfo == null ? null : currInfo.getAttributeValue("name");
+		final Map<String, Double> GDPpc_r_BY = new HashMap<String, Double>(minicamRegions.size());
+		final Map<String, Double> GDPpc_Diff_r_BY = new HashMap<String, Double>(minicamRegions.size());
+		final Map<String, Double> E_r_BY = new HashMap<String, Double>(minicamRegions.size());
+		final Map<String, Double> E_Diff_r_BY = new HashMap<String, Double>(minicamRegions.size());
+		final String baseTimeStr = String.valueOf(BASE_YEAR)+".0";
+		final int emissFinalYearIndex = emissTable.getColumnCount()-2;
+		final int emissBaseYearIndex = emissTable.findColumn(String.valueOf(BASE_YEAR));
+		final int gdpBaseYearIndex = gdpTable.findColumn(String.valueOf(BASE_YEAR));
+		final Map<String, Map<String, Double>> shares_GDPpc = new HashMap<String, Map<String, Double>>(minicamRegions.size());
+		final Map<String, Map<String, Double>> shares_E = new HashMap<String, Map<String, Double>>(minicamRegions.size());
+		if(emissBaseYearIndex == -1 || gdpBaseYearIndex == -1) {
+			log.severe("Could not find base year column in tables.");
+			return false;
+		}
+		for(int j = 0; j < populationTable.getRowCount(); ++j) {
+			final String currMinicamRegionName = checkRegion((String)populationTable.getValueAt(j, popRegionIndex));
+			Region currRegion = null;
+			for(Iterator<Region> it = minicamRegions.iterator(); it.hasNext(); ) {
+				Region tempRegion = it.next();
+				if(tempRegion.name.equals(currMinicamRegionName)) {
+					currRegion = tempRegion;
+					break;
+				}
+			}
+			assert(currRegion != null);
+			final double US90_TO_US95 = 0.001305215;
+			double GDPpc_BY_temp = getVariableSumValues(gdpVarName, baseTimeStr,
+					currRegion);
+			GDPpc_BY_temp /= US90_TO_US95;
+			GDPpc_BY_temp /= (Double)populationTable.getValueAt(j, popBaseYearIndex);
+			GDPpc_r_BY.put(currMinicamRegionName, GDPpc_BY_temp);
+			Map<String, Double> tempMap = new HashMap<String, Double>();
+			tempMap.put("total", 0.0);
+			shares_GDPpc.put(currMinicamRegionName, tempMap);
+			double gdp_diff_BY = (Double)gdpTable.getValueAt(j, gdpBaseYearIndex)
+				/ GDPpc_BY_temp;
+			GDPpc_Diff_r_BY.put(currMinicamRegionName, gdp_diff_BY);
+
+			// convert from data read to MTC what model uses
+			double E_BY_temp = getVariableSumValues(emissVarName, baseTimeStr,
+					currRegion);
+			E_BY_temp *= emissConvFactor;
+			E_r_BY.put(currMinicamRegionName, E_BY_temp);
+			tempMap = new HashMap<String, Double>();
+			tempMap.put("total", 0.0);
+			shares_E.put(currMinicamRegionName, tempMap);
+
+			// if emissDiffConvYear < BASE_YEAR we carry the difference through out
+			// all years if emissDiffConvYear == BASE_YEAR we adjust the base year
+			// numbers to match model data and if it is > we linearly reduce the 
+			// difference until it is all gone in the emissDiffConvYear
+			double emiss_diff_BY = 0;
+			try {
+				emiss_diff_BY = (Double)emissTable.getValueAt(j, emissBaseYearIndex)
+					/ E_BY_temp;
+			} catch(ClassCastException e) {
+				e.printStackTrace();
+				System.out.println("Was trying to cast >"+emissTable.getValueAt(j, emissBaseYearIndex)
+						+" at row: "+j+" col: "+emissBaseYearIndex);
+				throw e;
+			}
+			E_Diff_r_BY.put(currMinicamRegionName, emiss_diff_BY);
+
+		       if(emissDiffConvYear != BASE_YEAR) {
+			       double slope = emissDiffConvYear > BASE_YEAR ? emiss_diff_BY /
+				       (emissDiffConvYear - BASE_YEAR) : 0;
+			       for(int i = emissBaseYearIndex + 1; i <= emissFinalYearIndex; ++i) {
+				       double currDiff = emiss_diff_BY;
+				       int currYear = Integer.valueOf(emissTable.getColumnName(i));
+				       currDiff -= slope * (currYear - BASE_YEAR);
+				       double modelEmiss = (Double)emissTable.getValueAt(j, i);
+				       emissTable.setValueAt(modelEmiss - currDiff, j, i);
+			       }
+		       }
+		}
+
 		// calc GDPpc_r_CY
 		// calc EI_r_CY 
 		// assume the final period is second from end
 		final int gdpFinalYearIndex = gdpTable.getColumnCount()-2;
-		final int emissFinalYearIndex = emissTable.getColumnCount()-2;
 		final int popFinalYearIndex = populationTable.getColumnCount()-2;
 		final int finalModelYear = Integer.valueOf(gdpTable.getColumnName(gdpFinalYearIndex));
 		assert(finalModelYear < CONV_YEAR);
 		// TODO: why should this column name have to be capital?
-		// TODO: figure out what I ment by the above todo
 		final int gdpRegionIndex = gdpTable.findColumn("Region");
 		final int emissRegionIndex = emissTable.findColumn("region");
 		if(gdpRegionIndex == -1) {
@@ -231,10 +322,10 @@ public class EmissionsDownscaler {
 		final Map<String, Double> GDPpc_r_CY = new HashMap<String, Double>(minicamRegions.size());
 		final Map<String, Double> EI_r_CY = new HashMap<String, Double>(minicamRegions.size());
 		for(int j = 0; j < gdpTable.getRowCount(); ++j) {
-			final String currMiniCAMRegion = (String)gdpTable.getValueAt(j, gdpRegionIndex);
+			final String currMiniCAMRegion = checkRegion((String)gdpTable.getValueAt(j, gdpRegionIndex));
 			// TODO: remove this when sure regions are in the same order
-			final String testMRegion = (String)emissTable.getValueAt(j, emissRegionIndex);
-			assert(currMiniCAMRegion.equals("testMRegion"));
+			final String testMRegion = checkRegion((String)emissTable.getValueAt(j, emissRegionIndex));
+			assert(currMiniCAMRegion.equals(testMRegion));
 			// assume constant growth rate of the last period for all periods after 2100
 			double GDPpc_gr_r_CY = (Double)gdpTable.getValueAt(j, gdpFinalYearIndex) / 
 				(Double)gdpTable.getValueAt(j, gdpFinalYearIndex -1);
@@ -252,11 +343,17 @@ public class EmissionsDownscaler {
 				((Double)gdpTable.getValueAt(j, gdpFinalYearIndex-1) * (Double)populationTable.getValueAt(j,
 													popFinalYearIndex-1));
 			// as with GDP it is a constant growth rate from here on out
-			double EI_gr_r_CY = tempEIFinalYear / tempEIFinalYear_1;
+			// when emissions in the final year or the year before that is zero
+			// we need to special case since it will need to converge to 0 before
+			// the convergence year. TODO: what is the proper way to do this
+			// right now I am just setting the rate at 1 and letting the emissions
+			// remainder get split out by gdp per capita
+			double EI_gr_r_CY = tempEIFinalYear == 0 || tempEIFinalYear_1 == 0 ?
+				1 : tempEIFinalYear / tempEIFinalYear_1;
 			// grow the regional EI in CY based on an equation similar to (3)
 			EI_r_CY.put(currMiniCAMRegion, tempEIFinalYear * Math.pow(EI_gr_r_CY, 
 					((CONV_YEAR - finalModelYear) / finalYearTimeStep)));
-			if(currMiniCAMRegion.equals("USA")) {
+			if(currMiniCAMRegion.equals(debugCountry)) {
 				System.out.println("GR_CY: "+GDPpc_gr_r_CY);
 				System.out.println("GDPpr_r_CY: "+GDPpc_r_CY.get(currMiniCAMRegion));
 				System.out.println("GDP F Y: "+gdpTable.getValueAt(j, gdpFinalYearIndex));
@@ -268,10 +365,9 @@ public class EmissionsDownscaler {
 
 
 		// initialize the GDP and EI base year country data
-		currInfo = command.getChild("gdp-varname");
-		final String gdpVarName = currInfo.getAttributeValue("value");
-		currInfo = command.getChild("emissions-varname");
-		final String emissVarName = currInfo.getAttributeValue("value");
+		// TODO: I should be able to put this check back in now that
+		// the variables are switched to DM variables, but should test
+		// it first
 		/* TODO: figure out how to check and see if the the vars exist
 		 * and are defined for the BASE_YEAR. The following checks user's
 		 * DM variables (not from PP).
@@ -286,27 +382,56 @@ public class EmissionsDownscaler {
 		final Map<String, Double> E_c_BY = new HashMap<String, Double>(countryNames.size());
 		final Map<String, Double> EI_c_BY = new HashMap<String, Double>(countryNames.size());
 		final Map<String, Double> EI_grc = new HashMap<String, Double>(countryNames.size());
-		final String baseTimeStr = String.valueOf(BASE_YEAR)+".0";
 		for(Iterator<String> it = countryNames.iterator(); it.hasNext(); ) {
 			final String currCountry = it.next();
-			/*
-			GDPpc_BY.put(currCountry, getVariableSumValues(gdpVarName, baseTimeStr, 
-						(Region)driver.regionList.get(currCountry)));
-						*/
 			// convert from 95US$ (data read) to 90US$/person what model uses
 			final double US90_TO_US95 = 0.001305215;
 			double GDPpc_BY_temp = getVariableSumValues(gdpVarName, baseTimeStr,
 					(Region)driver.regionList.get(currCountry));
 			GDPpc_BY_temp /= US90_TO_US95;
 			GDPpc_BY_temp /= POPc.get(BASE_YEAR).get(currCountry);
-			double GDPpc_grc_temp = 0.0;
 
-			// convert from GgCO2 (data read) to MTC what model uses
-			//final double GgCO2_TO_MTC = 0.000272916;
-			final double GgCO2_TO_MTC = 0.000000000272916;
 			double E_c_BY_temp = getVariableSumValues(emissVarName, baseTimeStr,
 					(Region)driver.regionList.get(currCountry));
-			E_c_BY_temp *= GgCO2_TO_MTC;
+			E_c_BY_temp *= emissConvFactor;
+			if(GDPpc_BY_temp != 0.0 && E_c_BY_temp != 0.0) {
+				Region currMiniCAMRegion = getSuperRegion(minicamRegions, currCountry);
+
+				// TODO: make it so it is never null
+				if(currMiniCAMRegion != null) {
+					// calculate base year shares for GDPpc
+					double tempShare = GDPpc_BY_temp / GDPpc_r_BY.get(currMiniCAMRegion.name);
+					Map<String, Double> tempMap = shares_GDPpc.get(currMiniCAMRegion.name);
+					tempMap.put(currCountry, tempShare);
+					tempMap.put("total", tempMap.get("total") + tempShare);
+
+					// calculate base year shares for E only if emissDiffConvYear == BASE_YEAR
+					if(emissDiffConvYear == BASE_YEAR) {
+						tempShare = E_c_BY_temp / E_r_BY.get(currMiniCAMRegion.name);
+						tempMap = shares_E.get(currMiniCAMRegion.name);
+						tempMap.put(currCountry, tempShare);
+						tempMap.put("total", tempMap.get("total") + tempShare);
+					}
+				}
+			}
+			GDPpc_BY.put(currCountry, GDPpc_BY_temp);
+			E_c_BY.put(currCountry, E_c_BY_temp);
+		}
+
+		// share out the base year difference between read in data and
+		// model data
+		normalizeAndDistribute(GDPpc_BY, shares_GDPpc, GDPpc_Diff_r_BY);
+		if(emissDiffConvYear == BASE_YEAR) {
+			normalizeAndDistribute(E_c_BY, shares_E, E_Diff_r_BY);
+		}
+
+		// we can calc growth rates and intensities after differences have been
+		// distributed
+		for(Iterator<String> it = countryNames.iterator(); it.hasNext(); ) {
+			final String currCountry = it.next();
+			double GDPpc_BY_temp = GDPpc_BY.get(currCountry);
+			double GDPpc_grc_temp = 0.0;
+			double E_c_BY_temp = E_c_BY.get(currCountry);
 			double EI_grc_temp = 0.0;
 			double EI_c_BY_temp = 0.0;
 			if(GDPpc_BY_temp != 0.0 && E_c_BY_temp != 0.0) {
@@ -318,15 +443,20 @@ public class EmissionsDownscaler {
 					// note that this is an anual growth rate
 					GDPpc_grc_temp = Math.pow((GDPpc_r_CY.get(currMiniCAMRegion.name) / GDPpc_BY_temp),
 						(1.0 / (CONV_YEAR - BASE_YEAR)));
-
 					// convert to E to EI
 					EI_c_BY_temp = E_c_BY_temp / (GDPpc_BY_temp * POPc.get(BASE_YEAR).get(currCountry)); 
 					// calculate eq: (8)
 					// again this is an anual growth rate
 					EI_grc_temp = Math.pow((EI_r_CY.get(currMiniCAMRegion.name) / EI_c_BY_temp),
 						(1.0 / (CONV_YEAR - BASE_YEAR)));
-					//if(currMiniCAMRegion.name.equals("Western Europe")) {
-					if(currCountry.equals("USA")) {
+
+					// No change in pattern if CONV_YEAR is larger than max value to gaurd against infinity
+					if(CONV_YEAR > MAX_CONV_YEAR) {
+						// reset these to 1 to avoid possible inifinites
+						GDPpc_grc_temp = 1;
+						EI_grc_temp = 1;
+					}
+					if(currCountry.equals(debugCountry)) {
 						System.out.println("C: "+currCountry);
 						System.out.println("grc: "+GDPpc_grc_temp);
 						System.out.println("CBY: "+GDPpc_BY_temp);
@@ -337,16 +467,9 @@ public class EmissionsDownscaler {
 					}
 				}
 			}
-			GDPpc_BY.put(currCountry, GDPpc_BY_temp);
 			GDPpc_grc.put(currCountry, GDPpc_grc_temp);
-			E_c_BY.put(currCountry, E_c_BY_temp);
 			EI_c_BY.put(currCountry, EI_c_BY_temp);
 			EI_grc.put(currCountry, EI_grc_temp);
-			/*
-			if(currCountry.equals("Canada")) {
-				System.out.println("Base GDP: "+GDPpc_BY.get(currCountry));
-			}
-			*/
 		}
 
 		// calculate GDPDiff_rt, GDP_sh_ct, and finally GDPpc_ct
@@ -382,7 +505,7 @@ public class EmissionsDownscaler {
 			++popIndex;
 			// this assumes same region ordering for POP and GDP tables
 			for(int j = 0; j < gdpTable.getRowCount(); ++j) {
-				String currMiniCAMRegion = (String)gdpTable.getValueAt(j, gdpRegionIndex);
+				String currMiniCAMRegion = checkRegion((String)gdpTable.getValueAt(j, gdpRegionIndex));
 				currDiff.put(currMiniCAMRegion, 0.0);
 				currShare.put(currMiniCAMRegion, 0.0);
 				currGDPDiff_rt.put(currMiniCAMRegion, (Double)gdpTable.getValueAt(j, gdpYearIndex) * 
@@ -410,8 +533,7 @@ public class EmissionsDownscaler {
 				temp = currShare.get(minicamSuperRegion);
 				double temp2 = currGDPpc_ct.get(currC)*currPOPc.getValue() -
 					prevGDPpc_ct.get(currC)*POPc.get(yearBefore).get(currC);
-				/*
-				if(minicamSuperRegion.equals("USA")) {
+				if(minicamSuperRegion.equals("debugCountry")) {
 					System.out.println(currC+" going neg");
 					System.out.println("pc_ct* : "+currGDPpc_ct.get(currC));
 					System.out.println("POPct: "+currPOPc.getValue());
@@ -421,7 +543,6 @@ public class EmissionsDownscaler {
 					System.out.println("GR: "+GDPpc_grc.get(currC));
 					System.out.println("Curr summed diff: "+tempReport);
 				}
-				*/
 				temp += temp2;
 				currShare.put(minicamSuperRegion, temp);
 			}
@@ -440,11 +561,6 @@ public class EmissionsDownscaler {
 				// finished eq: (5)
 				double tempShare = currGDPpc_ct.get(currC)*currPOPc.getValue() -
 					prevGDPpc_ct.get(currC)*POPc.get(yearBefore).get(currC);
-				/*
-				if(currC.equals("United Kingdom")) {
-					System.out.println("tempShare before: "+tempShare);
-				}
-				*/
 				Region tempR = getSuperRegion(minicamRegions, currC);
 				// TODO: make sure this never happens
 				if(tempR == null) {
@@ -457,7 +573,7 @@ public class EmissionsDownscaler {
 				double temp = currGDPpc_ct.get(currC) + ((currGDPDiff_rt.get(minicamSuperRegion) * tempShare) / 
 					currPOPc.getValue());
 				currGDPpc_ctF.put(currC, temp);
-				if(currC.equals("Cameroon")) {
+				if(currC.equals(debugCountry)) {
 					System.out.println("tempShare: "+tempShare);
 					System.out.println("R Diff: "+currGDPDiff_rt.get(minicamSuperRegion));
 					System.out.println("currGDPpc_ct: "+temp);
@@ -484,6 +600,15 @@ public class EmissionsDownscaler {
 			if(currYear == BASE_YEAR) {
 				E_ct.put(currYear, E_c_BY);
 				currEI_s_ct = EI_c_BY;
+				if(CONV_YEAR > MAX_CONV_YEAR) {
+					// we will need the regional sum to back out appropriate base year emissions shares
+					// the emissions here would have already been adjusted to match base year data if
+					// the emissions convergence year was != BASE_YEAR
+					for(int j = 0; j < emissTable.getRowCount(); ++j) {
+						String currMiniCAMRegion = checkRegion((String)emissTable.getValueAt(j, emissRegionIndex));
+						E_r_BY.put(currMiniCAMRegion, (Double)emissTable.getValueAt(j, emissYearIndex));
+					}
+				}
 				continue;
 			}
 			Map<String, Double> POPc_t = POPc.get(currYear);
@@ -495,7 +620,7 @@ public class EmissionsDownscaler {
 			E_ct.put(currYear, currE_ct);
 			++emissYearIndex;
 			for(int j = 0; j < emissTable.getRowCount(); ++j) {
-				String currMiniCAMRegion = (String)emissTable.getValueAt(j, emissRegionIndex);
+				String currMiniCAMRegion = checkRegion((String)emissTable.getValueAt(j, emissRegionIndex));
 				currEmissRegionalSum.put(currMiniCAMRegion, 0.0);
 				currEmissDiff_rt.put(currMiniCAMRegion, (Double)emissTable.getValueAt(j, emissYearIndex));
 			}
@@ -547,62 +672,95 @@ public class EmissionsDownscaler {
 				// finished eq: (9)
 				double tempShare = GDPpc_ct.get(currYear).get(currC) * currPOPc.getValue() *
 					currEI_s_ct.get(currC);
-				/*
-				if(currC.equals("United Kingdom")) {
-					System.out.println("tempShare before: "+tempShare);
-				}
-				*/
 				tempShare /= currEmissRegionalSum.get(minicamSuperRegion);
 				// eq: (10)
 				double temp = currE_ct.get(currC) + (currEmissDiff_rt.get(minicamSuperRegion) * tempShare);
-				currE_ct.put(currC, temp);
-				if(currC.equals("USA")) {
-					System.out.println("E tempShare: "+tempShare);
-					System.out.println("E R Diff: "+currEmissDiff_rt.get(minicamSuperRegion));
-					System.out.println("currE_ct: "+temp);
+				if(CONV_YEAR > MAX_CONV_YEAR) {
+					// if the CONV_YEAR is farther out than the MAX_CONV_YEAR
+					// we assume there is no convergence in emissions so just
+					// multiply the current emissions by the base year shares
+					// we reset E_r_BY and E_c_BY should have also been adjusted
+					// if necessary for the emissions difference convergence,
+					// dividing them should give us the appropriate shares
+					// or the base year country emissions E_c_BY have been adjusted so we should be good
+					temp = (currEmissDiff_rt.get(minicamSuperRegion) + currEmissRegionalSum.get(minicamSuperRegion))
+							* (E_c_BY.get(currC) / E_r_BY.get(minicamSuperRegion));
+					if(currC.equals(debugCountry)) {
+						System.out.println("Diff_rt: "+currEmissDiff_rt.get(minicamSuperRegion));
+						System.out.println("Reg Sum: "+currEmissRegionalSum.get(minicamSuperRegion));
+						System.out.println("E_c_BY: "+E_c_BY.get(currC));
+						System.out.println("E_r_BY: "+E_r_BY.get(minicamSuperRegion));
+					}
 				}
+				currE_ct.put(currC, temp);
 			}
 		}
 
-		//dumpMapToCSV(E_ct.entrySet().iterator());
-		//dumpMapToCSV(GDPpc_ct.entrySet().iterator());
-		dumpMapToCSV(POPc.entrySet().iterator());
+		currInfo = command.getChild("emissions-csv-out");
+		if(currInfo != null) {
+			try {
+				dumpMapToCSV(E_ct.entrySet().iterator(), currInfo.getAttributeValue("file"));
+			} catch(Exception e) {
+				log.warning("Could not write emissions csv file: "+e);
+			}
+		}
+		currInfo = command.getChild("population-csv-out");
+		if(currInfo != null) {
+			try {
+				dumpMapToCSV(POPc.entrySet().iterator(), currInfo.getAttributeValue("file"));
+			} catch(Exception e) {
+				log.warning("Could not write population csv file: "+e);
+			}
+		}
+		currInfo = command.getChild("gdp-csv-out");
+		if(currInfo != null) {
+			try {
+				dumpMapToCSV(GDPpc_ct.entrySet().iterator(), currInfo.getAttributeValue("file"));
+			} catch(Exception e) {
+				log.warning("Could not write gdp csv file: "+e);
+			}
+		}
+		currInfo = command.getChild("emissions-out-varname");
+		createOutputVar(currInfo.getAttributeValue("value"), E_ct, emissVarName, baseTimeStr, driver, emissConvFactor);
 		return true;
 	}
 
 	/**
-	 * Dummps a map which is as the form time - country - value as a CSV table. 
-	 * This is used to debug.
+	 * Dumps a map which is as the form time - country - value as a CSV table. 
+	 * This is used to debug. The results will be placed in the given filename.
 	 * @param it and iterator that iterates through times for each country.
+	 * @param file The name of a file to place results into. 
 	 */
-	private static void dumpMapToCSV(Iterator<Map.Entry<Integer, Map<String, Double>>> it) {
+	private static void dumpMapToCSV(Iterator<Map.Entry<Integer, Map<String, Double>>> it, String file) throws Exception {
 		boolean isFirst = true;
+		final PrintStream out = new PrintStream(new File(file));
 		Map.Entry<Integer, Map<String, Double>> currCountryMap = null;
 		for(Iterator<Map.Entry<Integer, Map<String, Double>>> itTime = it; itTime.hasNext(); ) {
 			if(!isFirst && currCountryMap != null) {
 				// every other time
 				currCountryMap = itTime.next();
-				System.out.print(currCountryMap.getKey()+",");
+				out.print(currCountryMap.getKey()+",");
 			} else if(isFirst && currCountryMap == null) {
 				// first time
 				currCountryMap = itTime.next();
-				System.out.print(",");
+				out.print(",");
 			} else {
 				// second time
 				isFirst = false;
-				System.out.print(currCountryMap.getKey()+",");
+				out.print(currCountryMap.getKey()+",");
 			}
 			for(Iterator<Map.Entry<String, Double>> itC 
 					= currCountryMap.getValue().entrySet().iterator(); itC.hasNext(); ) {
 				Map.Entry<String, Double> currCountry = itC.next();
 				if(isFirst) {
-					System.out.print(currCountry.getKey()+",");
+					out.print(currCountry.getKey()+",");
 				} else {
-					System.out.print(currCountry.getValue()+",");
+					out.print(currCountry.getValue()+",");
 				}
 			}
-			System.out.println("");
+			out.println();
 		}
+		out.close();
 	}
 
 	/**
@@ -638,19 +796,21 @@ public class EmissionsDownscaler {
 	 * @param region The acutal region to look in. 
 	 * @return The summed value of varName in region for year. 
 	 */
-	private static double getVariableSumValues(String varName, String year, Region region) {
+	private static double getVariableSumValues(ReferenceVariable varName, String year, Region region) {
 		if(region == null) {
 			// TODO: log this?
 			return 0.0;
 		}
 
-		Wrapper[] workingVar = region.getWorkingM(varName, year);
-		if(workingVar == null) {
-			// TODO: log this?
-			return 0.0;
+		Wrapper[] ret;
+		if(varName.avg) {
+			// need to weight values
+			// I don't think the x/y/h are necessary anymore
+			ret = ComponentManipulator.sumValues(region.extractRegion(varName), varName.weight, varName.getLandFract(), varName.x,
+					varName.y, varName.h);
+		} else {
+			ret = ComponentManipulator.sumValues(region.extractRegion(varName));
 		}
-
-		Wrapper[] ret = ComponentManipulator.sumValues(workingVar);
 		return ret[0].getData()[0][0];
 	}
 
@@ -669,5 +829,122 @@ public class EmissionsDownscaler {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Distributes the regional difference between the readin data and the
+	 * model data base on shares.  The shares are first normalized which
+	 * assumes that there is a value "total" in the shares which has the share 
+	 * sum already calculated.
+	 * @param countryData The country level data that needs to be adjusted.
+	 * @param shares A map of Region to country to it's share.  It is assumed
+	 * 	that for each country there is a "total" which as the share sum
+	 * 	already calculated for that region.
+	 * @param regionalDiff The difference to be distributed from the region
+	 * 	level to the country level.
+	 */
+	private static void normalizeAndDistribute(Map<String, Double> countryData,
+			Map<String, Map<String, Double>> shares,
+			Map<String, Double> regionalDiff) {
+		for(Iterator<Map.Entry<String, Map<String, Double>>> it = shares.entrySet().iterator();
+				it.hasNext(); ) {
+			Map.Entry<String, Map<String, Double>> currRegionShares = it.next();
+			double currRegionDiff = regionalDiff.get(currRegionShares.getKey());
+			Map<String, Double> currShares = currRegionShares.getValue();
+			double currTotalShare = currShares.get("total");
+			for(Iterator<Map.Entry<String, Double>> itShares = currShares.entrySet().iterator();
+					itShares.hasNext(); ) {
+				Map.Entry<String, Double> currCountryShare = itShares.next();
+				String currC = currCountryShare.getKey();
+				if(currC.equals("total")) {
+					continue;
+				}
+				countryData.put(currC, countryData.get(currC) *
+						/* ((currCountryShare.getValue() / currTotalShare)) * */
+						 currRegionDiff);
+			}
+		}
+	}
+
+	/**
+	 * Creates the downscaled dm var which will be grouped by time.  The process goes by 
+	 * taking the base year map and scaling it based on the % change from the base year 
+	 * country sum to the downscaled country values.  It then takes that % and scales
+	 * each grid cell in the country by it.  Note that it uses convFactor such that the
+	 * results are left in the same units as the base year map.
+	 * @param outVarName The name of the group variable that will be created.
+	 * @param downscaledData The data map of time to country to data.
+	 * @param inVarName The base year data var. 
+	 * @param baseYear The base year to start from.
+	 * @param driver The manipulator driver which will be used to get access to Regions.
+	 * @param convFactor Conversion factor to convert base year units to working units.
+	 */
+	private static void createOutputVar(String outVarName, Map<Integer, Map<String, Double>> downscaledData,
+			ReferenceVariable inVarName, String baseYear, ManipulationDriver driver, double convFactor) {
+		// to avoid summing base year values too much we will do it once and store it in the map
+		Map<String, Double> baseYearSumCache = new HashMap<String, Double>();
+
+		// set up the out var as a group variable by time
+		GroupVariable outVar = new GroupVariable(outVarName);
+		outVar.isRef = true;
+		outVar.isTime = true;
+		driver.variableList.put(outVarName, outVar);
+		//String units = (String)driver.dataUnits.get(inVarName);
+		String units = inVarName.units;
+		final Region worldRegion = (Region)driver.regionList.get("World");
+		for(Iterator<Map.Entry<Integer, Map<String, Double>>> itTime = downscaledData.entrySet().iterator(); itTime.hasNext(); ) {
+			Map.Entry<Integer, Map<String, Double>> currTime = itTime.next();
+			// TODO: check the avg, I would hope I could get the right time here
+			ReferenceVariable outCurrYear = new ReferenceVariable(currTime.getKey().toString(), inVarName);
+			// this is confusing but copying a reference variable does not copy the data
+			// I think for us just copying the data wrapper and setting each pointer in there to the same as in
+			// inVarName should be good enough
+			outCurrYear.data = new Wrapper[inVarName.data.length];
+			for(int i = 0; i < inVarName.data.length; ++i) {
+				outCurrYear.data[i] = inVarName.data[i].makeCopy();
+				outCurrYear.data[i].setData(inVarName.data[i].getData());
+			}
+			outCurrYear.units = units;
+			outVar.addData(outCurrYear);
+			driver.variableList.put(outVarName+outCurrYear.name, outCurrYear);
+			Map<String, Double> countryMap = currTime.getValue();
+			for(Iterator<Map.Entry<String, Double>> itCountry = countryMap.entrySet().iterator(); itCountry.hasNext(); ) {
+				Map.Entry<String, Double> currCountryData = itCountry.next();
+				Region currRegion = (Region)driver.regionList.get(currCountryData.getKey());
+				if(currRegion == null) {
+					// this means that regions that did not match up will never have their emissions
+					// scale from the base year map
+					continue;
+				}
+				Wrapper[] workingVar = currRegion.extractRegion(outCurrYear);
+				double countrySum;
+				if(baseYearSumCache.containsKey(currCountryData.getKey())) {
+					countrySum = baseYearSumCache.get(currCountryData.getKey());
+				} else {
+					// Multiply by the conversion factor here so that the units cancel with the calculated
+					// units.  This will leave us with the units of the base year map.
+					countrySum = ComponentManipulator.sumValues(workingVar)[0].getData()[0][0] * convFactor;
+					baseYearSumCache.put(currCountryData.getKey(), countrySum);
+				}
+				double currRatio = currCountryData.getValue() / countrySum;
+				Wrapper[] ret = ComponentManipulator.multiplyVar(workingVar, currRatio);
+				assert(workingVar.length == ret.length);
+				for(int i = 0; i < workingVar.length; ++i) {
+					workingVar[i].setData(ret[i].getData());
+				}
+			}
+		}
+	}
+
+	/**
+	 * Checks if the model used minicam region name should be renamed to match
+	 * the data manipulator.  Currently this only matters for China since the DM
+	 * has a superRegion China/CPA which is what we want as well as the country China
+	 * so we must rename the model value to be China/CPA.
+	 * @param regionName The model region name.
+	 * @return The appropriate region name to use.
+	 */
+	private static String checkRegion(String regionName) {
+		return regionName.equals("China") ? "China/CPA" : regionName;
 	}
 }

@@ -219,7 +219,7 @@ public class FlatIndex implements DataIndex
 
     // The x,y values passed in ultimately determine the coordinates of each data point
     // Pass in UR corner -- y value has already been rounded up -- one res unit is subtracted in getRegion to get to LL corner of top cell
-    return data.getRegion((int)min.x, (int)max.y, toMask, minCoor.x, maxCoor.y, resolution); //returning data
+    return data.getRegion((int)min.x, (int)max.y, toMask, minCoor.x, maxCoor.y, resolution, m); //returning data
   }
   
   /*

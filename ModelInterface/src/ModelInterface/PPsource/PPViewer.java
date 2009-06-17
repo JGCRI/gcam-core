@@ -36,6 +36,7 @@ import javax.swing.event.*;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
@@ -60,8 +61,9 @@ import ModelInterface.InterfaceMain.MenuManager;
 import ModelInterface.ModelGUI2.DOMmodel;
 import ModelInterface.ModelGUI2.Documentation;
 import ModelInterface.ModelGUI2.XMLFilter;
+import ModelInterface.BatchRunner;
 
-public class PPViewer implements ActionListener, MenuAdder
+public class PPViewer implements ActionListener, MenuAdder, BatchRunner
 {
   
 //*****************************************************************************
@@ -399,5 +401,65 @@ public class PPViewer implements ActionListener, MenuAdder
     mainRun.runAll();
     JOptionPane.showMessageDialog(parentFrame, "The Preprocessor has completed running.", "Preprocessor Completed",
         JOptionPane.PLAIN_MESSAGE);
+  }
+
+  public void runBatch(Node command) {
+	  // set up logging
+	  Handler fHand, cHand;
+	  Logger log = Logger.getLogger("Preprocess");
+	  log.setLevel(Level.parse("WARNING"));
+	  log.setUseParentHandlers(false);
+
+	  cHand = new ConsoleHandler();
+	  cHand.setLevel(Level.WARNING);//use ALL for diagnostics, WARNING usually
+	  log.addHandler(cHand);
+	  try
+	  {
+		  fHand = new FileHandler("PPLog.log");
+		  fHand.setLevel(Level.ALL);
+		  fHand.setFormatter(new SimpleFormatter());
+		  log.addHandler(fHand);
+	  } catch(SecurityException e)
+	  {
+		  e.printStackTrace();
+	  } catch(IOException e)
+	  {
+		  e.printStackTrace();
+	  }
+
+	  NodeList children = command.getChildNodes();
+	  String dataFilename = null;
+	  String regionDefFilename = null;
+	  String outputFilename = null;
+	  for(int i = 0; i < children.getLength(); ++i ) {
+		  Node child = children.item(i);
+		  // TODO: put in a parse filter for this
+		  if(child.getNodeType() != Node.ELEMENT_NODE) {
+			  continue;
+		  }
+		  String actionCommand = ((Element)child).getNodeName();
+		  if(actionCommand.equals("data")) {
+			  dataFilename = ((Element)child).getAttribute("file");
+		  } else if(actionCommand.equals("region")) {
+			  regionDefFilename = ((Element)child).getAttribute("file");
+		  } else if(actionCommand.equals("output")) {
+			  outputFilename = ((Element)child).getAttribute("file");
+		  } else if(actionCommand.equals("log")) {
+			  log.setLevel(Level.parse(((Element)child).getAttribute("level")));
+		  } else {
+			  log.warning("Unreckognized command: "+actionCommand);
+		  }
+	  }
+	  if(dataFilename == null || regionDefFilename == null || outputFilename == null) {
+		  log.severe("Not enough information to run data manipulator");
+	  } else {
+		  log.log(Level.INFO, "creating DataBuilder to run preprocessing");
+		  DataBuilder mainRun = new DataBuilder(dataFilename, regionDefFilename, outputFilename);
+		  log.log(Level.INFO, "calling runAll in DataBuilder");
+		  mainRun.runAll();
+		  // TODO: maybe we should let the user know this batch finished however we
+		  // don't want to stop and wait for user input such as with a pop-up dialog
+	  }
+
   }
 }

@@ -31,6 +31,8 @@ package ModelInterface.PPsource;
 
 import java.awt.geom.*;
 import java.util.logging.*; 
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  * Definition of a region as bounding rectangle and bitmask. 
@@ -49,6 +51,11 @@ public class RegionMask extends Rectangle2D.Double
   public double resolution; //how much space each bit represents
   Logger log = Logger.getLogger("Preprocess"); //log class to use for all logging output 
 
+  /**
+   * A set of variable names which should not be included in this region
+   */
+  private Set<String> excludeVarNames;
+
   //Rec2D already contains x, y, w, h so i wont store the min's and max's here...
   /**
    * Default Constructor. Creates an impossible rectangle with negative bounds.
@@ -61,6 +68,7 @@ public class RegionMask extends Rectangle2D.Double
     y = 0;
     width = -1;
     height = -1;
+    excludeVarNames = new HashSet<String>();
   }
   /**
    * Basic Constructor for name and resolution. The bounds of the rectangle are set to
@@ -77,6 +85,7 @@ public class RegionMask extends Rectangle2D.Double
     y = 0;
     width = -1;
     height = -1;
+    excludeVarNames = new HashSet<String>();
   }
   /**
    * Gets the portion of the passed rectangle which overlaps this region.
@@ -257,6 +266,24 @@ public class RegionMask extends Rectangle2D.Double
       }
       System.out.println();
     }
+  }
+
+  /**
+   * Adds a variable to the exclusion list.  This is necessary when
+   * we want to have variables which will be in a special global region.
+   * @param varName The variable which will be excluded from this region.
+   */
+  public void addToExclusionList(String varName) {
+	  excludeVarNames.add(varName);
+  }
+
+  /**
+   * Determines if the given variable name should be included in this region mask.
+   * @param varName The variable to check.
+   * @return True if it should be excluded, false otherwise.
+   */
+  public boolean shouldExcludeVariable(String varName) {
+	  return excludeVarNames.contains(varName);
   }
 }
 
