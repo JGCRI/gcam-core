@@ -58,6 +58,7 @@
           <Value name="h2">../input/energy/hydrogen/h2_input_ref_bioccs.xml</Value>
           <Value name="h2">../input/energy/hydrogen/h2_demand.xml</Value>
           <Value name="oilgasp">../input/energy/fossil/oil_gas_price_adj.xml</Value>
+          <Value name="gas">../input/energy/fossil/gas_processing_input.xml</Value>
           <Value name="cement">../input/energy/cement/delete_cement.xml</Value>		
           <Value name="cement">../input/energy/cement/cement_input_ref.xml</Value>
           <Value name="cement">../input/energy/cement/ind_cement_adj_minicam.xml</Value>
@@ -68,6 +69,7 @@
          <Value name="livestock_nonco2">../input/nonco2/all_livestock.xml</Value>
          <Value name="energy_nonco2">../input/nonco2/all_energy.xml</Value>
          <Value name="unmanaged_nonco2">../input/nonco2/all_unmanaged.xml</Value>
+         <Value name="trn_nonco2">../input/energy/transportation/global_det_trn_nonco2.xml</Value>
          <Value name="keywords">../input/keywords/keywords_agg.xml</Value>
 	</ScenarioComponents>
 	<Strings>
