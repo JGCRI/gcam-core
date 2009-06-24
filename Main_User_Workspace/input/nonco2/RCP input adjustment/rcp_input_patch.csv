@@ -1,0 +1,169 @@
+"Reset deforestation ""input-emissions"" to not read in. Because this tag has no default value, the whole GHG object has to be deleted and re-made.",,,,,,,,,,,,
+Delete GHG objects,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+11999,,,,,,,,,,,,
+,,,,delete generic-ghg,,,,,,,,
+region,FoodSupplySector,FoodSupplySubsector,UnmanagedLandTechnology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+ALL,UnmanagedLand,UnmanagedLand,Deforestation,CH4,CH4,CH4,CH4,CH4,CH4,CH4,CH4,CH4
+ALL,UnmanagedLand,UnmanagedLand,Deforestation,N2O,N2O,N2O,N2O,N2O,N2O,N2O,N2O,N2O
+ALL,UnmanagedLand,UnmanagedLand,Deforestation,NOx,NOx,NOx,NOx,NOx,NOx,NOx,NOx,NOx
+ALL,UnmanagedLand,UnmanagedLand,Deforestation,CO,CO,CO,CO,CO,CO,CO,CO,CO
+ALL,UnmanagedLand,UnmanagedLand,Deforestation,NMVOC,NMVOC,NMVOC,NMVOC,NMVOC,NMVOC,NMVOC,NMVOC,NMVOC
+ALL,UnmanagedLand,UnmanagedLand,Deforestation,NH3,NH3,NH3,NH3,NH3,NH3,NH3,NH3,NH3
+ALL,UnmanagedLand,UnmanagedLand,Deforestation,BC,BC,BC,BC,BC,BC,BC,BC,BC
+ALL,UnmanagedLand,UnmanagedLand,Deforestation,OC,OC,OC,OC,OC,OC,OC,OC,OC
+
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+119990,,,,,,,,,,,,
+,,,,delete generic-ghg,,,,,,,,
+region,FoodSupplySector,FoodSupplySubsector,UnmanagedLandTechnology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+Africa,UnmanagedLand,UnmanagedLand,Deforestation,SO2_3,SO2_3,SO2_3,SO2_3,SO2_3,SO2_3,SO2_3,SO2_3,SO2_3
+Australia_NZ,UnmanagedLand,UnmanagedLand,Deforestation,SO2_3,SO2_3,SO2_3,SO2_3,SO2_3,SO2_3,SO2_3,SO2_3,SO2_3
+Canada,UnmanagedLand,UnmanagedLand,Deforestation,SO2_1,SO2_1,SO2_1,SO2_1,SO2_1,SO2_1,SO2_1,SO2_1,SO2_1
+China,UnmanagedLand,UnmanagedLand,Deforestation,SO2_2,SO2_2,SO2_2,SO2_2,SO2_2,SO2_2,SO2_2,SO2_2,SO2_2
+Eastern Europe,UnmanagedLand,UnmanagedLand,Deforestation,SO2_1,SO2_1,SO2_1,SO2_1,SO2_1,SO2_1,SO2_1,SO2_1,SO2_1
+Former Soviet Union,UnmanagedLand,UnmanagedLand,Deforestation,SO2_4,SO2_4,SO2_4,SO2_4,SO2_4,SO2_4,SO2_4,SO2_4,SO2_4
+India,UnmanagedLand,UnmanagedLand,Deforestation,SO2_2,SO2_2,SO2_2,SO2_2,SO2_2,SO2_2,SO2_2,SO2_2,SO2_2
+Japan,UnmanagedLand,UnmanagedLand,Deforestation,SO2_2,SO2_2,SO2_2,SO2_2,SO2_2,SO2_2,SO2_2,SO2_2,SO2_2
+Korea,UnmanagedLand,UnmanagedLand,Deforestation,SO2_2,SO2_2,SO2_2,SO2_2,SO2_2,SO2_2,SO2_2,SO2_2,SO2_2
+Latin America,UnmanagedLand,UnmanagedLand,Deforestation,SO2_3,SO2_3,SO2_3,SO2_3,SO2_3,SO2_3,SO2_3,SO2_3,SO2_3
+Middle East,UnmanagedLand,UnmanagedLand,Deforestation,SO2_3,SO2_3,SO2_3,SO2_3,SO2_3,SO2_3,SO2_3,SO2_3,SO2_3
+Southeast Asia,UnmanagedLand,UnmanagedLand,Deforestation,SO2_2,SO2_2,SO2_2,SO2_2,SO2_2,SO2_2,SO2_2,SO2_2,SO2_2
+USA,UnmanagedLand,UnmanagedLand,Deforestation,SO2_1,SO2_1,SO2_1,SO2_1,SO2_1,SO2_1,SO2_1,SO2_1,SO2_1
+Western Europe,UnmanagedLand,UnmanagedLand,Deforestation,SO2_1,SO2_1,SO2_1,SO2_1,SO2_1,SO2_1,SO2_1,SO2_1,SO2_1
+
+Reset drivers,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+12001,,,,,,,,,,,,
+
+region,FoodSupplySector,FoodSupplySubsector,UnmanagedLandTechnology,period,generic-ghg,output-driver,,,,,,
+ALL,UnmanagedLand,UnmanagedLand,Deforestation,ALL,CH4,(empty node),,,,,,
+ALL,UnmanagedLand,UnmanagedLand,Deforestation,ALL,N2O,,,,,,,
+ALL,UnmanagedLand,UnmanagedLand,Deforestation,ALL,NOx,,,,,,,
+ALL,UnmanagedLand,UnmanagedLand,Deforestation,ALL,CO,,,,,,,
+ALL,UnmanagedLand,UnmanagedLand,Deforestation,ALL,NMVOC,,,,,,,
+ALL,UnmanagedLand,UnmanagedLand,Deforestation,ALL,NH3,,,,,,,
+ALL,UnmanagedLand,UnmanagedLand,Deforestation,ALL,BC,
+ALL,UnmanagedLand,UnmanagedLand,Deforestation,ALL,OC,
+
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+120010,,,,,,
+
+region,FoodSupplySector,FoodSupplySubsector,UnmanagedLandTechnology,period,generic-ghg,output-driver
+Africa,UnmanagedLand,UnmanagedLand,Deforestation,ALL,SO2_3,
+Australia_NZ,UnmanagedLand,UnmanagedLand,Deforestation,ALL,SO2_3,
+Canada,UnmanagedLand,UnmanagedLand,Deforestation,ALL,SO2_1,
+China,UnmanagedLand,UnmanagedLand,Deforestation,ALL,SO2_2,
+Eastern Europe,UnmanagedLand,UnmanagedLand,Deforestation,ALL,SO2_1,
+Former Soviet Union,UnmanagedLand,UnmanagedLand,Deforestation,ALL,SO2_4,
+India,UnmanagedLand,UnmanagedLand,Deforestation,ALL,SO2_2,
+Japan,UnmanagedLand,UnmanagedLand,Deforestation,ALL,SO2_2,
+Korea,UnmanagedLand,UnmanagedLand,Deforestation,ALL,SO2_2,,,,,,,,,,,,,
+Latin America,UnmanagedLand,UnmanagedLand,Deforestation,ALL,SO2_3,,,,,,,,,,,,,
+Middle East,UnmanagedLand,UnmanagedLand,Deforestation,ALL,SO2_3,,,,,,,,,,,,,
+Southeast Asia,UnmanagedLand,UnmanagedLand,Deforestation,ALL,SO2_2,,,,,,,,,,,,,
+USA,UnmanagedLand,UnmanagedLand,Deforestation,ALL,SO2_1,,,,,,,,,,,,,
+Western Europe,UnmanagedLand,UnmanagedLand,Deforestation,ALL,SO2_1,,,,,,,,,,,,,
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+12015,,,,,,,,,,,,,,,,,,
+,,,,,uncontrolled-emiss-coef,,,,,,,,,,,,,
+FoodSupplySector,FoodSupplySubsector,UnmanagedLandTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
+UnmanagedLand,UnmanagedLand,Deforestation,1990,CH4,8.7715E-05,3.04116E-07,8.7715E-05,8.7715E-05,9.68978E-06,2.82881E-06,4.79187E-06,8.7715E-05,3.79257E-05,0.000113136,0.000860832,8.7715E-05,8.7715E-05,8.7715E-05
+UnmanagedLand,UnmanagedLand,Deforestation,1990,N2O,2.53967E-06,0,2.53967E-06,2.53967E-06,2.84569E-07,9.08285E-08,1.98532E-07,2.53967E-06,1.07062E-06,3.01122E-06,1.59644E-05,2.53967E-06,2.53967E-06,2.53967E-06
+UnmanagedLand,UnmanagedLand,Deforestation,1990,NOx,3.61175E-05,1.94328E-07,3.61175E-05,3.61175E-05,4.01641E-06,1.59874E-06,3.31464E-06,3.61175E-05,1.51266E-05,4.69915E-05,0.000229317,3.61175E-05,3.61175E-05,3.61175E-05
+UnmanagedLand,UnmanagedLand,Deforestation,1990,CO,0.001310633,5.40024E-06,0.001310633,0.001310633,0.000145263,4.74071E-05,8.90138E-05,0.001310633,0.000560061,0.001695976,0.01107784,0.001310633,0.001310633,0.001310633
+UnmanagedLand,UnmanagedLand,Deforestation,1990,NMVOC,0.00023427,9.28211E-07,0.00023427,0.00023427,2.59238E-05,8.28397E-06,1.5048E-05,0.00023427,0.000100472,0.000302846,0.002089592,0.00023427,0.00023427,0.00023427
+UnmanagedLand,UnmanagedLand,Deforestation,1990,NH3,1.64884E-05,1.74343E-07,1.64884E-05,1.64884E-05,1.55259E-06,1.76369E-06,1.51374E-06,1.64884E-05,7.46532E-06,2.09875E-05,0.000440323,1.64884E-05,1.64884E-05,1.64884E-05
+UnmanagedLand,UnmanagedLand,Deforestation,1990,BC,7.89523E-06,2.28713E-08,7.89523E-06,7.89523E-06,8.96181E-07,1.85674E-07,4.80158E-07,7.89523E-06,3.34997E-06,1.02363E-05,4.54065E-05,7.89523E-06,7.89523E-06,7.89523E-06
+UnmanagedLand,UnmanagedLand,Deforestation,1990,OC,6.71427E-05,3.99923E-07,6.71427E-05,6.71427E-05,7.4017E-06,3.34079E-06,6.49074E-06,6.71427E-05,2.81424E-05,8.73389E-05,0.000480836,6.71427E-05,6.71427E-05,6.71427E-05
+UnmanagedLand,UnmanagedLand,Deforestation,2005,CH4,8.7715E-05,5.36071E-07,8.7715E-05,8.7715E-05,8.98705E-06,8.7715E-05,2.67292E-06,8.7715E-05,3.82176E-05,0.000137212,0.005930437,8.7715E-05,8.7715E-05,8.7715E-05
+UnmanagedLand,UnmanagedLand,Deforestation,2005,N2O,2.53967E-06,1.82786E-08,2.53967E-06,2.53967E-06,2.63933E-07,2.53967E-06,1.11327E-07,2.53967E-06,1.07886E-06,4.00049E-06,0.000109369,2.53967E-06,2.53967E-06,2.53967E-06
+UnmanagedLand,UnmanagedLand,Deforestation,2005,NOx,3.61175E-05,3.21998E-07,3.61175E-05,3.61175E-05,3.72514E-06,3.61175E-05,1.86119E-06,3.61175E-05,1.5243E-05,5.69921E-05,0.001571015,3.61175E-05,3.61175E-05,3.61175E-05
+UnmanagedLand,UnmanagedLand,Deforestation,2005,CO,0.001310633,9.24121E-06,0.001310633,0.001310633,0.000134728,0.001310633,4.98133E-05,0.001310633,0.000564369,0.002056897,0.076192689,0.001310633,0.001310633,0.001310633
+UnmanagedLand,UnmanagedLand,Deforestation,2005,NMVOC,0.00023427,1.60174E-06,0.00023427,0.00023427,2.40437E-05,0.00023427,8.41438E-06,0.00023427,0.000101245,0.000367295,0.014380913,0.00023427,0.00023427,0.00023427
+UnmanagedLand,UnmanagedLand,Deforestation,2005,NH3,1.64884E-05,3.21288E-07,1.64884E-05,1.64884E-05,1.43997E-06,1.64884E-05,8.46203E-07,1.64884E-05,7.52275E-06,2.5454E-05,0.003051366,1.64884E-05,1.64884E-05,1.64884E-05
+UnmanagedLand,UnmanagedLand,Deforestation,2005,BC,7.89523E-06,3.76524E-08,7.89523E-06,7.89523E-06,8.31193E-07,7.89523E-06,2.68589E-07,7.89523E-06,3.37574E-06,1.24147E-05,0.000310697,7.89523E-06,7.89523E-06,7.89523E-06
+UnmanagedLand,UnmanagedLand,Deforestation,2005,OC,6.71427E-05,6.67644E-07,6.71427E-05,6.71427E-05,6.86494E-06,6.71427E-05,3.64543E-06,6.71427E-05,2.8359E-05,0.000105926,0.003299636,6.71427E-05,6.71427E-05,6.71427E-05
+UnmanagedLand,UnmanagedLand,Deforestation,2020,CH4,8.7715E-05,8.7715E-05,8.7715E-05,8.7715E-05,8.7715E-05,8.7715E-05,8.7715E-05,8.7715E-05,8.7715E-05,8.7715E-05,8.7715E-05,8.7715E-05,8.7715E-05,8.7715E-05
+UnmanagedLand,UnmanagedLand,Deforestation,2020,N2O,2.53967E-06,2.53967E-06,2.53967E-06,2.53967E-06,2.53967E-06,2.53967E-06,2.53967E-06,2.53967E-06,2.53967E-06,2.53967E-06,2.53967E-06,2.53967E-06,2.53967E-06,2.53967E-06
+UnmanagedLand,UnmanagedLand,Deforestation,2020,NOx,3.61175E-05,3.61175E-05,3.61175E-05,3.61175E-05,3.61175E-05,3.61175E-05,3.61175E-05,3.61175E-05,3.61175E-05,3.61175E-05,3.61175E-05,3.61175E-05,3.61175E-05,3.61175E-05
+UnmanagedLand,UnmanagedLand,Deforestation,2020,CO,0.001310633,0.001310633,0.001310633,0.001310633,0.001310633,0.001310633,0.001310633,0.001310633,0.001310633,0.001310633,0.001310633,0.001310633,0.001310633,0.001310633
+UnmanagedLand,UnmanagedLand,Deforestation,2020,NMVOC,0.00023427,0.00023427,0.00023427,0.00023427,0.00023427,0.00023427,0.00023427,0.00023427,0.00023427,0.00023427,0.00023427,0.00023427,0.00023427,0.00023427
+UnmanagedLand,UnmanagedLand,Deforestation,2020,NH3,1.64884E-05,1.64884E-05,1.64884E-05,1.64884E-05,1.64884E-05,1.64884E-05,1.64884E-05,1.64884E-05,1.64884E-05,1.64884E-05,1.64884E-05,1.64884E-05,1.64884E-05,1.64884E-05
+UnmanagedLand,UnmanagedLand,Deforestation,2020,BC,7.89523E-06,7.89523E-06,7.89523E-06,7.89523E-06,7.89523E-06,7.89523E-06,7.89523E-06,7.89523E-06,7.89523E-06,7.89523E-06,7.89523E-06,7.89523E-06,7.89523E-06,7.89523E-06
+UnmanagedLand,UnmanagedLand,Deforestation,2020,OC,6.71427E-05,6.71427E-05,6.71427E-05,6.71427E-05,6.71427E-05,6.71427E-05,6.71427E-05,6.71427E-05,6.71427E-05,6.71427E-05,6.71427E-05,6.71427E-05,6.71427E-05,6.71427E-05
+
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+120150,,,,,,,,,,,,,,,,,,
+
+region,FoodSupplySector,FoodSupplySubsector,UnmanagedLandTechnology,period,generic-ghg,uncontrolled-emiss-coef,,,,,,,,,,,,
+Africa,UnmanagedLand,UnmanagedLand,Deforestation,1990,SO2_3,3.44002E-06,,,,,,,,,,,,
+Australia_NZ,UnmanagedLand,UnmanagedLand,Deforestation,1990,SO2_3,8.20321E-07,,,,,,,,,,,,
+Canada,UnmanagedLand,UnmanagedLand,Deforestation,1990,SO2_1,6.07782E-08,,,,,,,,,,,,
+China,UnmanagedLand,UnmanagedLand,Deforestation,1990,SO2_2,7.2183E-07,,,,,,,,,,,,
+Eastern Europe,UnmanagedLand,UnmanagedLand,Deforestation,1990,SO2_1,0,,,,,,,,,,,,
+Former Soviet Union,UnmanagedLand,UnmanagedLand,Deforestation,1990,SO2_4,5.71435E-07,,,,,,,,,,,,
+India,UnmanagedLand,UnmanagedLand,Deforestation,1990,SO2_2,0
+Japan,UnmanagedLand,UnmanagedLand,Deforestation,1990,SO2_2,0
+Korea,UnmanagedLand,UnmanagedLand,Deforestation,1990,SO2_2,0
+Latin America,UnmanagedLand,UnmanagedLand,Deforestation,1990,SO2_3,1.02047E-05
+Middle East,UnmanagedLand,UnmanagedLand,Deforestation,1990,SO2_3,0
+Southeast Asia,UnmanagedLand,UnmanagedLand,Deforestation,1990,SO2_2,0.00012302
+USA,UnmanagedLand,UnmanagedLand,Deforestation,1990,SO2_1,0
+Western Europe,UnmanagedLand,UnmanagedLand,Deforestation,1990,SO2_1,0
+Africa,UnmanagedLand,UnmanagedLand,Deforestation,2005,SO2_3,3.46649E-06
+Australia_NZ,UnmanagedLand,UnmanagedLand,Deforestation,2005,SO2_3,7.60828E-07
+Canada,UnmanagedLand,UnmanagedLand,Deforestation,2005,SO2_1,1.07735E-07
+China,UnmanagedLand,UnmanagedLand,Deforestation,2005,SO2_2,4.04471E-07
+Eastern Europe,UnmanagedLand,UnmanagedLand,Deforestation,2005,SO2_1,0
+Former Soviet Union,UnmanagedLand,UnmanagedLand,Deforestation,2005,SO2_4,0
+India,UnmanagedLand,UnmanagedLand,Deforestation,2005,SO2_2,0
+Japan,UnmanagedLand,UnmanagedLand,Deforestation,2005,SO2_2,0
+Korea,UnmanagedLand,UnmanagedLand,Deforestation,2005,SO2_2,0
+Latin America,UnmanagedLand,UnmanagedLand,Deforestation,2005,SO2_3,1.23764E-05
+Middle East,UnmanagedLand,UnmanagedLand,Deforestation,2005,SO2_3,0
+Southeast Asia,UnmanagedLand,UnmanagedLand,Deforestation,2005,SO2_2,0.000850336
+USA,UnmanagedLand,UnmanagedLand,Deforestation,2005,SO2_1,0
+Western Europe,UnmanagedLand,UnmanagedLand,Deforestation,2005,SO2_1,0
+Africa,UnmanagedLand,UnmanagedLand,Deforestation,2020,SO2_3,7.92147E-06
+Australia_NZ,UnmanagedLand,UnmanagedLand,Deforestation,2020,SO2_3,7.92147E-06
+Canada,UnmanagedLand,UnmanagedLand,Deforestation,2020,SO2_1,7.92147E-06
+China,UnmanagedLand,UnmanagedLand,Deforestation,2020,SO2_2,7.92147E-06
+Eastern Europe,UnmanagedLand,UnmanagedLand,Deforestation,2020,SO2_1,7.92147E-06
+Former Soviet Union,UnmanagedLand,UnmanagedLand,Deforestation,2020,SO2_4,7.92147E-06
+India,UnmanagedLand,UnmanagedLand,Deforestation,2020,SO2_2,7.92147E-06
+Japan,UnmanagedLand,UnmanagedLand,Deforestation,2020,SO2_2,7.92147E-06
+Korea,UnmanagedLand,UnmanagedLand,Deforestation,2020,SO2_2,7.92147E-06
+Latin America,UnmanagedLand,UnmanagedLand,Deforestation,2020,SO2_3,7.92147E-06
+Middle East,UnmanagedLand,UnmanagedLand,Deforestation,2020,SO2_3,7.92147E-06
+Southeast Asia,UnmanagedLand,UnmanagedLand,Deforestation,2020,SO2_2,7.92147E-06
+USA,UnmanagedLand,UnmanagedLand,Deforestation,2020,SO2_1,7.92147E-06
+Western Europe,UnmanagedLand,UnmanagedLand,Deforestation,2020,SO2_1,7.92147E-06
+
+
+Drop the industry biomass shareweight for Africa. Make the long-term gas:bio shareweight similar to USA,,,,,,
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+200,,,,,,
+
+region,supplysector,subsector,techScaleYear,,,
+Africa,industry,energy-use,1975,,,
+
+
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,,,,
+2000,,,,,,,,,
+,,,,sharewt,,,,,
+region,supplysector,subsector,technology,2020,2035,2050,2065,2080,2095
+Africa,industry,energy-use,biomass,0.75,0.35,0.1,0.1,0.1,0.1
+Africa,industry,energy-use,coal,0.0646533,0.0646533,0.0646533,0.0646533,0.0646533,0.0646533
+Africa,industry,energy-use,electricity,12.1068,12.1068,12.1068,12.1068,12.1068,12.1068
+Africa,industry,energy-use,gas,0.157177,0.157177,0.157177,0.157177,0.157177,0.157177
+Africa,industry,energy-use,refined liquids,0.633017,0.633017,0.633017,0.633017,0.633017,0.633017

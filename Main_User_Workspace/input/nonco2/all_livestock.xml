@@ -6317,7 +6317,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -6435,7 +6435,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -6553,7 +6553,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -6671,7 +6671,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -6789,7 +6789,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -7025,7 +7025,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -7143,7 +7143,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -7247,7 +7247,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -7457,7 +7457,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>7.54677E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>7.54673E-10</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -7683,7 +7683,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -7801,7 +7801,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -7919,7 +7919,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -8037,7 +8037,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -8155,7 +8155,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -8391,7 +8391,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -8509,7 +8509,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -8613,7 +8613,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -8823,7 +8823,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>7.54677E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>7.54673E-10</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -9049,7 +9049,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -9167,7 +9167,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -9285,7 +9285,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -9403,7 +9403,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -9521,7 +9521,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -9757,7 +9757,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -9875,7 +9875,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -9997,7 +9997,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -10115,7 +10115,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -10233,7 +10233,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -10351,7 +10351,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -10469,7 +10469,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -10705,7 +10705,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -10823,7 +10823,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -10945,7 +10945,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -11063,7 +11063,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -11181,7 +11181,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -11299,7 +11299,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -11417,7 +11417,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -11653,7 +11653,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -11771,7 +11771,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -11875,7 +11875,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.21299E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21298E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -12085,7 +12085,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>7.54677E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>7.54673E-10</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -26061,7 +26061,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>6.35751E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.35752E-10</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -27483,7 +27483,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>6.35751E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.35752E-10</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -30913,7 +30913,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>6.35751E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.35752E-10</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -31017,7 +31017,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>6.35751E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.35752E-10</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -31148,7 +31148,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -31273,7 +31273,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -31398,7 +31398,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -31523,7 +31523,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -31648,7 +31648,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -31898,7 +31898,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -32023,7 +32023,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -32127,7 +32127,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -32231,7 +32231,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -32337,7 +32337,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.18367E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.18368E-10</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -32441,7 +32441,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.18367E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.18368E-10</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -32570,7 +32570,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -32695,7 +32695,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -32820,7 +32820,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -32945,7 +32945,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -33070,7 +33070,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -33320,7 +33320,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -33445,7 +33445,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -33549,7 +33549,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -33653,7 +33653,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -33759,7 +33759,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.18367E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.18368E-10</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -33863,7 +33863,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.18367E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.18368E-10</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -33992,7 +33992,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -34117,7 +34117,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -34242,7 +34242,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -34367,7 +34367,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -34492,7 +34492,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -34742,7 +34742,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -34867,7 +34867,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -34996,7 +34996,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -35121,7 +35121,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -35246,7 +35246,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -35371,7 +35371,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -35496,7 +35496,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -35746,7 +35746,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -35871,7 +35871,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -36000,7 +36000,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -36125,7 +36125,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -36250,7 +36250,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -36375,7 +36375,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -36500,7 +36500,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -36750,7 +36750,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -36875,7 +36875,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -36979,7 +36979,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -37083,7 +37083,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.86603E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.86604E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -37189,7 +37189,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.18367E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.18368E-10</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -37293,7 +37293,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.18367E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.18368E-10</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -37424,7 +37424,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -37549,7 +37549,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -37674,7 +37674,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -37799,7 +37799,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -37924,7 +37924,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -38049,7 +38049,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -38174,7 +38174,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -38299,7 +38299,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -38403,7 +38403,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -38507,7 +38507,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -38846,7 +38846,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -38971,7 +38971,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -39096,7 +39096,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -39221,7 +39221,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -39346,7 +39346,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -39471,7 +39471,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -39596,7 +39596,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -39721,7 +39721,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -39825,7 +39825,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -39929,7 +39929,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -40268,7 +40268,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -40393,7 +40393,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -40518,7 +40518,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -40643,7 +40643,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -40768,7 +40768,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -40893,7 +40893,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -41018,7 +41018,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -41143,7 +41143,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -41272,7 +41272,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -41397,7 +41397,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -41522,7 +41522,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -41647,7 +41647,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -41772,7 +41772,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -41897,7 +41897,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -42022,7 +42022,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -42147,7 +42147,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -42276,7 +42276,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -42401,7 +42401,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -42526,7 +42526,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -42651,7 +42651,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -42776,7 +42776,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -42901,7 +42901,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -43026,7 +43026,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -43151,7 +43151,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -43255,7 +43255,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -43359,7 +43359,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.06633E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06632E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -43700,7 +43700,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -43825,7 +43825,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -43950,7 +43950,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -44075,7 +44075,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -44200,7 +44200,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -44325,7 +44325,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -44450,7 +44450,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -44575,7 +44575,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -44679,7 +44679,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -44783,7 +44783,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -44889,7 +44889,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.21391E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.2139E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -44993,7 +44993,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.21391E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.2139E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -45122,7 +45122,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -45247,7 +45247,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -45372,7 +45372,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -45497,7 +45497,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -45622,7 +45622,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -45747,7 +45747,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -45872,7 +45872,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -45997,7 +45997,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -46101,7 +46101,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -46205,7 +46205,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -46311,7 +46311,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.21391E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.2139E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -46415,7 +46415,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.21391E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.2139E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -46544,7 +46544,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -46669,7 +46669,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -46794,7 +46794,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -46919,7 +46919,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -47044,7 +47044,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -47169,7 +47169,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -47294,7 +47294,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -47419,7 +47419,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -47548,7 +47548,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -47673,7 +47673,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -47798,7 +47798,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -47923,7 +47923,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -48048,7 +48048,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -48173,7 +48173,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -48298,7 +48298,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -48423,7 +48423,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -48552,7 +48552,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -48677,7 +48677,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -48802,7 +48802,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -48927,7 +48927,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -49052,7 +49052,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -49177,7 +49177,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -49302,7 +49302,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -49427,7 +49427,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -49531,7 +49531,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -49635,7 +49635,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.82245E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82244E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -49741,7 +49741,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.21391E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.2139E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -49845,7 +49845,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.21391E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.2139E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -49976,7 +49976,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -50101,7 +50101,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -50226,7 +50226,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -50351,7 +50351,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -50476,7 +50476,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -50601,7 +50601,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -50726,7 +50726,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -50851,7 +50851,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -50955,7 +50955,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -51059,7 +51059,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -51165,7 +51165,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.17221E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.17222E-10</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -51269,7 +51269,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.17221E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.17222E-10</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -51398,7 +51398,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -51523,7 +51523,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -51648,7 +51648,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -51773,7 +51773,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -51898,7 +51898,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -52023,7 +52023,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -52148,7 +52148,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -52273,7 +52273,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -52377,7 +52377,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -52481,7 +52481,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -52587,7 +52587,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.17221E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.17222E-10</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -52691,7 +52691,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.17221E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.17222E-10</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -52820,7 +52820,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -52945,7 +52945,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -53070,7 +53070,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -53195,7 +53195,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -53320,7 +53320,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -53445,7 +53445,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -53570,7 +53570,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -53695,7 +53695,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -53824,7 +53824,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -53949,7 +53949,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -54074,7 +54074,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -54199,7 +54199,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -54324,7 +54324,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -54449,7 +54449,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -54574,7 +54574,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -54699,7 +54699,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -54828,7 +54828,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -54953,7 +54953,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -55078,7 +55078,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -55203,7 +55203,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -55328,7 +55328,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -55453,7 +55453,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -55578,7 +55578,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -55703,7 +55703,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -55807,7 +55807,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -55911,7 +55911,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.65247E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.65248E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -56017,7 +56017,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.17221E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.17222E-10</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -56121,7 +56121,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.17221E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.17222E-10</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -62528,7 +62528,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -62653,7 +62653,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -62778,7 +62778,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -62903,7 +62903,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -63028,7 +63028,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -63153,7 +63153,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -63278,7 +63278,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -63403,7 +63403,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -63507,7 +63507,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -63611,7 +63611,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -63950,7 +63950,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -64075,7 +64075,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -64200,7 +64200,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -64325,7 +64325,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -64450,7 +64450,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -64575,7 +64575,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -64700,7 +64700,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -64825,7 +64825,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -64929,7 +64929,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -65033,7 +65033,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -65372,7 +65372,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -65497,7 +65497,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -65622,7 +65622,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -65747,7 +65747,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -65872,7 +65872,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -65997,7 +65997,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -66122,7 +66122,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -66247,7 +66247,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -66376,7 +66376,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -66501,7 +66501,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -66626,7 +66626,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -66751,7 +66751,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -66876,7 +66876,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -67001,7 +67001,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -67126,7 +67126,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -67251,7 +67251,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -67380,7 +67380,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -67505,7 +67505,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -67630,7 +67630,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -67755,7 +67755,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -67880,7 +67880,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -68005,7 +68005,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -68130,7 +68130,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -68255,7 +68255,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -68359,7 +68359,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -68463,7 +68463,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.11684E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.11685E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -75080,7 +75080,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -75205,7 +75205,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -75330,7 +75330,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -75455,7 +75455,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -75580,7 +75580,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -75955,7 +75955,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -76059,7 +76059,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -76163,7 +76163,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -76269,7 +76269,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>7.9508E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>7.95077E-11</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -76373,7 +76373,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>7.9508E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>7.95077E-11</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -76502,7 +76502,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -76627,7 +76627,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -76752,7 +76752,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -76877,7 +76877,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -77002,7 +77002,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -77377,7 +77377,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -77481,7 +77481,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -77585,7 +77585,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -77691,7 +77691,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>7.9508E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>7.95077E-11</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -77795,7 +77795,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>7.9508E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>7.95077E-11</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -77924,7 +77924,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -78049,7 +78049,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -78174,7 +78174,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -78299,7 +78299,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -78424,7 +78424,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -78799,7 +78799,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -78928,7 +78928,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -79053,7 +79053,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -79178,7 +79178,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -79303,7 +79303,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -79428,7 +79428,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -79803,7 +79803,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -79932,7 +79932,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -80057,7 +80057,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -80182,7 +80182,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -80307,7 +80307,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -80432,7 +80432,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -80807,7 +80807,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -80911,7 +80911,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -81015,7 +81015,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>1.30407E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30406E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -81121,7 +81121,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>7.9508E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>7.95077E-11</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -81225,7 +81225,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>7.9508E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>7.95077E-11</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -81356,7 +81356,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -81481,7 +81481,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -81606,7 +81606,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -81731,7 +81731,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -81856,7 +81856,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -81981,7 +81981,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -82106,7 +82106,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -82231,7 +82231,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -82335,7 +82335,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -82439,7 +82439,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -82545,7 +82545,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>8.1241E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>8.12415E-11</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -82649,7 +82649,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>8.1241E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>8.12415E-11</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -82778,7 +82778,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -82903,7 +82903,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -83028,7 +83028,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -83153,7 +83153,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -83278,7 +83278,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -83403,7 +83403,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -83528,7 +83528,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -83653,7 +83653,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -83757,7 +83757,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -83861,7 +83861,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -83967,7 +83967,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>8.1241E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>8.12415E-11</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -84071,7 +84071,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>8.1241E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>8.12415E-11</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -84200,7 +84200,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -84325,7 +84325,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -84450,7 +84450,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -84575,7 +84575,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -84700,7 +84700,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -84825,7 +84825,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -84950,7 +84950,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -85075,7 +85075,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -85204,7 +85204,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -85329,7 +85329,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -85454,7 +85454,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -85579,7 +85579,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -85704,7 +85704,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -85829,7 +85829,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -85954,7 +85954,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -86079,7 +86079,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -86208,7 +86208,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -86333,7 +86333,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -86458,7 +86458,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -86583,7 +86583,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -86708,7 +86708,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -86833,7 +86833,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -86958,7 +86958,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -87083,7 +87083,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -87187,7 +87187,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -87291,7 +87291,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>2.37007E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.37008E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -87397,7 +87397,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>8.1241E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>8.12415E-11</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -87501,7 +87501,7 @@
                      </generic-ghg>
                      <generic-ghg name="NH3_AGR">
                         <input-driver/>
-                        <uncontrolled-emiss-coef>8.1241E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>8.12415E-11</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
