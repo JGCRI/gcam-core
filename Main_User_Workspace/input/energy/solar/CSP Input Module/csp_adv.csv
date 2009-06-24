@@ -1,3 +1,19 @@
+INPUT_TABLE,,,,,,,,,
+Variable ID,,,,,,,,,
+1001,,,,,,,,,
+,,,,,,,minicam-non-energy-input,,capacity-limit-backup-calculator
+region,intermittent-supplysector,subsector,intermittent-technology,period,minicam-energy-input,minicam-non-energy-input,input-cost,electric-sector-name,capacity-limit
+ALL,CSPandAuxiliary,solar,CSP,1975,csp_backup,backup-cap-cost,0,electricity,0.4
+ALL,CSPandAuxiliary,solar,CSP,1990,csp_backup,backup-cap-cost,0,electricity,0.4
+ALL,CSPandAuxiliary,solar,CSP,2005,csp_backup,backup-cap-cost,0,electricity,0.4
+ALL,CSPandAuxiliary,solar,CSP,2020,csp_backup,backup-cap-cost,0,electricity,0.4
+ALL,CSPandAuxiliary,solar,CSP,2035,csp_backup,backup-cap-cost,0,electricity,0.4
+ALL,CSPandAuxiliary,solar,CSP,2050,csp_backup,backup-cap-cost,0,electricity,0.4
+ALL,CSPandAuxiliary,solar,CSP,2065,csp_backup,backup-cap-cost,0,electricity,0.4
+ALL,CSPandAuxiliary,solar,CSP,2080,csp_backup,backup-cap-cost,0,electricity,0.4
+ALL,CSPandAuxiliary,solar,CSP,2095,csp_backup,backup-cap-cost,0,electricity,0.4
+
+
 INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
 1102,,,,,,,,,,,,

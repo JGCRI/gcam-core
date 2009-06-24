@@ -1,22 +1,17 @@
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-1102,,,,,,,,,,,,
-,,,,input-cost,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-USA,electricity,solar,PV,40.74,40.74,40.74,20.84,12.44,8.68,7.02,6.29,6.00
-Canada,electricity,solar,PV,50.22,50.22,50.22,25.69,15.34,10.70,8.65,7.76,7.39
-Western Europe,electricity,solar,PV,60.18,60.18,60.18,30.79,18.38,12.82,10.37,9.30,8.86
-Japan,electricity,solar,PV,64.77,64.77,64.77,33.14,19.78,13.79,11.16,10.01,9.53
-Australia_NZ,electricity,solar,PV,55.65,55.65,55.65,28.47,17.00,11.85,9.59,8.60,8.19
-Former Soviet Union,electricity,solar,PV,69.54,69.54,69.54,35.58,21.24,14.81,11.98,10.74,10.24
-China,electricity,solar,PV,70.64,70.64,70.64,36.14,21.58,15.05,12.17,10.91,10.40
-Middle East,electricity,solar,PV,53.29,53.29,53.29,27.27,16.28,11.35,9.18,8.23,7.84
-Africa,electricity,solar,PV,39.84,39.84,39.84,20.39,12.17,8.49,6.86,6.16,5.86
-Latin America,electricity,solar,PV,32.66,32.66,32.66,16.71,9.98,6.96,5.63,5.05,4.81
-Southeast Asia,electricity,solar,PV,26.83,26.83,26.83,13.73,8.19,5.71,4.62,4.15,3.95
-Eastern Europe,electricity,solar,PV,33.18,33.18,33.18,16.98,10.13,7.07,5.72,5.13,4.88
-Korea,electricity,solar,PV,33.35,33.35,33.35,17.07,10.19,7.10,5.75,5.15,4.91
-India,electricity,solar,PV,27.76,27.76,27.76,14.21,8.48,5.91,4.78,4.29,4.09
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+1000,,,,,,,
+,,,,,,,capacity-limit-backup-calculator
+region,intermittent-supplysector,subsector,technology,period,minicam-energy-input,efficiency,capacity-limit
+ALL,SolarAndAuxiliary,solar,PV,1975,global solar resource,1,0.4
+ALL,SolarAndAuxiliary,solar,PV,1990,global solar resource,1,0.4
+ALL,SolarAndAuxiliary,solar,PV,2005,global solar resource,1,0.4
+ALL,SolarAndAuxiliary,solar,PV,2020,global solar resource,1,0.4
+ALL,SolarAndAuxiliary,solar,PV,2035,global solar resource,1,0.4
+ALL,SolarAndAuxiliary,solar,PV,2050,global solar resource,1,0.4
+ALL,SolarAndAuxiliary,solar,PV,2065,global solar resource,1,0.4
+ALL,SolarAndAuxiliary,solar,PV,2080,global solar resource,1,0.4
+ALL,SolarAndAuxiliary,solar,PV,2095,global solar resource,1,0.4
 
 
 INPUT_TABLE,,,,,,,,,,,,
@@ -24,17 +19,44 @@ Variable ID,,,,,,,,,,,,
 1102,,,,,,,,,,,,
 ,,,,input-cost,,,,,,,,
 region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-USA,electricity,solar,PV_storage,43.51,43.51,43.51,22.89,13.95,9.97,8.18,7.37,7.03
-Canada,electricity,solar,PV_storage,53.63,53.63,53.63,28.21,17.20,12.29,10.08,9.08,8.67
-Western Europe,electricity,solar,PV_storage,64.26,64.26,64.26,33.81,20.61,14.73,12.08,10.89,10.39
-Japan,electricity,solar,PV_storage,69.16,69.16,69.16,36.38,22.18,15.86,13.00,11.72,11.18
-Australia_NZ,electricity,solar,PV_storage,59.43,59.43,59.43,31.27,19.06,13.63,11.17,10.07,9.61
-Former Soviet Union,electricity,solar,PV_storage,74.26,74.26,74.26,39.07,23.82,17.03,13.96,12.58,12.00
-China,electricity,solar,PV_storage,75.44,75.44,75.44,39.69,24.19,17.30,14.18,12.78,12.19
-Middle East,electricity,solar,PV_storage,56.91,56.91,56.91,29.94,18.25,13.05,10.70,9.64,9.20
-Africa,electricity,solar,PV_storage,42.55,42.55,42.55,22.38,13.65,9.76,8.00,7.21,6.88
-Latin America,electricity,solar,PV_storage,34.88,34.88,34.88,18.35,11.19,8.00,6.56,5.91,5.64
-Southeast Asia,electricity,solar,PV_storage,28.65,28.65,28.65,15.07,9.19,6.57,5.38,4.85,4.63
-Eastern Europe,electricity,solar,PV_storage,35.43,35.43,35.43,18.64,11.36,8.12,6.66,6.00,5.73
-Korea,electricity,solar,PV_storage,35.62,35.62,35.62,18.74,11.42,8.17,6.69,6.03,5.76
-India,electricity,solar,PV_storage,29.65,29.65,29.65,15.60,9.51,6.80,5.57,5.02,4.79
+USA,electricity,solar,PV,49.78,49.78,49.78,24.44,14.02,9.41,7.34,6.35,5.84
+Canada,electricity,solar,PV,61.36,61.36,61.36,30.13,17.29,11.60,9.04,7.83,7.20
+Western Europe,electricity,solar,PV,73.53,73.53,73.53,36.10,20.72,13.90,10.84,9.38,8.63
+Japan,electricity,solar,PV,79.14,79.14,79.14,38.86,22.30,14.96,11.66,10.10,9.29
+Australia_NZ,electricity,solar,PV,68.00,68.00,68.00,33.39,19.16,12.86,10.02,8.68,7.98
+Former Soviet Union,electricity,solar,PV,84.97,84.97,84.97,41.72,23.94,16.07,12.52,10.84,9.97
+China,electricity,solar,PV,86.32,86.32,86.32,42.38,24.32,16.32,12.72,11.02,10.13
+Middle East,electricity,solar,PV,65.12,65.12,65.12,31.97,18.35,12.31,9.60,8.31,7.64
+Africa,electricity,solar,PV,48.69,48.69,48.69,23.90,13.72,9.21,7.18,6.21,5.71
+Latin America,electricity,solar,PV,39.91,39.91,39.91,19.59,11.24,7.55,5.88,5.09,4.68
+Southeast Asia,electricity,solar,PV,32.78,32.78,32.78,16.10,9.24,6.20,4.83,4.18,3.85
+Eastern Europe,electricity,solar,PV,40.54,40.54,40.54,19.91,11.42,7.67,5.98,5.17,4.76
+Korea,electricity,solar,PV,40.76,40.76,40.76,20.01,11.48,7.71,6.01,5.20,4.78
+India,electricity,solar,PV,33.92,33.92,33.92,16.66,9.56,6.41,5.00,4.33,3.98
+
+
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+1102,,,,,,,,,,,,
+,,,,input-cost,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,electricity,solar,PV_storage,61.97,61.97,61.97,32.93,20.13,14.55,11.88,10.55,9.87
+Canada,electricity,solar,PV_storage,76.38,76.38,76.38,40.59,24.81,17.93,14.64,13.00,12.17
+Western Europe,electricity,solar,PV_storage,91.54,91.54,91.54,48.64,29.73,21.49,17.55,15.58,14.58
+Japan,electricity,solar,PV_storage,98.51,98.51,98.51,52.35,31.99,23.13,18.89,16.77,15.69
+Australia_NZ,electricity,solar,PV_storage,84.65,84.65,84.65,44.98,27.49,19.87,16.23,14.41,13.48
+Former Soviet Union,electricity,solar,PV_storage,105.77,105.77,105.77,56.21,34.35,24.83,20.28,18.00,16.85
+China,electricity,solar,PV_storage,107.45,107.45,107.45,57.10,34.90,25.23,20.60,18.29,17.11
+Middle East,electricity,solar,PV_storage,81.06,81.06,81.06,43.08,26.33,19.03,15.54,13.80,12.91
+Africa,electricity,solar,PV_storage,60.61,60.61,60.61,32.21,19.68,14.23,11.62,10.32,9.65
+Latin America,electricity,solar,PV_storage,49.68,49.68,49.68,26.40,16.13,11.66,9.52,8.46,7.91
+Southeast Asia,electricity,solar,PV_storage,40.81,40.81,40.81,21.68,13.25,9.58,7.82,6.95,6.50
+Eastern Europe,electricity,solar,PV_storage,50.47,50.47,50.47,26.82,16.39,11.85,9.68,8.59,8.04
+Korea,electricity,solar,PV_storage,50.73,50.73,50.73,26.96,16.48,11.91,9.73,8.64,8.08
+India,electricity,solar,PV_storage,42.23,42.23,42.23,22.44,13.72,9.91,8.10,7.19,6.73
+
+
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,

@@ -115,27 +115,27 @@ Variable ID,,,,,,,,,,,,
 106,,,,minicam-non-energy-input,,,,,,,,
 ,,,,input-cost,,,,,,,,
 region,intermittent-supplysector,subsector,intermittent-technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-USA,Solar_roofs,Solar_roofs,Rooftop_PV,60.92,60.92,60.92,41.38,30.99,25.31,21.92,21.07,20.67
-Canada,Solar_roofs,Solar_roofs,Rooftop_PV,75.09,75.09,75.09,51.00,38.19,31.20,27.02,25.97,25.48
-Western Europe,Solar_roofs,Solar_roofs,Rooftop_PV,73.01,73.01,73.01,49.59,37.13,30.34,26.27,25.25,24.77
-Japan,Solar_roofs,Solar_roofs,Rooftop_PV,65.57,65.57,65.57,44.53,33.35,27.24,23.59,22.68,22.25
-Australia_NZ,Solar_roofs,Solar_roofs,Rooftop_PV,52.35,52.35,52.35,35.56,26.63,21.75,18.84,18.11,17.76
-Former Soviet Union,Solar_roofs,Solar_roofs,Rooftop_PV,76.13,76.13,76.13,51.70,38.72,31.63,27.39,26.33,25.83
-China,Solar_roofs,Solar_roofs,Rooftop_PV,61.89,61.89,61.89,42.03,31.48,25.71,22.27,21.40,21.00
-Middle East,Solar_roofs,Solar_roofs,Rooftop_PV,45.96,45.96,45.96,31.22,23.38,19.10,16.54,15.90,15.59
-Africa,Solar_roofs,Solar_roofs,Rooftop_PV,45.55,45.55,45.55,30.94,23.17,18.93,16.39,15.75,15.45
-Latin America,Solar_roofs,Solar_roofs,Rooftop_PV,49.94,49.94,49.94,33.92,25.40,20.75,17.97,17.27,16.94
-Southeast Asia,Solar_roofs,Solar_roofs,Rooftop_PV,50.04,50.04,50.04,33.99,25.45,20.79,18.00,17.31,16.98
-Eastern Europe,Solar_roofs,Solar_roofs,Rooftop_PV,75.35,75.35,75.35,51.17,38.32,31.31,27.11,26.06,25.56,,,
-Korea,Solar_roofs,Solar_roofs,Rooftop_PV,61.24,61.24,61.24,41.59,31.15,25.45,22.03,21.18,20.78,,,
-India,Solar_roofs,Solar_roofs,Rooftop_PV,50.71,50.71,50.71,34.44,25.79,21.07,18.25,17.54,17.21,,,
+USA,Solar_roofs,Solar_roofs,Rooftop_PV,63.14,63.14,63.14,39.52,27.72,21.02,16.78,15.43,14.54
+Canada,Solar_roofs,Solar_roofs,Rooftop_PV,77.82,77.82,77.82,48.71,34.17,25.91,20.68,19.02,17.92
+Western Europe,Solar_roofs,Solar_roofs,Rooftop_PV,75.66,75.66,75.66,47.36,33.22,25.19,20.10,18.49,17.42
+Japan,Solar_roofs,Solar_roofs,Rooftop_PV,67.95,67.95,67.95,42.53,29.84,22.62,18.05,16.60,15.64
+Australia_NZ,Solar_roofs,Solar_roofs,Rooftop_PV,54.26,54.26,54.26,33.96,23.82,18.06,14.42,13.26,12.49
+Former Soviet Union,Solar_roofs,Solar_roofs,Rooftop_PV,78.89,78.89,78.89,49.38,34.64,26.27,20.96,19.28,18.16
+China,Solar_roofs,Solar_roofs,Rooftop_PV,64.14,64.14,64.14,40.14,28.16,21.35,17.04,15.67,14.77
+Middle East,Solar_roofs,Solar_roofs,Rooftop_PV,47.63,47.63,47.63,29.81,20.91,15.86,12.66,11.64,10.97
+Africa,Solar_roofs,Solar_roofs,Rooftop_PV,47.21,47.21,47.21,29.55,20.73,15.72,12.54,11.54,10.87
+Latin America,Solar_roofs,Solar_roofs,Rooftop_PV,51.76,51.76,51.76,32.39,22.72,17.23,13.75,12.65,11.92
+Southeast Asia,Solar_roofs,Solar_roofs,Rooftop_PV,51.86,51.86,51.86,32.46,22.77,17.27,13.78,12.67,11.94
+Eastern Europe,Solar_roofs,Solar_roofs,Rooftop_PV,78.09,78.09,78.09,48.88,34.29,26.00,20.75,19.08,17.98,,,
+Korea,Solar_roofs,Solar_roofs,Rooftop_PV,63.47,63.47,63.47,39.73,27.87,21.13,16.86,15.51,14.61,,,
+India,Solar_roofs,Solar_roofs,Rooftop_PV,52.56,52.56,52.56,32.90,23.08,17.50,13.96,12.84,12.10,,,
 
 
 tech efficiency,,,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,,,
 107,,,,minicam-energy-input,,,,,,,,,,,
-,,,,efficiency,,,,,,,,,,,
+,,,,efficiency,"This should be 1. Solar resource is represented by electric output, not insolation.",,,,,,,,,,
 Region,intermittent-supplysector,subsector,intermittent-technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input,,
 USA,Solar_roofs,Solar_roofs,Rooftop_PV,1,1,1,1,1,1,1,1,1,Distributed_Solar,,
 Canada,Solar_roofs,Solar_roofs,Rooftop_PV,1,1,1,1,1,1,1,1,1,Distributed_Solar,,

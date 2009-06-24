@@ -23,17 +23,24 @@ Variable ID,,,,,,,,,,,
 2000,,,,minicam-non-energy-input,,,,,,,
 ,,,,input-cost,,,,,,,
 region,supplysector,subsector,technology,1990,2005,2020,2035,2050,2065,2080,2095
-Africa,electricity,wind,wind_storage,7.00,7.00,5.32,4.48,3.93,3.49,3.18,2.97
-Australia_NZ,electricity,wind,wind_storage,7.00,7.00,5.32,4.48,3.93,3.49,3.18,2.97
-Canada,electricity,wind,wind_storage,7.00,7.00,5.32,4.48,3.93,3.49,3.18,2.97
-China,electricity,wind,wind_storage,7.00,7.00,5.32,4.48,3.93,3.49,3.18,2.97
-Eastern Europe,electricity,wind,wind_storage,7.00,7.00,5.32,4.48,3.93,3.49,3.18,2.97
-Former Soviet Union,electricity,wind,wind_storage,7.00,7.00,5.32,4.48,3.93,3.49,3.18,2.97
-India,electricity,wind,wind_storage,7.00,7.00,5.32,4.48,3.93,3.49,3.18,2.97
-Japan,electricity,wind,wind_storage,7.00,7.00,5.32,4.48,3.93,3.49,3.18,2.97
-Korea,electricity,wind,wind_storage,7.00,7.00,5.32,4.48,3.93,3.49,3.18,2.97
-Latin America,electricity,wind,wind_storage,7.00,7.00,5.32,4.48,3.93,3.49,3.18,2.97
-Middle East,electricity,wind,wind_storage,7.00,7.00,5.32,4.48,3.93,3.49,3.18,2.97
-Southeast Asia,electricity,wind,wind_storage,7.00,7.00,5.32,4.48,3.93,3.49,3.18,2.97
-USA,electricity,wind,wind_storage,7.00,7.00,5.32,4.48,3.93,3.49,3.18,2.97
-Western Europe,electricity,wind,wind_storage,7.00,7.00,5.32,4.48,3.93,3.49,3.18,2.97
+Africa,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
+Australia_NZ,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
+Canada,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
+China,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
+Eastern Europe,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
+Former Soviet Union,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
+India,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
+Japan,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
+Korea,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
+Latin America,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
+Middle East,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
+Southeast Asia,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
+USA,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
+Western Europe,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
+
+INPUT_TABLE,,,,,,,,,,,
+Variable ID,,,,,,,,,,,
+305,,,,,,,,,,,
+,,,,2020 fillout,,,,,,,
+region,renewresource,smooth-renewable-subresource,gdpSupplyElast,techChange,subResourceVariance,subResourceCapacityFactor,,,,,
+ALL,large onshore windresource,large onshore wind,0,0,0.2,0.4,,,,,

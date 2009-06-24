@@ -29,7 +29,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>60.92</input-cost>
+                        <input-cost>63.14</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -45,7 +45,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>60.92</input-cost>
+                        <input-cost>63.14</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -61,7 +61,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>60.92</input-cost>
+                        <input-cost>63.14</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -77,7 +77,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>41.38</input-cost>
+                        <input-cost>39.52</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -93,7 +93,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>30.99</input-cost>
+                        <input-cost>27.72</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -109,7 +109,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>25.31</input-cost>
+                        <input-cost>21.02</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -125,7 +125,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>21.92</input-cost>
+                        <input-cost>16.78</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -141,7 +141,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>21.07</input-cost>
+                        <input-cost>15.43</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -157,7 +157,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>20.67</input-cost>
+                        <input-cost>14.54</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -333,7 +333,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>75.09</input-cost>
+                        <input-cost>77.82</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -349,7 +349,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>75.09</input-cost>
+                        <input-cost>77.82</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -365,7 +365,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>75.09</input-cost>
+                        <input-cost>77.82</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -381,7 +381,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>51.00</input-cost>
+                        <input-cost>48.71</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -397,7 +397,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>38.19</input-cost>
+                        <input-cost>34.17</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -413,7 +413,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>31.20</input-cost>
+                        <input-cost>25.91</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -429,7 +429,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>27.02</input-cost>
+                        <input-cost>20.68</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -445,7 +445,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>25.97</input-cost>
+                        <input-cost>19.02</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -461,7 +461,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>25.48</input-cost>
+                        <input-cost>17.92</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -637,7 +637,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>73.01</input-cost>
+                        <input-cost>75.66</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -653,7 +653,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>73.01</input-cost>
+                        <input-cost>75.66</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -669,7 +669,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>73.01</input-cost>
+                        <input-cost>75.66</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -685,7 +685,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>49.59</input-cost>
+                        <input-cost>47.36</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -701,7 +701,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>37.13</input-cost>
+                        <input-cost>33.22</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -717,7 +717,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>30.34</input-cost>
+                        <input-cost>25.19</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -733,7 +733,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>26.27</input-cost>
+                        <input-cost>20.10</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -749,7 +749,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>25.25</input-cost>
+                        <input-cost>18.49</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -765,7 +765,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>24.77</input-cost>
+                        <input-cost>17.42</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -941,7 +941,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>65.57</input-cost>
+                        <input-cost>67.95</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -957,7 +957,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>65.57</input-cost>
+                        <input-cost>67.95</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -973,7 +973,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>65.57</input-cost>
+                        <input-cost>67.95</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -989,7 +989,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>44.53</input-cost>
+                        <input-cost>42.53</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1005,7 +1005,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>33.35</input-cost>
+                        <input-cost>29.84</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1021,7 +1021,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>27.24</input-cost>
+                        <input-cost>22.62</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1037,7 +1037,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>23.59</input-cost>
+                        <input-cost>18.05</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1053,7 +1053,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>22.68</input-cost>
+                        <input-cost>16.60</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1069,7 +1069,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>22.25</input-cost>
+                        <input-cost>15.64</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1245,7 +1245,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>52.35</input-cost>
+                        <input-cost>54.26</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1261,7 +1261,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>52.35</input-cost>
+                        <input-cost>54.26</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1277,7 +1277,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>52.35</input-cost>
+                        <input-cost>54.26</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1293,7 +1293,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>35.56</input-cost>
+                        <input-cost>33.96</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1309,7 +1309,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>26.63</input-cost>
+                        <input-cost>23.82</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1325,7 +1325,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>21.75</input-cost>
+                        <input-cost>18.06</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1341,7 +1341,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>18.84</input-cost>
+                        <input-cost>14.42</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1357,7 +1357,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>18.11</input-cost>
+                        <input-cost>13.26</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1373,7 +1373,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>17.76</input-cost>
+                        <input-cost>12.49</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1549,7 +1549,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>76.13</input-cost>
+                        <input-cost>78.89</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1565,7 +1565,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>76.13</input-cost>
+                        <input-cost>78.89</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1581,7 +1581,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>76.13</input-cost>
+                        <input-cost>78.89</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1597,7 +1597,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>51.70</input-cost>
+                        <input-cost>49.38</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1613,7 +1613,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>38.72</input-cost>
+                        <input-cost>34.64</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1629,7 +1629,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>31.63</input-cost>
+                        <input-cost>26.27</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1645,7 +1645,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>27.39</input-cost>
+                        <input-cost>20.96</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1661,7 +1661,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>26.33</input-cost>
+                        <input-cost>19.28</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1677,7 +1677,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>25.83</input-cost>
+                        <input-cost>18.16</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1853,7 +1853,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>61.89</input-cost>
+                        <input-cost>64.14</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1869,7 +1869,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>61.89</input-cost>
+                        <input-cost>64.14</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1885,7 +1885,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>61.89</input-cost>
+                        <input-cost>64.14</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1901,7 +1901,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>42.03</input-cost>
+                        <input-cost>40.14</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1917,7 +1917,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>31.48</input-cost>
+                        <input-cost>28.16</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1933,7 +1933,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>25.71</input-cost>
+                        <input-cost>21.35</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1949,7 +1949,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>22.27</input-cost>
+                        <input-cost>17.04</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1965,7 +1965,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>21.40</input-cost>
+                        <input-cost>15.67</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -1981,7 +1981,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>21.00</input-cost>
+                        <input-cost>14.77</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2157,7 +2157,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>45.96</input-cost>
+                        <input-cost>47.63</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2173,7 +2173,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>45.96</input-cost>
+                        <input-cost>47.63</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2189,7 +2189,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>45.96</input-cost>
+                        <input-cost>47.63</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2205,7 +2205,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>31.22</input-cost>
+                        <input-cost>29.81</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2221,7 +2221,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>23.38</input-cost>
+                        <input-cost>20.91</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2237,7 +2237,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>19.10</input-cost>
+                        <input-cost>15.86</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2253,7 +2253,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>16.54</input-cost>
+                        <input-cost>12.66</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2269,7 +2269,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>15.90</input-cost>
+                        <input-cost>11.64</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2285,7 +2285,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>15.59</input-cost>
+                        <input-cost>10.97</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2461,7 +2461,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>45.55</input-cost>
+                        <input-cost>47.21</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2477,7 +2477,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>45.55</input-cost>
+                        <input-cost>47.21</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2493,7 +2493,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>45.55</input-cost>
+                        <input-cost>47.21</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2509,7 +2509,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>30.94</input-cost>
+                        <input-cost>29.55</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2525,7 +2525,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>23.17</input-cost>
+                        <input-cost>20.73</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2541,7 +2541,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>18.93</input-cost>
+                        <input-cost>15.72</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2557,7 +2557,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>16.39</input-cost>
+                        <input-cost>12.54</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2573,7 +2573,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>15.75</input-cost>
+                        <input-cost>11.54</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2589,7 +2589,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>15.45</input-cost>
+                        <input-cost>10.87</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2765,7 +2765,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>49.94</input-cost>
+                        <input-cost>51.76</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2781,7 +2781,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>49.94</input-cost>
+                        <input-cost>51.76</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2797,7 +2797,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>49.94</input-cost>
+                        <input-cost>51.76</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2813,7 +2813,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>33.92</input-cost>
+                        <input-cost>32.39</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2829,7 +2829,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>25.40</input-cost>
+                        <input-cost>22.72</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2845,7 +2845,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>20.75</input-cost>
+                        <input-cost>17.23</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2861,7 +2861,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>17.97</input-cost>
+                        <input-cost>13.75</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2877,7 +2877,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>17.27</input-cost>
+                        <input-cost>12.65</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -2893,7 +2893,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>16.94</input-cost>
+                        <input-cost>11.92</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3069,7 +3069,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>50.04</input-cost>
+                        <input-cost>51.86</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3085,7 +3085,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>50.04</input-cost>
+                        <input-cost>51.86</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3101,7 +3101,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>50.04</input-cost>
+                        <input-cost>51.86</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3117,7 +3117,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>33.99</input-cost>
+                        <input-cost>32.46</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3133,7 +3133,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>25.45</input-cost>
+                        <input-cost>22.77</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3149,7 +3149,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>20.79</input-cost>
+                        <input-cost>17.27</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3165,7 +3165,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>18.00</input-cost>
+                        <input-cost>13.78</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3181,7 +3181,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>17.31</input-cost>
+                        <input-cost>12.67</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3197,7 +3197,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>16.98</input-cost>
+                        <input-cost>11.94</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3373,7 +3373,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>75.35</input-cost>
+                        <input-cost>78.09</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3389,7 +3389,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>75.35</input-cost>
+                        <input-cost>78.09</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3405,7 +3405,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>75.35</input-cost>
+                        <input-cost>78.09</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3421,7 +3421,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>51.17</input-cost>
+                        <input-cost>48.88</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3437,7 +3437,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>38.32</input-cost>
+                        <input-cost>34.29</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3453,7 +3453,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>31.31</input-cost>
+                        <input-cost>26.00</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3469,7 +3469,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>27.11</input-cost>
+                        <input-cost>20.75</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3485,7 +3485,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>26.06</input-cost>
+                        <input-cost>19.08</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3501,7 +3501,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>25.56</input-cost>
+                        <input-cost>17.98</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3677,7 +3677,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>61.24</input-cost>
+                        <input-cost>63.47</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3693,7 +3693,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>61.24</input-cost>
+                        <input-cost>63.47</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3709,7 +3709,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>61.24</input-cost>
+                        <input-cost>63.47</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3725,7 +3725,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>41.59</input-cost>
+                        <input-cost>39.73</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3741,7 +3741,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>31.15</input-cost>
+                        <input-cost>27.87</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3757,7 +3757,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>25.45</input-cost>
+                        <input-cost>21.13</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3773,7 +3773,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>22.03</input-cost>
+                        <input-cost>16.86</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3789,7 +3789,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>21.18</input-cost>
+                        <input-cost>15.51</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3805,7 +3805,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>20.78</input-cost>
+                        <input-cost>14.61</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3981,7 +3981,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>50.71</input-cost>
+                        <input-cost>52.56</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -3997,7 +3997,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>50.71</input-cost>
+                        <input-cost>52.56</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -4013,7 +4013,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>50.71</input-cost>
+                        <input-cost>52.56</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -4029,7 +4029,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>34.44</input-cost>
+                        <input-cost>32.90</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -4045,7 +4045,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>25.79</input-cost>
+                        <input-cost>23.08</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -4061,7 +4061,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>21.07</input-cost>
+                        <input-cost>17.50</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -4077,7 +4077,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>18.25</input-cost>
+                        <input-cost>13.96</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -4093,7 +4093,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>17.54</input-cost>
+                        <input-cost>12.84</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>
@@ -4109,7 +4109,7 @@
                      <electric-sector-name>electricity</electric-sector-name>
                      <minicam-energy-input name="backup_electricity"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>17.21</input-cost>
+                        <input-cost>12.10</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="Distributed_Solar">
                         <efficiency>1</efficiency>

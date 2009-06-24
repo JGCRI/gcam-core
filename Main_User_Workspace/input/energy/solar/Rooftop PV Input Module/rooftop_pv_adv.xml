@@ -7,12 +7,12 @@
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0489</techChange>
-               <techChange year="2035">0.0217</techChange>
-               <techChange year="2050">0.0128</techChange>
-               <techChange year="2065">0.0072</techChange>
-               <techChange year="2080">0.0044</techChange>
-               <techChange year="2095">0.0031</techChange>
+               <techChange year="2020">0.0536</techChange>
+               <techChange year="2035">0.0250</techChange>
+               <techChange year="2050">0.0163</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0062</techChange>
+               <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
          <intermittent-supplysector name="Solar_roofs">
@@ -35,32 +35,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>28.73</input-cost>
+                        <input-cost>26.64</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>20.68</input-cost>
+                        <input-cost>18.22</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>17.03</input-cost>
+                        <input-cost>14.24</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>15.27</input-cost>
+                        <input-cost>12.32</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>14.30</input-cost>
+                        <input-cost>11.22</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>13.66</input-cost>
+                        <input-cost>10.50</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </intermittent-technology>
@@ -73,12 +73,12 @@
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0489</techChange>
-               <techChange year="2035">0.0217</techChange>
-               <techChange year="2050">0.0128</techChange>
-               <techChange year="2065">0.0072</techChange>
-               <techChange year="2080">0.0044</techChange>
-               <techChange year="2095">0.0031</techChange>
+               <techChange year="2020">0.0536</techChange>
+               <techChange year="2035">0.0250</techChange>
+               <techChange year="2050">0.0163</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0062</techChange>
+               <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
          <intermittent-supplysector name="Solar_roofs">
@@ -101,32 +101,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>35.41</input-cost>
+                        <input-cost>32.84</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>25.49</input-cost>
+                        <input-cost>22.46</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>21.00</input-cost>
+                        <input-cost>17.55</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>18.83</input-cost>
+                        <input-cost>15.19</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>17.63</input-cost>
+                        <input-cost>13.83</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>16.83</input-cost>
+                        <input-cost>12.94</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </intermittent-technology>
@@ -139,12 +139,12 @@
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0489</techChange>
-               <techChange year="2035">0.0217</techChange>
-               <techChange year="2050">0.0128</techChange>
-               <techChange year="2065">0.0072</techChange>
-               <techChange year="2080">0.0044</techChange>
-               <techChange year="2095">0.0031</techChange>
+               <techChange year="2020">0.0536</techChange>
+               <techChange year="2035">0.0250</techChange>
+               <techChange year="2050">0.0163</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0062</techChange>
+               <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
          <intermittent-supplysector name="Solar_roofs">
@@ -167,32 +167,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>34.43</input-cost>
+                        <input-cost>31.93</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>24.78</input-cost>
+                        <input-cost>21.84</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>20.41</input-cost>
+                        <input-cost>17.07</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>18.30</input-cost>
+                        <input-cost>14.76</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>17.14</input-cost>
+                        <input-cost>13.44</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>16.37</input-cost>
+                        <input-cost>12.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </intermittent-technology>
@@ -205,12 +205,12 @@
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0489</techChange>
-               <techChange year="2035">0.0217</techChange>
-               <techChange year="2050">0.0128</techChange>
-               <techChange year="2065">0.0072</techChange>
-               <techChange year="2080">0.0044</techChange>
-               <techChange year="2095">0.0031</techChange>
+               <techChange year="2020">0.0536</techChange>
+               <techChange year="2035">0.0250</techChange>
+               <techChange year="2050">0.0163</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0062</techChange>
+               <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
          <intermittent-supplysector name="Solar_roofs">
@@ -233,32 +233,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>30.92</input-cost>
+                        <input-cost>28.67</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>22.25</input-cost>
+                        <input-cost>19.61</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>18.33</input-cost>
+                        <input-cost>15.33</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>16.44</input-cost>
+                        <input-cost>13.26</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>15.39</input-cost>
+                        <input-cost>12.07</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>14.70</input-cost>
+                        <input-cost>11.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </intermittent-technology>
@@ -271,12 +271,12 @@
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0489</techChange>
-               <techChange year="2035">0.0217</techChange>
-               <techChange year="2050">0.0128</techChange>
-               <techChange year="2065">0.0072</techChange>
-               <techChange year="2080">0.0044</techChange>
-               <techChange year="2095">0.0031</techChange>
+               <techChange year="2020">0.0536</techChange>
+               <techChange year="2035">0.0250</techChange>
+               <techChange year="2050">0.0163</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0062</techChange>
+               <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
          <intermittent-supplysector name="Solar_roofs">
@@ -299,32 +299,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>24.69</input-cost>
+                        <input-cost>22.89</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>17.77</input-cost>
+                        <input-cost>15.66</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>14.64</input-cost>
+                        <input-cost>12.24</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>13.12</input-cost>
+                        <input-cost>10.59</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>12.29</input-cost>
+                        <input-cost>9.64</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.74</input-cost>
+                        <input-cost>9.02</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </intermittent-technology>
@@ -337,12 +337,12 @@
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0489</techChange>
-               <techChange year="2035">0.0217</techChange>
-               <techChange year="2050">0.0128</techChange>
-               <techChange year="2065">0.0072</techChange>
-               <techChange year="2080">0.0044</techChange>
-               <techChange year="2095">0.0031</techChange>
+               <techChange year="2020">0.0536</techChange>
+               <techChange year="2035">0.0250</techChange>
+               <techChange year="2050">0.0163</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0062</techChange>
+               <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
          <intermittent-supplysector name="Solar_roofs">
@@ -365,32 +365,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>35.90</input-cost>
+                        <input-cost>33.29</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>25.84</input-cost>
+                        <input-cost>22.77</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>21.28</input-cost>
+                        <input-cost>17.79</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>19.08</input-cost>
+                        <input-cost>15.39</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>17.87</input-cost>
+                        <input-cost>14.02</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>17.07</input-cost>
+                        <input-cost>13.12</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </intermittent-technology>
@@ -403,12 +403,12 @@
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0489</techChange>
-               <techChange year="2035">0.0217</techChange>
-               <techChange year="2050">0.0128</techChange>
-               <techChange year="2065">0.0072</techChange>
-               <techChange year="2080">0.0044</techChange>
-               <techChange year="2095">0.0031</techChange>
+               <techChange year="2020">0.0536</techChange>
+               <techChange year="2035">0.0250</techChange>
+               <techChange year="2050">0.0163</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0062</techChange>
+               <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
          <intermittent-supplysector name="Solar_roofs">
@@ -431,32 +431,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>29.18</input-cost>
+                        <input-cost>27.06</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>21.00</input-cost>
+                        <input-cost>18.51</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>17.30</input-cost>
+                        <input-cost>14.47</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>15.51</input-cost>
+                        <input-cost>12.52</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>14.53</input-cost>
+                        <input-cost>11.40</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>13.87</input-cost>
+                        <input-cost>10.67</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </intermittent-technology>
@@ -469,12 +469,12 @@
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0489</techChange>
-               <techChange year="2035">0.0217</techChange>
-               <techChange year="2050">0.0128</techChange>
-               <techChange year="2065">0.0072</techChange>
-               <techChange year="2080">0.0044</techChange>
-               <techChange year="2095">0.0031</techChange>
+               <techChange year="2020">0.0536</techChange>
+               <techChange year="2035">0.0250</techChange>
+               <techChange year="2050">0.0163</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0062</techChange>
+               <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
          <intermittent-supplysector name="Solar_roofs">
@@ -497,32 +497,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>21.67</input-cost>
+                        <input-cost>20.10</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>15.60</input-cost>
+                        <input-cost>13.75</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>12.85</input-cost>
+                        <input-cost>10.74</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.52</input-cost>
+                        <input-cost>9.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>10.79</input-cost>
+                        <input-cost>8.46</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>10.30</input-cost>
+                        <input-cost>7.92</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </intermittent-technology>
@@ -535,12 +535,12 @@
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0489</techChange>
-               <techChange year="2035">0.0217</techChange>
-               <techChange year="2050">0.0128</techChange>
-               <techChange year="2065">0.0072</techChange>
-               <techChange year="2080">0.0044</techChange>
-               <techChange year="2095">0.0031</techChange>
+               <techChange year="2020">0.0536</techChange>
+               <techChange year="2035">0.0250</techChange>
+               <techChange year="2050">0.0163</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0062</techChange>
+               <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
          <intermittent-supplysector name="Solar_roofs">
@@ -563,32 +563,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>21.48</input-cost>
+                        <input-cost>19.92</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>15.46</input-cost>
+                        <input-cost>13.62</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>12.74</input-cost>
+                        <input-cost>10.65</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.42</input-cost>
+                        <input-cost>9.21</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>10.69</input-cost>
+                        <input-cost>8.39</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>10.21</input-cost>
+                        <input-cost>7.85</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </intermittent-technology>
@@ -601,12 +601,12 @@
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0489</techChange>
-               <techChange year="2035">0.0217</techChange>
-               <techChange year="2050">0.0128</techChange>
-               <techChange year="2065">0.0072</techChange>
-               <techChange year="2080">0.0044</techChange>
-               <techChange year="2095">0.0031</techChange>
+               <techChange year="2020">0.0536</techChange>
+               <techChange year="2035">0.0250</techChange>
+               <techChange year="2050">0.0163</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0062</techChange>
+               <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
          <intermittent-supplysector name="Solar_roofs">
@@ -629,32 +629,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>23.55</input-cost>
+                        <input-cost>21.84</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>16.95</input-cost>
+                        <input-cost>14.94</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>13.96</input-cost>
+                        <input-cost>11.67</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>12.52</input-cost>
+                        <input-cost>10.10</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.72</input-cost>
+                        <input-cost>9.20</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.19</input-cost>
+                        <input-cost>8.61</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </intermittent-technology>
@@ -667,12 +667,12 @@
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0489</techChange>
-               <techChange year="2035">0.0217</techChange>
-               <techChange year="2050">0.0128</techChange>
-               <techChange year="2065">0.0072</techChange>
-               <techChange year="2080">0.0044</techChange>
-               <techChange year="2095">0.0031</techChange>
+               <techChange year="2020">0.0536</techChange>
+               <techChange year="2035">0.0250</techChange>
+               <techChange year="2050">0.0163</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0062</techChange>
+               <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
          <intermittent-supplysector name="Solar_roofs">
@@ -695,32 +695,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>23.60</input-cost>
+                        <input-cost>21.88</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>16.98</input-cost>
+                        <input-cost>14.97</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>13.99</input-cost>
+                        <input-cost>11.70</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>12.55</input-cost>
+                        <input-cost>10.12</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.75</input-cost>
+                        <input-cost>9.21</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.22</input-cost>
+                        <input-cost>8.63</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </intermittent-technology>
@@ -733,12 +733,12 @@
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0489</techChange>
-               <techChange year="2035">0.0217</techChange>
-               <techChange year="2050">0.0128</techChange>
-               <techChange year="2065">0.0072</techChange>
-               <techChange year="2080">0.0044</techChange>
-               <techChange year="2095">0.0031</techChange>
+               <techChange year="2020">0.0536</techChange>
+               <techChange year="2035">0.0250</techChange>
+               <techChange year="2050">0.0163</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0062</techChange>
+               <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
          <intermittent-supplysector name="Solar_roofs">
@@ -761,32 +761,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>35.53</input-cost>
+                        <input-cost>32.95</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>25.57</input-cost>
+                        <input-cost>22.54</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>21.07</input-cost>
+                        <input-cost>17.61</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>18.89</input-cost>
+                        <input-cost>15.24</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>17.69</input-cost>
+                        <input-cost>13.87</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>16.89</input-cost>
+                        <input-cost>12.99</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </intermittent-technology>
@@ -799,12 +799,12 @@
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0489</techChange>
-               <techChange year="2035">0.0217</techChange>
-               <techChange year="2050">0.0128</techChange>
-               <techChange year="2065">0.0072</techChange>
-               <techChange year="2080">0.0044</techChange>
-               <techChange year="2095">0.0031</techChange>
+               <techChange year="2020">0.0536</techChange>
+               <techChange year="2035">0.0250</techChange>
+               <techChange year="2050">0.0163</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0062</techChange>
+               <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
          <intermittent-supplysector name="Solar_roofs">
@@ -827,32 +827,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>28.88</input-cost>
+                        <input-cost>26.78</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>20.78</input-cost>
+                        <input-cost>18.32</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>17.12</input-cost>
+                        <input-cost>14.31</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>15.35</input-cost>
+                        <input-cost>12.38</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>14.38</input-cost>
+                        <input-cost>11.28</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>13.73</input-cost>
+                        <input-cost>10.56</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </intermittent-technology>
@@ -865,12 +865,12 @@
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0489</techChange>
-               <techChange year="2035">0.0217</techChange>
-               <techChange year="2050">0.0128</techChange>
-               <techChange year="2065">0.0072</techChange>
-               <techChange year="2080">0.0044</techChange>
-               <techChange year="2095">0.0031</techChange>
+               <techChange year="2020">0.0536</techChange>
+               <techChange year="2035">0.0250</techChange>
+               <techChange year="2050">0.0163</techChange>
+               <techChange year="2065">0.0096</techChange>
+               <techChange year="2080">0.0062</techChange>
+               <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
          <intermittent-supplysector name="Solar_roofs">
@@ -893,32 +893,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>23.91</input-cost>
+                        <input-cost>22.18</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>17.21</input-cost>
+                        <input-cost>15.17</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>14.18</input-cost>
+                        <input-cost>11.85</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>12.71</input-cost>
+                        <input-cost>10.26</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.90</input-cost>
+                        <input-cost>9.34</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.37</input-cost>
+                        <input-cost>8.74</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </intermittent-technology>

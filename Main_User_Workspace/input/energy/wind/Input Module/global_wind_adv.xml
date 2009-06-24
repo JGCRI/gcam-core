@@ -49,47 +49,55 @@
                <technology name="wind_storage">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.32</input-cost>
+                        <input-cost>8.61</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.48</input-cost>
+                        <input-cost>7.07</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.93</input-cost>
+                        <input-cost>6.21</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.49</input-cost>
+                        <input-cost>5.55</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.18</input-cost>
+                        <input-cost>5.12</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.97</input-cost>
+                        <input-cost>4.86</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
             </subsector>
          </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource name="large onshore wind">
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.2</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
       </region>
       <region name="Australia_NZ">
          <supplysector name="electricity">
@@ -139,47 +147,55 @@
                <technology name="wind_storage">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.32</input-cost>
+                        <input-cost>8.61</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.48</input-cost>
+                        <input-cost>7.07</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.93</input-cost>
+                        <input-cost>6.21</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.49</input-cost>
+                        <input-cost>5.55</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.18</input-cost>
+                        <input-cost>5.12</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.97</input-cost>
+                        <input-cost>4.86</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
             </subsector>
          </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource name="large onshore wind">
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.2</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
       </region>
       <region name="Canada">
          <supplysector name="electricity">
@@ -229,47 +245,55 @@
                <technology name="wind_storage">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.32</input-cost>
+                        <input-cost>8.61</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.48</input-cost>
+                        <input-cost>7.07</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.93</input-cost>
+                        <input-cost>6.21</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.49</input-cost>
+                        <input-cost>5.55</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.18</input-cost>
+                        <input-cost>5.12</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.97</input-cost>
+                        <input-cost>4.86</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
             </subsector>
          </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource name="large onshore wind">
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.2</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
       </region>
       <region name="China">
          <supplysector name="electricity">
@@ -319,47 +343,55 @@
                <technology name="wind_storage">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.32</input-cost>
+                        <input-cost>8.61</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.48</input-cost>
+                        <input-cost>7.07</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.93</input-cost>
+                        <input-cost>6.21</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.49</input-cost>
+                        <input-cost>5.55</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.18</input-cost>
+                        <input-cost>5.12</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.97</input-cost>
+                        <input-cost>4.86</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
             </subsector>
          </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource name="large onshore wind">
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.2</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
       </region>
       <region name="Eastern Europe">
          <supplysector name="electricity">
@@ -409,47 +441,55 @@
                <technology name="wind_storage">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.32</input-cost>
+                        <input-cost>8.61</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.48</input-cost>
+                        <input-cost>7.07</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.93</input-cost>
+                        <input-cost>6.21</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.49</input-cost>
+                        <input-cost>5.55</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.18</input-cost>
+                        <input-cost>5.12</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.97</input-cost>
+                        <input-cost>4.86</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
             </subsector>
          </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource name="large onshore wind">
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.2</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
       </region>
       <region name="Former Soviet Union">
          <supplysector name="electricity">
@@ -499,47 +539,55 @@
                <technology name="wind_storage">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.32</input-cost>
+                        <input-cost>8.61</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.48</input-cost>
+                        <input-cost>7.07</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.93</input-cost>
+                        <input-cost>6.21</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.49</input-cost>
+                        <input-cost>5.55</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.18</input-cost>
+                        <input-cost>5.12</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.97</input-cost>
+                        <input-cost>4.86</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
             </subsector>
          </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource name="large onshore wind">
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.2</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
       </region>
       <region name="India">
          <supplysector name="electricity">
@@ -589,47 +637,55 @@
                <technology name="wind_storage">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.32</input-cost>
+                        <input-cost>8.61</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.48</input-cost>
+                        <input-cost>7.07</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.93</input-cost>
+                        <input-cost>6.21</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.49</input-cost>
+                        <input-cost>5.55</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.18</input-cost>
+                        <input-cost>5.12</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.97</input-cost>
+                        <input-cost>4.86</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
             </subsector>
          </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource name="large onshore wind">
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.2</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
       </region>
       <region name="Japan">
          <supplysector name="electricity">
@@ -679,47 +735,55 @@
                <technology name="wind_storage">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.32</input-cost>
+                        <input-cost>8.61</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.48</input-cost>
+                        <input-cost>7.07</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.93</input-cost>
+                        <input-cost>6.21</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.49</input-cost>
+                        <input-cost>5.55</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.18</input-cost>
+                        <input-cost>5.12</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.97</input-cost>
+                        <input-cost>4.86</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
             </subsector>
          </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource name="large onshore wind">
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.2</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
       </region>
       <region name="Korea">
          <supplysector name="electricity">
@@ -769,47 +833,55 @@
                <technology name="wind_storage">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.32</input-cost>
+                        <input-cost>8.61</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.48</input-cost>
+                        <input-cost>7.07</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.93</input-cost>
+                        <input-cost>6.21</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.49</input-cost>
+                        <input-cost>5.55</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.18</input-cost>
+                        <input-cost>5.12</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.97</input-cost>
+                        <input-cost>4.86</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
             </subsector>
          </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource name="large onshore wind">
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.2</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
       </region>
       <region name="Latin America">
          <supplysector name="electricity">
@@ -859,47 +931,55 @@
                <technology name="wind_storage">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.32</input-cost>
+                        <input-cost>8.61</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.48</input-cost>
+                        <input-cost>7.07</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.93</input-cost>
+                        <input-cost>6.21</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.49</input-cost>
+                        <input-cost>5.55</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.18</input-cost>
+                        <input-cost>5.12</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.97</input-cost>
+                        <input-cost>4.86</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
             </subsector>
          </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource name="large onshore wind">
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.2</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
       </region>
       <region name="Middle East">
          <supplysector name="electricity">
@@ -949,47 +1029,55 @@
                <technology name="wind_storage">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.32</input-cost>
+                        <input-cost>8.61</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.48</input-cost>
+                        <input-cost>7.07</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.93</input-cost>
+                        <input-cost>6.21</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.49</input-cost>
+                        <input-cost>5.55</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.18</input-cost>
+                        <input-cost>5.12</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.97</input-cost>
+                        <input-cost>4.86</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
             </subsector>
          </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource name="large onshore wind">
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.2</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
       </region>
       <region name="Southeast Asia">
          <supplysector name="electricity">
@@ -1039,47 +1127,55 @@
                <technology name="wind_storage">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.32</input-cost>
+                        <input-cost>8.61</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.48</input-cost>
+                        <input-cost>7.07</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.93</input-cost>
+                        <input-cost>6.21</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.49</input-cost>
+                        <input-cost>5.55</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.18</input-cost>
+                        <input-cost>5.12</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.97</input-cost>
+                        <input-cost>4.86</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
             </subsector>
          </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource name="large onshore wind">
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.2</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
       </region>
       <region name="USA">
          <supplysector name="electricity">
@@ -1129,47 +1225,55 @@
                <technology name="wind_storage">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.32</input-cost>
+                        <input-cost>8.61</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.48</input-cost>
+                        <input-cost>7.07</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.93</input-cost>
+                        <input-cost>6.21</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.49</input-cost>
+                        <input-cost>5.55</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.18</input-cost>
+                        <input-cost>5.12</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.97</input-cost>
+                        <input-cost>4.86</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
             </subsector>
          </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource name="large onshore wind">
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.2</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
       </region>
       <region name="Western Europe">
          <supplysector name="electricity">
@@ -1219,47 +1323,55 @@
                <technology name="wind_storage">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.00</input-cost>
+                        <input-cost>11.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.32</input-cost>
+                        <input-cost>8.61</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.48</input-cost>
+                        <input-cost>7.07</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.93</input-cost>
+                        <input-cost>6.21</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.49</input-cost>
+                        <input-cost>5.55</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.18</input-cost>
+                        <input-cost>5.12</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.97</input-cost>
+                        <input-cost>4.86</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
             </subsector>
          </supplysector>
+         <renewresource name="large onshore windresource">
+            <smooth-renewable-subresource name="large onshore wind">
+               <gdpSupplyElast>0</gdpSupplyElast>
+               <techChange fillout="1" year="2020">0</techChange>
+               <subResourceVariance>0.2</subResourceVariance>
+               <subResourceCapacityFactor>0.4</subResourceCapacityFactor>
+            </smooth-renewable-subresource>
+         </renewresource>
       </region>
    </world>
 </scenario>
