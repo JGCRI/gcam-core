@@ -1534,7 +1534,8 @@ public final class ComponentManipulator
             store = (int)Math.floor((holdMS[iY][iX]-min)/factor);
             
             //toReturn[store].data[0][1] += (area);
-	    if(avg) {
+        // If not averaged, then simply adds vars, otherwise returns land area (would need to adjust data var by landfract if want cell area)
+	    if(!avg) {
 		    toReturn[store].data[0][1] += holdMS[iY][iX];
 	    } else {
 		    toReturn[store].data[0][1] += (area*holdMS[iY][iX]*holdW[iY][iX]*holdLF[iY][iX]);
@@ -1610,10 +1611,11 @@ public final class ComponentManipulator
             
             store = (int)Math.floor((holdMM[iY][iX]-min)/factor);
             
-	    if(avg) {
+       // If not averaged, then simply adds vars, otherwise returns land area (would need to adjust data var by landfract if want cell area)
+	    if(!avg) {
 		    toReturn[store].data[0][1] += holdMS[iY][iX];
 	    } else {
-		    toReturn[store].data[0][1] += (area*holdMS[iY][iX]/* *holdW[iY][iX]*holdLF[iY][iX] */);
+		    toReturn[store].data[0][1] += (area*holdMS[iY][iX]*holdW[iY][iX]*holdLF[iY][iX]);
 	    }
           }
         }
