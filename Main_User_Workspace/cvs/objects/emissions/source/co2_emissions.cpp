@@ -194,16 +194,22 @@ void CO2Emissions::calcEmission( const std::string& aRegionName,
     double inputEmissions = calcInputCO2Emissions( aInputs, aRegionName, aPeriod );
     double outputEmissions = calcOutputEmissions( aOutputs, aPeriod );
 
+	/* Total emissions are the difference in carbon of the input fuel and the output
+	 * fuel, if any. For conversion technologies like liquefaction or gasification, the
+	 * total emissions is the carbon involved in the conversion process, and the carbon
+	 * in the produced fuel is passed through. For electricity and hydrogen production,
+	 * this same logic works as the carbon in the output is zero */
+
+    double totalEmissions = inputEmissions - outputEmissions;
+
     // Calculate sequestered emissions if there is a sequestration device
-    // and subtract from input emissions.
+    // and subtract from total emissions.
     if( aSequestrationDevice ){
         mEmissionsSequestered[ aPeriod ] = aSequestrationDevice->calcSequesteredAmount( 
-                                           aRegionName, getName(), inputEmissions, aPeriod );
+                                           aRegionName, getName(), totalEmissions, aPeriod );
 
-        inputEmissions -= mEmissionsSequestered[ aPeriod ];
+		totalEmissions -= mEmissionsSequestered[ aPeriod ];
     }
-
-    double totalEmissions = inputEmissions;
 
     // If the good is a primary fuel, don't subtract output emissions as this is
     // extraction of the resource, not sequestration, and store the output
@@ -216,10 +222,6 @@ void CO2Emissions::calcEmission( const std::string& aRegionName,
         aRegionName, aPeriod, false );
     if( marketInfo && marketInfo->getBoolean( "IsPrimaryEnergyGood", false ) ){
         mEmissionsByFuel[ aPeriod ] = outputEmissions;
-    }
-    else {
-        // Remove emissions contained in the output from the total technology emissions.
-        totalEmissions -= outputEmissions;
     }
 
     // Store the total emissions.
